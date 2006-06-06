@@ -189,11 +189,11 @@ while($file = readdir($f)){
 
 /* Some replacements */
 $backwardlink  = "<a href=\"?pg=%s\"  class=\"maintitlebar\">
-                  <img src='images/back.png' align=\"middle\" alt=\""._("previous")."\" border=\"0\">
+                  <img src='images/back.png' class=\"center\" align=\"middle\" alt=\""._("previous")."\" border=\"0\">
                  </a>";
 
 $forwardlink   = "<a href=\"?pg=%s\"  class=\"maintitlebar\">
-                  <img src='images/forward.png' align=\"middle\" alt=\""._("next")."\" border=\"0\">
+                  <img src='images/forward.png' class=\"center\" align=\"middle\" alt=\""._("next")."\" border=\"0\">
                  </a>";
 
 
