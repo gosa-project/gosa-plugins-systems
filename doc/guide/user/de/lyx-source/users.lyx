@@ -312,7 +312,7 @@ Die dritte Spalte enthält Knöpfe für die möglichen Aktionen, um Verwaltungsaufga
 ben durchzuführen (Ausschneiden, Kopieren, Bearbeiten, Entfernen)
 \layout Standard
 
-Die Knöpfe (
+Die vier Knöpfe 
 \begin_inset Graphics
 	filename images/list_root.png
 
@@ -324,19 +324,19 @@ Die Knöpfe (
 
 \end_inset 
 
-, 
+ , 
 \begin_inset Graphics
 	filename images/list_home.png
 
 \end_inset 
 
-, 
+ und 
 \begin_inset Graphics
 	filename images/list_reload.png
 
 \end_inset 
 
-) dienen zur Navigation innerhalb der Abteilungshierarchie:
+ oberhalb der Liste dienen zur Navigation innerhalb der Abteilungshierarchie:
 \layout Itemize
 
 
@@ -345,7 +345,7 @@ Die Knöpfe (
 
 \end_inset 
 
- Zur Wurzel
+: Zur Wurzel
 \layout Itemize
 
 
@@ -354,7 +354,7 @@ Die Knöpfe (
 
 \end_inset 
 
- Eine Abteilung nach oben
+: Eine Abteilung nach oben
 \layout Itemize
 
 
@@ -363,7 +363,7 @@ Die Knöpfe (
 
 \end_inset 
 
- Zur Basis des Benutzers
+: Zur Basis des angemeldeten Benutzers
 \layout Itemize
 
 
@@ -372,7 +372,7 @@ Die Knöpfe (
 
 \end_inset 
 
- Aktuelle Abteilung neu laden
+: Aktuelle Abteilung neu laden
 \layout Standard
 
 
