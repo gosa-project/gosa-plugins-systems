@@ -1,6 +1,6 @@
 #LyX 1.3 created this file. For more info see http://www.lyx.org/
 \lyxformat 221
-\textclass scrartcl
+\textclass article
 \language ngerman
 \inputencoding auto
 \fontscheme default
@@ -9,8 +9,8 @@
 \spacing single 
 \papersize a4paper
 \paperpackage a4
-\use_geometry 1
-\use_amsmath 0
+\use_geometry 0
+\use_amsmath 1
 \use_natbib 0
 \use_numerical_citations 0
 \paperorientation portrait
@@ -30,21 +30,6 @@
 \papercolumns 1
 \papersides 1
 \paperpagestyle default
-\bullet 1
-	0
-	8
-	-1
-\end_bullet
-\bullet 2
-	0
-	8
-	-1
-\end_bullet
-\bullet 3
-	0
-	8
-	4
-\end_bullet
 
 \layout Title
 
@@ -80,68 +65,14 @@ Die erste Spalte enthält die Namen der Systeme
 Die zweite Spalte enthält Knöpfe für die möglichen Aktionen, um Verwaltungsaufga
 ben durchzuführen (Root-Passwort setzen, Bearbeiten, Entfernen)
 \layout Standard
-\added_space_bottom medskip 
-Die Knöpfe (
-\begin_inset Graphics
-	filename images/list_root.png
+
+
+\begin_inset Include \input{department_navigation.lyx}
+preview true
 
 \end_inset 
 
-, 
-\begin_inset Graphics
-	filename images/list_up.png
 
-\end_inset 
-
-, 
-\begin_inset Graphics
-	filename images/list_home.png
-
-\end_inset 
-
-, 
-\begin_inset Graphics
-	filename images/list_reload.png
-
-\end_inset 
-
-) dienen zur Navigation innerhalb der Abteilungshierarchie:
-\layout Itemize
-
-
-\begin_inset Graphics
-	filename images/list_root.png
-
-\end_inset 
-
-: Zur Wurzel
-\layout Itemize
-
-
-\begin_inset Graphics
-	filename images/list_up.png
-
-\end_inset 
-
-: Eine Abteilung nach oben
-\layout Itemize
-
-
-\begin_inset Graphics
-	filename images/list_home.png
-
-\end_inset 
-
-: Zur Basis des Benutzers
-\layout Itemize
-
-
-\begin_inset Graphics
-	filename images/list_reload.png
-
-\end_inset 
-
-: Aktuelle Abteilung neu laden
 \layout Standard
 
 Es ist weiterhin möglich, die Anzeige der Abteilungen mithilfe von Filtern

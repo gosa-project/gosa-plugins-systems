@@ -1,0 +1,90 @@
+#LyX 1.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 221
+\textclass article
+\language ngerman
+\inputencoding auto
+\fontscheme default
+\graphics default
+\paperfontsize default
+\spacing single 
+\papersize Default
+\paperpackage a4
+\use_geometry 0
+\use_amsmath 0
+\use_natbib 0
+\use_numerical_citations 0
+\paperorientation portrait
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\quotes_times 2
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+
+\layout Standard
+
+Die vier Knöpfe 
+\begin_inset Graphics
+	filename images/list_root.png
+
+\end_inset 
+
+, 
+\begin_inset Graphics
+	filename images/list_back.png
+
+\end_inset 
+
+, 
+\begin_inset Graphics
+	filename images/list_home.png
+
+\end_inset 
+
+, und 
+\begin_inset Graphics
+	filename images/list_reload.png
+
+\end_inset 
+
+ oberhalb der Liste dienen zur Navigation innerhalb der Abteilungshierarchie:
+\layout Itemize
+
+
+\begin_inset Graphics
+	filename images/list_root.png
+
+\end_inset 
+
+: Zur Wurzel
+\layout Itemize
+
+
+\begin_inset Graphics
+	filename images/list_back.png
+
+\end_inset 
+
+: Eine Abteilung nach oben
+\layout Itemize
+
+
+\begin_inset Graphics
+	filename images/list_home.png
+
+\end_inset 
+
+: Zur Basis des angemeldeten Benutzers
+\layout Itemize
+
+
+\begin_inset Graphics
+	filename images/list_reload.png
+
+\end_inset 
+
+: Aktuelle Abteilung neu laden
+\the_end
