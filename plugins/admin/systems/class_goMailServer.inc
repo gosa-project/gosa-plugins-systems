@@ -54,22 +54,24 @@ class goMailServer extends plugin{
     $this->TransportProtocols =array("smtp"=>"SMTP");
     $this->RestrictionFilters = array("FILTER"=>"FILTER"); 
     foreach(array("ADDITIONALRESTRICTIONFILTERS"=>"RestrictionFilters",
-            "ADDITIONALPROTOCOLLS"        =>"TransportProtocols") as $file => $var){
-      $file = $this->config->data['MAIN'][$file];
-      if((isset($file)) && is_readable($file)){
-        $tmp = file_get_contents($file);
-        $tmp2= split("\n",$tmp);
-        foreach($tmp2 as $entry){
-          if(empty($entry)) continue;
-          if(preg_match("/:/",$entry)){
-            $tmp3 = split(":",$entry);
-            $r = $this->$var;
-            $r[$tmp3[0]]=$tmp3[1];
-            $this->$var = $r;
-          }else{
-            $r = $this->$var;
-            $r[$entry] =$entry;
-            $this->$var = $r;
+          "ADDITIONALPROTOCOLLS"        =>"TransportProtocols") as $file => $var){
+      if(isset($this->config->data['MAIN'][$file])){
+        $file = $this->config->data['MAIN'][$file];
+        if((isset($file)) && is_readable($file)){
+          $tmp = file_get_contents($file);
+          $tmp2= split("\n",$tmp);
+          foreach($tmp2 as $entry){
+            if(empty($entry)) continue;
+            if(preg_match("/:/",$entry)){
+              $tmp3 = split(":",$entry);
+              $r = $this->$var;
+              $r[$tmp3[0]]=$tmp3[1];
+              $this->$var = $r;
+            }else{
+              $r = $this->$var;
+              $r[$entry] =$entry;
+              $this->$var = $r;
+            }
           }
         }
       }

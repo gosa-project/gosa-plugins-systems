@@ -4,9 +4,9 @@ define("START_SERVICE",1);
 define("STOP_SERVICE",2);
 define("RESET_SERVICE",3);
 
-define("SERVICE_STOPPED","stopped");
-define("SERVICE_STARTED","started");
-define("SERVICE_RESETTED","resetted");
+define("SERVICE_STOPPED",_("Stop"));
+define("SERVICE_STARTED",_("Start"));
+define("SERVICE_RESETTED",_("Restart"));
 
 define("ALL_SERVICES",100);
 

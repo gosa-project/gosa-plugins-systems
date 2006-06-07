@@ -30,7 +30,7 @@
 <p class="seperator">
 <p>
 <div style="width:100%; text-align:right;">
-    <input type='submit' name='SaveServiceAdd' value='{t}Save{/t}' {if !$Services} disabled {/if}>
+    <input type='submit' name='SaveServiceAdd' value='{t}Continue{/t}' {if !$Services} disabled {/if}>
     &nbsp;
     <input type='submit' name='CancelServiceAdd' value='{t}Cancel{/t}'>
 </div>
