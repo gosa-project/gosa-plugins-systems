@@ -1,30 +1,25 @@
-<div style="font-size: 18px;">
-	<div style="font-size: 18px;">
-		{t}Add a new service to this server.{/t}.
-	</div>
+<div style="height:5px">&nbsp;</div>
+<div style="font-size:18px;">
+	{t}Adding a new service to the current server{/t}
 </div>
 <br>
-<p class="seperator"><b>
-{t}This dialog allows you to add new services to the currenty edited server object. In the box below you can see all available services, services you have already in use are not shown.{/t} </b>
+<p class="seperator">
+{t}This dialog allows you to add new services to the currenty edited server object. The box below shows all available but not already used services.{/t}
 <br>
 <br>
 </p>
 {if $Services} 
-
 <br>
-
-<b>{t}Please choose a service listed below.{/t}</b>
-<br>
-<br>
-<br>{t}Available services{/t} &nbsp;
+<br>{t}Service to add{/t} &nbsp;
 	<select name="ServiceName" >
 		{html_options options=$Services }
 	</select>
 {else}
 	<br>
-	{t}There are no more services available, if you think that there is a service missing. Please check your gosa configuration file.{/t}
+	{t}All available services are already in use.{/t}
 	<br>
 {/if}
+<br>
 <br>
 <br>
 <p class="seperator">

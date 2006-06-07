@@ -1,4 +1,4 @@
-<b>{t}Kerberos kadmin access{/t}</b> 
+<h2><img class="center" alt="" align="middle" src="images/rightarrow.png" /> {t}FAX database information{/t}</h2>
  <table summary="">
     <tr>
      <td>{t}FAX DB user{/t}</td>

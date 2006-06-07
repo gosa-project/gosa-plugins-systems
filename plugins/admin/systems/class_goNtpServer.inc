@@ -24,7 +24,7 @@ class goNtpServer extends plugin{
   function goNtpServer($config,$dn)
   {
     plugin::plugin($config,$dn);
-    $this->DisplayName = _("NTP Service");
+    $this->DisplayName = _("Time service");
     
     /* Load arrays */
     $tmp = array();

@@ -1,6 +1,5 @@
-<b>{t}LDAP Service{/t}</b> 
-
-<input type="text" style="width:70%" value="{$goLdapBase}" {$goLdapBaseACL} name="goLdapBase" id="goLdapBaseId">
+<h2><img class="center" alt="" align="middle" src="images/rightarrow.png" /> {t}LDAP service{/t}</h2>
+{t}Base{/t} <input type="text" size="80" value="{$goLdapBase}" {$goLdapBaseACL} name="goLdapBase" id="goLdapBaseId">
 
 <p class='seperator'>&nbsp;</p>
 <p>

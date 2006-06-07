@@ -49,6 +49,7 @@ class divListSystemService extends MultiSelectWindow
     $listhead = "<div style='background:#F0F0F9;padding:5px;'>".
     " <input class='center' type='image' align='middle' src='images/select_new_server.png' class='center' 
         name='addNewService' alt='"._("Add service")."' title='"._("Add new service")."'>&nbsp;".
+    " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;".
     " <input class='center' type='image' align='middle' src='images/status_start_all.png' class='center'
         name='startServices' alt='"._("Start all")."' title='"._("Start all services")."'>&nbsp;".
     " <input class='center' type='image' align='middle' src='images/status_stop_all.png'  class='center'   

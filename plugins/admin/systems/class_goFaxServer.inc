@@ -25,7 +25,7 @@ class goFaxServer extends plugin{
   function goFaxServer($config,$dn)
   {
     plugin::plugin($config,$dn);
-    $this->DisplayName = _("FAX database");
+    $this->DisplayName = _("FAX service");
   }
 
 

@@ -26,7 +26,7 @@ class goKrbServer extends plugin{
   function goKrbServer($config,$dn)
   {
     plugin::plugin($config,$dn);
-    $this->DisplayName = _("Kerberos kadmin access informations");
+    $this->DisplayName = _("Kerberos service");
   }
 
 

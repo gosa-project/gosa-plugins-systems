@@ -42,7 +42,7 @@ class goMailServer extends plugin{
   function goMailServer($config,$dn)
   {
     plugin::plugin($config,$dn);
-    $this->DisplayName = _("Postfix service");
+    $this->DisplayName = _("Mail service (SMTP)");
 
     $this->Actions = array( SERVICE_STOPPED=>SERVICE_STOPPED,
                             SERVICE_STARTED => SERVICE_STARTED,

@@ -23,7 +23,7 @@ class goSyslogServer extends plugin{
   function goSyslogServer($config,$dn)
   {
     plugin::plugin($config,$dn);
-    $this->DisplayName = _("Syslog service");
+    $this->DisplayName = _("Logging service");
   }
 
 

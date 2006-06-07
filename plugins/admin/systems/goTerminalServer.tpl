@@ -1,5 +1,4 @@
-<b>{t}Terminal Service{/t}</b>
-
+<h2><img class="center" alt="" align="middle" src="images/rightarrow.png" /> {t}Terminal service{/t}</h2>
 <table summary="">
     <tr>
      <td colspan=2>

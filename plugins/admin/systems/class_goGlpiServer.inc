@@ -27,7 +27,7 @@ class goGlpiServer extends plugin{
   function goGlpiServer($config,$dn)
   {
     plugin::plugin($config,$dn);
-    $this->DisplayName = _("Glpi database");
+    $this->DisplayName = _("Inventory database");
   }
 
 

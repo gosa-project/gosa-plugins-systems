@@ -28,7 +28,7 @@ class goFonServer extends plugin{
   function goFonServer($config,$dn)
   {
     plugin::plugin($config,$dn);
-    $this->DisplayName = _("Asterisk management");
+    $this->DisplayName = _("VoIP service");
   }
 
 

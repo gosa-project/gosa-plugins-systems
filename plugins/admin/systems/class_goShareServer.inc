@@ -28,7 +28,7 @@ class goShareServer extends plugin{
   {
     plugin::plugin($config,$dn);
 
-    $this->DisplayName = _("Shares");
+    $this->DisplayName = _("File service");
 
     $tmp =array();
     if(isset($this->attrs['goExportEntry'])){

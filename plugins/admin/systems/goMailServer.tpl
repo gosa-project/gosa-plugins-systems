@@ -1,8 +1,7 @@
-<img src='images/mail.png'><b>{t}Generic{/t}</b>
-<br><br>
+<h2><img class="center" alt="" align="middle" src="images/rightarrow.png" /> {t}Generic{/t}</h2>
 <table  style="width:100%;">
 	<tr>
-		<td width="50%">
+		<td width="50%" style="vertical-align:top">
 			<table >
 				<tr>
 					<td>{t}Visible full qualified hostname{/t}

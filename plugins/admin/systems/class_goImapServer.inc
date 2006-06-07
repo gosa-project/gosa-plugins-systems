@@ -46,7 +46,7 @@ class goImapServer extends plugin{
   {
     plugin::plugin($config,$dn);
   
-    $this->DisplayName = _("Cyrus service");
+    $this->DisplayName = _("IMAP/POP3 service");
 
     $this->Actions = array( SERVICE_STOPPED=>SERVICE_STOPPED,
                             SERVICE_STARTED => SERVICE_STARTED,

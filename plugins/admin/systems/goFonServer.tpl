@@ -1,3 +1,4 @@
+<h2><img class="center" alt="" align="middle" src="images/rightarrow.png" /> {t}VoIP database information{/t}</h2>
   <table summary="">
     <tr>
      <td>{t}Asterisk DB user{/t}</td>

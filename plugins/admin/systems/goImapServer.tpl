@@ -1,5 +1,4 @@
-<b>{t}Generic{/t}</b>
-<br>
+<h2><img class="center" alt="" align="middle" src="images/rightarrow.png" /> {t}Generic{/t}</h2>
 <table width="100%">
 	<tr>
 		<td style='width:50%;'>

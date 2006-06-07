@@ -1,5 +1,4 @@
-<b>{t}Glpi database{/t}</b>
-
+<h2><img class="center" alt="" align="middle" src="images/rightarrow.png" /> {t}GLPI database information{/t}</h2>
   <table summary="">
     <tr>
      <td>{t}Logging DB user{/t}</td>
