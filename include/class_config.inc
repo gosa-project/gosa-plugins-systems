@@ -391,12 +391,14 @@ class config  {
     $ldap->search ("(&(objectClass=goShareServer)(goExportEntry=*))");
     while ($attrs= $ldap->fetch()){
       for ($i= 0; $i<$attrs["goExportEntry"]["count"]; $i++){
-        $path= preg_replace ("/\s.*$/", "", $attrs["goExportEntry"][$i]);
+        if(!preg_match('/^[^|]+\|[^|]+\|NFS\|.*$/', $attrs["goExportEntry"][$i])){
+          continue;
+        }
+        $path= preg_replace ("/^[^|]+\|[^|]+\|[^|]+\|[^|]+\|([^|]+).*$/", '\1', $attrs["goExportEntry"][$i]);
         $tmp[]= $attrs["cn"][0].":$path";
       }
     }
     $this->data['SERVERS']['NFS']= $tmp;
-
 
     /* Load Terminalservers */
     $ldap->cd ($this->current['BASE']);
