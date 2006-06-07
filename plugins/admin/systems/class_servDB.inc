@@ -39,8 +39,11 @@ class servdb extends plugin
                          "goLogAdmin", "goLogPassword", "goFonAdmin", "goFonPassword",
                          "goFonAreaCode", "goFonCountryCode","goGlpiAdmin","goGlpiDatabase","goGlpiPassword");
   var $objectclasses= array("top", "goServer");
-  var $additionaloc= array(
-                         "goKrbServer" => array("goKrbRealm", "goKrbAdmin",
+  var $additionaloc= array("goImapServer" => array("goImapName", "goImapConnect",
+                                                "goImapAdmin", "goImapPassword",
+                                                "goImapSieveServer", 
+                                                "goImapSievePort"),
+                          "goKrbServer" => array("goKrbRealm", "goKrbAdmin",
                                                 "goKrbPassword"),
                           "goFaxServer" => array("goFaxAdmin", "goFaxPassword"),
                           "goLogDBServer" => array("goLogAdmin", "goLogPassword"),
@@ -136,7 +139,7 @@ class servdb extends plugin
     }
 
     /* All fields are marked as *must* */
-    if (1 == 0 && in_array("goImapServer", $this->objectclasses)){
+    if (in_array("goImapServer", $this->objectclasses)){
       foreach (array("goImapAdmin", "goImapName") as $attr){
         if ($this->$attr == "" || preg_match("/ /", $this->$attr)){
           $message[]= sprintf(_("The attribute '%s' is empty or contains invalid characters."), $attr);
