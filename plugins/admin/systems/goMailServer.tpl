@@ -1,10 +1,16 @@
 <img src='images/mail.png'><b>{t}Generic{/t}</b>
 <br><br>
-{t}Visible full qualified hostname{/t}&nbsp;<input type="text" name='postfixMyhostname' value='{$postfixMyhostname}' title='{t}The full qualified host name.{/t}'>
 <table  style="width:100%;">
 	<tr>
 		<td width="50%">
 			<table >
+				<tr>
+					<td>{t}Visible full qualified hostname{/t}
+					</td>
+					<td>
+						<input type="text" name='postfixMyhostname' value='{$postfixMyhostname}' title='{t}The full qualified host name.{/t}'>
+					</td>
+				</tr>
 				<tr>
 					<td>{t}Max mail header size{/t}
 					</td>
@@ -142,7 +148,8 @@
 {/if}
 <br>
 <select name="action" title='{t}{/t}' {if $is_new == "new"} disabled {/if}>
-	{html_options options=$Actions selected=$goMailServerStatus}	
+	<option value="none">&nbsp;</option>
+	{html_options options=$Actions}	
 </select>
 <input type='submit' name='ExecAction' title='{t}Set status{/t}' value='{t}Execute{/t}' {if $is_new == "new"} disabled {/if}>
 

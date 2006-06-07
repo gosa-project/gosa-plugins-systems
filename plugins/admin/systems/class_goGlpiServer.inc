@@ -93,6 +93,7 @@ class goGlpiServer extends plugin{
   /* Directly save new status flag */
   function setStatus($value)
   {
+    if($value == "none") return;
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->dn);
     $ldap->cat($this->dn,array("objectClass","goGlpiAdmin","goGlpiDatabase"));

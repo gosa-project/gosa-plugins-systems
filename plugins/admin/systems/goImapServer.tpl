@@ -77,7 +77,8 @@
 {/if}
 <br>
 <select name="action" title='{t}{/t}' {if $is_new =="new"} disabled {/if}>
-    {html_options options=$Actions selected=$goImapServerStatus}
+	<option value="none">&nbsp;</option>
+    {html_options options=$Actions}
 </select>
 <input type='submit' name='ExecAction' title='{t}Set status{/t}' value='{t}Execute{/t}' {if $is_new == "new"} disabled {/if}>
 

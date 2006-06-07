@@ -338,7 +338,7 @@ class goMailServer extends plugin{
 
     /* Create divList for translation tables */
     $divTranslation = new divSelectBox("TransportProtocols");
-    $divTranslation->SetHeight(110);
+    $divTranslation->SetHeight(90);
     foreach($this->postfixTransportTable as $key => $entry){
       $img = "";
 
@@ -365,7 +365,7 @@ class goMailServer extends plugin{
 
     /* Create divList for sender restrictions */
     $DivSenderRestrict = new divSelectBox("postfixSenderRestrictions");
-    $DivSenderRestrict->SetHeight(110);
+    $DivSenderRestrict->SetHeight(90);
     foreach($this->postfixSenderRestrictions as $key => $entry){
       $img ="";
 
@@ -393,7 +393,8 @@ class goMailServer extends plugin{
 
     /* Create divList for translation tables */
     $DivRecipientRestrict = new divSelectBox("postfixRecipientRestrictions");
-    $DivRecipientRestrict->SetHeight(110);
+    $DivRecipientRestrict->SetHeight(90);
+
     foreach($this->postfixRecipientRestrictions as $key => $entry){
       $img = "";
       if($key != 0){
@@ -571,6 +572,7 @@ class goMailServer extends plugin{
   /* Directly save new status flag */
   function setStatus($value)
   {
+    if($value == "none") return;
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->dn);
     $ldap->cat($this->dn,array("objectClass"));
