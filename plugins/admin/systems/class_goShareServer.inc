@@ -21,6 +21,8 @@ class goShareServer extends plugin{
   var $goShareServerStatus  = "";
   var $goExportEntry        = array();
   var $allow_mounts         = false;
+  var $mounts_to_remove     = array();
+  var $mounts_to_add        = array();
 
   function goShareServer($config,$dn)
   {
@@ -261,6 +263,56 @@ class goShareServer extends plugin{
 
   function deleteFromList($id){
     unset($this->goExportEntryList[$id]);
+  }
+
+   function process_mounts() {
+
+    $clip = "cn=" . $this->cn . ",ou=servers,ou=systems,";
+    $mountsdn = "cn=mounts," . substr($this->dn, strlen($clip));
+
+    $mounts = array(
+      "objectClass" => "container",
+      "cn" => "mounts"
+    );
+
+    # load data from mounts container
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cat($mountsdn, array('dn'));
+    $attrs = $ldap->fetch();
+
+    # mounts container not present yet, so we create it
+    if (count($attrs) == 0) {
+        $ldap->cd($mountsdn);
+        $ldap->add($mounts);
+        show_ldap_error($ldap->get_error(), _("Creating mount container failed"));
+        gosa_log("Mount container '$mountsdn' has been created");
+    }
+
+    # remove deleted mounts from the container
+    foreach ($this->mounts_to_remove as $entry) {
+      $mount=$this->returnMountEntry($entry);
+      $mountdn = "cn=".$mount["cn"].","."$mountsdn";
+
+      $ldap->cat($mountdn, array('dn'));
+      $attrs = $ldap->fetch();
+
+      if (count($attrs) != 0) {
+        $ldap->rmdir($mountdn);
+        show_ldap_error($ldap->get_error(), _("Removing mount container failed"));
+        gosa_log("Mount object '".$mountdn."' has been removed");
+      }
+    }
+
+    # add new mounts to the container
+    foreach ($this->mounts_to_add as $entry) {
+
+      $mount=$this->returnMountEntry($entry);
+      $mountdn = "cn=".$mount["cn"].","."$mountsdn";
+      $ldap->cd($mountdn);
+      $ldap->add($mount);
+      show_ldap_error($ldap->get_error(), _("Saving mount container failed"));
+      gosa_log("Mount object '".$mountdn."' has been added");
+    }
   }
 
 
