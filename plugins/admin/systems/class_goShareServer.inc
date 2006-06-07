@@ -1,0 +1,269 @@
+<?php
+
+class goShareServer extends plugin{
+
+  var $cli_summary      = "This plugin is used within the ServerService Pluign \nand indicates that this server supports shares.";
+  var $cli_description  = "Some longer text\nfor help";
+  var $cli_parameters   = array("eins" => "Eins ist toll", "zwei" => "Zwei ist noch besser");
+
+  /* This plugin only writes its objectClass */
+  var $objectclasses    = array("goShareServer");
+  var $attributes       = array("goShareServerStatus","goExportEntry");
+  var $StatusFlag       = "goShareServerStatus";
+
+  /* This class can't be assigned twice so it conflicts with itsself */
+  var $conflicts        = array("goShareServer");
+
+  var $DisplayName      = "";
+  var $dn               = NULL;
+  var $acl;
+
+  var $goShareServerStatus  = "";
+  var $goExportEntry        = array();
+  var $allow_mounts         = false;
+
+  function goShareServer($config,$dn)
+  {
+    plugin::plugin($config,$dn);
+
+    $this->DisplayName = _("Shares");
+
+    $tmp =array();
+    if(isset($this->attrs['goExportEntry'])){
+      if(isset($this->attrs['goExportEntry']['count'])){
+        for($i= 0; $i<$this->attrs['goExportEntry']['count']; $i++){
+          $entry= $this->attrs['goExportEntry'][$i];
+          $tmp[preg_replace('/\|.*$/', '', $entry)]= $entry;
+        }
+      }
+    } 
+    $this->goExportEntryList = $tmp;
+
+    $ldap = $this->config->get_ldap_link();
+    $avl_objectclasses = $ldap->get_objectclasses();
+    if (isset($avl_objectclasses["mount"])) {
+      $this->allow_mounts = true;
+    }
+  }
+
+
+  function execute()
+  { 
+    $smarty = get_smarty(); 
+
+
+    if((isset($_POST['DelNfsEnt']))&&(isset($_POST['goExportEntryList']))){
+      if($this->allow_mounts){
+        foreach($_POST['goExportEntryList'] as $entry){
+          $this->deleteFromMountList($this->goExportEntryList[$entry]);
+        }
+      }
+      foreach($_POST['goExportEntryList'] as $entry){
+        $this->deleteFromList($entry);
+      }
+    }
+
+    if(isset($_POST['NewNfsAdd'])){
+      $this->oldone = NULL;
+      $this->o_subWindow = new servnfs($this->config,$this->acl, $this->allow_mounts, $this->dn);
+      $this->dialog = true;
+    }
+
+    if((isset($_POST['NewNfsEdit']))&&(isset($_POST['goExportEntryList']))){
+      $entry = $this->goExportEntryList[$_POST['goExportEntryList'][0]];
+      $add_mount=isset($this->mounts_to_add[$entry]);
+      $this->oldone=$entry;
+      $this->o_subWindow = new servnfs($this->config,$this->acl,$this->allow_mounts,$this->dn,$entry,$add_mount);
+      $this->dialog = true;
+    }
+    if(isset($this->o_subWindow)){
+      $this->o_subWindow->save_object(TRUE);
+    }
+
+    /* Save NFS setup */
+    if(isset($_POST['NFSsave'])){
+      if(count($this->o_subWindow->check())>0){
+        foreach($this->o_subWindow->check() as $msg) {
+          print_red($msg);
+        }
+      }else{
+        $this->o_subWindow->save_object();
+        $newone = $this->o_subWindow->save();
+        $this->addToList($newone);
+        if($this->allow_mounts){
+          if($this->oldone) {
+            $this->deleteFromMountList($this->oldone);
+          }
+          if ($this->o_subWindow->should_create_mount()) {
+            $this->addToMountList($newone);
+          }
+        }
+        unset($this->o_subWindow);
+        $this->dialog = false;
+      }
+    }
+
+    /* Cancel NFS setup */
+    if(isset($_POST['NFScancel'])){
+      $this->oldone = NULL;
+      unset($this->o_subWindow);
+      $this->dialog = false;
+    }
+
+    /* Execute NFS setup dialog*/
+    if(isset($this->o_subWindow)){
+      return $this->o_subWindow->execute();
+    }
+
+
+
+
+
+    foreach($this->attributes as $attr){
+      $smarty->assign($attr,$this->$attr);
+      $smarty->assign($attr."ACL",chkacl($this->acl,$attr));
+    }
+    $tellSmarty= array();
+    ksort($this->goExportEntryList);
+    foreach($this->goExportEntryList as $name=>$values){
+      $tmp = split("\|",$values);
+      $tellSmarty[$name] = $tmp[0]." ".$tmp[4]." (".$tmp[2].")";
+    }
+    $smarty->assign("goExportEntry",array_keys($tellSmarty));
+    $smarty->assign("goExportEntryKeys",($tellSmarty));
+    $smarty->assign("goExportEntryACL", chkacl($this->acl, "goExportEntry"));
+
+
+    return($smarty->fetch(get_template_path("goShareServer.tpl",TRUE,dirname(__FILE__))));
+  }
+
+
+  function getListEntry()
+  {
+    $flag = $this->StatusFlag;
+    $fields['Status']     = $this->$flag;
+    $fields['Message']    = _("Shares");
+    $fields['AllowStart'] = true;
+    $fields['AllowStop']  = true;
+    $fields['AllowReset'] = true;
+    $fields['AllowRemove']= true;
+    $fields['AllowEdit']  = true;
+    return($fields);
+  }
+
+
+  function remove_from_parent()
+  {
+    plugin::remove_from_parent();
+    /* Check if this is a new entry ... add/modify */
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cat($this->dn,array("objectClass"));
+    if($ldap->count()){
+      $ldap->cd($this->dn);
+      $ldap->modify($this->attrs);
+    }else{
+      $ldap->cd($this->dn);
+      $ldap->add($this->attrs);
+    }
+    show_ldap_error($ldap->get_error());
+  }
+
+
+  function save()
+  {
+    plugin::save();
+
+    /* Arrays */
+    foreach (array("goExportEntryList"=>"goExportEntry") as $source => $destination){
+      $this->attrs[$destination]= array();
+      foreach ($this->$source as $element){
+        $this->attrs[$destination][]= $element;
+      }
+    }
+
+
+    /* Process netatalk mounts */
+    if($this->allow_mounts) {
+      $this->process_mounts();
+    }
+
+
+    /* Check if this is a new entry ... add/modify */
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cat($this->dn,array("objectClass"));
+    if($ldap->count()){
+      $ldap->cd($this->dn);
+      $ldap->modify($this->attrs);
+    }else{
+      $ldap->cd($this->dn);
+      $ldap->add($this->attrs);
+    }
+    show_ldap_error($ldap->get_error());
+  }
+
+
+  /* Directly save new status flag */
+  function setStatus($value)
+  {
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd($this->dn);
+    $ldap->cat($this->dn,array("objectClass"));
+
+    if($ldap->count()){
+      $attrs =array();
+      foreach(array() as $req) {
+        if(!isset($attrs[$req])){
+          if(empty($this->$req)){
+            print_red(sprintf(_("The required attribute '%s' is not set."),$req));
+          }else{
+            $attrs[$req] = $this->$req;
+          }
+        }else{
+          $attrs[$req] = $attrs[$req][0];
+        }
+      }
+
+      $tmp = $ldap->fetch();
+      for($i = 0; $i < $tmp['objectClass']['count']; $i ++){
+        $attrs['objectClass'][] = $tmp['objectClass'][$i];
+      }    
+      if(!in_array("goShareServer",$attrs['objectClass'])){
+        $attrs['objectClass'][] = "goShareServer";
+      }
+
+      $flag = $this->StatusFlag;
+      $attrs[$flag] = $value;
+      $this->$flag = $value;
+      $ldap->modify($attrs);
+      show_ldap_error($ldap->get_error());
+    }    
+  }
+
+
+  function check()
+  { 
+    $message = plugin::check();
+    return($message);
+  }
+
+
+  function save_object()
+  {
+    if(isset($_POST['goShareServerPosted'])){
+      plugin::save_object();
+    }
+  } 
+
+  function addToList($entry){
+    $key =  key($entry);
+    $this->goExportEntryList[$key]=$entry[$key];
+  }
+
+  function deleteFromList($id){
+    unset($this->goExportEntryList[$id]);
+  }
+
+
+}
+// vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
+?>
