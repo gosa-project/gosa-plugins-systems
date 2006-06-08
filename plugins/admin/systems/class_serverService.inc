@@ -165,7 +165,7 @@ class ServerService extends plugin
 
 
     /* Abort dialog */
-    if(isset($_POST['SaveServiceAdd'])){
+    if((isset($_POST['SaveServiceAdd'])) && (!empty($_POST['ServiceName']))){
       $serv = $_POST['ServiceName'];    
       $this->plugins[$serv]->is_account = true;
       $this->dialog  = $this->plugins[$serv];

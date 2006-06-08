@@ -475,7 +475,7 @@ class goMailServer extends plugin{
   {
     $flag = $this->StatusFlag;
     $fields['Status']     = $this->$flag;
-    $fields['Message']    = _("Postfix"). " - ".$this->postfixMyhostname;
+    $fields['Message']    = _("Postfix")." ["._("configured for")." ".$this->postfixMyhostname."] ";
     $fields['AllowStart'] = true;
     $fields['AllowStop']  = true;
     $fields['AllowRestart'] = true;

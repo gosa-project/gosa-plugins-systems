@@ -12,6 +12,7 @@
 <br>
 <br>{t}Service to add{/t} &nbsp;
 	<select name="ServiceName" >
+		<option value="" >&nbsp;</option>
 		{html_options options=$Services }
 	</select>
 {else}
