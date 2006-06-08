@@ -118,28 +118,25 @@ class goNtpServer extends plugin{
   function setStatus($value)
   {
     if($value == "none") return;
+    if(!$this->initially_was_account) return;
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->dn);
     $ldap->cat($this->dn,array("objectClass"));
-      
     if($ldap->count()){
-      $attrs =array();
+
       $tmp = $ldap->fetch();
       for($i = 0; $i < $tmp['objectClass']['count']; $i ++){
         $attrs['objectClass'][] = $tmp['objectClass'][$i];
-      }    
-      if(!in_array("goNtpServer",$attrs['objectClass'])){
-        $attrs['objectClass'][] = "goNtpServer";
       }
-
       $flag = $this->StatusFlag;
       $attrs[$flag] = $value;
       $this->$flag = $value;
       $ldap->modify($attrs);
       show_ldap_error($ldap->get_error());
-    }    
+    }
   }
-  
+
+
   function check(){ return array();}
   
 function save_object(){;}

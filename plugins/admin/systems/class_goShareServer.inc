@@ -208,38 +208,22 @@ class goShareServer extends plugin{
   function setStatus($value)
   {
     if($value == "none") return;
+    if(!$this->initially_was_account) return;
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->dn);
     $ldap->cat($this->dn,array("objectClass"));
-
     if($ldap->count()){
-      $attrs =array();
-      foreach(array() as $req) {
-        if(!isset($attrs[$req])){
-          if(empty($this->$req)){
-            print_red(sprintf(_("The required attribute '%s' is not set."),$req));
-          }else{
-            $attrs[$req] = $this->$req;
-          }
-        }else{
-          $attrs[$req] = $attrs[$req][0];
-        }
-      }
 
       $tmp = $ldap->fetch();
       for($i = 0; $i < $tmp['objectClass']['count']; $i ++){
         $attrs['objectClass'][] = $tmp['objectClass'][$i];
-      }    
-      if(!in_array("goShareServer",$attrs['objectClass'])){
-        $attrs['objectClass'][] = "goShareServer";
       }
-
       $flag = $this->StatusFlag;
       $attrs[$flag] = $value;
       $this->$flag = $value;
       $ldap->modify($attrs);
       show_ldap_error($ldap->get_error());
-    }    
+    }
   }
 
 

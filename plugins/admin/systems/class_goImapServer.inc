@@ -72,6 +72,7 @@ class goImapServer extends plugin{
     }
     $smarty->assign("Actions",$this->Actions);
     $smarty->assign("is_new",$this->dn);
+    $smarty->assign("is_acc",$this->initially_was_account);
     return($smarty->fetch(get_template_path("goImapServer.tpl",TRUE,dirname(__FILE__))));
   }
 
@@ -126,32 +127,15 @@ class goImapServer extends plugin{
   function setStatus($value)
   {
     if($value == "none") return;
+    if(!$this->initially_was_account) return;
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->dn);
-    $ldap->cat($this->dn,array("objectClass","goImapName","goImapConnect","goImapAdmin","goImapPassword"));
-
+    $ldap->cat($this->dn,array("objectClass"));
     if($ldap->count()){
-
-      $attrs =array();
-      foreach(array("goImapName","goImapConnect","goImapAdmin","goImapPassword") as $required){
-        if(!isset($attrs[$required])){
-          if(empty($this->$required)){
-            print_red(_("Can't set new status while there are blank option within generic configuration part."));
-            return;
-          }else{
-            $attrs[$required] = $this->$required;
-          }
-        }else{
-          $attrs[$required] = $attrs[$required][0];
-        }
-      }
 
       $tmp = $ldap->fetch();
       for($i = 0; $i < $tmp['objectClass']['count']; $i ++){
         $attrs['objectClass'][] = $tmp['objectClass'][$i];
-      }
-      if(!in_array("goImapServer",$attrs['objectClass'])){
-        $attrs['objectClass'][] = "goImapServer";
       }
       $flag = $this->StatusFlag;
       $attrs[$flag] = $value;

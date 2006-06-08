@@ -71,16 +71,22 @@
 </table>
 <p class='seperator'>&nbsp;</p>
 <br>
+<h2><img class="center" alt="" src="images/rocket.png" align="middle"> Action</h2>
 {if $is_new == "new"}
     {t}The server must be saved before you can use the status flag.{/t}
+{elseif !$is_acc}
+    {t}The service must be saved before you can use the status flag.{/t}
 {/if}
 <br>
-<h2><img class="center" alt="" src="images/rocket.png" align="middle"> Action</h2>
-<select name="action" title='{t}{/t}' {if $is_new =="new"} disabled {/if}>
+<select name="action" title='{t}{/t}' 
+	{if $is_new =="new" || !$is_acc} disabled {/if}
+>
 	<option value="none">&nbsp;</option>
     {html_options options=$Actions}
 </select>
-<input type='submit' name='ExecAction' title='{t}Set status{/t}' value='{t}Execute{/t}' {if $is_new == "new"} disabled {/if}>
+<input type='submit' name='ExecAction' title='{t}Set status{/t}' value='{t}Execute{/t}' 
+	{if $is_new == "new" | !$is_acc} disabled {/if}
+>
 
 <p class="seperator">&nbsp;</p>
 <p>

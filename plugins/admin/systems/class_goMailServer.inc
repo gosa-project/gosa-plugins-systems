@@ -46,8 +46,7 @@ class goMailServer extends plugin{
 
     $this->Actions = array( SERVICE_STOPPED=>SERVICE_STOPPED,
                             SERVICE_STARTED => SERVICE_STARTED,
-                            SERVICE_RESTARTED=>SERVICE_RESTARTED, 
-                            "mailqueue"=>"mailqueue");
+                            SERVICE_RESTARTED=>SERVICE_RESTARTED); 
 
     /* Fill  RestrictionFilters   TransportProtocols  from external hooks */
     $str = $this->config->data['TABS']['SERVERSERVICE'];
@@ -426,6 +425,7 @@ class goMailServer extends plugin{
 
 
     $smarty->assign("is_new",                       $this->dn);
+    $smarty->assign("is_acc",                       $this->initially_was_account);
     $smarty->assign("TransportProtocols",           $this->TransportProtocols);
     $smarty->assign("Actions",                      $this->Actions);
     $smarty->assign("RestrictionFilters",           $this->RestrictionFilters);
@@ -573,21 +573,16 @@ class goMailServer extends plugin{
   function setStatus($value)
   {
     if($value == "none") return;
+    if(!$this->initially_was_account) return;
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->dn);
     $ldap->cat($this->dn,array("objectClass"));
-
     if($ldap->count()){
 
-      $attrs =array();
       $tmp = $ldap->fetch();
       for($i = 0; $i < $tmp['objectClass']['count']; $i ++){
         $attrs['objectClass'][] = $tmp['objectClass'][$i];
       }
-      if(!in_array("goMailServer",$attrs['objectClass'])){
-        $attrs['objectClass'][] = "goMailServer";
-      }
-
       $flag = $this->StatusFlag;
       $attrs[$flag] = $value;
       $this->$flag = $value;
