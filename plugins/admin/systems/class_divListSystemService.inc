@@ -69,32 +69,44 @@ class divListSystemService extends MultiSelectWindow
   function setEntries($list)
   {
     foreach($list as $name => $entry){
+      $tmp[$name] = $entry['Message']; 
+    }
+
+    natcasesort($tmp);
+    $tmp2 = array();
+    foreach($tmp as $name => $value){
+      $tmp2[$name] = $list[$name];
+    }
+
+    foreach($tmp2 as $name => $entry){
  
       switch($entry['Status']){
-        case ''      : $str ="";break;
+        case ''      : $str ="&nbsp;";break;
         case SERVICE_STOPPED  : $str ="<img src='images/status_stopped.png' title='"._("Stopped")."'>"; break;
         case SERVICE_STARTED  : $str ="<img src='images/status_running.png' title='"._("Started")."'>"; break;
         case SERVICE_RESTARTED : $str ="<img src='images/status_restarting.png' title='"._("Restarting")."' alt='R'>"; break;
         default: $str= "<img src='images/select_user.png' alt='".$entry['Status']."' title='"._("User status")." : ".$entry['Status']."'>";
       }
 
+      $WasAccount = $this->parent->plugins[$name] -> initially_was_account;    
+  
       $field1 = array("string" => $str ,"attach" => "style='width:20px;'");
       $field2 = array("string" => $entry['Message'] );
 
       $actions ="";
-      if($entry['AllowStart']){
+      if($entry['AllowStart'] && $WasAccount){
         $actions .= "&nbsp;<input type='image' name='StartSingleService_".$name."' src='images/status_start.png'
                             title='"._("Start service")."'>";
       }else{
         $actions .= "&nbsp;<img src='images/empty' width='16' alt=''>";
       }
-      if($entry['AllowStart']){
+      if($entry['AllowStart'] && $WasAccount){
         $actions .= "&nbsp;<input type='image' name='StopSingleService_".$name."' src='images/status_stop.png'
                             title='"._("Stop service")."'>";
       }else{
         $actions .= "&nbsp;<img src='images/empty' width='16' alt=''>";
       }
-      if($entry['AllowStart']){
+      if($entry['AllowStart'] && $WasAccount){
         $actions .= "&nbsp;<input type='image' name='RestartSingleService_".$name."' src='images/status_restart.png'
                             title='"._("Restart service")."'>";
       }else{

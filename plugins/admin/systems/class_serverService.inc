@@ -271,7 +271,7 @@ class ServerService extends plugin
     
     if($service == ALL_SERVICES){
       foreach($this->plugins as $name => $obj){
-        if($this->plugins[$name]->is_account){
+        if($this->plugins[$name]->initially_was_account && $this->plugins[$name]->is_account){
           $this->plugins[$name]->setStatus($action);
         }
       }
