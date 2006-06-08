@@ -1,7 +1,7 @@
 <h2><img class="center" alt="" align="middle" src="images/rightarrow.png" /> {t}GLPI database information{/t}</h2>
   <table summary="">
     <tr>
-     <td>{t}Logging DB user{/t}</td>
+     <td>{t}Logging DB user{/t}{$must}</td>
      <td><input name="goGlpiAdmin" id="goGlpiAdmin" size=30 maxlength=60 {$goGlpiAdminACL}
 value="{$goGlpiAdmin}"></td>
     </tr>
@@ -11,7 +11,7 @@ value="{$goGlpiAdmin}"></td>
 value="{$goGlpiPassword}"></td>
     </tr>
     <tr>
-     <td>{t}Database{/t}</td>
+     <td>{t}Database{/t}{$must}</td>
      <td><input name="goGlpiDatabase" id="goGlpiDatabase" size=30 maxlength=60 {$goGlpiDatabaseACL}
 value="{$goGlpiDatabase}"></td>
     </tr>

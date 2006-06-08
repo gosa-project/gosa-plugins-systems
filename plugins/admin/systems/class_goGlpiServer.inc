@@ -116,10 +116,11 @@ class goGlpiServer extends plugin{
   function check()
   { 
     $message = plugin::check();
-    foreach(array("goGlpiAdmin","goGlpiDatabase") as $attr){
-      if(empty($this->$attr)){
-        $message[]= sprintf(_("The attribute '%s' is empty or contains invalid characters."), $attr);
-      }
+    if(empty($this->goGlpiAdmin)){
+      $message[]= _("The attribute user is empty or contains invalid characters.");
+    }
+    if(empty($this->goGlpiDatabase)){
+      $message[]= _("The attribute database is empty or contains invalid characters.");
     }
     return($message);
   }
