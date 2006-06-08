@@ -47,7 +47,7 @@ class goSyslogServer extends plugin{
     $fields['AllowStop']  = true;
     $fields['AllowRestart'] = true;
     $fields['AllowRemove']= true;
-    $fields['AllowEdit']  = true;
+    $fields['AllowEdit']  = false;
     return($fields);
   }
 
