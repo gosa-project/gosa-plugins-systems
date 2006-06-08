@@ -408,7 +408,8 @@ objectclass (1.3.6.1.4.1.10098.1.2.1.27 NAME 'goServer' SUP top AUXILIARY
 # LogDB Server description
 objectclass (1.3.6.1.4.1.10098.1.2.1.28 NAME 'goLogDBServer' SUP top AUXILIARY
 	DESC 'Log DB server description (v2.4)'
-	MUST ( cn $ goLogAdmin $ goLogPassword $ goLogDBServerStatus ))
+	MUST ( cn $ goLogAdmin $ goLogPassword )
+	MAY	 ( goLogDBServerStatus ))
 
 # Fon Server description
 objectclass (1.3.6.1.4.1.10098.1.2.1.29 NAME 'goFonServer' SUP top AUXILIARY
