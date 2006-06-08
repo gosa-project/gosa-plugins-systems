@@ -113,6 +113,9 @@ class goLdapServer extends plugin{
   function check()
   { 
     $message = plugin::check();
+    if(empty($this->goLdapBase)){
+      $message[] = _("The given base is empty or contains invalid characters.");
+    }
     return($message);
   }
   
