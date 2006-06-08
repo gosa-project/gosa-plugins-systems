@@ -79,6 +79,7 @@ class goMailServer extends plugin{
 
     /* Get postfix my networks */
     $this->postfixMyNetworks = array();
+    $tmp = array();
     if(isset($this->attrs['postfixMyNetworks'][0])){
       $tmp = split(",",$this->attrs['postfixMyNetworks'][0]);
       foreach($tmp as $str){
@@ -106,6 +107,7 @@ class goMailServer extends plugin{
 
 
     /* Get transport tables */
+    $tmp = array();
     $this->postfixTransportTable = array();
     if(isset($this->attrs['postfixTransportTable'])){
       $tmp = array();
@@ -131,6 +133,7 @@ class goMailServer extends plugin{
    
 
     /* Get sender restrictions */
+    $tmp = array();
     $this->postfixSenderRestrictions = array();
     if(isset($this->attrs['postfixSenderRestrictions'])){
       unset($this->attrs['postfixSenderRestrictions']['count']);
@@ -154,6 +157,7 @@ class goMailServer extends plugin{
 
  
     /* Get sender restrictions */
+    $tmp = array();
     $this->postfixRecipientRestrictions = array();
     if(isset($this->attrs['postfixRecipientRestrictions'])){
       unset($this->attrs['postfixRecipientRestrictions']['count']);
