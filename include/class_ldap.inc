@@ -1130,6 +1130,14 @@ function gen_xls ($dn, $filter= "(objectClass=*)", $attributes= array('*'), $rec
 	  return $objectclasses;
   }
 
+  function create_snapshot($dn)
+  {
+    if ($this->dn_exists($dn) && $dn != ""){
+      $data= preg_replace('/^dn:.*\n/', '', $this->gen_ldif($dn));
+      echo base64_encode(gzcompress($data, 6));
+    }
+  }
+
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

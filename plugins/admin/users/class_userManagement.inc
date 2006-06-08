@@ -699,6 +699,7 @@ class userManagement extends plugin
 
     /* Generate userlist */
     $ldap= $this->config->get_ldap_link(TRUE);
+
     if ($SubSearch){
       $ListTemp =  get_list($filter, $this->ui->subtreeACL, $base,
                             array("uid", "givenName", "sn", "objectClass"), GL_SUBSEARCH | GL_SIZELIMIT);

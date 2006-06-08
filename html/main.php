@@ -135,6 +135,11 @@ if ($config->data['MAIN']['LANG'] == ""){
   $lang= $config->data['MAIN']['LANG'];
 }
 
+/* Preset current main base */
+if(!isset($_SESSION['CurrentMainBase'])){
+  $_SESSION['CurrentMainBase']= get_base_from_people($ui->dn);
+}
+
 $lang.=".UTF-8";
 putenv("LANGUAGE=");
 putenv("LANG=$lang");

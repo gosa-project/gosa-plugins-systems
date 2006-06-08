@@ -1078,9 +1078,8 @@ class posixAccount extends plugin
 
   }
 
- function reload()
+  function reload()
   {
-
     /* Set base for all searches */
     $base     = $_SESSION['CurrentMainBase'];
     $base     = $base;
