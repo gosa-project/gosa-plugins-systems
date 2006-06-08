@@ -149,7 +149,7 @@ class ServerService extends plugin
 
     /* Abort dialog */
     if(isset($_POST['SaveService'])){
-
+      $this->dialog->save_object();
       $msgs = $this->dialog->check();
       if(count($msgs)){
         foreach($msgs as $msg){
@@ -157,6 +157,10 @@ class ServerService extends plugin
         }
       }else{
         $this->plugins[$this->current] = $this->dialog;
+        $tmp  = get_object_vars($this->dialog);
+        foreach($tmp as $name => $value){
+          $this->plugins[$this->current]->$name = $value;
+        }
         $this->current = "";
         $this->dialog = NULL;
         $this->backup = NULL;
