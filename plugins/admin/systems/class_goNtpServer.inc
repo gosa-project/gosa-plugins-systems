@@ -48,7 +48,7 @@ class goNtpServer extends plugin{
     }
 
     /* Deleting an Entry, is a bit more complicated than adding one*/
-    if(isset($_POST['DelNTPEnt'])) {
+    if((isset($_POST['DelNTPEnt'])) && (isset($_POST['goTimeSource']))) {
       foreach ($_POST['goTimeSource'] as $entry){
         if (isset($this->goTimeSource[$entry])){
           unset($this->goTimeSource[$entry]);

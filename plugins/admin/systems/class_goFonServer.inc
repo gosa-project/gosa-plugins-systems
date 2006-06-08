@@ -117,10 +117,14 @@ class goFonServer extends plugin{
   function check()
   { 
     $message = plugin::check();
-    foreach (array("goFonAdmin", "goFonAreaCode", "goFonCountryCode") as $attr){
-      if ($this->$attr == "" || preg_match("/ /", $this->$attr)){
-        $message[]= sprintf(_("The attribute '%s' is empty or contains invalid characters."), $attr);
-      }
+    if (empty($this->goFonAdmin)){
+      $message[]= sprintf(_("The attribute DB user is empty or contains invalid characters."), $attr);
+    }
+    if (empty($this->goFonAreaCode)){
+      $message[]= sprintf(_("The attribute local dial prefix is empty or contains invalid characters."), $attr);
+    }
+    if (empty($this->goFonCountryCode)){
+      $message[]= sprintf(_("The attribute country dial prefix is empty or contains invalid characters."), $attr);
     }
     return($message);
   }

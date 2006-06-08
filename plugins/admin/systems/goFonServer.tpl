@@ -1,7 +1,7 @@
 <h2><img class="center" alt="" align="middle" src="images/rightarrow.png" /> {t}VoIP database information{/t}</h2>
   <table summary="">
     <tr>
-     <td>{t}Asterisk DB user{/t}</td>
+     <td>{t}Asterisk DB user{/t}{$must}</td>
      <td><input name="goFonAdmin" size=30 maxlength=60 id="goFonAdmin" {$goFonAdminACL} value="{$goFonAdmin}"></td>
     </tr>
     <tr>
@@ -9,11 +9,11 @@
      <td><input type=password name="goFonPassword" id="goFonPassword" size=30 maxlength=60 {$goFonPasswordACL}   value="{$goFonPassword}"></td>
     </tr>
     <tr>
-     <td>{t}Country dial prefix{/t}</td>
+     <td>{t}Country dial prefix{/t}{$must}</td>
      <td><input name="goFonCountryCode" size=10 maxlength=30 id="goFonCountryCode" {$goFonCountryCodeACL}   value="{$goFonCountryCode}"></td>
     </tr>
     <tr>
-     <td>{t}Local dial prefix{/t}</td>
+     <td>{t}Local dial prefix{/t}{$must}</td>
      <td><input name="goFonAreaCode" size=10 maxlength=30 id="goFonAreaCode" {$goFonAreaCodeACL}   value="{$goFonAreaCode}"></td>
     </tr>
    </table>
