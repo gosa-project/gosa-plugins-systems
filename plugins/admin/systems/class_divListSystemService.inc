@@ -83,27 +83,32 @@ class divListSystemService extends MultiSelectWindow
 
       $actions ="";
       if($entry['AllowStart']){
-        $actions .= "&nbsp;<input type='image' name='StartSingleService_".$name."' src='images/status_start.png'>";
+        $actions .= "&nbsp;<input type='image' name='StartSingleService_".$name."' src='images/status_start.png'
+                            title='"._("Start service")."'>";
       }else{
         $actions .= "&nbsp;<img src='images/empty' width='16' alt=''>";
       }
       if($entry['AllowStart']){
-        $actions .= "&nbsp;<input type='image' name='StopSingleService_".$name."' src='images/status_stop.png'>";
+        $actions .= "&nbsp;<input type='image' name='StopSingleService_".$name."' src='images/status_stop.png'
+                            title='"._("Stop service")."'>";
       }else{
         $actions .= "&nbsp;<img src='images/empty' width='16' alt=''>";
       }
       if($entry['AllowStart']){
-        $actions .= "&nbsp;<input type='image' name='RestartSingleService_".$name."' src='images/status_restart.png'>";
+        $actions .= "&nbsp;<input type='image' name='RestartSingleService_".$name."' src='images/status_restart.png'
+                            title='"._("Restart service")."'>";
       }else{
         $actions .= "&nbsp;<img src='images/empty' width='16' alt=''>";
       }
       if($entry['AllowEdit']){
-        $actions .= "&nbsp;<input type='image' name='EditSingleService_".$name."' src='images/edit.png'>";
+        $actions .= "&nbsp;<input type='image' name='EditSingleService_".$name."' src='images/edit.png'
+                            title='"._("Edit service")."'>";
       }else{
         $actions .= "&nbsp;<img src='images/empty' width='16' alt=''>";
       }
       if($entry['AllowRemove']){
-        $actions .= "&nbsp;<input type='image' name='RemoveSingleService_".$name."' src='images/edittrash.png'>";
+        $actions .= "&nbsp;<input type='image' name='RemoveSingleService_".$name."' src='images/edittrash.png'
+                            title='"._("Remove service")."'>";
       }else{
         $actions .= "&nbsp;<img src='images/empty' width='16' alt=''>";
       }
