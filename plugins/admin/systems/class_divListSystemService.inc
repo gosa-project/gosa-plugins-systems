@@ -18,7 +18,7 @@ class divListSystemService extends MultiSelectWindow
     $this->SetSummary(_("Installed services"));
 
     /* Result page will look like a headpage */
-    $this->SetHeadpageMode();
+//    $this->SetHeadpageMode();
     $this->SetInformation(_("This menu allows you to add, remove and configure the properties of a specific service."));
 
     /* Disable buttonsm */

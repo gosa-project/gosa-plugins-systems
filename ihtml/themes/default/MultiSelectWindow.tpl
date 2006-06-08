@@ -1,8 +1,8 @@
 	<table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding=4>
-	<tr>
+		<tr>
 	 		<td style="vertical-align:top; width:50%;">
-			<div class="contentboxh">
-				<p class="contentboxh">
+			<div class="contentboxh" {if !$is_headpage}  style="height:20px;" {/if}>
+				<p class="contentboxh" {if !$is_headpage} style="font-size:12px;" {/if}>
 				 	{$Summary} {$hint} 
 				</p>
 			</div>
@@ -58,6 +58,7 @@
   		</td>
 		{else}
   		<td style="vertical-align:top;">
+			{$UserBox1}
    			<div class="contentboxh" style="border-bottom:1px solid #B0B0B0;height:20px;">
     			<p class="contentboxh">
 					<img src="{$infoimage}" align="right" alt="[i]"><font style='font-size:13px;'>{t}Information{/t}</font>
@@ -66,7 +67,9 @@
    			<div class="contentboxb" style="padding:5px;">
 				{$Information}
    			</div>
+			{$UserBox2}
    			<br>
+			{if !$Skip_Filter_Part }
    			<div class="contentboxh" style="height:20px;">
     			<p class="contentboxh">
 					<img src="{$launchimage}" align="right" alt="[F]"><font style='font-size:13px;'>{t}Filters{/t}</font>
@@ -89,9 +92,10 @@
 				{/if}
 			{$regexes}
 			{$apply}
+			{$UserBox3}
+            {/if}
    			</div>
   		</td>
-
 		{/if}
 	</tr>
 </table>
