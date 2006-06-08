@@ -38,31 +38,31 @@
 		<td style="border-left:1px solid #A0A0A0;vertical-align:top;">
 			<table>
 				<tr>
-					<td>{t}Start IMAP service{/t}
-					</td>
 					<td>
 						<input type='checkbox' name='cyrusImap' value=1 {if $cyrusImap} checked {/if} {$cyrusImapACL}> 
 					</td>
+					<td>{t}Start IMAP service{/t}
+					</td>
 				</tr>
 				<tr>
-					<td>{t}Start IMAP SSL service{/t}
-					</td>
 					<td>
 						<input type='checkbox' name='cyrusImapSSL' value=1 {if $cyrusImapSSL} checked {/if} {$cyrusImapSSLACL}> 
 					</td>
+					<td>{t}Start IMAP SSL service{/t}
+					</td>
 				</tr>
 				<tr>
-					<td>{t}Start POP3 service{/t}
-					</td>
 					<td>
 						<input type='checkbox' name='cyrusPop3' value=1 {if $cyrusPop3} checked {/if} {$cyrusPop3ACL}> 
 					</td>
+					<td>{t}Start POP3 service{/t}
+					</td>
 				</tr>
 				<tr>
-					<td>{t}Start POP3 SSL service{/t}
-					</td>
 					<td>
 						<input type='checkbox' name='cyrusPop3SSL' value=1 {if $cyrusPop3SSL} checked {/if} {$cyrusPop3SSLACL}> 
+					</td>
+					<td>{t}Start POP3 SSL service{/t}
 					</td>
 				</tr>
 			</table>
