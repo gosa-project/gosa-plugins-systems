@@ -55,7 +55,7 @@ class divListSystemService extends MultiSelectWindow
     " <input class='center' type='image' align='middle' src='images/status_stop_all.png'  class='center'   
         name='stopServices' alt='"._("Stop service")."' title='"._("Stop all services")."'>&nbsp;".
     " <input class='center' type='image' align='middle' src='images/status_restart_all.png'    class='center'
-        name='resetServices' alt='"._("Reset service")."' title='"._("Reset all services")."'>&nbsp;".
+        name='restartServices' alt='"._("Restart service")."' title='"._("Restart all services")."'>&nbsp;".
     "</div>";
     $this->SetListHeader($listhead);
   }
@@ -74,7 +74,7 @@ class divListSystemService extends MultiSelectWindow
         case ''      : $str ="";break;
         case SERVICE_STOPPED  : $str ="<img src='images/status_stopped.png' title='"._("Stopped")."'>"; break;
         case SERVICE_STARTED  : $str ="<img src='images/status_running.png' title='"._("Started")."'>"; break;
-        case SERVICE_RESETTED : $str ="<img src='images/status_restarting.png' title='"._("Restarting")."' alt='R'>"; break;
+        case SERVICE_RESTARTED : $str ="<img src='images/status_restarting.png' title='"._("Restarting")."' alt='R'>"; break;
         default: $str= "<img src='images/select_user.png' alt='".$entry['Status']."' title='"._("User status")." : ".$entry['Status']."'>";
       }
 
@@ -93,7 +93,7 @@ class divListSystemService extends MultiSelectWindow
         $actions .= "&nbsp;<img src='images/empty' width='16' alt=''>";
       }
       if($entry['AllowStart']){
-        $actions .= "&nbsp;<input type='image' name='ResetSingleService_".$name."' src='images/status_restart.png'>";
+        $actions .= "&nbsp;<input type='image' name='RestartSingleService_".$name."' src='images/status_restart.png'>";
       }else{
         $actions .= "&nbsp;<img src='images/empty' width='16' alt=''>";
       }

@@ -69,7 +69,7 @@ class goNtpServer extends plugin{
     $fields['Message']    = _("NTP service");
     $fields['AllowStart'] = true;
     $fields['AllowStop']  = true;
-    $fields['AllowReset'] = true;
+    $fields['AllowRestart'] = true;
     $fields['AllowRemove']= true;
     $fields['AllowEdit']  = true;
     return($fields);

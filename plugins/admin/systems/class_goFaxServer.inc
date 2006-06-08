@@ -47,7 +47,7 @@ class goFaxServer extends plugin{
     $fields['Message']    = _("FAX database configuration");
     $fields['AllowStart'] = true;
     $fields['AllowStop']  = true;
-    $fields['AllowReset'] = true;
+    $fields['AllowRestart'] = true;
     $fields['AllowRemove']= true;
     $fields['AllowEdit']  = true;
     return($fields);

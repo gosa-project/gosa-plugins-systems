@@ -50,7 +50,7 @@ class goImapServer extends plugin{
 
     $this->Actions = array( SERVICE_STOPPED=>SERVICE_STOPPED,
                             SERVICE_STARTED => SERVICE_STARTED,
-                            SERVICE_RESETTED=>SERVICE_RESETTED,
+                            SERVICE_RESTARTED=>SERVICE_RESTARTED,
                             "repair_database"=>_("Repair database"));
     
   }
@@ -82,7 +82,7 @@ class goImapServer extends plugin{
     $fields['Message']    = _("Cyrus service");
     $fields['AllowStart'] = true;
     $fields['AllowStop']  = true;
-    $fields['AllowReset'] = true;
+    $fields['AllowRestart'] = true;
     $fields['AllowRemove']= true;
     $fields['AllowEdit']  = true;
     return($fields);

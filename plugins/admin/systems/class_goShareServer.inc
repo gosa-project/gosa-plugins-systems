@@ -147,7 +147,7 @@ class goShareServer extends plugin{
     $fields['Message']    = _("Shares");
     $fields['AllowStart'] = true;
     $fields['AllowStop']  = true;
-    $fields['AllowReset'] = true;
+    $fields['AllowRestart'] = true;
     $fields['AllowRemove']= true;
     $fields['AllowEdit']  = true;
     return($fields);

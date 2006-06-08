@@ -48,7 +48,7 @@ class goLogDBServer extends plugin{
     $fields['Message']    = _("Asterisk management");
     $fields['AllowStart'] = true;
     $fields['AllowStop']  = true;
-    $fields['AllowReset'] = true;
+    $fields['AllowRestart'] = true;
     $fields['AllowRemove']= true;
     $fields['AllowEdit']  = true;
     return($fields);

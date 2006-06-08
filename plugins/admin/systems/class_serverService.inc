@@ -2,11 +2,11 @@
 
 define("START_SERVICE",1);
 define("STOP_SERVICE",2);
-define("RESET_SERVICE",3);
+define("RESTART_SERVICE",3);
 
 define("SERVICE_STOPPED",_("Stop"));
 define("SERVICE_STARTED",_("Start"));
-define("SERVICE_RESETTED",_("Restart"));
+define("SERVICE_RESTARTED",_("Restart"));
 
 define("ALL_SERVICES",100);
 
@@ -60,12 +60,12 @@ class ServerService extends plugin
     $PossiblePosts = array("addNewService"  => "", 
                            "startServices"  => "",
                            "stopServices"   => "",
-                           "resetServices"  => "",
+                           "restartServices"  => "",
                            "removeServices" => "",
 
                            "StartSingleService"  => "/^StartSingleService_(.*)_[xy]$/",
                            "StopSingleService"   => "/^StopSingleService_(.*)_[xy]$/",
-                           "ResetSingleService"  => "/^ResetSingleService_(.*)_[xy]$/",
+                           "RestartSingleService"  => "/^RestartSingleService_(.*)_[xy]$/",
                            "RemoveSingleService" => "/^RemoveSingleService_(.*)_[xy]$/",
                            "EditSingleService"   => "/^EditSingleService_(.*)_[xy]$/");
 
@@ -88,10 +88,9 @@ class ServerService extends plugin
     /* Handle state changes for services */
     $map =  array( "startServices"          => array("type" => START_SERVICE , "service" => ALL_SERVICES),
                       "stopServices"          => array("type" => STOP_SERVICE  , "service" => ALL_SERVICES),
-                      "resetServices"         => array("type" => RESET_SERVICE , "service" => ALL_SERVICES),
-                      "StartSingleService"    => array("type" => START_SERVICE , "service" => $s_entry),
+                      "restartServices"         => array("type" => RESTART_SERVICE , "service" => ALL_SERVICES),                      "StartSingleService"    => array("type" => START_SERVICE , "service" => $s_entry),
                       "StopSingleService"     => array("type" => STOP_SERVICE , "service" => $s_entry),
-                      "ResetSingleService"    => array("type" => RESET_SERVICE , "service" => $s_entry));
+                      "RestartSingleService"    => array("type" => RESTART_SERVICE , "service" => $s_entry));
     if(isset($map[$s_action])){
       $type     = $map[$s_action]['type'];
       $service  = $map[$s_action]['service'];
@@ -263,8 +262,8 @@ class ServerService extends plugin
       $action = SERVICE_STARTED;
     }elseif($method== STOP_SERVICE){
       $action = SERVICE_STOPPED;
-    }elseif($method == RESET_SERVICE){
-      $action = SERVICE_RESETTED;
+    }elseif($method == RESTART_SERVICE){
+      $action = SERVICE_RESTARTED;
     }else{
       print_red(sprintf(_("The specified method '%s' can't executed for services."),$action));
       return;

@@ -48,7 +48,7 @@ class goKrbServer extends plugin{
     $fields['Message']    = _("Kerberos kadmin access informations");
     $fields['AllowStart'] = true;
     $fields['AllowStop']  = true;
-    $fields['AllowReset'] = true;
+    $fields['AllowRestart'] = true;
     $fields['AllowRemove']= true;
     $fields['AllowEdit']  = true;
     return($fields);

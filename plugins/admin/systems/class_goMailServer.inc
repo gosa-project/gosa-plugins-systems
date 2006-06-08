@@ -46,7 +46,7 @@ class goMailServer extends plugin{
 
     $this->Actions = array( SERVICE_STOPPED=>SERVICE_STOPPED,
                             SERVICE_STARTED => SERVICE_STARTED,
-                            SERVICE_RESETTED=>SERVICE_RESETTED, 
+                            SERVICE_RESTARTED=>SERVICE_RESTARTED, 
                             "mailqueue"=>"mailqueue");
 
     /* Fill  RestrictionFilters   TransportProtocols  from external hooks */
@@ -478,7 +478,7 @@ class goMailServer extends plugin{
     $fields['Message']    = _("Postfix"). " - ".$this->postfixMyhostname;
     $fields['AllowStart'] = true;
     $fields['AllowStop']  = true;
-    $fields['AllowReset'] = true;
+    $fields['AllowRestart'] = true;
     $fields['AllowRemove']= true;
     $fields['AllowEdit']  = true;
     return($fields);
