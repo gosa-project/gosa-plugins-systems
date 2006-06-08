@@ -66,6 +66,7 @@ class goCupsServer extends plugin{
       $ldap->add($this->attrs);
     }
     show_ldap_error($ldap->get_error());
+    $this->handle_post_events("remove");
   }
 
 
@@ -82,6 +83,12 @@ class goCupsServer extends plugin{
       $ldap->cd($this->dn);
       $ldap->add($this->attrs);
     }
+    if($this->initially_was_account){
+      $this->handle_post_events("modify");
+    }else{
+      $this->handle_post_events("add");
+    }
+
     show_ldap_error($ldap->get_error());
   }
 

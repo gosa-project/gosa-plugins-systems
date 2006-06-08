@@ -69,6 +69,7 @@ class goTerminalServer extends plugin{
       $ldap->add($this->attrs);
     }
     show_ldap_error($ldap->get_error());
+    $this->handle_post_events("remove");
   }
 
 
@@ -91,6 +92,11 @@ class goTerminalServer extends plugin{
       $ldap->add($this->attrs);
     }
     show_ldap_error($ldap->get_error());
+    if($this->initially_was_account){
+      $this->handle_post_events("modify");
+    }else{
+      $this->handle_post_events("add");
+    }
   }
 
 
