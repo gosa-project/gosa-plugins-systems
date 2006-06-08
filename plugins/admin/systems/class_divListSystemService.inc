@@ -68,6 +68,7 @@ class divListSystemService extends MultiSelectWindow
 
   function setEntries($list)
   {
+    $tmp = array();
     foreach($list as $name => $entry){
       $tmp[$name] = $entry['Message']; 
     }

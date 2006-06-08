@@ -114,8 +114,11 @@ class goFaxServer extends plugin{
   function check()
   { 
     $message = plugin::check();
-    if ($this->goFaxAdmin == "" || preg_match("/ /", $this->goFaxAdmin)){
-      $message[]= sprintf(_("The attribute '%s' is empty or contains invalid characters."), "goFaxAdmin");
+    if (empty($this->goFaxAdmin)){
+      $message[]= _("The attribute user is empty or contains invalid characters.");
+    }
+    if (empty($this->goFaxPassword)){
+      $message[]= _("The attribute password is empty or contains invalid characters.");
     }
     return($message);
   }
