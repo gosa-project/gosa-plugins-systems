@@ -5,7 +5,7 @@
      <td><input name="goFonAdmin" size=30 maxlength=60 id="goFonAdmin" {$goFonAdminACL} value="{$goFonAdmin}"></td>
     </tr>
     <tr>
-     <td>{t}Password{/t}</td>
+     <td>{t}Password{/t}{$must}</td>
      <td><input type=password name="goFonPassword" id="goFonPassword" size=30 maxlength=60 {$goFonPasswordACL}   value="{$goFonPassword}"></td>
     </tr>
     <tr>
