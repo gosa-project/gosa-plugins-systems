@@ -295,7 +295,7 @@ class departmentManagement extends plugin
       $display= $this->deptabs->execute();
       if (!$this->deptabs->by_object[$this->deptabs->current]->dialog){
         $display.= "<p style=\"text-align:right\">\n";
-        $display.= "<input type=submit name=\"edit_finish\" value=\""._("Save")."\">\n";
+        $display.= "<input type=submit name=\"edit_finish\" style=\"width:80px\" value=\""._("Ok")."\">\n";
         $display.= "&nbsp;\n";
         $display.= "<input type=submit name=\"edit_cancel\" value=\""._("Cancel")."\">\n";
         $display.= "</p>";

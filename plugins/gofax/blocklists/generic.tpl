@@ -82,8 +82,12 @@
 
 
 <p class="plugbottom">
-  <input type=submit name="edit_finish" value="{t}Save{/t}">
+  <input type=submit name="edit_finish" style="width:80px" value="{t}Ok{/t}">
   &nbsp;
+  {if $apply eq "1"}
+  <input type=submit name="edit_apply" value="{t}Apply{/t}">
+  &nbsp;
+  {/if}
   <input type=submit name="edit_cancel" value="{t}Cancel{/t}">
 </p>
 

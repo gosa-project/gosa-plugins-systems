@@ -502,19 +502,22 @@ class faiManagement extends plugin
 		 * If it was possible to save it, remove dialog object. 
 		 * If it wasn't possible, show errors and keep dialog.
 		 */
-		if((isset($_POST['edit_finish'])) && (isset($this->dialog->config))){
+		if((isset($_POST['edit_finish']) || isset($_POST['edit_apply'])) && (isset($this->dialog->config))){
 			$this->dialog->save_object();
-			if(count($this->dialog->check())!=0){
-				foreach($this->dialog->check() as $msg){
+      $msgs= $this->dialog->check();
+			if(count($msgs)!=0){
+				foreach($msgs as $msg){
 					print_red($msg);
 				}
 			}else{
-				del_lock ($this->dn);
 				$this->dialog->save();
-				unset($this->dialog);
-				$this->dialog=NULL;
-				$this->is_dialog=false;
-				unset($_SESSION['objectinfo']);
+        if (!isset($_POST['edit_apply'])){
+          del_lock ($this->dn);
+          unset($this->dialog);
+          $this->dialog=NULL;
+          $this->is_dialog=false;
+          unset($_SESSION['objectinfo']);
+        }
 			}
 		}
 
@@ -536,8 +539,12 @@ class faiManagement extends plugin
 				
 			}elseif(((isset($this->dialog->current))&&(!$this->dialog->by_object[$this->dialog->current]->is_dialog))){
 				$display.= "<p style=\"text-align:right\">\n";
-				$display.= "<input type=\"submit\" name=\"edit_finish\" value=\""._("Save")."\">\n";
+				$display.= "<input type=\"submit\" name=\"edit_finish\" style=\"width:80px\" value=\""._("Ok")."\">\n";
 				$display.= "&nbsp;\n";
+        if ($this->dn != "new"){
+          $display.= "<input type=submit name=\"edit_apply\" value=\""._("Apply")."\">\n";
+          $display.= "&nbsp;\n";
+        }
 				$display.= "<input type=\"submit\" name=\"edit_cancel\" value=\""._("Cancel")."\">\n";
 				$display.= "</p>";
 			}elseif(!isset($this->dialog->current)){

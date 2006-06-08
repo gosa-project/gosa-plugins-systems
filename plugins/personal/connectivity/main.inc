@@ -115,7 +115,7 @@ if (!$remove_lock){
   if ($in_edit_mode){
     $display.="<div align='right'>";
     if (isset($_SESSION['edit'])){
-      $display.= "<input type=submit name=\"edit_finish\" value=\""._("Save")."\">\n";
+      $display.= "<input type=submit name=\"edit_finish\" style=\"width:80px\" value=\""._("Ok")."\">\n";
       $display.= "&nbsp;";
       $display.= "<input type=submit name=\"edit_cancel\" value=\""._("Cancel")."\">\n";
       $info= "<img class=\"center\" alt=\"\" align=\"middle\" src=\"".get_template_path('images/closedlock.png').

@@ -274,7 +274,7 @@ class ogroupManagement extends plugin
      ****************/
 
     /* Finish button has been pressed */
-    if ((isset($_POST['edit_finish'])) && (isset($this->ogroup->config)) ){
+    if ((isset($_POST['edit_finish']) || isset($_POST['edit_apply'])) && (isset($this->ogroup->config)) ){
 
       /* Check tabs, will feed message array */
       $message= $this->ogroup->check();
@@ -286,16 +286,17 @@ class ogroupManagement extends plugin
         $this->ogroup->save();
         gosa_log ("Object group'".$this->dn."' has been saved");
 
-        /* Group has been saved successfully, remove lock from
-           LDAP. */
-        if ($this->dn != "new"){
-          del_lock ($this->dn);
+        if (!isset($_POST['edit_apply'])){
+          /* Group has been saved successfully, remove lock from
+             LDAP. */
+          if ($this->dn != "new"){
+            del_lock ($this->dn);
+          }
+
+          unset ($this->ogroup);
+          $this->ogroup= NULL;
+          unset ($_SESSION['objectinfo']);
         }
-
-        unset ($this->ogroup);
-        $this->ogroup= NULL;
-        unset ($_SESSION['objectinfo']);
-
       } else {
         /* Ok. There seem to be errors regarding to the tab data,
            show message and continue as usual. */
@@ -328,8 +329,12 @@ class ogroupManagement extends plugin
       /* Don't show buttons if tab dialog requests this */
       if (!$this->ogroup->by_object[$this->ogroup->current]->dialog){
         $display.= "<p style=\"text-align:right\">\n";
-        $display.= "<input type=submit name=\"edit_finish\" value=\""._("Save")."\">\n";
+        $display.= "<input type=submit name=\"edit_finish\" style=\"width:80px\" value=\""._("Ok")."\">\n";
         $display.= "&nbsp;\n";
+        if ($this->dn != "new"){
+          $display.= "<input type=submit name=\"edit_apply\" value=\""._("Apply")."\">\n";
+          $display.= "&nbsp;\n";
+        }
         $display.= "<input type=submit name=\"edit_cancel\" value=\""._("Cancel")."\">\n";
         $display.= "</p>";
       }

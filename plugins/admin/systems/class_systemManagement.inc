@@ -386,7 +386,7 @@ class systems extends plugin
     /* Finish user edit is triggered by the tabulator dialog, so
        the user wants to save edited data. Check and save at this
        point. */
-    if ((isset($_POST['edit_finish'])) && (isset($this->systab->config))){
+    if ((isset($_POST['edit_finish']) || isset($_POST['edit_apply'])) && (isset($this->systab->config))){
 
       /* Check tabs, will feed message array */
       $message= $this->systab->check();
@@ -428,15 +428,17 @@ class systems extends plugin
           $ldap->cd($this->config->current['BASE']);
         }
 
-        /* Terminal has been saved successfully, remove lock from
-           LDAP. */
-        if ($this->dn != "new"){
-          del_lock ($this->dn);
-        }
+        if (!isset($_POST['edit_apply'])){
+          /* Terminal has been saved successfully, remove lock from
+             LDAP. */
+          if ($this->dn != "new"){
+            del_lock ($this->dn);
+          }
 
-        unset ($this->systab);
-        $this->systab= NULL;
-        unset($_SESSION['objectinfo']);
+          unset ($this->systab);
+          $this->systab= NULL;
+          unset($_SESSION['objectinfo']);
+        }
       } else {
         /* Ok. There seem to be errors regarding to the tab data,
            show message and continue as usual. */
@@ -473,8 +475,12 @@ class systems extends plugin
       /* Don't show buttons if tab dialog requests this */
       if ((isset($this->systab->by_object))&&(!$this->systab->by_object[$this->systab->current]->dialog)){
         $display.= "<p style=\"text-align:right\">\n";
-        $display.= "<input type=\"submit\" name=\"edit_finish\" value=\""._("Save")."\">\n";
+        $display.= "<input type=\"submit\" name=\"edit_finish\" style=\"width:80px\" value=\""._("Ok")."\">\n";
         $display.= "&nbsp;\n";
+        if ($this->dn != "new"){
+          $display.= "<input type=submit name=\"edit_apply\" value=\""._("Apply")."\">\n";
+          $display.= "&nbsp;\n";
+        }
         $display.= "<input type=\"submit\" name=\"edit_cancel\" value=\""._("Cancel")."\">\n";
         $display.= "</p>";
       }

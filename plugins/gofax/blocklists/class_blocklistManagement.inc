@@ -221,7 +221,7 @@ class blocklist extends plugin
      ***************/
 
     /* What about finish? */
-    if ((isset($_POST['edit_finish'])) && (!empty($this->dn))){
+    if ((isset($_POST['edit_finish']) || isset($_POST['edit_apply'])) && (!empty($this->dn))){
       $message= $this->check();
       $this->remove_lock();
 
@@ -235,9 +235,12 @@ class blocklist extends plugin
 
         $this->save ();
         gosa_log ("Blocklist object'".$this->dn."' has been saved");
-        $this->dn= "";
-        del_lock ($this->ui->dn);
-        unset($_SESSION['objectinfo']);
+      
+        if (!isset($_POST['edit_apply'])){
+          $this->dn= "";
+          del_lock ($this->ui->dn);
+          unset($_SESSION['objectinfo']);
+        }
       } else {
         /* Errors found, show message */
         show_errors ($message);
@@ -293,9 +296,11 @@ class blocklist extends plugin
       if ($this->dn == "new" || preg_match ("/,ou=incoming,/", $this->dn)){
         $smarty->assign("selectmode", "");
         $smarty->assign("mode", "");
+        $smarty->assign("apply", "0");
       } else {
         $smarty->assign("selectmode", "disabled");
         $smarty->assign("mode", "readonly");
+        $smarty->assign("apply", "1");
       }
       foreach(array("cn", "description", "type", "goFaxBlocklist") as $val){
         $smarty->assign("$val", $this->$val);

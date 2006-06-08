@@ -160,7 +160,7 @@ class groupManagement extends plugin
     /* Finish group edit is triggered by the tabulator dialog, so
        the user wants to save edited data. Check and save at this
        point. */
-    if ((isset($_POST['edit_finish'])) && (isset($this->grouptab->config)) ){
+    if ((isset($_POST['edit_finish']) || isset($_POST['edit_apply'])) && (isset($this->grouptab->config)) ){
 
       /* Check tabs, will feed message array 
          Save, or display error message? */
@@ -171,17 +171,18 @@ class groupManagement extends plugin
         $this->grouptab->save();
         gosa_log ("Group object'".$this->dn."' has been saved");
 
-        /* Group has been saved successfully, remove lock from LDAP. */
-        if ($this->dn != "new"){
-          del_lock ($this->dn);
+        if (!isset($_POST['edit_apply'])){
+          /* Group has been saved successfully, remove lock from LDAP. */
+          if ($this->dn != "new"){
+            del_lock ($this->dn);
+          }
+
+          /* There's no page reload so we have to read new users at this point. */
+          //$this->reload ();
+          unset ($this->grouptab);
+          $this->grouptab= NULL;
+          unset ($_SESSION['objectinfo']);
         }
-
-        /* There's no page reload so we have to read new users at this point. */
-        //$this->reload ();
-        unset ($this->grouptab);
-        $this->grouptab= NULL;
-        unset ($_SESSION['objectinfo']);
-
       } else {
         /* Ok. There seem to be errors regarding to the tab data,
            show message and continue as usual. */
@@ -323,8 +324,12 @@ class groupManagement extends plugin
       /* Don't show buttons if tab dialog requests this */
       if (!$this->grouptab->by_object[$this->grouptab->current]->dialog){
         $display.= "<p style=\"text-align:right\">\n";
-        $display.= "<input type=submit name=\"edit_finish\" value=\""._("Save")."\">\n";
+        $display.= "<input type=submit name=\"edit_finish\" style=\"width:80px\" value=\""._("Ok")."\">\n";
         $display.= "&nbsp;\n";
+        if ($this->dn != "new"){
+          $display.= "<input type=submit name=\"edit_apply\" value=\""._("Apply")."\">\n";
+          $display.= "&nbsp;\n";
+        }
         $display.= "<input type=submit name=\"edit_cancel\" value=\""._("Cancel")."\">\n";
         $display.= "</p>";
       }

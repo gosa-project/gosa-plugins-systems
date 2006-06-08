@@ -197,7 +197,7 @@ class phoneConferenceManagment extends plugin
      ***************/
   
     /* Edit finished, check and save changes */
-    if ((isset($_POST['edit_finish'])) && (isset($this->conftab->config))){
+    if ((isset($_POST['edit_finish']) || isset($_POST['edit_apply'])) && (isset($this->conftab->config))){
       /* Check tabs, will feed message array */
       $this->conftab->last= $this->conftab->current;
       $this->conftab->save_object();
@@ -210,8 +210,10 @@ class phoneConferenceManagment extends plugin
         }
         gosa_log ("goFonConference object '".$this->dn."' has been saved");
 
-        if ($this->dn != "new"){
-          del_lock ($this->dn);
+        if (!isset($_POST['edit_apply'])){
+          if ($this->dn != "new"){
+            del_lock ($this->dn);
+          }
         }
 
         $this->conftab->save ();
@@ -236,8 +238,12 @@ class phoneConferenceManagment extends plugin
       /* Don't show buttons if tab dialog requests this */
       if (!$this->conftab->by_object[$this->conftab->current]->dialog){
         $display.= "<p style=\"text-align:right\">\n";
-        $display.= "<input type=\"submit\" name=\"edit_finish\" value=\""._("Save")."\">\n";
+        $display.= "<input type=\"submit\" name=\"edit_finish\" style=\"width:80px\" value=\""._("Ok")."\">\n";
         $display.= "&nbsp;\n";
+        if ($this->dn != "new"){
+          $display.= "<input type=submit name=\"edit_apply\" value=\""._("Apply")."\">\n";
+          $display.= "&nbsp;\n";
+        }
         $display.= "<input type=\"submit\" name=\"edit_cancel\" value=\""._("Cancel")."\">\n";
         $display.= "</p>";
       }

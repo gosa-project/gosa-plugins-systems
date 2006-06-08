@@ -371,7 +371,7 @@ class userManagement extends plugin
     /* Finish user edit is triggered by the tabulator dialog, so
        the user wants to save edited data. Check and save at this
        point. */
-    if ((isset($_POST['edit_finish'])) && (isset($this->usertab->config))){
+    if ((isset($_POST['edit_finish']) || isset($_POST['edit_apply'])) && (isset($this->usertab->config))){
 
       /* Check tabs, will feed message array */
       $this->usertab->last= $this->usertab->current;
@@ -397,19 +397,21 @@ class userManagement extends plugin
         }
         gosa_log ("User object '".$this->dn."' has been saved");
 
-        /* User has been saved successfully, remove lock from LDAP. */
-        if ($this->dn != "new"){
-          del_lock ($this->dn);
-        }
+        if (!isset($_POST['edit_apply'])){
+          /* User has been saved successfully, remove lock from LDAP. */
+          if ($this->dn != "new"){
+            del_lock ($this->dn);
+          }
 
-        /* In case of new users, ask for a password, skip this for templates */
-        if (($set_pass || $this->usertab->password_change_needed()) && !$this->is_template){
-          return($smarty->fetch(get_template_path('password.tpl', TRUE)));
-        }
+          /* In case of new users, ask for a password, skip this for templates */
+          if (($set_pass || $this->usertab->password_change_needed()) && !$this->is_template){
+            return($smarty->fetch(get_template_path('password.tpl', TRUE)));
+          }
 
-        unset ($this->usertab);
-        $this->usertab= NULL;
-        unset ($_SESSION['objectinfo']);
+          unset ($this->usertab);
+          $this->usertab= NULL;
+          unset ($_SESSION['objectinfo']);
+        }
       } else {
         /* Ok. There seem to be errors regarding to the tab data,
            show message and continue as usual. */
@@ -620,8 +622,12 @@ class userManagement extends plugin
       /* Don't show buttons if tab dialog requests this */
       if (!$this->usertab->by_object[$this->usertab->current]->dialog){
         $display.= "<p style=\"text-align:right\">\n";
-        $display.= "<input type=submit name=\"edit_finish\" value=\""._("Save")."\">\n";
+        $display.= "<input type=submit name=\"edit_finish\" style=\"width:80px\" value=\""._("Ok")."\">\n";
         $display.= "&nbsp;\n";
+        if ($this->dn != "new"){
+          $display.= "<input type=submit name=\"edit_apply\" value=\""._("Apply")."\">\n";
+          $display.= "&nbsp;\n";
+        }
         $display.= "<input type=submit name=\"edit_cancel\" value=\""._("Cancel")."\">\n";
         $display.= "</p>";
       }
