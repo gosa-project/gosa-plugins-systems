@@ -115,15 +115,16 @@ class goKrbServer extends plugin{
   function check()
   { 
     $message = plugin::check();
-    foreach (array("goKrbAdmin", "goKrbRealm") as $attr){
-        if ($this->$attr == "" || preg_match("/ /", $this->$attr)){
-          $message[]= sprintf(_("The attribute '%s' is empty or contains invalid characters."), $attr);
-        }
-      }
-      /* goKrbPassword is a must field, if goKrbServer is used as objectClass */
-      if ($this->goKrbPassword == "" ){
-        $message[]= sprintf(_("The specified kerberos password is empty."), $attr);
-      }
+    /* goKrbPassword is a must field, if goKrbServer is used as objectClass */
+    if (empty($this->goKrbPassword)){
+      $message[]= sprintf(_("The specified kerberos password is empty."), $attr);
+    }
+    if (empty($this->goKrbAdmin)){
+      $message[]= sprintf(_("The specified kerberos admin is empty."), $attr);
+    }
+    if (empty($this->goKrbRealm)){
+      $message[]= sprintf(_("The specified kerberos realm is empty."), $attr);
+    }
 
     return($message);
   }

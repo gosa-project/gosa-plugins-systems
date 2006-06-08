@@ -1,15 +1,15 @@
 <h2><img class="center" alt="" align="middle" src="images/rightarrow.png" /> {t}Kerberos kadmin access{/t}</h2>
   <table summary="">
     <tr>
-     <td>{t}Kerberos Realm{/t}</td>
+     <td>{t}Kerberos Realm{/t}{$must}</td>
      <td><input name="goKrbRealm" id="goKrbRealm" size=30 maxlength=60 {$goKrbRealmACL} value="{$goKrbRealm}"></td>
     </tr>
     <tr>
-     <td>{t}Admin user{/t}</td>
+     <td>{t}Admin user{/t}{$must}</td>
      <td><input name="goKrbAdmin" id="goKrbAdmin" size=30 maxlength=60 {$goKrbAdminACL} value="{$goKrbAdmin}"></td>
     </tr>
     <tr>
-     <td>{t}Password{/t}</td>
+     <td>{t}Password{/t}{$must}</td>
      <td><input type=password name="goKrbPassword" id="goKrbPassword" size=30 maxlength=60 {$goKrbPasswordACL} value="{$goKrbPassword}"></td>
     </tr>
    </table>
