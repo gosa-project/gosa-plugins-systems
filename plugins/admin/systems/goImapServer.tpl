@@ -4,31 +4,31 @@
 		<td style='width:50%;'>
 			<table summary="">
 				<tr>
-					<td>{t}Server identifier{/t}
+					<td>{t}Server identifier{/t}{$must}
 					</td>
 					<td><input name="goImapName" id="goImapName" size=40 maxlength=60 {$goImapNameACL} value="{$goImapName}" >
 					</td>
 				</tr>
 				<tr>
-					<td>{t}Connect URL{/t}
+					<td>{t}Connect URL{/t}{$must}
 					</td>
 					<td><input name="goImapConnect" id="goImapConnect" size=40 maxlength=60 {$goImapConnectACL} value="{$goImapConnect}" >
 					</td>
 				</tr>
 				<tr>
-					<td>{t}Admin user{/t}
+					<td>{t}Admin user{/t}{$must}
 					</td>
 					<td><input name="goImapAdmin" id="goImapAdmin" size=30 maxlength=60 {$goImapAdminACL} value="{$goImapAdmin}" >
 					</td>
 				</tr>
 				<tr>
-					<td>{t}Password{/t}
+					<td>{t}Password{/t}{$must}
 					</td>
 					<td><input type=password name="goImapPassword" id="goImapPassword" size=30 maxlength=60 {$goImapPasswordACL} value="{$goImapPassword}" >
 					</td>
 				</tr>
 				<tr>
-					<td>{t}Sieve port{/t}
+					<td>{t}Sieve port{/t}{$must}
 					</td>
 					<td><input name="goImapSievePort" id="goImapSievePort" size=10 maxlength=30 {$goImapSievePortACL} value="{$goImapSievePort}">
 					</td>
