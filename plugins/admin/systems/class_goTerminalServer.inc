@@ -21,8 +21,8 @@ class goTerminalServer extends plugin{
   var $goTerminalServerStatus  = "";
   var $goXdmcpIsEnabled        = false;  
   var $goFontPath              = "";
- 
- 
+
+
   function goTerminalServer($config,$dn)
   {
     plugin::plugin($config,$dn);
@@ -79,7 +79,7 @@ class goTerminalServer extends plugin{
     if(!$this->goXdmcpIsEnabled){
       $this->attrs['goXdmcpIsEnabled'] = "0";
     }
-  
+
     /* Check if this is a new entry ... add/modify */
     $ldap = $this->config->get_ldap_link();
     $ldap->cat($this->dn,array("objectClass"));
@@ -113,6 +113,7 @@ class goTerminalServer extends plugin{
       $this->$flag = $value;
       $ldap->modify($attrs);
       show_ldap_error($ldap->get_error());
+      $this->action_hook();
     }
   }
 
@@ -126,7 +127,7 @@ class goTerminalServer extends plugin{
 
     return($message);
   }
-  
+
 
   function save_object()
   {
@@ -138,7 +139,39 @@ class goTerminalServer extends plugin{
         $this->goXdmcpIsEnabled = false;
       }
     }
-  }  
+  } 
+
+  function action_hook($add_attrs= array())
+  {
+    /* Find postcreate entries for this class */
+    $command= search_config($this->config->data['MENU'], get_class($this), "ACTION_HOOK");
+    if ($command == "" && isset($this->config->data['TABS'])){
+      $command= search_config($this->config->data['TABS'], get_class($this), "ACTION_HOOK");
+    }
+    if ($command != ""){
+      /* Walk through attribute list */
+      foreach ($this->attributes as $attr){
+        if (!is_array($this->$attr)){
+          $command= preg_replace("/%$attr/", $this->$attr, $command);
+        }
+      }
+      $command= preg_replace("/%dn/", $this->dn, $command);
+      /* Additional attributes */
+      foreach ($add_attrs as $name => $value){
+        $command= preg_replace("/%$name/", $value, $command);
+      }
+      if (check_command($command)){
+        @DEBUG (DEBUG_SHELL, __LINE__, __FUNCTION__, __FILE__,
+            $command, "Execute");
+
+        exec($command);
+      } else {
+        $message= sprintf(_("Command '%s', specified as ACTION_HOOK for plugin '%s' doesn't seem to exist."), $command, get_class($this));
+        print_red ($message);
+      }
+    }
+  }
+
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

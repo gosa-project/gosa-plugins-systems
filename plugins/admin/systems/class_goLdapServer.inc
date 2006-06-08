@@ -1,7 +1,7 @@
 <?php
 
 class goLdapServer extends plugin{
-	
+
   var $cli_summary      = "This plugin is used within the ServerService Pluign \nand indicates that this server has goLdapServer defined.";
   var $cli_description  = "Some longer text\nfor help";
   var $cli_parameters   = array("eins" => "Eins ist toll", "zwei" => "Zwei ist noch besser");
@@ -10,7 +10,7 @@ class goLdapServer extends plugin{
   var $objectclasses    = array("goLdapServer");
   var $attributes       = array("goLdapServerStatus","goLdapBase");
   var $StatusFlag       = "goLdapServerStatus";
- 
+
   /* This class can't be assigned twice so it conflicts with itsself */
   var $conflicts        = array("goLdapServer");
 
@@ -20,7 +20,7 @@ class goLdapServer extends plugin{
 
   var $goLdapServerStatus  = "";
   var $goLdapBase          = ""; 
- 
+
   function goLdapServer($config,$dn)
   {
     plugin::plugin($config,$dn);
@@ -106,10 +106,11 @@ class goLdapServer extends plugin{
       $this->$flag = $value;
       $ldap->modify($attrs);
       show_ldap_error($ldap->get_error());
+      $this->action_hook();
     }
   }
 
-  
+
   function check()
   { 
     $message = plugin::check();
@@ -118,14 +119,46 @@ class goLdapServer extends plugin{
     }
     return($message);
   }
-  
+
 
   function save_object()
   {
     if(isset($_POST['goLdapServerPosted'])){
       plugin::save_object();
     }
-  }  
+  } 
+
+  function action_hook($add_attrs= array())
+  {
+    /* Find postcreate entries for this class */
+    $command= search_config($this->config->data['MENU'], get_class($this), "ACTION_HOOK");
+    if ($command == "" && isset($this->config->data['TABS'])){
+      $command= search_config($this->config->data['TABS'], get_class($this), "ACTION_HOOK");
+    }
+    if ($command != ""){
+      /* Walk through attribute list */
+      foreach ($this->attributes as $attr){
+        if (!is_array($this->$attr)){
+          $command= preg_replace("/%$attr/", $this->$attr, $command);
+        }
+      }
+      $command= preg_replace("/%dn/", $this->dn, $command);
+      /* Additional attributes */
+      foreach ($add_attrs as $name => $value){
+        $command= preg_replace("/%$name/", $value, $command);
+      }
+      if (check_command($command)){
+        @DEBUG (DEBUG_SHELL, __LINE__, __FUNCTION__, __FILE__,
+            $command, "Execute");
+
+        exec($command);
+      } else {
+        $message= sprintf(_("Command '%s', specified as ACTION_HOOK for plugin '%s' doesn't seem to exist."), $command, get_class($this));
+        print_red ($message);
+      }
+    }
+  }
+
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
