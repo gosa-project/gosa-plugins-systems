@@ -75,6 +75,11 @@ class goTerminalServer extends plugin{
   function save()
   {
     plugin::save();
+
+    if(!$this->goXdmcpIsEnabled){
+      $this->attrs['goXdmcpIsEnabled'] = "0";
+    }
+  
     /* Check if this is a new entry ... add/modify */
     $ldap = $this->config->get_ldap_link();
     $ldap->cat($this->dn,array("objectClass"));

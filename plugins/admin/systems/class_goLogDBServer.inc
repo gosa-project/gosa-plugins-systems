@@ -45,7 +45,7 @@ class goLogDBServer extends plugin{
   {
     $flag = $this->StatusFlag;
     $fields['Status']     = $this->$flag;
-    $fields['Message']    = _("Asterisk management");
+    $fields['Message']    = _("Logging database");
     $fields['AllowStart'] = true;
     $fields['AllowStop']  = true;
     $fields['AllowRestart'] = true;
