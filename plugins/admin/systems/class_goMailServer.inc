@@ -246,7 +246,7 @@ class goMailServer extends plugin{
       $this->postfixMyNetworks[base64_encode($str)] = $str;
     }
 
-    if((isset($_POST['DelpostfixMyNetworks'])) && (count($_POST['Select_postfixMyNetworks']))){
+    if((isset($_POST['DelpostfixMyNetworks'])) && isset($_POST['Select_postfixMyNetworks']) &&(count($_POST['Select_postfixMyNetworks']))){
       foreach($_POST['Select_postfixMyNetworks'] as $str ){
         unset($this->postfixMyNetworks[$str]);
       }
@@ -259,7 +259,7 @@ class goMailServer extends plugin{
       $this->postfixMyDestinations[base64_encode($str)] = $str;
     }
 
-    if((isset($_POST['DelpostfixMyDestinations'])) && (count($_POST['Select_postfixMyDestinations']))){
+    if((isset($_POST['DelpostfixMyDestinations'])) && isset($_POST['Select_postfixMyDestinations']) &&(count($_POST['Select_postfixMyDestinations']))){
       foreach($_POST['Select_postfixMyDestinations'] as $str ){
         unset($this->postfixMyDestinations[$str]);
       }
