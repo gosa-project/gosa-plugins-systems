@@ -504,6 +504,9 @@ class goMailServer extends plugin{
 
   function save()
   {
+    $this->postfixMyDomain   = preg_replace("/^[^\.]+\./","",$this->postfixMyhostname);
+    $this->postfixMyhostname = preg_replace("/\..*$/","",$this->postfixMyhostname);
+
     plugin::save();
 
     /* Fix transport table*/
@@ -546,14 +549,11 @@ class goMailServer extends plugin{
       foreach($this->postfixMyNetworks as $entry){
         $this->attrs['postfixMyNetworks'] .=$entry.",";
       }
+      $this->postfixMyNetworks = preg_replace("/,$/","",$this->attrs['postfixMyNetworks']);
     }else{
       $this->attrs['postfixMyNetworks']  = array();
     }
 
-    $this->attrs['postfixMyNetworks'] = preg_replace("/,$/","",$this->attrs['postfixMyNetworks']);
-
-    $this->attrs['postfixMyhostname'] = preg_replace("/\..*$/","",$this->postfixMyhostname);
-    $this->attrs['postfixMyDomain']   = preg_replace("/^[^\.]+\./","",$this->postfixMyhostname);
  
     /* Check if this is a new entry ... add/modify */
     $ldap = $this->config->get_ldap_link();
@@ -595,7 +595,7 @@ class goMailServer extends plugin{
   function check()
   { 
     $message =plugin::check();
-    
+  
     if(!is_numeric($this->postfixHeaderSizeLimit)){
       $message[] = _("Please specify a numeric value for header size limit.");
     }
