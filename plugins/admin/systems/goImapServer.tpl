@@ -75,6 +75,7 @@
     {t}The server must be saved before you can use the status flag.{/t}
 {/if}
 <br>
+<h2><img class="center" alt="" src="images/rocket.png" align="middle"> Action</h2>
 <select name="action" title='{t}{/t}' {if $is_new =="new"} disabled {/if}>
 	<option value="none">&nbsp;</option>
     {html_options options=$Actions}

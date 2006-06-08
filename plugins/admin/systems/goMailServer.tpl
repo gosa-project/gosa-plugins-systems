@@ -63,6 +63,7 @@
 	<tr>
 		<td colspan="2">
 			<p class='seperator'>&nbsp;</p>
+			<h2>{t}Domains and routing{/t}</h2>
 		</td>
 	</tr>	
 	<tr>
@@ -70,7 +71,7 @@
 			  <table style="width:100%;">
                 <tr>
                     <td>
-                        {t}Domains and routing{/t}<br>
+                        {t}Domains to accept mail for{/t}<br>
                         <select name='Select_postfixMyDestinations[]' multiple size=6 style='width:100%;' title='{t}Postfix is responsilbe for the follwing domains.{/t}'>
                             {html_options options=$postfixMyDestinations}
                         </select>
@@ -101,6 +102,7 @@
 	<tr>
 		<td colspan="2">
 			<p class='seperator'>&nbsp;</p>
+			<h2>{t}Restrictions{/t}</h2>
 		</td>
 	</tr>	
 	<tr>
@@ -146,6 +148,7 @@
 	{t}The server must be saved before you can use the status flag.{/t}
 {/if}
 <br>
+<h2><img class="center" alt="" src="images/rocket.png" align="middle"> Action</h2>
 <select name="action" title='{t}{/t}' {if $is_new == "new"} disabled {/if}>
 	<option value="none">&nbsp;</option>
 	{html_options options=$Actions}	
