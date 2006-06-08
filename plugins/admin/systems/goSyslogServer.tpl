@@ -1,4 +1,4 @@
-<b>{t}Syslog Service{/t} {t}enabled{/t}</b>
+<h2>{t}Syslog Service{/t} {t}enabled{/t}</h2>
 
 <p class='seperator'>&nbsp;</p>
 <p>
