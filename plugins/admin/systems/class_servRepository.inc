@@ -153,37 +153,40 @@ class servrepository extends plugin
         $value = preg_replace("/edit_/","",$name);
         $value = base64_decode(preg_replace("/_.$/","",$value));
 
-        $ldap = $this->config->get_ldap_link();
-        $ldap->cd ($this->config->current['BASE']);
-        
-        $url = $this->repositories[$value]['Url'];
-        $release = $this->repositories[$value]['Release'];
+        if(isset($this->repositories[$value])){
 
-        $ldap->search("(&(objectClass=gotoWorkstation)(objectClass=FAIobject)(FAIdebianMirror=".$url."))",array("cn","FAIclass"));
+          $ldap = $this->config->get_ldap_link();
+          $ldap->cd ($this->config->current['BASE']);
 
-        $found = false;
-        $found_in = " ";
-        while($attrs = $ldap->fetch()){
-          foreach($attrs['FAIclass'] as $class){
-            if(preg_match("/".str_replace("/","\/",$release)."$/i",$class)){
-              $found = true;
-              $found_in .= $attrs['cn'][0]." ";
+          $url = $this->repositories[$value]['Url'];
+          $release = $this->repositories[$value]['Release'];
+
+          $ldap->search("(&(objectClass=gotoWorkstation)(objectClass=FAIobject)(FAIdebianMirror=".$url."))",array("cn","FAIclass"));
+
+          $found = false;
+          $found_in = " ";
+          while($attrs = $ldap->fetch()){
+            foreach($attrs['FAIclass'] as $class){
+              if(preg_match("/".str_replace("/","\/",$release)."$/i",$class)){
+                $found = true;
+                $found_in .= $attrs['cn'][0]." ";
+              }
             }
           }
-        }
-  
-        if($found){
-          print_red(sprintf(_("Be careful editing this release, it is still used by these workstations [%s]."),$found_in));
-        } 
 
-        if(isset($this->repositories[$value])){
-          $once = true;
-          $obj = $this->repositories[$value];
-      
-          /* to be able to detect if this was renamed */
-          $obj['initialy_was'] = $obj['Release'];
-          $this->dialog = new servRepositorySetup($this->config,$this->dn,$obj);
-          $this->dialog->acl = $this->acl;
+          if($found){
+            print_red(sprintf(_("Be careful editing this release, it is still used by these workstations [%s]."),$found_in));
+          } 
+
+          if(isset($this->repositories[$value])){
+            $once = true;
+            $obj = $this->repositories[$value];
+
+            /* to be able to detect if this was renamed */
+            $obj['initialy_was'] = $obj['Release'];
+            $this->dialog = new servRepositorySetup($this->config,$this->dn,$obj);
+            $this->dialog->acl = $this->acl;
+          }
         }
       }
     }
