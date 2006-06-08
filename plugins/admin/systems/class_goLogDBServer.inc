@@ -115,11 +115,11 @@ class goLogDBServer extends plugin{
   function check()
   { 
     $message = plugin::check();
-    if ($this->goLogAdmin == "" || preg_match("/ /", $this->goLogAdmin)){
-      $message[]= sprintf(_("The attribute '%s' is empty or contains invalid characters."), "goLogAdmin");
+    if (empty($this->goLogAdmin)){
+      $message[]= sprintf_("The attribute user is empty or contains invalid characters.");
     }
-    if ($this->goLogPassword == "" || preg_match("/ /", $this->goLogPassword)){
-      $message[]= sprintf(_("The attribute '%s' is empty or contains invalid characters."), "goLogPassword");
+    if (empty($this->goLogPassword)){
+      $message[]= sprintf_("The attribute password is empty or contains invalid characters.");
     }
     return($message);
   }

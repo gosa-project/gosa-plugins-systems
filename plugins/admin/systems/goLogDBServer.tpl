@@ -1,11 +1,11 @@
 <h2><img class="center" alt="" align="middle" src="images/rightarrow.png" /> {t}Logging database information{/t}</h2>
 <table summary="">
     <tr>
-     <td>{t}Logging DB user{/t}</td>
+     <td>{t}Logging DB user{/t}{$must}</td>
      <td><input name="goLogAdmin" id="goLogAdmin" size=30 maxlength=60 {$goLogAdminACL} value="{$goLogAdmin}"></td>
     </tr>
     <tr>
-     <td>{t}Password{/t}</td>
+     <td>{t}Password{/t}{$must}</td>
      <td><input type=password name="goLogPassword" id="goLogPassword" size=30 maxlength=60 {$goLogPasswordACL} value="{$goLogPassword}"></td>
     </tr>
    </table>
