@@ -1,11 +1,11 @@
 <h2><img class="center" alt="" align="middle" src="images/rightarrow.png" /> {t}FAX database information{/t}</h2>
  <table summary="">
     <tr>
-     <td>{t}FAX DB user{/t}</td>
+     <td>{t}FAX DB user{/t}{$must}</td>
      <td><input name="goFaxAdmin" size=30 maxlength=60 {$goFaxAdminACL} id="goFaxAdmin" value="{$goFaxAdmin}" ></td>
     </tr>
     <tr>
-     <td>{t}Password{/t}</td>
+     <td>{t}Password{/t}{$must}</td>
      <td><input type=password name="goFaxPassword" id="goFaxPassword" size=30 maxlength=60 {$goFaxPasswordACL}   value="{$goFaxPassword}" ></td>
     </tr>
    </table>

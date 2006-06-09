@@ -17,7 +17,7 @@ class goTerminalServer extends plugin{
   var $DisplayName      = "";
   var $dn               = NULL;
   var $acl;
-
+  var $cn                      = "";
   var $goTerminalServerStatus  = "";
   var $goXdmcpIsEnabled        = false;  
   var $goFontPath              = "";
@@ -166,6 +166,16 @@ class goTerminalServer extends plugin{
       foreach ($add_attrs as $name => $value){
         $command= preg_replace("/%$name/", $value, $command);
       }
+
+      /* If there are still some %.. in our command, try to fill these with some other class vars */
+      if(preg_match("/%/",$command)){
+        $attrs = get_object_vars($this);
+        foreach($attrs as $name => $value){
+          if(!is_string($value)) continue;
+          $command= preg_replace("/%$name/", $value, $command);
+        }
+      }
+
       if (check_command($command)){
         @DEBUG (DEBUG_SHELL, __LINE__, __FUNCTION__, __FILE__,
             $command, "Execute");
