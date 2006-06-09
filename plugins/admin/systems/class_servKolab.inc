@@ -375,7 +375,6 @@ class servkolab extends plugin {
     /* Directly save new status flag */
   function setStatus($value)
   { 
-    echo "Status flag isn't set .... ";
     return;
   
     if($value == "none") return;
