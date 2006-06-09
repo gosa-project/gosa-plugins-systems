@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: Alfred Schroeder <schroeder@gonicus.de>\n"
 "POT-Creation-Date: 2003-09-19 13:41+0200\n"
-"PO-Revision-Date: 2006-06-09 12:15+0200\n"
+"PO-Revision-Date: 2006-06-09 12:29+0200\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -9152,7 +9152,6 @@ msgid "Transports"
 msgstr "Transporte"
 
 #: plugins/admin/systems/goMailServer.tpl:92
-#, fuzzy
 msgid "Select a transport protocol."
 msgstr "Wählen Sie ein Transport-Protokoll."
 
