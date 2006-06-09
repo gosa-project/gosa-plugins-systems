@@ -151,7 +151,7 @@
 	{t}The service must be saved before you can use the status flag.{/t}
 {/if}
 <br>
-<select name="action" title='{t}{/t}' 
+<select name="action" title='{t}Set new status{/t}' 
 	{if $is_new == "new" || $is_acc == false} disabled {/if}
 >
 	<option value="none">&nbsp;</option>
