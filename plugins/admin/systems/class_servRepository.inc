@@ -94,27 +94,11 @@ class servrepository extends plugin
     $smarty->assign("apply",        apply_filter());
     $smarty->assign("regex",        $this->regex);
 
-
-    /* Do we need to flip is_account state? */
-    if (isset($_POST['modify_state'])){
-      $this->is_account= !$this->is_account;
-    }
-
     /* Show tab dialog headers */
-    if ($this->is_account){
-      $display= $this->show_header(_("Remove FAI repository extension."),
-          _("This server has FAI repository features enabled. You can disable them by clicking below."));
-    } else {
-      $display= $this->show_header(_("Add FAI repository extension."),
-          _("This server has FAI repository features disabled. You can enable them by clicking below."));
-      return ($display);
-    }
-
     /*
        ADD / EDIT Repository
        Dialog Handling
      */
-
     $once = false;
     if(isset($_POST['servRepository'])){
       foreach($_POST as $name => $value){
