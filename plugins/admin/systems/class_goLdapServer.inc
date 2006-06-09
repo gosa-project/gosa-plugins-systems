@@ -8,7 +8,7 @@ class goLdapServer extends plugin{
 
   /* This plugin only writes its objectClass */
   var $objectclasses    = array("goLdapServer");
-  var $attributes       = array("goLdapServerStatus","goLdapBase");
+  var $attributes       = array("goLdapBase");
   var $StatusFlag       = "goLdapServerStatus";
 
   /* This class can't be assigned twice so it conflicts with itsself */

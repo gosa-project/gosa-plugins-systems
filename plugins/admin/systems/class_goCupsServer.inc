@@ -8,7 +8,7 @@ class goCupsServer extends plugin{
 
   /* This plugin only writes its objectClass */
   var $objectclasses    = array("goCupsServer");
-  var $attributes       = array("goCupsServerStatus");
+  var $attributes       = array();
   var $StatusFlag       = "goCupsServerStatus";
  
   /* This class can't be assigned twice so it conflicts with itsself */

@@ -14,8 +14,7 @@ class goImapServer extends plugin{
   var $DisplayName      = "";
   var $dn               = NULL;
   var $StatusFlag       = "goImapServerStatus";
-  var $attributes       = array("goImapServerStatus",
-                                "goImapName","goImapConnect","goImapAdmin","goImapPassword",
+  var $attributes       = array("goImapName","goImapConnect","goImapAdmin","goImapPassword",
                                 "goImapSieveServer","goImapSievePort",
                                 "cyrusImap","cyrusImapSSL","cyrusPop3","cyrusPop3SSL");
 

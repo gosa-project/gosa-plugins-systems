@@ -13,7 +13,7 @@ class goMailServer extends plugin{
   var $DisplayName      = "";
   var $dn               = NULL;
   var $StatusFlag       = "goMailServerStatus";
-  var $attributes       = array("goMailServerStatus","description","postfixHeaderSizeLimit",
+  var $attributes       = array("description","postfixHeaderSizeLimit",
       "postfixMailboxSizeLimit","postfixMessageSizeLimit",
       "postfixMyDestinations","postfixMyDomain","postfixMyhostname",
       "postfixMyNetworks","postfixRelayhost","postfixTransportTable",

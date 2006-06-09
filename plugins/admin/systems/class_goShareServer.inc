@@ -8,7 +8,7 @@ class goShareServer extends plugin{
 
   /* This plugin only writes its objectClass */
   var $objectclasses    = array("goShareServer");
-  var $attributes       = array("goShareServerStatus","goExportEntry");
+  var $attributes       = array("goExportEntry");
   var $StatusFlag       = "goShareServerStatus";
 
   /* This class can't be assigned twice so it conflicts with itsself */

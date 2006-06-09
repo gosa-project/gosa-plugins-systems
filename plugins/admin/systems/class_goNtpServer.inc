@@ -8,7 +8,7 @@ class goNtpServer extends plugin{
 
   /* This plugin only writes its objectClass */
   var $objectclasses    = array("goNtpServer");
-  var $attributes       = array("goTimeSource","goNtpServerStatus");
+  var $attributes       = array("goTimeSource");
   var $StatusFlag       = "goNtpServerStatus";
 
   /* This class can't be assigned twice so it conflicts with itsself */

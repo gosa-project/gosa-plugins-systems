@@ -188,9 +188,24 @@ class ServerService extends plugin
     /* Dispaly services overview */
     $this->divList->execute();
     $list = array();
+
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd($this->dn);
+    $ldap->cat($this->dn);
+    
+    if($ldap->count()){
+      $attrs = $ldap->fetch();
+    }else{
+      $attrs = array();
+    }
+
     foreach($this->plugins as $name => $obj){
       if($obj->is_account){
-        $list[$name] = $obj->getListEntry(); 
+        $flag = $this->plugins[$name]->StatusFlag;
+        if(isset($attrs[$flag][0])){
+          $this->plugins[$name]->$flag = $attrs[$flag][0];
+        }
+        $list[$name] = $this->plugins[$name]->getListEntry(); 
       }
     }
     $this->divList -> setEntries($list);

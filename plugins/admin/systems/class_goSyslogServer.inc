@@ -8,7 +8,7 @@ class goSyslogServer extends plugin{
 
   /* This plugin only writes its objectClass */
   var $objectclasses    = array("goSyslogServer");
-  var $attributes       = array("goSyslogServerStatus");
+  var $attributes       = array();
   var $StatusFlag       = "goSyslogServerStatus";
  
   /* This class can't be assigned twice so it conflicts with itsself */

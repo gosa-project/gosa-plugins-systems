@@ -8,7 +8,7 @@ class goGlpiServer extends plugin{
 
   /* This plugin only writes its objectClass */
   var $objectclasses    = array("goGlpiServer");
-  var $attributes       = array("goGlpiServerStatus","goGlpiAdmin","goGlpiDatabase","goGlpiPassword");
+  var $attributes       = array("goGlpiAdmin","goGlpiDatabase","goGlpiPassword");
   var $StatusFlag       = "goGlpiServerStatus";
  
   /* This class can't be assigned twice so it conflicts with itsself */

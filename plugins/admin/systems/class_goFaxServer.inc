@@ -8,7 +8,7 @@ class goFaxServer extends plugin{
 
   /* This plugin only writes its objectClass */
   var $objectclasses    = array("goFaxServer");
-  var $attributes       = array("goFaxServerStatus","goFaxAdmin", "goFaxPassword");
+  var $attributes       = array("goFaxAdmin", "goFaxPassword");
   var $StatusFlag       = "goFaxServerStatus";
  
   /* This class can't be assigned twice so it conflicts with itsself */

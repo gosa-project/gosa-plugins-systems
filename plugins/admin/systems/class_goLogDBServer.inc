@@ -8,7 +8,7 @@ class goLogDBServer extends plugin{
 
   /* This plugin only writes its objectClass */
   var $objectclasses    = array("goLogDBServer");
-  var $attributes       = array("goLogDBServerStatus","goLogAdmin", "goLogPassword");
+  var $attributes       = array("goLogAdmin", "goLogPassword");
   var $StatusFlag       = "goLogDBServerStatus";
 
   /* This class can't be assigned twice so it conflicts with itsself */

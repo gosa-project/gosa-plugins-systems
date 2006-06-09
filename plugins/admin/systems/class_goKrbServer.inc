@@ -8,7 +8,7 @@ class goKrbServer extends plugin{
 
   /* This plugin only writes its objectClass */
   var $objectclasses    = array("goKrbServer");
-  var $attributes       = array("goKrbServerStatus","goKrbRealm", "goKrbAdmin","goKrbPassword");
+  var $attributes       = array("goKrbRealm", "goKrbAdmin","goKrbPassword");
   var $StatusFlag       = "goKrbServerStatus";
  
   /* This class can't be assigned twice so it conflicts with itsself */

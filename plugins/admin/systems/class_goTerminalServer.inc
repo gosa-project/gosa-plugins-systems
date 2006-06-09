@@ -8,7 +8,7 @@ class goTerminalServer extends plugin{
 
   /* This plugin only writes its objectClass */
   var $objectclasses    = array("goTerminalServer");
-  var $attributes       = array("goTerminalServerStatus","goXdmcpIsEnabled", "goFontPath");
+  var $attributes       = array("goXdmcpIsEnabled", "goFontPath");
   var $StatusFlag       = "goTerminalServerStatus";
  
   /* This class can't be assigned twice so it conflicts with itsself */

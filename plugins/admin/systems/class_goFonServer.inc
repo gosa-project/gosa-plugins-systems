@@ -8,7 +8,7 @@ class goFonServer extends plugin{
 
   /* This plugin only writes its objectClass */
   var $objectclasses    = array("goFonServer");
-  var $attributes       = array("goFonServerStatus","goFonAdmin", "goFonPassword","goFonAreaCode", "goFonCountryCode");
+  var $attributes       = array("goFonAdmin", "goFonPassword","goFonAreaCode", "goFonCountryCode");
   var $StatusFlag       = "goFonServerStatus";
  
   /* This class can't be assigned twice so it conflicts with itsself */
