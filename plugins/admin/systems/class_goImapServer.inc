@@ -77,6 +77,7 @@ class goImapServer extends plugin{
 
   function getListEntry()
   {
+    $this->updateStatusState();
     $flag = $this->StatusFlag;
     $fields['Status']     = $this->$flag;
     $fields['Message']    = _("Cyrus service");
@@ -238,6 +239,24 @@ class goImapServer extends plugin{
     }
   }
 
+  
+  /* Get updates for status flag */
+  function updateStatusState()
+  {
+    if(empty($this->StatusFlag)) return;
+
+    $attrs = array();
+    $flag = $this->StatusFlag;
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd($this->cn);
+    $ldap->cat($this->dn,array($flag));
+    if($ldap->count()){
+      $attrs = $ldap->fetch();
+    }
+    if(isset($attrs[$flag][0])){
+      $this->$flag = $attrs[$flag][0];
+    }
+  }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

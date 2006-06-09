@@ -476,6 +476,7 @@ class goMailServer extends plugin{
   /* Return list entry */
   function getListEntry()
   {
+    $this->updateStatusState();
     $flag = $this->StatusFlag;
     $fields['Status']     = $this->$flag;
     $fields['Message']    = _("Postfix")." ["._("configured for")." ".$this->postfixMyhostname."] ";
@@ -729,6 +730,25 @@ class goMailServer extends plugin{
         $message= sprintf(_("Command '%s', specified as ACTION_HOOK for plugin '%s' doesn't seem to exist."), $command, get_class($this));
         print_red ($message);
       }
+    }
+  }
+
+
+  /* Get updates for status flag */
+  function updateStatusState()
+  {
+    if(empty($this->StatusFlag)) return;
+
+    $attrs = array();
+    $flag = $this->StatusFlag;
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd($this->cn);
+    $ldap->cat($this->dn,array($flag));
+    if($ldap->count()){
+      $attrs = $ldap->fetch();
+    }
+    if(isset($attrs[$flag][0])){
+      $this->$flag = $attrs[$flag][0];
     }
   }
 
