@@ -35,6 +35,11 @@ class servkolab extends plugin {
       "cyrus_quotawarn");
   var $objectclasses = array("top", "kolab");
 
+  /* Serverservice vars */
+  var $conflicts    = array("goImapServer","goMailServer");
+  var $DisplayName  = "Kolab mail service";
+  var $StatusFlag   = "";
+
   function servkolab($config, $dn = NULL) 
   {
     /* Setting the hostname and tell this Plugin that we are the kolab extension*/
@@ -348,6 +353,51 @@ class servkolab extends plugin {
       $this->handle_post_events("add");
     }
   }
+
+
+  function getListEntry()
+  {
+    $flag = $this->StatusFlag;
+    if(empty($flag)){
+      $fields['Status']       = "";
+    }else{
+      $fields['Status']       = $this->$flag;
+    }
+    $fields['Message']      = _("Kolab mail service");
+    $fields['AllowStart']   = true;
+    $fields['AllowStop']    = true;
+    $fields['AllowRestart'] = true;
+    $fields['AllowRemove']  = true;
+    $fields['AllowEdit']    = true;
+    return($fields);
+  }
+
+    /* Directly save new status flag */
+  function setStatus($value)
+  { 
+    echo "Status flag isn't set .... ";
+    return;
+  
+    if($value == "none") return;
+    if(!$this->initially_was_account) return;
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd($this->dn);
+    $ldap->cat($this->dn,array("objectClass"));
+    if($ldap->count()){
+
+      $tmp = $ldap->fetch();
+      for($i = 0; $i < $tmp['objectClass']['count']; $i ++){
+        $attrs['objectClass'][] = $tmp['objectClass'][$i];
+      }
+      $flag = $this->StatusFlag;
+      $attrs[$flag] = $value;
+      $this->$flag = $value;
+      $ldap->modify($attrs);
+      show_ldap_error($ldap->get_error());
+      $this->action_hook();
+    }
+  }
+
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
