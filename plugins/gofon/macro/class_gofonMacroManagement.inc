@@ -300,7 +300,7 @@ class gofonMacro extends plugin
     $Regex      = $this->DivListMacro->Regex;
     $Filter     = "(&(cn=".$Regex.")(objectClass=goFonMacro))";
     $Flags      = GL_SIZELIMIT;
-    $Attrs      = array("cn","description","displayName");
+    $Attrs      = array("cn","description","displayName","goFonMacroVisible");
 
     /* Prepare for ls or search*/        
     if($SubSearch){
