@@ -10,7 +10,6 @@ class goImapServer extends plugin{
   var $objectclasses    = array("goImapServer");
   
   /* This class can't be assigned twice so it conflicts with itsself */
-  var $conflicts        = array("goImapServer");
 
   var $DisplayName      = "";
   var $dn               = NULL;
@@ -40,7 +39,8 @@ class goImapServer extends plugin{
 
   var $acl; 
 
-  var $Actions              = array();
+  var $Actions              = array();  
+  var $conflicts            = array("goImapServer","kolab");
  
   function goImapServer($config,$dn)
   {

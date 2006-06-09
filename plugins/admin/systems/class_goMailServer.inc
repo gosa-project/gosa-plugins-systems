@@ -10,8 +10,6 @@ class goMailServer extends plugin{
   var $objectclasses    = array("goMailServer");
 
   /* This class can't be assigned twice so it conflicts with itsself */
-  var $conflicts        = array("goMailServer");
-
   var $DisplayName      = "";
   var $dn               = NULL;
   var $StatusFlag       = "goMailServerStatus";
@@ -38,6 +36,7 @@ class goMailServer extends plugin{
   var $TransportProtocols               = array(); 
   var $Actions                          = array();
   var $cn                               = "";
+  var $conflicts                        = array("goMailServer","kolab");
 
   function goMailServer($config,$dn)
   {
