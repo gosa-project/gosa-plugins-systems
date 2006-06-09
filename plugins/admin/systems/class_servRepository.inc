@@ -19,12 +19,20 @@ class servrepository extends plugin
   var $dialog                 = NULL;
 
   /* Repositories */
-  var $repositories           = array();
-  var $FAIrepository           = array();
+  var $repositories          = array();
+  var $FAIrepository         = array();
+
+
+  var $conflicts             = array("FAIrepositoryServer");
+  var $DisplayName           = "";
+  var $StatusFlag            = "";
+
 
   function servrepository ($config, $dn= NULL)
   {
     plugin::plugin ($config, $dn);
+
+    $this->DisplayName = _("Repository service");
 
     $this->repositories = array();
     if(isset($this->attrs['FAIrepository'])){
@@ -359,6 +367,67 @@ class servrepository extends plugin
       $ldap->cd($this->dn);
       $ldap->add($this->attrs);
       $this->handle_post_events("add");
+    }
+  }
+
+  /* Get updates for status flag */
+  function updateStatusState()
+  {
+    if(empty($this->StatusFlag)) return;
+
+    $attrs = array();
+    $flag = $this->StatusFlag;
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd($this->cn);
+    $ldap->cat($this->dn,array($flag));
+    if($ldap->count()){
+      $attrs = $ldap->fetch();
+    }
+    if(isset($attrs[$flag][0])){
+      $this->$flag = $attrs[$flag][0];
+    }
+  }
+
+
+  function getListEntry()
+  {
+    $this->updateStatusState();
+    $flag = $this->StatusFlag;
+    if(empty($flag)){
+      $fields['Status']      = "";
+    }else{
+      $fields['Status']      = $this->$flag;
+    }
+    $fields['Message']    = _("Repository service");
+    $fields['AllowStart'] = true;
+    $fields['AllowStop']  = true;
+    $fields['AllowRestart'] = true;
+    $fields['AllowRemove']= true;
+    $fields['AllowEdit']  = true;
+    return($fields);
+  }
+
+
+  /* Directly save new status flag */
+  function setStatus($value)
+  {
+    if($value == "none") return;
+    if(!$this->initially_was_account) return;
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd($this->dn);
+    $ldap->cat($this->dn,array("objectClass"));
+    if($ldap->count()){
+
+      $tmp = $ldap->fetch();
+      for($i = 0; $i < $tmp['objectClass']['count']; $i ++){
+        $attrs['objectClass'][] = $tmp['objectClass'][$i];
+      }
+      $flag = $this->StatusFlag;
+      $attrs[$flag] = $value;
+      $this->$flag = $value;
+      $ldap->modify($attrs);
+      show_ldap_error($ldap->get_error());
+      $this->action_hook();
     }
   }
 
