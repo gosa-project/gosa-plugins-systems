@@ -17,7 +17,7 @@ class goSyslogServer extends plugin{
   var $DisplayName      = "";
   var $dn               = NULL;
   var $acl;
-  var $cn;
+  var $cn                    = "";
   var $goSyslogServerStatus  = "";
  
   function goSyslogServer($config,$dn)

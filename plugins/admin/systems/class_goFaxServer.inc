@@ -21,7 +21,7 @@ class goFaxServer extends plugin{
   var $goFaxAdmin         = "";
   var $goFaxPassword      = "";
   var $goFaxServerStatus  = "";
-  var $cn;
+  var $cn                 = "";
  
   function goFaxServer($config,$dn)
   {

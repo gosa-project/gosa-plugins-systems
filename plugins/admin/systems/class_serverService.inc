@@ -274,13 +274,24 @@ class ServerService extends plugin
       return;
     }
     
+    $caseVars = array("cn","dn");
     if($service == ALL_SERVICES){
       foreach($this->plugins as $name => $obj){
+        foreach($caseVars as $var){
+          if(isset($this->$var)){
+            $this->plugins[$name]->$var = $this->$var;  
+          }
+        }
         if($this->plugins[$name]->initially_was_account && $this->plugins[$name]->is_account){
           $this->plugins[$name]->setStatus($action);
         }
       }
     }else{
+      foreach($caseVars as $var){
+        if(isset($this->$var)){
+          $this->plugins[$service]->$var = $this->$var;  
+        }
+      }
       if($this->plugins[$service]->is_account){
         $this->plugins[$service]->setStatus($action);
       }
