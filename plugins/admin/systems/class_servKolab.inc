@@ -139,6 +139,14 @@ class servkolab extends plugin {
 
   function remove_from_parent() 
   {
+
+     /* Remove status flag, it is not a memeber of
+        this->attributes, so ensure that it is deleted too */
+    if(!empty($this->StatusFlag)){
+      $this->attrs[$this->StatusFlag] = array();
+    }
+
+
     /* Only walk through following code, if this host 
        was a member of the kolab hosts, else skip this */
     if(!$this->initially_was_account){
