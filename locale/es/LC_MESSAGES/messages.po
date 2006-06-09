@@ -1,3 +1,16 @@
+# translation of messages.po to es_ES
+# Alejandro Escanero Blanco <alex@ofmin.com>, 2003, 2005.
+msgid ""
+msgstr ""
+"Project-Id-Version: messages\n"
+"PO-Revision-Date: 2005-05-25 19:07+0200\n"
+"Last-Translator: Alejandro Escanero Blanco <alex@ofmin.com>\n"
+"Language-Team:  <es@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.9.1\n"
+
 #: contrib/gosa.conf:4
 msgid "My account"
 msgstr "Mi cuenta"
@@ -8830,20 +8843,11 @@ msgstr ""
 msgid "The service must be saved before you can use the status flag."
 msgstr ""
 
-# translation of messages.po to es_ES
-# Alejandro Escanero Blanco <alex@ofmin.com>, 2003, 2005.
 #: plugins/admin/systems/goMailServer.tpl:154
 #: plugins/admin/systems/goImapServer.tpl:81
-msgid ""
-msgstr ""
-"Project-Id-Version: messages\n"
-"PO-Revision-Date: 2005-05-25 19:07+0200\n"
-"Last-Translator: Alejandro Escanero Blanco <alex@ofmin.com>\n"
-"Language-Team:  <es@li.org>\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.9.1\n"
+#, fuzzy
+msgid "Set new status"
+msgstr "Estado del Sistema"
 
 #: plugins/admin/systems/goMailServer.tpl:160
 #: plugins/admin/systems/goImapServer.tpl:87

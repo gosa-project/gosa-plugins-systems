@@ -1,3 +1,23 @@
+# translation of messages.po to Deutsch
+# Alfred Schroeder <schroeder@GONICUS.de>, 2004.
+# Cajus Pollmeier <pollmeier@gonicus.de>, 2004, 2005, 2006.
+# Jan Wenzel <jan.wenzel@gonicus.de>, 2004,2005.
+# Stefan Koehler <stefan.koehler@GONICUS.de>, 2005.
+# GOsa2 Translations
+# Copyright (C) 2003 GONICUS GmbH, Germany
+# This file is distributed under the same license as the GOsa2 package.
+msgid ""
+msgstr ""
+"Project-Id-Version: messages\n"
+"Report-Msgid-Bugs-To: Alfred Schroeder <schroeder@gonicus.de>\n"
+"POT-Creation-Date: 2003-09-19 13:41+0200\n"
+"PO-Revision-Date: 2006-06-02 14:02+0200\n"
+"Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
+"Language-Team: German <de@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
 #: contrib/gosa.conf:4
 msgid "My account"
 msgstr "Mein Konto"
@@ -8464,27 +8484,11 @@ msgstr ""
 msgid "The service must be saved before you can use the status flag."
 msgstr ""
 
-# translation of messages.po to Deutsch
-# Alfred Schroeder <schroeder@GONICUS.de>, 2004.
-# Cajus Pollmeier <pollmeier@gonicus.de>, 2004, 2005, 2006.
-# Jan Wenzel <jan.wenzel@gonicus.de>, 2004,2005.
-# Stefan Koehler <stefan.koehler@GONICUS.de>, 2005.
-# GOsa2 Translations
-# Copyright (C) 2003 GONICUS GmbH, Germany
-# This file is distributed under the same license as the GOsa2 package.
 #: plugins/admin/systems/goMailServer.tpl:154
 #: plugins/admin/systems/goImapServer.tpl:81
-msgid ""
-msgstr ""
-"Project-Id-Version: messages\n"
-"Report-Msgid-Bugs-To: Alfred Schroeder <schroeder@gonicus.de>\n"
-"POT-Creation-Date: 2003-09-19 13:41+0200\n"
-"PO-Revision-Date: 2006-06-02 14:02+0200\n"
-"Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
-"Language-Team: German <de@li.org>\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+#, fuzzy
+msgid "Set new status"
+msgstr "System-Status"
 
 #: plugins/admin/systems/goMailServer.tpl:160
 #: plugins/admin/systems/goImapServer.tpl:87

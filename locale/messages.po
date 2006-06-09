@@ -8096,7 +8096,7 @@ msgstr ""
 
 #: plugins/admin/systems/goMailServer.tpl:154
 #: plugins/admin/systems/goImapServer.tpl:81
-msgid ""
+msgid "Set new status"
 msgstr ""
 
 #: plugins/admin/systems/goMailServer.tpl:160

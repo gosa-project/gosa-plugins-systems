@@ -1,3 +1,17 @@
+# translation of messages.po to Français
+# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006.
+msgid ""
+msgstr ""
+"Project-Id-Version: messages\n"
+"PO-Revision-Date: 2006-06-02 09:14+0200\n"
+"Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
+"Language-Team: Français <fr@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.1\n"
+"Plural-Forms:  nplurals=2; plural=(n > 1);\n"
+
 #: contrib/gosa.conf:4
 msgid "My account"
 msgstr "Mon Compte"
@@ -8514,21 +8528,11 @@ msgstr ""
 msgid "The service must be saved before you can use the status flag."
 msgstr ""
 
-# translation of messages.po to Français
-# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006.
 #: plugins/admin/systems/goMailServer.tpl:154
 #: plugins/admin/systems/goImapServer.tpl:81
-msgid ""
-msgstr ""
-"Project-Id-Version: messages\n"
-"PO-Revision-Date: 2006-06-02 09:14+0200\n"
-"Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
-"Language-Team: Français <fr@li.org>\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.1\n"
-"Plural-Forms:  nplurals=2; plural=(n > 1);\n"
+#, fuzzy
+msgid "Set new status"
+msgstr "Statut du système"
 
 #: plugins/admin/systems/goMailServer.tpl:160
 #: plugins/admin/systems/goImapServer.tpl:87

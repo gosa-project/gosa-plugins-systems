@@ -1,3 +1,20 @@
+# translation of messages.po to Italian
+# Copyright (c) 2005 B-Open Solutions srl - http://www.bopen.it/
+# Copyright (c) 2005 Alessandro Amici <a.amici@bopen.it>
+# Alessandro Amici <a.amici@bopen.it>, 2005.
+msgid ""
+msgstr ""
+"Project-Id-Version: messages\n"
+"Report-Msgid-Bugs-To: Alessandro Amici <a.amici@bopen.it>\n"
+"POT-Creation-Date: 2003-09-19 13:41+0200\n"
+"PO-Revision-Date: 2005-11-18 15:26+0100\n"
+"Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
+"Language-Team: Italian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.9.1\n"
+
 #: contrib/gosa.conf:4
 msgid "My account"
 msgstr "Identità"
@@ -8567,24 +8584,11 @@ msgstr ""
 msgid "The service must be saved before you can use the status flag."
 msgstr ""
 
-# translation of messages.po to Italian
-# Copyright (c) 2005 B-Open Solutions srl - http://www.bopen.it/
-# Copyright (c) 2005 Alessandro Amici <a.amici@bopen.it>
-# Alessandro Amici <a.amici@bopen.it>, 2005.
 #: plugins/admin/systems/goMailServer.tpl:154
 #: plugins/admin/systems/goImapServer.tpl:81
-msgid ""
-msgstr ""
-"Project-Id-Version: messages\n"
-"Report-Msgid-Bugs-To: Alessandro Amici <a.amici@bopen.it>\n"
-"POT-Creation-Date: 2003-09-19 13:41+0200\n"
-"PO-Revision-Date: 2005-11-18 15:26+0100\n"
-"Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
-"Language-Team: Italian\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.9.1\n"
+#, fuzzy
+msgid "Set new status"
+msgstr "Stato"
 
 #: plugins/admin/systems/goMailServer.tpl:160
 #: plugins/admin/systems/goImapServer.tpl:87
