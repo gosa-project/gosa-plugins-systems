@@ -31,6 +31,7 @@ class ServerService extends plugin
   var $current          = "";
   var $backup           = NULL;
   var $acl              ;
+  var $cn;
 
   function ServerService ($config, $dn)
   {
