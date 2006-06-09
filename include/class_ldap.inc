@@ -1130,11 +1130,18 @@ function gen_xls ($dn, $filter= "(objectClass=*)", $attributes= array('*'), $rec
 	  return $objectclasses;
   }
 
-  function create_snapshot($dn)
+  function create_snapshot($dn, $type= "snapshot", $description= "")
   {
     if ($this->dn_exists($dn) && $dn != ""){
       $data= preg_replace('/^dn:.*\n/', '', $this->gen_ldif($dn));
-      echo base64_encode(gzcompress($data, 6));
+      $target= array();
+      $target['objectClass']= array("top", "gosaObjectSnapshot");
+      $target['gosaSnapshotData']= gzcompress($data, 6);
+      $target['gosaSnapshotType']= $type;
+      list($usec, $sec)= explode(" ", microtime());
+      $target['gosaShapshotTimestamp']= preg_replace("/\./", "", $sec.$usec);
+      $target['gosaShapshotDN']= $dn;
+      print_a($target);
     }
   }
 
