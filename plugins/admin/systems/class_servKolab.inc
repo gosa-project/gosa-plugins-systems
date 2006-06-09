@@ -104,27 +104,6 @@ class servkolab extends plugin {
                     chkacl($this->acl, 'cyrus_quotawarn'));
     $quotastr   = sprintf(_("Warn users when using more than %s%% of their mail quota"), $edit);
 
-
-    /***************  
-      Handle Account is_account state
-     ***************/  
-  
-    /* Do we need to flip is_account state? */
-    if (isset($_POST['modify_state'])) {
-      $this->is_account = !$this->is_account;
-    }
-
-    /* Show tab dialog headers */
-    if ($this->is_account) {
-      /* call Add Acoount to add account */
-      $display = $this->show_header(_("Remove Kolab extension"), _("This server has kolab features enabled. You can disable them by clicking below."));
-    } else {
-      /* call remove Account */
-      $display = $this->show_header(_("Add Kolab service"), _("This server has kolab features disabled. You can enable them by clicking below."));
-      return ($display);
-    }
-
-
     /***************
       Assign informations to smarty 
      ***************/
