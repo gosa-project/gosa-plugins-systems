@@ -39,7 +39,7 @@
 					</td>
 					<td>
 						<input type="text" name='postfixRelayhost' value='{$postfixRelayhost}' 
-									title='{t}Relay messages to following host.{/t}'>
+									title='{t}Relay messages to following host:{/t}'>
 					</td>
 				</tr>
 			</table>
@@ -72,7 +72,7 @@
                 <tr>
                     <td>
                         {t}Domains to accept mail for{/t}<br>
-                        <select name='Select_postfixMyDestinations[]' multiple size=6 style='width:100%;' title='{t}Postfix is responsilbe for the follwing domains.{/t}'>
+                        <select name='Select_postfixMyDestinations[]' multiple size=6 style='width:100%;' title='{t}Postfix is responsible for the following domains:{/t}'>
                             {html_options options=$postfixMyDestinations}
                         </select>
                         <input type="text" name="NewString_postfixMyDestinations" value="">
@@ -89,7 +89,7 @@
                         {t}Transports{/t}<br>
 						{$Div_postfixTransportTable}
                         <input type="text" name="Source_postfixTransportTable" value="">
-                        <select name='TransportProtocol' title='{t}Select a transport protocoll.{/t}'>
+                        <select name='TransportProtocol' title='{t}Select a transport protocol.{/t}'>
                             {html_options options=$TransportProtocols}
                         </select>
                         <input type="text" name="Destination_postfixTransportTable" value="">
