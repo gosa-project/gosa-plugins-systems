@@ -230,6 +230,7 @@ attributetype ( 1.3.6.1.4.1.10098.1.1.12.37 NAME 'gosaSnapshotTimestamp'
 attributetype ( 1.3.6.1.4.1.10098.1.1.12.38 NAME 'gosaSnapshotDN'
         DESC 'Original DN of saved object'
         EQUALITY caseIgnoreMatch
+	SUBSTR caseIgnoreSubstringsMatch
         SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 SINGLE-VALUE)
 
 attributetype ( 1.3.6.1.4.1.10098.1.1.12.39 NAME 'gosaSnapshotData'
