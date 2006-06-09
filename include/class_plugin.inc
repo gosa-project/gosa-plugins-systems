@@ -983,6 +983,25 @@ class plugin
     return $reason;
   }
 
+
+  /* Create a snapshot of the current object */
+  function create_snapshot($type= "snapshot", $description= "")
+  {
+    $ldap= $this->config->get_ldap_link();
+
+    if ($ldap->dn_exists($this->$dn)){
+      $data= preg_replace('/^dn:.*\n/', '', $ldap->gen_ldif($this->dn));
+      $target= array();
+      $target['objectClass']= array("top", "gosaObjectSnapshot");
+      $target['gosaSnapshotData']= gzcompress($data, 6);
+      $target['gosaSnapshotType']= $type;
+      list($usec, $sec)= explode(" ", microtime());
+      $target['gosaShapshotTimestamp']= preg_replace("/\./", "", $sec.$usec);
+      $target['gosaShapshotDN']= $this->dn;
+      print_a($target);
+    }
+  }
+
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
