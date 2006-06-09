@@ -191,8 +191,8 @@ Schnellsuche
 Filter anwenden
 \emph default 
 .
-\layout Paragraph
-\added_space_top medskip 
+\layout Subsection*
+
 Eine Anwendung hinzufügen / Eine bestehende Anwendung bearbeiten
 \layout Standard
 

@@ -2313,7 +2313,7 @@ Konnektivität
 
 Unter diesem Reiter finden sich diverse Möglichkeiten, um die Zugriffsmöglichkei
 ten des Benutzers zu erweitern:
-\layout Subparagraph*
+\layout Subsubsection
 
 Proxy Konto
 \layout Standard
@@ -2349,8 +2349,8 @@ Proxynutzung durch Kontingent einschränken
 : Mit dieser Option können Sie die maximal übertragene Menge für einen Zeitraum
  für den Benutzer festlegen.
  Wenn die Menge erreicht ist, kann der Benutzer keine Seiten mehr aufrufen.
-\layout Subparagraph
-\added_space_top smallskip 
+\layout Subsubsection
+
 FTP Konto
 \layout Standard
 
@@ -2424,31 +2424,29 @@ Temporäres Abschalten des FTP-Zugriffs: Mit dieser Option können Sie den
  Zugriff auf den FTP-Server deaktivieren, ohne dabei die vorgenommenen Einstellu
 ngen zu verlieren.
 \end_deeper 
-\layout Subparagraph
-\added_space_top smallskip 
+\layout Subsubsection
+
 WebDAV-Konto
 \layout Standard
 
 Mit diesem Konto können Sie dem Benutzer den Zugriff auf den WebDAV-Server
  erlauben.
-\layout Subparagraph
-\added_space_top smallskip 
+\layout Subsubsection
+
 phpGroupware-Konto
 \layout Standard
 
 Mit diesem Konto können Sie dem Benutzer den Zugriff auf den phpGroupware-Server
  erlauben.
-\layout Subparagraph
-\added_space_top smallskip 
+\layout Subsubsection
+
 Intranet-Konto
 \layout Standard
 \added_space_bottom smallskip 
 Mit diesem Konto können Sie dem Benutzer den Zugriff auf den Intranet-Server
  erlauben.
-\layout Standard
+\layout Subsubsection
 
-
-\series bold 
 Opengroupware
 \layout Standard
 
@@ -2485,28 +2483,22 @@ Gesperrt
 Teams
 \emph default 
 : Aktivieren Sie die Teams, denen der Benutzer angehören soll.
-\layout Standard
+\layout Subsubsection
 
-
-\series bold 
 PPTP-Konto
 \layout Standard
 \added_space_bottom smallskip 
 Mit diesem Konto können Sie dem Benutzer den VPN-Zugriff via PPTP erlauben.
-\layout Standard
+\layout Subsubsection
 
-
-\series bold 
 PHPScheduleit-Konto
 \layout Standard
 \added_space_bottom smallskip 
 Mit diesem Konto können Sie dem Benutzer den Zugriff auf den PHPscheduleit-Serve
 r erlauben:
-\layout Standard
+\layout Subsubsection
 
-
-\series bold 
-GLPI account
+GLPI-Konto
 \layout Standard
 
 If you activated the GLPI option, the user will access GLPI software.

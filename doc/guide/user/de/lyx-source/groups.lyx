@@ -435,7 +435,7 @@ In der rechten, oberen Ecke findet sich der komplette dn der aktuell geöffneten
 \layout Subsection
 \pagebreak_top 
 Allgemein
-\layout Itemize
+\layout Standard
 
 
 \begin_inset  Tabular
@@ -705,7 +705,7 @@ Freigaben
 Anmelde-Skripte
 \layout Subsubsection
 \added_space_top medskip 
-Hotplug-Geräate
+Hotplug-Geräte
 \layout Subsubsection
 \added_space_top medskip 
 Drucker
