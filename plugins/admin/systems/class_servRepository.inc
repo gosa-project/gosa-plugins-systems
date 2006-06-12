@@ -404,6 +404,7 @@ class servrepository extends plugin
   {
     if($value == "none") return;
     if(!$this->initially_was_account) return;
+    if(empty($this->StatusFlag)) return;
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->dn);
     $ldap->cat($this->dn,array("objectClass"));
