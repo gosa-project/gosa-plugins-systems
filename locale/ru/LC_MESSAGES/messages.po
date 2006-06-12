@@ -28,9 +28,9 @@ msgstr "Дополнительно"
 
 #: contrib/gosa.conf:76 contrib/gosa.conf:90 contrib/gosa.conf:99
 #: contrib/gosa.conf:105 contrib/gosa.conf:110 contrib/gosa.conf:116
-#: contrib/gosa.conf:125 contrib/gosa.conf:140 contrib/gosa.conf:150
-#: contrib/gosa.conf:155 contrib/gosa.conf:176 contrib/gosa.conf:181
-#: contrib/gosa.conf:186 contrib/gosa.conf:191
+#: contrib/gosa.conf:125 contrib/gosa.conf:136 contrib/gosa.conf:146
+#: contrib/gosa.conf:151 contrib/gosa.conf:175 contrib/gosa.conf:180
+#: contrib/gosa.conf:185 contrib/gosa.conf:190
 #: plugins/personal/mail/generic.tpl:4 plugins/personal/posix/generic.tpl:4
 #: plugins/personal/samba/samba2.tpl:6 plugins/personal/samba/samba3.tpl:6
 #: plugins/personal/generic/class_user.inc:16
@@ -134,9 +134,9 @@ msgstr ""
 
 #: contrib/gosa.conf:86 contrib/gosa.conf:95 contrib/gosa.conf:101
 #: contrib/gosa.conf:106 contrib/gosa.conf:112 contrib/gosa.conf:121
-#: contrib/gosa.conf:136 contrib/gosa.conf:146 contrib/gosa.conf:151
-#: contrib/gosa.conf:156 contrib/gosa.conf:177 contrib/gosa.conf:182
-#: contrib/gosa.conf:187 contrib/gosa.conf:192
+#: contrib/gosa.conf:132 contrib/gosa.conf:142 contrib/gosa.conf:147
+#: contrib/gosa.conf:152 contrib/gosa.conf:176 contrib/gosa.conf:181
+#: contrib/gosa.conf:186 contrib/gosa.conf:191
 msgid "References"
 msgstr "Ссылки"
 
@@ -150,7 +150,7 @@ msgid "ACL"
 msgstr "Доступ"
 
 #: contrib/gosa.conf:100 plugins/admin/applications/generic.tpl:73
-#: plugins/admin/systems/class_servRepository.inc:253
+#: plugins/admin/systems/class_servRepository.inc:246
 #: plugins/admin/systems/printerPPDDialog.tpl:17
 #: plugins/admin/ogroups/phonequeue.tpl:31
 #: plugins/gofon/conference/generic.tpl:92
@@ -162,17 +162,17 @@ msgstr "Параметры"
 msgid "Parameter"
 msgstr "Параметры загрузки"
 
-#: contrib/gosa.conf:117 contrib/gosa.conf:126 contrib/gosa.conf:141
+#: contrib/gosa.conf:117 contrib/gosa.conf:126 contrib/gosa.conf:137
 #: plugins/admin/ogroups/tabs_ogroups.inc:98
 msgid "Startup"
 msgstr "Запуск"
 
-#: contrib/gosa.conf:118 contrib/gosa.conf:142
+#: contrib/gosa.conf:118 contrib/gosa.conf:138
 #: plugins/admin/ogroups/tabs_ogroups.inc:102
 msgid "Devices"
 msgstr "Устройства"
 
-#: contrib/gosa.conf:119 contrib/gosa.conf:143
+#: contrib/gosa.conf:119 contrib/gosa.conf:139
 #: plugins/personal/environment/environment.tpl:171
 #: plugins/admin/systems/class_systemManagement.inc:757
 #: plugins/admin/ogroups/class_ogroupManagement.inc:376
@@ -180,7 +180,7 @@ msgstr "Устройства"
 msgid "Printer"
 msgstr "Принтер"
 
-#: contrib/gosa.conf:120 contrib/gosa.conf:135 contrib/gosa.conf:144
+#: contrib/gosa.conf:120 contrib/gosa.conf:131 contrib/gosa.conf:140
 #: plugins/gofax/blocklists/generic.tpl:75
 #: plugins/addons/addressbook/contents.tpl:33
 #: plugins/addons/godfs/contents.tpl:22
@@ -204,22 +204,15 @@ msgstr "Информация"
 msgid "Services"
 msgstr "Сервисы"
 
-#: contrib/gosa.conf:131 contrib/gosa.conf:133
-#: plugins/admin/fai/faiPackage.tpl:29
-#: plugins/admin/systems/servRepositorySetup.tpl:1
-#, fuzzy
-msgid "Repository"
-msgstr "Повторить"
-
-#: contrib/gosa.conf:134 contrib/gosa.conf:145
+#: contrib/gosa.conf:130 contrib/gosa.conf:141
 msgid "FAI summary"
 msgstr ""
 
-#: contrib/gosa.conf:202
+#: contrib/gosa.conf:201
 msgid "OGo"
 msgstr ""
 
-#: contrib/gosa.conf:214 plugins/addons/ldapmanager/contentexportxls.tpl:19
+#: contrib/gosa.conf:213 plugins/addons/ldapmanager/contentexportxls.tpl:19
 #: plugins/addons/ldapmanager/contentexportxls.tpl:32
 #: plugins/addons/ldapmanager/contentexportxls.tpl:47
 #: plugins/addons/ldapmanager/contentexport.tpl:16
@@ -228,12 +221,12 @@ msgstr ""
 msgid "Export"
 msgstr "Экспорт"
 
-#: contrib/gosa.conf:215
+#: contrib/gosa.conf:214
 #, fuzzy
 msgid "Excel Export"
 msgstr "Экспорт"
 
-#: contrib/gosa.conf:216 plugins/personal/mail/generic.tpl:113
+#: contrib/gosa.conf:215 plugins/personal/mail/generic.tpl:113
 #: plugins/personal/environment/logonManagement.tpl:65
 #: plugins/addons/ldapmanager/contentimport.tpl:49
 #: plugins/addons/ldapmanager/contentcsv.tpl:109
@@ -242,17 +235,17 @@ msgstr "Экспорт"
 msgid "Import"
 msgstr "Импортировать"
 
-#: contrib/gosa.conf:217
+#: contrib/gosa.conf:216
 #, fuzzy
 msgid "CSV Import"
 msgstr "Импортировать"
 
-#: contrib/gosa.conf:221
+#: contrib/gosa.conf:220
 #, fuzzy
 msgid "Partitions"
 msgstr "Назначение"
 
-#: contrib/gosa.conf:225 plugins/personal/environment/logonManagement.tpl:55
+#: contrib/gosa.conf:224 plugins/personal/environment/logonManagement.tpl:55
 #: plugins/admin/fai/faiScriptEntry.tpl:50
 #: plugins/admin/fai/faiHookEntry.tpl:50
 #: plugins/admin/applications/generic.tpl:99
@@ -260,68 +253,68 @@ msgstr "Назначение"
 msgid "Script"
 msgstr "Путь к сценариям"
 
-#: contrib/gosa.conf:229 plugins/admin/fai/class_faiSummaryTab.inc:40
+#: contrib/gosa.conf:228 plugins/admin/fai/class_faiSummaryTab.inc:40
 msgid "Hooks"
 msgstr ""
 
-#: contrib/gosa.conf:233 plugins/admin/fai/class_faiSummaryTab.inc:41
+#: contrib/gosa.conf:232 plugins/admin/fai/class_faiSummaryTab.inc:41
 #, fuzzy
 msgid "Variables"
 msgstr "Переменная"
 
-#: contrib/gosa.conf:237 plugins/admin/fai/class_faiSummaryTab.inc:42
+#: contrib/gosa.conf:236 plugins/admin/fai/class_faiSummaryTab.inc:42
 #, fuzzy
 msgid "Templates"
 msgstr "Шаблон"
 
-#: contrib/gosa.conf:241 plugins/personal/environment/environment.tpl:7
+#: contrib/gosa.conf:240 plugins/personal/environment/environment.tpl:7
 #: plugins/admin/fai/class_faiSummaryTab.inc:45
 #, fuzzy
 msgid "Profiles"
 msgstr "Путь к профилю"
 
-#: contrib/gosa.conf:242 plugins/admin/ogroups/tabs_ogroups.inc:107
+#: contrib/gosa.conf:241 plugins/admin/ogroups/tabs_ogroups.inc:107
 msgid "Summary"
 msgstr ""
 
-#: contrib/gosa.conf:246
+#: contrib/gosa.conf:245
 #, fuzzy
 msgid "Packages"
 msgstr "Показать телефоны"
 
-#: contrib/gosa.conf:272
+#: contrib/gosa.conf:271
 msgid "{LOCATIONNAME}"
 msgstr ""
 
-#: contrib/gosa.conf:290 plugins/admin/ogroups/class_phonequeue.inc:164
+#: contrib/gosa.conf:289 plugins/admin/ogroups/class_phonequeue.inc:164
 msgid "German"
 msgstr "Немецкий"
 
-#: contrib/gosa.conf:291
+#: contrib/gosa.conf:290
 msgid "Russian"
 msgstr "Русский"
 
-#: contrib/gosa.conf:292
+#: contrib/gosa.conf:291
 msgid "Spanish"
 msgstr "Испанский"
 
-#: contrib/gosa.conf:293
+#: contrib/gosa.conf:292
 msgid "French"
 msgstr "Французский"
 
-#: contrib/gosa.conf:294
+#: contrib/gosa.conf:293
 msgid "Dutch"
 msgstr "Датский"
 
-#: contrib/gosa.conf:295
+#: contrib/gosa.conf:294
 msgid "English"
 msgstr "Английский"
 
-#: contrib/gosa.conf:296
+#: contrib/gosa.conf:295
 msgid "Italian"
 msgstr ""
 
-#: contrib/gosa.conf:297
+#: contrib/gosa.conf:296
 #, fuzzy
 msgid "Polish"
 msgstr "Английский"
@@ -512,6 +505,7 @@ msgstr ""
 #: plugins/admin/systems/servRepositorySetup.tpl:43
 #: plugins/admin/systems/goMailServer.tpl:169
 #: plugins/admin/systems/goImapServer.tpl:96
+#: plugins/admin/systems/servdns.tpl:23
 #: plugins/admin/systems/goKrbServer.tpl:21
 #: plugins/admin/systems/goSyslogServer.tpl:8
 #: plugins/admin/systems/servnfs.tpl:121
@@ -524,6 +518,7 @@ msgstr ""
 #: plugins/admin/systems/glpiAttachmentEdit.tpl:70
 #: plugins/admin/systems/glpiSelectUser.tpl:51
 #: plugins/admin/systems/remove.tpl:16
+#: plugins/admin/systems/servRepository.tpl:66
 #: plugins/admin/systems/glpiAttachmentPool.tpl:52
 #: plugins/admin/systems/servdnseditzone.tpl:120
 #: plugins/admin/systems/remove_glpi.tpl:16
@@ -791,7 +786,7 @@ msgstr "Добавить локально"
 #: plugins/personal/posix/generic.tpl:74
 #: plugins/personal/posix/generic.tpl:104
 #: plugins/personal/samba/samba3.tpl:332
-#: plugins/personal/environment/class_environment.inc:604
+#: plugins/personal/environment/class_environment.inc:606
 #: plugins/personal/environment/environment.tpl:137
 #: plugins/personal/environment/environment.tpl:165
 #: plugins/personal/environment/environment.tpl:181
@@ -2195,7 +2190,7 @@ msgstr ""
 "ниже."
 
 #: plugins/personal/environment/class_environment.inc:448
-#: plugins/personal/environment/class_environment.inc:751
+#: plugins/personal/environment/class_environment.inc:753
 #: plugins/admin/systems/class_glpiDeviceManagement.inc:406
 #, fuzzy
 msgid "None"
@@ -2209,70 +2204,70 @@ msgstr "нет"
 msgid "You must specify a valid mount point."
 msgstr "Введите корректное имя пользователя!"
 
-#: plugins/personal/environment/class_environment.inc:591
-#: plugins/personal/environment/class_environment.inc:592
-#: plugins/personal/environment/class_environment.inc:600
-#: plugins/personal/environment/class_environment.inc:601
+#: plugins/personal/environment/class_environment.inc:593
+#: plugins/personal/environment/class_environment.inc:594
+#: plugins/personal/environment/class_environment.inc:602
+#: plugins/personal/environment/class_environment.inc:603
 #, fuzzy
 msgid "Reset password hash"
 msgstr "Изменить пароль"
 
-#: plugins/personal/environment/class_environment.inc:605
+#: plugins/personal/environment/class_environment.inc:607
 #, fuzzy
 msgid "Delete share entry"
 msgstr "Удалить"
 
-#: plugins/personal/environment/class_environment.inc:754
+#: plugins/personal/environment/class_environment.inc:756
 #, php-format
 msgid ""
 "The selected kiosk profile '%s' is no longer available, setting current "
 "profile to 'none'."
 msgstr ""
 
-#: plugins/personal/environment/class_environment.inc:806
+#: plugins/personal/environment/class_environment.inc:808
 #, fuzzy
 msgid "Removing environment information failed"
 msgstr "Удалить параметры"
 
-#: plugins/personal/environment/class_environment.inc:859
+#: plugins/personal/environment/class_environment.inc:861
 #, fuzzy
 msgid "Please set a valid profile quota size."
 msgstr "Пожалуйста, укажите корректную кадровую синхронизацию."
 
-#: plugins/personal/environment/class_environment.inc:866
+#: plugins/personal/environment/class_environment.inc:868
 msgid ""
 "You need to setup a valid posix extension in order to enable evironment "
 "features."
 msgstr ""
 
-#: plugins/personal/environment/class_environment.inc:904
+#: plugins/personal/environment/class_environment.inc:906
 msgid "Can't save new kiosk profiles, possibly permission denied for folder"
 msgstr ""
 
-#: plugins/personal/environment/class_environment.inc:998
+#: plugins/personal/environment/class_environment.inc:1000
 msgid "Error while writing printer"
 msgstr ""
 
-#: plugins/personal/environment/class_environment.inc:1068
+#: plugins/personal/environment/class_environment.inc:1070
 msgid "Error while writing printer settings"
 msgstr ""
 
-#: plugins/personal/environment/class_environment.inc:1137
+#: plugins/personal/environment/class_environment.inc:1139
 #, fuzzy
 msgid "Adding environment information failed"
 msgstr "Изменить свойства"
 
-#: plugins/personal/environment/class_environment.inc:1150
+#: plugins/personal/environment/class_environment.inc:1152
 #, fuzzy
 msgid "group share"
 msgstr "группы"
 
-#: plugins/personal/environment/class_environment.inc:1182
+#: plugins/personal/environment/class_environment.inc:1184
 #, fuzzy
 msgid "Administrator"
 msgstr "Администрирование"
 
-#: plugins/personal/environment/class_environment.inc:1187
+#: plugins/personal/environment/class_environment.inc:1189
 msgid "Default printer"
 msgstr "Принтер по умолчанию"
 
@@ -2367,7 +2362,7 @@ msgstr "Разрешение"
 #: plugins/admin/systems/workstationStartup.tpl:129
 #: plugins/admin/systems/servservice.tpl:11
 #: plugins/admin/systems/terminalStartup.tpl:66
-#: plugins/admin/systems/class_goShareServer.inc:147
+#: plugins/admin/systems/class_goShareServer.inc:148
 #, fuzzy
 msgid "Shares"
 msgstr "сброс"
@@ -2612,6 +2607,7 @@ msgstr "Устройства"
 #: plugins/admin/systems/goFonServer.tpl:24
 #: plugins/admin/systems/goMailServer.tpl:167
 #: plugins/admin/systems/goImapServer.tpl:94
+#: plugins/admin/systems/servdns.tpl:21
 #: plugins/admin/systems/goKrbServer.tpl:19
 #: plugins/admin/systems/goSyslogServer.tpl:6
 #: plugins/admin/systems/servnfs.tpl:120
@@ -2619,6 +2615,7 @@ msgstr "Устройства"
 #: plugins/admin/systems/servkolab.tpl:203
 #: plugins/admin/systems/goGlpiServer.tpl:24
 #: plugins/admin/systems/glpiAttachmentEdit.tpl:69
+#: plugins/admin/systems/servRepository.tpl:64
 #: plugins/admin/systems/servdnseditzone.tpl:119
 #: plugins/admin/systems/goTerminalServer.tpl:17
 #: plugins/admin/systems/goLdapServer.tpl:7
@@ -5434,7 +5431,7 @@ msgstr "Указанное имя уже используется."
 
 #: plugins/admin/fai/class_faiManagement.inc:322
 #: plugins/admin/systems/class_glpiAttachmentPool.inc:351
-#: plugins/admin/systems/class_servRepository.inc:211
+#: plugins/admin/systems/class_servRepository.inc:204
 #, fuzzy
 msgid "This name is already in use."
 msgstr "Указанное имя уже используется."
@@ -5730,12 +5727,18 @@ msgstr ""
 msgid "Saving FAI package entry failed"
 msgstr ""
 
+#: plugins/admin/fai/faiPackage.tpl:29
+#: plugins/admin/systems/servRepositorySetup.tpl:1
+#, fuzzy
+msgid "Repository"
+msgstr "Повторить"
+
 #: plugins/admin/fai/faiPackage.tpl:33 plugins/admin/fai/faiPackageNew.tpl:21
 #: plugins/admin/fai/faiPackageNew.tpl:24
 #: plugins/admin/systems/workstationStartup.tpl:45
 #: plugins/admin/systems/workstationStartup.tpl:75
 #: plugins/admin/systems/servRepositorySetup.tpl:17
-#: plugins/admin/systems/class_servRepository.inc:251
+#: plugins/admin/systems/class_servRepository.inc:244
 #, fuzzy
 msgid "Release"
 msgstr "Набор правил"
@@ -6540,7 +6543,7 @@ msgid "Access"
 msgstr "Адрес"
 
 #: plugins/admin/fai/faiTemplateEntry.tpl:86
-#: plugins/admin/systems/class_servDNS.inc:161
+#: plugins/admin/systems/class_servDNS.inc:167
 #, fuzzy
 msgid "Class"
 msgstr "Выберите тип мыши"
@@ -8129,7 +8132,7 @@ msgid "Zone"
 msgstr "телефоны"
 
 #: plugins/admin/systems/network.tpl:58
-#: plugins/admin/systems/class_servDNS.inc:160
+#: plugins/admin/systems/class_servDNS.inc:166
 #: plugins/admin/systems/servdnseditzone.tpl:85
 msgid "TTL"
 msgstr ""
@@ -8144,36 +8147,36 @@ msgstr "Каталог"
 msgid "FAX service"
 msgstr "LDAP-сервер"
 
-#: plugins/admin/systems/class_goFaxServer.inc:48
+#: plugins/admin/systems/class_goFaxServer.inc:49
 #, fuzzy
 msgid "FAX database configuration"
 msgstr "Базы данных"
 
-#: plugins/admin/systems/class_goFaxServer.inc:126
-#: plugins/admin/systems/class_goGlpiServer.inc:128
+#: plugins/admin/systems/class_goFaxServer.inc:134
+#: plugins/admin/systems/class_goGlpiServer.inc:136
 #, fuzzy
 msgid "The attribute user is empty or contains invalid characters."
 msgstr "Неправильное указание таймаута '%s'"
 
-#: plugins/admin/systems/class_goFaxServer.inc:129
-#: plugins/admin/systems/class_goFonServer.inc:132
+#: plugins/admin/systems/class_goFaxServer.inc:137
+#: plugins/admin/systems/class_goFonServer.inc:140
 #, fuzzy, php-format
 msgid "The attribute password is empty or contains invalid characters."
 msgstr "Неправильное указание таймаута '%s'"
 
-#: plugins/admin/systems/class_goFaxServer.inc:177
-#: plugins/admin/systems/class_goFonServer.inc:187
-#: plugins/admin/systems/class_goNtpServer.inc:181
-#: plugins/admin/systems/class_goKrbServer.inc:182
-#: plugins/admin/systems/class_goGlpiServer.inc:179
-#: plugins/admin/systems/class_goCupsServer.inc:168
-#: plugins/admin/systems/class_goTerminalServer.inc:185
-#: plugins/admin/systems/class_goLdapServer.inc:173
-#: plugins/admin/systems/class_goSyslogServer.inc:167
-#: plugins/admin/systems/class_goLogDBServer.inc:177
-#: plugins/admin/systems/class_goMailServer.inc:729
-#: plugins/admin/systems/class_goImapServer.inc:236
-#: plugins/admin/systems/class_goShareServer.inc:345
+#: plugins/admin/systems/class_goFaxServer.inc:185
+#: plugins/admin/systems/class_goFonServer.inc:195
+#: plugins/admin/systems/class_goNtpServer.inc:189
+#: plugins/admin/systems/class_goKrbServer.inc:190
+#: plugins/admin/systems/class_goGlpiServer.inc:187
+#: plugins/admin/systems/class_goCupsServer.inc:176
+#: plugins/admin/systems/class_goTerminalServer.inc:193
+#: plugins/admin/systems/class_goLdapServer.inc:181
+#: plugins/admin/systems/class_goSyslogServer.inc:175
+#: plugins/admin/systems/class_goLogDBServer.inc:185
+#: plugins/admin/systems/class_goMailServer.inc:737
+#: plugins/admin/systems/class_goImapServer.inc:243
+#: plugins/admin/systems/class_goShareServer.inc:353
 #, fuzzy, php-format
 msgid ""
 "Command '%s', specified as ACTION_HOOK for plugin '%s' doesn't seem to exist."
@@ -8265,7 +8268,7 @@ msgstr "Служба SSH"
 
 #: plugins/admin/systems/info.tpl:119
 #: plugins/admin/systems/class_goCupsServer.inc:26
-#: plugins/admin/systems/class_goCupsServer.inc:45
+#: plugins/admin/systems/class_goCupsServer.inc:46
 msgid "Print service"
 msgstr "Служба печати"
 
@@ -9209,12 +9212,17 @@ msgstr ""
 msgid "Mountpoint"
 msgstr "Мониторинг"
 
-#: plugins/admin/systems/class_servDNS.inc:67
+#: plugins/admin/systems/class_servDNS.inc:32
+#, fuzzy
+msgid "Domain name system service"
+msgstr "Сканер"
+
+#: plugins/admin/systems/class_servDNS.inc:73
 #: plugins/admin/systems/class_inventory.inc:36
 msgid "Remove DNS service"
 msgstr "Удалить сервис DNS"
 
-#: plugins/admin/systems/class_servDNS.inc:68
+#: plugins/admin/systems/class_servDNS.inc:74
 #: plugins/admin/systems/class_inventory.inc:37
 #, fuzzy
 msgid ""
@@ -9223,12 +9231,12 @@ msgstr ""
 "В этой учетной записи есть настройки факса. Вы можете удалить их, щелкнув "
 "ниже."
 
-#: plugins/admin/systems/class_servDNS.inc:70
+#: plugins/admin/systems/class_servDNS.inc:76
 #: plugins/admin/systems/class_inventory.inc:39
 msgid "Add DNS service"
 msgstr "Добавить сервис DNS"
 
-#: plugins/admin/systems/class_servDNS.inc:71
+#: plugins/admin/systems/class_servDNS.inc:77
 #: plugins/admin/systems/class_inventory.inc:40
 #, fuzzy
 msgid ""
@@ -9237,37 +9245,42 @@ msgstr ""
 "В этой учетной записи нет настроек факса. Вы можете добавить их, щелкнув "
 "ниже."
 
-#: plugins/admin/systems/class_servDNS.inc:159
+#: plugins/admin/systems/class_servDNS.inc:165
 #, fuzzy
 msgid "Reverse zone"
 msgstr "Ссылки"
 
-#: plugins/admin/systems/class_servDNS.inc:223
+#: plugins/admin/systems/class_servDNS.inc:229
 #, php-format
 msgid ""
 "Can't delete the selected zone, because it is still in use by these entry/"
 "entries '%s'"
 msgstr ""
 
-#: plugins/admin/systems/class_servDNS.inc:261
+#: plugins/admin/systems/class_servDNS.inc:267
 #, fuzzy
 msgid "Removing DNS service failed"
 msgstr "Удалить сервис DNS"
 
-#: plugins/admin/systems/class_servDNS.inc:282
+#: plugins/admin/systems/class_servDNS.inc:288
 #, fuzzy
 msgid "Updating DNS service failed"
 msgstr "Удалить сервис DNS"
 
-#: plugins/admin/systems/class_servDNS.inc:291
+#: plugins/admin/systems/class_servDNS.inc:297
 #, fuzzy
 msgid "Removing DNS entries failed"
 msgstr "Удалить сервис DNS"
 
-#: plugins/admin/systems/class_servDNS.inc:312
+#: plugins/admin/systems/class_servDNS.inc:318
 #, fuzzy
 msgid "Saving DNS entries failed"
 msgstr "UNIX аккаунт"
+
+#: plugins/admin/systems/class_servDNS.inc:356
+#, fuzzy
+msgid "DNS service"
+msgstr "Добавить сервис DNS"
 
 #: plugins/admin/systems/glpiDeviceManagement.tpl:6
 #, fuzzy
@@ -9290,7 +9303,7 @@ msgid "Regular expression for matching device names"
 msgstr "Регулярное выражение, соответствующее именам пользователей"
 
 #: plugins/admin/systems/class_servService.inc:320
-#: plugins/admin/systems/class_goTerminalServer.inc:131
+#: plugins/admin/systems/class_goTerminalServer.inc:139
 msgid "Terminal server, must have fontpath specified."
 msgstr ""
 
@@ -9300,19 +9313,19 @@ msgid "Saving server service object failed"
 msgstr "Атрибуты UNIX"
 
 #: plugins/admin/systems/class_servService.inc:410
-#: plugins/admin/systems/class_goShareServer.inc:279
+#: plugins/admin/systems/class_goShareServer.inc:287
 #, fuzzy
 msgid "Creating mount container failed"
 msgstr "Объект группы"
 
 #: plugins/admin/systems/class_servService.inc:424
-#: plugins/admin/systems/class_goShareServer.inc:293
+#: plugins/admin/systems/class_goShareServer.inc:301
 #, fuzzy
 msgid "Removing mount container failed"
 msgstr "Удалить настройки эл. почты"
 
 #: plugins/admin/systems/class_servService.inc:436
-#: plugins/admin/systems/class_goShareServer.inc:305
+#: plugins/admin/systems/class_goShareServer.inc:313
 #, fuzzy
 msgid "Saving mount container failed"
 msgstr "Удалить настройки эл. почты"
@@ -9455,8 +9468,8 @@ msgid "Parent server"
 msgstr "Служба печати"
 
 #: plugins/admin/systems/servRepositorySetup.tpl:33
-#: plugins/admin/systems/class_servRepository.inc:252
-#: plugins/admin/systems/class_servRepository.inc:273
+#: plugins/admin/systems/class_servRepository.inc:245
+#: plugins/admin/systems/class_servRepository.inc:266
 #, fuzzy
 msgid "Sections"
 msgstr "Действие"
@@ -9970,18 +9983,18 @@ msgid "The attribute '%s' is empty or contains invalid characters."
 msgstr "Неправильное указание таймаута '%s'"
 
 #: plugins/admin/systems/class_servDB.inc:152
-#: plugins/admin/systems/class_goImapServer.inc:175
+#: plugins/admin/systems/class_goImapServer.inc:182
 #, php-format
 msgid "The imap connect string needs to be in the form '%s'."
 msgstr ""
 
 #: plugins/admin/systems/class_servDB.inc:156
-#: plugins/admin/systems/class_goImapServer.inc:179
+#: plugins/admin/systems/class_goImapServer.inc:186
 msgid "The sieve port needs to be numeric."
 msgstr ""
 
 #: plugins/admin/systems/class_servDB.inc:167
-#: plugins/admin/systems/class_goKrbServer.inc:127
+#: plugins/admin/systems/class_goKrbServer.inc:135
 #, fuzzy, php-format
 msgid "The specified kerberos password is empty."
 msgstr "Значение поля \"Файлы\" некорректно."
@@ -10001,24 +10014,24 @@ msgstr "Почтовые настройки пользователя"
 msgid "VoIP service"
 msgstr "LDAP-сервер"
 
-#: plugins/admin/systems/class_goFonServer.inc:51
+#: plugins/admin/systems/class_goFonServer.inc:52
 #: plugins/admin/systems/servdb.tpl:42
 #, fuzzy
 msgid "Asterisk management"
 msgstr "Управление системами"
 
-#: plugins/admin/systems/class_goFonServer.inc:129
+#: plugins/admin/systems/class_goFonServer.inc:137
 #, fuzzy, php-format
 msgid "The attribute DB user is empty or contains invalid characters."
 msgstr "Неправильное указание таймаута '%s'"
 
-#: plugins/admin/systems/class_goFonServer.inc:135
+#: plugins/admin/systems/class_goFonServer.inc:143
 #, fuzzy, php-format
 msgid ""
 "The attribute local dial prefix is empty or contains invalid characters."
 msgstr "Неправильное указание таймаута '%s'"
 
-#: plugins/admin/systems/class_goFonServer.inc:138
+#: plugins/admin/systems/class_goFonServer.inc:146
 #, fuzzy, php-format
 msgid ""
 "The attribute country dial prefix is empty or contains invalid characters."
@@ -10034,7 +10047,7 @@ msgstr "телефоны"
 msgid "Time service"
 msgstr "Сервисы"
 
-#: plugins/admin/systems/class_goNtpServer.inc:69
+#: plugins/admin/systems/class_goNtpServer.inc:70
 #, fuzzy
 msgid "NTP service"
 msgstr "Сервер NTP"
@@ -10221,74 +10234,46 @@ msgstr ""
 msgid "Warn users when using more than %s%% of their mail quota"
 msgstr ""
 
-#: plugins/admin/systems/class_servKolab.inc:120
-#, fuzzy
-msgid "Remove Kolab extension"
-msgstr "Удалить параметры"
-
-#: plugins/admin/systems/class_servKolab.inc:120
-#, fuzzy
-msgid ""
-"This server has kolab features enabled. You can disable them by clicking "
-"below."
-msgstr ""
-"В этой учетной записи есть настройки факса. Вы можете удалить их, щелкнув "
-"ниже."
-
-#: plugins/admin/systems/class_servKolab.inc:123
-#, fuzzy
-msgid "Add Kolab service"
-msgstr "Добавить сервис DNS"
-
-#: plugins/admin/systems/class_servKolab.inc:123
-#, fuzzy
-msgid ""
-"This server has kolab features disabled. You can enable them by clicking "
-"below."
-msgstr ""
-"В этой учетной записи нет настроек факса. Вы можете добавить их, щелкнув "
-"ниже."
-
-#: plugins/admin/systems/class_servKolab.inc:204
+#: plugins/admin/systems/class_servKolab.inc:191
 #, fuzzy
 msgid "Removing kolab host entry failed"
 msgstr "Показать объекты адресной книги"
 
-#: plugins/admin/systems/class_servKolab.inc:220
+#: plugins/admin/systems/class_servKolab.inc:207
 #, fuzzy
 msgid "Removing server from kolab object failed"
 msgstr "Удалить телефонный аккаунт"
 
-#: plugins/admin/systems/class_servKolab.inc:259
+#: plugins/admin/systems/class_servKolab.inc:246
 msgid "Future days in Free/Busy settings must be set."
 msgstr ""
 
-#: plugins/admin/systems/class_servKolab.inc:261
+#: plugins/admin/systems/class_servKolab.inc:248
 msgid "Future days in Free/Busy settings must be a positive value."
 msgstr ""
 
-#: plugins/admin/systems/class_servKolab.inc:265
+#: plugins/admin/systems/class_servKolab.inc:252
 msgid "The given Quota settings value must be a number."
 msgstr ""
 
-#: plugins/admin/systems/class_servKolab.inc:267
+#: plugins/admin/systems/class_servKolab.inc:254
 msgid "Please choose a value between 1 and 100 for Quota settings."
 msgstr ""
 
-#: plugins/admin/systems/class_servKolab.inc:269
+#: plugins/admin/systems/class_servKolab.inc:256
 msgid "Future days must be a value."
 msgstr ""
 
-#: plugins/admin/systems/class_servKolab.inc:273
+#: plugins/admin/systems/class_servKolab.inc:260
 msgid "No SMTP privileged networks set."
 msgstr ""
 
-#: plugins/admin/systems/class_servKolab.inc:345
+#: plugins/admin/systems/class_servKolab.inc:332
 #, fuzzy
 msgid "Saving server to kolab object failed"
 msgstr "Моя учетная запись"
 
-#: plugins/admin/systems/class_servKolab.inc:366
+#: plugins/admin/systems/class_servKolab.inc:354
 #, fuzzy
 msgid "Kolab mail service"
 msgstr "Добавить сервис DNS"
@@ -10315,7 +10300,7 @@ msgstr ""
 
 #: plugins/admin/systems/servdb.tpl:100
 #: plugins/admin/systems/class_goLogDBServer.inc:29
-#: plugins/admin/systems/class_goLogDBServer.inc:48
+#: plugins/admin/systems/class_goLogDBServer.inc:49
 #, fuzzy
 msgid "Logging database"
 msgstr "база пользователя"
@@ -10395,7 +10380,7 @@ msgid "Time Service"
 msgstr "Сервисы"
 
 #: plugins/admin/systems/servservice.tpl:61
-#: plugins/admin/systems/class_goLdapServer.inc:46
+#: plugins/admin/systems/class_goLdapServer.inc:47
 #, fuzzy
 msgid "LDAP Service"
 msgstr "LDAP-сервер"
@@ -10958,17 +10943,17 @@ msgstr "Тип"
 msgid "Kerberos service"
 msgstr "Kerberos"
 
-#: plugins/admin/systems/class_goKrbServer.inc:48
+#: plugins/admin/systems/class_goKrbServer.inc:49
 #, fuzzy
 msgid "Kerberos kadmin access informations"
 msgstr "Личная информация"
 
-#: plugins/admin/systems/class_goKrbServer.inc:130
+#: plugins/admin/systems/class_goKrbServer.inc:138
 #, fuzzy, php-format
 msgid "The specified kerberos admin is empty."
 msgstr "Значение поля \"Файлы\" некорректно."
 
-#: plugins/admin/systems/class_goKrbServer.inc:133
+#: plugins/admin/systems/class_goKrbServer.inc:141
 #, fuzzy, php-format
 msgid "The specified kerberos realm is empty."
 msgstr "Значение поля \"Файлы\" некорректно."
@@ -11114,41 +11099,20 @@ msgstr "подразделения"
 msgid "Please specify a valid name for this attachment."
 msgstr "Укажите корректный номер телефона."
 
-#: plugins/admin/systems/class_servRepository.inc:97
+#: plugins/admin/systems/class_servRepository.inc:35
+#: plugins/admin/systems/class_servRepository.inc:392
 #, fuzzy
-msgid "Remove FAI repository extension."
-msgstr "Удалить параметры"
+msgid "Repository service"
+msgstr "Служба печати"
 
-#: plugins/admin/systems/class_servRepository.inc:98
-#, fuzzy
-msgid ""
-"This server has FAI repository features enabled. You can disable them by "
-"clicking below."
-msgstr ""
-"В этой учетной записи есть настройки факса. Вы можете удалить их, щелкнув "
-"ниже."
-
-#: plugins/admin/systems/class_servRepository.inc:100
-msgid "Add FAI repository extension."
-msgstr ""
-
-#: plugins/admin/systems/class_servRepository.inc:101
-#, fuzzy
-msgid ""
-"This server has FAI repository features disabled. You can enable them by "
-"clicking below."
-msgstr ""
-"В этой учетной записи нет настроек факса. Вы можете добавить их, щелкнув "
-"ниже."
-
-#: plugins/admin/systems/class_servRepository.inc:144
+#: plugins/admin/systems/class_servRepository.inc:137
 #, php-format
 msgid ""
 "You can't delete this release, it is still used by these workstations [%s]. "
 "Please solve this dependencies first, to keep data base consistency."
 msgstr ""
 
-#: plugins/admin/systems/class_servRepository.inc:178
+#: plugins/admin/systems/class_servRepository.inc:171
 #, php-format
 msgid ""
 "Be careful editing this release, it is still used by these workstations [%s]."
@@ -11662,7 +11626,7 @@ msgstr "Сервер"
 
 #: plugins/admin/systems/goTerminalServer.tpl:1
 #: plugins/admin/systems/class_goTerminalServer.inc:29
-#: plugins/admin/systems/class_goTerminalServer.inc:48
+#: plugins/admin/systems/class_goTerminalServer.inc:49
 #, fuzzy
 msgid "Terminal service"
 msgstr "Терминальный сервер"
@@ -11871,12 +11835,12 @@ msgstr "Удалить сервис DNS"
 msgid "Inventory database"
 msgstr "Базы данных"
 
-#: plugins/admin/systems/class_goGlpiServer.inc:50
+#: plugins/admin/systems/class_goGlpiServer.inc:51
 #, fuzzy
 msgid "Glpi management"
 msgstr "Название"
 
-#: plugins/admin/systems/class_goGlpiServer.inc:131
+#: plugins/admin/systems/class_goGlpiServer.inc:139
 #, fuzzy
 msgid "The attribute database is empty or contains invalid characters."
 msgstr "Неправильное указание таймаута '%s'"
@@ -11896,11 +11860,11 @@ msgstr "Запуск"
 msgid "Restart"
 msgstr "Повторить"
 
-#: plugins/admin/systems/class_serverService.inc:261
+#: plugins/admin/systems/class_serverService.inc:262
 msgid "Can't set status while this server is not saved."
 msgstr ""
 
-#: plugins/admin/systems/class_serverService.inc:273
+#: plugins/admin/systems/class_serverService.inc:274
 #, php-format
 msgid "The specified method '%s' can't executed for services."
 msgstr ""
@@ -11910,7 +11874,7 @@ msgstr ""
 msgid "FAX database information"
 msgstr "Базы данных"
 
-#: plugins/admin/systems/class_goLdapServer.inc:125
+#: plugins/admin/systems/class_goLdapServer.inc:133
 #, fuzzy
 msgid "The given base is empty or contains invalid characters."
 msgstr "Неправильное указание таймаута '%s'"
@@ -11920,7 +11884,7 @@ msgstr "Неправильное указание таймаута '%s'"
 msgid "Logging service"
 msgstr "Служба печати"
 
-#: plugins/admin/systems/class_goSyslogServer.inc:45
+#: plugins/admin/systems/class_goSyslogServer.inc:46
 #, fuzzy
 msgid "Syslog service"
 msgstr "Сервер системных журналов"
@@ -11930,37 +11894,32 @@ msgstr "Сервер системных журналов"
 msgid "Mail service (SMTP)"
 msgstr "Сервер"
 
-#: plugins/admin/systems/class_goMailServer.inc:481
+#: plugins/admin/systems/class_goMailServer.inc:482
 #, fuzzy
 msgid "Postfix"
 msgstr "Прокси-сервер"
 
-#: plugins/admin/systems/class_goMailServer.inc:481
-#, fuzzy
-msgid "configured for"
-msgstr "Не настроено"
-
-#: plugins/admin/systems/class_goMailServer.inc:611
+#: plugins/admin/systems/class_goMailServer.inc:619
 #, fuzzy
 msgid "Please specify a numeric value for header size limit."
 msgstr "Укажите корректный номер телефона."
 
-#: plugins/admin/systems/class_goMailServer.inc:615
+#: plugins/admin/systems/class_goMailServer.inc:623
 #, fuzzy
 msgid "Please specify a numeric value for mailbox size limit."
 msgstr "Укажите корректный номер телефона."
 
-#: plugins/admin/systems/class_goMailServer.inc:619
+#: plugins/admin/systems/class_goMailServer.inc:627
 #, fuzzy
 msgid "Please specify a numeric value for message size limit."
 msgstr "Укажите корректный номер телефона."
 
-#: plugins/admin/systems/class_goImapServer.inc:49
+#: plugins/admin/systems/class_goImapServer.inc:48
 #, fuzzy
 msgid "IMAP/POP3 service"
 msgstr "LDAP-сервер"
 
-#: plugins/admin/systems/class_goImapServer.inc:54
+#: plugins/admin/systems/class_goImapServer.inc:53
 #, fuzzy
 msgid "Repair database"
 msgstr "Базы данных"
@@ -11970,22 +11929,22 @@ msgstr "Базы данных"
 msgid "Cyrus service"
 msgstr "Звук"
 
-#: plugins/admin/systems/class_goImapServer.inc:161
+#: plugins/admin/systems/class_goImapServer.inc:168
 #, fuzzy
 msgid "Please specify a server identifier."
 msgstr "Введите корректное имя пользователя!"
 
-#: plugins/admin/systems/class_goImapServer.inc:164
+#: plugins/admin/systems/class_goImapServer.inc:171
 #, fuzzy
 msgid "Please specify a connect url."
 msgstr "Введите корректное имя пользователя!"
 
-#: plugins/admin/systems/class_goImapServer.inc:167
+#: plugins/admin/systems/class_goImapServer.inc:174
 #, fuzzy
 msgid "Please specify an admin user."
 msgstr "Введите корректное имя пользователя!"
 
-#: plugins/admin/systems/class_goImapServer.inc:170
+#: plugins/admin/systems/class_goImapServer.inc:177
 #, fuzzy
 msgid "Please specify a password for the admin user."
 msgstr "Укажите корректный номер телефона."
@@ -13098,7 +13057,7 @@ msgstr "Создание нового объекта в"
 msgid "New conference"
 msgstr "Номер телефона"
 
-#: plugins/gofon/conference/class_divListConferences.inc:135
+#: plugins/gofon/conference/class_divListConferences.inc:139
 #, fuzzy
 msgid "Conference"
 msgstr "Ссылки"
@@ -15031,6 +14990,54 @@ msgstr "Войти"
 msgid "Click here to log in"
 msgstr "Нажмите на эту кнопку, чтобы войти в систему"
 
+#, fuzzy
+#~ msgid "Remove Kolab extension"
+#~ msgstr "Удалить параметры"
+
+#, fuzzy
+#~ msgid ""
+#~ "This server has kolab features enabled. You can disable them by clicking "
+#~ "below."
+#~ msgstr ""
+#~ "В этой учетной записи есть настройки факса. Вы можете удалить их, щелкнув "
+#~ "ниже."
+
+#, fuzzy
+#~ msgid "Add Kolab service"
+#~ msgstr "Добавить сервис DNS"
+
+#, fuzzy
+#~ msgid ""
+#~ "This server has kolab features disabled. You can enable them by clicking "
+#~ "below."
+#~ msgstr ""
+#~ "В этой учетной записи нет настроек факса. Вы можете добавить их, щелкнув "
+#~ "ниже."
+
+#, fuzzy
+#~ msgid "Remove FAI repository extension."
+#~ msgstr "Удалить параметры"
+
+#, fuzzy
+#~ msgid ""
+#~ "This server has FAI repository features enabled. You can disable them by "
+#~ "clicking below."
+#~ msgstr ""
+#~ "В этой учетной записи есть настройки факса. Вы можете удалить их, щелкнув "
+#~ "ниже."
+
+#, fuzzy
+#~ msgid ""
+#~ "This server has FAI repository features disabled. You can enable them by "
+#~ "clicking below."
+#~ msgstr ""
+#~ "В этой учетной записи нет настроек факса. Вы можете добавить их, щелкнув "
+#~ "ниже."
+
+#, fuzzy
+#~ msgid "configured for"
+#~ msgstr "Не настроено"
+
 #~ msgid "Databases"
 #~ msgstr "Базы данных"
 
@@ -15348,10 +15355,6 @@ msgstr "Нажмите на эту кнопку, чтобы войти в сис
 #, fuzzy
 #~ msgid "Nfs Export"
 #~ msgstr "Экспорт"
-
-#, fuzzy
-#~ msgid "Domain name service"
-#~ msgstr "Сканер"
 
 #, fuzzy
 #~ msgid "DNS-Zone"

@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: Alfred Schroeder <schroeder@gonicus.de>\n"
 "POT-Creation-Date: 2003-09-19 13:41+0200\n"
-"PO-Revision-Date: 2006-06-09 12:29+0200\n"
+"PO-Revision-Date: 2006-06-12 14:28+0200\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -32,9 +32,9 @@ msgstr "Zusätzliches"
 
 #: contrib/gosa.conf:76 contrib/gosa.conf:90 contrib/gosa.conf:99
 #: contrib/gosa.conf:105 contrib/gosa.conf:110 contrib/gosa.conf:116
-#: contrib/gosa.conf:125 contrib/gosa.conf:140 contrib/gosa.conf:150
-#: contrib/gosa.conf:155 contrib/gosa.conf:176 contrib/gosa.conf:181
-#: contrib/gosa.conf:186 contrib/gosa.conf:191
+#: contrib/gosa.conf:125 contrib/gosa.conf:136 contrib/gosa.conf:146
+#: contrib/gosa.conf:151 contrib/gosa.conf:175 contrib/gosa.conf:180
+#: contrib/gosa.conf:185 contrib/gosa.conf:190
 #: plugins/personal/mail/generic.tpl:4 plugins/personal/posix/generic.tpl:4
 #: plugins/personal/samba/samba2.tpl:6 plugins/personal/samba/samba3.tpl:6
 #: plugins/personal/generic/class_user.inc:16
@@ -138,9 +138,9 @@ msgstr "Nagios"
 
 #: contrib/gosa.conf:86 contrib/gosa.conf:95 contrib/gosa.conf:101
 #: contrib/gosa.conf:106 contrib/gosa.conf:112 contrib/gosa.conf:121
-#: contrib/gosa.conf:136 contrib/gosa.conf:146 contrib/gosa.conf:151
-#: contrib/gosa.conf:156 contrib/gosa.conf:177 contrib/gosa.conf:182
-#: contrib/gosa.conf:187 contrib/gosa.conf:192
+#: contrib/gosa.conf:132 contrib/gosa.conf:142 contrib/gosa.conf:147
+#: contrib/gosa.conf:152 contrib/gosa.conf:176 contrib/gosa.conf:181
+#: contrib/gosa.conf:186 contrib/gosa.conf:191
 msgid "References"
 msgstr "Referenzen"
 
@@ -154,7 +154,7 @@ msgid "ACL"
 msgstr "Zugriffsregeln"
 
 #: contrib/gosa.conf:100 plugins/admin/applications/generic.tpl:73
-#: plugins/admin/systems/class_servRepository.inc:253
+#: plugins/admin/systems/class_servRepository.inc:246
 #: plugins/admin/systems/printerPPDDialog.tpl:17
 #: plugins/admin/ogroups/phonequeue.tpl:31
 #: plugins/gofon/conference/generic.tpl:92
@@ -165,17 +165,17 @@ msgstr "Optionen"
 msgid "Parameter"
 msgstr "Parameter"
 
-#: contrib/gosa.conf:117 contrib/gosa.conf:126 contrib/gosa.conf:141
+#: contrib/gosa.conf:117 contrib/gosa.conf:126 contrib/gosa.conf:137
 #: plugins/admin/ogroups/tabs_ogroups.inc:98
 msgid "Startup"
 msgstr "Start"
 
-#: contrib/gosa.conf:118 contrib/gosa.conf:142
+#: contrib/gosa.conf:118 contrib/gosa.conf:138
 #: plugins/admin/ogroups/tabs_ogroups.inc:102
 msgid "Devices"
 msgstr "Geräte"
 
-#: contrib/gosa.conf:119 contrib/gosa.conf:143
+#: contrib/gosa.conf:119 contrib/gosa.conf:139
 #: plugins/personal/environment/environment.tpl:171
 #: plugins/admin/systems/class_systemManagement.inc:757
 #: plugins/admin/ogroups/class_ogroupManagement.inc:376
@@ -183,7 +183,7 @@ msgstr "Geräte"
 msgid "Printer"
 msgstr "Drucker"
 
-#: contrib/gosa.conf:120 contrib/gosa.conf:135 contrib/gosa.conf:144
+#: contrib/gosa.conf:120 contrib/gosa.conf:131 contrib/gosa.conf:140
 #: plugins/gofax/blocklists/generic.tpl:75
 #: plugins/addons/addressbook/contents.tpl:33
 #: plugins/addons/godfs/contents.tpl:22
@@ -207,21 +207,15 @@ msgstr "Information"
 msgid "Services"
 msgstr "Dienste"
 
-#: contrib/gosa.conf:131 contrib/gosa.conf:133
-#: plugins/admin/fai/faiPackage.tpl:29
-#: plugins/admin/systems/servRepositorySetup.tpl:1
-msgid "Repository"
-msgstr "Repository"
-
-#: contrib/gosa.conf:134 contrib/gosa.conf:145
+#: contrib/gosa.conf:130 contrib/gosa.conf:141
 msgid "FAI summary"
 msgstr "FAI Übersicht"
 
-#: contrib/gosa.conf:202
+#: contrib/gosa.conf:201
 msgid "OGo"
 msgstr "OGo"
 
-#: contrib/gosa.conf:214 plugins/addons/ldapmanager/contentexportxls.tpl:19
+#: contrib/gosa.conf:213 plugins/addons/ldapmanager/contentexportxls.tpl:19
 #: plugins/addons/ldapmanager/contentexportxls.tpl:32
 #: plugins/addons/ldapmanager/contentexportxls.tpl:47
 #: plugins/addons/ldapmanager/contentexport.tpl:16
@@ -230,11 +224,11 @@ msgstr "OGo"
 msgid "Export"
 msgstr "Export"
 
-#: contrib/gosa.conf:215
+#: contrib/gosa.conf:214
 msgid "Excel Export"
 msgstr "Excel-Export"
 
-#: contrib/gosa.conf:216 plugins/personal/mail/generic.tpl:113
+#: contrib/gosa.conf:215 plugins/personal/mail/generic.tpl:113
 #: plugins/personal/environment/logonManagement.tpl:65
 #: plugins/addons/ldapmanager/contentimport.tpl:49
 #: plugins/addons/ldapmanager/contentcsv.tpl:109
@@ -243,79 +237,79 @@ msgstr "Excel-Export"
 msgid "Import"
 msgstr "Importieren"
 
-#: contrib/gosa.conf:217
+#: contrib/gosa.conf:216
 msgid "CSV Import"
 msgstr "CSV Import"
 
-#: contrib/gosa.conf:221
+#: contrib/gosa.conf:220
 msgid "Partitions"
 msgstr "Partitionen"
 
-#: contrib/gosa.conf:225 plugins/personal/environment/logonManagement.tpl:55
+#: contrib/gosa.conf:224 plugins/personal/environment/logonManagement.tpl:55
 #: plugins/admin/fai/faiScriptEntry.tpl:50
 #: plugins/admin/fai/faiHookEntry.tpl:50
 #: plugins/admin/applications/generic.tpl:99
 msgid "Script"
 msgstr "Skript"
 
-#: contrib/gosa.conf:229 plugins/admin/fai/class_faiSummaryTab.inc:40
+#: contrib/gosa.conf:228 plugins/admin/fai/class_faiSummaryTab.inc:40
 msgid "Hooks"
 msgstr "Hooks"
 
-#: contrib/gosa.conf:233 plugins/admin/fai/class_faiSummaryTab.inc:41
+#: contrib/gosa.conf:232 plugins/admin/fai/class_faiSummaryTab.inc:41
 msgid "Variables"
 msgstr "Variablen"
 
-#: contrib/gosa.conf:237 plugins/admin/fai/class_faiSummaryTab.inc:42
+#: contrib/gosa.conf:236 plugins/admin/fai/class_faiSummaryTab.inc:42
 msgid "Templates"
 msgstr "Vorlagen"
 
-#: contrib/gosa.conf:241 plugins/personal/environment/environment.tpl:7
+#: contrib/gosa.conf:240 plugins/personal/environment/environment.tpl:7
 #: plugins/admin/fai/class_faiSummaryTab.inc:45
 msgid "Profiles"
 msgstr "Profile"
 
-#: contrib/gosa.conf:242 plugins/admin/ogroups/tabs_ogroups.inc:107
+#: contrib/gosa.conf:241 plugins/admin/ogroups/tabs_ogroups.inc:107
 msgid "Summary"
 msgstr "Übersicht"
 
-#: contrib/gosa.conf:246
+#: contrib/gosa.conf:245
 msgid "Packages"
 msgstr "Pakete"
 
-#: contrib/gosa.conf:272
+#: contrib/gosa.conf:271
 msgid "{LOCATIONNAME}"
 msgstr "{LOCATIONNAME}"
 
-#: contrib/gosa.conf:290 plugins/admin/ogroups/class_phonequeue.inc:164
+#: contrib/gosa.conf:289 plugins/admin/ogroups/class_phonequeue.inc:164
 msgid "German"
 msgstr "Deutsch"
 
-#: contrib/gosa.conf:291
+#: contrib/gosa.conf:290
 msgid "Russian"
 msgstr "Russisch"
 
-#: contrib/gosa.conf:292
+#: contrib/gosa.conf:291
 msgid "Spanish"
 msgstr "Spanisch"
 
-#: contrib/gosa.conf:293
+#: contrib/gosa.conf:292
 msgid "French"
 msgstr "Französisch"
 
-#: contrib/gosa.conf:294
+#: contrib/gosa.conf:293
 msgid "Dutch"
 msgstr "Niederländisch"
 
-#: contrib/gosa.conf:295
+#: contrib/gosa.conf:294
 msgid "English"
 msgstr "Englisch"
 
-#: contrib/gosa.conf:296
+#: contrib/gosa.conf:295
 msgid "Italian"
 msgstr "Italienisch"
 
-#: contrib/gosa.conf:297
+#: contrib/gosa.conf:296
 msgid "Polish"
 msgstr "Polnisch"
 
@@ -496,6 +490,7 @@ msgstr "Ok"
 #: plugins/admin/systems/servRepositorySetup.tpl:43
 #: plugins/admin/systems/goMailServer.tpl:169
 #: plugins/admin/systems/goImapServer.tpl:96
+#: plugins/admin/systems/servdns.tpl:23
 #: plugins/admin/systems/goKrbServer.tpl:21
 #: plugins/admin/systems/goSyslogServer.tpl:8
 #: plugins/admin/systems/servnfs.tpl:121
@@ -508,6 +503,7 @@ msgstr "Ok"
 #: plugins/admin/systems/glpiAttachmentEdit.tpl:70
 #: plugins/admin/systems/glpiSelectUser.tpl:51
 #: plugins/admin/systems/remove.tpl:16
+#: plugins/admin/systems/servRepository.tpl:66
 #: plugins/admin/systems/glpiAttachmentPool.tpl:52
 #: plugins/admin/systems/servdnseditzone.tpl:120
 #: plugins/admin/systems/remove_glpi.tpl:16
@@ -761,7 +757,7 @@ msgstr "Lokale hinzufügen"
 #: plugins/personal/posix/generic.tpl:74
 #: plugins/personal/posix/generic.tpl:104
 #: plugins/personal/samba/samba3.tpl:332
-#: plugins/personal/environment/class_environment.inc:604
+#: plugins/personal/environment/class_environment.inc:606
 #: plugins/personal/environment/environment.tpl:137
 #: plugins/personal/environment/environment.tpl:165
 #: plugins/personal/environment/environment.tpl:181
@@ -2148,7 +2144,7 @@ msgstr ""
 "zuerst aktiviert werden."
 
 #: plugins/personal/environment/class_environment.inc:448
-#: plugins/personal/environment/class_environment.inc:751
+#: plugins/personal/environment/class_environment.inc:753
 #: plugins/admin/systems/class_glpiDeviceManagement.inc:406
 msgid "None"
 msgstr "keine"
@@ -2160,18 +2156,18 @@ msgstr "keine"
 msgid "You must specify a valid mount point."
 msgstr "Bitte geben Sie einen gültigen Mount-Pfad an!"
 
-#: plugins/personal/environment/class_environment.inc:591
-#: plugins/personal/environment/class_environment.inc:592
-#: plugins/personal/environment/class_environment.inc:600
-#: plugins/personal/environment/class_environment.inc:601
+#: plugins/personal/environment/class_environment.inc:593
+#: plugins/personal/environment/class_environment.inc:594
+#: plugins/personal/environment/class_environment.inc:602
+#: plugins/personal/environment/class_environment.inc:603
 msgid "Reset password hash"
 msgstr "Passwort zurücksetzen"
 
-#: plugins/personal/environment/class_environment.inc:605
+#: plugins/personal/environment/class_environment.inc:607
 msgid "Delete share entry"
 msgstr "Diesen Freigabe-Eintrag entfernen"
 
-#: plugins/personal/environment/class_environment.inc:754
+#: plugins/personal/environment/class_environment.inc:756
 #, php-format
 msgid ""
 "The selected kiosk profile '%s' is no longer available, setting current "
@@ -2180,15 +2176,15 @@ msgstr ""
 "Das ausgewählte Kiosk-Profil '%s' ist nicht mehr verfügbar, die Einstellung "
 "wurde auf 'keins' zurückgesetzt."
 
-#: plugins/personal/environment/class_environment.inc:806
+#: plugins/personal/environment/class_environment.inc:808
 msgid "Removing environment information failed"
 msgstr "Entfernen der Umgebungs-Informationen ist fehlgeschlagen"
 
-#: plugins/personal/environment/class_environment.inc:859
+#: plugins/personal/environment/class_environment.inc:861
 msgid "Please set a valid profile quota size."
 msgstr "Bitte wählen Sie eine gültige Kontingent-Grösse."
 
-#: plugins/personal/environment/class_environment.inc:866
+#: plugins/personal/environment/class_environment.inc:868
 msgid ""
 "You need to setup a valid posix extension in order to enable evironment "
 "features."
@@ -2196,33 +2192,33 @@ msgstr ""
 "Sie benötigen eine gültige UNIX-Erweiterung, um die Umgebungs-Erweiterung zu "
 "aktivieren."
 
-#: plugins/personal/environment/class_environment.inc:904
+#: plugins/personal/environment/class_environment.inc:906
 msgid "Can't save new kiosk profiles, possibly permission denied for folder"
 msgstr ""
 "Das neue Kiosk-Profil kann nicht gespeichert werden. Wahrscheinlich besitzen "
 "Sie nicht die nötigen Rechte."
 
-#: plugins/personal/environment/class_environment.inc:998
+#: plugins/personal/environment/class_environment.inc:1000
 msgid "Error while writing printer"
 msgstr "Fehler beim Speichern des Druckers"
 
-#: plugins/personal/environment/class_environment.inc:1068
+#: plugins/personal/environment/class_environment.inc:1070
 msgid "Error while writing printer settings"
 msgstr "Fehler beim Speichern der Drucker-Einstellungen"
 
-#: plugins/personal/environment/class_environment.inc:1137
+#: plugins/personal/environment/class_environment.inc:1139
 msgid "Adding environment information failed"
 msgstr "Hinzufügen der Umgebungs-Erweiterung ist fehlgeschlagen"
 
-#: plugins/personal/environment/class_environment.inc:1150
+#: plugins/personal/environment/class_environment.inc:1152
 msgid "group share"
 msgstr "Gruppen-Freigabe"
 
-#: plugins/personal/environment/class_environment.inc:1182
+#: plugins/personal/environment/class_environment.inc:1184
 msgid "Administrator"
 msgstr "Administrator"
 
-#: plugins/personal/environment/class_environment.inc:1187
+#: plugins/personal/environment/class_environment.inc:1189
 msgid "Default printer"
 msgstr "Standard Drucker"
 
@@ -2305,7 +2301,7 @@ msgstr "Auflösung"
 #: plugins/admin/systems/workstationStartup.tpl:129
 #: plugins/admin/systems/servservice.tpl:11
 #: plugins/admin/systems/terminalStartup.tpl:66
-#: plugins/admin/systems/class_goShareServer.inc:147
+#: plugins/admin/systems/class_goShareServer.inc:148
 msgid "Shares"
 msgstr "Freigaben"
 
@@ -2537,6 +2533,7 @@ msgstr "Geräte ID"
 #: plugins/admin/systems/goFonServer.tpl:24
 #: plugins/admin/systems/goMailServer.tpl:167
 #: plugins/admin/systems/goImapServer.tpl:94
+#: plugins/admin/systems/servdns.tpl:21
 #: plugins/admin/systems/goKrbServer.tpl:19
 #: plugins/admin/systems/goSyslogServer.tpl:6
 #: plugins/admin/systems/servnfs.tpl:120
@@ -2544,6 +2541,7 @@ msgstr "Geräte ID"
 #: plugins/admin/systems/servkolab.tpl:203
 #: plugins/admin/systems/goGlpiServer.tpl:24
 #: plugins/admin/systems/glpiAttachmentEdit.tpl:69
+#: plugins/admin/systems/servRepository.tpl:64
 #: plugins/admin/systems/servdnseditzone.tpl:119
 #: plugins/admin/systems/goTerminalServer.tpl:17
 #: plugins/admin/systems/goLdapServer.tpl:7
@@ -5264,7 +5262,7 @@ msgstr "Der angegebene \"Freeze\"-Name ist ungültig."
 
 #: plugins/admin/fai/class_faiManagement.inc:322
 #: plugins/admin/systems/class_glpiAttachmentPool.inc:351
-#: plugins/admin/systems/class_servRepository.inc:211
+#: plugins/admin/systems/class_servRepository.inc:204
 msgid "This name is already in use."
 msgstr "Der angegebene Name wird bereits verwendet."
 
@@ -5532,12 +5530,17 @@ msgstr "Speichern der FAI-Paket-Basis fehlgeschlagen"
 msgid "Saving FAI package entry failed"
 msgstr "Speichern des FAI-Paket-Eintrags fehlgeschlagen"
 
+#: plugins/admin/fai/faiPackage.tpl:29
+#: plugins/admin/systems/servRepositorySetup.tpl:1
+msgid "Repository"
+msgstr "Repository"
+
 #: plugins/admin/fai/faiPackage.tpl:33 plugins/admin/fai/faiPackageNew.tpl:21
 #: plugins/admin/fai/faiPackageNew.tpl:24
 #: plugins/admin/systems/workstationStartup.tpl:45
 #: plugins/admin/systems/workstationStartup.tpl:75
 #: plugins/admin/systems/servRepositorySetup.tpl:17
-#: plugins/admin/systems/class_servRepository.inc:251
+#: plugins/admin/systems/class_servRepository.inc:244
 msgid "Release"
 msgstr "Release"
 
@@ -6292,7 +6295,7 @@ msgid "Access"
 msgstr "Zugriff"
 
 #: plugins/admin/fai/faiTemplateEntry.tpl:86
-#: plugins/admin/systems/class_servDNS.inc:161
+#: plugins/admin/systems/class_servDNS.inc:167
 msgid "Class"
 msgstr "Klasse"
 
@@ -7812,7 +7815,7 @@ msgid "Zone"
 msgstr "Zone"
 
 #: plugins/admin/systems/network.tpl:58
-#: plugins/admin/systems/class_servDNS.inc:160
+#: plugins/admin/systems/class_servDNS.inc:166
 #: plugins/admin/systems/servdnseditzone.tpl:85
 msgid "TTL"
 msgstr "TTL"
@@ -7825,34 +7828,34 @@ msgstr "DNS-Einträge"
 msgid "FAX service"
 msgstr "Fax-Dienst"
 
-#: plugins/admin/systems/class_goFaxServer.inc:48
+#: plugins/admin/systems/class_goFaxServer.inc:49
 msgid "FAX database configuration"
 msgstr "Konfiguration der Fax-Datenbank"
 
-#: plugins/admin/systems/class_goFaxServer.inc:126
-#: plugins/admin/systems/class_goGlpiServer.inc:128
+#: plugins/admin/systems/class_goFaxServer.inc:134
+#: plugins/admin/systems/class_goGlpiServer.inc:136
 msgid "The attribute user is empty or contains invalid characters."
 msgstr "Das Attribut Benutzer ist leer oder enthält ungültige Zeichen."
 
-#: plugins/admin/systems/class_goFaxServer.inc:129
-#: plugins/admin/systems/class_goFonServer.inc:132
+#: plugins/admin/systems/class_goFaxServer.inc:137
+#: plugins/admin/systems/class_goFonServer.inc:140
 #, php-format
 msgid "The attribute password is empty or contains invalid characters."
 msgstr "Das Attribut Kennwort ist leer oder enthält ungültige Zeichen."
 
-#: plugins/admin/systems/class_goFaxServer.inc:177
-#: plugins/admin/systems/class_goFonServer.inc:187
-#: plugins/admin/systems/class_goNtpServer.inc:181
-#: plugins/admin/systems/class_goKrbServer.inc:182
-#: plugins/admin/systems/class_goGlpiServer.inc:179
-#: plugins/admin/systems/class_goCupsServer.inc:168
-#: plugins/admin/systems/class_goTerminalServer.inc:185
-#: plugins/admin/systems/class_goLdapServer.inc:173
-#: plugins/admin/systems/class_goSyslogServer.inc:167
-#: plugins/admin/systems/class_goLogDBServer.inc:177
-#: plugins/admin/systems/class_goMailServer.inc:729
-#: plugins/admin/systems/class_goImapServer.inc:236
-#: plugins/admin/systems/class_goShareServer.inc:345
+#: plugins/admin/systems/class_goFaxServer.inc:185
+#: plugins/admin/systems/class_goFonServer.inc:195
+#: plugins/admin/systems/class_goNtpServer.inc:189
+#: plugins/admin/systems/class_goKrbServer.inc:190
+#: plugins/admin/systems/class_goGlpiServer.inc:187
+#: plugins/admin/systems/class_goCupsServer.inc:176
+#: plugins/admin/systems/class_goTerminalServer.inc:193
+#: plugins/admin/systems/class_goLdapServer.inc:181
+#: plugins/admin/systems/class_goSyslogServer.inc:175
+#: plugins/admin/systems/class_goLogDBServer.inc:185
+#: plugins/admin/systems/class_goMailServer.inc:737
+#: plugins/admin/systems/class_goImapServer.inc:243
+#: plugins/admin/systems/class_goShareServer.inc:353
 #, php-format
 msgid ""
 "Command '%s', specified as ACTION_HOOK for plugin '%s' doesn't seem to exist."
@@ -7944,7 +7947,7 @@ msgstr "SSH-Dienst"
 
 #: plugins/admin/systems/info.tpl:119
 #: plugins/admin/systems/class_goCupsServer.inc:26
-#: plugins/admin/systems/class_goCupsServer.inc:45
+#: plugins/admin/systems/class_goCupsServer.inc:46
 msgid "Print service"
 msgstr "Druck-Dienst"
 
@@ -8838,12 +8841,16 @@ msgstr ""
 msgid "Mountpoint"
 msgstr "Mount-Pfad"
 
-#: plugins/admin/systems/class_servDNS.inc:67
+#: plugins/admin/systems/class_servDNS.inc:32
+msgid "Domain name system service"
+msgstr "Domain Name Service (DNS) Dienst"
+
+#: plugins/admin/systems/class_servDNS.inc:73
 #: plugins/admin/systems/class_inventory.inc:36
 msgid "Remove DNS service"
 msgstr "DNS-Dienst entfernen"
 
-#: plugins/admin/systems/class_servDNS.inc:68
+#: plugins/admin/systems/class_servDNS.inc:74
 #: plugins/admin/systems/class_inventory.inc:37
 msgid ""
 "This server has DNS features enabled. You can disable them by clicking below."
@@ -8851,12 +8858,12 @@ msgstr ""
 "Dieser Server besitzt aktivierte DNS-Funktionen. Sie können diese durch "
 "einen Klick auf die untere Schaltfläche deaktivieren."
 
-#: plugins/admin/systems/class_servDNS.inc:70
+#: plugins/admin/systems/class_servDNS.inc:76
 #: plugins/admin/systems/class_inventory.inc:39
 msgid "Add DNS service"
 msgstr "DNS-Dienst hinzufügen"
 
-#: plugins/admin/systems/class_servDNS.inc:71
+#: plugins/admin/systems/class_servDNS.inc:77
 #: plugins/admin/systems/class_inventory.inc:40
 msgid ""
 "This server has DNS features disabled. You can enable them by clicking below."
@@ -8864,11 +8871,11 @@ msgstr ""
 "Aktuell besitzt dieser Server keine aktivierten DNS-Funktionen. Sie können "
 "diese durch einen Klick auf die Schaltfläche unten aktivieren."
 
-#: plugins/admin/systems/class_servDNS.inc:159
+#: plugins/admin/systems/class_servDNS.inc:165
 msgid "Reverse zone"
 msgstr "Reverse Zone"
 
-#: plugins/admin/systems/class_servDNS.inc:223
+#: plugins/admin/systems/class_servDNS.inc:229
 #, php-format
 msgid ""
 "Can't delete the selected zone, because it is still in use by these entry/"
@@ -8877,21 +8884,25 @@ msgstr ""
 "Sie können die gewählte Zone nicht entfernen, sie wird noch von folgendem(n) "
 "Eintrag / Einträgen verwendet: '%s'"
 
-#: plugins/admin/systems/class_servDNS.inc:261
+#: plugins/admin/systems/class_servDNS.inc:267
 msgid "Removing DNS service failed"
 msgstr "Entfernen des DNS-Dienstes ist fehlgeschlagen"
 
-#: plugins/admin/systems/class_servDNS.inc:282
+#: plugins/admin/systems/class_servDNS.inc:288
 msgid "Updating DNS service failed"
 msgstr "Aktualisierung des DNS-Dienstes ist fehlgeschlagen"
 
-#: plugins/admin/systems/class_servDNS.inc:291
+#: plugins/admin/systems/class_servDNS.inc:297
 msgid "Removing DNS entries failed"
 msgstr "Entfernen von DNS-Einträge ist fehlgeschlagen"
 
-#: plugins/admin/systems/class_servDNS.inc:312
+#: plugins/admin/systems/class_servDNS.inc:318
 msgid "Saving DNS entries failed"
 msgstr "Speichern von DNS-Einträgen ist fehlgeschlagen"
+
+#: plugins/admin/systems/class_servDNS.inc:356
+msgid "DNS service"
+msgstr "DNS-Dienst"
 
 #: plugins/admin/systems/glpiDeviceManagement.tpl:6
 msgid "List of devices"
@@ -8913,7 +8924,7 @@ msgid "Regular expression for matching device names"
 msgstr "Regulärer Ausdruck zum Erkennen von Gerätenamen"
 
 #: plugins/admin/systems/class_servService.inc:320
-#: plugins/admin/systems/class_goTerminalServer.inc:131
+#: plugins/admin/systems/class_goTerminalServer.inc:139
 msgid "Terminal server, must have fontpath specified."
 msgstr "Terminal-Server benötigt einen Schrift-Suchpfad"
 
@@ -8922,17 +8933,17 @@ msgid "Saving server service object failed"
 msgstr "Speichern des Server-Dienste Objektes ist fehlgeschlagen"
 
 #: plugins/admin/systems/class_servService.inc:410
-#: plugins/admin/systems/class_goShareServer.inc:279
+#: plugins/admin/systems/class_goShareServer.inc:287
 msgid "Creating mount container failed"
 msgstr "Erstellen des Mount-Containers ist fehlgeschlagen"
 
 #: plugins/admin/systems/class_servService.inc:424
-#: plugins/admin/systems/class_goShareServer.inc:293
+#: plugins/admin/systems/class_goShareServer.inc:301
 msgid "Removing mount container failed"
 msgstr "Entfernen des Mount-Containers ist fehlgeschlagen"
 
 #: plugins/admin/systems/class_servService.inc:436
-#: plugins/admin/systems/class_goShareServer.inc:305
+#: plugins/admin/systems/class_goShareServer.inc:313
 msgid "Saving mount container failed"
 msgstr "Speichern des Mount-Containers ist fehlgeschlagen"
 
@@ -9077,8 +9088,8 @@ msgid "Parent server"
 msgstr "Parent-Server"
 
 #: plugins/admin/systems/servRepositorySetup.tpl:33
-#: plugins/admin/systems/class_servRepository.inc:252
-#: plugins/admin/systems/class_servRepository.inc:273
+#: plugins/admin/systems/class_servRepository.inc:245
+#: plugins/admin/systems/class_servRepository.inc:266
 msgid "Sections"
 msgstr "Sections"
 
@@ -9545,18 +9556,18 @@ msgid "The attribute '%s' is empty or contains invalid characters."
 msgstr "Das Attribut '%s' ist leer oder enthält ungültige Zeichen."
 
 #: plugins/admin/systems/class_servDB.inc:152
-#: plugins/admin/systems/class_goImapServer.inc:175
+#: plugins/admin/systems/class_goImapServer.inc:182
 #, php-format
 msgid "The imap connect string needs to be in the form '%s'."
 msgstr "Der IMAP-Verbindungsstring muss in der Form '%s' sein."
 
 #: plugins/admin/systems/class_servDB.inc:156
-#: plugins/admin/systems/class_goImapServer.inc:179
+#: plugins/admin/systems/class_goImapServer.inc:186
 msgid "The sieve port needs to be numeric."
 msgstr "Der Sieve-Port muss numerisch sein."
 
 #: plugins/admin/systems/class_servDB.inc:167
-#: plugins/admin/systems/class_goKrbServer.inc:127
+#: plugins/admin/systems/class_goKrbServer.inc:135
 #, php-format
 msgid "The specified kerberos password is empty."
 msgstr "Das angebene Kerberos-Passwort ist leer."
@@ -9576,23 +9587,23 @@ msgstr "Speichern der Server-Datenbank Einstellungen ist fehlgeschlagen"
 msgid "VoIP service"
 msgstr "VoIP-Dienst"
 
-#: plugins/admin/systems/class_goFonServer.inc:51
+#: plugins/admin/systems/class_goFonServer.inc:52
 #: plugins/admin/systems/servdb.tpl:42
 msgid "Asterisk management"
 msgstr "Asterisk Verwaltung"
 
-#: plugins/admin/systems/class_goFonServer.inc:129
+#: plugins/admin/systems/class_goFonServer.inc:137
 #, php-format
 msgid "The attribute DB user is empty or contains invalid characters."
 msgstr "Das Attribut DB ist leer oder enthält ungültige Zeichen."
 
-#: plugins/admin/systems/class_goFonServer.inc:135
+#: plugins/admin/systems/class_goFonServer.inc:143
 #, php-format
 msgid ""
 "The attribute local dial prefix is empty or contains invalid characters."
 msgstr "Das Attribut Ortsvorwahl ist leer oder enthält ungültige Zeichen."
 
-#: plugins/admin/systems/class_goFonServer.inc:138
+#: plugins/admin/systems/class_goFonServer.inc:146
 #, php-format
 msgid ""
 "The attribute country dial prefix is empty or contains invalid characters."
@@ -9606,7 +9617,7 @@ msgstr "Zonen"
 msgid "Time service"
 msgstr "Zeit-Dienst"
 
-#: plugins/admin/systems/class_goNtpServer.inc:69
+#: plugins/admin/systems/class_goNtpServer.inc:70
 msgid "NTP service"
 msgstr "Zeit-Dienst"
 
@@ -9779,67 +9790,43 @@ msgstr ""
 msgid "Warn users when using more than %s%% of their mail quota"
 msgstr "Warne Benutzer, wenn sie mehr als %s%% ihres Mail-Kontigentes benutzen"
 
-#: plugins/admin/systems/class_servKolab.inc:120
-msgid "Remove Kolab extension"
-msgstr "Kolab-Erweiterung entfernen"
-
-#: plugins/admin/systems/class_servKolab.inc:120
-msgid ""
-"This server has kolab features enabled. You can disable them by clicking "
-"below."
-msgstr ""
-"Dieser Server besitzt aktivierte Kolab-Funtionen. Sie können diese durch "
-"einen Klick auf die Schaltfläche unten deaktivieren."
-
-#: plugins/admin/systems/class_servKolab.inc:123
-msgid "Add Kolab service"
-msgstr "Kolab-Dienst hinzufügen"
-
-#: plugins/admin/systems/class_servKolab.inc:123
-msgid ""
-"This server has kolab features disabled. You can enable them by clicking "
-"below."
-msgstr ""
-"Aktuell besitzt dieser Server keine aktivierten Kolab-Funktionen. Sie können "
-"diese durch einen Klick auf die Schaltfläche unten aktivieren."
-
-#: plugins/admin/systems/class_servKolab.inc:204
+#: plugins/admin/systems/class_servKolab.inc:191
 msgid "Removing kolab host entry failed"
 msgstr "Entfernen des Kolab-Host Eintrags ist fehlgeschlagen"
 
-#: plugins/admin/systems/class_servKolab.inc:220
+#: plugins/admin/systems/class_servKolab.inc:207
 msgid "Removing server from kolab object failed"
 msgstr "Entfernen des Servers aus den Kolab-Einstellungen ist fehlgeschlagen."
 
-#: plugins/admin/systems/class_servKolab.inc:259
+#: plugins/admin/systems/class_servKolab.inc:246
 msgid "Future days in Free/Busy settings must be set."
 msgstr "Intervall für Frei/Belegt-Informationen muß gesetzt sein."
 
-#: plugins/admin/systems/class_servKolab.inc:261
+#: plugins/admin/systems/class_servKolab.inc:248
 msgid "Future days in Free/Busy settings must be a positive value."
 msgstr "Intervall für Frei/Belegt-Informationen muß ein positiver Wert sein."
 
-#: plugins/admin/systems/class_servKolab.inc:265
+#: plugins/admin/systems/class_servKolab.inc:252
 msgid "The given Quota settings value must be a number."
 msgstr "Der angegebene Kontingent-Wert muß numerisch sein."
 
-#: plugins/admin/systems/class_servKolab.inc:267
+#: plugins/admin/systems/class_servKolab.inc:254
 msgid "Please choose a value between 1 and 100 for Quota settings."
 msgstr "Bitte wählen Sie einen Kontingent-Wert zwischen 1 und 100."
 
-#: plugins/admin/systems/class_servKolab.inc:269
+#: plugins/admin/systems/class_servKolab.inc:256
 msgid "Future days must be a value."
 msgstr "Frei/Belegt-Intervall muß einen Wert besitzen."
 
-#: plugins/admin/systems/class_servKolab.inc:273
+#: plugins/admin/systems/class_servKolab.inc:260
 msgid "No SMTP privileged networks set."
 msgstr "Es sind keine SMTP-privilegierten Netzwerke vorhanden."
 
-#: plugins/admin/systems/class_servKolab.inc:345
+#: plugins/admin/systems/class_servKolab.inc:332
 msgid "Saving server to kolab object failed"
 msgstr "Speichern des Servers im Kolab-Objekt ist fehlgeschlagen"
 
-#: plugins/admin/systems/class_servKolab.inc:366
+#: plugins/admin/systems/class_servKolab.inc:354
 msgid "Kolab mail service"
 msgstr "Kolab Mail-Dienst"
 
@@ -9862,7 +9849,7 @@ msgstr "IMAP-Administrationszugang"
 
 #: plugins/admin/systems/servdb.tpl:100
 #: plugins/admin/systems/class_goLogDBServer.inc:29
-#: plugins/admin/systems/class_goLogDBServer.inc:48
+#: plugins/admin/systems/class_goLogDBServer.inc:49
 msgid "Logging database"
 msgstr "Protokoll-Datenbank"
 
@@ -9939,7 +9926,7 @@ msgid "Time Service"
 msgstr "Zeit-Dienst"
 
 #: plugins/admin/systems/servservice.tpl:61
-#: plugins/admin/systems/class_goLdapServer.inc:46
+#: plugins/admin/systems/class_goLdapServer.inc:47
 msgid "LDAP Service"
 msgstr "LDAP-Dienst"
 
@@ -10476,16 +10463,16 @@ msgstr "MIME-Typ"
 msgid "Kerberos service"
 msgstr "Kerberos-Dienst"
 
-#: plugins/admin/systems/class_goKrbServer.inc:48
+#: plugins/admin/systems/class_goKrbServer.inc:49
 msgid "Kerberos kadmin access informations"
 msgstr "Informationen zum Kerberos KAdmin-Zugang"
 
-#: plugins/admin/systems/class_goKrbServer.inc:130
+#: plugins/admin/systems/class_goKrbServer.inc:138
 #, php-format
 msgid "The specified kerberos admin is empty."
 msgstr "Der angebene Kerberos-Administrator ist leer."
 
-#: plugins/admin/systems/class_goKrbServer.inc:133
+#: plugins/admin/systems/class_goKrbServer.inc:141
 #, php-format
 msgid "The specified kerberos realm is empty."
 msgstr "Die angebene Kerberos-Realm ist leer."
@@ -10629,32 +10616,12 @@ msgstr "Neuer Anhang"
 msgid "Please specify a valid name for this attachment."
 msgstr "Bitte geben Sie einen gültigen Namen für diesen Anhang an."
 
-#: plugins/admin/systems/class_servRepository.inc:97
-msgid "Remove FAI repository extension."
-msgstr "FAI-Repository-Erweiterung entfernen"
+#: plugins/admin/systems/class_servRepository.inc:35
+#: plugins/admin/systems/class_servRepository.inc:392
+msgid "Repository service"
+msgstr "Repository-Dienst"
 
-#: plugins/admin/systems/class_servRepository.inc:98
-msgid ""
-"This server has FAI repository features enabled. You can disable them by "
-"clicking below."
-msgstr ""
-"Dieser Server besitzt aktivierte FAI-Repository-Erweiterungen. Sie können "
-"diese durch einen Klick auf die Schaltfläche unten deaktivieren."
-
-#: plugins/admin/systems/class_servRepository.inc:100
-msgid "Add FAI repository extension."
-msgstr "FAI-Repository-Erweiterung hinzufügen"
-
-#: plugins/admin/systems/class_servRepository.inc:101
-msgid ""
-"This server has FAI repository features disabled. You can enable them by "
-"clicking below."
-msgstr ""
-"Aktuell besitzt dieser Server keine aktivierten FAI-Repository-"
-"Erweiterungen. Sie können diese durch einen Klick auf die Schaltfläche unten "
-"aktivieren."
-
-#: plugins/admin/systems/class_servRepository.inc:144
+#: plugins/admin/systems/class_servRepository.inc:137
 #, php-format
 msgid ""
 "You can't delete this release, it is still used by these workstations [%s]. "
@@ -10664,7 +10631,7 @@ msgstr ""
 "Arbeitsstationen verwendet wird [%s]. Bitte lösen Sie zunächst diese "
 "Abhängigkeiten, um die Konsistenz der Datenbank zu gewährleisten."
 
-#: plugins/admin/systems/class_servRepository.inc:178
+#: plugins/admin/systems/class_servRepository.inc:171
 #, php-format
 msgid ""
 "Be careful editing this release, it is still used by these workstations [%s]."
@@ -11147,7 +11114,7 @@ msgstr "Neuer Treiber"
 
 #: plugins/admin/systems/goTerminalServer.tpl:1
 #: plugins/admin/systems/class_goTerminalServer.inc:29
-#: plugins/admin/systems/class_goTerminalServer.inc:48
+#: plugins/admin/systems/class_goTerminalServer.inc:49
 msgid "Terminal service"
 msgstr "Terminal-Dienst"
 
@@ -11337,11 +11304,11 @@ msgstr "Dienst entfernen"
 msgid "Inventory database"
 msgstr "Inventar-Datenbank"
 
-#: plugins/admin/systems/class_goGlpiServer.inc:50
+#: plugins/admin/systems/class_goGlpiServer.inc:51
 msgid "Glpi management"
 msgstr "GLPI-Verwaltung"
 
-#: plugins/admin/systems/class_goGlpiServer.inc:131
+#: plugins/admin/systems/class_goGlpiServer.inc:139
 msgid "The attribute database is empty or contains invalid characters."
 msgstr "Das Attribut Datenbank ist leer oder enthält ungültige Zeichen."
 
@@ -11358,12 +11325,12 @@ msgstr "Start"
 msgid "Restart"
 msgstr "Neustart"
 
-#: plugins/admin/systems/class_serverService.inc:261
+#: plugins/admin/systems/class_serverService.inc:262
 msgid "Can't set status while this server is not saved."
 msgstr ""
 "Kann den Status nicht setzen wenn der Server noch nicht gespeichert wurde."
 
-#: plugins/admin/systems/class_serverService.inc:273
+#: plugins/admin/systems/class_serverService.inc:274
 #, php-format
 msgid "The specified method '%s' can't executed for services."
 msgstr "Die angegebene Methode '%s' kann nicht für Dienste ausgeführt werden."
@@ -11372,7 +11339,7 @@ msgstr "Die angegebene Methode '%s' kann nicht für Dienste ausgeführt werden."
 msgid "FAX database information"
 msgstr "Informationen der Fax-Datenbank"
 
-#: plugins/admin/systems/class_goLdapServer.inc:125
+#: plugins/admin/systems/class_goLdapServer.inc:133
 msgid "The given base is empty or contains invalid characters."
 msgstr "Die angegebene Basis ist leer oder enthält ungültige Zeichen."
 
@@ -11380,7 +11347,7 @@ msgstr "Die angegebene Basis ist leer oder enthält ungültige Zeichen."
 msgid "Logging service"
 msgstr "Protokoll-Dienst"
 
-#: plugins/admin/systems/class_goSyslogServer.inc:45
+#: plugins/admin/systems/class_goSyslogServer.inc:46
 msgid "Syslog service"
 msgstr "Protokoll-Dienst"
 
@@ -11388,37 +11355,33 @@ msgstr "Protokoll-Dienst"
 msgid "Mail service (SMTP)"
 msgstr "Mail-Dienst (SMTP)"
 
-#: plugins/admin/systems/class_goMailServer.inc:481
+#: plugins/admin/systems/class_goMailServer.inc:482
 msgid "Postfix"
 msgstr "Postfix"
 
-#: plugins/admin/systems/class_goMailServer.inc:481
-msgid "configured for"
-msgstr "konfiguriert für"
-
-#: plugins/admin/systems/class_goMailServer.inc:611
+#: plugins/admin/systems/class_goMailServer.inc:619
 msgid "Please specify a numeric value for header size limit."
 msgstr ""
 "Bitte geben Sie einen numerischen Wert für die Maximale Größe der Kopfzeilen "
 "ein."
 
-#: plugins/admin/systems/class_goMailServer.inc:615
+#: plugins/admin/systems/class_goMailServer.inc:623
 msgid "Please specify a numeric value for mailbox size limit."
 msgstr ""
 "Bitte geben Sie einen numerischen Wert für die Maximale Größe der Mailbox "
 "ein."
 
-#: plugins/admin/systems/class_goMailServer.inc:619
+#: plugins/admin/systems/class_goMailServer.inc:627
 msgid "Please specify a numeric value for message size limit."
 msgstr ""
 "Bitte geben Sie einen numerischen Wert für die Maximale Nachrichten-Größe "
 "ein."
 
-#: plugins/admin/systems/class_goImapServer.inc:49
+#: plugins/admin/systems/class_goImapServer.inc:48
 msgid "IMAP/POP3 service"
 msgstr "IMAP/POP3-Dienst"
 
-#: plugins/admin/systems/class_goImapServer.inc:54
+#: plugins/admin/systems/class_goImapServer.inc:53
 msgid "Repair database"
 msgstr "Datenbank reparieren"
 
@@ -11426,19 +11389,19 @@ msgstr "Datenbank reparieren"
 msgid "Cyrus service"
 msgstr "Cyrus-Dienst"
 
-#: plugins/admin/systems/class_goImapServer.inc:161
+#: plugins/admin/systems/class_goImapServer.inc:168
 msgid "Please specify a server identifier."
 msgstr "Bitte geben Sie eine Kennung für den Server ein."
 
-#: plugins/admin/systems/class_goImapServer.inc:164
+#: plugins/admin/systems/class_goImapServer.inc:171
 msgid "Please specify a connect url."
 msgstr "Bitte geben Sie eine Verbindungs-URL ein."
 
-#: plugins/admin/systems/class_goImapServer.inc:167
+#: plugins/admin/systems/class_goImapServer.inc:174
 msgid "Please specify an admin user."
 msgstr "Bitte geben Sie einen administrativen Benutzer an!"
 
-#: plugins/admin/systems/class_goImapServer.inc:170
+#: plugins/admin/systems/class_goImapServer.inc:177
 msgid "Please specify a password for the admin user."
 msgstr "Bitte geben Sie ein Kennwort für den Administrator ein."
 
@@ -12493,7 +12456,7 @@ msgstr "Neue Konferenz erstellen"
 msgid "New conference"
 msgstr "Neue Konferenz"
 
-#: plugins/gofon/conference/class_divListConferences.inc:135
+#: plugins/gofon/conference/class_divListConferences.inc:139
 msgid "Conference"
 msgstr "Konferenz"
 
@@ -14495,3 +14458,46 @@ msgstr "Anmelden"
 msgid "Click here to log in"
 msgstr "Hier klicken zum Anmelden"
 
+#~ msgid "Remove Kolab extension"
+#~ msgstr "Kolab-Erweiterung entfernen"
+
+#~ msgid ""
+#~ "This server has kolab features enabled. You can disable them by clicking "
+#~ "below."
+#~ msgstr ""
+#~ "Dieser Server besitzt aktivierte Kolab-Funtionen. Sie können diese durch "
+#~ "einen Klick auf die Schaltfläche unten deaktivieren."
+
+#~ msgid "Add Kolab service"
+#~ msgstr "Kolab-Dienst hinzufügen"
+
+#~ msgid ""
+#~ "This server has kolab features disabled. You can enable them by clicking "
+#~ "below."
+#~ msgstr ""
+#~ "Aktuell besitzt dieser Server keine aktivierten Kolab-Funktionen. Sie "
+#~ "können diese durch einen Klick auf die Schaltfläche unten aktivieren."
+
+#~ msgid "Remove FAI repository extension."
+#~ msgstr "FAI-Repository-Erweiterung entfernen"
+
+#~ msgid ""
+#~ "This server has FAI repository features enabled. You can disable them by "
+#~ "clicking below."
+#~ msgstr ""
+#~ "Dieser Server besitzt aktivierte FAI-Repository-Erweiterungen. Sie können "
+#~ "diese durch einen Klick auf die Schaltfläche unten deaktivieren."
+
+#~ msgid "Add FAI repository extension."
+#~ msgstr "FAI-Repository-Erweiterung hinzufügen"
+
+#~ msgid ""
+#~ "This server has FAI repository features disabled. You can enable them by "
+#~ "clicking below."
+#~ msgstr ""
+#~ "Aktuell besitzt dieser Server keine aktivierten FAI-Repository-"
+#~ "Erweiterungen. Sie können diese durch einen Klick auf die Schaltfläche "
+#~ "unten aktivieren."
+
+#~ msgid "configured for"
+#~ msgstr "konfiguriert für"
