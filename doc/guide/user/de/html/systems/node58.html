@@ -30,42 +30,93 @@ Dienste</A>
 <P>
 
 <UL>
-<LI>Nfs Export
+<LI>Freigaben
+<BR>
+Dieses Modul erlaubt es, beliebige Verzeichnisse dieses Servers &#252;ber
+verschiedene Protokolle (derzeit stehen NFS, Samba, netatalk sowie
+NCP) zur Verf&#252;gung.
+
+<P>
+
+<UL>
+<LI>Liste der Freigaben: Die Liste umfasst alle momentan definierten Freigaben
+dieses Servers
+</LI>
+<LI>Freigabe hinzuf&#252;gen: Um eine Freigabe hinzuzuf&#252;gen, dr&#252;cken Sie auf
+den Knopf <SPAN  CLASS="textit">Hinzuf&#252;gen</SPAN> unterhalb der Liste. F&#252;llen Sie die folgenden
+Felder:<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>Name<SPAN ID="hue509">*</SPAN></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=283>Der eindeutige Name der Freigabe</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>Beschreibung</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=283>Kurze Beschreibung der Freigabe</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>Pfad</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=283>Der UNIX-Pfad der Freigabe (z.B. '/export')</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>Volume (nur sichtbar bei Typ 'NCP')</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=283>Geben Sie das Volume der Freigabe ein</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>Typ</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=283>W&#228;hlen Sie aus der Liste den Typ der Freigabe</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>Codepage</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=283>W&#228;hlen Sie aus der Liste den Zeichensatz der Freigabe</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>Option</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=283>Geben Sie in dieses Feld weitere Optionen dieser Freigabe ein</TD>
+</TR>
+</TABLE>
+<BR>
+Wenn Ihre Eingaben vollst&#228;ndig sind, dr&#252;cken Sie zum &#220;bernehmen der
+Einstellungen den Knopf <SPAN  CLASS="textit">Speichern</SPAN>.
+</LI>
+<LI>Freigabe bearbeiten: Um eine bestehende Freigabe nachtr&#228;glich zu bearbeiten,
+markieren Sie diese in der Liste und dr&#252;cken Sie den Knopf <SPAN  CLASS="textit">Bearbeiten</SPAN>.
+Gehen Sie f&#252;r die weiteren Schritte analog zu <SPAN  CLASS="textit">Freigabe hinzuf&#252;gen</SPAN>
+vor.
+</LI>
+<LI>Freigabe entfernen: Um eine bestehende Freigabe wieder zu entfernen,
+markieren Sie diese in der Liste und dr&#252;cken Sie den Knopf <SPAN  CLASS="textit">Entfernen</SPAN>
 </LI>
 </UL>
-<SPAN ID="hue305">?</SPAN>
+
+<P>
+<BR>
+
+</LI>
+<LI>Zeit-Dienst:
+<BR>
+Damit dieser Server seine Zeit mit externen NTP-Servern synchronisiert,
+wird der Zeit-Dienst verwendet. Tragen Sie mindestens einen NTP-Server
+ein.
+
+<P>
+<BR>
+
+</LI>
+<LI>LDAP-Dienst:
+<BR>
+Binden Sie diesen Server an Ihr LDAP-Verzeichnis, indem Sie einfach
+die Basis eintragen.
+</LI>
+</UL>
+<SPAN ID="hue320">?</SPAN>
 <P>
 
 <BR>
 
 <UL>
-<LI>Time Service
-</LI>
-</UL>
-<SPAN ID="hue310">?</SPAN>
-<P>
-
-<BR>
-
-<UL>
-<LI>LDAP Service
-</LI>
-</UL>
-<SPAN ID="hue315">?</SPAN>
-<P>
-
-<BR>
-
-<UL>
-<LI>Terminal Service
+<LI>Terminal-Dienst
 </LI>
 </UL>
 <TABLE CELLPADDING=3 BORDER="1">
-<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>Temporary disable login</TD>
-<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=283><SPAN ID="hue323">?</SPAN></TD>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Anmeldung sperren (tempor&#228;r)</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=283>Sperrt die Anmeldung, ohne die Einstellungen zu verwerfen (sinnvoll
+z.B. f&#252;r Updates).</TD>
 </TR>
-<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=142>Font path</TD>
-<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=283><SPAN ID="hue325">?</SPAN></TD>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=170>Schrift-Suchpfad</TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=283>Geben Sie den Pfad zum Schrift-Server ein.</TD>
 </TR>
 </TABLE>
 
@@ -74,24 +125,24 @@ Dienste</A>
 <BR>
 
 <UL>
-<LI>Syslog Service
+<LI>Protokoll-Dienst
 </LI>
 </UL>
-<SPAN ID="hue331">?</SPAN>
+<SPAN ID="hue332">?</SPAN>
 <P>
 
 <BR>
 
 <UL>
-<LI>Print Service
+<LI>Druck-Dienst
 </LI>
 </UL>
-<SPAN ID="hue336">?</SPAN>
+<SPAN ID="hue337">?</SPAN>
 <P>
 <BR><HR>
 <ADDRESS>
 Jan Wenzel
-2006-06-09
+2006-06-12
 </ADDRESS>
 </BODY>
 </HTML>

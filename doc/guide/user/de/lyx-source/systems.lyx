@@ -2378,15 +2378,15 @@ Aktionen
 Datenbanken
 \layout Standard
 
-This tab contains the databases linked to the to the server.
- The administrator can check one or many propositions of databases according
- to the system configuration and the user's access.
+Dieser Reiter enthält die Datenbanken, auf die dieser Server zugreifen muss.
+ Es können, je nach Konfiguration, beliebig viele oder wenige der angebotenen
+ Möglichkeiten verwendet werden.
 \layout Standard
 
-The administrator have the choice between :
+Im Moment können folgende Datenbank konfiguriert werden:
 \layout Itemize
 
-Kerberos kadmin access
+Kerberos-Zugang vie kadmin
 \begin_deeper 
 \layout Standard
 
@@ -2410,6 +2410,7 @@ Kerberos Realm
 
 \layout Standard
 
+Die Realm der Kerberos-Datenbank (EXAMPLE.COM)
 \end_inset 
 </cell>
 </row>
@@ -2419,7 +2420,7 @@ Kerberos Realm
 
 \layout Standard
 
-Admin user
+Administrator
 \end_inset 
 </cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
@@ -2427,6 +2428,7 @@ Admin user
 
 \layout Standard
 
+Der Benutzername des Adminstrators
 \end_inset 
 </cell>
 </row>
@@ -2436,7 +2438,7 @@ Admin user
 
 \layout Standard
 
-Password
+Passwort
 \end_inset 
 </cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
@@ -2444,6 +2446,7 @@ Password
 
 \layout Standard
 
+Das Passwort des Administrators
 \end_inset 
 </cell>
 </row>
@@ -2455,7 +2458,7 @@ Password
 \end_deeper 
 \layout Itemize
 \added_space_top medskip 
-FAX database
+FAX-Datenbank
 \begin_deeper 
 \layout Standard
 
@@ -2471,7 +2474,7 @@ FAX database
 
 \layout Standard
 
-FAX DB user
+FAX-DB Benutzer
 \end_inset 
 </cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
@@ -2479,6 +2482,8 @@ FAX DB user
 
 \layout Standard
 
+Der Name des Benutzers, der auf die Datenbank verbinden darf und über ausreichen
+de Rechte verfügt
 \end_inset 
 </cell>
 </row>
@@ -2488,7 +2493,7 @@ FAX DB user
 
 \layout Standard
 
-Password
+Passwort
 \end_inset 
 </cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
@@ -2496,6 +2501,7 @@ Password
 
 \layout Standard
 
+Das zugehörige Passwort des Benutzers
 \end_inset 
 </cell>
 </row>
@@ -2507,7 +2513,7 @@ Password
 \end_deeper 
 \layout Itemize
 \added_space_top medskip 
-Asterisk Management
+Asterisk Verwaltung
 \begin_deeper 
 \layout Standard
 
@@ -2523,7 +2529,7 @@ Asterisk Management
 
 \layout Standard
 
-Asterisk DB user
+Asterisk- DB Benutzer
 \end_inset 
 </cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
@@ -2531,6 +2537,7 @@ Asterisk DB user
 
 \layout Standard
 
+Der Name des Benutzers für den Asterisk-Zugang
 \end_inset 
 </cell>
 </row>
@@ -2540,7 +2547,7 @@ Asterisk DB user
 
 \layout Standard
 
-Password
+Passwort
 \end_inset 
 </cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
@@ -2548,6 +2555,7 @@ Password
 
 \layout Standard
 
+Das zugehörige Passwort des Benutzers
 \end_inset 
 </cell>
 </row>
@@ -2557,7 +2565,7 @@ Password
 
 \layout Standard
 
-Country dial prefix
+Landesvorwahl
 \end_inset 
 </cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
@@ -2565,6 +2573,8 @@ Country dial prefix
 
 \layout Standard
 
+Die Vorwahl für das Land (z.B.
+ 049 für Deutschland)
 \end_inset 
 </cell>
 </row>
@@ -2574,7 +2584,7 @@ Country dial prefix
 
 \layout Standard
 
-Local dial prefix
+Ortsvorwahl
 \end_inset 
 </cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
@@ -2582,6 +2592,8 @@ Local dial prefix
 
 \layout Standard
 
+Die Vorwahl für den Ort (z.B.
+ 02932 für Arnsberg)
 \end_inset 
 </cell>
 </row>
@@ -2593,7 +2605,7 @@ Local dial prefix
 \end_deeper 
 \layout Itemize
 \added_space_top medskip 
-IMAP admin access
+IMAP-Administrationszugang
 \begin_deeper 
 \layout Standard
 
@@ -2609,7 +2621,7 @@ IMAP admin access
 
 \layout Standard
 
-Server identifier 
+Serverbezeichnung
 \end_inset 
 </cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
@@ -2617,6 +2629,7 @@ Server identifier
 
 \layout Standard
 
+Der Hostname des IMAP-Servers
 \end_inset 
 </cell>
 </row>
@@ -2626,7 +2639,7 @@ Server identifier
 
 \layout Standard
 
-Connect URL
+Verbindungs-URL
 \end_inset 
 </cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
@@ -2634,6 +2647,12 @@ Connect URL
 
 \layout Standard
 
+Eine spezielle URL in der Form '{Servername:Port/Optionen}'.
+ Der Port ist in der Regel 143 (für IMAPS 993).
+ Als Option ist im Moment nur 'notls' für Klartextverbindungen bekannt.
+\layout Standard
+
+Hinweis: Die URL enthält geschweifte Klammern.
 \end_inset 
 </cell>
 </row>
@@ -2643,7 +2662,7 @@ Connect URL
 
 \layout Standard
 
-Admin user
+Administrator
 \end_inset 
 </cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
@@ -2651,6 +2670,8 @@ Admin user
 
 \layout Standard
 
+Der administrative Benutzer, der verwendet werden soll (IMAP- und Sieve-Administ
+rator)
 \end_inset 
 </cell>
 </row>
@@ -2660,7 +2681,7 @@ Admin user
 
 \layout Standard
 
-Password
+Passwort
 \end_inset 
 </cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
@@ -2668,6 +2689,7 @@ Password
 
 \layout Standard
 
+Das zugehörige Passwort
 \end_inset 
 </cell>
 </row>
@@ -2677,7 +2699,7 @@ Password
 
 \layout Standard
 
-Sieve port
+Sieve-Port
 \end_inset 
 </cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
@@ -2685,6 +2707,7 @@ Sieve port
 
 \layout Standard
 
+Der Port, auf dem der Sieve-Dienst angesprochen wird
 \end_inset 
 </cell>
 </row>
@@ -2696,7 +2719,7 @@ Sieve port
 \end_deeper 
 \layout Itemize
 \added_space_top medskip 
-Logging database
+Protokoll-Datenbank
 \begin_deeper 
 \layout Standard
 
@@ -2712,7 +2735,7 @@ Logging database
 
 \layout Standard
 
-Logging DB user
+Protokoll-DB Benutzer
 \end_inset 
 </cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
@@ -2720,6 +2743,8 @@ Logging DB user
 
 \layout Standard
 
+Der Name des Benutzers, der auf die Datenbank verbinden darf und über ausreichen
+de Rechte verfügt.
 \end_inset 
 </cell>
 </row>
@@ -2729,7 +2754,7 @@ Logging DB user
 
 \layout Standard
 
-Password
+Passwort
 \end_inset 
 </cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
@@ -2737,6 +2762,7 @@ Password
 
 \layout Standard
 
+Das zugehörige Passwort des Benutzers.
 \end_inset 
 </cell>
 </row>
@@ -2751,36 +2777,26 @@ Password
 Dienste
 \layout Itemize
 
-Nfs Export
-\layout Standard
-
-
-\color red
-?
+Freigaben
+\newline 
+Dieses Modul erlaubt es, beliebige Verzeichnisse dieses Servers über verschieden
+e Protokolle (derzeit stehen NFS, Samba, netatalk sowie NCP) zur Verfügung.
+\begin_deeper 
 \layout Itemize
-\added_space_top medskip 
-Time Service
-\layout Standard
 
-
-\color red
-?
+Liste der Freigaben: Die Liste umfasst alle momentan definierten Freigaben
+ dieses Servers
 \layout Itemize
-\added_space_top medskip 
-LDAP Service
-\layout Standard
 
-
-\color red
-?
-\layout Itemize
-\added_space_top medskip 
-Terminal Service
-\layout Standard
-
-
+Freigabe hinzufügen: Um eine Freigabe hinzuzufügen, drücken Sie auf den
+ Knopf 
+\emph on 
+Hinzufügen
+\emph default 
+ unterhalb der Liste.
+ Füllen Sie die folgenden Felder:
 \begin_inset  Tabular
-<lyxtabular version="3" rows="2" columns="2">
+<lyxtabular version="3" rows="7" columns="2">
 <features>
 <column alignment="block" valignment="top" leftline="true" width="5cm">
 <column alignment="block" valignment="top" leftline="true" rightline="true" width="10cm">
@@ -2790,7 +2806,9 @@ Terminal Service
 
 \layout Standard
 
-Temporary disable login
+Name
+\color red
+*
 \end_inset 
 </cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
@@ -2798,9 +2816,98 @@ Temporary disable login
 
 \layout Standard
 
+Der eindeutige Name der Freigabe
+\end_inset 
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
 
-\color red
-?
+\layout Standard
+
+Beschreibung
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+Kurze Beschreibung der Freigabe
+\end_inset 
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+Pfad
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+Der UNIX-Pfad der Freigabe (z.B.
+ '/export')
+\end_inset 
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+Volume (nur sichtbar bei Typ 'NCP')
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+Geben Sie das Volume der Freigabe ein
+\end_inset 
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+Typ
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+Wählen Sie aus der Liste den Typ der Freigabe
+\end_inset 
+</cell>
+</row>
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+Codepage
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+Wählen Sie aus der Liste den Zeichensatz der Freigabe
 \end_inset 
 </cell>
 </row>
@@ -2810,7 +2917,7 @@ Temporary disable login
 
 \layout Standard
 
-Font path
+Option
 \end_inset 
 </cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
@@ -2818,9 +2925,105 @@ Font path
 
 \layout Standard
 
+Geben Sie in dieses Feld weitere Optionen dieser Freigabe ein
+\end_inset 
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset 
+
+
+\newline 
+Wenn Ihre Eingaben vollständig sind, drücken Sie zum Übernehmen der Einstellunge
+n den Knopf 
+\emph on 
+Speichern
+\emph default 
+.
+\layout Itemize
+
+Freigabe bearbeiten: Um eine bestehende Freigabe nachträglich zu bearbeiten,
+ markieren Sie diese in der Liste und drücken Sie den Knopf 
+\emph on 
+Bearbeiten
+\emph default 
+.
+ Gehen Sie für die weiteren Schritte analog zu 
+\emph on 
+Freigabe hinzufügen
+\emph default 
+ vor.
+\layout Itemize
+
+Freigabe entfernen: Um eine bestehende Freigabe wieder zu entfernen, markieren
+ Sie diese in der Liste und drücken Sie den Knopf 
+\emph on 
+Entfernen
+\end_deeper 
+\layout Itemize
+\added_space_top medskip 
+Zeit-Dienst:
+\newline 
+Damit dieser Server seine Zeit mit externen NTP-Servern synchronisiert,
+ wird der Zeit-Dienst verwendet.
+ Tragen Sie mindestens einen NTP-Server ein.
+\layout Itemize
+\added_space_top medskip 
+LDAP-Dienst:
+\newline 
+Binden Sie diesen Server an Ihr LDAP-Verzeichnis, indem Sie einfach die
+ Basis eintragen.
+\layout Standard
+
 
 \color red
 ?
+\layout Itemize
+\added_space_top medskip 
+Terminal-Dienst
+\layout Standard
+
+
+\begin_inset  Tabular
+<lyxtabular version="3" rows="2" columns="2">
+<features>
+<column alignment="block" valignment="top" leftline="true" width="6cm">
+<column alignment="block" valignment="top" leftline="true" rightline="true" width="10cm">
+<row topline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+Anmeldung sperren (temporär)
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+Sperrt die Anmeldung, ohne die Einstellungen zu verwerfen (sinnvoll z.B.
+ für Updates).
+\end_inset 
+</cell>
+</row>
+<row topline="true" bottomline="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+Schrift-Suchpfad
+\end_inset 
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\layout Standard
+
+Geben Sie den Pfad zum Schrift-Server ein.
 \end_inset 
 </cell>
 </row>
@@ -2831,7 +3034,7 @@ Font path
 
 \layout Itemize
 \added_space_top medskip 
-Syslog Service
+Protokoll-Dienst
 \layout Standard
 
 
@@ -2839,7 +3042,7 @@ Syslog Service
 ?
 \layout Itemize
 \added_space_top medskip 
-Print Service
+Druck-Dienst
 \layout Standard
 
 
@@ -2850,15 +3053,14 @@ Print Service
 Information
 \layout Standard
 
-This tab give a summary of the sytem's score.
+Dieser Reiter zeigt aktuelle Informationen über den Server an.
 \layout Paragraph
 
-References
+Referenzen
 \layout Standard
 
-
-\color red
-?
+Unter Referenzen werden alle Verbindungen dieses Servers zu anderen Objekten
+ im LDAP-Verzeichnis aufgeführt.
 \layout Subsubsection
 \pagebreak_top 
 Drucker konfigurieren
