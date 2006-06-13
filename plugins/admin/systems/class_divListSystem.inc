@@ -279,9 +279,12 @@ class divListSystem extends MultiSelectWindow
 
     /* Restore is requested, restore the object with the posted dn .*/ 
     if((isset($_POST['RestoreSnapshot'])) && (isset($_POST['SnapShot']))){
-      $entry = base64_decode($_POST['SnapShot']);
-      $this->parent->restore_snapshot($entry);
-      $this->parent->systab = NULL;
+      $entry =trim($_POST['SnapShot']);
+      if(!empty($entry)){    
+        $entry = base64_decode($entry);
+        $this->parent->restore_snapshot($entry);
+        $this->parent->systab = NULL;
+      }
     }
   }
 }

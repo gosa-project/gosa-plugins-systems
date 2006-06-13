@@ -21,7 +21,7 @@
 	<tr>
 		<td>
 			<select name="SnapShot">
-				<option value="&nbsp;">&nbsp;</option>
+				<option value="">&nbsp;</option>
 				{html_options options=$SnapShots}
 			</select>
 		</td>
