@@ -1018,7 +1018,7 @@ class plugin
       /* Collect some infos */
       $base           = $this->config->current['BASE'];
       $snap_base      = $tmp['SNAPSHOT_BASE'];
-      $base_of_object = dn2base($this->dn);
+      $base_of_object = preg_replace ('/^[^,]+,/i', '', $this->dn);
       $new_base       = preg_replace("/".normalizePreg($base)."$/","",$base_of_object).$snap_base;
 
       /* Create object */
@@ -1102,7 +1102,7 @@ class plugin
     /* Prepare bases and some other infos */
     $base           = $this->config->current['BASE'];
     $snap_base      = $tmp['SNAPSHOT_BASE'];
-    $base_of_object = dn2base($dn);
+    $base_of_object = preg_replace ('/^[^,]+,/i', '', $dn);
     $new_base       = preg_replace("/".normalizePreg($base)."$/","",$base_of_object).$snap_base;
     $tmp            = array(); 
 

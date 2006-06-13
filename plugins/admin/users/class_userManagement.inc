@@ -852,7 +852,6 @@ class userManagement extends plugin
         }
       }else{
         $this->dn =  $this->usertab->dn;
-        echo $this->dn;
         $this->create_snapshot("snapshot",$this->usertab->CurrentDescription);
         $this->usertab = NULL;
       }
