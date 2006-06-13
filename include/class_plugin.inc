@@ -1038,12 +1038,13 @@ class plugin
           an unused value. */ 
       $new_dn                           = "gosaSnapshotTimestamp=".$newName.",".$new_base;
       $ldap_to->cat($new_dn);
-      while($ldap->count()){
+      while($ldap_to->count()){
         $ldap_to->cat($new_dn);
         $newName = preg_replace("/\./", "", $sec."-".($usec++));
         $new_dn                           = "gosaSnapshotTimestamp=".$newName.",".$new_base;
         $target['gosaSnapshotTimestamp']  = $newName;
       } 
+
 
       /* Inset this new snapshot */
       $ldap_to->create_missing_trees($new_base);

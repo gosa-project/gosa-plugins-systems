@@ -537,7 +537,7 @@ class systems extends plugin
       /* Restore one of the already deleted objects */
       if(preg_match("/^RestoreDeletedSnapShot_/",$name) && $once){
         $once = false;
-        $entry = "ou=systems,".$this->selectedBase;  
+        $entry = "ou=systems,".$this->DivListSystem->selectedBase;  
         $this->systab = new SnapShotDialog($this->config,$entry,$this); 
         $this->systab->Restore      = true;
         $this->systab->DeletedOnes  = true;
@@ -554,8 +554,8 @@ class systems extends plugin
           print_red($msg);
         }
       }else{
-        $this->dn =  $this->parent->systab->dn;
-        $this->create_snapshot("snapshot",$this->parent->systab->CurrentDescription);
+        $this->dn =  $this->systab->dn;
+        $this->create_snapshot("snapshot",$this->systab->CurrentDescription);
         $this->systab = NULL;
       }
     }
@@ -565,8 +565,8 @@ class systems extends plugin
       $entry =trim($_POST['SnapShot']);
       if(!empty($entry)){
         $entry = base64_decode($entry);
-        $this->parent->restore_snapshot($entry);
-        $this->parent->systab = NULL;
+        $this->restore_snapshot($entry);
+        $this->systab = NULL;
       }
     }
   }
