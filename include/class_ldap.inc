@@ -1060,7 +1060,7 @@ function gen_xls ($dn, $filter= "(objectClass=*)", $attributes= array('*'), $rec
 
       /* Delete existing entry */
       if($delete){
-        $this->rmdir($data['dn']);
+        $this->rmdir_recursive($data['dn'])
       }
       
       /* Create missing trees */
@@ -1074,7 +1074,7 @@ function gen_xls ($dn, $filter= "(objectClass=*)", $attributes= array('*'), $rec
         $ret = $this->modify($data);
       }
     }
-
+    show_ldap_error($this->get_error(),_("Ldap import failed"));
     return($ret);
   }
 
