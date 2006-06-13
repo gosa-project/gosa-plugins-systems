@@ -48,7 +48,7 @@ class divListGroup extends MultiSelectWindow
     $this->AddHeader(array("string"=>"&nbsp;","attach"=>"style='width:20px;'"));
     $this->AddHeader(array("string"=>_("Groupname / Department")));
     $this->AddHeader(array("string"=>_("Properties"),"attach"=>"style='width:136px;'"));
-    $this->AddHeader(array("string"=>_("Actions"),"attach"=>"style='width:80px;border-right:0px;'"));
+    $this->AddHeader(array("string"=>_("Actions"),"attach"=>"style='width:110px;border-right:0px;'"));
 
     /*                  Text        ,Value    ,Name         ,Is selected */
     $this->AddCheckBox("ShowPrimaryGroups",     _("Select to see groups that are primary groups of users"),          _("Show primary groups"),      true);
@@ -64,6 +64,26 @@ class divListGroup extends MultiSelectWindow
     /*                  Name                 ,Text                              ,Default  , Connect with alphabet  */
     $this->AddRegex   ("Regex",     _("Regular expression for matching group names"), "*" , true);
     $this->AddRegex   ("UserRegex", _("User name of which groups are shown"),         "*" , false, "images/search_user.png");
+  }
+
+
+ function GetSnapShotActions($dn)
+  {
+    $str = "";
+
+    if($this->parent->snapshotEnabled()){
+
+      $str .="<input class='center' type='image' src='images/snapshot.png'
+        alt='"._("Create snapshot")."' name='CreateSnapShot_".base64_encode($dn)."' title='"._("Create a new snapshot from this object")."'>&nbsp;";
+
+      if(count($this->parent->Available_SnapsShots($dn))){
+        $str .="<input class='center' type='image' src='images/restore.png'
+          alt='"._("Restore snapshot")."' name='RestoreSnapShot_".base64_encode($dn)."' title='"._("Restore snapshot")."'>&nbsp;";
+      }else{
+        $str.= "<img src='images/empty.png' style='width:16px;' class='center'>&nbsp;";
+      }
+    }
+    return($str);
   }
 
 
@@ -94,13 +114,21 @@ class divListGroup extends MultiSelectWindow
       " <input type='image' class='center' src='images/list_back.png' title='"._("Go up one department")."' alt='"._("Up")."' name='dep_back'>&nbsp;".
       " <input type='image' class='center' src='images/list_home.png' title='"._("Go to users department")."' alt='"._("Home")."' name='dep_home'>&nbsp;".
       " <input class='center' type='image' src='images/list_reload.png' align='middle' title='"._("Reload list")."' name='submit_department' alt='".        _("Submit")."'>&nbsp;".
-      " <img class='center' src='images/list_seperator.png' alt='' height='16' width='1'>&nbsp;".
-      " <input type='image' class='center' src='images/list_new_group.png' title='"._("Create new group")."' alt='"._("New")."' name='group_new'>&nbsp;".
+      " <img class='center' src='images/list_seperator.png' alt='' height='16' width='1'>&nbsp;";
+
+
+    if($this->parent->snapshotEnabled()){
+      $listhead .= "  <input class='center' type='image' align='middle' src='images/restore.png'
+        title='"._("Restore snapshopts of already deleted objects")."' alt='"._("Restore")."' name='RestoreDeletedSnapShot'>".
+        " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
+    }
+
+    $listhead.=" <input type='image' class='center' src='images/list_new_group.png' title='"._("Create new group")."' alt='"._("New")."' name='group_new'>&nbsp;".
       $Copy_Paste.
       " <img class='center' src='images/list_seperator.png' alt='' height='16' width='1'>&nbsp;".
       _("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
-       " <input type='image' class='center' src='images/list_submit.png' title='"._("Submit department")."' name='submit_department' alt='"._("Submit").
-"'>&nbsp;".
+      " <input type='image' class='center' src='images/list_submit.png' title='"._("Submit department")."' name='submit_department' alt='"._("Submit").
+      "'>&nbsp;".
       "</div>";
 
     $this->SetListHeader($listhead);
@@ -138,25 +166,26 @@ class divListGroup extends MultiSelectWindow
     // Space
     $empty    = "<img class='center' src='images/empty.png' style='width:16px;height:16px;' alt=''>";
 
-    /* Create action icons - copy & paste icons */
-    $actions = "";
-    if($this->parent->CopyPasteHandler){
-      $actions.= "<input class='center' type='image'
-        src='images/editcut.png' alt='"._("cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
-      $actions.= "<input class='center' type='image'
-        src='images/editcopy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
-    }
-    $actions.= "<input class='center' type='image'
-      src='images/edit.png' alt='"._("edit")."' name='group_edit_%KEY%' title='"._("Edit this entry")."'>";
-    $actions.= "<input class='center' type='image'
-      src='images/edittrash.png' alt='"._("delete")."' name='group_del_%KEY%' title='"._("Delete this entry")."'>";
-
 
     // User and Template  Images
     $editlink = "<a href='?plug=".$_GET['plug']."&amp;id=%s&amp;act=edit_entry'>%s</a>";
 
     // Test Every Entry and generate divlist Array
     foreach($groups as $key => $val){
+    
+      /* Create action icons - copy & paste icons */
+      $actions = $this->GetSnapShotActions($val['dn']);
+      if($this->parent->CopyPasteHandler){
+        $actions.= "<input class='center' type='image'
+          src='images/editcut.png' alt='"._("cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
+        $actions.= "<input class='center' type='image'
+          src='images/editcopy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
+      }
+      $actions.= "<input class='center' type='image'
+        src='images/edit.png' alt='"._("edit")."' name='group_edit_%KEY%' title='"._("Edit this entry")."'>";
+      $actions.= "<input class='center' type='image'
+        src='images/edittrash.png' alt='"._("delete")."' name='group_del_%KEY%' title='"._("Delete this entry")."'>";
+
 
       $posix=$mail=$samba=$appl=$phone=$enviro=$empty;
 
@@ -185,7 +214,7 @@ class divListGroup extends MultiSelectWindow
       $field1 = array("string" => sprintf($userimg,$val['dn']), "attach" => "style='text-align:center;width:20px;'");
       $field2 = array("string" => sprintf($editlink,$key,($val['cn']['0'].$desc)), "attach" => "style='' ".$title);
       $field3 = array("string" => preg_replace("/%KEY%/", $key, $posix."&nbsp;".$enviro."&nbsp;".$mail."&nbsp;".$samba."&nbsp;".$appl."&nbsp;".$phone),     "attach" => "style='width:136px;'");
-      $field4 = array("string" => preg_replace("/%KEY%/", $key, $actions), "attach" => "style='width:80px;border-right:0px;text-align:right;'");
+      $field4 = array("string" => preg_replace("/%KEY%/", $key, $actions), "attach" => "style='width:110px;border-right:0px;text-align:right;'");
 
       $this->AddElement(array($field1,$field2,$field3,$field4));
     }

@@ -306,7 +306,9 @@ class groupManagement extends plugin
 
     /* Cancel dialogs */
     if (isset($_POST['edit_cancel']) || isset($_POST['password_cancel'])){
-      del_lock ($this->grouptab->dn);
+      if(isset($this->grouptab->dn)){
+        del_lock ($this->grouptab->dn);
+      }
       unset ($this->grouptab);
       $this->grouptab= NULL;
       unset($_SESSION['objectinfo']);
@@ -322,16 +324,18 @@ class groupManagement extends plugin
       $display= $this->grouptab->execute();
 
       /* Don't show buttons if tab dialog requests this */
-      if (!$this->grouptab->by_object[$this->grouptab->current]->dialog){
-        $display.= "<p style=\"text-align:right\">\n";
-        $display.= "<input type=submit name=\"edit_finish\" style=\"width:80px\" value=\""._("Ok")."\">\n";
-        $display.= "&nbsp;\n";
-        if ($this->dn != "new"){
-          $display.= "<input type=submit name=\"edit_apply\" value=\""._("Apply")."\">\n";
+      if(isset($this->grouptab->by_object)){
+        if (!$this->grouptab->by_object[$this->grouptab->current]->dialog){
+          $display.= "<p style=\"text-align:right\">\n";
+          $display.= "<input type=submit name=\"edit_finish\" style=\"width:80px\" value=\""._("Ok")."\">\n";
           $display.= "&nbsp;\n";
+          if ($this->dn != "new"){
+            $display.= "<input type=submit name=\"edit_apply\" value=\""._("Apply")."\">\n";
+            $display.= "&nbsp;\n";
+          }
+          $display.= "<input type=submit name=\"edit_cancel\" value=\""._("Cancel")."\">\n";
+          $display.= "</p>";
         }
-        $display.= "<input type=submit name=\"edit_cancel\" value=\""._("Cancel")."\">\n";
-        $display.= "</p>";
       }
       return ($display);
     }
@@ -518,6 +522,61 @@ class groupManagement extends plugin
   function save_object()
   {
     $this->DivListGroup->save_object();
+        $once = true;
+    foreach($_POST as $name => $value){
+
+      /* Create a new snapshot, display a dialog */
+      if(preg_match("/^CreateSnapShot_/",$name) && $once){
+        $once = false;
+        $entry = preg_replace("/^CreateSnapShot_/","",$name);
+        $entry = base64_decode(preg_replace("/_[xy]$/","",$entry));
+        $this->grouptab = new SnapShotDialog($this->config,$entry,$this);
+      }
+
+      /* Restore a snapshot, display a dialog with all snapshots of the current object */
+      if(preg_match("/^RestoreSnapShot_/",$name) && $once){
+        $once = false;
+        $entry = preg_replace("/^RestoreSnapShot_/","",$name);
+        $entry = base64_decode(preg_replace("/_[xy]$/","",$entry));
+        $this->grouptab = new SnapShotDialog($this->config,$entry,$this);
+        $this->grouptab->Restore = true;
+      }
+
+      /* Restore one of the already deleted objects */
+      if(preg_match("/^RestoreDeletedSnapShot_/",$name) && $once){
+        $once = false;
+        $entry = get_groups_ou().$this->DivListGroup->selectedBase;
+        $this->grouptab = new SnapShotDialog($this->config,$entry,$this);
+        $this->grouptab->Restore      = true;
+        $this->grouptab->DeletedOnes  = true;
+      }
+    }
+
+    /* Create a new snapshot requested, check
+       the given attributes and create the snapshot*/
+    if(isset($_POST['CreateSnapshot'])){
+      $this->grouptab->save_object();
+      $msgs = $this->grouptab->check();
+      if(count($msgs)){
+        foreach($msgs as $msg){
+          print_red($msg);
+        }
+      }else{
+        $this->dn =  $this->grouptab->dn;
+        $this->create_snapshot("snapshot",$this->grouptab->CurrentDescription);
+        $this->grouptab = NULL;
+      }
+    }
+
+    /* Restore is requested, restore the object with the posted dn .*/
+    if((isset($_POST['RestoreSnapshot'])) && (isset($_POST['SnapShot']))){
+      $entry =trim($_POST['SnapShot']);
+      if(!empty($entry)){
+        $entry = base64_decode($entry);
+        $this->restore_snapshot($entry);
+        $this->grouptab = NULL;
+      }
+    }
   }
 
 

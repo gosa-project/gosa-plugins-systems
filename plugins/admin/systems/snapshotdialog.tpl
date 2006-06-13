@@ -8,21 +8,35 @@
 </p>
 <p class="seperator">
 <br>
-<b>{t}You will be able to restore from{/t}</b>
+
+	{if $CountSnapShots!=0}
+		<b>{t}You will be able to restore from{/t}</b>
+	{else}
+		<b>{t}There are no available snapshots.{/t}</b>
+	{/if}
 <br>
 <br>
 </p>
 <br>
 <table summary="">
 	<tr>
-		<td>{t}Choose a snapshot and click continue, to restore the snapshot.{/t}
+		<td>
+			{if $CountSnapShots==0}
+				{t}There is no snapshot available that could be restored.{/t}
+			{else}
+				{t}Choose a snapshot and click continue, to restore the snapshot.{/t}
+			{/if}
 		</td>
 	</tr>
 	<tr>
 		<td>
-			<select name="SnapShot">
-				<option value="">&nbsp;</option>
-				{html_options options=$SnapShots}
+			<select name="SnapShot" {if $CountSnapShots==0} disabled {/if}>
+				{if $CountSnapShots==0} disabled 
+					<option value="">&nbsp;{t}none{/t}&nbsp;</option>
+				{else}
+					<option value="">&nbsp;</option>
+					{html_options options=$SnapShots}
+				{/if}
 			</select>
 		</td>
 	</tr>
@@ -31,7 +45,7 @@
 <p class="seperator">&nbsp;</p>
 <p>
 <div style="width:100%; text-align:right;">
-    <input type='submit' name='RestoreSnapshot' value='{t}Save{/t}'>
+    <input type='submit' name='RestoreSnapshot' value='{t}Save{/t}' {if $CountSnapShots==0} disabled {/if}>
     &nbsp;
     <input type='submit' name='edit_cancel' value='{t}Cancel{/t}'>
 </div></p>
