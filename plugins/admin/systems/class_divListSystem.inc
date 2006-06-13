@@ -126,25 +126,6 @@ class divListSystem extends MultiSelectWindow
   }
 
 
-  function GetSnapShotActions($dn)
-  {
-    $str = "";
-
-    if($this->parent->snapshotEnabled()){
-
-      $str .="<input class='center' type='image' src='images/snapshot.png' 
-        alt='"._("Create snapshot")."' name='CreateSnapShot_".base64_encode($dn)."' title='"._("Create a new snapshot from this object")."'>&nbsp;";
-
-      if(count($this->parent->Available_SnapsShots($dn))){
-        $str .="<input class='center' type='image' src='images/restore.png' 
-          alt='"._("Restore snapshot")."' name='RestoreSnapShot_".base64_encode($dn)."' title='"._("Restore snapshot")."'>&nbsp;";
-      }else{
-        $str.= "<img src='images/empty.png' style='width:16px;' class='center'>&nbsp;";
-      }
-    }
-    return($str);
-  }
-
   function setEntries($terminals)
   {
     $img1  = "<img class='center' src='images/printer.png'            alt='C' title='"._("Cups Server")  ."'>";

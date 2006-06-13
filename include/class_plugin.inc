@@ -100,6 +100,7 @@ class plugin
   var $givenName= "";
   var $acl= "*none*";
   var $dialog= FALSE;
+  var $snapDialog = NULL;
 
   /* attribute list for save action */
   var $attributes= array();
@@ -1228,6 +1229,75 @@ class plugin
     show_ldap_error($ldap_to->get_error().$err, _("Restore snapshot failed."));
   }
 
+
+  function showSnapshotDialog($base,$baseSuffix)
+  {
+    $once = true;
+    foreach($_POST as $name => $value){
+
+      /* Create a new snapshot, display a dialog */
+      if(preg_match("/^CreateSnapShot_/",$name) && $once){
+        $once = false;
+        $entry = preg_replace("/^CreateSnapShot_/","",$name);
+        $entry = base64_decode(preg_replace("/_[xy]$/","",$entry));
+        $this->snapDialog = new SnapShotDialog($this->config,$entry,$this);
+      }
+
+      /* Restore a snapshot, display a dialog with all snapshots of the current object */
+      if(preg_match("/^RestoreSnapShot_/",$name) && $once){
+        $once = false;
+        $entry = preg_replace("/^RestoreSnapShot_/","",$name);
+        $entry = base64_decode(preg_replace("/_[xy]$/","",$entry));
+        $this->snapDialog = new SnapShotDialog($this->config,$entry,$this);
+        $this->snapDialog->Restore = true;
+      }
+
+      /* Restore one of the already deleted objects */
+      if(preg_match("/^RestoreDeletedSnapShot_/",$name) && $once){
+        $once = false;
+        $entry = $baseSuffix.$base;
+        $this->snapDialog = new SnapShotDialog($this->config,$entry,$this);
+        $this->snapDialog->Restore      = true;
+        $this->snapDialog->DeletedOnes  = true;
+      }
+    }
+
+    /* Create a new snapshot requested, check
+       the given attributes and create the snapshot*/
+    if(isset($_POST['CreateSnapshot'])){
+      $this->snapDialog->save_object();
+      $msgs = $this->snapDialog->check();
+      if(count($msgs)){
+        foreach($msgs as $msg){
+          print_red($msg);
+        }
+      }else{
+        $this->dn =  $this->snapDialog->dn;
+        $this->create_snapshot("snapshot",$this->snapDialog->CurrentDescription);
+        $this->snapDialog = NULL;
+      }
+    }
+
+    /* Restore is requested, restore the object with the posted dn .*/
+    if((isset($_POST['RestoreSnapshot'])) && (isset($_POST['SnapShot']))){
+      $entry =trim($_POST['SnapShot']);
+      if(!empty($entry)){
+        $entry = base64_decode($entry);
+        $this->restore_snapshot($entry);
+        $this->snapDialog = NULL;
+      }
+    }
+   
+    if(isset($_POST['CancelSnapshot'])){
+      $this->snapDialog = NULL;
+    }
+ 
+    if($this->snapDialog){
+      $this->snapDialog->save_object();
+      return($this->snapDialog->execute());
+    }
+
+  }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

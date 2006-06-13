@@ -635,7 +635,12 @@ class userManagement extends plugin
       }
       return ($display);
     }
-      
+    
+    /* Check if there is a snapshot dialog open */
+    if($str = $this->showSnapshotDialog($this->DivListUsers->selectedBase,get_people_ou())){
+      return($str);
+    }
+  
     /* Return rendered main page */
         /* Display dialog with system list */
     $this->DivListUsers->parent = $this;
@@ -809,63 +814,6 @@ class userManagement extends plugin
   {
     /* Handle divlist filter && department selection*/
     $this->DivListUsers->save_object();
-
-    /* check for posts */
-    $once = true;
-    foreach($_POST as $name => $value){
-
-      /* Create a new snapshot, display a dialog */
-      if(preg_match("/^CreateSnapShot_/",$name) && $once){
-        $once = false;
-        $entry = preg_replace("/^CreateSnapShot_/","",$name);
-        $entry = base64_decode(preg_replace("/_[xy]$/","",$entry));
-        $this->usertab = new SnapShotDialog($this->config,$entry,$this);
-      }
-
-      /* Restore a snapshot, display a dialog with all snapshots of the current object */
-      if(preg_match("/^RestoreSnapShot_/",$name) && $once){
-        $once = false;
-        $entry = preg_replace("/^RestoreSnapShot_/","",$name);
-        $entry = base64_decode(preg_replace("/_[xy]$/","",$entry));
-        $this->usertab = new SnapShotDialog($this->config,$entry,$this);
-        $this->usertab->Restore = true;
-      }
-
-      /* Restore one of the already deleted objects */
-      if(preg_match("/^RestoreDeletedSnapShot_/",$name) && $once){
-        $once = false;
-        $entry = get_people_ou().$this->DivListUsers->selectedBase;
-        $this->usertab = new SnapShotDialog($this->config,$entry,$this);
-        $this->usertab->Restore      = true;
-        $this->usertab->DeletedOnes  = true;
-      }
-    }
-
-    /* Create a new snapshot requested, check
-       the given attributes and create the snapshot*/
-    if(isset($_POST['CreateSnapshot'])){
-      $this->usertab->save_object();
-      $msgs = $this->usertab->check();
-      if(count($msgs)){
-        foreach($msgs as $msg){
-          print_red($msg);
-        }
-      }else{
-        $this->dn =  $this->usertab->dn;
-        $this->create_snapshot("snapshot",$this->usertab->CurrentDescription);
-        $this->usertab = NULL;
-      }
-    }
-
-    /* Restore is requested, restore the object with the posted dn .*/
-    if((isset($_POST['RestoreSnapshot'])) && (isset($_POST['SnapShot']))){
-      $entry =trim($_POST['SnapShot']);
-      if(!empty($entry)){
-        $entry = base64_decode($entry);
-        $this->restore_snapshot($entry);
-        $this->usertab = NULL;
-      }
-    }
   }
 
   /* A set of disabled and therefore overloaded functions. They are

@@ -47,7 +47,7 @@
 <div style="width:100%; text-align:right;">
     <input type='submit' name='RestoreSnapshot' value='{t}Save{/t}' {if $CountSnapShots==0} disabled {/if}>
     &nbsp;
-    <input type='submit' name='edit_cancel' value='{t}Cancel{/t}'>
+    <input type='submit' name='CancelSnapshot' value='{t}Cancel{/t}'>
 </div></p>
 {else}
 
@@ -94,6 +94,6 @@
 <div style="width:100%; text-align:right;">
     <input type='submit' name='CreateSnapshot' value='{t}Save{/t}'>
     &nbsp;
-    <input type='submit' name='edit_cancel' value='{t}Cancel{/t}'>
+    <input type='submit' name='CancelSnapshot' value='{t}Cancel{/t}'>
 </div></p>
 {/if}
