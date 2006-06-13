@@ -29,7 +29,7 @@ class divListSystem extends MultiSelectWindow
   function divListSystem ($config,$parent)
   {
     MultiSelectWindow::MultiSelectWindow($config,"System");
-    
+
     $this->parent       = $parent;
     $this->ui           = get_userinfo();
 
@@ -42,7 +42,7 @@ class divListSystem extends MultiSelectWindow
     $this->SetInformation(_("This menu allows you to add, remove and change the properties of specific systems. You can only add systems which have already been started once."));
 
     $this->EnableAplhabet   (true);
-  
+
     /* Disable buttonsm */
     $this->EnableCloseButton(false);
     $this->EnableSaveButton (false);
@@ -50,7 +50,7 @@ class divListSystem extends MultiSelectWindow
     /* set Page header */
     $this->AddHeader(array("string"=>"&nbsp;","attach"=>"style='width:20px;'"));
     $this->AddHeader(array("string"=>_("System / Department")));
-    $this->AddHeader(array("string"=>_("Actions"),"attach"=>"style='width:60px;border-right:0px;'"));
+    $this->AddHeader(array("string"=>_("Actions"),"attach"=>"style='width:90px;border-right:0px;'"));
 
     /*                  Text        ,Value    ,Name         ,Is selected */
     $this->AddCheckBox("ShowServers",         _("Select to see servers"),            _("Show servers"),          true);
@@ -84,31 +84,34 @@ class divListSystem extends MultiSelectWindow
       }
     }
     $listhead = "<div style='background:#F0F0F9;padding:5px;'>".
-    " <input class='center' type='image' src='images/list_root.png' align='middle'
-        title='"._("Go to root department")."' name='dep_root' alt='"._("Root")."'>&nbsp;".
-    " <input class='center' type='image' align='middle' src='images/list_back.png'
-        title='"._("Go up one department")."' alt='"._("Up")."' name='dep_back'>&nbsp;".
-    " <input class='center' type='image' align='middle' src='images/list_home.png'
-        title='"._("Go to users department")."' alt='"._("Home")."'                     name='dep_home'>&nbsp;".
-    " <input class='center' type='image' src='images/list_reload.png' align='middle' title='"._("Reload list")."' name='submit_department' alt='".          _("Submit")."'>&nbsp;".
-    " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;".
-    " <input class='center' type='image' align='middle' src='images/select_new_terminal.png'
-        name='newsystem_terminal'    alt='"._("New Terminal template")."' title='"._("New Terminal")."'>".
-    " <input class='center' type='image' align='middle' src='images/select_new_workstation.png'
-        name='newsystem_workstation' alt='"._("New Workstation template")."' title='"._("New Workstation")."'>".
-    " <input class='center' type='image' align='middle' src='images/select_new_server.png'     name='newsystem_server'      alt='"._("New Server")."'
-        title='"._("New Server")."'>".
-    " <input class='center' type='image' align='middle' src='images/select_new_printer.png'    name='newsystem_printer'     alt='"._("New Printer")."'
-        title='"._("New Printer")."'>".
-    " <input class='center' type='image' align='middle' src='images/select_new_phone.png'      name='newsystem_phone'       alt='"._("New Phone")."'
-        title='"._("New Phone")."'>".
-    " <input class='center' type='image' align='middle' src='images/select_new_component.png'  name='newsystem_component'   alt='"._("New Component")."'
-        title='"._("New Component")."'>".
-    " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;"._("Base")."&nbsp;".
-    " <select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
-    " <input class='center' type='image' src='images/list_submit.png' align='middle'
-        title='"._("Submit department")."' name='submit_department' alt='".           _("Submit")."'>&nbsp;".
-    "</div>";
+      " <input class='center' type='image' src='images/list_root.png' align='middle'
+      title='"._("Go to root department")."' name='dep_root' alt='"._("Root")."'>&nbsp;".
+      " <input class='center' type='image' align='middle' src='images/list_back.png'
+      title='"._("Go up one department")."' alt='"._("Up")."' name='dep_back'>&nbsp;".
+      " <input class='center' type='image' align='middle' src='images/list_home.png'
+      title='"._("Go to users department")."' alt='"._("Home")."'                     name='dep_home'>&nbsp;".
+      " <input class='center' type='image' src='images/list_reload.png' align='middle' title='"._("Reload list")."' name='submit_department' alt='".          _("Submit")."'>&nbsp;".
+      " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;".
+      "  <input class='center' type='image' align='middle' src='images/list_back.png'
+      title='"._("Go up one department")."' alt='"._("Up")."' name='RestoreDeletedSnapShot'>".
+      " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;".
+      " <input class='center' type='image' align='middle' src='images/select_new_terminal.png'
+      name='newsystem_terminal'    alt='"._("New Terminal template")."' title='"._("New Terminal")."'>".
+      " <input class='center' type='image' align='middle' src='images/select_new_workstation.png'
+      name='newsystem_workstation' alt='"._("New Workstation template")."' title='"._("New Workstation")."'>".
+      " <input class='center' type='image' align='middle' src='images/select_new_server.png'     name='newsystem_server'      alt='"._("New Server")."'
+      title='"._("New Server")."'>".
+      " <input class='center' type='image' align='middle' src='images/select_new_printer.png'    name='newsystem_printer'     alt='"._("New Printer")."'
+      title='"._("New Printer")."'>".
+      " <input class='center' type='image' align='middle' src='images/select_new_phone.png'      name='newsystem_phone'       alt='"._("New Phone")."'
+      title='"._("New Phone")."'>".
+      " <input class='center' type='image' align='middle' src='images/select_new_component.png'  name='newsystem_component'   alt='"._("New Component")."'
+      title='"._("New Component")."'>".
+      " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;"._("Base")."&nbsp;".
+      " <select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
+      " <input class='center' type='image' src='images/list_submit.png' align='middle'
+      title='"._("Submit department")."' name='submit_department' alt='".           _("Submit")."'>&nbsp;".
+      "</div>";
     $this->SetListHeader($listhead);
   }
 
@@ -116,6 +119,22 @@ class divListSystem extends MultiSelectWindow
   {
     $this->ClearElementsList();
     $this->GenHeader();
+  }
+
+
+  function GetSnapShotActions($dn)
+  {
+    $str = "";
+    $str .="<input class='center' type='image' src='images/snapshot.png' 
+      alt='"._("Create snapshot")."' name='CreateSnapShot_".base64_encode($dn)."' title='"._("Create snapshot")."'>&nbsp;";
+
+    if(count($this->parent->Available_SnapsShots($dn))){
+      $str .="<input class='center' type='image' src='images/restore.png' 
+        alt='"._("Restore snapshot")."' name='RestoreSnapShot_".base64_encode($dn)."' title='"._("Restore snapshot")."'>&nbsp;";
+    }else{
+      $str.= "<img src='images/empty.png' style='width:16px;' class='center'>&nbsp;";
+    }
+    return($str);
   }
 
   function setEntries($terminals)
@@ -132,15 +151,17 @@ class divListSystem extends MultiSelectWindow
     $img10 = "<img class='center' src='images/save.png'               alt='L' title='"._("Ldap Server") ."'>";
 
     $empty    ="&nbsp;";
-    $action= "<input class='center' type='image' src='images/edit.png' alt='"._("edit")."'     name='user_edit_%KEY%' title='"._("Edit system")."'>";
-    $action.= "<input class='center' type='image' src='images/edittrash.png' alt='"._("delete")."'   name='user_del_%KEY%' title='"._("Delete system")."'>";
 
     // User and Template  Images
     $editlink = "<a href='?plug=".$_GET['plug']."&amp;id=%s&amp;act=edit_entry'>%s</a>";
 
     // Test Every Entry and generate divlist Array
     foreach($terminals as $key => $val){
- 
+
+      $action =  $this->GetSnapShotActions($val['dn']);
+      $action.= "<input class='center' type='image' src='images/edit.png' alt='"._("edit")."'     name='user_edit_%KEY%' title='"._("Edit system")."'>";
+      $action.= "<input class='center' type='image' src='images/edittrash.png' alt='"._("delete")."'   name='user_del_%KEY%' title='"._("Delete system")."'>";
+
       /* Generate picture list, which is currently disabled */
       if(in_array("goCupsServer"    ,$val['objectClass'])) $cups    = $img1;   else $cups  =$empty;
       if(in_array("goLogDBServer"   ,$val['objectClass'])) $logdb   = $img2;   else $logdb =$empty;
@@ -152,7 +173,7 @@ class divListSystem extends MultiSelectWindow
       if(in_array("goFonServer"     ,$val['objectClass'])) $fon     = $img8;   else $fon   =$empty;
       if(in_array("goFaxServer"     ,$val['objectClass'])) $fax     = $img9;   else $fax   =$empty;
       if(in_array("goLdapServer"    ,$val['objectClass'])) $ldap     = $img10;   else $ldap   =$empty;
-      
+
       $pics = $cups.$logdb.$syslog.$imap.$samba.$nfs.$krb.$fon.$fax.$ldap;
       $pics = ""; // Pictures currently hidden
 
@@ -182,21 +203,78 @@ class divListSystem extends MultiSelectWindow
       $img    = $this->parent->convert_list($val);
       $field1 = array("string" => sprintf($img['img'],$val['dn']), "attach" => "style='text-align:center;width:20px;'");
       $field2 = array("string" => sprintf($editlink,$key,$display), "attach" => "style='' title='".preg_replace('/ /', '&nbsp;', @LDAP::fix($val['dn']))."'");
-      $field3 = array("string" => preg_replace("/%KEY%/", "$key", $action2.$action), "attach" => "style='width:60px;border-right:0px;text-align:right;'");
+      $field3 = array("string" => preg_replace("/%KEY%/", "$key", $action2.$action), "attach" => "style='width:90px;border-right:0px;text-align:right;'");
       $this->AddElement( array($field1,$field2,$field3));
     }
 
   }
+
 
   function Save()
   {
     MultiSelectWindow :: Save();  
   }
 
+
   function save_object()
   {
     /* Save automatic created POSTs like regex, checkboxes */
-    MultiSelectWindow :: save_object();   
+    MultiSelectWindow :: save_object();  
+
+
+    /* check for posts */
+    $once = true;
+    foreach($_POST as $name => $value){
+
+      /* Create a new snapshot, display a dialog */
+      if(preg_match("/^CreateSnapShot_/",$name) && $once){
+        $once = false;
+        $entry = preg_replace("/^CreateSnapShot_/","",$name);
+        $entry = base64_decode(preg_replace("/_[xy]$/","",$entry));
+        $this->parent->systab = new SnapShotDialog($this->config,$entry,$this->parent); 
+      }
+
+      /* Restore a snapshot, display a dialog with all snapshots of the current object */
+      if(preg_match("/^RestoreSnapShot_/",$name) && $once){
+        $once = false;
+        $entry = preg_replace("/^RestoreSnapShot_/","",$name);
+        $entry = base64_decode(preg_replace("/_[xy]$/","",$entry));
+        $this->parent->systab = new SnapShotDialog($this->config,$entry,$this->parent); 
+        $this->parent->systab->Restore = true;
+      }
+
+      /* Restore one of the already deleted objects */
+      if(preg_match("/^RestoreDeletedSnapShot_/",$name) && $once){
+        $once = false;
+        $entry = "ou=systems,".$this->selectedBase;  
+        $this->parent->systab = new SnapShotDialog($this->config,$entry,$this->parent); 
+        $this->parent->systab->Restore      = true;
+        $this->parent->systab->DeletedOnes  = true;
+      }
+    }
+
+    /* Create a new snapshot requested, check 
+       the given attributes and create the snapshot*/
+    if(isset($_POST['CreateSnapshot'])){
+      $this->parent->systab->save_object();
+      $msgs = $this->parent->systab->check();
+      if(count($msgs)){
+        foreach($msgs as $msg){
+          print_red($msg);
+        }
+      }else{
+        $this->parent->dn =  $this->parent->systab->dn;
+        $this->parent->create_snapshot("snapshot",$this->parent->systab->CurrentDescription);
+        $this->parent->systab = NULL;
+      }
+    }
+
+    /* Restore is requested, restore the object with the posted dn .*/ 
+    if((isset($_POST['RestoreSnapshot'])) && (isset($_POST['SnapShot']))){
+      $entry = base64_decode($_POST['SnapShot']);
+      $this->parent->restore_snapshot($entry);
+      $this->parent->systab = NULL;
+    }
   }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
