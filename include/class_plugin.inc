@@ -985,21 +985,221 @@ class plugin
 
 
   /* Create a snapshot of the current object */
-  function create_snapshot($type= "snapshot", $description= "")
+  function create_snapshot($type= "snapshot", $description= array())
+  {
+    /* Create 2 ldap connections 
+        one connection points to the snapshot server and 
+        one to our basic ldap server */
+    $ldap= $this->config->get_ldap_link();
+    $ldap->cd($this->config->current['BASE']);
+    $tmp = $this->config->data['MAIN'];
+  
+    /* check if there are special server configurations for snapshots */
+    if(isset($tmp['SNAPSHOT_SERVER'])){
+      $server         = $tmp['SNAPSHOT_SERVER'];
+      $user           = $tmp['SNAPSHOT_USER'];
+      $password       = $tmp['SNAPSHOT_PASSWORD'];
+      $snapldapbase   = $tmp['SNAPSHOT_LDAP_BASE'];
+      $ldap_to        = new LDAP($user,$password, $server);
+      $ldap_to -> cd($snapldapbase);
+      show_ldap_error($ldap_to->get_error(), _("Snapshot failed."));
+    }else{
+      $ldap_to    = $ldap;
+    }
+   
+    /* check if the dn exists */ 
+    if ($ldap->dn_exists($this->dn)){
+
+      /* Extract seconds & mysecs, they are used as entry index */
+      list($usec, $sec)= explode(" ", microtime());
+
+      /* Collect some infos */
+      $base           = $this->config->current['BASE'];
+      $snap_base      = $tmp['SNAPSHOT_BASE'];
+      $base_of_object = dn2base($this->dn);
+      $new_base       = preg_replace("/".normalizePreg($base)."$/","",$base_of_object).$snap_base;
+
+      /* Create object */
+      $data             = preg_replace('/^dn:.*\n/', '', $ldap->gen_one_entry($this->dn));
+      $newName          = preg_replace("/\./", "", $sec."-".$usec);
+      $target= array();
+      $target['objectClass']            = array("top", "gosaSnapshotObject");
+      $target['gosaSnapshotData']       = gzcompress($data, 6);
+      $target['gosaSnapshotType']       = $type;
+      $target['gosaSnapshotDN']         = $this->dn;
+      $target['description']            = $description;
+      $target['gosaSnapshotTimestamp']  = $newName;
+
+      /* Insert the new snapshot 
+          But we have to check first, if the given gosaSnapshotTimestamp
+          is already used, in this case we should increment this value till there is 
+          an unused value. */ 
+      $new_dn                           = "gosaSnapshotTimestamp=".$newName.",".$new_base;
+      $ldap_to->cat($new_dn);
+      while($ldap->count()){
+        $ldap_to->cat($new_dn);
+        $newName = preg_replace("/\./", "", $sec."-".($usec++));
+        $new_dn                           = "gosaSnapshotTimestamp=".$newName.",".$new_base;
+        $target['gosaSnapshotTimestamp']  = $newName;
+      } 
+
+      /* Inset this new snapshot */
+      $ldap_to->create_missing_trees($new_base);
+      $ldap_to->cd($new_dn);
+      $ldap_to->add($target);
+      show_ldap_error($ldap_to->get_error(), _("Create snapshot failed."));
+      show_ldap_error($ldap->get_error(), _("Create snapshot failed."));
+    }
+  }
+
+
+  /* Return available snapshots for the given base 
+  */
+  function Available_SnapsShots($dn,$raw = false)
+  {
+    /* Create an additional ldap object which
+        points to our ldap snapshot server */
+    $ldap= $this->config->get_ldap_link();
+    $ldap->cd($this->config->current['BASE']);
+    $tmp = $this->config->data['MAIN'];
+
+    /* check if there are special server configurations for snapshots */
+    if(isset($tmp['SNAPSHOT_SERVER'])){
+      $server       = $tmp['SNAPSHOT_SERVER'];
+      $user         = $tmp['SNAPSHOT_USER'];
+      $password     = $tmp['SNAPSHOT_PASSWORD'];
+      $snapldapbase = $tmp['SNAPSHOT_LDAP_BASE'];
+      $ldap_to      = new LDAP($user,$password, $server);
+      $ldap_to -> cd ($snapldapbase);
+      show_ldap_error($ldap_to->get_error(), _("Snapshot failed."));
+    }else{
+      $ldap_to    = $ldap;
+    }
+
+    /* Prepare bases and some other infos */
+    $base           = $this->config->current['BASE'];
+    $snap_base      = $tmp['SNAPSHOT_BASE'];
+    $base_of_object = dn2base($dn);
+    $new_base       = preg_replace("/".normalizePreg($base)."$/","",$base_of_object).$snap_base;
+    $tmp            = array(); 
+
+    /* Fetch all objects with  gosaSnapshotDN=$dn */
+    $ldap_to->cd($new_base);
+    $ldap_to->ls("(&(objectClass=gosaSnapshotObject)(gosaSnapshotDN=".$dn."))",$new_base,
+                    array("gosaSnapshotType","gosaSnapshotTimestamp","gosaSnapshotDN","description")); 
+ 
+    /* Put results into a list and add description if missing */
+    while($entry = $ldap->fetch()){ 
+      if(!isset($entry['description'][0])){
+        $entry['description'][0]  = "";
+      }
+      $tmp[] = $entry; 
+    }
+
+    /* Return the raw array, or format the result */
+    if($raw){
+      return($tmp);
+    }else{  
+      $tmp2 = array();
+      foreach($tmp as $entry){
+        $tmp2[base64_encode($entry['dn'])] = $entry['description'][0]; 
+      }
+    }
+    return($tmp2);
+  }
+
+
+  function getAllDeletedSnapshots($base_of_object,$raw = false)
+  {
+  
+    /* Create an additional ldap object which
+        points to our ldap snapshot server */
+    $ldap= $this->config->get_ldap_link();
+    $ldap->cd($this->config->current['BASE']);
+    $tmp = $this->config->data['MAIN'];
+
+    /* check if there are special server configurations for snapshots */
+    if(isset($tmp['SNAPSHOT_SERVER'])){
+      $server       = $tmp['SNAPSHOT_SERVER'];
+      $user         = $tmp['SNAPSHOT_USER'];
+      $password     = $tmp['SNAPSHOT_PASSWORD'];
+      $snapldapbase = $tmp['SNAPSHOT_LDAP_BASE'];
+      $ldap_to      = new LDAP($user,$password, $server);
+      $ldap_to->cd ($snapldapbase);
+      show_ldap_error($ldap_to->get_error(), _("Snapshot failed."));
+    }else{
+      $ldap_to    = $ldap;
+    }
+
+    /* Prepare bases */ 
+    $base           = $this->config->current['BASE'];
+    $snap_base      = $tmp['SNAPSHOT_BASE'];
+    $new_base       = preg_replace("/".normalizePreg($base)."$/","",$base_of_object).$snap_base;
+
+    /* Fetch all objects and check if they do not exist anymore */
+    $ui = get_userinfo();
+    $tmp = array();
+    $ldap_to->cd($new_base);
+    $ldap_to->search("(&(objectClass=gosaSnapshotObject))",array("gosaSnapshotType","gosaSnapshotTimestamp","gosaSnapshotDN","description"));
+    while($entry = $ldap_to->fetch()){
+      if(!isset($entry['description'][0])){
+        $entry['description'][0]  = "";
+      }
+      $tmp[] = $entry; 
+    }
+
+    /* Check if entry still exists */
+    foreach($tmp as $key => $entry){
+      $ldap->cat($entry['gosaSnapshotDN'][0]);
+      if($ldap->count()){
+        unset($tmp[$key]);
+      }
+    }
+
+    /* Format result as requested */
+    if($raw) {
+      return($tmp);
+    }else{
+      $tmp2 = array();
+      foreach($tmp as $key => $entry){
+        $tmp2[base64_encode($entry['dn'])] = $entry['description'][0]; 
+      }
+    }
+    return($tmp2);
+  } 
+
+
+  /* Restore selected snapshot */
+  function restore_snapshot($dn)
   {
     $ldap= $this->config->get_ldap_link();
+    $ldap->cd($this->config->current['BASE']);
+    $tmp = $this->config->data['MAIN'];
 
-    if ($ldap->dn_exists($this->$dn)){
-      $data= preg_replace('/^dn:.*\n/', '', $ldap->gen_ldif($this->dn));
-      $target= array();
-      $target['objectClass']= array("top", "gosaObjectSnapshot");
-      $target['gosaSnapshotData']= gzcompress($data, 6);
-      $target['gosaSnapshotType']= $type;
-      list($usec, $sec)= explode(" ", microtime());
-      $target['gosaShapshotTimestamp']= preg_replace("/\./", "", $sec.$usec);
-      $target['gosaShapshotDN']= $this->dn;
-      print_a($target);
+    /* check if there are special server configurations for snapshots */
+    if(isset($tmp['SNAPSHOT_SERVER'])){
+      $server       = $tmp['SNAPSHOT_SERVER'];
+      $user         = $tmp['SNAPSHOT_USER'];
+      $password     = $tmp['SNAPSHOT_PASSWORD'];
+      $snapldapbase = $tmp['SNAPSHOT_LDAP_BASE'];
+      $ldap_to      = new LDAP($user,$password, $server);
+      $ldap_to->cd ($snapldapbase);
+      show_ldap_error($ldap_to->get_error(), _("Snapshot failed."));
+    }else{
+      $ldap_to    = $ldap;
     }
+  
+    /* Get the snapshot */ 
+    $ldap_to->cat($dn);
+    $restoreObject = $ldap_to->fetch();
+    
+    /* Prepare import string */
+    $data  = gzuncompress($ldap_to->get_attribute($dn,'gosaSnapshotData'));
+    $data =  "dn: ".$restoreObject['gosaSnapshotDN'][0]."\n".$data; 
+  
+    /* Import the given data */
+    $ldap->import_complete_ldif($data,$err,true,true);
+    show_ldap_error($ldap_to->get_error().$err, _("Restore snapshot failed."));
   }
 
 }
