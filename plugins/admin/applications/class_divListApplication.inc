@@ -42,7 +42,7 @@ class divListApplication extends MultiSelectWindow
     /* set Page header */
     $this->AddHeader(array("string" => "&nbsp;",                "attach" => "style='text-align:center;width:20px;'"));
     $this->AddHeader(array("string" => _("Application name")." / "._("Department"), "attach" => "style=''"));
-    $this->AddHeader(array("string" => _("Actions"),            "attach" => "style='width:80px;border-right:0px;text-align:right;'"));
+    $this->AddHeader(array("string" => _("Actions"),            "attach" => "style='width:110px;border-right:0px;text-align:right;'"));
 
     /* Add SubSearch checkbox */
     $this->AddCheckBox("SubSearch",  _("Select to search within subtrees"), _("Ignore subtrees"), false);
@@ -89,16 +89,23 @@ class divListApplication extends MultiSelectWindow
      */
     $listhead = "<div style='background:#F0F0F9;padding:5px;'>".
       " <input class='center' type='image' src='images/list_root.png' align='middle' ".
-        "title='"._("Go to root department")."' name='dep_root' alt='"._("Root")."'>&nbsp;".
+      "title='"._("Go to root department")."' name='dep_root' alt='"._("Root")."'>&nbsp;".
       " <input class='center' type='image' align='middle' src='images/list_back.png' ".
-        "title='"._("Go up one department")."' alt='"._("Up")."' name='dep_back'>&nbsp;".
+      "title='"._("Go up one department")."' alt='"._("Up")."' name='dep_back'>&nbsp;".
       " <input class='center' type='image' align='middle' src='images/list_home.png' ".
-        "title='"._("Go to users department")."' alt='"._("Home")."' name='dep_home'>&nbsp;".
+      "title='"._("Go to users department")."' alt='"._("Home")."' name='dep_home'>&nbsp;".
       " <input class='center' type='image' src='images/list_reload.png' align='middle' ".
-        "title='"._("Reload list")."' name='submit_department' alt='"._("Submit")."'>&nbsp;".
-      " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;".
-      " <input class='center' type='image' align='middle' src='images/list_new_app.png' alt='"._("new").
-        "' title='"._("Create new application")."' name='appl_new'>&nbsp;".
+      "title='"._("Reload list")."' name='submit_department' alt='"._("Submit")."'>&nbsp;".
+      " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
+
+    if($this->parent->snapshotEnabled()){
+      $listhead .= "  <input class='center' type='image' align='middle' src='images/restore.png'
+        title='"._("Restore snapshopts of already deleted objects")."' alt='"._("Restore")."' name='RestoreDeletedSnapShot'>".
+        " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
+    }
+
+    $listhead .= " <input class='center' type='image' align='middle' src='images/list_new_app.png' alt='"._("new").
+      "' title='"._("Create new application")."' name='appl_new'>&nbsp;".
       $Copy_Paste.
       " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;".
       _("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
@@ -131,18 +138,6 @@ class divListApplication extends MultiSelectWindow
     $empty    = "<img class='center' src='images/empty.png' style='width:16px;height:16px;' alt=''>";
 
 
-    /* Create action icons */
-    $actions = "";
-    if($this->parent->CopyPasteHandler){
-      $actions.= "<input class='center' type='image'
-        src='images/editcut.png' alt='"._("cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
-      $actions.= "<input class='center' type='image'
-        src='images/editcopy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
-    }
-    $actions.= "<input class='center' type='image'
-      src='images/edit.png' alt='"._("edit")."' name='appl_edit_%KEY%' title='"._("Edit this entry")."'>";
-    $actions.= "<input class='center' type='image'
-      src='images/edittrash.png' alt='"._("delete")."' name='appl_del_%KEY%' title='"._("Delete this entry")."'>";
 
 
     /********************
@@ -150,6 +145,20 @@ class divListApplication extends MultiSelectWindow
      ********************/
 
     foreach($list as $key => $val){
+
+      /* Create action icons */
+      $actions = $this->GetSnapShotActions($val['dn']);
+      if($this->parent->CopyPasteHandler){
+        $actions.= "<input class='center' type='image'
+          src='images/editcut.png' alt='"._("cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
+        $actions.= "<input class='center' type='image'
+          src='images/editcopy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
+      }
+      $actions.= "<input class='center' type='image'
+        src='images/edit.png' alt='"._("edit")."' name='appl_edit_%KEY%' title='"._("Edit this entry")."'>";
+      $actions.= "<input class='center' type='image'
+        src='images/edittrash.png' alt='"._("delete")."' name='appl_del_%KEY%' title='"._("Delete this entry")."'>";
+
       $title = "title='".preg_replace('/ /', '&nbsp;', @LDAP::fix($val['dn']))."'";
 
       if(!isset($val['description'][0])){
@@ -159,7 +168,7 @@ class divListApplication extends MultiSelectWindow
       }
       $field1 = array("string" => sprintf($applimg,$val['dn']), "attach" => "style='text-align:center;width:20px;'");
       $field2 = array("string" => sprintf($editlink,$key,($val['cn']['0'].$desc)), "attach" => "style='' ".$title);
-      $field3 = array("string" => preg_replace("/%KEY%/", $key, $actions), "attach" => "style='width:80px;border-right:0px;text-align:right;'");
+      $field3 = array("string" => preg_replace("/%KEY%/", $key, $actions), "attach" => "style='width:110px;border-right:0px;text-align:right;'");
       $this->AddElement(array($field1,$field2,$field3));
     }
   }

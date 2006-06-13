@@ -364,6 +364,11 @@ class applicationManagement extends plugin
       Dialog display
      ****************/
 
+    /* Check if there is a snapshot dialog open */
+    if($str = $this->showSnapshotDialog($this->DivListApplication->selectedBase,"ou=apps,")){
+      return($str);
+    }
+
     /* Display dialog with system list */
     $this->DivListApplication->parent = $this;
     $this->DivListApplication->execute();
