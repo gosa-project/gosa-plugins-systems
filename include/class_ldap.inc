@@ -1060,7 +1060,7 @@ function gen_xls ($dn, $filter= "(objectClass=*)", $attributes= array('*'), $rec
 
       /* Delete existing entry */
       if($delete){
-        $this->rmdir_recursive($data['dn'])
+        $this->rmdir_recursive($data['dn']);
       }
       
       /* Create missing trees */
