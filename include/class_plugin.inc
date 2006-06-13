@@ -1063,6 +1063,11 @@ class plugin
     $ldap->cd($this->config->current['BASE']);
     $tmp = $this->config->data['MAIN'];
 
+    if(!isset($tmp['SNAPSHOT_BASE'])){
+      print_red(_("Please specify the attribute SNAPSHOT_SERVER in your gosa.conf."));
+      return(array());
+    }
+
     /* check if there are special server configurations for snapshots */
     if(isset($tmp['SNAPSHOT_SERVER'])){
       $server       = $tmp['SNAPSHOT_SERVER'];
