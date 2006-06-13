@@ -95,7 +95,7 @@ class divListSystem extends MultiSelectWindow
 
     if($this->parent->snapshotEnabled()){ 
       $listhead .= "  <input class='center' type='image' align='middle' src='images/restore.png'
-        title='"._("Restore objects")."' alt='"._("Up")."' name='RestoreDeletedSnapShot'>".
+        title='"._("Restore snapshopts of already deleted objects")."' alt='"._("Restore")."' name='RestoreDeletedSnapShot'>".
         " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
     }
 
@@ -133,7 +133,7 @@ class divListSystem extends MultiSelectWindow
     if($this->parent->snapshotEnabled()){
 
       $str .="<input class='center' type='image' src='images/snapshot.png' 
-        alt='"._("Create snapshot")."' name='CreateSnapShot_".base64_encode($dn)."' title='"._("Create snapshot")."'>&nbsp;";
+        alt='"._("Create snapshot")."' name='CreateSnapShot_".base64_encode($dn)."' title='"._("Create a new snapshot from this object")."'>&nbsp;";
 
       if(count($this->parent->Available_SnapsShots($dn))){
         $str .="<input class='center' type='image' src='images/restore.png' 

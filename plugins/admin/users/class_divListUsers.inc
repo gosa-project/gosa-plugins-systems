@@ -49,7 +49,7 @@ class divListUsers extends MultiSelectWindow
     $this->AddHeader(array("string"=>"&nbsp;",          "attach"=>"style='width:20px;'"));
     $this->AddHeader(array("string"=>_("Username")." / "._("Department")));
     $this->AddHeader(array("string"=>_("Properties"),   "attach" => "style='width:152px;'"));
-    $this->AddHeader(array("string"=>_("Actions"),      "attach" => "style='width:102px;border-right:0px;text-align:right;'"));
+    $this->AddHeader(array("string"=>_("Actions"),      "attach" => "style='width:132px;border-right:0px;text-align:right;'"));
     
     $this->AddCheckBox("ShowTemplates"      ,_("Select to see template pseudo users")               ,_("Show templates")        , false);
     $this->AddCheckBox("ShowFunctionalUsers",_("Select to see users that have only a GOsa object"),_("Show functional users") , true);
@@ -65,6 +65,26 @@ class divListUsers extends MultiSelectWindow
     /*                  Name                 ,Text                              ,Default  , Connect with alphabet  */
     $this->AddRegex   ("Regex",     _("Display users matching"),"*" , true);
   }
+
+  function GetSnapShotActions($dn)
+  {
+    $str = "";
+
+    if($this->parent->snapshotEnabled()){
+
+      $str .="<input class='center' type='image' src='images/snapshot.png'
+        alt='"._("Create snapshot")."' name='CreateSnapShot_".base64_encode($dn)."' title='"._("Create a new snapshot from this object")."'>&nbsp;";
+
+      if(count($this->parent->Available_SnapsShots($dn))){
+        $str .="<input class='center' type='image' src='images/restore.png'
+          alt='"._("Restore snapshot")."' name='RestoreSnapShot_".base64_encode($dn)."' title='"._("Restore snapshot")."'>&nbsp;";
+      }else{
+        $str.= "<img src='images/empty.png' style='width:16px;' class='center'>&nbsp;";
+      }
+    }
+    return($str);
+  }
+
 
   function GenHeader()
   {
@@ -97,8 +117,15 @@ class divListUsers extends MultiSelectWindow
       title='"._("Go to users department")."' alt='"._("Home")."'            name='dep_home'>&nbsp;".
       " <input class='center' type='image' src='images/list_reload.png' align='middle' 
       title='"._("Reload list")."' name='submit_department' alt='".        _("Submit")."'>&nbsp;".
-      " <img   class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;".
-      " <input class='center' type='image' align='middle' src='images/list_new_user.png' 
+      " <img   class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
+
+    if($this->parent->snapshotEnabled()){
+      $listhead .= "  <input class='center' type='image' align='middle' src='images/restore.png'
+        title='"._("Restore snapshopts of already deleted objects")."' alt='"._("Restore")."' name='RestoreDeletedSnapShot'>".
+        " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
+    }
+
+    $listhead .= " <input class='center' type='image' align='middle' src='images/list_new_user.png' 
       title='"._("Create new user")."' alt='"._("New user")."'           name='user_new'>&nbsp;".
       " <input class='center' type='image' align='middle' src='images/list_new.png' 
       title='"._("Create new template")."' alt='"._("New template")."'        name='user_tplnew'>&nbsp;".
@@ -132,21 +159,6 @@ class divListUsers extends MultiSelectWindow
     $tplimg     = "<img class='center' src='images/select_template.png' alt='Template' title='%s'>";
     $editlink   = "<a href='?plug=".validate($_GET['plug'])."&amp;id=%s&amp;act=edit_entry'>%s</a>";
 
-    /* Create action icons */
-    $action = "";
-    if($this->parent->CopyPasteHandler){
-      $action .= "<input class='center' type='image'
-        src='images/editcut.png' alt='"._("cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
-      $action.= "<input class='center' type='image'
-        src='images/editcopy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
-    }
-    $action.= "<input class='center' type='image' src='images/edit.png' alt='"._("edit")."'
-      name='user_edit_%KEY%' title='"._("Edit user")."'>";
-    $action.= "<input class='center' type='image' src='images/list_password.png' alt='"._("password")."'
-      name='user_chgpw_%KEY%' title='"._("Change password")."'>";
-    $action.= "<input class='center' type='image' src='images/edittrash.png' alt='"._("delete")."'
-      name='user_del_%KEY%' title='"._("Delete user")."'>";
-    
     /* Possilbe objectClass image combinations */  
     $possibleAccounts = array(
             "posixAccount"    => array("VAR"=>"posix"     ,"IMG"=>"posiximg"),
@@ -210,6 +222,22 @@ class divListUsers extends MultiSelectWindow
  
     // Test Every Entry and generate divlist Array
     foreach($list as $key => $val){
+
+      /* Create action icons */
+      $action = $this->GetSnapShotActions($val['dn']);
+      if($this->parent->CopyPasteHandler){
+        $action .= "<input class='center' type='image'
+          src='images/editcut.png' alt='"._("cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
+        $action.= "<input class='center' type='image'
+          src='images/editcopy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
+      }
+      $action.= "<input class='center' type='image' src='images/edit.png' alt='"._("edit")."'
+        name='user_edit_%KEY%' title='"._("Edit user")."'>";
+      $action.= "<input class='center' type='image' src='images/list_password.png' alt='"._("password")."'
+        name='user_chgpw_%KEY%' title='"._("Change password")."'>";
+      $action.= "<input class='center' type='image' src='images/edittrash.png' alt='"._("delete")."'
+        name='user_del_%KEY%' title='"._("Delete user")."'>";
+
 
       /* Create phonaccopunt informationm, if conencted && is phoneAccount */ 
       $connected  = ""; // This string represents timestamp or offline status
@@ -281,7 +309,7 @@ class divListUsers extends MultiSelectWindow
       $field2 = array("string" => sprintf($editlink,$key,$display).$ip_port, "attach" => "style='' title='".preg_replace('/ /', '&nbsp;', @LDAP::fix($val['dn']))."'");
       $field3 = array("string" => $UseImg, "attach" => "style='width:152px;'");
       $field4 = array("string" => $s_img_create_from_template.preg_replace("/%KEY%/", "$key", $action),
-                      "attach" => "style='width:102px;border-right:0px;    text-align:right;'");
+                      "attach" => "style='width:132px;border-right:0px;    text-align:right;'");
       /* Add to list */
       $add = array($field1,$field2,$field3,$field4);
       $this->AddElement($add);

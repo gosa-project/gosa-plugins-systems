@@ -9,7 +9,7 @@ class SnapShotDialog extends plugin
 	var $parent				= NULL;
 	var $Restore			= false;		/* Defines the restore mode */
 	var $DeletedOnes		= false; 		/* Specifies which objects will be listed */	
-
+	var $dialog				= true;
 	
 	function SnapShotDialog($config,$dn,$parent)
 	{

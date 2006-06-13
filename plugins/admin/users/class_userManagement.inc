@@ -620,16 +620,18 @@ class userManagement extends plugin
       $display= $this->usertab->execute();
 
       /* Don't show buttons if tab dialog requests this */
-      if (!$this->usertab->by_object[$this->usertab->current]->dialog){
-        $display.= "<p style=\"text-align:right\">\n";
-        $display.= "<input type=submit name=\"edit_finish\" style=\"width:80px\" value=\""._("Ok")."\">\n";
-        $display.= "&nbsp;\n";
-        if ($this->dn != "new"){
-          $display.= "<input type=submit name=\"edit_apply\" value=\""._("Apply")."\">\n";
+      if(isset($this->usertab->by_object)){
+        if (!$this->usertab->by_object[$this->usertab->current]->dialog){
+          $display.= "<p style=\"text-align:right\">\n";
+          $display.= "<input type=submit name=\"edit_finish\" style=\"width:80px\" value=\""._("Ok")."\">\n";
           $display.= "&nbsp;\n";
+          if ($this->dn != "new"){
+            $display.= "<input type=submit name=\"edit_apply\" value=\""._("Apply")."\">\n";
+            $display.= "&nbsp;\n";
+          }
+          $display.= "<input type=submit name=\"edit_cancel\" value=\""._("Cancel")."\">\n";
+          $display.= "</p>";
         }
-        $display.= "<input type=submit name=\"edit_cancel\" value=\""._("Cancel")."\">\n";
-        $display.= "</p>";
       }
       return ($display);
     }
@@ -777,8 +779,8 @@ class userManagement extends plugin
       }
 
       /* Copy selected object 
-          Create a new empty object and the current selected object. 
-          Send both to copy&paste class*/
+         Create a new empty object and the current selected object. 
+         Send both to copy&paste class*/
       if($s_action == "copy"){
         $this->CopyPasteHandler->Clear();
         $dn= $this->list[trim($s_entry)]['dn'];
@@ -791,7 +793,7 @@ class userManagement extends plugin
       }
 
       /* Cut selected object. 
-          Open user object and send it to the copy & paste handler */
+         Open user object and send it to the copy & paste handler */
       if($s_action == "cut"){
         $this->CopyPasteHandler->Clear();
         $dn= $this->list[trim($s_entry)]['dn'];
@@ -807,6 +809,64 @@ class userManagement extends plugin
   {
     /* Handle divlist filter && department selection*/
     $this->DivListUsers->save_object();
+
+    /* check for posts */
+    $once = true;
+    foreach($_POST as $name => $value){
+
+      /* Create a new snapshot, display a dialog */
+      if(preg_match("/^CreateSnapShot_/",$name) && $once){
+        $once = false;
+        $entry = preg_replace("/^CreateSnapShot_/","",$name);
+        $entry = base64_decode(preg_replace("/_[xy]$/","",$entry));
+        $this->usertab = new SnapShotDialog($this->config,$entry,$this);
+      }
+
+      /* Restore a snapshot, display a dialog with all snapshots of the current object */
+      if(preg_match("/^RestoreSnapShot_/",$name) && $once){
+        $once = false;
+        $entry = preg_replace("/^RestoreSnapShot_/","",$name);
+        $entry = base64_decode(preg_replace("/_[xy]$/","",$entry));
+        $this->usertab = new SnapShotDialog($this->config,$entry,$this);
+        $this->usertab->Restore = true;
+      }
+
+      /* Restore one of the already deleted objects */
+      if(preg_match("/^RestoreDeletedSnapShot_/",$name) && $once){
+        $once = false;
+        $entry = get_people_ou().$this->DivListUsers->selectedBase;
+        $this->usertab = new SnapShotDialog($this->config,$entry,$this);
+        $this->usertab->Restore      = true;
+        $this->usertab->DeletedOnes  = true;
+      }
+    }
+
+    /* Create a new snapshot requested, check
+       the given attributes and create the snapshot*/
+    if(isset($_POST['CreateSnapshot'])){
+      $this->usertab->save_object();
+      $msgs = $this->usertab->check();
+      if(count($msgs)){
+        foreach($msgs as $msg){
+          print_red($msg);
+        }
+      }else{
+        $this->dn =  $this->usertab->dn;
+        echo $this->dn;
+        $this->create_snapshot("snapshot",$this->usertab->CurrentDescription);
+        $this->usertab = NULL;
+      }
+    }
+
+    /* Restore is requested, restore the object with the posted dn .*/
+    if((isset($_POST['RestoreSnapshot'])) && (isset($_POST['SnapShot']))){
+      $entry =trim($_POST['SnapShot']);
+      if(!empty($entry)){
+        $entry = base64_decode($entry);
+        $this->restore_snapshot($entry);
+        $this->usertab = NULL;
+      }
+    }
   }
 
   /* A set of disabled and therefore overloaded functions. They are
