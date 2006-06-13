@@ -91,11 +91,15 @@ class divListSystem extends MultiSelectWindow
       " <input class='center' type='image' align='middle' src='images/list_home.png'
       title='"._("Go to users department")."' alt='"._("Home")."'                     name='dep_home'>&nbsp;".
       " <input class='center' type='image' src='images/list_reload.png' align='middle' title='"._("Reload list")."' name='submit_department' alt='".          _("Submit")."'>&nbsp;".
-      " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;".
-      "  <input class='center' type='image' align='middle' src='images/list_back.png'
-      title='"._("Go up one department")."' alt='"._("Up")."' name='RestoreDeletedSnapShot'>".
-      " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;".
-      " <input class='center' type='image' align='middle' src='images/select_new_terminal.png'
+      " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
+
+    if($this->parent->snapshotEnabled()){ 
+      $listhead .= "  <input class='center' type='image' align='middle' src='images/restore.png'
+        title='"._("Restore objects")."' alt='"._("Up")."' name='RestoreDeletedSnapShot'>".
+        " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
+    }
+
+    $listhead .= " <input class='center' type='image' align='middle' src='images/select_new_terminal.png'
       name='newsystem_terminal'    alt='"._("New Terminal template")."' title='"._("New Terminal")."'>".
       " <input class='center' type='image' align='middle' src='images/select_new_workstation.png'
       name='newsystem_workstation' alt='"._("New Workstation template")."' title='"._("New Workstation")."'>".
@@ -125,14 +129,18 @@ class divListSystem extends MultiSelectWindow
   function GetSnapShotActions($dn)
   {
     $str = "";
-    $str .="<input class='center' type='image' src='images/snapshot.png' 
-      alt='"._("Create snapshot")."' name='CreateSnapShot_".base64_encode($dn)."' title='"._("Create snapshot")."'>&nbsp;";
 
-    if(count($this->parent->Available_SnapsShots($dn))){
-      $str .="<input class='center' type='image' src='images/restore.png' 
-        alt='"._("Restore snapshot")."' name='RestoreSnapShot_".base64_encode($dn)."' title='"._("Restore snapshot")."'>&nbsp;";
-    }else{
-      $str.= "<img src='images/empty.png' style='width:16px;' class='center'>&nbsp;";
+    if($this->parent->snapshotEnabled()){
+
+      $str .="<input class='center' type='image' src='images/snapshot.png' 
+        alt='"._("Create snapshot")."' name='CreateSnapShot_".base64_encode($dn)."' title='"._("Create snapshot")."'>&nbsp;";
+
+      if(count($this->parent->Available_SnapsShots($dn))){
+        $str .="<input class='center' type='image' src='images/restore.png' 
+          alt='"._("Restore snapshot")."' name='RestoreSnapShot_".base64_encode($dn)."' title='"._("Restore snapshot")."'>&nbsp;";
+      }else{
+        $str.= "<img src='images/empty.png' style='width:16px;' class='center'>&nbsp;";
+      }
     }
     return($str);
   }

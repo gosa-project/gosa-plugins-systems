@@ -987,6 +987,8 @@ class plugin
   /* Create a snapshot of the current object */
   function create_snapshot($type= "snapshot", $description= array())
   {
+    if(!$this->snapshotEnabled()) return;
+
     /* Create 2 ldap connections 
         one connection points to the snapshot server and 
         one to our basic ldap server */
@@ -1052,11 +1054,26 @@ class plugin
     }
   }
 
+    
+  /* returns true if snapshots are enabled */
+  function snapshotEnabled()
+  {
+    $tmp = $this->config->data['MAIN'];
+    if(isset($tmp['ENABLE_SNAPSHOT'])){
+      if (preg_match("/^true$/i", $tmp['ENABLE_SNAPSHOT']) || preg_match("/yes/i", $tmp['ENABLE_SNAPSHOT'])){
+        return(TRUE);
+      }
+    }
+    return(false);
+  }
+  
 
   /* Return available snapshots for the given base 
   */
   function Available_SnapsShots($dn,$raw = false)
   {
+    if(!$this->snapshotEnabled()) return(array());
+
     /* Create an additional ldap object which
         points to our ldap snapshot server */
     $ldap= $this->config->get_ldap_link();
@@ -1064,7 +1081,7 @@ class plugin
     $tmp = $this->config->data['MAIN'];
 
     if(!isset($tmp['SNAPSHOT_BASE'])){
-      print_red(_("Please specify the attribute SNAPSHOT_SERVER in your gosa.conf."));
+      print_red(_("Please specify the attribute SNAPSHOT_BASE in your gosa.conf."));
       return(array());
     }
 
@@ -1094,7 +1111,7 @@ class plugin
                     array("gosaSnapshotType","gosaSnapshotTimestamp","gosaSnapshotDN","description")); 
  
     /* Put results into a list and add description if missing */
-    while($entry = $ldap->fetch()){ 
+    while($entry = $ldap_to->fetch()){ 
       if(!isset($entry['description'][0])){
         $entry['description'][0]  = "";
       }
@@ -1116,6 +1133,7 @@ class plugin
 
   function getAllDeletedSnapshots($base_of_object,$raw = false)
   {
+    if(!$this->snapshotEnabled()) return(array());
   
     /* Create an additional ldap object which
         points to our ldap snapshot server */
@@ -1177,6 +1195,8 @@ class plugin
   /* Restore selected snapshot */
   function restore_snapshot($dn)
   {
+    if(!$this->snapshotEnabled()) return(array());
+
     $ldap= $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
     $tmp = $this->config->data['MAIN'];
