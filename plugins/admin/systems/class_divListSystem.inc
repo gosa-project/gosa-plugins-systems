@@ -230,62 +230,6 @@ class divListSystem extends MultiSelectWindow
     MultiSelectWindow :: save_object();  
 
 
-    /* check for posts */
-    $once = true;
-    foreach($_POST as $name => $value){
-
-      /* Create a new snapshot, display a dialog */
-      if(preg_match("/^CreateSnapShot_/",$name) && $once){
-        $once = false;
-        $entry = preg_replace("/^CreateSnapShot_/","",$name);
-        $entry = base64_decode(preg_replace("/_[xy]$/","",$entry));
-        $this->parent->systab = new SnapShotDialog($this->config,$entry,$this->parent); 
-      }
-
-      /* Restore a snapshot, display a dialog with all snapshots of the current object */
-      if(preg_match("/^RestoreSnapShot_/",$name) && $once){
-        $once = false;
-        $entry = preg_replace("/^RestoreSnapShot_/","",$name);
-        $entry = base64_decode(preg_replace("/_[xy]$/","",$entry));
-        $this->parent->systab = new SnapShotDialog($this->config,$entry,$this->parent); 
-        $this->parent->systab->Restore = true;
-      }
-
-      /* Restore one of the already deleted objects */
-      if(preg_match("/^RestoreDeletedSnapShot_/",$name) && $once){
-        $once = false;
-        $entry = "ou=systems,".$this->selectedBase;  
-        $this->parent->systab = new SnapShotDialog($this->config,$entry,$this->parent); 
-        $this->parent->systab->Restore      = true;
-        $this->parent->systab->DeletedOnes  = true;
-      }
-    }
-
-    /* Create a new snapshot requested, check 
-       the given attributes and create the snapshot*/
-    if(isset($_POST['CreateSnapshot'])){
-      $this->parent->systab->save_object();
-      $msgs = $this->parent->systab->check();
-      if(count($msgs)){
-        foreach($msgs as $msg){
-          print_red($msg);
-        }
-      }else{
-        $this->parent->dn =  $this->parent->systab->dn;
-        $this->parent->create_snapshot("snapshot",$this->parent->systab->CurrentDescription);
-        $this->parent->systab = NULL;
-      }
-    }
-
-    /* Restore is requested, restore the object with the posted dn .*/ 
-    if((isset($_POST['RestoreSnapshot'])) && (isset($_POST['SnapShot']))){
-      $entry =trim($_POST['SnapShot']);
-      if(!empty($entry)){    
-        $entry = base64_decode($entry);
-        $this->parent->restore_snapshot($entry);
-        $this->parent->systab = NULL;
-      }
-    }
   }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
