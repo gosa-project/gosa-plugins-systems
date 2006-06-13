@@ -936,12 +936,12 @@ function gen_xls ($dn, $filter= "(objectClass=*)", $attributes= array('*'), $rec
             $attr  = $encoded[0];
             $value = base64_decode($encoded[1]);
             /* Add linenumber */
-            $data .= $current_line."#".$attr.":".$value."\n";
+            $data .= $current_line."#".base64_encode($attr.":".$value)."\n";
           }
           else
           {
             /* Add Linenumber */ 
-            $data .= $current_line."#".$entry."\n";
+            $data .= $current_line."#".base64_encode($entry)."\n";
           }
         }
       }
@@ -957,7 +957,7 @@ function gen_xls ($dn, $filter= "(objectClass=*)", $attributes= array('*'), $rec
     foreach ( $all as $single) {
       $lineone = split("\n",$single);  
       $ndn = split("#", $lineone[0]);
-      $line = $ndn[1];
+      $line = base64_decode($ndn[1]);
 
       $dnn = split (":",$line);
       $current_line = $ndn[0];
@@ -1009,6 +1009,8 @@ function gen_xls ($dn, $filter= "(objectClass=*)", $attributes= array('*'), $rec
   {
     if($this->reconnect) $this->connect();
 
+    
+
     $ret = false;
     $rows= split("\n",$str_attr);
     $data= false;
@@ -1018,13 +1020,13 @@ function gen_xls ($dn, $filter= "(objectClass=*)", $attributes= array('*'), $rec
       /* Check if we use Linenumbers (when import_complete_ldif is called we use
          Linenumbers) Linenumbers are use like this 123#attribute : value */
       if(!empty($row)) {
-        if((strpos($row,"#")!=FALSE)&&(strpos($row,"#")<strpos($row,":"))) {
+        if(strpos($row,"#")!=FALSE) {
 
           /* We are using line numbers 
              Because there is a # before a : */
           $tmp1= split("#",$row);
           $current_line= $tmp1[0];
-          $row= $tmp1[1];
+          $row= base64_decode($tmp1[1]);
         }
 
         /* Split the line into  attribute  and value */
@@ -1052,7 +1054,6 @@ function gen_xls ($dn, $filter= "(objectClass=*)", $attributes= array('*'), $rec
         }
       }
     } 
-    
     /* If dn is an index of data, we should try to insert the data */
     if(isset($data['dn'])) {
       /* Creating Entry */
