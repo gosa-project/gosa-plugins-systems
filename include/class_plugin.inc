@@ -1023,7 +1023,7 @@ class plugin
       $new_base       = preg_replace("/".normalizePreg($base)."$/","",$base_of_object).$snap_base;
 
       /* Create object */
-      $data             = preg_replace('/^dn:.*\n/', '', $ldap->gen_one_entry($this->dn));
+      $data             = preg_replace('/^dn:.*\n/', '', $ldap->gen_ldif($this->dn,"(!(objectClass=gosaDepartment))"));
       $newName          = preg_replace("/\./", "", $sec."-".$usec);
       $target= array();
       $target['objectClass']            = array("top", "gosaSnapshotObject");
