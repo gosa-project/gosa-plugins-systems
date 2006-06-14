@@ -97,6 +97,7 @@ specified for this class below.
 	<ENTRY NAME="phonequeue" 					VALUE="Phone queue" 		PATH="../doc/guide/user/__LANG__/html/ogroups" FILE="index.html" />
 	<ENTRY NAME="conference" 					VALUE="Phone conference" 	PATH="../doc/guide/user/__LANG__/html/conference" FILE="index.html" />
 	<ENTRY NAME="phoneConferenceManagment" 		VALUE="Phone conference" 	PATH="../doc/guide/user/__LANG__/html/conference" FILE="index.html" />
+	<ENTRY NAME="mailqueue" 					VALUE="Mail queue" 		PATH="../doc/guide/user/__LANG__/html/mailqueue" FILE="node1.html" />
 
 	<ENTRY NAME="gofonMacro" 					VALUE="Phone macro" 		PATH="../doc/guide/user/__LANG__/html/macro" FILE="index.html" />
 	<ENTRY NAME="macro" 						VALUE="Phone macro" 		PATH="../doc/guide/user/__LANG__/html/macro" FILE="index.html" />
