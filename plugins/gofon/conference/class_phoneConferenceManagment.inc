@@ -255,6 +255,12 @@ class phoneConferenceManagment extends plugin
       display divlist
      ***************/
 
+    /* Check if there is a snapshot dialog open */
+    if($str = $this->showSnapshotDialog($this->DivListConference->selectedBase,
+      array("ou=conferences,ou=asterisk,ou=configs,ou=systems,".$this->DivListConference->selectedBase))){
+      return($str);
+    }
+
     /* Return rendered main page */
     /* Display dialog with system list */
     $this->DivListConference->parent = $this;
