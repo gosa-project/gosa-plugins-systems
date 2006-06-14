@@ -342,7 +342,7 @@ class groupManagement extends plugin
 
     
     /* Check if there is a snapshot dialog open */
-    if($str = $this->showSnapshotDialog($this->DivListGroup->selectedBase,get_groups_ou())){
+    if($str = $this->showSnapshotDialog($this->DivListGroup->selectedBase,array(get_groups_ou().$this->DivListGroup->selectedBase))){
       return($str);
     }
 

@@ -637,7 +637,7 @@ class userManagement extends plugin
     }
     
     /* Check if there is a snapshot dialog open */
-    if($str = $this->showSnapshotDialog($this->DivListUsers->selectedBase,get_people_ou())){
+    if($str = $this->showSnapshotDialog($this->DivListUsers->selectedBase,array(get_people_ou().$this->DivListUsers->selectedBase))){
       return($str);
     }
   
