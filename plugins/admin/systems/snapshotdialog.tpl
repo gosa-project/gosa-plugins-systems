@@ -45,7 +45,7 @@
 <p class="seperator">&nbsp;</p>
 <p>
 <div style="width:100%; text-align:right;">
-    <input type='submit' name='RestoreSnapshot' value='{t}Save{/t}' {if $CountSnapShots==0} disabled {/if}>
+    <input type='submit' name='RestoreSnapshot' value='{t}Continue{/t}' {if $CountSnapShots==0} disabled {/if}>
     &nbsp;
     <input type='submit' name='CancelSnapshot' value='{t}Cancel{/t}'>
 </div></p>
@@ -92,7 +92,7 @@
 <p class="seperator">&nbsp;</p>
 <p>
 <div style="width:100%; text-align:right;">
-    <input type='submit' name='CreateSnapshot' value='{t}Save{/t}'>
+    <input type='submit' name='CreateSnapshot' value='{t}Continue{/t}'>
     &nbsp;
     <input type='submit' name='CancelSnapshot' value='{t}Cancel{/t}'>
 </div></p>
