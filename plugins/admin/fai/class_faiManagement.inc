@@ -561,6 +561,20 @@ class faiManagement extends plugin
       Dialog display
      ****************/
 
+    /* Check if there is a snapshot dialog open */
+    $tmp = array();
+    $types = array("hooks","scripts","disk","packages","profiles","templates","variables");
+    foreach($types as $type){
+      if($this->DivListFai->selectedBranch == "main"){
+        $tmp[] = "ou=".$type.",ou=fai,ou=configs,ou=systems,".$this->DivListFai->selectedBase;
+      }else{
+        $tmp[] = "ou=".$type.",".$this->DivListFai->selectedBranch;
+      }
+    }
+    if($str = $this->showSnapshotDialog($this->DivListFai->selectedBase,$tmp)){
+      return($str);
+    }
+
     /* Display dialog with system list */
     $this->DivListFai->parent = $this;
     $this->DivListFai->execute();

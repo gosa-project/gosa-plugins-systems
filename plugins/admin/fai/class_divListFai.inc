@@ -57,7 +57,7 @@ class divListFai extends MultiSelectWindow
     $this->AddHeader(array("string" => "&nbsp;",                "attach" => "style='text-align:center;width:20px;'"));
     $this->AddHeader(array("string" => _("Name of FAI class"),  "attach" => "style=''"));
     $this->AddHeader(array("string" => _("Class type"),         "attach" => "style='width:200px;'"));
-    $this->AddHeader(array("string" => _("Actions"),            "attach" => "style='width:60px;border-right:0px;text-align:right;'"));
+    $this->AddHeader(array("string" => _("Actions"),            "attach" => "style='width:90px;border-right:0px;text-align:right;'"));
 
     $this->AddCheckBox("ShowProfiles"   , _("Display FAI profile objects")    ,_("Show profiles")     ,true);
     $this->AddCheckBox("ShowTemplates"  , _("Display FAI template objects")   ,_("Show templates")    ,true);
@@ -124,9 +124,15 @@ _("Submit")."'>&nbsp;".
       " <input class='center' type='image' src='images/fai_new_profile.png' align='middle'
       title='"._("New profile")."' name='Create_profile' alt='"._("P")."'>&nbsp;".
 
-      "<img class='center' src=\"images/list_seperator.png\" alt=\"\" align=\"middle\" height=\"16\" width=\"1\">&nbsp;".
+      "<img class='center' src=\"images/list_seperator.png\" alt=\"\" align=\"middle\" height=\"16\" width=\"1\">&nbsp;";
 
-      " <input class='center' type='image' src='images/fai_new_partitionTable.png' align='middle'
+    if($this->parent->snapshotEnabled()){
+      $listhead .= "  <input class='center' type='image' align='middle' src='images/restore.png'
+        title='"._("Restore snapshopts of already deleted objects")."' alt='"._("Restore")."' name='RestoreDeletedSnapShot'>".
+        " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
+    }
+
+      $listhead .= " <input class='center' type='image' src='images/fai_new_partitionTable.png' align='middle'
       title='"._("New partition table")."' name='Create_partition' alt='"._("PT")."'>&nbsp;".
 
       " <input class='center' type='image' src='images/fai_new_script.png' align='middle'
@@ -205,13 +211,14 @@ _("Submit")."'>&nbsp;".
          $desc= "";
        }
 
+       $action = $this->GetSnapShotActions($value['dn']);;
        if($value['FAIstate'] == "freeze"){
-         $action  = "<input class='center' type='image' src='images/edit.png'  alt='"._("edit")."'
+         $action  .= "<input class='center' type='image' src='images/edit.png'  alt='"._("edit")."'
            name='entry_edit_%KEY%' title='"._("Edit class")."'>";
          $edi = $editlink;
          $acti = $action;
        }else{
-         $action  = "<input class='center' type='image' src='images/edit.png'  alt='"._("edit")."'
+         $action  .= "<input class='center' type='image' src='images/edit.png'  alt='"._("edit")."'
            name='entry_edit_%KEY%' title='"._("Edit class")."'>";
          $action .= "<input class='center' type='image' src='images/edittrash.png' alt='"._("delete")."'
            name='entry_delete_%KEY%' title='"._("Delete class")."'>";
@@ -222,9 +229,9 @@ _("Submit")."'>&nbsp;".
        $field1 = array("string" => $img , "attach" => "style='text-align:center;width:20px;'");
        $field2 = array("string" => preg_replace(array("/%KEY%/","/%NAME%/","/%TITLE%/"),array($key,$value['cn'].$desc,preg_replace('/ /', '&nbsp;', @LDAP::fix($value['dn']))),$edi) , "attach" => "style=''");
        $field3 = array("string" => $info, "attach" => "style='width:200px;'");
-       $field4 = array("string" => preg_replace("/%KEY%/",$key,$acti) , "attach" => "style='width:60px;border-right:0px;text-align:right;'");
+       $field4 = array("string" => preg_replace("/%KEY%/",$key,$acti) , "attach" => "style='width:90px;border-right:0px;text-align:right;'");
        $this->AddElement(array($field1,$field2,$field3,$field4));
-    }
+     }
   }
 
   function Save()
