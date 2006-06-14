@@ -72,7 +72,7 @@ class applicationManagement extends plugin
     $ldap                   = $this->config->get_ldap_link();
     $dn                     = "ou=apps,".$base;
     $ret                    = array();
-    $ret [$base] = "/";
+    $ret ["ou=apps,".$base] = "/";
 
     $ldap->cd($dn);
     $ldap->search("objectClass=organizationalUnit",array("ou"));
@@ -364,8 +364,9 @@ class applicationManagement extends plugin
       Dialog display
      ****************/
 
+    $useBase = $this->DivListApplication->selectedRelease;
     /* Check if there is a snapshot dialog open */
-    if($str = $this->showSnapshotDialog($this->DivListApplication->selectedBase,"ou=apps,")){
+    if($str = $this->showSnapshotDialog($this->DivListApplication->selectedBase,$useBase)){
       return($str);
     }
 
