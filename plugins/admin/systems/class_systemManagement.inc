@@ -488,7 +488,12 @@ class systems extends plugin
     }
 
     /* Check if there is a snapshot dialog open */
-    if($str = $this->showSnapshotDialog($this->DivListSystem->selectedBase,"ou=systems,")){
+    $tmp = array();
+    foreach(array("phones","servers","printers","terminals","netdevices","workstations") as $ent){
+      $tmp[] = "ou=".$ent.",ou=systems,".$this->DivListSystem->selectedBase;
+    }
+    
+    if($str = $this->showSnapshotDialog($this->DivListSystem->selectedBase,$tmp)){
       return($str);
     }
 

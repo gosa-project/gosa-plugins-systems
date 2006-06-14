@@ -31,7 +31,14 @@ class SnapShotDialog extends plugin
                 or the snapshots for the given object dn */
 			$res = array();
 			if($this->DeletedOnes){
-				$tmp = $this->getAllDeletedSnapshots($this->dn,true);
+				if(is_array($this->dn)){
+					$tmp = array();
+					foreach($this->dn as $dn){
+						$tmp = array_merge($tmp,$this->getAllDeletedSnapshots($dn,true));
+					}
+				}else{
+					$tmp = $this->getAllDeletedSnapshots($this->dn,true);
+				}
 			}else{
 				$tmp = $this->Available_SnapsShots($this->dn,true);
 			}
