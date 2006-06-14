@@ -1165,10 +1165,10 @@ class plugin
     $ui = get_userinfo();
     $tmp = array();
     $ldap_to->cd($new_base);
-    $ldap_to->ls("(&(objectClass=gosaSnapshotObject))",$new_base,array("gosaSnapshotType","gosaSnapshotTimestamp","gosaSnapshotDN","description"));
+    $ldap_to->ls("(objectClass=gosaSnapshotObject)",$new_base,array("gosaSnapshotType","gosaSnapshotTimestamp","gosaSnapshotDN","description"));
     while($entry = $ldap_to->fetch()){
 
-      $chk =  str_replace($base,"",$entry['gosaSnapshotDN'][0]);
+      $chk =  str_replace($new_base,"",$entry['dn']);
       if(preg_match("/,ou=/",$chk)) continue;
 
       if(!isset($entry['description'][0])){
@@ -1236,7 +1236,7 @@ class plugin
   }
 
 
-  function showSnapshotDialog($base,$baseSuffix)
+  function showSnapshotDialog($base,$baseSuffixe)
   {
     $once = true;
     foreach($_POST as $name => $value){
@@ -1261,8 +1261,7 @@ class plugin
       /* Restore one of the already deleted objects */
       if(preg_match("/^RestoreDeletedSnapShot_/",$name) && $once){
         $once = false;
-        $entry = $baseSuffix.$base;
-        $this->snapDialog = new SnapShotDialog($this->config,$entry,$this);
+        $this->snapDialog = new SnapShotDialog($this->config,$baseSuffixe,$this);
         $this->snapDialog->Restore      = true;
         $this->snapDialog->DeletedOnes  = true;
       }
