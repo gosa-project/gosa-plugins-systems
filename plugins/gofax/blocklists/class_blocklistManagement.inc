@@ -321,6 +321,12 @@ class blocklist extends plugin
         Divlist dialog 
        ***************/
 
+      /* Check if there is a snapshot dialog open */
+      if($str = $this->showSnapshotDialog($this->DivListBlocklist->selectedBase,
+              array("ou=gofax,ou=systems,". $this->DivListBlocklist->selectedBase))){
+        return($str);
+      }
+
       /* Display dialog with system list */
       $this->DivListBlocklist->parent = $this;
       $this->DivListBlocklist->execute();
