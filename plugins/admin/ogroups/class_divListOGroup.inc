@@ -51,7 +51,7 @@ class divListOGroup extends MultiSelectWindow
     $this->AddHeader(array("string" => "&nbsp;", "attach" => "style='text-align:center;width:20px;'"));
     $this->AddHeader(array("string" => _("Name of object groups")." / "._("Departments"), "attach" => "style=''"));
     $this->AddHeader(array("string" => _("Properties"), "attach" => "style='width:136px;'"));
-    $this->AddHeader(array("string" => _("Actions"), "attach" => "style='width:107px;border-right:0px;text-align:right;'"));
+    $this->AddHeader(array("string" => _("Actions"), "attach" => "style='width:130px;border-right:0px;text-align:right;'"));
 
     /*                  Text        ,Value    ,Name         ,Is selected */
     $this->AddCheckBox("UserGroups" ,       _("Select to see groups containing users")       , _("Show groups containing users"), true);
@@ -96,23 +96,31 @@ class divListOGroup extends MultiSelectWindow
     // Managment
     $listhead = "<div style='background:#F0F0F9;padding:5px;'>".
       " <input class='center' type='image' src='images/list_root.png' align='middle' 
-          title='"._("Go to root department")."' name='dep_root' alt='"._("Root")."'>&nbsp;".
+      title='"._("Go to root department")."' name='dep_root' alt='"._("Root")."'>&nbsp;".
       " <input class='center' type='image' align='middle' src='images/list_back.png' 
-          title='"._("Go up one department")."' alt='"._("Up")."' name='dep_back'>&nbsp;".
+      title='"._("Go up one department")."' alt='"._("Up")."' name='dep_back'>&nbsp;".
       " <input class='center' type='image' align='middle' src='images/list_home.png' 
-          title='"._("Go to users department")."' alt='"._("Home")."' name='dep_home'>&nbsp;".
-       " <input class='center' type='image' src='images/list_reload.png' align='middle' 
-          title='"._("Reload list")."' name='submit_department' alt='"._("Submit")."'>&nbsp;".
-      " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;".
-      " <input class='center' type='image' align='middle' src='images/list_new_ogroup.png' 
-          title='"._("Create new object group")."' alt='"._("new")."' name='group_new'>".
+      title='"._("Go to users department")."' alt='"._("Home")."' name='dep_home'>&nbsp;".
+      " <input class='center' type='image' src='images/list_reload.png' align='middle' 
+      title='"._("Reload list")."' name='submit_department' alt='"._("Submit")."'>&nbsp;".
+      " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
+
+    if($this->parent->snapshotEnabled()){
+      $listhead .= "  <input class='center' type='image' align='middle' src='images/restore.png'
+        title='"._("Restore snapshopts of already deleted objects")."' alt='"._("Restore")."' name='RestoreDeletedSnapShot'>".
+        " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
+    }
+
+
+    $listhead .=" <input class='center' type='image' align='middle' src='images/list_new_ogroup.png' 
+      title='"._("Create new object group")."' alt='"._("new")."' name='group_new'>".
       $Copy_Paste.
       " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;".
       _("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
       " <input class='center' type='image' src='images/list_submit.png' align='middle' 
-          title='"._("Submit department")."' name='submit_department' alt='"._("Submit")."'>&nbsp;".
+      title='"._("Submit department")."' name='submit_department' alt='"._("Submit")."'>&nbsp;".
       "</div>";
-  
+
     $this->SetListHeader($listhead);
   }
 
@@ -126,19 +134,6 @@ class divListOGroup extends MultiSelectWindow
   {
     /* Add Copy & Paste buttons if copy&paste is enabled
      */
-    /* Create action icons */
-    $actions = "";
-    if($this->parent->CopyPasteHandler){
-      $actions.= "<input class='center' type='image'
-        src='images/editcut.png' alt='"._("cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
-      $actions.= "<input class='center' type='image'
-        src='images/editcopy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
-    }
-    $actions.= "<input class='center' type='image'
-      src='images/edit.png' alt='"._("edit")."' name='group_edit_%KEY%' title='"._("Edit this entry")."'>";
-    $actions.= "<input class='center' type='image'
-      src='images/edittrash.png' alt='"._("delete")."' name='group_del_%KEY%' title='"._("Delete this entry")."'>";
-
     // Defining Links
     $linkopen = "<a href='?plug=".$_GET['plug']."&amp;act=dep_open&amp;dep_id=%s'>%s</a>";
     $editlink = "<a href='?plug=".$_GET['plug']."&amp;id=%s&amp;act=edit_entry'>%s</a>";
@@ -148,6 +143,20 @@ class divListOGroup extends MultiSelectWindow
 
     // Assigning ogroups
     foreach($list as $key => $val){
+
+      /* Create action icons */
+      $actions = $this->GetSnapShotActions($val['dn']);
+      if($this->parent->CopyPasteHandler){
+        $actions.= "<input class='center' type='image'
+          src='images/editcut.png' alt='"._("cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
+        $actions.= "<input class='center' type='image'
+          src='images/editcopy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
+      }
+      $actions.= "<input class='center' type='image'
+        src='images/edit.png' alt='"._("edit")."' name='group_edit_%KEY%' title='"._("Edit this entry")."'>";
+      $actions.= "<input class='center' type='image'
+        src='images/edittrash.png' alt='"._("delete")."' name='group_del_%KEY%' title='"._("Delete this entry")."'>";
+
 
       if(isset($val['mail'])){
         $mail = $mailimg;
@@ -163,7 +172,7 @@ class divListOGroup extends MultiSelectWindow
       $field1 = array("string" => "<img src='images/list_ogroup.png' alt='"._("Object group")."' ".$title.">", "attach" => "style='text-align:center;width: 20px;'");
       $field2 = array("string" => sprintf($editlink,$key,($val['cn']['0'].$desc)), "attach" => "style='' ".$title);
       $field3 = array("string" => preg_replace("/%KEY/", $key, $this->parent->convert_list($val))."&nbsp;".$mail, "attach" => "style='width:136px;'");
-      $field4 = array("string" => preg_replace("/%KEY%/", $key, $actions), "attach" => "style='width:107px;border-right:0px;text-align:right;'");
+      $field4 = array("string" => preg_replace("/%KEY%/", $key, $actions), "attach" => "style='width:130px;border-right:0px;text-align:right;'");
 
       $this->AddElement(array($field1,$field2,$field3,$field4));
     }

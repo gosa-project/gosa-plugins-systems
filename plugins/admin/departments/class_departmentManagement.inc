@@ -120,6 +120,7 @@ class departmentManagement extends plugin
      * The entry which will be edited is defined in $s_entry
      */
     if (( $s_action=="edit") && (!isset($this->deptabs->config))){
+      $s_entry = convert_department_dn(base64_decode($s_entry));
       $this->dn= $this->config->departments[trim($s_entry)];
 
       if (($user= get_lock($this->dn)) != ""){
@@ -147,6 +148,7 @@ class departmentManagement extends plugin
      * The entry which will be deleted is defined in $s_entry
      */
     if ($s_action =="del"){
+      $s_entry = convert_department_dn(base64_decode($s_entry));
       $this->dn= $this->config->departments[trim($s_entry)];
 
       /* Check locking */
@@ -302,6 +304,12 @@ class departmentManagement extends plugin
       }
       return ($display);
     }else{
+
+      /* Check if there is a snapshot dialog open */
+      if($str = $this->showSnapshotDialog($this->DivListDepartment->selectedBase,"")){
+        return($str);
+      }
+
       /* Display dialog with group list */
       $this->DivListDepartment->parent = $this;
       $this->DivListDepartment->execute();
@@ -344,24 +352,21 @@ class departmentManagement extends plugin
     }
 
     $this->departments= array();
+    $tmp = array();
     foreach ($res as $key => $value){
-
+      #$tmp[get_sub_department(convert_department_dn($value['dn']))] = $key;
+      $tmp[$key] = get_sub_department(convert_department_dn($value['dn']));
+    }
+    natcasesort($tmp);
+    foreach($tmp as $key => $q){
+      $value = $res [$key];
       /* Don't display base as entry on subsearch */
       if(($value['dn'] == $base) && ($this->DivListDepartment->SubSearch)){
         continue;
       }
 
-      $cdn= convert_department_dn($value['dn']);
-
-      /* Append to dep list */
-      if(isset($value["description"][0])){
-        $this->departments[$cdn]= get_sub_department($cdn)." - [".$value["description"][0]."]";
-      }else{
-        $this->departments[$cdn]= get_sub_department($cdn);//$value["description"][0];
-      }
+      $this->departments[base64_encode($value['dn'])]= $value;
     }
-    natcasesort ($this->departments);
-    reset ($this->departments);
   }
 
   function remove_from_parent()

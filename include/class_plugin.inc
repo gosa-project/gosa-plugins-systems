@@ -1165,8 +1165,12 @@ class plugin
     $ui = get_userinfo();
     $tmp = array();
     $ldap_to->cd($new_base);
-    $ldap_to->search("(&(objectClass=gosaSnapshotObject))",array("gosaSnapshotType","gosaSnapshotTimestamp","gosaSnapshotDN","description"));
+    $ldap_to->ls("(&(objectClass=gosaSnapshotObject))",$new_base,array("gosaSnapshotType","gosaSnapshotTimestamp","gosaSnapshotDN","description"));
     while($entry = $ldap_to->fetch()){
+
+      $chk =  str_replace($base,"",$entry['gosaSnapshotDN'][0]);
+      if(preg_match("/,ou=/",$chk)) continue;
+
       if(!isset($entry['description'][0])){
         $entry['description'][0]  = "";
       }
@@ -1180,6 +1184,8 @@ class plugin
         unset($tmp[$key]);
       }
     }
+
+    
 
     /* Format result as requested */
     if($raw) {

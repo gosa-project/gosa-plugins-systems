@@ -346,6 +346,11 @@ class ogroupManagement extends plugin
       Display list 
      ****************/
 
+   /* Check if there is a snapshot dialog open */
+    if($str = $this->showSnapshotDialog($this->DivListOGroup->selectedBase,get_groups_ou())){
+      return($str);
+    }
+
     /* Display dialog with group list */
     $this->DivListOGroup->parent = $this;
     $this->DivListOGroup->execute();
