@@ -277,6 +277,12 @@ class gofonMacro extends plugin
       Display entry list 
      *****************/
 
+    /* Check if there is a snapshot dialog open */
+    if($str = $this->showSnapshotDialog($this->DivListMacro->selectedBase,
+      array("ou=macros,ou=asterisk,ou=configs,ou=systems,".$this->DivListMacro->selectedBase))){
+      return($str);
+    }
+
     /* Return rendered main page */
     /* Display dialog with system list */
     $this->DivListMacro->parent = $this;

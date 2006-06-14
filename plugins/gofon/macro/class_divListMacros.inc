@@ -45,7 +45,7 @@ class divListMacro extends MultiSelectWindow
     $this->AddHeader(array("string" => "&nbsp;", "attach" => "style='text-align:center;width:20px;'"));
     $this->AddHeader(array("string" => _("macro name")." / "._("Department"), "attach" => "style=''"));
     $this->AddHeader(array("string" => _("Visible"), "attach" => "style='width:50px;'"));
-    $this->AddHeader(array("string" => _("Actions"), "attach" => "style='width:60px;border-right:0px;text-align:right;'" ));
+    $this->AddHeader(array("string" => _("Actions"), "attach" => "style='width:90px;border-right:0px;text-align:right;'" ));
 
     /* Add Checkboxes / SubSearch checkbox */
     $this->AddCheckBox("SubSearch",  _("Select to search within subtrees"), _("Ignore subtrees"), false);
@@ -78,13 +78,20 @@ class divListMacro extends MultiSelectWindow
         title='"._("Go to users department")."' alt='"._("Home")."' name='dep_home'>&nbsp;".
       " <input class='center' type='image' src='images/list_reload.png' align='middle' 
         title='"._("Reload list")."' name='submit_department' alt='"._("Submit")."'>&nbsp;".
-      " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;".
-      " <input class='center' type='image' align='middle' src='images/list_new_macro.png' 
-        title='"._("Create new phone macro")."' alt='"._("New")."' name='user_new'>&nbsp;".
+        " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
+
+    if($this->parent->snapshotEnabled()){
+      $listhead .= "  <input class='center' type='image' align='middle' src='images/restore.png'
+        title='"._("Restore snapshopts of already deleted objects")."' alt='"._("Restore")."' name='RestoreDeletedSnapShot'>".
+        " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
+    }
+
+    $listhead .=  " <input class='center' type='image' align='middle' src='images/list_new_macro.png' 
+      title='"._("Create new phone macro")."' alt='"._("New")."' name='user_new'>&nbsp;".
       " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;".
       _("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
       " <input class='center' type='image' src='images/list_submit.png' align='middle' 
-        title='"._("Submit department")."' name='submit_department' alt='"._("Submit")."'>&nbsp;".
+      title='"._("Submit department")."' name='submit_department' alt='"._("Submit")."'>&nbsp;".
       "</div>";
 
     $this->SetListHeader($listhead);
@@ -111,6 +118,13 @@ class divListMacro extends MultiSelectWindow
     $editlink   = "<a href='?plug=".$_GET['plug']."&amp;id=%s&amp;act=edit_entry'>%s</a>";
 
     foreach($list as $key => $val){
+   
+      $action    = $this->GetSnapShotActions($val['dn']); 
+      $action    .= "<input class='center' type='image' src='images/edit.png' alt='"._("edit")."'     
+        name='user_edit_%KEY%' title='"._("Edit macro")."'>";
+      $action    .= "<input class='center' type='image' src='images/edittrash.png' alt='"._("delete")."'   
+        name='user_del_%KEY%' title='"._("Delete macro")."'>";
+
       $display= $val["displayName"][0];
 
       if(isset($val['goFonMacroVisible']['0'])&&($val['goFonMacroVisible']['0'] == "1")){
@@ -122,7 +136,7 @@ class divListMacro extends MultiSelectWindow
       $field1 = array("string" => sprintf($macroimg,$val['dn']), "attach" => "style='text-align:center;width:20px;'");
       $field2 = array("string" => sprintf($editlink,$key,$display), "attach" => "style='' title='".preg_replace('/ /', '&nbsp;', @LDAP::fix($val['dn']))."'");
       $field3 = array("string" => $pic1, "attach" => "style='width:50px;'");
-      $field4 = array("string" => preg_replace("/%KEY%/", "$key", $action), "attach" => "style='width:60px;border-right:0px;text-align:right;'");
+      $field4 = array("string" => preg_replace("/%KEY%/", "$key", $action), "attach" => "style='width:90px;border-right:0px;text-align:right;'");
 
       $this->AddElement(array($field1,$field2,$field3,$field4));
     }
