@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: Alfred Schroeder <schroeder@gonicus.de>\n"
 "POT-Creation-Date: 2003-09-19 13:41+0200\n"
-"PO-Revision-Date: 2006-06-14 13:30+0200\n"
+"PO-Revision-Date: 2006-06-19 13:33+0200\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -5992,7 +5992,7 @@ msgstr "PT"
 
 #: plugins/admin/fai/class_divListFai.inc:139
 msgid "New scripts"
-msgstr "Neue Skripte"
+msgstr "Neues Skript"
 
 #: plugins/admin/fai/class_divListFai.inc:139
 msgid "S"
@@ -6000,7 +6000,7 @@ msgstr "S"
 
 #: plugins/admin/fai/class_divListFai.inc:142
 msgid "New hooks"
-msgstr "Neue Hooks"
+msgstr "Neuer Hook"
 
 #: plugins/admin/fai/class_divListFai.inc:142
 msgid "H"
@@ -6008,7 +6008,7 @@ msgstr "H"
 
 #: plugins/admin/fai/class_divListFai.inc:145
 msgid "New variables"
-msgstr "Neue Variablen"
+msgstr "Neue Variable"
 
 #: plugins/admin/fai/class_divListFai.inc:145
 msgid "V"
@@ -6016,7 +6016,7 @@ msgstr "V"
 
 #: plugins/admin/fai/class_divListFai.inc:148
 msgid "New templates"
-msgstr "Neue Vorlagen"
+msgstr "Neue Vorlage"
 
 #: plugins/admin/fai/class_divListFai.inc:148
 msgid "T"
@@ -6137,31 +6137,31 @@ msgstr "Speichern der FAI-Variablen fehlgeschlagen"
 
 #: plugins/admin/fai/class_askClassName.inc:81
 msgid "Create new FAI object - partition table."
-msgstr "Erstelle neues FAI-Objekt - Partitions-Tabelle"
+msgstr "Erstelle neues FAI-Objekt: Partitions-Tabelle"
 
 #: plugins/admin/fai/class_askClassName.inc:82
 msgid "Create new FAI object - package bundle."
-msgstr "Erstelle neues FAI-Objekt - Paket-Gruppe"
+msgstr "Erstelle neues FAI-Objekt: Paket-Gruppe"
 
 #: plugins/admin/fai/class_askClassName.inc:83
 msgid "Create new FAI object - script bundle."
-msgstr "Erstelle neues FAI-Objekt - Skript-Gruppe"
+msgstr "Erstelle neues FAI-Objekt: Skript-Gruppe"
 
 #: plugins/admin/fai/class_askClassName.inc:84
 msgid "Create new FAI object - variable bundle."
-msgstr "Erstelle neues FAI-Objekt - Variablen-Gruppe"
+msgstr "Erstelle neues FAI-Objekt: Variablen-Gruppe"
 
 #: plugins/admin/fai/class_askClassName.inc:85
 msgid "Create new FAI object - hook bundle."
-msgstr "Erstelle neues FAI-Objekt - Hook-Gruppe"
+msgstr "Erstelle neues FAI-Objekt: Hook-Gruppe"
 
 #: plugins/admin/fai/class_askClassName.inc:86
 msgid "Create new FAI object - profile."
-msgstr "Erstelle neues FAI-Objekt - Profil"
+msgstr "Erstelle neues FAI-Objekt: Profil"
 
 #: plugins/admin/fai/class_askClassName.inc:87
 msgid "Create new FAI object - template."
-msgstr "Erstelle neues FAI-Objekt - Vorlage"
+msgstr "Erstelle neues FAI-Objekt: Vorlage"
 
 #: plugins/admin/fai/class_askClassName.inc:88
 msgid "Create new FAI object"
