@@ -797,7 +797,7 @@ class LDAP{
   }
 
 
-  function gen_ldif ($dn, $filter= "(objectClass=*)", $attributes= array('*'), $recursive= TRUE,$first = true)
+  function gen_ldif ($dn, $filter= "(objectClass=*)", $attributes= array('*'), $recursive= TRUE)
   {
     $display= "";
 
@@ -806,20 +806,13 @@ class LDAP{
       $this->ls($filter,$dn, array('dn','objectClass'));
       $deps = array();
 
-      if($first){
-        $display .= $this->gen_one_entry($dn)."\n";
-      }
+      $display .= $this->gen_one_entry($dn)."\n";
 
       while ($attrs= $this->fetch()){
-        $display.= $this->gen_one_entry($attrs['dn'], $filter, $attributes);
-        $display.= "\n";
-
-        if(in_array("organizationalUnit",$attrs['objectClass'])){
-          $deps[] = $attrs['dn'];
-        }
+        $deps[] = $attrs['dn'];
       }
       foreach($deps as $dn){
-        $display .= $this->gen_ldif($dn, $filter,$attributes,$recursive,false);
+        $display .= $this->gen_ldif($dn, $filter,$attributes,$recursive);
       }
     } else {
       $display.= $this->gen_one_entry($dn);
