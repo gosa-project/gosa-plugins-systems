@@ -366,9 +366,12 @@ class config  {
 
     /* Get asterisk servers */
     $ldap->cd ($this->current['BASE']);
-    $ldap->search ("(objectClass=goGlpiServer)");
+    $ldap->search ("(&(objectClass=goGlpiServer)(cn=*)(goGlpiAdmin=*)(goGlpiDatabase=*))",array("cn","goGlpiPassword","goGlpiAdmin","goGlpiDatabase"));
     if ($ldap->count()){
       $attrs= $ldap->fetch();
+      if(!isset($attrs['goGlpiPassword'])){
+        $attrs['goGlpiPassword'][0] ="";
+      }
       $this->data['SERVERS']['GLPI']= array( 
           'SERVER' 	=> $attrs['cn'][0],
           'LOGIN' 	=> $attrs['goGlpiAdmin'][0],
