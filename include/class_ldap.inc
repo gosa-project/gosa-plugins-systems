@@ -797,7 +797,7 @@ class LDAP{
   }
 
 
-  function gen_ldif ($dn, $filter= "(objectClass=*)", $attributes= array('*'), $recursive= TRUE)
+  function gen_ldif ($dn, $filter= "(objectClass=*)", $attributes= array('*'), $recursive= TRUE,$first = true)
   {
     $display= "";
 
@@ -805,6 +805,11 @@ class LDAP{
       $this->cd($dn);
       $this->ls($filter,$dn, array('dn','objectClass'));
       $deps = array();
+
+      if($first){
+        $display .= $this->gen_one_entry($dn)."\n";
+      }
+
       while ($attrs= $this->fetch()){
         $display.= $this->gen_one_entry($attrs['dn'], $filter, $attributes);
         $display.= "\n";
@@ -814,7 +819,7 @@ class LDAP{
         }
       }
       foreach($deps as $dn){
-        $display .= $this->gen_ldif($dn, $filter,$attributes,$recursive);
+        $display .= $this->gen_ldif($dn, $filter,$attributes,$recursive,false);
       }
     } else {
       $display.= $this->gen_one_entry($dn);
@@ -1017,8 +1022,6 @@ class LDAP{
   {
     if($this->reconnect) $this->connect();
 
-    
-
     $ret = false;
     $rows= split("\n",$str_attr);
     $data= false;
@@ -1061,7 +1064,8 @@ class LDAP{
           }
         }
       }
-    } 
+    }
+
     /* If dn is an index of data, we should try to insert the data */
     if(isset($data['dn'])) {
       /* Creating Entry */

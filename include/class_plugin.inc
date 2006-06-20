@@ -1023,7 +1023,8 @@ class plugin
       $new_base       = preg_replace("/".normalizePreg($base)."$/","",$base_of_object).$snap_base;
 
       /* Create object */
-      $data             = preg_replace('/^dn:.*\n/', '', $ldap->gen_ldif($this->dn,"(!(objectClass=gosaDepartment))"));
+      #$data             = preg_replace('/^dn:.*\n/', '', $ldap->gen_ldif($this->dn,"(!(objectClass=gosaDepartment))"));
+      $data             = $ldap->gen_ldif($this->dn,"(!(objectClass=gosaDepartment))");
       $newName          = preg_replace("/\./", "", $sec."-".$usec);
       $target= array();
       $target['objectClass']            = array("top", "gosaSnapshotObject");
@@ -1228,8 +1229,8 @@ class plugin
     
     /* Prepare import string */
     $data  = gzuncompress($ldap_to->get_attribute($dn,'gosaSnapshotData'));
-    $data =  "dn: ".$restoreObject['gosaSnapshotDN'][0]."\n".$data; 
-  
+//    $data =  "dn: ".$restoreObject['gosaSnapshotDN'][0]."\n".$data; 
+ 
     /* Import the given data */
     $ldap->import_complete_ldif($data,$err,true,true);
     show_ldap_error($ldap_to->get_error().$err, _("Restore snapshot failed."));

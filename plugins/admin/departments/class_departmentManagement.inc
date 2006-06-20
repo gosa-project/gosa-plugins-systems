@@ -306,7 +306,7 @@ class departmentManagement extends plugin
     }else{
 
       /* Check if there is a snapshot dialog open */
-      if($str = $this->showSnapshotDialog($this->DivListDepartment->selectedBase,"")){
+      if($str = $this->showSnapshotDialog($this->DivListDepartment->selectedBase,$this->DivListDepartment->selectedBase)){
         return($str);
       }
 
