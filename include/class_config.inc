@@ -113,8 +113,8 @@ class config  {
                     $this->currentLocation= $name;
 
                     /* Add location elements */
-                    $this->data['LOCATIONS'][$name]= $attrs;
-                  }
+                      $this->data['LOCATIONS'][$name]= $attrs;
+                    }
                   break;
 
                   /* Handle referral tags */
