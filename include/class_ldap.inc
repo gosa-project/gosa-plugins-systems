@@ -803,19 +803,27 @@ class LDAP{
 
     if ($recursive){
       $this->cd($dn);
-      $this->search("$filter", array('dn'));
+      $this->ls($filter,$dn, array('dn','objectClass'));
+      $deps = array();
       while ($attrs= $this->fetch()){
         $display.= $this->gen_one_entry($attrs['dn'], $filter, $attributes);
         $display.= "\n";
+
+        if(in_array("organizationalUnit",$attrs['objectClass'])){
+          $deps[] = $attrs['dn'];
+        }
+      }
+      foreach($deps as $dn){
+        $display .= $this->gen_ldif($dn, $filter,$attributes,$recursive);
       }
     } else {
       $display.= $this->gen_one_entry($dn);
     }
-
     return ($display);
   }
 
-function gen_xls ($dn, $filter= "(objectClass=*)", $attributes= array('*'), $recursive= TRUE,$r_array=0)
+
+  function gen_xls ($dn, $filter= "(objectClass=*)", $attributes= array('*'), $recursive= TRUE,$r_array=0)
   {
     $display= "";
 
