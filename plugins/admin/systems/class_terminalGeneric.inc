@@ -282,11 +282,16 @@ class termgeneric extends plugin
     }
   
     $smarty->assign("nfsservers",     $tmp2);
-
-    
-
     $smarty->assign("syslogservers",  $this->gotoSyslogServers);
-    $smarty->assign("ntpservers",     $this->gotoNtpServers);
+
+    $tmp = array();
+    foreach($this->gotoNtpServers as $server){
+      if(!in_array($server,$this->gotoNtpServer)){
+        $tmp[$server] = $server;
+      }
+    }
+    
+    $smarty->assign("ntpservers",     $tmp);
 
     /* Variables */
     foreach(array("base", "gotoMode", "gotoTerminalPath", "gotoSwapServer",

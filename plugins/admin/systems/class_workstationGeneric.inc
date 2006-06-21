@@ -228,7 +228,14 @@ class workgeneric extends plugin
     $smarty->assign("l", $this->l);
     $smarty->assign("bases", $this->config->idepartments);
     $smarty->assign("staticAddress", "");
-    $smarty->assign("gotoNtpServers",$this->gotoNtpServers);
+
+    $tmp = array();
+    foreach($this->gotoNtpServers as $server){
+      if(!in_array($server,$this->gotoNtpServer)){
+        $tmp[$server] = $server;
+      }
+    }
+    $smarty->assign("gotoNtpServers",$tmp);
         
     /* Check if workstation is online */
     $query= "fping -q -r 1 -t 500 ".$this->cn;
