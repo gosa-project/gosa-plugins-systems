@@ -46,7 +46,7 @@ class divListConference extends MultiSelectWindow
     $this->AddHeader(array("string" =>_("Name - Number"), "attach" => "style=''"));
     $this->AddHeader(array("string" => _("Owner"), "attach" => "style='width:200px;'"));
     $this->AddHeader(array("string" => _("PIN"), "attach" => "style='width:50px;'"));
-    $this->AddHeader(array("string" =>_("Actions"), "attach" => "style='width:60px;border-right:0px;text-align:right;'"));
+    $this->AddHeader(array("string" =>_("Actions"), "attach" => "style='width:90px;border-right:0px;text-align:right;'"));
 
     /* Add Checkboxes / SubSearch checkbox */
     $this->AddCheckBox("SubSearch",  _("Select to search within subtrees"), _("Ignore subtrees"), false);
@@ -157,7 +157,7 @@ class divListConference extends MultiSelectWindow
       $a_field4 = array("string"=> $pin, "attach" =>  $title." style='width:50px;'");
 
       if(($this->parent->ui->dn==$conference['goFonConferenceOwner'][0])&&(chkacl($this->parent->acl,"goFonConferenceOwner")=="")){
-        $a_field5 = array("string"=>preg_replace("/%KEY%/",$conferencekey,$action.$actions), "attach" =>  $title."style='width:60px;border-right:0px;text-align:right;'");
+        $a_field5 = array("string"=>preg_replace("/%KEY%/",$conferencekey,$action.$actions), "attach" =>  $title."style='width:90px;border-right:0px;text-align:right;'");
       }elseif(chkacl($this->parent->acl,"goFonConferenceOwner")==""){
         $a_field5 = array("string"=>preg_replace("/%KEY%/",$conferencekey,$action.$actions2), "attach" =>  $title."style='width:52px;border-right:0px;text-align:right;'");
       }else{
@@ -166,9 +166,6 @@ class divListConference extends MultiSelectWindow
 
       $this->AddElement(array($a_field1,$a_field2,$a_field3,$a_field4,$a_field5));
     }
- 
-
- 
   }
 
   function Save()
