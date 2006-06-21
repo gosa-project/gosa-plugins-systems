@@ -212,7 +212,15 @@ class termgroup extends plugin
     $smarty->assign("modes", $this->modes);
     $smarty->assign("actions", array("wake" => _("Wake up"), "halt" => _("Switch off"), "reboot" => _("Reboot")));
     $smarty->assign("actionACL", chkacl($this->acl, 'action'));
-    $smarty->assign("gotoNtpServers",$this->gotoNtpServers); 
+
+    $tmp = array();
+    foreach($this->gotoNtpServers as $server){
+      if(!in_array($server,$this->gotoNtpServer)){
+        $tmp[$server] = $server;
+      }
+    }
+
+    $smarty->assign("gotoNtpServers",$tmp); 
     $smarty->assign("syslogservers", $this->config->data['SERVERS']['SYSLOG']); 
     $smarty->assign("gotoSyslogServer_select", $this->gotoSyslogServer); 
 

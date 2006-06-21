@@ -21,9 +21,9 @@
 				   {html_options output=$gotoNtpServers values=$gotoNtpServers}
 				  </select>
 					<input type="submit" name="addNtpServer" value="{t}Add{/t}"     id="addNtpServer" {$gotoNtpServerACL}
-					 {if $inheritTimeServer} disabled {/if}>
+					 {if ($inheritTimeServer) || (!$gotoNtpServers)} disabled {/if}>
 					<input type="submit" name="delNtpServer" value="{t}Delete{/t}"  id="delNtpServer" {$gotoNtpServerACL}
-					 {if $inheritTimeServer} disabled {/if}>
+					 {if ($inheritTimeServer) || (!$gotoNtpServer_select)} disabled {/if} >
 				 </td>
 				</tr>
 			   </table>
