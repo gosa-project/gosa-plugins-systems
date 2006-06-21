@@ -871,11 +871,11 @@ class plugin
     //FIXME: How to optimize this? We have at least two
     //       LDAP accesses per object. It would be a good
     //       idea to have it integrated.
-  
+
     /* No dn? Self-operation... */
     if ($dn == ""){
       $dn= $this->dn;
-    
+
       /* No tag? Find it yourself... */
       if ($tag == ""){
         $len= strlen($dn);
@@ -908,7 +908,7 @@ class plugin
         }
       }
     }
- 
+
 
     /* Set tag? */
     if ($tag != ""){
@@ -943,7 +943,7 @@ class plugin
       } else {
         @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__, "Not tagging ($tag) $dn - seems to have moved away", "Tagging");
       }
-      
+
     } else {
       /* Remove objectclass and attribute */
       $ldap= $this->config->get_ldap_link();
@@ -973,7 +973,7 @@ class plugin
         @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__, "Not removing tag ($tag) $dn - seems to have moved away", "Tagging");
       }
     }
-    
+
   }
 
 
@@ -991,9 +991,9 @@ class plugin
 
     /* Check if snapshot functionality is enabled */
     if(!$this->snapshotEnabled()){
-       return;
+      return;
     }
-  
+
     /* Get configuration from gosa.conf */
     $tmp = $this->config->data['MAIN'];
     /* Check if the undo level is specified */
@@ -1024,7 +1024,7 @@ class plugin
       show_ldap_error($ldap_to->get_error(), _("Snapshot failed."));
     }
 
- 
+
     /* check if the dn exists */ 
     if ($ldap->dn_exists($this->dn)){
 
@@ -1038,7 +1038,7 @@ class plugin
       $new_base       = preg_replace("/".normalizePreg($base)."$/","",$base_of_object).$snap_base;
 
       /* Create object */
-      #$data             = preg_replace('/^dn:.*\n/', '', $ldap->gen_ldif($this->dn,"(!(objectClass=gosaDepartment))"));
+#$data             = preg_replace('/^dn:.*\n/', '', $ldap->gen_ldif($this->dn,"(!(objectClass=gosaDepartment))"));
       $data             = $ldap->gen_ldif($this->dn,"(&(!(objectClass=gosaDepartment))(!(objectClass=FAIclass)))");
       $newName          = preg_replace("/\./", "", $sec."-".$usec);
       $target= array();
@@ -1050,9 +1050,9 @@ class plugin
       $target['gosaSnapshotTimestamp']  = $newName;
 
       /* Insert the new snapshot 
-          But we have to check first, if the given gosaSnapshotTimestamp
-          is already used, in this case we should increment this value till there is 
-          an unused value. */ 
+         But we have to check first, if the given gosaSnapshotTimestamp
+         is already used, in this case we should increment this value till there is 
+         an unused value. */ 
       $new_dn                           = "gosaSnapshotTimestamp=".$newName.",".$new_base;
       $ldap_to->cat($new_dn);
       while($ldap_to->count()){
@@ -1088,9 +1088,9 @@ class plugin
     }
   }
 
-    
+
   /* returns true if snapshots are enabled, and false if it is disalbed
-      There will also be some errors psoted, if the configuration failed */
+     There will also be some errors psoted, if the configuration failed */
   function snapshotEnabled()
   {
     $tmp = $this->config->data['MAIN'];
@@ -1099,7 +1099,7 @@ class plugin
 
         /* Check if the snapshot_base is defined */
         if(!isset($tmp['SNAPSHOT_BASE'])){
-          print_red(_("The snapshot functionality is enabled, but the required variable SNAPSHOT_BASE is not configured in your gosa.conf."));
+          print_red(sprintf(_("The snapshot functionality is enabled, but the required variable '%s' is not configured in your gosa.conf."),$missing));
           return(FALSE);
         }
 
@@ -1119,18 +1119,18 @@ class plugin
         return(TRUE);
       }
     }
-    return(false);
+    return(FALSE);
   }
-  
+
 
   /* Return available snapshots for the given base 
-  */
+   */
   function Available_SnapsShots($dn,$raw = false)
   {
     if(!$this->snapshotEnabled()) return(array());
 
     /* Create an additional ldap object which
-        points to our ldap snapshot server */
+       points to our ldap snapshot server */
     $ldap= $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
     $tmp = $this->config->data['MAIN'];
@@ -1158,8 +1158,8 @@ class plugin
     /* Fetch all objects with  gosaSnapshotDN=$dn */
     $ldap_to->cd($new_base);
     $ldap_to->ls("(&(objectClass=gosaSnapshotObject)(gosaSnapshotDN=".$dn."))",$new_base,
-                    array("gosaSnapshotType","gosaSnapshotTimestamp","gosaSnapshotDN","description")); 
- 
+        array("gosaSnapshotType","gosaSnapshotTimestamp","gosaSnapshotDN","description")); 
+
     /* Put results into a list and add description if missing */
     while($entry = $ldap_to->fetch()){ 
       if(!isset($entry['description'][0])){
@@ -1184,9 +1184,9 @@ class plugin
   function getAllDeletedSnapshots($base_of_object,$raw = false)
   {
     if(!$this->snapshotEnabled()) return(array());
-  
+
     /* Create an additional ldap object which
-        points to our ldap snapshot server */
+       points to our ldap snapshot server */
     $ldap= $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
     $tmp = $this->config->data['MAIN'];
@@ -1267,14 +1267,14 @@ class plugin
     }else{
       $ldap_to    = $ldap;
     }
-  
+
     /* Get the snapshot */ 
     $ldap_to->cat($dn);
     $restoreObject = $ldap_to->fetch();
-    
+
     /* Prepare import string */
     $data  = gzuncompress($ldap_to->get_attribute($dn,'gosaSnapshotData'));
- 
+
     /* Import the given data */
     $ldap->import_complete_ldif($data,$err,true,true);
     show_ldap_error($ldap_to->get_error().$err, _("Restore snapshot failed."));
@@ -1337,16 +1337,15 @@ class plugin
         $this->snapDialog = NULL;
       }
     }
-   
+
     if(isset($_POST['CancelSnapshot'])){
       $this->snapDialog = NULL;
     }
- 
+
     if($this->snapDialog){
       $this->snapDialog->save_object();
       return($this->snapDialog->execute());
     }
-
   }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
