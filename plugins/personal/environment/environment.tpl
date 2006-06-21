@@ -134,8 +134,9 @@
 	
 				<br>
 				<input type="submit" {$gotoLogonScriptACL} name="gotoLogonScriptNew"	value="{t}Add{/t}">
-				<input type="submit" {$gotoLogonScriptACL} name="gotoLogonScriptDel" 	value="{t}Delete{/t}"> 
-				<input type="submit" {$gotoLogonScriptACL} name="gotoLogonScriptEdit" 	value="{t}Edit{/t}"> 
+				<input type="submit" {$gotoLogonScriptACL} name="gotoLogonScriptEdit" 	value="{t}Edit{/t}">
+				<input type="submit" {$gotoLogonScriptACL} name="gotoLogonScriptDel" 	value="{t}Delete{/t}" 
+				{if !$gotoLogonScripts} disabled {/if}> 
 			</td>
 		</tr>
 	</table>	
@@ -162,7 +163,8 @@
 			<td>
 				<input type="submit" {$gotoHotplugDeviceACL} name="gotoHotplugDeviceNew" value="{t}New{/t}">
 				<input type="submit" {$gotoHotplugDeviceACL} name="gotoHotplugDeviceUse" value="{t}Existing{/t}">
-				<input type="submit" {$gotoHotplugDeviceACL} name="gotoHotplugDeviceDel" value="{t}Delete{/t}">
+				<input type="submit" {$gotoHotplugDeviceACL} name="gotoHotplugDeviceDel" value="{t}Delete{/t}"
+				{if !$gotoHotplugDevices} disabled {/if}>
 			</td>
 		</tr>
 	</table>
@@ -178,9 +180,9 @@
 		</select>
 		<br>
 		<input type="submit" {$gotoPrinterACL} name="gotoPrinterAdd"     value="{t}Add{/t}">
-		<input type="submit" {$gotoPrinterACL} name="gotoPrinterDel"     value="{t}Delete{/t}">
-		<input type="submit" {$gotoPrinterACL} name="gotoPrinterEdit"    value="{t}Toggle admin{/t}">
-		<input type="submit" {$gotoPrinterACL} name="gotoPrinterDefault"    value="{t}Toggle default{/t}">
+		<input type="submit" {$gotoPrinterACL} name="gotoPrinterDel"     value="{t}Delete{/t}" {if !$gotoPrinter } disabled {/if}>
+		<input type="submit" {$gotoPrinterACL} name="gotoPrinterEdit"    value="{t}Toggle admin{/t}" {if !$gotoPrinter } disabled {/if}>
+		<input type="submit" {$gotoPrinterACL} name="gotoPrinterDefault"    value="{t}Toggle default{/t}" {if !$gotoPrinter } disabled {/if}>
 	    </td>
 	</tr>
     </table>
