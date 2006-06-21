@@ -18,7 +18,7 @@ class servdns extends plugin
 
   var $orig_dn          = "";
 
-  var $DNSinitially_was_account;
+  var $initially_was_account;
   
   /* ServerService tab vars */
   var $conflicts        = array("servdns");
@@ -48,7 +48,7 @@ class servdns extends plugin
     }else{
       $this->is_account = true;
     }
-    $this->DNSinitially_was_account = $this->is_account;
+    $this->initially_was_account = $this->is_account;
   }
 
 
@@ -253,7 +253,7 @@ class servdns extends plugin
    */
   function remove_from_parent()
   {
-    if(!$this->DNSinitially_was_account){
+    if(!$this->initially_was_account){
       return;
     }
     print_red("Can't remove dns yet. returning without remove.");

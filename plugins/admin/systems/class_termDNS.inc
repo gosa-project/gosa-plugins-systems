@@ -27,7 +27,7 @@ class termDNS extends plugin
    */
   var $DNSattributes            = array("dNSClass","zoneName","dNSTTL");
   var $DNS_is_Account           = false;
-  var $DNSinitially_was_account = false;
+  var $initially_was_account = false;
   var $dnsEntry                 = array();
   var $DNSenabled               = false;
 
@@ -100,7 +100,7 @@ class termDNS extends plugin
  
     /* Store initally account settings 
      */
-    $this->DNSinitially_was_account = $this->DNS_is_account;
+    $this->initially_was_account = $this->DNS_is_account;
   }
 
 
@@ -408,7 +408,7 @@ class termDNS extends plugin
       /* Create diff and follow instructions 
        * If Account was disabled, remove account by setting exists to false
        */
-      if((!$this->DNS_is_account)&&($this->DNSinitially_was_account)){  
+      if((!$this->DNS_is_account)&&($this->initially_was_account)){  
         $this->dnsEntry['exists'] = false;
         $tmp = getDNSHostEntriesDiff($this->config,$this->OrigCn,$this->dnsEntry,$this->cn);
       }else{
