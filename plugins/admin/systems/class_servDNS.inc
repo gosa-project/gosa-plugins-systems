@@ -227,9 +227,10 @@ class servdns extends plugin
         $str .=" ... ";
       }
       print_red(sprintf(_("Can't delete the selected zone, because it is still in use by these entry/entries '%s'"),trim($str)));
-
+      return(false);
     }else{
       unset($this->Zones[$id]);
+      return(true);
     }
   } 
 
@@ -254,13 +255,15 @@ class servdns extends plugin
   function remove_from_parent()
   {
     if($this->initially_was_account){
-      $ldap = $this->config->get_ldap_link();
-      $ldap->ls("(&(objectClass=dNSZone)(zoneName=*)(relativeDomainName=@))",$this->orig_dn,array("relativeDomainName","zoneName"));
-      while($attr = $ldap->fetch()){
-        $ldap->cd($attr['dn']);
-        $ldap->rmdir_recursive($attr['dn']);
+      $bool = true;
+      foreach($this->Zones as $key => $zone){
+        $bool= $bool & $this->RemoveZone($key);
       }
-      show_ldap_error($ldap->get_error(), _("Removing DNS service failed"));
+
+      if($bool){
+        $this->save();
+      }
+      return($bool);
     }
   }
 
@@ -322,6 +325,7 @@ class servdns extends plugin
   {
     if($value == "none") return;
     if(!$this->initially_was_account) return;
+    if(empty($this->StatusFlag)) return;
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->dn);
     $ldap->cat($this->dn,array("objectClass"));

@@ -56,7 +56,7 @@ class termDNS extends plugin
     /* Hide all dns specific code, if dns is not available 
      */
     $DNSenabled = false;
-    foreach($this->config->data['TABS']['SERVTABS'] as $tab){
+    foreach($this->config->data['TABS']['SERVERSERVICE'] as $tab){
       if(preg_match("/^servdns$/",$tab['CLASS'])){
         $this->DNSenabled = true;
       }
