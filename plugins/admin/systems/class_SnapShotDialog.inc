@@ -58,7 +58,8 @@ class SnapShotDialog extends plugin
 	
 				$res[base64_encode($entry['dn'])] = $date." - ".$data;
 			}
-			$smarty->assign("SnapShots",$res);
+			natcasesort($res);
+			$smarty->assign("SnapShots",array_reverse($res));
 			$smarty->assign("CountSnapShots",count($res));
 		}
 
