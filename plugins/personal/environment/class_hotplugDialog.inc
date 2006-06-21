@@ -24,11 +24,12 @@ class hotplugDialog extends plugin
   var $regex                    = "*";
   var $depselect                = "/";
   var $deplist                  = "/";
+  var $skipThese                = array();
 
-
-  function hotplugDialog ($config, $dn= NULL,$use_existing=false )
+  function hotplugDialog ($config, $dn= NULL,$use_existing=false ,$skipThese = array())
   {
     $this->use_existing = $use_existing;
+    $this->skipThese    = $skipThese;
     plugin::plugin ($config, $dn);
     $this->depselect = $this->config->current['BASE'];
   }
@@ -179,6 +180,9 @@ class hotplugDialog extends plugin
           $tmp = split("\|",$device);
           
           if(preg_match("/^".str_replace("*","",$this->regex).".*/i",$tmp[0])){
+  
+            if(in_array($tmp[0],$this->skipThese)) continue;
+
             $a_return[$tmp[0]]= $tmp[0]." [".$tmp[1]."] ".$tmp[2];
             
             $tmp2['name']         = $tmp[0];

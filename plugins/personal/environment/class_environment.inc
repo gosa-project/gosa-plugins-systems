@@ -123,7 +123,7 @@ class environment extends plugin
           $tmp[4] = "";
         }
   
-        $tmp2['product']     = $tmp[3]; 
+        $tmp2['produkt']     = $tmp[3]; 
         $tmp2['vendor']      = $tmp[4];
  
         $this->gotoHotplugDevices[$tmp[0]]=$tmp2;
@@ -647,7 +647,11 @@ class environment extends plugin
 
     /* There are already defined hotplugs from other users we could use */
     if(isset($_POST['gotoHotplugDeviceUse'])){
-      $this->dialog = new hotplugDialog($this->config,$this->dn,true);
+      $tmp  =array();
+      foreach($this->gotoHotplugDevices as $plugs){
+        $tmp[] = $plugs['name'];
+      }
+      $this->dialog = new hotplugDialog($this->config,$this->dn,true,$tmp);
       $this->is_dialog = true;
     }
 
