@@ -113,6 +113,19 @@ class environment extends plugin
         $tmp2['name']        = $tmp[0]; 
         $tmp2['description'] = $tmp[1]; 
         $tmp2['id']          = $tmp[2]; 
+
+        /* Produkt ID */
+        if(!isset($tmp[3])){
+          $tmp[3] = "";
+        }
+        /* Vendor ID */
+        if(!isset($tmp[4])){
+          $tmp[4] = "";
+        }
+  
+        $tmp2['product']     = $tmp[3]; 
+        $tmp2['vendor']      = $tmp[4];
+ 
         $this->gotoHotplugDevices[$tmp[0]]=$tmp2;
       }
     }
@@ -1074,7 +1087,8 @@ $ldap->modify ($attrs);
     /* Prepare HotPlug devices */
     $this->attrs['gotoHotplugDevice'] = array();
     foreach($this->gotoHotplugDevices as $name => $device){
-      $this->attrs['gotoHotplugDevice'][] = $device['name']."|".$device['description']."|".$device['id'];
+      $this->attrs['gotoHotplugDevice'][] = $device['name']."|".$device['description']."|".$device['id'].
+        "|".$device['produkt']."|".$device['vendor'];
     }
 
     /* Prepare LogonScripts */

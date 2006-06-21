@@ -9,20 +9,21 @@ class hotplugDialog extends plugin
 
   /* attribute list for save action */
   var $ignore_account       = TRUE;
-  var $attributes           = array("HOT_name","HOT_description","HOT_id");
+  var $attributes           = array("HOT_name","HOT_description","HOT_id","HOT_produkt","HOT_vendor");
   var $objectclasses        = array("whatever");
   var $use_existing         = false;  
 
   var $HOT_name                 = "";
   var $HOT_description          = "";
   var $HOT_id                   = "";
+  var $HOT_produkt              = "";
+  var $HOT_vendor               = "";
 
   var $hotplugDevices           = ""; 
   var $hotplugDeviceList        = array(); 
   var $regex                    = "*";
   var $depselect                = "/";
   var $deplist                  = "/";
-
 
 
   function hotplugDialog ($config, $dn= NULL,$use_existing=false )
@@ -118,6 +119,12 @@ class hotplugDialog extends plugin
       if((empty($this->HOT_id))||(preg_match("/[\|]/i",$this->HOT_id))){
         $message[]=_("Please specify a valid id.");
       }
+      if((empty($this->HOT_vendor))||(preg_match("/[\|]/i",$this->HOT_vendor))){
+        $message[]=_("Please specify a valid id.");
+      }
+      if((empty($this->HOT_produkt))||(preg_match("/[\|]/i",$this->HOT_produkt))){
+        $message[]=_("Please specify a valid id.");
+      }
 
     $ldap = $this->config->get_ldap_link();
     $ldap->search("(&(objectClass=gotoEnvironment)(gotoHotplugDevice=".$this->HOT_name."*))",array("gotoHotplugDevice"));
@@ -141,9 +148,11 @@ class hotplugDialog extends plugin
     /* return generated entry from input fields*/
     if(!$this->use_existing){
       $a_return=array();
-      $a_return[$this->HOT_name]['name']= $this->HOT_name; 
-      $a_return[$this->HOT_name]['description']= $this->HOT_description; 
-      $a_return[$this->HOT_name]['id']= $this->HOT_id;
+      $a_return[$this->HOT_name]['name']        = $this->HOT_name; 
+      $a_return[$this->HOT_name]['description'] = $this->HOT_description; 
+      $a_return[$this->HOT_name]['id']          = $this->HOT_id;
+      $a_return[$this->HOT_name]['produkt']     = $this->HOT_produkt;
+      $a_return[$this->HOT_name]['vendor']      = $this->HOT_vendor;
       return($a_return); 
     }else{
       $entries = array();
@@ -173,8 +182,20 @@ class hotplugDialog extends plugin
             $a_return[$tmp[0]]= $tmp[0]." [".$tmp[1]."] ".$tmp[2];
             
             $tmp2['name']         = $tmp[0];
-            $tmp2['description'] = $tmp[1];
+            $tmp2['description']  = $tmp[1];
             $tmp2['id']           = $tmp[2];
+
+            /* Produkt ID */
+            if(!isset($tmp[3])){
+              $tmp[3] = "";
+            }
+            /* Vendor ID */
+            if(!isset($tmp[4])){
+              $tmp[4] = "";
+            }
+
+            $tmp2['produkt']      = $tmp[3];
+            $tmp2['vendor']       = $tmp[4];
 
             $this->hotplugDeviceList[$tmp[0]]=$tmp2;
           }

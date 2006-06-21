@@ -25,11 +25,24 @@
    <td style="vertical-align:top">
 	<table summary="">
 		<tr>
+			<td><LABEL for="HOT_vendor">{t}Vendor ID{/t}</LABEL>{$must}
+			</td>
+			<td>
+				<input type="text" value="{$HOT_vendor}" name="HOT_vendor" id="HOT_vendor">
+			</td>
+			<td><LABEL for="HOT_produkt">{t}Produkt ID{/t}</LABEL>{$must}
+			</td>
+			<td>
+				<input type="text" value="{$HOT_produkt}" name="HOT_produkt" id="HOT_produkt">
+			</td>
+		</tr>
+		<tr>
 			<td><LABEL for="HOT_id">{t}Device ID{/t}</LABEL>{$must}
 			</td>
 			<td>
 				<input type="text" value="{$HOT_id}" name="HOT_id" id="HOT_id">
 			</td>
+			<td cols="2">&nbsp;</td>
 		</tr>
 	</table>
 </table>
