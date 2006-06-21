@@ -988,28 +988,66 @@ class plugin
   /* Create a snapshot of the current object */
   function create_snapshot($type= "snapshot", $description= array())
   {
-    if(!$this->snapshotEnabled()) return;
 
-    /* Create 2 ldap connections 
-        one connection points to the snapshot server and 
-        one to our basic ldap server */
+    /* Check if snapshot functionality is enabled */
+    if(!$this->snapshotEnabled()){
+       return;
+    }
+  
+    /* Get configuration from gosa.conf */
+    $tmp = $this->config->data['MAIN'];
+
+    /* Check if the snapshot_base is defined */
+    if(!isset($tmp['SNAPSHOT_BASE'])){
+      print_red(_("Can't create a new snapshot, the required variable SNAPSHOT_BASE in not configured in your gosa.conf."));
+      return;
+    }
+
+    /* Check if the undo level is specified */
+    if(isset($tmp['SNAPSHOT_UNDO_LEVEL'])){      
+      $UndoLvl   = $tmp['SNAPSHOT_UNDO_LEVEL'];
+    }else{
+      $UndoLvl   = 5;
+    }
+
+    /* Create lokal ldap connection */
     $ldap= $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
-    $tmp = $this->config->data['MAIN'];
-  
+
     /* check if there are special server configurations for snapshots */
-    if(isset($tmp['SNAPSHOT_SERVER'])){
-      $server         = $tmp['SNAPSHOT_SERVER'];
-      $user           = $tmp['SNAPSHOT_USER'];
-      $password       = $tmp['SNAPSHOT_PASSWORD'];
-      $snapldapbase   = $tmp['SNAPSHOT_LDAP_BASE'];
-      $ldap_to        = new LDAP($user,$password, $server);
-      $ldap_to -> cd($snapldapbase);
-      show_ldap_error($ldap_to->get_error(), _("Snapshot failed."));
-    }else{
+    if(!isset($tmp['SNAPSHOT_SERVER'])){
+
+      /* Source and destination server are both the same, just copy source to dest obj */
       $ldap_to    = $ldap;
+
+    }else{
+
+      /* check if all required vars are available to create a new ldap connection */
+      $missing = "";
+      foreach(array("SNAPSHOT_SERVER","SNAPSHOT_USER","SNAPSHOT_PASSWORD","SNAPSHOT_LDAP_BASE") as $var){
+        if(!isset($tmp[$var])){
+          $missing .= $var." ";
+        }
+      }
+
+      /* All vars are available, create a seperate ldap connection to store snapshots  */
+      if($missing == ""){
+        $server         = $tmp['SNAPSHOT_SERVER'];
+        $user           = $tmp['SNAPSHOT_USER'];
+        $password       = $tmp['SNAPSHOT_PASSWORD'];
+        $snapldapbase   = $tmp['SNAPSHOT_LDAP_BASE'];
+
+        $ldap_to        = new LDAP($user,$password, $server);
+        $ldap_to -> cd($snapldapbase);
+        show_ldap_error($ldap_to->get_error(), _("Snapshot failed."));
+
+      }else{
+        print_red(sprintf(_("Can't create a new snapshot the following variables are not configured in your gosa.conf '%s'."),$missing));
+        return;
+      }
     }
-   
+
+ 
     /* check if the dn exists */ 
     if ($ldap->dn_exists($this->dn)){
 
@@ -1054,6 +1092,23 @@ class plugin
       $ldap_to->add($target);
       show_ldap_error($ldap_to->get_error(), _("Create snapshot failed."));
       show_ldap_error($ldap->get_error(), _("Create snapshot failed."));
+
+      /* Check amount of used snapshots, and remove old ones if necessary */
+      $test = $this->Available_SnapsShots($this->dn,true);
+      if(count($test) > $UndoLvl){
+        $toDel = array();
+        foreach($test as $entry){
+          $toDel[preg_replace("/-/","",$entry['gosaSnapshotTimestamp'][0])] = $entry['dn'];
+        }
+        krsort($toDel);
+        $i = 0 ; 
+        foreach($toDel as $entryID => $entry){
+          $i ++ ; 
+          if($i > $UndoLvl){
+            $ldap_to->rmdir_recursive($entry);
+          }
+        }
+      }
     }
   }
 
