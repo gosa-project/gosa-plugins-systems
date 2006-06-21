@@ -254,7 +254,14 @@ class workgeneric extends plugin
     $smarty->assign("modes", $this->modes);
     $smarty->assign("nfsservers", $this->config->data['SERVERS']['NFS']);
     $smarty->assign("syslogservers", $this->gotoSyslogServers);
-    $smarty->assign("ntpservers", $this->config->data['SERVERS']['NTP']);
+
+    $ntpser = array();
+    foreach($this->gotoNtpServers as $server){
+      if(!in_array($server,$this->gotoNtpServer)){
+        $ntpser[$server] = $server;
+      }
+    }
+    $smarty->assign("gotoNtpServers", $ntpser);
 
     /* Variables */
     foreach(array("base", "gotoMode", "gotoSyslogServer", "gotoNtpServer") as $val){

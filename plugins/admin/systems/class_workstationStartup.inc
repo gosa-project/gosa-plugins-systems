@@ -904,7 +904,7 @@ class workstartup extends plugin
     }elseif(isset($this->parent->by_object['workgeneric'])){
       $this->objectclasses = array("GOhard", "FAIobject");
     }elseif(isset($this->parent->by_object['servgeneric'])){
-      $this->objectclasses = array("GOhard", "FAIobject");
+      $this->objectclasses = array("GOhard", "FAIobject","gotoWorkstationTemplate");
     }else{
       print "Object Type Configuration : unknown";
       exit();
