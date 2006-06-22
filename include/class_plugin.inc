@@ -1279,7 +1279,7 @@ class plugin
     $data  = gzuncompress($ldap_to->get_attribute($dn,'gosaSnapshotData'));
 
     /* Import the given data */
-    $ldap->import_complete_ldif($data,$err,true,true);
+    $ldap->import_complete_ldif($data,$err,false,false);
     show_ldap_error($ldap_to->get_error().$err, _("Restore snapshot failed."));
   }
 

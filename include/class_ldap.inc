@@ -902,7 +902,14 @@ class LDAP{
   
 
 
-  function import_complete_ldif($str_attr,&$error,$overwrite,$cleanup)
+  /*  This funktion imports ldifs 
+        
+      If DeleteOldEntries is true, the destination entry will be deleted first. 
+      If JustModify is true the destination entry will only be touched by the attributes specified in the ldif.
+      if JustMofify id false the destination dn will be overwritten by the new ldif. 
+    */
+
+  function import_complete_ldif($str_attr,&$error,$JustModify,$DeleteOldEntries)
   {
     if($this->reconnect) $this->connect();
 
@@ -914,8 +921,21 @@ class LDAP{
     $cnt = 0; 
     $current_line = 0;
 
+    /* FIX ldif */
+    $last = "";
+    $tmp  = "";
+    $i = 0;
+    foreach($entries as $entry){
+      if(preg_match("/^ /",$entry)){
+        $tmp[$i] .= trim($entry);
+      }else{
+        $i ++;
+        $tmp[$i] = trim($entry);
+      }
+    }
+
     /* Every single line ... */
-    foreach($entries as $entry) {
+    foreach($tmp as $entry) {
       $current_line ++;
 
       /* Removing Spaces to .. 
@@ -982,18 +1002,18 @@ class LDAP{
       /* Delete before insert */
       $usermdir= false;
     
-      /* The dn address already exists! */
-      if (($this->dn_exists($value))&&((!$overwrite)&&(!$cleanup))) {
+      /* The dn address already exists, Don't delete destination entry, overwrite it */
+      if (($this->dn_exists($value))&&((!$JustModify)&&(!$DeleteOldEntries))) {
 
-        $error= sprintf(_("The dn: '%s' (from line %s) already exists in the LDAP database."), $line, $current_line);
-        return ALREADY_EXISTING_ENTRY;   
+        $usermdir = $usemodify = false;
 
-      } elseif(($this->dn_exists($value))&&($cleanup)){
+      /* Delete old entry first, then add new */
+      } elseif(($this->dn_exists($value))&&($DeleteOldEntries)){
 
         /* Delete first, then add */
         $usermdir = true;        
 
-      } elseif(($this->dn_exists($value))&&($overwrite)) {
+      } elseif(($this->dn_exists($value))&&($JustModify)) {
         
         /* Modify instead of Add */
         $usemodify = true;
@@ -1010,7 +1030,11 @@ class LDAP{
   }
 
 
-  /* Imports a single entry */
+  /* Imports a single entry 
+      If $delete is true;  The old entry will be deleted if it exists.
+      if $modify is true;  All variables that are not touched by the new ldif will be kept.
+      if $modify is false; The new ldif overwrites the old entry, and all untouched attributes get lost.
+  */
   function import_single_entry($str_attr,$modify,$delete)
   {
     if($this->reconnect) $this->connect();
@@ -1061,6 +1085,17 @@ class LDAP{
 
     /* If dn is an index of data, we should try to insert the data */
     if(isset($data['dn'])) {
+
+      /* Fix dn */
+      $tmp = ldap_explode_dn($data['dn'],0);
+      unset($tmp['count']);
+      $newdn ="";
+      foreach($tmp as $tm){
+        $newdn.= trim($tm).",";
+      }
+      $newdn = preg_replace("/,$/","",$newdn);
+      $data['dn'] = $newdn;
+   
       /* Creating Entry */
       $this->cd($data['dn']);
 
@@ -1068,15 +1103,40 @@ class LDAP{
       if($delete){
         $this->rmdir_recursive($data['dn']);
       }
-      
+     
       /* Create missing trees */
+      $this->cd ($this->basedn);
       $this->create_missing_trees($data['dn']);
+      $this->cd($data['dn']);
+      $dn = $data['dn'];
       unset($data['dn']);
       
-      /* If entry exists use modify */
       if(!$modify){
-        $ret = $this->add($data);
+
+        $this->cat($dn);
+        if($this->count()){
+        
+          /* The destination entry exists, overwrite it with the new entry */
+          $attrs = $this->fetch();
+          foreach($attrs as $name => $value ){
+            if(!is_numeric($name)){
+              if(in_array($name,array("dn","count"))) continue;
+              if(!isset($data[$name])){
+                $data[$name] = array();
+              }
+            }
+          }
+          $ret = $this->modify($data);
+    
+        }else{
+    
+          /* The destination entry doesn't exists, create it */
+          $ret = $this->add($data);
+        }
+
       } else {
+        
+        /* Keep all vars that aren't touched by this ldif */
         $ret = $this->modify($data);
       }
     }

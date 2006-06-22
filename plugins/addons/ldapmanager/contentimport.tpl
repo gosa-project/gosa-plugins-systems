@@ -4,9 +4,9 @@
 </p>
 
 <p class="seperator">&nbsp;</p>
-<table summary="">
+<table summary="" width="100%">
 <tr>
-    <td width="30%">
+    <td width="180">
 		<LABEL for="userfile">{t}Import LDIF File{/t}</LABEL>
     </td>
     <td>
@@ -20,8 +20,9 @@
 		&nbsp;
 	</td>
 	<td>
-        <input type="checkbox" name="overwrite" value="1" id="overwrite">
-		<LABEL for="overwrite">{t}Modify existing attributes{/t}</LABEL>
+<!--        <input type="checkbox" name="overwrite" value="1" id="overwrite">-->
+		<input type="radio" name="overwrite" value="1" checked>{t}Modify existing objects, keep untouched attributes{/t}<br>
+		<input type="radio" name="overwrite" value="0">{t}Overwrite existing objects, all not listed attributes will be removed{/t}
 	</td>
 </tr>
 <tr>
@@ -30,7 +31,7 @@
    	</td>
    	<td>
         <input type="checkbox" name="cleanup" value="1" id="cleanup">
-		<LABEL for="cleanup">{t}Overwrite existing entry{/t}</LABEL>
+		<LABEL for="cleanup">{t}Remove existing entries first{/t}</LABEL>
 	</td>
 </tr>
 </table>
