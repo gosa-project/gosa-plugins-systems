@@ -21,7 +21,6 @@ class deptabs extends tabs
     $baseobject= $this->by_object['department'];
     $ou= preg_replace('/,/', '\,', $baseobject->ou);
     $new_dn= @LDAP::convert('ou='.$ou.','.$baseobject->base);
-    
     if($justsave){
       if ($this->dn != $new_dn && $this->dn != "new"){
         /* if( new_dn is subtree of this->dn ) */
@@ -35,9 +34,10 @@ class deptabs extends tabs
           return;
         }
       }
+    }else{
+      $this->dn= $new_dn;
+      return(tabs::save(TRUE));
     }
-    $this->dn= $new_dn;
-    return(tabs::save(TRUE));
   }
 
 }

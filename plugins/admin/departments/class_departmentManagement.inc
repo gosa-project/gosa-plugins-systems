@@ -195,8 +195,9 @@ class departmentManagement extends plugin
       /* Save, or display error message? */
       if (count($message) == 0){
 
-        $this->deptabs->save(true);
-        $this->deptabs->by_object['department']->save();     
+        if(!$this->deptabs->by_object['department']->am_i_moved()){
+          $this->deptabs->save(true);
+        }
 
         /* This object must be tagged, so set ObjectTaggingRequested to true */
         if($this->deptabs->by_object['department']->must_be_tagged()){
