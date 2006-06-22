@@ -995,7 +995,7 @@ class plugin
     }
 
     /* Get configuration from gosa.conf */
-    $tmp = $this->config->data['MAIN'];
+    $tmp = $this->config->current;
     /* Check if the undo level is specified */
     if(isset($tmp['SNAPSHOT_UNDO_LEVEL'])){      
       $UndoLvl   = $tmp['SNAPSHOT_UNDO_LEVEL'];
@@ -1011,7 +1011,8 @@ class plugin
     if(!isset($tmp['SNAPSHOT_SERVER'])){
 
       /* Source and destination server are both the same, just copy source to dest obj */
-      $ldap_to    = $ldap;
+      $ldap_to      = $ldap;
+      $snapldapbase = $this->config->current['BASE'];
 
     }else{
       $server         = $tmp['SNAPSHOT_SERVER'];
@@ -1063,9 +1064,11 @@ class plugin
       } 
 
       /* Inset this new snapshot */
+      $ldap_to->cd($snapldapbase);
       $ldap_to->create_missing_trees($new_base);
       $ldap_to->cd($new_dn);
       $ldap_to->add($target);
+
       show_ldap_error($ldap_to->get_error(), _("Create snapshot failed."));
       show_ldap_error($ldap->get_error(), _("Create snapshot failed."));
 
@@ -1093,7 +1096,7 @@ class plugin
      There will also be some errors psoted, if the configuration failed */
   function snapshotEnabled()
   {
-    $tmp = $this->config->data['MAIN'];
+    $tmp = $this->config->current;
     if(isset($tmp['ENABLE_SNAPSHOT'])){
       if (preg_match("/^true$/i", $tmp['ENABLE_SNAPSHOT']) || preg_match("/yes/i", $tmp['ENABLE_SNAPSHOT'])){
 
@@ -1133,7 +1136,7 @@ class plugin
        points to our ldap snapshot server */
     $ldap= $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
-    $tmp = $this->config->data['MAIN'];
+    $tmp = $this->config->current;
 
     /* check if there are special server configurations for snapshots */
     if(isset($tmp['SNAPSHOT_SERVER'])){
@@ -1189,7 +1192,7 @@ class plugin
        points to our ldap snapshot server */
     $ldap= $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
-    $tmp = $this->config->data['MAIN'];
+    $tmp = $this->config->current;
 
     /* check if there are special server configurations for snapshots */
     if(isset($tmp['SNAPSHOT_SERVER'])){
@@ -1253,7 +1256,7 @@ class plugin
 
     $ldap= $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
-    $tmp = $this->config->data['MAIN'];
+    $tmp = $this->config->current;
 
     /* check if there are special server configurations for snapshots */
     if(isset($tmp['SNAPSHOT_SERVER'])){
