@@ -1062,6 +1062,9 @@ class LDAP{
         $attr[0]= trim($attr[0]);  /* attribute */
         $attr[1]= trim($attr[1]);  /* value */
 
+        $attr[0] = trim( preg_replace("/:.*$/","",$row));
+        $attr[1] = trim( preg_replace("/^".$attr[0]."[ ::]/","",$row));
+
         /* Check for attributes that are used more than once */
         if(!isset($data[$attr[0]])) {
           $data[$attr[0]]=$attr[1];
