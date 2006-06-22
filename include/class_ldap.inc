@@ -939,8 +939,8 @@ class LDAP{
           if(ereg("::",$tmp2))
           {
             $encoded = split("::",$entry);
-            $attr  = $encoded[0];
-            $value = base64_decode($encoded[1]);
+            $attr  = trim($encoded[0]);
+            $value = base64_decode(trim($encoded[1]));
             /* Add linenumber */
             $data .= $current_line."#".base64_encode($attr.":".$value)."\n";
           }
