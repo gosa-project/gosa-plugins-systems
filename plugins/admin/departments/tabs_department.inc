@@ -30,7 +30,8 @@ class deptabs extends tabs
           print_red(_("Try to move tree failed. Destination tree is subtree of source tree."));
         }else{
           /* Prepare to be moved */
-          $baseobject->recursive_move($this->dn, $new_dn);			
+          $baseobject->recursive_move($this->dn, $new_dn);		
+          $this->by_object['department'] = $baseobject;
           return;
         }
       }
