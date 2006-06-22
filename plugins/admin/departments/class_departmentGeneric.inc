@@ -175,6 +175,13 @@ class department extends plugin
 
 	function must_be_tagged()
 	{
+    if((isset($this->attrs['gosaUnitTag'][0])) && ($this->is_administrational_unit)){
+      $this->must_be_tagged = false;
+    }elseif((!isset($this->attrs['gosaUnitTag'][0])) && (!$this->is_administrational_unit)){
+      $this->must_be_tagged = false;
+    }else{
+      $this->must_be_tagged = true;
+    }
 		return $this->must_be_tagged;
 	}
 
@@ -325,10 +332,6 @@ class department extends plugin
 		}
 		show_ldap_error($ldap->get_error(), _("Saving department failed"));
 
-    /* The parameter forces only to set must_be_tagged, and don't touch any objects 
-        This will be done later */
-    $this->tag_objects(true);
-    
     /* Optionally execute a command after we're done */
 		$this->postcreate();
     return(true);
