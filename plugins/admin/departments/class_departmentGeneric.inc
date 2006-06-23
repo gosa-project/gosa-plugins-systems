@@ -43,6 +43,7 @@ class department extends plugin
   var $MustBeMoved              = "";
   var $MoveDestination          = "";
   var $MoveSource               = "";
+  var $MoveOu                   = "";
 
 	/* attribute list for save action */
 	var $attributes               = array("ou", "description", "businessCategory", "st", 
@@ -241,7 +242,7 @@ class department extends plugin
 
 
 	/* Save to LDAP */
-	function save($skipSave = false)
+	function save()
 	{
 		$ldap= $this->config->get_ldap_link();
 
@@ -284,9 +285,7 @@ class department extends plugin
 			$this->gosaUnitTag= "";
 		}
 
-    if(!$skipSave){
-		  plugin::save();
-    }
+		plugin::save();
 
 		/* Remove tag information if needed */
 		if (!$this->is_administrational_unit){
@@ -304,25 +303,24 @@ class department extends plugin
 			}
 		}
 
-    if(!$skipSave){
-      /* Write back to ldap */
-      $ldap= $this->config->get_ldap_link();
-      $ldap->cat($this->dn, array('dn'));
-      $a= $ldap->fetch();
-      $ldap->cd($this->dn);
+		/* Write back to ldap */
+		$ldap= $this->config->get_ldap_link();
+		$ldap->cat($this->dn, array('dn'));
+		$a= $ldap->fetch();
+		$ldap->cd($this->dn);
 
-      if (count($a)){
-        $this->cleanup();
-        $ldap->modify ($this->attrs); 
+		if (count($a)){
+			$this->cleanup();
+			$ldap->modify ($this->attrs); 
 
-        $this->handle_post_events('modify');
-      } else {
-        $ldap->add($this->attrs);
-        $this->handle_post_events('add');
-      }
+			$this->handle_post_events('modify');
+		} else {
+			$ldap->add($this->attrs);
+			$this->handle_post_events('add');
+		}
 
-      show_ldap_error($ldap->get_error(), _("Saving department failed"));
-    }
+  	show_ldap_error($ldap->get_error(), _("Saving department failed"));
+
     /* The parameter forces only to set must_be_tagged, and don't touch any objects 
         This will be done later */
     $this->tag_objects(true);

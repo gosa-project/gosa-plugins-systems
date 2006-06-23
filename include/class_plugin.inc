@@ -729,11 +729,20 @@ class plugin
     /* Adapt naming attribute */
     $dst_name= preg_replace("/^([^=]+)=.*$/", "\\1", $dst_dn);
     $dst_val = preg_replace("/^[^=]+=([^,+]+).*,.*$/", "\\1", $dst_dn);
-    $new[$dst_name]= str_replace("\\","", ldap::fix($dst_val));
+    $new[$dst_name]= $dst_val;
+
+    /* Check if this is a department.
+     * If it is a dep. && there is a , override in his ou 
+     *  change \2C to , again, else this entry can't be saved ...
+     */
+    if((isset($new['ou'])) &&( preg_match("/\\\\2C/",$new['ou']))){
+      $new['ou'] = preg_replace("/\\\\2C/",",",$new['ou']);
+    }
 
     /* Save copy */
     $ldap->connect();
     $ldap->cd($this->config->current['BASE']);
+    
     $ldap->create_missing_trees(preg_replace('/^[^,]+,/', '', $dst_dn));
 
     /* FAIvariable=.../..., cn=.. 
@@ -744,7 +753,7 @@ class plugin
     }
     $ldap->cd($dst_dn);
     $ldap->add($new);
-  
+
     if ($ldap->error != "Success"){
       trigger_error("Trying to save $dst_dn failed.",
           E_USER_WARNING);

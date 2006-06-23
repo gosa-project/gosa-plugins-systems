@@ -240,7 +240,6 @@ class tabs
 		} else {
 			$obj->remove_from_parent();
 		}
-		$this->by_object[$key]= $obj;
 	}
 	return (0);
   }

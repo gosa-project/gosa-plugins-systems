@@ -218,7 +218,7 @@ class departmentManagement extends plugin
 
         /* Save current changes */
         if(!$this->AfterSaveProcedure){
-          $this->deptabs->save();
+          $this->deptabs->save(true);
         }
 
         /* Check if we have to tag this department */
