@@ -39,11 +39,8 @@ class departmentManagement extends plugin
   var $attributes= array();
   var $objectclasses= array();
 
-  /* Vars to handle operations after saving the department 
-     Recursive move && tagging   */
-  var $ObjectInSaveMode         = false;    // Is true, if current object wasn't saved right now
-  var $ObjectTaggingRequested   = false;    // Object must be tagged, an iframe will be shown. 
-  var $RecursiveRemoveRequested = false;    // Is true, if this object must be moved, an iframe will be displayed in this case
+  /* Tagging || Moving in progress */
+  var $AfterSaveProcedure   = false;
 
   function departmentManagement ($config, $ui)
   {
@@ -182,53 +179,14 @@ class departmentManagement extends plugin
       }
     }
 
-
-    /***************
-      Edit department finished 
-     ***************/
-
-    if ((isset($_POST['edit_finish'])) && (isset($this->deptabs->config))){
-
-      /* Check tabs, will feed message array */
-      $message= $this->deptabs->check();
-
-      /* Save, or display error message? */
-      if (count($message) == 0){
-
-        $this->deptabs->save(true);
-
-        if(!$this->deptabs->by_object['department']->am_i_moved()){
-          $this->deptabs->save(true);
-        }
-
-        /* This object must be tagged, so set ObjectTaggingRequested to true */
-        if($this->deptabs->by_object['department']->must_be_tagged()){
-          $this->ObjectTaggingRequested   = true; 
-        }		
-
-        /* Get recursive move is required, set RecursiveRemoveRequested to true */
-        if($this->deptabs->by_object['department']->am_i_moved()){	
-          $this->RecursiveRemoveRequested = true;
-        }		
-
-        /* This var indicated that there is an object which isn't saved right now. */
-        $this->ObjectInSaveMode = true;
-
-      } else {
-        /* Ok. There seem to be errors regarding to the tab data,
-           show message and continue as usual. */
-        show_errors($message);
-      }
-    }
-
-
     /***************
       Handle Tagging (Return output for an iframe)
      ***************/
 
-    /* This department must be tagged (Is called from iframe, generates output)*/
+    /* This department must be tagged (Is called from iframe, generates output) */
     if(isset($_GET['TagDepartment'])){
       $this->deptabs->by_object['department']->tag_objects();
+      $this->deptabs->by_object['department']->must_be_tagged = false;
       exit();  
     }
 
@@ -239,43 +197,57 @@ class departmentManagement extends plugin
 
     /* initiate recursive remove  (Is called from iframe, generates output)*/
     if(isset($_GET['PerformRecMove'])){
-      $this->deptabs->by_object['department']->recursive_move("","",true);
+      $this->deptabs->by_object['department']->recursive_move();
+      $this->deptabs->by_object['department']->MustBeMoved = false;
       exit();
     }
 
 
-    /***************
-      Return iframes, which call tagging / recusrsive move 
-     ***************/
-
-    /* While one of these vars below isset, we must return an iframe, 
-       to perform requested operation */
-    if($this->ObjectTaggingRequested){
-      $this->ObjectTaggingRequested = false;
-      return($this->deptabs->by_object['department']->ShowTagFrame());
-    }
-    if($this->RecursiveRemoveRequested){
-      $this->RecursiveRemoveRequested = false;
-      return($this->deptabs->by_object['department']->ShowMoveFrame());
-    }
-
 
     /***************
-      In case of tagging/moving the object wasn't deleted, do it know
+      Edit department finished 
      ***************/
 
-    /* If there is an unsaved object and all operations are done
-       remove locks & save object tab & unset current object */
-    if($this->ObjectInSaveMode && (!$this->RecursiveRemoveRequested) && (!$this->ObjectTaggingRequested)){
-      $this->deptabs->save();
-      $this->ObjectInSaveMode = false;
-      if ($this->dn != "new"){
-        del_lock ($this->dn);
+    if (($this->AfterSaveProcedure || isset($_POST['edit_finish'])) && (isset($this->deptabs->config))){
+
+      /* Check tabs, will feed message array */
+      $message= $this->deptabs->check();
+
+      /* Save, or display error message? */
+      if (count($message) == 0){
+
+        /* Save current changes */
+        if(!$this->AfterSaveProcedure){
+          $this->deptabs->save(true);
+        }
+
+        /* Check if we have to tag this department */
+        if($this->deptabs->by_object['department']->must_be_tagged){
+          $this->AfterSaveProcedure = true;
+          $this->deptabs->by_object['department']->must_be_tagged = false;
+          return($this->deptabs->by_object['department']->ShowTagFrame());
+        }
+        
+        /* Saving and tagging, is done now, lets move the dep if required */ 
+        if($this->deptabs->by_object['department']->MustBeMoved){
+          $this->AfterSaveProcedure = true;
+          $this->deptabs->by_object['department']->MustBeMoved = false;
+          return($this->deptabs->by_object['department']->ShowMoveFrame());
+        }
+
+        if ($this->dn != "new"){
+          del_lock ($this->dn);
+        }
+        gosa_log ("Department object'".$this->dn."' has been saved");
+        unset ($this->deptabs);
+        $this->deptabs= NULL;
+        $this->AfterSaveProcedure = false;
+        unset ($_SESSION['objectinfo']);
+      } else {
+        /* Ok. There seem to be errors regarding to the tab data,
+           show message and continue as usual. */
+        show_errors($message);
       }
-      gosa_log ("Department object'".$this->dn."' has been saved");
-      unset ($this->deptabs);
-      $this->deptabs= NULL;
-      unset ($_SESSION['objectinfo']);
     }
 
 
