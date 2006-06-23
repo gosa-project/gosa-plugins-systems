@@ -36,18 +36,18 @@ class deptabs extends tabs
         $this->by_object['department']->MustBeMoved      = true;
         $this->by_object['department']->MoveDestination  = $new_dn;
         $this->by_object['department']->MoveSource       = $this->dn;
-        $this->by_object['department']->MoveOu           = $ou;
-        $this->dn                           = $this->dn;
-        $baseobject->dn                     = $this->dn;
         $this->by_object['department']->ou  = $baseobject->attrs['ou'][0];
-        $this->by_object['department']      = $baseobject;
-        return(tabs::save(TRUE));
+        $ret              = tabs::save(TRUE);
+        $this->by_object['department']->save(true);
+        return($ret);
       }
     }else{
-      $this->dn= $new_dn;
-      $baseobject->dn= $this->dn;
+      $this->dn         = $new_dn;
+      $baseobject->dn   = $this->dn;
+      $ret              = tabs::save(TRUE);
+      $baseobject->save(true);
       $this->by_object['department']= $baseobject;
-      return(tabs::save(TRUE));
+      return($ret);
     }
   }
 }
