@@ -21,45 +21,43 @@
 class department extends plugin
 {
 	/* department attributes */
-	var $ou                       = "";
-	var $description              = "";
-	var $base                     = "";
-	var $st                       = "";
-	var $l                        = "";
-	var $postalAddress            = "";
-	var $businessCategory         = "";
-	var $telephoneNumber          = "";
-	var $facsimileTelephoneNumber = "";
-	var $orig_dn                  = "";
-	var $is_administrational_unit = false;
-	var $gosaUnitTag              = "";
+	var $ou= "";
+	var $description= "";
+	var $base= "";
+	var $st= "";
+	var $l= "";
+	var $postalAddress= "";
+	var $businessCategory= "";
+	var $telephoneNumber= "";
+	var $facsimileTelephoneNumber= "";
+	var $orig_dn= "";
+	var $is_administrational_unit= false;
+	var $gosaUnitTag= "";
+
+	var $rec_dst=false;	// Destination for recursive move
+	var $rec_src=false;	// Source for recursive move 
+	var $rec_cpy=false;	// Is recursive move requested ? 
 
 	/* Headpage attributes */
-	var $last_dep_sorting         = "invalid";
-	var $departments              = array();
+	var $last_dep_sorting= "invalid";
+	var $departments= array();
 
-  /* Used to indicate that a new tagging is required */
-  var $must_be_tagged           = false;
-  var $MustBeMoved              = "";
-  var $MoveDestination          = "";
-  var $MoveSource               = "";
-  var $MoveOu                   = "";
+  var $must_be_tagged = false;
 
 	/* attribute list for save action */
-	var $attributes               = array("ou", "description", "businessCategory", "st", 
-                                        "l", "postalAddress",	"telephoneNumber", 
-                                        "facsimileTelephoneNumber", "gosaUnitTag");
-	var $objectclasses            = array("top", "gosaDepartment", "organizationalUnit");
-
+	var $attributes= array("ou", "description", "businessCategory", "st", "l", "postalAddress",
+			"telephoneNumber", "facsimileTelephoneNumber", "gosaUnitTag");
+	var $objectclasses= array("top", "gosaDepartment", "organizationalUnit");
 
 	function department ($config, $dn)
 	{
+
 		plugin::plugin($config, $dn);
-		$this->is_account = TRUE;
-		$this->ui         = get_userinfo();
-		$this->dn         = $dn;
-		$this->orig_dn    = $dn;
-		$this->config     = $config;
+		$this->is_account= TRUE;
+		$this->ui= get_userinfo();
+		$this->dn= $dn;
+		$this->orig_dn= $dn;
+		$this->config= $config;
 
 		/* Set base */
 		if ($this->dn == "new"){
@@ -74,15 +72,15 @@ class department extends plugin
 		}
 
 		/* set permissions */
-		$acl      = get_permissions ($this->ui->dn, $this->ui->subtreeACL);
-		$this->acl= get_module_permission($acl, "department", $this->ui->dn);
+		$ui= get_userinfo();
+		$acl= get_permissions ($ui->dn, $ui->subtreeACL);
+		$this->acl= get_module_permission($acl, "department", $ui->dn);
 
 		/* Is administrational Unit? */
 		if ($dn != "new" && in_array_ics('gosaAdministrativeUnit', $this->attrs['objectClass'])){
 			$this->is_administrational_unit= true;
 		}
 	}
-
 
 	function execute()
 	{
@@ -104,13 +102,11 @@ class department extends plugin
 			}
 		}
 
-		/* BASE select dialog handling */
+		/* Dialog handling */
 		if(is_object($this->dialog)){
-  
-      /* save sub dialog vars */
+			/* Must be called before save_object */
 			$this->dialog->save_object();
 
-      /* Check if dialog was closed */
 			if($this->dialog->isClosed()){
 				$this->dialog = false;
 			}elseif($this->dialog->isSelected()){
@@ -129,7 +125,6 @@ class department extends plugin
 			$tmp	= array();	
 			foreach($bases as $dn=>$base){
 				$fixed = str_replace("/","\\",$this->dn);
-
 				/* Only attach departments which are not a subtree of this one */
 				if(!preg_match("/".$fixed."/",$dn)){
 					$tmp[$dn]=$base;
@@ -138,7 +133,6 @@ class department extends plugin
 		}
 		$smarty->assign("bases", $tmp);
 
-    /* Report class vars to smarty */
 		foreach ($this->attributes as $val){
 			$smarty->assign("$val", $this->$val);
 			$smarty->assign("$val"."ACL", chkacl($this->acl, "$val"));
@@ -153,14 +147,23 @@ class department extends plugin
 			$smarty->assign("unitTag", "");
 		}
 		$smarty->assign("unitTag"."ACL", chkacl($this->acl, "unitTag"));
+
 		return($smarty->fetch (get_template_path('generic.tpl', TRUE)));
 	}
 
+	function clear_fields()
+	{
+		$this->dn= "";
+		$this->base= "";
+		$this->acl= "#none#";
 
-  /* Remove department && all sub objects from ldap */
+		foreach ($this->attributes as $val){
+			$this->$val= "";
+		}
+	}
+
 	function remove_from_parent()
 	{
-    /* Remove the current department from ldap */
 		$ldap= $this->config->get_ldap_link();
 		$ldap->cd ($this->dn);
 		$ldap->recursive_remove();
@@ -168,6 +171,23 @@ class department extends plugin
 
 		/* Optionally execute a command after we're done */
 		$this->handle_post_events('remove');
+	}
+
+	function must_be_tagged()
+	{
+    if((isset($this->attrs['gosaUnitTag'][0])) && ($this->is_administrational_unit)){
+      $this->must_be_tagged = false;
+    }elseif((!isset($this->attrs['gosaUnitTag'][0])) && (!$this->is_administrational_unit)){
+      $this->must_be_tagged = false;
+    }else{
+      $this->must_be_tagged = true;
+    }
+		return $this->must_be_tagged;
+	}
+
+	function am_i_moved()
+	{
+		return $this->rec_cpy;
 	}
 
 
@@ -248,14 +268,9 @@ class department extends plugin
 
 		/* Add tag objects if needed */
 		if ($this->is_administrational_unit){
-
-      /* Add tagging objectClass if it is not available */
       if(!in_array_ics("gosaAdministrativeUnit",$this->objectclasses)){
   			$this->objectclasses[]= "gosaAdministrativeUnit";
       }
-
-  
-      /* If tag wasn't set right now */
 			if ($this->gosaUnitTag == ""){
 
 				/* It's unlikely, but check if already used... */
@@ -263,16 +278,15 @@ class department extends plugin
 				$ldap->cd($this->config->current['BASE']);
 				while ($try--){
 
-					/* Generate microtime stamp as tag, and check if this tag was already used somewhere */
+					/* Generate microtime stamp as tag */
 					list($usec, $sec)= explode(" ", microtime());
 					$time_stamp= preg_replace("/\./", "", $sec.$usec);
+
 					$ldap->search("(&(objectClass=gosaAdministrativeUnit)(gosaUnitTag=$time_stamp))",array("gosaUnitTag"));
 					if ($ldap->count() == 0){
 						break;
 					}
-			  }
-      
-        /* Last try, and all generated tag are already in use */	
+				}
 				if($try == 0) {
 					print_red(_("Fatal error: Can't find an unused tag to mark the administrative unit!"));
 					return;
@@ -280,8 +294,6 @@ class department extends plugin
 				$this->gosaUnitTag= preg_replace("/\./", "", $sec.$usec);
 			}
 		} else {
-
-      /* Set tag to "" if department isn't tagged */
 			$this->gosaUnitTag= "";
 		}
 
@@ -318,12 +330,7 @@ class department extends plugin
 			$ldap->add($this->attrs);
 			$this->handle_post_events('add');
 		}
-
-  	show_ldap_error($ldap->get_error(), _("Saving department failed"));
-
-    /* The parameter forces only to set must_be_tagged, and don't touch any objects 
-        This will be done later */
-    $this->tag_objects(true);
+		show_ldap_error($ldap->get_error(), _("Saving department failed"));
 
     /* Optionally execute a command after we're done */
 		$this->postcreate();
@@ -331,10 +338,27 @@ class department extends plugin
 	}
 
 
+  function ShowMoveFrame()
+  {
+    $smarty = get_smarty();
+    $smarty->assign("src","?plug=".$_GET['plug']."&PerformRecMove");
+    $smarty->assign("message","As soon as the move operation has finished, you can scroll down to end of the page and press the 'Continue' button to continue with the department management dialog.");
+    $display=  $smarty->fetch(get_template_path("dep_iframe.tpl",TRUE));
+    return($display);
+  }
+
+  function ShowTagFrame()
+  {
+    $smarty = get_smarty();
+    $smarty->assign("src","?plug=".$_GET['plug']."&TagDepartment");
+    $smarty->assign("message","As soon as the tag operation has finished, you can scroll down to end of the page and press the 'Continue' button to continue with the department management dialog.");
+    $display=  $smarty->fetch(get_template_path("dep_iframe.tpl",TRUE));
+    return($display);
+  }
+
 	/* Tag objects to have the gosaAdministrativeUnitTag */
 	function tag_objects($OnlySetTagFlag = false)
 	{
-    /* Skip output */
     if(!$OnlySetTagFlag){
       $smarty= get_smarty();
       echo "<!-- headers.tpl-->".$smarty->fetch(get_template_path('headers.tpl'));
@@ -342,19 +366,16 @@ class department extends plugin
       echo "<h3>".sprintf(_("Tagging '%s'."),"<i>".@LDAP::fix($this->dn)."</i>")."</h3>";
     }
 
-    /* Get all object that must be tagged, or the tag removed */ 
+		$add= $this->is_administrational_unit;
+		$len= strlen($this->dn);
 		$ldap= $this->config->get_ldap_link();
 		$ldap->cd($this->dn);
-		if ($this->is_administrational_unit){
-			$ldap->search('(!(&(objectClass=gosaAdministrativeUnitTag)(gosaUnitTag='.$this->gosaUnitTag.')))', array('dn'));
+		if ($add){
+			$ldap->search('(!(&(objectClass=gosaAdministrativeUnitTag)(gosaUnitTag='.
+								$this->gosaUnitTag.')))', array('dn'));
 		} else {
 			$ldap->search('objectClass=gosaAdministrativeUnitTag', array('dn'));
 		}
-
-    /* Get dn length, it is used to validate the fetched dns */
-		$len= strlen($this->dn);
-
-    /* Walk through all objects && verify if fetch object musst be touched */
 		while ($attrs= $ldap->fetch()){
 
 			/* Skip self */
@@ -365,7 +386,6 @@ class department extends plugin
 			/* Check for confilicting administrative units */
 			$fix= true;
 			foreach ($this->config->adepartments as $key => $tag){
-
 				/* This one is shorter than our dn, its not relevant... */
 				if ($len >= strlen($key)){
 					continue;
@@ -380,18 +400,13 @@ class department extends plugin
 
       /* Fix entry if needed */
       if ($fix){
-    
-        /* If OnlySetTagFlag is true, then only set must_be_tagged to true, and skip tagging. */
         if($OnlySetTagFlag){
           $this->must_be_tagged =true;
           return;
-        }else{
-  				$this->handle_object_tagging($attrs['dn'], $this->gosaUnitTag, TRUE );
         }
+				$this->handle_object_tagging($attrs['dn'], $this->gosaUnitTag, TRUE );
 			}
 		}
-    
-    /* Hide all output, if we only want to if we must tag */
     if(!$OnlySetTagFlag){
       echo '<p class="seperator">&nbsp;</p>';
       echo "<div style='width:100%;text-align:right;'><form name='form' method='post' action='?plug=".$_GET['plug']."' target='_parent'>
@@ -402,25 +417,40 @@ class department extends plugin
 
 
 	/* Move/Rename complete trees */
-	function recursive_move()
+	function recursive_move($src_dn, $dst_dn,$force = false)
 	{
-			/* Check if the destination entry exists */
-			$ldap= $this->config->get_ldap_link();
+    /* If force == false prepare to recursive move this object from src to dst 
+        on the next call. */
+		if(!$force){
+			$this->rec_cpy 	= true;
+			$this->rec_src	= $src_dn;
+			$this->rec_dst	= $dst_dn;
+		}else{
 
-      /* Get destination && source dn */
-			$src_dn = $this->MoveSource;
-			$dst_dn = $this->MoveDestination;
+      /* If this is called, but not wanted, abort */
+			if(!$this->rec_cpy){ 
+				return;
+			}
+
+			$src_dn = $this->rec_src;
+			$dst_dn = $this->rec_dst;
 
 			/* Print header to have styles included */
 			$smarty= get_smarty();
 			echo "<!-- headers.tpl-->".$smarty->fetch(get_template_path('headers.tpl'));
 			echo "<body style='background-image:none;margin:3px;color:black'>";
+
 			echo "<h3>".sprintf(_("Moving '%s' to '%s'"),"<i>".$src_dn."</i>","<i>".$dst_dn."</i>")."</h3>";
+
+
+			/* Check if the destination entry exists */
+			$ldap= $this->config->get_ldap_link();
 
 			/* Check if destination exists - abort */
 			$ldap->cat($dst_dn, array('dn'));
 			if ($ldap->fetch()){
-				trigger_error("Recursive_move $dst_dn already exists.",	E_USER_WARNING);
+				trigger_error("Recursive_move $dst_dn already exists.",
+						E_USER_WARNING);
 				echo sprintf("Recursive_move: '%s' already exists", $dst_dn)."<br>"; 
 				return (FALSE);
 			}
@@ -440,6 +470,7 @@ class department extends plugin
 
 			/* Copy objects from small to big indent levels by replacing src_dn by dst_dn */
 			foreach ($objects as $object => $len){
+
 
 				$src= str_replace("\\","\\\\",$object);
 				$dst= preg_replace("/".str_replace("\\","\\\\",$src_dn)."$/", "$dst_dn", $object);
@@ -462,37 +493,16 @@ class department extends plugin
 			$this->rec_cpy =false;
 
 			echo '<p class="seperator">&nbsp;</p>';
+
 			echo "<div style='width:100%;text-align:right;'><form name='form' method='post' action='?plug=".$_GET['plug']."' target='_parent'>
 				<br><input type='submit' name='back' value='"._("Continue")."'>
 				</form></div>";
 
 			echo "</body></html>";
+
 			return (TRUE);
+		}
 	}
-
-  
-  /* Return an iframe, that calls the recursive move function of departmentManagement */
-  function ShowMoveFrame()
-  {
-    $smarty = get_smarty();
-    $smarty->assign("src","?plug=".$_GET['plug']."&PerformRecMove");
-    $smarty->assign("message","As soon as the move operation has finished, you can scroll down to end of the page and press the 'Continue' button to continue with the department management dialog.");
-    $display=  $smarty->fetch(get_template_path("dep_iframe.tpl",TRUE));
-    return($display);
-  }
-
-
-  /* return an iframe, that will initiate the tagging process */
-  function ShowTagFrame()
-  {
-    $smarty = get_smarty();
-    $smarty->assign("src","?plug=".$_GET['plug']."&TagDepartment");
-    $smarty->assign("message","As soon as the tag operation has finished, you can scroll down to end of the page and press the 'Continue' button to continue with the department management dialog.");
-    $display=  $smarty->fetch(get_template_path("dep_iframe.tpl",TRUE));
-    return($display);
-  }
-
-
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
