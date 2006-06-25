@@ -170,7 +170,7 @@ msgid "Devices"
 msgstr "Servicios"
 
 #: contrib/gosa.conf:119 contrib/gosa.conf:139
-#: plugins/personal/environment/environment.tpl:171
+#: plugins/personal/environment/environment.tpl:173
 #: plugins/admin/systems/class_systemManagement.inc:767
 #: plugins/admin/ogroups/class_ogroupManagement.inc:381
 #: plugins/generic/references/class_reference.inc:52
@@ -224,7 +224,7 @@ msgstr "Exportar en XLS"
 
 #: contrib/gosa.conf:215 plugins/personal/mail/generic.tpl:113
 #: plugins/personal/environment/logonManagement.tpl:65
-#: plugins/addons/ldapmanager/contentimport.tpl:49
+#: plugins/addons/ldapmanager/contentimport.tpl:50
 #: plugins/addons/ldapmanager/contentcsv.tpl:109
 #: plugins/addons/ldapmanager/contentcsv.tpl:112
 #: plugins/admin/applications/generic.tpl:101
@@ -271,39 +271,39 @@ msgstr ""
 msgid "Packages"
 msgstr "Paquetes"
 
-#: contrib/gosa.conf:275
+#: contrib/gosa.conf:267
 msgid "{LOCATIONNAME}"
 msgstr "{LOCATIONNAME}"
 
-#: contrib/gosa.conf:293 plugins/admin/ogroups/class_phonequeue.inc:164
+#: contrib/gosa.conf:287 plugins/admin/ogroups/class_phonequeue.inc:164
 msgid "German"
 msgstr "Alemán"
 
-#: contrib/gosa.conf:294
+#: contrib/gosa.conf:288
 msgid "Russian"
 msgstr "Ruso"
 
-#: contrib/gosa.conf:295
+#: contrib/gosa.conf:289
 msgid "Spanish"
 msgstr "Español"
 
-#: contrib/gosa.conf:296
+#: contrib/gosa.conf:290
 msgid "French"
 msgstr "Francés"
 
-#: contrib/gosa.conf:297
+#: contrib/gosa.conf:291
 msgid "Dutch"
 msgstr "Holandés"
 
-#: contrib/gosa.conf:298
+#: contrib/gosa.conf:292
 msgid "English"
 msgstr "Inglés"
 
-#: contrib/gosa.conf:299
+#: contrib/gosa.conf:293
 msgid "Italian"
 msgstr "Italiano"
 
-#: contrib/gosa.conf:300
+#: contrib/gosa.conf:294
 msgid "Polish"
 msgstr "Polaco"
 
@@ -412,7 +412,7 @@ msgstr "Ha fallado borrar cuenta de nagios"
 #: plugins/admin/groups/class_groupManagement.inc:330
 #: plugins/admin/users/class_userManagement.inc:626
 #: plugins/admin/applications/class_applicationManagement.inc:350
-#: plugins/admin/departments/class_departmentManagement.inc:300
+#: plugins/admin/departments/class_departmentManagement.inc:303
 #: plugins/admin/systems/class_systemManagement.inc:478
 #: plugins/admin/ogroups/class_ogroupManagement.inc:332
 #: plugins/gofon/macro/class_gofonMacroManagement.inc:263
@@ -431,8 +431,8 @@ msgstr ""
 #: plugins/personal/environment/hotplugDialog.tpl:64
 #: plugins/personal/environment/selectPrinterDialog.tpl:61
 #: plugins/personal/environment/logonManagement.tpl:76
-#: plugins/personal/environment/hotplugDialogNew.tpl:39
 #: plugins/personal/environment/main.inc:106
+#: plugins/personal/environment/hotplugDialogNew.tpl:52
 #: plugins/personal/generic/password.tpl:19
 #: plugins/personal/generic/generic_picture.tpl:35
 #: plugins/personal/generic/generic_certs.tpl:78
@@ -470,7 +470,7 @@ msgstr ""
 #: plugins/admin/applications/remove.tpl:15
 #: plugins/admin/applications/class_applicationManagement.inc:356
 #: plugins/admin/departments/remove.tpl:16
-#: plugins/admin/departments/class_departmentManagement.inc:302
+#: plugins/admin/departments/class_departmentManagement.inc:305
 #: plugins/admin/systems/glpiSelectUser.tpl:51
 #: plugins/admin/systems/goKrbServer.tpl:21
 #: plugins/admin/systems/ServiceAddDialog.tpl:31
@@ -538,7 +538,7 @@ msgstr ""
 #: plugins/personal/nagios/main.inc:115 plugins/personal/mail/main.inc:115
 #: plugins/personal/posix/main.inc:122 plugins/personal/netatalk/main.inc:112
 #: plugins/personal/samba/main.inc:115
-#: plugins/personal/environment/environment.tpl:138
+#: plugins/personal/environment/environment.tpl:137
 #: plugins/personal/environment/main.inc:115
 #: plugins/personal/generic/main.inc:172
 #: plugins/personal/connectivity/main.inc:129
@@ -678,7 +678,7 @@ msgstr "Direcciones alternativas"
 #: plugins/personal/environment/selectPrinterDialog.tpl:60
 #: plugins/personal/environment/environment.tpl:119
 #: plugins/personal/environment/environment.tpl:136
-#: plugins/personal/environment/environment.tpl:180
+#: plugins/personal/environment/environment.tpl:182
 #: plugins/personal/environment/kioskManagement.tpl:14
 #: plugins/personal/connectivity/kolab.tpl:18
 #: plugins/personal/connectivity/class_kolabAccount.inc:203
@@ -752,10 +752,10 @@ msgstr "Añadir Cuenta Local"
 #: plugins/personal/posix/generic.tpl:74
 #: plugins/personal/posix/generic.tpl:104
 #: plugins/personal/samba/samba3.tpl:332
-#: plugins/personal/environment/class_environment.inc:606
-#: plugins/personal/environment/environment.tpl:137
-#: plugins/personal/environment/environment.tpl:165
-#: plugins/personal/environment/environment.tpl:181
+#: plugins/personal/environment/class_environment.inc:619
+#: plugins/personal/environment/environment.tpl:138
+#: plugins/personal/environment/environment.tpl:166
+#: plugins/personal/environment/environment.tpl:183
 #: plugins/personal/connectivity/kolab.tpl:20
 #: plugins/gofax/blocklists/generic.tpl:69
 #: plugins/gofax/blocklists/remove.tpl:14
@@ -1217,7 +1217,7 @@ msgstr ""
 #: plugins/personal/generic/main.inc:169
 #: plugins/gofax/faxreports/detail.tpl:67
 #: plugins/addons/ldapmanager/contentexportxls.tpl:69
-#: plugins/addons/ldapmanager/contentimport.tpl:44
+#: plugins/addons/ldapmanager/contentimport.tpl:45
 #: plugins/addons/ldapmanager/contentcsv.tpl:114
 #: plugins/addons/ldapmanager/contentexport.tpl:66
 #: plugins/admin/fai/faiNewBranch.tpl:50
@@ -2021,25 +2021,27 @@ msgstr ""
 msgid "Saving Samba account failed"
 msgstr ""
 
-#: plugins/personal/environment/class_hotplugDialog.inc:113
+#: plugins/personal/environment/class_hotplugDialog.inc:115
 msgid "Please specify a valid name. Only 0-9 a-Z is allowed."
 msgstr "Por favor especifique un nombre  valido: Solo se permiten 0-9 a-Z."
 
-#: plugins/personal/environment/class_hotplugDialog.inc:116
+#: plugins/personal/environment/class_hotplugDialog.inc:118
 msgid "Invalid character in description. Please specify a valid description."
 msgstr ""
 "Caracteres no validos en la descripción, por favor especifique una "
 "descripción valida."
 
-#: plugins/personal/environment/class_hotplugDialog.inc:119
+#: plugins/personal/environment/class_hotplugDialog.inc:121
+#: plugins/personal/environment/class_hotplugDialog.inc:124
+#: plugins/personal/environment/class_hotplugDialog.inc:127
 msgid "Please specify a valid id."
 msgstr "Por favor especifique un id valido."
 
-#: plugins/personal/environment/class_hotplugDialog.inc:125
+#: plugins/personal/environment/class_hotplugDialog.inc:133
 msgid "An Entry with this name already exists."
 msgstr "Ya existe una entrada con este 'Nombre'."
 
-#: plugins/personal/environment/class_hotplugDialog.inc:130
+#: plugins/personal/environment/class_hotplugDialog.inc:138
 msgid "Please select an entry or press cancel."
 msgstr "¡Por favor seleccione una entrada o presione cancelar."
 
@@ -2080,11 +2082,11 @@ msgstr ""
 "Expresiones regulares que concuerden con dispositivos de conexión en "
 "caliente (HotPlug)"
 
-#: plugins/personal/environment/class_environment.inc:185
+#: plugins/personal/environment/class_environment.inc:198
 msgid "auto"
 msgstr "automático"
 
-#: plugins/personal/environment/class_environment.inc:207
+#: plugins/personal/environment/class_environment.inc:220
 #: plugins/admin/systems/class_terminalService.inc:95
 #: plugins/admin/systems/class_workstationService.inc:88
 #, php-format
@@ -2093,32 +2095,32 @@ msgid ""
 "check the permission of the file '%s'."
 msgstr ""
 
-#: plugins/personal/environment/class_environment.inc:284
-#: plugins/personal/environment/class_environment.inc:321
+#: plugins/personal/environment/class_environment.inc:297
+#: plugins/personal/environment/class_environment.inc:334
 msgid "Remove environment extension"
 msgstr "Eliminar extensión de estado"
 
-#: plugins/personal/environment/class_environment.inc:285
-#: plugins/personal/environment/class_environment.inc:322
+#: plugins/personal/environment/class_environment.inc:298
+#: plugins/personal/environment/class_environment.inc:335
 msgid "Environment extension enabled. You can disable it by clicking below."
 msgstr ""
 "La extensión de estado está activada. Puede desactivarla pulsando aquí."
 
-#: plugins/personal/environment/class_environment.inc:294
-#: plugins/personal/environment/class_environment.inc:299
-#: plugins/personal/environment/class_environment.inc:327
-#: plugins/personal/environment/class_environment.inc:332
+#: plugins/personal/environment/class_environment.inc:307
+#: plugins/personal/environment/class_environment.inc:312
+#: plugins/personal/environment/class_environment.inc:340
+#: plugins/personal/environment/class_environment.inc:345
 msgid "Add environment extension"
 msgstr ""
 
-#: plugins/personal/environment/class_environment.inc:295
-#: plugins/personal/environment/class_environment.inc:328
+#: plugins/personal/environment/class_environment.inc:308
+#: plugins/personal/environment/class_environment.inc:341
 msgid "Environment extension disabled. You can enable it by clicking below."
 msgstr ""
 "La extensión de estado está desactivada. Puede activarla pulsando aquí."
 
-#: plugins/personal/environment/class_environment.inc:300
-#: plugins/personal/environment/class_environment.inc:333
+#: plugins/personal/environment/class_environment.inc:313
+#: plugins/personal/environment/class_environment.inc:346
 msgid ""
 "Environment extension disabled. You have to setup a posix account before you "
 "can enable this feature."
@@ -2126,76 +2128,76 @@ msgstr ""
 "La extensión de estado está desactivada. Debe crear una cuenta Posix antes "
 "de poder activarla."
 
-#: plugins/personal/environment/class_environment.inc:448
-#: plugins/personal/environment/class_environment.inc:753
+#: plugins/personal/environment/class_environment.inc:461
+#: plugins/personal/environment/class_environment.inc:770
 #: plugins/admin/systems/class_glpiDeviceManagement.inc:406
 msgid "None"
 msgstr "Ninguno"
 
-#: plugins/personal/environment/class_environment.inc:531
-#: plugins/personal/environment/class_environment.inc:542
+#: plugins/personal/environment/class_environment.inc:544
+#: plugins/personal/environment/class_environment.inc:555
 #: plugins/admin/systems/class_terminalStartup.inc:187
 #: plugins/admin/systems/class_workstationStartup.inc:613
 msgid "You must specify a valid mount point."
 msgstr "Por favor especifique un punto de montaje válido."
 
-#: plugins/personal/environment/class_environment.inc:593
-#: plugins/personal/environment/class_environment.inc:594
-#: plugins/personal/environment/class_environment.inc:602
-#: plugins/personal/environment/class_environment.inc:603
+#: plugins/personal/environment/class_environment.inc:606
+#: plugins/personal/environment/class_environment.inc:607
+#: plugins/personal/environment/class_environment.inc:615
+#: plugins/personal/environment/class_environment.inc:616
 msgid "Reset password hash"
 msgstr "Reiniciar hash de la contraseña"
 
-#: plugins/personal/environment/class_environment.inc:607
+#: plugins/personal/environment/class_environment.inc:620
 msgid "Delete share entry"
 msgstr "Eliminar entrada compartida"
 
-#: plugins/personal/environment/class_environment.inc:756
+#: plugins/personal/environment/class_environment.inc:773
 #, php-format
 msgid ""
 "The selected kiosk profile '%s' is no longer available, setting current "
 "profile to 'none'."
 msgstr ""
 
-#: plugins/personal/environment/class_environment.inc:808
+#: plugins/personal/environment/class_environment.inc:825
 msgid "Removing environment information failed"
 msgstr "Ha fallado al eliminar la extensión de estado"
 
-#: plugins/personal/environment/class_environment.inc:861
+#: plugins/personal/environment/class_environment.inc:878
 msgid "Please set a valid profile quota size."
 msgstr "Por favor especifique un tamaño de cuota del perfil valido"
 
-#: plugins/personal/environment/class_environment.inc:868
+#: plugins/personal/environment/class_environment.inc:885
 msgid ""
 "You need to setup a valid posix extension in order to enable evironment "
 "features."
 msgstr ""
 
-#: plugins/personal/environment/class_environment.inc:906
+#: plugins/personal/environment/class_environment.inc:923
 msgid "Can't save new kiosk profiles, possibly permission denied for folder"
 msgstr ""
 
-#: plugins/personal/environment/class_environment.inc:1000
+#: plugins/personal/environment/class_environment.inc:1017
 msgid "Error while writing printer"
 msgstr "¡Error mientras se guardaba la impresora"
 
-#: plugins/personal/environment/class_environment.inc:1070
+#: plugins/personal/environment/class_environment.inc:1087
 msgid "Error while writing printer settings"
 msgstr "¡Error mientras se guardaban los parámetros de la impresora"
 
-#: plugins/personal/environment/class_environment.inc:1139
+#: plugins/personal/environment/class_environment.inc:1157
 msgid "Adding environment information failed"
 msgstr "Ha fallado al añadir la información de estado"
 
-#: plugins/personal/environment/class_environment.inc:1152
+#: plugins/personal/environment/class_environment.inc:1170
 msgid "group share"
 msgstr "grupos compartidos"
 
-#: plugins/personal/environment/class_environment.inc:1184
+#: plugins/personal/environment/class_environment.inc:1202
 msgid "Administrator"
 msgstr "Administrador"
 
-#: plugins/personal/environment/class_environment.inc:1189
+#: plugins/personal/environment/class_environment.inc:1207
 msgid "Default printer"
 msgstr "Impresora por defecto"
 
@@ -2223,7 +2225,7 @@ msgstr ""
 
 #: plugins/personal/environment/environment.tpl:8
 #: plugins/personal/environment/environment.tpl:103
-#: plugins/personal/environment/environment.tpl:148
+#: plugins/personal/environment/environment.tpl:149
 msgid "Environment managment settings"
 msgstr "Parámetros de gestión de estado"
 
@@ -2326,33 +2328,33 @@ msgstr ""
 msgid "Logon script management"
 msgstr "Gestión del script de gestión"
 
-#: plugins/personal/environment/environment.tpl:151
+#: plugins/personal/environment/environment.tpl:152
 msgid "Hotplug devices"
 msgstr "Dispositivos de conexión en caliente (HotPlug)"
 
-#: plugins/personal/environment/environment.tpl:152
+#: plugins/personal/environment/environment.tpl:153
 msgid "Hotplug device settings"
 msgstr "Parámetros dispositivos de conexión en caliente (HotPlug)"
 
-#: plugins/personal/environment/environment.tpl:163
+#: plugins/personal/environment/environment.tpl:164
 #: plugins/admin/groups/class_divListGroup.inc:106
-#: plugins/gofon/macro/class_divListMacros.inc:83
+#: plugins/gofon/macro/class_divListMacros.inc:90
 msgid "New"
 msgstr "Nuevo"
 
-#: plugins/personal/environment/environment.tpl:164
+#: plugins/personal/environment/environment.tpl:165
 msgid "Existing"
 msgstr ""
 
-#: plugins/personal/environment/environment.tpl:172
+#: plugins/personal/environment/environment.tpl:174
 msgid "Printer settings"
 msgstr "Parámetros de impresora"
 
-#: plugins/personal/environment/environment.tpl:182
+#: plugins/personal/environment/environment.tpl:184
 msgid "Toggle admin"
 msgstr "Cambio de administrador"
 
-#: plugins/personal/environment/environment.tpl:183
+#: plugins/personal/environment/environment.tpl:185
 msgid "Toggle default"
 msgstr "Cambio por defecto"
 
@@ -2473,58 +2475,6 @@ msgstr ""
 msgid "Kiosk path '%s' is not accessible. Please check the permissions."
 msgstr ""
 
-#: plugins/personal/environment/hotplugDialogNew.tpl:1
-msgid "Create new hotplug entry"
-msgstr ""
-"Crear una nueva entrada en dispositivos de conexión en caliente (HotPlug)"
-
-#: plugins/personal/environment/hotplugDialogNew.tpl:8
-msgid "Create new hotplug device"
-msgstr "Crear un nuevo dispositivo de conexión en caliente (HotPlug)"
-
-#: plugins/personal/environment/hotplugDialogNew.tpl:10
-#: plugins/admin/systems/component.tpl:6
-msgid "Device name"
-msgstr "Nombre del dispositivo"
-
-#: plugins/personal/environment/hotplugDialogNew.tpl:28
-msgid "Device ID"
-msgstr "Identificador de dispositivo"
-
-#: plugins/personal/environment/hotplugDialogNew.tpl:38
-#: plugins/personal/generic/generic_picture.tpl:33
-#: plugins/personal/generic/generic_certs.tpl:76
-#: plugins/addons/addressbook/address_edit.tpl:233
-#: plugins/admin/fai/faiPartitionTableEntry.tpl:29
-#: plugins/admin/systems/goKrbServer.tpl:19
-#: plugins/admin/systems/goLdapServer.tpl:7
-#: plugins/admin/systems/goImapServer.tpl:94
-#: plugins/admin/systems/glpi_devices.tpl:760
-#: plugins/admin/systems/goCupsServer.tpl:6
-#: plugins/admin/systems/goSyslogServer.tpl:6
-#: plugins/admin/systems/goTerminalServer.tpl:17
-#: plugins/admin/systems/servRepository.tpl:64
-#: plugins/admin/systems/servkolab.tpl:203
-#: plugins/admin/systems/goNtpServer.tpl:22
-#: plugins/admin/systems/goShareServer.tpl:21
-#: plugins/admin/systems/snapshotdialog.tpl:48
-#: plugins/admin/systems/snapshotdialog.tpl:95
-#: plugins/admin/systems/servdnseditzone.tpl:119
-#: plugins/admin/systems/goFaxServer.tpl:16
-#: plugins/admin/systems/servdns.tpl:21 plugins/admin/systems/servnfs.tpl:120
-#: plugins/admin/systems/goLogDBServer.tpl:16
-#: plugins/admin/systems/goFonServer.tpl:24
-#: plugins/admin/systems/goMailServer.tpl:167
-#: plugins/admin/systems/goGlpiServer.tpl:24
-#: plugins/admin/systems/glpiAttachmentEdit.tpl:69
-#: plugins/admin/systems/glpiPrinterCartridgesEdit.tpl:74
-#: plugins/admin/systems/servDNSeditZoneEntries.tpl:20
-#: plugins/admin/systems/glpiManufacturerAdd.tpl:80
-#: include/class_MultiSelectWindow.inc:78
-#: ihtml/themes/default/copyPasteDialog.tpl:14
-msgid "Save"
-msgstr "Guardar"
-
 #: plugins/personal/environment/kioskManagement.tpl:1
 #: plugins/personal/environment/kioskManagement.tpl:5
 msgid "Kiosk profile management"
@@ -2552,6 +2502,65 @@ msgstr "Cerrar"
 #: plugins/personal/environment/main.inc:124
 msgid "User environment settings"
 msgstr "Parámetros de estado de usuarios"
+
+#: plugins/personal/environment/hotplugDialogNew.tpl:1
+msgid "Create new hotplug entry"
+msgstr ""
+"Crear una nueva entrada en dispositivos de conexión en caliente (HotPlug)"
+
+#: plugins/personal/environment/hotplugDialogNew.tpl:8
+msgid "Create new hotplug device"
+msgstr "Crear un nuevo dispositivo de conexión en caliente (HotPlug)"
+
+#: plugins/personal/environment/hotplugDialogNew.tpl:10
+#: plugins/admin/systems/component.tpl:6
+msgid "Device name"
+msgstr "Nombre del dispositivo"
+
+#: plugins/personal/environment/hotplugDialogNew.tpl:28
+#, fuzzy
+msgid "Vendor ID"
+msgstr "ID del Remitente"
+
+#: plugins/personal/environment/hotplugDialogNew.tpl:33
+msgid "Product ID"
+msgstr ""
+
+#: plugins/personal/environment/hotplugDialogNew.tpl:40
+msgid "Device ID"
+msgstr "Identificador de dispositivo"
+
+#: plugins/personal/environment/hotplugDialogNew.tpl:51
+#: plugins/personal/generic/generic_picture.tpl:33
+#: plugins/personal/generic/generic_certs.tpl:76
+#: plugins/addons/addressbook/address_edit.tpl:233
+#: plugins/admin/fai/faiPartitionTableEntry.tpl:29
+#: plugins/admin/systems/goKrbServer.tpl:19
+#: plugins/admin/systems/goLdapServer.tpl:7
+#: plugins/admin/systems/goImapServer.tpl:94
+#: plugins/admin/systems/glpi_devices.tpl:760
+#: plugins/admin/systems/goCupsServer.tpl:6
+#: plugins/admin/systems/goSyslogServer.tpl:6
+#: plugins/admin/systems/goTerminalServer.tpl:17
+#: plugins/admin/systems/servRepository.tpl:64
+#: plugins/admin/systems/servkolab.tpl:203
+#: plugins/admin/systems/goNtpServer.tpl:22
+#: plugins/admin/systems/goShareServer.tpl:21
+#: plugins/admin/systems/servdnseditzone.tpl:119
+#: plugins/admin/systems/goFaxServer.tpl:16
+#: plugins/admin/systems/servdns.tpl:21 plugins/admin/systems/servnfs.tpl:120
+#: plugins/admin/systems/goLogDBServer.tpl:16
+#: plugins/admin/systems/goFonServer.tpl:24
+#: plugins/admin/systems/goMailServer.tpl:167
+#: plugins/admin/systems/goGlpiServer.tpl:24
+#: plugins/admin/systems/glpiAttachmentEdit.tpl:69
+#: plugins/admin/systems/glpiPrinterCartridgesEdit.tpl:74
+#: plugins/admin/systems/servDNSeditZoneEntries.tpl:20
+#: plugins/admin/systems/glpiManufacturerAdd.tpl:80
+#: include/class_MultiSelectWindow.inc:78
+#: ihtml/themes/default/copyPasteDialog.tpl:14
+msgid "Save"
+msgstr "Guardar"
 
 #: plugins/personal/generic/password.tpl:2
 msgid ""
@@ -2676,9 +2685,9 @@ msgstr "Lenguaje preferido"
 #: plugins/admin/systems/class_baseSelectDialog.inc:44
 #: plugins/admin/ogroups/class_divListOGroup.inc:119
 #: plugins/admin/ogroups/generic.tpl:21
-#: plugins/gofon/macro/class_divListMacros.inc:85
+#: plugins/gofon/macro/class_divListMacros.inc:92
 #: plugins/gofon/macro/generic.tpl:20
-#: plugins/gofon/conference/class_divListConferences.inc:86
+#: plugins/gofon/conference/class_divListConferences.inc:93
 #: plugins/gofon/conference/generic.tpl:33
 msgid "Base"
 msgstr "Base"
@@ -2989,7 +2998,7 @@ msgstr "El campo 'Pagina web principal' contiene un URL no valida"
 #: plugins/personal/generic/class_user.inc:1028
 #: plugins/addons/addressbook/class_addressbook.inc:556
 #: plugins/addons/addressbook/class_addressbook.inc:584
-#: plugins/admin/departments/class_departmentGeneric.inc:244
+#: plugins/admin/departments/class_departmentGeneric.inc:251
 msgid "The field 'Name' contains invalid characters."
 msgstr "El campo 'Nombre' contiene caracteres no validos."
 
@@ -3003,13 +3012,13 @@ msgstr "El campo 'Sobrenombre' contiene caracteres no validos"
 #: plugins/personal/generic/class_user.inc:1011
 #: plugins/addons/addressbook/class_addressbook.inc:564
 #: plugins/addons/addressbook/class_addressbook.inc:567
-#: plugins/admin/departments/class_departmentGeneric.inc:247
+#: plugins/admin/departments/class_departmentGeneric.inc:254
 msgid "The field 'Phone' contains an invalid phone number."
 msgstr "El campo 'Teléfono' contiene un número de teléfono no valido."
 
 #: plugins/personal/generic/class_user.inc:1014
 #: plugins/addons/addressbook/class_addressbook.inc:570
-#: plugins/admin/departments/class_departmentGeneric.inc:250
+#: plugins/admin/departments/class_departmentGeneric.inc:257
 msgid "The field 'Fax' contains an invalid phone number."
 msgstr "El campo 'Fax' contiene un número de teléfono no valido."
 
@@ -3238,7 +3247,7 @@ msgid "GB"
 msgstr "Gb"
 
 #: plugins/personal/connectivity/class_proxyAccount.inc:80
-#: plugins/addons/mailqueue/class_mailqueue.inc:314
+#: plugins/addons/mailqueue/class_mailqueue.inc:323
 msgid "hour"
 msgstr "hora"
 
@@ -3557,7 +3566,7 @@ msgid "You have no permissions to create a blocklist on this 'Base'."
 msgstr "No tiene permisos para crear una lista de bloqueo en esta 'Base'."
 
 #: plugins/gofax/blocklists/class_blocklistManagement.inc:449
-#: plugins/admin/departments/class_departmentGeneric.inc:233
+#: plugins/admin/departments/class_departmentGeneric.inc:240
 msgid "Required field 'Name' is not set."
 msgstr "El campo requerido 'Nombre' no ha sido rellenado."
 
@@ -3774,9 +3783,9 @@ msgstr ""
 #: plugins/admin/ogroups/class_divListOGroup.inc:105
 #: plugins/admin/ogroups/class_divListOGroup.inc:121
 #: plugins/gofon/macro/class_divListMacros.inc:80
-#: plugins/gofon/macro/class_divListMacros.inc:87
+#: plugins/gofon/macro/class_divListMacros.inc:94
 #: plugins/gofon/conference/class_divListConferences.inc:81
-#: plugins/gofon/conference/class_divListConferences.inc:88
+#: plugins/gofon/conference/class_divListConferences.inc:95
 msgid "Submit"
 msgstr ""
 
@@ -3788,6 +3797,8 @@ msgstr ""
 #: plugins/admin/departments/class_divListDepartment.inc:80
 #: plugins/admin/systems/class_divListSystem.inc:98
 #: plugins/admin/ogroups/class_divListOGroup.inc:110
+#: plugins/gofon/macro/class_divListMacros.inc:85
+#: plugins/gofon/conference/class_divListConferences.inc:89
 msgid "Restore snapshopts of already deleted objects"
 msgstr ""
 
@@ -3799,6 +3810,8 @@ msgstr ""
 #: plugins/admin/departments/class_divListDepartment.inc:80
 #: plugins/admin/systems/class_divListSystem.inc:98
 #: plugins/admin/ogroups/class_divListOGroup.inc:110
+#: plugins/gofon/macro/class_divListMacros.inc:85
+#: plugins/gofon/conference/class_divListConferences.inc:89
 #, fuzzy
 msgid "Restore"
 msgstr "Reintentar"
@@ -3821,8 +3834,8 @@ msgstr "Nueva lista de bloqueo"
 #: plugins/admin/systems/class_divListSystem.inc:117
 #: plugins/admin/systems/class_glpiSelectUser.inc:169
 #: plugins/admin/ogroups/class_divListOGroup.inc:121
-#: plugins/gofon/macro/class_divListMacros.inc:87
-#: plugins/gofon/conference/class_divListConferences.inc:88
+#: plugins/gofon/macro/class_divListMacros.inc:94
+#: plugins/gofon/conference/class_divListConferences.inc:95
 msgid "Submit department"
 msgstr "Enviar departamentos"
 
@@ -3846,8 +3859,9 @@ msgstr "Enviar departamentos"
 #: plugins/admin/systems/glpiPrinterCartridgesEdit.tpl:43
 #: plugins/admin/systems/glpiPrinterCartridgesEdit.tpl:53
 #: plugins/admin/ogroups/class_divListOGroup.inc:156
-#: plugins/gofon/macro/class_divListMacros.inc:102
-#: plugins/gofon/conference/class_divListConferences.inc:103
+#: plugins/gofon/macro/class_divListMacros.inc:109
+#: plugins/gofon/macro/class_divListMacros.inc:123
+#: plugins/gofon/conference/class_divListConferences.inc:120
 msgid "edit"
 msgstr "Editar"
 
@@ -3868,9 +3882,10 @@ msgstr "Editar usuario"
 #: plugins/admin/departments/class_divListDepartment.inc:119
 #: plugins/admin/systems/class_divListSystem.inc:152
 #: plugins/admin/ogroups/class_divListOGroup.inc:158
-#: plugins/gofon/macro/class_divListMacros.inc:104
-#: plugins/gofon/conference/class_divListConferences.inc:105
-#: plugins/gofon/conference/class_divListConferences.inc:107
+#: plugins/gofon/macro/class_divListMacros.inc:111
+#: plugins/gofon/macro/class_divListMacros.inc:125
+#: plugins/gofon/conference/class_divListConferences.inc:122
+#: plugins/gofon/conference/class_divListConferences.inc:124
 msgid "delete"
 msgstr "borrar"
 
@@ -4527,8 +4542,8 @@ msgid "Creating new entry in"
 msgstr "Crear una nueva entrada en"
 
 #: plugins/addons/addressbook/class_addressbook.inc:513
-#: plugins/addons/mailqueue/class_mailqueue.inc:296
-#: plugins/addons/mailqueue/class_mailqueue.inc:361
+#: plugins/addons/mailqueue/class_mailqueue.inc:305
+#: plugins/addons/mailqueue/class_mailqueue.inc:370
 #: plugins/addons/logview/class_logview.inc:94
 #: plugins/addons/logview/class_logview.inc:111
 msgid "All"
@@ -4688,50 +4703,57 @@ msgid ""
 "Please check your 'gosa.conf', there is no 'MAILQUEUESCRIPTPATH' specified."
 msgstr ""
 
-#: plugins/addons/mailqueue/class_mailqueue.inc:86
-#: plugins/addons/mailqueue/class_mailqueue.inc:94
-#: plugins/addons/mailqueue/class_mailqueue.inc:113
-#: plugins/addons/mailqueue/class_mailqueue.inc:122
-#: plugins/addons/mailqueue/class_mailqueue.inc:177
-#: plugins/addons/mailqueue/class_mailqueue.inc:204
+#: plugins/addons/mailqueue/class_mailqueue.inc:85
+#: plugins/addons/mailqueue/class_mailqueue.inc:112
+#: plugins/addons/mailqueue/class_mailqueue.inc:171
+#: plugins/addons/mailqueue/class_mailqueue.inc:198
+#, fuzzy, php-format
+msgid ""
+"You do not have permission to execute the command '%s' on the mailqueue."
+msgstr "No tiene permisos para crear un usuario en esta 'Base'."
+
+#: plugins/addons/mailqueue/class_mailqueue.inc:93
+#: plugins/addons/mailqueue/class_mailqueue.inc:121
+#: plugins/addons/mailqueue/class_mailqueue.inc:181
+#: plugins/addons/mailqueue/class_mailqueue.inc:213
 #, php-format
 msgid "Please check your 'gosa.conf' the given '%s' can't be executed."
 msgstr ""
 
-#: plugins/addons/mailqueue/class_mailqueue.inc:216
+#: plugins/addons/mailqueue/class_mailqueue.inc:225
 msgid "There are no mail server specified."
 msgstr ""
 
-#: plugins/addons/mailqueue/class_mailqueue.inc:266
+#: plugins/addons/mailqueue/class_mailqueue.inc:275
 msgid "up"
 msgstr "Arriba"
 
-#: plugins/addons/mailqueue/class_mailqueue.inc:268
+#: plugins/addons/mailqueue/class_mailqueue.inc:277
 msgid "down"
 msgstr "Abajo"
 
-#: plugins/addons/mailqueue/class_mailqueue.inc:311
+#: plugins/addons/mailqueue/class_mailqueue.inc:320
 msgid "no limit"
 msgstr ""
 
-#: plugins/addons/mailqueue/class_mailqueue.inc:316
+#: plugins/addons/mailqueue/class_mailqueue.inc:325
 msgid "hours"
 msgstr "horas"
 
-#: plugins/addons/mailqueue/class_mailqueue.inc:362
+#: plugins/addons/mailqueue/class_mailqueue.inc:371
 msgid "Hold"
 msgstr ""
 
-#: plugins/addons/mailqueue/class_mailqueue.inc:363
+#: plugins/addons/mailqueue/class_mailqueue.inc:372
 msgid "Un hold"
 msgstr ""
 
-#: plugins/addons/mailqueue/class_mailqueue.inc:364
+#: plugins/addons/mailqueue/class_mailqueue.inc:373
 #: plugins/addons/mailqueue/contents.tpl:76
 msgid "Active"
 msgstr "Activo"
 
-#: plugins/addons/mailqueue/class_mailqueue.inc:365
+#: plugins/addons/mailqueue/class_mailqueue.inc:374
 msgid "Not active"
 msgstr ""
 
@@ -4957,14 +4979,20 @@ msgid "Import LDIF File"
 msgstr "Importar archivo LDIF"
 
 #: plugins/addons/ldapmanager/contentimport.tpl:24
-msgid "Modify existing attributes"
+#, fuzzy
+msgid "Modify existing objects, keep untouched attributes"
 msgstr "Modificar los atributos existentes"
 
-#: plugins/addons/ldapmanager/contentimport.tpl:33
-msgid "Overwrite existing entry"
-msgstr "Sobreescribir la entrada actual"
+#: plugins/addons/ldapmanager/contentimport.tpl:25
+msgid "Overwrite existing objects, all not listed attributes will be removed"
+msgstr ""
 
-#: plugins/addons/ldapmanager/contentimport.tpl:40
+#: plugins/addons/ldapmanager/contentimport.tpl:34
+#, fuzzy
+msgid "Remove existing entries first"
+msgstr "Ha fallado la eliminación de las entradas DNS"
+
+#: plugins/addons/ldapmanager/contentimport.tpl:41
 msgid "Import successful"
 msgstr "Importación correcta"
 
@@ -5181,7 +5209,7 @@ msgstr "Ha fallado la grabación del script FAI"
 #: plugins/admin/fai/tabsVariable.inc:34 plugins/admin/fai/tabsPackage.inc:33
 #: plugins/admin/fai/tabsProfile.inc:34 plugins/admin/fai/tabsScript.inc:34
 #: plugins/admin/fai/tabsTemplate.inc:34
-#: plugins/admin/departments/tabs_department.inc:31
+#: plugins/admin/departments/tabs_department.inc:30
 msgid "Try to move tree failed. Destination tree is subtree of source tree."
 msgstr ""
 
@@ -5244,9 +5272,11 @@ msgstr "El nombre especificado ya esta siendo usado"
 #: plugins/admin/fai/class_faiManagement.inc:392
 #: plugins/admin/fai/class_faiManagement.inc:552
 #: plugins/admin/fai/faiPackageNew.tpl:50 plugins/admin/users/template.tpl:48
-#: plugins/admin/departments/class_departmentGeneric.inc:410
-#: plugins/admin/departments/class_departmentGeneric.inc:495
+#: plugins/admin/departments/class_departmentGeneric.inc:413
+#: plugins/admin/departments/class_departmentGeneric.inc:498
 #: plugins/admin/systems/ServiceAddDialog.tpl:29
+#: plugins/admin/systems/snapshotdialog.tpl:48
+#: plugins/admin/systems/snapshotdialog.tpl:95
 #: plugins/admin/systems/SelectDeviceType.tpl:44
 #: ihtml/themes/default/setup_introduction.tpl:12
 #: ihtml/themes/default/setup_useradmin.tpl:41
@@ -6498,7 +6528,7 @@ msgstr "Copiar esta entrada"
 #: plugins/admin/applications/class_divListApplication.inc:160
 #: plugins/admin/departments/class_divListDepartment.inc:117
 #: plugins/admin/ogroups/class_divListOGroup.inc:156
-#: plugins/gofon/conference/class_divListConferences.inc:103
+#: plugins/gofon/conference/class_divListConferences.inc:120
 msgid "Edit this entry"
 msgstr "Editar esta entrada"
 
@@ -6506,8 +6536,8 @@ msgstr "Editar esta entrada"
 #: plugins/admin/applications/class_divListApplication.inc:162
 #: plugins/admin/departments/class_divListDepartment.inc:119
 #: plugins/admin/ogroups/class_divListOGroup.inc:158
-#: plugins/gofon/conference/class_divListConferences.inc:105
-#: plugins/gofon/conference/class_divListConferences.inc:107
+#: plugins/gofon/conference/class_divListConferences.inc:122
+#: plugins/gofon/conference/class_divListConferences.inc:124
 msgid "Delete this entry"
 msgstr "Borrar esta entrada"
 
@@ -6579,7 +6609,7 @@ msgid "Please select a valid mail server."
 msgstr "Por favor seleccione un servidor de correo valido."
 
 #: plugins/admin/groups/acl.tpl:4
-#: plugins/admin/departments/class_departmentGeneric.inc:476
+#: plugins/admin/departments/class_departmentGeneric.inc:479
 #: plugins/admin/systems/snapshotdialog.tpl:70 include/class_ldap.inc:455
 msgid "Object"
 msgstr "Objeto"
@@ -7387,20 +7417,20 @@ msgstr "Mantenimiento de Departamentos"
 msgid "Removing department failed"
 msgstr "Ha fallado la eliminación del departamento"
 
-#: plugins/admin/departments/class_departmentGeneric.inc:219
+#: plugins/admin/departments/class_departmentGeneric.inc:226
 msgid "You have no permissions to create a department on this 'Base'."
 msgstr "No tiene permisos para crear un departamento en esta 'Base'."
 
-#: plugins/admin/departments/class_departmentGeneric.inc:226
-#: plugins/admin/departments/class_departmentGeneric.inc:228
+#: plugins/admin/departments/class_departmentGeneric.inc:233
+#: plugins/admin/departments/class_departmentGeneric.inc:235
 msgid "Department with that 'Name' already exists."
 msgstr "Ya existe un Departamento con este 'Nombre'."
 
-#: plugins/admin/departments/class_departmentGeneric.inc:236
+#: plugins/admin/departments/class_departmentGeneric.inc:243
 msgid "Required field 'Description' is not set."
 msgstr "El campo requerido 'Descripción' no ha sido rellenado."
 
-#: plugins/admin/departments/class_departmentGeneric.inc:240
+#: plugins/admin/departments/class_departmentGeneric.inc:247
 #, php-format
 msgid ""
 "The field 'Name' contains the reserved word '%s'. Please choose another name."
@@ -7408,25 +7438,25 @@ msgstr ""
 "El campo 'Nombre' contiene la palabra reservada '%s'. Por favor elija otro "
 "nombre."
 
-#: plugins/admin/departments/class_departmentGeneric.inc:284
+#: plugins/admin/departments/class_departmentGeneric.inc:291
 msgid "Fatal error: Can't find an unused tag to mark the administrative unit!"
 msgstr ""
 
-#: plugins/admin/departments/class_departmentGeneric.inc:326
+#: plugins/admin/departments/class_departmentGeneric.inc:333
 msgid "Saving department failed"
 msgstr "Ha fallado la grabación del departamento"
 
-#: plugins/admin/departments/class_departmentGeneric.inc:363
+#: plugins/admin/departments/class_departmentGeneric.inc:366
 #, php-format
 msgid "Tagging '%s'."
 msgstr ""
 
-#: plugins/admin/departments/class_departmentGeneric.inc:440
+#: plugins/admin/departments/class_departmentGeneric.inc:443
 #, php-format
 msgid "Moving '%s' to '%s'"
 msgstr ""
 
-#: plugins/admin/departments/class_departmentGeneric.inc:479
+#: plugins/admin/departments/class_departmentGeneric.inc:482
 #, php-format
 msgid "FAILED to copy %s, aborting operation"
 msgstr ""
@@ -7448,7 +7478,7 @@ msgstr "Esta a punto de borrar todo el subárbol LDAP colocado bajo '%s'."
 msgid "You have no permission to remove this department."
 msgstr "No tiene permisos para eliminar este departamento."
 
-#: plugins/admin/departments/class_departmentManagement.inc:342
+#: plugins/admin/departments/class_departmentManagement.inc:345
 msgid ".."
 msgstr ""
 
@@ -7708,7 +7738,7 @@ msgid "Execution of '%s' failed!"
 msgstr "¡La ejecución de '%s' ha fallado!"
 
 #: plugins/admin/systems/class_servGeneric.inc:161
-#: plugins/admin/systems/class_workstationGeneric.inc:239
+#: plugins/admin/systems/class_workstationGeneric.inc:246
 #: plugins/admin/systems/class_terminalGeneric.inc:262
 #: plugins/admin/ogroups/class_termgroup.inc:204
 #: plugins/admin/ogroups/class_termgroup.inc:213
@@ -7716,7 +7746,7 @@ msgid "Switch off"
 msgstr "Apagar"
 
 #: plugins/admin/systems/class_servGeneric.inc:161
-#: plugins/admin/systems/class_workstationGeneric.inc:239
+#: plugins/admin/systems/class_workstationGeneric.inc:246
 #: plugins/admin/systems/class_terminalGeneric.inc:263
 #: plugins/admin/ogroups/class_termgroup.inc:205
 #: plugins/admin/ogroups/class_termgroup.inc:213
@@ -7724,37 +7754,37 @@ msgid "Reboot"
 msgstr "Reiniciar"
 
 #: plugins/admin/systems/class_servGeneric.inc:162
-#: plugins/admin/systems/class_workstationGeneric.inc:240
+#: plugins/admin/systems/class_workstationGeneric.inc:247
 #: plugins/admin/ogroups/class_termgroup.inc:206
 msgid "Instant update"
 msgstr "Actualización instantánea"
 
 #: plugins/admin/systems/class_servGeneric.inc:163
 #: plugins/admin/systems/class_servGeneric.inc:171
-#: plugins/admin/systems/class_workstationGeneric.inc:241
-#: plugins/admin/systems/class_workstationGeneric.inc:249
+#: plugins/admin/systems/class_workstationGeneric.inc:248
+#: plugins/admin/systems/class_workstationGeneric.inc:256
 #: plugins/admin/ogroups/class_termgroup.inc:207
 msgid "Scheduled update"
 msgstr "Actualización programada"
 
 #: plugins/admin/systems/class_servGeneric.inc:164
 #: plugins/admin/systems/class_servGeneric.inc:170
-#: plugins/admin/systems/class_workstationGeneric.inc:242
-#: plugins/admin/systems/class_workstationGeneric.inc:248
+#: plugins/admin/systems/class_workstationGeneric.inc:249
+#: plugins/admin/systems/class_workstationGeneric.inc:255
 #: plugins/admin/ogroups/class_termgroup.inc:208
 msgid "Reinstall"
 msgstr ""
 
 #: plugins/admin/systems/class_servGeneric.inc:165
-#: plugins/admin/systems/class_workstationGeneric.inc:243
+#: plugins/admin/systems/class_workstationGeneric.inc:250
 #: plugins/admin/ogroups/class_termgroup.inc:209
 msgid "Rescan hardware"
 msgstr "Buscar hardware"
 
 #: plugins/admin/systems/class_servGeneric.inc:166
 #: plugins/admin/systems/class_servGeneric.inc:172
-#: plugins/admin/systems/class_workstationGeneric.inc:244
-#: plugins/admin/systems/class_workstationGeneric.inc:250
+#: plugins/admin/systems/class_workstationGeneric.inc:251
+#: plugins/admin/systems/class_workstationGeneric.inc:257
 #: plugins/admin/systems/class_terminalGeneric.inc:264
 #: plugins/admin/systems/class_terminalGeneric.inc:268
 #: plugins/admin/ogroups/class_termgroup.inc:40
@@ -7763,8 +7793,8 @@ msgstr "Testeo de memoria"
 
 #: plugins/admin/systems/class_servGeneric.inc:167
 #: plugins/admin/systems/class_servGeneric.inc:173
-#: plugins/admin/systems/class_workstationGeneric.inc:245
-#: plugins/admin/systems/class_workstationGeneric.inc:251
+#: plugins/admin/systems/class_workstationGeneric.inc:252
+#: plugins/admin/systems/class_workstationGeneric.inc:258
 #: plugins/admin/systems/class_terminalGeneric.inc:265
 #: plugins/admin/systems/class_terminalGeneric.inc:269
 #: plugins/admin/ogroups/class_termgroup.inc:41
@@ -7772,7 +7802,7 @@ msgid "System analysis"
 msgstr "Análisis del sistema"
 
 #: plugins/admin/systems/class_servGeneric.inc:169
-#: plugins/admin/systems/class_workstationGeneric.inc:247
+#: plugins/admin/systems/class_workstationGeneric.inc:254
 #: plugins/admin/systems/class_terminalGeneric.inc:267
 #: plugins/admin/ogroups/class_termgroup.inc:213
 msgid "Wake up"
@@ -7791,8 +7821,8 @@ msgid "You have no permissions to create a server on this 'Base'."
 msgstr "No tiene permisos para crear un servidor en esta 'Base'."
 
 #: plugins/admin/systems/class_servGeneric.inc:242
-#: plugins/admin/systems/class_workstationGeneric.inc:347
-#: plugins/admin/systems/class_terminalGeneric.inc:386
+#: plugins/admin/systems/class_workstationGeneric.inc:361
+#: plugins/admin/systems/class_terminalGeneric.inc:391
 #: plugins/admin/systems/class_winGeneric.inc:174
 #: plugins/admin/systems/class_componentGeneric.inc:165
 #: plugins/admin/systems/class_printGeneric.inc:618
@@ -7904,10 +7934,6 @@ msgid ""
 "entries '%s'"
 msgstr ""
 
-#: plugins/admin/systems/class_servDNS.inc:267
-msgid "Removing DNS service failed"
-msgstr "Ha fallado la eliminación del servicio DNS"
-
 #: plugins/admin/systems/class_servDNS.inc:288
 msgid "Updating DNS service failed"
 msgstr "Ha fallado la actualización del servicio DNS"
@@ -7920,7 +7946,7 @@ msgstr "Ha fallado la eliminación de las entradas DNS"
 msgid "Saving DNS entries failed"
 msgstr "Ha fallado la grabación de las entradas DNS"
 
-#: plugins/admin/systems/class_servDNS.inc:356
+#: plugins/admin/systems/class_servDNS.inc:357
 #, fuzzy
 msgid "DNS service"
 msgstr "Añadir servicio DNS"
@@ -9182,7 +9208,7 @@ msgstr "Mostrar dispositivos que concuerden con"
 msgid "Regular expression for matching device names"
 msgstr "Expresiones regulares que concuerden con nombres de dispositivos"
 
-#: plugins/admin/systems/class_SnapShotDialog.inc:78
+#: plugins/admin/systems/class_SnapShotDialog.inc:79
 #, fuzzy
 msgid "Please specify a valid description for this snapshot."
 msgstr "Por favor especifique un nombre de adjunto valido."
@@ -9509,26 +9535,26 @@ msgstr "Equipos/Redes que no tienen permisos para conectar"
 msgid "MSN"
 msgstr ""
 
-#: plugins/admin/systems/class_servService.inc:320
+#: plugins/admin/systems/class_servService.inc:321
 #: plugins/admin/systems/class_goTerminalServer.inc:139
 msgid "Terminal server, must have fontpath specified."
 msgstr ""
 
-#: plugins/admin/systems/class_servService.inc:379
+#: plugins/admin/systems/class_servService.inc:380
 msgid "Saving server service object failed"
 msgstr "Ha fallado la grabación del objeto de servicio de servidor"
 
-#: plugins/admin/systems/class_servService.inc:410
+#: plugins/admin/systems/class_servService.inc:411
 #: plugins/admin/systems/class_goShareServer.inc:287
 msgid "Creating mount container failed"
 msgstr "Ha fallado la creación del contenedor de montaje"
 
-#: plugins/admin/systems/class_servService.inc:424
+#: plugins/admin/systems/class_servService.inc:425
 #: plugins/admin/systems/class_goShareServer.inc:301
 msgid "Removing mount container failed"
 msgstr "Ha fallado la eliminación del contenedor de montaje"
 
-#: plugins/admin/systems/class_servService.inc:436
+#: plugins/admin/systems/class_servService.inc:437
 #: plugins/admin/systems/class_goShareServer.inc:313
 msgid "Saving mount container failed"
 msgstr "Ha fallado la grabación del contenedor de montaje"
@@ -9614,30 +9640,30 @@ msgstr "Registros de zona global"
 msgid "This 'dn' has no workstation features."
 msgstr "Esta 'dn' no tiene características de estación de trabajo."
 
-#: plugins/admin/systems/class_workstationGeneric.inc:279
+#: plugins/admin/systems/class_workstationGeneric.inc:293
 msgid "Removing workstation failed"
 msgstr "Ha fallado la eliminación de la estación de trabajo"
 
-#: plugins/admin/systems/class_workstationGeneric.inc:330
+#: plugins/admin/systems/class_workstationGeneric.inc:344
 #: plugins/admin/ogroups/class_termgroup.inc:106
 msgid "You have no permissions to create a workstation on this 'Base'."
 msgstr "No tiene permisos para crear una estación de trabajo en esta 'Base'."
 
-#: plugins/admin/systems/class_workstationGeneric.inc:334
+#: plugins/admin/systems/class_workstationGeneric.inc:348
 msgid "The required field 'Workstation name' is not set."
 msgstr ""
 " El campo requerido 'Nombre de la estación de trabajo' no ha sido rellenado."
 
-#: plugins/admin/systems/class_workstationGeneric.inc:357
-#: plugins/admin/systems/class_terminalGeneric.inc:396
+#: plugins/admin/systems/class_workstationGeneric.inc:371
+#: plugins/admin/systems/class_terminalGeneric.inc:401
 msgid ""
 "There must be at least one NTP server selected, or the inherit mode "
 "activated."
 msgstr ""
 
-#: plugins/admin/systems/class_workstationGeneric.inc:424
-#: plugins/admin/systems/class_workstationGeneric.inc:442
-#: plugins/admin/ogroups/class_termgroup.inc:290
+#: plugins/admin/systems/class_workstationGeneric.inc:438
+#: plugins/admin/systems/class_workstationGeneric.inc:456
+#: plugins/admin/ogroups/class_termgroup.inc:298
 msgid "Saving workstation failed"
 msgstr "Ha fallado la grabación de la estación de trabajo"
 
@@ -10125,19 +10151,19 @@ msgstr "No se ha encontrado ninguna definición de 'REBOOTCMD' en 'gosa.conf'"
 msgid "No HALTCMD definition found in your gosa.conf"
 msgstr "No se ha encontrado ninguna definición de 'HALTCMD' en 'gosa.conf'"
 
-#: plugins/admin/systems/class_terminalGeneric.inc:314
+#: plugins/admin/systems/class_terminalGeneric.inc:319
 msgid "Removing terminal failed"
 msgstr "Ha fallado la eliminación del terminal"
 
-#: plugins/admin/systems/class_terminalGeneric.inc:369
+#: plugins/admin/systems/class_terminalGeneric.inc:374
 msgid "You have no permissions to create a terminal on this 'Base'."
 msgstr "No tiene permisos para crear un terminal en esta 'Base'."
 
-#: plugins/admin/systems/class_terminalGeneric.inc:373
+#: plugins/admin/systems/class_terminalGeneric.inc:378
 msgid "The required field 'Terminal name' is not set."
 msgstr " El campo requerido 'Nombre del terminal' no ha sido rellenado."
 
-#: plugins/admin/systems/class_terminalGeneric.inc:471
+#: plugins/admin/systems/class_terminalGeneric.inc:476
 msgid "Saving terminal failed"
 msgstr "Ha fallado la grabación del terminal"
 
@@ -11213,12 +11239,12 @@ msgid "This 'dn' has no phone features."
 msgstr "Esta 'dn' no tiene características de teléfono."
 
 #: plugins/admin/systems/class_phoneGeneric.inc:203
-#: plugins/gofon/macro/class_divListMacros.inc:109
+#: plugins/gofon/macro/class_divListMacros.inc:116
 msgid "yes"
 msgstr "si"
 
 #: plugins/admin/systems/class_phoneGeneric.inc:203
-#: plugins/gofon/macro/class_divListMacros.inc:110
+#: plugins/gofon/macro/class_divListMacros.inc:117
 msgid "no"
 msgstr "no"
 
@@ -11939,32 +11965,34 @@ msgstr "Variable"
 msgid "Regular expression for matching macro names"
 msgstr "Expresión regular que concuerde con nombres de grupos"
 
-#: plugins/gofon/macro/class_divListMacros.inc:83
+#: plugins/gofon/macro/class_divListMacros.inc:90
 #, fuzzy
 msgid "Create new phone macro"
 msgstr "Crear cuenta telefónica"
 
-#: plugins/gofon/macro/class_divListMacros.inc:103
+#: plugins/gofon/macro/class_divListMacros.inc:110
+#: plugins/gofon/macro/class_divListMacros.inc:124
 #, fuzzy
 msgid "Edit macro"
 msgstr "Editar recurso compartido"
 
-#: plugins/gofon/macro/class_divListMacros.inc:105
+#: plugins/gofon/macro/class_divListMacros.inc:112
+#: plugins/gofon/macro/class_divListMacros.inc:126
 #, fuzzy
 msgid "Delete macro"
 msgstr "Borrar usuario"
 
-#: plugins/gofon/macro/class_divListMacros.inc:108
+#: plugins/gofon/macro/class_divListMacros.inc:115
 #, fuzzy
 msgid "Macro"
 msgstr "Nombre de la maquina"
 
-#: plugins/gofon/macro/class_divListMacros.inc:109
+#: plugins/gofon/macro/class_divListMacros.inc:116
 #, fuzzy
 msgid "visible"
 msgstr "Visible Publicamente"
 
-#: plugins/gofon/macro/class_divListMacros.inc:110
+#: plugins/gofon/macro/class_divListMacros.inc:117
 #, fuzzy
 msgid "invisible"
 msgstr "Visible Publicamente"
@@ -12350,7 +12378,7 @@ msgstr "Crear una nueva entrada en"
 msgid "New conference"
 msgstr "Número de teléfono"
 
-#: plugins/gofon/conference/class_divListConferences.inc:139
+#: plugins/gofon/conference/class_divListConferences.inc:149
 #, fuzzy
 msgid "Conference"
 msgstr "Referencias"
@@ -12522,53 +12550,53 @@ msgstr ""
 "de los valores de la configuración del correo no serán guardados en el "
 "servidor"
 
-#: include/class_mail-methods-cyrus.inc:127
+#: include/class_mail-methods-cyrus.inc:129
 #, php-format
 msgid "Can't create IMAP mailbox. Server says '%s'."
 msgstr ""
 "No se pueden crear carpetas de correo IMAP. El error del servidor es: '%s'"
 
-#: include/class_mail-methods-cyrus.inc:146
+#: include/class_mail-methods-cyrus.inc:148
 #, php-format
 msgid "Can't write IMAP quota. Server says '%s'."
 msgstr "No se puede activar una cuota IMAP. El error del servidor es: '%s'"
 
-#: include/class_mail-methods-cyrus.inc:172
+#: include/class_mail-methods-cyrus.inc:174
 #, fuzzy
 msgid "Warning: imap_getacl is not implemented, can't remove acl informations."
 msgstr ""
 "Aviso: imap_getacl no ha sido implementado, no se modificara información "
 "sobre las listas de acceso."
 
-#: include/class_mail-methods-cyrus.inc:190
+#: include/class_mail-methods-cyrus.inc:192
 msgid "Warning: imap_getacl is not available, can't get imap permissions!"
 msgstr ""
 "Aviso: no esta disponible imap_getacl, ¡no se puede acceder a los permisos "
 "IMAP!"
 
-#: include/class_mail-methods-cyrus.inc:212
+#: include/class_mail-methods-cyrus.inc:214
 #, php-format
 msgid "Can't remove IMAP mailbox. Server says '%s'."
 msgstr ""
 "No se puede eliminar la carpeta de correo IMAP. El error del servidor es: '%"
 "s'"
 
-#: include/class_mail-methods-cyrus.inc:240
+#: include/class_mail-methods-cyrus.inc:242
 #, php-format
 msgid "Can't log into SIEVE server. Server says '%s'."
 msgstr "No se puede conectar al servidor SIEVE. El error del servidor es: '%s'"
 
-#: include/class_mail-methods-cyrus.inc:253
+#: include/class_mail-methods-cyrus.inc:255
 #, php-format
 msgid "Can't get sieve script. Server says '%s'."
 msgstr "No puedo ejecutar un 'script' SIEVE. El error del servidor es: '%s'"
 
-#: include/class_mail-methods-cyrus.inc:324
+#: include/class_mail-methods-cyrus.inc:326
 #, php-format
 msgid "Can't send sieve script. Server says '%s'."
 msgstr "No puedo subir un 'script' SIEVE. El error del servidor es: '%s'"
 
-#: include/class_mail-methods-cyrus.inc:328
+#: include/class_mail-methods-cyrus.inc:330
 #, php-format
 msgid "Can't activate GOsa sieve script. Server says '%s'."
 msgstr ""
@@ -12631,21 +12659,31 @@ msgstr ""
 msgid "Removing tag from object '%s'"
 msgstr ""
 
-#: include/class_plugin.inc:1008 include/class_plugin.inc:1098
-#: include/class_plugin.inc:1154 include/class_plugin.inc:1220
+#: include/class_plugin.inc:1025 include/class_plugin.inc:1149
+#: include/class_plugin.inc:1205 include/class_plugin.inc:1269
 #, fuzzy
 msgid "Snapshot failed."
 msgstr "Ha fallado la grabación del nombre de teléfono"
 
-#: include/class_plugin.inc:1054 include/class_plugin.inc:1055
+#: include/class_plugin.inc:1072 include/class_plugin.inc:1073
 msgid "Create snapshot failed."
 msgstr ""
 
-#: include/class_plugin.inc:1086
-msgid "Please specify the attribute SNAPSHOT_BASE in your gosa.conf."
+#: include/class_plugin.inc:1105
+#, php-format
+msgid ""
+"The snapshot functionality is enabled, but the required variable '%s' is not "
+"configured in your gosa.conf."
 msgstr ""
 
-#: include/class_plugin.inc:1235
+#: include/class_plugin.inc:1117
+#, php-format
+msgid ""
+"The snapshot functionality is enabled, but the required variable(s) '%s' is "
+"not configured in your gosa.conf."
+msgstr ""
+
+#: include/class_plugin.inc:1283
 #, fuzzy
 msgid "Restore snapshot failed."
 msgstr "Ha fallado la eliminación del teléfono"
@@ -13602,7 +13640,7 @@ msgstr ""
 "NO se puede conectar a LDAP. Por favor, contacte con su administrador de "
 "sistemas."
 
-#: include/class_config.inc:458
+#: include/class_config.inc:461
 msgid "SID and/or RIDBASE missing in your configuration!"
 msgstr "SID y/o RIDBASE no se encuentran en su configuración."
 
@@ -13660,7 +13698,7 @@ msgstr ""
 "Hay un error trantando de conectarse al servidor LDAP. El error del servidor "
 "es: '%s'"
 
-#: include/class_ldap.inc:969
+#: include/class_ldap.inc:995
 #, php-format
 msgid ""
 "This is not a valid DN: '%s'. A block for import should begin with 'dn: ...' "
@@ -13669,19 +13707,14 @@ msgstr ""
 "El DN: '%s' no es válido, Un bloque importado debería comenzar por 'dn:...' "
 "en la linea %s"
 
-#: include/class_ldap.inc:982
-#, php-format
-msgid "The dn: '%s' (from line %s) already exists in the LDAP database."
-msgstr "El DN: '%s' (de la linea %s) ya existe en la base de datos LDAP."
-
-#: include/class_ldap.inc:998
+#: include/class_ldap.inc:1024
 #, php-format
 msgid "Error while importing dn: '%s', please check your LDIF from line %s on!"
 msgstr ""
 "Ha habido un error mientras se importaba el dn: '%s', ¡pro favor compruebe "
 "el LDIF desde la linea %s en adelante!"
 
-#: include/class_ldap.inc:1078
+#: include/class_ldap.inc:1146
 #, fuzzy
 msgid "Ldap import failed"
 msgstr "Ha fallado la grabación de la impresora"
@@ -14408,6 +14441,15 @@ msgstr "mujer"
 #: ihtml/themes/default/setup_step4.tpl:115
 msgid "Check"
 msgstr "Comprobación"
+
+#~ msgid "Overwrite existing entry"
+#~ msgstr "Sobreescribir la entrada actual"
+
+#~ msgid "Removing DNS service failed"
+#~ msgstr "Ha fallado la eliminación del servicio DNS"
+
+#~ msgid "The dn: '%s' (from line %s) already exists in the LDAP database."
+#~ msgstr "El DN: '%s' (de la linea %s) ya existe en la base de datos LDAP."
 
 #~ msgid "Databases"
 #~ msgstr "Bases de datos"
