@@ -93,9 +93,9 @@ class config  {
 
     /* yes/no to true/false and upper case TRUE to true and so on*/
     foreach($attrs as $name => $value){
-      if((preg_match("/^yes$/i",$value)) || (preg_match("/^true$/i",$value))){
+      if(preg_match("/(true|yes)/i",$value)){
         $attrs[$name] = "true";
-      }elseif((preg_match("/^no$/i",$value)) || (preg_match("/^false$/i",$value))){
+      }elseif(preg_match("/(false|no)/i",$value)){
         $attrs[$name] = "false";
       } 
     }
