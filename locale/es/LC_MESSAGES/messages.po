@@ -26,9 +26,9 @@ msgstr "Agregados"
 
 #: contrib/gosa.conf:76 contrib/gosa.conf:90 contrib/gosa.conf:99
 #: contrib/gosa.conf:105 contrib/gosa.conf:110 contrib/gosa.conf:116
-#: contrib/gosa.conf:125 contrib/gosa.conf:136 contrib/gosa.conf:146
-#: contrib/gosa.conf:151 contrib/gosa.conf:175 contrib/gosa.conf:180
-#: contrib/gosa.conf:185 contrib/gosa.conf:190
+#: contrib/gosa.conf:125 contrib/gosa.conf:134 contrib/gosa.conf:144
+#: contrib/gosa.conf:149 contrib/gosa.conf:172 contrib/gosa.conf:177
+#: contrib/gosa.conf:182 contrib/gosa.conf:187
 #: plugins/personal/mail/generic.tpl:4 plugins/personal/posix/generic.tpl:4
 #: plugins/personal/samba/samba2.tpl:6 plugins/personal/samba/samba3.tpl:6
 #: plugins/personal/generic/class_user.inc:16
@@ -62,32 +62,32 @@ msgstr "Unix"
 
 #: contrib/gosa.conf:78 contrib/gosa.conf:91
 #: plugins/personal/environment/class_environment.inc:12
-#: plugins/admin/groups/class_divListGroup.inc:144
-#: plugins/admin/users/class_divListUsers.inc:157
+#: plugins/admin/groups/class_divListGroup.inc:156
+#: plugins/admin/users/class_divListUsers.inc:169
 msgid "Environment"
 msgstr "Entorno"
 
 #: contrib/gosa.conf:79 contrib/gosa.conf:93
 #: plugins/personal/mail/class_mailAccount.inc:22
-#: plugins/admin/groups/class_divListGroup.inc:136
-#: plugins/admin/users/class_divListUsers.inc:159
+#: plugins/admin/groups/class_divListGroup.inc:148
+#: plugins/admin/users/class_divListUsers.inc:171
 #: plugins/admin/ogroups/tabs_ogroups.inc:75
 #: plugins/admin/ogroups/tabs_ogroups.inc:178
-#: plugins/admin/ogroups/class_divListOGroup.inc:141
+#: plugins/admin/ogroups/class_divListOGroup.inc:147
 #: plugins/generic/references/class_reference.inc:24
 msgid "Mail"
 msgstr "Correo Electrónico"
 
 #: contrib/gosa.conf:80 plugins/personal/samba/class_sambaAccount.inc:24
-#: plugins/admin/groups/class_divListGroup.inc:138
-#: plugins/admin/users/class_divListUsers.inc:165
+#: plugins/admin/groups/class_divListGroup.inc:150
+#: plugins/admin/users/class_divListUsers.inc:177
 #: plugins/generic/references/class_reference.inc:26
 #: plugins/generic/references/class_reference.inc:28
 msgid "Samba"
 msgstr "Samba"
 
 #: contrib/gosa.conf:81 plugins/personal/netatalk/class_netatalk.inc:36
-#: plugins/admin/users/class_divListUsers.inc:167
+#: plugins/admin/users/class_divListUsers.inc:179
 msgid "Netatalk"
 msgstr ""
 
@@ -101,7 +101,7 @@ msgstr "Conectividad"
 #: plugins/gofax/faxaccount/paste_generic.tpl:8
 #: plugins/gofax/faxaccount/generic.tpl:10
 #: plugins/addons/addressbook/contents.tpl:14
-#: plugins/admin/users/class_divListUsers.inc:163
+#: plugins/admin/users/class_divListUsers.inc:175
 #: plugins/admin/departments/generic.tpl:67
 #: plugins/admin/systems/glpiManufacturerAdd.tpl:39 html/getxls.php:174
 #: html/getxls.php:236
@@ -115,8 +115,8 @@ msgstr "Fax"
 #: plugins/addons/addressbook/contents.tpl:14
 #: plugins/addons/addressbook/address_info.tpl:37
 #: plugins/addons/addressbook/address_info.tpl:85
-#: plugins/admin/groups/class_divListGroup.inc:142
-#: plugins/admin/users/class_divListUsers.inc:161
+#: plugins/admin/groups/class_divListGroup.inc:154
+#: plugins/admin/users/class_divListUsers.inc:173
 #: plugins/admin/departments/generic.tpl:63
 #: plugins/admin/systems/chooser.tpl:12
 #: plugins/admin/systems/class_systemManagement.inc:758
@@ -132,9 +132,9 @@ msgstr ""
 
 #: contrib/gosa.conf:86 contrib/gosa.conf:95 contrib/gosa.conf:101
 #: contrib/gosa.conf:106 contrib/gosa.conf:112 contrib/gosa.conf:121
-#: contrib/gosa.conf:132 contrib/gosa.conf:142 contrib/gosa.conf:147
-#: contrib/gosa.conf:152 contrib/gosa.conf:176 contrib/gosa.conf:181
-#: contrib/gosa.conf:186 contrib/gosa.conf:191
+#: contrib/gosa.conf:130 contrib/gosa.conf:140 contrib/gosa.conf:145
+#: contrib/gosa.conf:150 contrib/gosa.conf:173 contrib/gosa.conf:178
+#: contrib/gosa.conf:183 contrib/gosa.conf:188
 msgid "References"
 msgstr "Referencias"
 
@@ -159,17 +159,17 @@ msgstr "Opciones"
 msgid "Parameter"
 msgstr "Parámetro"
 
-#: contrib/gosa.conf:117 contrib/gosa.conf:126 contrib/gosa.conf:137
+#: contrib/gosa.conf:117 contrib/gosa.conf:126 contrib/gosa.conf:135
 #: plugins/admin/ogroups/tabs_ogroups.inc:98
 msgid "Startup"
 msgstr "Inicio"
 
-#: contrib/gosa.conf:118 contrib/gosa.conf:138
+#: contrib/gosa.conf:118 contrib/gosa.conf:136
 #: plugins/admin/ogroups/tabs_ogroups.inc:102
 msgid "Devices"
 msgstr "Servicios"
 
-#: contrib/gosa.conf:119 contrib/gosa.conf:139
+#: contrib/gosa.conf:119 contrib/gosa.conf:137
 #: plugins/personal/environment/environment.tpl:173
 #: plugins/admin/systems/class_systemManagement.inc:767
 #: plugins/admin/ogroups/class_ogroupManagement.inc:381
@@ -177,7 +177,7 @@ msgstr "Servicios"
 msgid "Printer"
 msgstr "Impresora"
 
-#: contrib/gosa.conf:120 contrib/gosa.conf:131 contrib/gosa.conf:140
+#: contrib/gosa.conf:120 contrib/gosa.conf:129 contrib/gosa.conf:138
 #: plugins/gofax/blocklists/generic.tpl:75
 #: plugins/addons/addressbook/contents.tpl:33
 #: plugins/addons/godfs/contents.tpl:22
@@ -201,15 +201,15 @@ msgstr "Información"
 msgid "Services"
 msgstr "Servicios"
 
-#: contrib/gosa.conf:130 contrib/gosa.conf:141
+#: contrib/gosa.conf:128 contrib/gosa.conf:139
 msgid "FAI summary"
 msgstr ""
 
-#: contrib/gosa.conf:201
+#: contrib/gosa.conf:199
 msgid "OGo"
 msgstr ""
 
-#: contrib/gosa.conf:213 plugins/addons/ldapmanager/contentexportxls.tpl:19
+#: contrib/gosa.conf:210 plugins/addons/ldapmanager/contentexportxls.tpl:19
 #: plugins/addons/ldapmanager/contentexportxls.tpl:32
 #: plugins/addons/ldapmanager/contentexportxls.tpl:47
 #: plugins/addons/ldapmanager/contentexport.tpl:16
@@ -218,11 +218,11 @@ msgstr ""
 msgid "Export"
 msgstr "Exportar"
 
-#: contrib/gosa.conf:214
+#: contrib/gosa.conf:211
 msgid "Excel Export"
 msgstr "Exportar en XLS"
 
-#: contrib/gosa.conf:215 plugins/personal/mail/generic.tpl:113
+#: contrib/gosa.conf:212 plugins/personal/mail/generic.tpl:113
 #: plugins/personal/environment/logonManagement.tpl:65
 #: plugins/addons/ldapmanager/contentimport.tpl:50
 #: plugins/addons/ldapmanager/contentcsv.tpl:109
@@ -231,79 +231,79 @@ msgstr "Exportar en XLS"
 msgid "Import"
 msgstr "Importar"
 
-#: contrib/gosa.conf:216
+#: contrib/gosa.conf:213
 msgid "CSV Import"
 msgstr "Importación desde CVS"
 
-#: contrib/gosa.conf:220
+#: contrib/gosa.conf:217
 msgid "Partitions"
 msgstr "Paticiones"
 
-#: contrib/gosa.conf:224 plugins/personal/environment/logonManagement.tpl:55
+#: contrib/gosa.conf:221 plugins/personal/environment/logonManagement.tpl:55
 #: plugins/admin/fai/faiScriptEntry.tpl:50
 #: plugins/admin/fai/faiHookEntry.tpl:50
 #: plugins/admin/applications/generic.tpl:99
 msgid "Script"
 msgstr "Script"
 
-#: contrib/gosa.conf:228 plugins/admin/fai/class_faiSummaryTab.inc:40
+#: contrib/gosa.conf:225 plugins/admin/fai/class_faiSummaryTab.inc:40
 msgid "Hooks"
 msgstr ""
 
-#: contrib/gosa.conf:232 plugins/admin/fai/class_faiSummaryTab.inc:41
+#: contrib/gosa.conf:229 plugins/admin/fai/class_faiSummaryTab.inc:41
 msgid "Variables"
 msgstr "Variables"
 
-#: contrib/gosa.conf:236 plugins/admin/fai/class_faiSummaryTab.inc:42
+#: contrib/gosa.conf:233 plugins/admin/fai/class_faiSummaryTab.inc:42
 msgid "Templates"
 msgstr "Plantillas"
 
-#: contrib/gosa.conf:240 plugins/personal/environment/environment.tpl:7
+#: contrib/gosa.conf:237 plugins/personal/environment/environment.tpl:7
 #: plugins/admin/fai/class_faiSummaryTab.inc:45
 msgid "Profiles"
 msgstr "Perfiles"
 
-#: contrib/gosa.conf:241 plugins/admin/ogroups/tabs_ogroups.inc:107
+#: contrib/gosa.conf:238 plugins/admin/ogroups/tabs_ogroups.inc:107
 msgid "Summary"
 msgstr ""
 
-#: contrib/gosa.conf:245
+#: contrib/gosa.conf:242
 msgid "Packages"
 msgstr "Paquetes"
 
-#: contrib/gosa.conf:267
+#: contrib/gosa.conf:264
 msgid "{LOCATIONNAME}"
 msgstr "{LOCATIONNAME}"
 
-#: contrib/gosa.conf:287 plugins/admin/ogroups/class_phonequeue.inc:164
+#: contrib/gosa.conf:284 plugins/admin/ogroups/class_phonequeue.inc:164
 msgid "German"
 msgstr "Alemán"
 
-#: contrib/gosa.conf:288
+#: contrib/gosa.conf:285
 msgid "Russian"
 msgstr "Ruso"
 
-#: contrib/gosa.conf:289
+#: contrib/gosa.conf:286
 msgid "Spanish"
 msgstr "Español"
 
-#: contrib/gosa.conf:290
+#: contrib/gosa.conf:287
 msgid "French"
 msgstr "Francés"
 
-#: contrib/gosa.conf:291
+#: contrib/gosa.conf:288
 msgid "Dutch"
 msgstr "Holandés"
 
-#: contrib/gosa.conf:292
+#: contrib/gosa.conf:289
 msgid "English"
 msgstr "Inglés"
 
-#: contrib/gosa.conf:293
+#: contrib/gosa.conf:290
 msgid "Italian"
 msgstr "Italiano"
 
-#: contrib/gosa.conf:294
+#: contrib/gosa.conf:291
 msgid "Polish"
 msgstr "Polaco"
 
@@ -487,8 +487,6 @@ msgstr ""
 #: plugins/admin/systems/servkolab.tpl:205
 #: plugins/admin/systems/goNtpServer.tpl:24
 #: plugins/admin/systems/goShareServer.tpl:23
-#: plugins/admin/systems/snapshotdialog.tpl:50
-#: plugins/admin/systems/snapshotdialog.tpl:97
 #: plugins/admin/systems/servdnseditzone.tpl:120
 #: plugins/admin/systems/servRepositorySetup.tpl:43
 #: plugins/admin/systems/goFaxServer.tpl:18
@@ -520,6 +518,8 @@ msgstr ""
 #: plugins/gofon/conference/remove.tpl:16
 #: ihtml/themes/default/copyPasteDialog.tpl:15
 #: ihtml/themes/default/islocked.tpl:15
+#: ihtml/themes/default/snapshotdialog.tpl:50
+#: ihtml/themes/default/snapshotdialog.tpl:97
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -1136,7 +1136,7 @@ msgstr "Nombre de usuario de las direcciones mostradas"
 #: plugins/admin/systems/servdb.tpl:50 plugins/admin/systems/servdb.tpl:86
 #: plugins/admin/systems/servdb.tpl:109 plugins/admin/systems/servdb.tpl:128
 #: plugins/admin/systems/goImapServer.tpl:25
-#: plugins/admin/systems/class_divListSystem.inc:183
+#: plugins/admin/systems/class_divListSystem.inc:195
 #: plugins/admin/systems/goFaxServer.tpl:8
 #: plugins/admin/systems/goLogDBServer.tpl:8
 #: plugins/admin/systems/goFonServer.tpl:8
@@ -1156,7 +1156,7 @@ msgstr "¡No tiene permisos para cambiar su contraseña! en este momento"
 
 #: plugins/personal/password/password.tpl:2
 #: plugins/personal/password/changed.tpl:2
-#: plugins/admin/users/class_divListUsers.inc:218
+#: plugins/admin/users/class_divListUsers.inc:230
 msgid "Change password"
 msgstr "Cambiar contraseña"
 
@@ -1279,15 +1279,15 @@ msgid "Display groups of department"
 msgstr "Mostrar los grupos de departamentos"
 
 #: plugins/personal/posix/posix_groups.tpl:46
-#: plugins/gofax/blocklists/class_divListBlocklists.inc:54
-#: plugins/admin/groups/class_divListGroup.inc:62
-#: plugins/admin/users/class_divListUsers.inc:63
-#: plugins/admin/applications/class_divListApplication.inc:50
-#: plugins/admin/departments/class_divListDepartment.inc:45
-#: plugins/admin/systems/class_divListSystem.inc:66
-#: plugins/admin/ogroups/class_divListOGroup.inc:69
-#: plugins/gofon/macro/class_divListMacros.inc:51
-#: plugins/gofon/conference/class_divListConferences.inc:52
+#: plugins/gofax/blocklists/class_divListBlocklists.inc:60
+#: plugins/admin/groups/class_divListGroup.inc:68
+#: plugins/admin/users/class_divListUsers.inc:69
+#: plugins/admin/applications/class_divListApplication.inc:55
+#: plugins/admin/departments/class_divListDepartment.inc:51
+#: plugins/admin/systems/class_divListSystem.inc:72
+#: plugins/admin/ogroups/class_divListOGroup.inc:75
+#: plugins/gofon/macro/class_divListMacros.inc:57
+#: plugins/gofon/conference/class_divListConferences.inc:58
 msgid "Ignore subtrees"
 msgstr ""
 
@@ -1296,9 +1296,9 @@ msgid "Display groups matching"
 msgstr "Mostrar grupos que concuerden con"
 
 #: plugins/personal/posix/posix_groups.tpl:57
-#: plugins/admin/groups/class_divListGroup.inc:65
-#: plugins/admin/departments/class_divListDepartment.inc:48
-#: plugins/admin/ogroups/class_divListOGroup.inc:72
+#: plugins/admin/groups/class_divListGroup.inc:71
+#: plugins/admin/departments/class_divListDepartment.inc:54
+#: plugins/admin/ogroups/class_divListOGroup.inc:78
 msgid "Regular expression for matching group names"
 msgstr "Expresión regular que concuerde con nombres de grupos"
 
@@ -1307,7 +1307,7 @@ msgid "Display groups of user"
 msgstr "Mostrar grupos de usuarios"
 
 #: plugins/personal/posix/posix_groups.tpl:68
-#: plugins/admin/groups/class_divListGroup.inc:66
+#: plugins/admin/groups/class_divListGroup.inc:72
 msgid "User name of which groups are shown"
 msgstr "Nombres de usuarios de los grupos que se muestran"
 
@@ -1366,7 +1366,7 @@ msgid "Display systems of department"
 msgstr "Mostrar sistemas de departamentos"
 
 #: plugins/personal/posix/trust_machines.tpl:30
-#: plugins/admin/systems/class_divListSystem.inc:69
+#: plugins/admin/systems/class_divListSystem.inc:75
 msgid "Display systems matching"
 msgstr "Mostrar sistemas que concuerden con"
 
@@ -2067,10 +2067,10 @@ msgid "Choose the department the search will be based    on"
 msgstr "Escoja el departamento base de la búsqueda"
 
 #: plugins/personal/environment/hotplugDialog.tpl:43
-#: plugins/admin/fai/class_divListFai.inc:75
+#: plugins/admin/fai/class_divListFai.inc:81
 #: plugins/admin/groups/group_objects.tpl:46
-#: plugins/admin/users/class_divListUsers.inc:66
-#: plugins/admin/applications/class_divListApplication.inc:53
+#: plugins/admin/users/class_divListUsers.inc:72
+#: plugins/admin/applications/class_divListApplication.inc:58
 #: plugins/admin/systems/glpiSelectUser.tpl:35
 #: plugins/gofon/conference/headpage.tpl:35
 msgid "Display users matching"
@@ -2337,8 +2337,8 @@ msgid "Hotplug device settings"
 msgstr "Parámetros dispositivos de conexión en caliente (HotPlug)"
 
 #: plugins/personal/environment/environment.tpl:164
-#: plugins/admin/groups/class_divListGroup.inc:106
-#: plugins/gofon/macro/class_divListMacros.inc:90
+#: plugins/admin/groups/class_divListGroup.inc:112
+#: plugins/gofon/macro/class_divListMacros.inc:96
 msgid "New"
 msgstr "Nuevo"
 
@@ -2395,14 +2395,12 @@ msgstr "Nombre del Script"
 #: plugins/admin/applications/generic.tpl:23
 #: plugins/admin/departments/generic.tpl:12
 #: plugins/admin/systems/printer.tpl:13 plugins/admin/systems/component.tpl:30
-#: plugins/admin/systems/server.tpl:10
-#: plugins/admin/systems/snapshotdialog.tpl:86
-#: plugins/admin/systems/wingeneric.tpl:25
+#: plugins/admin/systems/server.tpl:10 plugins/admin/systems/wingeneric.tpl:25
 #: plugins/admin/systems/servnfs.tpl:17 plugins/admin/systems/phone.tpl:30
 #: plugins/admin/ogroups/generic.tpl:13 plugins/gofon/macro/generic.tpl:41
 #: plugins/gofon/conference/generic.tpl:56
 #: plugins/generic/references/contents.tpl:11 html/getxls.php:123
-#: html/getxls.php:230
+#: html/getxls.php:230 ihtml/themes/default/snapshotdialog.tpl:86
 msgid "Description"
 msgstr "Descripción"
 
@@ -2662,32 +2660,32 @@ msgid "Preferred langage"
 msgstr "Lenguaje preferido"
 
 #: plugins/personal/generic/generic.tpl:127
-#: plugins/gofax/blocklists/class_divListBlocklists.inc:95
+#: plugins/gofax/blocklists/class_divListBlocklists.inc:101
 #: plugins/gofax/blocklists/generic.tpl:14
 #: plugins/addons/godfs/class_dfsManagment.inc:217
-#: plugins/admin/fai/class_divListFai.inc:155
-#: plugins/admin/groups/class_divListGroup.inc:109
+#: plugins/admin/fai/class_divListFai.inc:161
+#: plugins/admin/groups/class_divListGroup.inc:115
 #: plugins/admin/groups/generic.tpl:21
-#: plugins/admin/users/class_divListUsers.inc:115
-#: plugins/admin/applications/class_divListApplication.inc:113
+#: plugins/admin/users/class_divListUsers.inc:121
+#: plugins/admin/applications/class_divListApplication.inc:118
 #: plugins/admin/applications/generic.tpl:32
-#: plugins/admin/departments/class_divListDepartment.inc:87
+#: plugins/admin/departments/class_divListDepartment.inc:93
 #: plugins/admin/departments/generic.tpl:27
 #: plugins/admin/systems/printer.tpl:20
 #: plugins/admin/systems/goLdapServer.tpl:2
 #: plugins/admin/systems/component.tpl:13 plugins/admin/systems/server.tpl:14
 #: plugins/admin/systems/terminal.tpl:17
-#: plugins/admin/systems/class_divListSystem.inc:114
+#: plugins/admin/systems/class_divListSystem.inc:120
 #: plugins/admin/systems/wingeneric.tpl:13
 #: plugins/admin/systems/workstation.tpl:23
 #: plugins/admin/systems/servservice.tpl:61 plugins/admin/systems/phone.tpl:13
 #: plugins/admin/systems/class_glpiSelectUser.inc:166
 #: plugins/admin/systems/class_baseSelectDialog.inc:44
-#: plugins/admin/ogroups/class_divListOGroup.inc:119
+#: plugins/admin/ogroups/class_divListOGroup.inc:125
 #: plugins/admin/ogroups/generic.tpl:21
-#: plugins/gofon/macro/class_divListMacros.inc:92
+#: plugins/gofon/macro/class_divListMacros.inc:98
 #: plugins/gofon/macro/generic.tpl:20
-#: plugins/gofon/conference/class_divListConferences.inc:93
+#: plugins/gofon/conference/class_divListConferences.inc:99
 #: plugins/gofon/conference/generic.tpl:33
 msgid "Base"
 msgstr "Base"
@@ -2769,13 +2767,13 @@ msgid "Organization"
 msgstr "Organización"
 
 #: plugins/personal/generic/generic.tpl:217
-#: plugins/gofax/blocklists/class_divListBlocklists.inc:46
+#: plugins/gofax/blocklists/class_divListBlocklists.inc:52
 #: plugins/addons/addressbook/address_edit.tpl:138
 #: plugins/addons/addressbook/address_info.tpl:64
-#: plugins/admin/users/class_divListUsers.inc:50
-#: plugins/admin/applications/class_divListApplication.inc:46
+#: plugins/admin/users/class_divListUsers.inc:56
+#: plugins/admin/applications/class_divListApplication.inc:51
 #: plugins/admin/ogroups/class_ogroupManagement.inc:376
-#: plugins/gofon/macro/class_divListMacros.inc:46
+#: plugins/gofon/macro/class_divListMacros.inc:52
 #: plugins/generic/references/class_reference.inc:38
 msgid "Department"
 msgstr "Departamento"
@@ -3601,296 +3599,296 @@ msgstr ""
 "seleccionadas. Puede usar el selector de rango en la parte superior de la "
 "lista de bloqueos, cuando trabaja con un gran número de bloqueos."
 
-#: plugins/gofax/blocklists/class_divListBlocklists.inc:46
+#: plugins/gofax/blocklists/class_divListBlocklists.inc:52
 msgid "Blocklist name"
 msgstr "N0mbre de listas de bloqueo"
 
-#: plugins/gofax/blocklists/class_divListBlocklists.inc:47
+#: plugins/gofax/blocklists/class_divListBlocklists.inc:53
 #: plugins/addons/addressbook/contents.tpl:42
-#: plugins/admin/fai/class_divListFai.inc:60
-#: plugins/admin/groups/class_divListGroup.inc:51
-#: plugins/admin/users/class_divListUsers.inc:52
-#: plugins/admin/applications/class_divListApplication.inc:47
-#: plugins/admin/departments/class_divListDepartment.inc:42
+#: plugins/admin/fai/class_divListFai.inc:66
+#: plugins/admin/groups/class_divListGroup.inc:57
+#: plugins/admin/users/class_divListUsers.inc:58
+#: plugins/admin/applications/class_divListApplication.inc:52
+#: plugins/admin/departments/class_divListDepartment.inc:48
 #: plugins/admin/systems/class_divListSystemService.inc:31
-#: plugins/admin/systems/class_divListSystem.inc:53
+#: plugins/admin/systems/class_divListSystem.inc:59
 #: plugins/admin/systems/class_glpiDeviceManagement.inc:188
 #: plugins/admin/systems/class_glpiAttachmentPool.inc:203
-#: plugins/admin/ogroups/class_divListOGroup.inc:54
-#: plugins/gofon/macro/class_divListMacros.inc:48
-#: plugins/gofon/conference/class_divListConferences.inc:49
+#: plugins/admin/ogroups/class_divListOGroup.inc:60
+#: plugins/gofon/macro/class_divListMacros.inc:54
+#: plugins/gofon/conference/class_divListConferences.inc:55
 msgid "Actions"
 msgstr "Acciones"
 
-#: plugins/gofax/blocklists/class_divListBlocklists.inc:50
+#: plugins/gofax/blocklists/class_divListBlocklists.inc:56
 msgid "Select to see send blocklists"
 msgstr "Seleccione para mostrar listas de bloqueo salientes"
 
-#: plugins/gofax/blocklists/class_divListBlocklists.inc:50
+#: plugins/gofax/blocklists/class_divListBlocklists.inc:56
 msgid "Show send blocklists"
 msgstr "Mostrar listas de bloqueos salientes"
 
-#: plugins/gofax/blocklists/class_divListBlocklists.inc:51
+#: plugins/gofax/blocklists/class_divListBlocklists.inc:57
 msgid "Select to see receive blocklists"
 msgstr "Seleccione para mostrar listas de bloqueo entrantes"
 
-#: plugins/gofax/blocklists/class_divListBlocklists.inc:51
+#: plugins/gofax/blocklists/class_divListBlocklists.inc:57
 msgid "Show receive blocklists"
 msgstr "Mostrar listas de bloqueos entrantes"
 
-#: plugins/gofax/blocklists/class_divListBlocklists.inc:54
-#: plugins/admin/groups/class_divListGroup.inc:62
-#: plugins/admin/users/class_divListUsers.inc:63
-#: plugins/admin/applications/class_divListApplication.inc:50
-#: plugins/admin/departments/class_divListDepartment.inc:45
-#: plugins/admin/systems/class_divListSystem.inc:66
-#: plugins/admin/ogroups/class_divListOGroup.inc:69
-#: plugins/gofon/macro/class_divListMacros.inc:51
-#: plugins/gofon/conference/class_divListConferences.inc:52
+#: plugins/gofax/blocklists/class_divListBlocklists.inc:60
+#: plugins/admin/groups/class_divListGroup.inc:68
+#: plugins/admin/users/class_divListUsers.inc:69
+#: plugins/admin/applications/class_divListApplication.inc:55
+#: plugins/admin/departments/class_divListDepartment.inc:51
+#: plugins/admin/systems/class_divListSystem.inc:72
+#: plugins/admin/ogroups/class_divListOGroup.inc:75
+#: plugins/gofon/macro/class_divListMacros.inc:57
+#: plugins/gofon/conference/class_divListConferences.inc:58
 msgid "Select to search within subtrees"
 msgstr "Seleccione para buscar dentro del subárbol"
 
-#: plugins/gofax/blocklists/class_divListBlocklists.inc:57
+#: plugins/gofax/blocklists/class_divListBlocklists.inc:63
 msgid "Regular expression for matching list names"
 msgstr "Expresiones regulares para encontrar nombres de listas"
 
-#: plugins/gofax/blocklists/class_divListBlocklists.inc:77
-#: plugins/admin/fai/class_divListFai.inc:111
-#: plugins/admin/groups/class_divListGroup.inc:93
-#: plugins/admin/users/class_divListUsers.inc:94
-#: plugins/admin/applications/class_divListApplication.inc:94
-#: plugins/admin/departments/class_divListDepartment.inc:69
-#: plugins/admin/systems/class_divListSystem.inc:88
+#: plugins/gofax/blocklists/class_divListBlocklists.inc:83
+#: plugins/admin/fai/class_divListFai.inc:117
+#: plugins/admin/groups/class_divListGroup.inc:99
+#: plugins/admin/users/class_divListUsers.inc:100
+#: plugins/admin/applications/class_divListApplication.inc:99
+#: plugins/admin/departments/class_divListDepartment.inc:75
+#: plugins/admin/systems/class_divListSystem.inc:94
 #: plugins/admin/systems/class_glpiSelectUser.inc:160
 #: plugins/admin/systems/class_baseSelectDialog.inc:26
-#: plugins/admin/ogroups/class_divListOGroup.inc:99
-#: plugins/gofon/macro/class_divListMacros.inc:74
-#: plugins/gofon/conference/class_divListConferences.inc:75
+#: plugins/admin/ogroups/class_divListOGroup.inc:105
+#: plugins/gofon/macro/class_divListMacros.inc:80
+#: plugins/gofon/conference/class_divListConferences.inc:81
 msgid "Go to root department"
 msgstr "Ir al departamento raíz"
 
-#: plugins/gofax/blocklists/class_divListBlocklists.inc:77
+#: plugins/gofax/blocklists/class_divListBlocklists.inc:83
 #: plugins/addons/godfs/class_dfsManagment.inc:214
-#: plugins/admin/fai/class_divListFai.inc:111
-#: plugins/admin/groups/class_divListGroup.inc:93
-#: plugins/admin/users/class_divListUsers.inc:94
-#: plugins/admin/applications/class_divListApplication.inc:94
-#: plugins/admin/departments/class_divListDepartment.inc:69
-#: plugins/admin/systems/class_divListSystem.inc:88
+#: plugins/admin/fai/class_divListFai.inc:117
+#: plugins/admin/groups/class_divListGroup.inc:99
+#: plugins/admin/users/class_divListUsers.inc:100
+#: plugins/admin/applications/class_divListApplication.inc:99
+#: plugins/admin/departments/class_divListDepartment.inc:75
+#: plugins/admin/systems/class_divListSystem.inc:94
 #: plugins/admin/systems/class_glpiSelectUser.inc:160
 #: plugins/admin/systems/class_baseSelectDialog.inc:26
-#: plugins/admin/ogroups/class_divListOGroup.inc:99
-#: plugins/gofon/macro/class_divListMacros.inc:74
-#: plugins/gofon/conference/class_divListConferences.inc:75
+#: plugins/admin/ogroups/class_divListOGroup.inc:105
+#: plugins/gofon/macro/class_divListMacros.inc:80
+#: plugins/gofon/conference/class_divListConferences.inc:81
 msgid "Root"
 msgstr "Raíz"
 
-#: plugins/gofax/blocklists/class_divListBlocklists.inc:79
-#: plugins/admin/fai/class_divListFai.inc:114
-#: plugins/admin/groups/class_divListGroup.inc:94
-#: plugins/admin/users/class_divListUsers.inc:96
-#: plugins/admin/applications/class_divListApplication.inc:96
-#: plugins/admin/departments/class_divListDepartment.inc:71
-#: plugins/admin/systems/class_divListSystem.inc:90
+#: plugins/gofax/blocklists/class_divListBlocklists.inc:85
+#: plugins/admin/fai/class_divListFai.inc:120
+#: plugins/admin/groups/class_divListGroup.inc:100
+#: plugins/admin/users/class_divListUsers.inc:102
+#: plugins/admin/applications/class_divListApplication.inc:101
+#: plugins/admin/departments/class_divListDepartment.inc:77
+#: plugins/admin/systems/class_divListSystem.inc:96
 #: plugins/admin/systems/class_glpiSelectUser.inc:162
 #: plugins/admin/systems/class_baseSelectDialog.inc:28
-#: plugins/admin/ogroups/class_divListOGroup.inc:101
-#: plugins/gofon/macro/class_divListMacros.inc:76
-#: plugins/gofon/conference/class_divListConferences.inc:77
+#: plugins/admin/ogroups/class_divListOGroup.inc:107
+#: plugins/gofon/macro/class_divListMacros.inc:82
+#: plugins/gofon/conference/class_divListConferences.inc:83
 msgid "Go up one department"
 msgstr "Subir un departamento"
 
-#: plugins/gofax/blocklists/class_divListBlocklists.inc:79
+#: plugins/gofax/blocklists/class_divListBlocklists.inc:85
 #: plugins/addons/godfs/class_dfsManagment.inc:213
 #: plugins/admin/fai/class_faiProfile.inc:303
-#: plugins/admin/fai/class_divListFai.inc:114
-#: plugins/admin/groups/class_divListGroup.inc:94
-#: plugins/admin/users/class_divListUsers.inc:96
-#: plugins/admin/applications/class_divListApplication.inc:96
-#: plugins/admin/departments/class_divListDepartment.inc:71
-#: plugins/admin/systems/class_divListSystem.inc:90
+#: plugins/admin/fai/class_divListFai.inc:120
+#: plugins/admin/groups/class_divListGroup.inc:100
+#: plugins/admin/users/class_divListUsers.inc:102
+#: plugins/admin/applications/class_divListApplication.inc:101
+#: plugins/admin/departments/class_divListDepartment.inc:77
+#: plugins/admin/systems/class_divListSystem.inc:96
 #: plugins/admin/systems/class_glpiSelectUser.inc:162
 #: plugins/admin/systems/class_servDNSeditZone.inc:289
 #: plugins/admin/systems/class_baseSelectDialog.inc:28
-#: plugins/admin/ogroups/class_divListOGroup.inc:101
+#: plugins/admin/ogroups/class_divListOGroup.inc:107
 #: plugins/admin/ogroups/phonequeue.tpl:17
-#: plugins/gofon/macro/class_divListMacros.inc:76
-#: plugins/gofon/conference/class_divListConferences.inc:77
+#: plugins/gofon/macro/class_divListMacros.inc:82
+#: plugins/gofon/conference/class_divListConferences.inc:83
 msgid "Up"
 msgstr ""
 
-#: plugins/gofax/blocklists/class_divListBlocklists.inc:81
-#: plugins/admin/groups/class_divListGroup.inc:95
-#: plugins/admin/users/class_divListUsers.inc:98
-#: plugins/admin/applications/class_divListApplication.inc:98
-#: plugins/admin/systems/class_divListSystem.inc:92
+#: plugins/gofax/blocklists/class_divListBlocklists.inc:87
+#: plugins/admin/groups/class_divListGroup.inc:101
+#: plugins/admin/users/class_divListUsers.inc:104
+#: plugins/admin/applications/class_divListApplication.inc:103
+#: plugins/admin/systems/class_divListSystem.inc:98
 #: plugins/admin/systems/class_glpiSelectUser.inc:164
 #: plugins/admin/systems/class_baseSelectDialog.inc:30
-#: plugins/admin/ogroups/class_divListOGroup.inc:103
-#: plugins/gofon/macro/class_divListMacros.inc:78
-#: plugins/gofon/conference/class_divListConferences.inc:79
+#: plugins/admin/ogroups/class_divListOGroup.inc:109
+#: plugins/gofon/macro/class_divListMacros.inc:84
+#: plugins/gofon/conference/class_divListConferences.inc:85
 msgid "Go to users department"
 msgstr "Ir al departamento de los usuarios"
 
-#: plugins/gofax/blocklists/class_divListBlocklists.inc:81
-#: plugins/admin/fai/class_divListFai.inc:117
-#: plugins/admin/groups/class_divListGroup.inc:95
-#: plugins/admin/users/class_divListUsers.inc:98
-#: plugins/admin/applications/class_divListApplication.inc:98
-#: plugins/admin/departments/class_divListDepartment.inc:73
-#: plugins/admin/systems/class_divListSystem.inc:92
+#: plugins/gofax/blocklists/class_divListBlocklists.inc:87
+#: plugins/admin/fai/class_divListFai.inc:123
+#: plugins/admin/groups/class_divListGroup.inc:101
+#: plugins/admin/users/class_divListUsers.inc:104
+#: plugins/admin/applications/class_divListApplication.inc:103
+#: plugins/admin/departments/class_divListDepartment.inc:79
+#: plugins/admin/systems/class_divListSystem.inc:98
 #: plugins/admin/systems/class_glpiSelectUser.inc:164
 #: plugins/admin/systems/class_baseSelectDialog.inc:30
-#: plugins/admin/ogroups/class_divListOGroup.inc:103
-#: plugins/gofon/macro/class_divListMacros.inc:78
-#: plugins/gofon/conference/class_divListConferences.inc:79
+#: plugins/admin/ogroups/class_divListOGroup.inc:109
+#: plugins/gofon/macro/class_divListMacros.inc:84
+#: plugins/gofon/conference/class_divListConferences.inc:85
 msgid "Home"
 msgstr "Inicio"
 
-#: plugins/gofax/blocklists/class_divListBlocklists.inc:83
-#: plugins/admin/fai/class_divListFai.inc:119
-#: plugins/admin/groups/class_divListGroup.inc:96
-#: plugins/admin/users/class_divListUsers.inc:100
-#: plugins/admin/applications/class_divListApplication.inc:100
-#: plugins/admin/departments/class_divListDepartment.inc:75
-#: plugins/admin/systems/class_divListSystem.inc:93
+#: plugins/gofax/blocklists/class_divListBlocklists.inc:89
+#: plugins/admin/fai/class_divListFai.inc:125
+#: plugins/admin/groups/class_divListGroup.inc:102
+#: plugins/admin/users/class_divListUsers.inc:106
+#: plugins/admin/applications/class_divListApplication.inc:105
+#: plugins/admin/departments/class_divListDepartment.inc:81
+#: plugins/admin/systems/class_divListSystem.inc:99
 #: plugins/admin/systems/class_glpiSelectUser.inc:165
 #: plugins/admin/systems/class_baseSelectDialog.inc:31
-#: plugins/admin/ogroups/class_divListOGroup.inc:105
-#: plugins/gofon/macro/class_divListMacros.inc:80
-#: plugins/gofon/conference/class_divListConferences.inc:81
+#: plugins/admin/ogroups/class_divListOGroup.inc:111
+#: plugins/gofon/macro/class_divListMacros.inc:86
+#: plugins/gofon/conference/class_divListConferences.inc:87
 msgid "Reload list"
 msgstr ""
 
-#: plugins/gofax/blocklists/class_divListBlocklists.inc:83
-#: plugins/gofax/blocklists/class_divListBlocklists.inc:97
+#: plugins/gofax/blocklists/class_divListBlocklists.inc:89
+#: plugins/gofax/blocklists/class_divListBlocklists.inc:103
 #: plugins/addons/godfs/class_dfsManagment.inc:218
-#: plugins/admin/fai/class_divListFai.inc:120
-#: plugins/admin/fai/class_divListFai.inc:156
-#: plugins/admin/groups/class_divListGroup.inc:96
-#: plugins/admin/groups/class_divListGroup.inc:110
-#: plugins/admin/users/class_divListUsers.inc:100
-#: plugins/admin/users/class_divListUsers.inc:117
-#: plugins/admin/applications/class_divListApplication.inc:100
-#: plugins/admin/applications/class_divListApplication.inc:115
-#: plugins/admin/departments/class_divListDepartment.inc:75
-#: plugins/admin/departments/class_divListDepartment.inc:89
-#: plugins/admin/systems/class_divListSystem.inc:93
-#: plugins/admin/systems/class_divListSystem.inc:117
+#: plugins/admin/fai/class_divListFai.inc:126
+#: plugins/admin/fai/class_divListFai.inc:162
+#: plugins/admin/groups/class_divListGroup.inc:102
+#: plugins/admin/groups/class_divListGroup.inc:116
+#: plugins/admin/users/class_divListUsers.inc:106
+#: plugins/admin/users/class_divListUsers.inc:123
+#: plugins/admin/applications/class_divListApplication.inc:105
+#: plugins/admin/applications/class_divListApplication.inc:120
+#: plugins/admin/departments/class_divListDepartment.inc:81
+#: plugins/admin/departments/class_divListDepartment.inc:95
+#: plugins/admin/systems/class_divListSystem.inc:99
+#: plugins/admin/systems/class_divListSystem.inc:123
 #: plugins/admin/systems/class_glpiSelectUser.inc:165
 #: plugins/admin/systems/class_glpiSelectUser.inc:169
 #: plugins/admin/systems/class_baseSelectDialog.inc:31
-#: plugins/admin/ogroups/class_divListOGroup.inc:105
-#: plugins/admin/ogroups/class_divListOGroup.inc:121
-#: plugins/gofon/macro/class_divListMacros.inc:80
-#: plugins/gofon/macro/class_divListMacros.inc:94
-#: plugins/gofon/conference/class_divListConferences.inc:81
-#: plugins/gofon/conference/class_divListConferences.inc:95
+#: plugins/admin/ogroups/class_divListOGroup.inc:111
+#: plugins/admin/ogroups/class_divListOGroup.inc:127
+#: plugins/gofon/macro/class_divListMacros.inc:86
+#: plugins/gofon/macro/class_divListMacros.inc:100
+#: plugins/gofon/conference/class_divListConferences.inc:87
+#: plugins/gofon/conference/class_divListConferences.inc:101
 msgid "Submit"
 msgstr ""
 
-#: plugins/gofax/blocklists/class_divListBlocklists.inc:88
-#: plugins/admin/fai/class_divListFai.inc:131
-#: plugins/admin/groups/class_divListGroup.inc:102
-#: plugins/admin/users/class_divListUsers.inc:105
-#: plugins/admin/applications/class_divListApplication.inc:105
-#: plugins/admin/departments/class_divListDepartment.inc:80
-#: plugins/admin/systems/class_divListSystem.inc:98
-#: plugins/admin/ogroups/class_divListOGroup.inc:110
-#: plugins/gofon/macro/class_divListMacros.inc:85
-#: plugins/gofon/conference/class_divListConferences.inc:89
+#: plugins/gofax/blocklists/class_divListBlocklists.inc:94
+#: plugins/admin/fai/class_divListFai.inc:137
+#: plugins/admin/groups/class_divListGroup.inc:108
+#: plugins/admin/users/class_divListUsers.inc:111
+#: plugins/admin/applications/class_divListApplication.inc:110
+#: plugins/admin/departments/class_divListDepartment.inc:86
+#: plugins/admin/systems/class_divListSystem.inc:104
+#: plugins/admin/ogroups/class_divListOGroup.inc:116
+#: plugins/gofon/macro/class_divListMacros.inc:91
+#: plugins/gofon/conference/class_divListConferences.inc:95
 msgid "Restore snapshopts of already deleted objects"
 msgstr ""
 
-#: plugins/gofax/blocklists/class_divListBlocklists.inc:88
-#: plugins/admin/fai/class_divListFai.inc:131
-#: plugins/admin/groups/class_divListGroup.inc:102
-#: plugins/admin/users/class_divListUsers.inc:105
-#: plugins/admin/applications/class_divListApplication.inc:105
-#: plugins/admin/departments/class_divListDepartment.inc:80
-#: plugins/admin/systems/class_divListSystem.inc:98
-#: plugins/admin/ogroups/class_divListOGroup.inc:110
-#: plugins/gofon/macro/class_divListMacros.inc:85
-#: plugins/gofon/conference/class_divListConferences.inc:89
+#: plugins/gofax/blocklists/class_divListBlocklists.inc:94
+#: plugins/admin/fai/class_divListFai.inc:137
+#: plugins/admin/groups/class_divListGroup.inc:108
+#: plugins/admin/users/class_divListUsers.inc:111
+#: plugins/admin/applications/class_divListApplication.inc:110
+#: plugins/admin/departments/class_divListDepartment.inc:86
+#: plugins/admin/systems/class_divListSystem.inc:104
+#: plugins/admin/ogroups/class_divListOGroup.inc:116
+#: plugins/gofon/macro/class_divListMacros.inc:91
+#: plugins/gofon/conference/class_divListConferences.inc:95
 #, fuzzy
 msgid "Restore"
 msgstr "Reintentar"
 
-#: plugins/gofax/blocklists/class_divListBlocklists.inc:93
+#: plugins/gofax/blocklists/class_divListBlocklists.inc:99
 msgid "Create new blocklist"
 msgstr "Crear nueva lista de bloqueos"
 
-#: plugins/gofax/blocklists/class_divListBlocklists.inc:93
+#: plugins/gofax/blocklists/class_divListBlocklists.inc:99
 msgid "New Blocklist"
 msgstr "Nueva lista de bloqueo"
 
-#: plugins/gofax/blocklists/class_divListBlocklists.inc:97
+#: plugins/gofax/blocklists/class_divListBlocklists.inc:103
 #: plugins/addons/godfs/class_dfsManagment.inc:218
-#: plugins/admin/fai/class_divListFai.inc:156
-#: plugins/admin/groups/class_divListGroup.inc:110
-#: plugins/admin/users/class_divListUsers.inc:117
-#: plugins/admin/applications/class_divListApplication.inc:115
-#: plugins/admin/departments/class_divListDepartment.inc:89
-#: plugins/admin/systems/class_divListSystem.inc:117
+#: plugins/admin/fai/class_divListFai.inc:162
+#: plugins/admin/groups/class_divListGroup.inc:116
+#: plugins/admin/users/class_divListUsers.inc:123
+#: plugins/admin/applications/class_divListApplication.inc:120
+#: plugins/admin/departments/class_divListDepartment.inc:95
+#: plugins/admin/systems/class_divListSystem.inc:123
 #: plugins/admin/systems/class_glpiSelectUser.inc:169
-#: plugins/admin/ogroups/class_divListOGroup.inc:121
-#: plugins/gofon/macro/class_divListMacros.inc:94
-#: plugins/gofon/conference/class_divListConferences.inc:95
+#: plugins/admin/ogroups/class_divListOGroup.inc:127
+#: plugins/gofon/macro/class_divListMacros.inc:100
+#: plugins/gofon/conference/class_divListConferences.inc:101
 msgid "Submit department"
 msgstr "Enviar departamentos"
 
-#: plugins/gofax/blocklists/class_divListBlocklists.inc:119
+#: plugins/gofax/blocklists/class_divListBlocklists.inc:131
 #: plugins/admin/fai/class_faiScript.inc:228
 #: plugins/admin/fai/class_faiScript.inc:231
 #: plugins/admin/fai/class_faiTemplate.inc:198
 #: plugins/admin/fai/class_faiTemplate.inc:201
 #: plugins/admin/fai/class_faiHook.inc:252
 #: plugins/admin/fai/class_faiHook.inc:255
-#: plugins/admin/fai/class_divListFai.inc:216
-#: plugins/admin/fai/class_divListFai.inc:221
-#: plugins/admin/groups/class_divListGroup.inc:165
-#: plugins/admin/users/class_divListUsers.inc:215
-#: plugins/admin/applications/class_divListApplication.inc:160
-#: plugins/admin/departments/class_divListDepartment.inc:117
+#: plugins/admin/fai/class_divListFai.inc:228
+#: plugins/admin/fai/class_divListFai.inc:233
+#: plugins/admin/groups/class_divListGroup.inc:176
+#: plugins/admin/users/class_divListUsers.inc:227
+#: plugins/admin/applications/class_divListApplication.inc:168
+#: plugins/admin/departments/class_divListDepartment.inc:129
 #: plugins/admin/systems/glpi.tpl:15 plugins/admin/systems/glpi.tpl:25
 #: plugins/admin/systems/glpi.tpl:35 plugins/admin/systems/glpiPrinter.tpl:15
 #: plugins/admin/systems/glpiPrinter.tpl:25
-#: plugins/admin/systems/class_divListSystem.inc:151
+#: plugins/admin/systems/class_divListSystem.inc:163
 #: plugins/admin/systems/glpiPrinterCartridgesEdit.tpl:43
 #: plugins/admin/systems/glpiPrinterCartridgesEdit.tpl:53
-#: plugins/admin/ogroups/class_divListOGroup.inc:156
-#: plugins/gofon/macro/class_divListMacros.inc:109
-#: plugins/gofon/macro/class_divListMacros.inc:123
-#: plugins/gofon/conference/class_divListConferences.inc:120
+#: plugins/admin/ogroups/class_divListOGroup.inc:168
+#: plugins/gofon/macro/class_divListMacros.inc:115
+#: plugins/gofon/macro/class_divListMacros.inc:135
+#: plugins/gofon/conference/class_divListConferences.inc:131
 msgid "edit"
 msgstr "Editar"
 
-#: plugins/gofax/blocklists/class_divListBlocklists.inc:119
-#: plugins/admin/users/class_divListUsers.inc:216
+#: plugins/gofax/blocklists/class_divListBlocklists.inc:131
+#: plugins/admin/users/class_divListUsers.inc:228
 msgid "Edit user"
 msgstr "Editar usuario"
 
-#: plugins/gofax/blocklists/class_divListBlocklists.inc:120
+#: plugins/gofax/blocklists/class_divListBlocklists.inc:132
 #: plugins/addons/mailqueue/contents.tpl:93
 #: plugins/admin/fai/class_faiScript.inc:232
 #: plugins/admin/fai/class_faiTemplate.inc:202
 #: plugins/admin/fai/class_faiHook.inc:256
-#: plugins/admin/fai/class_divListFai.inc:223
-#: plugins/admin/groups/class_divListGroup.inc:167
-#: plugins/admin/users/class_divListUsers.inc:219
-#: plugins/admin/applications/class_divListApplication.inc:162
-#: plugins/admin/departments/class_divListDepartment.inc:119
-#: plugins/admin/systems/class_divListSystem.inc:152
-#: plugins/admin/ogroups/class_divListOGroup.inc:158
-#: plugins/gofon/macro/class_divListMacros.inc:111
-#: plugins/gofon/macro/class_divListMacros.inc:125
-#: plugins/gofon/conference/class_divListConferences.inc:122
-#: plugins/gofon/conference/class_divListConferences.inc:124
+#: plugins/admin/fai/class_divListFai.inc:235
+#: plugins/admin/groups/class_divListGroup.inc:178
+#: plugins/admin/users/class_divListUsers.inc:231
+#: plugins/admin/applications/class_divListApplication.inc:170
+#: plugins/admin/departments/class_divListDepartment.inc:131
+#: plugins/admin/systems/class_divListSystem.inc:164
+#: plugins/admin/ogroups/class_divListOGroup.inc:170
+#: plugins/gofon/macro/class_divListMacros.inc:117
+#: plugins/gofon/macro/class_divListMacros.inc:137
+#: plugins/gofon/conference/class_divListConferences.inc:133
+#: plugins/gofon/conference/class_divListConferences.inc:135
 msgid "delete"
 msgstr "borrar"
 
-#: plugins/gofax/blocklists/class_divListBlocklists.inc:120
-#: plugins/admin/users/class_divListUsers.inc:220
+#: plugins/gofax/blocklists/class_divListBlocklists.inc:132
+#: plugins/admin/users/class_divListUsers.inc:232
 msgid "Delete user"
 msgstr "Borrar usuario"
 
@@ -4293,8 +4291,8 @@ msgstr "Buscar"
 
 #: plugins/gofax/faxreports/contents.tpl:31
 #: plugins/addons/logview/contents.tpl:84
-#: plugins/admin/systems/snapshotdialog.tpl:78
 #: plugins/gofon/fonreports/contents.tpl:30
+#: ihtml/themes/default/snapshotdialog.tpl:78
 msgid "Date"
 msgstr "Fecha"
 
@@ -5272,16 +5270,16 @@ msgstr "El nombre especificado ya esta siendo usado"
 #: plugins/admin/fai/class_faiManagement.inc:392
 #: plugins/admin/fai/class_faiManagement.inc:552
 #: plugins/admin/fai/faiPackageNew.tpl:50 plugins/admin/users/template.tpl:48
-#: plugins/admin/departments/class_departmentGeneric.inc:413
-#: plugins/admin/departments/class_departmentGeneric.inc:498
+#: plugins/admin/departments/class_departmentGeneric.inc:418
+#: plugins/admin/departments/class_departmentGeneric.inc:503
 #: plugins/admin/systems/ServiceAddDialog.tpl:29
-#: plugins/admin/systems/snapshotdialog.tpl:48
-#: plugins/admin/systems/snapshotdialog.tpl:95
 #: plugins/admin/systems/SelectDeviceType.tpl:44
 #: ihtml/themes/default/setup_introduction.tpl:12
 #: ihtml/themes/default/setup_useradmin.tpl:41
 #: ihtml/themes/default/setup_step2.tpl:13
 #: ihtml/themes/default/setup_step3.tpl:18
+#: ihtml/themes/default/snapshotdialog.tpl:48
+#: ihtml/themes/default/snapshotdialog.tpl:95
 msgid "Continue"
 msgstr "Continuar"
 
@@ -5473,12 +5471,12 @@ msgid "Choose a variable to delete or edit"
 msgstr ""
 
 #: plugins/admin/fai/faiScriptEntry.tpl:29
-#: plugins/admin/groups/class_divListGroup.inc:50
-#: plugins/admin/users/class_divListUsers.inc:51
+#: plugins/admin/groups/class_divListGroup.inc:56
+#: plugins/admin/users/class_divListUsers.inc:57
 #: plugins/admin/departments/generic.tpl:4
 #: plugins/admin/systems/terminal.tpl:1
 #: plugins/admin/systems/workstation.tpl:1
-#: plugins/admin/ogroups/class_divListOGroup.inc:53
+#: plugins/admin/ogroups/class_divListOGroup.inc:59
 #: plugins/gofon/conference/generic.tpl:4
 msgid "Properties"
 msgstr "Propiedades"
@@ -5847,139 +5845,139 @@ msgstr ""
 msgid "This menu allows you to create, delete and edit FAI classes."
 msgstr ""
 
-#: plugins/admin/fai/class_divListFai.inc:58
+#: plugins/admin/fai/class_divListFai.inc:64
 msgid "Name of FAI class"
 msgstr "Nombre de las clases FAI"
 
-#: plugins/admin/fai/class_divListFai.inc:59
+#: plugins/admin/fai/class_divListFai.inc:65
 msgid "Class type"
 msgstr ""
 
-#: plugins/admin/fai/class_divListFai.inc:62
+#: plugins/admin/fai/class_divListFai.inc:68
 msgid "Display FAI profile objects"
 msgstr ""
 
-#: plugins/admin/fai/class_divListFai.inc:62
+#: plugins/admin/fai/class_divListFai.inc:68
 msgid "Show profiles"
 msgstr "Mostrar perfiles"
 
-#: plugins/admin/fai/class_divListFai.inc:63
+#: plugins/admin/fai/class_divListFai.inc:69
 msgid "Display FAI template objects"
 msgstr "Mostrar objetos de plantilla FAI"
 
-#: plugins/admin/fai/class_divListFai.inc:63
-#: plugins/admin/users/class_divListUsers.inc:54
+#: plugins/admin/fai/class_divListFai.inc:69
+#: plugins/admin/users/class_divListUsers.inc:60
 msgid "Show templates"
 msgstr "Mostrar plantillas"
 
-#: plugins/admin/fai/class_divListFai.inc:64
+#: plugins/admin/fai/class_divListFai.inc:70
 msgid "Display FAI scripts"
 msgstr "Mostrar scrips FAI"
 
-#: plugins/admin/fai/class_divListFai.inc:64
+#: plugins/admin/fai/class_divListFai.inc:70
 msgid "Show scripts"
 msgstr "Mostrar scrips"
 
-#: plugins/admin/fai/class_divListFai.inc:65
+#: plugins/admin/fai/class_divListFai.inc:71
 msgid "Display FAI hooks"
 msgstr "Mostrar acciones FAI"
 
-#: plugins/admin/fai/class_divListFai.inc:65
+#: plugins/admin/fai/class_divListFai.inc:71
 msgid "Show hooks"
 msgstr "Mostrar acciones"
 
-#: plugins/admin/fai/class_divListFai.inc:66
+#: plugins/admin/fai/class_divListFai.inc:72
 msgid "Display FAI variables"
 msgstr "Mostrar variables FAI"
 
-#: plugins/admin/fai/class_divListFai.inc:66
+#: plugins/admin/fai/class_divListFai.inc:72
 msgid "Show variables"
 msgstr "Mostrar variables"
 
-#: plugins/admin/fai/class_divListFai.inc:67
+#: plugins/admin/fai/class_divListFai.inc:73
 msgid "Display FAI packages"
 msgstr "Mostrar paquetes FAI"
 
-#: plugins/admin/fai/class_divListFai.inc:67
+#: plugins/admin/fai/class_divListFai.inc:73
 msgid "Show packages"
 msgstr "Mostrar paquetes"
 
-#: plugins/admin/fai/class_divListFai.inc:68
+#: plugins/admin/fai/class_divListFai.inc:74
 msgid "Display FAI partitions"
 msgstr "Mostrar particiones FAI"
 
-#: plugins/admin/fai/class_divListFai.inc:68
+#: plugins/admin/fai/class_divListFai.inc:74
 msgid "Show partitions"
 msgstr "Mostrar particiones"
 
-#: plugins/admin/fai/class_divListFai.inc:117
-#: plugins/admin/departments/class_divListDepartment.inc:73
+#: plugins/admin/fai/class_divListFai.inc:123
+#: plugins/admin/departments/class_divListDepartment.inc:79
 msgid "Go to users home department"
 msgstr "Ir al departamento base de los usuarios"
 
-#: plugins/admin/fai/class_divListFai.inc:125
+#: plugins/admin/fai/class_divListFai.inc:131
 msgid "New profile"
 msgstr "Nuevo perfil"
 
-#: plugins/admin/fai/class_divListFai.inc:125
+#: plugins/admin/fai/class_divListFai.inc:131
 #: plugins/admin/systems/class_glpiDeviceManagement.inc:229
 msgid "P"
 msgstr ""
 
-#: plugins/admin/fai/class_divListFai.inc:136
+#: plugins/admin/fai/class_divListFai.inc:142
 msgid "New partition table"
 msgstr "Nueva tabla de particiones"
 
-#: plugins/admin/fai/class_divListFai.inc:136
+#: plugins/admin/fai/class_divListFai.inc:142
 msgid "PT"
 msgstr ""
 
-#: plugins/admin/fai/class_divListFai.inc:139
+#: plugins/admin/fai/class_divListFai.inc:145
 msgid "New scripts"
 msgstr "Nuevos scripts"
 
-#: plugins/admin/fai/class_divListFai.inc:139
+#: plugins/admin/fai/class_divListFai.inc:145
 msgid "S"
 msgstr "S"
 
-#: plugins/admin/fai/class_divListFai.inc:142
+#: plugins/admin/fai/class_divListFai.inc:148
 msgid "New hooks"
 msgstr "Nuevas acciones"
 
-#: plugins/admin/fai/class_divListFai.inc:142
+#: plugins/admin/fai/class_divListFai.inc:148
 msgid "H"
 msgstr ""
 
-#: plugins/admin/fai/class_divListFai.inc:145
+#: plugins/admin/fai/class_divListFai.inc:151
 msgid "New variables"
 msgstr "Nuevas variables"
 
-#: plugins/admin/fai/class_divListFai.inc:145
+#: plugins/admin/fai/class_divListFai.inc:151
 msgid "V"
 msgstr ""
 
-#: plugins/admin/fai/class_divListFai.inc:148
+#: plugins/admin/fai/class_divListFai.inc:154
 msgid "New templates"
 msgstr "Nuevas plantillas"
 
-#: plugins/admin/fai/class_divListFai.inc:148
+#: plugins/admin/fai/class_divListFai.inc:154
 msgid "T"
 msgstr ""
 
-#: plugins/admin/fai/class_divListFai.inc:151
+#: plugins/admin/fai/class_divListFai.inc:157
 msgid "New package list"
 msgstr "Nueva lista de paquetes"
 
-#: plugins/admin/fai/class_divListFai.inc:151
+#: plugins/admin/fai/class_divListFai.inc:157
 msgid "PK"
 msgstr ""
 
-#: plugins/admin/fai/class_divListFai.inc:217
-#: plugins/admin/fai/class_divListFai.inc:222
+#: plugins/admin/fai/class_divListFai.inc:229
+#: plugins/admin/fai/class_divListFai.inc:234
 msgid "Edit class"
 msgstr "Editar clase"
 
-#: plugins/admin/fai/class_divListFai.inc:224
+#: plugins/admin/fai/class_divListFai.inc:236
 msgid "Delete class"
 msgstr "Eliminar clase"
 
@@ -6238,7 +6236,7 @@ msgid "Destination path"
 msgstr "Ruta de destino"
 
 #: plugins/admin/fai/faiTemplateEntry.tpl:62
-#: plugins/gofon/conference/class_divListConferences.inc:47
+#: plugins/gofon/conference/class_divListConferences.inc:53
 msgid "Owner"
 msgstr ""
 
@@ -6434,110 +6432,110 @@ msgstr ""
 "usar el selector de rango en la parte superior de la lista de grupos, cuando "
 "trabaja con un gran número de grupos."
 
-#: plugins/admin/groups/class_divListGroup.inc:49
+#: plugins/admin/groups/class_divListGroup.inc:55
 msgid "Groupname / Department"
 msgstr "Nombre de grupo / Departamento"
 
-#: plugins/admin/groups/class_divListGroup.inc:54
+#: plugins/admin/groups/class_divListGroup.inc:60
 msgid "Select to see groups that are primary groups of users"
 msgstr "Seleccione para ver que grupos son grupos primarios de usuarios"
 
-#: plugins/admin/groups/class_divListGroup.inc:54
+#: plugins/admin/groups/class_divListGroup.inc:60
 msgid "Show primary groups"
 msgstr "Mostrar grupos primarios"
 
-#: plugins/admin/groups/class_divListGroup.inc:55
+#: plugins/admin/groups/class_divListGroup.inc:61
 msgid "Select to see groups that have samba groups mappings"
 msgstr "Seleccione para ver que grupos tienen asignado un grupo samba"
 
-#: plugins/admin/groups/class_divListGroup.inc:55
+#: plugins/admin/groups/class_divListGroup.inc:61
 msgid "Show samba groups"
 msgstr "Mostrar los grupos samba"
 
-#: plugins/admin/groups/class_divListGroup.inc:56
+#: plugins/admin/groups/class_divListGroup.inc:62
 msgid "Select to see groups that have applications configured"
 msgstr "Seleccione para ver que grupos tienen aplicaciones configuradas"
 
-#: plugins/admin/groups/class_divListGroup.inc:56
+#: plugins/admin/groups/class_divListGroup.inc:62
 msgid "Show application groups"
 msgstr "Mostrar los grupos de aplicaciones"
 
-#: plugins/admin/groups/class_divListGroup.inc:57
+#: plugins/admin/groups/class_divListGroup.inc:63
 msgid "Select to see groups that have mail settings"
 msgstr ""
 "Seleccione para ver que grupos tienen configuración de correo electrónico"
 
-#: plugins/admin/groups/class_divListGroup.inc:57
+#: plugins/admin/groups/class_divListGroup.inc:63
 msgid "Show mail groups"
 msgstr "Mostrar grupos de correo"
 
-#: plugins/admin/groups/class_divListGroup.inc:58
+#: plugins/admin/groups/class_divListGroup.inc:64
 msgid "Select to see normal groups that have only functional aspects"
 msgstr "Seleccione para ver que grupos tienen solo aspectos funcionales"
 
-#: plugins/admin/groups/class_divListGroup.inc:58
+#: plugins/admin/groups/class_divListGroup.inc:64
 msgid "Show functional groups"
 msgstr "Mostrar grupos funcionales"
 
-#: plugins/admin/groups/class_divListGroup.inc:106
+#: plugins/admin/groups/class_divListGroup.inc:112
 msgid "Create new group"
 msgstr "Crear nuevo grupo"
 
-#: plugins/admin/groups/class_divListGroup.inc:134
-#: plugins/admin/users/class_divListUsers.inc:155
+#: plugins/admin/groups/class_divListGroup.inc:146
+#: plugins/admin/users/class_divListUsers.inc:167
 msgid "Posix"
 msgstr "Posix"
 
-#: plugins/admin/groups/class_divListGroup.inc:140
-#: plugins/admin/applications/class_divListApplication.inc:139
+#: plugins/admin/groups/class_divListGroup.inc:152
+#: plugins/admin/applications/class_divListApplication.inc:144
 #: plugins/admin/ogroups/class_ogroupManagement.inc:375
 #: plugins/gofon/fonreports/contents.tpl:34
 #: plugins/generic/references/class_reference.inc:42
 msgid "Application"
 msgstr "Aplicación"
 
-#: plugins/admin/groups/class_divListGroup.inc:160
-#: plugins/admin/users/class_divListUsers.inc:211
-#: plugins/admin/applications/class_divListApplication.inc:155
-#: plugins/admin/ogroups/class_divListOGroup.inc:151
+#: plugins/admin/groups/class_divListGroup.inc:171
+#: plugins/admin/users/class_divListUsers.inc:223
+#: plugins/admin/applications/class_divListApplication.inc:163
+#: plugins/admin/ogroups/class_divListOGroup.inc:163
 msgid "cut"
 msgstr "Cortar"
 
-#: plugins/admin/groups/class_divListGroup.inc:160
-#: plugins/admin/users/class_divListUsers.inc:211
-#: plugins/admin/applications/class_divListApplication.inc:155
-#: plugins/admin/ogroups/class_divListOGroup.inc:151
+#: plugins/admin/groups/class_divListGroup.inc:171
+#: plugins/admin/users/class_divListUsers.inc:223
+#: plugins/admin/applications/class_divListApplication.inc:163
+#: plugins/admin/ogroups/class_divListOGroup.inc:163
 msgid "Cut this entry"
 msgstr "Cortar por esta entrada"
 
-#: plugins/admin/groups/class_divListGroup.inc:162
-#: plugins/admin/users/class_divListUsers.inc:213
-#: plugins/admin/applications/class_divListApplication.inc:157
-#: plugins/admin/ogroups/class_divListOGroup.inc:153
+#: plugins/admin/groups/class_divListGroup.inc:173
+#: plugins/admin/users/class_divListUsers.inc:225
+#: plugins/admin/applications/class_divListApplication.inc:165
+#: plugins/admin/ogroups/class_divListOGroup.inc:165
 msgid "copy"
 msgstr ""
 
-#: plugins/admin/groups/class_divListGroup.inc:162
-#: plugins/admin/users/class_divListUsers.inc:213
-#: plugins/admin/applications/class_divListApplication.inc:157
-#: plugins/admin/ogroups/class_divListOGroup.inc:153
+#: plugins/admin/groups/class_divListGroup.inc:173
+#: plugins/admin/users/class_divListUsers.inc:225
+#: plugins/admin/applications/class_divListApplication.inc:165
+#: plugins/admin/ogroups/class_divListOGroup.inc:165
 msgid "Copy this entry"
 msgstr "Copiar esta entrada"
 
-#: plugins/admin/groups/class_divListGroup.inc:165
-#: plugins/admin/applications/class_divListApplication.inc:160
-#: plugins/admin/departments/class_divListDepartment.inc:117
-#: plugins/admin/ogroups/class_divListOGroup.inc:156
-#: plugins/gofon/conference/class_divListConferences.inc:120
+#: plugins/admin/groups/class_divListGroup.inc:176
+#: plugins/admin/applications/class_divListApplication.inc:168
+#: plugins/admin/departments/class_divListDepartment.inc:129
+#: plugins/admin/ogroups/class_divListOGroup.inc:168
+#: plugins/gofon/conference/class_divListConferences.inc:131
 msgid "Edit this entry"
 msgstr "Editar esta entrada"
 
-#: plugins/admin/groups/class_divListGroup.inc:167
-#: plugins/admin/applications/class_divListApplication.inc:162
-#: plugins/admin/departments/class_divListDepartment.inc:119
-#: plugins/admin/ogroups/class_divListOGroup.inc:158
-#: plugins/gofon/conference/class_divListConferences.inc:122
-#: plugins/gofon/conference/class_divListConferences.inc:124
+#: plugins/admin/groups/class_divListGroup.inc:178
+#: plugins/admin/applications/class_divListApplication.inc:170
+#: plugins/admin/departments/class_divListDepartment.inc:131
+#: plugins/admin/ogroups/class_divListOGroup.inc:170
+#: plugins/gofon/conference/class_divListConferences.inc:133
+#: plugins/gofon/conference/class_divListConferences.inc:135
 msgid "Delete this entry"
 msgstr "Borrar esta entrada"
 
@@ -6609,8 +6607,8 @@ msgid "Please select a valid mail server."
 msgstr "Por favor seleccione un servidor de correo valido."
 
 #: plugins/admin/groups/acl.tpl:4
-#: plugins/admin/departments/class_departmentGeneric.inc:479
-#: plugins/admin/systems/snapshotdialog.tpl:70 include/class_ldap.inc:455
+#: plugins/admin/departments/class_departmentGeneric.inc:484
+#: include/class_ldap.inc:455 ihtml/themes/default/snapshotdialog.tpl:70
 msgid "Object"
 msgstr "Objeto"
 
@@ -6648,7 +6646,7 @@ msgid "Select users to add"
 msgstr "Seleccione usuarios que serán añadidos"
 
 #: plugins/admin/groups/group_objects.tpl:30
-#: plugins/admin/systems/class_divListSystem.inc:56
+#: plugins/admin/systems/class_divListSystem.inc:62
 #: plugins/admin/ogroups/ogroup_objects.tpl:31
 msgid "Select to see servers"
 msgstr "Seleccione para ver los servidores"
@@ -6808,7 +6806,7 @@ msgid "The selected application has no options."
 msgstr "La aplicación seleccionada no tiene opciones."
 
 #: plugins/admin/groups/class_groupApplication.inc:638
-#: plugins/admin/departments/class_divListDepartment.inc:134
+#: plugins/admin/departments/class_divListDepartment.inc:146
 msgid "department"
 msgstr "departamento"
 
@@ -6900,10 +6898,10 @@ msgid "You are not allowed to delete this user!"
 msgstr "No le es permitido borrar este usuario"
 
 #: plugins/admin/users/class_userManagement.inc:453
-#: plugins/admin/systems/snapshotdialog.tpl:35
 #: plugins/admin/systems/class_glpiDeviceManagement.inc:393
 #: plugins/admin/systems/class_SelectDeviceType.inc:29
 #: plugins/admin/ogroups/class_ogroup.inc:277
+#: ihtml/themes/default/snapshotdialog.tpl:35
 msgid "none"
 msgstr "ninguno"
 
@@ -6961,125 +6959,125 @@ msgstr ""
 "seleccionados. Si tiene un gran numero de usuarios usted preferirá usar los "
 "selectores de rangos en la parte superior del listado."
 
-#: plugins/admin/users/class_divListUsers.inc:50
+#: plugins/admin/users/class_divListUsers.inc:56
 #: ihtml/themes/default/setup_useradmin.tpl:22
 #: ihtml/themes/default/login.tpl:28 ihtml/themes/default/login.tpl:32
 msgid "Username"
 msgstr "Nombre de Usuario"
 
-#: plugins/admin/users/class_divListUsers.inc:54
+#: plugins/admin/users/class_divListUsers.inc:60
 msgid "Select to see template pseudo users"
 msgstr "Seleccione para mostrar los usuarios pseudo plantillas"
 
-#: plugins/admin/users/class_divListUsers.inc:55
+#: plugins/admin/users/class_divListUsers.inc:61
 msgid "Select to see users that have only a GOsa object"
 msgstr "Seleccione para ver los usuarios que solo tienen objeto GOsa"
 
-#: plugins/admin/users/class_divListUsers.inc:55
+#: plugins/admin/users/class_divListUsers.inc:61
 msgid "Show functional users"
 msgstr "Mostrar usuarios funcionales"
 
-#: plugins/admin/users/class_divListUsers.inc:56
+#: plugins/admin/users/class_divListUsers.inc:62
 msgid "Select to see users that have posix settings"
 msgstr "Seleccione para ver usuario que tienen configuraciones posix"
 
-#: plugins/admin/users/class_divListUsers.inc:56
+#: plugins/admin/users/class_divListUsers.inc:62
 msgid "Show unix users"
 msgstr "Mostrar los usuarios unix"
 
-#: plugins/admin/users/class_divListUsers.inc:57
+#: plugins/admin/users/class_divListUsers.inc:63
 msgid "Select to see users that have mail settings"
 msgstr "Seleccione para ver los usuarios que tiene confiraciones de correo"
 
-#: plugins/admin/users/class_divListUsers.inc:57
+#: plugins/admin/users/class_divListUsers.inc:63
 msgid "Show mail users"
 msgstr "Mostrar los usuarios de correo"
 
-#: plugins/admin/users/class_divListUsers.inc:58
+#: plugins/admin/users/class_divListUsers.inc:64
 msgid "Select to see users that have samba settings"
 msgstr "Seleccione para ver los usuarios que tiene configuraciones samba"
 
-#: plugins/admin/users/class_divListUsers.inc:58
+#: plugins/admin/users/class_divListUsers.inc:64
 msgid "Show samba users"
 msgstr "Mostrar usuarios samba"
 
-#: plugins/admin/users/class_divListUsers.inc:59
+#: plugins/admin/users/class_divListUsers.inc:65
 msgid "Select to see users that have proxy settings"
 msgstr "Seleccione para ver los usuarios que tienen configuraciones de proxy"
 
-#: plugins/admin/users/class_divListUsers.inc:59
+#: plugins/admin/users/class_divListUsers.inc:65
 msgid "Show proxy users"
 msgstr "Mostrar los usuarios de proxy"
 
-#: plugins/admin/users/class_divListUsers.inc:110
+#: plugins/admin/users/class_divListUsers.inc:116
 msgid "Create new user"
 msgstr "Crear nuevo usuario"
 
-#: plugins/admin/users/class_divListUsers.inc:110
+#: plugins/admin/users/class_divListUsers.inc:116
 msgid "New user"
 msgstr "Nuevo usuario"
 
-#: plugins/admin/users/class_divListUsers.inc:112
+#: plugins/admin/users/class_divListUsers.inc:118
 msgid "Create new template"
 msgstr "Crear nueva plantilla"
 
-#: plugins/admin/users/class_divListUsers.inc:112
+#: plugins/admin/users/class_divListUsers.inc:118
 msgid "New template"
 msgstr "Nueva plantilla"
 
-#: plugins/admin/users/class_divListUsers.inc:153
+#: plugins/admin/users/class_divListUsers.inc:165
 msgid "GOsa"
 msgstr ""
 
-#: plugins/admin/users/class_divListUsers.inc:154
+#: plugins/admin/users/class_divListUsers.inc:166
 msgid "Edit generic properties"
 msgstr "Editar propiedades genéricas"
 
-#: plugins/admin/users/class_divListUsers.inc:156
+#: plugins/admin/users/class_divListUsers.inc:168
 msgid "Edit UNIX properties"
 msgstr "Editar propiedades UNIX"
 
-#: plugins/admin/users/class_divListUsers.inc:158
+#: plugins/admin/users/class_divListUsers.inc:170
 msgid "Edit environment properties"
 msgstr "Editar propiedades de estado"
 
-#: plugins/admin/users/class_divListUsers.inc:160
+#: plugins/admin/users/class_divListUsers.inc:172
 msgid "Edit mail properties"
 msgstr "Editar propiedades de correo"
 
-#: plugins/admin/users/class_divListUsers.inc:162
+#: plugins/admin/users/class_divListUsers.inc:174
 msgid "Edit phone properties"
 msgstr "Editar propiedades telefónicas"
 
-#: plugins/admin/users/class_divListUsers.inc:164
+#: plugins/admin/users/class_divListUsers.inc:176
 msgid "Edit fax properies"
 msgstr "Editar propiedades de fax"
 
-#: plugins/admin/users/class_divListUsers.inc:166
+#: plugins/admin/users/class_divListUsers.inc:178
 msgid "Edit samba properties"
 msgstr "Editar propiedades samba"
 
-#: plugins/admin/users/class_divListUsers.inc:168
+#: plugins/admin/users/class_divListUsers.inc:180
 msgid "Edit netatalk properties"
 msgstr "Editar propiedades Netatalk"
 
-#: plugins/admin/users/class_divListUsers.inc:169
+#: plugins/admin/users/class_divListUsers.inc:181
 msgid "Create user from template"
 msgstr "Crear usuario desde plantilla"
 
-#: plugins/admin/users/class_divListUsers.inc:170
+#: plugins/admin/users/class_divListUsers.inc:182
 msgid "Create user with this template"
 msgstr "Crear usuario con esta plantilla"
 
-#: plugins/admin/users/class_divListUsers.inc:217
+#: plugins/admin/users/class_divListUsers.inc:229
 msgid "password"
 msgstr "contraseña"
 
-#: plugins/admin/users/class_divListUsers.inc:239
+#: plugins/admin/users/class_divListUsers.inc:251
 msgid "Online"
 msgstr "En linea"
 
-#: plugins/admin/users/class_divListUsers.inc:246
+#: plugins/admin/users/class_divListUsers.inc:258
 msgid "Offline"
 msgstr "Fuera de linea"
 
@@ -7101,19 +7099,19 @@ msgstr ""
 "Puede usar el selector de rango en la parte superior de la lista de "
 "aplicaciones, cuando trabaja con un gran número de aplicaciones."
 
-#: plugins/admin/applications/class_divListApplication.inc:46
+#: plugins/admin/applications/class_divListApplication.inc:51
 #: plugins/admin/applications/generic.tpl:7
 #: plugins/admin/applications/generic.tpl:8
 #: plugins/admin/applications/class_applicationGeneric.inc:446
 msgid "Application name"
 msgstr "Nombre de la aplicación"
 
-#: plugins/admin/applications/class_divListApplication.inc:109
-#: plugins/admin/ogroups/class_divListOGroup.inc:116
+#: plugins/admin/applications/class_divListApplication.inc:114
+#: plugins/admin/ogroups/class_divListOGroup.inc:122
 msgid "new"
 msgstr "nuevo"
 
-#: plugins/admin/applications/class_divListApplication.inc:110
+#: plugins/admin/applications/class_divListApplication.inc:115
 msgid "Create new application"
 msgstr "Crear nueva aplicación"
 
@@ -7311,11 +7309,11 @@ msgstr ""
 "Puede usar el selector de rango en la parte superior de la lista de "
 "departamentos, cuando trabaja con un gran número de departamentos."
 
-#: plugins/admin/departments/class_divListDepartment.inc:41
+#: plugins/admin/departments/class_divListDepartment.inc:47
 msgid "Department name"
 msgstr "Nombre del departamento"
 
-#: plugins/admin/departments/class_divListDepartment.inc:85
+#: plugins/admin/departments/class_divListDepartment.inc:91
 msgid "Create new department"
 msgstr "Crear nuevo departamento"
 
@@ -7446,24 +7444,24 @@ msgstr ""
 msgid "Saving department failed"
 msgstr "Ha fallado la grabación del departamento"
 
-#: plugins/admin/departments/class_departmentGeneric.inc:366
+#: plugins/admin/departments/class_departmentGeneric.inc:371
 #, php-format
 msgid "Tagging '%s'."
 msgstr ""
 
-#: plugins/admin/departments/class_departmentGeneric.inc:443
+#: plugins/admin/departments/class_departmentGeneric.inc:448
 #, php-format
 msgid "Moving '%s' to '%s'"
 msgstr ""
 
-#: plugins/admin/departments/class_departmentGeneric.inc:482
+#: plugins/admin/departments/class_departmentGeneric.inc:487
 #, php-format
 msgid "FAILED to copy %s, aborting operation"
 msgstr ""
 
 #: plugins/admin/departments/class_departmentManagement.inc:25
 #: plugins/admin/systems/class_glpiSelectUser.inc:112
-#: plugins/admin/ogroups/class_divListOGroup.inc:52
+#: plugins/admin/ogroups/class_divListOGroup.inc:58
 msgid "Departments"
 msgstr "Departamentos"
 
@@ -9208,11 +9206,6 @@ msgstr "Mostrar dispositivos que concuerden con"
 msgid "Regular expression for matching device names"
 msgstr "Expresiones regulares que concuerden con nombres de dispositivos"
 
-#: plugins/admin/systems/class_SnapShotDialog.inc:79
-#, fuzzy
-msgid "Please specify a valid description for this snapshot."
-msgstr "Por favor especifique un nombre de adjunto valido."
-
 #: plugins/admin/systems/class_glpiPrinterAccount.inc:200
 msgid ""
 "This server has inventory features enabled. You can disable them by clicking "
@@ -9559,37 +9552,6 @@ msgstr "Ha fallado la eliminación del contenedor de montaje"
 msgid "Saving mount container failed"
 msgstr "Ha fallado la grabación del contenedor de montaje"
 
-#: plugins/admin/systems/snapshotdialog.tpl:3
-msgid "Restoring an object snapshot"
-msgstr ""
-
-#: plugins/admin/systems/snapshotdialog.tpl:6
-#: plugins/admin/systems/snapshotdialog.tpl:57
-msgid "This procedure will create a working snapshot of the selected object."
-msgstr ""
-
-#: plugins/admin/systems/snapshotdialog.tpl:13
-#: plugins/admin/systems/snapshotdialog.tpl:62
-msgid "You will be able to restore from"
-msgstr ""
-
-#: plugins/admin/systems/snapshotdialog.tpl:15
-msgid "There are no available snapshots."
-msgstr ""
-
-#: plugins/admin/systems/snapshotdialog.tpl:25
-msgid "There is no snapshot available that could be restored."
-msgstr ""
-
-#: plugins/admin/systems/snapshotdialog.tpl:27
-msgid "Choose a snapshot and click continue, to restore the snapshot."
-msgstr ""
-
-#: plugins/admin/systems/snapshotdialog.tpl:54
-#, fuzzy
-msgid "Creating an object snapshot"
-msgstr "Crear nuevo objeto grupo"
-
 #: plugins/admin/systems/servdnseditzone.tpl:7
 msgid "Zone name"
 msgstr "Nombre de la zona"
@@ -9690,157 +9652,157 @@ msgstr ""
 "Este menú permite añadir, modificar o eliminar las propiedades de sistemas "
 "específicos. Solo puede añadir sistemas que han sido ya iniciados alguna vez."
 
-#: plugins/admin/systems/class_divListSystem.inc:52
+#: plugins/admin/systems/class_divListSystem.inc:58
 msgid "System / Department"
 msgstr "Sistema / Departamento"
 
-#: plugins/admin/systems/class_divListSystem.inc:56
+#: plugins/admin/systems/class_divListSystem.inc:62
 #: plugins/admin/ogroups/ogroup_objects.tpl:31
 msgid "Show servers"
 msgstr "Mostrar servidores"
 
-#: plugins/admin/systems/class_divListSystem.inc:57
+#: plugins/admin/systems/class_divListSystem.inc:63
 msgid "Select to see Linux terminals"
 msgstr "Seleccione para ver los terminales Linux"
 
-#: plugins/admin/systems/class_divListSystem.inc:57
+#: plugins/admin/systems/class_divListSystem.inc:63
 #: plugins/admin/ogroups/ogroup_objects.tpl:33
 msgid "Show terminals"
 msgstr "Mostrar terminales"
 
-#: plugins/admin/systems/class_divListSystem.inc:58
+#: plugins/admin/systems/class_divListSystem.inc:64
 msgid "Select to see Linux workstations"
 msgstr "Seleccione para ver las estaciones de trabajo Linux"
 
-#: plugins/admin/systems/class_divListSystem.inc:58
+#: plugins/admin/systems/class_divListSystem.inc:64
 #: plugins/admin/ogroups/ogroup_objects.tpl:32
 msgid "Show workstations"
 msgstr "Mostrar estaciones de trabajo"
 
-#: plugins/admin/systems/class_divListSystem.inc:59
+#: plugins/admin/systems/class_divListSystem.inc:65
 msgid "Select to see MicroSoft Windows based workstations"
 msgstr "Seleccione para ver estaciones de trabajo basadas en Windows"
 
-#: plugins/admin/systems/class_divListSystem.inc:59
+#: plugins/admin/systems/class_divListSystem.inc:65
 msgid "Show windows based workstations"
 msgstr "Mostrara estaciones de trabajo basadas en windows"
 
-#: plugins/admin/systems/class_divListSystem.inc:60
+#: plugins/admin/systems/class_divListSystem.inc:66
 msgid "Select to see network printers"
 msgstr "Seleccione para ver impresoras de red"
 
-#: plugins/admin/systems/class_divListSystem.inc:60
+#: plugins/admin/systems/class_divListSystem.inc:66
 msgid "Show network printers"
 msgstr "Mostrar impresoras de red"
 
-#: plugins/admin/systems/class_divListSystem.inc:61
+#: plugins/admin/systems/class_divListSystem.inc:67
 msgid "Select to see VOIP phones"
 msgstr "Seleccione para ver teléfonos VOIP"
 
-#: plugins/admin/systems/class_divListSystem.inc:61
+#: plugins/admin/systems/class_divListSystem.inc:67
 #: plugins/admin/ogroups/ogroup_objects.tpl:35
 msgid "Show phones"
 msgstr "Mostrar teléfonos"
 
-#: plugins/admin/systems/class_divListSystem.inc:62
+#: plugins/admin/systems/class_divListSystem.inc:68
 msgid "Select to see network devices"
 msgstr "Seleccione para ver los dispositivos de red"
 
-#: plugins/admin/systems/class_divListSystem.inc:62
+#: plugins/admin/systems/class_divListSystem.inc:68
 msgid "Show network devices"
 msgstr "Mostrar dispositivos de Red"
 
-#: plugins/admin/systems/class_divListSystem.inc:70
+#: plugins/admin/systems/class_divListSystem.inc:76
 msgid "Display systems of user"
 msgstr "Mostrar sistemas del usuario"
 
-#: plugins/admin/systems/class_divListSystem.inc:103
+#: plugins/admin/systems/class_divListSystem.inc:109
 msgid "New Terminal template"
 msgstr "Nueva plantilla de terminal"
 
-#: plugins/admin/systems/class_divListSystem.inc:103
+#: plugins/admin/systems/class_divListSystem.inc:109
 #: plugins/admin/systems/class_systemManagement.inc:765
 msgid "New Terminal"
 msgstr "Nuevo terminal"
 
-#: plugins/admin/systems/class_divListSystem.inc:105
+#: plugins/admin/systems/class_divListSystem.inc:111
 msgid "New Workstation template"
 msgstr "Nueva plantilla de estación de trabajo"
 
-#: plugins/admin/systems/class_divListSystem.inc:105
+#: plugins/admin/systems/class_divListSystem.inc:111
 #: plugins/admin/systems/class_systemManagement.inc:766
 msgid "New Workstation"
 msgstr "Nueva estación de trabajo"
 
-#: plugins/admin/systems/class_divListSystem.inc:106
-#: plugins/admin/systems/class_divListSystem.inc:107
+#: plugins/admin/systems/class_divListSystem.inc:112
+#: plugins/admin/systems/class_divListSystem.inc:113
 msgid "New Server"
 msgstr "Nuevo servidor"
 
-#: plugins/admin/systems/class_divListSystem.inc:108
-#: plugins/admin/systems/class_divListSystem.inc:109
+#: plugins/admin/systems/class_divListSystem.inc:114
+#: plugins/admin/systems/class_divListSystem.inc:115
 msgid "New Printer"
 msgstr "Nueva impresora"
 
-#: plugins/admin/systems/class_divListSystem.inc:110
-#: plugins/admin/systems/class_divListSystem.inc:111
+#: plugins/admin/systems/class_divListSystem.inc:116
+#: plugins/admin/systems/class_divListSystem.inc:117
 msgid "New Phone"
 msgstr "Nuevo teléfono"
 
-#: plugins/admin/systems/class_divListSystem.inc:112
-#: plugins/admin/systems/class_divListSystem.inc:113
+#: plugins/admin/systems/class_divListSystem.inc:118
+#: plugins/admin/systems/class_divListSystem.inc:119
 msgid "New Component"
 msgstr "Nuevo componente"
 
-#: plugins/admin/systems/class_divListSystem.inc:131
+#: plugins/admin/systems/class_divListSystem.inc:137
 msgid "Cups Server"
 msgstr "Servidor CUPS"
 
-#: plugins/admin/systems/class_divListSystem.inc:132
+#: plugins/admin/systems/class_divListSystem.inc:138
 msgid "Log Db"
 msgstr ""
 
-#: plugins/admin/systems/class_divListSystem.inc:133
+#: plugins/admin/systems/class_divListSystem.inc:139
 msgid "Syslog Server"
 msgstr "Servidor SYSLOG"
 
-#: plugins/admin/systems/class_divListSystem.inc:134
+#: plugins/admin/systems/class_divListSystem.inc:140
 msgid "Mail Server"
 msgstr "Servidor de correo"
 
-#: plugins/admin/systems/class_divListSystem.inc:135
+#: plugins/admin/systems/class_divListSystem.inc:141
 msgid "Imap Server"
 msgstr "Servidor IMAP"
 
-#: plugins/admin/systems/class_divListSystem.inc:136
+#: plugins/admin/systems/class_divListSystem.inc:142
 msgid "Nfs Server"
 msgstr "Servidor NFS"
 
-#: plugins/admin/systems/class_divListSystem.inc:137
+#: plugins/admin/systems/class_divListSystem.inc:143
 msgid "Kerberos Server"
 msgstr "Servidor Kerberos"
 
-#: plugins/admin/systems/class_divListSystem.inc:138
+#: plugins/admin/systems/class_divListSystem.inc:144
 msgid "Asterisk Server"
 msgstr "Servidor Asterisk"
 
-#: plugins/admin/systems/class_divListSystem.inc:139
+#: plugins/admin/systems/class_divListSystem.inc:145
 msgid "Fax Server"
 msgstr "Servidor FAX"
 
-#: plugins/admin/systems/class_divListSystem.inc:140
+#: plugins/admin/systems/class_divListSystem.inc:146
 msgid "Ldap Server"
 msgstr "Servidor LDAP"
 
-#: plugins/admin/systems/class_divListSystem.inc:151
+#: plugins/admin/systems/class_divListSystem.inc:163
 msgid "Edit system"
 msgstr "Editar sistema"
 
-#: plugins/admin/systems/class_divListSystem.inc:152
+#: plugins/admin/systems/class_divListSystem.inc:164
 msgid "Delete system"
 msgstr "Eliminar sistema"
 
-#: plugins/admin/systems/class_divListSystem.inc:183
+#: plugins/admin/systems/class_divListSystem.inc:195
 msgid "Set root       password"
 msgstr "Poner Contraseña de root"
 
@@ -11239,12 +11201,12 @@ msgid "This 'dn' has no phone features."
 msgstr "Esta 'dn' no tiene características de teléfono."
 
 #: plugins/admin/systems/class_phoneGeneric.inc:203
-#: plugins/gofon/macro/class_divListMacros.inc:116
+#: plugins/gofon/macro/class_divListMacros.inc:122
 msgid "yes"
 msgstr "si"
 
 #: plugins/admin/systems/class_phoneGeneric.inc:203
-#: plugins/gofon/macro/class_divListMacros.inc:117
+#: plugins/gofon/macro/class_divListMacros.inc:123
 msgid "no"
 msgstr "no"
 
@@ -11450,87 +11412,87 @@ msgstr ""
 "Puede usar el selector de rango en la parte superior de la lista de grupos, "
 "cuando trabaja con un gran número de grupos."
 
-#: plugins/admin/ogroups/class_divListOGroup.inc:52
+#: plugins/admin/ogroups/class_divListOGroup.inc:58
 msgid "Name of object groups"
 msgstr "Nombre del objeto grupo"
 
-#: plugins/admin/ogroups/class_divListOGroup.inc:57
+#: plugins/admin/ogroups/class_divListOGroup.inc:63
 msgid "Select to see groups containing users"
 msgstr "Seleccione para mostrar grupos que tienen usuarios"
 
-#: plugins/admin/ogroups/class_divListOGroup.inc:57
+#: plugins/admin/ogroups/class_divListOGroup.inc:63
 msgid "Show groups containing users"
 msgstr "Mostrar grupos que tienen usuarios"
 
-#: plugins/admin/ogroups/class_divListOGroup.inc:58
+#: plugins/admin/ogroups/class_divListOGroup.inc:64
 msgid "Select to see groups containing groups"
 msgstr "Seleccione para mostrar grupos que contienen grupos"
 
-#: plugins/admin/ogroups/class_divListOGroup.inc:58
+#: plugins/admin/ogroups/class_divListOGroup.inc:64
 msgid "Show groups containing groups"
 msgstr "Mostrar grupos que contienen grupos"
 
-#: plugins/admin/ogroups/class_divListOGroup.inc:59
+#: plugins/admin/ogroups/class_divListOGroup.inc:65
 msgid "Select to see groups containing applications"
 msgstr "seleccione para mostrar grupos que contienen aplicaciones"
 
-#: plugins/admin/ogroups/class_divListOGroup.inc:59
+#: plugins/admin/ogroups/class_divListOGroup.inc:65
 msgid "Show groups containing applications"
 msgstr "Mostrar grupos que contienen aplicaciones"
 
-#: plugins/admin/ogroups/class_divListOGroup.inc:60
+#: plugins/admin/ogroups/class_divListOGroup.inc:66
 msgid "Select to see groups containing departments"
 msgstr "Seleccione para mostrar grupos que contienen departamentos"
 
-#: plugins/admin/ogroups/class_divListOGroup.inc:60
+#: plugins/admin/ogroups/class_divListOGroup.inc:66
 msgid "Show groups containing departments"
 msgstr "Mostrar grupos que contienen departamentos"
 
-#: plugins/admin/ogroups/class_divListOGroup.inc:61
+#: plugins/admin/ogroups/class_divListOGroup.inc:67
 msgid "Select to see groups containing servers"
 msgstr "Seleccione para mostrar grupos que contienen servidores"
 
-#: plugins/admin/ogroups/class_divListOGroup.inc:61
+#: plugins/admin/ogroups/class_divListOGroup.inc:67
 msgid "Show groups containing servers"
 msgstr "Mostrar grupos que contienen servidores"
 
-#: plugins/admin/ogroups/class_divListOGroup.inc:62
+#: plugins/admin/ogroups/class_divListOGroup.inc:68
 msgid "Select to see groups containing workstations"
 msgstr "Seleccione para mostrar grupos que contienen estaciones de trabajo"
 
-#: plugins/admin/ogroups/class_divListOGroup.inc:62
+#: plugins/admin/ogroups/class_divListOGroup.inc:68
 msgid "Show groups containing workstations"
 msgstr "Mostrar grupos que contienen estaciones de trabajo"
 
-#: plugins/admin/ogroups/class_divListOGroup.inc:63
+#: plugins/admin/ogroups/class_divListOGroup.inc:69
 msgid "Select to see groups containing terminals"
 msgstr "Seleccione para mostrar grupos que contienen terminales"
 
-#: plugins/admin/ogroups/class_divListOGroup.inc:63
+#: plugins/admin/ogroups/class_divListOGroup.inc:69
 msgid "Show groups containing terminals"
 msgstr "Mostrar grupos que contienen terminales"
 
-#: plugins/admin/ogroups/class_divListOGroup.inc:64
+#: plugins/admin/ogroups/class_divListOGroup.inc:70
 msgid "Select to see groups containing printer"
 msgstr "Seleccione para mostrar grupos que contienen impresoras"
 
-#: plugins/admin/ogroups/class_divListOGroup.inc:64
+#: plugins/admin/ogroups/class_divListOGroup.inc:70
 msgid "Show groups containing printer"
 msgstr "Mostrar grupos que contienen impresoras"
 
-#: plugins/admin/ogroups/class_divListOGroup.inc:65
+#: plugins/admin/ogroups/class_divListOGroup.inc:71
 msgid "Select to see groups containing phones"
 msgstr "Seleccione para mostrar grupos que contienen teléfonos"
 
-#: plugins/admin/ogroups/class_divListOGroup.inc:65
+#: plugins/admin/ogroups/class_divListOGroup.inc:71
 msgid "Show groups containing phones"
 msgstr "Mostrar grupos que contienen teléfonos"
 
-#: plugins/admin/ogroups/class_divListOGroup.inc:116
+#: plugins/admin/ogroups/class_divListOGroup.inc:122
 msgid "Create new object group"
 msgstr "Crear nuevo objeto grupo"
 
-#: plugins/admin/ogroups/class_divListOGroup.inc:172
+#: plugins/admin/ogroups/class_divListOGroup.inc:184
 #: plugins/generic/references/class_reference.inc:50
 msgid "Object group"
 msgstr "Grupo de objetos"
@@ -11949,50 +11911,50 @@ msgstr ""
 "usar el selector de rango en la parte superior de la lista de grupos, cuando "
 "trabaja con un gran número de grupos."
 
-#: plugins/gofon/macro/class_divListMacros.inc:46
+#: plugins/gofon/macro/class_divListMacros.inc:52
 #, fuzzy
 msgid "macro name"
 msgstr "Nombre de la macro"
 
-#: plugins/gofon/macro/class_divListMacros.inc:47
+#: plugins/gofon/macro/class_divListMacros.inc:53
 #, fuzzy
 msgid "Visible"
 msgstr "Variable"
 
-#: plugins/gofon/macro/class_divListMacros.inc:54
+#: plugins/gofon/macro/class_divListMacros.inc:60
 #: plugins/gofon/macro/headpage.tpl:41
 #, fuzzy
 msgid "Regular expression for matching macro names"
 msgstr "Expresión regular que concuerde con nombres de grupos"
 
-#: plugins/gofon/macro/class_divListMacros.inc:90
+#: plugins/gofon/macro/class_divListMacros.inc:96
 #, fuzzy
 msgid "Create new phone macro"
 msgstr "Crear cuenta telefónica"
 
-#: plugins/gofon/macro/class_divListMacros.inc:110
-#: plugins/gofon/macro/class_divListMacros.inc:124
+#: plugins/gofon/macro/class_divListMacros.inc:116
+#: plugins/gofon/macro/class_divListMacros.inc:136
 #, fuzzy
 msgid "Edit macro"
 msgstr "Editar recurso compartido"
 
-#: plugins/gofon/macro/class_divListMacros.inc:112
-#: plugins/gofon/macro/class_divListMacros.inc:126
+#: plugins/gofon/macro/class_divListMacros.inc:118
+#: plugins/gofon/macro/class_divListMacros.inc:138
 #, fuzzy
 msgid "Delete macro"
 msgstr "Borrar usuario"
 
-#: plugins/gofon/macro/class_divListMacros.inc:115
+#: plugins/gofon/macro/class_divListMacros.inc:121
 #, fuzzy
 msgid "Macro"
 msgstr "Nombre de la maquina"
 
-#: plugins/gofon/macro/class_divListMacros.inc:116
+#: plugins/gofon/macro/class_divListMacros.inc:122
 #, fuzzy
 msgid "visible"
 msgstr "Visible Publicamente"
 
-#: plugins/gofon/macro/class_divListMacros.inc:117
+#: plugins/gofon/macro/class_divListMacros.inc:123
 #, fuzzy
 msgid "invisible"
 msgstr "Visible Publicamente"
@@ -12353,32 +12315,32 @@ msgstr ""
 "Puede usar el selector de rango en la parte superior de la lista de "
 "departamentos, cuando trabaja con un gran número de departamentos."
 
-#: plugins/gofon/conference/class_divListConferences.inc:46
+#: plugins/gofon/conference/class_divListConferences.inc:52
 #, fuzzy
 msgid "Name - Number"
 msgstr "Número de teléfono"
 
-#: plugins/gofon/conference/class_divListConferences.inc:48
+#: plugins/gofon/conference/class_divListConferences.inc:54
 #: plugins/gofon/conference/generic.tpl:112
 msgid "PIN"
 msgstr ""
 
-#: plugins/gofon/conference/class_divListConferences.inc:55
+#: plugins/gofon/conference/class_divListConferences.inc:61
 #, fuzzy
 msgid "Regular expression for matching conference names"
 msgstr "Expresiones regulares que concuerden con nombres de usuarios"
 
-#: plugins/gofon/conference/class_divListConferences.inc:84
+#: plugins/gofon/conference/class_divListConferences.inc:90
 #, fuzzy
 msgid "Create new conference"
 msgstr "Crear una nueva entrada en"
 
-#: plugins/gofon/conference/class_divListConferences.inc:84
+#: plugins/gofon/conference/class_divListConferences.inc:90
 #, fuzzy
 msgid "New conference"
 msgstr "Número de teléfono"
 
-#: plugins/gofon/conference/class_divListConferences.inc:149
+#: plugins/gofon/conference/class_divListConferences.inc:160
 #, fuzzy
 msgid "Conference"
 msgstr "Referencias"
@@ -13719,6 +13681,11 @@ msgstr ""
 msgid "Ldap import failed"
 msgstr "Ha fallado la grabación de la impresora"
 
+#: include/class_SnapShotDialog.inc:79
+#, fuzzy
+msgid "Please specify a valid description for this snapshot."
+msgstr "Por favor especifique un nombre de adjunto valido."
+
 #: html/getvcard.php:36
 msgid "Error: getcvard.php needs a parameter to export a vcard!"
 msgstr "Error: getcvard.php necesita un parametro para exportar a vcard."
@@ -14141,34 +14108,6 @@ msgstr ""
 msgid "Toggle Show/Hide"
 msgstr ""
 
-#: ihtml/themes/default/conflict.tpl:2
-msgid "Session conflict detected"
-msgstr "Detectado conflicto de sesiones."
-
-#: ihtml/themes/default/conflict.tpl:6
-msgid ""
-"Probably there's another active instance of your session. Multiple window "
-"operation is technical not possible and heavily depends on the browser "
-"you're using. Usage of different browsers at a time (i.e. IE and Mozilla) is "
-"possible. Pressing the <b>Logout</b> button will close this session."
-msgstr ""
-"Probablemente hay otra instancia de su sesión. Las operaciones con múltiples "
-"ventanas son técnicamente imposibles y dependen altamente del navegador que "
-"este usando. Es posible usar distintos navegadores al mismo tiempo (es "
-"decir, IE y Mozilla). Apretando el botón <b>Salir</b> cerrará está sesión."
-
-#: ihtml/themes/default/conflict.tpl:10
-msgid ""
-"Ignoring this message will change/destroy the data you're currently editing, "
-"so please close multiple windows and log in again."
-msgstr ""
-"Ignorando este mensaje cambiara/borrara los datos que esta actualmente "
-"editando. Por favor, cierre las ventanas múltiples y vuelva a entrar."
-
-#: ihtml/themes/default/conflict.tpl:14
-msgid "Logout"
-msgstr "Salir"
-
 #: ihtml/themes/default/setup_useradmin.tpl:3
 msgid "You already have an Administrative Account and a Group."
 msgstr "Ya tiene una cuenta y un grupo administrativo."
@@ -14441,6 +14380,66 @@ msgstr "mujer"
 #: ihtml/themes/default/setup_step4.tpl:115
 msgid "Check"
 msgstr "Comprobación"
+
+#: ihtml/themes/default/conflict.tpl:2
+msgid "Session conflict detected"
+msgstr "Detectado conflicto de sesiones."
+
+#: ihtml/themes/default/conflict.tpl:6
+#, fuzzy
+msgid ""
+"Probably there's another active instance of your session. Multiple window "
+"operation is technical not possible and heavily depends on the browser "
+"you're using. Usage of different browsers at a time (i.e. IE and Mozilla) is "
+"possible. Pressing the Logout button will close this session."
+msgstr ""
+"Probablemente hay otra instancia de su sesión. Las operaciones con múltiples "
+"ventanas son técnicamente imposibles y dependen altamente del navegador que "
+"este usando. Es posible usar distintos navegadores al mismo tiempo (es "
+"decir, IE y Mozilla). Apretando el botón <b>Salir</b> cerrará está sesión."
+
+#: ihtml/themes/default/conflict.tpl:10
+msgid ""
+"Ignoring this message will change/destroy the data you're currently editing, "
+"so please close multiple windows and log in again."
+msgstr ""
+"Ignorando este mensaje cambiara/borrara los datos que esta actualmente "
+"editando. Por favor, cierre las ventanas múltiples y vuelva a entrar."
+
+#: ihtml/themes/default/conflict.tpl:14
+msgid "Logout"
+msgstr "Salir"
+
+#: ihtml/themes/default/snapshotdialog.tpl:3
+msgid "Restoring an object snapshot"
+msgstr ""
+
+#: ihtml/themes/default/snapshotdialog.tpl:6
+#: ihtml/themes/default/snapshotdialog.tpl:57
+msgid "This procedure will create a working snapshot of the selected object."
+msgstr ""
+
+#: ihtml/themes/default/snapshotdialog.tpl:13
+#: ihtml/themes/default/snapshotdialog.tpl:62
+msgid "You will be able to restore from"
+msgstr ""
+
+#: ihtml/themes/default/snapshotdialog.tpl:15
+msgid "There are no available snapshots."
+msgstr ""
+
+#: ihtml/themes/default/snapshotdialog.tpl:25
+msgid "There is no snapshot available that could be restored."
+msgstr ""
+
+#: ihtml/themes/default/snapshotdialog.tpl:27
+msgid "Choose a snapshot and click continue, to restore the snapshot."
+msgstr ""
+
+#: ihtml/themes/default/snapshotdialog.tpl:54
+#, fuzzy
+msgid "Creating an object snapshot"
+msgstr "Crear nuevo objeto grupo"
 
 #~ msgid "Overwrite existing entry"
 #~ msgstr "Sobreescribir la entrada actual"
