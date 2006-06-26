@@ -100,8 +100,10 @@ class SnapShotDialog extends plugin
 			/* Add Elements to divlist */	
 			foreach($list_of_elements as $entry){
 
-				$actions = "<input type='image' src='images/edittrash.png' name='RemoveSnapShot_%KEY' title='"._("Remove snapshot")."'>&nbsp;";
-				$actions.= "<input type='image' src='images/restore.png' name='RestoreSnapShot_%KEY' title='"._("Restore snapshot")."'>&nbsp;";
+				$actions = "<input type='image' src='images/edittrash.png' name='RemoveSnapShot_%KEY' 
+								class='center' title='"._("Remove snapshot")."'>&nbsp;";
+				$actions.= "<input type='image' src='images/restore.png' name='RestoreSnapShot_%KEY' 
+								class='center' title='"._("Restore snapshot")."'>&nbsp;";
 
 				$time_stamp 	= date("d.m.Y H.i.s",preg_replace("/\-.*$/","",$entry['gosaSnapshotTimestamp'][0]));
 				$display_data 	= $entry['description'][0];
