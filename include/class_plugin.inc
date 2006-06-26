@@ -996,12 +996,6 @@ class plugin
 
     /* Get configuration from gosa.conf */
     $tmp = $this->config->current;
-    /* Check if the undo level is specified */
-    if(isset($tmp['SNAPSHOT_UNDO_LEVEL'])){      
-      $UndoLvl   = $tmp['SNAPSHOT_UNDO_LEVEL'];
-    }else{
-      $UndoLvl   = 5;
-    }
 
     /* Create lokal ldap connection */
     $ldap= $this->config->get_ldap_link();
@@ -1024,7 +1018,6 @@ class plugin
       $ldap_to -> cd($snapldapbase);
       show_ldap_error($ldap_to->get_error(), _("Snapshot failed."));
     }
-
 
     /* check if the dn exists */ 
     if ($ldap->dn_exists($this->dn)){
@@ -1071,23 +1064,21 @@ class plugin
 
       show_ldap_error($ldap_to->get_error(), _("Create snapshot failed."));
       show_ldap_error($ldap->get_error(), _("Create snapshot failed."));
+    }
+  }
 
-      /* Check amount of used snapshots, and remove old ones if necessary */
-      $test = $this->Available_SnapsShots($this->dn,true);
-      if(count($test) > $UndoLvl){
-        $toDel = array();
-        foreach($test as $entry){
-          $toDel[preg_replace("/-/","",$entry['gosaSnapshotTimestamp'][0])] = $entry['dn'];
-        }
-        krsort($toDel);
-        $i = 0 ; 
-        foreach($toDel as $entryID => $entry){
-          $i ++ ; 
-          if($i > $UndoLvl){
-            $ldap_to->rmdir_recursive($entry);
-          }
-        }
-      }
+  function remove_snapshot($dn)
+  {
+    $ui   = get_userinfo();
+    $acl  = get_permissions ($dn, $ui->subtreeACL);
+    $acl  = get_module_permission($acl, "snapshot", $dn);
+
+    if (chkacl($this->acl, "delete") == ""){
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd($this->config->current['BASE']);
+    $ldap->rmdir_recursive($dn);
+    }else{
+      print_red (_("You are not allowed to delete this snap shot!"));
     }
   }
 
@@ -1290,17 +1281,17 @@ class plugin
     foreach($_POST as $name => $value){
 
       /* Create a new snapshot, display a dialog */
-      if(preg_match("/^CreateSnapShot_/",$name) && $once){
+      if(preg_match("/^CreateSnapShotDialog_/",$name) && $once){
         $once = false;
-        $entry = preg_replace("/^CreateSnapShot_/","",$name);
+        $entry = preg_replace("/^CreateSnapShotDialog_/","",$name);
         $entry = base64_decode(preg_replace("/_[xy]$/","",$entry));
         $this->snapDialog = new SnapShotDialog($this->config,$entry,$this);
       }
 
       /* Restore a snapshot, display a dialog with all snapshots of the current object */
-      if(preg_match("/^RestoreSnapShot_/",$name) && $once){
+      if(preg_match("/^RestoreSnapShotDialog_/",$name) && $once){
         $once = false;
-        $entry = preg_replace("/^RestoreSnapShot_/","",$name);
+        $entry = preg_replace("/^RestoreSnapShotDialog_/","",$name);
         $entry = base64_decode(preg_replace("/_[xy]$/","",$entry));
         $this->snapDialog = new SnapShotDialog($this->config,$entry,$this);
         $this->snapDialog->display_restore_dialog = true;
@@ -1312,6 +1303,17 @@ class plugin
         $this->snapDialog = new SnapShotDialog($this->config,$baseSuffixe,$this);
         $this->snapDialog->display_restore_dialog      = true;
         $this->snapDialog->display_all_removed_objects  = true;
+      }
+
+      /* Restore selected snapshot */
+      if(preg_match("/^RestoreSnapShot_/",$name) && $once){
+        $once = false;
+        $entry = preg_replace("/^RestoreSnapShot_/","",$name);
+        $entry = base64_decode(trim(preg_replace("/_[xy]$/","",$entry)));
+        if(!empty($entry)){
+          $this->restore_snapshot($entry);
+          $this->snapDialog = NULL;
+        }
       }
     }
 
@@ -1333,12 +1335,6 @@ class plugin
 
     /* Restore is requested, restore the object with the posted dn .*/
     if((isset($_POST['RestoreSnapshot'])) && (isset($_POST['SnapShot']))){
-      $entry =trim($_POST['SnapShot']);
-      if(!empty($entry)){
-        $entry = base64_decode($entry);
-        $this->restore_snapshot($entry);
-        $this->snapDialog = NULL;
-      }
     }
 
     if(isset($_POST['CancelSnapshot'])){

@@ -30,14 +30,7 @@
 	</tr>
 	<tr>
 		<td>
-			<select name="SnapShot" {if $CountSnapShots==0} disabled {/if}>
-				{if $CountSnapShots==0} disabled 
-					<option value="">&nbsp;{t}none{/t}&nbsp;</option>
-				{else}
-					<option value="">&nbsp;</option>
-					{html_options options=$SnapShots}
-				{/if}
-			</select>
+			{$SnapShotDivlist}
 		</td>
 	</tr>
 </table>
