@@ -364,9 +364,9 @@ class applicationManagement extends plugin
       Dialog display
      ****************/
 
-    $useBase = $this->DivListApplication->selectedRelease;
     /* Check if there is a snapshot dialog open */
-    if($str = $this->showSnapshotDialog($this->DivListApplication->selectedBase,$useBase)){
+    $base = $this->DivListApplication->selectedBase;
+    if($str = $this->showSnapshotDialog($base,$this->get_used_snapshot_bases($base))){
       return($str);
     }
 
@@ -377,6 +377,16 @@ class applicationManagement extends plugin
     $this->reload();
     $this->DivListApplication->setEntries($this->applications);
     return($this->DivListApplication->Draw());
+  }
+
+
+  /* Return departments, that will be included within snapshot detection */
+  function get_used_snapshot_bases(){
+    if($this->DivListApplication->selectedRelease == "main"){
+      return(array($this->DivListApplication->selectedBase));
+    }else{
+      return(array($this->DivListApplication->selectedRelease));
+    }
   }
 
 

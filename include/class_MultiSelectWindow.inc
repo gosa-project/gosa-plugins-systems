@@ -480,14 +480,35 @@ class MultiSelectWindow{
 				}
 			}
 		}
-
 	}
+
+
+  /* Create header snapshot value */
+  function get_snapshot_header()
+  {
+    $str = "";
+    if($this->parent->snapshotEnabled()){
+      $ok = false;
+      foreach($this->parent->get_used_snapshot_bases() as $base){
+        $ok |= count($this->parent->getAllDeletedSnapshots($base)) >= 1 ;
+      }
+      if($ok){
+        $str = "<input class='center' type='image' align='middle' src='images/restore.png'
+          title='"._("Restore snapshopts of already deleted objects")."' 
+          alt='"._("Restore")."' name='RestoreDeletedSnapShot'>&nbsp;"; 
+      }else{
+        $str = "<img class='center' src='images/restore_grey.png'>&nbsp;";
+      }
+
+      $str .= "<img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
+    }
+    return($str);
+  }
 
 
   function GetSnapShotActions($dn)
   {
     $str = "";
-
     if($this->parent->snapshotEnabled()){
 
       $str .="<input class='center' type='image' src='images/snapshot.png'
