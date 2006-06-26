@@ -47,11 +47,17 @@ class divListOGroup extends MultiSelectWindow
     $this->EnableCloseButton(false);
     $this->EnableSaveButton (false);
 
+    /* Dynamic action col, depending on snapshot icons */
+    $action_col_size = 70;
+    if($this->parent->snapshotEnabled()){
+      $action_col_size += 38; 
+    }
+
     /* set Page header */
     $this->AddHeader(array("string" => "&nbsp;", "attach" => "style='text-align:center;width:20px;'"));
     $this->AddHeader(array("string" => _("Name of object groups")." / "._("Departments"), "attach" => "style=''"));
     $this->AddHeader(array("string" => _("Properties"), "attach" => "style='width:136px;'"));
-    $this->AddHeader(array("string" => _("Actions"), "attach" => "style='width:130px;border-right:0px;text-align:right;'"));
+    $this->AddHeader(array("string" => _("Actions"), "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'"));
 
     /*                  Text        ,Value    ,Name         ,Is selected */
     $this->AddCheckBox("UserGroups" ,       _("Select to see groups containing users")       , _("Show groups containing users"), true);
@@ -141,6 +147,12 @@ class divListOGroup extends MultiSelectWindow
     $mailimg  = "<img class='center' src='images/mailto.png'             alt='M'  title='"._("Mail")   ."'>";
     $empty    = "<img class='center' src='images/empty.png' style='width:16px;height:16px;' alt=''>";
 
+    /* Dynamic action col, depending on snapshot icons */
+    $action_col_size = 70;
+    if($this->parent->snapshotEnabled()){
+      $action_col_size += 38; 
+    }
+
     // Assigning ogroups
     foreach($list as $key => $val){
 
@@ -172,7 +184,7 @@ class divListOGroup extends MultiSelectWindow
       $field1 = array("string" => "<img src='images/list_ogroup.png' alt='"._("Object group")."' ".$title.">", "attach" => "style='text-align:center;width: 20px;'");
       $field2 = array("string" => sprintf($editlink,$key,($val['cn']['0'].$desc)), "attach" => "style='' ".$title);
       $field3 = array("string" => preg_replace("/%KEY/", $key, $this->parent->convert_list($val))."&nbsp;".$mail, "attach" => "style='width:136px;'");
-      $field4 = array("string" => preg_replace("/%KEY%/", $key, $actions), "attach" => "style='width:130px;border-right:0px;text-align:right;'");
+      $field4 = array("string" => preg_replace("/%KEY%/", $key, $actions), "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'");
 
       $this->AddElement(array($field1,$field2,$field3,$field4));
     }

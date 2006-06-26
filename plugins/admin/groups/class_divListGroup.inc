@@ -44,11 +44,17 @@ class divListGroup extends MultiSelectWindow
     $this->EnableCloseButton(false);
     $this->EnableSaveButton (false);
 
+    /* Dynamic action col, depending on snapshot icons */
+    $action_col_size = 70;
+    if($this->parent->snapshotEnabled()){
+      $action_col_size += 38;
+    }
+
     /* set Page header */
     $this->AddHeader(array("string"=>"&nbsp;","attach"=>"style='width:20px;'"));
     $this->AddHeader(array("string"=>_("Groupname / Department")));
     $this->AddHeader(array("string"=>_("Properties"),"attach"=>"style='width:136px;'"));
-    $this->AddHeader(array("string"=>_("Actions"),"attach"=>"style='width:110px;border-right:0px;'"));
+    $this->AddHeader(array("string"=>_("Actions"),"attach"=>"style='width:".$action_col_size."px;border-right:0px;'"));
 
     /*                  Text        ,Value    ,Name         ,Is selected */
     $this->AddCheckBox("ShowPrimaryGroups",     _("Select to see groups that are primary groups of users"),          _("Show primary groups"),      true);
@@ -129,6 +135,12 @@ class divListGroup extends MultiSelectWindow
     $editlink = "<a href='?plug=".$_GET['plug']."&amp;id=%s&amp;act=edit_entry'>%s</a>";
     $userimg  = "<img class='center' src='images/select_groups.png' alt='User'    title='%s'>";
 
+    /* Dynamic action col, depending on snapshot icons */
+    $action_col_size = 70;
+    if($this->parent->snapshotEnabled()){
+      $action_col_size += 38;
+    }
+
     /* Assign extension images */
     $posiximg = "<input type='image' class='center' src='images/select_groups.png'
                  name='group_group_edit_%KEY%' alt='P'  title='"._("Posix")  ."'>";
@@ -145,7 +157,6 @@ class divListGroup extends MultiSelectWindow
 
     // Space
     $empty    = "<img class='center' src='images/empty.png' style='width:16px;height:16px;' alt=''>";
-
 
     // User and Template  Images
     $editlink = "<a href='?plug=".$_GET['plug']."&amp;id=%s&amp;act=edit_entry'>%s</a>";
@@ -194,7 +205,7 @@ class divListGroup extends MultiSelectWindow
       $field1 = array("string" => sprintf($userimg,$val['dn']), "attach" => "style='text-align:center;width:20px;'");
       $field2 = array("string" => sprintf($editlink,$key,($val['cn']['0'].$desc)), "attach" => "style='' ".$title);
       $field3 = array("string" => preg_replace("/%KEY%/", $key, $posix."&nbsp;".$enviro."&nbsp;".$mail."&nbsp;".$samba."&nbsp;".$appl."&nbsp;".$phone),     "attach" => "style='width:136px;'");
-      $field4 = array("string" => preg_replace("/%KEY%/", $key, $actions), "attach" => "style='width:110px;border-right:0px;text-align:right;'");
+      $field4 = array("string" => preg_replace("/%KEY%/", $key, $actions), "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'");
 
       $this->AddElement(array($field1,$field2,$field3,$field4));
     }

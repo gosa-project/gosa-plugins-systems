@@ -41,12 +41,18 @@ class divListConference extends MultiSelectWindow
     $this->EnableCloseButton(false);
     $this->EnableSaveButton (false);
 
+    /* Dynamic action col, depending on snapshot icons */
+    $action_col_size = 50;
+    if($this->parent->snapshotEnabled()){
+      $action_col_size += 20;
+    }
+
     /* set Page header */
     $this->AddHeader(array("string" => "&nbsp;", "attach" => "style='text-align:center;width:20px;'"));
     $this->AddHeader(array("string" =>_("Name - Number"), "attach" => "style=''"));
     $this->AddHeader(array("string" => _("Owner"), "attach" => "style='width:200px;'"));
     $this->AddHeader(array("string" => _("PIN"), "attach" => "style='width:50px;'"));
-    $this->AddHeader(array("string" =>_("Actions"), "attach" => "style='width:90px;border-right:0px;text-align:right;'"));
+    $this->AddHeader(array("string" =>_("Actions"), "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'"));
 
     /* Add Checkboxes / SubSearch checkbox */
     $this->AddCheckBox("SubSearch",  _("Select to search within subtrees"), _("Ignore subtrees"), false);
@@ -110,9 +116,14 @@ class divListConference extends MultiSelectWindow
 
     $userimg  = "<img class='center' src='images/select_conference.png' alt='User' title='%s'>";
     $editlink = "<a href='?plug=".$_GET['plug']."&amp;id=%s&amp;act=edit_entry'>%s</a>";
-  
-        /* Insert conferneces*/
 
+    /* Dynamic action col, depending on snapshot icons */
+    $action_col_size = 50;
+    if($this->parent->snapshotEnabled()){
+      $action_col_size += 20;
+    }
+
+    /* Insert conferneces*/
     foreach($list as $conferencekey => $conference ){
 
       $action = $this->GetSnapShotActions($conference['dn']);
@@ -157,7 +168,7 @@ class divListConference extends MultiSelectWindow
       $a_field4 = array("string"=> $pin, "attach" =>  $title." style='width:50px;'");
 
       if(($this->parent->ui->dn==$conference['goFonConferenceOwner'][0])&&(chkacl($this->parent->acl,"goFonConferenceOwner")=="")){
-        $a_field5 = array("string"=>preg_replace("/%KEY%/",$conferencekey,$action.$actions), "attach" =>  $title."style='width:90px;border-right:0px;text-align:right;'");
+        $a_field5 = array("string"=>preg_replace("/%KEY%/",$conferencekey,$action.$actions), "attach" =>  $title."style='width:".$action_col_size."px;border-right:0px;text-align:right;'");
       }elseif(chkacl($this->parent->acl,"goFonConferenceOwner")==""){
         $a_field5 = array("string"=>preg_replace("/%KEY%/",$conferencekey,$action.$actions2), "attach" =>  $title."style='width:52px;border-right:0px;text-align:right;'");
       }else{

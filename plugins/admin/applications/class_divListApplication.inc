@@ -42,9 +42,14 @@ class divListApplication extends MultiSelectWindow
     $this->EnableSaveButton (false);
 
     /* set Page header */
+    $action_col_size = 70;
+    if($this->parent->snapshotEnabled()){
+      $action_col_size += 38;
+    }
+
     $this->AddHeader(array("string" => "&nbsp;",                "attach" => "style='text-align:center;width:20px;'"));
     $this->AddHeader(array("string" => _("Application name")." / "._("Department"), "attach" => "style=''"));
-    $this->AddHeader(array("string" => _("Actions"),            "attach" => "style='width:110px;border-right:0px;text-align:right;'"));
+    $this->AddHeader(array("string" => _("Actions"),            "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'"));
 
     /* Add SubSearch checkbox */
     $this->AddCheckBox("SubSearch",  _("Select to search within subtrees"), _("Ignore subtrees"), false);
@@ -139,8 +144,11 @@ class divListApplication extends MultiSelectWindow
     $applimg  = "<img class='center' src='images/select_application.png' alt='A'  title='"._("Application")."'>";
     $empty    = "<img class='center' src='images/empty.png' style='width:16px;height:16px;' alt=''>";
 
-
-
+    /* set Page header */
+    $action_col_size = 70;
+    if($this->parent->snapshotEnabled()){
+      $action_col_size += 38;
+    }
 
     /********************
       Attach objects
@@ -170,7 +178,7 @@ class divListApplication extends MultiSelectWindow
       }
       $field1 = array("string" => sprintf($applimg,$val['dn']), "attach" => "style='text-align:center;width:20px;'");
       $field2 = array("string" => sprintf($editlink,$key,($val['cn']['0'].$desc)), "attach" => "style='' ".$title);
-      $field3 = array("string" => preg_replace("/%KEY%/", $key, $actions), "attach" => "style='width:110px;border-right:0px;text-align:right;'");
+      $field3 = array("string" => preg_replace("/%KEY%/", $key, $actions), "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'");
       $this->AddElement(array($field1,$field2,$field3));
     }
   }

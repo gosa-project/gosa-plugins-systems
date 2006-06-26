@@ -45,11 +45,17 @@ class divListUsers extends MultiSelectWindow
     $this->EnableCloseButton(false);
     $this->EnableSaveButton (false);
 
+    /* Dynamic action col, depending on snapshot icons */
+    $action_col_size = 88;
+    if($this->parent->snapshotEnabled()){
+      $action_col_size += 38;
+    }
+
     /* set Page header */
     $this->AddHeader(array("string"=>"&nbsp;",          "attach"=>"style='width:20px;'"));
     $this->AddHeader(array("string"=>_("Username")." / "._("Department")));
     $this->AddHeader(array("string"=>_("Properties"),   "attach" => "style='width:152px;'"));
-    $this->AddHeader(array("string"=>_("Actions"),      "attach" => "style='width:132px;border-right:0px;text-align:right;'"));
+    $this->AddHeader(array("string"=>_("Actions"),      "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'"));
     
     $this->AddCheckBox("ShowTemplates"      ,_("Select to see template pseudo users")               ,_("Show templates")        , false);
     $this->AddCheckBox("ShowFunctionalUsers",_("Select to see users that have only a GOsa object"),_("Show functional users") , true);
@@ -139,6 +145,12 @@ class divListUsers extends MultiSelectWindow
     $userimg    = "<img class='center' src='images/select_user.png' alt='User' title='%s'>";
     $tplimg     = "<img class='center' src='images/select_template.png' alt='Template' title='%s'>";
     $editlink   = "<a href='?plug=".validate($_GET['plug'])."&amp;id=%s&amp;act=edit_entry'>%s</a>";
+
+    /* Dynamic action col, depending on snapshot icons */
+    $action_col_size = 88;
+    if($this->parent->snapshotEnabled()){
+      $action_col_size += 38;
+    }
 
     /* Possilbe objectClass image combinations */  
     $possibleAccounts = array(
@@ -290,7 +302,7 @@ class divListUsers extends MultiSelectWindow
       $field2 = array("string" => sprintf($editlink,$key,$display).$ip_port, "attach" => "style='' title='".preg_replace('/ /', '&nbsp;', @LDAP::fix($val['dn']))."'");
       $field3 = array("string" => $UseImg, "attach" => "style='width:152px;'");
       $field4 = array("string" => $s_img_create_from_template.preg_replace("/%KEY%/", "$key", $action),
-                      "attach" => "style='width:132px;border-right:0px;    text-align:right;'");
+                      "attach" => "style='width:".$action_col_size."px;border-right:0px;    text-align:right;'");
       /* Add to list */
       $add = array($field1,$field2,$field3,$field4);
       $this->AddElement($add);

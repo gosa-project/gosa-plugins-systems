@@ -36,10 +36,16 @@ class divListDepartment extends MultiSelectWindow
     $this->EnableCloseButton(false);
     $this->EnableSaveButton (false);
 
+    /* Dynamic action col, depending on snapshot icons */
+    $action_col_size = 50;
+    if($this->parent->snapshotEnabled()){
+      $action_col_size += 20;
+    }
+
     /* set Page header */
     $this->AddHeader(array("string" => "&nbsp;", "attach" => "style='text-align:center;width:20px;'"));
     $this->AddHeader(array("string"=>_("Department name"), "attach" => "style=''"));
-    $this->AddHeader(array("string" =>_("Actions"), "attach" => "style='width:80px;border-right:0px;text-align:right;'"));
+    $this->AddHeader(array("string" =>_("Actions"), "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'"));
 
     /* Add SubSearch checkbox */    
     $this->AddCheckBox("SubSearch",  _("Select to search within subtrees"), _("Ignore subtrees"), false);
@@ -103,6 +109,12 @@ class divListDepartment extends MultiSelectWindow
 
     $linkopen = "<a href='?plug=".$_GET['plug']."&amp;act=dep_open&amp;dep_id=%s'>%s</a>";
 
+    /* Dynamic action col, depending on snapshot icons */
+    $action_col_size = 50;
+    if($this->parent->snapshotEnabled()){
+      $action_col_size += 20;
+    }
+
     foreach($list as $key => $val) {
   
       $cdn= convert_department_dn($val['dn']);  
@@ -133,7 +145,7 @@ class divListDepartment extends MultiSelectWindow
       $title = preg_replace('/ /', '&nbsp;', @LDAP::fix($this->config->departments[$key]));
       $field0 = array("string" => "<img src='images/".$non_empty."folder.png' title='"._("department")."' alt='department'>", "attach" => "style='text-align:center;width:20px;'");
       $field1 = array("string" => sprintf($linkopen,base64_encode($cdn),$disp), "attach" => "style='' title='".$title."'");
-      $field2 = array("string" => preg_replace("/%KEY%/", base64_encode($key), $actions), "attach" => "style='width:80px;border-right:0px;text-align:
+      $field2 = array("string" => preg_replace("/%KEY%/", base64_encode($key), $actions), "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:
           right;'");
 
       $this->AddElement( array($field0,$field1,$field2));

@@ -47,10 +47,16 @@ class divListSystem extends MultiSelectWindow
     $this->EnableCloseButton(false);
     $this->EnableSaveButton (false);
 
+    /* Dynamic action col, depending on snapshot icons */
+    $action_col_size = 50;
+    if($this->parent->snapshotEnabled()){
+      $action_col_size += 38;
+    }
+
     /* set Page header */
     $this->AddHeader(array("string"=>"&nbsp;","attach"=>"style='width:20px;'"));
     $this->AddHeader(array("string"=>_("System / Department")));
-    $this->AddHeader(array("string"=>_("Actions"),"attach"=>"style='width:90px;border-right:0px;'"));
+    $this->AddHeader(array("string"=>_("Actions"),"attach"=>"style='width:".$action_col_size."px;border-right:0px;'"));
 
     /*                  Text        ,Value    ,Name         ,Is selected */
     $this->AddCheckBox("ShowServers",         _("Select to see servers"),            _("Show servers"),          true);
@@ -141,6 +147,12 @@ class divListSystem extends MultiSelectWindow
 
     $empty    ="&nbsp;";
 
+    /* Dynamic action col, depending on snapshot icons */
+    $action_col_size = 50;
+    if($this->parent->snapshotEnabled()){
+      $action_col_size += 38;
+    }
+
     // User and Template  Images
     $editlink = "<a href='?plug=".$_GET['plug']."&amp;id=%s&amp;act=edit_entry'>%s</a>";
 
@@ -192,7 +204,7 @@ class divListSystem extends MultiSelectWindow
       $img    = $this->parent->convert_list($val);
       $field1 = array("string" => sprintf($img['img'],$val['dn']), "attach" => "style='text-align:center;width:20px;'");
       $field2 = array("string" => sprintf($editlink,$key,$display), "attach" => "style='' title='".preg_replace('/ /', '&nbsp;', @LDAP::fix($val['dn']))."'");
-      $field3 = array("string" => preg_replace("/%KEY%/", "$key", $action2.$action), "attach" => "style='width:90px;border-right:0px;text-align:right;'");
+      $field3 = array("string" => preg_replace("/%KEY%/", "$key", $action2.$action), "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'");
       $this->AddElement( array($field1,$field2,$field3));
     }
 

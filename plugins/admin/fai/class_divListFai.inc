@@ -53,11 +53,17 @@ class divListFai extends MultiSelectWindow
     $this->EnableCloseButton(false);
     $this->EnableSaveButton (false);
 
+   /* Dynamic action col, depending on snapshot icons */
+    $action_col_size = 50;
+    if($this->parent->snapshotEnabled()){
+      $action_col_size += 20;
+    }
+
     /* set Page header */
     $this->AddHeader(array("string" => "&nbsp;",                "attach" => "style='text-align:center;width:20px;'"));
     $this->AddHeader(array("string" => _("Name of FAI class"),  "attach" => "style=''"));
     $this->AddHeader(array("string" => _("Class type"),         "attach" => "style='width:200px;'"));
-    $this->AddHeader(array("string" => _("Actions"),            "attach" => "style='width:90px;border-right:0px;text-align:right;'"));
+    $this->AddHeader(array("string" => _("Actions"),            "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'"));
 
     $this->AddCheckBox("ShowProfiles"   , _("Display FAI profile objects")    ,_("Show profiles")     ,true);
     $this->AddCheckBox("ShowTemplates"  , _("Display FAI template objects")   ,_("Show templates")    ,true);
@@ -185,6 +191,12 @@ _("Submit")."'>&nbsp;".
 
     $editlink ="<a href='?plug=".$_GET['plug']."&amp;edit_entry=%KEY%' title='%TITLE%'>%NAME%</a>";
 
+    /* Dynamic action col, depending on snapshot icons */
+    $action_col_size = 50;
+    if($this->parent->snapshotEnabled()){
+      $action_col_size += 20;
+    }
+
     /********************
       Attach objects
      ********************/
@@ -229,7 +241,7 @@ _("Submit")."'>&nbsp;".
        $field1 = array("string" => $img , "attach" => "style='text-align:center;width:20px;'");
        $field2 = array("string" => preg_replace(array("/%KEY%/","/%NAME%/","/%TITLE%/"),array($key,$value['cn'].$desc,preg_replace('/ /', '&nbsp;', @LDAP::fix($value['dn']))),$edi) , "attach" => "style=''");
        $field3 = array("string" => $info, "attach" => "style='width:200px;'");
-       $field4 = array("string" => preg_replace("/%KEY%/",$key,$acti) , "attach" => "style='width:90px;border-right:0px;text-align:right;'");
+       $field4 = array("string" => preg_replace("/%KEY%/",$key,$acti) , "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'");
        $this->AddElement(array($field1,$field2,$field3,$field4));
      }
   }

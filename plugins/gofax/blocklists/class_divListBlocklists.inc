@@ -41,10 +41,16 @@ class divListBlocklist extends MultiSelectWindow
     $this->EnableCloseButton(false);
     $this->EnableSaveButton (false);
 
+    /* Dynamic action col, depending on snapshot icons */
+    $action_col_size = 50;
+    if($this->parent->snapshotEnabled()){
+      $action_col_size += 20;
+    }
+
     /* set Page header */
     $this->AddHeader(array("string" => "&nbsp;", "attach" => "style='text-align:center;width:20px;'"));
     $this->AddHeader(array("string" => _("Blocklist name")." / "._("Department"), "attach" => "style=''"));
-    $this->AddHeader(array("string" => _("Actions"), "attach" => "style='width:90px;border-right:0px;text-align:right;'" ));
+    $this->AddHeader(array("string" => _("Actions"), "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'" ));
 
     /* Add Checkboxes / SubSearch checkbox */
     $this->AddCheckBox("ShowSendBocklists"     , _("Select to see send blocklists"),    _("Show send blocklists"),true);
@@ -112,6 +118,12 @@ class divListBlocklist extends MultiSelectWindow
     $blockimg = "<img class='center' src='images/list_blocklist.png' alt='User' title='%s'>";
     $editlink = "<a href='?plug=".$_GET['plug']."&amp;id=%s&amp;act=edit_entry'>%s</a>";
 
+    /* Dynamic action col, depending on snapshot icons */
+    $action_col_size = 50;
+    if($this->parent->snapshotEnabled()){
+      $action_col_size += 20;
+    }
+
     /* Append to list */
     foreach($list as $key => $val){
   
@@ -123,7 +135,7 @@ class divListBlocklist extends MultiSelectWindow
       $display= "[".$val["cn"][0]."]";
       $field1 = array("string" => sprintf($blockimg,$val['dn']), "attach" => "style='text-align:center;width:20px;'");
       $field2 = array("string" => sprintf($editlink,$key,$display), "attach" => "style='' title='".preg_replace('/ /', '&nbsp;', @LDAP::fix($val['dn']))."'");
-      $field3 = array("string" => preg_replace("/%KEY%/", "$key", $action), "attach" => "style='width:90px;border-right:0px;text-align:right;'");
+      $field3 = array("string" => preg_replace("/%KEY%/", "$key", $action), "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'");
       $this->AddElement( array($field1,$field2,$field3));
     }
   }

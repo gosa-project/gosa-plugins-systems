@@ -41,11 +41,17 @@ class divListMacro extends MultiSelectWindow
     $this->EnableCloseButton(false);
     $this->EnableSaveButton (false);
 
+    /* Dynamic action col, depending on snapshot icons */
+    $action_col_size = 50;
+    if($this->parent->snapshotEnabled()){
+      $action_col_size += 20;
+    }
+
     /* set Page header */
     $this->AddHeader(array("string" => "&nbsp;", "attach" => "style='text-align:center;width:20px;'"));
     $this->AddHeader(array("string" => _("macro name")." / "._("Department"), "attach" => "style=''"));
     $this->AddHeader(array("string" => _("Visible"), "attach" => "style='width:50px;'"));
-    $this->AddHeader(array("string" => _("Actions"), "attach" => "style='width:90px;border-right:0px;text-align:right;'" ));
+    $this->AddHeader(array("string" => _("Actions"), "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'" ));
 
     /* Add Checkboxes / SubSearch checkbox */
     $this->AddCheckBox("SubSearch",  _("Select to search within subtrees"), _("Ignore subtrees"), false);
@@ -117,6 +123,12 @@ class divListMacro extends MultiSelectWindow
     $invisible  = "<img class='center' src='images/false.png' alt='"._("no")."'title='"._("invisible")."'>";
     $editlink   = "<a href='?plug=".$_GET['plug']."&amp;id=%s&amp;act=edit_entry'>%s</a>";
 
+    /* Dynamic action col, depending on snapshot icons */
+    $action_col_size = 50;
+    if($this->parent->snapshotEnabled()){
+      $action_col_size += 20;
+    }
+
     foreach($list as $key => $val){
    
       $action    = $this->GetSnapShotActions($val['dn']); 
@@ -136,7 +148,7 @@ class divListMacro extends MultiSelectWindow
       $field1 = array("string" => sprintf($macroimg,$val['dn']), "attach" => "style='text-align:center;width:20px;'");
       $field2 = array("string" => sprintf($editlink,$key,$display), "attach" => "style='' title='".preg_replace('/ /', '&nbsp;', @LDAP::fix($val['dn']))."'");
       $field3 = array("string" => $pic1, "attach" => "style='width:50px;'");
-      $field4 = array("string" => preg_replace("/%KEY%/", "$key", $action), "attach" => "style='width:90px;border-right:0px;text-align:right;'");
+      $field4 = array("string" => preg_replace("/%KEY%/", "$key", $action), "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'");
 
       $this->AddElement(array($field1,$field2,$field3,$field4));
     }
