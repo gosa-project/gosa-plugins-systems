@@ -332,6 +332,11 @@ class department extends plugin
 		}
 		show_ldap_error($ldap->get_error(), _("Saving department failed"));
 
+    /* Fix tagging if needed */
+    if (!$this->is_administrational_unit){
+      $this->handle_object_tagging();
+    }
+
     /* Optionally execute a command after we're done */
 		$this->postcreate();
     return(true);
