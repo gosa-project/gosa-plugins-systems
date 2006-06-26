@@ -67,7 +67,7 @@ class SnapShotDialog extends plugin
 		$smarty->assign("CurrentDate",date("d.m.Y H:i"));
 		$smarty->assign("CurrentDN",$this->dn);
 		$smarty->assign("CurrentDescription",$this->CurrentDescription);
-		return($smarty->fetch(get_template_path("snapshotdialog.tpl",TRUE)));
+		return($smarty->fetch(get_template_path("snapshotdialog.tpl")));
 	}
 
 
