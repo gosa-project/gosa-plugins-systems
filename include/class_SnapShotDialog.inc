@@ -4,12 +4,13 @@
 class SnapShotDialog extends plugin 
 {
 	var $config;
-	var $attributes 		= array("CurrentDescription");
-	var $CurrentDescription = "";
-	var $parent				= NULL;
-	var $display_restore_dialog			= false;		/* Defines the restore mode */
-	var $display_all_removed_objects		= false; 		/* Specifies which objects will be listed */	
-	var $dialog				= true;
+	var $attributes 				= array("CurrentDescription");
+	var $CurrentDescription 		= "";
+	var $parent						= NULL;
+	var $display_restore_dialog		= false;		/* Defines the restore mode */
+	var $display_all_removed_objects= false; 		/* Specifies which objects will be listed, all snapshots for a single entry 
+														or all snapshots of already deleted objects  */	
+	var $dialog						= true;
 	
 	function SnapShotDialog($config,$dn,$parent)
 	{
@@ -24,7 +25,7 @@ class SnapShotDialog extends plugin
 		plugin::execute();
 		$smarty = get_smarty();
 
-		/* We must restore a snapshot, so get snapshots  */
+		/* We must restore a snapshot */
 		if($this->display_restore_dialog){
 
 			/* Should we only display all snapshots of already deleted objects 

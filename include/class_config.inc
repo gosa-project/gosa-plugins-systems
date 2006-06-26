@@ -91,8 +91,18 @@ class config  {
       return;
     }
 
+    /* yes/no to true/false and upper case TRUE to true and so on*/
+    foreach($attrs as $name => $value){
+      if((preg_match("/^yes$/i",$value)) || (preg_match("/^true$/i",$value))){
+        $attrs[$name] = "true";
+      }elseif((preg_match("/^no$/i",$value)) || (preg_match("/^false$/i",$value))){
+        $attrs[$name] = "false";
+      } 
+    }
+
     /* Look through attributes */
     switch ($this->tags[$this->level-1]){
+
 
       /* Handle tab section */
       case 'TAB':	$name= $this->tags[$this->level-2];
