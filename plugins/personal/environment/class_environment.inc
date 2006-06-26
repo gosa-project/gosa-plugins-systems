@@ -575,6 +575,14 @@ class environment extends plugin
         $key  = preg_replace("/^gotoShareDel_/","",$name);
         $key  = preg_replace("/_+[xy]$/","",$key);
         $key  = preg_replace("/_/", ".", $key);
+
+        if(isset($this->gotoShares[$key])) {
+          unset($this->gotoShares[$key]);
+        }
+
+        /* Remove corresponding password entry, too. This is a workaround
+           to get rid of old-style entries. */
+        $key= preg_replace("/\|/", "|!", $key);
         if(isset($this->gotoShares[$key])) {
           unset($this->gotoShares[$key]);
         }
