@@ -1303,14 +1303,14 @@ class plugin
         $entry = preg_replace("/^RestoreSnapShot_/","",$name);
         $entry = base64_decode(preg_replace("/_[xy]$/","",$entry));
         $this->snapDialog = new SnapShotDialog($this->config,$entry,$this);
-        $this->snapDialog->Restore = true;
+        $this->snapDialog->display_restore_dialog = true;
       }
 
       /* Restore one of the already deleted objects */
       if(preg_match("/^RestoreDeletedSnapShot_/",$name) && $once){
         $once = false;
         $this->snapDialog = new SnapShotDialog($this->config,$baseSuffixe,$this);
-        $this->snapDialog->Restore      = true;
+        $this->snapDialog->display_restore_dialog      = true;
         $this->snapDialog->DeletedOnes  = true;
       }
     }

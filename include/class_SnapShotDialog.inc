@@ -7,8 +7,8 @@ class SnapShotDialog extends plugin
 	var $attributes 		= array("CurrentDescription");
 	var $CurrentDescription = "";
 	var $parent				= NULL;
-	var $Restore			= false;		/* Defines the restore mode */
-	var $DeletedOnes		= false; 		/* Specifies which objects will be listed */	
+	var $display_restore_dialog			= false;		/* Defines the restore mode */
+	var $display_all_removed_objects		= false; 		/* Specifies which objects will be listed */	
 	var $dialog				= true;
 	
 	function SnapShotDialog($config,$dn,$parent)
@@ -25,12 +25,12 @@ class SnapShotDialog extends plugin
 		$smarty = get_smarty();
 
 		/* We must restore a snapshot, so get snapshots  */
-		if($this->Restore){
+		if($this->display_restore_dialog){
 
 			/* Should we only display all snapshots of already deleted objects 
                 or the snapshots for the given object dn */
 			$res = array();
-			if($this->DeletedOnes){
+			if($this->display_all_removed_objects){
 				if(is_array($this->dn)){
 					$tmp = array();
 					foreach($this->dn as $dn){
@@ -48,7 +48,7 @@ class SnapShotDialog extends plugin
 			
 				$data = $entry['description'][0];
 				$date = date("d.m.Y H.i.s",preg_replace("/\-.*$/","",$entry['gosaSnapshotTimestamp'][0]));
-				if($this->DeletedOnes){
+				if($this->display_all_removed_objects){
 					$data.= " - ".$entry['gosaSnapshotDN'][0];
 				}
 	
@@ -63,7 +63,7 @@ class SnapShotDialog extends plugin
 			$smarty->assign("CountSnapShots",count($res));
 		}
 
-		$smarty->assign("RestoreMode",$this->Restore);
+		$smarty->assign("RestoreMode",$this->display_restore_dialog);
 		$smarty->assign("CurrentDate",date("d.m.Y H:i"));
 		$smarty->assign("CurrentDN",$this->dn);
 		$smarty->assign("CurrentDescription",$this->CurrentDescription);
@@ -74,7 +74,7 @@ class SnapShotDialog extends plugin
 	function check()
 	{
 		$message = plugin::check();
-		if(!$this->Restore){
+		if(!$this->display_restore_dialog){
 			if(empty($this->CurrentDescription)){
 				$message[]  = _("Please specify a valid description for this snapshot.");
 			}
