@@ -1311,7 +1311,7 @@ class plugin
         $once = false;
         $this->snapDialog = new SnapShotDialog($this->config,$baseSuffixe,$this);
         $this->snapDialog->display_restore_dialog      = true;
-        $this->snapDialog->DeletedOnes  = true;
+        $this->snapDialog->display_all_removed_objects  = true;
       }
     }
 
