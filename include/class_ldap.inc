@@ -1058,12 +1058,17 @@ class LDAP{
         }
 
         /* Split the line into  attribute  and value */
-        $attr   = split(":", $row);
+        $attr   = split(":", $row,2);
         $attr[0]= trim($attr[0]);  /* attribute */
-        $attr[1]= trim($attr[1]);  /* value */
+        $attr[1]= $attr[1];  /* value */
 
-        $attr[0] = trim( preg_replace("/:.*$/","",$row));
-        $attr[1] = trim( preg_replace("/^".$attr[0]."[ ::]/","",$row));
+        /* Check :: was used to indicate base64_encoded strings */
+        if($attr[1][0] == ":"){
+          $attr[1]=trim(preg_replace("/^:/","",$attr[1]));
+          $attr[1]=base64_decode($attr[1]);
+        }
+
+        $attr[1] = trim($attr[1]);
 
         /* Check for attributes that are used more than once */
         if(!isset($data[$attr[0]])) {
@@ -1111,6 +1116,7 @@ class LDAP{
       $this->cd ($this->basedn);
       $this->create_missing_trees($data['dn']);
       $this->cd($data['dn']);
+
       $dn = $data['dn'];
       unset($data['dn']);
       
