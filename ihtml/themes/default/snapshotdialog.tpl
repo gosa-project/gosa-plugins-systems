@@ -1,30 +1,26 @@
 {if $RestoreMode}
 
-<h2>{t}Restoring an object snapshot{/t}</h2>
+<h2>{t}Restoring object snapshots{/t}</h2>
+<p class="seperator">&nbsp;</p>
 <br>
-<p class="seperator">
-{t}This procedure will create a working snapshot of the selected object.{/t}
+{t}This procedure will restore a snapshot of the selected object. It will replace the existing object after pressing the continue button.{/t}
 <br>
-</p>
-<p class="seperator">
+<p class="seperator">&nbsp;</p>
 <br>
-
-	{if $CountSnapShots!=0}
-		<b>{t}You will be able to restore from{/t}</b>
-	{else}
-		<b>{t}There are no available snapshots.{/t}</b>
-	{/if}
-<br>
-<br>
-</p>
-<br>
-<table summary="">
+<table summary="" style="width:100%">
 	<tr>
 		<td>
+		<b>{t}Object{/t}</b>&nbsp;
+		{$CurrentDN}
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<br>
 			{if $CountSnapShots==0}
-				{t}There is no snapshot available that could be restored.{/t}
+				{t}There is no snapshot available that could be restored{/t}
 			{else}
-				{t}Choose a snapshot and click continue, to restore the snapshot.{/t}
+				{t}Choose a snapshot and click the folder image, to restore the snapshot{/t}
 			{/if}
 		</td>
 	</tr>
@@ -38,37 +34,30 @@
 <p class="seperator">&nbsp;</p>
 <p>
 <div style="width:100%; text-align:right;">
-    <input type='submit' name='RestoreSnapshot' value='{t}Continue{/t}' {if $CountSnapShots==0} disabled {/if}>
-    &nbsp;
     <input type='submit' name='CancelSnapshot' value='{t}Cancel{/t}'>
 </div></p>
+
 {else}
 
-<h2>{t}Creating an object snapshot{/t}</h2>
+<h2>{t}Creating object snapshots{/t}</h2>
+<p class="seperator">&nbsp;</p>
 <br>
-<p class="seperator">
-{t}This procedure will create a working snapshot of the selected object.{/t}
+{t}This procedure will create a snapshot of the selected object. It will be stored inside a special branch of your directory system and can be restored later on.{/t}
 <br>
-</p>
-<p class="seperator">
+<p class="seperator">&nbsp;</p>
 <br>
-<b>{t}You will be able to restore from{/t}</b>
-<br>
-<br>
-</p>
-<br>
-<table summary="">
+<table summary="" style="width:100%">
 	<tr>
-		<td style="width:120px;">
-			{t}Object{/t} 
+		<td>
+			<b>{t}Object{/t}</b>
 		</td>
-		<td> 
+		<td style="width:95%"> 
 		   {$CurrentDN}
 		</td>
 	</tr>
 	<tr>
 		<td>
-			{t}Date{/t} 
+			<b>{t}Date{/t}</b> 
 		</td>
 		<td> 
 		   {$CurrentDate}
@@ -76,8 +65,9 @@
 	</tr>
 	<tr>
 		<td style="vertical-align:top;" colspan="2">
-			{t}Description{/t}<br> 
-			<textarea name="CurrentDescription" style="width:400px;height:120px;">{$CurrentDescription}</textarea>
+			<br>
+			{t}Reason for generating this snapshot{/t}<br> 
+			<textarea name="CurrentDescription" style="width:100%;height:160px;">{$CurrentDescription}</textarea>
 		</td>
 	</tr>
 </table>
