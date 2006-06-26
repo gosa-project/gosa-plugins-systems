@@ -111,7 +111,7 @@ class SnapShotDialog extends plugin
 				}
 
 				$field0 = array("string"=> $time_stamp , "attach"=> "style='vertical-align:top;width:120px;'");
-				$field1 = array("string"=> $display_data , "attach"=> "");
+				$field1 = array("string"=> htmlentities (utf8_decode($display_data)), "attach"=> "");
 				$field2 = array("string"=> preg_replace("/%KEY/",base64_encode($entry['dn']),$actions) , 
 								"attach"=> "style='border-right:0px;vertical-align:top;width:40px;text-align:right;'");
 				$DivListSnapShots->AddEntry(array($field0,$field1,$field2));
