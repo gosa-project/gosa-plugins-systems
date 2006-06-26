@@ -488,12 +488,8 @@ class systems extends plugin
     }
 
     /* Check if there is a snapshot dialog open */
-    $tmp = array();
-    foreach(array("phones","servers","printers","terminals","netdevices","workstations") as $ent){
-      $tmp[] = "ou=".$ent.",ou=systems,".$this->DivListSystem->selectedBase;
-    }
-    
-    if($str = $this->showSnapshotDialog($this->DivListSystem->selectedBase,$tmp)){
+    $base = $this->DivListSystem->selectedBase;
+    if($str = $this->showSnapshotDialog($base,$this->get_used_snapshot_bases())){
       return($str);
     }
 
@@ -510,6 +506,16 @@ class systems extends plugin
     return($this->DivListSystem->Draw());
   }
 
+
+  /* Return departments, that will be included within snapshot detection */
+  function get_used_snapshot_bases()
+  {
+    $tmp = array();
+    foreach(array("phones","servers","printers","terminals","netdevices","workstations") as $ent){
+      $tmp[] = "ou=".$ent.",ou=systems,".$this->DivListSystem->selectedBase;
+    }
+    return($tmp); 
+  }
 
 
   function remove_from_parent()
