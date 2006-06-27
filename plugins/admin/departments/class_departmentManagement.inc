@@ -120,7 +120,6 @@ class departmentManagement extends plugin
      * The entry which will be edited is defined in $s_entry
      */
     if (( $s_action=="edit") && (!isset($this->deptabs->config))){
-      $s_entry = convert_department_dn(base64_decode($s_entry));
       $this->dn= $this->config->departments[trim($s_entry)];
 
       if (($user= get_lock($this->dn)) != ""){
@@ -148,7 +147,6 @@ class departmentManagement extends plugin
      * The entry which will be deleted is defined in $s_entry
      */
     if ($s_action =="del"){
-      $s_entry = convert_department_dn(base64_decode($s_entry));
       $this->dn= $this->config->departments[trim($s_entry)];
 
       /* Check locking */
@@ -196,10 +194,7 @@ class departmentManagement extends plugin
       if (count($message) == 0){
 
         $this->deptabs->save(true);
-
-        if(!$this->deptabs->by_object['department']->am_i_moved()){
-          $this->deptabs->save(true);
-        }
+        $this->deptabs->by_object['department']->save();     
 
         /* This object must be tagged, so set ObjectTaggingRequested to true */
         if($this->deptabs->by_object['department']->must_be_tagged()){
@@ -300,20 +295,13 @@ class departmentManagement extends plugin
       $display= $this->deptabs->execute();
       if (!$this->deptabs->by_object[$this->deptabs->current]->dialog){
         $display.= "<p style=\"text-align:right\">\n";
-        $display.= "<input type=submit name=\"edit_finish\" style=\"width:80px\" value=\""._("Ok")."\">\n";
+        $display.= "<input type=submit name=\"edit_finish\" value=\""._("Save")."\">\n";
         $display.= "&nbsp;\n";
         $display.= "<input type=submit name=\"edit_cancel\" value=\""._("Cancel")."\">\n";
         $display.= "</p>";
       }
       return ($display);
     }else{
-
-      /* Check if there is a snapshot dialog open */
-      $base = $this->DivListDepartment->selectedBase;
-      if($str = $this->showSnapshotDialog($base,$this->get_used_snapshot_bases())){
-        return($str);
-      }
-
       /* Display dialog with group list */
       $this->DivListDepartment->parent = $this;
       $this->DivListDepartment->execute();
@@ -323,14 +311,6 @@ class departmentManagement extends plugin
       return($this->DivListDepartment->Draw());
     }
   }
-
-
-  /* Return departments, that will be included within snapshot detection */
-  function get_used_snapshot_bases()
-  {
-    return(array($this->DivListDepartment->selectedBase));
-  }
-
 
 
   function reload()
@@ -364,21 +344,24 @@ class departmentManagement extends plugin
     }
 
     $this->departments= array();
-    $tmp = array();
     foreach ($res as $key => $value){
-      #$tmp[get_sub_department(convert_department_dn($value['dn']))] = $key;
-      $tmp[$key] = get_sub_department(convert_department_dn($value['dn']));
-    }
-    natcasesort($tmp);
-    foreach($tmp as $key => $q){
-      $value = $res [$key];
+
       /* Don't display base as entry on subsearch */
       if(($value['dn'] == $base) && ($this->DivListDepartment->SubSearch)){
         continue;
       }
 
-      $this->departments[base64_encode($value['dn'])]= $value;
+      $cdn= convert_department_dn($value['dn']);
+
+      /* Append to dep list */
+      if(isset($value["description"][0])){
+        $this->departments[$cdn]= get_sub_department($cdn)." - [".$value["description"][0]."]";
+      }else{
+        $this->departments[$cdn]= get_sub_department($cdn);//$value["description"][0];
+      }
     }
+    natcasesort ($this->departments);
+    reset ($this->departments);
   }
 
   function remove_from_parent()

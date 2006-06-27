@@ -175,13 +175,6 @@ class department extends plugin
 
 	function must_be_tagged()
 	{
-    if((isset($this->attrs['gosaUnitTag'][0])) && ($this->is_administrational_unit)){
-      $this->must_be_tagged = false;
-    }elseif((!isset($this->attrs['gosaUnitTag'][0])) && (!$this->is_administrational_unit)){
-      $this->must_be_tagged = false;
-    }else{
-      $this->must_be_tagged = true;
-    }
 		return $this->must_be_tagged;
 	}
 
@@ -228,8 +221,8 @@ class department extends plugin
 
 		/* Check for presence of this department */
 		$ldap= $this->config->get_ldap_link();
-		$ldap->ls ("(&(ou=".$this->ou.")(objectClass=organizationalUnit))", $this->base, array('dn'));
-		if ($this->orig_dn == "new" && $ldap->count()){
+    $ldap->ls ("(&(ou=".$this->ou.")(objectClass=organizationalUnit))", $this->base, array('dn'));
+    if ($this->orig_dn == "new" && $ldap->count()){
 			$message[]= _("Department with that 'Name' already exists.");
 		} elseif ($this->orig_dn != $this->dn && !($attrs === FALSE)){
 			$message[]= _("Department with that 'Name' already exists.");
@@ -270,8 +263,9 @@ class department extends plugin
 		if ($this->is_administrational_unit){
       if(!in_array_ics("gosaAdministrativeUnit",$this->objectclasses)){
   			$this->objectclasses[]= "gosaAdministrativeUnit";
-        $this->gosaUnitTag= "";
+			  $this->gosaUnitTag= "";
       }
+
 			if ($this->gosaUnitTag == ""){
 
 				/* It's unlikely, but check if already used... */
@@ -308,9 +302,9 @@ class department extends plugin
 				if (!preg_match("/^gosaAdministrativeUnit$/i", $oc)){
 					$tmp[]= $oc;
 				}
-        if (preg_match("/^gosaAdministrativeUnitTag$/i", $oc)){
-          $has_unit_tag= true;
-        }
+				if (preg_match("/^gosaAdministrativeUnitTag$/i", $oc)){
+					$has_unit_tag= true;
+				}
 			}
 			$this->attrs['objectClass']= $tmp;
 
@@ -336,11 +330,15 @@ class department extends plugin
 		}
 		show_ldap_error($ldap->get_error(), _("Saving department failed"));
 
+    /* The parameter forces only to set must_be_tagged, and don't touch any objects 
+        This will be done later */
+    $this->tag_objects(true);
+
     /* Fix tagging if needed */
     if (!$this->is_administrational_unit){
       $this->handle_object_tagging();
     }
-
+    
     /* Optionally execute a command after we're done */
 		$this->postcreate();
     return(true);
@@ -385,6 +383,7 @@ class department extends plugin
 		} else {
 			$ldap->search('objectClass=gosaAdministrativeUnitTag', array('dn'));
 		}
+
 		while ($attrs= $ldap->fetch()){
 
 			/* Skip self */

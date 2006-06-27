@@ -21,6 +21,7 @@ class deptabs extends tabs
     $baseobject= $this->by_object['department'];
     $ou= preg_replace('/,/', '\,', $baseobject->ou);
     $new_dn= @LDAP::convert('ou='.$ou.','.$baseobject->base);
+    
     if($justsave){
       if ($this->dn != $new_dn && $this->dn != "new"){
         /* if( new_dn is subtree of this->dn ) */
@@ -30,15 +31,16 @@ class deptabs extends tabs
           print_red(_("Try to move tree failed. Destination tree is subtree of source tree."));
         }else{
           /* Prepare to be moved */
-          $baseobject->recursive_move($this->dn, $new_dn);		
+          $baseobject->recursive_move($this->dn, $new_dn);			
           $this->by_object['department'] = $baseobject;
           return;
         }
       }
-    }else{
-      $this->dn= $new_dn;
-      return(tabs::save(TRUE));
     }
+    $this->dn= $new_dn;
+    $baseobject->dn= $this->dn;
+    $this->by_object['department']= $baseobject;
+    return(tabs::save(TRUE));
   }
 
 }
