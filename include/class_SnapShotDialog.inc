@@ -123,6 +123,7 @@ class SnapShotDialog extends plugin
 			$smarty->assign("CountSnapShots",count($list_of_elements));
 		}
 
+		$smarty->assign("restore_deleted",$this->display_all_removed_objects);
 		$smarty->assign("RestoreMode",$this->display_restore_dialog);
 		$smarty->assign("CurrentDate",date("d.m.Y H:i"));
 		$smarty->assign("CurrentDN",$this->dn);

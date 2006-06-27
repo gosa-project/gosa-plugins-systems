@@ -8,12 +8,14 @@
 <p class="seperator">&nbsp;</p>
 <br>
 <table summary="" style="width:100%">
+	{if !$restore_deleted}
 	<tr>
 		<td>
 		<b>{t}Object{/t}</b>&nbsp;
 		{$CurrentDN}
 		</td>
 	</tr>
+	{/if}
 	<tr>
 		<td>
 			<br>
