@@ -211,7 +211,7 @@ class divListUsers extends MultiSelectWindow
     foreach($list as $key => $val){
 
       /* Create action icons */
-      $action = $this->GetSnapShotActions($val['dn']);
+      $action= "";
       if($this->parent->CopyPasteHandler){
         $action .= "<input class='center' type='image'
           src='images/editcut.png' alt='"._("cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
@@ -222,6 +222,7 @@ class divListUsers extends MultiSelectWindow
         name='user_edit_%KEY%' title='"._("Edit user")."'>";
       $action.= "<input class='center' type='image' src='images/list_password.png' alt='"._("password")."'
         name='user_chgpw_%KEY%' title='"._("Change password")."'>";
+      $action.= $this->GetSnapShotActions($val['dn']);
       $action.= "<input class='center' type='image' src='images/edittrash.png' alt='"._("delete")."'
         name='user_del_%KEY%' title='"._("Delete user")."'>";
 

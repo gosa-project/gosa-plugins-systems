@@ -131,10 +131,10 @@ class divListMacro extends MultiSelectWindow
 
     foreach($list as $key => $val){
    
-      $action    = $this->GetSnapShotActions($val['dn']); 
-      $action    .= "<input class='center' type='image' src='images/edit.png' alt='"._("edit")."'     
+      $action= "<input class='center' type='image' src='images/edit.png' alt='"._("edit")."'     
         name='user_edit_%KEY%' title='"._("Edit macro")."'>";
-      $action    .= "<input class='center' type='image' src='images/edittrash.png' alt='"._("delete")."'   
+      $action.= $this->GetSnapShotActions($val['dn']); 
+      $action.= "<input class='center' type='image' src='images/edittrash.png' alt='"._("delete")."'   
         name='user_del_%KEY%' title='"._("Delete macro")."'>";
 
       $display= $val["displayName"][0];

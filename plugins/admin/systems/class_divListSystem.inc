@@ -153,8 +153,8 @@ class divListSystem extends MultiSelectWindow
     // Test Every Entry and generate divlist Array
     foreach($terminals as $key => $val){
 
-      $action =  $this->GetSnapShotActions($val['dn']);
-      $action.= "<input class='center' type='image' src='images/edit.png' alt='"._("edit")."'     name='user_edit_%KEY%' title='"._("Edit system")."'>";
+      $action= "<input class='center' type='image' src='images/edit.png' alt='"._("edit")."'     name='user_edit_%KEY%' title='"._("Edit system")."'>";
+      $action.= $this->GetSnapShotActions($val['dn']);
       $action.= "<input class='center' type='image' src='images/edittrash.png' alt='"._("delete")."'   name='user_del_%KEY%' title='"._("Delete system")."'>";
 
       /* Generate picture list, which is currently disabled */

@@ -165,7 +165,7 @@ class divListGroup extends MultiSelectWindow
     foreach($groups as $key => $val){
     
       /* Create action icons - copy & paste icons */
-      $actions = $this->GetSnapShotActions($val['dn']);
+      $actions= "";
       if($this->parent->CopyPasteHandler){
         $actions.= "<input class='center' type='image'
           src='images/editcut.png' alt='"._("cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
@@ -174,6 +174,7 @@ class divListGroup extends MultiSelectWindow
       }
       $actions.= "<input class='center' type='image'
         src='images/edit.png' alt='"._("edit")."' name='group_edit_%KEY%' title='"._("Edit this entry")."'>";
+      $actions.= $this->GetSnapShotActions($val['dn']);
       $actions.= "<input class='center' type='image'
         src='images/edittrash.png' alt='"._("delete")."' name='group_del_%KEY%' title='"._("Delete this entry")."'>";
 

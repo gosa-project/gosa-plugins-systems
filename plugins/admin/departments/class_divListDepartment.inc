@@ -124,9 +124,9 @@ class divListDepartment extends MultiSelectWindow
         $disp = get_sub_department($cdn);
       }
   
-      $actions = $this->GetSnapShotActions($val['dn']);
-      $actions.= "<input class='center' type='image' src='images/edit.png'
+      $actions= "<input class='center' type='image' src='images/edit.png'
         alt='"._("edit")."'   name='dep_edit_%KEY%' title='"._("Edit this entry")."'>";
+      $actions.= $this->GetSnapShotActions($val['dn']);
       $actions.= "<input class='center' type='image' src='images/edittrash.png'
         alt='"._("delete")."'   name='dep_del_%KEY%' title='"._("Delete this entry")."'>";
 

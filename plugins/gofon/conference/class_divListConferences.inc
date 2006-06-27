@@ -126,9 +126,9 @@ class divListConference extends MultiSelectWindow
     /* Insert conferneces*/
     foreach($list as $conferencekey => $conference ){
 
-      $action = $this->GetSnapShotActions($conference['dn']);
       $actions= "<input class='center' type='image' src='images/edit.png'     
         alt='"._("edit")."'    name='conf_edit_%KEY%' title='"._("Edit this entry")."'>";
+      $actions.= $this->GetSnapShotActions($conference['dn']);
       $actions.= "<input class='center' type='image' src='images/edittrash.png' 
         alt='"._("delete")."'   name='conf_del_%KEY%'  title='"._("Delete this entry")."'>";
       $actions2= "<input class='center' type='image' src='images/edittrash.png' 

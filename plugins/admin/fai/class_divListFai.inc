@@ -223,16 +223,16 @@ _("Submit")."'>&nbsp;".
          $desc= "";
        }
 
-       $action = $this->GetSnapShotActions($value['dn']);;
        if($value['FAIstate'] == "freeze"){
-         $action  .= "<input class='center' type='image' src='images/edit.png'  alt='"._("edit")."'
+         $action= "<input class='center' type='image' src='images/edit.png'  alt='"._("edit")."'
            name='entry_edit_%KEY%' title='"._("Edit class")."'>";
          $edi = $editlink;
          $acti = $action;
        }else{
-         $action  .= "<input class='center' type='image' src='images/edit.png'  alt='"._("edit")."'
+         $action= "<input class='center' type='image' src='images/edit.png'  alt='"._("edit")."'
            name='entry_edit_%KEY%' title='"._("Edit class")."'>";
-         $action .= "<input class='center' type='image' src='images/edittrash.png' alt='"._("delete")."'
+         $action.= $this->GetSnapShotActions($value['dn']);;
+         $action.= "<input class='center' type='image' src='images/edittrash.png' alt='"._("delete")."'
            name='entry_delete_%KEY%' title='"._("Delete class")."'>";
          $acti = $action;
          $edi = $editlink;

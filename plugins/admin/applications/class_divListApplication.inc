@@ -151,7 +151,7 @@ class divListApplication extends MultiSelectWindow
     foreach($list as $key => $val){
 
       /* Create action icons */
-      $actions = $this->GetSnapShotActions($val['dn']);
+      $actions= "";
       if($this->parent->CopyPasteHandler){
         $actions.= "<input class='center' type='image'
           src='images/editcut.png' alt='"._("cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
@@ -160,6 +160,7 @@ class divListApplication extends MultiSelectWindow
       }
       $actions.= "<input class='center' type='image'
         src='images/edit.png' alt='"._("edit")."' name='appl_edit_%KEY%' title='"._("Edit this entry")."'>";
+      $actions.= $this->GetSnapShotActions($val['dn']);
       $actions.= "<input class='center' type='image'
         src='images/edittrash.png' alt='"._("delete")."' name='appl_del_%KEY%' title='"._("Delete this entry")."'>";
 
