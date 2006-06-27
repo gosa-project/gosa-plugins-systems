@@ -508,16 +508,16 @@ class MultiSelectWindow{
 
   function GetSnapShotActions($dn)
   {
-    $str = "";
+    $str= "";
     if($this->parent->snapshotEnabled()){
 
-      $str= "<input class='center' type='image' src='images/snapshot.png'
-        alt='"._("Create snapshot")."' name='CreateSnapShotDialog_".base64_encode($dn)."' title='"._("Create a new snapshot from this object")."'>&nbsp;";
-
       if(count($this->parent->Available_SnapsShots($dn))){
-        $str= "<input class='center' type='image' src='images/restore.png'
+        $str.= "<input class='center' type='image' src='images/restore.png'
           alt='"._("Restore snapshot")."' name='RestoreSnapShotDialog_".base64_encode($dn)."' title='"._("Restore snapshot")."'>&nbsp;";
       }
+
+      $str.= "<input class='center' type='image' src='images/snapshot.png'
+        alt='"._("Create snapshot")."' name='CreateSnapShotDialog_".base64_encode($dn)."' title='"._("Create a new snapshot from this object")."'>&nbsp;";
     }
 
     return($str);
