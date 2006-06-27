@@ -3,7 +3,7 @@
 <h2>{t}Restoring object snapshots{/t}</h2>
 <p class="seperator">&nbsp;</p>
 <br>
-{t}This procedure will restore a snapshot of the selected object. It will replace the existing object after pressing the continue button.{/t}
+{t}This procedure will restore a snapshot of the selected object. It will replace the existing object after pressing the restore button.{/t}
 <br>
 <p class="seperator">&nbsp;</p>
 <br>
