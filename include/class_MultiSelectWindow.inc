@@ -360,6 +360,9 @@ class MultiSelectWindow{
 	   Store data also into a session var, to keep the checkboxes check after reload  */
 	function save_object()
 	{
+    /* Get up to date config */
+    $this->config = $this->parent->config;
+
 		/* Update current base */
 		if($this->DepartmentsAdded){
 			$s_action ="";
