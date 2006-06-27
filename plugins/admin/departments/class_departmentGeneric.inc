@@ -260,12 +260,11 @@ class department extends plugin
 		return $message;
 	}
 
-
-	/* Save to LDAP */
-	function save()
-	{
+  
+  /* Prepare Unit tag */
+  function prepare_unit_tag()
+  {
 		$ldap= $this->config->get_ldap_link();
-
 		/* Add tag objects if needed */
 		if ($this->is_administrational_unit){
       if(!in_array_ics("gosaAdministrativeUnit",$this->objectclasses)){
@@ -294,8 +293,17 @@ class department extends plugin
 				}
 				$this->gosaUnitTag= preg_replace("/\./", "", $sec.$usec);
 			}
-		}
+		}else{
+      $this->gosaUnitTag = "";
+    }
+  }
 
+
+	/* Save to LDAP */
+	function save()
+	{
+		$ldap= $this->config->get_ldap_link();
+    $this->prepare_unit_tag();
 		plugin::save();
 
 		/* Remove tag information if needed */
@@ -368,6 +376,8 @@ class department extends plugin
 	/* Tag objects to have the gosaAdministrativeUnitTag */
 	function tag_objects($OnlySetTagFlag = false)
 	{
+    $this->prepare_unit_tag();
+
     if(!$OnlySetTagFlag){
       $smarty= get_smarty();
       echo "<!-- headers.tpl-->".$smarty->fetch(get_template_path('headers.tpl'));
