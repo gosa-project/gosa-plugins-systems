@@ -59,7 +59,7 @@
 	</tr>
 	<tr>
 		<td>
-			<b>{t}Date{/t}</b> 
+			<b>{t}Timestamp{/t}</b> 
 		</td>
 		<td> 
 		   {$CurrentDate}
