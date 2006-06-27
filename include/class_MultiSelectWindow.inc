@@ -515,7 +515,7 @@ class MultiSelectWindow{
         $str.= "<input class='center' type='image' src='images/restore.png'
           alt='"._("Restore snapshot")."' name='RestoreSnapShotDialog_".base64_encode($dn)."' title='"._("Restore snapshot")."'>&nbsp;";
       } else {
-        $str.= "<img src='images/empty.png' style='width:16px;' class='center'>&nbsp;";
+        $str = "<img class='center' src='images/restore_grey.png'>&nbsp;";
       }
 
       $str.= "<input class='center' type='image' src='images/snapshot.png'
