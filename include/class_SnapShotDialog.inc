@@ -106,7 +106,7 @@ class SnapShotDialog extends plugin
 				$actions.= "<input type='image' src='images/edittrash.png' name='RemoveSnapShot_%KEY' 
 								class='center' title='"._("Remove snapshot")."'>&nbsp;";
 
-				$time_stamp 	= date("d.m.Y H.i.s",preg_replace("/\-.*$/","",$entry['gosaSnapshotTimestamp'][0]));
+				$time_stamp 	= date(_("Y-m-d, H:i:s"),preg_replace("/\-.*$/","",$entry['gosaSnapshotTimestamp'][0]));
 				$display_data 	= $entry['description'][0];
 
 				if($this->display_all_removed_objects){
@@ -126,7 +126,7 @@ class SnapShotDialog extends plugin
 
 		$smarty->assign("restore_deleted",$this->display_all_removed_objects);
 		$smarty->assign("RestoreMode",$this->display_restore_dialog);
-		$smarty->assign("CurrentDate",date("d.m.Y H:i"));
+		$smarty->assign("CurrentDate",date(_("Y-m-d, H:i:s")));
 		$smarty->assign("CurrentDN",$this->dn);
 		$smarty->assign("CurrentDescription",$this->CurrentDescription);
 		return($smarty->fetch(get_template_path("snapshotdialog.tpl")));
