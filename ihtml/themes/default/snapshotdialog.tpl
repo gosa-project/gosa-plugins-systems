@@ -81,4 +81,10 @@
     &nbsp;
     <input type='submit' name='CancelSnapshot' value='{t}Cancel{/t}'>
 </div></p>
+
+<script language="JavaScript" type="text/javascript">
+  <!-- // First input field on page
+  document.mainform.CurrentDescription.focus();
+  -->
+</script>
 {/if}
