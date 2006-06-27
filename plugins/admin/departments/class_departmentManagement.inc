@@ -309,7 +309,8 @@ class departmentManagement extends plugin
     }else{
 
       /* Check if there is a snapshot dialog open */
-      if($str = $this->showSnapshotDialog($this->DivListDepartment->selectedBase,$this->DivListDepartment->selectedBase)){
+      $base = $this->DivListDepartment->selectedBase;
+      if($str = $this->showSnapshotDialog($base,$this->get_used_snapshot_bases())){
         return($str);
       }
 
@@ -322,6 +323,14 @@ class departmentManagement extends plugin
       return($this->DivListDepartment->Draw());
     }
   }
+
+
+  /* Return departments, that will be included within snapshot detection */
+  function get_used_snapshot_bases()
+  {
+    return(array($this->DivListDepartment->selectedBase));
+  }
+
 
 
   function reload()

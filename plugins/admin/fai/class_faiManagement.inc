@@ -562,16 +562,8 @@ class faiManagement extends plugin
      ****************/
 
     /* Check if there is a snapshot dialog open */
-    $tmp = array();
-    $types = array("hooks","scripts","disk","packages","profiles","templates","variables");
-    foreach($types as $type){
-      if($this->DivListFai->selectedBranch == "main"){
-        $tmp[] = "ou=".$type.",ou=fai,ou=configs,ou=systems,".$this->DivListFai->selectedBase;
-      }else{
-        $tmp[] = "ou=".$type.",".$this->DivListFai->selectedBranch;
-      }
-    }
-    if($str = $this->showSnapshotDialog($this->DivListFai->selectedBase,$tmp)){
+    $base = $this->DivListFai->selectedBase;
+    if($str = $this->showSnapshotDialog($base,$this->get_used_snapshot_bases())){
       return($str);
     }
 
@@ -583,6 +575,22 @@ class faiManagement extends plugin
     $this->DivListFai->setEntries($this->objects);
     return($this->DivListFai->Draw());
 	}
+
+
+  /* Return departments, that will be included within snapshot detection */
+  function get_used_snapshot_bases()
+  {
+    $tmp = array();
+    $types = array("hooks","scripts","disk","packages","profiles","templates","variables");
+    foreach($types as $type){
+      if($this->DivListFai->selectedBranch == "main"){
+        $tmp[] = "ou=".$type.",ou=fai,ou=configs,ou=systems,".$this->DivListFai->selectedBase;
+      }else{
+        $tmp[] = "ou=".$type.",".$this->DivListFai->selectedBranch;
+      }
+    }
+    return($tmp);
+  }
 
 
   /* Get available branches for current base */

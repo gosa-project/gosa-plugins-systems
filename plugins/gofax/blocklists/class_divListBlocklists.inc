@@ -88,13 +88,7 @@ class divListBlocklist extends MultiSelectWindow
       " <input class='center' type='image' src='images/list_reload.png' align='middle' 
           title='"._("Reload list")."' name='submit_department' alt='".      _("Submit")."'>&nbsp;".
           " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
-
-    if($this->parent->snapshotEnabled()){
-      $listhead .= "  <input class='center' type='image' align='middle' src='images/restore.png'
-        title='"._("Restore snapshopts of already deleted objects")."' alt='"._("Restore")."' name='RestoreDeletedSnapShot'>".
-        " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
-    }
-
+    $listhead .= $this->get_snapshot_header($this->selectedBase);
     $listhead .= " <input class='center' type='image' align='middle' src='images/list_new_blocklist.png' 
       title='"._("Create new blocklist")."' alt='"._("New Blocklist")."' name='user_new'>&nbsp;".
       " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>".

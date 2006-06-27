@@ -322,8 +322,8 @@ class blocklist extends plugin
        ***************/
 
       /* Check if there is a snapshot dialog open */
-      if($str = $this->showSnapshotDialog($this->DivListBlocklist->selectedBase,
-              array("ou=gofax,ou=systems,". $this->DivListBlocklist->selectedBase))){
+      $base = $this->DivListBlocklist->selectedBase;
+      if($str = $this->showSnapshotDialog($base,$this->get_used_snapshot_bases())){
         return($str);
       }
 
@@ -339,6 +339,13 @@ class blocklist extends plugin
       $this->DivListBlocklist->setEntries($this->blocklists);
       return($this->DivListBlocklist->Draw());
     }
+  }
+
+
+  /* Return departments, that will be included within snapshot detection */
+  function get_used_snapshot_bases()
+  {
+    return(array("ou=gofax,ou=systems,". $this->DivListBlocklist->selectedBase));
   }
 
 

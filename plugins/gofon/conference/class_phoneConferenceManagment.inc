@@ -256,8 +256,8 @@ class phoneConferenceManagment extends plugin
      ***************/
 
     /* Check if there is a snapshot dialog open */
-    if($str = $this->showSnapshotDialog($this->DivListConference->selectedBase,
-      array("ou=conferences,ou=asterisk,ou=configs,ou=systems,".$this->DivListConference->selectedBase))){
+    $base = $this->DivListConference->selectedBase;
+    if($str = $this->showSnapshotDialog($base,$this->get_used_snapshot_bases())){
       return($str);
     }
 
@@ -273,6 +273,13 @@ class phoneConferenceManagment extends plugin
     $this->reload();
     $this->DivListConference->setEntries($this->conferences);
     return($this->DivListConference->Draw());
+  }
+
+
+  /* Return departments, that will be included within snapshot detection */
+  function get_used_snapshot_bases()
+  {
+    return(array("ou=conferences,ou=asterisk,ou=configs,ou=systems,".$this->DivListConference->selectedBase));
   }
 
 

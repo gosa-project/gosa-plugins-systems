@@ -340,12 +340,13 @@ class groupManagement extends plugin
       return ($display);
     }
 
-    
+
     /* Check if there is a snapshot dialog open */
-    if($str = $this->showSnapshotDialog($this->DivListGroup->selectedBase,array(get_groups_ou().$this->DivListGroup->selectedBase))){
+    $base = $this->DivListGroup->selectedBase;
+    if($str = $this->showSnapshotDialog($base,$this->get_used_snapshot_bases())){
       return($str);
     }
-
+   
     /* Display dialog with group list */
     $this->DivListGroup->parent = $this;
     $this->DivListGroup->execute();
@@ -358,6 +359,15 @@ class groupManagement extends plugin
     $this->DivListGroup->setEntries($this->grouplist);
     return($this->DivListGroup->Draw());
   }
+
+
+  /* Return departments, that will be included within snapshot detection */
+  function get_used_snapshot_bases()
+  {
+    return(array(get_groups_ou().$this->DivListGroup->selectedBase));
+  }
+
+
 
   function reload($CreatePosixsList=false)
   {

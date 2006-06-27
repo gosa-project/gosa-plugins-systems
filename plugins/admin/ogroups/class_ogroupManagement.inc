@@ -346,8 +346,9 @@ class ogroupManagement extends plugin
       Display list 
      ****************/
 
-   /* Check if there is a snapshot dialog open */
-    if($str = $this->showSnapshotDialog($this->DivListOGroup->selectedBase,array(get_groups_ou().$this->DivListOGroup->selectedBase))){
+    /* Check if there is a snapshot dialog open */
+    $base = $this->DivListOGroup->selectedBase;
+    if($str = $this->showSnapshotDialog($base,$this->get_used_snapshot_bases())){
       return($str);
     }
 
@@ -364,6 +365,14 @@ class ogroupManagement extends plugin
     return($this->DivListOGroup->Draw());
   }
 
+
+  /* Return departments, that will be included within snapshot detection */
+  function get_used_snapshot_bases()
+  {
+    return(array(get_people_ou().$this->DivListOGroup->selectedBase));
+  }
+
+  
 
   function convert_list($input)
   {

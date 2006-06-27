@@ -131,13 +131,7 @@ _("Submit")."'>&nbsp;".
       title='"._("New profile")."' name='Create_profile' alt='"._("P")."'>&nbsp;".
 
       "<img class='center' src=\"images/list_seperator.png\" alt=\"\" align=\"middle\" height=\"16\" width=\"1\">&nbsp;";
-
-    if($this->parent->snapshotEnabled()){
-      $listhead .= "  <input class='center' type='image' align='middle' src='images/restore.png'
-        title='"._("Restore snapshopts of already deleted objects")."' alt='"._("Restore")."' name='RestoreDeletedSnapShot'>".
-        " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
-    }
-
+      $listhead .= $this->get_snapshot_header($this->selectedBase);
       $listhead .= " <input class='center' type='image' src='images/fai_new_partitionTable.png' align='middle'
       title='"._("New partition table")."' name='Create_partition' alt='"._("PT")."'>&nbsp;".
 
