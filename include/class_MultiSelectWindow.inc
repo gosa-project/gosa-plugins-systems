@@ -361,7 +361,9 @@ class MultiSelectWindow{
 	function save_object()
 	{
     /* Get up to date config */
-    $this->config = $this->parent->config;
+    if(isset($this->parent->config)){
+      $this->config = $this->parent->config;
+    }
 
 		/* Update current base */
 		if($this->DepartmentsAdded){
