@@ -33,7 +33,7 @@ $output= $MimeTypeManagement->execute();
 if (isset($_SESSION['objectinfo'])){
 	$display= print_header(get_template_path('images/mimetypes.png'), _("Mimetype management"), "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/closedlock.png')."\"> ".@LDAP::fix($_SESSION['objectinfo']));
 } else {
-	$display= print_header(get_template_path('images/application.png'), _("Mimetype management"));
+	$display= print_header(get_template_path('images/mimetypes.png'), _("Mimetype management"));
 }
 
 /* Reset requested? */

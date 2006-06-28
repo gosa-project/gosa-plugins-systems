@@ -1,7 +1,7 @@
 <table style="width:100%">
 	<tr>
 		<td colspan="2">
-			<h2><img src='images/head.png' class='center'>&nbsp;{t}Generic{/t}</h2>
+			<h2><img src='images/list_mime.png' class='center'>&nbsp;{t}Generic{/t}</h2>
 		</td>
 	</tr>
 	<tr>
@@ -68,14 +68,12 @@
 		<td style='width:50%; vertical-align:top;' >
 			{t}File patterns{/t}
 			{$gotoMimeFilePatterns}		
-			<br>
 			<input type='text'	 name='NewFilePattern'	  value='' title='{t}Please specify a new file pattern{/t}' {$gotoMimeFilePatternACL}>
 			<input type='submit' name='AddNewFilePattern' value='{t}Add{/t}' title='{t}Add a new file pattern{/t}' {$gotoMimeFilePatternACL}>
 		</td>
 		<td style="border-left:1px solid #A0A0A0;vertical-align:top;">
 			{t}Applications{/t}
 			{$gotoMimeApplications}		
-			<br>
 			<input type='text'	 name='NewApplication'	  value='' title='{t}Enter an application name here{/t}' {$gotoMimeApplicationACL}>
 			<input type='submit' name='AddNewApplication' value='{t}Add{/t}' title='{t}Add application{/t}' {$gotoMimeApplicationACL}>
 		</td>
@@ -117,7 +115,6 @@
 		<td style="border-left:1px solid #A0A0A0;vertical-align:top;">
 			{t}Applications{/t}
 			{$gotoMimeEmbeddedApplications}		
-			<br>
 			<input type='text'	 name='NewEmbeddedApplication'	  value='' title='{t}Enter an application name here{/t}' {$gotoMimeEmbeddedApplicationACL}>
 			<input type='submit' name='AddNewEmbeddedApplication' value='{t}Add{/t}' title='{t}Add application{/t}' {$gotoMimeEmbeddedApplicationACL}>
 		</td>
