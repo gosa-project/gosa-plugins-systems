@@ -8,6 +8,17 @@ $ACLD['application']=array("cn" => "LDAP name",
 			"gosaApplicationExecute" => "Execute",
 			"gosaApplicationFlags" => "Modify flags",
 			"gosaApplicationName" => "Visible name");
+$ACLD['mimetype']=array("cn" 				=> "LDAP name",
+			"create" 						=> "Create",
+			"delete" 						=> "Delete",
+			"description" 					=> "Description",
+			"gotoMimeIcon" 					=> "Icon",
+			"gotoMimeApplication" 			=> "Modify flags",
+			"gotoMimeEmbeddedApplication" 	=> "Embedded applications",
+			"gotoMimeLeftClickAction" 		=> "Left click actions",
+			"gotoMimeFilePattern" 			=> "File patterns",
+			"gotoMimeGroup" 				=> "Mime group",
+			"description"	 				=> "Description");
 $ACLD['department']= array(
 			"businessCategory",
 			"description",
