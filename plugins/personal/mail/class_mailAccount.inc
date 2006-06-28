@@ -157,9 +157,6 @@ class mailAccount extends plugin
       }
     }
 
-
-    /* Get vacation message */
-
     /* Fill vacation array */
     $this->vacation= array();
     if (isset($this->config->current['VACATIONDIR'])){
@@ -379,7 +376,7 @@ class mailAccount extends plugin
     }
 
   
-    /* Vocation message */
+    /* Vacation message */
   
     /* Import vacation message? */
     if (isset($_POST["import_vacation"]) && isset($this->vacation[$_POST["vacation_template"]])){
