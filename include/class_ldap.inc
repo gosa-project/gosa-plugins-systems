@@ -527,7 +527,7 @@ class LDAP{
 
           /* If this is no department */
           foreach($attr as $key => $value){
-            if(in_array($key ,array("FAItemplateFile","FAIscript", "gotoLogonScript", "gosaApplicationIcon"))){
+            if(in_array($key ,array("FAItemplateFile","FAIscript", "gotoLogonScript", "gosaApplicationIcon","gotoMimeIcon"))){
               $sr= ldap_read($this->cid, $this->fix($sourcedn), "$key=*", array($key));
               $ei= ldap_first_entry($this->cid, $sr);
               if ($tmp= @ldap_get_values_len($this->cid, $ei,$key)){
@@ -545,7 +545,7 @@ class LDAP{
           unset($attr['count']);
           unset($attr['dn']);
 
-          if(!in_array("gosaApplication" , $attr['objectClass'])){
+          if((!in_array("gosaApplication" , $attr['objectClass'])) && (!in_array("gotoMimeType", $attr['objectClass']))){
             if($type=="branch"){
               $attr['FAIstate'] ="branch";
             }elseif($type=="freeze"){

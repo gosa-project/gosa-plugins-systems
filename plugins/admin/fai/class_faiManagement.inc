@@ -370,6 +370,9 @@ class faiManagement extends plugin
       $appsrc = preg_replace("/ou=fai,ou=configs,ou=systems,/","ou=apps,",$baseToUse); 
       $appdst = preg_replace("/ou=fai,ou=configs,ou=systems,/","ou=apps,","ou=".$name.",".$baseToUse) ; 
 
+      $mimesrc = preg_replace("/ou=fai,ou=configs,ou=systems,/","ou=mime,",$baseToUse); 
+      $mimedst = preg_replace("/ou=fai,ou=configs,ou=systems,/","ou=mime,","ou=".$name.",".$baseToUse) ; 
+
       /* Print header to have styles included */
       echo "<!-- headers.tpl-->".$smarty->fetch(get_template_path('headers.tpl'));
       echo "<body style='background-image:none;margin:3px;color:black'>";
@@ -380,6 +383,13 @@ class faiManagement extends plugin
       $ldap->recursive_remove();
       $ldap->cd ($this->config->current['BASE']);
       $ldap->copy_FAI_resource_recursive($appsrc,$appdst,$NewReleaseName,$type,true);
+
+      /* Duplicate mime types 
+       */
+      $ldap->cd ($appdst);
+      $ldap->recursive_remove();
+      $ldap->cd ($this->config->current['BASE']);
+      $ldap->copy_FAI_resource_recursive($mimesrc,$mimedst,$NewReleaseName,$type,true);
 
       /* Duplicate fai objects 
        */
