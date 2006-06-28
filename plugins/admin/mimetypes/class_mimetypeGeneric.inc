@@ -361,6 +361,7 @@ class mimetype extends plugin
 	/* Remove current mime type */
 	function remove_from_parent()
 	{
+		$ldap = $this->config->get_ldap_link();
 		$ldap->rmDir($this->dn);
 		show_ldap_error($ldap->get_error(), _("Removing mie type failed"));
 
