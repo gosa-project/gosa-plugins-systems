@@ -16,10 +16,11 @@ class mimetype extends plugin
 	var $ui;
 	var $cn									= "";					
 	var $gotoMimeLeftClickAction			= "I";
-	var $gotoMimeLeftClickAction_I			= false;
+	var $gotoMimeLeftClickAction_I			= true;
 	var $gotoMimeLeftClickAction_E			= false;
 	var $gotoMimeLeftClickAction_Q			= false;
 	var $gotoMimeIcon						= "*removed*";
+	var $use_gotoMimeIcon					= NULL;
 	var $description						= "";
 	var $gotoMimeFilePattern				= array();
 	var $gotoMimeApplication				= array();
@@ -43,11 +44,16 @@ class mimetype extends plugin
 
 	/* Select options */
 	var $MimeGroups			= array("video","audio","system");
-		
+
+	/* Orig_Dn is used to verify if this object is new or only edited */		
+	var $orig_dn			= "";
 
 	function mimetype($config,$dn= NULL)
 	{
 		plugin::plugin ($config, $dn);
+
+		/* Save original dn */
+		$this->orig_dn = $dn;	
 
 		/* get gotoMimeLeftClickActions I/E/Q */
 		if(isset($this->gotoMimeLeftClickAction)){
@@ -58,6 +64,11 @@ class mimetype extends plugin
 					$this->$varna = true;
 				}
 			}
+		}
+
+		/* If both radio buttons arn't set, set option I */
+		if(!$this->gotoMimeLeftClickAction_I && !$this->gotoMimeLeftClickAction_E){
+			$this->gotoMimeLeftClickAction_I = true;
 		}
 
 		/* Get list of array attributes */
@@ -319,9 +330,7 @@ class mimetype extends plugin
 			foreach($this->$use_attr as $entry){
 				$tmp[] = $entry."|".$i ++;
 			}
-			if($this->new && count($tmp) == 0){
-				$this->$attr = "";
-			}
+			$this->$attr = $tmp;
 		}
 
 		/* Create array entries */
@@ -329,19 +338,32 @@ class mimetype extends plugin
 			$i 				= 0;
 			$use_attr 		= "use_".$attr;
 			$tmp 			= array();
-			$this->$attr 	= "";
+			$this->$attr 	= array();
 			foreach($this->$use_attr as $entry){
 				$tmp[] = $entry;
 			}
 			$this->$attr = $tmp;
 		}
 
+		if($this->use_gotoMimeIcon != "*removed*"){
+			$this->gotoMimeIcon = $this->iconData;
+		}else{
+			$this->gotoMimeIcon = "";
+		}
+	
 		plugin::save();
 
-		if($this->gotoMimeIcon != "*removed"){
-			$this->attrs['gotoMimeIcon'] = $this->iconData;
+		/* If this is a newly created object, skip storing those 
+			attributes that contain an empty array */
+		if($this->orig_dn == "new"){
+			foreach(array("gotoMimeEmbeddedApplication","gotoMimeApplication","gotoMimeFilePattern") as $attr){
+				if(!count($this->$attr)){
+					unset($this->attrs[$attr]);
+				}
+			}
 		}
-		
+
+
 		$ldap = $this->config->get_ldap_link();
 		$ldap-> cd ( $this->config->current['BASE']);
 		$ldap->cat($this->dn);
@@ -400,7 +422,7 @@ class mimetype extends plugin
 	{
 		if (empty($filename)){
 			$filename= "./images/default_icon.png";
-			$this->gotoMimeIcon= "*removed*";
+			$this->use_gotoMimeIcon= "*removed*";
 		}
 
 		if (file_exists($filename)){
