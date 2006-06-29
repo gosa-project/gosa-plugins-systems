@@ -48,7 +48,8 @@ class mimetype extends plugin
   var $CopyPasteVars        = array("use_gotoMimeFilePattern","use_gotoMimeApplication","use_gotoMimeEmbeddedApplication","iconData");
 
   /* Select options */
-  var $MimeGroups			      = array("video","audio","system");
+  var $MimeGroups			      = array("application","audio","chemical","image","inode","message","model",
+                                      "multipart","text","video","x-conference","x-world");
 
   /* Orig_Dn is used to verify if this object is new or only edited */		
   var $orig_dn			= "";
