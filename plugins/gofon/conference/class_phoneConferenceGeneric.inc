@@ -179,6 +179,7 @@ class conference extends plugin
     $ldap->cd ($this->dn);
     $ldap->recursive_remove();
 
+    show_ldap_error($ldap->get_error(), sprintf(_("Removing of goFonConference/generic with dn '%s' failed."),$this->dn));
     /* Optionally execute a command after we're done */
     $this->handle_post_events('remove');
   }
@@ -506,7 +507,7 @@ class conference extends plugin
       $ldap->add($this->attrs);
       $this->handle_post_events('add');
     }
-    show_ldap_error($ldap->get_error(), _("Saving phone conference failed"));
+    show_ldap_error($ldap->get_error(), sprintf(_("Saving of goFonConference/generic with dn '%s' failed."),$this->dn));
 
     /* Optionally execute a command after we're done */
     $this->postcreate();

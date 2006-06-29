@@ -393,7 +393,7 @@ class macroParameter extends plugin
       $ldap->add($this->attrs);
       $this->handle_post_events("add");
     }
-    show_ldap_error($ldap->get_error(), _("Saving phone macro parameters failed"));
+    show_ldap_error($ldap->get_error(), sprintf(_("Removing of goFonMacro/generic account with dn '%s' failed."),$this->dn));
   }
 
 }
