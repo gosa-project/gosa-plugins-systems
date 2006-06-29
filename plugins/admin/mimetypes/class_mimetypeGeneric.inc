@@ -431,7 +431,7 @@ class mimetype extends plugin
       $ldap->cd($this->dn);
       $ldap->add($this->attrs);
     }
-    show_ldap_error($ldap->get_error(),_("Saving mime type failed."));
+    show_ldap_error($ldap->get_error(), sprintf(_("Saving of mime type/generic with dn '%s' failed."),$this->dn));
   }
 
 
@@ -440,7 +440,7 @@ class mimetype extends plugin
   {
     $ldap = $this->config->get_ldap_link();
     $ldap->rmDir($this->dn);
-    show_ldap_error($ldap->get_error(), _("Removing mie type failed"));
+    show_ldap_error($ldap->get_error(), sprintf(_("Removing of mime type/generic with dn '%s' failed."),$this->dn));
 
     /* Optionally execute a command after we're done */
     $this->handle_post_events("remove");
