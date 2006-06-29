@@ -34,6 +34,21 @@
 						<input type="text" name='description' value="{$description}" {$descriptionACL} title='{t}Please sepecify a description{/t}'>
 					</td>
 				</tr>
+				<tr>
+				  	<td><LABEL for="base">{t}Base{/t}{$must}</LABEL></td>
+				  	<td>
+				   		<select size="1" id="base" name="base" title="{t}Choose subtree to place application in{/t}"
+							{if $isReleaseMimeType} disabled {/if} {$baseACL}>
+							{html_options options=$bases selected=$base_select}
+				   		</select>
+						{if $baseACL == "" && !$isReleaseMimeType}
+							<input type="image" name="chooseBase" src="images/folder.png" class="center" title="{t}Select a base{/t}">
+						{else}
+							<img src="images/folder_gray.png" class="center" title="{t}Select a base{/t}">
+						{/if}
+				  </td>
+				 </tr>
+
 			</table>
 			
 		</td>

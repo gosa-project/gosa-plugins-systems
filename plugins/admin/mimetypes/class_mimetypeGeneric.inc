@@ -30,6 +30,7 @@ class mimetype extends plugin
 	var $use_gotoMimeEmbeddedApplication	= array();
 	var $gotoMimeGroup						= "";
 	var $iconData							= NULL;	
+	var $base								= "";
 
 	/* divLists */
 	var $DivPatterns						= NULL;
@@ -38,6 +39,7 @@ class mimetype extends plugin
 
 	/* Mime type release mode */
 	var $isReleaseMimeType 					= false;
+	var $dialog								= NULL;
 	
 	/* These vars will be copied too, if you use copy&paste mode */
 	var $CopyPasteVars      = array("use_gotoMimeFilePattern","use_gotoMimeApplication","use_gotoMimeEmbeddedApplication","iconData");
@@ -114,6 +116,18 @@ class mimetype extends plugin
 			}
 		}
 
+		/* Set base */	
+		if ($this->dn == "new"){
+		  if(isset($_SESSION['CurrentMainBase'])){
+			$this->base= $_SESSION['CurrentMainBase'];
+		  }else{
+			$ui= get_userinfo();
+			$this->base= dn2base($ui->dn);
+		  }
+		} else {
+		  $this->base= preg_replace ("/^[^,]+,[^,]+,/", "", $this->dn);
+		}
+
 		/* Get icon data */
 		if(isset($this->attrs['gotoMimeIcon'])){
 			$ldap = $this->config->get_ldap_link();
@@ -131,6 +145,33 @@ class mimetype extends plugin
 	function execute()
 	{
 		$smarty = get_smarty();
+
+		/* Base select dialog */
+		$once = true;
+		foreach($_POST as $name => $value){
+			if(preg_match("/^chooseBase/",$name) && $once){
+				$once = false;
+				$this->dialog = new baseSelectDialog($this->config,$this);
+				echo $this->base;
+				$this->dialog->setCurrentBase($this->base);
+			}
+		}
+
+		/* Dialog handling */
+		if(is_object($this->dialog)){
+		
+			/* Must be called before save_object */
+			$this->dialog->save_object();
+
+			if($this->dialog->isClosed()){
+				$this->dialog = false;
+			}elseif($this->dialog->isSelected()){
+				$this->base = $this->dialog->isSelected();
+				$this->dialog= false;
+			}else{
+				return($this->dialog->execute());
+			}
+		}
 
 		/* Check Posts */
 		$posts = array(	
@@ -257,7 +298,11 @@ class mimetype extends plugin
 			$field2 = array("string" => preg_replace("/%s/",$key,$EApps_Actions),"attach"=>"style='border-right:0px;width:50px;'");
 			$fields = array($field1,$field2);
 			$DivEApps -> AddEntry($fields);
-		}			
+		}
+		$smarty->assign("baseACL", 						chkacl($this->acl,"base"));	
+	    $smarty->assign("bases", 						$this->config->idepartments);		
+	    $smarty->assign("base_select", 					$this->base);		
+		$smarty->assign("isReleaseMimeType",			$this->isReleaseMimeType);
 		$smarty->assign("gotoMimeFilePatterns",			$DivPatterns->DrawList());
 		$smarty->assign("gotoMimeApplications",			$DivApps->DrawList());
 		$smarty->assign("gotoMimeEmbeddedApplications",	$DivEApps->DrawList());
@@ -556,4 +601,5 @@ class mimetype extends plugin
 		}
 	}
 }
+// vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

@@ -33,6 +33,7 @@ class mimetypeManagement extends plugin
   var $mimetabs                       = NULL;
   var $snapDialog                     = NULL;
   var $acl                            = NULL;
+  var $CopyPasteHandler               = NULL;
 
   function mimetypeManagement ($config, $ui)
   {
