@@ -175,7 +175,7 @@ class goShareServer extends plugin{
       $ldap->cd($this->dn);
       $ldap->add($this->attrs);
     }
-    show_ldap_error($ldap->get_error());
+    show_ldap_error($ldap->get_error(), sprintf(_("Removing of system server/shares with dn '%s' failed."),$this->dn));
     $this->handle_post_events("remove");
   }
 
@@ -209,7 +209,7 @@ class goShareServer extends plugin{
       $ldap->cd($this->dn);
       $ldap->add($this->attrs);
     }
-    show_ldap_error($ldap->get_error());
+    show_ldap_error($ldap->get_error(), sprintf(_("Saving of system server/shares with dn '%s' failed."),$this->dn));
     if($this->initially_was_account){
       $this->handle_post_events("modify");
     }else{
@@ -236,7 +236,7 @@ class goShareServer extends plugin{
       $attrs[$flag] = $value;
       $this->$flag = $value;
       $ldap->modify($attrs);
-      show_ldap_error($ldap->get_error());
+      show_ldap_error($ldap->get_error(), sprintf(_("Set status flag, for system server/shares with dn '%s' failed."),$this->dn));
       $this->action_hook();
     }
   }
@@ -284,7 +284,7 @@ class goShareServer extends plugin{
     if (count($attrs) == 0) {
         $ldap->cd($mountsdn);
         $ldap->add($mounts);
-        show_ldap_error($ldap->get_error(), _("Creating mount container failed"));
+        show_ldap_error($ldap->get_error(), sprintf(_("Creating system server/shares (mount container) with dn '%s' failed."),$this->dn)); 
         gosa_log("Mount container '$mountsdn' has been created");
     }
 
@@ -298,7 +298,7 @@ class goShareServer extends plugin{
 
       if (count($attrs) != 0) {
         $ldap->rmdir($mountdn);
-        show_ldap_error($ldap->get_error(), _("Removing mount container failed"));
+        show_ldap_error($ldap->get_error(), sprintf(_("Removing system server/shares (mount container) with dn '%s' failed."),$this->dn)); 
         gosa_log("Mount object '".$mountdn."' has been removed");
       }
     }
@@ -310,7 +310,7 @@ class goShareServer extends plugin{
       $mountdn = "cn=".$mount["cn"].","."$mountsdn";
       $ldap->cd($mountdn);
       $ldap->add($mount);
-      show_ldap_error($ldap->get_error(), _("Saving mount container failed"));
+      show_ldap_error($ldap->get_error(), sprintf(_("Saving system server/shares (mount container) with dn '%s' failed."),$this->dn)); 
       gosa_log("Mount object '".$mountdn."' has been added");
     }
   }

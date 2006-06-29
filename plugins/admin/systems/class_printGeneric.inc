@@ -549,7 +549,7 @@ class printgeneric extends plugin
       /* Remove account & dns extension */ 
       $this->netConfigDNS->remove_from_parent();
       $ldap->rmdir($this->dn);
-      show_ldap_error($ldap->get_error(), _("Removing printer failed"));
+      show_ldap_error($ldap->get_error(), sprintf(_("Removing of system print/generic with dn '%s' failed."),$this->dn));
       $this->handle_post_events("remove");
 
       /* Delete references to object groups */
@@ -731,7 +731,7 @@ class printgeneric extends plugin
 
       $this->handle_post_events("modify");
     }
-    show_ldap_error($ldap->get_error(), _("Saving printer failed"));
+    show_ldap_error($ldap->get_error(), sprintf(_("Saving of system print/generic with dn '%s' failed."),$this->dn));
 
     $this->netConfigDNS->cn = $this->cn;
     $this->netConfigDNS->dn = $this->dn;
