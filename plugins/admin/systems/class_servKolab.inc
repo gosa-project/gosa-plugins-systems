@@ -188,7 +188,7 @@ class servkolab extends plugin {
 
       /* Remove complete entry */
       $ldap->rmdir ($this->dn);
-      show_ldap_error($ldap->get_error(), _("Removing kolab host entry failed"));
+      show_ldap_error($ldap->get_error(), sprintf(_("Removing host entry from system server/kolab with dn '%s' failed."),$this->dn));
       gosa_log("k=kolab entry removed, ".$this->hostname." was the last kolabHost entry.");
 
     } else {
@@ -204,7 +204,7 @@ class servkolab extends plugin {
       $ldap->cd($this->dn);
       $this->cleanup();
       $ldap->modify ($attrs); 
-      show_ldap_error($ldap->get_error(), _("Removing server from kolab object failed"));
+      show_ldap_error($ldap->get_error(), sprintf(_("Removing host entry from system server/kolab with dn '%s' failed."),$this->dn));
       gosa_log("Removing ".$this->hostname." from list of kolabHosts");
     }
 
@@ -329,7 +329,7 @@ class servkolab extends plugin {
     $ldap->cd($this->dn);
     $this->cleanup();;
     $ldap->$mode($this->attrs);
-    show_ldap_error($ldap->get_error(), _("Saving server to kolab object failed"));
+    show_ldap_error($ldap->get_error(), sprintf(_("Saving system server/kolab with dn '%s' failed."),$this->dn));
 
     /* Optionally execute a command after we're done */
     if ($this->initially_was_account == $this->is_account) {
@@ -380,7 +380,7 @@ class servkolab extends plugin {
       $attrs[$flag] = $value;
       $this->$flag = $value;
       $ldap->modify($attrs);
-      show_ldap_error($ldap->get_error());
+      show_ldap_error($ldap->get_error(), sprintf(_("Set status flag for system server/kolab with dn '%s' failed."),$this->dn)); 
       $this->action_hook();
     }
   }

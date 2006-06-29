@@ -285,7 +285,7 @@ class servdns extends plugin
       foreach($tmp['zoneUpdates'] as $dn => $attrs){
         $ldap->cd($dn);
         $ldap->modify($attrs);
-        show_ldap_error("Zone:".$ldap->get_error(), _("Updating DNS service failed"));
+        show_ldap_error($ldap->get_error(), sprintf(_("Updating of system server/dns with dn '%s' failed."),$this->dn));
       }
     }
 
@@ -294,7 +294,7 @@ class servdns extends plugin
     foreach($tmp['del'] as $dn => $del){
       $ldap->cd($dn);
       $ldap->rmdir_recursive($dn);
-      show_ldap_error($ldap->get_error(), _("Removing DNS entries failed"));
+      show_ldap_error($ldap->get_error(), sprintf(_("Removing of system server/dns with dn '%s' failed."),$this->dn));
     }
 
     /* move follwoing entries
@@ -315,7 +315,7 @@ class servdns extends plugin
         $ldap->cd($dn);
         $ldap->add($attrs);
       }
-      show_ldap_error($ldap->get_error(), _("Saving DNS entries failed"));
+      show_ldap_error($ldap->get_error(), sprintf(_("Saving of system server/dns with dn '%s' failed."),$this->dn));
     }
   }
 
@@ -339,7 +339,7 @@ class servdns extends plugin
       $attrs[$flag] = $value;
       $this->$flag = $value;
       $ldap->modify($attrs);
-      show_ldap_error($ldap->get_error());
+      show_ldap_error($ldap->get_error(), sprintf(_("Set status flag for system server/dns with dn '%s' failed."),$this->dn));
       $this->action_hook();
     }
   }

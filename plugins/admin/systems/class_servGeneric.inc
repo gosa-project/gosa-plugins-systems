@@ -108,7 +108,7 @@ class servgeneric extends plugin
  
           $ldap->cd($this->dn);
           $ldap->modify($attrs);
-          show_ldap_error($ldap->get_error());
+          show_ldap_error($ldap->get_error(), sprintf(_("Saving of system server/generic (FAIstate) with dn '%s' failed."),$this->dn)); 
         }
       }
     }
@@ -186,6 +186,7 @@ class servgeneric extends plugin
     $ldap= $this->config->get_ldap_link();
     $ldap->rmdir($this->dn);
     show_ldap_error($ldap->get_error(), _("Removing server failed"));
+    show_ldap_error($ldap->get_error(), sprintf(_("Removing of system server/generic with dn '%s' failed."),$this->dn)); 
 
     /* Delete references to object groups */
     $ldap->cd ($this->config->current['BASE']);
@@ -297,7 +298,7 @@ class servgeneric extends plugin
 
       $mode= "modify";
     }
-    show_ldap_error($ldap->get_error(), _("Saving server failed"));
+    show_ldap_error($ldap->get_error(), sprintf(_("Saving of system server/generic with dn '%s' failed."),$this->dn)); 
     $this->netConfigDNS->cn = $this->cn;
     $this->netConfigDNS->save($this->dn);
 
