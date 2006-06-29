@@ -95,7 +95,7 @@ class mailogroup extends plugin
     $this->cleanup();
     $ldap->modify ($this->attrs); 
 
-    show_ldap_error($ldap->get_error(), _("Saving mail objectgroup settings failed"));
+    show_ldap_error($ldap->get_error(), sprintf(_("Saving of object group/mail with dn '%s' failed."),$this->dn));
 
     /* Optionally execute a command after we're done */
     if ($this->initially_was_account == $this->is_account){
@@ -128,7 +128,7 @@ class mailogroup extends plugin
     $this->cleanup();
     $ldap->modify ($this->attrs); 
 
-    show_ldap_error($ldap->get_error(), _("Removing mail objectgroup settings failed"));
+    show_ldap_error($ldap->get_error(), sprintf(_("Removing of object group/mail with dn '%s' failed."),$this->dn));
   }
 
 

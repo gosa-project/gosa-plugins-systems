@@ -584,7 +584,7 @@ class phonequeue extends plugin
     $this->cleanup();
     $ldap->modify ($this->attrs); 
 
-    show_ldap_error($ldap->get_error(), _("Saving phone queue failed"));
+    show_ldap_error($ldap->get_error(), sprintf(_("Saving of object group/phone queue with dn '%s' failed."),$this->dn));
 
     /* Optionally execute a command after we're done */
     if ($this->initially_was_account == $this->is_account){
@@ -681,7 +681,7 @@ class phonequeue extends plugin
     $this->cleanup();
     $ldap->modify ($this->attrs); 
 
-    show_ldap_error($ldap->get_error(), _("Removing phone queue failed"));
+    show_ldap_error($ldap->get_error(), sprintf(_("Removing of object group/phone queue with dn '%s' failed."),$this->dn));
   }
 
   

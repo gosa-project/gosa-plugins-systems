@@ -295,7 +295,7 @@ class termgroup extends plugin
         $this->handle_post_events("modify");
       }
     }
-    show_ldap_error($ldap->get_error(), _("Saving workstation failed"));
+    show_ldap_error($ldap->get_error(), sprintf(_("Removing of object group/workstation with dn '%s' failed."),$this->dn));
   }
 }
 
