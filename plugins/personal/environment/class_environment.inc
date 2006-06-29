@@ -829,7 +829,7 @@ class environment extends plugin
     $this->cleanup();
     $ldap->modify ($this->attrs); 
 
-    show_ldap_error($ldap->get_error(), _("Removing environment information failed"));
+    show_ldap_error($ldap->get_error(), sprintf(_("Removing of user/environment account with dn '%s' failed."),$this->dn));
 
     /* Optionally execute a command after we're done */
     $this->handle_post_events("remove");
@@ -1173,7 +1173,7 @@ $ldap->modify ($attrs);
     $ldap->cd($this->dn);
     $this->cleanup();
     $ldap->$mode($this->attrs);
-    show_ldap_error($ldap->get_error(), _("Adding environment information failed"));
+    show_ldap_error($ldap->get_error(), sprintf(_("Saving of user/environment account with dn '%s' failed."),$this->dn));
     $this->handle_post_events($mode);
   }
 

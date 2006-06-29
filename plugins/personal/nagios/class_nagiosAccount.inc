@@ -144,7 +144,7 @@ class nagiosAccount extends plugin
     $this->cleanup();
     $ldap->modify ($this->attrs); 
 
-    show_ldap_error($ldap->get_error(), _("Saving nagios account failed"));
+    show_ldap_error($ldap->get_error(), sprintf(_("Saving of user/nagios account with dn '%s' failed."),$this->dn));
 
     /* Optionally execute a command after we're done */
     if ($this->initially_was_account == $this->is_account){
@@ -223,7 +223,7 @@ class nagiosAccount extends plugin
     $this->cleanup();
     $ldap->modify ($this->attrs); 
 
-    show_ldap_error($ldap->get_error(), _("Removing nagios account failed"));
+    show_ldap_error($ldap->get_error(), sprintf(_("Removing of user/nagios account with dn '%s' failed."),$this->dn));
 
     /* remove the entry from LDAP */
     unset ($this->attrs['uid']);

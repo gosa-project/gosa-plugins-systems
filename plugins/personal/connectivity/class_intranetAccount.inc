@@ -99,7 +99,7 @@ class intranetAccount extends plugin
 		  $this->cleanup();
 		  $ldap->modify ($this->attrs); 
 
-		  show_ldap_error($ldap->get_error(), _("Removing intranet account failed"));
+			show_ldap_error($ldap->get_error(), sprintf(_("Removing of user/intranet account with dn '%s' failed."),$this->dn));
 
 		  /* Optionally execute a command after we're done */
 		  $this->postremove();
@@ -154,7 +154,7 @@ class intranetAccount extends plugin
 		  $this->cleanup();
 		  $ldap->modify ($this->attrs); 
 
-		  show_ldap_error($ldap->get_error(), _("Saving intranet account failed"));
+			show_ldap_error($ldap->get_error(), sprintf(_("Saving of user/intranet account with dn '%s' failed."),$this->dn));
 
 		  /* Optionally execute a command after we're done */
 		  $this->postcreate();

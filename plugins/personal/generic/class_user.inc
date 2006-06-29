@@ -543,7 +543,7 @@ class user extends plugin
   {
     $ldap= $this->config->get_ldap_link();
     $ldap->rmdir ($this->dn);
-    show_ldap_error($ldap->get_error(), _("Removing generic user account failed"));
+    show_ldap_error($ldap->get_error(), sprintf(_("Removing of user/generic account with dn '%s' failed."),$this->dn));
 
     /* Delete references to groups */
     $ldap->cd ($this->config->current['BASE']);
@@ -832,7 +832,7 @@ class user extends plugin
     $this->cleanup();
     $ldap->cd ($this->dn);
     $ldap->$mode ($this->attrs);
-    if (show_ldap_error($ldap->get_error(), _("Saving generic user account failed"))){
+    if (show_ldap_error($ldap->get_error(), sprintf(_("Saving of user/generic account with dn '%s' failed."),$this->dn))){
       return (1);
     }
 

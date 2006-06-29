@@ -253,7 +253,7 @@ class netatalk extends plugin {
     $this->cleanup();
     $ldap->modify($this->attrs);
 
-    show_ldap_error($ldap->get_error(), _("Saving Netatalk account failed"));
+    show_ldap_error($ldap->get_error(), sprintf(_("Saving of user/netatalk account with dn '%s' failed."),$this->dn));
 
     /* Optionally execute a command after we're done */
     if ($this->initially_was_account == $this->is_account) {
@@ -313,7 +313,7 @@ class netatalk extends plugin {
     $this->cleanup();
     $ldap->modify($this->attrs);
 
-    show_ldap_error($ldap->get_error(), _("Removing Netatalk account failed"));
+    show_ldap_error($ldap->get_error(), sprintf(_("Removing of user/netatalk account with dn '%s' failed."),$this->dn));
 
     /* remove the entry from LDAP */
     unset ($this->attrs['uid']);

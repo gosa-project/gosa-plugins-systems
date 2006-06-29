@@ -733,7 +733,7 @@ class oxchangeAccount extends plugin
 
     if($ldap->dn_exists("ou=addr,".$this->dn)){
     	$ldap->rmdir_recursive("ou=addr,".$this->dn);
-    	show_ldap_error($ldap->get_error(), _("Removing of oxchange addressbook failed"));
+			show_ldap_error($ldap->get_error(), sprintf(_("Removing of user/oxchange addressbook account with dn '%s' failed."),$this->dn));
     }
 
     $ldap->cd($this->dn);
@@ -741,7 +741,7 @@ class oxchangeAccount extends plugin
         $this->attributes, "Save");
     $this->cleanup();
     $ldap->modify ($this->attrs); 
-    show_ldap_error($ldap->get_error(), _("Removing oxchange account failed"));
+		show_ldap_error($ldap->get_error(), sprintf(_("Removing of user/oxchange addressbook account with dn '%s' failed."),$this->dn));
 
     /* Optionally execute a command after we're done */
     $this->postremove();
@@ -834,14 +834,14 @@ class oxchangeAccount extends plugin
     $this->cleanup();
     $ldap->modify ($this->attrs); 
 
-    show_ldap_error($ldap->get_error(), _("Saving of oxchange account failed"));
+		show_ldap_error($ldap->get_error(), sprintf(_("Saving of user/oxchange account with dn '%s' failed."),$this->dn));
 
     /* Optionally execute a command after we're done */
     $this->postcreate();
 
     if($needupdate){
       $ldap->create_missing_trees("ou=addr,".$this->dn);
-      show_ldap_error($ldap->get_error(), _("Creating oxchange addressbook tree failed"));
+			show_ldap_error($ldap->get_error(), sprintf(_("Creating of user/oxchange account with dn '%s' failed."),$this->dn));
       /* Finally save data to postgresql server */
       pg_set_client_encoding ("UNICODE");
       $nv = "SELECT nextval ('serial_id')";
