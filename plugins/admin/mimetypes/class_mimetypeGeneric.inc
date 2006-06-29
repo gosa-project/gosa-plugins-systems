@@ -461,6 +461,40 @@ class mimetype extends plugin
 		if(!count($this->use_gotoMimeFilePattern)){
 			$message[] = _("Please specify at least one file pattern.") ;
 		}
+
+    /* Check if there is already a mime type with this cn */
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd($this->config->current["BASE"]);
+    if($this->isReleaseMimeType && (isset($_SESSION['mimefilter']['release']))){
+      $baseDn = str_replace($this->config->current['BASE'],$this->base,$_SESSION['mimefilter']['release']);
+      $baseDn = preg_replace("/ou=mime,.*/","ou=mime,".$this->base,$_SESSION['mimefilter']['release']);
+      $ldap->ls("(&(objectClass=gotoMimeType)(cn=".$this->cn."))",$baseDn,array("cn"));
+      if($ldap->count()){
+        $attrs = $ldap->fetch();
+        if($this->dn != $attrs['dn']) {
+          $message[]= _("There's already a mime type with this 'Name'.");
+        }
+      }
+    }else{
+      $ldap->ls("(&(objectClass=gotoMimeType)(cn=".$this->cn."))","ou=mime,".$this->base,array("cn"));
+      if ($ldap->count()){
+        $attrs = $ldap->fetch();
+        if($this->dn != $attrs['dn']) {
+          $message[]= _("There's already an mime with this 'Name'.");
+        }
+      }
+    }
+
+    /* Check permissions for that base? */
+    if ($this->base != ""){
+      $new_dn= "cn=".$this->cn.",ou=mime,".$this->base;
+    } else {
+      $new_dn= $this->dn;
+    }
+    if (chkacl($this->acl, "create") != ""){
+      $message[]= _("You have no permissions to create a mime type on this 'Base'.");
+    }
+
 		return($message);
 	}
 	
