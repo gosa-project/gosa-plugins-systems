@@ -167,7 +167,7 @@ class department extends plugin
 		$ldap= $this->config->get_ldap_link();
 		$ldap->cd ($this->dn);
 		$ldap->recursive_remove();
-		show_ldap_error($ldap->get_error(), _("Removing department failed"));
+    show_ldap_error($ldap->get_error(), sprintf(_("Removing of department with dn '%s' failed."),$this->dn));
 
 		/* Optionally execute a command after we're done */
 		$this->handle_post_events('remove');
@@ -328,7 +328,7 @@ class department extends plugin
 			$ldap->add($this->attrs);
 			$this->handle_post_events('add');
 		}
-		show_ldap_error($ldap->get_error(), _("Saving department failed"));
+    show_ldap_error($ldap->get_error(), sprintf(_("Saving of department with dn '%s' failed."),$this->dn));
 
     /* The parameter forces only to set must_be_tagged, and don't touch any objects 
         This will be done later */

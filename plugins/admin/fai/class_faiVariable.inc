@@ -291,7 +291,7 @@ class faiVariable extends plugin
       $ldap->cd($this->dn);
       $ldap->add($this->attrs);
     }
-    show_ldap_error($ldap->get_error(), _("Saving FAI variable base failed"));
+    show_ldap_error($ldap->get_error(), sprintf(_("Saving of FAI/variable with dn '%s' failed."),$this->dn));
  
     /* Do object tagging */
     $this->handle_object_tagging();
@@ -353,14 +353,14 @@ class faiVariable extends plugin
         $ldap->cd($sub_dn);
         $ldap->rmdir_recursive($sub_dn);
         $this->handle_post_events("remove");
-        show_ldap_error($ldap->get_error(), _("Removing FAI variable failed")); 
+        show_ldap_error($ldap->get_error(), sprintf(_("Removing of FAI/variable with dn '%s' failed."),$sub_dn));
       }elseif($obj['status'] == "edited"){
         $ldap->cd($sub_dn);
         $this->cleanup();
         $ldap->modify ($tmp); 
 
         $this->handle_post_events("modify");
-        show_ldap_error($ldap->get_error(), _("Saving FAI variable failed")); 
+        show_ldap_error($ldap->get_error(), sprintf(_("Saving of FAI/variable with dn '%s' failed."),$sub_dn));
       }elseif($obj['status']=="new"){
 
         if($tmp['description'] == array()){
@@ -372,7 +372,7 @@ class faiVariable extends plugin
         $ldap->cd($sub_dn);
         $ldap->add($tmp); 
         $this->handle_post_events("add");
-        show_ldap_error($ldap->get_error(), _("Saving FAI variable failed")); 
+        show_ldap_error($ldap->get_error(), sprintf(_("Saving of FAI/variable with dn '%s' failed."),$sub_dn));
       }
 
       $this->handle_object_tagging($sub_dn, $this->gosaUnitTag);

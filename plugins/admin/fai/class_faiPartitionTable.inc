@@ -345,7 +345,7 @@ class faiPartitionTable extends plugin
       $this->cleanup();
       $ldap->modify ($this->attrs); 
     }
-    show_ldap_error($ldap->get_error(), _("Saving FAI partition table base failed"));
+    show_ldap_error($ldap->get_error(), sprintf(_("Saving of FAI/partition table with dn '%s' failed."),$this->dn));
   
     /* Do object tagging */
     $this->handle_object_tagging();
@@ -387,7 +387,7 @@ class faiPartitionTable extends plugin
       if($disk['status'] == "delete"){
         $ldap->cd($disk_dn);
         $ldap->rmdir_recursive($disk_dn);
-        show_ldap_error($ldap->get_error(), _("Removing FAI partition table failed"));
+        show_ldap_error($ldap->get_error(), sprintf(_("Removing of FAI/partition table with dn '%s' failed."),$disk_dn));
       }elseif($disk['status']== "edited"){
         if(empty($disk_attrs['description'])){
           $disk_attrs['description']=array();
@@ -395,7 +395,7 @@ class faiPartitionTable extends plugin
         $ldap->cd($disk_dn);
         $this->cleanup();
         $ldap->modify ($disk_attrs); 
-        show_ldap_error($ldap->get_error(), _("Saving FAI partition table failed"));
+        show_ldap_error($ldap->get_error(), sprintf(_("Saving of FAI/partition table with dn '%s' failed."),$disk_dn));
       }elseif($disk['status']== "new"){
         if(empty($disk_attrs['description'])){
           unset($disk_attrs['description']);
@@ -404,7 +404,7 @@ class faiPartitionTable extends plugin
         $ldap->create_missing_trees(preg_replace('/^[^,]+,/', '', $disk_dn));
         $ldap->cd($disk_dn);
         $ldap->add($disk_attrs);
-        show_ldap_error($ldap->get_error(), _("Saving FAI partition table failed"));
+        show_ldap_error($ldap->get_error(), sprintf(_("Saving of FAI/partition table with dn '%s' failed."),$disk_dn));
       }else{
         print_red("unknown status while saving disks");
       }
@@ -452,7 +452,7 @@ class faiPartitionTable extends plugin
         if(($partition['status'] == "delete")&&($disk['status']!="new")){
           $ldap->cd($partition_dn);
           $ldap->rmdir_recursive($partition_dn);
-          show_ldap_error($ldap->get_error(), _("Removing FAI partition table entry failed"));
+          show_ldap_error($ldap->get_error(), sprintf(_("Removing of FAI/partition table entry with dn '%s' failed."),$partition_dn));
         }elseif($partition['status'] == "new"){
           if(empty($partition_attrs['description'])){
             unset($partition_attrs['description']);
@@ -461,7 +461,7 @@ class faiPartitionTable extends plugin
           $ldap->create_missing_trees(preg_replace('/^[^,]+,/', '', $partition_dn));
           $ldap->cd($partition_dn);
           $ldap->add($partition_attrs);
-          show_ldap_error($ldap->get_error(), _("Saving FAI partition table entry failed"));
+          show_ldap_error($ldap->get_error(), sprintf(_("Saving of FAI/partition table entry with dn '%s' failed."),$partition_dn));
         }elseif($partition['status'] == "edited"){
           if(empty($partition_attrs['description'])){
             $partition_attrs['description']=array();
@@ -469,7 +469,7 @@ class faiPartitionTable extends plugin
           $ldap->cd($partition_dn);
           $this->cleanup();
           $ldap->modify ($partition_attrs); 
-          show_ldap_error($ldap->get_error(), _("Saving FAI partition table entry failed"));
+          show_ldap_error($ldap->get_error(), sprintf(_("Saving of FAI/partition table entry with dn '%s' failed."),$partition_dn));
         } 
 
         $this->handle_object_tagging($partition_dn, $this->gosaUnitTag);

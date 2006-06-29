@@ -196,7 +196,7 @@ class application extends plugin
   {
     $ldap= $this->config->get_ldap_link();
     $ldap->rmDir($this->dn);
-    show_ldap_error($ldap->get_error(), _("Removing application failed"));
+    show_ldap_error($ldap->get_error(), sprintf(_("Removing of applciation with dn '%s' failed."),$this->dn));
 
     /* Optionally execute a command after we're done */
     $this->handle_post_events("remove");
@@ -414,7 +414,7 @@ class application extends plugin
       $ldap->add($this->attrs);
       $this->handle_post_events("add");
     }
-    show_ldap_error($ldap->get_error(), _("Saving application failed"));
+    show_ldap_error($ldap->get_error(), sprintf(_("Saving of application with dn '%s' failed."),$this->dn));
   }
 
   function set_picture($filename)

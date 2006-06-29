@@ -300,7 +300,7 @@ class faiScript extends plugin
     $ldap = $this->config->get_ldap_link();
     $ldap->cd ($this->dn);
     $ldap->rmdir_recursive($this->dn);
-    show_ldap_error($ldap->get_error(), _("Removing FAI script base failed"));
+    show_ldap_error($ldap->get_error(), sprintf(_("Removing of FAI/script with dn '%s' failed."),$this->dn));
     $this->handle_post_events("remove");    
   }
 
@@ -351,7 +351,7 @@ class faiScript extends plugin
       $ldap->cd($this->dn);
       $ldap->add($this->attrs);
     }
-    show_ldap_error($ldap->get_error(), _("Creating FAI script base failed"));
+    show_ldap_error($ldap->get_error(), sprintf(_("Creating of FAI/script with dn '%s' failed."),$this->dn));
 
     /* Do object tagging */
     $this->handle_object_tagging();
@@ -421,7 +421,7 @@ class faiScript extends plugin
         $ldap->cd($sub_dn);
         $ldap->rmdir_recursive($sub_dn);
         $this->handle_post_events("remove");
-        show_ldap_error($ldap->get_error(), _("Removing FAI script failed")); 
+        show_ldap_error($ldap->get_error(), sprintf(_("Saving of FAI/script entry with dn '%s' failed."),$this->dn));
       }elseif($obj['status'] == "edited"){
         $ldap->cd($sub_dn);
         $this->cleanup();
@@ -440,7 +440,7 @@ class faiScript extends plugin
         $ldap->cd($sub_dn);
         $ldap->add($tmp); 
         $this->handle_post_events("add");
-        show_ldap_error($ldap->get_error(), _("Saving FAI script failed")); 
+        show_ldap_error($ldap->get_error(), sprintf(_("Saving of FAI/script entry with dn '%s' failed."),$this->dn));
       }
 
       $this->handle_object_tagging($sub_dn, $this->gosaUnitTag);

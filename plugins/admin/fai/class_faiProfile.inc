@@ -356,7 +356,7 @@ class faiProfile extends plugin
     $ldap = $this->config->get_ldap_link();
     $ldap->cd ($this->dn);
     $ldap->rmdir_recursive($this->dn);
-    show_ldap_error($ldap->get_error(), _("Removing FAI profile failed"));
+    show_ldap_error($ldap->get_error(), sprintf(_("Removing of FAI/profile with dn '%s' failed."),$this->dn));
     $this->handle_post_events("remove");    
   }
 
@@ -426,7 +426,7 @@ class faiProfile extends plugin
       $ldap->cd($this->dn);
       $ldap->add($this->attrs);
     }
-    show_ldap_error($ldap->get_error(), _("Saving FAI profile failed"));
+    show_ldap_error($ldap->get_error(), sprintf(_("Saving of FAI/profile with dn '%s' failed."),$this->dn));
 
     /* Do object tagging */
     $this->handle_object_tagging();
