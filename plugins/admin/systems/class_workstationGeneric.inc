@@ -190,7 +190,7 @@ class workgeneric extends plugin
     foreach($_POST as $name => $value){
       if(preg_match("/^chooseBase/",$name) && $once){
         $once = false;
-        $this->dialog = new baseSelectDialog($this->config);
+        $this->dialog = new baseSelectDialog($this->config,$this);
         $this->dialog->setCurrentBase($this->base);
       }
     }

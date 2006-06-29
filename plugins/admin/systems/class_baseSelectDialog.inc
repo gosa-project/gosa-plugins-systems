@@ -4,19 +4,19 @@ class baseSelectDialog extends MultiSelectWindow
 {
   var $selectedBase        = ""; // Used for navigation 
   var $base_selection_regex = "*"; // Used regex ... 
-//  var $Doesnothing          = ""; // Checkbox which does nothing 
-
   var $BaseToUse         = false;  // used to specify the selected base, 
                                       // false if none is selected
 
   var $allowedBases         = array();
+  var $parent               = NULL;
  
-  function baseSelectDialog ($config,$onlyAllowThisBases = array())
+  function baseSelectDialog ($config,$parent,$onlyAllowThisBases = array())
   {
     MultiSelectWindow::MultiSelectWindow($config,"BASEselectWindow");
-    
+   
+    $this->parent = $parent;
+ 
     $this->selectedBase = $config->current['BASE'];
-  
     $this->allowedBases  = $onlyAllowThisBases;
 
     $this->SetTitle("Base");
