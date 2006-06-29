@@ -72,7 +72,7 @@ class divListMimeTypes extends MultiSelectWindow
       $smarty->assign("selectedRelease",$this->selectedRelease);
       $smarty->assign("branchimage","images/branch.png");
       $smarty->assign("releases",$this->AvailableReleases);
-      $str = $smarty->fetch(get_template_path('release_select.tpl', TRUE));
+      $str = $smarty->fetch(get_template_path('release_select.tpl', TRUE,dirname(__FILE__)));
     }
     return($str);
   }
