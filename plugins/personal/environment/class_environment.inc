@@ -1191,6 +1191,7 @@ $ldap->modify ($attrs);
           $a_return[$share['name']."|".$share['server']]= $share['server']."://".$share['name']." on ".$share['mountPoint']." as ".$share['Username'];
         }
       }
+      natcasesort($a_return);
     }
     return($a_return);
   }
