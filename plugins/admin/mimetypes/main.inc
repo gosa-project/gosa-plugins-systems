@@ -18,32 +18,40 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-
-/* Create MimeTypeManagement object on demand */
-if (!isset($_SESSION['MimeTypeManagement']) || (isset($_GET['reset']) && $_GET['reset'] == 1)){
-	$_SESSION['MimeTypeManagement']= new mimetypeManagement ($config, $_SESSION['ui']);
-}
-
-/* Get object */
-$MimeTypeManagement= $_SESSION['MimeTypeManagement'];
-$MimeTypeManagement->save_object();
-$output= $MimeTypeManagement->execute();
-
-/* Page header*/
-if (isset($_SESSION['objectinfo'])){
-	$display= print_header(get_template_path('images/mimetypes.png'), _("Mimetype management"), "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/closedlock.png')."\"> ".@LDAP::fix($_SESSION['objectinfo']));
+if ($remove_lock){
+		if(isset($_SESSION['MimeTypeManagement'])){
+				$MimeTypeManagement= $_SESSION['MimeTypeManagement'];
+				$MimeTypeManagement->remove_lock();
+				del_lock ($ui->dn);
+				sess_del ('MimeTypeManagement');
+		}
 } else {
-	$display= print_header(get_template_path('images/mimetypes.png'), _("Mimetype management"));
+
+		/* Create MimeTypeManagement object on demand */
+		if (!isset($_SESSION['MimeTypeManagement']) || (isset($_GET['reset']) && $_GET['reset'] == 1)){
+				$_SESSION['MimeTypeManagement']= new mimetypeManagement ($config, $_SESSION['ui']);
+		}
+
+		/* Get object */
+		$MimeTypeManagement= $_SESSION['MimeTypeManagement'];
+		$MimeTypeManagement->save_object();
+		$output= $MimeTypeManagement->execute();
+
+		/* Page header*/
+		if (isset($_SESSION['objectinfo'])){
+				$display= print_header(get_template_path('images/mimetypes.png'), _("Mimetype management"), "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/closedlock.png')."\"> ".@LDAP::fix($_SESSION['objectinfo']));
+		} else {
+				$display= print_header(get_template_path('images/mimetypes.png'), _("Mimetype management"));
+		}
+
+		/* Reset requested? */
+		if (isset($_GET['reset']) && $_GET['reset'] == 1){
+				del_lock ($ui->dn);
+				sess_del ('MimeTypeManagement');
+		}
+
+		/* Show and save dialog */
+		$display.= $output;
+		$_SESSION['MimeTypeManagement']= $MimeTypeManagement;
 }
-
-/* Reset requested? */
-if (isset($_GET['reset']) && $_GET['reset'] == 1){
-	del_lock ($ui->dn);
-	sess_del ('MimeTypeManagement');
-}
-
-/* Show and save dialog */
-$display.= $output;
-$_SESSION['MimeTypeManagement']= $MimeTypeManagement;
-
 ?>
