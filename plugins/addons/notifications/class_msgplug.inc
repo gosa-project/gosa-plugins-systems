@@ -107,7 +107,7 @@ class msgplug extends plugin
           if ($cmd == ""){
             print_red(_("No NOTIFY_COMMAND definition found in your gosa.conf"));
           } else {
-            $parameters= "";
+            $parameters= base64_encode($this->nmessage) ." ";
             foreach ($this->recipients as $key => $value){
               $parameters.= "$key ";
             }
