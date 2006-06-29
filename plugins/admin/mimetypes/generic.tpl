@@ -10,7 +10,7 @@
 			<table>
 				<tr>
 					<td>
-						{t}Mime type{/t}
+						{t}Mime type{/t}{$must}
 					</td>
 					<td>
 						<input type="text" name='cn' value="{$cn}" {$cnACL} title='{t}Please enter a name for the mime type here{/t}'>
@@ -81,7 +81,7 @@
 	</tr>
 	<tr>
 		<td style='width:50%; vertical-align:top;' >
-			{t}File patterns{/t}
+			{t}File patterns{/t}{$must}
 			{$gotoMimeFilePatterns}		
 			<input type='text'	 name='NewFilePattern'	  value='' title='{t}Please specify a new file pattern{/t}' {$gotoMimeFilePatternACL}>
 			<input type='submit' name='AddNewFilePattern' value='{t}Add{/t}' title='{t}Add a new file pattern{/t}' {$gotoMimeFilePatternACL}>
