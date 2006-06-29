@@ -493,7 +493,7 @@ class group extends plugin
 
     $ldap= $this->config->get_ldap_link();
     $ldap->rmdir($this->dn);
-    show_ldap_error($ldap->get_error(), _("Removing group failed"));
+    show_ldap_error($ldap->get_error(), sprintf(_("Removing of groups/generic with dn '%s' failed."),$this->dn));
 
     /* Delete references to object groups */
     $ldap->cd ($this->config->current['BASE']);
@@ -690,7 +690,7 @@ class group extends plugin
     $ldap->$mode($this->attrs);
 
     $ret= 0;
-    if (show_ldap_error($ldap->get_error(), _("Saving group failed"))){
+    if ( show_ldap_error($ldap->get_error(), sprintf(_("Removing of groups/generic with dn '%s' failed."),$this->dn))){
       $ret= 1;
     }
 
