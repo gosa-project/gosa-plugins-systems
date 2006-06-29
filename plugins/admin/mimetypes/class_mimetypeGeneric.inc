@@ -111,9 +111,7 @@ class mimetype extends plugin
 		/* Check if release Management is enabled */
 		$tmp = search_config($this->config->data,"faiManagement","CLASS");
 		if(!empty($tmp)) {
-			if(!preg_match("/^ou=apps,/",$_SESSION['mimefilter']['release'])){
-				$this->isReleaseMimeType= true;
-			}
+			$this->isReleaseMimeType= true;
 		}
 
 		/* Set base */	
@@ -329,6 +327,12 @@ class mimetype extends plugin
 		if(isset($_POST['MimeGeneric'])){
 			plugin::save_object();
 
+      if(!$this->isReleaseMimeType){
+        if(isset($_POST['base'])){
+          $this->base = $_POST['base'];
+        }
+      }
+  
 			
 			/* Save radio buttons */
 			if(chkacl($this->acl,"gotoMimeLeftClickAction")== ""){
