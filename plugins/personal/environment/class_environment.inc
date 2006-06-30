@@ -973,6 +973,7 @@ class environment extends plugin
 
       /* Remove normal entries (User)*/
       if(isset($attr['goto'.$s_suffix.'Printer'])) {
+        unset($attr['goto'.$s_suffix.'Printer']['count']);
         foreach($attr['goto'.$s_suffix.'Printer'] as $key => $user){
           if($this->uid==$user){
             unset($attr['goto'.$s_suffix.'Printer'][$key]);
@@ -988,6 +989,7 @@ class environment extends plugin
 
       /* Remove administrational entries (Admin)*/
       if(isset($attr['goto'.$s_suffix.'AdminPrinter'])){
+        unset($attr['goto'.$s_suffix.'AdminPrinter']['count']);
         foreach($attr['goto'.$s_suffix.'AdminPrinter'] as $key => $user){
           if($this->uid==$user){
             unset($attr['goto'.$s_suffix.'AdminPrinter'][$key]);
@@ -1029,12 +1031,11 @@ class environment extends plugin
 
       /* Save changes */
       $ldap->cd($attr['dn']);
+      $dn = $attr['dn'];
       unset($attr['dn']);
-$ldap->modify ($attr); 
-
-      if($ldap->get_error()!="Success"){
-        print_red(_("Error while writing printer")." : ".$ldap->get_error());
-      }
+        
+      $ldap->modify ($attr); 
+      show_ldap_error($ldap->get_error(),sprintf(_("Saving printer membership with dn %s failed "),$dn));
     }
 
     /* All printers are cleaned, (our cn/uid removed) 
