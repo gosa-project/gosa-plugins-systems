@@ -939,7 +939,7 @@ class plugin
         $nattrs['objectClass'][]= "gosaAdministrativeUnitTag";
         $ldap->cd($dn);
         $ldap->modify($nattrs);
-        show_ldap_error($ldap->get_error(), _("Handle object tagging failed"));
+        show_ldap_error($ldap->get_error(), sprintf(_("Handle object tagging with dn '%s' failed."),$dn));
       } else {
         @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__, "Not tagging ($tag) $dn - seems to have moved away", "Tagging");
       }
@@ -968,7 +968,7 @@ class plugin
         }
         $ldap->cd($dn);
         $ldap->modify($nattrs);
-        show_ldap_error($ldap->get_error(), _("Handle object tagging failed"));
+        show_ldap_error($ldap->get_error(), sprintf(_("Handle object tagging with dn '%s' failed."),$dn));
       } else {
         @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__, "Not removing tag ($tag) $dn - seems to have moved away", "Tagging");
       }
@@ -1016,7 +1016,7 @@ class plugin
 
       $ldap_to        = new LDAP($user,$password, $server);
       $ldap_to -> cd($snapldapbase);
-      show_ldap_error($ldap_to->get_error(), _("Snapshot failed."));
+      show_ldap_error($ldap->get_error(), sprintf(_("Saving object snapshot with dn '%s' failed."),$snapldapbase));
     }
 
     /* check if the dn exists */ 
@@ -1062,8 +1062,8 @@ class plugin
       $ldap_to->cd($new_dn);
       $ldap_to->add($target);
 
-      show_ldap_error($ldap_to->get_error(), _("Create snapshot failed."));
-      show_ldap_error($ldap->get_error(), _("Create snapshot failed."));
+      show_ldap_error($ldap->get_error(), sprintf(_("Saving object snapshot with dn '%s' failed."),$new_base));
+      show_ldap_error($ldap_to->get_error(), sprintf(_("Saving object snapshot with dn '%s' failed."),$new_base));
     }
   }
 
@@ -1137,7 +1137,7 @@ class plugin
       $snapldapbase = $tmp['SNAPSHOT_LDAP_BASE'];
       $ldap_to      = new LDAP($user,$password, $server);
       $ldap_to -> cd ($snapldapbase);
-      show_ldap_error($ldap_to->get_error(), _("Snapshot failed."));
+      show_ldap_error($ldap->get_error(), sprintf(_("Method get available snapshots with dn '%s' failed."),$this->dn));
     }else{
       $ldap_to    = $ldap;
     }
@@ -1193,7 +1193,7 @@ class plugin
       $snapldapbase = $tmp['SNAPSHOT_LDAP_BASE'];
       $ldap_to      = new LDAP($user,$password, $server);
       $ldap_to->cd ($snapldapbase);
-      show_ldap_error($ldap_to->get_error(), _("Snapshot failed."));
+      show_ldap_error($ldap->get_error(), sprintf(_("Method get deleted snapshots with dn '%s' failed."),$this->dn));
     }else{
       $ldap_to    = $ldap;
     }
@@ -1257,7 +1257,7 @@ class plugin
       $snapldapbase = $tmp['SNAPSHOT_LDAP_BASE'];
       $ldap_to      = new LDAP($user,$password, $server);
       $ldap_to->cd ($snapldapbase);
-      show_ldap_error($ldap_to->get_error(), _("Snapshot failed."));
+      show_ldap_error($ldap->get_error(), sprintf(_("Restore snapshot with dn '%s' failed."),$snapldapbase));
     }else{
       $ldap_to    = $ldap;
     }
@@ -1271,7 +1271,7 @@ class plugin
 
     /* Import the given data */
     $ldap->import_complete_ldif($data,$err,false,false);
-    show_ldap_error($ldap_to->get_error().$err, _("Restore snapshot failed."));
+    show_ldap_error($ldap->get_error(), sprintf(_("Restore snapshot with dn '%s' failed."),$dn));
   }
 
 
