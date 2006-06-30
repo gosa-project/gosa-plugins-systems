@@ -1149,7 +1149,7 @@ class LDAP{
         $ret = $this->modify($data);
       }
     }
-    show_ldap_error($this->get_error(),_("Ldap import failed"));
+    show_ldap_error($this->get_error(), sprintf(_("Ldap import with dn '%s' failed."),$dn));
     return($ret);
   }
 
