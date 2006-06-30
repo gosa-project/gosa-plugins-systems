@@ -73,7 +73,7 @@ class goCupsServer extends plugin{
       $ldap->cd($this->dn);
       $ldap->add($this->attrs);
     }
-    show_ldap_error($ldap->get_error());
+    show_ldap_error($ldap->get_error(), sprintf(_("Removing of server services/cups with dn '%s' failed."),$this->dn));
     $this->handle_post_events("remove");
   }
 
@@ -97,7 +97,7 @@ class goCupsServer extends plugin{
       $this->handle_post_events("add");
     }
 
-    show_ldap_error($ldap->get_error());
+    show_ldap_error($ldap->get_error(), sprintf(_("Saving of server services/cups with dn '%s' failed."),$this->dn));
   }
 
 
@@ -119,7 +119,7 @@ class goCupsServer extends plugin{
       $attrs[$flag] = $value;
       $this->$flag = $value;
       $ldap->modify($attrs);
-      show_ldap_error($ldap->get_error());
+      show_ldap_error($ldap->get_error(), sprintf(_("Set status flag for server services/cups with dn '%s' failed."),$this->dn));
       $this->action_hook();
     }
   }

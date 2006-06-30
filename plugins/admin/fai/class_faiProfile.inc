@@ -430,7 +430,7 @@ class faiProfile extends plugin
 
     /* Do object tagging */
     $this->handle_object_tagging();
-    show_ldap_error($ldap->get_error());
+    show_ldap_error($ldap->get_error(), sprintf(_("Saving of FAI/profile with dn '%s' failed."),$this->dn));
   }
 }
 

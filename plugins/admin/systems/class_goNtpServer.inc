@@ -97,7 +97,7 @@ class goNtpServer extends plugin{
       $ldap->cd($this->dn);
       $ldap->add($this->attrs);
     }
-    show_ldap_error($ldap->get_error());
+    show_ldap_error($ldap->get_error(), sprintf(_("Removing server services/goNtpServer with dn '%s' failed."),$this->dn));
     $this->handle_post_events("remove");
   }
 
@@ -119,7 +119,7 @@ class goNtpServer extends plugin{
       $ldap->cd($this->dn);
       $ldap->add($this->attrs);
     }
-    show_ldap_error($ldap->get_error());
+    show_ldap_error($ldap->get_error(), sprintf(_("Saving server services/goNtpServer with dn '%s' failed."),$this->dn));
     if($this->initially_was_account){
       $this->handle_post_events("modify");
     }else{
@@ -146,7 +146,7 @@ class goNtpServer extends plugin{
       $attrs[$flag] = $value;
       $this->$flag = $value;
       $ldap->modify($attrs);
-      show_ldap_error($ldap->get_error());
+      show_ldap_error($ldap->get_error(), sprintf(_("Set status flag for server services/goNtpServer with dn '%s' failed."),$this->dn));
       $this->action_hook();
     }
   }

@@ -76,7 +76,7 @@ class goFaxServer extends plugin{
       $ldap->cd($this->dn);
       $ldap->add($this->attrs);
     }
-    show_ldap_error($ldap->get_error());
+    show_ldap_error($ldap->get_error(), sprintf(_("Removing server services/gofax with dn '%s' failed."),$this->dn));
     $this->handle_post_events("remove");
   }
 
@@ -99,7 +99,7 @@ class goFaxServer extends plugin{
     }else{
       $this->handle_post_events("add");
     }
-    show_ldap_error($ldap->get_error());
+    show_ldap_error($ldap->get_error(), sprintf(_("Saving server services/gofax with dn '%s' failed."),$this->dn));
   }
 
 
@@ -121,7 +121,8 @@ class goFaxServer extends plugin{
       $attrs[$flag] = $value;
       $this->$flag = $value;
       $ldap->modify($attrs);
-      show_ldap_error($ldap->get_error());
+
+      show_ldap_error($ldap->get_error(), sprintf(_("Set status flag for server services/gofax with dn '%s' failed."),$this->dn));
       $this->action_hook();
     }
   }
