@@ -171,8 +171,8 @@ class workgeneric extends plugin
 
           $ldap->cd($this->dn);
           $ldap->modify($attrs);
-          show_ldap_error($ldap->get_error());
-  
+          show_ldap_error($ldap->get_error(), sprintf(_("Saving of system workstation/generic (FAIstate) with dn '%s' failed."),$this->dn));
+ 
           $this->didAction= TRUE;
         }
       }
@@ -290,7 +290,7 @@ class workgeneric extends plugin
     $this->netConfigDNS->remove_from_parent();
     $ldap= $this->config->get_ldap_link();
     $ldap->rmdir($this->dn);
-    show_ldap_error($ldap->get_error(), _("Removing workstation failed"));
+    show_ldap_error($ldap->get_error(), sprintf(_("Removing of system workstation/generic with dn '%s' failed."),$this->dn));
 
     /* Optionally execute a command after we're done */
     $this->handle_post_events("remove", array("macAddress" => $this->netConfigDNS->macAddress));
@@ -435,7 +435,7 @@ class workgeneric extends plugin
       $ldap->create_missing_trees(preg_replace('/^[^,]+,/', '', $this->dn));
       $ldap->cd($this->dn);
       $ldap->add($this->attrs);
-      show_ldap_error($ldap->get_error(), _("Saving workstation failed"));
+      show_ldap_error($ldap->get_error(), sprintf(_("Saving of system workstation/generic with dn '%s' failed."),$this->dn));
       if(!$this->didAction){
         $this->handle_post_events("add");
       }
@@ -453,7 +453,7 @@ class workgeneric extends plugin
     }
     $this->netConfigDNS->cn = $this->cn;
     $this->netConfigDNS->save($this->dn);
-    show_ldap_error($ldap->get_error(), _("Saving workstation failed"));
+    show_ldap_error($ldap->get_error(), sprintf(_("Saving of system workstation/generic with dn '%s' failed."),$this->dn));
   }
 
 }

@@ -158,7 +158,7 @@ class termgeneric extends plugin
 
       $ldap->cd($this->dn);
       $ldap->modify($attrs);
-      show_ldap_error($ldap->get_error());
+      show_ldap_error($ldap->get_error(), sprintf(_("Saving of system terminal/generic (FAIstate) with dn '%s' failed."),$this->dn));
 
       switch($_POST['saction']){
         case 'wake':
@@ -316,7 +316,7 @@ class termgeneric extends plugin
     if($ldap->count()){
       $this->netConfigDNS->remove_from_parent();
       $ldap->rmDir($this->dn);
-      show_ldap_error($ldap->get_error(), _("Removing terminal failed"));
+      show_ldap_error($ldap->get_error(), sprintf(_("Removing of object system terminal/generic with dn '%s' failed."),$this->dn));
 
       /* Optionally execute a command after we're done */
       $this->handle_post_events("remove", array("macAddress" => $this->netConfigDNS->macAddress));
@@ -473,7 +473,7 @@ class termgeneric extends plugin
     }
     $this->netConfigDNS->cn = $this->cn;
     $this->netConfigDNS->save($this->dn);
-    show_ldap_error($ldap->get_error(), _("Saving terminal failed"));
+    show_ldap_error($ldap->get_error(), sprintf(_("Saving of object system terminal/generic with dn '%s' failed."),$this->dn));
 
     /* Optionally execute a command after we're done */
     $this->postcreate();

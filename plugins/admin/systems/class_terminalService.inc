@@ -413,7 +413,7 @@ class termservice extends plugin
     $this->cleanup();
     $ldap->modify ($this->attrs); 
 
-    show_ldap_error($ldap->get_error(), _("Saving terminal service information failed"));
+    show_ldap_error($ldap->get_error(), sprintf(_("Saving of object system terminal/service with dn '%s' failed."),$this->dn));
     $this->handle_post_events("modify");
   }
 
