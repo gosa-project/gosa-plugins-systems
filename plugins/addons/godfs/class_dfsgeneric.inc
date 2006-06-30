@@ -183,7 +183,7 @@
           # add
           $ldap->add($this->attrs);
         }
-        show_ldap_error($ldap->get_error());
+				show_ldap_error($ldap->get_error(), sprintf(_("Saving dfs/generic with dn '%s' failed."),$this->basedn));
       }
     }
 
@@ -216,7 +216,7 @@
       $ldap = $this->config->get_ldap_link();
       $ldap->cd($this->basedn);
       $ldap->rmdir($this->basedn);
-      show_ldap_error($ldap->get_error());
+			show_ldap_error($ldap->get_error(), sprintf(_("Removing dfs/generic with dn '%s' failed."),$this->basedn));
     }
       
   }
