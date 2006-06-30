@@ -236,7 +236,7 @@ class goShareServer extends plugin{
       $attrs[$flag] = $value;
       $this->$flag = $value;
       $ldap->modify($attrs);
-      show_ldap_error($ldap->get_error(), sprintf(_("Set status flag, for system server/shares with dn '%s' failed."),$this->dn));
+      show_ldap_error($ldap->get_error(), sprintf(_("Set status flag for system server/shares with dn '%s' failed."),$this->dn));
       $this->action_hook();
     }
   }
