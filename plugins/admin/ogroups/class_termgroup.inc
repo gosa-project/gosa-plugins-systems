@@ -15,9 +15,16 @@ class termgroup extends plugin
   var $modes              = array();
   var $inheritTimeServer  = true;
   var $acl                ;
-  var $is_account		  = true; 
-  var $orig_dn		      = "";
-  var $didAction		  = FALSE;
+  var $is_account		      = true; 
+  var $orig_dn            = "";
+  var $didAction          = FALSE;
+  var $mapActions         = array("reboot"          => "",
+                            "instant_update"  => "softupdate",
+                            "update"          => "sceduledupdate",
+                            "reinstall"       => "install",
+                            "rescan"          => "",
+                            "memcheck"        => "memcheck",
+                            "sysinfo"         => "sysinfo");
 
 
   function termgroup ($config, $dn= NULL)
@@ -37,8 +44,8 @@ class termgroup extends plugin
 
     $this->modes["active"]= _("Activated");
     $this->modes["locked"]= _("Locked");
-    $this->modes["memcheck"]= _("Memory test");
-    $this->modes["sysinfo"]= _("System analysis");
+//    $this->modes["memcheck"]= _("Memory test");
+//    $this->modes["sysinfo"]= _("System analysis");
 
     $this->orig_dn =	$this->dn;
 
@@ -150,6 +157,7 @@ class termgroup extends plugin
 
       if (isset($_POST['action'])){
         $cmd= search_config($this->config->data['TABS'], "workgeneric", "ACTIONCMD");
+
         if ($cmd == ""){
           print_red(_("No ACTIONCMD definition found in your gosa.conf"));
         } else {
@@ -157,6 +165,45 @@ class termgroup extends plugin
           if ($retval != 0){
             print_red(sprintf(_("Execution of '%s' failed!"), $cmd));
           } else {
+            $this->didAction= TRUE;
+
+            /* Get dns from member objects. Create ldap object  */
+            $member = $this->parent->by_object['ogroup']->member;
+            $ldap = $this->config->get_ldap_link();
+            $ldap->cd($this->config->current['BASE']);
+
+            /* walk trough members and add FAIstate */ 
+            foreach($member as $dn =>  $object){
+
+              /* Get object */
+              $ldap->cat($dn,array("objectClass"));
+              $res                = $ldap->fetch();
+              $attrs              = array();
+
+              /* Add FAI state */
+              $attrs['FAIstate']  = "";
+              if(isset($this->mapActions[$_POST['saction']])){
+                $attrs['FAIstate'] = $this->mapActions[$_POST ['saction']];
+              }
+
+              /* Fix objectClass index */
+              for($i = 0; $i < $res['objectClass']['count'] ; $i ++){
+                $attrs['objectClass'][] = $res['objectClass'][$i];
+              }
+
+              /* Check if we must add the objectClass */
+              if(($attrs['FAIstate'] != "") && (!in_array("FAIobject",$attrs['objectClass']))){
+                $attrs['objectClass'][] = "FAIobject";
+              }
+
+              if($attrs['FAIstate'] == ""){
+                $attrs['FAIstate'] = array();
+              }
+
+              $ldap->cd($dn);
+              $ldap->modify($attrs);
+              show_ldap_error($ldap->get_error(), sprintf(_("Saving of system workstation/generic (FAIstate) with dn '%s' failed."),$dn));
+            }
             $this->didAction= TRUE;
           }
         }
@@ -199,18 +246,16 @@ class termgroup extends plugin
       $smarty->assign($val."ACL", chkacl($this->acl, $val));
     }
 
-    /* Check if workstation is online */
-    $smarty->assign("actions", array(
-          "halt" =>             _("Switch off"), 
-          "reboot" =>           _("Reboot"),
-          "instant_update" =>   _("Instant update"),
-          "update" =>           _("Scheduled update"),
-          "reinstall" =>        _("Reinstall"),
-          "rescan" =>           _("Rescan hardware")));
+    $smarty->assign("actions", array("halt" => _("Switch off"), "reboot" => _("Reboot"),
+          "instant_update" => _("Instant update"),
+          "update" => _("Scheduled update"),
+          "reinstall" => _("Reinstall"),
+          "rescan" => _("Rescan hardware"),
+          "memcheck" => _("Memory test"),
+          "sysinfo"  => _("System analysis")));
 
     $smarty->assign("inheritTimeServer",$this->inheritTimeServer);
     $smarty->assign("modes", $this->modes);
-    $smarty->assign("actions", array("wake" => _("Wake up"), "halt" => _("Switch off"), "reboot" => _("Reboot")));
     $smarty->assign("actionACL", chkacl($this->acl, 'action'));
 
     $tmp = array();
