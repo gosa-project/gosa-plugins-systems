@@ -117,6 +117,10 @@ class application extends plugin
       return ($display);
     }
 
+    $_SESSION['binary']       = $this->gotoLogonScript;
+    $_SESSION['binarytype']   = "octet-stream";
+    $_SESSION['binaryfile']   = $this->cn.".gosaApplication";
+    $smarty->assign("rand", rand(0, 10000));
     $head = $this->generateTemplate();
     $this->gotoLogonScript= $this->generateTemplate().preg_replace('/.*### END HEADER ###/s', '', $this->gotoLogonScript);
 

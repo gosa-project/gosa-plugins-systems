@@ -100,6 +100,7 @@
 			<textarea name="gotoLogonScript" style='width:99%;height:220px;'>{$gotoLogonScript}</textarea>
 			<input type="file" name="ScriptFile" value="{t}Import{/t}">
 			<input type="submit" name="upLoad" value="{t}Upload{/t}">
+			<a href='getbin?rand={$rand}'><input type='button' name="Download" value="{t}Download{/t}"></a>
 		</td>
 	</tr>
 </table>
