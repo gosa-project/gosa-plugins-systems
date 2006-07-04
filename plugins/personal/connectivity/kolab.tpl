@@ -12,6 +12,8 @@
 	changeState('unrestrictedMailSize');
 	changeState('calFBURL');
 	changeState('kolabFreeBusyFuture');
+	changeState('kolabInvitationPolicy');
+	{$changeState}  
 ">
 <b>{t}Kolab account{/t}</b>
 <br>

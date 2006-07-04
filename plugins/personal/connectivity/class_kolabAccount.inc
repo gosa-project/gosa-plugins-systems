@@ -32,9 +32,11 @@ class kolabAccount extends plugin
     /* Pull arrays */
     foreach(array("kolabDelegate", "kolabInvitationPolicy") as $attr){
       if (isset($this->attrs["$attr"]["count"])){
+        $tmp = array();
         for ($i= 0; $i<$this->attrs["$attr"]["count"]; $i++){
-          array_push($this->$attr, $this->attrs["$attr"][$i]);
+          $tmp[]=$this->attrs["$attr"][$i];
         }
+        $this->$attr = $tmp;
       }
     }
 
@@ -94,9 +96,6 @@ class kolabAccount extends plugin
     /* Unify addresses */
     $new= array();
     foreach($this->kolabInvitationPolicy as $value){
-      if (preg_match('/^:/', $value)){
-        continue;
-      }
       $address= preg_replace('/^([^:]+:).*$/', '\1', $value);
       $new[$address]= $value;
     }
@@ -184,8 +183,19 @@ class kolabAccount extends plugin
     $this->imapping= array();
     $nr= 0;
     $acl= chkacl($this->acl, "kolabInvitationPolicy");
+    $changeState = "";
     foreach ($this->kolabInvitationPolicy as $entry){
+
+      $changeState .= "changeState('address".$nr."'); \n changeState('policy".$nr."'); \n
+                         changeState('add".$nr."'); \n changeState('remove".$nr."'); \n";
+
       $invitation.= "<tr><td>";
+      if($this->is_account){
+        $dis = " ";
+      }else{
+        $dis = " disabled ";
+      }
+    
 
       /* The default entry does not have colons... */
       if (!preg_match('/:/', $entry)){
@@ -195,12 +205,12 @@ class kolabAccount extends plugin
       } else {
         $name= preg_replace('/:.*$/', '', $entry);
         $mode= preg_replace('/^[^:]*: */', '', $entry);
-        $invitation.= "<input name=\"address$nr\" size=16 maxlength=60 $acl value=\"$name\">";
+        $invitation.= "<input name=\"address$nr\" size=16 maxlength=60 $acl value=\"$name\" id='address".$nr."' ".$dis.">";
       }
       $invitation.= "</td>";
 
       /* Add mode switch */
-      $invitation.= "<td><select size=\"1\" name=\"policy$nr\" $acl>";
+      $invitation.= "<td><select size=\"1\" name=\"policy$nr\" $acl  id='policy".$nr."' ".$dis.">";
       foreach($policies as $key => $value){
         if ($key == $mode){
           $invitation.= "<option value=\"$key\" selected>$value</option>";
@@ -212,10 +222,10 @@ class kolabAccount extends plugin
       /* Assign buttons */
       $button= "";
       if ($nr == count($this->kolabInvitationPolicy)-1){
-        $button= "<input type=submit name=\"add$nr\" value=\""._("Add")."\">";
+        $button= "<input type=submit name=\"add$nr\" value=\""._("Add")."\" id='add".$nr."' ".$dis.">";
       }
       if ($nr != 0) {
-        $button.= "<input type=submit name=\"remove$nr\" value=\""._("Remove")."\">";
+        $button.= "<input type=submit name=\"remove$nr\" value=\""._("Remove")."\" id='remove".$nr."' ".$dis.">";
       }
       
       $invitation.= "</select>&nbsp;$button</td></tr>\n";
@@ -223,7 +233,7 @@ class kolabAccount extends plugin
       $nr++;
     }
     $smarty->assign("invitation", $invitation);
-
+    $smarty->assign("changeState", $changeState);
     $smarty->assign("kolabState",$this->is_account);
     $display.= $smarty->fetch (get_template_path('kolab.tpl', TRUE, dirname(__FILE__)));
 
@@ -350,6 +360,13 @@ class kolabAccount extends plugin
     $this->attrs['kolabDelegate']= $this->kolabDelegate;
     $this->attrs['kolabInvitationPolicy']= $this->kolabInvitationPolicy;
 
+    /* unrestrictedMailSize is boolean */
+    if($this->attrs['unrestrictedMailSize']){
+      $this->attrs['unrestrictedMailSize'] = "TRUE";
+    }else{
+      $this->attrs['unrestrictedMailSize'] = "FALSE";
+    }
+  
     /* Write back to ldap */
     $ldap= $this->config->get_ldap_link();
     $ldap->cd($this->dn);
