@@ -1,0 +1,3 @@
+<b>Hard coded DN for testing</b>
+<br>
+Some acl stuff here...

@@ -2,16 +2,31 @@
 
 class acl extends plugin
 {
+  /* Definitions */
+  var $plHeadline= "Access control";
+  var $plDescription= "This does something";
 
-  /* constructor, if 'dn' is set, the node loads the given
-     'dn' from LDAP */
+  /* attribute list for save action */
+  var $attributes= array("target", "nmessage");
+  var $objectclasses= array();
+
+
   function acl ($config, $dn= NULL)
   {
+    /* Include config object */
     $this->config= $config;
+  }
 
-    /* Load base attributes */
-    plugin::plugin ($config, $dn);
 
+  function execute()
+  {
+    /* Call parent execute */
+    plugin::execute();
+
+    $smarty= get_smarty();
+
+    /* Show main page */
+    return ($smarty->fetch (get_template_path('contents.tpl', TRUE)));
   }
 
 }
