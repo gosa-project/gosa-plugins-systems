@@ -109,15 +109,17 @@ class plugin
   var $saved_attributes= array();
 
   /* Plugin identifier */
-  var $pl_object_name= "";
-  var $pl_provided_acls= array();
-  var $pl_self_modify= FALSE;
-  var $pl_options= array();
-  var $pl_section= "";
-  var $pl_task= array();
-  var $pl_priority= 0;
-  var $pl_depends= array();
-  var $pl_conflicts= array();
+  var $plHeadline= "";
+  var $plDescription= "";
+  var $plObject_name= "";
+  var $plProvided_acls= array();
+  var $plSelf_modify= FALSE;
+  var $plOptions= array();
+  var $plSection= "";
+  var $plTask= array();
+  var $plPriority= 0;
+  var $plDepends= array();
+  var $plConflicts= array();
 
   /*! \brief plugin constructor
 
