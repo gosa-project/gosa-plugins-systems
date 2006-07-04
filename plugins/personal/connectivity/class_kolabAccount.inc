@@ -2,27 +2,28 @@
 class kolabAccount extends plugin
 {
   /* Definitions */
-  var $plHeadline= "Kolab";
-  var $plDescription= "This does something";
+  var $plHeadline       = "Kolab";
+  var $plDescription    = "This does something";
 
   /* CLI vars */
-  var $cli_summary= "Manage users Kolab account";
-  var $cli_description= "Some longer text\nfor help";
-  var $cli_parameters= array("eins" => "Eins ist toll", "zwei" => "Zwei ist noch besser");
+  var $cli_summary      = "Manage users Kolab account";
+  var $cli_description  = "Some longer text\nfor help";
+  var $cli_parameters   = array("eins" => "Eins ist toll", "zwei" => "Zwei ist noch besser");
 
   /* Kolab attributes */
-  var $kolabInvitationPolicy= array();
-  var $kolabFreeBusyFuture= 60;
-  var $unrestrictedMailSize= 0;
-  var $calFBURL= "";
-  var $kolabDelegate= array();
+  var $kolabInvitationPolicy  = array();
+  var $kolabFreeBusyFuture    = 60;
+  var $unrestrictedMailSize   = 0;
+  var $calFBURL               = "";
+  var $kolabDelegate          = array();
 
   /* attribute list for save action */
-  var $attributes= array( "kolabFreeBusyFuture", "unrestrictedMailSize", "calFBURL");
-  var $objectclasses= array("kolab");
+  var $attributes     = array("kolabFreeBusyFuture", "unrestrictedMailSize", "calFBURL","kolabDelegate");
+  var $objectclasses  = array("kolabInetOrgPerson");
 
   /* Helper */
   var $imapping= array();
+
 
   function kolabAccount ($config, $dn= NULL)
   {
@@ -42,12 +43,23 @@ class kolabAccount extends plugin
        $this->kolabInvitationPolicy= array("ACT_MANUAL");
     }
 
+    /* Check is account state */
+    $this->is_account = false;
+    if(count($this->kolabDelegate)){
+      $this->is_account = true;
+    }
+    foreach(array("calFBURL","unrestrictedMailSize") as $attr){
+      if(!empty($this->$attr)){
+        $this->is_account = true;
+      }
+    } 
   }
+
 
   function execute()
   {
 	/* Call parent execute */
-//	plugin::execute();
+  	plugin::execute();
 
     /* Show tab dialog headers */
     $display= "";
@@ -153,9 +165,9 @@ class kolabAccount extends plugin
 
     /* Transfer account states for this union */
     if (isset($this->parent) && $this->parent->by_object['mailAccount']->is_account){
-      $smarty->assign('is_account', 'true');
+      $smarty->assign('mail_account', 'true');
     } else {
-      $smarty->assign('is_account', '');
+      $smarty->assign('mail_account', '');
     }
 
     /* Transfer delegation list */
@@ -212,14 +224,31 @@ class kolabAccount extends plugin
     }
     $smarty->assign("invitation", $invitation);
 
+    $smarty->assign("kolabState",$this->is_account);
     $display.= $smarty->fetch (get_template_path('kolab.tpl', TRUE, dirname(__FILE__)));
+
+
     return ($display);
   }
 
   function remove_from_parent()
   {
     /* Optionally execute a command after we're done */
+    plugin::remove_from_parent();
+    
+    if(!in_array("kolabInetOrgPerson",$this->attrs['objectClass'])){
+      $this->attrs['objectClass'][] = "kolabInetOrgPerson";
+    }
+
+    $ldap = $this->config->get_ldap_linK(); 
+    $ldap->cd($this->config->current['BASE']);
+    $ldap->cd ($this->dn);
+    $ldap->modify($this->attrs);
+
+    print_a($this->attrs);
+
     $this->handle_post_events('remove');
+    show_ldap_error($ldap->get_error(), sprintf(_("Removing of user/kolab account with dn '%s' failed."),$this->dn));
   }
 
 
@@ -272,6 +301,13 @@ class kolabAccount extends plugin
   {
     /* Do we need to flip is_account state? */
     if (isset($_POST['connectivityTab'])){
+
+      if(isset($_POST["kolabState"])){
+        $this->is_account = true;
+      }else{
+        $this->is_account = false;
+      }
+
       if (chkacl('unrestrictedMailSize', $this->acl == "")){
         if (isset($_POST['unrestrictedMailSize']) && $_POST['unrestrictedMailSize'] == 1){
           $this->unrestrictedMailSize= 1;
@@ -322,7 +358,9 @@ class kolabAccount extends plugin
     $this->cleanup();
     $ldap->modify ($this->attrs); 
 
-    show_ldap_error($ldap->get_error(), sprintf(_("Saving of user/kolav account with dn '%s' failed."),$this->dn));
+    print_a($this->attrs);
+
+    show_ldap_error($ldap->get_error(), sprintf(_("Saving of user/kolab account with dn '%s' failed."),$this->dn));
 
     /* Optionally execute a command after we're done */
     if ($this->initially_was_account == $this->is_account){
