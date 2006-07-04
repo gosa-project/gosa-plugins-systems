@@ -108,6 +108,17 @@ class plugin
   var $new= TRUE;
   var $saved_attributes= array();
 
+  /* Plugin identifier */
+  var $pl_object_name= "";
+  var $pl_provided_acls= array();
+  var $pl_self_modify= FALSE;
+  var $pl_options= array();
+  var $pl_section= "";
+  var $pl_task= array();
+  var $pl_priority= 0;
+  var $pl_depends= array();
+  var $pl_conflicts= array();
+
   /*! \brief plugin constructor
 
     If 'dn' is set, the node loads the given 'dn' from LDAP
