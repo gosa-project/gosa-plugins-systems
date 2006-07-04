@@ -245,8 +245,6 @@ class kolabAccount extends plugin
     $ldap->cd ($this->dn);
     $ldap->modify($this->attrs);
 
-    print_a($this->attrs);
-
     $this->handle_post_events('remove');
     show_ldap_error($ldap->get_error(), sprintf(_("Removing of user/kolab account with dn '%s' failed."),$this->dn));
   }
@@ -357,8 +355,6 @@ class kolabAccount extends plugin
     $ldap->cd($this->dn);
     $this->cleanup();
     $ldap->modify ($this->attrs); 
-
-    print_a($this->attrs);
 
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of user/kolab account with dn '%s' failed."),$this->dn));
 
