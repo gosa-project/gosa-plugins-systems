@@ -13,8 +13,9 @@
 	changeState('calFBURL');
 	changeState('kolabFreeBusyFuture');
 	changeState('kolabInvitationPolicy');
-	{$changeState}  
-">
+	{$changeState}"
+	{$kolabAccountACL}
+>
 <b>{t}Kolab account{/t}</b>
 <br>
 <br>

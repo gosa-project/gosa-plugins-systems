@@ -74,6 +74,7 @@ class kolabAccount extends plugin
       $smarty->assign("$val", $this->$val);
       $smarty->assign($val."ACL", chkacl($this->acl, "$val"));
     }
+    $smarty->assign("kolabAccountACL", chkacl($this->acl, "kolabAccountACL"));
 
     /* Check for invitation action */
     $nr= 0;
@@ -165,7 +166,9 @@ class kolabAccount extends plugin
     /* Transfer account states for this union */
     if (isset($this->parent) && $this->parent->by_object['mailAccount']->is_account){
       $smarty->assign('mail_account', 'true');
-    } else {
+    } elseif($this-> initially_was_account && (isset($this->attrs['objectClass']) && (in_array("kolabInetOrgPerson",$this->attrs['objectClass'])))){
+      $smarty->assign('mail_account', 'true');
+    }else{
       $smarty->assign('mail_account', '');
     }
 
