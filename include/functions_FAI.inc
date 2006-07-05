@@ -6,7 +6,7 @@
    This function resolves the release management 
    from base to the given dn.
  */
-function get_all_objects_for_given_base($Current_DN,$detailed = false)
+function get_all_objects_for_given_base($Current_DN,$filter,$detailed = false)
 {
   global $config;
   $ldap = $config->get_ldap_link();
@@ -32,7 +32,7 @@ function get_all_objects_for_given_base($Current_DN,$detailed = false)
 
       /* Ldap search for fai classes specified in this release */
       $ldap->cd($fai_base);
-      $ldap->search("(objectClass=FAIclass)",array("dn","objectClass"));
+      $ldap->search($filter,array("dn","objectClass"));
 
       /* check the returned objects, and add/replace them in our return vareable */
       while($attr = $ldap->fetch()){
@@ -133,6 +133,16 @@ function prepare_to_save_FAI_object($Current_DN)
   
   $previous_releases = get_previous_releases_of_this_release($base_release,true);
   $following_releases= get_sub_releases_of_this_release($base_release,true);
+  
+  global $config;
+  $ldap = $config->get_ldap_link();
+  $ldap->cd($config->current['BASE']);
+  $ldap->cat($Current_DN);
+  if(!$ldap->count()){
+    $is_new = true;
+  }else{
+    $is_new = false;
+  }
  
   echo "<h2>".$Current_DN."</h2>";
  
@@ -140,21 +150,23 @@ function prepare_to_save_FAI_object($Current_DN)
   if(count($following_releases) == 0 ){
     echo "<b>Saving dircetly, is a leaf object</b><br>";
   }else{
-    
-    echo "<b>This object has sub releases: </b><br>";
-
+   
     $r = get_following_releases_that_inherit_this_object($Current_DN);
-    echo "This object must be updated <b>".$r[key($r)]."</b> with <b>".$parent_obj."</b><br>";
-    unset($r[key($r)]);
 
+    if($is_new){
+      echo "Creating an empty entry for <b>".$r[key($r)]."</b><br>";
+      echo "By setting <b>'FAIstate'</b> to <b>'*|removed'</b><br>"; 
+    }else{
+      echo "<b>This object has sub releases: </b><br>";
+      echo "This object must be updated <b>".$r[key($r)]."</b> with <b>".$parent_obj."</b><br>";
+    }
+    unset($r[key($r)]);
     echo "<br> the result will be inherited by .";
     foreach($r as $release => $value){
-      echo "&nbsp; : <i>".$release."</i><br>";
+      echo "<br>&nbsp; : <i>".$release."</i>";
     }
   } 
-
   echo "<br>.--------------------------------------------------------------------.<br>";
-
 }
 
 
@@ -317,7 +329,13 @@ function is_release_department($dn)
   /* Check objectClasses and name to check if this is a release department */
   if($ldap->count()){
     $attrs = $ldap->fetch();
-    if((in_array("FAIbranch",$attrs['objectClass'])) || ($attrs['ou'][0] == "fai")){
+			
+    $ou = "";
+    if(isset($attrs['ou'][0])){
+      $ou = $attrs['ou'][0];	
+    }
+	
+    if((in_array("FAIbranch",$attrs['objectClass'])) || ($ou == "fai")){
       return($attrs['dn']);
     }
   }
@@ -366,5 +384,5 @@ function get_release_dn($Current_DN)
   return("");
 }
 
-
+// vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
