@@ -157,8 +157,8 @@ function prepare_to_save_FAI_object($Current_DN)
       echo "Creating an empty entry for <b>".$r[key($r)]."</b><br>";
       echo "By setting <b>'FAIstate'</b> to <b>'*|removed'</b><br>"; 
     }else{
-      echo "<b>This object has sub releases: </b><br>";
-      echo "This object must be updated <b>".$r[key($r)]."</b> with <b>".$parent_obj."</b><br>";
+      echo "<b>This object has sub releases: </b><br>This object must be updated <b>";
+      echo $r[key($r)]."<br></b> with <b>".$parent_obj."</b><br>";
     }
     unset($r[key($r)]);
     echo "<br> the result will be inherited by .";

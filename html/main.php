@@ -23,6 +23,7 @@ $start = microtime();
 $timing= array();
 require_once ("../include/php_setup.inc");
 require_once ("functions.inc");
+require_once ("functions_FAI.inc");
 header("Content-type: text/html; charset=UTF-8");
 
 /* Find all class files and include them */
