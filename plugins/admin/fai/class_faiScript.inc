@@ -299,9 +299,35 @@ class faiScript extends plugin
   {
     $ldap = $this->config->get_ldap_link();
     $ldap->cd ($this->dn);
-    $ldap->rmdir_recursive($this->dn);
-    show_ldap_error($ldap->get_error(), sprintf(_("Removing of FAI/script with dn '%s' failed."),$this->dn));
-    $this->handle_post_events("remove");    
+
+    $use_dn = str_ireplace( get_release_dn($this->dn), $_SESSION['faifilter']['branch'], $this->dn);
+
+    $attr = prepare_ldap_fetch_to_be_saved($this->attrs);
+    if(isset($attr['FAIstate'][0])){
+      if(!preg_match("/removed$/",$attr['FAIstate'][0])){
+        $attr['FAIstate'][0] .= "|removed";
+      }   
+    }else{
+      $attr['FAIstate'][0] = "|removed";
+    }
+   
+    prepare_to_save_FAI_object($use_dn,$attr);
+    
+    foreach($this->SubObjects as $name => $obj){
+   
+      $use_dn = str_ireplace( get_release_dn($this->dn), $_SESSION['faifilter']['branch'], $obj['dn']);
+
+      $ldap->cat($obj['dn']);
+      $attr = prepare_ldap_fetch_to_be_saved($ldap->fetch());
+      if(isset($attr['FAIstate'][0])){
+        if(!preg_match("/removed$/",$attr['FAIstate'][0])){
+          $attr['FAIstate'][0] .= "|removed";
+        }   
+      }else{
+        $attr['FAIstate'][0] = "|removed";
+      }
+      prepare_to_save_FAI_object($use_dn,$attr);
+    }
   }
 
 
@@ -336,20 +362,22 @@ class faiScript extends plugin
     plugin::save();
 
     $ldap = $this->config->get_ldap_link();
-
     $ldap->cat($this->dn,array("objectClass"));
+
+    prepare_to_save_FAI_object($this->dn,$this->attrs);
+
     if($ldap->count()!=0){
       /* Write FAIscript to ldap*/
       $ldap->cd($this->dn);
       $this->cleanup();
-      $ldap->modify ($this->attrs); 
+//      $ldap->modify ($this->attrs); 
 
     }else{
       /* Write FAIscript to ldap*/
       $ldap->cd($this->config->current['BASE']);
       $ldap->create_missing_trees(preg_replace('/^[^,]+,/', '', $this->dn));
       $ldap->cd($this->dn);
-      $ldap->add($this->attrs);
+//      $ldap->add($this->attrs);
     }
     show_ldap_error($ldap->get_error(), sprintf(_("Creating of FAI/script with dn '%s' failed."),$this->dn));
 
@@ -417,15 +445,21 @@ class faiScript extends plugin
         }
       }
 
+
       if($obj['status'] == "delete"){
+  
+        $tmp['FAIstate'] = "|removed";
+        prepare_to_save_FAI_object($sub_dn,$tmp);
+
         $ldap->cd($sub_dn);
-        $ldap->rmdir_recursive($sub_dn);
+        //$ldap->rmdir_recursive($sub_dn);
         $this->handle_post_events("remove");
         show_ldap_error($ldap->get_error(), sprintf(_("Saving of FAI/script entry with dn '%s' failed."),$this->dn));
       }elseif($obj['status'] == "edited"){
         $ldap->cd($sub_dn);
         $this->cleanup();
-        $ldap->modify ($tmp); 
+        prepare_to_save_FAI_object($sub_dn,$tmp);
+       // $ldap->modify ($tmp); 
 
         $this->handle_post_events("modify");
       }elseif($obj['status']=="new"){
@@ -438,7 +472,8 @@ class faiScript extends plugin
         $ldap->cd($this->config->current['BASE']);
         $ldap->create_missing_trees(preg_replace('/^[^,]+,/', '', $this->dn));
         $ldap->cd($sub_dn);
-        $ldap->add($tmp); 
+        prepare_to_save_FAI_object($sub_dn,$tmp);
+       // $ldap->add($tmp); 
         $this->handle_post_events("add");
         show_ldap_error($ldap->get_error(), sprintf(_("Saving of FAI/script entry with dn '%s' failed."),$this->dn));
       }

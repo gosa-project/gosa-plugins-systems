@@ -26,6 +26,7 @@ require "tabsScript.inc";
 require "tabsProfile.inc";
 require "tabsPackage.inc";
 
+
 class faiManagement extends plugin
 {
 	/* Definitions */
@@ -623,23 +624,17 @@ class faiManagement extends plugin
   }
 
   
-  /* reload list of objects */
-	function reload()
-	{
-    /* Create a new list of FAI object 
-     * Generate List of Partitions,Hooks,Scripts,Templates,Profiles ... 
-     */
-    $ObjectTypes = array(
-        "FAIpartitionTable"  => array("OU"=>"ou=disk,"       , "CHKBOX"=>"ShowPartitions"),
-        "FAIpackageList"     => array("OU"=>"ou=packages,"    , "CHKBOX"=>"ShowPackages"),
-        "FAIscript"          => array("OU"=>"ou=scripts,"     , "CHKBOX"=>"ShowScripts"),
-        "FAIvariable"        => array("OU"=>"ou=variables,"   , "CHKBOX"=>"ShowVariables"),
-        "FAIhook"            => array("OU"=>"ou=hooks,"       , "CHKBOX"=>"ShowHooks"),
-        "FAIprofile"         => array("OU"=>"ou=profiles,"    , "CHKBOX"=>"ShowProfiles"),
-        "FAItemplate"        => array("OU"=>"ou=templates,"   , "CHKBOX"=>"ShowTemplates"));
 
-    /* Set base for all searches */
-    $base           = "ou=fai,ou=configs,ou=systems,".$this->DivListFai->selectedBase;
+  /* reload list of objects */
+  function reload()
+  {
+    /* Variable initialisation */
+    $str            = "";
+    $Regex          = $this->DivListFai->Regex;
+    $this->objects  = array();
+
+    /* Get base */
+    $base = "ou=fai,ou=configs,ou=systems,".$this->DivListFai->selectedBase;
     if($this->DivListFai->selectedBranch != "main"){
       $br = $this->getBranches();
       if(isset($br[$this->DivListFai->selectedBranch])){
@@ -649,49 +644,65 @@ class faiManagement extends plugin
       }
     }
 
-    $Regex          = $this->DivListFai->Regex;
-    $str            = "";
-    $objects        = array();
-    $this->objects  = array();
+    /* Get resolved release dependencies */
+    $tmp = get_all_objects_for_given_base($base,"(&(|(objectClass=FAIpartitionTable)(objectClass=FAIpackageList)(objectClass=FAIscript)
+      (objectClass=FAIvariable)(objectClass=FAIhook)(objectClass=FAIprofile)(objectClass=FAItemplate))(cn=$Regex))");
 
-    /* Walk through possible sub departments and fetch all FAI objects */
-		foreach($ObjectTypes as $type => $obj){
+    /* Create a new list of FAI object 
+     * Generate List of Partitions,Hooks,Scripts,Templates,Profiles ... 
+     */
+    $ObjectTypes = array(
+        "FAIpartitionTable"  => array("OU"=>"ou=disk,"        , "CHKBOX"=>"ShowPartitions"),
+        "FAIpackageList"     => array("OU"=>"ou=packages,"    , "CHKBOX"=>"ShowPackages"),
+        "FAIscript"          => array("OU"=>"ou=scripts,"     , "CHKBOX"=>"ShowScripts"),
+        "FAIvariable"        => array("OU"=>"ou=variables,"   , "CHKBOX"=>"ShowVariables"),
+        "FAIhook"            => array("OU"=>"ou=hooks,"       , "CHKBOX"=>"ShowHooks"),
+        "FAIprofile"         => array("OU"=>"ou=profiles,"    , "CHKBOX"=>"ShowProfiles"),
+        "FAItemplate"        => array("OU"=>"ou=templates,"   , "CHKBOX"=>"ShowTemplates"));
 
-      /* Skip all unchecked types */
-      if(! $this->DivListFai->$obj['CHKBOX']){
-        continue;
-      }
+    /* Ge listed ldap objects */
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd($this->config->current['BASE']);
+    foreach($tmp as $entry){
 
-      /* Fetch objects from fai sub department */
-      $res= get_list("(&(objectClass=".$type.")(cn=$Regex))", $this->ui->subtreeACL, $obj['OU'].$base,
-            array("cn","description","objectClass","FAIclass","FAIstate"), GL_SIZELIMIT);
+      /* Get some more informations about the object */ 
+      $ldap->cat($entry['dn'], array("cn","description","objectClass","FAIclass","FAIstate","objectClass"));
+      $object  = $ldap->fetch();
 
-      /* Walk through objects */
-			foreach($res as $object){
+      /* Walk through possible types */
+      foreach($ObjectTypes as $type => $rest){  
 
-        /* Prepare object */
-				unset($object['objectClass']['count']);
-				if(!isset($object['description'][0])){
-					$object['description'][0]="";
-				}
-				
-				/* Clean up object informations */
-				$obj['cn'] 			      = $object['cn'][0];
-				$obj['dn'] 			      = $object['dn'];
-				$obj['description']   = $object['description'][0];
-				$obj['objectClass']   = $object['objectClass'];
-
-        /* Append type to this string, to be able to check if the selected 
-         * entry is of type 'freeze' or 'branch'
-         */
-        if(isset($object['FAIstate'])){
-          $obj['FAIstate'] = $object['FAIstate'][0];
-          $str.="|".$obj['FAIstate'];
-        }else{
-          $obj['FAIstate'] ="";
+        /* Skip all unchecked types */
+        if(! $this->DivListFai->$rest['CHKBOX']){
+          continue;
         }
-				$this->objects[strtolower($obj['cn']).$obj['cn'].$type] = $obj;
-				$this->objects[strtolower($obj['cn']).$obj['cn'].$type]['type']=$type;
+
+        if(in_array($type,$object['objectClass'])){
+
+          /* Prepare object */
+          unset($object['objectClass']['count']);
+          if(!isset($object['description'][0])){
+            $object['description'][0]="";
+          }
+
+          /* Clean up object informations */
+          $obj['cn'] 			      = $object['cn'][0];
+          $obj['dn'] 			      = $object['dn'];
+          $obj['description']   = $object['description'][0];
+          $obj['objectClass']   = $object['objectClass'];
+
+          /* Append type to this string, to be able to check if the selected 
+           * entry is of type 'freeze' or 'branch'
+           */
+          if(isset($object['FAIstate'])){
+            $obj['FAIstate'] = $object['FAIstate'][0];
+            $str.="|".$obj['FAIstate'];
+          }else{
+            $obj['FAIstate'] ="";
+          }
+          $this->objects[strtolower($obj['cn']).$obj['cn'].$type] = $obj;
+          $this->objects[strtolower($obj['cn']).$obj['cn'].$type]['type']=$type;
+        }
 			}
 		}
 
