@@ -134,7 +134,7 @@ function get_all_releases_from_base($dn)
     !!!!!!! No functionality just output 
   
  */
-function prepare_to_save_FAI_object($Current_DN,$objectAttrs)
+function prepare_to_save_FAI_object($Current_DN,$objectAttrs,$removed = false)
 {
   /* Get ldap object */  
   global $config;
@@ -153,6 +153,32 @@ function prepare_to_save_FAI_object($Current_DN,$objectAttrs)
     $is_new = true;
   }else{
     $is_new = false;
+  }
+  
+  /* if parameter removed is true, we have to add FAIstate to the current attrs 
+        FAIstate should end with ...|removed after this operation */  
+  if($removed ){
+    $ldap->cat($Current_DN);
+
+    if((!$ldap->count()) && !empty($parent_obj)){
+      $ldap->cat($parent_obj);
+    }
+    if(!$ldap->count()){
+
+      echo "Error can't remove this object ".$Current_DN;
+      return;
+  
+    }else{
+
+      $objectAttrs = prepare_ldap_fetch_to_be_saved($ldap->fetch());
+      if(isset($objectAttrs['FAIstate'][0])){
+        if(!preg_match("/removed$/",$objectAttrs['FAIstate'][0])){
+          $objectAttrs['FAIstate'][0] .= "|removed";
+        }
+      }else{
+        $objectAttrs['FAIstate'][0] = "|removed";
+      }
+    }
   }
   
   /* Check if this a leaf release or not */ 
@@ -183,14 +209,14 @@ function prepare_to_save_FAI_object($Current_DN,$objectAttrs)
 
         echo "<b>Saving main object</b>".$Current_DN;
         print_a($objectAttrs);
-
-        $key = $r[key($r)];
-        echo "<b>Saving parent to following release</b> ".$key;
-        print_a($parent_attrs);
-
+        
         save_FAI_object($Current_DN,$objectAttrs);
-        save_FAI_object($key,$parent_attrs);
 
+        foreach($r as $key){
+          echo "<b>Saving parent to following release</b> ".$key;
+          print_a($parent_attrs);
+          save_FAI_object($key,$parent_attrs);
+        }
       }else{
 
         echo "<b>Saving main object</b>".$Current_DN;
@@ -198,24 +224,27 @@ function prepare_to_save_FAI_object($Current_DN,$objectAttrs)
 
         save_FAI_object($Current_DN,$objectAttrs);
 
-        $key = $r[key($r)];
-        echo "<b>Create an empty placeholder in follwing release</b> ".$key; 
         if(isset($objectAttrs['FAIstate'])){
           $objectAttrs['FAIstate'] .= "|removed"; 
         }else{
           $objectAttrs['FAIstate'] = "|removed";
         }
-        print_a($objectAttrs);
-        save_FAI_object($key,$objectAttrs);
+
+        foreach($r as $key ){
+          echo "<b>Create an empty placeholder in follwing release</b> ".$key; 
+          print_a($objectAttrs);
+          save_FAI_object($key,$objectAttrs);
+        }
       }
     }else{
 
       /* check if we must patch the follwing release */
       if(!empty($r)){
-        $key = $r[key($r)];
-        echo "<b>Copy current objects original attributes to next release</b> ".$key;
-        print_a($parent_attrs);
-        save_FAI_object($key,$parent_attrs);
+        foreach($r as $key ){
+          echo "<b>Copy current objects original attributes to next release</b> ".$key;
+          print_a($parent_attrs);
+          save_FAI_object($key,$parent_attrs);
+        }
       }
 
       echo "<b>Saving current object</b>".$parent_obj;
@@ -226,11 +255,6 @@ function prepare_to_save_FAI_object($Current_DN,$objectAttrs)
       if($parent_obj != $Current_DN){
         echo "<b>Error they must be equal : </b>".$parent_obj."<br><b> and </b><br> ".$Current_DN."<br>";
       }
-    }
-    unset($r[key($r)]);
-    echo "<br> the result will be inherited by .";
-    foreach($r as $release => $value){
-      echo "<br>&nbsp; : <i>".$release."</i>";
     }
   } 
   echo "<br>.--------------------------------------------------------------------.<br>";
@@ -281,11 +305,11 @@ function get_following_releases_that_inherit_this_object($dn)
   $base_release = get_release_dn($dn);
 
   /* Get previous release dns */
-  $sub_releases = get_sub_releases_of_this_release($base_release,true);
+  $sub_releases = get_sub_releases_of_this_release($base_release);
 
   /* Get dn suffix. Example  "FAIvairableEntry=keksdose,FAIvariable=Keksregal," */
   $dn_suffix = str_ireplace($base_release,"",$dn);
-    
+
   /* Check if given object also exists whitin one of these releases */
   foreach($sub_releases as $p_release => $name){
 
@@ -294,7 +318,7 @@ function get_following_releases_that_inherit_this_object($dn)
     $ldap->cat($check_dn,array("dn","objectClass"));
     
     if($ldap->count()){
-      return($ret);
+      //return($ret);
     }else{
       $ret[$check_dn]=$check_dn;
     }
