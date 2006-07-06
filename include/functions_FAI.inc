@@ -180,7 +180,8 @@ function prepare_to_save_FAI_object($Current_DN,$objectAttrs,$removed = false)
       }
     }
   }
-  
+ 
+ 
   /* Check if this a leaf release or not */ 
   if(count($following_releases) == 0 ){
 
@@ -257,7 +258,19 @@ function prepare_to_save_FAI_object($Current_DN,$objectAttrs,$removed = false)
       }
     }
   } 
+  /* Remove the source object from ldap. It is no longer required */
+  if($removed){
+    if(get_parent_release_object($Current_DN,false) == ""){
+      $ldap->clearResult();
+      $ldap->cat($Current_DN);
+      
+      $tmp = $ldap->fetch();
+      return($tmp['dn']);      
+    }
+  }
   echo "<br>.--------------------------------------------------------------------.<br>";
+
+  return("");
 }
 
 
@@ -328,7 +341,7 @@ function get_following_releases_that_inherit_this_object($dn)
 
 
 /* Get previous version of the object dn */
-function get_parent_release_object($dn)
+function get_parent_release_object($dn,$include_myself=true)
 {
   global $config;
   $ldap = $config->get_ldap_link();
@@ -337,7 +350,9 @@ function get_parent_release_object($dn)
 
   /* Get base release */
   $base_release = get_release_dn($dn);
-  $previous_releases[] = $base_release;  
+  if($include_myself){
+    $previous_releases[] = $base_release;  
+  }
 
   /* Get previous release dns */
   $tmp = get_previous_releases_of_this_release($base_release,true);
