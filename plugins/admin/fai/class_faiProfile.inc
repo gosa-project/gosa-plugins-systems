@@ -361,7 +361,7 @@ class faiProfile extends plugin
       $use_dn = $this->dn;
     }
 
-    prepare_to_save_FAI_object($this->dn,$this->attrs);
+    prepare_to_save_FAI_object($this->dn,array(),true);
     $this->handle_post_events("remove");    
   }
 
