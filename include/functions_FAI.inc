@@ -148,14 +148,16 @@ function prepare_to_save_FAI_object($Current_DN,$objectAttrs,$removed = false)
 
     /* Get some basic informations */
     $parent_obj   = get_parent_release_object($Current_DN);
-    $ldap->cat($parent_obj,array("*"));
-    $attrs = prepare_ldap_fetch_to_be_saved($ldap->fetch());
+    if(!empty($parent_obj)){
+      $ldap->cat($parent_obj,array("*"));
+      $attrs = prepare_ldap_fetch_to_be_saved($ldap->fetch());
 
-    if(!array_diff_FAI( $attrs,$objectAttrs)){
-      $addObj['diff'] = FALSE;
-    }
+      if(!array_diff_FAI( $attrs,$objectAttrs)){
+        $addObj['diff'] = FALSE;
+      }
+    } 
   }
-
+   
   $_SESSION['FAI_objects_to_save'][$Current_DN] =  $addObj;
 }
 
@@ -188,13 +190,15 @@ function save_release_changes_now()
   /* Variable init*/
   $to_save = array();
   
+
   /* check which attributes must realy be saved */
   foreach($_SESSION['FAI_objects_to_save'] as $Current_DN => $object){
     if($object['diff']){
       $sub_name = $Current_DN;
       while(isset($_SESSION['FAI_objects_to_save'][$sub_name])){
        
-        $to_save[strlen($sub_name)] = $_SESSION['FAI_objects_to_save'][$sub_name]; 
+        
+        $to_save[strlen($sub_name)."-".$sub_name] = $_SESSION['FAI_objects_to_save'][$sub_name]; 
         unset($_SESSION['FAI_objects_to_save'][$sub_name]);
         $sub_name = preg_replace('/^[^,]+,/', '', $sub_name);
       }
@@ -423,7 +427,6 @@ function prepare_ldap_fetch_to_be_saved($attrs)
 
 function save_FAI_object($dn,$attrs)
 {
-  print_a(array($dn,$attrs));
   global $config;
   $ldap = $config->get_ldap_link();
   $ldap->cd($config->current['BASE']);
