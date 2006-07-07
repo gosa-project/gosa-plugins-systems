@@ -198,7 +198,7 @@ function save_release_changes_now()
       while(isset($_SESSION['FAI_objects_to_save'][$sub_name])){
        
         
-        $to_save[strlen($sub_name)."-".$sub_name] = $_SESSION['FAI_objects_to_save'][$sub_name]; 
+        $to_save[strlen($sub_name)][$sub_name] = $_SESSION['FAI_objects_to_save'][$sub_name]; 
         unset($_SESSION['FAI_objects_to_save'][$sub_name]);
         $sub_name = preg_replace('/^[^,]+,/', '', $sub_name);
       }
@@ -208,6 +208,15 @@ function save_release_changes_now()
   /* Sort list of objects that must be saved, and ensure that 
       container   objects are safed, before their childs are saved */
   ksort($to_save);
+  
+  $tmp = array();
+  foreach($to_save as $SubObjects){
+    foreach($SubObjects as $object){
+      $tmp[] = $object;
+    }
+  }
+
+  $to_save = $tmp;
 
   /* Save objects and manage the correct release behavior*/
   foreach($to_save as $save){
@@ -430,6 +439,8 @@ function save_FAI_object($dn,$attrs)
   global $config;
   $ldap = $config->get_ldap_link();
   $ldap->cd($config->current['BASE']);
+  echo $dn;
+  print_a($attrs);
   $ldap->create_missing_trees(preg_replace('/^[^,]+,/', '', $dn));
   $ldap->cd($dn);
   
