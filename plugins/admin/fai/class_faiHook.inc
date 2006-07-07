@@ -343,8 +343,7 @@ class faiHook extends plugin
       $use_dn = $this->dn;
     }
 
-    $del = array();
-    $del[] = prepare_to_save_FAI_object($use_dn,array(),true);
+    prepare_to_save_FAI_object($use_dn,array(),true);
 
     foreach($this->SubObjects as $name => $obj){
       $use_dn = str_ireplace( get_release_dn($this->dn), $_SESSION['faifilter']['branch'], $obj['dn']);
