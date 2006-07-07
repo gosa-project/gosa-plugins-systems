@@ -54,6 +54,14 @@ class faiPartitionTable extends plugin
       $ldap->cd ($this->dn);
       $ldap->search("(&(objectClass=FAIclass)(objectClass=FAIpartitionDisk))",array("*"));
       while($object = $ldap->fetch()){
+
+        /* Skip objects, that are tagged as removed */
+        if(isset($object['FAIstate'][0])){
+          if(preg_match("/removed$/",$object['FAIstate'][0])){
+            continue;
+          }
+        }
+
         $this->disks[$object['cn'][0]]['status']      = "edited";
         $this->disks[$object['cn'][0]]['dn']          = $object['dn'];
         $this->disks[$object['cn'][0]]['cn']          = $object['cn'][0];
@@ -71,6 +79,13 @@ class faiPartitionTable extends plugin
         $ldap->cd ($disk['dn']);
         $ldap->search("(&(objectClass=FAIclass)(objectClass=FAIpartitionEntry))",array("*"));
         while($partition = $ldap->fetch()){
+
+          /* Skip objects, that are tagged as removed */
+          if(isset($partition['FAIstate'][0])){
+            if(preg_match("/removed$/",$partition['FAIstate'][0])){
+              continue;
+            }
+          }
 
           /* remove count ... from ldap result 
            */
@@ -289,10 +304,33 @@ class faiPartitionTable extends plugin
   {
     $ldap = $this->config->get_ldap_link();
     $ldap->cd ($this->dn);
-    $ldap->rmdir_recursive($this->dn);
-    $this->handle_post_events("remove");    
-  
-    /* This cannot be removed... */
+
+    $use_dn = str_ireplace( get_release_dn($this->dn), $_SESSION['faifilter']['branch'], $this->dn);
+    if($_SESSION['faifilter']['branch'] == "main"){
+      $use_dn = $this->dn;
+    }
+
+    prepare_to_save_FAI_object($use_dn,array(),true);
+    
+    foreach($this->disks as $disk){
+
+      $disk_dn = "cn=".$disk['cn'].",".$this->dn;
+      $use_dn = str_ireplace( get_release_dn($this->dn), $_SESSION['faifilter']['branch'], $disk_dn);
+      if($_SESSION['faifilter']['branch'] == "main"){
+        $use_dn = $disk_dn;
+      }
+      prepare_to_save_FAI_object($use_dn,array(),true);
+
+      foreach($disk['partitions'] as $key => $partition){    
+     
+        $partition_dn= "FAIpartitionNr=".$partition['FAIpartitionNr'].",".$disk_dn;      
+        $use_dn = str_ireplace( get_release_dn($this->dn), $_SESSION['faifilter']['branch'], $partition_dn);
+        if($_SESSION['faifilter']['branch'] == "main"){
+          $use_dn = $disk_dn;
+        }
+        prepare_to_save_FAI_object($use_dn,array(),true);
+      }
+    }
   }
 
 
@@ -333,18 +371,7 @@ class faiPartitionTable extends plugin
 
     $ldap = $this->config->get_ldap_link();
 
-    if($this->new){
-      $ldap->cd($this->config->current['BASE']);
-      $ldap->create_missing_trees(preg_replace('/^[^,]+,/', '', $this->dn));
-      $ldap->cd($this->dn);
-      $ldap->add($this->attrs);
-    }else{
-      /* Add partition table to ldap
-       */
-      $ldap->cd($this->dn);
-      $this->cleanup();
-      $ldap->modify ($this->attrs); 
-    }
+    prepare_to_save_FAI_object($this->dn,$this->attrs);
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of FAI/partition table with dn '%s' failed."),$this->dn));
   
     /* Do object tagging */
@@ -383,30 +410,16 @@ class faiPartitionTable extends plugin
       if(isset($attrs['objectClass']) && in_array_ics("gosaAdministrativeUnitTag",$attrs['objectClass'])){
         $disk_attrs['objectClass'][] = "gosaAdministrativeUnitTag";
       }
- 
+
       if($disk['status'] == "delete"){
-        $ldap->cd($disk_dn);
-        $ldap->rmdir_recursive($disk_dn);
-        show_ldap_error($ldap->get_error(), sprintf(_("Removing of FAI/partition table with dn '%s' failed."),$disk_dn));
-      }elseif($disk['status']== "edited"){
-        if(empty($disk_attrs['description'])){
-          $disk_attrs['description']=array();
-        }
-        $ldap->cd($disk_dn);
-        $this->cleanup();
-        $ldap->modify ($disk_attrs); 
-        show_ldap_error($ldap->get_error(), sprintf(_("Saving of FAI/partition table with dn '%s' failed."),$disk_dn));
-      }elseif($disk['status']== "new"){
-        if(empty($disk_attrs['description'])){
-          unset($disk_attrs['description']);
-        }
-        $ldap->cd($this->config->current['BASE']);
-        $ldap->create_missing_trees(preg_replace('/^[^,]+,/', '', $disk_dn));
-        $ldap->cd($disk_dn);
-        $ldap->add($disk_attrs);
-        show_ldap_error($ldap->get_error(), sprintf(_("Saving of FAI/partition table with dn '%s' failed."),$disk_dn));
-      }else{
-        print_red("unknown status while saving disks");
+        prepare_to_save_FAI_object($disk_dn,array(),true);
+        $this->handle_post_events("remove");
+      }elseif($disk['status'] == "edited"){
+        prepare_to_save_FAI_object($disk_dn,$disk_attrs);
+        $this->handle_post_events("modify");
+      }elseif($disk['status']=="new"){
+        prepare_to_save_FAI_object($disk_dn,$disk_attrs);
+        $this->handle_post_events("add");
       }
 
       $this->handle_object_tagging($disk_dn, $this->gosaUnitTag);
@@ -449,28 +462,16 @@ class faiPartitionTable extends plugin
           $partition_attrs['objectClass'][] = "gosaAdministrativeUnitTag";
         }
 
-        if(($partition['status'] == "delete")&&($disk['status']!="new")){
-          $ldap->cd($partition_dn);
-          $ldap->rmdir_recursive($partition_dn);
-          show_ldap_error($ldap->get_error(), sprintf(_("Removing of FAI/partition table entry with dn '%s' failed."),$partition_dn));
-        }elseif($partition['status'] == "new"){
-          if(empty($partition_attrs['description'])){
-            unset($partition_attrs['description']);
-          }
-          $ldap->cd($this->config->current['BASE']);
-          $ldap->create_missing_trees(preg_replace('/^[^,]+,/', '', $partition_dn));
-          $ldap->cd($partition_dn);
-          $ldap->add($partition_attrs);
-          show_ldap_error($ldap->get_error(), sprintf(_("Saving of FAI/partition table entry with dn '%s' failed."),$partition_dn));
+        if($partition['status'] == "delete"){
+          prepare_to_save_FAI_object($partition_dn,array(),true);
+          $this->handle_post_events("remove");
         }elseif($partition['status'] == "edited"){
-          if(empty($partition_attrs['description'])){
-            $partition_attrs['description']=array();
-          }
-          $ldap->cd($partition_dn);
-          $this->cleanup();
-          $ldap->modify ($partition_attrs); 
-          show_ldap_error($ldap->get_error(), sprintf(_("Saving of FAI/partition table entry with dn '%s' failed."),$partition_dn));
-        } 
+          prepare_to_save_FAI_object($partition_dn,$partition_attrs);
+          $this->handle_post_events("modify");
+        }elseif($partition['status']=="new"){
+          prepare_to_save_FAI_object($partition_dn,$partition_attrs);
+          $this->handle_post_events("add");
+        }
 
         $this->handle_object_tagging($partition_dn, $this->gosaUnitTag);
       }
