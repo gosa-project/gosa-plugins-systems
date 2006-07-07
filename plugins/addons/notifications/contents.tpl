@@ -9,7 +9,7 @@
         {html_options options=$targets selected=$target}
         <option disabled>&nbsp;</option>
    </select>
-   <input type="submit" value="{t}Apply{/t}" name="refresh"><br><br>
+   {if $javascript eq 'false'}<input type="submit" value="{t}Apply{/t}" name="refresh">{/if}<br><br>
   </td>
   <td>
   </td>

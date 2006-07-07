@@ -1,6 +1,8 @@
 Target for 2.6:
 ===============
 
+* {if $javascript eq 'false'} for all refresh buttons that are not in filter
+
 * Add new smarty gettext plugin -> requires fixing of <b> and <i> tags in
   translations
 

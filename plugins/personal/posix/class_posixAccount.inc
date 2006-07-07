@@ -1207,6 +1207,17 @@ class posixAccount extends plugin
     return($ret);
   }
 
+
+  function plInfo()
+  {
+    return (array("plDescription" => _("POSIX account"),
+                  "plSelfModify" => TRUE,
+                  "plDepends" => array("objectClass" => "gosaAccount"),
+                  "homeDirectory" => _("Home directory"), "uidNumber" => _("User ID"),
+                  "gidNumber" => _("Group ID")));
+  }
+
+
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

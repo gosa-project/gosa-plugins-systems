@@ -33,7 +33,7 @@ class msgplug extends plugin
 
     /* Preset values */
     $this->targets= array("user" => _("Users"), "group" => _("Groups"));
-    ksort($this->targets);
+    asort($this->targets);
 
     /* Users */
     $ldap= $config->get_ldap_link();
@@ -41,7 +41,7 @@ class msgplug extends plugin
     if ($tag == ""){
       $ldap->search('(objectClass=gosaAccount)', array('uid', 'cn'));
     } else {
-      $ldap->search('(&(objectClass=gosaAccount)(gosaUnitTag)'.$tag.'))', array('uid', 'cn'));
+      $ldap->search('(&(objectClass=gosaAccount)(gosaUnitTag='.$tag.'))', array('uid', 'cn'));
     }
     while ($attrs= $ldap->fetch()){
       $this->users['U:'.$attrs['uid'][0]]= $attrs['cn'][0].' ['.$attrs['uid'][0].']';

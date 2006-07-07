@@ -511,6 +511,7 @@ class department extends plugin
 			return (TRUE);
 		}
 	}
+
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

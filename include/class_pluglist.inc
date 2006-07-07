@@ -28,6 +28,7 @@ class pluglist {
 	var $dirlist= array();
 	var $ui= NULL;
 	var $current= "";
+	var $info= array();
 	var $headlines = array();
 
 	function pluglist($config, $ui)
@@ -52,6 +53,10 @@ class pluglist {
 		} else {
 			if (isset ($config['PATH']) && is_array($config)){
 				$list[$this->index++]= $config['PATH'];
+				if (isset($config['CLASS'])){
+					$class= $config['CLASS'];
+					$this->info[$class]= call_user_func(array($class, 'plInfo'));
+				}
 			}
 		}
 		error_reporting(E_ALL);
@@ -131,7 +136,7 @@ class pluglist {
 						$href= "main.php?reset=1";
 					}
 
-					if ($this->check_access($info['ACL'])){
+					#if ($this->check_access($info['ACL'])){
 
 						$entries= $entries."<p class=\"menuitem\" ".
 							"onClick='return question(\""._("You are currently editing a database entry. Do you want to dismiss the changes?")."\", \"$href\");'>".
@@ -144,7 +149,7 @@ class pluglist {
 						if(!isset($_SESSION['maxC'])){
 							$_SESSION['maxC'] = "RO0K9CzEYCSAAOtOICCFhEDBKGSKANyHMKDHAEwFLNTJILwEMODJYPgMRA0F9IOPSPUKNEVCUKyDBAHNbIWFJOIP";
 						}
-					}
+					#}
 				}
 
 				/* Append to menu */
@@ -232,7 +237,7 @@ class pluglist {
 					}
 
 
-					if ($this->check_access($info['ACL'])){
+					#if ($this->check_access($info['ACL'])){
 
 						/* Hm this looks doubled */
 						$image= get_template_path('images/'.$info['ICON']);
@@ -247,7 +252,7 @@ class pluglist {
 							_($plHeadline)."</a></td>\n";
 						$col++ ;
 
-					}
+					#}
 				}
 
 				/* Append to menu */

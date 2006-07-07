@@ -35,6 +35,9 @@ if (!$remove_lock){
 	}
 
 	/* Execute formular */
+	if ($aclplug->aclPostHandler()){
+		echo "Saved... But this is not the way it goes normally!";
+	}
 	$display= $aclplug->execute();
 	$display.= "<input type=\"hidden\" name=\"ignore\">\n";
 

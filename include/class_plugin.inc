@@ -111,15 +111,6 @@ class plugin
   /* Plugin identifier */
   var $plHeadline= "";
   var $plDescription= "";
-  var $plObject_name= "";
-  var $plProvided_acls= array();
-  var $plSelf_modify= FALSE;
-  var $plOptions= array();
-  var $plSection= "";
-  var $plTask= array();
-  var $plPriority= 0;
-  var $plDepends= array();
-  var $plConflicts= array();
 
   /*! \brief plugin constructor
 
@@ -1359,6 +1350,22 @@ class plugin
       return($this->snapDialog->execute());
     }
   }
+
+
+  function plInfo()
+  {
+    #var $plObject_name= "";
+    #var $plProvidedAcls= array();
+    #var $plSelfModify= FALSE;
+    #var $plOptions= array();
+    #var $plSection= "";
+    #var $plTask= array();
+    #var $plPriority= 0;
+    #var $plDepends= array();
+    #var $plConflicts= array();
+    return array();
+  }
+
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

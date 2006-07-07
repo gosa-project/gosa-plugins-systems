@@ -1284,6 +1284,17 @@ class user extends plugin
       }
     } 
   }
+
+
+  function plInfo()
+  {
+    return (array("plDescription" => _("Generic user settings"),
+                  "plSelfModify" => TRUE,
+                  "plDepends" => array("objectClass" => "gosaAccount", "description" => _("Users")),
+                  "userPassword" => _("Set password"), "sn" => _("Surename"),
+                  "givenName" => _("Given name")));
+  }
+
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
