@@ -196,6 +196,13 @@ class faiManagement extends plugin
 				unset ($this->dialog);
 				gosa_log ("FAI class '".$this->dn."' has been removed");
 				$this->dialog= NULL;
+        $to_del = clean_up_releases($this->dn);
+
+        foreach($to_del as $dn){
+          $ldap->rmdir_recursive($dn);
+          gosa_log(sprintf(_("Release cleanup : Removing object (tagged as remvoed) that is no longer in use '%s'."),$dn));
+        }
+
 			} else {
 
 				/* Normally this shouldn't be reached, send some extra
@@ -392,12 +399,25 @@ class faiManagement extends plugin
       $ldap->cd ($this->config->current['BASE']);
       $ldap->copy_FAI_resource_recursive($mimesrc,$mimedst,$NewReleaseName,$type,true);
 
+
+      $attr = array();
+      $attr['objectClass'] = array("organizationalUnit","FAIbranch");
+      $attr['ou'] = $name;
+      $ldap->cd($this->config->current['BASE']);
+      $ldap->cd("ou=".$name.",".$baseToUse);
+      $ldap->cat("ou=".$name.",".$baseToUse);
+      if($ldap->count()){
+        $ldap->modify($attr);
+      }else{
+        $ldap->add($attr);
+      }
+
       /* Duplicate fai objects 
        */
-      $ldap->cd ("ou=".$name.",".$baseToUse);
-      $ldap->recursive_remove();
-      $ldap->cd ($this->config->current['BASE']);
-      $ldap->copy_FAI_resource_recursive($baseToUse,"ou=".$name.",".$baseToUse,$NewReleaseName,$type,true);
+//      $ldap->cd ("ou=".$name.",".$baseToUse);
+//      $ldap->recursive_remove();
+//      $ldap->cd ($this->config->current['BASE']);
+//      $ldap->copy_FAI_resource_recursive($baseToUse,"ou=".$name.",".$baseToUse,$NewReleaseName,$type,true);
 
       echo "<div style='width:100%;text-align:right;'><form name='form' method='post' action='?plug=".$_GET['plug']."' target='_parent'>
               <br><input type='submit' name='CloseIFrame' value='"._("Continue")."'>
