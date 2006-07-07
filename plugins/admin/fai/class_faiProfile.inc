@@ -355,10 +355,16 @@ class faiProfile extends plugin
   {
     $ldap = $this->config->get_ldap_link();
     $ldap->cd ($this->dn);
-    $ldap->rmdir_recursive($this->dn);
-    show_ldap_error($ldap->get_error(), sprintf(_("Removing of FAI/profile with dn '%s' failed."),$this->dn));
+
+    $use_dn = str_ireplace( get_release_dn($this->dn), $_SESSION['faifilter']['branch'], $this->dn);
+    if($_SESSION['faifilter']['branch'] == "main"){
+      $use_dn = $this->dn;
+    }
+
+    prepare_to_save_FAI_object($this->dn,$this->attrs);
     $this->handle_post_events("remove");    
   }
+
 
   /* Save data to object 
    */
@@ -413,19 +419,8 @@ class faiProfile extends plugin
 
     $this->attrs['FAIclass']=trim($this->FAIclass);
 
-    $ldap->cat($this->dn,array("objectClass"));
-    if($ldap->count()!=0){
-      /* Write FAIscript to ldap*/
-      $ldap->cd($this->dn);
-      $this->cleanup();
-      $ldap->modify ($this->attrs); 
-    }else{
-      /* Write FAIscript to ldap*/
-      $ldap->cd($this->config->current['BASE']);
-      $ldap->create_missing_trees(preg_replace('/^[^,]+,/', '', $this->dn));
-      $ldap->cd($this->dn);
-      $ldap->add($this->attrs);
-    }
+    prepare_to_save_FAI_object($this->dn,$this->attrs);
+    
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of FAI/profile with dn '%s' failed."),$this->dn));
 
     /* Do object tagging */
