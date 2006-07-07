@@ -112,10 +112,18 @@ class faiPackage extends plugin
     
     /* Search for configuration objects */ 
     $ldap = $this->config->get_ldap_link();
-    $ldap->search($PackageFilter,array("FAIvariable","FAIvariableType","FAIvariableContent","FAIpackage","FAIdebianSection"));
+    $ldap->search($PackageFilter,array("FAIvariable","FAIvariableType","FAIvariableContent","FAIpackage","FAIdebianSection","FAIstate"));
 
     /* Walk through configurations and append them to our list of ConfiguredPackages */
     while($attr = $ldap->fetch()){
+
+      /* Skip objects, that are tagged as removed */
+      if(isset($object['FAIstate'][0])){
+        if(preg_match("/removed$/",$attr['FAIstate'][0])){
+          continue;
+        }
+      }
+
       $tmp =array(); 
       $tmp['Name']  = $attr['FAIvariable'][0];
       $tmp['Type']  = $attr['FAIvariableType'][0];
@@ -327,6 +335,7 @@ class faiPackage extends plugin
     $smarty->assign("section" ,$strsec);
     $smarty->assign("usedPackages",$this->printUsedPackages());
     $display.= $smarty->fetch(get_template_path('faiPackage.tpl', TRUE));
+    print_a($this->ConfiguredPackages);
     return($display);
   }
 
@@ -336,9 +345,25 @@ class faiPackage extends plugin
   {
     $ldap = $this->config->get_ldap_link();
     $ldap->cd ($this->dn);
-    $ldap->rmdir_recursive($this->dn);
-    show_ldap_error($ldap->get_error(), sprintf(_("Removing of FAI/package list with dn '%s' failed."),$this->dn));
-    $this->handle_post_events("remove");    
+
+    $use_dn = str_ireplace( get_release_dn($this->dn), $_SESSION['faifilter']['branch'], $this->dn);
+    if($_SESSION['faifilter']['branch'] == "main"){
+      $use_dn = $this->dn;
+    }
+
+    prepare_to_save_FAI_object($use_dn,array(),true);
+
+    foreach($this->ConfiguredPackages as $pkgname => $attrs){
+      foreach($attrs as $name => $attr){
+        $pkgdn =  "FAIvariable=".$name.",".$this->dn;
+        $use_dn = str_ireplace( get_release_dn($this->dn), $_SESSION['faifilter']['branch'], $pkgdn);
+        if($_SESSION['faifilter']['branch'] == "main"){
+          $use_dn = $obj['dn'];
+        }
+        prepare_to_save_FAI_object($use_dn,array(),true);
+      }
+    }
+    $this->handle_post_events("remove");
   }
 
 
@@ -465,22 +490,7 @@ class faiPackage extends plugin
       $this->attrs['FAIdebianSection'][] = $sec;
     }
 
-    //    $this->attrs["FAIinstallMethod"]= "aptitude";
-
-    $ldap->cat($this->dn, array('dn'));
-    if($ldap->count()!=0){
-      /* Write FAIscript to ldap*/
-      $ldap->cd($this->dn);
-      $this->cleanup();
-      $ldap->modify ($this->attrs); 
-
-    }else{
-      /* Write FAIscript to ldap*/
-      $ldap->cd($this->config->current['BASE']);
-      $ldap->create_missing_trees(preg_replace('/^[^,]+,/', '', $this->dn));
-      $ldap->cd($this->dn);
-      $ldap->add($this->attrs);
-    }
+    prepare_to_save_FAI_object($this->dn,$this->attrs);
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of FAI/package list with dn '%s' failed."),$this->dn));
 
     /* Do object tagging */
@@ -514,19 +524,8 @@ class faiPackage extends plugin
         if((isset($attrs['objectClass'])) && (in_array_ics("gosaAdministrativeUnitTag",$attrs['objectClass']))){
           $pkgattrs['objectClass'][] = "gosaAdministrativeUnitTag";
         }
-    
-        if($ldap->count()!=0){
-          $ldap->cd($pkgdn);
-          $this->cleanup();
-          $ldap->modify ($pkgattrs); 
 
-        }else{
-          $ldap->cd($this->config->current['BASE']);
-          $ldap->create_missing_trees(preg_replace('/^[^,]+,/', '', $pkgdn));
-          $ldap->cd($pkgdn);
-          $ldap->add($pkgattrs);
-        }
-        show_ldap_error($ldap->get_error(), sprintf(_("Saving of FAI/package list with dn '%s' failed."),$this->dn));
+        prepare_to_save_FAI_object($pkgdn,$pkgattrs);
 
         /* Handle tagging */
         $this->handle_object_tagging($pkgdn, $this->gosaUnitTag);
