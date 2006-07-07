@@ -66,11 +66,20 @@ class faiHook extends plugin
        */
       $ldap     = $this->config->get_ldap_link();
       $ldap->cd ($this->dn);
-      $ldap->search("(&(objectClass=FAIclass)(objectClass=".$this->subClass."))",$this->subAttributes);
+      $attrs_to_search = $this->subAttributes;
+      $attrs_to_search[] = "FAIstate";
+      $ldap->search("(&(objectClass=FAIclass)(objectClass=".$this->subClass."))",$attrs_to_search);
 
       while($object = $ldap->fetch()){
-        /* Set status for save management */
 
+        /* Skip objects, that are tagged as removed */
+        if(isset($object['FAIstate'][0])){
+          if(preg_match("/removed$/",$object['FAIstate'][0])){
+            continue;
+          }
+        }
+
+        /* Set status for save management */
         foreach($this->subAttributes as $attrs){
           if(!isset($object[$attrs][0])){
             $this->SubObjects[$object['cn'][0]][$attrs]="";
@@ -328,8 +337,22 @@ class faiHook extends plugin
   {
     $ldap = $this->config->get_ldap_link();
     $ldap->cd ($this->dn);
-    $ldap->rmdir_recursive($this->dn);
-    show_ldap_error($ldap->get_error(), sprintf(_("Removing of FAI/hook with dn '%s' failed."),$this->dn));
+
+    $use_dn = str_ireplace( get_release_dn($this->dn), $_SESSION['faifilter']['branch'], $this->dn);
+    if($_SESSION['faifilter']['branch'] == "main"){
+      $use_dn = $this->dn;
+    }
+
+    $del = array();
+    $del[] = prepare_to_save_FAI_object($use_dn,array(),true);
+
+    foreach($this->SubObjects as $name => $obj){
+      $use_dn = str_ireplace( get_release_dn($this->dn), $_SESSION['faifilter']['branch'], $obj['dn']);
+      if($_SESSION['faifilter']['branch'] == "main"){
+        $use_dn = $obj['dn'];
+      }
+      prepare_to_save_FAI_object($use_dn,array(),true);
+    }
     $this->handle_post_events("remove");    
   }
 
@@ -366,20 +389,7 @@ class faiHook extends plugin
 
     $ldap = $this->config->get_ldap_link();
 
-    $ldap->cat($this->dn,array("objectClass"));
-    if($ldap->count()!=0){     
-      /* Write FAIscript to ldap*/ 
-      $ldap->cd($this->dn);
-      $this->cleanup();
-      $ldap->modify ($this->attrs); 
-
-    }else{
-      /* Write FAIscript to ldap*/ 
-      $ldap->cd($this->config->current['BASE']);
-      $ldap->create_missing_trees(preg_replace('/^[^,]+,/', '', $this->dn));
-      $ldap->cd($this->dn);
-      $ldap->add($this->attrs);
-    }
+    prepare_to_save_FAI_object($this->dn,$this->attrs);
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of FAI/hook with dn '%s' failed."),$this->dn));
 
     /* Do object tagging */
@@ -445,26 +455,14 @@ class faiHook extends plugin
       }
 
       if($obj['status'] == "delete"){
-        $ldap->cd($sub_dn);
-        $ldap->rmdir_recursive($sub_dn);
+        prepare_to_save_FAI_object($sub_dn,array(),true);
         $this->handle_post_events("remove");
-        show_ldap_error($ldap->get_error(), sprintf(_("Removing of FAI/hook with dn '%s' failed."),$sub_dn));
       }elseif($obj['status'] == "edited"){
-        $ldap->cd($sub_dn);
-        $this->cleanup();
-        $ldap->modify ($tmp); 
+        prepare_to_save_FAI_object($sub_dn,$tmp);
         $this->handle_post_events("modify");
-        show_ldap_error($ldap->get_error(), sprintf(_("Saving of FAI/hook with dn '%s' failed."),$sub_dn)); 
       }elseif($obj['status']=="new"){
-        if($tmp['description']==array()){
-          unset($tmp['description']);
-        }
-        $ldap->cd($this->config->current['BASE']);
-        $ldap->create_missing_trees(preg_replace('/^[^,]+,/', '', $sub_dn));
-        $ldap->cd($sub_dn);
-        $ldap->add($tmp); 
+        prepare_to_save_FAI_object($sub_dn,$tmp);
         $this->handle_post_events("add");
-        show_ldap_error($ldap->get_error(), sprintf(_("Saving of FAI/hook with dn '%s' failed."),$sub_dn)); 
       }
       $this->handle_object_tagging($sub_dn, $this->gosaUnitTag);
     }

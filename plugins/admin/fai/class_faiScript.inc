@@ -68,11 +68,21 @@ class faiScript extends plugin
        */
       $ldap     = $this->config->get_ldap_link();
       $ldap->cd ($this->dn);
-      $ldap->search("(&(objectClass=FAIclass)(objectClass=".$this->subClass."))",$this->subAttributes);
+      
+      $attrs_to_search = $this->subAttributes;
+      $attrs_to_search[] = "FAIstate";
+      $ldap->search("(&(objectClass=FAIclass)(objectClass=".$this->subClass."))",$attrs_to_search);
 
       while($object = $ldap->fetch()){
-        /* Set status for save management */
 
+        /* Skip objects, that are tagged as removed */
+        if(isset($object['FAIstate'][0])){
+          if(preg_match("/removed$/",$object['FAIstate'][0])){
+            continue;
+          }
+        }
+
+        /* Set status for save management */
         foreach($this->subAttributes as $attrs){
           if(!isset($object[$attrs][0])){
             $this->SubObjects[$object['cn'][0]][$attrs]="";
@@ -313,18 +323,9 @@ class faiScript extends plugin
       if($_SESSION['faifilter']['branch'] == "main"){
         $use_dn = $obj['dn'];
       }
-      $del[] = prepare_to_save_FAI_object($use_dn,array(),true);
+      prepare_to_save_FAI_object($use_dn,array(),true);
     }
-
-    /* Delete unused objects */
-    foreach($del as $dn){
-      if(!empty($dn)){
-        $ldap->cat($dn);
-        if($ldap->count()){
-          $ldap->rmdir_recursive($dn);
-        }
-      }
-    }
+    $this->handle_post_events("remove");
   }
 
 
@@ -359,23 +360,8 @@ class faiScript extends plugin
     plugin::save();
 
     $ldap = $this->config->get_ldap_link();
-    $ldap->cat($this->dn,array("objectClass"));
 
     prepare_to_save_FAI_object($this->dn,$this->attrs);
-
-    if($ldap->count()!=0){
-      /* Write FAIscript to ldap*/
-      $ldap->cd($this->dn);
-      $this->cleanup();
-//      $ldap->modify ($this->attrs); 
-
-    }else{
-      /* Write FAIscript to ldap*/
-      $ldap->cd($this->config->current['BASE']);
-      $ldap->create_missing_trees(preg_replace('/^[^,]+,/', '', $this->dn));
-      $ldap->cd($this->dn);
-//      $ldap->add($this->attrs);
-    }
     show_ldap_error($ldap->get_error(), sprintf(_("Creating of FAI/script with dn '%s' failed."),$this->dn));
 
     /* Do object tagging */
