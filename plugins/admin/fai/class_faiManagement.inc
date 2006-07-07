@@ -194,7 +194,7 @@ class faiManagement extends plugin
 
 				$this->dialog->by_object[$type[1]]->remove_from_parent ();
 				unset ($this->dialog);
-				gosa_log ("FAI class '".$this->dn."' has been removed");
+				gosa_log ("FAI class '".$this->dn."' has been tagged as removed");
 				$this->dialog= NULL;
         $to_del = clean_up_releases($this->dn);
 
