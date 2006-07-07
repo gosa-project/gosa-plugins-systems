@@ -294,7 +294,6 @@ class faiPackage extends plugin
           $this->usedPackages[$pkg]= $pkg;
         }
       }
-      print_a($this->usedPackages);
     }
 
     /* Save Configuration */
@@ -335,7 +334,6 @@ class faiPackage extends plugin
     $smarty->assign("section" ,$strsec);
     $smarty->assign("usedPackages",$this->printUsedPackages());
     $display.= $smarty->fetch(get_template_path('faiPackage.tpl', TRUE));
-    print_a($this->ConfiguredPackages);
     return($display);
   }
 
