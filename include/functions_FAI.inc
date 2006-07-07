@@ -132,144 +132,223 @@ function get_all_releases_from_base($dn)
 }
 
 
-/* This function does everything to be able to save the given dn. */
+/* Add this object to list of objects, that must be checked for release saving */
 function prepare_to_save_FAI_object($Current_DN,$objectAttrs,$removed = false)
 {
   /* Get ldap object */  
   global $config;
-  $ldap = $config->get_ldap_link();
-  $ldap->cd($config->current['BASE']);
+  $addObj['Current_DN'] = $Current_DN;
+  $addObj['objectAttrs']= $objectAttrs;
+  $addObj['removed']    = $removed;
+  $addObj['diff']       = TRUE;
 
-  /* Get some basic informations */
-  $base_release       = get_release_dn($Current_DN);
-  $sub_releases       = get_sub_releases_of_this_release($base_release,true);
-  $parent_obj         = get_parent_release_object($Current_DN);
-  $following_releases = get_sub_releases_of_this_release($base_release,true);
-  
-  /* Check if given dn exists or if is a new entry */
-  $ldap->cat($Current_DN);
-  if(!$ldap->count()){
-    $is_new = true;
-  }else{
-    $is_new = false;
+  if(!$removed){
+    $ldap = $config->get_ldap_link();
+    $ldap->cd($config->current['BASE']);
+
+    /* Get some basic informations */
+    $parent_obj   = get_parent_release_object($Current_DN);
+    $ldap->cat($parent_obj,array("*"));
+    $attrs = prepare_ldap_fetch_to_be_saved($ldap->fetch());
+
+    if(!array_diff_FAI( $attrs,$objectAttrs)){
+      $addObj['diff'] = FALSE;
+    }
   }
+
+  $_SESSION['FAI_objects_to_save'][$Current_DN] =  $addObj;
+}
+
+
+/* Detect differences in attribute arrays  */
+function array_diff_FAI($ar1,$ar2)
+{
+  foreach($ar1 as $key1 => $val1){
+
+    if((is_array($val1)) && (count($val1)==1)){
+      $ar1[$key1] = $val1[0];
+    }
+
+    if((is_array($ar2[$key1])) && (count($ar2[$key1])==1)){
+      $val1 = $val1[0];
+      $ar2[$key1] = $ar2[$key1][0];
+    }
+  }
+  if(count( array_diff($ar1,$ar2))){
+    return(true);
+  }else{
+    return(false);
+  }
+}
+
+
+/* check which objects must be saved, and save them */
+function save_release_changes_now()
+{
+  /* Variable init*/
+  $to_save = array();
   
-  /* if parameter removed is true, we have to add FAIstate to the current attrs 
-        FAIstate should end with ...|removed after this operation */  
-  if($removed ){
+  /* check which attributes must realy be saved */
+  foreach($_SESSION['FAI_objects_to_save'] as $Current_DN => $object){
+    if($object['diff']){
+      $sub_name = $Current_DN;
+      while(isset($_SESSION['FAI_objects_to_save'][$sub_name])){
+       
+        $to_save[strlen($sub_name)] = $_SESSION['FAI_objects_to_save'][$sub_name]; 
+        unset($_SESSION['FAI_objects_to_save'][$sub_name]);
+        $sub_name = preg_replace('/^[^,]+,/', '', $sub_name);
+      }
+    }
+  }
+
+  /* Sort list of objects that must be saved, and ensure that 
+      container   objects are safed, before their childs are saved */
+  ksort($to_save);
+
+  /* Save objects and manage the correct release behavior*/
+  foreach($to_save as $save){
+
+    $Current_DN = $save['Current_DN'];
+    $removed    = $save['removed'];
+    $objectAttrs= $save['objectAttrs'];
+
+    /* Get ldap object */ 
+    global $config;
+    $ldap = $config->get_ldap_link();
+    $ldap->cd($config->current['BASE']);
+
+    /* Get some basic informations */
+    $base_release       = get_release_dn($Current_DN);
+    $sub_releases       = get_sub_releases_of_this_release($base_release,true);
+    $parent_obj         = get_parent_release_object($Current_DN);
+    $following_releases = get_sub_releases_of_this_release($base_release,true);
+    
+    /* Check if given dn exists or if is a new entry */
     $ldap->cat($Current_DN);
-
-    /* Get current object, because we must add the FAIstate ...|removed */
-    if((!$ldap->count()) && !empty($parent_obj)){
-      $ldap->cat($parent_obj);
-    }
-
-    /* Check if we have found a suiteable object */ 
     if(!$ldap->count()){
-      echo "Error can't remove this object ".$Current_DN;
-      return;
+      $is_new = true;
     }else{
+      $is_new = false;
+    }
+    
+    /* if parameter removed is true, we have to add FAIstate to the current attrs 
+          FAIstate should end with ...|removed after this operation */  
+    if($removed ){
+      $ldap->cat($Current_DN);
 
-      /* Set FAIstate to current objectAttrs */
-      $objectAttrs = prepare_ldap_fetch_to_be_saved($ldap->fetch());
-      if(isset($objectAttrs['FAIstate'][0])){
-        if(!preg_match("/removed$/",$objectAttrs['FAIstate'][0])){
-          $objectAttrs['FAIstate'][0] .= "|removed";
-        }
-      }else{
-        $objectAttrs['FAIstate'][0] = "|removed";
+      /* Get current object, because we must add the FAIstate ...|removed */
+      if((!$ldap->count()) && !empty($parent_obj)){
+        $ldap->cat($parent_obj);
       }
-    }
-  }
- 
- 
-  /* Check if this a leaf release or not */ 
-  if(count($following_releases) == 0 ){
 
-    /* This is a leaf object. It isn't unherited by any other object */    
-    if(DEBUG_FAI_FUNC) { 
-      echo "<b>Saving directly, is a leaf object</b><br> ".$Current_DN;
-      print_a($objectAttrs);
-    }
-    save_FAI_object($Current_DN,$objectAttrs);
-  }else{
-
-    /* This object is inherited by some sub releases */  
-
-    /* Get all releases, that inherit this object */ 
-    $r = get_following_releases_that_inherit_this_object($Current_DN);
-
-    /* Get parent object */
-    $ldap->cat($parent_obj);
-    $parent_attrs = prepare_ldap_fetch_to_be_saved($ldap->fetch());
-      
-    /* New objects require special handling */
-    if($is_new){
-
-      /* check if there is already an entry named like this,
-          in one of our parent releases */
-      if(!empty($parent_obj)){
-        if(DEBUG_FAI_FUNC) { 
-          echo "There is already an entry named like this.</b><br>";
-
-          echo "<b>Saving main object</b>".$Current_DN;
-          print_a($objectAttrs);
-        }    
-        save_FAI_object($Current_DN,$objectAttrs);
-
-        foreach($r as $key){
-          if(DEBUG_FAI_FUNC) { 
-            echo "<b>Saving parent to following release</b> ".$key;
-            print_a($parent_attrs);
-          }
-          save_FAI_object($key,$parent_attrs);
-        }
+      /* Check if we have found a suiteable object */ 
+      if(!$ldap->count()){
+        echo "Error can't remove this object ".$Current_DN;
+        return;
       }else{
 
-        if(DEBUG_FAI_FUNC) { 
-          echo "<b>Saving main object</b>".$Current_DN;
-          print_a($objectAttrs);
-        }
-        save_FAI_object($Current_DN,$objectAttrs);
-
-        if(isset($objectAttrs['FAIstate'])){
-          $objectAttrs['FAIstate'] .= "|removed"; 
+        /* Set FAIstate to current objectAttrs */
+        $objectAttrs = prepare_ldap_fetch_to_be_saved($ldap->fetch());
+        if(isset($objectAttrs['FAIstate'][0])){
+          if(!preg_match("/removed$/",$objectAttrs['FAIstate'][0])){
+            $objectAttrs['FAIstate'][0] .= "|removed";
+          }
         }else{
-          $objectAttrs['FAIstate'] = "|removed";
-        }
-
-        foreach($r as $key ){
-          if(DEBUG_FAI_FUNC) { 
-            echo "<b>Create an empty placeholder in follwing release</b> ".$key; 
-            print_a($objectAttrs);
-          }
-          save_FAI_object($key,$objectAttrs);
+          $objectAttrs['FAIstate'][0] = "|removed";
         }
       }
-    }else{
+    }
+   
+   
+    /* Check if this a leaf release or not */ 
+    if(count($following_releases) == 0 ){
 
-      /* check if we must patch the follwing release */
-      if(!empty($r)){
-        foreach($r as $key ){
-          if(DEBUG_FAI_FUNC) { 
-            echo "<b>Copy current objects original attributes to next release</b> ".$key;
-            print_a($parent_attrs);
-          }
-          save_FAI_object($key,$parent_attrs);
-        }
-      }
-
+      /* This is a leaf object. It isn't unherited by any other object */    
       if(DEBUG_FAI_FUNC) { 
-        echo "<b>Saving current object</b>".$parent_obj;
+        echo "<b>Saving directly, is a leaf object</b><br> ".$Current_DN;
         print_a($objectAttrs);
       }
-      save_FAI_object($parent_obj,$objectAttrs);
+      save_FAI_object($Current_DN,$objectAttrs);
+    }else{
 
-      if(($parent_obj != $Current_DN)){
-        print_red(sprintf(_("Error, following objects should be equal '%s' and '%s'"),$parent_obj,$Current_DN));
+      /* This object is inherited by some sub releases */  
+
+      /* Get all releases, that inherit this object */ 
+      $r = get_following_releases_that_inherit_this_object($Current_DN);
+
+      /* Get parent object */
+      $ldap->cat($parent_obj);
+      $parent_attrs = prepare_ldap_fetch_to_be_saved($ldap->fetch());
+        
+      /* New objects require special handling */
+      if($is_new){
+
+        /* check if there is already an entry named like this,
+            in one of our parent releases */
+        if(!empty($parent_obj)){
+          if(DEBUG_FAI_FUNC) { 
+            echo "There is already an entry named like this.</b><br>";
+
+            echo "<b>Saving main object</b>".$Current_DN;
+            print_a($objectAttrs);
+          }    
+          save_FAI_object($Current_DN,$objectAttrs);
+
+          foreach($r as $key){
+            if(DEBUG_FAI_FUNC) { 
+              echo "<b>Saving parent to following release</b> ".$key;
+              print_a($parent_attrs);
+            }
+            save_FAI_object($key,$parent_attrs);
+          }
+        }else{
+
+          if(DEBUG_FAI_FUNC) { 
+            echo "<b>Saving main object</b>".$Current_DN;
+            print_a($objectAttrs);
+          }
+          save_FAI_object($Current_DN,$objectAttrs);
+
+          if(isset($objectAttrs['FAIstate'])){
+            $objectAttrs['FAIstate'] .= "|removed"; 
+          }else{
+            $objectAttrs['FAIstate'] = "|removed";
+          }
+
+          foreach($r as $key ){
+            if(DEBUG_FAI_FUNC) { 
+              echo "<b>Create an empty placeholder in follwing release</b> ".$key; 
+              print_a($objectAttrs);
+            }
+            save_FAI_object($key,$objectAttrs);
+          }
+        }
+      }else{
+
+        /* check if we must patch the follwing release */
+        if(!empty($r)){
+          foreach($r as $key ){
+            if(DEBUG_FAI_FUNC) { 
+              echo "<b>Copy current objects original attributes to next release</b> ".$key;
+              print_a($parent_attrs);
+            }
+            save_FAI_object($key,$parent_attrs);
+          }
+        }
+
+        if(DEBUG_FAI_FUNC) { 
+          echo "<b>Saving current object</b>".$parent_obj;
+          print_a($objectAttrs);
+        }
+        save_FAI_object($parent_obj,$objectAttrs);
+
+        if(($parent_obj != $Current_DN)){
+          print_red(sprintf(_("Error, following objects should be equal '%s' and '%s'"),$parent_obj,$Current_DN));
+        }
       }
     }
   } 
+  $_SESSION['FAI_objects_to_save'] = array();
 }
 
 
@@ -344,6 +423,7 @@ function prepare_ldap_fetch_to_be_saved($attrs)
 
 function save_FAI_object($dn,$attrs)
 {
+  print_a(array($dn,$attrs));
   global $config;
   $ldap = $config->get_ldap_link();
   $ldap->cd($config->current['BASE']);

@@ -197,6 +197,7 @@ class faiManagement extends plugin
 				gosa_log ("FAI class '".$this->dn."' has been tagged as removed");
 				$this->dialog= NULL;
         $to_del = clean_up_releases($this->dn);
+        save_release_changes_now();
 
         foreach($to_del as $dn){
           $ldap->rmdir_recursive($dn);
@@ -542,6 +543,7 @@ class faiManagement extends plugin
 				}
 			}else{
 				$this->dialog->save();
+        save_release_changes_now();
         if (!isset($_POST['edit_apply'])){
           del_lock ($this->dn);
           unset($this->dialog);
