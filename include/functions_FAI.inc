@@ -171,6 +171,10 @@ function array_diff_FAI($ar1,$ar2)
       $ar1[$key1] = $val1[0];
     }
 
+    if(!isset($ar2[$key1])){
+      return(true);
+    }
+
     if((is_array($ar2[$key1])) && (count($ar2[$key1])==1)){
       $val1 = $val1[0];
       $ar2[$key1] = $ar2[$key1][0];
@@ -238,7 +242,7 @@ function save_release_changes_now()
     }else{
       $is_new = false;
     }
-    
+   
     /* if parameter removed is true, we have to add FAIstate to the current attrs 
           FAIstate should end with ...|removed after this operation */  
     if($removed ){
@@ -435,9 +439,14 @@ function save_FAI_object($dn,$attrs)
   $ldap->cd($config->current['BASE']);
   $ldap->create_missing_trees(preg_replace('/^[^,]+,/', '', $dn));
   $ldap->cd($dn);
-  
+ 
   $ldap->cat($dn,array("dn"));
   if($ldap->count()){
+
+    if(!isset($attrs['FAIstate'])){
+      $attrs['FAIstate'] = array();
+    }
+
     $ldap->modify($attrs);
   }else{
     $ldap->add($attrs);
