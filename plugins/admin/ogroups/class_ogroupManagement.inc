@@ -369,7 +369,7 @@ class ogroupManagement extends plugin
   /* Return departments, that will be included within snapshot detection */
   function get_used_snapshot_bases()
   {
-    return(array(get_people_ou().$this->DivListOGroup->selectedBase));
+    return(array(get_groups_ou().$this->DivListOGroup->selectedBase));
   }
 
   
