@@ -426,7 +426,7 @@ class ogroupManagement extends plugin
   function reload()
   {
     /* Set base for all searches && initialise some vars */
-    $this->oogrouplist= array();
+    $this->ogrouplist= array();
     $base     = $this->DivListOGroup->selectedBase;
     $filter   = "(gosaGroupObjects=[])";
     $Regex    = $this->DivListOGroup->Regex;
