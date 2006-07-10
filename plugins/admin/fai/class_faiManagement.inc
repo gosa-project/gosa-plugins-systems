@@ -388,18 +388,23 @@ class faiManagement extends plugin
 
       /* Duplicate applications 
        */
-      $ldap->cd ($appdst);
-      $ldap->recursive_remove();
-      $ldap->cd ($this->config->current['BASE']);
-      $ldap->copy_FAI_resource_recursive($appsrc,$appdst,$NewReleaseName,$type,true);
-
+      $ldap->cat($appsrc,array("dn")) ;
+      if($ldap->count()){
+        $ldap->cd ($appdst);
+        $ldap->recursive_remove();
+        $ldap->cd ($this->config->current['BASE']);
+        $ldap->copy_FAI_resource_recursive($appsrc,$appdst,$NewReleaseName,$type,true);
+      }
+  
       /* Duplicate mime types 
        */
-      $ldap->cd ($appdst);
-      $ldap->recursive_remove();
-      $ldap->cd ($this->config->current['BASE']);
-      $ldap->copy_FAI_resource_recursive($mimesrc,$mimedst,$NewReleaseName,$type,true);
-
+      $ldap->cat($mimesrc,array("dn")) ;
+      if($ldap->count()){
+        $ldap->cd ($appdst);
+        $ldap->recursive_remove();
+        $ldap->cd ($this->config->current['BASE']);
+        $ldap->copy_FAI_resource_recursive($mimesrc,$mimedst,$NewReleaseName,$type,true);
+      }
 
       $attr = array();
       $attr['objectClass'] = array("organizationalUnit","FAIbranch");
