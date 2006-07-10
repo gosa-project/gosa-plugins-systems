@@ -408,7 +408,7 @@ class workstartup extends plugin
     if(!in_array($this->FAIrelease, $tmp2)){  
       $this->FAIrelease = key($tmp2);
     }
- 
+
     /* Get all Packages for this server/release combination
      */
     if(!isset($this->FAIServRepConfig[$this->FAIdebianMirror]['RELEASE'][$this->FAIrelease]['PACKAGES'])){
@@ -828,8 +828,9 @@ class workstartup extends plugin
       $this->FAIdebianMirror = "auto";
     }
 
-    $errorClasses = "";  
-  
+    $errorClasses = array();  
+
+    if(is_array($this->FAIServRepConfig[$this->FAIdebianMirror]['RELEASE'])){
     foreach($this->FAIServRepConfig[$this->FAIdebianMirror]['RELEASE'] as $release => $sections){
       $use = true;
       
@@ -849,6 +850,7 @@ class workstartup extends plugin
         $ret[$release]=$release;
       }
     } 
+    }
     if((count($ret) == 0 ) && ($this->FAIdebianMirror != "auto")){
 
       $eClasses = " ";
@@ -865,9 +867,13 @@ class workstartup extends plugin
       foreach($errorClasses as $class){
         $eClasses .= $class." ";
       }
-      
-      $this->FAIclass= array();
-      print_red(sprintf(_("Can't resolve the given FAIclass(es) [%s] anyway, please check your FAI configurations, possibly some classes where deleted or renamed. !All classes have been removed from this account, press cancel if you don't want this to be saved."),$eClasses));
+
+      $eClasses = preg_replace("/  */","",$eClasses);
+     
+      if(!empty($eClasses)) {
+        $this->FAIclass= array();
+        print_red(sprintf(_("Can't resolve the given FAIclass(es) [%s] anyway, please check your FAI configurations, possibly some classes where deleted or renamed. !All classes have been removed from this account, press cancel if you don't want this to be saved."),$eClasses));
+      }
     }
     return($ret);
   }
