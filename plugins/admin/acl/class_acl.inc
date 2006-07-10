@@ -8,7 +8,7 @@ class acl extends plugin
 
   /* attribute list for save action */
   var $attributes= array('gosaAclEntry');
-  var $objectclasses= array();
+  var $objectclasses= array('gosaAcl');
 
   /* Helpers */
   var $dialogState= "head";
@@ -546,6 +546,9 @@ class acl extends plugin
 
     /* Rip acl off the string, seperate by ',' and place it in an array */
     $ms= preg_replace('/^[^:]+:[^:]+:([^:]+).*$/', '\1', $acl);
+    if ($ms == $acl){
+      return $a;
+    }
     $ma= split(',', $ms);
 
     /* Decode dn's, fill with informations from LDAP */
@@ -634,10 +637,14 @@ class acl extends plugin
     if ($summary != ""){
       $summary.= ", ";
     }
-    $summary.= _("Members:")." ";
-    foreach ($entry['members'] as $cn){
-      $cn= preg_replace('/ \[.*$/', '', $cn);
-      $summary.= $cn.", ";
+    if (count($entry['members'])){
+      $summary.= _("Members:")." ";
+      foreach ($entry['members'] as $cn){
+        $cn= preg_replace('/ \[.*$/', '', $cn);
+        $summary.= $cn.", ";
+      }
+    } else {
+      $summary.= _("ACLs is valid for all users");
     }
 
     return (preg_replace('/, $/', '', $summary));
@@ -676,13 +683,66 @@ class acl extends plugin
   function save()
   {
     /* Assemble ACL's */
-    print_a($this->gosaAclEntry);
+    $tmp_acl= array();
+    foreach ($this->gosaAclEntry as $prio => $entry){
+      $final= "";
+      $members= "";
+      foreach ($entry['members'] as $key => $dummy){
+        $members.= base64_encode(preg_replace('/^.:/', '', $key)).',';
+      }
+      $final= $prio.":".$entry['type'].":".preg_replace('/,$/', '', $members);
+
+      /* ACL's if needed */
+      if ($entry['type'] != "reset" && $entry['type'] != "role"){
+        $acl= ":";
+        foreach ($entry['acl'] as $object => $contents){
+          $acl.= $object.";";
+          
+          foreach($contents as $attr => $permission){
+
+            /* First entry? Its the one for global settings... */
+            if ($attr == '0'){
+              $acl.= $permission;
+            } else {
+              $acl.= '#'.$attr.';'.$permission;
+            }
+
+          }
+          $acl.= ',';
+
+        }
+        $final.= preg_replace('/,$/', '', $acl);
+      }
+
+      $tmp_acl[]= $final;
+    } 
+
+    /* Finally (re-)assign it... */
+    $this->gosaAclEntry= $tmp_acl;
 
     /* Call main method */
     plugin::save();
 
-    /* Do LDAP modifications */
+    /* Remove acl from this entry if it is empty... */
+    if (!count($this->gosaAclEntry)){
+      /* Remove attribute */
+      if ($this->initially_was_account){
+        $attrs['gosaAclEntry']= array();
+      } else {
+        unset($attrs['gosaAclEntry']);
+      }
 
+      /* Remove object class */
+      $this->attrs['objectClass']= array_remove_entries(array('gosaAcl'), $this->attrs['objectClass']);
+    }    
+
+    /* Do LDAP modifications */
+    $ldap= $this->config->get_ldap_link();
+    $ldap->cd($this->dn);
+    $this->cleanup();
+    $ldap->modify ($this->attrs);
+
+    show_ldap_error($ldap->get_error(), sprintf(_("Saving ACLs with dn '%s' failed."),$this->dn));
   }
 
 }
