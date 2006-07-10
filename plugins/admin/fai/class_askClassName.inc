@@ -51,21 +51,21 @@ class askClassName extends plugin
     }
     $ldap = $this->config->get_ldap_link();
     
-    /* Set base to release base */
-    $base = key(get_previous_releases_of_this_release(get_release_dn($base),false));
-
-    $res= get_list("(objectClass=organizationalUnit)", $this->ui->subtreeACL, $base,
-                   array("cn","description","objectClass"), GL_SIZELIMIT);
-    $used = array();
+    $res= get_list("(&(objectClass=organizationalUnit)(!(objectClass=FAIbranch)))", $this->ui->subtreeACL, $base,
+                   array("cn","description","objectClass"), GL_SIZELIMIT );
 
     $delete = array();
+    $used   = array();
     foreach($res as $objecttypes){
       $res2= get_list("(objectClass=*)", $this->ui->subtreeACL, $objecttypes['dn'],
-                      array("cn","description","objectClass","FAIclass"), GL_SIZELIMIT | GL_CONVERT | GL_SUBSEARCH);
-
+                      array("cn","description","objectClass","FAIclass","FAIstate"), GL_SIZELIMIT | GL_CONVERT );
       foreach($res2 as $object){
+
         /* skip class names with this name */ 
         if(in_array($this->objectClass,$object['objectClass'])){
+          if(isset($object['FAIstate'][0]) && preg_match("/removed$/",$object['FAIstate'][0])){
+            continue;
+          }
           $delete[] = $object['cn'][0];
         }
     
