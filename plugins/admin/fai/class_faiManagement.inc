@@ -403,7 +403,8 @@ class faiManagement extends plugin
 
       $attr = array();
       $attr['objectClass'] = array("organizationalUnit","FAIbranch");
-      $attr['ou'] = $name;
+      $attr['ou']       = $name;
+      $attr['FAIstate'] = $type;
       $ldap->cd($this->config->current['BASE']);
       $ldap->cd("ou=".$name.",".$baseToUse);
       $ldap->cat("ou=".$name.",".$baseToUse);
