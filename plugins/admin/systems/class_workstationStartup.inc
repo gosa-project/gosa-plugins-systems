@@ -341,47 +341,22 @@ class workstartup extends plugin
       return($_SESSION['getAvailableClassesForThisRelease_CACHE'][$release]);
     }
 
-    /* Create cache with all classes 
-     */
-    if((!isset($_SESSION['getAvailableClassesForThisRelease_CACHED_CLASSES'])) ||
-       (!is_array($_SESSION['getAvailableClassesForThisRelease_CACHED_CLASSES'])) ||
-       (count($_SESSION['getAvailableClassesForThisRelease_CACHED_CLASSES']) ==0 )){
+    $test2  = array();
+    $bb     = $this->generateDNSyn($release).$_SESSION['CurrentMainBase'];
+    $ldap   = $this->config->get_ldap_link();
+    $ldap->cd($this->config->current['BASE']);
+  
+    /* Get classes fpr given release */
+    $p_classes = get_all_objects_for_given_base($bb,
+        "(|(objectClass=FAIpackageList)(objectClass=FAItemplate)".
+          "(objectClass=FAIvariable)(objectClass=FAIscript)(objectClass=FAIhook)".
+          "(objectClass=FAIprofile)(objectClass=FAIpartitionTable))");
 
-      /* Get ldap connection */
-      $ldap   = $this->config->get_ldap_link();
-      $ldap->cd($this->config->current['BASE']);
-
-      /* Get possible classes ... 
-         This would be faste with some kind of caching ... 
-       */
-      $ldap->search("(|(objectClass=FAIpackageList)(objectClass=FAItemplate)(objectClass=FAIvariable)(objectClass=FAIscript)(objectClass=FAIhook)(objectClass=FAIprofile)(objectClass=FAIpartitionTable))",array("cn"),true);
-      /* Sort all entries, and attach elementtype.
-       * To be able to show the types in the listbox.
-       */
-      while($attr = $ldap->fetch()){
-        $_SESSION['getAvailableClassesForThisRelease_CACHED_CLASSES'][] = $attr;
-      }  
-    }
-
-    /* Walk through cache and get out what we need.
-     *   
-     *   Function od : "$this->generateDNSyn($release)"
-     *    It returns an array like this one :
-     *       array("ou=packges,ou=rc0.9.2,ou=siga,", 
-     *            "ou=scripts.. " 
-     *             ...);
-     *   This helps us to select the correct classes for each release. 
-     *   It prevents errors like:  'siga' is selected as release, but all classes
-     *     with ou='siga' in their dn are shown, also ou=rc...,ou=siga...  
-     */
-    $tmp2 = $this->generateDNSyn($release)     ; 
-    $test2 = array();
-    foreach($_SESSION['getAvailableClassesForThisRelease_CACHED_CLASSES'] as $attr){  
-      foreach($tmp2 as $dns){
-        if(preg_match("/".$dns."/",$attr['dn'])){
-          $test2[$attr['cn'][0]] = $attr['cn'][0];
-        }
-      }
+    /* Create list of classes */
+    foreach($p_classes as $class){
+      $ldap->cat($class['dn'],array("cn"));
+      $attr = $ldap->fetch();
+      $test2[$attr['cn'][0]] = $attr['cn'][0];
     }
     $_SESSION['getAvailableClassesForThisRelease_CACHE'][$release] = $test2;
     return($test2);
@@ -767,19 +742,14 @@ class workstartup extends plugin
     $tmp = split("\/",$release);
     $tmp = array_reverse($tmp);
 
-    $base = ",ou=fai,";   
- 
-    $arr = array("scripts","hooks","disk","variables","templates","profiles","packages");
-
+    $base = "ou=fai,ou=configs,ou=systems,";   
     foreach($tmp as $departmentname){
       
       $str .= ",ou=".$departmentname;
     }
-    $ret = array();
-    foreach($arr as $ar){
-      $ret[] = ",ou=".$ar.$str.$base;
-    }
-    return($ret);
+    $str = preg_replace("/^,/","",($str.",".$base));
+    
+    return($str);
   }
 
   function getFAIdebianMirrors()
