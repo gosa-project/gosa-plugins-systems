@@ -116,7 +116,7 @@ function get_FAI_departments($suffix = "")
 
 
 /* Return all releases within the given base */
-function get_all_releases_from_base($dn,$appendedName)
+function get_all_releases_from_base($dn,$appendedName=false)
 {
   global $config;
   $base = "ou=fai,ou=configs,ou=systems,".$dn;
