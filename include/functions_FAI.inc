@@ -459,6 +459,28 @@ function save_FAI_object($dn,$attrs)
 }
 
 
+function get_release_tag($dn)
+{
+  global $config;
+  $ldap = $config->get_ldap_link();
+  $ldap->cd($dn);
+  $ldap->cat($dn,array("FAIstate"));
+
+  if($ldap->count()){
+  
+    $attr = $ldap->fetch();
+    if(isset($attr['FAIstate'][0])){
+      if(preg_match("/freeze/",$attr['FAIstate'][0])){
+        return("freeze");
+      }elseif(preg_match("/branch/",$attr['FAIstate'][0])){
+        return("branch");
+      }
+    }
+  }
+  return("");
+}
+
+
 function get_following_releases_that_inherit_this_object($dn)
 {
   global $config;

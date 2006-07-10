@@ -667,6 +667,8 @@ class faiManagement extends plugin
       }
     }
 
+    $this->lock_type = get_release_tag(get_release_dn($base));
+
     /* Get resolved release dependencies */
     $tmp = get_all_objects_for_given_base($base,"(&(|(objectClass=FAIpartitionTable)(objectClass=FAIpackageList)(objectClass=FAIscript)
       (objectClass=FAIvariable)(objectClass=FAIhook)(objectClass=FAIprofile)(objectClass=FAItemplate))(cn=$Regex))");
@@ -709,6 +711,7 @@ class faiManagement extends plugin
           }
 
           /* Clean up object informations */
+          $obj                  = array();
           $obj['cn'] 			      = $object['cn'][0];
           $obj['dn'] 			      = $object['dn'];
           $obj['description']   = $object['description'][0];
@@ -717,27 +720,17 @@ class faiManagement extends plugin
           /* Append type to this string, to be able to check if the selected 
            * entry is of type 'freeze' or 'branch'
            */
-          if(isset($object['FAIstate'])){
-            $obj['FAIstate'] = $object['FAIstate'][0];
-            $str.="|".$obj['FAIstate'];
+          if(!isset($object['FAIstate'])){
+            $obj['FAIstate'] = $this->lock_type;
           }else{
-            $obj['FAIstate'] ="";
+            $obj['FAIstate'] = $object['FAIstate'][0]; 
           }
+
           $this->objects[strtolower($obj['cn']).$obj['cn'].$type] = $obj;
           $this->objects[strtolower($obj['cn']).$obj['cn'].$type]['type']=$type;
         }
 			}
 		}
-
-    /* Tell class what we have currently opened 
-        'main' has type '' */
-    if(preg_match("/freeze/",$str)){
-      $this->lock_type = "freeze";
-    }elseif(preg_match("/branch/",$str)){
-      $this->lock_type = "branch";
-    }else{
-      $this->lock_type = "";
-    }
 
 		ksort($this->objects);
 		reset ($this->objects);
