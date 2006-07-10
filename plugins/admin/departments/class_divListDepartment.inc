@@ -46,7 +46,7 @@ class divListDepartment extends MultiSelectWindow
     $this->AddCheckBox("SubSearch",  _("Select to search within subtrees"), _("Ignore subtrees"), false);
 
     /*                  Name                 ,Text                              ,Default  , Connect with alphabet  */
-    $this->AddRegex   ("Regex",     _("Regular expression for matching group names"), "*" , true);
+    $this->AddRegex   ("Regex",     _("Regular expression for matching department names"), "*" , true);
   }
 
 
