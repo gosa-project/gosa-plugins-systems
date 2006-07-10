@@ -1,7 +1,7 @@
 <?php
 /*
   This code is part of GOsa (https://gosa.gonicus.de)
-  Copyright (C) 2005  Cajus Pollmeier
+  Copyright (C) 2006  Cajus Pollmeier
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -18,33 +18,41 @@
   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-if (!$remove_lock){
-	/* Create message object on demand */
-	if (!isset($_SESSION['aclplug']) || (isset($_GET['reset']) && $_GET['reset'] == 1)){
-		$_SESSION['aclplug']= new acl ($config, 'ou=Direktorium,o=Landeshauptstadt München,c=de');
-	}
-	$aclplug= $_SESSION['aclplug'];
+if ($remove_lock){
+        if(isset($_SESSION['macl'])){
+                $macl= $_SESSION['macl'];
+                $macl->remove_lock();
+                del_lock ($ui->dn);
+                sess_del ('macl');
+        }
+} else {
+	$display= "No headpage yet for this module";
 
-	/* Set permissions */
-	$acl= get_permissions ($ui->dn, $ui->subtreeACL);
-	$aclplug->acl= get_module_permission($acl, "acl", $ui->dn);
-
-	/* save changes back to object */
-	if (isset ($_POST['target'])){
-	  $aclplug->save_object ();
-	}
-
-	/* Execute formular */
-	if ($aclplug->aclPostHandler()){
-		echo "Saved... But this is not the way it goes normally!";
-	}
-	$display= $aclplug->execute();
-	$display.= "<input type=\"hidden\" name=\"ignore\">\n";
-
-	/* Page header*/
-	$display= print_header(get_template_path('images/acl.png'), _("Access control")).$display;
-
-	/* Store changes  in session */
-	$_SESSION['aclplug']= $aclplug;
+#	/* Create usermanagement object on demand */
+#	if (!isset($_SESSION['macl']) || (isset($_GET['reset']) && $_GET['reset'] == 1)){
+#		$_SESSION['macl']= new aclManagement($config, $ui);
+#	}
+#	$macl= $_SESSION['macl'];
+#	
+#	/* Show and save dialog */
+#	$macl->save_object();
+#	$output= $macl->execute();
+#
+#	/* Page header*/
+#	if (isset($_SESSION['objectinfo'])){
+#		$display= print_header(get_template_path('images/acl.png'), _("ACL management"), "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/closedlock.png')."\"> ".@LDAP::fix($_SESSION['objectinfo']));
+#	} else {
+#		$display= print_header(get_template_path('images/acl.png'), _("ACL management"));
+#	}
+#
+#	/* Reset requested? */
+#	if (isset($_GET['reset']) && $_GET['reset'] == 1){
+#		del_lock ($ui->dn);
+#		sess_del ('macl');
+#	}
+#
+#	$display.= $output;
+#	$_SESSION['macl']= $macl;
 }
+
 ?>

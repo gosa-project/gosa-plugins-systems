@@ -745,6 +745,12 @@ class acl extends plugin
     show_ldap_error($ldap->get_error(), sprintf(_("Saving ACLs with dn '%s' failed."),$this->dn));
   }
 
+
+  function remove_from_parent()
+  {
+    echo "remove_from_parent() called";
+  }
+
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
