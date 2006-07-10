@@ -1118,6 +1118,7 @@ function gen_locked_message($user, $dn)
   
   $remove= false;
 
+  /* Save variables from LOCK_VARS_TO_USE in session - for further editing */
   if((isset($_SESSION['LOCK_VARS_TO_USE']))&&(count($_SESSION['LOCK_VARS_TO_USE']))){
     $_SESSION['LOCK_VARS_USED']  =array();
     foreach($_SESSION['LOCK_VARS_TO_USE'] as $name){
