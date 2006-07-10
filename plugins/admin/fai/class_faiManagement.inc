@@ -638,16 +638,14 @@ class faiManagement extends plugin
     $ret = array("main"=>"/");
     $ldap = $this->config->get_ldap_link();
     if(!$base){
-      $base= "ou=fai,ou=configs,ou=systems,".$_SESSION['CurrentMainBase'];
+      $base= $_SESSION['CurrentMainBase'];
     }
-    $ldap->ls("(objectClass=FAIbranch)",$base);
-    while($attrs = $ldap->fetch()){
-      if((isset($attrs['ou']))&&($attrs['dn']!=$base)){
-        $ret[$attrs['dn']]= $prefix.$attrs['ou'][0];
-        $ret = array_merge($ret,$this->getBranches($attrs['dn'],"".$prefix.$attrs['ou'][0]."/"));
-      }
+    $tmp = get_all_releases_from_base($base,true);
+    foreach($tmp as $dn => $name){
+      $ret[$dn]=$name;
     }
-
+    echo $base;
+    print_a($ret);
     return ($ret);
   }
 

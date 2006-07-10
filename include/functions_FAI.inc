@@ -119,7 +119,12 @@ function get_FAI_departments($suffix = "")
 function get_all_releases_from_base($dn,$appendedName=false)
 {
   global $config;
-  $base = "ou=fai,ou=configs,ou=systems,".$dn;
+    
+  if(!preg_match("/ou=fai,ou=configs,ou=systems,/",$dn)){
+    $base = "ou=fai,ou=configs,ou=systems,".$dn;
+  }else{
+    $base = $dn;
+  }
   $res = array();  
   
   $ldap = $config->get_ldap_link();
@@ -422,6 +427,7 @@ function clean_up_releases($Current_DN)
 }
 
 
+/* Remove numeric index and 'count' from ldap->fetch result */
 function prepare_ldap_fetch_to_be_saved($attrs)
 {
   foreach($attrs as $key => $value){
@@ -436,6 +442,7 @@ function prepare_ldap_fetch_to_be_saved($attrs)
 }
 
 
+/* Save given attrs to specified dn*/
 function save_FAI_object($dn,$attrs)
 {
   global $config;
@@ -447,18 +454,26 @@ function save_FAI_object($dn,$attrs)
   $ldap->cat($dn,array("dn"));
   if($ldap->count()){
 
+    /* Remove FAIstate*/
     if(!isset($attrs['FAIstate'])){
       $attrs['FAIstate'] = array();
     }
 
     $ldap->modify($attrs);
   }else{
+  
+    /* Unset description if empty  */
+    if(empty($attrs['description'])){
+      unset($attrs['description']);
+    }    
+
     $ldap->add($attrs);
   }
   show_ldap_error($ldap->get_error(),sprintf(_("Release management failed, can't save '%s'"),$dn));
 }
 
 
+/* Return FAIstate freeze branch or "" for specified release department */
 function get_release_tag($dn)
 {
   global $config;
