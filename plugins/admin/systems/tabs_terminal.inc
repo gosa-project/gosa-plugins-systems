@@ -24,6 +24,9 @@ class termtabs extends tabs
         $this->current= $tab['CLASS'];
       }
     }
+
+    /* Add references/acls/snapshots */
+    $this->addSpecialTabs();
   }
 
   function save_object($save_current= FALSE)

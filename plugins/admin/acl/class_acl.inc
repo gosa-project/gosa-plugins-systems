@@ -139,6 +139,7 @@ class acl extends plugin
     /* Handle posts */
     if (isset($_POST['new_acl'])){
       $this->dialogState= 'create';
+      $this->dialog= TRUE;
       $this->currentIndex= count($this->gosaAclEntry);
       $this->loadAclEntry(TRUE);
     }
@@ -150,6 +151,7 @@ class acl extends plugin
       /* Actions... */
       if (preg_match('/^acl_edit_.*_x/', $name)){
         $this->dialogState= 'create';
+        $this->dialog= TRUE;
         $this->currentIndex= preg_replace('/^acl_edit_([0-9]+).*$/', '\1', $name);
         $this->loadAclEntry();
         continue;
@@ -228,6 +230,7 @@ class acl extends plugin
     /* Cancel new acl? */
     if (isset($_POST['cancel_new_acl'])){
       $this->dialogState= 'head';
+      $this->dialog= FALSE;
       if ($this->wasNewEntry){
         unset ($this->gosaAclEntry[$this->currentIndex]);
       }
@@ -239,6 +242,7 @@ class acl extends plugin
       $this->gosaAclEntry[$this->currentIndex]['members']= $this->recipients;
       $this->gosaAclEntry[$this->currentIndex]['acl']= $this->aclContents;
       $this->dialogState= 'head';
+      $this->dialog= FALSE;
     }
 
     /* Cancel edit acl? */
@@ -400,7 +404,7 @@ class acl extends plugin
 
     /* Show main page */
     $smarty->assign("dialogState", $this->dialogState);
-    return ($smarty->fetch (get_template_path('contents.tpl', TRUE)));
+    return ($smarty->fetch (get_template_path('contents.tpl', TRUE, get_base_dir().'/plugins/admin/acl')));
   }
 
   

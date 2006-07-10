@@ -7,6 +7,9 @@ class apptabs extends tabs
   function apptabs($config, $data, $dn)
   {
     tabs::tabs($config, $data, $dn);
+
+    /* Add references/acls/snapshots */
+    $this->addSpecialTabs();
   }
 
   function set_release($newRelease)

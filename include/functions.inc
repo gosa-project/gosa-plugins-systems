@@ -2092,5 +2092,12 @@ function is_department_name_reserved($name,$base)
 }
 
 
+function get_base_dir()
+{
+  global $BASE_DIR;
+
+  return $BASE_DIR;
+}
+
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

@@ -12,6 +12,9 @@ class grouptabs extends tabs
 				$this->by_object[$name]->parent  = $this;
 			}
 		}
+
+		/* Add references/acls/snapshots */
+		$this->addSpecialTabs();
 	}
 
 	function save_object($save_current= FALSE)

@@ -288,6 +288,18 @@ class tabs
 	  return($ret);
   }
 
+
+  function addSpecialTabs()
+  {
+	$this->by_name['acl']= _("ACL");
+	$this->by_object['acl']= new acl($this->config, $this->dn);
+	$this->by_object['acl']->parent= &$this;
+	$this->by_name['reference']= _("References");
+	$this->by_object['reference']= new reference($this->config, $this->dn);
+	$this->by_object['reference']->parent= &$this;
+  }
+
+
 }
 
 ?>

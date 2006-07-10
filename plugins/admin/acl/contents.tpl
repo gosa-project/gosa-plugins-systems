@@ -1,16 +1,7 @@
-<b><font style="color:red">This plugin is only simulating the interface. Therefore it's not functional. Please don't use.</font></b>
-<br>
-
 {if $dialogState eq 'head'}
 <h1>{t}Assigned ACLs for current entry{/t}</h1>
 {$aclList}
 <input type="submit" name="new_acl" value="{t}New ACL{/t}">
-<p class="seperator">&nbsp;</p>
-<div style='text-align:right;margin-top:5px'>
-	<input type="submit" name="save_acl" value="{t}Ok{/t}">
-	&nbsp;
-	<input type="submit" name="cancel_acl" value="{t}Cancel{/t}">
-</div>
 {/if}
 
 {if $dialogState eq 'create'}

@@ -8,6 +8,9 @@ class conferencetabs extends tabs
   {
 	  tabs::tabs($config, $data, $dn);
 	  $this->base= $this->by_object['conference']->base; 
+
+    /* Add references/acls/snapshots */
+    $this->addSpecialTabs();
   }
 
   function check()

@@ -8,6 +8,9 @@ class deptabs extends tabs
   {
     tabs::tabs($config, $data, $dn);
     $this->base= $this->by_object['department']->base;
+
+    /* Add references/acls/snapshots */
+    $this->addSpecialTabs();
   }
 
   function check()
@@ -42,6 +45,7 @@ class deptabs extends tabs
     $this->by_object['department']= $baseobject;
     return(tabs::save(TRUE));
   }
+
 
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

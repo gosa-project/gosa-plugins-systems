@@ -182,6 +182,9 @@ class ogrouptabs extends tabs
           break;
       }
     }
+
+    /* Add references/acls/snapshots */
+    $this->addSpecialTabs();
   }
 
 

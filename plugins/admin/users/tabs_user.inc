@@ -8,6 +8,9 @@ class usertabs extends tabs
   {
     tabs::tabs($config, $data, $dn);
     $this->base= $this->by_object['user']->base;
+
+    /* Add references/acls/snapshots */
+    $this->addSpecialTabs();
   }
 
   function save_object($save_current= FALSE)

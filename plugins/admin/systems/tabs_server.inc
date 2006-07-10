@@ -6,6 +6,9 @@ class servtabs extends tabs
   function servtabs($config, $data, $dn)
   {
     tabs::tabs($config, $data, $dn);
+
+    /* Add references/acls/snapshots */
+    $this->addSpecialTabs();
   }
 
   function save_object($save_current= FALSE)
