@@ -644,8 +644,6 @@ class faiManagement extends plugin
     foreach($tmp as $dn => $name){
       $ret[$dn]=$name;
     }
-    echo $base;
-    print_a($ret);
     return ($ret);
   }
 
