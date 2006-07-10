@@ -54,9 +54,8 @@ class faiSummaryTab extends plugin{
     $this->InitCalled = true;
     $this->Result = array();
     $_SESSION['faiSummaryTab']['UniqueID'] = 0; 
-    $tmp = $this->getBranches();
+    $tmp = array_flip($this->getBranches());
    
- 
     /* Get classes & release name 
        There are 2 different tabs which use the summary tab
        faiProfile / Workstations */
@@ -67,9 +66,6 @@ class faiSummaryTab extends plugin{
       /* Get Classes and release */
       $this->Classes = $this->parent->by_object['faiProfile']->FAIclasses;
       $str = preg_replace("/^.*ou=profiles,/","",$this->dn);
-      if(isset($tmp[$str])){
-        $this->Release = $tmp[$str];
-      }
   
     /* Check if parent tab is work tab */
     }elseif(isset($this->parent->by_name['workstartup'])){
@@ -80,17 +76,12 @@ class faiSummaryTab extends plugin{
       if(isset($this->parent->by_object['workgeneric']->cn)){
         $this->Classes[] = $this->parent->by_object['workgeneric']->cn;
       }
- 
-      $tmp = array_flip($tmp);
-      if(!isset($tmp[$this->Release])) {
-        $this->Release = "";
-      }
     }
 
     $this->Classes[] = "LAST";
 
     /* Set all available releases */
-    $this->Releases = array_flip($this->getBranches());
+    $this->Releases = $tmp;
     $this->usedClasses = array();
 
     /* Check the configuration */
@@ -148,7 +139,7 @@ class faiSummaryTab extends plugin{
     if(!$base){
       $base = $this->config->current['BASE'];
     }
-    return(get_all_releases_from_base($base));
+    return(get_all_releases_from_base($base,true));
   }
 
 
@@ -353,35 +344,39 @@ class faiSummaryTab extends plugin{
   /* resolve specified object to append it to our object tree */
   function resolveObject($class)
   {
-    $ldap 	= $this->config->get_ldap_link();
-    $dn 	  = $this->Releases [$this->Release];
-    $res    = array();
- 
+    $ldap 	          = $this->config->get_ldap_link();
+    $dn 	            = $this->Releases [$this->Release];
+    $resolvedClasses  = get_all_objects_for_given_base($dn,"(&(objectClass=FAIclass)(cn=".$class."))");
+
     /* Try to fetch all types of fai objects with the given cn  */
-    foreach($this->objs as $key =>  $obj){
-      
-      /* Check for objects with cn=$class 
-          and add them to our list */
-      $ldap->ls("(&(objectClass=".$key.")(cn=".$class."))",$obj['Tree'].$dn,array("*"));
+    foreach($resolvedClasses as $obj){
+
+      $dn = $obj['dn'];
+      $ldap->cat($dn);
+
       while($attrs = $ldap->fetch()){
 
-        if(!isset($this->usedClasses[$key][$class])){
-          $this->usedClasses[$key][$class] = true;
-          switch($key){
-            case "FAIprofile": 		        $this->prepare_FAIprofile($attrs);break;
-            case "FAIscript": 		        $this->prepare_FAIscript($attrs);break;
-            case "FAIhook": 		          $this->prepare_FAIhook($attrs);break;
-            case "FAIvariable":		        $this->prepare_FAIvariable($attrs);break;
-            case "FAItemplate":		        $this->prepare_FAItemplate($attrs);break;
-            case "FAIpackageList":	      $this->prepare_FAIpackageList($attrs);break;
-            case "FAIpartitionTable":	    $this->prepare_FAIpartitionTable($attrs);break;
+        foreach($this-> objs as $key => $rest){
+          if(in_array($key,$attrs['objectClass'])){
+
+            if(!isset($this->usedClasses[$key][$class])){
+              $this->usedClasses[$key][$class] = true;
+              switch($key){
+                case "FAIprofile": 		        $this->prepare_FAIprofile($attrs);break;
+                case "FAIscript": 		        $this->prepare_FAIscript($attrs);break;
+                case "FAIhook": 		          $this->prepare_FAIhook($attrs);break;
+                case "FAIvariable":		        $this->prepare_FAIvariable($attrs);break;
+                case "FAItemplate":		        $this->prepare_FAItemplate($attrs);break;
+                case "FAIpackageList":	      $this->prepare_FAIpackageList($attrs);break;
+                case "FAIpartitionTable":	    $this->prepare_FAIpartitionTable($attrs);break;
+              }
+            }
+
           }
         }
       }
     }
-    return($res);
   }
-
 
   /* Prepare fai script */
   function prepare_FAIscript($data)
