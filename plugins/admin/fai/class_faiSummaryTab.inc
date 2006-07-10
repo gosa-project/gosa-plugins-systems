@@ -145,18 +145,10 @@ class faiSummaryTab extends plugin{
   /* returns an array with all possibly release types */
   function getBranches($base = false,$prefix = "")
   {
-    $ret = array("main"=>"/");
-    $ldap = $this->config->get_ldap_link();
-    $ldap->cd($this->config->current['BASE']);
-    $ldap->search("(objectClass=FAIbranch)",array("dn","cn","ou"));
-    while($attrs = $ldap->fetch()){
-      if((isset($attrs['ou']))&&($attrs['dn']!=$base)){
-        $name = convert_department_dn(preg_replace("/,ou=fai,.*$/","",$attrs['dn']));
-        $ret[$attrs['dn']] = $name;
-        $ret = array_merge($ret,$this->getBranches($attrs['dn'],$prefix.$attrs['ou'][0]."/"));
-      }
+    if(!$base){
+      $base = $this->config->current['BASE'];
     }
-    return($ret);
+    return(get_all_releases_from_base($base));
   }
 
 
