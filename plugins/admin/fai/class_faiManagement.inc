@@ -780,11 +780,9 @@ class faiManagement extends plugin
   function CheckNewBranchName($name,$base)
   {
     $f = $this->DivListFai->selectedBranch;
-    if(empty($name)){
+    if($name == ""){
       return(false);
     }elseif(in_array($name,$this->getBranches($f))) {
-      return(false);
-    }elseif(empty($name)){
       return(false);
     }elseif(is_department_name_reserved($name,$base)){
       return(false);
