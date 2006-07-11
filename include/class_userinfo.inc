@@ -89,7 +89,7 @@ class userinfo
       }
     }
 
-#    echo "NEW ACL LOADING --------------------------------------------------------------------------------------------<br>";
+#echo "NEW ACL LOADING --------------------------------------------------------------------------------------------<br>";
     $this->ACL= array();    
     $this->groups= array();    
     $ldap= $this->config->get_ldap_link();
@@ -108,29 +108,57 @@ class userinfo
     while ($attrs= $ldap->fetch()){
 
       /* Insert links in ACL array */
-      $tree= split(',', $attrs['dn']);
-      $tree= array_reverse($tree);
-
-      $interresting= FALSE;
-      $t= acl::explodeAcl($attrs['gosaAclEntry'][0]);
-#      print_a($t);
-
-      /* We're interested in ACLs apply for *all* users... */
-
-      /* ... for groups we're member in... */
-
-      /* and for our DN as member. */
-
-
       $aclp[$attrs['dn']]= substr_count($attrs['dn'], ',');
-      $aclc[$attrs['dn']]= $attrs['gosaAclEntry'];
-
+      $aclc[$attrs['dn']]= array();
+      $ol= array();
+      for($i= 0; $i<$attrs['gosaAclEntry']['count']; $i++){
+        $ol= array_merge($ol, acl::explodeAcl($attrs['gosaAclEntry'][$i]));
+      }
+      $aclc[$attrs['dn']]= $ol;
     }
 
     /* ACL's read, sort for tree depth */
     asort($aclp);
 
-#print_a($aclp);
+    /* Sort in tree order */
+    foreach ($aclp as $dn => $acl){
+      /* Check if we need to keep this ACL */
+      foreach($aclc[$dn] as $idx => $type){
+        $interresting= FALSE;
+        
+        /* No members? This is good for all users... */
+        if (!count($type['members'])){
+          $interresting= TRUE;
+        }
+
+        /* Inspect members... */
+        foreach ($type['members'] as $grp => $grpdsc){
+          /* Some group inside the members that is relevant for us? */
+          if (in_array_ics(preg_replace('/^G:/', '', $grp), $this->groups)){
+            $interresting= TRUE;
+          }
+
+          /* User inside the members? */
+          if (preg_replace('/^U:/', '', $grp) == $this->dn){
+            $interresting= TRUE;
+          }
+        }
+
+        if ($interresting){
+          if (!isset($this->ACL[$dn])){
+            $this->ACL[$dn]= array();
+          }
+          $this->ACL[$dn][$idx]= $type;
+        }
+      }
+
+    }
+  }
+
+
+  function get_permissions($dn, $object= "", $attribute= "")
+  {
+    echo "Evaluating permissions for $dn, object $object/$attribute<br>";
   }
 
 }

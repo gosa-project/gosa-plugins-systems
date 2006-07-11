@@ -765,7 +765,7 @@ class acl extends plugin
     }    
 
     /* Do LDAP modifications */
-    $ldap= $config->get_ldap_link();
+    $ldap= $this->config->get_ldap_link();
     $ldap->cd($this->dn);
     $this->cleanup();
     $ldap->modify ($this->attrs);
