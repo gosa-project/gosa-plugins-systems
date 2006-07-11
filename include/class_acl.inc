@@ -30,7 +30,7 @@ class acl extends plugin
   var $savedAclContents= array();
 
 
-  function acl ($config, $dn= NULL)
+  function acl ($config, $parent, $dn= NULL)
   {
     /* Include config object */
     plugin::plugin($config, $dn);
@@ -45,26 +45,13 @@ class acl extends plugin
     }
     ksort($this->gosaAclEntry);
 
+    /* Save parent - we've to know more about it than other plugins... */
+    $this->parent= $parent;
+
     /* Container? */
     if (preg_match('/^(ou|c|l|dc)=/i', $dn)){
       $this->isContainer= TRUE;
     }
-
-    /* Fill acl types */
-    if ($this->isContainer){
-      $this->aclTypes= array("reset" => _("Reset ACLs"),
-                             "one" => _("One level"),
-                             "base" => _("Current object"),
-                             "sub" => _("Complete subtree"),
-                             "psub" => _("Complete subtree (permanent)"),
-                             "role" => _("Use ACL defined in role"));
-    } else {
-      $this->aclTypes= array("base" => _("Current object"),
-          "role" => _("Use ACL defined in role"));
-    }
-    asort($this->aclTypes);
-    $this->targets= array("user" => _("Users"), "group" => _("Groups"));
-    asort($this->targets);
 
     /* Users */
     $ui= get_userinfo();
@@ -100,6 +87,17 @@ class acl extends plugin
     /* Objects */
     $tmp= get_global('plist');
     $plist= $tmp->info;
+    if (isset($this->parent)){
+      $oc= array();
+      foreach ($this->parent->by_object as $key => $obj){
+        $oc= array_merge($oc, $obj->objectclasses);
+      }
+      if (in_array_ics('organizationalUnit', $oc)){
+        $this->isContainer= TRUE;
+      }
+    } else {
+      $oc=  $this->attrs['objectClass'];
+    }
     foreach ($plist as $class => $acls){
       if (isset($acls['plDescription'])){
         /* Only feed categories */
@@ -108,7 +106,7 @@ class acl extends plugin
         }
 
         /* Additionally filter the classes we're interested in in "self edit" mode */
-        if (in_array_ics($acls['plDepends']['objectClass'], $this->attrs['objectClass'])){
+        if (in_array_ics($acls['plDepends']['objectClass'], $oc)){
           $this->myAclObjects[$class]= $acls['plDescription'];
         }
       }
@@ -125,6 +123,24 @@ class acl extends plugin
         $this->ocMapping[$class][]= $oc;
       }
     }
+
+    /* Fill acl types */
+    if ($this->isContainer){
+      $this->aclTypes= array("reset" => _("Reset ACLs"),
+                             "one" => _("One level"),
+                             "base" => _("Current object"),
+                             "sub" => _("Complete subtree"),
+                             "psub" => _("Complete subtree (permanent)"),
+                             "role" => _("Use ACL defined in role"));
+    } else {
+      $this->aclTypes= array("base" => _("Current object"),
+          "role" => _("Use ACL defined in role"));
+    }
+    asort($this->aclTypes);
+    $this->targets= array("user" => _("Users"), "group" => _("Groups"));
+    asort($this->targets);
+
+    /* Finally - we want to get saved... */
     $this->is_account= TRUE;
   }
 
@@ -405,7 +421,7 @@ class acl extends plugin
 
     /* Show main page */
     $smarty->assign("dialogState", $this->dialogState);
-    return ($smarty->fetch (get_template_path('contents.tpl', TRUE, get_base_dir().'/plugins/admin/acl')));
+    return ($smarty->fetch (get_template_path('acl.tpl')));
   }
 
   
@@ -517,7 +533,7 @@ class acl extends plugin
   {
     list($index, $type)= split(':', $acl);
     $a= array( $index => array("type" => $type,
-                               "members" => $this->extractMembers($acl)));
+                               "members" => acl::extractMembers($acl)));
     
     /* Handle different types */
     switch ($type){
@@ -526,7 +542,7 @@ class acl extends plugin
       case 'sub':
       case 'one':
       case 'base':
-        $a[$index]['acl']= $this->extractACL($acl);
+        $a[$index]['acl']= acl::extractACL($acl);
         break;
       
       case 'role':
@@ -547,6 +563,7 @@ class acl extends plugin
 
   function extractMembers($acl)
   {
+    global $config;
     $a= array();
 
     /* Rip acl off the string, seperate by ',' and place it in an array */
@@ -557,7 +574,7 @@ class acl extends plugin
     $ma= split(',', $ms);
 
     /* Decode dn's, fill with informations from LDAP */
-    $ldap= $this->config->get_ldap_link();
+    $ldap= $config->get_ldap_link();
     foreach ($ma as $memberdn){
       $dn= base64_decode($memberdn);
       $ldap->cat($dn, array('cn', 'objectClass', 'description', 'uid'));
@@ -748,7 +765,7 @@ class acl extends plugin
     }    
 
     /* Do LDAP modifications */
-    $ldap= $this->config->get_ldap_link();
+    $ldap= $config->get_ldap_link();
     $ldap->cd($this->dn);
     $this->cleanup();
     $ldap->modify ($this->attrs);

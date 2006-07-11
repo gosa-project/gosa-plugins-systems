@@ -140,9 +140,9 @@ class tabs
 		$display.= "<td style=\"vertical-align:bottom;width:1px;\">";
 
 		/* Shorten string if its too long for the tab headers*/
-		$title= _($name);
-		if (mb_strlen($title, 'UTF-8') > 14){
-			$title= mb_substr($title,0, 12, 'UTF-8')."...";
+		$title= '<nobr>'._($name).'</nobr>';
+		if (mb_strlen($title, 'UTF-8') > 28){
+			$title= mb_substr($title,0, 25, 'UTF-8')."...";
 		}
 		
 		if ($_SESSION['js']==FALSE){	
@@ -292,7 +292,7 @@ class tabs
   function addSpecialTabs()
   {
 	$this->by_name['acl']= _("ACL");
-	$this->by_object['acl']= new acl($this->config, $this->dn);
+	$this->by_object['acl']= new acl($this->config, $this, $this->dn);
 	$this->by_object['acl']->parent= &$this;
 	$this->by_name['reference']= _("References");
 	$this->by_object['reference']= new reference($this->config, $this->dn);

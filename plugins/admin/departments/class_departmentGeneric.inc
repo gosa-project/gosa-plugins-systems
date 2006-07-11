@@ -341,7 +341,7 @@ class department extends plugin
     
     /* Optionally execute a command after we're done */
 		$this->postcreate();
-    return(true);
+    return(false);
 	}
 
 

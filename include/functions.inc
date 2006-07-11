@@ -36,12 +36,13 @@ $svn_revision = '$Revision$';
 /* Include required files */
 require_once ("class_ldap.inc");
 require_once ("class_config.inc");
-require_once ("class_userinfo.inc");
 require_once ("class_plugin.inc");
+require_once ("class_acl.inc");
+require_once ("class_userinfo.inc");
 require_once ("class_pluglist.inc");
 require_once ("class_tabs.inc");
 require_once ("class_mail-methods.inc");
-require_once("class_password-methods.inc");
+require_once ("class_password-methods.inc");
 require_once ("functions_debug.inc");
 require_once ("functions_dns.inc");
 require_once ("class_MultiSelectWindow.inc");
@@ -367,7 +368,6 @@ function ldap_login_user ($username, $password)
 
 function ldap_expired_account($config, $userdn, $username)
 {
-    //$this->config= $config; 
     $ldap= $config->get_ldap_link();
     $ldap->cat($userdn);
     $attrs= $ldap->fetch();
@@ -727,9 +727,11 @@ function getMenuCache()
   }
 }
 
+
 function get_permissions ($dn, $subtreeACL)
 {
   global $config;
+echo "get_permissions() - to be removed<br>";
 
   $base= $config->current['BASE'];
   $tmp= "d,".$dn;
@@ -765,6 +767,7 @@ function get_permissions ($dn, $subtreeACL)
 function get_module_permission($acl_array, $module, $dn)
 {
   global $ui;
+echo "get_module_permissions() - to be removed<br>";
 
   $final= "";
   foreach($acl_array as $acl){
@@ -923,6 +926,7 @@ function get_base_from_people($dn)
 
 function chkacl($acl, $name)
 {
+  echo "chkacl - to be removed<br>";
   /* Look for attribute in ACL */
   if (preg_match("/#$name#/", $acl) || $acl == "#all#"){
     return ("");

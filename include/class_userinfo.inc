@@ -24,11 +24,14 @@ class userinfo
   var $ip;
   var $username;
   var $cn;
+  var $uid;
   var $gidNumber= -1;
   var $language= "";
   var $config;
   var $gosaUnitTag= "";
   var $subtreeACL= array();
+  var $ACL= array();
+  var $groups= array();
 
   /* get acl's an put them into the userinfo object
      attr subtreeACL (userdn:components, userdn:component1#sub1#sub2,component2,...) */
@@ -57,6 +60,7 @@ class userinfo
     }
 
     $this->dn= $userdn;
+    $this->uid= $attrs['uid'][0];
     $this->ip= $_SERVER['REMOTE_ADDR'];
   }
 
@@ -84,6 +88,49 @@ class userinfo
         $this->subtreeACL[$base][]= $attrs["gosaSubtreeACL"][$i];
       }
     }
+
+#    echo "NEW ACL LOADING --------------------------------------------------------------------------------------------<br>";
+    $this->ACL= array();    
+    $this->groups= array();    
+    $ldap= $this->config->get_ldap_link();
+    $ldap->cd($this->config->current['BASE']);
+
+    /* Get member groups... */
+    $ldap->search("(&(objectClass=posixGroup)(memberUid=".$this->uid."))", array('dn'));
+    while ($attrs= $ldap->fetch()){
+      $this->groups[$attrs['dn']]= $attrs['dn'];
+    }
+
+    /* Crawl through ACLs and move relevant to the tree */
+    $ldap->search("(objectClass=gosaACL)", array('dn', 'gosaAclEntry'));
+    $aclp= array();
+    $aclc= array();
+    while ($attrs= $ldap->fetch()){
+
+      /* Insert links in ACL array */
+      $tree= split(',', $attrs['dn']);
+      $tree= array_reverse($tree);
+
+      $interresting= FALSE;
+      $t= acl::explodeAcl($attrs['gosaAclEntry'][0]);
+#      print_a($t);
+
+      /* We're interested in ACLs apply for *all* users... */
+
+      /* ... for groups we're member in... */
+
+      /* and for our DN as member. */
+
+
+      $aclp[$attrs['dn']]= substr_count($attrs['dn'], ',');
+      $aclc[$attrs['dn']]= $attrs['gosaAclEntry'];
+
+    }
+
+    /* ACL's read, sort for tree depth */
+    asort($aclp);
+
+#print_a($aclp);
   }
 
 }
