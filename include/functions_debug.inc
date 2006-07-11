@@ -183,7 +183,11 @@ class Print_a_class {
 			
 			# value output
 			if($type == 'array') {
-				$this->print_a( $value, TRUE, $key_bg_color );
+				if(count($value)){
+					$this->print_a( $value, TRUE, $key_bg_color );
+				}else{
+					$this->output .= '<div style="color:blue;">Array (empty)</div>';
+				}
 			} elseif($type == 'object') {
 				if( $this->show_object_vars ) {
 					$this->print_a( get_object_vars( $value ), TRUE, $key_bg_color );
