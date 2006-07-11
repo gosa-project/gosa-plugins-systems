@@ -64,7 +64,9 @@
 					   {html_options options=$macros selected=$macro}
 				<option disabled>&nbsp;</option>
 					 </select>
+					{if $javascript eq 'false'}
 					 <input type="submit" name="refresh" value="{t}Refresh{/t}" {$goFonMacroACL}>
+					{/if}
 				</td>
 			</tr>
 		</table>
