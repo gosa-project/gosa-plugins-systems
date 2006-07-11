@@ -125,6 +125,7 @@ class acl extends plugin
         $this->ocMapping[$class][]= $oc;
       }
     }
+    $this->is_account= TRUE;
   }
 
 
@@ -691,29 +692,33 @@ class acl extends plugin
     foreach ($this->gosaAclEntry as $prio => $entry){
       $final= "";
       $members= "";
-      foreach ($entry['members'] as $key => $dummy){
-        $members.= base64_encode(preg_replace('/^.:/', '', $key)).',';
+      if (isset($entry['members'])){
+        foreach ($entry['members'] as $key => $dummy){
+          $members.= base64_encode(preg_replace('/^.:/', '', $key)).',';
+        }
       }
       $final= $prio.":".$entry['type'].":".preg_replace('/,$/', '', $members);
 
       /* ACL's if needed */
       if ($entry['type'] != "reset" && $entry['type'] != "role"){
         $acl= ":";
-        foreach ($entry['acl'] as $object => $contents){
-          $acl.= $object.";";
-          
-          foreach($contents as $attr => $permission){
+        if (isset($entry['acl'])){
+          foreach ($entry['acl'] as $object => $contents){
+            $acl.= $object.";";
+            
+            foreach($contents as $attr => $permission){
 
-            /* First entry? Its the one for global settings... */
-            if ($attr == '0'){
-              $acl.= $permission;
-            } else {
-              $acl.= '#'.$attr.';'.$permission;
+              /* First entry? Its the one for global settings... */
+              if ($attr == '0'){
+                $acl.= $permission;
+              } else {
+                $acl.= '#'.$attr.';'.$permission;
+              }
+
             }
-
+            $acl.= ',';
+            
           }
-          $acl.= ',';
-
         }
         $final.= preg_replace('/,$/', '', $acl);
       }
@@ -721,19 +726,21 @@ class acl extends plugin
       $tmp_acl[]= $final;
     } 
 
-    /* Finally (re-)assign it... */
-    $this->gosaAclEntry= $tmp_acl;
-
     /* Call main method */
     plugin::save();
 
+    /* Finally (re-)assign it... */
+    $this->attrs['gosaAclEntry']= $tmp_acl;
+
     /* Remove acl from this entry if it is empty... */
-    if (!count($this->gosaAclEntry)){
+    if (!count($tmp_acl)){
       /* Remove attribute */
       if ($this->initially_was_account){
-        $attrs['gosaAclEntry']= array();
+        $this->attrs['gosaAclEntry']= array();
       } else {
-        unset($attrs['gosaAclEntry']);
+        if (isset($this->attrs['gosaAclEntry'])){
+          unset($this->attrs['gosaAclEntry']);
+        }
       }
 
       /* Remove object class */
