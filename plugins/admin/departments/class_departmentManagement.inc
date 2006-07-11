@@ -344,6 +344,12 @@ class departmentManagement extends plugin
     }
 
     $this->departments= array();
+
+    /* Add current base to the list of available departments, but only if its naming attribute is 'ou' */
+    if(preg_match("/^ou=/",$base)){
+      $this->departments [ convert_department_dn($base) ] = ".";
+    }
+
     foreach ($res as $key => $value){
 
       /* Don't display base as entry on subsearch */
