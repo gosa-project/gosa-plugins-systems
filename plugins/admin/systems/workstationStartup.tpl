@@ -82,7 +82,7 @@
 						{html_options options=$FAIdebianMirrors output=$FAIdebianMirrors selected=$FAIdebianMirror}
 						<option disabled>&nbsp;</option>
 					</select>
-				<!--<input type="submit" value="{t}set{/t}" name="refresh">-->
+					{if $javascript eq 'false'}<input type="submit" value="{t}set{/t}" name="refresh">{/if}
 				</td>
 				<td>
 					<select name="FAIrelease"  onchange='document.mainform.submit()'>
