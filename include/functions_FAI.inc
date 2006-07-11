@@ -78,24 +78,6 @@ function get_all_objects_for_given_base($Current_DN,$filter,$detailed = false)
 }
 
 
-
-/* Return the object defining ObjectClass e.g. FAIscriptEntry */
-function get_FAI_type($attr)
-{
-  $arr = array( "FAIprofile","FAIpartitionTable", "FAIpartitionDisk","FAIpartitionEntry","FAIhook","FAIhookEntry",
-      "FAIscriptEntry","FAIscript","FAIvariable","FAIvariableEntry","FAIpackageList","FAItemplate",
-      "FAItemplateEntry","FAIdebconfInfo","FAIrepository","FAIrepositoryServer","FAIbranch","FAIreleaseTag");  
-  foreach($arr as $name){    
-    if(in_array($name,$attr['objectClass'])){
-      preg_match("");
-      return($name);
-    }
-  }
-  if(DEBUG_FAI_FUNC) { echo "Not found"; } 
-  return("");
-} 
-
-
 /* Return all relevant FAI departments */
 function get_FAI_departments($suffix = "")
 {
@@ -174,14 +156,22 @@ function prepare_to_save_FAI_object($Current_DN,$objectAttrs,$removed = false)
 /* Detect differences in attribute arrays  */
 function array_diff_FAI($ar1,$ar2)
 {
+
+  if((!isset($ar1['description'])) || (isset($ar1['description']) && (count($ar1['description']) == 0))){
+    $ar1['description'] = "";
+  }
+  if((!isset($ar2['description'])) || (isset($ar2['description']) && (count($ar2['description']) == 0))){
+    $ar2['description'] = "";
+  }
+
+  if(count($ar1) != count($ar2)) {
+    return (true);
+  }
+
   foreach($ar1 as $key1 => $val1){
 
     if((is_array($val1)) && (count($val1)==1)){
       $ar1[$key1] = $val1[0];
-    }
-
-    if(!isset($ar2[$key1])){
-      return(true);
     }
 
     if((is_array($ar2[$key1])) && (count($ar2[$key1])==1)){
@@ -189,6 +179,8 @@ function array_diff_FAI($ar1,$ar2)
       $ar2[$key1] = $ar2[$key1][0];
     }
   }
+  ksort($ar1);
+  ksort($ar2);
   if(count( array_diff($ar1,$ar2))){
     return(true);
   }else{
