@@ -7,7 +7,9 @@
 		<select id="selected_categorie" size="1" name="selected_categorie" title="{t}Choose a phone type{/t}" onchange="mainform.submit();">
 			{html_options options=$categories selected=$selected_categorie}
 		</select>
-		<input type="submit" value="{t}refresh{/t}" name="refresh">
+		{if $javascript eq 'false'}
+			<input type="submit" value="{t}refresh{/t}" name="refresh">
+		{/if}
 		<br>
 		<br>
 	</td>
