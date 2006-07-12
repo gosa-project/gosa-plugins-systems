@@ -1243,10 +1243,28 @@ function printOutHotPlugDevices()
     }
     return($a_return);
   }
+
+
+  function plInfo()
+  {
+    return (array("plDescription"   => _("Environment settings"),
+                  "plSelfModify"    => TRUE,
+                  "plDepends"       => array("objectClass" => "gotoEnvironment"),
+
+                  "gotoProfileServer"   => _("Profile server") ,
+                  "gotoProfileFlag_L"   => "FIXME"._("Resolution changeable during session") ,  // These variable are flags 
+                  "gotoProfileFlag_C"   => "FIXME"._("Cache profile localy") ,                  // extracted from gotoProfileFlag
+                  "gotoXResolution"     => _("Resolution") ,
+                  "gotoProfileQuota"    => _("Profile quota") ,
+                  "gotoLogonScripts"    => _("Logon script") ,
+                  "gotoPrinter"         => _("Printer") ,
+                  "gosaDefaultPrinter"  => _("Default printer") ,
+                  "gotoKioskProfile"    => _("Kiosk profile") ,
+                  "gotoShare"           => _("Shares") ));
+    }
 }
 
-
-
+  
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

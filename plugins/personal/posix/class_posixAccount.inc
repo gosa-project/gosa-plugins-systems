@@ -1217,13 +1217,30 @@ class posixAccount extends plugin
   function plInfo()
   {
     return (array("plDescription" => _("POSIX account"),
-                  "plSelfModify" => TRUE,
-                  "plDepends" => array("objectClass" => "gosaAccount"),
-                  "homeDirectory" => _("Home directory"), "uidNumber" => _("User ID"),
-                  "gidNumber" => _("Group ID")));
+          "plSelfModify" => TRUE,
+          "plDepends" => array("objectClass" => "gosaAccount"),
+
+          "homeDirectory"       =>  _("Home directory"), 
+          "uidNumber"           =>  _("User ID"),
+          "gidNumber"           =>  _("Group ID"),
+          "homeDirectory"       =>  _("Home directory"),
+          "primaryGroup"        =>  _("Primary group"),
+
+          "loginShell"          =>  _("Shell"),
+//          "gecos"               =>  _(""),
+
+          "shadowMin"           =>  _("Shadow min"),
+          "shadowMax"           =>  _("Shadow max"),
+          "shadowWarning"       =>  _("Shadow warning"),
+          "shadowInactive"      =>  _("Shadow inactive"),
+          "shadowLastChange"    =>  _("Shadow last change"),
+
+          "shadowExpire"        =>  _("Shadow expire"),
+          //"gosaDefaultPrinter"  =>  _(""),
+          //"gosaDefaultLanguage" =>  _(""), 
+          "accessTo"            =>  _("System trust"),
+          "trustModel"          =>  _("System trust modell"))) ;
   }
-
-
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
