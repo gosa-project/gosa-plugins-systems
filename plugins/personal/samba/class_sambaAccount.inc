@@ -1029,10 +1029,32 @@ class sambaAccount extends plugin
       $sambafilter= array( "depselect" => $base, "regex" => "*");
       register_global("sambafilter", $sambafilter);
     }
-
-
   }
 
+  
+  function plInfo()
+  {
+    return (array("plDescription"   => _("Samba settings"),
+          "plSelfModify"    => TRUE,
+          "plDepends"       => array("objectClass" => "gosaAccount"),
+
+          "AllowLoginOnTerminalServer"  => _("Allow login on terminal server"),
+          "InheritClientConfig"         => _("Inherit client config"),
+          "sambaAcctFlags_N"            => _("Login from windows client requires no password"),
+          "sambaAcctFlags_L"            => _("Lock samba account"),
+
+          "sambaLogonTime"        => _("Limit Logon Time") ,
+          "sambaLogoffTime"       => _("Limit Logoff Time") ,
+          "sambaKickoffTime"      => _("Account expires") ,
+          "sambaPwdCanChange"     => _("Allow user to change password") ,
+          "sambaPwdMustChange"    => _("Password expires") ,
+          "sambaHomePath"         => _("Generic home directory") ,
+          "sambaHomeDrive"        => _("Generic samba home drive") ,
+          "sambaLogonScript"      => _("Generic script path") ,
+          "sambaProfilePath"      => _("Generic profile path") ,
+          "sambaDomainName"       => _("Domain") ,
+          "sambaUserWorkstations" => _("Allow connection from") ));
+  }    
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
