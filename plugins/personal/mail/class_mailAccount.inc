@@ -973,6 +973,33 @@ class mailAccount extends plugin
       }
     }
   }
+
+
+  function plInfo()
+  {
+    return (array("plDescription"   => _("Mail settings"),
+          "plSelfModify"    => TRUE,
+          "plDepends"       => array("objectClass" => "gosaMailAccount"),
+
+          "mail"                      =>  _("Mail address"),
+          "gosaMailServer"            =>  _("Mail server"),
+          "gosaMailQuota"             =>  _("Quota sizw"),
+          "gosaMailMaxSize"           =>  _("Mail max size"),
+          "gosaMailForwardingAddress" =>  _("Forwarding address"),
+          "gosaMailDeliveryMode_L"    =>  "FIXME"._("Local delivery"),            // This is flag of gosaMailDeliveryMode
+          "gosaMailDeliveryMode_R"    =>  "FIXME"._("Reject due to mailsize"),    // This is flag of gosaMailDeliveryMode
+          "gosaMailDeliveryMode_s"    =>  "FIXME"._("Use spam filter"),           // This is flag of gosaMailDeliveryMode
+          "gosaMailDeliveryMode_V"    =>  "FIXME"._("Add vacation information"),  // This is flag of gosaMailDeliveryMode
+          "gosaMailDeliveryMode_C"    =>  "FIXME"._("Use custom sieve script"),   // This is flag of gosaMailDeliveryMode
+          "gosaMailDeliveryMode_I"    =>  "FIXME"._("Only insider delivery"),     // This is flag of gosaMailDeliveryMode
+          "gosaSpamSortLevel"         =>  _("Spam level"),
+          "gosaSpamMailbox"           =>  _("Spam mail box"),
+          "gosaMailAlternateAddress"  =>  _("Mail alternative addresses"),
+
+          "gosaVacationMessage"       =>  _("Vocation message"),
+          "gosaMailForwardingAddress" =>  _("Forwarding address")));
+
+  }
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
