@@ -983,7 +983,7 @@ class mailAccount extends plugin
 
           "mail"                      =>  _("Mail address"),
           "gosaMailServer"            =>  _("Mail server"),
-          "gosaMailQuota"             =>  _("Quota sizw"),
+          "gosaMailQuota"             =>  _("Quota size"),
           "gosaMailMaxSize"           =>  _("Mail max size"),
           "gosaMailForwardingAddress" =>  _("Forwarding address"),
           "gosaMailDeliveryMode_L"    =>  "FIXME"._("Local delivery"),            // This is flag of gosaMailDeliveryMode
@@ -996,7 +996,7 @@ class mailAccount extends plugin
           "gosaSpamMailbox"           =>  _("Spam mail box"),
           "gosaMailAlternateAddress"  =>  _("Mail alternative addresses"),
 
-          "gosaVacationMessage"       =>  _("Vocation message"),
+          "gosaVacationMessage"       =>  _("Vacation message"),
           "gosaMailForwardingAddress" =>  _("Forwarding address")));
 
   }

@@ -200,7 +200,7 @@ class application extends plugin
   {
     $ldap= $this->config->get_ldap_link();
     $ldap->rmDir($this->dn);
-    show_ldap_error($ldap->get_error(), sprintf(_("Removing of applciation with dn '%s' failed."),$this->dn));
+    show_ldap_error($ldap->get_error(), sprintf(_("Removing of application with dn '%s' failed."),$this->dn));
 
     /* Optionally execute a command after we're done */
     $this->handle_post_events("remove");

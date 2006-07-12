@@ -121,7 +121,7 @@
 
 						<input type='checkbox' name='gotoMimeLeftClickAction_Q' value='1' 
 							{if $gotoMimeLeftClickAction_Q} checked {/if} {$gotoMimeLeftClickActionACL}>
-						{t}Ask wheter to save to local disk{/t}
+						{t}Ask whether to save to local disk{/t}
 					</td>
 				</tr>
 			</table>

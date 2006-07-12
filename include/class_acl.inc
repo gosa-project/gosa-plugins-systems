@@ -666,7 +666,7 @@ class acl extends plugin
         $summary.= $cn.", ";
       }
     } else {
-      $summary.= _("ACLs is valid for all users");
+      $summary.= _("ACL is valid for all users");
     }
 
     return (preg_replace('/, $/', '', $summary));

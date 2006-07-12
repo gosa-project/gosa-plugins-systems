@@ -1239,7 +1239,7 @@ class posixAccount extends plugin
           //"gosaDefaultPrinter"  =>  _(""),
           //"gosaDefaultLanguage" =>  _(""), 
           "accessTo"            =>  _("System trust"),
-          "trustModel"          =>  _("System trust modell"))) ;
+          "trustModel"          =>  _("System trust model"))) ;
   }
 }
 
