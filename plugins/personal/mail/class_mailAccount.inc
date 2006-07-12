@@ -979,7 +979,7 @@ class mailAccount extends plugin
   {
     return (array("plDescription"   => _("Mail settings"),
           "plSelfModify"    => TRUE,
-          "plDepends"       => array("objectClass" => "gosaMailAccount"),
+          "plDepends"       => array("objectClass" => "gosaAccount"),
 
           "mail"                      =>  _("Mail address"),
           "gosaMailServer"            =>  _("Mail server"),
