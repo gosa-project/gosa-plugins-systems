@@ -137,6 +137,15 @@ class pptpAccount extends plugin
     }
   }
 
+  function plInfo()
+  {
+    return (array(  "plDescription"   => _("PPTP account"),
+          "plSelfModify"    => TRUE,
+          "plDepends"       => array("objectClass" => "gosaAccount"),
+          "pptpServerAccount" => "PPTP account"));
+  }
+
+
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

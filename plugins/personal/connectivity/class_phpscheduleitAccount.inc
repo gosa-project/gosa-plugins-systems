@@ -134,6 +134,15 @@ class phpscheduleitAccount extends plugin
 
   }
 
+  function plInfo()
+  {
+    return (array(  "plDescription"   => _("PHPscheduleit account"),
+          "plSelfModify"    => TRUE,
+          "plDepends"       => array("objectClass" => "gosaAccount"),
+          "phpscheduleitAccount" => "PHPscheduleit account"));
+  }
+
+
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

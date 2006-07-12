@@ -875,6 +875,18 @@ class oxchangeAccount extends plugin
       pg_close($pgcon);
     }
   }
+
+
+  function plInfo()
+  {
+    return (array("plDescription"   => _("Open xchange account settings"),
+          "plSelfModify"    => TRUE,
+          "plDepends"       => array("objectClass" => _("gosaAccount")),
+          "OXAppointmentDays"   => "#FIXEME attributes arn't translated"._("OXAppointmentDays"),
+          "OXTaskDays"   	=> _("OXTaskDays"),
+          "mailEnabled"   	=> _("mailEnabled"),
+          "OXTimeZone"   	=> _("OXTimeZone")));
+  }
 }
 
 ?>

@@ -185,6 +185,24 @@ class pureftpdAccount extends plugin
 
   }
 
+
+  function plInfo()
+  {
+
+    # FIXME We should combine some of the attributes liste below..
+    return (array(  "plDescription"   => _("Intranet account settings"),
+          "plSelfModify"    => TRUE,
+          "plDepends"       => array("objectClass" => "gosaAccount"),
+
+          "FTPQuotaFiles"         => _("Quota files"),
+          "FTPUploadRatio"        => _("Upload ratio"),
+          "FTPQuotaMBytes"        => _("Quota MBytes"),
+          "FTPDownloadRatio"      => _("Download ratio"),
+          "FTPUploadBandwidth"    => _("Upload bandwith"),
+          "FTPDownloadBandwidth"  => _("Download bandwith"),
+          "FTPStatus"             => _("Status")));
+  }
+
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

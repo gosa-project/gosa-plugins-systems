@@ -124,6 +124,19 @@ class phpgwAccount extends plugin
       }
     }
   }
+
+
+  function plInfo()
+  {
+    return (array(  "plDescription"   => _("Intranet account settings"),
+          "plSelfModify"    => TRUE,
+          "plDepends"       => array("objectClass" => "gosaAccount"),
+          "phpgwAccountExpires" =>"#FIXME not translated."_("phpgwAccountExpires"),
+          "phpgwAccountStatus"  =>_("phpgwAccountStatus"),
+          "phpgwAccountType"    =>_("phpgwAccountType")));
+  }
+
+
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

@@ -272,6 +272,25 @@ class proxyAccount extends plugin
 
   }
 
+
+  function plInfo()
+  {
+    return (array(  "plDescription"   => _("Intranet account settings"),
+          "plSelfModify"    => TRUE,
+          "plDepends"       => array("objectClass" => "gosaAccount"),
+
+          "gosaProxyID"           => _("gosaProxyID"),
+    
+          "gosaProxyFlag_F"   => _("Filter unwanted content"), 
+          "gosaProxyFlag_T"   => _("Limit proxy access"),
+          "gosaProxyFlag_B"   => _("Restrict proxy usage by quota"),
+
+          "gosaProxyWorkingTime"  => _("Limit proxy access"),
+          "gosaProxyQuota"        => _("Limit quota"),
+          "gosaProxyQuotaPeriod"  => _("Quota limit period")));
+  }
+
+
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

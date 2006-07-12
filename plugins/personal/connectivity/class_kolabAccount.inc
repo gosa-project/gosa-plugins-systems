@@ -406,6 +406,17 @@ class kolabAccount extends plugin
     $this->is_modified= TRUE;
   }
 
+
+  function plInfo()
+  {
+    return (array(	"plDescription"   => _("Koalb account settings"),
+          "plSelfModify"    => TRUE,
+          "plDepends"       => array("objectClass" => "gosaAccount"),
+          "kolabFreeBusyFuture"   => _("Free busy future"),
+          "unrestrictedMailSize"  => _("Mail size restriction"),
+          "calFBURL"              => _("Free busy information"),
+          "kolabDelegate"         => _("Delegations")));
+  }
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

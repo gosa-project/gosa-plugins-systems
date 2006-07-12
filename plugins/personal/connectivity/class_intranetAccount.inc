@@ -161,6 +161,15 @@ class intranetAccount extends plugin
 	  }
   }
 
+	
+  function plInfo()
+  {
+    return (array(	"plDescription"   => _("Intranet account settings"),
+          "plSelfModify"    => TRUE,
+          "plDepends"       => array("objectClass" => "gosaAccount"),
+          "gosaIntranetAccount" => "GOsa intranet account"));
+  }
 }
 
+// vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

@@ -331,6 +331,15 @@ class opengwAccount extends plugin
     // Nothing to do, because this object can't be copied ... yet
   }
 
+
+  function plInfo()
+  {
+    return (array(	"plDescription"   => _("Open groupware account settings"),
+          "plSelfModify"    => TRUE,
+          "plDepends"       => array("objectClass" => "gosaAccount"),
+          "opengwAccount"   => "Open groupware account"));
+  }
+  
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
