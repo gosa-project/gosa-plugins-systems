@@ -574,8 +574,7 @@ class environment extends plugin
         $once = false;  
         $key  = preg_replace("/^gotoShareDel_/","",$name);
         $key  = preg_replace("/_+[xy]$/","",$key);
-        $key  = preg_replace("/_/", ".", $key);
-
+        $key  = base64_decode($key);
         if(isset($this->gotoShares[$key])) {
           unset($this->gotoShares[$key]);
         }
@@ -591,7 +590,7 @@ class environment extends plugin
         $once = false;
         $key  = preg_replace("/^gotoShareResetPwd_/","",$name);
         $key  = preg_replace("/_+[xy]$/","",$key);
-        $key  = preg_replace("/_/", ".", $key);
+        $key  = base64_decode($key);
         $this->gotoShares[$key]['PwdHash'] = "";
       }
     }
@@ -602,7 +601,7 @@ class environment extends plugin
     
     foreach($tmp as $key => $value){
       $img = "";
-   
+  
       /* Check if entry starts with an ! */
       if(preg_match("/^!/",$this->gotoShares[$key]['server'])){
 
@@ -611,7 +610,7 @@ class environment extends plugin
     
         /* Create pwd reset images */
         if($this->gotoShares[$key]['PwdHash'] != ""){
-          $img.= "<input type='image' name='gotoShareResetPwd_".$key." 'src='images/list_reset_password.png' alt='"._("Reset password hash")."' 
+          $img.= "<input type='image' name='gotoShareResetPwd_".base64_encode($key)." 'src='images/list_reset_password.png' alt='"._("Reset password hash")."' 
             title='"._("Reset password hash")."'>";
         }
         $field1 = array("string" => "<font style=\"color:#C0C0C0\">".$value."</font>" );
@@ -620,11 +619,11 @@ class environment extends plugin
 
         /* Create pwd reset img && delete image */
         if($this->gotoShares[$key]['PwdHash'] != ""){
-          $img.= "<input type='image' name='gotoShareResetPwd_".$key." 'src='images/list_reset_password.png' alt='"._("Reset password hash")."' 
+          $img.= "<input type='image' name='gotoShareResetPwd_".base64_encode($key)." 'src='images/list_reset_password.png' alt='"._("Reset password hash")."' 
             title='"._("Reset password hash")."'>";
           $img.= "&nbsp;";
         }
-        $img.= "<input type='image' name='gotoShareDel_".$key." 'src='images/edittrash.png' alt='"._("Delete")."' 
+        $img.= "<input type='image' name='gotoShareDel_".base64_encode($key)." 'src='images/edittrash.png' alt='"._("Delete")."' 
           title='"._("Delete share entry")."'>";
         $field1 = array("string" => $value);
         $field2 = array("string" => $img   , "attach" => "style='border-right:0px;'");
