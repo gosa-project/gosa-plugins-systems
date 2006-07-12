@@ -67,6 +67,8 @@ class userinfo
 
   function loadACL()
   {
+
+#--------------------------------------------------------------------------OLD-BUT-ACTIVE-----------------------------
     $ldap= $this->config->get_ldap_link();
 
     /* Load ACL's from all groups we're in */
@@ -88,8 +90,8 @@ class userinfo
         $this->subtreeACL[$base][]= $attrs["gosaSubtreeACL"][$i];
       }
     }
-
 #echo "NEW ACL LOADING --------------------------------------------------------------------------------------------<br>";
+
     $this->ACL= array();    
     $this->groups= array();    
     $ldap= $this->config->get_ldap_link();
@@ -156,9 +158,213 @@ class userinfo
   }
 
 
-  function get_permissions($dn, $object= "", $attribute= "")
+  function get_permissions($dn, $object, $attribute)
   {
-    echo "Evaluating permissions for $dn, object $object/$attribute<br>";
+    $acl= array("r" => "", "w" => "", "c" => "", "d" => "", "m" => "");
+
+    /* Build dn array */
+    $path= split(',', $dn);
+    $path= array_reverse($path);
+
+    /* Walk along the path to evaluate the acl */
+    $cpath= "";
+    foreach ($path as $element){
+
+      /* Clean potential ACLs for each level */
+      $acl= $this->cleanACL($acl);
+
+      if ($cpath == ""){
+        $cpath= $element;
+      } else {
+        $cpath= $element.','.$cpath;
+      }
+      if (isset($this->ACL[$cpath])){
+
+        /* Inspect this ACL, place the result into ACL */
+        foreach ($this->ACL[$cpath] as $subacl){
+
+          /* Reset? Just clean the ACL and turn over to the next one... */
+          if ($subacl['type'] == 'reset'){
+            $acl= $this->cleanACL($acl, TRUE);
+            continue;
+          }
+
+          /* Per attribute ACL? */
+          if (isset($subacl['acl'][$object][$attribute])){
+            $acl= $this->mergeACL($acl, $subacl['type'], $subacl['acl'][$object][$attribute]);
+            continue;
+          }
+
+          /* Per object ACL? */
+          if (isset($subacl['acl'][$object][0])){
+            $acl= $this->mergeACL($acl, $subacl['type'], preg_replace('/[cdm]/', '', $subacl['acl'][$object][0]));
+            continue;
+          }
+
+          /* Global ACL? */
+          if (isset($subacl['acl'][0])){
+            $acl= $this->mergeACL($acl, $subacl['type'], preg_replace('/[cdm]/', '', $subacl['acl'][0]));
+            continue;
+          }
+
+        }
+
+      }
+    }
+
+    /* Assemble string */
+    $ret= "";
+    foreach ($acl as $key => $value){
+      if ($value != ""){
+        $ret.= $key;
+      }
+    }
+
+    return ($ret);
+  }
+
+
+  function get_module_departments($module)
+  {
+    global $plist;
+
+    $objects= array();
+    $deps= array();
+
+    /* Extract all relevant objects for this module from plist */
+    foreach ($plist->info as $object => $info){
+      if (isset($info['plDepends']['objectClass']) && $info['plDepends']['objectClass'] == $module){
+        $objects[$object]= $object;
+      }
+    }
+
+    /* Get all gosaDepartments */
+    $ldap= $this->config->get_ldap_link();
+    $ldap->cd($this->config->current['BASE']);
+    $ldap->search('objectClass=gosaDepartment', array('dn'));
+    while ($attrs= $ldap->fetch()){
+      $acl= array("r" => "", "w" => "", "c" => "", "d" => "", "m" => "");
+
+      /* Build dn array */
+      $path= split(',', $attrs['dn']);
+      $path= array_reverse($path);
+
+      /* Walk along the path to evaluate the acl */
+      $cpath= "";
+      foreach ($path as $element){
+
+        /* Clean potential ACLs for each level */
+        $acl= $this->cleanACL($acl);
+
+        if ($cpath == ""){
+          $cpath= $element;
+        } else {
+          $cpath= $element.','.$cpath;
+        }
+        if (isset($this->ACL[$cpath])){
+
+          /* Inspect this ACL, place the result into ACL */
+          foreach ($this->ACL[$cpath] as $subacl){
+
+            /* Reset? Just clean the ACL and turn over to the next one... */
+            if ($subacl['type'] == 'reset'){
+              $acl= $this->cleanACL($acl, TRUE);
+              continue;
+            }
+
+            /* Per object ACL? */
+            foreach ($objects as $object){
+              if (isset($subacl['acl'][$object])){
+                foreach($subacl['acl'][$object] as $attribute => $dcl){
+                  if (isset($subacl['acl'][$object][$attribute])){
+                    $acl= $this->mergeACL($acl, $subacl['type'], preg_replace('/[cdm]/', '', $subacl['acl'][$object][$attribute]));
+                  }
+                }
+              }
+            }
+
+            /* Global ACL? */
+            if (isset($subacl['acl'][0])){
+              $acl= $this->mergeACL($acl, $subacl['type'], preg_replace('/[cdm]/', '', $subacl['acl'][0]));
+              continue;
+            }
+          }
+        }
+      }
+
+      /* Add department, if we have (some) permissions for the requred module */
+      foreach ($acl as $val){
+        if ($val != ""){
+          $deps[]= $attrs['dn'];
+          break;
+        }
+      }
+    }
+
+    return ($deps);
+  }
+
+
+  function mergeACL($acl, $type, $newACL)
+  {
+    foreach(str_split($newACL) as $char){
+
+      /* Ignore invalid characters */
+      if (!preg_match('/[rwcdm]/', $char)){
+        continue;
+      }
+
+      /* Skip permanent and subtree entries */
+      if (preg_match('/[sp]/', $acl[$char])){
+        continue;
+      }
+
+      switch ($type){
+        case 'psub':
+          $acl[$char]= 'p';
+          break;
+
+        case 'sub':
+          $acl[$char]= 's';
+          break;
+
+        case 'one':
+          $acl[$char]= 1;
+          break;
+
+        case 'base':
+          if ($acl[$char] != 1){
+            $acl[$char]= 0;
+          }
+          break;
+      }
+    }
+
+    return ($acl);
+  }
+
+
+  function cleanACL($acl, $reset= FALSE)
+  {
+    foreach ($acl as $key => $value){
+
+      /* Reset removes everything but 'p' */
+      if ($reset && $value != 'p'){
+        $acl[$key]= "";
+        continue;
+      }
+
+      /* Decrease tree level */
+      if (preg_match('/^[0-9]+$/', $value)){
+        if ($value > 0){
+          $acl[$key]= $value - 1;
+        } else {
+          $acl[$key]= "";
+        }
+      }
+    }
+
+    return ($acl);
   }
 
 }

@@ -392,7 +392,6 @@ echo $display;
 $_SESSION['plist']= $plist;
 $_SESSION['config']= $config;
 
-
 /* Echo compilation time * /
 $r = split(" ",$start);
 $ms = $r[0];

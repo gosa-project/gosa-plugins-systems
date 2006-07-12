@@ -130,8 +130,8 @@ class acl extends plugin
                              "one" => _("One level"),
                              "base" => _("Current object"),
                              "sub" => _("Complete subtree"),
-                             "psub" => _("Complete subtree (permanent)"),
-                             "role" => _("Use ACL defined in role"));
+                             "psub" => _("Complete subtree (permanent)"));
+                             //"role" => _("Use ACL defined in role"));
     } else {
       $this->aclTypes= array("base" => _("Current object"),
           "role" => _("Use ACL defined in role"));
