@@ -1249,7 +1249,7 @@ function printOutHotPlugDevices()
   {
     return (array("plDescription"   => _("Environment settings"),
                   "plSelfModify"    => TRUE,
-                  "plDepends"       => array("objectClass" => "gotoEnvironment"),
+                  "plDepends"       => array("objectClass" => "gotoAccount"),
 
                   "gotoProfileServer"   => _("Profile server") ,
                   "gotoProfileFlag_L"   => "FIXME"._("Resolution changeable during session") ,  // These variable are flags 
