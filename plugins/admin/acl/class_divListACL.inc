@@ -18,6 +18,8 @@ class divListACL extends MultiSelectWindow
   var $parent             ;
   var $ui                 ;
 
+  
+
   function divListACL ($config,$parent)
   {
     MultiSelectWindow::MultiSelectWindow($config,"ACLs");
@@ -46,10 +48,14 @@ class divListACL extends MultiSelectWindow
     $this->AddHeader(array("string"=>"&nbsp;",          "attach"=>"style='width:20px;'"));
     $this->AddHeader(array("string"=>_("Summary")));
     $this->AddHeader(array("string"=>_("Actions"),      "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'"));
-    
+
+    /* Set dynamically filter checkboxes */
+    $this->set_filter_objectclasses();   
+ 
     /* Add SubSearch checkbox */
-//    $this->AddCheckBox(SEPERATOR);
+    $this->AddCheckBox(SEPERATOR);
     $this->AddCheckBox("SubSearch",  _("Select to search within subtrees"), _("Ignore subtrees"), false);
+
 
     /*                  Name                 ,Text                              ,Default  , Connect with alphabet  */
     $this->AddRegex   ("Regex",     _("Display acls matching"),"Not implemented yet" , true);
@@ -104,15 +110,25 @@ class divListACL extends MultiSelectWindow
 
     foreach($list as $key => $acl_entry){
 
-      $action = "<input class='center' type='image' src='images/edit.png' alt='"._("edit")."'     name='acl_edit_%KEY%' title='"._("Edit system")."'>";
-      $action.= $this->GetSnapShotActions($acl_entry['dn']);
-      $action.= "<input class='center' type='image' src='images/edittrash.png' alt='"._("delete")."' name='acl_del_%KEY%' title='"._("Delete system")."'>";
-
-      $field1 = array("string" => $list_left_icon, "attach"=> "style='text-align:center;width:20px;'");
-      $field2 = array("string" => htmlentities(utf8_decode($acl_entry['dn'])),"attach" => "");
-      $field3 = array("string" => preg_replace("/%KEY%/",$key,$action), "attach"=> "style='text-align:center;width:80px;border-right:0px;'");
+      $skip = true;
+      foreach($this->get_filter_objectclasses() as $oc){
+        if(in_array($oc,$acl_entry['objectClass']) && $this->$oc){
+          $skip = false;
+        }
+      }
     
-      $this->AddElement(array($field1,$field2,$field3));
+      if(!$skip){
+        $action = "<input class='center' type='image' src='images/edit.png' alt='"._("edit")."'     
+                    name='acl_edit_%KEY%' title='"._("Edit system")."'>";
+        $action.= $this->GetSnapShotActions($acl_entry['dn']);
+        $action.= "<input class='center' type='image' src='images/edittrash.png' alt='"._("delete")."' 
+                    name='acl_del_%KEY%' title='"._("Delete system")."'>";
+
+        $field1 = array("string" => $list_left_icon, "attach"=> "style='text-align:center;width:20px;'");
+        $field2 = array("string" => htmlentities(utf8_decode($acl_entry['dn']))."&nbsp;","attach" => "");
+        $field3 = array("string" => preg_replace("/%KEY%/",$key,$action), "attach"=> "style='text-align:center;width:80px;border-right:0px;'");
+        $this->AddElement(array($field1,$field2,$field3));
+      }
     }
   }
 
@@ -126,6 +142,25 @@ class divListACL extends MultiSelectWindow
     /* Save automatic created POSTs like regex, checkboxes */
     MultiSelectWindow::save_object();   
   }
+
+
+  /* Add some additional checkboxes to the filter part, this should be generated dynamically. */
+  function set_filter_objectclasses()
+  { 
+    #FIXME This should be created dynamically 
+    $this->gosaAccount = true;
+    $this->AddCheckBox("gosaAccount",     _("Select to display users"),       _("Display user")       , true);
+    $this->gosaDepartment = true;
+    $this->AddCheckBox("gosaDepartment",  _("Select to display departments"), _("Display departments"), true);
+  }
+
+  
+  /* Return objectClass names used in filter part */  
+  function get_filter_objectclasses()
+  {
+    return(array("gosaAccount","gosaDepartment"));
+  }
+
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

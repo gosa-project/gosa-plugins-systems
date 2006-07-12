@@ -227,15 +227,6 @@ class aclManagement extends plugin
       /* Save, or display error message? */
       if (count($message) == 0){
 
-        /* No errors. Go ahead and prepare to ask for a password
-           in case we're creating a new acl. 'dn' will be 'new'
-           in this case. It is set to the correct value later. */
-        if ($this->dn == "new"){
-          $set_pass= 1;
-        } else {
-          $set_pass= 0;
-        }
-
         /* Save acl data to ldap */
         if($this->acltabs->save() == 1){
           gosa_log ("ACL object '".$this->dn."' saving failed.");
