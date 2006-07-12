@@ -1288,13 +1288,68 @@ class user extends plugin
 
   function plInfo()
   {
-    return (array("plDescription" => _("Generic user settings"),
-                  "plSelfModify" => TRUE,
-                  "plDepends" => array("objectClass" => "gosaAccount", "description" => _("Users")),
-                  "userPassword" => _("Set password"), "sn" => _("Surename"),
-                  "givenName" => _("Given name")));
-  }
+  
+    $govattrs= array(
+        "gouvernmentOrganizationalUnit"             =>  _("Unit"), 
+        "houseIdentifier"                           =>  _("House identifier"), 
+        "vocation"                                  =>  _("Vocation"),
+        "ivbbLastDeliveryCollective"                =>  _("Last delivery"), 
+        "gouvernmentOrganizationalPersonLocality"   =>  _("Person locality"),
+        "gouvernmentOrganizationalUnitDescription"  =>  _("Unit description"),
+        "gouvernmentOrganizationalUnitSubjectArea"  =>  _("Subject area"),
+        "functionalTitle"                           =>  _("Functional title"),
+        "certificateSerialNumber"                   =>  _(""),
+        "publicVisible"                             =>  _("Public visible"),
+        "street"                                    =>  _("Street"),
+        "role"                                      =>  _("Role"),
+        "postalCode"                                =>  _("Postal code"));
 
+    $ret = array(
+        "plDescription" => _("Generic user settings"),
+        "plSelfModify"  => TRUE,
+        "plDepends"     => array("objectClass" => "gosaAccount", 
+                                 "description"   => _("Users")),
+
+        "userPassword"      => _("User password"), 
+        "sn"                => _("Surename"),
+        "givenName"         => _("Given name"),
+        "uid"               => _("User identification"),
+        "personalTitle"     => _("Personal title"),
+        "academicTitle"     => _("Academic title"),
+        "homePostalAddress" => _("Home postal address"),
+        "homePhone"         => _("Home phone number"),
+        "labeledURI"        => _("Homepage"),
+        "o"                 => _("Organization"),
+        "ou"                => _("Department"),
+        "dateOfBirth"       => _("Date of birth"),
+        "gender"            => _("Gender"),
+        "preferredLanguage" => _("Preferred language"),
+        "departmentNumber"  => _("Department number"),
+        "employeeNumber"    => _("Employee number"),
+        "employeeType"      => _("Employee type"),
+        "l"                 => _("Location"),
+        "st"                => _("State"),
+
+        "roomNumber"        => _("Room number"),
+        "telephoneNumber"   => _("Telefon number"),
+        "mobile"            => _("Mobile number"),
+        "pager"             => _("Pager number"),
+        "userPKCS12"        => _("User certificate PKCS12"),
+
+        "postalAddress"                => _("Postal address"),
+        "facsimileTelephoneNumber"     => _("Fax number"),
+        "userSMIMECertificate"         => _("User certificate SMIME"));
+
+    /* Append government attributes if required */
+      global $config;
+    if (isset($config->current['GOVERNMENTMODE']) &&  preg_match('/true/i', $config->current['GOVERNMENTMODE'])){
+      foreach($govattrs as $attr => $desc){
+        $ret[$attr] = $desc;
+      }
+    }
+
+    return($ret);
+  }
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
