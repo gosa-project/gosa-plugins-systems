@@ -38,12 +38,19 @@ class pluglist {
 
 		/* Create dirlist for all plugins */
 		$this->dirlist= $this->get_plugins ($this->dirlist, $this->config->data);
+
+                /* Fill info part of pluglist */
+                $classes= get_declared_classes();
+                foreach (get_declared_classes() as $cname){
+                        if (method_exists($cname, 'plInfo')){
+                                $this->info[$cname]= @call_user_func(array($cname, 'plInfo'));
+                        }
+                }
 	}
 
 	function get_plugins($list, $config)
 	{
 		/* Error reporting, because I'm getting strange messages in PHP 4.2.x */
-		error_reporting(0);
 		if (!isset($config['PATH']) && !isset($config['CLASS'])){
 			if (is_array($config)){
 				foreach ($config as $val){
@@ -55,11 +62,9 @@ class pluglist {
 				$list[$this->index++]= $config['PATH'];
 				if (isset($config['CLASS'])){
 					$class= $config['CLASS'];
-					$this->info[$class]= call_user_func(array($class, 'plInfo'));
 				}
 			}
 		}
-		error_reporting(E_ALL);
 
 		return ($list);
 	}

@@ -2103,5 +2103,23 @@ function get_base_dir()
   return $BASE_DIR;
 }
 
+
+function obj_is_readable($dn, $object, $attribute)
+{
+  global $ui;
+
+  return preg_match('/r/', $ui->get_permissions($dn, $object, $attribute));
+}
+
+
+function obj_is_writable($dn, $object, $attribute)
+{
+  global $ui;
+
+  return preg_match('/w/', $ui->get_permissions($dn, $object, $attribute));
+}
+
+
+
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

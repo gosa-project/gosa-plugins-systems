@@ -253,7 +253,7 @@ class acl extends plugin
       }
     }
 
-    /* Store ACL in mail object? */
+    /* Store ACL in main object? */
     if (isset($_POST['submit_new_acl'])){
       $this->gosaAclEntry[$this->currentIndex]['type']= $this->aclType;
       $this->gosaAclEntry[$this->currentIndex]['members']= $this->recipients;
@@ -353,6 +353,10 @@ class acl extends plugin
             if (count($this->aclContents[$key]) && isset($this->aclContents[$key][0]) &&
                 $this->aclContents[$key][0] != ""){
               $summary.= "$key, ";
+              continue;
+            }
+            if (!isset($this->aclContents[$key][0]) && count($this->aclContents[$key])){
+              $summary.= "$key, ";
             }
           }
         }
@@ -421,6 +425,7 @@ class acl extends plugin
 
     /* Show main page */
     $smarty->assign("dialogState", $this->dialogState);
+
     return ($smarty->fetch (get_template_path('acl.tpl')));
   }
 
@@ -650,7 +655,9 @@ class acl extends plugin
     if (isset($entry['acl'])){
       $acl= "";
       foreach ($entry['acl'] as $name => $object){
-        $acl.= "$name, ";
+        if (count($object)){
+          $acl.= "$name, ";
+        }
       }
       $summary.= sprintf(_("Contains settings for these objects: %s"), preg_replace('/, $/', '', $acl));
     }
@@ -721,19 +728,23 @@ class acl extends plugin
         $acl= ":";
         if (isset($entry['acl'])){
           foreach ($entry['acl'] as $object => $contents){
-            $acl.= $object.";";
-            
-            foreach($contents as $attr => $permission){
 
-              /* First entry? Its the one for global settings... */
-              if ($attr == '0'){
-                $acl.= $permission;
-              } else {
-                $acl.= '#'.$attr.';'.$permission;
+            /* Only save, if we've some contents in there... */
+            if (count($contents)){
+              $acl.= $object.";";
+
+              foreach($contents as $attr => $permission){
+
+                /* First entry? Its the one for global settings... */
+                if ($attr == '0'){
+                  $acl.= $permission;
+                } else {
+                  $acl.= '#'.$attr.';'.$permission;
+                }
+
               }
-
+              $acl.= ',';
             }
-            $acl.= ',';
             
           }
         }

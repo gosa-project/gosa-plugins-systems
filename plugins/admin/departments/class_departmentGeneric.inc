@@ -512,6 +512,20 @@ class department extends plugin
 		}
 	}
 
+
+  function plInfo()
+  {
+    return (array("plDescription" => _("Departments"),
+                  "plSelfModify" => FALSE,
+                  "plDepends" => array("objectClass" => "gosaDepartment", "description" => _("Departments")),
+                  "description" => _("Description"),
+                  "c" => _("Country"),
+                  "l" => _("Location"),
+                  "telephoneNumber" => _("Telephone"),
+                  "ou" => _("Department name") ));
+  }
+
+
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
