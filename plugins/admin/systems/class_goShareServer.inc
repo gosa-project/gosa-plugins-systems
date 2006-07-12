@@ -305,7 +305,6 @@ class goShareServer extends plugin{
 
     # add new mounts to the container
     foreach ($this->mounts_to_add as $entry) {
-
       $mount=$this->returnMountEntry($entry);
       $mountdn = "cn=".$mount["cn"].","."$mountsdn";
       $ldap->cd($mountdn);
@@ -372,6 +371,73 @@ class goShareServer extends plugin{
     if(isset($attrs[$flag][0])){
       $this->$flag = $attrs[$flag][0];
     }
+  }
+
+
+  function addToMountList($entry) 
+  {
+    $key =  key($entry);
+    $type = $this->get_share_type($entry[$key]);
+    if (($type == "netatalk") || ($type == "NFS")) {
+      $this->mounts_to_add[$entry[$key]] = $entry[$key];
+      unset($this->mounts_to_remove[$entry[$key]]);
+    }
+  }
+
+  function deleteFromMountList($entry) 
+  {
+    $type = $this->get_share_type($entry);
+    if (($type == "netatalk") || ($type == "NFS")) {
+      $this->mounts_to_remove[$entry] = $entry;
+      unset($this->mounts_to_add[$entry]);
+    }
+  }
+
+  function get_share_type($share) 
+  {
+    $tmp = split("\|", $share);
+    return $tmp[2];
+  }
+
+  function returnMountEntry($entry)
+  {
+    $item = split("\|", $entry);
+    $name = $item[0];
+    $description = $item[1];
+    $type = $item[2];
+    $charset = $item[3];
+    $path = $item[4];
+    $options = $item[5];
+
+    switch ($type) {
+      case "netatalk" : {
+        $mount = array(
+            "mountDirectory" => "/Network/Servers/",
+            "mountOption" => array(
+              "net",
+              "url==afp://;AUTH=NO%20USER%20AUTHENT@".$this->cn."/$name/"
+              ),
+            "mountType" => "url",
+            "objectClass" => "mount",
+            "cn" => $this->cn .":/".$name
+            );
+        break;
+      }
+      case "NFS" : {
+        $mount = array(
+            "mountDirectory" => "/Network/Servers/",
+            "mountOption" => "net",
+            "mountType" => "nfs",
+            "objectClass" => "mount",
+            "cn" => $this->cn .":".$path
+            );
+        break;
+      }
+      default : {
+                  continue;
+                }
+    }
+    return $mount;
   }
 
 }
