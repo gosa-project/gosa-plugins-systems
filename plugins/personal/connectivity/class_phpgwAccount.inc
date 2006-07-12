@@ -131,7 +131,7 @@ class phpgwAccount extends plugin
     return (array(  "plDescription"   => _("Intranet account settings"),
           "plSelfModify"    => TRUE,
           "plDepends"       => array("objectClass" => "gosaAccount"),
-          "phpgwAccountExpires" =>"#FIXME not translated."_("phpgwAccountExpires"),
+          "phpgwAccountExpires" =>"#FIXME not translated"._("phpgwAccountExpires"),
           "phpgwAccountStatus"  =>_("phpgwAccountStatus"),
           "phpgwAccountType"    =>_("phpgwAccountType")));
   }
