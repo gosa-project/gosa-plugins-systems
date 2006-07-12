@@ -107,6 +107,7 @@ class divListACL extends MultiSelectWindow
   function setEntries($list)
   {
     $list_left_icon = "<img src='images/select_acl.png' alt='"._("Acl")."'>";
+    $editlink = "<a href='?plug=".$_GET['plug']."&amp;id=%s&amp;act=edit_entry'>%s</a>";
 
     foreach($list as $key => $acl_entry){
 
@@ -125,7 +126,7 @@ class divListACL extends MultiSelectWindow
                     name='acl_del_%KEY%' title='"._("Delete system")."'>";
 
         $field1 = array("string" => $list_left_icon, "attach"=> "style='text-align:center;width:20px;'");
-        $field2 = array("string" => htmlentities(utf8_decode($acl_entry['dn']))."&nbsp;","attach" => "");
+        $field2 = array("string" => sprintf($editlink,$key,htmlentities(utf8_decode($acl_entry['dn'])))."&nbsp;","attach" => "");
         $field3 = array("string" => preg_replace("/%KEY%/",$key,$action), "attach"=> "style='text-align:center;width:80px;border-right:0px;'");
         $this->AddElement(array($field1,$field2,$field3));
       }
