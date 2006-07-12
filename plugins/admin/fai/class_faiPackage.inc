@@ -421,13 +421,15 @@ class faiPackage extends plugin
         $dsc= "";
         if (preg_match('/^-/', $usedName)){
           $dsc= " - "._("Package marked for removal");
-          $usedName= preg_replace('/^-/', '! ', $usedName);
+          $usedName2= preg_replace('/^-/', '! ', $usedName);
+        }else{
+          $usedName2= $usedName;
         }
 
         if(isset($this->list[$usedName][1])){
-          $a_ret[$usedName] = $usedName." [".$this->list[$usedName][1]."]".$c_str.$dsc;
+          $a_ret[$usedName] = $usedName2." [".$this->list[$usedName][1]."]".$c_str.$dsc;
         }else{
-          $a_ret[$usedName] = $usedName.$c_str.$dsc;
+          $a_ret[$usedName] = $usedName2.$c_str.$dsc;
         }
       }
     }
