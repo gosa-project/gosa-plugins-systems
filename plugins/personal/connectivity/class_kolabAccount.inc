@@ -402,7 +402,7 @@ class kolabAccount extends plugin
   }
 
 
-  /* Return pluign informations for acl handling  */
+  /* Return plugin informations for acl handling  */
   function plInfo()
   {
     return (array(	

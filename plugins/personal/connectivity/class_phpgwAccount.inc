@@ -121,7 +121,7 @@ class phpgwAccount extends plugin
   }
 
 
-  /* Return pluign informations for acl handling 
+  /* Return plugin informations for acl handling 
     #FIME ACL attributes arn't translated yet */
   function plInfo()
   {

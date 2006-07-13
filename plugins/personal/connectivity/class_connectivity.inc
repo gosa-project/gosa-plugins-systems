@@ -163,7 +163,18 @@ class connectivity extends plugin
       $this->plugin[$key]->PrepareForCopyPaste($plug);
     }
   }
-  
+
+  /* Return plugin informations for acl handling 
+      #FIXME We should check here, if the user has access to sub one of the subClasses */ 
+  function plInfo()
+  {
+    return (array(  
+          "plDescription"     => _("Connectivity extension"),
+          "plSelfModify"      => TRUE,
+          "plDepends"         => array("objectClass" => "gosaAccount"),
+          "connectivity"      => "!!! FIXME "._("Conenctivity  account")));
+  }
+
 
 }
 

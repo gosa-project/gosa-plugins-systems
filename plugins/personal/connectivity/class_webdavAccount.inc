@@ -116,7 +116,7 @@ class webdavAccount extends plugin
     }
   }
 
-  /* Return pluign informations for acl handling
+  /* Return plugin informations for acl handling
       #FIXME This is only an enable/disable checkbox for this account, there is possibly a better solution available later */
   function plInfo()
   {

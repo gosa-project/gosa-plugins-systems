@@ -872,7 +872,7 @@ class oxchangeAccount extends plugin
   }
 
 
-  /* Return pluign informations for acl handling
+  /* Return plugin informations for acl handling
     #FIXME ACL attributes aren't translated yet.	*/
   function plInfo()
   {
