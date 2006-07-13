@@ -520,7 +520,7 @@ class conference extends plugin
     return (array(
           "plDescription"     => _("Asterisk conference management"),
           "plSelfModify"      => TRUE,
-          "plDepends"         => array("objectClass" => "goFonConference"),
+          "plDepends"         => array("objectClass" => "goFonConference", "description" => _("Asterisk")),
 
           "base"                          => _("Base"), 
           "description"                   => _("Description"), 
