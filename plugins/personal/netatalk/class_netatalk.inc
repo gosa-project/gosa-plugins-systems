@@ -322,6 +322,21 @@ class netatalk extends plugin {
     $this->handle_post_events('remove');
   }
 
+  
+  /* Return plugin informations for acl handling
+      #FIXME Attributes aren't translated */
+  function plInfo()
+  {
+    return (array(
+          "plDescription"     => _("Apple talk"),
+          "plSelfModify"      => TRUE,
+          "plDepends"         => array("objectClass" => "gosaAccount"),
+          "apple-user-homeurl"        => _("apple-user-homeurl"),
+          "apple-user-homeDirectory"  => _("apple-user-homeDirectory")));
+  }
+
+
+
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
