@@ -121,12 +121,14 @@ class phpgwAccount extends plugin
   }
 
 
+  /* Return pluign informations for acl handling 
+    #FIME ACL attributes arn't translated yet */
   function plInfo()
   {
     return (array(  "plDescription"   => _("Intranet account settings"),
           "plSelfModify"    => TRUE,
           "plDepends"       => array("objectClass" => "gosaAccount"),
-          "phpgwAccountExpires" =>"#FIXME not translated"._("phpgwAccountExpires"),
+          "phpgwAccountExpires" =>"!!! FIXME "._("phpgwAccountExpires"),
           "phpgwAccountStatus"  =>_("phpgwAccountStatus"),
           "phpgwAccountType"    =>_("phpgwAccountType")));
   }

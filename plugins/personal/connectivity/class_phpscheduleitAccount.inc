@@ -129,12 +129,15 @@ class phpscheduleitAccount extends plugin
 
   }
 
+
+  /* Return pluign informations for acl handling 
+      #FIXME This is only an enable/disable checkbox for this account, there is possibly a better solution available later */
   function plInfo()
   {
     return (array(  "plDescription"   => _("PHPscheduleit account"),
           "plSelfModify"    => TRUE,
           "plDepends"       => array("objectClass" => "gosaAccount"),
-          "phpscheduleitAccount" => "PHPscheduleit account"));
+          "phpscheduleitAccount" => "!!! FIXME "._("PHPscheduleit account")));
   }
 
 

@@ -267,14 +267,15 @@ class proxyAccount extends plugin
 
   }
 
-
+  /* Return pluign informations for acl handling 
+      #FIME There possibly some attributes that can be combined to one acl. */
   function plInfo()
   {
     return (array(  "plDescription"   => _("Intranet account settings"),
           "plSelfModify"    => TRUE,
           "plDepends"       => array("objectClass" => "gosaAccount"),
 
-          "gosaProxyID"           => _("gosaProxyID"),
+          "gosaProxyID"           => "!!! FIXME "._("gosaProxyID"),
     
           "gosaProxyFlag_F"   => _("Filter unwanted content"), 
           "gosaProxyFlag_T"   => _("Limit proxy access"),

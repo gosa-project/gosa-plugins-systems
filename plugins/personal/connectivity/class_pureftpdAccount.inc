@@ -181,15 +181,16 @@ class pureftpdAccount extends plugin
   }
 
 
+  /* Return pluign informations for acl handling
+  #FIME There possibly some attributes that can be combined to one acl. */
   function plInfo()
   {
-
-    # FIXME We should combine some of the attributes liste below..
-    return (array(  "plDescription"   => _("Intranet account settings"),
+    return (array(  
+          "plDescription"   => _("Intranet account settings"),
           "plSelfModify"    => TRUE,
           "plDepends"       => array("objectClass" => "gosaAccount"),
 
-          "FTPQuotaFiles"         => _("Quota files"),
+          "FTPQuotaFiles"         => "!!! FIXME "._("Quota files"),
           "FTPUploadRatio"        => _("Upload ratio"),
           "FTPQuotaMBytes"        => _("Quota MBytes"),
           "FTPDownloadRatio"      => _("Download ratio"),

@@ -327,12 +327,15 @@ class opengwAccount extends plugin
   }
 
 
+ /* Return pluign informations for acl handling 
+      #FIXME This is only an enable/disable checkbox for this account, there is possibly a better solution available later */	
   function plInfo()
   {
-    return (array(	"plDescription"   => _("Open groupware account settings"),
+    return (array(	
+          "plDescription"   => _("Open groupware account settings"),
           "plSelfModify"    => TRUE,
           "plDepends"       => array("objectClass" => "gosaAccount"),
-          "opengwAccount"   => "Open groupware account"));
+          "opengwAccount"   => "!!! FIXME "._("Open groupware account")));
   }
   
 }

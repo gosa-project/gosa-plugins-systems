@@ -872,16 +872,19 @@ class oxchangeAccount extends plugin
   }
 
 
+  /* Return pluign informations for acl handling
+    #FIXME ACL attributes aren't translated yet.	*/
   function plInfo()
   {
-    return (array("plDescription"   => _("Open xchange account settings"),
-          "plSelfModify"    => TRUE,
-          "plDepends"       => array("objectClass" => _("gosaAccount")),
-          "OXAppointmentDays"   => "#FIXEME attributes arn't translated"._("OXAppointmentDays"),
-          "OXTaskDays"   	=> _("OXTaskDays"),
-          "mailEnabled"   	=> _("mailEnabled"),
-          "OXTimeZone"   	=> _("OXTimeZone")));
+    return (
+    array("plDescription"     => _("Open xchange account settings"),
+          "plSelfModify"      => TRUE,
+          "plDepends"         => array("objectClass" => _("gosaAccount")),
+          "OXAppointmentDays" => "!!! FIXME "._("OXAppointmentDays"),
+          "OXTaskDays"   	    => _("OXTaskDays"),
+          "mailEnabled"   	  => _("mailEnabled"),
+          "OXTimeZone"   	    => _("OXTimeZone")));
   }
 }
-
+// vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

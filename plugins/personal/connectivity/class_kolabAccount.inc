@@ -402,11 +402,13 @@ class kolabAccount extends plugin
   }
 
 
+  /* Return pluign informations for acl handling  */
   function plInfo()
   {
-    return (array(	"plDescription"   => _("Koalb account settings"),
-          "plSelfModify"    => TRUE,
-          "plDepends"       => array("objectClass" => "gosaAccount"),
+    return (array(	
+          "plDescription"         => _("Koalb account settings"),
+          "plSelfModify"          => TRUE,
+          "plDepends"             => array("objectClass" => "gosaAccount"),
           "kolabFreeBusyFuture"   => _("Free busy future"),
           "unrestrictedMailSize"  => _("Mail size restriction"),
           "calFBURL"              => _("Free busy information"),
