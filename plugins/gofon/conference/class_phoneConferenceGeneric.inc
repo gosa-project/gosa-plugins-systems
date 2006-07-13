@@ -513,6 +513,32 @@ class conference extends plugin
     $this->postcreate();
   }
 
+
+  /* Return plugin informations for acl handling */
+  function plInfo()
+  {
+    return (array(
+          "plDescription"     => _("Asterisk conference management"),
+          "plSelfModify"      => TRUE,
+          "plDepends"         => array("objectClass" => "goFonConference"),
+
+          "base"                          => _("Base"), 
+          "description"                   => _("Description"), 
+          "goFonPIN"                      => _("Conference PIN"),
+
+          "goFonConferenceOption_P"       => _("Preset PIN"),
+          "goFonConferenceOption_r"       => _("Record conference"),
+          "goFonConferenceOption_M"       => _("Play music on hold"),
+          "goFonConferenceOption_s"       => _("Activate menu"),
+          "goFonConferenceOption_i"       => _("Announce user activity"),
+          "goFonConferenceOption_c"       => _("Count user"),
+          "goFonConferenceOption_D"       => _("Conference type"),
+
+          "goFonConferenceOptionFormat"   => _("Format"),
+          "goFonConferenceOptionLifetime" => _("Lifetime"),
+          "telephoneNumber"               => _("Telephone number"),
+          "goFonConferenceOwner"          => _("Owner")));
+  }
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
