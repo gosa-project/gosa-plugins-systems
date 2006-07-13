@@ -48,6 +48,7 @@ class department extends plugin
 	var $attributes= array("ou", "description", "businessCategory", "st", "l", "postalAddress",
 			"telephoneNumber", "facsimileTelephoneNumber", "gosaUnitTag");
 	var $objectclasses= array("top", "gosaDepartment", "organizationalUnit");
+  var $initially_was_tagged = false;
 
 	function department ($config, $dn)
 	{
@@ -79,6 +80,7 @@ class department extends plugin
 		/* Is administrational Unit? */
 		if ($dn != "new" && in_array_ics('gosaAdministrativeUnit', $this->attrs['objectClass'])){
 			$this->is_administrational_unit= true;
+      $this->initially_was_tagged = true;
 		}
 	}
 
@@ -261,9 +263,15 @@ class department extends plugin
 
 		/* Add tag objects if needed */
 		if ($this->is_administrational_unit){
-      if(!in_array_ics("gosaAdministrativeUnit",$this->objectclasses)){
+
+      /* If this wasn't tagged before add oc an reset unit tag */
+      if(!$this->initially_was_tagged){
   			$this->objectclasses[]= "gosaAdministrativeUnit";
 			  $this->gosaUnitTag= "";
+
+        /* It seams that this method is called twice, 
+            set this to true. to avoid adding this oc twice */
+        $this->initially_was_tagged = true;
       }
 
 			if ($this->gosaUnitTag == ""){
@@ -311,6 +319,7 @@ class department extends plugin
 			if(!$has_unit_tag && isset($this->attrs['gosaUnitTag'])){
 				$this->attrs['gosaUnitTag']= array();
 			}
+      $this->gosaUnitTag = "";
 		}
 
 		/* Write back to ldap */
