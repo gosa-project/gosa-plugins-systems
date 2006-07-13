@@ -1193,6 +1193,23 @@ class phoneAccount extends plugin
       $this->goFonPIN = $_POST['goFonPIN'];
     }
   }
+
+
+  /* Return plugin informations for acl handling */
+  function plInfo()
+  {
+    return (array(
+          "plDescription"     => _("Phone extension"),
+          "plSelfModify"      => TRUE,
+          "plDepends"         => array("objectClass" => "gosaAccount"),
+
+          "goFonDeliveryMode"   => _("Delivery mode"),
+          "goFonHardware"       => _("Phone hardware"),
+          "goFonPIN"            => _("Telephone pin"),
+          "goFonVoicemailPIN"   => _("Voivemail pin"),
+          "telephoneNumber"     => _("Telephone number"),
+          "goFonMacro"          => _("Macro settings")));
+  }
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
