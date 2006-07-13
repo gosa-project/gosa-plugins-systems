@@ -232,6 +232,38 @@ class nagiosAccount extends plugin
     $this->handle_post_events('remove');
   }
 
+
+
+  function plInfo()
+  {
+    return (array(
+          "plDescription"   => _("Intranet account settings"),
+          "plSelfModify"    => TRUE,
+          "plDepends"       => array("objectClass" => "gosaAccount"),
+
+          "NagiosAlias"                       =>  _("Alias"),
+          "NagiosPager"                       =>  _("Pager number"),
+          "NagiosMail"                        =>  _("Mail address"),
+
+          "HostNotificationCommands"          =>  _("Host notification commands"),
+          "HostNotificationOptions"           =>  _("Host notification options"),
+          "HostNotificationPeriod"            =>  _("Host notification period"),
+
+          "ServiceNotificationCommands"       =>  _("Service notification commands"),
+          "ServiceNotificationOptions"        =>  _("Service notification options"),
+          "ServiceNotificationPeriod"         =>  _("Service notification period"),
+
+          "AuthorizedAllHosts"                =>  _("View all hosts"),
+          "AuthorizedAllServices"             =>  _("View all services"),
+
+          "AuthorizedSystemCommands"          =>  _("Trigger system commands"),
+          "AuthorizedAllHostCommands"         =>  _("Trigger all host commands"),
+          "AuthorizedAllServiceCommands"      =>  _("Trigger all service commands"),
+
+          "AuthorizedConfigurationInformation"=>  _("View configuration information"),
+          "AuthorizedSystemInformation"       =>  _("View system informations")));
+
+  }
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
