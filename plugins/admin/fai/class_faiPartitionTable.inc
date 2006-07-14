@@ -478,6 +478,25 @@ class faiPartitionTable extends plugin
     }
     $this->handle_post_events("add");
   }
+
+  
+  /* Return plugin informations for acl handling */ 
+  function plInfo()
+  {
+    return (array(  
+          "plDescription"     => _("FAI partition table"),
+          "plSelfModify"      => FALSE,
+          "plDepends"         => array("objectClass" => "FAIclass"),
+          "cn"                => _("Name"),
+          "FAIpartitionType"  => _("Partition type"),
+          "FAIpartitionNr"    => _("Partition no."),
+          "FAIfsType"         => _("File system type"),
+          "FAImountPoint"     => _("Mount point"),
+          "FAIpartitionSize"  => _("Partition size"),
+          "FAImountOptions"   => _("Mount options"),
+          "FAIfsOptions"      => _("File system options"),
+          "FAIpartitionFlags" => _("Partition flags")));
+  }
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

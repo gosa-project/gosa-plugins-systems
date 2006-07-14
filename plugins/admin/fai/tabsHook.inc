@@ -7,6 +7,8 @@ class tabsHook extends tabs
   function tabsHook($config, $data, $dn)
   {
 	tabs::tabs($config, $data, $dn);
+	/* Add references/acls/snapshots */
+	$this->addSpecialTabs();
   }
 
   function check()

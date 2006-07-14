@@ -16,10 +16,6 @@ class faiProfile extends plugin
   /* ObjectClasses for this Object*/
   var $objectclasses    = array("top","FAIclass","FAIprofile");
 
-  /* Class name of the Ldap ObjectClass for the Sub Object */
-  var $subClass         = "FAIscriptEntry";
-  var $subClasses       = array("top","FAIclass","FAIscriptEntry");
-
   /* Specific attributes */
   var $old_cn           = "";
   var $cn               = "";       // The class name for this object
@@ -427,6 +423,20 @@ class faiProfile extends plugin
     $this->handle_object_tagging();
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of FAI/profile with dn '%s' failed."),$this->dn));
   }
+
+
+  /* Return plugin informations for acl handling */ 
+  function plInfo()
+  {
+    return (array(  
+          "plDescription"     => _("FAI profile"),
+          "plSelfModify"      => FALSE,
+          "plDepends"         => array("objectClass" => "FAIclass"),
+          "cn"                => _("Name"),
+          "description"       => _("Description"),
+          "FAIclass"          => _("FAI classes")));
+  }
+
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

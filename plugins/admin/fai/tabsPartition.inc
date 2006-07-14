@@ -7,6 +7,9 @@ class tabsPartition extends tabs
   function tabsPartition($config, $data, $dn)
   {
 	tabs::tabs($config, $data, $dn);
+
+	/* Add references/acls/snapshots */
+	$this->addSpecialTabs();
   }
 
   function check()

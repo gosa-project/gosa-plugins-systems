@@ -405,6 +405,21 @@ class faiTemplate extends plugin
       $this->handle_object_tagging($sub_dn, $this->gosaUnitTag);
     }
   }
+  
+  /* Return plugin informations for acl handling */ 
+  function plInfo()
+  {
+    return (array(  
+          "plDescription"     => _("FAI template"),
+          "plSelfModify"      => FALSE,
+          "plDepends"         => array("objectClass" => "FAIclass"),
+          "cn"                => _("Name"),
+          "description"       => _("Description"),
+          "FAItemplateFile"   => _("Template file"),
+          "FAItemplatePath"   => _("Template path"),
+          "FAIowner"          => _("File owner"),
+          "FAImode"           => _("File permissions")));
+  }
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

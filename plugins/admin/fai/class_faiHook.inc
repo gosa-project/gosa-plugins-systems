@@ -466,6 +466,19 @@ class faiHook extends plugin
       $this->handle_object_tagging($sub_dn, $this->gosaUnitTag);
     }
   }
+
+  /* Return plugin informations for acl handling */ 
+  function plInfo()
+  {
+    return (array(  
+          "plDescription"     => _("FAI hook"),
+          "plSelfModify"      => FALSE,
+          "plDepends"         => array("objectClass" => "FAIclass"),
+          "cn"                => _("Name"),
+          "description"       => _("Description"),
+          "FAItast"           => _("Task"),
+          "FAIscript"         => _("FAI script")));
+  }
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

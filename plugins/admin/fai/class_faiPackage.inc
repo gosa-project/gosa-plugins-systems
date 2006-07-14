@@ -532,6 +532,21 @@ class faiPackage extends plugin
       }
     }
   }
+
+  /* Return plugin informations for acl handling */ 
+  function plInfo()
+  {
+    return (array(  
+          "plDescription"     => _("FAI Package list"),
+          "plSelfModify"      => FALSE,
+          "plDepends"         => array("objectClass" => "FAIclass"),
+          "cn"                => _("Name"),
+          "description"       => _("Description"),
+          "FAIpackage"        => _("Packages"),
+          "FAIdebianSection"  => _("Section"),
+          "FAIinstallMethod"  => _("Install Method"),
+          "FAIdebianRelease"  => _("Release")));
+  }
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

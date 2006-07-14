@@ -441,6 +441,19 @@ class faiScript extends plugin
       $this->handle_object_tagging($sub_dn, $this->gosaUnitTag);
     }
   }
+  
+  /* Return plugin informations for acl handling */ 
+  function plInfo()
+  {
+    return (array(  
+          "plDescription"     => _("FAI script"),
+          "plSelfModify"      => FALSE,
+          "plDepends"         => array("objectClass" => "FAIclass"),
+          "cn"                => _("Name"),
+          "description"       => _("Description"),
+          "FAIpriority"       => _("Script priority"),
+          "FAIscript"         => _("FAI script")));
+  }
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

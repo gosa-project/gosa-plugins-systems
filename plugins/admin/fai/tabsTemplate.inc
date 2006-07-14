@@ -7,6 +7,9 @@ class tabsTemplate extends tabs
   function tabsTemplate($config, $data, $dn)
   {
 	tabs::tabs($config, $data, $dn);
+
+	/* Add references/acls/snapshots */
+	$this->addSpecialTabs();
   }
 
   function check()
