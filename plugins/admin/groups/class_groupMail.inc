@@ -973,6 +973,32 @@ I: Only insider delivery */
   }
 
 
+  /* Return plugin informations for acl handling  */ 
+  function plInfo()
+  {
+    return (array(  
+          "plDescription"     => _("Group mail"),
+          "plSelfModify"      => FALSE,
+          "plDepends"         => array("objectClass" => "posixGroup"),
+
+          "mail"                      => _("Mail address"),
+          "gosaMailAlternateAddress"  => _("Alternate addresses"),
+          "gosaMailForwardingAddress" => _("Forwarding addresses"),
+
+          "gosaMailQuota"             => _("Quota size"),
+//        "gosaMailMaxSize"           => _("Mail max size"),
+
+          "gosaMailServer"            => _("Mail server"),
+//        "gosaMailDeliveryMode"      => _("Delivery mode"),
+
+//        "gosaSpamSortLevel"         => _(""),
+//        "gosaSpamMailbox"           => _(""),
+
+          "acl"                       => _(""),
+//        "gosaSharedFolderTarget"    => _(""),
+//        "gosaVacationMessage"       => _("")
+                                                   ));
+  }
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

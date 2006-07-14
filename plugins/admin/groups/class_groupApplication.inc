@@ -1049,9 +1049,21 @@ class appgroup extends plugin
         $ret[$path]=$cat;
       } 
     }
-  return($ret);
+    return($ret);
+  }
+
+
+  /* Return plugin informations for acl handling  */ 
+  function plInfo()
+  {
+    return (array(  
+          "plDescription"     => _("Group applications"),
+          "plSelfModify"      => FALSE,
+          "plDepends"         => array("objectClass" => "posixGroup"),
+          "gosaMemberApplication"     => _("Application"),
+          "gosaApplicationParameter"  => _("Application parameter")));
+
   }
 }
-
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
