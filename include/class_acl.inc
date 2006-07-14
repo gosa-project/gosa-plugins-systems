@@ -613,7 +613,7 @@ class acl extends plugin
   function extractACL($acl)
   {
     /* Rip acl off the string, seperate by ',' and place it in an array */
-    $as= preg_replace('/^[^:]+:[^:]+:[^:]+:(.*)$/', '\1', $acl);
+    $as= preg_replace('/^[^:]+:[^:]+:[^:]*:(.*)$/', '\1', $acl);
     $aa= split(',', $as);
     $a= array();
 
