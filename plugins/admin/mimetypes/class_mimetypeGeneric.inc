@@ -644,6 +644,25 @@ class mimetype extends plugin
       }
     }
   }
+
+  /* Return plugin informations for acl handling  */ 
+  function plInfo()
+  {
+    return (array(  
+          "plDescription"     => _("Mime types"),
+          "plSelfModify"      => FALSE,
+          "plDepends"         => array("objectClass" => "gotoMimeType","description"=>_("Mime type")),
+
+          "cn"                          => _("Name"),
+          "gotoMimeGroup"               => _("Mime group"),
+          "description"                 => _("Description"),
+          "base"                        => _("Base"),
+          "gotoMimeApplication"         => _("Application"),
+          "gotoMimeLeftClickAction"     => _("Left click action"),
+          "gotoMimeIcon"                => _("Icon"),
+          "gotoMimeFilePattern"         => _("File patterns"),
+          "gotoMimeEmbeddedApplication" => _("Embedded applications")));
+  }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
