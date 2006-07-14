@@ -458,6 +458,21 @@ class macro extends plugin
     }
   }
 
+
+  /* Return plugin informations for acl handling */
+  function plInfo()
+  {
+    return (array(
+          "plDescription"     => _("Asterisk macro management"),
+          "plSelfModify"      => TRUE,
+          "plDepends"         => array("objectClass" => "goFonMacro","description"   => _("Macro")),
+
+          "base"                          => _("Base"), 
+          "description"                   => _("Description"), 
+          "displayName"                   => _("Display name"),
+          "goFonMacroContent"             => _("Macro content"),
+          "goFonMacroVisible"             => _("Visibility flag")));
+  }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
