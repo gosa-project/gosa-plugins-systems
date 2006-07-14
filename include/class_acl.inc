@@ -111,6 +111,8 @@ class acl extends plugin
         }
       }
     }
+
+    /* Add category for all objects */
     asort($this->aclObjects);
 
     /* Generate mapping object */
@@ -119,6 +121,7 @@ class acl extends plugin
         $class= $pl['plDepends']['objectClass'];
         if (!isset($this->ocMapping[$class])){
           $this->ocMapping[$class]= array();
+          $this->ocMapping[$class][]= '0';
         }
         $this->ocMapping[$class][]= $oc;
       }
@@ -231,7 +234,6 @@ class acl extends plugin
           $new_acl[$object][$attribute]= $value;
         }
       }
-
     }
     
     /* Only be interested in new acl's, if we're in the right _POST place */
@@ -242,6 +244,11 @@ class acl extends plugin
           $this->aclContents[$oc]= $new_acl[$oc];
         }
       }
+    }
+
+    /* Save new acl in case of base edit mode */
+    if ($this->aclType == 'base'){
+      $this->aclContents= $new_acl;
     }
 
     /* Cancel new acl? */
@@ -363,7 +370,7 @@ class acl extends plugin
 
         /* Set summary... */
         if ($summary == ""){
-          $summary= _("No ACL settings for this category");
+          $summary= '<i>'._("No ACL settings for this category").'</i>';
         } else {
           $summary= sprintf(_("Contains ACLs for these objects: %s"), preg_replace('/, $/', '', $summary));
         }
@@ -414,6 +421,7 @@ class acl extends plugin
 
       /* Collect objects for selected category */
       $aclObjects= array();
+
       foreach ($plist as $class => $acls){
         if (isset($acls['plDepends']['objectClass']) && $acls['plDepends']['objectClass'] == $this->aclObject){
           $aclObjects[$class]= $acls['plDescription'];
@@ -471,9 +479,9 @@ class acl extends plugin
 
       /* Global options */
       $more_options= $this->mkchkbx($key."_0_r",  _("read"), preg_match('/r/', $currentAcl[0])).$spc;
-      $more_options.= $this->mkchkbx($key."_0_w", _("write"), preg_match('/w/', $currentAcl[0])).$spc;
+      $more_options.= $this->mkchkbx($key."_0_w", _("write"), preg_match('/w/', $currentAcl[0]));
 
-      $display.= "<tr><td style='background-color:#E0E0E0' colspan=".($cols-1).">$options</td><td style='background-color:#C8C8C8'>&nbsp;".("Complete object:")." $more_options</td></tr>";
+      $display.= "<tr><td style='background-color:#E0E0E0' colspan=".($cols-1).">$options</td><td style='background-color:#D4D4D4'>&nbsp;".("Complete object:")." $more_options</td></tr>";
 
       /* Walk through the list of attributes */
       $cnt= 1;
