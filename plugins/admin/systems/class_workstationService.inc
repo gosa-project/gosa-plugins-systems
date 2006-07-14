@@ -422,6 +422,33 @@ class workservice extends plugin
     $this->handle_post_events("modify");
   }
 
+
+  /* Return plugin informations for acl handling  */ 
+  function plInfo()
+  {
+    return (array(  
+          "plDescription"     => _("Services"),
+          "plSelfModify"      => FALSE,
+          "plDepends"         => array("objectClass" => "gotoWorkstation"),
+
+          "gotoXMonitor"        => _("Monitor"),
+          "gotoXDriver"         => _("Driver"),
+          "gotoXResolution"     => _("Resolution"),
+          "gotoXColordepth"     => _("Color depth"),
+          "gotoXHsync"          => _("H sync"),
+          "gotoXVsync"          => _("V sync"),
+
+          "gotoScannerEnable"   => _("Enable scanner"),
+          "gotoScannerClients"  => _("Scanner client"),
+          "gotoScannerBackend"  => _("Scanner backend"),
+
+          "gotoXKbModel"        => _("Keyboard model"),
+          "gotoXKbLayout"       => _("Keyboard layout"),
+          "gotoXKbVariant"      => _("Keyboard Variant"),
+          "gotoXMouseType"      => _("Mouse type"),
+          "gotoXMouseport"      => _("Mouse port"),
+          "goFonHardware"       => _("Telefon Hardware")));
+  }
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

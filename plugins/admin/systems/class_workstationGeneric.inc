@@ -456,6 +456,38 @@ class workgeneric extends plugin
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of system workstation/generic with dn '%s' failed."),$this->dn));
   }
 
+
+  /* Return plugin informations for acl handling 
+      #FIXME FAIscript seams to ununsed within this class... */ 
+  function plInfo()
+  {
+    return (array(  
+          "plDescription"     => _("Workstation"),
+          "plSelfModify"      => FALSE,
+          "plDepends"         => array("objectClass" => "gotoWorkstation","description"=>_("Workstation")),
+
+          "cn"                  => _("Workstation name"), 
+
+          "gotoMode"            => _("Goto mode"), 
+          "gotoSyslogServer"    => _("Syslog server"), 
+          "gotoNtpServer"       => _("Ntp server"), 
+          "FAIstate"            => _("Action flag"),
+
+//        "gotoFloppyEnable"    => _(""), 
+//        "gotoCdromEnable"     => _(""), 
+//        "gotoSndModule"       => _(""), 
+
+//        "ghCpuType"           => _(""), 
+//        "ghMemSize"           => _(""), 
+//        "ghUsbSupport"        => _(""), 
+//        "ghGfxAdapter"        => _(""), 
+//        "ghSoundAdapter"      => _(""), 
+//        "gotoLastUser"        => _(""), 
+//        "l"                   => _(""), 
+//          "FAIscript"           => _("FAI status ")
+            ));
+  }
+
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

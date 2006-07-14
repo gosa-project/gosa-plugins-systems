@@ -501,6 +501,19 @@ class termDNS extends plugin
     $str.="</select>";
     return($str); 
   }
+
+
+  /* Return plugin informations for acl handling  */ 
+  function plInfo()
+  {
+    return (array(  
+          "plDescription"     => _("DNS"),
+          "plSelfModify"      => FALSE,
+          "plDepends"         => array("objectClass" => array("gotoWorkstation")),
+
+          "ipHostNumber"  => _("IP address"),
+          "macAddress"    => _("MAC address")));
+  }
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

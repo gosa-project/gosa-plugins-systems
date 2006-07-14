@@ -1074,6 +1074,23 @@ class workstartup extends plugin
     return($ret);
   }
 
+
+  /* Return plugin informations for acl handling  */ 
+  function plInfo()
+  {
+    return (array(  
+          "plDescription"     => _("Startup"),
+          "plSelfModify"      => FALSE,
+          "plDepends"         => array("objectClass" => "gotoWorkstation"),
+          "gotoLdapServer"        => _("Ldap server"),
+          "gotoBootKernel"        => _("Boot kernel"),
+          "gotoKernelParameters"  => _("Kernel parameter"),
+          "FAIclass"              => _("FAI classes"),
+          "FAIstatus"             => _("FAI status flag"),
+          "gotoShare"             => _("Shares"),
+          "FAIdebianMirror"       => _("Debian mirror"),
+          "FAIrelease"            => _("Debian release")));
+  }
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
