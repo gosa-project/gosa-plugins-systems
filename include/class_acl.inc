@@ -450,7 +450,7 @@ class acl extends plugin
       $currentAcl= $this->aclContents[$key];
 
       /* Object header */
-      $display.= "<table style='width:100%;border:1px solid #A0A0A0' cellspacing=0 cellpadding=2><tr><td style='background-color:#C8C8C8;height:1.8em' colspan=$cols><b>"._("Object").":</b> $name</td></tr>";
+      $display.= "<table style='width:100%;border:1px solid #A0A0A0' cellspacing=0 cellpadding=2><tr><td style='background-color:#C8C8C8;height:1.8em' colspan=$cols><b>"._("Object").": $name</b></td></tr>";
 
       /* Generate options */
       $spc= "&nbsp;&nbsp;";
@@ -469,7 +469,11 @@ class acl extends plugin
         }
       }
 
-      $display.= "<tr><td style='background-color:#E0E0E0' colspan=$cols>$options</td></tr>";
+      /* Global options */
+      $more_options= $this->mkchkbx($key."_0_r",  _("read"), preg_match('/r/', $currentAcl[0])).$spc;
+      $more_options.= $this->mkchkbx($key."_0_w", _("write"), preg_match('/w/', $currentAcl[0])).$spc;
+
+      $display.= "<tr><td style='background-color:#E0E0E0' colspan=".($cols-1).">$options</td><td style='background-color:#C8C8C8'>&nbsp;".("Complete object:")." $more_options</td></tr>";
 
       /* Walk through the list of attributes */
       $cnt= 1;
@@ -507,8 +511,8 @@ class acl extends plugin
       }
       
       /* Fill missing td's if needed */
-      if (--$cnt != $cols){
-       $display.= str_repeat("<td style='border-top:1px solid #A0A0A0'>&nbsp;</td>", $cols-$cnt); 
+      if (--$cnt != $cols && $cnt != 0){
+       $display.= str_repeat("<td style='border-top:1px solid #A0A0A0; width:".(int)(100/$cols)."%'>&nbsp;</td>", $cols-$cnt); 
       }
 
       $display.= "</table><br>";
@@ -787,7 +791,6 @@ class acl extends plugin
 
   function remove_from_parent()
   {
-    echo "remove_from_parent() called";
   }
 
 }
