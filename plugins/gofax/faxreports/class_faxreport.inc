@@ -385,7 +385,7 @@ class faxreport extends plugin
     return (array(
           "plDescription"     => _("Fax reports"),
           "plSelfModify"      => TRUE,
-          "plDepends"         => array("objectClass" => "gosaAccount"),
+          "plDepends"         => array("objectClass" => "goFaxSBlock"),
           "connectivity"      => "!!! FIXME "._("Fax reports")));
   }
 

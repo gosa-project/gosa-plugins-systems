@@ -559,7 +559,7 @@ class blocklist extends plugin
     return (array(  
           "plDescription"     => _("Fax Blocklists"),
           "plSelfModify"      => TRUE,
-          "plDepends"         => array("objectClass" => "goFaxSBlock", "description"=> _("Fax blocklist")),
+          "plDepends"         => array("objectClass" => "goFaxSBlock", "description"=> _("FAX")),
           "cn"              => _("Name"),
           "description"     => _("Description"),
           "base"            => _("Base"),
