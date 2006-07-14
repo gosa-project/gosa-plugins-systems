@@ -1251,7 +1251,7 @@ function printOutHotPlugDevices()
   {
     return (array("plDescription"   => _("Environment settings"),
                   "plSelfModify"    => TRUE,
-                  "plDepends"       => array("objectClass" => "gotoAccount"),
+                  "plDepends"       => array("objectClass" => array("gosaAccount", "posixGroup")),
 
                   "gotoProfileServer"   => _("Profile server") ,
                   "gotoProfileFlag_L"   => "FIXME"._("Resolution changeable during session") ,  // These variable are flags 
