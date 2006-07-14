@@ -465,7 +465,7 @@ class macro extends plugin
     return (array(
           "plDescription"     => _("Asterisk macro management"),
           "plSelfModify"      => TRUE,
-          "plDepends"         => array("objectClass" => "goFonMacro","description"   => _("Macro")),
+          "plDepends"         => array("objectClass" => "goFonMacro"),
 
           "base"                          => _("Base"), 
           "description"                   => _("Description"), 
