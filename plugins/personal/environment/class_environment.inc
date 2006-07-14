@@ -1245,6 +1245,8 @@ function printOutHotPlugDevices()
   }
 
 
+  /* Return plugin informations for acl handling 
+      #FIXME these ACLs should work for groups too */ 
   function plInfo()
   {
     return (array("plDescription"   => _("Environment settings"),

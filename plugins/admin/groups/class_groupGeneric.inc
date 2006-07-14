@@ -852,6 +852,27 @@ class group extends plugin
       $this->gidNumber  = false;
     }
   }
+
+  
+  /* Return plugin informations for acl handling  */ 
+  function plInfo()
+  {
+    return (array(  
+          "plDescription"     => _("Groups"),
+          "plSelfModify"      => FALSE,
+          "plDepends"         => array("objectClass" => "posixGroup","description"=>_("Groups")),
+          "cn"                => _("Name"),
+          "description"       => _("Description"),
+          "base"              => _("Base"),
+
+          "fon_group"         => _("Phone pickup group"),
+          "nagios_group"      => _("Nagios group"),
+
+          "gidNumber"         => _("GID"),
+          "memberUid"         => _("Group member"),
+          "sambaGroupType"    => _("Samba group type"),
+          "sambaSID"          => _("Samba SID")));
+  }
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
