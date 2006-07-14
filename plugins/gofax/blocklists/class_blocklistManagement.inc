@@ -553,6 +553,19 @@ class blocklist extends plugin
     }
   }
 
+  /* Return plugin informations for acl handling */
+  function plInfo()
+  {
+    return (array(  
+          "plDescription"     => _("Fax Blocklists"),
+          "plSelfModify"      => TRUE,
+          "plDepends"         => array("objectClass" => "goFaxSBlock", "description"=> _("Fax blocklist")),
+          "cn"              => _("Name"),
+          "description"     => _("Description"),
+          "base"            => _("Base"),
+          "type"            => _("Blocklist type")));
+  }
+
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

@@ -346,6 +346,19 @@ class fonreport extends plugin
       ORDER BY ".$this->fields[$this->sort]." $desc;";
     return($query);
   }
+
+
+  /* Return plugin informations for acl handling 
+     #FIXME You can only read attributes within this report plugin */
+  function plInfo()
+  {
+    return (array(
+          "plDescription"     => _("Phone reports"),
+          "plSelfModify"      => TRUE,
+          "plDepends"         => array("objectClass" => "fonreport"),
+
+          "fonreport" => "!!! FIXME "._("Phone reports")));
+  }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

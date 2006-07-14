@@ -804,6 +804,25 @@ class gofaxAccount extends plugin
     }
   }
 
+
+  /* Return plugin informations for acl handling 
+      #FIXME some attributes are still missing in this plugin acls */
+  function plInfo()
+  {
+    return (array(  
+          "plDescription"     => _("Fax account"),
+          "plSelfModify"      => TRUE,
+          "plDepends"         => array("objectClass" => "gosaAccount"),
+
+          "goFaxIsEnabled"                    => "!!! FIXME "._("Enable/Disable fax"),
+          "goFaxRBlocklist"                   => _("Receive blocklist"),
+          "goFaxSBlocklist"                   => _("Send blocklist"),
+          "facsimileTelephoneNumber"          => _("Fax number"), // goFaxDeliveryMode
+          "goFaxPrinter"                      => _("Deliver fax to printer"),
+//          "goFaxDivertNumber"                 => _(""),
+          "goFaxFormat"                       => _("Delivery format"),
+          "goFaxLanguage"                     => _("Language")));
+  }
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

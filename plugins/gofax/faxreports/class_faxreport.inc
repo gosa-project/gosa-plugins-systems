@@ -376,6 +376,19 @@ class faxreport extends plugin
     }  
     register_global("faxreportfilter",$faxreportfilter);
   }
+
+
+  /* Return plugin informations for acl handling
+    #FIXME You can only read attributes within this report plugin */
+  function plInfo()
+  {
+    return (array(
+          "plDescription"     => _("Fax reports"),
+          "plSelfModify"      => TRUE,
+          "plDepends"         => array("objectClass" => "gosaAccount"),
+          "connectivity"      => "!!! FIXME "._("Fax reports")));
+  }
+
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
