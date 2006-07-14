@@ -102,27 +102,12 @@ class acl extends plugin
       if (isset($acls['plDescription'])){
         /* Only feed categories */
         if (isset($acls['plDepends']['description'])){
-          if (is_array($acls['plDepends']['objectClass'])){
-            foreach($acls['plDepends']['objectClass'] as $oc){
-              $this->aclObjects[$oc]= $acls['plDepends']['description'];
-            }
-          } else {
-            $this->aclObjects[$acls['plDepends']['objectClass']]= $acls['plDepends']['description'];
-          }
+          $this->aclObjects[$acls['plDepends']['objectClass']]= $acls['plDepends']['description'];
         }
 
         /* Additionally filter the classes we're interested in in "self edit" mode */
-        if (is_array($acls['plDepends']['objectClass'])){
-          foreach($acls['plDepends']['objectClass'] as $hoc){
-            if (in_array_ics($hoc, $oc)){
-              $this->myAclObjects[$class]= $acls['plDescription'];
-              break;
-            }
-          }
-        } else {
-          if (in_array_ics($acls['plDepends']['objectClass'], $oc)){
-            $this->myAclObjects[$class]= $acls['plDescription'];
-          }
+        if (in_array_ics($acls['plDepends']['objectClass'], $oc)){
+          $this->myAclObjects[$class]= $acls['plDescription'];
         }
       }
     }
@@ -133,20 +118,12 @@ class acl extends plugin
     /* Generate mapping object */
     foreach ($plist as $oc => $pl){
       if (isset($pl['plDepends']['objectClass'])){
-        if (is_array($pl['plDepends']['objectClass'])){
-          foreach($pl['plDepends']['objectClass'] as $class){
-            if (!isset($this->ocMapping[$class])){
-              $this->ocMapping[$class]= array();
-            }
-            $this->ocMapping[$class][]= $oc;
-          }
-        } else {
-          $class= $pl['plDepends']['objectClass'];
-          if (!isset($this->ocMapping[$class])){
-            $this->ocMapping[$class]= array();
-          }
-          $this->ocMapping[$class][]= $oc;
+        $class= $pl['plDepends']['objectClass'];
+        if (!isset($this->ocMapping[$class])){
+          $this->ocMapping[$class]= array();
+          $this->ocMapping[$class][]= '0';
         }
+        $this->ocMapping[$class][]= $oc;
       }
     }
 
@@ -446,19 +423,8 @@ class acl extends plugin
       $aclObjects= array();
 
       foreach ($plist as $class => $acls){
-        if (isset($acls['plDepends']['objectClass'])){
-          if (is_array($acls['plDepends']['objectClass'])){
-            foreach($acls['plDepends']['objectClass'] as $coc){
-              if ($coc == $this->aclObject){
-                $aclObjects[$class]= $acls['plDescription'];
-                break;
-              }
-            }
-          } else {
-            if ($acls['plDepends']['objectClass'] == $this->aclObject){
-              $aclObjects[$class]= $acls['plDescription'];
-            }
-          }
+        if (isset($acls['plDepends']['objectClass']) && $acls['plDepends']['objectClass'] == $this->aclObject){
+          $aclObjects[$class]= $acls['plDescription'];
         }
       }
 
