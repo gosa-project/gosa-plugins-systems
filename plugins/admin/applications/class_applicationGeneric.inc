@@ -468,6 +468,31 @@ class application extends plugin
       $this->cn = $_POST['cn'];
     }
   }
+
+
+  /* Return plugin informations for acl handling */ 
+  function plInfo()
+  {
+    return (array(  
+          "plDescription"     => _("Applications"),
+          "plSelfModify"      => FALSE,
+          "plDepends"         => array("objectClass" => "gosaApplication"),
+          "cn"                => _("Name"),
+          "description"       => _("Description"),
+
+          "gosaApplicationExecute"  => _("Execute"),
+          "gosaApplicationName"     => _("Name"),
+          "gosaApplicationIcon"     => _("Icon"),
+          "gosaApplicationFlags"    => _("Flag"),
+          "gotoLogonScript"         => _("Script content"),
+
+          "exec_for_groupmembers" => _("Only executable for members"),              // G
+          "place_on_desktop"      => _("Place icon on members desktop"),            // D
+          "place_on_kicker"       => _("Place entry in members launch bar"),        // L
+          "place_in_startmenu"    => _("Place entry in members startmenu"),         // M
+          "overwrite_config"      => _("Replace user configuration on startup")));  // O
+
+  }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
