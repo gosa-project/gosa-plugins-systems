@@ -98,34 +98,45 @@ class acl extends plugin
     } else {
       $oc=  $this->attrs['objectClass'];
     }
-    foreach ($plist as $class => $acls){
-      if (isset($acls['plDescription'])){
-        /* Only feed categories */
-        if (isset($acls['plDepends']['description'])){
-          $this->aclObjects[$acls['plDepends']['objectClass']]= $acls['plDepends']['description'];
-        }
 
-        /* Additionally filter the classes we're interested in in "self edit" mode */
-        if (in_array_ics($acls['plDepends']['objectClass'], $oc)){
-          $this->myAclObjects[$class]= $acls['plDescription'];
+
+    /* Extract available categories from plugin info list */
+    foreach ($plist as $class => $acls){
+
+      /* Only feed categories */
+      if (isset($acls['plCategory'])){
+
+        /* Walk through supplied list and feed only translated categories */
+        foreach($acls['plCategory'] as $idx => $data){
+
+          /* Non numeric index means -> base object containing more informations */
+          if (preg_match('/^[0-9]+$/', $idx)){
+            if (!isset($this->ocMapping[$data])){
+              $this->ocMapping[$data]= array();
+              $this->ocMapping[$data][]= '0';
+            }
+            $this->ocMapping[$data][]= $class;
+          } else {
+            if (!isset($this->ocMapping[$idx])){
+              $this->ocMapping[$idx]= array();
+              $this->ocMapping[$idx][]= '0';
+            }
+            $this->ocMapping[$idx][]= $class;
+            $this->aclObjects[$idx]= $data['description'];
+
+            /* Additionally filter the classes we're interested in in "self edit" mode */
+            if (in_array_ics($data['objectClass'], $oc)){
+              $this->myAclObjects[$class]= $acls['plDescription'];
+            }
+          }
+
         }
       }
     }
 
-    /* Add category for all objects */
+    /* Sort categories */
     asort($this->aclObjects);
 
-    /* Generate mapping object */
-    foreach ($plist as $oc => $pl){
-      if (isset($pl['plDepends']['objectClass'])){
-        $class= $pl['plDepends']['objectClass'];
-        if (!isset($this->ocMapping[$class])){
-          $this->ocMapping[$class]= array();
-          $this->ocMapping[$class][]= '0';
-        }
-        $this->ocMapping[$class][]= $oc;
-      }
-    }
 
     /* Fill acl types */
     if ($this->isContainer){
@@ -352,19 +363,16 @@ class acl extends plugin
       $aclList->SetHeight(150);
 
       /* Add settings for all categories to the (permanent) list */
-      foreach ($this->aclObjects as $oc => $dsc){
+      foreach ($this->aclObjects as $section => $dsc){
         $summary= "";
-        foreach ($plist as $key => $plugin){
-          if (isset($plugin['plDepends']['objectClass']) && $plugin['plDepends']['objectClass'] == $oc &&
-              isset($this->aclContents[$key])){
-            if (count($this->aclContents[$key]) && isset($this->aclContents[$key][0]) &&
-                $this->aclContents[$key][0] != ""){
-              $summary.= "$key, ";
-              continue;
-            }
-            if (!isset($this->aclContents[$key][0]) && count($this->aclContents[$key])){
-              $summary.= "$key, ";
-            }
+        foreach($this->ocMapping[$section] as $oc){
+          if (isset($this->aclContents[$oc]) && count($this->aclContents[$oc]) && isset($this->aclContents[$oc][0]) &&
+              $this->aclContents[$oc][0] != ""){
+            $summary.= "$oc, ";
+            continue;
+          }
+          if (isset($this->aclContents[$oc]) && !isset($this->aclContents[$oc][0]) && count($this->aclContents[$oc])){
+            $summary.= "$oc, ";
           }
         }
 
@@ -377,8 +385,8 @@ class acl extends plugin
 
         $field1= array("string" => $dsc, "attach" => "style='width:100px'");
         $field2= array("string" => $summary);
-        $action= "<input class='center' type='image' src='images/edit.png' alt='"._("edit")."' name='cat_edit_$oc' title='"._("Edit categories ACLs")."'>";
-        $action.= "<input class='center' type='image' src='images/edittrash.png' alt='"._("delete")."' name='cat_del_$oc' title='"._("Clear categories ACLs")."'>";
+        $action= "<input class='center' type='image' src='images/edit.png' alt='"._("edit")."' name='cat_edit_$section' title='"._("Edit categories ACLs")."'>";
+        $action.= "<input class='center' type='image' src='images/edittrash.png' alt='"._("delete")."' name='cat_del_$section' title='"._("Clear categories ACLs")."'>";
         $field3= array("string" => $action, "attach" => "style='border-right:0px;width:50px'");
         $aclList->AddEntry(array($field1, $field2, $field3));
       }
@@ -421,13 +429,12 @@ class acl extends plugin
 
       /* Collect objects for selected category */
       $aclObjects= array();
-
-      foreach ($plist as $class => $acls){
-        if (isset($acls['plDepends']['objectClass']) && $acls['plDepends']['objectClass'] == $this->aclObject){
-          $aclObjects[$class]= $acls['plDescription'];
+      foreach ($this->ocMapping[$this->aclObject] as $idx => $class){
+        if ($idx == 0){
+          continue;
         }
+        $aclObjects[$class]= $plist[$class]['plDescription'];
       }
-
       $smarty->assign('aclSelector', $this->buildAclSelector($aclObjects));
     }
 
@@ -446,40 +453,12 @@ class acl extends plugin
     $plist= $tmp->info;
     asort($plist);
 
-    /* Generate global options */
-#    $key= "global";
-#    $display.= "<table style='width:100%;border:1px solid #C04040' cellspacing=0 cellpadding=2><tr><td style='background-color:#D88888;height:1.8em' colspan=$cols><b>"._("All objects of this category")."</b></td></tr>";
-#
-#    $spc= "&nbsp;&nbsp;";
-#    if ($this->isContainer && $this->aclType != 'base'){
-#      $options= $this->mkchkbx($key."_0_c",  _("Create objects"), preg_match('/c/', $currentAcl[0])).$spc;
-#      $options.= $this->mkchkbx($key."_0_m", _("Move objects"), preg_match('/m/', $currentAcl[0])).$spc;
-#      $options.= $this->mkchkbx($key."_0_d", _("Remove objects"), preg_match('/d/', $currentAcl[0])).$spc;
-#      if ($plist[$key]['plSelfModify']){
-#        $options.= $this->mkchkbx($key."_0_s", _("Modifyable by owner"), preg_match('/s/', $currentAcl[0])).$spc;
-#      }
-#    } else {
-#      $options= $this->mkchkbx($key."_0_m", _("Move object"), preg_match('/m/', $currentAcl[0])).$spc;
-#      $options.= $this->mkchkbx($key."_0_d", _("Remove object"), preg_match('/d/', $currentAcl[0])).$spc;
-#      if ($plist[$key]['plSelfModify']){
-#        $options.= $this->mkchkbx($key."_0_s", _("Modifyable by owner"), preg_match('/s/', $currentAcl[0])).$spc;
-#      }
-#    }
-#
-#    /* Global options */
-#    $more_options= $this->mkchkbx($key."_0_r",  _("read"), preg_match('/r/', $currentAcl[0])).$spc;
-#    $more_options.= $this->mkchkbx($key."_0_w", _("write"), preg_match('/w/', $currentAcl[0]));
-#
-#    $display.= "<tr><td style='background-color:#E0E0E0' colspan=".($cols-1).">$options</td><td style='background-color:#D4D4D4'>&nbsp;".("Complete object:")." $more_options</td></tr></table><br>";
-    
     /* Build general objects */
     foreach ($list as $key => $name){
 
       /* Create sub acl if it does not exist */
       if (!isset($this->aclContents[$key])){
         $this->aclContents[$key]= array();
-      }
-      if (!isset($this->aclContents[$key][0])){
         $this->aclContents[$key][0]= '';
       }
       $currentAcl= $this->aclContents[$key];
@@ -512,7 +491,7 @@ class acl extends plugin
 
       /* Walk through the list of attributes */
       $cnt= 1;
-      $splist= $plist[$key];
+      $splist= $plist[$key]['plProvidedAcls'];
       asort($splist);
       foreach($splist as $attr => $dsc){
 

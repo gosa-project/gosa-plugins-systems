@@ -864,7 +864,7 @@ class group extends plugin
           "plDepends"     => array(),
           "plPriority"    => 0,
           "plSection"     => array("admin"),
-          "plCategory"    => array("groups" => _("Groups")),
+          "plCategory"    => array("groups" => array("objectClass" => "posixGroup", "description" => _("Groups"))),
 
           "plProvidedAcls"    => array(
             "cn"                => _("Name"),

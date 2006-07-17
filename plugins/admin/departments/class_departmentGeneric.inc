@@ -525,19 +525,26 @@ class department extends plugin
   /* Return plugin informations for acl handling */ 
   function plInfo()
   {
-    return (array("plDescription"     => _("Departments"),
-                  "plSelfModify"      => FALSE,
-                  "plDepends"         => array("objectClass" => "gosaDepartment", "description" => _("Departments")),
-                  "description"       => _("Description"),
-                  "c"                 => _("Country"),
-                  "l"                 => _("Location"),
-                  "telephoneNumber"   => _("Telephone"),
-                  "ou"                => _("Department name"),
-                  "businessCategory"  => _("Category"),
-                  "st"                => _("State"),
-                  "postalAddress"     => _("Address"),
-                  "gosaUnitTag"       => _("Administrative settings"),
-                  "facsimileTelephoneNumber" => _("Fax")));
+    return (array("plShortName"   => _("Generic"),
+                  "plDescription" => _("Departments"),
+                  "plSelfModify"  => FALSE,
+                  "plPriority"    => 0,
+                  "plDepends"     => array(),
+                  "plSection"     => array("admin"),
+                  "plCategory"    => array("department" => array("objectClass" => "gosaDepartment", "description" => _("Departments"))),
+            
+                  "plProvidedAcls" => array(
+                    "description"       => _("Description"),
+                    "c"                 => _("Country"),
+                    "l"                 => _("Location"),
+                    "telephoneNumber"   => _("Telephone"),
+                    "ou"                => _("Department name"),
+                    "businessCategory"  => _("Category"),
+                    "st"                => _("State"),
+                    "postalAddress"     => _("Address"),
+                    "gosaUnitTag"       => _("Administrative settings"),
+                    "facsimileTelephoneNumber" => _("Fax"))
+                  ));
   }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

@@ -1311,7 +1311,8 @@ class user extends plugin
         "plDepends"     => array(),
         "plPriority"    => 0,
         "plSection"     => array("personal" => _("My account")),
-        "plCategory"    => array("gosaAccount" => _("Users")),
+        "plCategory"    => array("users" => array("description" => _("Users"),
+                                                  "objectClass" => "gosaAccount")),
 
         "plProvidedAcls" => array(
           "userPassword"      => _("User password"), 

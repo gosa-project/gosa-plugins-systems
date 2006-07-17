@@ -175,7 +175,7 @@ class connectivity extends plugin
           "plDepends"         => array("user"),
           "plPriority"        => 5,                                 // Position in tabs
           "plSection"       => "personal",                        // This belongs to personal
-          "plCategory"      => array("gosaAccount"),
+          "plCategory"      => array("users"),
           "plOptions"       => array(),
           "plProvidedAcls"  => array(
             "connectivity"      => "!!! FIXME "._("Connectivity  account"))
