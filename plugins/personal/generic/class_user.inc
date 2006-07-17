@@ -943,14 +943,11 @@ class user extends plugin
     }
 
     $ui= get_userinfo();
-    $acl= get_permissions ($new_dn, $ui->subtreeACL);
-    $acl= get_module_permission($acl, "user", $new_dn);
-    if ($this->dn == "new" && chkacl($acl, "create") != ""){
+    #FIXME How is the create flag stored ?, Add check for rename move ... 
+    if ($this->dn == "new" &&  !obj_is_writable($this->dn, "user","create")){
       $message[]= _("You have no permissions to create a user on this 'Base'.");
     } elseif ($this->dn != $new_dn && $this->dn != "new"){
-      $acl= get_permissions ($this->dn, $ui->subtreeACL);
-      $acl= get_module_permission($acl, "user", $this->dn);
-      if (chkacl($acl, "create") != ""){
+      if (!obj_is_writable($this->dn, "user","create")){
         $message[]= _("You have no permissions to move a user from the original 'Base'.");
       }
     }
