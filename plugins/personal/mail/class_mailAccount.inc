@@ -978,28 +978,35 @@ class mailAccount extends plugin
 
   function plInfo()
   {
-    return (array("plDescription"   => _("Mail settings"),
+    return (array(
+          "plShortName"     => _("Mail"),
+          "plDescription"   => _("Mail settings"),
           "plSelfModify"    => TRUE,
-          "plDepends"       => array("objectClass" => "gosaAccount"),
+          "plDepends"       => array("user"),                     // This plugin depends on
+          "plPriority"      => 4,                                 // Position in tabs
+          "plSection"       => "personal",                        // This belongs to personal
+          "plCategory"      => array("users"),                    // Add to following categories
+          "plOptions"       => array(),
+  
+          "plProvidedAcls"  => array(
+            "mail"                      =>  _("Mail address"),
+            "gosaMailServer"            =>  _("Mail server"),
+            "gosaMailQuota"             =>  _("Quota size"),
+            "gosaMailMaxSize"           =>  _("Mail max size"),
+            "gosaMailForwardingAddress" =>  _("Forwarding address"),
+            "gosaMailDeliveryMode_L"    =>  "FIXME"._("Local delivery"),            // This is flag of gosaMailDeliveryMode
+            "gosaMailDeliveryMode_R"    =>  "FIXME"._("Reject due to mailsize"),    // This is flag of gosaMailDeliveryMode
+            "gosaMailDeliveryMode_s"    =>  "FIXME"._("Use spam filter"),           // This is flag of gosaMailDeliveryMode
+            "gosaMailDeliveryMode_V"    =>  "FIXME"._("Add vacation information"),  // This is flag of gosaMailDeliveryMode
+            "gosaMailDeliveryMode_C"    =>  "FIXME"._("Use custom sieve script"),   // This is flag of gosaMailDeliveryMode
+            "gosaMailDeliveryMode_I"    =>  "FIXME"._("Only insider delivery"),     // This is flag of gosaMailDeliveryMode
+            "gosaSpamSortLevel"         =>  _("Spam level"),
+            "gosaSpamMailbox"           =>  _("Spam mail box"),
+            "gosaMailAlternateAddress"  =>  _("Mail alternative addresses"),
 
-          "mail"                      =>  _("Mail address"),
-          "gosaMailServer"            =>  _("Mail server"),
-          "gosaMailQuota"             =>  _("Quota size"),
-          "gosaMailMaxSize"           =>  _("Mail max size"),
-          "gosaMailForwardingAddress" =>  _("Forwarding address"),
-          "gosaMailDeliveryMode_L"    =>  "FIXME"._("Local delivery"),            // This is flag of gosaMailDeliveryMode
-          "gosaMailDeliveryMode_R"    =>  "FIXME"._("Reject due to mailsize"),    // This is flag of gosaMailDeliveryMode
-          "gosaMailDeliveryMode_s"    =>  "FIXME"._("Use spam filter"),           // This is flag of gosaMailDeliveryMode
-          "gosaMailDeliveryMode_V"    =>  "FIXME"._("Add vacation information"),  // This is flag of gosaMailDeliveryMode
-          "gosaMailDeliveryMode_C"    =>  "FIXME"._("Use custom sieve script"),   // This is flag of gosaMailDeliveryMode
-          "gosaMailDeliveryMode_I"    =>  "FIXME"._("Only insider delivery"),     // This is flag of gosaMailDeliveryMode
-          "gosaSpamSortLevel"         =>  _("Spam level"),
-          "gosaSpamMailbox"           =>  _("Spam mail box"),
-          "gosaMailAlternateAddress"  =>  _("Mail alternative addresses"),
-
-          "gosaVacationMessage"       =>  _("Vacation message"),
-          "gosaMailForwardingAddress" =>  _("Forwarding address")));
-
+            "gosaVacationMessage"       =>  _("Vacation message"),
+            "gosaMailForwardingAddress" =>  _("Forwarding address")));
+    )
   }
 }
 

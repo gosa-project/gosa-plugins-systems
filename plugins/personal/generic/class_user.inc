@@ -1310,7 +1310,7 @@ class user extends plugin
         "plSelfModify"  => TRUE,
         "plDepends"     => array(),
         "plPriority"    => 0,
-        "plSection"     => array("personal" => _("My account"))),
+        "plSection"     => array("personal" => _("My account")),
         "plCategory"    => array("users" => _("Users")),
 
         "plProvidedAcls" => array(

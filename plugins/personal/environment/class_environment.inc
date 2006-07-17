@@ -1249,12 +1249,13 @@ function printOutHotPlugDevices()
       #FIXME these ACLs should work for groups too */ 
   function plInfo()
   {
-    return (array("plDescription"   => _("Environment settings"),
-                  "plSelfModify"    => TRUE,
-                  "plDepends"       => array("user", "posixAccount"),
-                  "plPriority"      => 2,
-                  "plSection"       => "personal",
-                  "plCategory"      => array("users", "groups"),
+    return (array("plShortName"     => _("Environment"),
+                  "plDescription"   => _("Environment settings"),         // Description
+                  "plSelfModify"    => TRUE,                              
+                  "plDepends"       => array("user", "posixAccount"),     // This plugin depends on 
+                  "plPriority"      => 2,                                 // Position in tabs 
+                  "plSection"       => "personal",                        // This belongs to personal
+                  "plCategory"      => array("users", "groups"),          // Add to following categories 
                   "plOptions"       => array("resolution_hook" => array("type" => "string",
                                                                         "description" => _("Command to extend the list of possible screen resolutions"))),
 
@@ -1272,8 +1273,6 @@ function printOutHotPlugDevices()
                    ));
     }
 }
-
-  
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
