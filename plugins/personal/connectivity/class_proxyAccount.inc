@@ -271,22 +271,28 @@ class proxyAccount extends plugin
       #FIME There possibly some attributes that can be combined to one acl. */
   function plInfo()
   {
-    return (array(  "plDescription"   => _("Intranet account settings"),
+    return (array(
+          "plShortName"     => _("Proxy"),
+          "plDescription"   => _("Proxy account"),
           "plSelfModify"    => TRUE,
-          "plDepends"       => array("objectClass" => "gosaAccount"),
+          "plDepends"       => array("connectivity"),
+          "plPriority"      => 7,                                 // Position in tabs
+          "plSection"       => "personal",                        // This belongs to personal
+          "plCategory"      => array("gosaAccount"),
+          "plOptions"       => array(),
 
-          "gosaProxyID"           => "!!! FIXME "._("gosaProxyID"),
-    
-          "gosaProxyFlag_F"   => _("Filter unwanted content"), 
-          "gosaProxyFlag_T"   => _("Limit proxy access"),
-          "gosaProxyFlag_B"   => _("Restrict proxy usage by quota"),
+          "plProvidedAcls"  => array(
+            "gosaProxyID"           => "!!! FIXME "._("gosaProxyID"),
 
-          "gosaProxyWorkingTime"  => _("Limit proxy access"),
-          "gosaProxyQuota"        => _("Limit quota"),
-          "gosaProxyQuotaPeriod"  => _("Quota limit period")));
+            "gosaProxyFlag_F"       => _("Filter unwanted content"), 
+            "gosaProxyFlag_T"       => _("Limit proxy access"),
+            "gosaProxyFlag_B"       => _("Restrict proxy usage by quota"),
+
+            "gosaProxyWorkingTime"  => _("Limit proxy access"),
+            "gosaProxyQuota"        => _("Limit quota"),
+            "gosaProxyQuotaPeriod"  => _("Quota limit period"))
+          ));
   }
-
-
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

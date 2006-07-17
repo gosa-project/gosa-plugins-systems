@@ -331,13 +331,20 @@ class opengwAccount extends plugin
       #FIXME This is only an enable/disable checkbox for this account, there is possibly a better solution available later */	
   function plInfo()
   {
-    return (array(	
+    return (array(
+          "plShortName"     => _("Opengroupware"),
           "plDescription"   => _("Open groupware account settings"),
           "plSelfModify"    => TRUE,
-          "plDepends"       => array("objectClass" => "gosaAccount"),
-          "opengwAccount"   => "!!! FIXME "._("Open groupware account")));
+          "plDepends"       => array("connectivity"),
+          "plPriority"      => 3,                                 // Position in tabs
+          "plSection"       => "personal",                        // This belongs to personal
+          "plCategory"      => array("gosaAccount"),
+          "plOptions"       => array(),
+
+          "plProvidedAcls"  => array(
+            "opengwAccount"   => "!!! FIXME "._("Open groupware account"))
+          ));
   }
-  
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

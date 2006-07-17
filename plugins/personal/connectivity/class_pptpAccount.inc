@@ -137,14 +137,20 @@ class pptpAccount extends plugin
       #FIXME This is only an enable/disable checkbox for this account, there is possibly a better solution available later */ 
   function plInfo()
   {
-    return (array(  
-          "plDescription"     => _("PPTP account"),
-          "plSelfModify"      => TRUE,
-          "plDepends"         => array("objectClass" => "gosaAccount"),
-          "pptpServerAccount" => "!!! FIXME "._("PPTP account")));
+    return (array(
+          "plShortName"     => _("PPTP"),
+          "plDescription"   => _("PPTP account"),
+          "plSelfModify"    => TRUE,
+          "plDepends"       => array("connectivity"),
+          "plPriority"      => 1,                                 // Position in tabs
+          "plSection"       => "personal",                        // This belongs to personal
+          "plCategory"      => array("gosaAccount"),
+          "plOptions"       => array(),
+
+          "plProvidedAcls"  => array(
+            "pptpServerAccount" => "!!! FIXME "._("PPTP account"))
+          ));
   }
-
-
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

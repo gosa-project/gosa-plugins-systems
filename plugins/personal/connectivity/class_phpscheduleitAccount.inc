@@ -134,13 +134,20 @@ class phpscheduleitAccount extends plugin
       #FIXME This is only an enable/disable checkbox for this account, there is possibly a better solution available later */
   function plInfo()
   {
-    return (array(  "plDescription"   => _("PHPscheduleit account"),
+    return (array(
+          "plShortName"     => _("PHP Schedule it"),
+          "plDescription"   => _("PHP Schedule it settings"),
           "plSelfModify"    => TRUE,
-          "plDepends"       => array("objectClass" => "gosaAccount"),
-          "phpscheduleitAccount" => "!!! FIXME "._("PHPscheduleit account")));
+          "plDepends"       => array("connectivity"),
+          "plPriority"      => 6,                                 // Position in tabs
+          "plSection"       => "personal",                        // This belongs to personal
+          "plCategory"      => array("gosaAccount"),
+          "plOptions"       => array(),
+
+          "plProvidedAcls"  => array(
+            "phpscheduleitAccount" => "!!! FIXME "._("PHPscheduleit account"))
+          ));
   }
-
-
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

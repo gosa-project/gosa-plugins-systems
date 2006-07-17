@@ -121,10 +121,18 @@ class webdavAccount extends plugin
   function plInfo()
   {
     return (array(  
-          "plDescription"     => _("Intranet account settings"),
-          "plSelfModify"      => TRUE,
-          "plDepends"         => array("objectClass" => "gosaAccount"),
-          "gosaWebdavAccount" => "!!! FIXME "._("WebDAV account")));
+          "plShortName"     => _("WebDAV"),
+          "plDescription"   => _("WebDAV account"),
+          "plSelfModify"    => TRUE,
+          "plDepends"       => array("connectivity"),
+          "plPriority"      => 9,                                 // Position in tabs
+          "plSection"       => "personal",                        // This belongs to personal
+          "plCategory"      => array("gosaAccount"),
+          "plOptions"       => array(),
+
+          "plProvidedAcls"  => array(
+            "gosaWebdavAccount" => "!!! FIXME "._("WebDAV account"))
+          ));
   }
 }
 

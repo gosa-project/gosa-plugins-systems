@@ -185,20 +185,26 @@ class pureftpdAccount extends plugin
   #FIME There possibly some attributes that can be combined to one acl. */
   function plInfo()
   {
-    return (array(  
-          "plDescription"   => _("Intranet account settings"),
+    return (array(
+          "plShortName"     => _("Ftp"),
+          "plDescription"   => _("Pure ftp account"),
           "plSelfModify"    => TRUE,
-          "plDepends"       => array("objectClass" => "gosaAccount"),
+          "plDepends"       => array("connectivity"),
+          "plPriority"      => 8,                                 // Position in tabs
+          "plSection"       => "personal",                        // This belongs to personal
+          "plCategory"      => array("gosaAccount"),
+          "plOptions"       => array(),
 
-          "FTPQuotaFiles"         => "!!! FIXME "._("Quota files"),
-          "FTPUploadRatio"        => _("Upload ratio"),
-          "FTPQuotaMBytes"        => _("Quota MBytes"),
-          "FTPDownloadRatio"      => _("Download ratio"),
-          "FTPUploadBandwidth"    => _("Upload bandwith"),
-          "FTPDownloadBandwidth"  => _("Download bandwith"),
-          "FTPStatus"             => _("Status")));
+          "plProvidedAcls"  => array(
+            "FTPQuotaFiles"         => "!!! FIXME "._("Quota files"),
+            "FTPUploadRatio"        => _("Upload ratio"),
+            "FTPQuotaMBytes"        => _("Quota MBytes"),
+            "FTPDownloadRatio"      => _("Download ratio"),
+            "FTPUploadBandwidth"    => _("Upload bandwith"),
+            "FTPDownloadBandwidth"  => _("Download bandwith"),
+            "FTPStatus"             => _("Status"))
+          ));
   }
-
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

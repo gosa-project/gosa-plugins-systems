@@ -125,15 +125,22 @@ class phpgwAccount extends plugin
     #FIME ACL attributes arn't translated yet */
   function plInfo()
   {
-    return (array(  "plDescription"   => _("Intranet account settings"),
+    return (array(
+          "plShortName"     => _("PHP GW"),
+          "plDescription"   => _("PHP GW account settings"),
           "plSelfModify"    => TRUE,
-          "plDepends"       => array("objectClass" => "gosaAccount"),
+          "plDepends"       => array("connectivity"),
+          "plPriority"      => 5,                                 // Position in tabs
+          "plSection"       => "personal",                        // This belongs to personal
+          "plCategory"      => array("gosaAccount"),
+          "plOptions"       => array(),
+
+          "plProvidedAcls"  => array(
           "phpgwAccountExpires" =>"!!! FIXME "._("phpgwAccountExpires"),
           "phpgwAccountStatus"  =>_("phpgwAccountStatus"),
-          "phpgwAccountType"    =>_("phpgwAccountType")));
+          "phpgwAccountType"    =>_("phpgwAccountType"))
+          ));
   }
-
-
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

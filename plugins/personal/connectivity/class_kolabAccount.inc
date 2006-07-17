@@ -406,13 +406,21 @@ class kolabAccount extends plugin
   function plInfo()
   {
     return (array(	
-          "plDescription"         => _("Koalb account settings"),
-          "plSelfModify"          => TRUE,
-          "plDepends"             => array("objectClass" => "gosaAccount"),
-          "kolabFreeBusyFuture"   => _("Free busy future"),
-          "unrestrictedMailSize"  => _("Mail size restriction"),
-          "calFBURL"              => _("Free busy information"),
-          "kolabDelegate"         => _("Delegations")));
+          "plShortName"     => _("Kolab"),
+          "plDescription"   => _("Kolab account settings"),
+          "plSelfModify"    => TRUE,
+          "plDepends"       => array("connectivity"),
+          "plPriority"      => 2,                                 // Position in tabs
+          "plSection"       => "personal",                        // This belongs to personal
+          "plCategory"      => array("gosaAccount"),
+          "plOptions"       => array(),
+
+          "plProvidedAcls"  => array(
+            "kolabFreeBusyFuture"   => _("Free busy future"),
+            "unrestrictedMailSize"  => _("Mail size restriction"),
+            "calFBURL"              => _("Free busy information"),
+            "kolabDelegate"         => _("Delegations"))
+          ));
   }
 }
 
