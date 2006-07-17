@@ -945,7 +945,7 @@ class user extends plugin
     $ui= get_userinfo();
     #FIXME How is the create flag stored ?, Add check for rename move ... 
     if ($this->dn == "new" &&  !obj_is_writable($this->dn, "user","create")){
-      $message[]= _("You have no permissions to create a user on this 'Base'.");
+//      $message[]= _("You have no permissions to create a user on this 'Base'.");
     } elseif ($this->dn != $new_dn && $this->dn != "new"){
       if (!obj_is_writable($this->dn, "user","create")){
         $message[]= _("You have no permissions to move a user from the original 'Base'.");
