@@ -95,7 +95,7 @@ class mailAccount extends plugin
     /* Create the account prefix  user. user/ 
        Preset folder prefix. Will change it later to respect
        altnamespace. */
-    if (!isset($this->config->current['CYRUSUNIXSTYLE']) && $this->config->current['CYRUSUNIXSTYLE'] == "true"){
+    if (isset($this->config->current['CYRUSUNIXSTYLE']) && $this->config->current['CYRUSUNIXSTYLE'] == "true"){
       $this->folder_prefix= "user/";
     }elseif (isset($this->config->data['MAIN']['CYRUSUNIXSTYLE']) && $this->config->data['MAIN']['CYRUSUNIXSTYLE'] == "true"){
       $this->folder_prefix= "user/";
