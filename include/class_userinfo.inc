@@ -233,8 +233,16 @@ class userinfo
 
     /* Extract all relevant objects for this module from plist */
     foreach ($plist->info as $object => $info){
-      if (isset($info['plDepends']['objectClass']) && $info['plDepends']['objectClass'] == $module){
-        $objects[$object]= $object;
+      foreach ($info['plCategory'] as $idx => $data){
+        if (preg_match('/^[0-9]+$/', $idx)){
+          if ($data == $module){
+            $objects[$object]= $object;
+          }
+        } else {
+          if ($idx == $module){
+            $objects[$object]= $object;
+          }
+        }
       }
     }
 
