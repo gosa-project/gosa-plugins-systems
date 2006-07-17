@@ -383,10 +383,18 @@ class faxreport extends plugin
   function plInfo()
   {
     return (array(
-          "plDescription"     => _("Fax reports"),
-          "plSelfModify"      => TRUE,
-          "plDepends"         => array("objectClass" => "goFaxSBlock"),
-          "connectivity"      => "!!! FIXME "._("Fax reports")));
+          "plShortName"     => _("Fax report"),
+          "plDescription"   => _("Fax report"),
+          "plSelfModify"    => TRUE,
+          "plDepends"       => array(),
+          "plPriority"      => 1,                                 // Position in tabs
+          "plSection"       => "FAX Reports",                     // This belongs to personal
+          "plCategory"      => array("fax"),
+          "plOptions"       => array(),
+
+          "plProvidedAcls" => array(
+            "detailedView" => _("Detailed view"))
+          ));
   }
 
 }
