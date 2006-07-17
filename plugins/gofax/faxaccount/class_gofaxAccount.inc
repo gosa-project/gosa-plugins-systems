@@ -810,18 +810,24 @@ class gofaxAccount extends plugin
   function plInfo()
   {
     return (array(  
-          "plDescription"     => _("Fax account"),
-          "plSelfModify"      => TRUE,
-          "plDepends"         => array("objectClass" => "gosaAccount"),
+          "plShortName"     => _("Fax"),
+          "plDescription"   => _("Fax account settings"),
+          "plSelfModify"    => TRUE,
+          "plDepends"       => array("user"),
+          "plPriority"      => 6,             
+          "plSection"       => "personal",  
+          "plCategory"      => array("users"),
+          "plOptions"       => array(),
 
-          "goFaxIsEnabled"                    => "!!! FIXME "._("Enable/Disable fax"),
-          "goFaxRBlocklist"                   => _("Receive blocklist"),
-          "goFaxSBlocklist"                   => _("Send blocklist"),
-          "facsimileTelephoneNumber"          => _("Fax number"), // goFaxDeliveryMode
-          "goFaxPrinter"                      => _("Deliver fax to printer"),
-//          "goFaxDivertNumber"                 => _(""),
-          "goFaxFormat"                       => _("Delivery format"),
-          "goFaxLanguage"                     => _("Language")));
+          "plProvidedAcls"  => array(
+            "goFaxIsEnabled"                    => "!!! FIXME "._("Enable/Disable fax"),
+            "goFaxRBlocklist"                   => _("Receive blocklist"),
+            "goFaxSBlocklist"                   => _("Send blocklist"),
+            "facsimileTelephoneNumber"          => _("Fax number"), // goFaxDeliveryMode
+            "goFaxPrinter"                      => _("Deliver fax to printer"),
+            "goFaxFormat"                       => _("Delivery format"),
+            "goFaxLanguage"                     => _("Language"))
+          ));
   }
 }
 

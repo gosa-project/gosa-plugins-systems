@@ -1034,26 +1034,34 @@ class sambaAccount extends plugin
   
   function plInfo()
   {
-    return (array("plDescription"   => _("Samba settings"),
+    return (array(
+          "plShortName"     => _("Samba"),
+          "plDescription"   => _("Samba settings"),
           "plSelfModify"    => TRUE,
-          "plDepends"       => array("objectClass" => "gosaAccount"),
+          "plDepends"       => array("user"),
+          "plPriority"      => 5,                                 // Position in tabs
+          "plSection"       => "personal",                        // This belongs to personal
+          "plCategory"      => array("users"),                    // Add to following categories
+          "plOptions"       => array(),
 
-          "AllowLoginOnTerminalServer"  => _("Allow login on terminal server"),
-          "InheritClientConfig"         => _("Inherit client config"),
-          "sambaAcctFlags_N"            => _("Login from windows client requires no password"),
-          "sambaAcctFlags_L"            => _("Lock samba account"),
+          "plProvidedAcls"  => array(
+            "AllowLoginOnTerminalServer"  => _("Allow login on terminal server"),
+            "InheritClientConfig"         => _("Inherit client config"),
+            "sambaAcctFlags_N"            => _("Login from windows client requires no password"),
+            "sambaAcctFlags_L"            => _("Lock samba account"),
 
-          "sambaLogonTime"        => _("Limit Logon Time") ,
-          "sambaLogoffTime"       => _("Limit Logoff Time") ,
-          "sambaKickoffTime"      => _("Account expires") ,
-          "sambaPwdCanChange"     => _("Allow user to change password") ,
-          "sambaPwdMustChange"    => _("Password expires") ,
-          "sambaHomePath"         => _("Generic home directory") ,
-          "sambaHomeDrive"        => _("Generic samba home drive") ,
-          "sambaLogonScript"      => _("Generic script path") ,
-          "sambaProfilePath"      => _("Generic profile path") ,
-          "sambaDomainName"       => _("Domain") ,
-          "sambaUserWorkstations" => _("Allow connection from") ));
+            "sambaLogonTime"        => _("Limit Logon Time") ,
+            "sambaLogoffTime"       => _("Limit Logoff Time") ,
+            "sambaKickoffTime"      => _("Account expires") ,
+            "sambaPwdCanChange"     => _("Allow user to change password") ,
+            "sambaPwdMustChange"    => _("Password expires") ,
+            "sambaHomePath"         => _("Generic home directory") ,
+            "sambaHomeDrive"        => _("Generic samba home drive") ,
+            "sambaLogonScript"      => _("Generic script path") ,
+            "sambaProfilePath"      => _("Generic profile path") ,
+            "sambaDomainName"       => _("Domain") ,
+            "sambaUserWorkstations" => _("Allow connection from")))
+              );
   }    
 }
 

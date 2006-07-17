@@ -237,32 +237,39 @@ class nagiosAccount extends plugin
   function plInfo()
   {
     return (array(
-          "plDescription"   => _("Intranet account settings"),
+          "plShortName"     => _("Nagios"),
+          "plDescription"   => _("Nagios account settings"),
           "plSelfModify"    => TRUE,
-          "plDepends"       => array("objectClass" => "gosaAccount"),
+          "plDepends"       => array("user"),
+          "plPriority"      => 8,                                 // Position in tabs
+          "plSection"       => "personal",                        // This belongs to personal
+          "plCategory"      => array("users"),                   
+          "plOptions"       => array(),
 
-          "NagiosAlias"                       =>  _("Alias"),
-          "NagiosPager"                       =>  _("Pager number"),
-          "NagiosMail"                        =>  _("Mail address"),
+          "plProvidedAcls"  => array(
 
-          "HostNotificationCommands"          =>  _("Host notification commands"),
-          "HostNotificationOptions"           =>  _("Host notification options"),
-          "HostNotificationPeriod"            =>  _("Host notification period"),
+            "NagiosAlias"                       =>  _("Alias"),
+            "NagiosPager"                       =>  _("Pager number"),
+            "NagiosMail"                        =>  _("Mail address"),
 
-          "ServiceNotificationCommands"       =>  _("Service notification commands"),
-          "ServiceNotificationOptions"        =>  _("Service notification options"),
-          "ServiceNotificationPeriod"         =>  _("Service notification period"),
+            "HostNotificationCommands"          =>  _("Host notification commands"),
+            "HostNotificationOptions"           =>  _("Host notification options"),
+            "HostNotificationPeriod"            =>  _("Host notification period"),
 
-          "AuthorizedAllHosts"                =>  _("View all hosts"),
-          "AuthorizedAllServices"             =>  _("View all services"),
+            "ServiceNotificationCommands"       =>  _("Service notification commands"),
+            "ServiceNotificationOptions"        =>  _("Service notification options"),
+            "ServiceNotificationPeriod"         =>  _("Service notification period"),
 
-          "AuthorizedSystemCommands"          =>  _("Trigger system commands"),
-          "AuthorizedAllHostCommands"         =>  _("Trigger all host commands"),
-          "AuthorizedAllServiceCommands"      =>  _("Trigger all service commands"),
+            "AuthorizedAllHosts"                =>  _("View all hosts"),
+            "AuthorizedAllServices"             =>  _("View all services"),
 
-          "AuthorizedConfigurationInformation"=>  _("View configuration information"),
-          "AuthorizedSystemInformation"       =>  _("View system informations")));
+            "AuthorizedSystemCommands"          =>  _("Trigger system commands"),
+            "AuthorizedAllHostCommands"         =>  _("Trigger all host commands"),
+            "AuthorizedAllServiceCommands"      =>  _("Trigger all service commands"),
 
+            "AuthorizedConfigurationInformation"=>  _("View configuration information"),
+            "AuthorizedSystemInformation"       =>  _("View system informations"))
+      ));
   }
 }
 

@@ -1199,16 +1199,23 @@ class phoneAccount extends plugin
   function plInfo()
   {
     return (array(
-          "plDescription"     => _("Phone extension"),
-          "plSelfModify"      => TRUE,
-          "plDepends"         => array("objectClass" => "gosaAccount"),
+          "plShortName"     => _("Phone"),
+          "plDescription"   => _("Phone account settings"),
+          "plSelfModify"    => TRUE,
+          "plDepends"       => array("user"),
+          "plPriority"      => 7,                                 // Position in tabs
+          "plSection"       => "personal",                        // This belongs to personal
+          "plCategory"      => array("users"),
+          "plOptions"       => array(),
 
-          "goFonDeliveryMode"   => _("Delivery mode"),
-          "goFonHardware"       => _("Phone hardware"),
-          "goFonPIN"            => _("Telephone pin"),
-          "goFonVoicemailPIN"   => _("Voivemail pin"),
-          "telephoneNumber"     => _("Telephone number"),
-          "goFonMacro"          => _("Macro settings")));
+          "plProvidedAcls"  => array(
+            "goFonDeliveryMode"   => _("Delivery mode"),
+            "goFonHardware"       => _("Phone hardware"),
+            "goFonPIN"            => _("Telephone pin"),
+            "goFonVoicemailPIN"   => _("Voivemail pin"),
+            "telephoneNumber"     => _("Telephone number"),
+            "goFonMacro"          => _("Macro settings"))
+            ));
   }
 }
 
