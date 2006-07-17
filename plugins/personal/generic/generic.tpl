@@ -16,12 +16,16 @@
 	  <table>
 	   <tr>
 		<td width="147" height="200" bgcolor="gray">
-		 <img align="center" valign="center" border="0" width="100%" src="getbin.php?rand={$rand}" alt="{t}Personal picture{/t}">
+		{render acl=$userPictureACL}
+		 	<img align="center" valign="center" border="0" width="100%" src="getbin.php?rand={$rand}" alt="{t}Personal picture{/t}">
+		{/render}
 		</td>
 	   </tr>
 	   <tr>
 		<td>
-		 <input valign="top" type="submit" name="edit_picture" {$jpegPhotoACL} value="{t}Change picture{/t}...">
+		{render acl=$userPictureACL}
+		 	<input valign="top" type="submit" name="edit_picture" value="{t}Change picture{/t}...">
+		{/render}
 		</td>
 	   </tr>
 	  </table>
@@ -31,7 +35,7 @@
   <td style="vertical-align:top">
    <img align="bottom" border="1" width="145" height="200" src="getbin.php?rand={$rand}" alt="{t}Personal picture{/t}">
    <br>
-   <input type="submit" name="edit_picture" {$jpegPhotoACL} value="{t}Change picture{/t}...">
+   <input type="submit" name="edit_picture" value="{t}Change picture{/t}...">
   </td>
 	-->
 
@@ -41,23 +45,23 @@
     {if $is_template ne "true"}
     <tr>
      <td><label for="sn">{t}Last name{/t}{$must}</label></td>
-     <td><input id="sn" name="sn" size=25 maxlength=60 {$snACL} value="{$sn}"></td>
+     <td>{render acl=$snACL}<input id="sn" name="sn" size=25 maxlength=60 value="{$sn}">{/render}</td>
     </tr>
     {else}
     <tr>
      <td><label for="sn">{t}Template name{/t}{$must}</label></td>
-     <td><input id="sn" name="sn" size=25 maxlength=60 {$snACL} value="{$sn}"></td>
+     <td>{render acl=$snACL}<input id="sn" name="sn" size=25 maxlength=60 value="{$sn}">{/render}</td>
     </tr>
     {/if}
 
     {if $is_template ne "true"}
     <tr>
      <td><label for="givenName">{t}First name{/t}{$must}</label></td>
-     <td><input id="givenName" name="givenName" size=25 maxlength=60 {$givenNameACL} value="{$givenName}"></td>
+     <td>{render acl=$givenNameACL}<input id="givenName" name="givenName" size=25 maxlength=60 value="{$givenName}">{/render}</td>
     </tr>
     <tr>
      <td><label for="uid">{t}Login{/t}{$must}</label></td>
-     <td><input id="uid" name="uid" size=25 maxlength=60 {$uidACL} value="{$uid}"></td>
+     <td>{render acl=$uidACL}<input id="uid" name="uid" size=25 maxlength=60  value="{$uid}">{/render}</td>
     </tr>
     {/if}
       
@@ -68,13 +72,17 @@
      </td>
      <td>
       <div style="height:10px;"></div>
-      <input id="personalTitle" name="personalTitle" size=25 maxlength=60 {$personalTitleACL} value="{$personalTitle}">
+      	{render acl=$personalTitleACL}
+		<input id="personalTitle" name="personalTitle" size=25 maxlength=60 value="{$personalTitle}">
+	{/render}
      </td>
     </tr>
     <tr>
      <td><label for="academicTitle">{t}Academic title{/t}</label></td>
      <td>
-      <input id="academicTitle" name="academicTitle" size=25 maxlength=60 {$academicTitleACL} value="{$academicTitle}">
+      	{render acl=$academicTitleACL}
+	      <input id="academicTitle" name="academicTitle" size=25 maxlength=60 value="{$academicTitle}">
+	{/render}
      </td>
     </tr>
     <tr>
@@ -84,21 +92,23 @@
      </td>
      <td>
       <div style="height:10px;"></div>
-      {if $use_dob eq 1}
-      <select id="day" name=day onChange="createResult(this.form,this.form.dateOfBirth);" {$dateOfBirthACL}>
-       {html_options values=$days output=$days selected=$day}
-      </select>
-      <select name=month onChange="populate(this.form,this.form.dateOfBirth);" {$dateOfBirthACL}>
-       {html_options options=$months selected=$month}
-      </select>
-      <select name=year onChange="populate(this.form,this.form.dateOfBirth);" {$dateOfBirthACL}>
-       {html_options values=$years output=$years selected=$year}
-      </select>
-      <input type="hidden" name="dateOfBirth" value="{$dateOfBirth}">
-      <input type="submit" name="set_dob" value="-" {$dateOfBirthACL}>
-      {else}
-      <input type="submit" name="set_dob" value="{t}Set{/t}" {$dateOfBirthACL}>
-      {/if}
+      	{render acl=$dateOfBirthACL}
+	      {if $use_dob eq 1}
+	      <select id="day" name=day onChange="createResult(this.form,this.form.dateOfBirth);"> 
+	       {html_options values=$days output=$days selected=$day}
+	      </select>
+	      <select name=month onChange="populate(this.form,this.form.dateOfBirth);" >
+	       {html_options options=$months selected=$month}
+	      </select>
+	      <select name=year onChange="populate(this.form,this.form.dateOfBirth);" >
+	       {html_options values=$years output=$years selected=$year}
+	      </select>
+	      <input type="hidden" name="dateOfBirth" value="{$dateOfBirth}">
+	      <input type="submit" name="set_dob" value="-" >
+	      {else}
+	      <input type="submit" name="set_dob" value="{t}Set{/t}" >
+	      {/if}
+	{/render}
      </td>
     </tr>
     <tr>
@@ -106,9 +116,11 @@
       <label for="gender">{t}Sex{/t}</label>
      </td>
      <td>
-      <select size="1" id="gender" name="gender" {$genderACL}>
-       {html_options options=$gender_list selected=$gender}
-      </select>
+      	{render acl=$genderACL}
+	      <select size="1" id="gender" name="gender">
+	       {html_options options=$gender_list selected=$gender}
+	      </select>
+	{/render}
      </td>
     </tr>
     <tr>
@@ -116,9 +128,11 @@
       <label for="preferredLanguage">{t}Preferred langage{/t}</label>
      </td>
      <td>
-      <select size="1" id="preferredLanguage" name="preferredLanguage" {$preferredLanguageACL}>
-       {html_options options=$preferredLanguage_list selected=$preferredLanguage}
-      </select>
+      	{render acl=$preferredLanguageACL}
+	      <select size="1" id="preferredLanguage" name="preferredLanguage">
+	       {html_options options=$preferredLanguage_list selected=$preferredLanguage}
+	      </select>
+	{/render}
      </td>
     </tr>
     <tr>
@@ -128,14 +142,16 @@
      </td>
      <td>
       <div style="height:10px;"></div>
-      <select id="base" size="1" name="base" {$selectmode} title="{t}Choose subtree to place user in{/t}">
-       {html_options options=$bases selected=$base_select}
-      </select>
-		{if $selectmode == ""}
+      	{render acl=$baseACL}
+		<select id="base" size="1" name="base" {$selectmode} title="{t}Choose subtree to place user in{/t}">
+			{html_options options=$bases selected=$base_select}
+		</select>
+		{if $selectmode==""}
 			<input type="image" name="chooseBase" src="images/folder.png" class="center" title="{t}Select a base{/t}">
 		{else}
 			<img src="images/folder_gray.png" class="center" title="{t}Select a base{/t}">
 		{/if}
+	{/render}
      </td>
     </tr>
    </table>
@@ -149,15 +165,27 @@
    <table summary="" style="width:100%"> 
     <tr>
      <td style="vertical-align:top;"><label for="homePostalAddress">{t}Address{/t}</label></td>
-     <td><textarea id="homePostalAddress" name="homePostalAddress" rows="3" style="width:100%" {$homePostalAddressACL}>{$homePostalAddress}</textarea></td>
+      <td>
+      	{render acl=$homePostalAddressACL}
+	     <textarea id="homePostalAddress" name="homePostalAddress" rows="3" style="width:100%">{$homePostalAddress}</textarea>
+	{/render}
+     </td>
     </tr>
     <tr>
-     <td><label for="homePhone">{t}Private phone{/t}</label></td>
-     <td><input id="homePhone" name="homePhone" size=25 maxlength=60 {$homePhoneACL} value="{$homePhone}"></td>
+     <td><label for="homePhone">{t}Private phone{/t}</label>
+     </td><td>
+      	{render acl=$homePhoneACL}
+	     <input id="homePhone" name="homePhone" size=25 maxlength=60 value="{$homePhone}">
+	{/render}
+     </td>
     </tr>
     <tr>
      <td><label for="labeledURI">{t}Homepage{/t}</label></td>
-     <td><input id="labeledURI" name="labeledURI" size=25 maxlength=60 {$labeledURIACL} value="{$labeledURI}"></td>
+     <td>
+      	{render acl=$labeledURIACL}
+	 	<input id="labeledURI" name="labeledURI" size=25 maxlength=60 value="{$labeledURI}">
+	{/render}
+     </td>
     </tr>
     <tr>
      <td colspan=2>
@@ -167,9 +195,11 @@
     <tr>
      <td><label for="pw_storage">{t}Password storage{/t}</label></td>
      <td>
-      <select size="1" id="pw_storage" name="pw_storage" {$passwordStorageACL}>
-       {html_options values=$pwmode output=$pwmode selected=$pwmode_select}
-      </select>
+      	{render acl=$passwordStorageACL}
+	      <select size="1" id="pw_storage" name="pw_storage">
+	       {html_options values=$pwmode output=$pwmode selected=$pwmode_select}
+	      </select>
+	{/render}
      </td>
     </tr>
 
@@ -177,13 +207,20 @@
     <tr>
      <td><label for="edit_cert">{t}Certificates{/t}</label></td>
      <td>
-      <input id="edit_cert" type="submit" name="edit_cert" {$certificatesACL} value="{t}Edit certificates{/t}...">
+      	{render acl=$CertificatesACL}
+      		<input id="edit_cert" type="submit" name="edit_cert" value="{t}Edit certificates{/t}...">
+	{/render}
      </td>
     </tr>
+<!--
     <tr>
      <td><label for="edit_krb">{t}Kerberos{/t}</label></td>
-     <td><input id="edit_krb" type="submit" name="edit_krb" disabled value="{t}Edit properties{/t}..."></td>
+     <td>
+	no acls
+		<input id="edit_krb" type="submit" name="edit_krb" disabled value="{t}Edit properties{/t}...">
+     </td>
     </tr>
+-->
     {/if}
 
    </table>
@@ -211,28 +248,42 @@
    <table summary=""> 
     <tr>
      <td><label for="o">{t}Organization{/t}</label></td>
-     <td><input id="o" name="o" size=22 maxlength=60 {$oACL} value="{$o}"></td>
+     <td>	
+      	{render acl=$oACL}
+		<input id="o" name="o" size=22 maxlength=60 value="{$o}">
+	{/render}
+     </td>
     </tr>
     <tr>
      <td><label for="ou">{t}Department{/t}</label></td>
-     <td><input id="ou" name="ou" size=22 maxlength=60 {$ouACL} value="{$ou}"></td>
+     <td>
+      	{render acl=$ouACL}
+		<input id="ou" name="ou" size=22 maxlength=60 value="{$ou}">
+	{/render}
+     </td>
     </tr>
     <tr>
      <td><label for="departmentNumber">{t}Department No.{/t}</label></td>
      <td>
-      <input id="departmentNumber" name="departmentNumber" size=22 maxlength=60 {$departmentNumberACL} value="{$departmentNumber}">
+      	{render acl=$departmentNumberACL}
+	      <input id="departmentNumber" name="departmentNumber" size=22 maxlength=60 value="{$departmentNumber}">
+	{/render}
      </td>
     </tr>
     <tr>
      <td><label for="employeeNumber">{t}Employee No.{/t}</label></td>
      <td>
-      <input id="employeeNumber" name="employeeNumber" size=22 maxlength=60 {$employeeNumberACL} value="{$employeeNumber}">
+      	{render acl=$employeeNumberACL}
+      		<input id="employeeNumber" name="employeeNumber" size=22 maxlength=60 value="{$employeeNumber}">
+	{/render}
      </td>
     </tr>
     <tr>
      <td><label for="employeeType">{t}Employee type{/t}</label></td>
      <td>
-      <input id="employeeType" name="employeeType" size=22 maxlength=60 {$employeeTypeACL} value="{$employeeType}">
+      	{render acl=$employeeTypeACL}
+      		<input id="employeeType" name="employeeType" size=22 maxlength=60 value="{$employeeType}">
+	{/render}
      </td>
     </tr>
    </table>
@@ -247,30 +298,44 @@
    <table summary=""> 
     <tr>
      <td><label for="roomNumber">{t}Room No.{/t}</label></td>
-     <td><input id="roomNumber" name="roomNumber" size=22 maxlength=60 {$roomNumberACL} value="{$roomNumber}"></td>
+     <td>
+      	{render acl=$roomNumberACL}
+		<input id="roomNumber" name="roomNumber" size=22 maxlength=60 value="{$roomNumber}">
+	{/render}
+     </td>
     </tr>
     {if $has_phoneaccount ne "true"}
     <tr>
      <td><label for="telephoneNumber">{t}Phone{/t}</label></td>
      <td>
-      <input id="telephoneNumber" name="telephoneNumber" size=22 maxlength=60 {$telephoneNumberACL} value="{$telephoneNumber}">
+      	{render acl=$telephoneNumberACL}
+      		<input id="telephoneNumber" name="telephoneNumber" size=22 maxlength=60 value="{$telephoneNumber}">
+	{/render}
      </td>
     </tr>
     {/if}
     <tr>
      <td><label for="mobile">{t}Mobile{/t}</label></td>
-     <td><input id="mobile" name="mobile" size=22 maxlength=60 {$mobileACL} value="{$mobile}"></td>
+     <td>
+      	{render acl=$mobileACL}
+		<input id="mobile" name="mobile" size=22 maxlength=60 value="{$mobile}">
+	{/render}
+     </td>
     </tr>
     <tr>
      <td><label for="pager">{t}Pager{/t}</label></td>
      <td>
-      <input id="pager" name="pager" size=22 maxlength=60 {$pagerACL} value="{$pager}">
+      	{render acl=$pagerACL}
+      		<input id="pager" name="pager" size=22 maxlength=60 value="{$pager}">
+	{/render}
      </td>
     </tr>
     <tr>
      <td><label for="facsimileTelephoneNumber">{t}Fax{/t}</label></td>
-     <td><input id="facsimileTelephoneNumber" name="facsimileTelephoneNumber" size=22 maxlength=60 {$facsimileTelephoneNumberACL}
-                value="{$facsimileTelephoneNumber}">
+     <td>
+      	{render acl=$facsimileTelephoneNumberACL}
+		<input id="facsimileTelephoneNumber" name="facsimileTelephoneNumber" size=22 maxlength=60 value="{$facsimileTelephoneNumber}">
+	{/render}
      </td>
     </tr>
    </table>
@@ -285,16 +350,26 @@
    <table summary="" style="width:100%"> 
     <tr>
      <td><label for="l">{t}Location{/t}</l></td>
-     <td><input id="l" name="l" size=22 maxlength=60 {$lACL} value="{$l}"></td>
+     <td>
+      	{render acl=$lACL}
+		<input id="l" name="l" size=22 maxlength=60 value="{$l}">
+	{/render}
+     </td>
     </tr>
     <tr>
      <td><label for="st">{t}State{/t}</label></td>
-     <td><input id="st" name="st" size=22 maxlength=60 {$stACL} value="{$st}"></td>
+     <td>
+      	{render acl=$stACL}
+		<input id="st" name="st" size=22 maxlength=60 value="{$st}">
+	{/render}
+     </td>
     </tr>
     <tr>
      <td style="vertical-align:top;"><label for="postalAddress">{t}Address{/t}</label></td>
      <td>
-      <textarea id="postalAddress" name="postalAddress" rows=3 style="width:100%" {$postalAddressACL}>{$postalAddress}</textarea>
+      	{render acl=$postalAddressACL}
+      		<textarea id="postalAddress" name="postalAddress" rows=3 style="width:100%">{$postalAddress}</textarea>
+	{/render}
      </td>
     </tr>
    </table>
@@ -307,35 +382,45 @@
    <table summary=""> 
     <tr>
      <td><label for="vocation">{t}Vocation{/t}</label></td>
-     <td><input id="vocation" name="vocation" size=22 maxlength=60 {$vocationACL} value="{$vocation}"></td>
+     <td>
+      	{render acl=$vocationACL}
+		<input id="vocation" name="vocation" size=22 maxlength=60 value="{$vocation}">
+	{/render}
+     </td>
     </tr>
     <tr>
      <td><label for="gouvernmentOrganizationalUnitDescription">{t}Unit description{/t}</label></td>
      <td>
-      <input id="gouvernmentOrganizationalUnitDescription" name="gouvernmentOrganizationalUnitDescription" size=22 maxlength=60
-	{$gouvernmentOrganizationalUnitDescriptionACL}  
-	value="{$gouvernmentOrganizationalUnitDescription}">
+      	{render acl=$gouvernmentOrganizationalUnitDescriptionACL}
+      		<input id="gouvernmentOrganizationalUnitDescription" name="gouvernmentOrganizationalUnitDescription" size=22 maxlength=60
+		value="{$gouvernmentOrganizationalUnitDescription}">
+	{/render}
      </td>
     </tr>
     <tr>
      <td><label for="gouvernmentOrganizationalUnitSubjectArea">{t}Subject area{/t}</label></td>
      <td>
-      <input id="gouvernmentOrganizationalUnitSubjectArea" name="gouvernmentOrganizationalUnitSubjectArea" size=22 maxlength=60
-          {$gouvernmentOrganizationalUnitSubjectAreaACL}  
-           value="{$gouvernmentOrganizationalUnitSubjectArea}">
+      	{render acl=$gouvernmentOrganizationalUnitSubjectAreaACL}
+	      	<input id="gouvernmentOrganizationalUnitSubjectArea" name="gouvernmentOrganizationalUnitSubjectArea" size=22 maxlength=60
+           	value="{$gouvernmentOrganizationalUnitSubjectArea}">
+	{/render}
      </td>
     </tr>
     <tr>
      <td><label for="functionalTitle">{t}Functional title{/t}</label></td>
      <td>
-      <input name="functionalTitle" id="functionalTitle"  size=22 maxlength=60 {$functionalTitleACL}
-             value="{$functionalTitle}">
+      	{render acl=$functionalTitleACL}
+      		<input name="functionalTitle" id="functionalTitle"  size=22 maxlength=60
+             	value="{$functionalTitle}">
+	{/render}
      </td>
     </tr>
     <tr>
      <td><label for="role">{t}Role{/t}</label></td>
      <td>
-      <input id="role" name="role" size=22 maxlength=60 {$roleACL} value="{$role}">
+      	{render acl=$roleACL}
+      		<input id="role" name="role" size=22 maxlength=60 value="{$role}">
+	{/render}
      </td>
     </tr>
    </table>
@@ -347,35 +432,44 @@
     <tr>
      <td><label for="gouvernmentOrganizationalPersonLocality">{t}Person locality{/t}</label></td>
      <td>
-      <input id="gouvernmentOrganizationalPersonLocality" name="gouvernmentOrganizationalPersonLocality" size=22 maxlength=60
-         {$gouvernmentOrganizationalPersonLocalityACL}
+      	{render acl=$gouvernmentOrganizationalPersonLocalityACL}
+      		<input id="gouvernmentOrganizationalPersonLocality" name="gouvernmentOrganizationalPersonLocality" size=22 maxlength=60
                 value="{$gouvernmentOrganizationalPersonLocality}">
+	{/render}
      </td>
     </tr>
     <tr>
      <td><label for="gouvernmentOrganizationalUnit">{t}Unit{/t}</label></td>
-     <td><input id="gouvernmentOrganizationalUnit" name="gouvernmentOrganizationalUnit" size=22 maxlength=60 
-     {$gouvernmentOrganizationalUnitACL}
-            value="{$gouvernmentOrganizationalUnit}">
+     <td>
+      	{render acl=$gouvernmentOrganizationalUnitACL}
+		<input id="gouvernmentOrganizationalUnit" name="gouvernmentOrganizationalUnit" size=22 maxlength=60 
+            	value="{$gouvernmentOrganizationalUnit}">
+	{/render}
      </td>
     </tr>
     <tr>
      <td><label for="street">{t}Street{/t}</label></td>
      <td>
-      <input name="street" id="street" size=22 maxlength=60 {$streetACL} value="{$street}">
+      	{render acl=$streetACL}
+      		<input name="street" id="street" size=22 maxlength=60 value="{$street}">
+	{/render}
      </td>
     </tr>
     <tr>
      <td><label for="postalCode">{t}Postal code{/t}</label></td>
      <td> 
-      <input name="postalCode" id="postalCode" size=22 maxlength=60 {$postalCodeACL} value="{$postalCode}">
+      	{render acl=$postalCodeACL}
+      		<input name="postalCode" id="postalCode" size=22 maxlength=60 value="{$postalCode}">
+	{/render}
      </td>
     </tr>
     <tr>
      <td><label for="houseIdentifier">{t}House identifier{/t}</label></td>
      <td>
-      <input id="houseIdentifier" name="houseIdentifier" size=22 maxlength=60 {$houseIdentifierACL}
-             value="{$houseIdentifier}">
+      	{render acl=$houseIdentifierACL}
+      		<input id="houseIdentifier" name="houseIdentifier" size=22 maxlength=60
+             	value="{$houseIdentifier}">
+	{/render}
      </td>
     </tr>
    </table>
@@ -386,39 +480,50 @@
    <table summary=""> 
     <tr>
      <td><label for="roomNumber">{t}Room No.{/t}</label></td>
-     <td><input id="roomNumber" name="roomNumber" size=22 maxlength=60 {$roomNumberACL} value="{$roomNumber}"></td>
+     <td>
+      	{render acl=$roomNumberACL}
+		<input id="roomNumber" name="roomNumber" size=22 maxlength=60 value="{$roomNumber}">
+	{/render}
+     </td>
     </tr>
     <tr>
      <td><label for="telephoneNumber">{t}Phone{/t}</label></td>
      <td>
-      {if $has_phoneaccount ne "true"}
-      <input id="telephoneNumber" name="telephoneNumber" size=22 maxlength=60 {$telephoneNumberACL} value="{$telephoneNumber}">
-      {else}
-      <i>{t}Please use the phone tab{/t}</i>
-      {/if}
+      	{render acl=$telephoneNumberACL}
+	      {if $has_phoneaccount ne "true"}
+			<input id="telephoneNumber" name="telephoneNumber" size=22 maxlength=60 value="{$telephoneNumber}">
+	      {else}
+			<i>{t}Please use the phone tab{/t}</i>
+	      {/if}
+	{/render}
      </td>
     </tr>
     <tr>
      <td><label for="facsimileTelephoneNumber">{t}Fax{/t}</label></td>
      <td>
-      <input id="facsimileTelephoneNumber" name="facsimileTelephoneNumber" size=22 maxlength=60 
-	          {$facsimileTelephoneNumberACL}  
-                 value="{$facsimileTelephoneNumber}">
+      	{render acl=$facsimileTelephoneNumberACL}
+      		<input id="facsimileTelephoneNumber" name="facsimileTelephoneNumber" size=22 maxlength=60 
+                value="{$facsimileTelephoneNumber}">
+	{/render}
      </td>
     </tr>
     <tr>
      <td><label for="ivbbLastDeliveryCollective">{t}Last delivery{/t}</label></td>
      <td>
-      <input name="ivbbLastDeliveryCollective" size=22 maxlength=60 {$ivbbLastDeliveryCollectiveACL} id="ivbbLastDeliveryCollective" 
-             value="{$ivbbLastDeliveryCollective}">
+      	{render acl=$ivbbLastDeliveryCollectiveACL}
+      		<input name="ivbbLastDeliveryCollective" size=22 maxlength=60 id="ivbbLastDeliveryCollective" 
+             	value="{$ivbbLastDeliveryCollective}">
+	{/render}
      </td>
     </tr>
     <tr>
      <td><label for="publicVisible">{t}Public visible{/t}</label></td>
      <td>
-      <select size="1" id="publicVisible" name="publicVisible" {$publicVisibleACL}>
-       {html_options values=$ivbbmodes output=$ivbbmodes selected=$publicVisible}
-      </select>
+      	{render acl=$publicVisibleACL}
+	      <select size="1" id="publicVisible" name="publicVisible">
+	       {html_options values=$ivbbmodes output=$ivbbmodes selected=$publicVisible}
+	      </select>
+	{/render}
      </td>
     </tr>
    </table>
@@ -437,4 +542,3 @@
 				populate(document.mainform,document.mainform.dateOfBirth);
   -->
 </script>
-
