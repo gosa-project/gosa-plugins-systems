@@ -518,26 +518,32 @@ class conference extends plugin
   function plInfo()
   {
     return (array(
-          "plDescription"     => _("Asterisk conference management"),
-          "plSelfModify"      => TRUE,
-          "plDepends"         => array("objectClass" => "goFonConference", "description" => _("Asterisk")),
+          "plShortName"   => _("Phone conferences"),
+          "plDescription" => _("Phone conference management"),
+          "plSelfModify"  => TRUE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("conference" => _("Phone conference")),
+          "plCategory"    => array("conference" => _("Phone conference")),
 
-          "base"                          => _("Base"), 
-          "description"                   => _("Description"), 
-          "goFonPIN"                      => _("Conference PIN"),
+          "plProvidedAcls" => array(
+            "base"                          => _("Base"), 
+            "description"                   => _("Description"), 
+            "goFonPIN"                      => _("Conference PIN"),
 
-          "goFonConferenceOption_P"       => _("Preset PIN"),
-          "goFonConferenceOption_r"       => _("Record conference"),
-          "goFonConferenceOption_M"       => _("Play music on hold"),
-          "goFonConferenceOption_s"       => _("Activate menu"),
-          "goFonConferenceOption_i"       => _("Announce user activity"),
-          "goFonConferenceOption_c"       => _("Count user"),
-          "goFonConferenceOption_D"       => _("Conference type"),
+            "goFonConferenceOption_P"       => _("Preset PIN"),
+            "goFonConferenceOption_r"       => _("Record conference"),
+            "goFonConferenceOption_M"       => _("Play music on hold"),
+            "goFonConferenceOption_s"       => _("Activate menu"),
+            "goFonConferenceOption_i"       => _("Announce user activity"),
+            "goFonConferenceOption_c"       => _("Count user"),
+            "goFonConferenceOption_D"       => _("Conference type"),
 
-          "goFonConferenceOptionFormat"   => _("Format"),
-          "goFonConferenceOptionLifetime" => _("Lifetime"),
-          "telephoneNumber"               => _("Telephone number"),
-          "goFonConferenceOwner"          => _("Owner")));
+            "goFonConferenceOptionFormat"   => _("Format"),
+            "goFonConferenceOptionLifetime" => _("Lifetime"),
+            "telephoneNumber"               => _("Telephone number"),
+            "goFonConferenceOwner"          => _("Owner"))
+            ));
   }
 }
 

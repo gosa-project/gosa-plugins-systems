@@ -353,6 +353,16 @@ class fonreport extends plugin
   function plInfo()
   {
     return (array(
+        "plShortName"   => _("Phone reports"),
+        "plDescription" => _("Phone reports"),
+        "plSelfModify"  => TRUE,
+        "plDepends"     => array(),
+        "plPriority"    => 0,
+        "plSection"     => array("fonreport" => _("Phone reports")),
+        "plCategory"    => array("gofon"     => _("Phone reports")),
+
+
+
           "plDescription"     => _("Phone reports"),
           "plSelfModify"      => TRUE,
           "plDepends"         => array("objectClass" => "fonreport"),
