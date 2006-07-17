@@ -267,7 +267,7 @@ class plugin
   {
     /* Save values to object */
     foreach ($this->attributes as $val){
-      if (chkacl ($this->acl, "$val") == "" && isset ($_POST["$val"])){
+      if (obj_is_writable($this->dn,get_class($this),$val) && isset ($_POST["$val"])){
         /* Check for modifications */
         if (get_magic_quotes_gpc()) {
           $data= stripcslashes($_POST["$val"]);
