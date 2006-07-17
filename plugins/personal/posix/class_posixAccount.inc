@@ -1216,30 +1216,33 @@ class posixAccount extends plugin
 
   function plInfo()
   {
-    return (array("plDescription" => _("POSIX account"),
-          "plSelfModify" => TRUE,
-          "plDepends" => array("objectClass" => "gosaAccount"),
+    return (array(
+          "plDescription"     => _("POSIX account"),
+          "plSelfModify"      => TRUE,
+          "plDepends"         => array("user"),
+          "plPriority"        => 1,
+          "plSection"         => "personal", 
+          "plCategory"        => array("users"),
+          "plOptions"         => array(),
 
-          "homeDirectory"       =>  _("Home directory"), 
-          "uidNumber"           =>  _("User ID"),
-          "gidNumber"           =>  _("Group ID"),
-          "homeDirectory"       =>  _("Home directory"),
-          "primaryGroup"        =>  _("Primary group"),
+          "plProvidedAcls"  => array(
+            "homeDirectory"       =>  _("Home directory"), 
+            "uidNumber"           =>  _("User ID"),
+            "gidNumber"           =>  _("Group ID"),
+            "homeDirectory"       =>  _("Home directory"),
+            "primaryGroup"        =>  _("Primary group"),
 
-          "loginShell"          =>  _("Shell"),
-//          "gecos"               =>  _(""),
+            "loginShell"          =>  _("Shell"),
+            "shadowMin"           =>  _("Shadow min"),
+            "shadowMax"           =>  _("Shadow max"),
+            "shadowWarning"       =>  _("Shadow warning"),
+            "shadowInactive"      =>  _("Shadow inactive"),
+            "shadowLastChange"    =>  _("Shadow last change"),
 
-          "shadowMin"           =>  _("Shadow min"),
-          "shadowMax"           =>  _("Shadow max"),
-          "shadowWarning"       =>  _("Shadow warning"),
-          "shadowInactive"      =>  _("Shadow inactive"),
-          "shadowLastChange"    =>  _("Shadow last change"),
-
-          "shadowExpire"        =>  _("Shadow expire"),
-          //"gosaDefaultPrinter"  =>  _(""),
-          //"gosaDefaultLanguage" =>  _(""), 
-          "accessTo"            =>  _("System trust"),
-          "trustModel"          =>  _("System trust model"))) ;
+            "shadowExpire"        =>  _("Shadow expire"),
+            "accessTo"            =>  _("System trust"),
+            "trustModel"          =>  _("System trust model")))
+           ) ;
   }
 }
 
