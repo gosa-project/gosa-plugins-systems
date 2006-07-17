@@ -165,17 +165,22 @@ class connectivity extends plugin
   }
 
   /* Return plugin informations for acl handling 
-      #FIXME We should check here, if the user has access to sub one of the subClasses */ 
+#FIXME We should check here, if the user has access to one of the subClasses */ 
   function plInfo()
   {
     return (array(  
-          "plDescription"     => _("Connectivity extension"),
+          "plShortName"       => _("Connectivity"),
+          "plDescription"     => _("Connectivity settings"),
           "plSelfModify"      => TRUE,
-          "plDepends"         => array("objectClass" => "gosaAccount"),
-          "connectivity"      => "!!! FIXME "._("Conenctivity  account")));
+          "plDepends"         => array("user"),
+          "plPriority"        => 5,                                 // Position in tabs
+          "plSection"       => "personal",                        // This belongs to personal
+          "plCategory"      => array("gosaAccount"),
+          "plOptions"       => array(),
+          "plProvidedAcls"  => array(
+            "connectivity"      => "!!! FIXME "._("Connectivity  account"))
+          ));
   }
-
-
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

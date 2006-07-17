@@ -160,10 +160,19 @@ class intranetAccount extends plugin
   function plInfo()
   {
     return (array(	
+          "plShortName"     => _("Intranet"),
+          "plDepends"       => array("connectivity"),
+          "plPriority"      => 1,                                 // Position in tabs
+          "plSection"       => "personal",                        // This belongs to personal
+          "plCategory"      => array("gosaAccount"),
+          "plOptions"       => array(),
+
           "plDescription"       => _("Intranet account settings"),
           "plSelfModify"        => TRUE,
-          "plDepends"           => array("objectClass" => "gosaAccount"),
-          "gosaIntranetAccount" => "!!! FIME "._("GOsa intranet account")));
+
+          "plProvidedAcls"  => array(
+            "gosaIntranetAccount" => "!!! FIXME "._("GOsa intranet account")))
+        );
   }
 }
 
