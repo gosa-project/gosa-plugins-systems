@@ -1305,46 +1305,51 @@ class user extends plugin
         "postalCode"                                =>  _("Postal code"));
 
     $ret = array(
+        "plShortName" => _("Generic"),
         "plDescription" => _("Generic user settings"),
         "plSelfModify"  => TRUE,
-        "plDepends"     => array("objectClass" => "gosaAccount", 
-                                 "description"   => _("Users")),
+        "plDepends"     => array(),
+        "plPriority"    => 0,
+        "plSection"     => array("personal" => _("My account"))),
+        "plCategory"    => array("users" => _("Users")),
 
-        "userPassword"      => _("User password"), 
-        "sn"                => _("Surename"),
-        "givenName"         => _("Given name"),
-        "uid"               => _("User identification"),
-        "personalTitle"     => _("Personal title"),
-        "academicTitle"     => _("Academic title"),
-        "homePostalAddress" => _("Home postal address"),
-        "homePhone"         => _("Home phone number"),
-        "labeledURI"        => _("Homepage"),
-        "o"                 => _("Organization"),
-        "ou"                => _("Department"),
-        "dateOfBirth"       => _("Date of birth"),
-        "gender"            => _("Gender"),
-        "preferredLanguage" => _("Preferred language"),
-        "departmentNumber"  => _("Department number"),
-        "employeeNumber"    => _("Employee number"),
-        "employeeType"      => _("Employee type"),
-        "l"                 => _("Location"),
-        "st"                => _("State"),
+        "plProvidedAcls" => array(
+          "userPassword"      => _("User password"), 
+          "sn"                => _("Surename"),
+          "givenName"         => _("Given name"),
+          "uid"               => _("User identification"),
+          "personalTitle"     => _("Personal title"),
+          "academicTitle"     => _("Academic title"),
+          "homePostalAddress" => _("Home postal address"),
+          "homePhone"         => _("Home phone number"),
+          "labeledURI"        => _("Homepage"),
+          "o"                 => _("Organization"),
+          "ou"                => _("Department"),
+          "dateOfBirth"       => _("Date of birth"),
+          "gender"            => _("Gender"),
+          "preferredLanguage" => _("Preferred language"),
+          "departmentNumber"  => _("Department number"),
+          "employeeNumber"    => _("Employee number"),
+          "employeeType"      => _("Employee type"),
+          "l"                 => _("Location"),
+          "st"                => _("State"),
 
-        "roomNumber"        => _("Room number"),
-        "telephoneNumber"   => _("Telefon number"),
-        "mobile"            => _("Mobile number"),
-        "pager"             => _("Pager number"),
-        "userPKCS12"        => _("User certificate PKCS12"),
+          "roomNumber"        => _("Room number"),
+          "telephoneNumber"   => _("Telefon number"),
+          "mobile"            => _("Mobile number"),
+          "pager"             => _("Pager number"),
+          "userPKCS12"        => _("User certificate PKCS12"),
 
-        "postalAddress"                => _("Postal address"),
-        "facsimileTelephoneNumber"     => _("Fax number"),
-        "userSMIMECertificate"         => _("User certificate SMIME"));
+          "postalAddress"                => _("Postal address"),
+          "facsimileTelephoneNumber"     => _("Fax number"),
+          "userSMIMECertificate"         => _("User certificate SMIME"))
+        );
 
     /* Append government attributes if required */
       global $config;
     if (isset($config->current['GOVERNMENTMODE']) &&  preg_match('/true/i', $config->current['GOVERNMENTMODE'])){
       foreach($govattrs as $attr => $desc){
-        $ret[$attr] = $desc;
+        $ret["plProvidedAcls"][$attr] = $desc;
       }
     }
 

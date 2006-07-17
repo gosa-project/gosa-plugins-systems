@@ -1359,6 +1359,8 @@ class plugin
     #var $plSelfModify= FALSE;
     #var $plOptions= array();
     #var $plSection= "";
+    #var $plProvidedCategory= array();
+    #var $plCategory= array();
     #var $plTask= array();
     #var $plPriority= 0;
     #var $plDepends= array();

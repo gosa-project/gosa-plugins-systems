@@ -1251,18 +1251,25 @@ function printOutHotPlugDevices()
   {
     return (array("plDescription"   => _("Environment settings"),
                   "plSelfModify"    => TRUE,
-                  "plDepends"       => array("objectClass" => "gosaAccount"),
+                  "plDepends"       => array("user", "posixAccount"),
+                  "plPriority"      => 2,
+                  "plSection"       => "personal",
+                  "plCategory"      => array("users", "groups"),
+                  "plOptions"       => array("resolution_hook" => array("type" => "string",
+                                                                        "description" => _("Command to extend the list of possible screen resolutions"))),
 
-                  "gotoProfileServer"   => _("Profile server") ,
-                  "gotoProfileFlag_L"   => "FIXME"._("Resolution changeable during session") ,  // These variable are flags 
-                  "gotoProfileFlag_C"   => "FIXME"._("Cache profile localy") ,                  // extracted from gotoProfileFlag
-                  "gotoXResolution"     => _("Resolution") ,
-                  "gotoProfileQuota"    => _("Profile quota") ,
-                  "gotoLogonScripts"    => _("Logon script") ,
-                  "gotoPrinter"         => _("Printer") ,
-                  "gosaDefaultPrinter"  => _("Default printer") ,
-                  "gotoKioskProfile"    => _("Kiosk profile") ,
-                  "gotoShare"           => _("Shares") ));
+                  "plProvidedAcls"  => array(
+                    "gotoProfileServer"   => _("Profile server") ,
+                    "gotoProfileFlag_L"   => _("Resolution changeable during session") ,
+                    "gotoProfileFlag_C"   => _("Cache profile localy") ,
+                    "gotoXResolution"     => _("Resolution") ,
+                    "gotoProfileQuota"    => _("Profile quota") ,
+                    "gotoLogonScripts"    => _("Logon script") ,
+                    "gotoPrinter"         => _("Printer") ,
+                    "gosaDefaultPrinter"  => _("Default printer") ,
+                    "gotoKioskProfile"    => _("Kiosk profile") ,
+                    "gotoShare"           => _("Shares")),
+                   ));
     }
 }
 

@@ -858,20 +858,27 @@ class group extends plugin
   function plInfo()
   {
     return (array(  
-          "plDescription"     => _("Groups"),
-          "plSelfModify"      => FALSE,
-          "plDepends"         => array("objectClass" => "posixGroup","description"=>_("Groups")),
-          "cn"                => _("Name"),
-          "description"       => _("Description"),
-          "base"              => _("Base"),
+          "plShortName" => _("Generic"),
+          "plDescription" => _("Generic group settings"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("admin"),
+          "plCategory"    => array("groups" => _("Groups")),
 
-          "fon_group"         => _("Phone pickup group"),
-          "nagios_group"      => _("Nagios group"),
+          "plProvidedAcls"    => array(
+            "cn"                => _("Name"),
+            "description"       => _("Description"),
+            "base"              => _("Base"),
 
-          "gidNumber"         => _("GID"),
-          "memberUid"         => _("Group member"),
-          "sambaGroupType"    => _("Samba group type"),
-          "sambaSID"          => _("Samba SID")));
+            "fon_group"         => _("Phone pickup group"),
+            "nagios_group"      => _("Nagios group"),
+
+            "gidNumber"         => _("GID"),
+            "memberUid"         => _("Group member"),
+            "sambaGroupType"    => _("Samba group type"),
+            "sambaSID"          => _("Samba SID"))
+        ));
   }
 }
 
