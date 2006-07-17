@@ -1005,8 +1005,8 @@ class mailAccount extends plugin
             "gosaMailAlternateAddress"  =>  _("Mail alternative addresses"),
 
             "gosaVacationMessage"       =>  _("Vacation message"),
-            "gosaMailForwardingAddress" =>  _("Forwarding address")));
-    )
+            "gosaMailForwardingAddress" =>  _("Forwarding address"))
+        ));
   }
 }
 
