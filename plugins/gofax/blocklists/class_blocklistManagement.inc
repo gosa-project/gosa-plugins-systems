@@ -560,14 +560,15 @@ class blocklist extends plugin
   function plInfo()
   {
     return (array(  
-          "plShortName" => _("Fay"),
+          "plShortName"       => _("Fax"),
           "plDescription"     => _("Fax Blocklists"),
           "plSelfModify"      => TRUE,
           "plDepends"         => array(),
 
           "plPriority"    => 0,
-          "plSection"     => array("blocklists" => _("FAX Blocklists")),
-          "plCategory"    => array("goFaxRBlock" => _("Blocklists")),
+          "plSection"     => array("administration" => _("FAX Blocklists")),
+          "plCategory"    => array("blocklists"     => array("description" => _("Blocklists"),
+                                                             "objectClass" => array("goFaxRBlock","goFaxSBlock"))),
       
   
 
