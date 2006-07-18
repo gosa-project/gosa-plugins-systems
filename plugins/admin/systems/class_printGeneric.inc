@@ -763,6 +763,32 @@ class printgeneric extends plugin
     }
     return($a_return);
   }
+
+  /* Return plugin informations for acl handling
+      #FIXME FAIscript seams to ununsed within this class... */
+  function plInfo()
+  {
+    return (array(
+          "plShortName"   => _("Generic"),
+          "plDescription" => _("Print generic"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("printer" => array("description"  => _("Printer"),
+                                                    "objectClass"  => _("gotoPrinter"))),
+          "plProvidedAcls"=> array(
+            "cn"                => _("Name"), 
+            "description"       => _("Description"), 
+            "l"                 => _("Location"), 
+            "labeledURI"        => _("LabeledURL"), 
+            "gotoPrinterPPD"    => _("Printer PPD"),
+            "gotoUserPrinter"   => _("Permissions")) 
+          ));
+  }
+
+
+
 }
 
 
