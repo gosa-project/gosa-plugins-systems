@@ -523,8 +523,9 @@ class conference extends plugin
           "plSelfModify"  => TRUE,
           "plDepends"     => array(),
           "plPriority"    => 0,
-          "plSection"     => array("conference" => _("Phone conference")),
-          "plCategory"    => array("conference" => _("Phone conference")),
+          "plSection"     => array("addons" => _("Addons")),
+          "plCategory"    => array("conference" => array("description" => _("GOfon"),
+                                                  "objectClass" => "gofonConference")),
 
           "plProvidedAcls" => array(
             "base"                          => _("Base"), 
