@@ -294,7 +294,7 @@ class environment extends plugin
 
       /* Group Dialog with enabled environment options */
       if ($this->is_account){
-        $display= $this->show_header(_("Remove environment extension"),
+        $display= $this->show_enable_header(_("Remove environment extension"),
             _("Environment extension enabled. You can disable it by clicking below."));
       } else {
   
@@ -304,12 +304,12 @@ class environment extends plugin
        */
         if((isset($this->parent->by_object['group']))||(isset($this->attrs['objectClass']))&&((in_array("posixAccount",$this->attrs['objectClass'])))){
           // 4. There is a PosixAccount
-          $display= $this->show_header(_("Add environment extension"),
+          $display= $this->show_enable_header(_("Add environment extension"),
               _("Environment extension disabled. You can enable it by clicking below."));
           return $display;
         }else{
           // 4. There is no PosixAccount
-          $display= $this->show_header(_("Add environment extension"),
+          $display= $this->show_enable_header(_("Add environment extension"),
               _("Environment extension disabled. You have to setup a posix account before you can enable this feature."));
           return $display;
         }
@@ -331,18 +331,18 @@ class environment extends plugin
 
         // 3. Account enabled . Editing from adminmenu
         if ($this->is_account){
-          $display= $this->show_header(_("Remove environment extension"),
+          $display= $this->show_disable_header(_("Remove environment extension"),
               _("Environment extension enabled. You can disable it by clicking below."));
         } else {
 
           if($this->parent->by_object['posixAccount']->is_account==true){
             // 4. There is a PosixAccount
-            $display= $this->show_header(_("Add environment extension"),
+            $display= $this->show__disable_header(_("Add environment extension"),
                 _("Environment extension disabled. You can enable it by clicking below."));
             return $display;
           }else{
             // 4. There is a PosixAccount
-            $display= $this->show_header(_("Add environment extension"),
+            $display= $this->show_disable_header(_("Add environment extension"),
                 _("Environment extension disabled. You have to setup a posix account before you can enable this feature."),TRUE,TRUE);
             return $display;
           }
