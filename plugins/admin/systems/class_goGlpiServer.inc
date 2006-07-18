@@ -208,6 +208,27 @@ class goGlpiServer extends plugin{
       $this->$flag = $attrs[$flag][0];
     }
   }
+
+  
+  /* Return plugin informations for acl handling */
+  function plInfo()
+  {
+    return (array(
+          "plShortName"   => _("Glpi server"),
+          "plDescription" => _("Glpi server service"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("server"),
+
+          "plProvidedAcls"=> array(
+             "goGlpiAdmin"    => _("Admin"), 
+             "goGlpiDatabase" => _("Database"),
+             "goGlpiPassword" => _("Password"))
+          ));
+  }
+
  
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

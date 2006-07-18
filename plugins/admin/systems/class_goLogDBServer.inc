@@ -207,6 +207,24 @@ class goLogDBServer extends plugin{
     }
   }
   
+
+  /* Return plugin informations for acl handling */
+  function plInfo()
+  {
+    return (array(
+          "plShortName"   => _("Log"),
+          "plDescription" => _("Log service"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("server"),
+
+          "plProvidedAcls"=> array(
+            "goLogAdmin"    => _("Admin"),
+            "goLogPassword" => _("Password"))
+          ));
+  }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

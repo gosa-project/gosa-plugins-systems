@@ -215,6 +215,27 @@ class goFonServer extends plugin{
       $this->$flag = $attrs[$flag][0];
     }
   }
+
+  
+  /* Return plugin informations for acl handling */
+  function plInfo()
+  {
+    return (array(
+          "plShortName"   => _("GoFon server"),
+          "plDescription" => _("GoFon server service"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("server"),
+
+          "plProvidedAcls"=> array(
+              "goFonAdmin"      => _("Admin"), 
+              "goFonPassword"   => _("Password"),
+              "goFonAreaCode"   => _("Area code"), 
+              "goFonCountryCode"=> _("Country code"))
+          ));
+  }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

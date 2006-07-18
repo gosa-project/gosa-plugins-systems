@@ -763,6 +763,34 @@ class goMailServer extends plugin{
   {
     plugin::save_object();  
   }
+
+
+
+  /* Return plugin informations for acl handling */
+  function plInfo()
+  {
+    return (array(
+          "plShortName"   => _("Mail"),
+          "plDescription" => _("Mail service"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("server"),
+
+          "plProvidedAcls"=> array(
+            "description"                 => _("Description"), 
+            "postfixHeaderSizeLimit"      => _("Header size limit"), 
+            "postfixMailboxSizeLimit"     => _("Max mailbox size"), 
+            "postfixMessageSizeLimit"     => _("Max message size"), 
+            "postfixMyDestinations"       => _("Domains to accept mail for"), 
+            "postfixMyNetworks"           => _("Local networks"), 
+            "postfixRelayhost"            => _("Relay host"), 
+            "postfixTransportTable"       => _("Transport table"), 
+            "postfixSenderRestrictions"   => _("Restrictions for sender"), 
+            "postfixRecipientRestrictions"=> _("Restrictions for recipient"))
+            ));
+  }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

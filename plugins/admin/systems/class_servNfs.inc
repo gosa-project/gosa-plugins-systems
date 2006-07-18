@@ -255,6 +255,27 @@ class servnfs extends plugin
     return $this->create_mount;
   }
 
+  /* Return plugin informations for acl handling */
+  function plInfo()
+  {
+    return (array(
+          "plShortName"   => _("NFS"),
+          "plDescription" => _("NFS service"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("server"),
+
+          "plProvidedAcls"=> array(
+              "description" => _("Description"),
+              "type"        => _("Type"),
+              "charset"     => _("Charset"),
+              "path"        => _("Path"),
+              "option"      => _("Option"), 
+              "volume"      => _("Valume"))
+            ));
+  }
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

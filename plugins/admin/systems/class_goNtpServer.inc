@@ -212,6 +212,24 @@ class goNtpServer extends plugin{
   }
 
 
+  /* Return plugin informations for acl handling */
+  function plInfo()
+  {
+    return (array(
+          "plShortName"   => _("NTP"),
+          "plDescription" => _("NTP service"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("server"),
+
+          "plProvidedAcls"=> array(
+            "goTimeSource"        =>_("Ntp source"))
+          ));
+  }
+
+
   function check(){ return array();}
 
   function save_object(){;}

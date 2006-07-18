@@ -215,6 +215,25 @@ class goTerminalServer extends plugin{
     }
   }
 
+    /* Return plugin informations for acl handling */
+  function plInfo()
+  {
+    return (array(
+          "plShortName"   => _("Terminal"),
+          "plDescription" => _("Terminal service"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("server"),
+
+          "plProvidedAcls"=> array(
+            "goXdmcpIsEnabled"  => _("Temporary disable login"),
+            "goFontPath"        => _("Font path"))
+          ));
+  }
+
+
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

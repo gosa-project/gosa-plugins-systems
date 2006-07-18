@@ -403,6 +403,39 @@ class servkolab extends plugin {
       $this->$flag = $attrs[$flag][0];
     }
   }
+
+
+
+  /* Return plugin informations for acl handling */
+  function plInfo()
+  {
+    return (array(
+          "plShortName"   => _("Kolab"),
+          "plDescription" => _("Kolab service"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("server"),
+
+          "plProvidedAcls"=> array(
+            "postfix_mydomain"                => _("Postfix mydomain") ,
+            "postfix_mydestination"           => _("My destination") ,
+            "proftpd_ftp"                     => _("FTP FreeBusy service") ,
+            "postfix_mynetworks"              => _("SMTP privileged networks") ,
+            "postfix_enable_virus_scan"       => _("Enable virus scan") ,
+            "postfix_relayhost"               => _("Relayhost") ,
+            "apache_http"                     => _("HTTP FreeBusy service") ,
+            "postfix_allow_unauthenticated"   => _("Accept Internet Mail") ,
+            "cyrus_imap"                      => _("IMAP service") ,
+            "kolabFreeBusyFuture"             => _("kolabFreeBusyFuture") ,
+            "cyrus_pop3"                      => _("POP3 service") ,
+            "cyrus_imaps"                     => _("IMAP/SSL service") ,
+            "cyrus_pop3s"                     => _("POP3/SSL service") ,
+            "cyrus_sieve"                     => _("Sieve service") ,
+            "cyrus_quotawarn"                 => _("Quota settings")) 
+            ));
+  }
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

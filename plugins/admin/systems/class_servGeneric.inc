@@ -307,6 +307,27 @@ class servgeneric extends plugin
     }
   }
 
+
+  /* Return plugin informations for acl handling */ 
+  function plInfo()
+  {
+    return (array( 
+          "plShortName"   => _("Generic"),
+          "plDescription" => _("Server generic"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("administration"),           
+          "plCategory"    => array("server" => array("description"  => _("Server"),
+                                                     "objectClass"  => _("gotoWorkstation"))),
+          "plProvidedAcls"=> array(
+            "cn"           => _("Name"),
+            "description"  => _("Description"),
+            "gotoMode"     => _("Goto mode"),
+            "base"         => _("Base"),
+            "FAIstate"     => _("Action flag"))
+          ));
+  }
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

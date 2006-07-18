@@ -381,6 +381,34 @@ class servdns extends plugin
       $this->$flag = $attrs[$flag][0];
     }
   }
+
+
+  /* Return plugin informations for acl handling */
+  function plInfo()
+  {
+    return (array(
+          "plShortName"   => _("DNS"),
+          "plDescription" => _("DNS service"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("server"),
+
+          "plProvidedAcls"=> array(
+            "zoneName"      =>_("Zone name"),
+            "ReverseZone"   =>_("Reverse zone"),
+            "sOAprimary"    =>_("Primary dns server"),
+            "sOAmail"       =>_("Mail address"),
+            "sOAserial"     =>_("Serial"),
+            "sOArefresh"    =>_("Refresh"),
+            "sOAretry"      =>_("Retry"),
+            "sOAexpire"     =>_("Expire"),
+            "sOAttl"        =>_("TTL"),
+            "zoneRecords"   =>_("Zone records"))
+    ));
+  }
+
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

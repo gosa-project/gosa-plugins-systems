@@ -211,6 +211,25 @@ class goKrbServer extends plugin{
       $this->$flag = $attrs[$flag][0];
     }
   }
+
+    /* Return plugin informations for acl handling */
+  function plInfo()
+  {
+    return (array(
+          "plShortName"   => _("Kerberos"),
+          "plDescription" => _("Kerberos service"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("server"),
+
+          "plProvidedAcls"=> array(
+            "goKrbRealm"    => _("Realm"), 
+            "goKrbAdmin"    => _("Admin"),
+            "goKrbPassword" => _("Password"))
+          ));
+  }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

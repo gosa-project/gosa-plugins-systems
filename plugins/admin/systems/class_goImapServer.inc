@@ -264,6 +264,33 @@ class goImapServer extends plugin{
       $this->$flag = $attrs[$flag][0];
     }
   }
+
+
+  /* Return plugin informations for acl handling */
+  function plInfo()
+  {
+    return (array(
+          "plShortName"   => _("Imap"),
+          "plDescription" => _("Imap service"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("server"),
+
+          "plProvidedAcls"=> array(
+            "goImapName"        =>_("Server indentifier"),
+            "goImapConnect"     =>_("Connect URL"),
+            "goImapAdmin"       =>_("Admin user"),
+            "goImapPassword"    =>_("Admin password"),
+            "goImapSievePort"   =>_("Sieve port"),
+            "cyrusImap"         =>_("Start IMAP service"),
+            "cyrusImapSSL"      =>_("Start IMAP SSL service"),
+            "cyrusPop3"         =>_("Start POP3 service"),
+            "cyrusPop3SSL"      =>_("Start POP3 SSL service"))
+          ));
+  }
+
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

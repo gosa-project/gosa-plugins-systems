@@ -1075,21 +1075,28 @@ class workstartup extends plugin
   }
 
 
-  /* Return plugin informations for acl handling  */ 
+  /* Return plugin informations for acl handling */ 
   function plInfo()
   {
-    return (array(  
-          "plDescription"     => _("Startup"),
-          "plSelfModify"      => FALSE,
-          "plDepends"         => array("objectClass" => "gotoWorkstation"),
-          "gotoLdapServer"        => _("Ldap server"),
-          "gotoBootKernel"        => _("Boot kernel"),
-          "gotoKernelParameters"  => _("Kernel parameter"),
-          "FAIclass"              => _("FAI classes"),
-          "FAIstatus"             => _("FAI status flag"),
-          "gotoShare"             => _("Shares"),
-          "FAIdebianMirror"       => _("Debian mirror"),
-          "FAIrelease"            => _("Debian release")));
+    return (array( 
+          "plShortName"   => _("Startup"),
+          "plDescription" => _("System startup"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("administration"),           
+          "plCategory"    => array("workstation","server"),
+
+          "plProvidedAcls"=> array(
+            "gotoLdapServer"        => _("Ldap server"),
+            "gotoBootKernel"        => _("Boot kernel"),
+            "gotoKernelParameters"  => _("Kernel parameter"),
+            "FAIclass"              => _("FAI classes"),
+            "FAIstatus"             => _("FAI status flag"),
+            "gotoShare"             => _("Shares"),
+            "FAIdebianMirror"       => _("Debian mirror"),
+            "FAIrelease"            => _("Debian release"))
+          ));
   }
 }
 
