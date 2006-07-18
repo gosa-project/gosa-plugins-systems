@@ -470,28 +470,35 @@ class application extends plugin
   }
 
 
-  /* Return plugin informations for acl handling */ 
+  /* Return plugin informations for acl handling
+      #FIXME FAIscript seams to ununsed within this class... */
   function plInfo()
   {
-    return (array(  
-          "plDescription"     => _("Applications"),
-          "plSelfModify"      => FALSE,
-          "plDepends"         => array("objectClass" => "gosaApplication"),
-          "cn"                => _("Name"),
-          "description"       => _("Description"),
+    return (array(
+          "plShortName"   => _("Generic"),
+          "plDescription" => _("Application generic"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("application" => array("description"  => _("Application"),
+                                                          "objectClass"  => "gosaApplication")),
+          "plProvidedAcls"=> array(
+            "cn"                => _("Name"),
+            "description"       => _("Description"),
+            "gosaApplicationExecute"  => _("Execute"),
+            "gosaApplicationName"     => _("Name"),
+            "gosaApplicationIcon"     => _("Icon"),
+            "gosaApplicationFlags"    => _("Flag"),
+            "gotoLogonScript"         => _("Script content"),
+            "gosaApplicationParameter"=> _("Application parameter"),
 
-          "gosaApplicationExecute"  => _("Execute"),
-          "gosaApplicationName"     => _("Name"),
-          "gosaApplicationIcon"     => _("Icon"),
-          "gosaApplicationFlags"    => _("Flag"),
-          "gotoLogonScript"         => _("Script content"),
-
-          "exec_for_groupmembers" => _("Only executable for members"),              // G
-          "place_on_desktop"      => _("Place icon on members desktop"),            // D
-          "place_on_kicker"       => _("Place entry in members launch bar"),        // L
-          "place_in_startmenu"    => _("Place entry in members startmenu"),         // M
-          "overwrite_config"      => _("Replace user configuration on startup")));  // O
-
+            "exec_for_groupmembers" => _("Only executable for members"),              // G
+            "place_on_desktop"      => _("Place icon on members desktop"),            // D
+            "place_on_kicker"       => _("Place entry in members launch bar"),        // L
+            "place_in_startmenu"    => _("Place entry in members startmenu"),         // M
+            "overwrite_config"      => _("Replace user configuration on startup"))  // O
+            ));
   }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
