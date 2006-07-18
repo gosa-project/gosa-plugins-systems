@@ -400,6 +400,32 @@ class phoneGeneric extends plugin
     $this->postcreate();
   }
 
+
+  /* Return plugin informations for acl handling
+      #FIXME FAIscript seams to ununsed within this class... */
+  function plInfo()
+  {
+    return (array(
+          "plShortName"   => _("Generic"),
+          "plDescription" => _("Phone generic"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("phone" => array("description"  => _("Phone hardware"),
+                                                    "objectClass"  => _("goFonHardware"))),
+          "plProvidedAcls"=> array(
+            "cn"                  => _("Name"),
+            "description"         => _("Description"),
+            "goFonType"           => _("Mode"),
+            "goFonDmtfMode"       => _("DTMF mode"),
+            "goFonDefaultIP"      => _("Default ip"),
+            "goFonQualify"        => _("Qualify"),
+            "selected_categorie"  => _("Hardware type"))
+          ));
+  }
+
+
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
