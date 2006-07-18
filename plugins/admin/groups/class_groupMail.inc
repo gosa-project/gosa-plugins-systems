@@ -973,31 +973,25 @@ I: Only insider delivery */
   }
 
 
-  /* Return plugin informations for acl handling  */ 
+  /* Return plugin informations for acl handling  */
   function plInfo()
   {
-    return (array(  
-          "plDescription"     => _("Group mail"),
-          "plSelfModify"      => FALSE,
-          "plDepends"         => array("objectClass" => "posixGroup"),
-
-          "mail"                      => _("Mail address"),
-          "gosaMailAlternateAddress"  => _("Alternate addresses"),
-          "gosaMailForwardingAddress" => _("Forwarding addresses"),
-
-          "gosaMailQuota"             => _("Quota size"),
-//        "gosaMailMaxSize"           => _("Mail max size"),
-
-          "gosaMailServer"            => _("Mail server"),
-//        "gosaMailDeliveryMode"      => _("Delivery mode"),
-
-//        "gosaSpamSortLevel"         => _(""),
-//        "gosaSpamMailbox"           => _(""),
-
-          "acl"                       => _(""),
-//        "gosaSharedFolderTarget"    => _(""),
-//        "gosaVacationMessage"       => _("")
-                                                   ));
+    return (array(
+          "plShortName"   => _("Mail"),
+          "plDescription" => _("Group mail"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("groups"), 
+          "plProvidedAcls"=> array(
+            "mail"                      => _("Mail address"),
+            "gosaMailAlternateAddress"  => _("Alternate addresses"),
+            "gosaMailForwardingAddress" => _("Forwarding addresses"),
+            "gosaMailQuota"             => _("Quota size"),
+            "gosaMailServer"            => _("Mail server"),
+            "acl"                       => _("Permissions"))
+          ));
   }
 }
 

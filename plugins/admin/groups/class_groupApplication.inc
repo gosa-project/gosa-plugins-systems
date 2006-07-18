@@ -1056,12 +1056,23 @@ class appgroup extends plugin
   /* Return plugin informations for acl handling  */ 
   function plInfo()
   {
-    return (array(  
-          "plDescription"     => _("Group applications"),
-          "plSelfModify"      => FALSE,
-          "plDepends"         => array("objectClass" => "posixGroup"),
-          "gosaMemberApplication"     => _("Application"),
-          "gosaApplicationParameter"  => _("Application parameter")));
+     function plInfo()
+  {
+    return (array(
+          "plShortName"   => _("Applications"),
+          "plDescription" => _("Group applications"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("groups"),
+          "plProvidedAcls"=> array(
+            "gosaMemberApplication"     => _("Application"),
+            "gosaApplicationParameter"  => _("Application parameter"))
+          ));
+  }
+
+
 
   }
 }
