@@ -442,17 +442,24 @@ class faiScript extends plugin
     }
   }
   
+
   /* Return plugin informations for acl handling */ 
   function plInfo()
   {
-    return (array(  
-          "plDescription"     => _("FAI script"),
-          "plSelfModify"      => FALSE,
-          "plDepends"         => array("objectClass" => "FAIclass"),
-          "cn"                => _("Name"),
-          "description"       => _("Description"),
-          "FAIpriority"       => _("Script priority"),
-          "FAIscript"         => _("FAI script")));
+    return (array( 
+          "plShortName" => _("Script"),
+          "plDescription" => _("FAI script"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("fai"),
+          "plProvidedAcls" => array(
+            "cn"                => _("Name"),
+            "description"       => _("Description"),
+            "FAIpriority"       => _("Script priority"),
+            "FAIscript"         => _("FAI script"))
+          ));
   }
 }
 

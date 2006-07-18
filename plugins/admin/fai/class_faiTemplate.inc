@@ -406,19 +406,26 @@ class faiTemplate extends plugin
     }
   }
   
+
   /* Return plugin informations for acl handling */ 
   function plInfo()
   {
-    return (array(  
-          "plDescription"     => _("FAI template"),
-          "plSelfModify"      => FALSE,
-          "plDepends"         => array("objectClass" => "FAIclass"),
-          "cn"                => _("Name"),
-          "description"       => _("Description"),
-          "FAItemplateFile"   => _("Template file"),
-          "FAItemplatePath"   => _("Template path"),
-          "FAIowner"          => _("File owner"),
-          "FAImode"           => _("File permissions")));
+    return (array( 
+          "plShortName" => _("Template"),
+          "plDescription" => _("FAI template"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("fai"),
+          "plProvidedAcls" => array(
+            "cn"                => _("Name"),
+            "description"       => _("Description"),
+            "FAItemplateFile"   => _("Template file"),
+            "FAItemplatePath"   => _("Template path"),
+            "FAIowner"          => _("File owner"),
+            "FAImode"           => _("File permissions"))
+          ));
   }
 }
 

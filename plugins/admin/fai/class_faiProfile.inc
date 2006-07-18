@@ -428,15 +428,20 @@ class faiProfile extends plugin
   /* Return plugin informations for acl handling */ 
   function plInfo()
   {
-    return (array(  
-          "plDescription"     => _("FAI profile"),
-          "plSelfModify"      => FALSE,
-          "plDepends"         => array("objectClass" => "FAIclass"),
-          "cn"                => _("Name"),
-          "description"       => _("Description"),
-          "FAIclass"          => _("FAI classes")));
+    return (array( 
+          "plShortName" => _("Profile"),
+          "plDescription" => _("FAI profile"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("fai"),
+          "plProvidedAcls" => array(
+            "cn"                => _("Name"),
+            "description"       => _("Description"),
+            "FAIclass"          => _("FAI classes"))
+          ));
   }
-
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

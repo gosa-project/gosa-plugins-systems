@@ -536,16 +536,22 @@ class faiPackage extends plugin
   /* Return plugin informations for acl handling */ 
   function plInfo()
   {
-    return (array(  
-          "plDescription"     => _("FAI Package list"),
-          "plSelfModify"      => FALSE,
-          "plDepends"         => array("objectClass" => "FAIclass"),
-          "cn"                => _("Name"),
-          "description"       => _("Description"),
-          "FAIpackage"        => _("Packages"),
-          "FAIdebianSection"  => _("Section"),
-          "FAIinstallMethod"  => _("Install Method"),
-          "FAIdebianRelease"  => _("Release")));
+    return (array( 
+          "plShortName" => _("Package"),
+          "plDescription" => _("FAI Package list"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("fai"),
+          "plProvidedAcls" => array(
+            "cn"                => _("Name"),
+            "description"       => _("Description"),
+            "FAIpackage"        => _("Packages"),
+            "FAIdebianSection"  => _("Section"),
+            "FAIinstallMethod"  => _("Install Method"),
+            "FAIdebianRelease"  => _("Release"))
+          ));
   }
 }
 

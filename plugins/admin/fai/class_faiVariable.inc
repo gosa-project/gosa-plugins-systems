@@ -373,17 +373,24 @@ class faiVariable extends plugin
       $this->handle_object_tagging($sub_dn, $this->gosaUnitTag);
     }
   }
+
   
   /* Return plugin informations for acl handling */ 
   function plInfo()
   {
-    return (array(  
-          "plDescription"     => _("FAI variable"),
-          "plSelfModify"      => FALSE,
-          "plDepends"         => array("objectClass" => "FAIclass"),
-          "cn"                => _("Name"),
-          "description"       => _("Description"),
-          "FAIvariableContent"=> _("Variable content")));
+    return (array( 
+          "plShortName" => _("Variable"),
+          "plDescription" => _("FAI variable"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("fai"),
+          "plProvidedAcls" => array(
+            "cn"                => _("Name"),
+            "description"       => _("Description"),
+            "FAIvariableContent"=> _("Variable content"))
+          ));
   }
 }
 

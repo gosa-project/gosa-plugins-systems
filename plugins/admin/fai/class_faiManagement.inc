@@ -800,6 +800,21 @@ class faiManagement extends plugin
     $this->DivListFai->save_object();
   }
 
+
+  /* Return plugin informations for acl handling */ 
+  function plInfo()
+  {
+    return (array( 
+          "plShortName"   => _("Management"),
+          "plDescription" => _("FAI management"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("administration"),           
+          "plCategory"    => array("fai"=> array("description" => _("FAI"),
+                                                 "objectClass" => "FAIclass")),
+          "plProvidedAcls"=> array());
+  }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

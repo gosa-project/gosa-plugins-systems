@@ -479,23 +479,29 @@ class faiPartitionTable extends plugin
     $this->handle_post_events("add");
   }
 
-  
+
   /* Return plugin informations for acl handling */ 
   function plInfo()
   {
-    return (array(  
-          "plDescription"     => _("FAI partition table"),
-          "plSelfModify"      => FALSE,
-          "plDepends"         => array("objectClass" => "FAIclass"),
-          "cn"                => _("Name"),
-          "FAIpartitionType"  => _("Partition type"),
-          "FAIpartitionNr"    => _("Partition no."),
-          "FAIfsType"         => _("File system type"),
-          "FAImountPoint"     => _("Mount point"),
-          "FAIpartitionSize"  => _("Partition size"),
-          "FAImountOptions"   => _("Mount options"),
-          "FAIfsOptions"      => _("File system options"),
-          "FAIpartitionFlags" => _("Partition flags")));
+    return (array( 
+          "plShortName" => _("Partition table"),
+          "plDescription" => _("FAI partition table"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("fai"),
+          "plProvidedAcls" => array(
+            "cn"                => _("Name"),
+            "FAIpartitionType"  => _("Partition type"),
+            "FAIpartitionNr"    => _("Partition no."),
+            "FAIfsType"         => _("File system type"),
+            "FAImountPoint"     => _("Mount point"),
+            "FAIpartitionSize"  => _("Partition size"),
+            "FAImountOptions"   => _("Mount options"),
+            "FAIfsOptions"      => _("File system options"),
+            "FAIpartitionFlags" => _("Partition flags"))
+          ));
   }
 }
 
