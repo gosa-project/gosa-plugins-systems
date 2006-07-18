@@ -267,7 +267,7 @@ class plugin
   {
     /* Save values to object */
     foreach ($this->attributes as $val){
-      if (obj_is_writable($this->dn,get_class($this),$val) && isset ($_POST["$val"])){
+      if ($this->acl_is_writable($val) && isset ($_POST["$val"])){
         /* Check for modifications */
         if (get_magic_quotes_gpc()) {
           $data= stripcslashes($_POST["$val"]);
@@ -504,8 +504,9 @@ class plugin
     return FALSE;
   }
 
+
   /* Show header message for tab dialogs */
-  function show_header($button_text, $text, $disabled= FALSE)
+  function show_enable_header($button_text, $text, $disabled= FALSE)
   {
     if ($disabled == TRUE){
       $state= "disabled";
@@ -514,11 +515,47 @@ class plugin
     }
     $display= "<table summary=\"\" width=\"100%\"><tr>\n<td colspan=2><p><b>$text</b></p>\n";
     $display.= "<input type=submit value=\"$button_text\" name=\"modify_state\" ".
-      chkacl($this->acl, "all")." ".$state.
+      ($this->acl_is_createable()?'':'disabled')." ".$state.
       "><p class=\"seperator\">&nbsp;</p></td></tr></table>";
 
     return($display);
   }
+
+
+  /* Show header message for tab dialogs */
+  function show_disable_header($button_text, $text, $disabled= FALSE)
+  {
+    if ($disabled == TRUE){
+      $state= "disabled";
+    } else {
+      $state= "";
+    }
+    $display= "<table summary=\"\" width=\"100%\"><tr>\n<td colspan=2><p><b>$text</b></p>\n";
+    $display.= "<input type=submit value=\"$button_text\" name=\"modify_state\" ".
+      ($this->acl_is_removeable()?'':'disabled')." ".$state.
+      "><p class=\"seperator\">&nbsp;</p></td></tr></table>";
+
+    return($display);
+  }
+
+
+  /* Show header message for tab dialogs */
+  function show_header($button_text, $text, $disabled= FALSE)
+  {
+    echo "FIXME: show_header should be replaced by show_disable_header and show_enable_header<br>";
+    if ($disabled == TRUE){
+      $state= "disabled";
+    } else {
+      $state= "";
+    }
+    $display= "<table summary=\"\" width=\"100%\"><tr>\n<td colspan=2><p><b>$text</b></p>\n";
+    $display.= "<input type=submit value=\"$button_text\" name=\"modify_state\" ".
+      ($this->acl_is_createable()?'':'disabled')." ".$state.
+      "><p class=\"seperator\">&nbsp;</p></td></tr></table>";
+
+    return($display);
+  }
+
 
   function postcreate($add_attrs= array())
   {
@@ -1073,14 +1110,15 @@ class plugin
 
   function remove_snapshot($dn)
   {
+echo "FIXME: remove_snapshot uses old acl's<br>";
     $ui   = get_userinfo();
     $acl  = get_permissions ($dn, $ui->subtreeACL);
     $acl  = get_module_permission($acl, "snapshot", $dn);
 
     if (chkacl($this->acl, "delete") == ""){
-    $ldap = $this->config->get_ldap_link();
-    $ldap->cd($this->config->current['BASE']);
-    $ldap->rmdir_recursive($dn);
+      $ldap = $this->config->get_ldap_link();
+      $ldap->cd($this->config->current['BASE']);
+      $ldap->rmdir_recursive($dn);
     }else{
       print_red (_("You are not allowed to delete this snap shot!"));
     }
@@ -1354,18 +1392,35 @@ class plugin
 
   function plInfo()
   {
-    #var $plObject_name= "";
-    #var $plProvidedAcls= array();
-    #var $plSelfModify= FALSE;
-    #var $plOptions= array();
-    #var $plSection= "";
-    #var $plProvidedCategory= array();
-    #var $plCategory= array();
-    #var $plTask= array();
-    #var $plPriority= 0;
-    #var $plDepends= array();
-    #var $plConflicts= array();
     return array();
+  }
+
+
+  function acl_is_writable($attribute)
+  {
+    $ui= get_userinfo();
+    return preg_match('/w/', $ui->get_permissions($this->dn, get_class($this), $attribute));
+  }
+
+
+  function acl_is_readable($attribute)
+  {
+    $ui= get_userinfo();
+    return preg_match('/r/', $ui->get_permissions($this->dn, get_class($this), $attribute));
+  }
+
+
+  function acl_is_createable()
+  {
+    $ui= get_userinfo();
+    return preg_match('/c/', $ui->get_permissions($this->dn, get_class($this), 'dummy'));
+  }
+
+
+  function acl_is_removable()
+  {
+    $ui= get_userinfo();
+    return preg_match('/d/', $ui->get_permissions($this->dn, get_class($this), 'dummy'));
   }
 
 }
