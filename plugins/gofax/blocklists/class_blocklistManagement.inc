@@ -567,7 +567,7 @@ class blocklist extends plugin
 
           "plPriority"    => 0,
           "plSection"     => array("administration" => _("FAX Blocklists")),
-          "plCategory"    => array("blocklists"     => array("description" => _("Blocklists"),
+          "plCategory"    => array("gofax"          => array("description" => _("Fax"),
                                                              "objectClass" => array("goFaxRBlock","goFaxSBlock"))),
       
   

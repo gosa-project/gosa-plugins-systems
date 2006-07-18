@@ -512,8 +512,15 @@ class user extends plugin
       $smarty->assign("governmentmode", "false");
     }
 
+    /* Special mode for uid */
     $uidACL= $ui->get_permissions($this->dn,"user", "uid");
-    $uidACL= preg_replace("/w/","",$uidACL);
+    if (isset ($this->dn)){
+      if ($this->dn != "new"){
+        $uidACL= preg_replace("/w/","",$uidACL);
+      }
+    }  else {
+      $uidACL= preg_replace("/w/","",$uidACL);
+    }
     
     $smarty->assign("uidACL", $uidACL);
     $smarty->assign("is_template", $this->is_template);

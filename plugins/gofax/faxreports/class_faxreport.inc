@@ -382,14 +382,17 @@ class faxreport extends plugin
     #FIXME You can only read attributes within this report plugin */
   function plInfo()
   {
+
+  
+  
     return (array(
           "plShortName"     => _("Fax report"),
           "plDescription"   => _("Fax report"),
           "plSelfModify"    => TRUE,
           "plDepends"       => array(),
           "plPriority"      => 1,                                 // Position in tabs
-          "plSection"       => "FAX Reports",                     // This belongs to personal
-          "plCategory"      => array("fax"),
+          "plSection"       => array("administration"),                     // This belongs to personal
+          "plCategory"      => array("gofax"),
           "plOptions"       => array(),
 
           "plProvidedAcls" => array(
