@@ -813,7 +813,7 @@ class faiManagement extends plugin
           "plSection"     => array("administration"),           
           "plCategory"    => array("fai"=> array("description" => _("FAI"),
                                                  "objectClass" => "FAIclass")),
-          "plProvidedAcls"=> array());
+          "plProvidedAcls"=> array()));
   }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
