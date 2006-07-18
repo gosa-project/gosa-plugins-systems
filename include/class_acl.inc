@@ -125,8 +125,17 @@ class acl extends plugin
             $this->aclObjects[$idx]= $data['description'];
 
             /* Additionally filter the classes we're interested in in "self edit" mode */
-            if (in_array_ics($data['objectClass'], $oc)){
-              $this->myAclObjects[$class]= $acls['plDescription'];
+            if (is_array($data['objectClass'])){
+              foreach($data['objectClass'] as $objectClass){
+                if (in_array_ics($objectClass, $oc)){
+                  $this->myAclObjects[$class]= $acls['plDescription'];
+                  break;
+                }
+              }
+            } else {
+              if (in_array_ics($data['objectClass'], $oc)){
+                $this->myAclObjects[$class]= $acls['plDescription'];
+              }
             }
           }
 
