@@ -462,30 +462,21 @@ class workgeneric extends plugin
   function plInfo()
   {
     return (array(  
-          "plDescription"     => _("Workstation"),
-          "plSelfModify"      => FALSE,
-          "plDepends"         => array("objectClass" => "gotoWorkstation","description"=>_("Workstation")),
-
-          "cn"                  => _("Workstation name"), 
-
-          "gotoMode"            => _("Goto mode"), 
-          "gotoSyslogServer"    => _("Syslog server"), 
-          "gotoNtpServer"       => _("Ntp server"), 
-          "FAIstate"            => _("Action flag"),
-
-//        "gotoFloppyEnable"    => _(""), 
-//        "gotoCdromEnable"     => _(""), 
-//        "gotoSndModule"       => _(""), 
-
-//        "ghCpuType"           => _(""), 
-//        "ghMemSize"           => _(""), 
-//        "ghUsbSupport"        => _(""), 
-//        "ghGfxAdapter"        => _(""), 
-//        "ghSoundAdapter"      => _(""), 
-//        "gotoLastUser"        => _(""), 
-//        "l"                   => _(""), 
-//          "FAIscript"           => _("FAI status ")
-            ));
+          "plShortName"   => _("Generic"),
+          "plDescription" => _("Workstation generic"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("workstation" => array("description"  => _("Workstation"),
+                                                          "objectClass"  => _("gotoWorkstation"))),
+          "plProvidedAcls"=> array(
+            "cn"                  => _("Workstation name"), 
+            "gotoMode"            => _("Goto mode"), 
+            "gotoSyslogServer"    => _("Syslog server"), 
+            "gotoNtpServer"       => _("Ntp server"), 
+            "FAIstate"            => _("Action flag"))
+          ));
   }
 
 }

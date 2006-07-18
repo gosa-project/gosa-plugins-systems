@@ -422,32 +422,33 @@ class workservice extends plugin
     $this->handle_post_events("modify");
   }
 
-
-  /* Return plugin informations for acl handling  */ 
+  /* Return plugin informations for acl handling */
   function plInfo()
   {
-    return (array(  
-          "plDescription"     => _("Services"),
-          "plSelfModify"      => FALSE,
-          "plDepends"         => array("objectClass" => "gotoWorkstation"),
+    return (array(
+          "plShortName"   => _("Service"),
+          "plDescription" => _("Workstation service"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("workstation"), 
 
-          "gotoXMonitor"        => _("Monitor"),
-          "gotoXDriver"         => _("Driver"),
-          "gotoXResolution"     => _("Resolution"),
-          "gotoXColordepth"     => _("Color depth"),
-          "gotoXHsync"          => _("H sync"),
-          "gotoXVsync"          => _("V sync"),
-
-          "gotoScannerEnable"   => _("Enable scanner"),
-          "gotoScannerClients"  => _("Scanner client"),
-          "gotoScannerBackend"  => _("Scanner backend"),
-
-          "gotoXKbModel"        => _("Keyboard model"),
-          "gotoXKbLayout"       => _("Keyboard layout"),
-          "gotoXKbVariant"      => _("Keyboard Variant"),
-          "gotoXMouseType"      => _("Mouse type"),
-          "gotoXMouseport"      => _("Mouse port"),
-          "goFonHardware"       => _("Telefon Hardware")));
+          "plProvidedAcls"=> array(
+            "gotoXMonitor"          => _("Monitor"),
+            "gotoXDriver"           => _("Gfx driver"),
+            "gotoXResolution"       => _("Gfx resolution"),
+            "gotoXColordepth"       => _("Gfx color depth"),
+            "gotoXHsync"            => _("Hsync"),
+            "gotoXVsync"            => _("Vsync"),
+            "gotoScannerEnable"     => _("Scanner enabled"),
+            "gotoXKbModel"          => _("Keyboard model"),
+            "gotoXKbLayout"         => _("Keyboard layout"),
+            "gotoXKbVariant"        => _("Keyboard variant"),
+            "gotoXMouseType"        => _("Mouse type"),
+            "gotoXMouseport"        => _("Mouse port"),
+            "goFonHardware"         => _("Telephone hardware")) 
+            ));
   }
 }
 
