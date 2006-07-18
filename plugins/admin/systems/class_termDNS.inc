@@ -506,13 +506,22 @@ class termDNS extends plugin
   /* Return plugin informations for acl handling  */ 
   function plInfo()
   {
-    return (array(  
-          "plDescription"     => _("DNS"),
-          "plSelfModify"      => FALSE,
-          "plDepends"         => array("objectClass" => array("gotoWorkstation")),
+    return (array(
+          "plShortName"   => _("DNS"),
+          "plDescription" => _("DNS settings"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("workstation","terminal","phone","server","component","printer"),
 
-          "ipHostNumber"  => _("IP address"),
-          "macAddress"    => _("MAC address")));
+          "plProvidedAcls"=> array(
+            "Records"       => _("DNS records"),
+            "zoneName"      => _("Zone name"),
+            "dNSTTL"        => _("TTL"),
+            "ipHostNumber"  => _("IP address"),
+            "macAddress"    => _("MAC address"))
+          ));
   }
 }
 
