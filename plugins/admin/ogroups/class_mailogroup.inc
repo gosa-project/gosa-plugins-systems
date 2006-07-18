@@ -147,6 +147,26 @@ class mailogroup extends plugin
       $this->mail = $_POST['mail'];
     }
   }
+
+
+     function plInfo()
+  {
+    return (array(
+          "plShortName"   => _("Mail"),
+          "plDescription" => _("Mail group"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("ogroups"),
+          "plProvidedAcls"=> array(
+            "mail" => _("Mail address"))
+          ));
+  }
+
+
+
+
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

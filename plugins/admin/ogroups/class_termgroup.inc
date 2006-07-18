@@ -342,6 +342,27 @@ class termgroup extends plugin
     }
     show_ldap_error($ldap->get_error(), sprintf(_("Removing of object group/workstation with dn '%s' failed."),$this->dn));
   }
+  
+  function plInfo()
+  {
+    return (array(
+          "plShortName"   => _("System"),
+          "plDescription" => _("System group"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("ogroups"),
+          "plProvidedAcls"=> array(
+            "gotoMode"          => _("Mode"),     
+            "gotoSyslogServer"  => _("Syslog server"), 
+            "FAIstate"          => _("Action flag"), 
+            "gotoNtpServer"     => _("Ntp server"))
+          ));
+  }
+
+
+
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

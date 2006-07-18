@@ -745,6 +745,25 @@ class ogroup extends plugin
       $this->cn = $_POST['cn'];
     }
   }
+
+
+  function plInfo()
+  {
+    return (array(
+          "plShortName"   => _("Generic"),
+          "plDescription" => _("Object group generic"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("ogroups" => array("description"  => _("Object groups"),
+                                                      "objectClass"  => "gosaGroupOfNames")),
+          "plProvidedAcls"=> array(
+            "cn"                => _("Name"),
+            "description"       => _("Description"),
+            "member"            => _("Member"))
+          ));
+  }
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

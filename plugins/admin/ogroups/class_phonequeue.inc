@@ -702,6 +702,48 @@ class phonequeue extends plugin
   }
 
 
+    function plInfo()
+  {
+    return (array(
+          "plShortName"   => _("Phone"),
+          "plDescription" => _("Phone group"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("ogroups"), 
+          "plProvidedAcls"=> array(
+
+            "goFonTimeOut"              => _("Timeout"),
+            "goFonMaxLen"               => _("Max queue lenght"),
+            "goFonAnnounceFrequency"    => _(" Announce frequency"),
+            "goFonDialOption_t"         => _("Allow the called user to transfer his call"),
+            "goFonDialOption_T"         => _("Allows calling user to transfer call"),
+            "goFonDialOption_h"         => _("Allow the called to hangup by pressing *"),
+            "goFonDialOption_r"         => _("Ring instead of playing background music"),
+            "goFonDialOption_H"         => _("Allows calling to hangup by pressing *"),
+
+            "goFonMusiconHold"          => _("Music on hold"),
+            "goFonWelcomeMusic"         => _("Welcome music"),
+            "goFonQueueReportHold"      => _("Report hold time"),
+            "goFonQueueYouAreNext"      => _("'You are next' sound"),
+            "goFonQueueThereAre"        => _("'There are' sound"),
+            "goFonQueueCallsWaiting"    => _("'Call waiting' sound"),
+            "goFonQueueThankYou"        => _("'Thank you' sound"),
+            "goFonQueueMinutes"         => _("'Minutes' sound"),
+            "goFonQueueSeconds"         => _("'Second' sound"),
+            "goFonQueueLessThan"        => _("'Less than' sound"),
+            "telephoneNumber"           => _("Queue phone number"),
+            "goFonQueueLanguage"        => _("Language"),
+            "goFonQueueStrategy"        => _("Method"),
+            "goFonQueueAnnounceHoldtime"=> _("Announce holdtime"),
+            "goFonQueueAnnounce"        => _("Announce"),
+            "goFonQueueRetry"           => _("Retry"))
+              ));
+  }
+
+
+
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

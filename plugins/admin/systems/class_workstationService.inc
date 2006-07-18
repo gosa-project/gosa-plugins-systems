@@ -432,7 +432,7 @@ class workservice extends plugin
           "plDepends"     => array(),
           "plPriority"    => 0,
           "plSection"     => array("administration"),
-          "plCategory"    => array("workstation"), 
+          "plCategory"    => array("workstation","ogroups"), 
 
           "plProvidedAcls"=> array(
             "gotoXMonitor"          => _("Monitor"),

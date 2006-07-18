@@ -1085,7 +1085,7 @@ class workstartup extends plugin
           "plDepends"     => array(),
           "plPriority"    => 0,
           "plSection"     => array("administration"),           
-          "plCategory"    => array("workstation","server"),
+          "plCategory"    => array("workstation","server","ogroups"),
 
           "plProvidedAcls"=> array(
             "gotoLdapServer"        => _("Ldap server"),
