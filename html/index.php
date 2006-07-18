@@ -299,7 +299,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])){
               if (preg_match("/\bpassword\b/i",$value)){
                 $plug=$key;
                 gosa_log ("User \"$username\" password forced to change");
-                header ("Location: main.php?plug=$plug&reset=1");
+                header ("Location: main.php?plug=$plug&amp;reset=1");
                 exit;
               }
             }

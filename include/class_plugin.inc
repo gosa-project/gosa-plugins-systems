@@ -289,6 +289,9 @@ class plugin
           $data = "";  
         }
         $this->$val= $data;
+        echo "<font color='blue'>".$val."</font><br>";
+      }else{
+        echo "<font color='red'>".$val."</font><br>";
       }
     }
   }
@@ -1413,14 +1416,14 @@ echo "FIXME: remove_snapshot uses old acl's<br>";
   function acl_is_createable()
   {
     $ui= get_userinfo();
-    return preg_match('/c/', $ui->get_permissions($this->dn, get_class($this), 'dummy'));
+    return preg_match('/c/', $ui->get_permissions($this->dn, get_class($this), '0'));
   }
 
 
-  function acl_is_removable()
+  function acl_is_removeable()
   {
     $ui= get_userinfo();
-    return preg_match('/d/', $ui->get_permissions($this->dn, get_class($this), 'dummy'));
+    return preg_match('/d/', $ui->get_permissions($this->dn, get_class($this), '0'));
   }
 
 }

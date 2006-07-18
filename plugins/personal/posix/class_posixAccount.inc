@@ -259,14 +259,14 @@ class posixAccount extends plugin
              in the moment, because I need to rely on unique
              uidNumbers. There'll be a better solution later
              on. */
-          $display= $this->show_header(_("Remove posix account"),
+          $display= $this->show_disable_header(_("Remove posix account"),
               _("This account has unix features enabled. To disable them, you'll need to remove the samba / environment account first."), TRUE);
         } else {
-          $display= $this->show_header(_("Remove posix account"),
+          $display= $this->show_disable_header(_("Remove posix account"),
               _("This account has posix features enabled. You can disable them by clicking below."));
         }
       } else {
-        $display= $this->show_header(_("Create posix account"),
+        $display= $this->show_enable_header(_("Create posix account"),
             _("This account has posix features disabled. You can enable them by clicking below."));
         return($display);
       }
