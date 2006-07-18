@@ -757,7 +757,37 @@ class glpiPrinterAccount extends plugin
     return($ret);
   }  
 
-}
+     /* Return plugin informations for acl handling */
+  function plInfo()
+  {
+    return (array(
+          "plShortName"   => _("Glpi"),
+          "plDescription" => _("Printer inventory extension"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("printer"),
 
+          "plProvidedAcls"=> array(
+            "flags_serial"         => _("Supports serial interface"),
+            "flags_par"            => _("Supports parallel interface"),
+            "flags_usb"            => _("Supports usb interface"),
+            "tech_num"             => _("Technical responsible"),
+            "comments"             => _("Comments"),
+            "location"             => _("Location"),
+            "contact_num"          => _("Contact person"),
+            "type"                 => _("Type"),
+            "FK_glpi_enterprise"   => _("Manufacturer"),
+
+            "Attachment_name"             => _("Attachment name"),
+            "Attachment_comment"          => _("Attachment comment"),
+            "Attachment_mime"             => _("Attachment mime type"),
+            "Attachment_filename"         => _("Attachment filename"),
+        
+            "ManageCartridges"            => _("Cartridge settings"))
+          ));
+  }
+}
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

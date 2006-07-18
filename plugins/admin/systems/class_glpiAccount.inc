@@ -760,6 +760,49 @@ class glpiAccount extends plugin
     }
     return($ret);
   }
+
+   /* Return plugin informations for acl handling */
+  function plInfo()
+  {
+    return (array(
+          "plShortName"   => _("Glpi"),
+          "plDescription" => _("Inventory extension"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("workstation","terminal","component","server","phone") ,
+          "plProvidedAcls"=> array(
+          
+            "tech_num"            => _("Technical responsilbe"),
+            "comments"            => _("Comment"),
+            "os"                  => _("Operating system"),
+            "location"            => _("Location"),
+            "contact_num"         => _("Contact person"),
+            "model"               => _("Model"),
+            "type"                => _("Type"),
+            "FK_glpi_enterprise"  => _("Manufacturer"),
+
+            "Attachment_name"             => _("Attachment name"),
+            "Attachment_comment"          => _("Attachment comment"),
+            "Attachment_mime"             => _("Attachment mime type"),
+            "Attachment_filename"         => _("Attachment filename"),
+
+            "Device_monitor"        => _("Device monitor"),
+            "Device_case"           => _("Device case"),
+            "Device_moboard"        => _("Device motherboard"),
+            "Device_sndcard"        => _("Device soundcard"),
+            "Device_processor"      => _("Device processor"),
+            "Device_iface"          => _("Device misc device"),
+            "Device_ram"            => _("Device ram"),
+            "Device_hdd"            => _("Device hard disk drive"),
+            "Device_drive"          => _("Device drive"),
+            "Device_control"        => _("Device controler"),
+            "Device_gfxcard"        => _("Device graphics card"),
+            "Device_power"          => _("Device power supply"),
+            "Device_pci"            => _("Device pci device"))
+          ));
+  }
   
 
 }
