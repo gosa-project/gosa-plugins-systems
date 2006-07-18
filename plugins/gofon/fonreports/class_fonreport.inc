@@ -358,16 +358,12 @@ class fonreport extends plugin
         "plSelfModify"  => TRUE,
         "plDepends"     => array(),
         "plPriority"    => 0,
-        "plSection"     => array("fonreport" => _("Phone reports")),
-        "plCategory"    => array("gofon"     => _("Phone reports")),
-
-
-
-          "plDescription"     => _("Phone reports"),
-          "plSelfModify"      => TRUE,
-          "plDepends"         => array("objectClass" => "fonreport"),
-
-          "fonreport" => "!!! FIXME "._("Phone reports")));
+        "plSection"     => array("administration"),
+        "plCategory"    => array("gofon"),
+  
+        "plProvidedAcls" => array(
+          "fonreport" => "!!! FIXME "._("Phone reports"))
+        ));
   }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

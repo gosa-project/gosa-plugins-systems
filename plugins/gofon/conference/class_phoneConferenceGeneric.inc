@@ -524,7 +524,7 @@ class conference extends plugin
           "plDepends"     => array(),
           "plPriority"    => 0,
           "plSection"     => array("addons" => _("Addons")),
-          "plCategory"    => array("conference" => array("description" => _("GOfon"),
+          "plCategory"    => array("gofon" => array("description" => _("GOfon"),
                                                   "objectClass" => "gofonConference")),
 
           "plProvidedAcls" => array(
