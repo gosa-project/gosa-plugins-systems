@@ -226,6 +226,25 @@ class componentGeneric extends plugin
     $this->postcreate();
   }
 
+  /* Return plugin informations for acl handling */
+  function plInfo()
+  {
+    return (array(
+          "plShortName"   => _("Generic"),
+          "plDescription" => _("Component generic"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("component" => array("description"  => _("Network device"),
+                                                        "objectClass"  => array("device", "ipHost", "ieee802Device"))),
+          "plProvidedAcls"=> array(
+            "cn"                  => _("Name"),
+            "description"         => _("Description"))
+          ));
+  }
+
+
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
