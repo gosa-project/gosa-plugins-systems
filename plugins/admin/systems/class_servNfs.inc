@@ -273,7 +273,7 @@ class servnfs extends plugin
               "charset"     => _("Charset"),
               "path"        => _("Path"),
               "option"      => _("Option"), 
-              "volume"      => _("Valume"))
+              "volume"      => _("Volume"))
             ));
   }
 }

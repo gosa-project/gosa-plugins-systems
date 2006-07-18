@@ -774,7 +774,7 @@ class glpiAccount extends plugin
           "plCategory"    => array("workstation","terminal","component","server","phone") ,
           "plProvidedAcls"=> array(
           
-            "tech_num"            => _("Technical responsilbe"),
+            "tech_num"            => _("Technical responsible"),
             "comments"            => _("Comment"),
             "os"                  => _("Operating system"),
             "location"            => _("Location"),

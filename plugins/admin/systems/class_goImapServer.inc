@@ -279,7 +279,7 @@ class goImapServer extends plugin{
           "plCategory"    => array("server"),
 
           "plProvidedAcls"=> array(
-            "goImapName"        =>_("Server indentifier"),
+            "goImapName"        =>_("Server identifier"),
             "goImapConnect"     =>_("Connect URL"),
             "goImapAdmin"       =>_("Admin user"),
             "goImapPassword"    =>_("Admin password"),
