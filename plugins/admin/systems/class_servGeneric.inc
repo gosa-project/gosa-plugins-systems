@@ -319,7 +319,7 @@ class servgeneric extends plugin
           "plPriority"    => 0,
           "plSection"     => array("administration"),           
           "plCategory"    => array("server" => array("description"  => _("Server"),
-                                                     "objectClass"  => _("gotoWorkstation"))),
+                                                     "objectClass"  => "gotoWorkstation")),
           "plProvidedAcls"=> array(
             "cn"           => _("Name"),
             "description"  => _("Description"),

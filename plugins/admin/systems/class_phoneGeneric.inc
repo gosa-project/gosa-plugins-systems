@@ -413,7 +413,7 @@ class phoneGeneric extends plugin
           "plPriority"    => 0,
           "plSection"     => array("administration"),
           "plCategory"    => array("phone" => array("description"  => _("Phone hardware"),
-                                                    "objectClass"  => _("goFonHardware"))),
+                                                    "objectClass"  => "goFonHardware")),
           "plProvidedAcls"=> array(
             "cn"                  => _("Name"),
             "description"         => _("Description"),

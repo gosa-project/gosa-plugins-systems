@@ -469,7 +469,7 @@ class workgeneric extends plugin
           "plPriority"    => 0,
           "plSection"     => array("administration"),
           "plCategory"    => array("workstation" => array("description"  => _("Workstation"),
-                                                          "objectClass"  => _("gotoWorkstation"))),
+                                                          "objectClass"  => "gotoWorkstation")),
           "plProvidedAcls"=> array(
             "cn"                  => _("Workstation name"), 
             "gotoMode"            => _("Goto mode"), 

@@ -491,7 +491,7 @@ class termgeneric extends plugin
           "plPriority"    => 0,
           "plSection"     => array("administration"),
           "plCategory"    => array("terminal" => array( "description"  => _("Terminal"),
-                                                        "objectClass"  => _("gotoTerminal"))),
+                                                        "objectClass"  => "gotoTerminal")),
           "plProvidedAcls"=> array(
             "gotoMode"            => _("Mode"),
             "gotoTerminalPath"    => _("Root server"),
