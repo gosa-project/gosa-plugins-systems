@@ -666,10 +666,12 @@ class config  {
   /* This function returns all available ShareServer */
   function getShareServerList()
   {
-    $ldap= $this->get_ldap_link();
-    $a_res = $ldap->search("(&(objectClass=goShareServer)(goExportEntry=*))",array("goExportEntry","cn"));
-    $return= array();
-    while($entry = $ldap->fetch($a_res)){
+    global $config;
+    $return = array();
+    $ui = get_userinfo();
+    $base = $config->current['BASE'];
+    $res = get_list("(&(objectClass=goShareServer)(goExportEntry=*))",$ui->subtreeACL,$base,array("goExportEntry","cn"),GL_SUBSEARCH);
+    foreach($res as $entry){
       if(isset($entry['goExportEntry']['count'])){
         unset($entry['goExportEntry']['count']);
       }
@@ -678,6 +680,7 @@ class config  {
         $sharename = $a_share[0];
         $return[$entry['cn'][0]."|".$sharename] = $entry['cn'][0]." [".$sharename."]";
       }
+
     }
     return($return);
   }
