@@ -715,8 +715,8 @@ class phonequeue extends plugin
           "plProvidedAcls"=> array(
 
             "goFonTimeOut"              => _("Timeout"),
-            "goFonMaxLen"               => _("Max queue lenght"),
-            "goFonAnnounceFrequency"    => _(" Announce frequency"),
+            "goFonMaxLen"               => _("Max queue length"),
+            "goFonAnnounceFrequency"    => _("Announce frequency"),
             "goFonDialOption_t"         => _("Allow the called user to transfer his call"),
             "goFonDialOption_T"         => _("Allows calling user to transfer call"),
             "goFonDialOption_h"         => _("Allow the called to hangup by pressing *"),
@@ -731,7 +731,7 @@ class phonequeue extends plugin
             "goFonQueueCallsWaiting"    => _("'Call waiting' sound"),
             "goFonQueueThankYou"        => _("'Thank you' sound"),
             "goFonQueueMinutes"         => _("'Minutes' sound"),
-            "goFonQueueSeconds"         => _("'Second' sound"),
+            "goFonQueueSeconds"         => _("'Seconds' sound"),
             "goFonQueueLessThan"        => _("'Less than' sound"),
             "telephoneNumber"           => _("Queue phone number"),
             "goFonQueueLanguage"        => _("Language"),

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-18 15:46+0200\n"
+"POT-Creation-Date: 2006-07-18 17:27+0200\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -12950,10 +12950,12 @@ msgid "Strategy"
 msgstr "Адм. единица"
 
 #: plugins/admin/ogroups/phonequeue.tpl:74
+#: plugins/admin/ogroups/class_phonequeue.inc:718
 msgid "Max queue length"
 msgstr ""
 
 #: plugins/admin/ogroups/phonequeue.tpl:82
+#: plugins/admin/ogroups/class_phonequeue.inc:719
 msgid "Announce frequency"
 msgstr ""
 
@@ -13092,6 +13094,121 @@ msgstr "Атрибуты UNIX"
 #, fuzzy
 msgid "Mail group"
 msgstr "Основная группа"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:38
+#: plugins/admin/ogroups/class_divListOGroup.inc:39
+#, fuzzy
+msgid "List of object groups"
+msgstr "Название группы"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:44
+#, fuzzy
+msgid ""
+"This menu allows you to add, edit or remove selected groups. You may want to "
+"use the range selector on top of the group listbox, when working with  a "
+"large number of groups."
+msgstr ""
+"С помощью этого меню вы можете добавлять, изменять и удалять выбранные "
+"группы пользователей. Если у вас их достаточно большое количество, вы можете "
+"использовать групповое выделение."
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:58
+#, fuzzy
+msgid "Name of object groups"
+msgstr "Название группы"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:63
+#, fuzzy
+msgid "Select to see groups containing users"
+msgstr "Показать группы с пользователями"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:63
+msgid "Show groups containing users"
+msgstr "Показать группы с пользователями"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:64
+#, fuzzy
+msgid "Select to see groups containing groups"
+msgstr "Показать группы с группами"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:64
+msgid "Show groups containing groups"
+msgstr "Показать группы с группами"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:65
+#, fuzzy
+msgid "Select to see groups containing applications"
+msgstr "Показать группы с приложениями"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:65
+msgid "Show groups containing applications"
+msgstr "Показать группы с приложениями"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:66
+#, fuzzy
+msgid "Select to see groups containing departments"
+msgstr "Показать группы с подразделениями"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:66
+msgid "Show groups containing departments"
+msgstr "Показать группы с подразделениями"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:67
+#, fuzzy
+msgid "Select to see groups containing servers"
+msgstr "Показать группы с серверами"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:67
+msgid "Show groups containing servers"
+msgstr "Показать группы с серверами"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:68
+#, fuzzy
+msgid "Select to see groups containing workstations"
+msgstr "Показать группы с рабочими станциями"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:68
+msgid "Show groups containing workstations"
+msgstr "Показать группы с рабочими станциями"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:69
+#, fuzzy
+msgid "Select to see groups containing terminals"
+msgstr "Показать группы с терминалами"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:69
+msgid "Show groups containing terminals"
+msgstr "Показать группы с терминалами"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:70
+#, fuzzy
+msgid "Select to see groups containing printer"
+msgstr "Показать группы с принтерами"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:70
+#, fuzzy
+msgid "Show groups containing printer"
+msgstr "Показать группы с принтерами"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:71
+#, fuzzy
+msgid "Select to see groups containing phones"
+msgstr "Показать группы с принтерами"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:71
+#, fuzzy
+msgid "Show groups containing phones"
+msgstr "Показать группы с принтерами"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:115
+#, fuzzy
+msgid "Create new object group"
+msgstr "Объект группы"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:178
+#: plugins/generic/references/class_reference.inc:50
+msgid "Object group"
+msgstr "Объект группы"
 
 #: plugins/admin/ogroups/class_phonequeue.inc:79
 #, fuzzy
@@ -13235,16 +13352,6 @@ msgstr "Почтовые настройки пользователя"
 msgid "Phone group"
 msgstr "Члены телефонной группы"
 
-#: plugins/admin/ogroups/class_phonequeue.inc:718
-#, fuzzy
-msgid "Max queue lenght"
-msgstr "Сервер"
-
-#: plugins/admin/ogroups/class_phonequeue.inc:719
-#, fuzzy
-msgid " Announce frequency"
-msgstr "Сообщение автоответчика"
-
 #: plugins/admin/ogroups/class_phonequeue.inc:727
 #, fuzzy
 msgid "Welcome music"
@@ -13276,8 +13383,9 @@ msgid "'Minutes' sound"
 msgstr ""
 
 #: plugins/admin/ogroups/class_phonequeue.inc:734
-msgid "'Second' sound"
-msgstr ""
+#, fuzzy
+msgid "'Seconds' sound"
+msgstr "Добро пожаловать %s!"
 
 #: plugins/admin/ogroups/class_phonequeue.inc:735
 #, fuzzy
@@ -13293,121 +13401,6 @@ msgstr "Телефонные номера"
 #, fuzzy
 msgid "Announce"
 msgstr "Сообщение автоответчика"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:38
-#: plugins/admin/ogroups/class_divListOGroup.inc:39
-#, fuzzy
-msgid "List of object groups"
-msgstr "Название группы"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:44
-#, fuzzy
-msgid ""
-"This menu allows you to add, edit or remove selected groups. You may want to "
-"use the range selector on top of the group listbox, when working with  a "
-"large number of groups."
-msgstr ""
-"С помощью этого меню вы можете добавлять, изменять и удалять выбранные "
-"группы пользователей. Если у вас их достаточно большое количество, вы можете "
-"использовать групповое выделение."
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:58
-#, fuzzy
-msgid "Name of object groups"
-msgstr "Название группы"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:63
-#, fuzzy
-msgid "Select to see groups containing users"
-msgstr "Показать группы с пользователями"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:63
-msgid "Show groups containing users"
-msgstr "Показать группы с пользователями"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:64
-#, fuzzy
-msgid "Select to see groups containing groups"
-msgstr "Показать группы с группами"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:64
-msgid "Show groups containing groups"
-msgstr "Показать группы с группами"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:65
-#, fuzzy
-msgid "Select to see groups containing applications"
-msgstr "Показать группы с приложениями"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:65
-msgid "Show groups containing applications"
-msgstr "Показать группы с приложениями"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:66
-#, fuzzy
-msgid "Select to see groups containing departments"
-msgstr "Показать группы с подразделениями"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:66
-msgid "Show groups containing departments"
-msgstr "Показать группы с подразделениями"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:67
-#, fuzzy
-msgid "Select to see groups containing servers"
-msgstr "Показать группы с серверами"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:67
-msgid "Show groups containing servers"
-msgstr "Показать группы с серверами"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:68
-#, fuzzy
-msgid "Select to see groups containing workstations"
-msgstr "Показать группы с рабочими станциями"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:68
-msgid "Show groups containing workstations"
-msgstr "Показать группы с рабочими станциями"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:69
-#, fuzzy
-msgid "Select to see groups containing terminals"
-msgstr "Показать группы с терминалами"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:69
-msgid "Show groups containing terminals"
-msgstr "Показать группы с терминалами"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:70
-#, fuzzy
-msgid "Select to see groups containing printer"
-msgstr "Показать группы с принтерами"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:70
-#, fuzzy
-msgid "Show groups containing printer"
-msgstr "Показать группы с принтерами"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:71
-#, fuzzy
-msgid "Select to see groups containing phones"
-msgstr "Показать группы с принтерами"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:71
-#, fuzzy
-msgid "Show groups containing phones"
-msgstr "Показать группы с принтерами"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:115
-#, fuzzy
-msgid "Create new object group"
-msgstr "Объект группы"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:178
-#: plugins/generic/references/class_reference.inc:50
-msgid "Object group"
-msgstr "Объект группы"
 
 #: plugins/admin/acl/class_aclManagement.inc:25
 #, fuzzy
@@ -14618,7 +14611,7 @@ msgstr "Категория этой ветки"
 
 #: plugins/admin/mimetypes/generic.tpl:34
 #, fuzzy
-msgid "Please sepecify a description"
+msgid "Please specify a description"
 msgstr "Введите корректное имя пользователя!"
 
 #: plugins/admin/mimetypes/generic.tpl:66
@@ -14751,7 +14744,7 @@ msgstr "У вас недостаточно прав для удаления эт
 
 #: plugins/admin/mimetypes/paste_generic.tpl:24
 #, fuzzy
-msgid "Please sepecify a description for this mime type here"
+msgid "Please specify a description for this mime type here"
 msgstr "Укажите корректный номер телефона."
 
 #: plugins/admin/mimetypes/class_divListMimeTypes.inc:35
@@ -14965,7 +14958,7 @@ msgid "Telephone pin"
 msgstr "Телефон"
 
 #: plugins/gofon/phoneaccount/class_phoneAccount.inc:1215
-msgid "Voivemail pin"
+msgid "Voicemail pin"
 msgstr ""
 
 #: plugins/gofon/phoneaccount/class_phoneAccount.inc:1216
@@ -15916,7 +15909,7 @@ msgstr "Моя учетная запись"
 
 #: include/class_plugin.inc:1126 include/class_SnapShotDialog.inc:53
 #, fuzzy
-msgid "You are not allowed to delete this snap shot!"
+msgid "You are not allowed to delete this snapshot!"
 msgstr "У вас недостаточно прав для удаления этого объекта!"
 
 #: include/class_plugin.inc:1141
@@ -17590,6 +17583,14 @@ msgstr "Таймаут (с)"
 #: ihtml/themes/default/snapshotdialog.tpl:71
 msgid "Reason for generating this snapshot"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Max queue lenght"
+#~ msgstr "Сервер"
+
+#, fuzzy
+#~ msgid " Announce frequency"
+#~ msgstr "Сообщение автоответчика"
 
 #, fuzzy
 #~ msgid "Day"

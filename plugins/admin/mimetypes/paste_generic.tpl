@@ -21,7 +21,7 @@
 						{t}Description{/t}
 					</td>
 					<td>
-						<input type="text" name='description' value="{$description}" title='{t}Please sepecify a description for this mime type here{/t}'>
+						<input type="text" name='description' value="{$description}" title='{t}Please specify a description for this mime type here{/t}'>
 					</td>
 				</tr>
 			</table>

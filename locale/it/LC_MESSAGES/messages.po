@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-18 15:46+0200\n"
+"POT-Creation-Date: 2006-07-18 17:27+0200\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -12583,10 +12583,12 @@ msgid "Strategy"
 msgstr "Stato"
 
 #: plugins/admin/ogroups/phonequeue.tpl:74
+#: plugins/admin/ogroups/class_phonequeue.inc:718
 msgid "Max queue length"
 msgstr ""
 
 #: plugins/admin/ogroups/phonequeue.tpl:82
+#: plugins/admin/ogroups/class_phonequeue.inc:719
 msgid "Announce frequency"
 msgstr ""
 
@@ -12719,6 +12721,121 @@ msgstr "Elimina estensioni Unix"
 #, fuzzy
 msgid "Mail group"
 msgstr "Gruppo primario"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:38
+#: plugins/admin/ogroups/class_divListOGroup.inc:39
+#, fuzzy
+msgid "List of object groups"
+msgstr "Nome del gruppo"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:44
+#, fuzzy
+msgid ""
+"This menu allows you to add, edit or remove selected groups. You may want to "
+"use the range selector on top of the group listbox, when working with  a "
+"large number of groups."
+msgstr ""
+"Questo menù permette di creare, modificare e cancellare i gruppi "
+"selezionati. Avendo un gran numero di gruppi, puoi usare i selettori di "
+"intervalli in cima alla lista dei gruppi."
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:58
+#, fuzzy
+msgid "Name of object groups"
+msgstr "Nome del gruppo"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:63
+#, fuzzy
+msgid "Select to see groups containing users"
+msgstr "Mostra gruppi che contengono utenti"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:63
+msgid "Show groups containing users"
+msgstr "Mostra gruppi che contengono utenti"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:64
+#, fuzzy
+msgid "Select to see groups containing groups"
+msgstr "Mostra gruppi che contengono gruppi"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:64
+msgid "Show groups containing groups"
+msgstr "Mostra gruppi che contengono gruppi"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:65
+#, fuzzy
+msgid "Select to see groups containing applications"
+msgstr "Mostra gruppi che contengono applicazioni"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:65
+msgid "Show groups containing applications"
+msgstr "Mostra gruppi che contengono applicazioni"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:66
+#, fuzzy
+msgid "Select to see groups containing departments"
+msgstr "Mostra gruppi che contengono dipartimenti"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:66
+msgid "Show groups containing departments"
+msgstr "Mostra gruppi che contengono dipartimenti"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:67
+#, fuzzy
+msgid "Select to see groups containing servers"
+msgstr "Mostra gruppi che contengono server"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:67
+msgid "Show groups containing servers"
+msgstr "Mostra gruppi che contengono server"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:68
+#, fuzzy
+msgid "Select to see groups containing workstations"
+msgstr "Mostra gruppi che contengono workstation"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:68
+msgid "Show groups containing workstations"
+msgstr "Mostra gruppi che contengono workstation"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:69
+#, fuzzy
+msgid "Select to see groups containing terminals"
+msgstr "Mostra gruppi che contengono terminali"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:69
+msgid "Show groups containing terminals"
+msgstr "Mostra gruppi che contengono terminali"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:70
+#, fuzzy
+msgid "Select to see groups containing printer"
+msgstr "Mostra gruppi che contengono stampanti"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:70
+#, fuzzy
+msgid "Show groups containing printer"
+msgstr "Mostra gruppi che contengono stampanti"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:71
+#, fuzzy
+msgid "Select to see groups containing phones"
+msgstr "Mostra gruppi che contengono stampanti"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:71
+#, fuzzy
+msgid "Show groups containing phones"
+msgstr "Mostra gruppi che contengono stampanti"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:115
+#, fuzzy
+msgid "Create new object group"
+msgstr "Gruppo di oggetti"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:178
+#: plugins/generic/references/class_reference.inc:50
+msgid "Object group"
+msgstr "Gruppo di oggetti"
 
 #: plugins/admin/ogroups/class_phonequeue.inc:79
 #, fuzzy
@@ -12858,16 +12975,6 @@ msgstr "Opzioni di posta dell'identità"
 msgid "Phone group"
 msgstr "I membri sono in un gruppo di risposta telefonica"
 
-#: plugins/admin/ogroups/class_phonequeue.inc:718
-#, fuzzy
-msgid "Max queue lenght"
-msgstr "Coda della posta"
-
-#: plugins/admin/ogroups/class_phonequeue.inc:719
-#, fuzzy
-msgid " Announce frequency"
-msgstr "Messaggio di di risposta automatica"
-
 #: plugins/admin/ogroups/class_phonequeue.inc:727
 #, fuzzy
 msgid "Welcome music"
@@ -12898,8 +13005,9 @@ msgid "'Minutes' sound"
 msgstr ""
 
 #: plugins/admin/ogroups/class_phonequeue.inc:734
-msgid "'Second' sound"
-msgstr ""
+#, fuzzy
+msgid "'Seconds' sound"
+msgstr "Benvenuto %s!"
 
 #: plugins/admin/ogroups/class_phonequeue.inc:735
 #, fuzzy
@@ -12915,121 +13023,6 @@ msgstr "Numero di telefono"
 #, fuzzy
 msgid "Announce"
 msgstr "Messaggio di di risposta automatica"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:38
-#: plugins/admin/ogroups/class_divListOGroup.inc:39
-#, fuzzy
-msgid "List of object groups"
-msgstr "Nome del gruppo"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:44
-#, fuzzy
-msgid ""
-"This menu allows you to add, edit or remove selected groups. You may want to "
-"use the range selector on top of the group listbox, when working with  a "
-"large number of groups."
-msgstr ""
-"Questo menù permette di creare, modificare e cancellare i gruppi "
-"selezionati. Avendo un gran numero di gruppi, puoi usare i selettori di "
-"intervalli in cima alla lista dei gruppi."
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:58
-#, fuzzy
-msgid "Name of object groups"
-msgstr "Nome del gruppo"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:63
-#, fuzzy
-msgid "Select to see groups containing users"
-msgstr "Mostra gruppi che contengono utenti"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:63
-msgid "Show groups containing users"
-msgstr "Mostra gruppi che contengono utenti"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:64
-#, fuzzy
-msgid "Select to see groups containing groups"
-msgstr "Mostra gruppi che contengono gruppi"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:64
-msgid "Show groups containing groups"
-msgstr "Mostra gruppi che contengono gruppi"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:65
-#, fuzzy
-msgid "Select to see groups containing applications"
-msgstr "Mostra gruppi che contengono applicazioni"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:65
-msgid "Show groups containing applications"
-msgstr "Mostra gruppi che contengono applicazioni"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:66
-#, fuzzy
-msgid "Select to see groups containing departments"
-msgstr "Mostra gruppi che contengono dipartimenti"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:66
-msgid "Show groups containing departments"
-msgstr "Mostra gruppi che contengono dipartimenti"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:67
-#, fuzzy
-msgid "Select to see groups containing servers"
-msgstr "Mostra gruppi che contengono server"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:67
-msgid "Show groups containing servers"
-msgstr "Mostra gruppi che contengono server"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:68
-#, fuzzy
-msgid "Select to see groups containing workstations"
-msgstr "Mostra gruppi che contengono workstation"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:68
-msgid "Show groups containing workstations"
-msgstr "Mostra gruppi che contengono workstation"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:69
-#, fuzzy
-msgid "Select to see groups containing terminals"
-msgstr "Mostra gruppi che contengono terminali"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:69
-msgid "Show groups containing terminals"
-msgstr "Mostra gruppi che contengono terminali"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:70
-#, fuzzy
-msgid "Select to see groups containing printer"
-msgstr "Mostra gruppi che contengono stampanti"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:70
-#, fuzzy
-msgid "Show groups containing printer"
-msgstr "Mostra gruppi che contengono stampanti"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:71
-#, fuzzy
-msgid "Select to see groups containing phones"
-msgstr "Mostra gruppi che contengono stampanti"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:71
-#, fuzzy
-msgid "Show groups containing phones"
-msgstr "Mostra gruppi che contengono stampanti"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:115
-#, fuzzy
-msgid "Create new object group"
-msgstr "Gruppo di oggetti"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:178
-#: plugins/generic/references/class_reference.inc:50
-msgid "Object group"
-msgstr "Gruppo di oggetti"
 
 #: plugins/admin/acl/class_aclManagement.inc:25
 #, fuzzy
@@ -14208,7 +14201,7 @@ msgstr ""
 
 #: plugins/admin/mimetypes/generic.tpl:34
 #, fuzzy
-msgid "Please sepecify a description"
+msgid "Please specify a description"
 msgstr "Prego inserire un numero di telefono valido!"
 
 #: plugins/admin/mimetypes/generic.tpl:66
@@ -14341,7 +14334,7 @@ msgstr "Non hai il permesso di cambiare la tua password."
 
 #: plugins/admin/mimetypes/paste_generic.tpl:24
 #, fuzzy
-msgid "Please sepecify a description for this mime type here"
+msgid "Please specify a description for this mime type here"
 msgstr "Specificare una dimenzione valida per le mail da rigettare."
 
 #: plugins/admin/mimetypes/class_divListMimeTypes.inc:35
@@ -14542,7 +14535,7 @@ msgid "Telephone pin"
 msgstr "Telefono"
 
 #: plugins/gofon/phoneaccount/class_phoneAccount.inc:1215
-msgid "Voivemail pin"
+msgid "Voicemail pin"
 msgstr ""
 
 #: plugins/gofon/phoneaccount/class_phoneAccount.inc:1216
@@ -15453,7 +15446,7 @@ msgstr "Account Kolab"
 
 #: include/class_plugin.inc:1126 include/class_SnapShotDialog.inc:53
 #, fuzzy
-msgid "You are not allowed to delete this snap shot!"
+msgid "You are not allowed to delete this snapshot!"
 msgstr "Non hai il permesso di cambiare la tua password."
 
 #: include/class_plugin.inc:1141
@@ -17054,6 +17047,14 @@ msgstr "Timeout"
 #: ihtml/themes/default/snapshotdialog.tpl:71
 msgid "Reason for generating this snapshot"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Max queue lenght"
+#~ msgstr "Coda della posta"
+
+#, fuzzy
+#~ msgid " Announce frequency"
+#~ msgstr "Messaggio di di risposta automatica"
 
 #, fuzzy
 #~ msgid "Day"

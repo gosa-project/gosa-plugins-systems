@@ -16,13 +16,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-18 15:46+0200\n"
-"PO-Revision-Date: 2006-07-18 15:25+0200\n"
+"POT-Creation-Date: 2006-07-18 17:27+0200\n"
+"PO-Revision-Date: 2006-07-18 17:35+0200\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8bit"
 
 #: contrib/gosa.conf:4 plugins/personal/generic/class_user.inc:1312
 msgid "My account"
@@ -3069,9 +3069,8 @@ msgid "Ftp"
 msgstr "FTP"
 
 #: plugins/personal/connectivity/class_pureftpdAccount.inc:190
-#, fuzzy
 msgid "Pure ftp account"
-msgstr "Fax-Konto erzeugen"
+msgstr "PureFTP-Konto"
 
 #: plugins/personal/connectivity/class_pureftpdAccount.inc:199
 msgid "Quota files"
@@ -3091,12 +3090,10 @@ msgid "Download ratio"
 msgstr "Download-Verhältnis"
 
 #: plugins/personal/connectivity/class_pureftpdAccount.inc:203
-#, fuzzy
 msgid "Upload bandwith"
 msgstr "Upload-Bandbreite"
 
 #: plugins/personal/connectivity/class_pureftpdAccount.inc:204
-#, fuzzy
 msgid "Download bandwith"
 msgstr "Download-Bandbreite"
 
@@ -3187,24 +3184,20 @@ msgid "Creating of user/oxchange account with dn '%s' failed."
 msgstr "Erstellen von Benutzer/oxchange-Konto mit dn '%s' fehlgeschlagen."
 
 #: plugins/personal/connectivity/class_oxchangeAccount.inc:880
-#, fuzzy
 msgid "Open xchange"
 msgstr "Open-Xchange"
 
 #: plugins/personal/connectivity/class_oxchangeAccount.inc:881
-#, fuzzy
 msgid "Open xchange account settings"
-msgstr "Open-Xchange Konto"
+msgstr "Open-Xchange Konto-Einstellungen"
 
 #: plugins/personal/connectivity/class_oxchangeAccount.inc:890
-#, fuzzy
 msgid "OXAppointmentDays"
-msgstr "Tage für Termin"
+msgstr "OX-Tage für Termin"
 
 #: plugins/personal/connectivity/class_oxchangeAccount.inc:891
-#, fuzzy
 msgid "OXTaskDays"
-msgstr "Tage für Aufgabe"
+msgstr "OX-Tage für Aufgabe"
 
 #: plugins/personal/connectivity/class_oxchangeAccount.inc:892
 #, fuzzy
@@ -3212,9 +3205,8 @@ msgid "mailEnabled"
 msgstr "aktiviert"
 
 #: plugins/personal/connectivity/class_oxchangeAccount.inc:893
-#, fuzzy
 msgid "OXTimeZone"
-msgstr "Zeitzone des Benutzers"
+msgstr "OX-Zeitzone"
 
 #: plugins/personal/connectivity/intranet.tpl:3
 msgid "Intranet account"
@@ -3225,14 +3217,12 @@ msgid "This account has no connectivity extensions."
 msgstr "Dieses Konto besitzt keine Konnektivitäts-Erweiterungen."
 
 #: plugins/personal/connectivity/class_connectivity.inc:173
-#, fuzzy
 msgid "Connectivity settings"
-msgstr "Konnektivität"
+msgstr "Konnektivitäts-Einstellungen"
 
 #: plugins/personal/connectivity/class_connectivity.inc:181
-#, fuzzy
 msgid "Connectivity  account"
-msgstr "Konnektivität"
+msgstr "Konnektivitäts-Konto"
 
 #: plugins/personal/connectivity/class_proxyAccount.inc:5
 #: plugins/personal/connectivity/class_proxyAccount.inc:275
@@ -3294,7 +3284,7 @@ msgstr "Proxy"
 
 #: plugins/personal/connectivity/class_proxyAccount.inc:287
 msgid "Filter unwanted content"
-msgstr ""
+msgstr "Filtere ungewünschten Inhalt"
 
 #: plugins/personal/connectivity/class_proxyAccount.inc:288
 #: plugins/personal/connectivity/class_proxyAccount.inc:291
@@ -3334,9 +3324,8 @@ msgid "Saving of user/intranet account with dn '%s' failed."
 msgstr "Speichern von Benutzer/Intranet-Konto mit dn '%s' fehlgeschlagen."
 
 #: plugins/personal/connectivity/class_intranetAccount.inc:170
-#, fuzzy
 msgid "Intranet account settings"
-msgstr "Intranet-Konto"
+msgstr "Einstellungen für Intranet-Konto"
 
 #: plugins/personal/connectivity/class_intranetAccount.inc:174
 msgid "GOsa intranet account"
@@ -3439,9 +3428,8 @@ msgid ""
 msgstr "OpenGroupware: Die angegebene Datenbank kann nicht erreicht werden."
 
 #: plugins/personal/connectivity/class_opengwAccount.inc:336
-#, fuzzy
 msgid "Open groupware account settings"
-msgstr "Opengroupware-Konto"
+msgstr "Opengroupware Konto-Einstellungen"
 
 #: plugins/personal/connectivity/class_opengwAccount.inc:345
 #, fuzzy
@@ -4141,27 +4129,22 @@ msgid "View all services"
 msgstr "Alle Dienste anzeigen"
 
 #: plugins/personal/nagios/class_nagiosAccount.inc:266
-#, fuzzy
 msgid "Trigger system commands"
-msgstr "Alle System-Befehle ausführen"
+msgstr "Auslösen aller System-Befehle"
 
 #: plugins/personal/nagios/class_nagiosAccount.inc:267
-#, fuzzy
 msgid "Trigger all host commands"
-msgstr "Alle Host-Befehle ausführen"
+msgstr "Auslösen aller Host-Befehle"
 
 #: plugins/personal/nagios/class_nagiosAccount.inc:268
-#, fuzzy
 msgid "Trigger all service commands"
-msgstr "Alle Dienst-Befehle ausführen"
+msgstr "Auslösen aller Dienst-Befehle"
 
 #: plugins/personal/nagios/class_nagiosAccount.inc:270
-#, fuzzy
 msgid "View configuration information"
 msgstr "Konfiguration anzeigen"
 
 #: plugins/personal/nagios/class_nagiosAccount.inc:271
-#, fuzzy
 msgid "View system informations"
 msgstr "System-Informationen anzeigen"
 
@@ -6019,7 +6002,7 @@ msgstr "Empfänger der Meldung"
 
 #: plugins/addons/notifications/contents.tpl:7
 msgid "Use target from"
-msgstr ""
+msgstr "Verwende Ziel von"
 
 #: plugins/addons/notifications/contents.tpl:21
 msgid "Available recipients"
@@ -7140,7 +7123,7 @@ msgstr "Name der Anwendung"
 
 #: plugins/admin/applications/class_applicationGeneric.inc:492
 msgid "Flag"
-msgstr ""
+msgstr "Flag"
 
 #: plugins/admin/applications/class_applicationGeneric.inc:493
 msgid "Script content"
@@ -7676,7 +7659,7 @@ msgstr "Diese 'dn' hat keine Netzwerk-Erweiterungen."
 #: plugins/admin/systems/class_winGeneric.inc:126
 #, php-format
 msgid "Removing of system wingeneric/generic with dn '%s' failed."
-msgstr ""
+msgstr "Entfernen von System WinGeneric/Allgemein mit dn '%s' fehlgeschlagen."
 
 #: plugins/admin/systems/class_winGeneric.inc:164
 #: plugins/admin/systems/class_componentGeneric.inc:155
@@ -9138,7 +9121,7 @@ msgstr "Das Feld 'IP-Adresse' enthält eine ungültige Adresse."
 #: plugins/admin/systems/class_componentGeneric.inc:223
 #, php-format
 msgid "Saving of system component/generic with dn '%s' failed."
-msgstr ""
+msgstr "Speichern von System Komponente/Allgemein mit dn '%s' fehlgeschlagen."
 
 #: plugins/admin/systems/class_componentGeneric.inc:234
 #, fuzzy
@@ -9378,7 +9361,7 @@ msgstr ""
 #: plugins/admin/systems/class_phoneGeneric.inc:247
 #, php-format
 msgid "Removing of system phone/generic with dn '%s' failed."
-msgstr ""
+msgstr "Entfernen von System Telefon/Allgemein mit dn '%s' fehlgeschlagen."
 
 #: plugins/admin/systems/class_phoneGeneric.inc:292
 msgid "The required field 'Phone name' is not set."
@@ -9396,7 +9379,7 @@ msgstr ""
 #: plugins/admin/systems/class_phoneGeneric.inc:397
 #, php-format
 msgid "Saving of system phone/generic with dn '%s' failed."
-msgstr ""
+msgstr "Speichern von System Telefon/Allgemein mit dn '%s' fehlgeschlagen."
 
 #: plugins/admin/systems/class_phoneGeneric.inc:410
 #, fuzzy
@@ -9405,7 +9388,6 @@ msgstr "Telefonnummer"
 
 #: plugins/admin/systems/class_phoneGeneric.inc:415
 #: plugins/gofon/phoneaccount/class_phoneAccount.inc:1213
-#, fuzzy
 msgid "Phone hardware"
 msgstr "Telefon-Hardware"
 
@@ -9415,7 +9397,6 @@ msgid "DTMF mode"
 msgstr "DTMF-Modus"
 
 #: plugins/admin/systems/class_phoneGeneric.inc:422
-#, fuzzy
 msgid "Default ip"
 msgstr "Standard IP-Adresse"
 
@@ -9561,7 +9542,7 @@ msgstr "FAI-Klassen"
 
 #: plugins/admin/systems/class_workstationStartup.inc:1095
 msgid "FAI status flag"
-msgstr ""
+msgstr "FAI-Status-Flag"
 
 #: plugins/admin/systems/class_workstationStartup.inc:1097
 msgid "Debian mirror"
@@ -10173,7 +10154,7 @@ msgstr "Speichern von Server-Dienste/GLPI mit dn '%s' fehlgeschlagen."
 #: plugins/admin/systems/class_goGlpiServer.inc:126
 #, php-format
 msgid "Set status flag for server services/glpi with dn '%s' failed."
-msgstr ""
+msgstr "Setzen von Status-Flag für Server Dienste/GLPI mit dn '%s' fehlgeschlagen."
 
 #: plugins/admin/systems/class_goGlpiServer.inc:139
 msgid "The attribute database is empty or contains invalid characters."
@@ -10967,24 +10948,20 @@ msgid "Printer inventory extension"
 msgstr "Drucker-Erweiterung hinzufügen"
 
 #: plugins/admin/systems/class_glpiPrinterAccount.inc:773
-#, fuzzy
 msgid "Supports serial interface"
-msgstr "Unterstützte Schnittstellen"
+msgstr "Unterstützt serielle Schnittstelle"
 
 #: plugins/admin/systems/class_glpiPrinterAccount.inc:774
-#, fuzzy
 msgid "Supports parallel interface"
-msgstr "Unterstützte Schnittstellen"
+msgstr "Unterstützt parallele Schnittstelle"
 
 #: plugins/admin/systems/class_glpiPrinterAccount.inc:775
-#, fuzzy
 msgid "Supports usb interface"
-msgstr "Unterstützte Schnittstellen"
+msgstr "Unterstützt USB-Schnittstelle"
 
 #: plugins/admin/systems/class_glpiPrinterAccount.inc:788
-#, fuzzy
 msgid "Cartridge settings"
-msgstr "Patronen"
+msgstr "Patronen-Einstellungen"
 
 #: plugins/admin/systems/class_glpiPrinterCartridges.inc:97
 #, php-format
@@ -11545,7 +11522,7 @@ msgstr "Speichern von Server-Dienste/CUPS mit dn '%s' fehlgeschlagen."
 #: plugins/admin/systems/class_goCupsServer.inc:122
 #, php-format
 msgid "Set status flag for server services/cups with dn '%s' failed."
-msgstr ""
+msgstr "Setzen von Status-Flag für Server Dienste/CUPS mit dn '%s' fehlgeschlagen."
 
 #: plugins/admin/systems/class_goCupsServer.inc:206
 msgid "Cups"
@@ -11574,7 +11551,7 @@ msgstr ""
 #: plugins/admin/systems/class_goTerminalServer.inc:129
 #, php-format
 msgid "Set status flag for server services/terminalServer with dn '%s' failed."
-msgstr ""
+msgstr "Setzen von Status-Flag für Server Dienste/Terminal-Dienst mit dn '%s' fehlgeschlagen."
 
 #: plugins/admin/systems/class_goTerminalServer.inc:139
 msgid "Terminal server, must have fontpath specified."
@@ -11704,7 +11681,7 @@ msgstr "Speichern von Server-Dienste/GOntp mit dn '%s' fehlgeschlagen."
 #: plugins/admin/systems/class_goNtpServer.inc:149
 #, php-format
 msgid "Set status flag for server services/goNtpServer with dn '%s' failed."
-msgstr ""
+msgstr "Setzen von Status-Flag für Server Dienste/GOntp mit dn '%s' fehlgeschlagen."
 
 #: plugins/admin/systems/class_goNtpServer.inc:219
 msgid "NTP"
@@ -11727,7 +11704,7 @@ msgstr "Speichern von Server-Dienste/LDAP mit dn '%s' fehlgeschlagen."
 #: plugins/admin/systems/class_goLdapServer.inc:123
 #, php-format
 msgid "Set status flag for server services/ldap with dn '%s' failed."
-msgstr ""
+msgstr "Setzen von Status-Flag für Server Dienste/LDAP mit dn '%s' fehlgeschlagen."
 
 #: plugins/admin/systems/class_goLdapServer.inc:133
 msgid "The given base is empty or contains invalid characters."
@@ -11735,7 +11712,7 @@ msgstr "Die angegebene Basis ist leer oder enthält ungültige Zeichen."
 
 #: plugins/admin/systems/class_goLdapServer.inc:210
 msgid "Ldap"
-msgstr ""
+msgstr "LDAP"
 
 #: plugins/admin/systems/class_goLdapServer.inc:211
 msgid "Ldap service"
@@ -11903,7 +11880,7 @@ msgstr "Speichern von Server-Dienste/GOsyslog mit dn '%s' fehlgeschlagen."
 #: plugins/admin/systems/class_goSyslogServer.inc:121
 #, php-format
 msgid "Set status flag for server services/goSysLog with dn '%s' failed."
-msgstr ""
+msgstr "Setzen von Status-Flag für Server Dienste/GOsyslog mit dn '%s' fehlgeschlagen."
 
 #: plugins/admin/systems/class_goSyslogServer.inc:204
 msgid "Syslog"
@@ -11926,7 +11903,7 @@ msgstr "Speichern von Server-Dienste/GOfon mit dn '%s' fehlgeschlagen."
 #: plugins/admin/systems/class_goFonServer.inc:127
 #, php-format
 msgid "Set status flag for server services/gofon with dn '%s' failed."
-msgstr ""
+msgstr "Setzen von Status-Flag für Server Dienste/GOfon mit dn '%s' fehlgeschlagen."
 
 #: plugins/admin/systems/class_goFonServer.inc:137
 #, php-format
@@ -11974,7 +11951,7 @@ msgstr "Speichern von Server-Dienste/GOlogDB mit dn '%s' fehlgeschlagen."
 #: plugins/admin/systems/class_goLogDBServer.inc:124
 #, php-format
 msgid "Set status flag for server services/goLogDB with dn '%s' failed."
-msgstr ""
+msgstr "Setzen von Status-Flag für Server Dienste/GOlogDB mit dn '%s' fehlgeschlagen."
 
 #: plugins/admin/systems/class_goLogDBServer.inc:215
 msgid "Log"
@@ -12011,7 +11988,7 @@ msgstr "Speichern von Server-Dienste/GOkrb mit dn '%s' fehlgeschlagen."
 #: plugins/admin/systems/class_goKrbServer.inc:124
 #, php-format
 msgid "Set status flag for server services/gokrb with dn '%s' failed."
-msgstr ""
+msgstr "Setzen von Status-Flag für Server Dienste/GOkrb mit dn '%s' fehlgeschlagen."
 
 #: plugins/admin/systems/class_goKrbServer.inc:135
 #, php-format
@@ -12053,7 +12030,7 @@ msgstr "Speichern von Server-Dienste/Mail mit dn '%s' fehlgeschlagen."
 #: plugins/admin/systems/class_goMailServer.inc:608
 #, php-format
 msgid "Set status flag for server services/mail with dn '%s' failed."
-msgstr ""
+msgstr "Setzen von Status-Flag für Server Dienste/Mail mit dn '%s' fehlgeschlagen."
 
 #: plugins/admin/systems/class_goMailServer.inc:619
 msgid "Please specify a numeric value for header size limit."
@@ -12114,7 +12091,7 @@ msgstr "Speichern von Server-Dienste/IMAP mit dn '%s' fehlgeschlagen."
 #: plugins/admin/systems/class_goImapServer.inc:158
 #, php-format
 msgid "Set status flag for server services/imap with dn '%s' failed."
-msgstr ""
+msgstr "Setzen von Status-Flag für Server Dienste/IMAP mit dn '%s' fehlgeschlagen."
 
 #: plugins/admin/systems/class_goImapServer.inc:168
 msgid "Please specify a server identifier."
@@ -12403,9 +12380,8 @@ msgid "Object group generic"
 msgstr "Objektgruppe"
 
 #: plugins/admin/ogroups/class_ogroup.inc:764
-#, fuzzy
 msgid "Member"
-msgstr "Mitglieder"
+msgstr "Mitglied"
 
 #: plugins/admin/ogroups/remove.tpl:7
 msgid ""
@@ -12442,10 +12418,12 @@ msgid "Strategy"
 msgstr "Strategie"
 
 #: plugins/admin/ogroups/phonequeue.tpl:74
+#: plugins/admin/ogroups/class_phonequeue.inc:718
 msgid "Max queue length"
 msgstr "Maximale Grösse der Warteschlange"
 
 #: plugins/admin/ogroups/phonequeue.tpl:82
+#: plugins/admin/ogroups/class_phonequeue.inc:719
 msgid "Announce frequency"
 msgstr "Benachrichtigungsfrequenz"
 
@@ -12576,6 +12554,106 @@ msgstr "Entfernen der Objektgruppe ist fehlgeschlagen"
 #, fuzzy
 msgid "Mail group"
 msgstr "MIME-Gruppe"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:38
+#: plugins/admin/ogroups/class_divListOGroup.inc:39
+msgid "List of object groups"
+msgstr "Liste von Objektgruppen"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:44
+msgid ""
+"This menu allows you to add, edit or remove selected groups. You may want to "
+"use the range selector on top of the group listbox, when working with  a "
+"large number of groups."
+msgstr ""
+"Dieses Menü erlaubt es Ihnen Makros hinzuzufügen, zu bearbeiten oder zu "
+"entfernen. Bei einer großen Anzahl von Makros bietet sich die Verwendung der "
+"Bereichsauswahl an."
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:58
+msgid "Name of object groups"
+msgstr "Name der Objektgruppen"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:63
+msgid "Select to see groups containing users"
+msgstr "Zeige Gruppen die Benutzer enthalten"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:63
+msgid "Show groups containing users"
+msgstr "Zeige Gruppen mit Benutzern"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:64
+msgid "Select to see groups containing groups"
+msgstr "Zeige Gruppen die Gruppen enthalten"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:64
+msgid "Show groups containing groups"
+msgstr "Zeige Gruppen mit Gruppen"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:65
+msgid "Select to see groups containing applications"
+msgstr "Zeige Gruppen die Applikationen enthalten"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:65
+msgid "Show groups containing applications"
+msgstr "Zeige Gruppen mit Applikationen"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:66
+msgid "Select to see groups containing departments"
+msgstr "Zeige Gruppen die Abteilungen enthalten"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:66
+msgid "Show groups containing departments"
+msgstr "Zeige Gruppen mit Abteilungen"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:67
+msgid "Select to see groups containing servers"
+msgstr "Zeige Gruppen die Server enthalten"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:67
+msgid "Show groups containing servers"
+msgstr "Zeige Gruppen mit Servern"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:68
+msgid "Select to see groups containing workstations"
+msgstr "Zeige Gruppen die Arbeitsstationen enthalten"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:68
+msgid "Show groups containing workstations"
+msgstr "Zeige Gruppen mit Arbeitsstationen"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:69
+msgid "Select to see groups containing terminals"
+msgstr "Zeige Gruppen die Terminals enthalten"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:69
+msgid "Show groups containing terminals"
+msgstr "Zeige Gruppen mit Terminals"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:70
+msgid "Select to see groups containing printer"
+msgstr "Zeige Gruppen die Drucker enthalten"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:70
+msgid "Show groups containing printer"
+msgstr "Zeige Gruppen mit Druckern"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:71
+msgid "Select to see groups containing phones"
+msgstr "Zeige Gruppen die Telefone enthalten"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:71
+msgid "Show groups containing phones"
+msgstr "Zeige Gruppen mit Telefonen"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:115
+msgid "Create new object group"
+msgstr "Erstelle neue Objektgruppe"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:178
+#: plugins/generic/references/class_reference.inc:50
+msgid "Object group"
+msgstr "Objektgruppe"
 
 #: plugins/admin/ogroups/class_phonequeue.inc:79
 msgid "ring all"
@@ -12715,24 +12793,12 @@ msgid "Removing of object group/phone queue with dn '%s' failed."
 msgstr "Entfernen der Maileinstellungen der Objektgruppe ist fehlgeschlagen"
 
 #: plugins/admin/ogroups/class_phonequeue.inc:709
-#, fuzzy
 msgid "Phone group"
-msgstr "Mitglieder sind in einer Telefon-Gruppe"
-
-#: plugins/admin/ogroups/class_phonequeue.inc:718
-#, fuzzy
-msgid "Max queue lenght"
-msgstr "Maximale Grösse der Warteschlange"
-
-#: plugins/admin/ogroups/class_phonequeue.inc:719
-#, fuzzy
-msgid " Announce frequency"
-msgstr "Benachrichtigungsfrequenz"
+msgstr "Telefon-Gruppe"
 
 #: plugins/admin/ogroups/class_phonequeue.inc:727
-#, fuzzy
 msgid "Welcome music"
-msgstr "Willkommen %s!"
+msgstr "Begrüßungsmusik"
 
 #: plugins/admin/ogroups/class_phonequeue.inc:728
 #, fuzzy
@@ -12741,37 +12807,31 @@ msgstr "Benachrichtige über Wartezeit"
 
 #: plugins/admin/ogroups/class_phonequeue.inc:729
 msgid "'You are next' sound"
-msgstr ""
+msgstr "'Sie sind der Nächste'-Ton"
 
 #: plugins/admin/ogroups/class_phonequeue.inc:730
-#, fuzzy
 msgid "'There are' sound"
-msgstr "'Es gibt ...'"
+msgstr "'Es gibt ...'-Ton"
 
 #: plugins/admin/ogroups/class_phonequeue.inc:731
-#, fuzzy
 msgid "'Call waiting' sound"
-msgstr "'... wartende Anrufe'"
+msgstr "'wartender Anruf'-Ton"
 
 #: plugins/admin/ogroups/class_phonequeue.inc:732
-#, fuzzy
 msgid "'Thank you' sound"
-msgstr "'Vielen Dank'"
+msgstr "'Vielen Dank'-Ton"
 
 #: plugins/admin/ogroups/class_phonequeue.inc:733
-#, fuzzy
 msgid "'Minutes' sound"
-msgstr "'Minuten'"
+msgstr "'Minuten'-Ton"
 
 #: plugins/admin/ogroups/class_phonequeue.inc:734
-#, fuzzy
-msgid "'Second' sound"
-msgstr "'Sekunden'"
+msgid "'Seconds' sound"
+msgstr "'Sekunden'-Ton"
 
 #: plugins/admin/ogroups/class_phonequeue.inc:735
-#, fuzzy
 msgid "'Less than' sound"
-msgstr "'Weniger als...''"
+msgstr "'Weniger als'-Ton"
 
 #: plugins/admin/ogroups/class_phonequeue.inc:736
 #, fuzzy
@@ -12779,118 +12839,17 @@ msgid "Queue phone number"
 msgstr "Telefonnummer"
 
 #: plugins/admin/ogroups/class_phonequeue.inc:740
-#, fuzzy
 msgid "Announce"
-msgstr "Benachrichtigung"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:38
-#: plugins/admin/ogroups/class_divListOGroup.inc:39
-msgid "List of object groups"
-msgstr "Liste von Objektgruppen"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:44
-msgid ""
-"This menu allows you to add, edit or remove selected groups. You may want to "
-"use the range selector on top of the group listbox, when working with  a "
-"large number of groups."
-msgstr ""
-"Dieses Menü erlaubt es Ihnen Makros hinzuzufügen, zu bearbeiten oder zu "
-"entfernen. Bei einer großen Anzahl von Makros bietet sich die Verwendung der "
-"Bereichsauswahl an."
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:58
-msgid "Name of object groups"
-msgstr "Name der Objektgruppen"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:63
-msgid "Select to see groups containing users"
-msgstr "Zeige Gruppen die Benutzer enthalten"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:63
-msgid "Show groups containing users"
-msgstr "Zeige Gruppen mit Benutzern"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:64
-msgid "Select to see groups containing groups"
-msgstr "Zeige Gruppen die Gruppen enthalten"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:64
-msgid "Show groups containing groups"
-msgstr "Zeige Gruppen mit Gruppen"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:65
-msgid "Select to see groups containing applications"
-msgstr "Zeige Gruppen die Applikationen enthalten"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:65
-msgid "Show groups containing applications"
-msgstr "Zeige Gruppen mit Applikationen"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:66
-msgid "Select to see groups containing departments"
-msgstr "Zeige Gruppen die Abteilungen enthalten"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:66
-msgid "Show groups containing departments"
-msgstr "Zeige Gruppen mit Abteilungen"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:67
-msgid "Select to see groups containing servers"
-msgstr "Zeige Gruppen die Server enthalten"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:67
-msgid "Show groups containing servers"
-msgstr "Zeige Gruppen mit Servern"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:68
-msgid "Select to see groups containing workstations"
-msgstr "Zeige Gruppen die Arbeitsstationen enthalten"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:68
-msgid "Show groups containing workstations"
-msgstr "Zeige Gruppen mit Arbeitsstationen"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:69
-msgid "Select to see groups containing terminals"
-msgstr "Zeige Gruppen die Terminals enthalten"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:69
-msgid "Show groups containing terminals"
-msgstr "Zeige Gruppen mit Terminals"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:70
-msgid "Select to see groups containing printer"
-msgstr "Zeige Gruppen die Drucker enthalten"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:70
-msgid "Show groups containing printer"
-msgstr "Zeige Gruppen mit Druckern"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:71
-msgid "Select to see groups containing phones"
-msgstr "Zeige Gruppen die Telefone enthalten"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:71
-msgid "Show groups containing phones"
-msgstr "Zeige Gruppen mit Telefonen"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:115
-msgid "Create new object group"
-msgstr "Erstelle neue Objektgruppe"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:178
-#: plugins/generic/references/class_reference.inc:50
-msgid "Object group"
-msgstr "Objektgruppe"
+msgstr "Ankündigung"
 
 #: plugins/admin/acl/class_aclManagement.inc:25
 msgid "ACLs"
 msgstr "ACLs"
 
 #: plugins/admin/acl/class_aclManagement.inc:159
-#, fuzzy, php-format
+#, php-format
 msgid "You're about to delete the acl %s."
-msgstr "Sie sind dabei das Makro '%s' zu löschen."
+msgstr "Sie sind dabei die ACL %s zu löschen."
 
 #: plugins/admin/acl/class_aclManagement.inc:165
 #: plugins/admin/acl/class_aclManagement.inc:191
@@ -12908,10 +12867,9 @@ msgid "List of acls"
 msgstr "Liste der ACLs"
 
 #: plugins/admin/acl/class_divListACL.inc:36
-#, fuzzy
 msgid "This menu allows you to edit and delete selected acls."
 msgstr ""
-"Dieses Menü erlaubt es Ihnen, FAI-Klassen zu erstellen, entfernen und zu "
+"Dieses Menü erlaubt es Ihnen, ausgewählte ACLs zu entfernen und zu "
 "bearbeiten."
 
 #: plugins/admin/acl/class_divListACL.inc:61
@@ -12928,9 +12886,8 @@ msgid "Select to display users"
 msgstr "Wählen Sie dies, um gewöhnliche Benutzer anzuzeigen"
 
 #: plugins/admin/acl/class_divListACL.inc:153
-#, fuzzy
 msgid "Display user"
-msgstr "Angezeigter Name"
+msgstr "Zeige Benutzer"
 
 #: plugins/admin/acl/class_divListACL.inc:155
 #, fuzzy
@@ -12938,9 +12895,8 @@ msgid "Select to display departments"
 msgstr "Zeige Abteilungen"
 
 #: plugins/admin/acl/class_divListACL.inc:155
-#, fuzzy
 msgid "Display departments"
-msgstr "Zeige Abteilungen, auf die zutrifft"
+msgstr "Zeige Abteilungen"
 
 #: plugins/admin/acl/main.inc:43 plugins/admin/acl/main.inc:45
 msgid "ACL management"
@@ -13271,19 +13227,17 @@ msgid "FAI profile"
 msgstr "FAI-Profil"
 
 #: plugins/admin/fai/class_faiHook.inc:392
-#, fuzzy, php-format
+#, php-format
 msgid "Saving of FAI/hook with dn '%s' failed."
-msgstr "Erzeugen der Basis für FAI-Hooks ist fehlgeschlagen"
+msgstr "Speichern von FAI/Hook mit dn '%s' fehlgeschlagen."
 
 #: plugins/admin/fai/class_faiHook.inc:474
-#, fuzzy
 msgid "Hook"
-msgstr "Hooks"
+msgstr "Hook"
 
 #: plugins/admin/fai/class_faiHook.inc:475
-#, fuzzy
 msgid "FAI hook"
-msgstr "Zeige FAI-Hooks"
+msgstr "FAI-Hook"
 
 #: plugins/admin/fai/class_faiHook.inc:484
 #: plugins/admin/fai/faiHookEntry.tpl:34
@@ -13578,9 +13532,8 @@ msgid "Saving of FAI/variable with dn '%s' failed."
 msgstr "Speichern der FAI-Variablen-Basis fehlgeschlagen"
 
 #: plugins/admin/fai/class_faiVariable.inc:383
-#, fuzzy
 msgid "FAI variable"
-msgstr "Zeige FAI-Variablen"
+msgstr "FAI-Variable"
 
 #: plugins/admin/fai/class_faiTemplateEntry.inc:88
 msgid "no file uploaded yet"
@@ -13986,14 +13939,13 @@ msgid "Mime group"
 msgstr "MIME-Gruppe"
 
 #: plugins/admin/mimetypes/generic.tpl:24
-#, fuzzy
 msgid "Categorize this mime type"
-msgstr "Kategorie dieses Unterbaums"
+msgstr "Kategorie dieses MIME-Typs"
 
 #: plugins/admin/mimetypes/generic.tpl:34
 #, fuzzy
-msgid "Please sepecify a description"
-msgstr "Bitte geben Sie einen gültigen Skript-Namen ein."
+msgid "Please specify a description"
+msgstr "Bitte geben Sie eine Beschreibung an."
 
 #: plugins/admin/mimetypes/generic.tpl:66
 msgid "Update mime type icon"
@@ -14005,9 +13957,8 @@ msgstr "Linksklick"
 
 #: plugins/admin/mimetypes/generic.tpl:84
 #: plugins/admin/mimetypes/class_mimetypeGeneric.inc:668
-#, fuzzy
 msgid "File patterns"
-msgstr "Filter"
+msgstr "Datei-Muster"
 
 #: plugins/admin/mimetypes/generic.tpl:86
 #, fuzzy
@@ -14020,15 +13971,13 @@ msgstr "Erstelle ein neues Dateimuster"
 
 #: plugins/admin/mimetypes/generic.tpl:92
 #: plugins/admin/mimetypes/generic.tpl:133
-#, fuzzy
 msgid "Enter an application name here"
-msgstr "Name der Anwendung"
+msgstr "Geben Sie hier den Namen der Anwendung ein"
 
 #: plugins/admin/mimetypes/generic.tpl:93
 #: plugins/admin/mimetypes/generic.tpl:134
-#, fuzzy
 msgid "Add application"
-msgstr "Anwendung"
+msgstr "Anwendung hinzufügen"
 
 #: plugins/admin/mimetypes/generic.tpl:103
 msgid "Embedding"
@@ -14043,7 +13992,6 @@ msgid "Show file in external viewer"
 msgstr "Zeige Datei mit externem Programm"
 
 #: plugins/admin/mimetypes/generic.tpl:124
-#, fuzzy
 msgid "Ask whether to save to local disk"
 msgstr "Frage nach, ob Datei lokal auf Festplatte gespeichert werden soll"
 
@@ -14063,9 +14011,8 @@ msgid "Removing mime type from objectgroup '%s' failed"
 msgstr "Entfernen der Anwendung von Objektgruppe '%s' fehlgeschlagen"
 
 #: plugins/admin/mimetypes/class_mimetypeGeneric.inc:465
-#, fuzzy
 msgid "Please specify a valid name for this mime type."
-msgstr "Bitte geben Sie einen gültigen Namen für diesen Anhang an."
+msgstr "Bitte geben Sie einen gültigen Namen für diesen MIME-Typ an."
 
 #: plugins/admin/mimetypes/class_mimetypeGeneric.inc:468
 #, fuzzy
@@ -14099,23 +14046,21 @@ msgid "Mime types"
 msgstr "MIME-Typen"
 
 #: plugins/admin/mimetypes/class_mimetypeGeneric.inc:666
-#, fuzzy
 msgid "Left click action"
-msgstr "Linksklick"
+msgstr "Linksklick-Aktion"
 
 #: plugins/admin/mimetypes/class_mimetypeGeneric.inc:669
-#, fuzzy
 msgid "Embedded applications"
-msgstr "Verwendete Anwendungen"
+msgstr "Eingebettete Anwendungen"
 
 #: plugins/admin/mimetypes/class_mimetypeManagement.inc:27
 msgid "Manage mime types"
 msgstr "MIME-Typen verwalten"
 
 #: plugins/admin/mimetypes/class_mimetypeManagement.inc:284
-#, fuzzy, php-format
+#, php-format
 msgid "You're about to delete the mime type '%s'."
-msgstr "Sie löschen gerade den Eintrag %s."
+msgstr "Sie löschen gerade den MIME-Typ '%s'."
 
 #: plugins/admin/mimetypes/class_mimetypeManagement.inc:290
 #: plugins/admin/mimetypes/class_mimetypeManagement.inc:319
@@ -14125,8 +14070,8 @@ msgstr "Sie haben keine Berechtigung, diesen Eintrag zu löschen!"
 
 #: plugins/admin/mimetypes/paste_generic.tpl:24
 #, fuzzy
-msgid "Please sepecify a description for this mime type here"
-msgstr "Bitte geben Sie eine gültige Beschreibung für diesen Abzug an."
+msgid "Please specify a description for this mime type here"
+msgstr "Bitte geben Sie hier eine Beschreibung dieses MIME-Typs ein"
 
 #: plugins/admin/mimetypes/class_divListMimeTypes.inc:35
 #: plugins/admin/mimetypes/class_divListMimeTypes.inc:36
@@ -14134,24 +14079,22 @@ msgid "List of defined mime types"
 msgstr "Liste von definierten MIME-Typen"
 
 #: plugins/admin/mimetypes/class_divListMimeTypes.inc:37
-#, fuzzy
 msgid ""
 "This menu allows you to add, edit and remove selected mime types. You may "
 "want to use the range selector on top of the mime type listbox, when working "
 "with a large number of mime types."
 msgstr ""
-"Dieses Menü erlaubt es Ihnen Makros hinzuzufügen, zu bearbeiten oder zu "
-"entfernen. Bei einer großen Anzahl von Makros bietet sich die Verwendung der "
-"Bereichsauswahl an."
+"Dieses Menü erlaubt es Ihnen MIME-Typen hinzuzufügen, zu bearbeiten oder zu "
+"entfernen. Bei einer großen Anzahl von MIME-Typen bietet sich die Verwendung "
+"der Bereichsauswahl an."
 
 #: plugins/admin/mimetypes/class_divListMimeTypes.inc:55
 msgid "Mime type name"
 msgstr "MIME-Typ Name"
 
 #: plugins/admin/mimetypes/class_divListMimeTypes.inc:62
-#, fuzzy
 msgid "Display mime types matching"
-msgstr "Zeige die Patronentypen, auf die Folgendes passt"
+msgstr "Zeige MIME-Typen, auf die Folgendes passt"
 
 #: plugins/admin/mimetypes/class_divListMimeTypes.inc:118
 msgid "Create new mime type"
@@ -14319,40 +14262,35 @@ msgid "Removed user '%s' from phone queue '%s'."
 msgstr "Benutzer '%s' von Warteschlange '%s' entfernt."
 
 #: plugins/gofon/phoneaccount/class_phoneAccount.inc:1125
-#, fuzzy, php-format
+#, php-format
 msgid "Removing of user/phone account with dn '%s' failed."
-msgstr "Entfernen des Telefon-Kontos ist fehlgeschlagen"
+msgstr "Entfernen von Benutzer/Telefon-Konto mit dn '%s' fehlgeschlagen."
 
 #: plugins/gofon/phoneaccount/class_phoneAccount.inc:1203
-#, fuzzy
 msgid "Phone account settings"
-msgstr "Telefon-Einstellungen"
+msgstr "Telefon-Konto-Einstellungen"
 
 #: plugins/gofon/phoneaccount/class_phoneAccount.inc:1212
-#, fuzzy
 msgid "Delivery mode"
 msgstr "Auslieferungsmethode"
 
 #: plugins/gofon/phoneaccount/class_phoneAccount.inc:1214
-#, fuzzy
 msgid "Telephone pin"
-msgstr "Telefon"
+msgstr "Telefon-PIN"
 
 #: plugins/gofon/phoneaccount/class_phoneAccount.inc:1215
 #, fuzzy
-msgid "Voivemail pin"
+msgid "Voicemail pin"
 msgstr "Voicemail-PIN"
 
 #: plugins/gofon/phoneaccount/class_phoneAccount.inc:1216
 #: plugins/gofon/conference/class_phoneConferenceGeneric.inc:545
-#, fuzzy
 msgid "Telephone number"
 msgstr "Telefonnummer"
 
 #: plugins/gofon/phoneaccount/class_phoneAccount.inc:1217
-#, fuzzy
 msgid "Macro settings"
-msgstr "Mail-Einstellungen"
+msgstr "Makro-Einstellungen"
 
 #: plugins/gofon/phoneaccount/main.inc:122
 #: plugins/gofon/phoneaccount/paste_generic.tpl:1
@@ -14509,18 +14447,16 @@ msgid "Saving of goFonMacro/generic account with dn '%s' failed."
 msgstr "Speichern des oxchange-Adressbuchs fehlgeschlagen"
 
 #: plugins/gofon/macro/class_gofonMacro.inc:466
-#, fuzzy
 msgid "Asterisk macro management"
-msgstr "Asterisk Verwaltung"
+msgstr "Asterisk-Makro-Verwaltung"
 
 #: plugins/gofon/macro/class_gofonMacro.inc:477
-#, fuzzy
 msgid "Macro content"
 msgstr "Makro-Inhalt"
 
 #: plugins/gofon/macro/class_gofonMacro.inc:478
 msgid "Visibility flag"
-msgstr ""
+msgstr "Sichtbarkeits-Flag"
 
 #: plugins/gofon/macro/parameter.tpl:3
 msgid "Argument"
@@ -14728,48 +14664,40 @@ msgid "Saving of goFonConference/generic with dn '%s' failed."
 msgstr ""
 
 #: plugins/gofon/conference/class_phoneConferenceGeneric.inc:522
-#, fuzzy
 msgid "Phone conference management"
-msgstr "Konferenz-Verwaltung"
+msgstr "Telefonkonferenz-Verwaltung"
 
 #: plugins/gofon/conference/class_phoneConferenceGeneric.inc:527
 msgid "GOfon"
 msgstr "GOfon"
 
 #: plugins/gofon/conference/class_phoneConferenceGeneric.inc:533
-#, fuzzy
 msgid "Conference PIN"
-msgstr "Konferenz"
+msgstr "Konferenz-PIN"
 
 #: plugins/gofon/conference/class_phoneConferenceGeneric.inc:538
-#, fuzzy
 msgid "Activate menu"
-msgstr "Sitzungsmenü aktivieren"
+msgstr "Menü aktivieren"
 
 #: plugins/gofon/conference/class_phoneConferenceGeneric.inc:539
-#, fuzzy
 msgid "Announce user activity"
-msgstr "Benachrichtigungsfrequenz"
+msgstr "Melde Benutzer-Aktivität"
 
 #: plugins/gofon/conference/class_phoneConferenceGeneric.inc:540
-#, fuzzy
 msgid "Count user"
 msgstr "Zähle Benutzer"
 
 #: plugins/gofon/conference/class_phoneConferenceGeneric.inc:541
-#, fuzzy
 msgid "Conference type"
-msgstr "Konferenz-Name"
+msgstr "Konferenz-Typ"
 
 #: plugins/gofon/conference/class_phoneConferenceGeneric.inc:543
-#, fuzzy
 msgid "Format"
 msgstr "Format"
 
 #: plugins/gofon/conference/class_phoneConferenceGeneric.inc:544
-#, fuzzy
 msgid "Lifetime"
-msgstr "Lebenszeit (in Tagen)"
+msgstr "Lebenszeit"
 
 #: plugins/gofon/conference/main.inc:39 plugins/gofon/conference/main.inc:41
 msgid "Conference management"
@@ -15209,9 +15137,9 @@ msgstr ""
 "Zeile %s!"
 
 #: include/class_ldap.inc:1152
-#, fuzzy, php-format
+#, php-format
 msgid "Ldap import with dn '%s' failed."
-msgstr "LDAP-Import fehlgeschlagen"
+msgstr "LDAP-Import von dn '%s' fehlgeschlagen."
 
 #: include/class_tabs.inc:182
 #, php-format
@@ -15282,8 +15210,8 @@ msgstr "Speichern des Gruppenobjektes fehlgeschlagen"
 
 #: include/class_plugin.inc:1126 include/class_SnapShotDialog.inc:53
 #, fuzzy
-msgid "You are not allowed to delete this snap shot!"
-msgstr "Sie haben keine Berechtigung, diesen Eintrag zu löschen!"
+msgid "You are not allowed to delete this snapshot!"
+msgstr "Sie haben keine Berechtigung, dieses Abbild zu löschen!"
 
 #: include/class_plugin.inc:1141
 #, php-format
@@ -15314,9 +15242,9 @@ msgid "Method get deleted snapshots with dn '%s' failed."
 msgstr ""
 
 #: include/class_plugin.inc:1305 include/class_plugin.inc:1319
-#, fuzzy, php-format
+#, php-format
 msgid "Restore snapshot with dn '%s' failed."
-msgstr "Wiederherstellen des Abbilds fehlgeschlagen."
+msgstr "Wiederherstellen des Abbilds mit dn '%s' fehlgeschlagen."
 
 #: include/class_password-methods-ssha.inc:51
 msgid "Can't use ssha for encryption. (Missing function mhash / sha1)"
@@ -16098,7 +16026,7 @@ msgstr "Kann nicht einfügen"
 #: include/functions_FAI.inc:358
 #, php-format
 msgid "Error, following objects should be equal '%s' and '%s'"
-msgstr ""
+msgstr "Fehler, die folgenden Objekte sollten gleich sein: '%s' und '%s'"
 
 #: include/functions_FAI.inc:464
 #, php-format
@@ -16106,9 +16034,8 @@ msgid "Release management failed, can't save '%s'"
 msgstr ""
 
 #: include/class_acl.inc:6
-#, fuzzy
 msgid "Access control"
-msgstr "Zugriffsoptionen"
+msgstr "Zugriffskontrolle"
 
 #: include/class_acl.inc:152
 msgid "Reset ACLs"
@@ -16120,14 +16047,12 @@ msgid "One level"
 msgstr "Priorität"
 
 #: include/class_acl.inc:154 include/class_acl.inc:159
-#, fuzzy
 msgid "Current object"
-msgstr "Erstelle neues FAI-Objekt"
+msgstr "Aktuelles Objekt"
 
 #: include/class_acl.inc:155
-#, fuzzy
 msgid "Complete subtree"
-msgstr "Ignoriere Unterbäume"
+msgstr "Vollständiger Unterbaum"
 
 #: include/class_acl.inc:156
 msgid "Complete subtree (permanent)"
@@ -16211,7 +16136,6 @@ msgid "Members:"
 msgstr "Mitglieder:"
 
 #: include/class_acl.inc:703
-#, fuzzy
 msgid "ACL is valid for all users"
 msgstr "ACL ist gültig für alle Benutzer"
 
@@ -16914,9 +16838,8 @@ msgid "Available members"
 msgstr "Verfügbare Mitglieder"
 
 #: ihtml/themes/default/acl.tpl:55
-#, fuzzy
 msgid "List of available ACL categories"
-msgstr "Liste verfügbarer Pakete"
+msgstr "Liste verfügbarer ACL-Kategorien"
 
 #: ihtml/themes/default/acl.tpl:63
 msgid "ACLs for this object"
@@ -16969,9 +16892,8 @@ msgid "Click here to Change your password"
 msgstr "Hier klicken, um Ihr Passwort zu ändern"
 
 #: ihtml/themes/default/snapshotdialog.tpl:3
-#, fuzzy
 msgid "Restoring object snapshots"
-msgstr "Stelle einen Objekt-Abzug wieder her"
+msgstr "Stelle Objekt-Abbilder wieder her"
 
 #: ihtml/themes/default/snapshotdialog.tpl:6
 msgid ""
@@ -16983,20 +16905,18 @@ msgstr ""
 "gedrückt haben."
 
 #: ihtml/themes/default/snapshotdialog.tpl:23
-#, fuzzy
 msgid "There is no snapshot available that could be restored"
-msgstr "Es ist kein Abbild verfügbar, das wiederhergestellt werden kann."
+msgstr "Es ist kein Abbild verfügbar, das wiederhergestellt werden kann"
 
 #: ihtml/themes/default/snapshotdialog.tpl:25
-#, fuzzy
 msgid "Choose a snapshot and click the folder image, to restore the snapshot"
 msgstr ""
-"Wählen Sie ein Abbild und drücken Sie continue, um es wiederherzustellen."
+"Wählen Sie ein Abbild und klicken Sie auf das Ordner-Bild, um es "
+"wiederherzustellen."
 
 #: ihtml/themes/default/snapshotdialog.tpl:44
-#, fuzzy
 msgid "Creating object snapshots"
-msgstr "Erstelle Abbild ein Objekts"
+msgstr "Erstelle Objekte-Abbilder"
 
 #: ihtml/themes/default/snapshotdialog.tpl:47
 msgid ""
@@ -17013,9 +16933,14 @@ msgid "Timestamp"
 msgstr "Zeitstempel"
 
 #: ihtml/themes/default/snapshotdialog.tpl:71
-#, fuzzy
 msgid "Reason for generating this snapshot"
-msgstr "Stelle einen Objekt-Abzug wieder her"
+msgstr "Grund für das Erzeugen dieses Abbilds"
+
+#~ msgid "Max queue lenght"
+#~ msgstr "Maximale Grösse der Warteschlange"
+
+#~ msgid " Announce frequency"
+#~ msgstr "Benachrichtigungsfrequenz"
 
 #~ msgid "Day"
 #~ msgstr "Tag"

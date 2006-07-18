@@ -50,7 +50,7 @@ class SnapShotDialog extends plugin
 
 					/* Obviously the user isn't allowed to delete. Show message and
 					   clean session. */
-					print_red (_("You are not allowed to delete this snap shot!"));
+					print_red (_("You are not allowed to delete this snapshot!"));
 				}
 			}
 		}

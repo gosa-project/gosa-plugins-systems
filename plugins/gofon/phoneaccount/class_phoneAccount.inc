@@ -1212,7 +1212,7 @@ class phoneAccount extends plugin
             "goFonDeliveryMode"   => _("Delivery mode"),
             "goFonHardware"       => _("Phone hardware"),
             "goFonPIN"            => _("Telephone pin"),
-            "goFonVoicemailPIN"   => _("Voivemail pin"),
+            "goFonVoicemailPIN"   => _("Voicemail pin"),
             "telephoneNumber"     => _("Telephone number"),
             "goFonMacro"          => _("Macro settings"))
             ));

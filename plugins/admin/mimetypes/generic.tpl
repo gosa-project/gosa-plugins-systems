@@ -31,7 +31,7 @@
 						{t}Description{/t}
 					</td>
 					<td>
-						<input type="text" name='description' value="{$description}" {$descriptionACL} title='{t}Please sepecify a description{/t}'>
+						<input type="text" name='description' value="{$description}" {$descriptionACL} title='{t}Please specify a description{/t}'>
 					</td>
 				</tr>
 				<tr>

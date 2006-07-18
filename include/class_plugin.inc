@@ -1123,7 +1123,7 @@ echo "FIXME: remove_snapshot uses old acl's<br>";
       $ldap->cd($this->config->current['BASE']);
       $ldap->rmdir_recursive($dn);
     }else{
-      print_red (_("You are not allowed to delete this snap shot!"));
+      print_red (_("You are not allowed to delete this snapshot!"));
     }
   }
 
