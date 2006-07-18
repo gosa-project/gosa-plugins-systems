@@ -424,6 +424,25 @@ class termstartup extends plugin
     return($a_return);
   }
 
+  /* Return plugin informations for acl handling */
+  function plInfo()
+  {
+    return (array(
+          "plShortName"   => _("Startup"),
+          "plDescription" => _("Terminal startup"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("terminal"),
+
+          "plProvidedAcls"=> array(
+            "gotoLdapServer"      => _("Ldap server"), 
+            "gotoBootKernel"      => _("Boot kernel"), 
+            "gotoKernelParameters"=> _("Kernel paramenter"))
+          ));
+  }
+
 
 }
 

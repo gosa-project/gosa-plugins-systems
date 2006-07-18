@@ -417,6 +417,43 @@ class termservice extends plugin
     $this->handle_post_events("modify");
   }
 
+
+/* Return plugin informations for acl handling */
+  function plInfo()
+  {
+    return (array(
+          "plShortName"   => _("Service"),
+          "plDescription" => _("Terminal service"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("workstation"),
+
+          "plProvidedAcls"=> array(
+            "gotoXMonitor"            => _("Monitor"),
+            "gotoXMethod"             => _("Method"),
+            "gotoXdmcpServer"         => _("Remote desktop"),
+            "gotoFontPath"            => _("Font path"),
+            "gotoXDriver"             => _("Gfx driver"),
+            "gotoXResolution"         => _("Gfx resolution"),
+            "gotoXColordepth"         => _("Gfx color depth"),
+            "gotoXHsync"              => _("Hsync"),
+            "gotoXVsync"              => _("Vsync"),
+            "gotoLpdEnable"           => _("Printer service enabled"),
+            "gotoLpdServer"           => _("Spool server"),
+            "gotoScannerEnable"       => _("Scanner enabled"),
+            "gotoScannerModel"        => _("Scanner modell"),
+            "gotoScannerClients"      => _(""),
+            "gotoScannerBackend"      => _(""),
+            "gotoXKbModel"            => _("Keyboard modell"),
+            "gotoXKbLayout"           => _("Keyboard layout"),
+            "gotoXKbVariant"          => _("Keyborad variant"),
+            "gotoXMouseType"          => _("Mouse type"),
+            "gotoXMouseport"          => _("Mouse port"),
+            "goFonHardware"           => _("Telephone hardware"))
+          ));
+  }
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

@@ -479,6 +479,30 @@ class termgeneric extends plugin
     $this->postcreate();
   }
 
+
+  /* Return plugin informations for acl handling */
+  function plInfo()
+  {
+    return (array(
+          "plShortName"   => _("Terminal"),
+          "plDescription" => _("Terminal generic"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("terminal" => array( "description"  => _("Terminal"),
+                                                        "objectClass"  => _("gotoTerminal"))),
+          "plProvidedAcls"=> array(
+            "gotoMode"            => _("Mode"),
+            "gotoTerminalPath"    => _("Root server"),
+            "gotoSwapServer"      => _("Swap server"),
+            "gotoSyslogServer"    => _("Syslog server enabled"),
+            "gotoNtpServer"       => _("Ntp server settings"),
+            "base"                => _("Base"),
+            "cn"                  => _("Name"),
+            "FAIstate"            => _("Action flag"))
+          ));
+  }
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
