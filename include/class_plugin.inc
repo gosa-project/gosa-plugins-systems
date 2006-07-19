@@ -1437,7 +1437,7 @@ echo "FIXME: remove_snapshot uses old acl's<br>";
   function getacl($attribute)
   {
     $ui= get_userinfo();
-    return  $ui->get_permissions($this->dn, get_class($this), $attribute));
+    return  $ui->get_permissions($this->dn, get_class($this), $attribute);
   }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
