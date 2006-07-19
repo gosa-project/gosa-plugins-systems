@@ -337,7 +337,7 @@ class environment extends plugin
 
           if($this->parent->by_object['posixAccount']->is_account==true){
             // 4. There is a PosixAccount
-            $display= $this->show__disable_header(_("Add environment extension"),
+            $display= $this->show_disable_header(_("Add environment extension"),
                 _("Environment extension disabled. You can enable it by clicking below."));
             return $display;
           }else{
