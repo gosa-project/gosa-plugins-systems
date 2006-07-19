@@ -480,17 +480,22 @@ class user extends plugin
     $ui =get_userinfo();
     foreach($this->attributes as $val){
       $smarty->assign("$val", $this->$val);
-      $smarty->assign("$val"."ACL", $ui->get_permissions($this->dn, "user", $val));
+      $smarty->assign("$val"."ACL", $this->getacl($val));
     }
 
     $smarty->assign("pwmode", $hashes);
     $smarty->assign("pwmode_select", $this->pw_storage);
-    $smarty->assign("passwordStorageACL", $ui->get_permissions($this->dn,"user", "userPassword"));
+    $smarty->assign("passwordStorageACL", $this->getacl("userPassword"));
     $smarty->assign("base_select",      $this->base);
-    $smarty->assign("baseACL",          $ui->get_permissions($this->dn,"user", "base"));
-    $smarty->assign("selectmode",       $ui->get_permissions($this->dn,"user", "create"));
-    $smarty->assign("CertificatesACL",  $ui->get_permissions($this->dn,"user", "Certificate"));
-    $smarty->assign("userPictureACL",     $ui->get_permissions($this->dn,"user", "userPicture"));
+    $smarty->assign("CertificatesACL",  $this->getacl("Certificate"));
+    $smarty->assign("userPictureACL",   $this->getacl("userPicture"));
+
+    /* Create base acls */
+    $baseACL = $this->("base");
+    if(!$this->acl_is_moveable()) {
+      $baseACL = preg_replace("/w/","",$baseACL);
+    }
+    $smarty->assign("baseACL",          $baseACL);
 
     /* Show us the edit screen */
     @$smarty->assign("bases", $this->allowedBasesToMoveTo());
@@ -506,14 +511,14 @@ class user extends plugin
       $smarty->assign("ivbbmodes", $ivbbmodes);
       foreach ($this->govattrs as $val){
         $smarty->assign("$val", $this->$val);
-        $smarty->assign("$val"."ACL", $ui->get_permissions($this->dn,"user",$val));
+        $smarty->assign("$val"."ACL", $this->getacl($val));
       }
     } else {
       $smarty->assign("governmentmode", "false");
     }
 
     /* Special mode for uid */
-    $uidACL= $ui->get_permissions($this->dn,"user", "uid");
+    $uidACL= $this->getacl("uid");
     if (isset ($this->dn)){
       if ($this->dn != "new"){
         $uidACL= preg_replace("/w/","",$uidACL);
