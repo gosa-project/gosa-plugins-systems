@@ -390,57 +390,59 @@ class user extends plugin
 
 
     /* Remove certificate? */
-    foreach (array ("userCertificate", "userSMIMECertificate", "userPKCS12") as $val){
-      if (isset($_POST["remove_$val"])){
+    if($this->acl_is_writeable("Certificate")){ 
+      foreach (array ("userCertificate", "userSMIMECertificate", "userPKCS12") as $val){
+        if (isset($_POST["remove_$val"])){
 
-        /* Reset specified cert*/
-        $this->$val= "";
-        $this->is_modified= TRUE;
+          /* Reset specified cert*/
+          $this->$val= "";
+          $this->is_modified= TRUE;
+        }
       }
     }
-
 
     /* Upload new cert and close dialog? */	
-    if (isset($_POST['cert_edit_finish'])){
+    if($this->acl_is_writeable("Certificate")){ 
+      if (isset($_POST['cert_edit_finish'])){
 
-      /* for all certificates do */
-      foreach (array ("userCertificate", "userSMIMECertificate", "userPKCS12")
-          as $val){
+        /* for all certificates do */
+        foreach (array ("userCertificate", "userSMIMECertificate", "userPKCS12")
+            as $val){
 
-        /* Check for clean upload */
-        if (array_key_exists($val."_file", $_FILES) &&
-            array_key_exists('name', $_FILES[$val."_file"]) &&
-            $_FILES[$val."_file"]['name'] != "" &&
-            is_uploaded_file($_FILES[$val."_file"]['tmp_name'])) {
-          $this->set_cert("$val", $_FILES[$val."_file"]['tmp_name']);
-        }
-      }
-
-      /* Save serial number */
-      if (isset($_POST["certificateSerialNumber"]) &&
-          $_POST["certificateSerialNumber"] != ""){
-
-        if (!is_id($_POST["certificateSerialNumber"])){
-          print_red (_("Please enter a valid serial number"));
-
-          foreach(array("userCertificate", "userSMIMECertificate", "userPKCS12") as $cert){
-            if ($this->$cert != ""){
-              $smarty->assign("$cert"."_state", "true");
-            } else {
-              $smarty->assign("$cert"."_state", "");
-            }
+          /* Check for clean upload */
+          if (array_key_exists($val."_file", $_FILES) &&
+              array_key_exists('name', $_FILES[$val."_file"]) &&
+              $_FILES[$val."_file"]['name'] != "" &&
+              is_uploaded_file($_FILES[$val."_file"]['tmp_name'])) {
+            $this->set_cert("$val", $_FILES[$val."_file"]['tmp_name']);
           }
-          return ($smarty->fetch (get_template_path('generic_certs.tpl', TRUE, dirname(__FILE__))));
         }
 
-        $this->certificateSerialNumber= $_POST["certificateSerialNumber"];
-        $this->is_modified= TRUE;
+        /* Save serial number */
+        if (isset($_POST["certificateSerialNumber"]) &&
+            $_POST["certificateSerialNumber"] != ""){
+
+          if (!is_id($_POST["certificateSerialNumber"])){
+            print_red (_("Please enter a valid serial number"));
+
+            foreach(array("userCertificate", "userSMIMECertificate", "userPKCS12") as $cert){
+              if ($this->$cert != ""){
+                $smarty->assign("$cert"."_state", "true");
+              } else {
+                $smarty->assign("$cert"."_state", "");
+              }
+            }
+            return ($smarty->fetch (get_template_path('generic_certs.tpl', TRUE, dirname(__FILE__))));
+          }
+
+          $this->certificateSerialNumber= $_POST["certificateSerialNumber"];
+          $this->is_modified= TRUE;
+        }
+
+        $this->cert_dialog= FALSE;
+        $this->dialog= FALSE;
       }
-
-      $this->cert_dialog= FALSE;
-      $this->dialog= FALSE;
     }
-
     /* Display picture dialog */
     if ($this->picture_dialog){
       return($smarty->fetch (get_template_path('generic_picture.tpl', TRUE, dirname(__FILE__))));
@@ -1145,6 +1147,7 @@ class user extends plugin
   /* Load certificate from file to object */
   function set_cert($cert, $filename)
   {
+    if(!$thsi->acl_is_writeable("Certificate")) return;
     $fd = fopen ($filename, "rb");
     if (filesize($filename)>0) {
       $this->$cert= fread ($fd, filesize ($filename));
