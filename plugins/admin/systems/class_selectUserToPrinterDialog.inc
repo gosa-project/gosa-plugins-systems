@@ -76,6 +76,7 @@ class selectUserToPrinterDialog extends plugin
     }
 
     $tmp_printers= $this->getPrinter();
+    natcasesort($tmp_printers);
     $smarty->assign("regexPrinter"        , $this->regex);
     $smarty->assign("deplistPrinter"      , $this->config->idepartments);//deplist);
     $smarty->assign("depselectPrinter"    , $this->depselect);
