@@ -267,7 +267,7 @@ class plugin
   {
     /* Save values to object */
     foreach ($this->attributes as $val){
-      if ($this->acl_is_writable($val) && isset ($_POST["$val"])){
+      if ($this->acl_is_writeable($val) && isset ($_POST["$val"])){
         /* Check for modifications */
         if (get_magic_quotes_gpc()) {
           $data= stripcslashes($_POST["$val"]);
