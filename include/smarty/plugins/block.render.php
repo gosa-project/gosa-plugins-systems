@@ -16,15 +16,15 @@ function smarty_block_render($params, $text, &$smarty)
 		unset($params['acl']);
 	}
 
-	echo "<font color='blue' size='2'>".$acl."</font>";
+//	echo "<font color='blue' size='2'>".$acl."</font>";
 
 	/* Read / Write*/
 	if(preg_match("/w/i",$acl)){
 		return ($text);
 	}
 
-	/* Disable objects, but keep submit buttons active in readmode */
-	if(!preg_match("/submit/",$text)){
+	/* Disable objects, but keep those active that have mode=read_active */
+	if(!(isset($params['mode']) && $params['mode']=='read_active')){
 		$from 	=  array("/name=/i");
 		$to 	=  array("disabled name=");
 		$text = preg_replace($from,$to,$text);

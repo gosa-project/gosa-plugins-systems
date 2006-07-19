@@ -203,7 +203,7 @@
     <tr>
      <td><label for="edit_cert">{t}Certificates{/t}</label></td>
      <td>
-      	{render acl=$CertificatesACL}
+      	{render acl=$CertificatesACL mode=read_active}
       		<input id="edit_cert" type="submit" name="edit_cert" value="{t}Edit certificates{/t}...">
 	{/render}
      </td>
