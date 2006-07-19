@@ -154,6 +154,8 @@ class user extends plugin
         $this->base= dn2base($dn);
       }
 
+      echo $this->base;
+
       /* get password storage type */
       if (isset ($this->attrs['userPassword'][0])){
       	/* Initialize local array */
@@ -357,7 +359,7 @@ class user extends plugin
 
 
     /* Want certificate= */
-    if (isset($_POST['edit_cert'])){
+    if ((isset($_POST['edit_cert'])) && $this->acl_is_readable("Certificate")){
 
       /* Save original values for later reconstruction */
       foreach (array("certificateSerialNumber", "userCertificate",
@@ -446,6 +448,9 @@ class user extends plugin
 
     /* Display cert dialog */
     if ($this->cert_dialog){
+      $smarty->assign("CertificateACL",$this->getacl("Certificate"));
+      $smarty->assign("Certificate_readable",$this->acl_is_readable("Certificate"));
+
       foreach(array("userCertificate", "userSMIMECertificate", "userPKCS12") as $cert){
         if ($this->$cert != ""){
           /* import certificate */
