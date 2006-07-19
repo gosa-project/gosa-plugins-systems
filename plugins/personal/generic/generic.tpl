@@ -16,9 +16,11 @@
 	  <table>
 	   <tr>
 		<td width="147" height="200" bgcolor="gray">
-		{render acl=$userPictureACL}
-		 	<img align="center" valign="center" border="0" width="100%" src="getbin.php?rand={$rand}" alt="{t}Personal picture{/t}">
-		{/render}
+		{if !$userPicture_is_readable}
+			<img align="center" valign="center" border="0" width="100%" src="images/default.png" alt="{t}Personal picture{/t}">
+		{else}
+			<img align="center" valign="center" border="0" width="100%" src="getbin.php?rand={$rand}" alt="{t}Personal picture{/t}">
+		{/if}
 		</td>
 	   </tr>
 	   <tr>

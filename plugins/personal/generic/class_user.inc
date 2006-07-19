@@ -301,22 +301,24 @@ class user extends plugin
     }
 
     /* Want picture edit dialog? */
-    if (isset($_POST['edit_picture'])){
-      /* Save values for later recovery, in case some presses
-         the cancel button. */
-      $this->old_jpegPhoto= $this->jpegPhoto;
-      $this->old_photoData= $this->photoData;
-      $this->picture_dialog= TRUE;
-      $this->dialog= TRUE;
-    }
+    if($this->acl_is_writeable("jpegPhoto")) {
+      if (isset($_POST['edit_picture'])){
+        /* Save values for later recovery, in case some presses
+           the cancel button. */
+        $this->old_jpegPhoto= $this->jpegPhoto;
+        $this->old_photoData= $this->photoData;
+        $this->picture_dialog= TRUE;
+        $this->dialog= TRUE;
+      }
 
-    /* Remove picture? */
-    if (isset($_POST['picture_remove'])){
-      $this->jpegPhoto= "*removed*";
-      $this->set_picture ("./images/default.jpg");
-      $this->is_modified= TRUE;
+      /* Remove picture? */
+      if (isset($_POST['picture_remove'])){
+        $this->jpegPhoto= "*removed*";
+        $this->set_picture ("./images/default.jpg");
+        $this->is_modified= TRUE;
 
-      return($smarty->fetch (get_template_path('generic_picture.tpl', TRUE, dirname(__FILE__))));
+        return($smarty->fetch (get_template_path('generic_picture.tpl', TRUE, dirname(__FILE__))));
+      }
     }
 
     /* Save picture */
@@ -496,6 +498,7 @@ class user extends plugin
     $smarty->assign("base_select",      $this->base);
     $smarty->assign("CertificatesACL",  $this->getacl("Certificate"));
     $smarty->assign("userPictureACL",   $this->getacl("userPicture"));
+    $smarty->assign("userPicture_is_readable",   $this->acl_is_readable("userPicture"));
 
     /* Create base acls */
     $baseACL = $this->getacl("base");
@@ -1129,18 +1132,20 @@ class user extends plugin
   /* Load picture from file to object */
   function set_picture($filename)
   {
-    if (!is_file($filename)){
-      $filename= "./images/default.jpg";
-      $this->jpegPhoto= "*removed*";
+    if($this->acl_is_writeable("jpegPhoto")) {
+      if (!is_file($filename)){
+        $filename= "./images/default.jpg";
+        $this->jpegPhoto= "*removed*";
+      }
+
+      $fd = fopen ($filename, "rb");
+      $this->photoData= fread ($fd, filesize ($filename));
+      $_SESSION['binary']= $this->photoData;
+      $_SESSION['binarytype']= "image/jpeg";
+      $this->jpegPhoto= "";
+
+      fclose ($fd);
     }
-
-    $fd = fopen ($filename, "rb");
-    $this->photoData= fread ($fd, filesize ($filename));
-    $_SESSION['binary']= $this->photoData;
-    $_SESSION['binarytype']= "image/jpeg";
-    $this->jpegPhoto= "";
-
-    fclose ($fd);
   }
 
 
