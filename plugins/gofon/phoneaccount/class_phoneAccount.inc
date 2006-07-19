@@ -748,14 +748,14 @@ class phoneAccount extends plugin
     /* Show tab dialog headers */
     if ($this->parent != NULL){
       if ($this->is_account){
-        $display= $this->show_header(_("Remove phone account"),
+        $display= $this->show_disable_header(_("Remove phone account"),
             _("This account has phone features enabled. You can disable them by clicking below."));
       } else {
         if(empty($this->uid)){
-          $display= $this->show_header(_("Create phone account"),
+          $display= $this->show_enable_header(_("Create phone account"),
               _("This account has phone features disabled. You can't enable them while no uid is set."),TRUE,TRUE);
         }else{
-          $display= $this->show_header(_("Create phone account"),
+          $display= $this->show_enable_header(_("Create phone account"),
               _("This account has phone features disabled. You can enable them by clicking below."));
         }
         return ($display);

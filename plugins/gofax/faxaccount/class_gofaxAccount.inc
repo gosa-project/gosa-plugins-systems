@@ -143,10 +143,10 @@ class gofaxAccount extends plugin
     $display= "";
     if ($this->parent != NULL){
       if ($this->is_account){
-        $display= $this->show_header(_("Remove fax account"),
+        $display= $this->show_disable_header(_("Remove fax account"),
             _("This account has fax features enabled. You can disable them by clicking below."));
       } else {
-        $display= $this->show_header(_("Create fax account"),
+        $display= $this->show_enable_header(_("Create fax account"),
             _("This account has fax features disabled. You can enable them by clicking below."));
         return ($display);
       }

@@ -398,10 +398,10 @@ class appgroup extends plugin
     $display= "";
     if ($this->parent != NULL){
       if ($this->is_account){
-        $display= $this->show_header(_("Remove applications"),
+        $display= $this->show_disable_header(_("Remove applications"),
             _("This group has application features enabled. You can disable them by clicking below."));
       } else {
-        $display.= $this->show_header(_("Create applications"),
+        $display.= $this->show_enable_header(_("Create applications"),
             _("This group has application features disabled. You can enable them by clicking below."));
         return ($display);
       }

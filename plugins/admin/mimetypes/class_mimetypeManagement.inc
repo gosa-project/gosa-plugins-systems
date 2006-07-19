@@ -501,7 +501,6 @@ class mimetypeManagement extends plugin
   function check() {}
   function adapt_from_template($dn) {}
   function password_change_needed() {}
-  function show_header($button_text, $text, $disabled= FALSE) {}
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

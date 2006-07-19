@@ -317,10 +317,10 @@ class mailgroup extends plugin
     $display= "";
     if ($this->parent != NULL){
       if ($this->is_account){
-        $display= $this->show_header(_("Remove mail account"),
+        $display= $this->show_disable_header(_("Remove mail account"),
             _("This account has mail features enabled. You can disable them by clicking below."));
       } else {
-        $display= $this->show_header(_("Create mail account"),
+        $display= $this->show_enable_header(_("Create mail account"),
             _("This account has mail features disabled. You can enable them by clicking below."));
         return ($display);
       }

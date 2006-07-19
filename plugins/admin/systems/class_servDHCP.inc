@@ -33,10 +33,10 @@ class servdhcp extends plugin
 
     /* Show tab dialog headers */
     if ($this->is_account){
-      $display= $this->show_header(_("Remove DHCP service"),
+      $display= $this->show_disable_header(_("Remove DHCP service"),
           _("This server has DHCP features enabled. You can disable them by clicking below."));
     } else {
-      $display= $this->show_header(_("Add DHCP service"),
+      $display= $this->show_enable_header(_("Add DHCP service"),
           _("This server has DHCP features disabled. You can enable them by clicking below."));
       return ($display);
     }

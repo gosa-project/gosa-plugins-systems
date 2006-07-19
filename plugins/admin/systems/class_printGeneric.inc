@@ -229,7 +229,7 @@ class printgeneric extends plugin
      * hide this tab.
      */
     if($this->BelongsTo == "unknown"){
-      $display= $this->show_header(_("Add printer extension"),
+      $display= $this->show_enable_header(_("Add printer extension"),
           _("Could not intialize printer tab, parameter parent was missing while construction."),TRUE,TRUE);
       return($display);
     }
@@ -237,12 +237,12 @@ class printgeneric extends plugin
     /* Templates can't have printer extensions 
      */
     if($this->BelongsTo == "WorkstationTemplate"){
-      $display= $this->show_header(_("Add printer extension"),
+      $display= $this->show_enable_header(_("Add printer extension"),
           _("This is a workstation template, printer tab is disabled."),TRUE,TRUE);
       return($display);
     }
     if($this->BelongsTo == "TerminalTemplate"){
-      $display= $this->show_header(_("Add printer extension"),
+      $display= $this->show_enable_header(_("Add printer extension"),
           _("This is a terminal template, printer tab is disabled."),TRUE,TRUE);
       return($display);
     }
@@ -281,7 +281,7 @@ class printgeneric extends plugin
     /* If this is a WS / Terminal depending printer, display account state button */
     if($this->BelongsTo != "Printer"){
       if((empty($this->cn)) && ($this->dn != "new")){
-        $display= $this->show_header(_("Add printer extension"),
+        $display= $this->show_enable_header(_("Add printer extension"),
             _("This object has printer extension disabled. You can't enable it while 'cn' is not present in entry. Possibly you are currently creating a new terminal template"),TRUE,TRUE);
         $this->is_account= false;
         return $display;
@@ -289,18 +289,18 @@ class printgeneric extends plugin
 
       if (($this->is_account)){
         if($this->BelongsTo=="Workstation"){
-          $display= $this->show_header(_("Remove printer extension"),
+          $display= $this->show_disable_header(_("Remove printer extension"),
               _("This workstation has printer extension enabled.You can disable it by clicking below."));
         }elseif($this->BelongsTo=="Terminal"){
-          $display= $this->show_header(_("Remove printer extension"),
+          $display= $this->show_disable_header(_("Remove printer extension"),
               _("This terminal has printer extension enabled. You can disable it by clicking below."));
         }
       }else{
         if($this->BelongsTo=="Workstation"){
-          $display= $this->show_header(_("Add printer extension"),
+          $display= $this->show_disable_header(_("Add printer extension"),
               _("This workstation has printer extension disabled. You can enable it by clicking below."));
         }elseif($this->BelongsTo=="Terminal"){
-          $display= $this->show_header(_("Add printer extension"),
+          $display= $this->show_enable_header(_("Add printer extension"),
               _("This terminal has printer extension disabled. You can enable it by clicking below."));
         }  
         return ($display);

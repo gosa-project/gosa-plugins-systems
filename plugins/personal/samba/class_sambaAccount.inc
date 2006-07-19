@@ -204,7 +204,7 @@ class sambaAccount extends plugin
     $display= "";
     if ($this->parent != NULL){
       if ($this->is_account){
-        $display= $this->show_header(_("Remove samba account"),
+        $display= $this->show_disable_header(_("Remove samba account"),
             _("This account has samba features enabled. You can disable them by clicking below."));
       } else {
         $obj= $this->parent->by_object['posixAccount'];
@@ -215,10 +215,10 @@ class sambaAccount extends plugin
            on. */
         if ($obj->is_account){
 
-          $display= $this->show_header(_("Create samba account"),
+          $display= $this->show_enable_header(_("Create samba account"),
               _("This account has samba features disabled. You can enable them by clicking below."));
         } else {
-          $display= $this->show_header(_("Create samba account"),
+          $display= $this->show_enable_header(_("Create samba account"),
               _("This account has samba features disabled. Posix features are needed for samba accounts, enable them first."), TRUE);
         }
         return ($display);

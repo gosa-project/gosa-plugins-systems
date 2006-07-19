@@ -98,10 +98,10 @@ class nagiosAccount extends plugin
     /* Show tab dialog headers */
     if ($this->parent != NULL){
       if ($this->is_account){
-        $display= $this->show_header(_("Remove nagios account"),
+        $display= $this->show_disable_header(_("Remove nagios account"),
             _("This account has nagios features enabled. You can disable them by clicking below."));
       } else {
-        $display= $this->show_header(_("Create nagios account"), _("This account has nagios features disabled. You can enable them by clicking below."));
+        $display= $this->show_enable_header(_("Create nagios account"), _("This account has nagios features disabled. You can enable them by clicking below."));
         return($display);
       }
     }

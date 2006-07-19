@@ -130,7 +130,7 @@ class netatalk extends plugin {
     /* Show tab dialog headers */
     if ($this->parent != NULL) {
       if ($this->is_account) {
-        $display = $this->show_header(_("Remove netatalk account"), _("This account has netatalk features enabled. You can disable them by clicking below."));
+        $display = $this->show_disable_header(_("Remove netatalk account"), _("This account has netatalk features enabled. You can disable them by clicking below."));
       } else {
         $errmsg="";
         $obj = $this->parent->by_object['posixAccount'];
@@ -141,9 +141,9 @@ class netatalk extends plugin {
           $errmsg.="At least one share with netatalk or NFS mount entry needed.";
         }
         if($errmsg==""){
-          $display = $this->show_header(_("Create netatalk account"), _("This account has netatalk features disabled. You can enable them by clicking below."));
+          $display = $this->show_enable_header(_("Create netatalk account"), _("This account has netatalk features disabled. You can enable them by clicking below."));
         } else {
-          $display = $this->show_header(_("Create netatalk account"), _($errmsg), TRUE);  
+          $display = $this->show_enable_header(_("Create netatalk account"), _($errmsg), TRUE);  
         }
         return ($display);
       }

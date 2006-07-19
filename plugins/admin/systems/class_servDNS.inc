@@ -70,10 +70,10 @@ class servdns extends plugin
     }
 
     if ($this->is_account){
-      $display= $this->show_header(_("Remove DNS service"),
+      $display= $this->show_disable_header(_("Remove DNS service"),
           _("This server has DNS features enabled. You can disable them by clicking below."));
     } else {
-      $display= $this->show_header(_("Add DNS service"),
+      $display= $this->show_enable_header(_("Add DNS service"),
           _("This server has DNS features disabled. You can enable them by clicking below."));
       return ($display);
     }

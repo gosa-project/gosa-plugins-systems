@@ -49,10 +49,10 @@ class applicationParameters extends plugin
 	$display= "";
 	if ($this->parent != NULL){
 		if ($this->is_account){
-			$display= $this->show_header(_("Remove options"),
+			$display= $this->show_disable_header(_("Remove options"),
 				_("This application has options. You can disable them by clicking below."));
 		} else {
-			$display= $this->show_header(_("Create options"),
+			$display= $this->show_enable_header(_("Create options"),
 				_("This application has options disabled. You can enable them by clicking below."));
 			$this->parent->by_object['application']->generateTemplate();
 			return ($display);
