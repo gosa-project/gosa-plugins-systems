@@ -491,7 +491,7 @@ class user extends plugin
     $smarty->assign("userPictureACL",   $this->getacl("userPicture"));
 
     /* Create base acls */
-    $baseACL = $this->("base");
+    $baseACL = $this->getacl("base");
     if(!$this->acl_is_moveable()) {
       $baseACL = preg_replace("/w/","",$baseACL);
     }
