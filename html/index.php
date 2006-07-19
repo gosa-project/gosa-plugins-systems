@@ -123,7 +123,7 @@ if (!is_readable(CONFIG_DIR."/gosa.conf")){
 }
 
 /* Parse configuration file */
-$config= new config(CONFIG_DIR."/gosa.conf", $BASE_DIR);
+$config= new config(CONFIG_DIR."/gosa.conf-trunk", $BASE_DIR);
 $_SESSION['DEBUGLEVEL']= $config->data['MAIN']['DEBUGLEVEL'];
 if ($_SERVER["REQUEST_METHOD"] != "POST"){
   @DEBUG (DEBUG_CONFIG, __LINE__, __FUNCTION__, __FILE__, $config->data, "config");
