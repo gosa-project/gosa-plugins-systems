@@ -289,9 +289,9 @@ class plugin
           $data = "";  
         }
         $this->$val= $data;
-        echo "<font color='blue'>".$val."</font><br>";
+        //echo "<font color='blue'>".$val."</font><br>";
       }else{
-        echo "<font color='red'>".$val."</font><br>";
+        //echo "<font color='red'>".$val."</font><br>";
       }
     }
   }
