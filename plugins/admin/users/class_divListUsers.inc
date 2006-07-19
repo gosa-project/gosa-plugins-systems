@@ -141,7 +141,7 @@ class divListUsers extends MultiSelectWindow
     $editlink   = "<a href='?plug=".validate($_GET['plug'])."&amp;id=%s&amp;act=edit_entry'>%s</a>";
 
     /* Dynamic action col, depending on snapshot icons */
-    $action_col_size = 88;
+    $action_col_size = 104;
     if($this->parent->snapshotEnabled()){
       $action_col_size += 38;
     }
