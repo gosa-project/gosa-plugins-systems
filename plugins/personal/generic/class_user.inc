@@ -301,7 +301,7 @@ class user extends plugin
     }
 
     /* Want picture edit dialog? */
-    if($this->acl_is_writeable("jpegPhoto")) {
+    if($this->acl_is_readable("userPicture")) {
       if (isset($_POST['edit_picture'])){
         /* Save values for later recovery, in case some presses
            the cancel button. */
@@ -310,8 +310,10 @@ class user extends plugin
         $this->picture_dialog= TRUE;
         $this->dialog= TRUE;
       }
+    }
 
-      /* Remove picture? */
+    /* Remove picture? */
+    if($this->acl_is_writeable("userPicture")) {
       if (isset($_POST['picture_remove'])){
         $this->jpegPhoto= "*removed*";
         $this->set_picture ("./images/default.jpg");
@@ -1132,7 +1134,7 @@ class user extends plugin
   /* Load picture from file to object */
   function set_picture($filename)
   {
-    if($this->acl_is_writeable("jpegPhoto")) {
+    if($this->acl_is_writeable("userPicture")) {
       if (!is_file($filename)){
         $filename= "./images/default.jpg";
         $this->jpegPhoto= "*removed*";
