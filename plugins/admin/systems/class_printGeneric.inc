@@ -28,7 +28,6 @@ class printgeneric extends plugin
   var $AdminMembers     =array();
   var $AdminMemberKeys  =array();
 
-  var $gotoUserPrinter ;
   var $PPDdialogToSave  = NULL;
   var $BelongsTo        = "unknown"; //  Specifies if this is a standalone printer, or belongs to a terminal / WS
 
@@ -40,8 +39,14 @@ class printgeneric extends plugin
   var $baseSelection    = false;
   var $macAddress       = "";
 
+  var $gotoUserAdminPrinter;
+  var $gotoGroupAdminPrinter ;
+  var $gotoGroupPrinter;
+  var $gotoUserPrinter ;
+
   /* attribute list for save action */
-  var $attributes     = array("cn", "description", "l", "labeledURI", "gotoPrinterPPD","gotoUserPrinter", "macAddress");
+  var $attributes     = array("cn", "description", "l", "labeledURI", "gotoPrinterPPD","gotoUserPrinter", "macAddress", 
+                              "gotoUserAdminPrinter","gotoGroupAdminPrinter","gotoUserPrinter","gotoGroupPrinter");
   var $objectclasses  = array("top", "gotoPrinter");
 
   function printgeneric ($config, $dn= NULL,$parent = NULL)
@@ -674,32 +679,33 @@ class printgeneric extends plugin
     }else{
       $method="http://";
     }
-  
+ 
     $this->attrs['gotoPrinterPPD'] = $method.str_replace("//","/",$_SERVER['SERVER_NAME']."/ppd/".$this->gotoPrinterPPD);
 
     /* Append printer user 
      */
-    if((isset($this->attrs['gotoUserPrinter'])) && (is_string($this->attrs['gotoUserPrinter']))){
-      $this->attrs['gotoUserPrinter']=array();
-    }
+    $this->attrs['gotoUserPrinter']=array();
     foreach($this->member['AddUser'] as $mem){
       $this->attrs['gotoUserPrinter'][]=$mem['uid'][0];
     }
 
     /* Append printer group 
      */
+    $this->attrs['gotoGroupPrinter'] = array();
     foreach($this->member['AddGroup'] as $mem){
       $this->attrs['gotoGroupPrinter'][]=$mem['cn'][0];
     }
 
     /* Append printer admin user 
      */
+    $this->attrs['gotoUserAdminPrinter'] = array();
     foreach($this->member['AddAdminUser'] as $mem){
       $this->attrs['gotoUserAdminPrinter'][]=$mem['uid'][0];
     }
 
     /* Append printer admin group 
      */
+    $this->attrs['gotoGroupAdminPrinter']= array();
     foreach($this->member['AddAdminGroup'] as $mem){
       $this->attrs['gotoGroupAdminPrinter'][]=$mem['cn'][0];
     }
@@ -707,6 +713,7 @@ class printgeneric extends plugin
     if(($this->gosaUnitTag) && (!in_array_ics("gosaAdministrativeUnitTag",$this->attrs['objectClass']))){
       $this->attrs['objectClass'][] = "gosaAdministrativeUnitTag";
     }
+
 
     /* Write back to ldap */
     $ldap= $this->config->get_ldap_link();
