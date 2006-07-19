@@ -439,7 +439,7 @@ class termstartup extends plugin
           "plProvidedAcls"=> array(
             "gotoLdapServer"      => _("Ldap server"), 
             "gotoBootKernel"      => _("Boot kernel"), 
-            "gotoKernelParameters"=> _("Kernel paramenter"))
+            "gotoKernelParameters"=> _("Kernel parameter"))
           ));
   }
 

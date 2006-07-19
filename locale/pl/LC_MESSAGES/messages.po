@@ -1,4 +1,4 @@
-#: plugins/personal/generic/class_user.inc:1300
+#: plugins/personal/generic/class_user.inc:1318
 #: plugins/admin/systems/class_terminalService.inc:447
 #: plugins/admin/systems/class_terminalService.inc:448
 #: include/class_plugin.inc:112 include/class_plugin.inc:113
@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-18 17:27+0200\n"
+"POT-Creation-Date: 2006-07-19 14:58+0200\n"
 "PO-Revision-Date: 2006-07-01 22:33+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "X-Poedit-SourceCharset: iso-8859-2\n"
 "X-Poedit-Basepath: tedst\n"
 
-#: contrib/gosa.conf:4 plugins/personal/generic/class_user.inc:1312
+#: contrib/gosa.conf:4 plugins/personal/generic/class_user.inc:1330
 msgid "My account"
 msgstr "Moje konto "
 
@@ -39,7 +39,7 @@ msgstr "Dodatki"
 #: plugins/personal/mail/generic.tpl:4 plugins/personal/posix/generic.tpl:4
 #: plugins/personal/samba/samba2.tpl:6 plugins/personal/samba/samba3.tpl:6
 #: plugins/personal/generic/class_user.inc:16
-#: plugins/personal/generic/class_user.inc:1307
+#: plugins/personal/generic/class_user.inc:1325
 #: plugins/gofax/blocklists/generic.tpl:1
 #: plugins/gofax/faxaccount/generic.tpl:6
 #: plugins/gofax/faxaccount/paste_generic.tpl:4
@@ -50,7 +50,7 @@ msgstr "Dodatki"
 #: plugins/admin/systems/class_servGeneric.inc:315
 #: plugins/admin/systems/class_workstationGeneric.inc:465
 #: plugins/admin/systems/servkolab.tpl:6
-#: plugins/admin/systems/class_printGeneric.inc:772
+#: plugins/admin/systems/class_printGeneric.inc:764
 #: plugins/admin/systems/class_componentGeneric.inc:233
 #: plugins/admin/systems/glpiPrinter.tpl:6 plugins/admin/systems/glpi.tpl:6
 #: plugins/admin/systems/class_phoneGeneric.inc:409
@@ -84,7 +84,7 @@ msgstr "Unix"
 
 #: contrib/gosa.conf:82 contrib/gosa.conf:98
 #: plugins/personal/environment/class_environment.inc:12
-#: plugins/personal/environment/class_environment.inc:1252
+#: plugins/personal/environment/class_environment.inc:1144
 #: plugins/admin/groups/class_divListGroup.inc:149
 #: plugins/admin/users/class_divListUsers.inc:163
 msgid "Environment"
@@ -125,8 +125,8 @@ msgstr "Netatalk"
 msgid "Connectivity"
 msgstr "Połączenia"
 
-#: contrib/gosa.conf:87 plugins/personal/generic/generic.tpl:334
-#: plugins/personal/generic/generic.tpl:502
+#: contrib/gosa.conf:87 plugins/personal/generic/generic.tpl:332
+#: plugins/personal/generic/generic.tpl:500
 #: plugins/gofax/blocklists/class_blocklistManagement.inc:563
 #: plugins/gofax/blocklists/class_blocklistManagement.inc:570
 #: plugins/gofax/faxaccount/generic.tpl:10
@@ -141,8 +141,8 @@ msgstr "Połączenia"
 msgid "Fax"
 msgstr "Fax"
 
-#: contrib/gosa.conf:88 plugins/personal/generic/generic.tpl:309
-#: plugins/personal/generic/generic.tpl:490
+#: contrib/gosa.conf:88 plugins/personal/generic/generic.tpl:307
+#: plugins/personal/generic/generic.tpl:488
 #: plugins/addons/addressbook/contents.tpl:14
 #: plugins/addons/addressbook/address_edit.tpl:85
 #: plugins/addons/addressbook/address_edit.tpl:195
@@ -203,9 +203,9 @@ msgstr "Urządzenia"
 
 #: contrib/gosa.conf:122 contrib/gosa.conf:138
 #: plugins/personal/environment/environment.tpl:173
-#: plugins/personal/environment/class_environment.inc:1269
+#: plugins/personal/environment/class_environment.inc:1161
 #: plugins/admin/systems/class_systemManagement.inc:773
-#: plugins/admin/systems/class_printGeneric.inc:778
+#: plugins/admin/systems/class_printGeneric.inc:770
 #: plugins/admin/ogroups/class_ogroupManagement.inc:390
 #: plugins/generic/references/class_reference.inc:52
 msgid "Printer"
@@ -493,7 +493,7 @@ msgstr "Dodaj"
 #: plugins/personal/generic/password.tpl:19
 #: plugins/personal/generic/generic_picture.tpl:35
 #: plugins/personal/generic/main.inc:160
-#: plugins/personal/generic/generic_certs.tpl:78
+#: plugins/personal/generic/generic_certs.tpl:94
 #: plugins/personal/connectivity/main.inc:120
 #: plugins/personal/environment/main.inc:106
 #: plugins/personal/environment/hotplugDialog.tpl:64
@@ -617,7 +617,7 @@ msgstr "Użycie Quoty"
 
 #: plugins/personal/mail/generic.tpl:30 plugins/admin/groups/mail.tpl:32
 #: plugins/admin/systems/class_terminalInfo.inc:169
-#: plugins/admin/systems/class_printGeneric.inc:483
+#: plugins/admin/systems/class_printGeneric.inc:475
 msgid "not defined"
 msgstr "nie zdefiniowane"
 
@@ -664,9 +664,9 @@ msgstr "Lista alternatywnych adresów pocztowych"
 #: plugins/admin/departments/remove.tpl:14
 #: plugins/admin/systems/servservice.tpl:22
 #: plugins/admin/systems/servservice.tpl:48
-#: plugins/admin/systems/terminal.tpl:101
+#: plugins/admin/systems/terminal.tpl:101 plugins/admin/systems/printer.tpl:76
+#: plugins/admin/systems/printer.tpl:92
 #: plugins/admin/systems/workstation.tpl:80
-#: plugins/admin/systems/printer.tpl:76 plugins/admin/systems/printer.tpl:92
 #: plugins/admin/systems/remove.tpl:14
 #: plugins/admin/systems/goNtpServer.tpl:14
 #: plugins/admin/systems/remove_glpi.tpl:14
@@ -1479,7 +1479,7 @@ msgstr "Ostrzeż użytkownika na %s dni przed wygaśnięciem hasła"
 #: plugins/personal/samba/class_sambaAccount.inc:375
 #: plugins/personal/samba/class_sambaAccount.inc:393
 #: plugins/personal/samba/class_sambaAccount.inc:411
-#: plugins/personal/generic/class_user.inc:245
+#: plugins/personal/generic/class_user.inc:247
 msgid "January"
 msgstr "Styczeń"
 
@@ -1488,7 +1488,7 @@ msgstr "Styczeń"
 #: plugins/personal/samba/class_sambaAccount.inc:375
 #: plugins/personal/samba/class_sambaAccount.inc:393
 #: plugins/personal/samba/class_sambaAccount.inc:411
-#: plugins/personal/generic/class_user.inc:245
+#: plugins/personal/generic/class_user.inc:247
 msgid "February"
 msgstr "Luty"
 
@@ -1497,7 +1497,7 @@ msgstr "Luty"
 #: plugins/personal/samba/class_sambaAccount.inc:375
 #: plugins/personal/samba/class_sambaAccount.inc:393
 #: plugins/personal/samba/class_sambaAccount.inc:411
-#: plugins/personal/generic/class_user.inc:245
+#: plugins/personal/generic/class_user.inc:247
 msgid "March"
 msgstr "Marzec"
 
@@ -1506,7 +1506,7 @@ msgstr "Marzec"
 #: plugins/personal/samba/class_sambaAccount.inc:375
 #: plugins/personal/samba/class_sambaAccount.inc:393
 #: plugins/personal/samba/class_sambaAccount.inc:411
-#: plugins/personal/generic/class_user.inc:245
+#: plugins/personal/generic/class_user.inc:247
 msgid "April"
 msgstr "Kwiecień"
 
@@ -1515,7 +1515,7 @@ msgstr "Kwiecień"
 #: plugins/personal/samba/class_sambaAccount.inc:376
 #: plugins/personal/samba/class_sambaAccount.inc:394
 #: plugins/personal/samba/class_sambaAccount.inc:412
-#: plugins/personal/generic/class_user.inc:246
+#: plugins/personal/generic/class_user.inc:248
 msgid "May"
 msgstr "Maj"
 
@@ -1524,7 +1524,7 @@ msgstr "Maj"
 #: plugins/personal/samba/class_sambaAccount.inc:376
 #: plugins/personal/samba/class_sambaAccount.inc:394
 #: plugins/personal/samba/class_sambaAccount.inc:412
-#: plugins/personal/generic/class_user.inc:246
+#: plugins/personal/generic/class_user.inc:248
 msgid "June"
 msgstr "Czerwiec"
 
@@ -1533,7 +1533,7 @@ msgstr "Czerwiec"
 #: plugins/personal/samba/class_sambaAccount.inc:376
 #: plugins/personal/samba/class_sambaAccount.inc:394
 #: plugins/personal/samba/class_sambaAccount.inc:412
-#: plugins/personal/generic/class_user.inc:246
+#: plugins/personal/generic/class_user.inc:248
 msgid "July"
 msgstr "Lipiec"
 
@@ -1542,7 +1542,7 @@ msgstr "Lipiec"
 #: plugins/personal/samba/class_sambaAccount.inc:376
 #: plugins/personal/samba/class_sambaAccount.inc:394
 #: plugins/personal/samba/class_sambaAccount.inc:412
-#: plugins/personal/generic/class_user.inc:246
+#: plugins/personal/generic/class_user.inc:248
 msgid "August"
 msgstr "Sierpień"
 
@@ -1551,7 +1551,7 @@ msgstr "Sierpień"
 #: plugins/personal/samba/class_sambaAccount.inc:376
 #: plugins/personal/samba/class_sambaAccount.inc:394
 #: plugins/personal/samba/class_sambaAccount.inc:412
-#: plugins/personal/generic/class_user.inc:246
+#: plugins/personal/generic/class_user.inc:248
 msgid "September"
 msgstr "Wrzesień"
 
@@ -1560,7 +1560,7 @@ msgstr "Wrzesień"
 #: plugins/personal/samba/class_sambaAccount.inc:377
 #: plugins/personal/samba/class_sambaAccount.inc:395
 #: plugins/personal/samba/class_sambaAccount.inc:413
-#: plugins/personal/generic/class_user.inc:247
+#: plugins/personal/generic/class_user.inc:249
 msgid "October"
 msgstr "Październik"
 
@@ -1569,7 +1569,7 @@ msgstr "Październik"
 #: plugins/personal/samba/class_sambaAccount.inc:377
 #: plugins/personal/samba/class_sambaAccount.inc:395
 #: plugins/personal/samba/class_sambaAccount.inc:413
-#: plugins/personal/generic/class_user.inc:247
+#: plugins/personal/generic/class_user.inc:249
 msgid "November"
 msgstr "Listopad"
 
@@ -1578,7 +1578,7 @@ msgstr "Listopad"
 #: plugins/personal/samba/class_sambaAccount.inc:377
 #: plugins/personal/samba/class_sambaAccount.inc:395
 #: plugins/personal/samba/class_sambaAccount.inc:413
-#: plugins/personal/generic/class_user.inc:247
+#: plugins/personal/generic/class_user.inc:249
 msgid "December"
 msgstr "Grudzień"
 
@@ -2034,96 +2034,100 @@ msgstr "Ścieżka do profilu"
 msgid "Allow connection from"
 msgstr "Zezwól na połączenia tylko z tych stacji"
 
-#: plugins/personal/generic/class_user.inc:256
+#: plugins/personal/generic/class_user.inc:258
 msgid "female"
 msgstr "kobieta"
 
-#: plugins/personal/generic/class_user.inc:256
+#: plugins/personal/generic/class_user.inc:258
 msgid "male"
 msgstr "mężczyzna"
 
-#: plugins/personal/generic/class_user.inc:272
+#: plugins/personal/generic/class_user.inc:274
 msgid "This account has no valid GOsa extensions."
 msgstr "To konto nie posiada poprawnych rozszerzeń GOsa."
 
-#: plugins/personal/generic/class_user.inc:326
+#: plugins/personal/generic/class_user.inc:332
 msgid "The specified file has not been uploaded via HTTP POST! Aborted."
 msgstr "Podany plik nie został wgrany poprzez HTTP POST! Akcja anulowana."
 
-#: plugins/personal/generic/class_user.inc:422
+#: plugins/personal/generic/class_user.inc:430
 msgid "Please enter a valid serial number"
 msgstr "Proszę podać poprawny numer seryjny"
 
-#: plugins/personal/generic/class_user.inc:459
+#: plugins/personal/generic/class_user.inc:470
 #, php-format
 msgid "Certificate is valid from %s to %s and is currently %s."
 msgstr "Certyfikat jest ważny od %s do %s i jest obecnie %s."
 
-#: plugins/personal/generic/class_user.inc:459
+#: plugins/personal/generic/class_user.inc:470
 msgid "valid"
 msgstr "prawidłowy"
 
-#: plugins/personal/generic/class_user.inc:459
+#: plugins/personal/generic/class_user.inc:470
 msgid "invalid"
 msgstr "nieprawidłowy"
 
-#: plugins/personal/generic/class_user.inc:463
+#: plugins/personal/generic/class_user.inc:474
 msgid "No certificate installed"
 msgstr "Brak zainstalowanych certyfikatów"
 
-#: plugins/personal/generic/class_user.inc:548
+#: plugins/personal/generic/class_user.inc:565
 #, fuzzy, php-format
 msgid "Removing of user/generic account with dn '%s' failed."
 msgstr "Usuwanie konta ogólnego użytkownika nieudane"
 
-#: plugins/personal/generic/class_user.inc:837
+#: plugins/personal/generic/class_user.inc:854
 #, fuzzy, php-format
 msgid "Saving of user/generic account with dn '%s' failed."
 msgstr "Zapisywanie konta ogólnego użytkownika nieudane"
 
-#: plugins/personal/generic/class_user.inc:884
+#: plugins/personal/generic/class_user.inc:901
 msgid "Kerberos database communication failed"
 msgstr "Komunikacja z bazą Kerberos nieudana"
 
-#: plugins/personal/generic/class_user.inc:901
+#: plugins/personal/generic/class_user.inc:918
 msgid "Can't remove user from kerberos database."
 msgstr "Nie można usunąć użytkownika z bazy Kerberos."
 
-#: plugins/personal/generic/class_user.inc:912
+#: plugins/personal/generic/class_user.inc:929
 msgid "Can't add user to kerberos database."
 msgstr "nie można dodać użytkownika do bazy Kerberos."
 
-#: plugins/personal/generic/class_user.inc:958
+#: plugins/personal/generic/class_user.inc:970
+msgid "You have no permissions to create a user on this 'Base'."
+msgstr "Brak uprawnień do tworzenia konta w tym 'Kontenerze'."
+
+#: plugins/personal/generic/class_user.inc:973
 msgid "You have no permissions to move a user from the original 'Base'."
 msgstr "Brak uprawnień do przenoszenia konta z obecnego 'Kontenera'."
 
-#: plugins/personal/generic/class_user.inc:964
+#: plugins/personal/generic/class_user.inc:979
 #: plugins/addons/addressbook/class_addressbook.inc:546
 #: plugins/admin/users/class_userManagement.inc:519
 msgid "The required field 'Name' is not set."
 msgstr "Wymagane pole 'Nazwa' jest puste."
 
-#: plugins/personal/generic/class_user.inc:973
+#: plugins/personal/generic/class_user.inc:988
 msgid "There's already a person with this 'Login' in the database."
 msgstr "Już istnieje osoba z takim samym loginem w bazie."
 
-#: plugins/personal/generic/class_user.inc:979
+#: plugins/personal/generic/class_user.inc:994
 #: plugins/addons/addressbook/class_addressbook.inc:550
 #: plugins/admin/users/class_userManagement.inc:522
 msgid "The required field 'Given name' is not set."
 msgstr "Wymagane pole 'Podana nazwa' jest puste."
 
-#: plugins/personal/generic/class_user.inc:982
+#: plugins/personal/generic/class_user.inc:997
 msgid "The required field 'Login' is not set."
 msgstr "Wymagane pole 'Login' jest puste."
 
-#: plugins/personal/generic/class_user.inc:989
+#: plugins/personal/generic/class_user.inc:1004
 msgid ""
 "There's already a person with this 'Name'/'Given name' combination in the "
 "database."
 msgstr "Już istnieje osoba z tą 'Nazwą'/'Podaną nazwą' w bazie."
 
-#: plugins/personal/generic/class_user.inc:996
+#: plugins/personal/generic/class_user.inc:1011
 msgid ""
 "The field 'Login' contains invalid characters. Lowercase, numbers and dashes "
 "are allowed."
@@ -2131,120 +2135,120 @@ msgstr ""
 "Pole 'Login' zawiera niedozwolone znaki. Tylko małe litery, liczny i "
 "myślniki są dozwolone."
 
-#: plugins/personal/generic/class_user.inc:999
+#: plugins/personal/generic/class_user.inc:1014
 msgid "The field 'Homepage' contains an invalid URL definition."
 msgstr "Pole 'Strona WWW' zawiera niepoprawną definicję URL."
 
-#: plugins/personal/generic/class_user.inc:1002
-#: plugins/personal/generic/class_user.inc:1027
+#: plugins/personal/generic/class_user.inc:1017
+#: plugins/personal/generic/class_user.inc:1042
 #: plugins/addons/addressbook/class_addressbook.inc:556
 #: plugins/addons/addressbook/class_addressbook.inc:584
 #: plugins/admin/departments/class_departmentGeneric.inc:246
 msgid "The field 'Name' contains invalid characters."
 msgstr "Pole 'Nazwa' zawiera niedozwolone znaki."
 
-#: plugins/personal/generic/class_user.inc:1005
-#: plugins/personal/generic/class_user.inc:1024
+#: plugins/personal/generic/class_user.inc:1020
+#: plugins/personal/generic/class_user.inc:1039
 #: plugins/addons/addressbook/class_addressbook.inc:559
 #: plugins/addons/addressbook/class_addressbook.inc:581
 msgid "The field 'Given name' contains invalid characters."
 msgstr "Pole 'Podana nazwa' zawiera niedozwolone znaki."
 
-#: plugins/personal/generic/class_user.inc:1010
+#: plugins/personal/generic/class_user.inc:1025
 #: plugins/addons/addressbook/class_addressbook.inc:564
 #: plugins/addons/addressbook/class_addressbook.inc:567
 #: plugins/admin/departments/class_departmentGeneric.inc:249
 msgid "The field 'Phone' contains an invalid phone number."
 msgstr "Pole 'Telefon' zawiera nieprawidłowy numer telefonu."
 
-#: plugins/personal/generic/class_user.inc:1013
+#: plugins/personal/generic/class_user.inc:1028
 #: plugins/addons/addressbook/class_addressbook.inc:570
 #: plugins/admin/departments/class_departmentGeneric.inc:252
 msgid "The field 'Fax' contains an invalid phone number."
 msgstr "Pole 'Fax' zawiera nieprawidłowy numer telefonu."
 
-#: plugins/personal/generic/class_user.inc:1016
+#: plugins/personal/generic/class_user.inc:1031
 #: plugins/addons/addressbook/class_addressbook.inc:573
 msgid "The field 'Mobile' contains an invalid phone number."
 msgstr "Pole 'Komórka' zawiera nieprawidłowy numer telefonu."
 
-#: plugins/personal/generic/class_user.inc:1019
+#: plugins/personal/generic/class_user.inc:1034
 #: plugins/addons/addressbook/class_addressbook.inc:576
 msgid "The field 'Pager' contains an invalid phone number."
 msgstr "Pole 'Pager' zawiera nieprawidłowy numer telefonu."
 
-#: plugins/personal/generic/class_user.inc:1146
+#: plugins/personal/generic/class_user.inc:1164
 msgid "Could not open specified certificate!"
 msgstr "Nie można otworzyć wybranego certyfikatu!"
 
-#: plugins/personal/generic/class_user.inc:1292
-#: plugins/personal/generic/generic.tpl:442
+#: plugins/personal/generic/class_user.inc:1310
+#: plugins/personal/generic/generic.tpl:440
 msgid "Unit"
 msgstr "Jednostka"
 
-#: plugins/personal/generic/class_user.inc:1293
-#: plugins/personal/generic/generic.tpl:467
+#: plugins/personal/generic/class_user.inc:1311
+#: plugins/personal/generic/generic.tpl:465
 msgid "House identifier"
 msgstr "Identyfikator budynku"
 
-#: plugins/personal/generic/class_user.inc:1294
-#: plugins/personal/generic/generic.tpl:384
+#: plugins/personal/generic/class_user.inc:1312
+#: plugins/personal/generic/generic.tpl:382
 msgid "Vocation"
 msgstr "Wywołanie"
 
-#: plugins/personal/generic/class_user.inc:1295
-#: plugins/personal/generic/generic.tpl:511
+#: plugins/personal/generic/class_user.inc:1313
+#: plugins/personal/generic/generic.tpl:509
 msgid "Last delivery"
 msgstr "Ostatnia dostawa"
 
-#: plugins/personal/generic/class_user.inc:1296
-#: plugins/personal/generic/generic.tpl:433
+#: plugins/personal/generic/class_user.inc:1314
+#: plugins/personal/generic/generic.tpl:431
 msgid "Person locality"
 msgstr "Lokalizacja osoby"
 
-#: plugins/personal/generic/class_user.inc:1297
-#: plugins/personal/generic/generic.tpl:392
+#: plugins/personal/generic/class_user.inc:1315
+#: plugins/personal/generic/generic.tpl:390
 msgid "Unit description"
 msgstr "Opis jednostki"
 
-#: plugins/personal/generic/class_user.inc:1298
-#: plugins/personal/generic/generic.tpl:401
+#: plugins/personal/generic/class_user.inc:1316
+#: plugins/personal/generic/generic.tpl:399
 msgid "Subject area"
 msgstr "Sektor"
 
-#: plugins/personal/generic/class_user.inc:1299
-#: plugins/personal/generic/generic.tpl:410
+#: plugins/personal/generic/class_user.inc:1317
+#: plugins/personal/generic/generic.tpl:408
 msgid "Functional title"
 msgstr "Tytuł funkcjonalny"
 
-#: plugins/personal/generic/class_user.inc:1301
-#: plugins/personal/generic/generic.tpl:520
+#: plugins/personal/generic/class_user.inc:1319
+#: plugins/personal/generic/generic.tpl:518
 msgid "Public visible"
 msgstr "Publicznie widoczne"
 
-#: plugins/personal/generic/class_user.inc:1302
-#: plugins/personal/generic/generic.tpl:451
+#: plugins/personal/generic/class_user.inc:1320
+#: plugins/personal/generic/generic.tpl:449
 msgid "Street"
 msgstr "Ulica"
 
-#: plugins/personal/generic/class_user.inc:1303
-#: plugins/personal/generic/generic.tpl:419
+#: plugins/personal/generic/class_user.inc:1321
+#: plugins/personal/generic/generic.tpl:417
 msgid "Role"
 msgstr "Pełniona funkcja"
 
-#: plugins/personal/generic/class_user.inc:1304
-#: plugins/personal/generic/generic.tpl:459
+#: plugins/personal/generic/class_user.inc:1322
+#: plugins/personal/generic/generic.tpl:457
 #: plugins/addons/addressbook/address_edit.tpl:158
 #: plugins/addons/addressbook/address_info.tpl:70 html/getxls.php:174
 msgid "Postal code"
 msgstr "Kod pocztowy"
 
-#: plugins/personal/generic/class_user.inc:1308
+#: plugins/personal/generic/class_user.inc:1326
 #, fuzzy
 msgid "Generic user settings"
 msgstr "Ogólne ustawienia kolejki"
 
-#: plugins/personal/generic/class_user.inc:1313
+#: plugins/personal/generic/class_user.inc:1331
 #: plugins/addons/notifications/class_msgplug.inc:35
 #: plugins/admin/users/class_userManagement.inc:28
 #: plugins/admin/systems/printer.tpl:71
@@ -2254,8 +2258,8 @@ msgstr "Ogólne ustawienia kolejki"
 msgid "Users"
 msgstr "Użytkownicy"
 
-#: plugins/personal/generic/class_user.inc:1317
-#: plugins/personal/generic/generic.tpl:141
+#: plugins/personal/generic/class_user.inc:1335
+#: plugins/personal/generic/generic.tpl:143
 #: plugins/gofax/blocklists/generic.tpl:14
 #: plugins/gofax/blocklists/class_blocklistManagement.inc:578
 #: plugins/gofax/blocklists/class_divListBlocklists.inc:95
@@ -2270,8 +2274,8 @@ msgstr "Użytkownicy"
 #: plugins/admin/departments/class_divListDepartment.inc:76
 #: plugins/admin/systems/servservice.tpl:61
 #: plugins/admin/systems/terminal.tpl:17 plugins/admin/systems/server.tpl:14
-#: plugins/admin/systems/phone.tpl:13 plugins/admin/systems/workstation.tpl:23
-#: plugins/admin/systems/printer.tpl:20
+#: plugins/admin/systems/phone.tpl:13 plugins/admin/systems/printer.tpl:20
+#: plugins/admin/systems/workstation.tpl:23
 #: plugins/admin/systems/class_terminalGeneric.inc:501
 #: plugins/admin/systems/class_servGeneric.inc:327
 #: plugins/admin/systems/wingeneric.tpl:13
@@ -2296,59 +2300,59 @@ msgstr "Użytkownicy"
 msgid "Base"
 msgstr "Kontener"
 
-#: plugins/personal/generic/class_user.inc:1318
+#: plugins/personal/generic/class_user.inc:1336
 #, fuzzy
 msgid "User password"
 msgstr "Wyczyść hasło"
 
-#: plugins/personal/generic/class_user.inc:1319 html/getxls.php:236
+#: plugins/personal/generic/class_user.inc:1337 html/getxls.php:236
 msgid "Surename"
 msgstr "Nazwisko"
 
-#: plugins/personal/generic/class_user.inc:1320
+#: plugins/personal/generic/class_user.inc:1338
 #: plugins/addons/addressbook/class_addressbook.inc:513 html/getxls.php:65
 #: html/getxls.php:174 html/getxls.php:224 html/getxls.php:236
 msgid "Given name"
 msgstr "Imię"
 
-#: plugins/personal/generic/class_user.inc:1321
+#: plugins/personal/generic/class_user.inc:1339
 #, fuzzy
 msgid "User identification"
 msgstr "Informacja o użytkowniku"
 
-#: plugins/personal/generic/class_user.inc:1322
-#: plugins/personal/generic/generic.tpl:71
+#: plugins/personal/generic/class_user.inc:1340
+#: plugins/personal/generic/generic.tpl:73
 #: plugins/addons/addressbook/address_edit.tpl:54
 #: plugins/addons/addressbook/address_info.tpl:22
 msgid "Personal title"
 msgstr "Osobisty tytuł"
 
-#: plugins/personal/generic/class_user.inc:1323
-#: plugins/personal/generic/generic.tpl:81
+#: plugins/personal/generic/class_user.inc:1341
+#: plugins/personal/generic/generic.tpl:83
 msgid "Academic title"
 msgstr "Tytuł naukowy"
 
-#: plugins/personal/generic/class_user.inc:1324 html/getxls.php:174
+#: plugins/personal/generic/class_user.inc:1342 html/getxls.php:174
 msgid "Home postal address"
 msgstr "Adres domowy"
 
-#: plugins/personal/generic/class_user.inc:1325
+#: plugins/personal/generic/class_user.inc:1343
 #, fuzzy
 msgid "Home phone number"
 msgstr "Numer telefonu"
 
-#: plugins/personal/generic/class_user.inc:1326
-#: plugins/personal/generic/generic.tpl:183
+#: plugins/personal/generic/class_user.inc:1344
+#: plugins/personal/generic/generic.tpl:181
 msgid "Homepage"
 msgstr "Strona domowa"
 
-#: plugins/personal/generic/class_user.inc:1327
-#: plugins/personal/generic/generic.tpl:250 html/getxls.php:236
+#: plugins/personal/generic/class_user.inc:1345
+#: plugins/personal/generic/generic.tpl:248 html/getxls.php:236
 msgid "Organization"
 msgstr "Organizacja"
 
-#: plugins/personal/generic/class_user.inc:1328
-#: plugins/personal/generic/generic.tpl:258
+#: plugins/personal/generic/class_user.inc:1346
+#: plugins/personal/generic/generic.tpl:256
 #: plugins/gofax/blocklists/class_divListBlocklists.inc:52
 #: plugins/addons/addressbook/address_edit.tpl:138
 #: plugins/addons/addressbook/address_info.tpl:64
@@ -2361,94 +2365,94 @@ msgstr "Organizacja"
 msgid "Department"
 msgstr "Departament"
 
-#: plugins/personal/generic/class_user.inc:1329
-#: plugins/personal/generic/generic.tpl:91
+#: plugins/personal/generic/class_user.inc:1347
+#: plugins/personal/generic/generic.tpl:93
 msgid "Date of birth"
 msgstr "Data urodzenia"
 
-#: plugins/personal/generic/class_user.inc:1330
+#: plugins/personal/generic/class_user.inc:1348
 #, fuzzy
 msgid "Gender"
 msgstr "Nadawca"
 
-#: plugins/personal/generic/class_user.inc:1331
+#: plugins/personal/generic/class_user.inc:1349
 #, fuzzy
 msgid "Preferred language"
 msgstr "Preferowany język"
 
-#: plugins/personal/generic/class_user.inc:1332
+#: plugins/personal/generic/class_user.inc:1350
 #, fuzzy
 msgid "Department number"
 msgstr "Nazwa departamentu"
 
-#: plugins/personal/generic/class_user.inc:1333
+#: plugins/personal/generic/class_user.inc:1351
 #, fuzzy
 msgid "Employee number"
 msgstr "Typ pracownika"
 
-#: plugins/personal/generic/class_user.inc:1334
-#: plugins/personal/generic/generic.tpl:282
+#: plugins/personal/generic/class_user.inc:1352
+#: plugins/personal/generic/generic.tpl:280
 msgid "Employee type"
 msgstr "Typ pracownika"
 
-#: plugins/personal/generic/class_user.inc:1335
-#: plugins/personal/generic/generic.tpl:352
+#: plugins/personal/generic/class_user.inc:1353
+#: plugins/personal/generic/generic.tpl:350
 #: plugins/addons/godfs/generic.tpl:34
 #: plugins/admin/departments/generic.tpl:47
 #: plugins/admin/departments/generic.tpl:55
 #: plugins/admin/departments/class_departmentGeneric.inc:539
 #: plugins/admin/systems/workstation.tpl:17
-#: plugins/admin/systems/class_printGeneric.inc:783
+#: plugins/admin/systems/class_printGeneric.inc:775
 #: plugins/admin/systems/class_glpiAccount.inc:780
 #: plugins/admin/systems/class_glpiPrinterAccount.inc:778 html/getxls.php:174
 msgid "Location"
 msgstr "Lokalizacja"
 
-#: plugins/personal/generic/class_user.inc:1336
-#: plugins/personal/generic/generic.tpl:360
+#: plugins/personal/generic/class_user.inc:1354
+#: plugins/personal/generic/generic.tpl:358
 #: plugins/admin/departments/generic.tpl:51
 #: plugins/admin/departments/class_departmentGeneric.inc:543
 #: html/getxls.php:174 html/getxls.php:236
 msgid "State"
 msgstr "Stan"
 
-#: plugins/personal/generic/class_user.inc:1337
+#: plugins/personal/generic/class_user.inc:1355
 #: plugins/personal/generic/paste_generic.tpl:22
 msgid "User picture"
 msgstr "Zdjęcie użytkownika"
 
-#: plugins/personal/generic/class_user.inc:1338
+#: plugins/personal/generic/class_user.inc:1356
 #, fuzzy
 msgid "Room number"
 msgstr "Numer telefonu"
 
-#: plugins/personal/generic/class_user.inc:1339
+#: plugins/personal/generic/class_user.inc:1357
 #, fuzzy
 msgid "Telefon number"
 msgstr "Numer telefonu"
 
-#: plugins/personal/generic/class_user.inc:1340
+#: plugins/personal/generic/class_user.inc:1358
 #, fuzzy
 msgid "Mobile number"
 msgstr "Telefon komórkowy"
 
-#: plugins/personal/generic/class_user.inc:1341
+#: plugins/personal/generic/class_user.inc:1359
 #: plugins/personal/nagios/class_nagiosAccount.inc:252
 #, fuzzy
 msgid "Pager number"
 msgstr "Numer telefonu"
 
-#: plugins/personal/generic/class_user.inc:1342
+#: plugins/personal/generic/class_user.inc:1360
 #, fuzzy
 msgid "User certificates"
 msgstr "Standardowy certyfikat"
 
-#: plugins/personal/generic/class_user.inc:1344 html/getxls.php:174
+#: plugins/personal/generic/class_user.inc:1362 html/getxls.php:174
 #: html/getxls.php:236
 msgid "Postal address"
 msgstr "Adres pocztowy"
 
-#: plugins/personal/generic/class_user.inc:1345
+#: plugins/personal/generic/class_user.inc:1363
 #: plugins/gofax/faxaccount/class_gofaxAccount.inc:826
 #, fuzzy
 msgid "Fax number"
@@ -2459,62 +2463,62 @@ msgid "Personal information"
 msgstr "Informacje osobiste"
 
 #: plugins/personal/generic/generic.tpl:20
-#: plugins/personal/generic/generic.tpl:36
+#: plugins/personal/generic/generic.tpl:22
+#: plugins/personal/generic/generic.tpl:38
 #: plugins/personal/generic/generic_picture.tpl:5
 #: plugins/personal/generic/generic_picture.tpl:15
 #: plugins/personal/generic/paste_generic.tpl:50
 msgid "Personal picture"
 msgstr "Osobiste zdjęcie"
 
-#: plugins/personal/generic/generic.tpl:27
-#: plugins/personal/generic/generic.tpl:38
+#: plugins/personal/generic/generic.tpl:29
+#: plugins/personal/generic/generic.tpl:40
 msgid "Change picture"
 msgstr "Zmień zdjęcie"
 
-#: plugins/personal/generic/generic.tpl:47
+#: plugins/personal/generic/generic.tpl:49
 #: plugins/personal/generic/paste_generic.tpl:7
 #: plugins/addons/addressbook/address_edit.tpl:33
 #: plugins/admin/users/template.tpl:23
 msgid "Last name"
 msgstr "Nazwisko"
 
-#: plugins/personal/generic/generic.tpl:52
+#: plugins/personal/generic/generic.tpl:54
 msgid "Template name"
 msgstr "Nazwa Szablonu"
 
-#: plugins/personal/generic/generic.tpl:59
+#: plugins/personal/generic/generic.tpl:61
 #: plugins/personal/generic/paste_generic.tpl:11
 #: plugins/addons/addressbook/address_edit.tpl:30
 #: plugins/admin/users/template.tpl:27
 msgid "First name"
 msgstr "Imię"
 
-#: plugins/personal/generic/generic.tpl:63
+#: plugins/personal/generic/generic.tpl:65
 #: plugins/personal/generic/paste_generic.tpl:15
 #: plugins/admin/users/template.tpl:32
 msgid "Login"
 msgstr "Login"
 
-#: plugins/personal/generic/generic.tpl:109
+#: plugins/personal/generic/generic.tpl:111
 #: ihtml/themes/default/sizelimit.tpl:14
 msgid "Set"
 msgstr "Ustaw"
 
-#: plugins/personal/generic/generic.tpl:116 html/getxls.php:65
+#: plugins/personal/generic/generic.tpl:118 html/getxls.php:65
 #: html/getxls.php:224
 msgid "Sex"
 msgstr "Płeć"
 
-#: plugins/personal/generic/generic.tpl:128
+#: plugins/personal/generic/generic.tpl:130
 msgid "Preferred langage"
 msgstr "Preferowany język"
 
-#: plugins/personal/generic/generic.tpl:146
+#: plugins/personal/generic/generic.tpl:148
 msgid "Choose subtree to place user in"
 msgstr "Wybierz poddrzewo do umieszczenia konta."
 
-#: plugins/personal/generic/generic.tpl:150
-#: plugins/personal/generic/generic.tpl:152
+#: plugins/personal/generic/generic.tpl:151
 #: plugins/gofax/blocklists/generic.tpl:21
 #: plugins/gofax/blocklists/generic.tpl:23 plugins/admin/groups/generic.tpl:27
 #: plugins/admin/groups/generic.tpl:29
@@ -2525,9 +2529,9 @@ msgstr "Wybierz poddrzewo do umieszczenia konta."
 #: plugins/admin/systems/terminal.tpl:23 plugins/admin/systems/terminal.tpl:25
 #: plugins/admin/systems/server.tpl:21 plugins/admin/systems/server.tpl:23
 #: plugins/admin/systems/phone.tpl:19 plugins/admin/systems/phone.tpl:21
+#: plugins/admin/systems/printer.tpl:26 plugins/admin/systems/printer.tpl:28
 #: plugins/admin/systems/workstation.tpl:29
 #: plugins/admin/systems/workstation.tpl:31
-#: plugins/admin/systems/printer.tpl:26 plugins/admin/systems/printer.tpl:28
 #: plugins/admin/systems/wingeneric.tpl:18
 #: plugins/admin/systems/component.tpl:19
 #: plugins/admin/systems/component.tpl:21 plugins/admin/ogroups/generic.tpl:27
@@ -2538,8 +2542,8 @@ msgstr "Wybierz poddrzewo do umieszczenia konta."
 msgid "Select a base"
 msgstr "Wybierz bazę"
 
-#: plugins/personal/generic/generic.tpl:167
-#: plugins/personal/generic/generic.tpl:368
+#: plugins/personal/generic/generic.tpl:165
+#: plugins/personal/generic/generic.tpl:366
 #: plugins/addons/addressbook/address_edit.tpl:72
 #: plugins/addons/addressbook/address_edit.tpl:182
 #: plugins/addons/addressbook/address_info.tpl:33
@@ -2550,57 +2554,57 @@ msgstr "Wybierz bazę"
 msgid "Address"
 msgstr "Adres"
 
-#: plugins/personal/generic/generic.tpl:175
+#: plugins/personal/generic/generic.tpl:173
 msgid "Private phone"
 msgstr "Telefon prywatny"
 
-#: plugins/personal/generic/generic.tpl:196
+#: plugins/personal/generic/generic.tpl:194
 msgid "Password storage"
 msgstr "Przechowywanie hasła"
 
-#: plugins/personal/generic/generic.tpl:208
+#: plugins/personal/generic/generic.tpl:206
 #: plugins/personal/generic/generic_certs.tpl:3
 msgid "Certificates"
 msgstr "Certyfikaty"
 
-#: plugins/personal/generic/generic.tpl:211
+#: plugins/personal/generic/generic.tpl:209
 msgid "Edit certificates"
 msgstr "Edytuj certyfikaty"
 
-#: plugins/personal/generic/generic.tpl:217
+#: plugins/personal/generic/generic.tpl:215
 #: plugins/admin/systems/class_goKrbServer.inc:219
 msgid "Kerberos"
 msgstr "Kerberos"
 
-#: plugins/personal/generic/generic.tpl:220
+#: plugins/personal/generic/generic.tpl:218
 msgid "Edit properties"
 msgstr "Edytuj właściwości"
 
-#: plugins/personal/generic/generic.tpl:238
+#: plugins/personal/generic/generic.tpl:236
 msgid "Organizational information"
 msgstr "Informacje organizacyjne"
 
-#: plugins/personal/generic/generic.tpl:266
+#: plugins/personal/generic/generic.tpl:264
 msgid "Department No."
 msgstr "Numer departamentu"
 
-#: plugins/personal/generic/generic.tpl:274
+#: plugins/personal/generic/generic.tpl:272
 msgid "Employee No."
 msgstr "Numer pracownika"
 
-#: plugins/personal/generic/generic.tpl:300
-#: plugins/personal/generic/generic.tpl:482
+#: plugins/personal/generic/generic.tpl:298
+#: plugins/personal/generic/generic.tpl:480
 msgid "Room No."
 msgstr "Numer pokoju"
 
-#: plugins/personal/generic/generic.tpl:318
+#: plugins/personal/generic/generic.tpl:316
 #: plugins/addons/addressbook/contents.tpl:15
 #: plugins/addons/addressbook/address_edit.tpl:95
 #: plugins/addons/addressbook/address_info.tpl:40 html/getxls.php:236
 msgid "Mobile"
 msgstr "Komórka"
 
-#: plugins/personal/generic/generic.tpl:326
+#: plugins/personal/generic/generic.tpl:324
 #: plugins/personal/nagios/nagios.tpl:48
 #: plugins/addons/addressbook/address_edit.tpl:217
 #: plugins/addons/addressbook/address_info.tpl:91 html/getxls.php:174
@@ -2608,7 +2612,7 @@ msgstr "Komórka"
 msgid "Pager"
 msgstr "Pager"
 
-#: plugins/personal/generic/generic.tpl:496
+#: plugins/personal/generic/generic.tpl:494
 msgid "Please use the phone tab"
 msgstr "Proszę użyć zakładki telefony"
 
@@ -2627,7 +2631,7 @@ msgid "Remove picture"
 msgstr "Usuń obrazek"
 
 #: plugins/personal/generic/generic_picture.tpl:33
-#: plugins/personal/generic/generic_certs.tpl:76
+#: plugins/personal/generic/generic_certs.tpl:91
 #: plugins/personal/environment/hotplugDialogNew.tpl:51
 #: plugins/addons/addressbook/address_edit.tpl:233
 #: plugins/admin/departments/class_departmentManagement.inc:298
@@ -2672,9 +2676,9 @@ msgstr "Ogólne informacje o użytkowniku"
 msgid "Standard certificate"
 msgstr "Standardowy certyfikat"
 
-#: plugins/personal/generic/generic_certs.tpl:17
-#: plugins/personal/generic/generic_certs.tpl:37
-#: plugins/personal/generic/generic_certs.tpl:57
+#: plugins/personal/generic/generic_certs.tpl:21
+#: plugins/personal/generic/generic_certs.tpl:45
+#: plugins/personal/generic/generic_certs.tpl:69
 #: plugins/personal/connectivity/class_kolabAccount.inc:226
 #: plugins/personal/environment/environment.tpl:120
 #: plugins/personal/environment/kioskManagement.tpl:15
@@ -2693,15 +2697,15 @@ msgstr "Standardowy certyfikat"
 msgid "Remove"
 msgstr "Usuń"
 
-#: plugins/personal/generic/generic_certs.tpl:28
+#: plugins/personal/generic/generic_certs.tpl:33
 msgid "S/MIME certificate"
 msgstr "certyfikat S/MIME"
 
-#: plugins/personal/generic/generic_certs.tpl:48
+#: plugins/personal/generic/generic_certs.tpl:57
 msgid "PKCS12 certificate"
 msgstr "certyfikat PKCS12"
 
-#: plugins/personal/generic/generic_certs.tpl:65
+#: plugins/personal/generic/generic_certs.tpl:78
 msgid "Certificate serial number"
 msgstr "Nmer seryjny certyfikatu"
 
@@ -3448,7 +3452,7 @@ msgid "Profil quota"
 msgstr "Quota profili"
 
 #: plugins/personal/environment/environment.tpl:54
-#: plugins/personal/environment/class_environment.inc:1265
+#: plugins/personal/environment/class_environment.inc:1157
 msgid "Cache profile localy"
 msgstr "Buforu profil lokalnie"
 
@@ -3457,7 +3461,7 @@ msgid "Kiosk profile settings"
 msgstr "Ustawienia profilu Kiosk"
 
 #: plugins/personal/environment/environment.tpl:66
-#: plugins/personal/environment/class_environment.inc:1271
+#: plugins/personal/environment/class_environment.inc:1163
 msgid "Kiosk profile"
 msgstr "Profil Kiosk"
 
@@ -3466,19 +3470,19 @@ msgid "Manage"
 msgstr "Zarządzaj"
 
 #: plugins/personal/environment/environment.tpl:82
-#: plugins/personal/environment/class_environment.inc:1264
+#: plugins/personal/environment/class_environment.inc:1156
 msgid "Resolution changeable during session"
 msgstr "Rozdzielczość zmienialna podczas pracy"
 
 #: plugins/personal/environment/environment.tpl:87
-#: plugins/personal/environment/class_environment.inc:1266
+#: plugins/personal/environment/class_environment.inc:1158
 #: plugins/admin/systems/workstationService.tpl:94
 #: plugins/admin/systems/terminalService.tpl:94
 msgid "Resolution"
 msgstr "Rozdzielczość"
 
 #: plugins/personal/environment/environment.tpl:106
-#: plugins/personal/environment/class_environment.inc:1272
+#: plugins/personal/environment/class_environment.inc:1164
 #: plugins/admin/systems/servservice.tpl:11
 #: plugins/admin/systems/class_workstationStartup.inc:1096
 #: plugins/admin/systems/workstationStartup.tpl:129
@@ -3568,7 +3572,7 @@ msgid "Please select an entry or press cancel."
 msgstr "Proszę wybrać wpis lub nacisnąć Anuluj."
 
 #: plugins/personal/environment/class_selectPrinterDialog.inc:69
-#: plugins/admin/systems/class_selectUserToPrinterDialog.inc:101
+#: plugins/admin/systems/class_selectUserToPrinterDialog.inc:102
 msgid "Please select a printer or press cancel."
 msgstr "Proszę wybrać drukarkę lub nacisnąć Anuluj."
 
@@ -3703,53 +3707,44 @@ msgstr ""
 "Nie można zapisać nowych profili kiosk, prawdopodobnie brak uprawnień dla "
 "katalogu"
 
-#: plugins/personal/environment/class_environment.inc:1037
-#, fuzzy, php-format
-msgid "Saving printer membership with dn %s failed "
-msgstr "Zapisywanie drukarki nieudane"
-
-#: plugins/personal/environment/class_environment.inc:1106
-msgid "Error while writing printer settings"
-msgstr "Błąd podczas zapisywania ustawień drukarki"
-
-#: plugins/personal/environment/class_environment.inc:1176
+#: plugins/personal/environment/class_environment.inc:1068
 #, fuzzy, php-format
 msgid "Saving of user/environment account with dn '%s' failed."
 msgstr "Zapisywanie konta oxchange nieudane"
 
-#: plugins/personal/environment/class_environment.inc:1189
+#: plugins/personal/environment/class_environment.inc:1081
 msgid "group share"
 msgstr "grupuj udział"
 
-#: plugins/personal/environment/class_environment.inc:1222
+#: plugins/personal/environment/class_environment.inc:1114
 msgid "Administrator"
 msgstr "Administrator"
 
-#: plugins/personal/environment/class_environment.inc:1227
-#: plugins/personal/environment/class_environment.inc:1270
+#: plugins/personal/environment/class_environment.inc:1119
+#: plugins/personal/environment/class_environment.inc:1162
 msgid "Default printer"
 msgstr "Domyślna drukarka"
 
-#: plugins/personal/environment/class_environment.inc:1253
+#: plugins/personal/environment/class_environment.inc:1145
 #, fuzzy
 msgid "Environment settings"
 msgstr "Ustawienia środowiska użytkownika"
 
-#: plugins/personal/environment/class_environment.inc:1260
+#: plugins/personal/environment/class_environment.inc:1152
 msgid "Command to extend the list of possible screen resolutions"
 msgstr ""
 
-#: plugins/personal/environment/class_environment.inc:1263
+#: plugins/personal/environment/class_environment.inc:1155
 #, fuzzy
 msgid "Profile server"
 msgstr "Serwer plików"
 
-#: plugins/personal/environment/class_environment.inc:1267
+#: plugins/personal/environment/class_environment.inc:1159
 #, fuzzy
 msgid "Profile quota"
 msgstr "Quota profili"
 
-#: plugins/personal/environment/class_environment.inc:1268
+#: plugins/personal/environment/class_environment.inc:1160
 #: plugins/personal/environment/logonManagement.tpl:56
 msgid "Logon script"
 msgstr "Skrypt logowania"
@@ -3808,7 +3803,7 @@ msgstr "Nazwa skryptu"
 #: plugins/admin/systems/class_servGeneric.inc:325
 #: plugins/admin/systems/wingeneric.tpl:25
 #: plugins/admin/systems/component.tpl:30
-#: plugins/admin/systems/class_printGeneric.inc:782
+#: plugins/admin/systems/class_printGeneric.inc:774
 #: plugins/admin/systems/class_componentGeneric.inc:243
 #: plugins/admin/systems/servnfs.tpl:17
 #: plugins/admin/systems/class_phoneGeneric.inc:419
@@ -4358,7 +4353,7 @@ msgstr "Bloklisty FAX"
 #: plugins/admin/applications/class_applicationGeneric.inc:490
 #: plugins/admin/systems/class_terminalGeneric.inc:502
 #: plugins/admin/systems/class_servGeneric.inc:324
-#: plugins/admin/systems/class_printGeneric.inc:781
+#: plugins/admin/systems/class_printGeneric.inc:773
 #: plugins/admin/systems/class_componentGeneric.inc:242
 #: plugins/admin/systems/servnfs.tpl:9
 #: plugins/admin/systems/class_phoneGeneric.inc:418
@@ -4964,7 +4959,7 @@ msgstr "Szukaj"
 
 #: plugins/gofax/faxreports/contents.tpl:30
 #: plugins/gofax/faxreports/detail.tpl:21
-#: plugins/admin/systems/class_printGeneric.inc:760
+#: plugins/admin/systems/class_printGeneric.inc:752
 #: plugins/admin/ogroups/class_ogroupManagement.inc:382
 #: plugins/admin/fai/faiTemplateEntry.tpl:94
 msgid "User"
@@ -6261,7 +6256,7 @@ msgstr "Adres podstawowy"
 
 #: plugins/admin/groups/class_groupMail.inc:993
 #: plugins/admin/systems/printer.tpl:63
-#: plugins/admin/systems/class_printGeneric.inc:786
+#: plugins/admin/systems/class_printGeneric.inc:778
 msgid "Permissions"
 msgstr "Uprawnienia"
 
@@ -7607,7 +7602,7 @@ msgstr "Brak uprawnień do tworzenia komponentów w tym elemencie."
 #: plugins/admin/systems/class_terminalGeneric.inc:391
 #: plugins/admin/systems/class_servGeneric.inc:242
 #: plugins/admin/systems/class_workstationGeneric.inc:361
-#: plugins/admin/systems/class_printGeneric.inc:616
+#: plugins/admin/systems/class_printGeneric.inc:608
 #: plugins/admin/systems/class_componentGeneric.inc:165
 #: plugins/admin/systems/class_phoneGeneric.inc:312
 #, php-format
@@ -7632,8 +7627,8 @@ msgid "Terminal name"
 msgstr "Nazwa terminala"
 
 #: plugins/admin/systems/terminal.tpl:19 plugins/admin/systems/server.tpl:17
-#: plugins/admin/systems/phone.tpl:15 plugins/admin/systems/workstation.tpl:25
-#: plugins/admin/systems/printer.tpl:22
+#: plugins/admin/systems/phone.tpl:15 plugins/admin/systems/printer.tpl:22
+#: plugins/admin/systems/workstation.tpl:25
 #: plugins/admin/systems/wingeneric.tpl:15
 #: plugins/admin/systems/component.tpl:15
 msgid "Choose subtree to place terminal in"
@@ -7981,8 +7976,9 @@ msgid "Boot kernel"
 msgstr "Uruchamiane jądro"
 
 #: plugins/admin/systems/class_terminalStartup.inc:442
+#: plugins/admin/systems/class_workstationStartup.inc:1093
 #, fuzzy
-msgid "Kernel paramenter"
+msgid "Kernel parameter"
 msgstr "Sprawdź parametr"
 
 #: plugins/admin/systems/server.tpl:6 html/getxls.php:146
@@ -7996,15 +7992,6 @@ msgstr "Proszę wybrać akcję do wykonania dla tego serwera"
 #: plugins/admin/systems/phone.tpl:6
 msgid "Phone name"
 msgstr "Nazwa telefonu"
-
-#: plugins/admin/systems/workstation.tpl:8
-msgid "Workstation template"
-msgstr "Szablon stacji roboczej"
-
-#: plugins/admin/systems/workstation.tpl:10
-#: plugins/admin/systems/class_workstationGeneric.inc:474
-msgid "Workstation name"
-msgstr "Nazwa stacji roboczej"
 
 #: plugins/admin/systems/printer.tpl:6
 msgid "General"
@@ -8051,6 +8038,15 @@ msgstr "Użytkownicy, którzy mogą administrować tą drukarką"
 #: plugins/admin/systems/printer.tpl:87
 msgid "Admins"
 msgstr "Administratorzy"
+
+#: plugins/admin/systems/workstation.tpl:8
+msgid "Workstation template"
+msgstr "Szablon stacji roboczej"
+
+#: plugins/admin/systems/workstation.tpl:10
+#: plugins/admin/systems/class_workstationGeneric.inc:474
+msgid "Workstation name"
+msgstr "Nazwa stacji roboczej"
 
 #: plugins/admin/systems/class_terminalGeneric.inc:98
 msgid "text"
@@ -8958,40 +8954,40 @@ msgstr ""
 "Ten terminal ma wyłączone rozszerzenia drukarki. Można je włączyć klikając "
 "poniżej."
 
-#: plugins/admin/systems/class_printGeneric.inc:478
+#: plugins/admin/systems/class_printGeneric.inc:470
 #, php-format
 msgid "Your currently selected PPD file '%s' doesn't exist."
 msgstr "Wybrany plik PPD '%s' nie istnieje."
 
-#: plugins/admin/systems/class_printGeneric.inc:486
+#: plugins/admin/systems/class_printGeneric.inc:478
 msgid "can't get ppd informations."
 msgstr "Nie można pobrać informacji ppd."
 
-#: plugins/admin/systems/class_printGeneric.inc:499
+#: plugins/admin/systems/class_printGeneric.inc:491
 #, php-format
 msgid "This printer belongs to terminal %s. You can't rename this printer."
 msgstr ""
 "Ta drukarka należy do terminala %s. Nie można zmienić nazwy tej drukarki."
 
-#: plugins/admin/systems/class_printGeneric.inc:501
+#: plugins/admin/systems/class_printGeneric.inc:493
 #, php-format
 msgid "This printer belongs to workstation %s. You can't rename this printer."
 msgstr ""
 "Ta drukarka należy do stacji roboczej %s. Nie można zmienić nazwy tej "
 "drulkarki."
 
-#: plugins/admin/systems/class_printGeneric.inc:552
+#: plugins/admin/systems/class_printGeneric.inc:544
 #, fuzzy, php-format
 msgid "Removing of system print/generic with dn '%s' failed."
 msgstr "Usuwanie drukarki nieudane"
 
-#: plugins/admin/systems/class_printGeneric.inc:738
+#: plugins/admin/systems/class_printGeneric.inc:730
 #, php-format
 msgid "Saving of system print/generic with dn '%s' failed."
 msgstr ""
 
-#: plugins/admin/systems/class_printGeneric.inc:755
-#: plugins/admin/systems/class_printGeneric.inc:757
+#: plugins/admin/systems/class_printGeneric.inc:747
+#: plugins/admin/systems/class_printGeneric.inc:749
 #: plugins/admin/ogroups/class_ogroupManagement.inc:383
 #: plugins/admin/fai/faiTemplateEntry.tpl:71
 #: plugins/admin/fai/faiTemplateEntry.tpl:103
@@ -8999,19 +8995,34 @@ msgstr ""
 msgid "Group"
 msgstr "Grupa"
 
-#: plugins/admin/systems/class_printGeneric.inc:773
+#: plugins/admin/systems/class_printGeneric.inc:765
 #, fuzzy
 msgid "Print generic"
 msgstr "Usługa drukowania"
 
-#: plugins/admin/systems/class_printGeneric.inc:784
+#: plugins/admin/systems/class_printGeneric.inc:776
 msgid "LabeledURL"
 msgstr ""
 
-#: plugins/admin/systems/class_printGeneric.inc:785
+#: plugins/admin/systems/class_printGeneric.inc:777
 #, fuzzy
 msgid "Printer PPD"
 msgstr "Drukarka"
+
+#: plugins/admin/systems/class_printGeneric.inc:797
+#, php-format
+msgid "Illegal printer type while adding '%s' to the list of '%s' printers,"
+msgstr ""
+
+#: plugins/admin/systems/class_printGeneric.inc:819
+#, php-format
+msgid "Can't add '%s' to the list of members, it is already used."
+msgstr ""
+
+#: plugins/admin/systems/class_printGeneric.inc:827
+#, php-format
+msgid "Can't add '%s' to list of members, it is not reachable."
+msgstr ""
 
 #: plugins/admin/systems/password.tpl:2
 msgid ""
@@ -9461,11 +9472,6 @@ msgstr ""
 #, fuzzy
 msgid "System startup"
 msgstr "Status systemu"
-
-#: plugins/admin/systems/class_workstationStartup.inc:1093
-#, fuzzy
-msgid "Kernel parameter"
-msgstr "Sprawdź parametr"
 
 #: plugins/admin/systems/class_workstationStartup.inc:1094
 #: plugins/admin/fai/class_faiProfile.inc:442
@@ -12464,106 +12470,6 @@ msgstr "Usuwanie grupy obiektów nieudane"
 msgid "Mail group"
 msgstr "Grupa podstawowa"
 
-#: plugins/admin/ogroups/class_divListOGroup.inc:38
-#: plugins/admin/ogroups/class_divListOGroup.inc:39
-msgid "List of object groups"
-msgstr "Lista grupy obiektów"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:44
-msgid ""
-"This menu allows you to add, edit or remove selected groups. You may want to "
-"use the range selector on top of the group listbox, when working with  a "
-"large number of groups."
-msgstr ""
-"To menu umożliwia tworzenie, edycję oraz usuwanie wybranych grup. Posiadając "
-"dużą liczbę grup wygodniej jest używać selektorów zakresu na górze listy "
-"grup."
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:58
-msgid "Name of object groups"
-msgstr "Nazwa grupy obiektów"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:63
-msgid "Select to see groups containing users"
-msgstr "Zaznacz aby zobaczyć grupy zawierające użytkowników"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:63
-msgid "Show groups containing users"
-msgstr "Pokaż grupy zawierające użytkowników"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:64
-msgid "Select to see groups containing groups"
-msgstr "Zaznacz aby zobaczyć grupy zawierające grupy"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:64
-msgid "Show groups containing groups"
-msgstr "Pokaż grupy zawierające grupy"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:65
-msgid "Select to see groups containing applications"
-msgstr "Zaznacz aby zobaczyć grupy zawierające aplikacje"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:65
-msgid "Show groups containing applications"
-msgstr "Pokaż grupy zawierające aplikacje"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:66
-msgid "Select to see groups containing departments"
-msgstr "Zaznacz aby zobaczyć grupy zawierające departamenty"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:66
-msgid "Show groups containing departments"
-msgstr "Pokaż grupy zawierające departamenty"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:67
-msgid "Select to see groups containing servers"
-msgstr "Zaznacz aby zobaczyć grupy zawierające serwery"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:67
-msgid "Show groups containing servers"
-msgstr "Pokaż grupy zawierające serwery"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:68
-msgid "Select to see groups containing workstations"
-msgstr "Zaznacz aby zobaczyć grupy zawierające stacje robocze"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:68
-msgid "Show groups containing workstations"
-msgstr "Pokaż grupy zawierające stacje robocze"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:69
-msgid "Select to see groups containing terminals"
-msgstr "Zaznacz aby zobaczyć grupy zawierające terminale"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:69
-msgid "Show groups containing terminals"
-msgstr "Pokaż grupy zawierające terminale"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:70
-msgid "Select to see groups containing printer"
-msgstr "Zaznacz aby zobaczyć grupy zawierające drukarki"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:70
-msgid "Show groups containing printer"
-msgstr "Pokaż grupy zawierające drukarki"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:71
-msgid "Select to see groups containing phones"
-msgstr "Zaznacz aby zobaczyć grupy zawierające telefony"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:71
-msgid "Show groups containing phones"
-msgstr "Pokaż grupy zawierające telefony"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:115
-msgid "Create new object group"
-msgstr "Utwórz nową grupę obiektów"
-
-#: plugins/admin/ogroups/class_divListOGroup.inc:178
-#: plugins/generic/references/class_reference.inc:50
-msgid "Object group"
-msgstr "Grupa obiektu"
-
 #: plugins/admin/ogroups/class_phonequeue.inc:79
 msgid "ring all"
 msgstr "dzwoń do wszystkich"
@@ -12758,6 +12664,106 @@ msgstr "Numer telefonu"
 #, fuzzy
 msgid "Announce"
 msgstr "Komunikat zapowiadający"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:38
+#: plugins/admin/ogroups/class_divListOGroup.inc:39
+msgid "List of object groups"
+msgstr "Lista grupy obiektów"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:44
+msgid ""
+"This menu allows you to add, edit or remove selected groups. You may want to "
+"use the range selector on top of the group listbox, when working with  a "
+"large number of groups."
+msgstr ""
+"To menu umożliwia tworzenie, edycję oraz usuwanie wybranych grup. Posiadając "
+"dużą liczbę grup wygodniej jest używać selektorów zakresu na górze listy "
+"grup."
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:58
+msgid "Name of object groups"
+msgstr "Nazwa grupy obiektów"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:63
+msgid "Select to see groups containing users"
+msgstr "Zaznacz aby zobaczyć grupy zawierające użytkowników"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:63
+msgid "Show groups containing users"
+msgstr "Pokaż grupy zawierające użytkowników"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:64
+msgid "Select to see groups containing groups"
+msgstr "Zaznacz aby zobaczyć grupy zawierające grupy"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:64
+msgid "Show groups containing groups"
+msgstr "Pokaż grupy zawierające grupy"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:65
+msgid "Select to see groups containing applications"
+msgstr "Zaznacz aby zobaczyć grupy zawierające aplikacje"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:65
+msgid "Show groups containing applications"
+msgstr "Pokaż grupy zawierające aplikacje"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:66
+msgid "Select to see groups containing departments"
+msgstr "Zaznacz aby zobaczyć grupy zawierające departamenty"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:66
+msgid "Show groups containing departments"
+msgstr "Pokaż grupy zawierające departamenty"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:67
+msgid "Select to see groups containing servers"
+msgstr "Zaznacz aby zobaczyć grupy zawierające serwery"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:67
+msgid "Show groups containing servers"
+msgstr "Pokaż grupy zawierające serwery"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:68
+msgid "Select to see groups containing workstations"
+msgstr "Zaznacz aby zobaczyć grupy zawierające stacje robocze"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:68
+msgid "Show groups containing workstations"
+msgstr "Pokaż grupy zawierające stacje robocze"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:69
+msgid "Select to see groups containing terminals"
+msgstr "Zaznacz aby zobaczyć grupy zawierające terminale"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:69
+msgid "Show groups containing terminals"
+msgstr "Pokaż grupy zawierające terminale"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:70
+msgid "Select to see groups containing printer"
+msgstr "Zaznacz aby zobaczyć grupy zawierające drukarki"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:70
+msgid "Show groups containing printer"
+msgstr "Pokaż grupy zawierające drukarki"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:71
+msgid "Select to see groups containing phones"
+msgstr "Zaznacz aby zobaczyć grupy zawierające telefony"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:71
+msgid "Show groups containing phones"
+msgstr "Pokaż grupy zawierające telefony"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:115
+msgid "Create new object group"
+msgstr "Utwórz nową grupę obiektów"
+
+#: plugins/admin/ogroups/class_divListOGroup.inc:178
+#: plugins/generic/references/class_reference.inc:50
+msgid "Object group"
+msgstr "Grupa obiektu"
 
 #: plugins/admin/acl/class_aclManagement.inc:25
 #, fuzzy
@@ -16802,6 +16808,17 @@ msgid "Reason for generating this snapshot"
 msgstr "Odtwarzanie snapshot'y obiektu"
 
 #, fuzzy
+#~ msgid "Saving printer membership with dn %s failed "
+#~ msgstr "Zapisywanie drukarki nieudane"
+
+#~ msgid "Error while writing printer settings"
+#~ msgstr "Błąd podczas zapisywania ustawień drukarki"
+
+#, fuzzy
+#~ msgid "Kernel paramenter"
+#~ msgstr "Sprawdź parametr"
+
+#, fuzzy
 #~ msgid "Max queue lenght"
 #~ msgstr "Maksymalna długość kolejki"
 
@@ -16832,9 +16849,6 @@ msgstr "Odtwarzanie snapshot'y obiektu"
 #, fuzzy
 #~ msgid "Server indentifier"
 #~ msgstr "Identyfikator serwera"
-
-#~ msgid "You have no permissions to create a user on this 'Base'."
-#~ msgstr "Brak uprawnień do tworzenia konta w tym 'Kontenerze'."
 
 #, fuzzy
 #~ msgid "User certificate PKCS12"
