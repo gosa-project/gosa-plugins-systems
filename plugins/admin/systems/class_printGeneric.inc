@@ -811,13 +811,12 @@ class printgeneric extends plugin
     if($ldap->count()){
 
       $attrs = $ldap->fetch();
-
+      $name = $attrs[$var][0];
+  
       /* Check if this uid/cn is already assigned to any permission */
       foreach($types as $ctype){
-        if($type == $ctype) continue;
-
-        if(in_array($attrs[$var][0],$this->member[$ctype])){
-          print_red(sprintf(_("Can't add '%s' to members it is already used in another category."),$attrs[$var][0]));
+        if(isset(  $this->member[$ctype][$name])){
+          print_red(sprintf(_("Can't add '%s' to the list of members, it is already used."),$attrs[$var][0]));
           return;
         }
       }
