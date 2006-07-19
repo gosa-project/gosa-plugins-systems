@@ -46,7 +46,7 @@ class divListUsers extends MultiSelectWindow
     $this->EnableSaveButton (false);
 
     /* Dynamic action col, depending on snapshot icons */
-    $action_col_size = 88;
+    $action_col_size = 104;
     if($this->parent->snapshotEnabled()){
       $action_col_size += 38;
     }
