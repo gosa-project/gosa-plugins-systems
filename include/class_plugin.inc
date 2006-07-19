@@ -1426,6 +1426,12 @@ echo "FIXME: remove_snapshot uses old acl's<br>";
     return preg_match('/d/', $ui->get_permissions($this->dn, get_class($this), '0'));
   }
 
+
+  function acl_is_moveable()
+  {
+    $ui= get_userinfo();
+    return preg_match('/m/', $ui->get_permissions($this->dn, get_class($this), '0'));
+  }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
