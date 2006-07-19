@@ -1399,7 +1399,7 @@ echo "FIXME: remove_snapshot uses old acl's<br>";
   }
 
 
-  function acl_is_writable($attribute)
+  function acl_is_writeable($attribute)
   {
     $ui= get_userinfo();
     return preg_match('/w/', $ui->get_permissions($this->dn, get_class($this), $attribute));
