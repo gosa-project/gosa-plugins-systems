@@ -158,7 +158,7 @@ class userinfo
   }
 
 
-  function get_permissions($dn, $object, $attribute)
+  function get_permissions($dn, $object, $attribute, $skip_write= FALSE)
   {
     $acl= array("r" => "", "w" => "", "c" => "", "d" => "", "m" => "");
 
@@ -218,6 +218,11 @@ class userinfo
       if ($value != ""){
         $ret.= $key;
       }
+    }
+
+    /* Remove write if needed */
+    if ($skip_write){
+      $ret= preg_replace('/w/', '', $ret);
     }
 
     return ($ret);
