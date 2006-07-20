@@ -50,7 +50,7 @@ class posixAccount extends plugin
   var $use_shadowWarning= "0";
   var $use_shadowInactive= "0";
   var $use_shadowExpire= "0";
-  var $must_change_password= "0";
+  var $mustchangepassword= "0";
   var $force_ids= 0;
   var $printerList= array();
   var $group_dialog= FALSE;
@@ -68,7 +68,7 @@ class posixAccount extends plugin
 
   /* attribute list for save action */
   var $CopyPasteVars  = array("grouplist","groupMembership","use_shadowMin","use_shadowMax",
-      "use_shadowWarning","use_shadowInactive","use_shadowExpire","must_change_password",
+      "use_shadowWarning","use_shadowInactive","use_shadowExpire","mustchangepassword",
       "force_ids","printerList","grouplist","savedGidNumber","savedUidNumber","savedGroupMembership");
 
   var $attributes     = array("homeDirectory", "loginShell", "uidNumber", "gidNumber", "gecos",
@@ -294,20 +294,22 @@ class posixAccount extends plugin
     if (isset($_POST['add_groups_finish']) && isset($_POST['groups']) &&
         count($_POST['groups'])){
 
-      if (chkacl ($this->acl, "memberUid") == ""){
-        $this->addGroup ($_POST['groups']);
-        $this->is_modified= TRUE;
-      }
+      /* FIX ME  put the acl check into addGroup function*/
+      #if (chk acl ($this->acl, "memberUid") == ""){
+      #  $this->addGroup ($_POST['groups']);
+      #  $this->is_modified= TRUE;
+      #}
     }
 
     /* Delete selected groups */
     if (isset($_POST['delete_groupmembership']) && 
         isset($_POST['group_list']) && count($_POST['group_list'])){
 
-      if (chkacl ($this->acl, "memberUid") == ""){
-        $this->delGroup ($_POST['group_list']);
-        $this->is_modified= TRUE;
-      }
+      /* FIX ME  put the acl check into addGroup function*/
+      #if (chk acl ($this->acl, "memberUid") == ""){
+      #  $this->delGroup ($_POST['group_list']);
+      #  $this->is_modified= TRUE;
+      #}
     }
 
     /* Add user workstation? */
@@ -434,24 +436,39 @@ class posixAccount extends plugin
     /* Depending on pwmode, currently hardcoded because there are no other methods */
     if ( 1 == 1 ){
       $smarty->assign("pwmode", dirname(__FILE__)."/posix_shadow");
-      $shadowMinACL= chkacl($this->acl, "shadowMin");
-      $smarty->assign("shadowmins", sprintf(_("Password can't be changed up to %s days after last change"), "<input name=\"shadowMin\" size=3 maxlength=4 $shadowMinACL value=\"".$this->shadowMin."\">"));
-      $shadowMaxACL= chkacl($this->acl, "shadowMax");
-      $smarty->assign("shadowmaxs", sprintf(_("Password must be changed after %s days"), "<input name=\"shadowMax\" size=3 maxlength=4 $shadowMaxACL value=\"".$this->shadowMax."\">"));
-      $shadowInactiveACL= chkacl($this->acl, "shadowInactive");
-      $smarty->assign("shadowinactives", sprintf(_("Disable account after %s days of inactivity after password expiery"), "<input name=\"shadowInactive\" size=3 maxlength=4 $shadowInactiveACL value=\"".$this->shadowInactive."\">"));
-      $shadowWarningACL= chkacl($this->acl, "shadowWarning");
-      $smarty->assign("shadowwarnings", sprintf(_("Warn user %s days before password expiery"), "<input name=\"shadowWarning\" size=3 maxlength=4 $shadowWarningACL value=\"".$this->shadowWarning."\">"));
-      foreach( array("must_change_password", "use_shadowMin", "use_shadowMax",
-            "use_shadowExpire", "use_shadowInactive",
-            "use_shadowWarning") as $val){
+
+      $shadowMinACL     =  $this->getacl("shadowMin");
+      $smarty->assign("shadowmins", sprintf(_("Password can't be changed up to %s days after last change"), 
+                                              "<input name=\"shadowMin\" size=3 maxlength=4 $shadowMinACL value=\"".$this->shadowMin."\">"));
+
+      $shadowMaxACL     =  $this->getacl("shadowMax");
+      $smarty->assign("shadowmaxs", sprintf(_("Password must be changed after %s days"), 
+                                              "<input name=\"shadowMax\" size=3 maxlength=4 $shadowMaxACL value=\"".$this->shadowMax."\">"));
+
+      $shadowInactiveACL=  $this->getacl("shadowInactive");
+      $smarty->assign("shadowinactives", sprintf(_("Disable account after %s days of inactivity after password expiery"), 
+                                              "<input name=\"shadowInactive\" size=3 maxlength=4 $shadowInactiveACL value=\"".$this->shadowInactive."\">"));
+
+      $shadowWarningACL =  $this->getacl("shadowWarning");
+      $smarty->assign("shadowwarnings", sprintf(_("Warn user %s days before password expiery"), 
+                                              "<input name=\"shadowWarning\" size=3 maxlength=4 $shadowWarningACL value=\"".$this->shadowWarning."\">"));
+
+      foreach( array("use_shadowMin", "use_shadowMax",
+                     "use_shadowExpire", "use_shadowInactive","use_shadowWarning") as $val){
         if ($this->$val == 1){
           $smarty->assign("$val", "checked");
         } else {
           $smarty->assign("$val", "");
         }
-        $smarty->assign("$val"."ACL", chkacl($this->acl, $val));
+        $smarty->assign("$val"."ACL", $this->getacl($val));
       }
+
+      if($this->mustchangepassword){
+        $smarty->assign("mustchangepassword", "checked");
+      } else {
+        $smarty->assign("mustchangepassword", "");
+      }
+      $smarty->assign("mustchangepasswordACL", $this->getacl("mustchangepassword"));
     }
 
     /* Fill calendar */
@@ -508,44 +525,38 @@ class posixAccount extends plugin
       }
       $smarty->assign("force_ids", "");
     }
-    $smarty->assign("force_idsACL", chkacl($this->acl, "force_ids"));
+
+    
+
+    $smarty->assign("force_idsACL", $this->getacl("uidNumber").$this->getacl("gidNumber"));
 
     /* Load attributes and acl's */
     foreach($this->attributes as $val){
-      if((chkacl($this->acl,$val)=="")&&(($_SESSION["js"])&&(($val=="uidNumber")||($val=="gidNumber"))))
+      if(($_SESSION["js"])&&(($val=="uidNumber")||($val=="gidNumber")))
       {
-        $smarty->assign("$val"."ACL","");
+        $smarty->assign("$val"."ACL",$this->getacl($val));
         $smarty->assign("$val", $this->$val);
         continue;
       }
       $smarty->assign("$val", $this->$val);
-      $smarty->assign("$val"."ACL", chkacl($this->acl,$val));
+      $smarty->assign("$val"."ACL", $this->getacl($val));
     }
-    $smarty->assign("groupMembershipACL", chkacl($this->acl, "groupMembership"));
+    $smarty->assign("groupMembershipACL","rw");//  $this->getacl("groupMembership"));
     $smarty->assign("status", $this->status);
 
     /* Work on trust modes */
-    $smarty->assign("trustmodeACL", chkacl($this->acl, "trustmode"));
+    $smarty->assign("trustmodeACL",  $this->getacl("trustModel"));
     if ($this->trustModel == "fullaccess"){
       $trustmode= 1;
       // pervent double disable tag in html code, this will disturb our clean w3c html
-
-      if(chkacl($this->acl, "trustmode")==""){
-        $smarty->assign("trusthide", "disabled");
-      }else{
-        $smarty->assign("trusthide", "");
-      }
+      $smarty->assign("trustmode",  $this->getacl("trustModel"));
 
     } elseif ($this->trustModel == "byhost"){
       $trustmode= 2;
       $smarty->assign("trusthide", "");
     } else {
       // pervent double disable tag in html code, this will disturb our clean w3c html
-      if(chkacl($this->acl, "trustmode")==""){
-        $smarty->assign("trusthide", "disabled");
-      }else{
-        $smarty->assign("trusthide", "");
-      }
+      $smarty->assign("trustmode",  $this->getacl("trustModel"));
       $trustmode= 0;
     }
     $smarty->assign("trustmode", $trustmode);
@@ -622,41 +633,34 @@ class posixAccount extends plugin
       /* Save values to object */
       plugin::save_object();
 
-      /* Save force GID attribute */
-      if (chkacl ($this->acl, "force_ids") == ""){
-        if (isset ($_POST['force_ids'])){
-          $data= 1;
-        } else {
-          $data= 0;
-        }
-        if ($this->force_ids != $data){
-          $this->is_modified= TRUE;
-        }
-        $this->force_ids= $data;
-
-        $data= $_POST['primaryGroup'];
-        if ($this->primaryGroup != $data){
-          $this->is_modified= TRUE;
-        }
-        $this->primaryGroup= $_POST['primaryGroup'];
+      /* Save force GID checkbox */
+      if (isset ($_POST['force_ids'])){
+        $data= 1;
+      } else {
+        $data= 0;
       }
+      if ($this->force_ids != $data){
+        $this->is_modified= TRUE;
+      }
+      $this->force_ids= $data;
 
-      /* Save pwmode dependent attributes, curently hardcoded because there're
-         no alternatives */
-      if (1 == 1){
-        foreach( array("must_change_password", "use_shadowMin", "use_shadowMax",
-              "use_shadowExpire", "use_shadowInactive",
-              "use_shadowWarning") as $val){
-          if (chkacl($this->acl, "$val") == ""){
-            if (isset ($_POST[$val])){
-              $data= 1;
-            } else {
-              $data= 0;
-            }
-            if ($data != $this->$val){
-              $this->is_modified= TRUE;
-            }
-            $this->$val= $data;
+
+      /*Save primary group settings */
+      $data= $_POST['primaryGroup'];
+      if ($this->primaryGroup != $data){
+        $this->is_modified= TRUE;
+      }
+      $this->primaryGroup= $_POST['primaryGroup'];
+
+      foreach(array("shadowMin","shadowMax","shadowExpire","shadowInactive","shadowWarning","mustchangepassword") as $var) {
+        if($this->acl_is_writeable($var)){
+          $use_var = "use_".$var;
+          if(isset($_POST['use_'.$var])){
+            $this->$use_var  = true;
+            $this->$var      = $_POST['shadowMin'];
+          }else{
+            $this->$use_var  = false;
+            $this->$var      = 0;
           }
         }
       }
@@ -719,7 +723,7 @@ class posixAccount extends plugin
     if (!$this->use_shadowMax){
       $this->shadowMax= "0";
     }
-    if ($this->must_change_password){
+    if ($this->mustchangepassword){
       $this->shadowLastChange= (int)(date("U") / 86400) - $this->shadowMax - 1;
     } else {
       $this->shadowLastChange= (int)(date("U") / 86400);
@@ -768,7 +772,7 @@ class posixAccount extends plugin
       $this->shadowMin = "";
     }
 
-    if (($this->use_shadowMax != "1") && ($this->must_change_password != "1")) {
+    if (($this->use_shadowMax != "1") && ($this->mustchangepassword != "1")) {
       $this->shadowMax = "";
     }
 
@@ -1231,23 +1235,20 @@ class posixAccount extends plugin
           "plOptions"         => array(),
 
           "plProvidedAcls"  => array(
+
             "homeDirectory"       =>  _("Home directory"), 
+            "loginShell"          =>  _("Shell"),
             "uidNumber"           =>  _("User ID"),
             "gidNumber"           =>  _("Group ID"),
-            "homeDirectory"       =>  _("Home directory"),
-            "primaryGroup"        =>  _("Primary group"),
 
-            "loginShell"          =>  _("Shell"),
+            "mustchangepassword"=>  _("Force password change on login"),
             "shadowMin"           =>  _("Shadow min"),
             "shadowMax"           =>  _("Shadow max"),
             "shadowWarning"       =>  _("Shadow warning"),
             "shadowInactive"      =>  _("Shadow inactive"),
-            "shadowLastChange"    =>  _("Shadow last change"),
-
             "shadowExpire"        =>  _("Shadow expire"),
-            "accessTo"            =>  _("System trust"),
             "trustModel"          =>  _("System trust model")))
-              ) ;
+            );
   }
 }
 

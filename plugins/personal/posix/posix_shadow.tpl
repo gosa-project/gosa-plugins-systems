@@ -3,8 +3,8 @@
   <td style="width:50%; vertical-align:top;">
 
 <!-- must_change_password  -->
-{render acl=$must_change_passwordACL}
-   <input type=checkbox name="must_change_password" value="1" {$must_change_password}>
+{render acl=$mustchangepasswordACL}
+   <input type=checkbox name="mustchangepassword" value="1" {$mustchangepassword}>
 {/render}
    {t}User must change password on first login{/t}
    <br>
@@ -46,8 +46,6 @@
    <select name=year onChange="populate(this.form,this.form.shadowExpire);">
     {html_options values=$years output=$years selected=$year}
    </select>
-{/render}
-{render acl=$must_change_passwordACL}
    <input type="hidden" name="shadowExpire" value="{$shadowExpire}">
 {/render}
    <br>

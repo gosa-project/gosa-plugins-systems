@@ -39,7 +39,7 @@
    <table summary="">
     <tr>
      <td>
-	{render acl=$gidNumberACL}
+	{render acl=$force_idsACL}
       <input id="force_ids" type=checkbox name="force_ids" value="1" {$force_ids} onclick="changeState('uidNumber'); changeState('gidNumber');">
 	{/render}
 					</td>
@@ -51,7 +51,7 @@
 						<label for="uidNumber">{t}UID{/t}</label>
 					</td>
 					<td>
-	{render acl=$gidNumberACL}
+	{render acl=$uidNumberACL}
 						<input id="uidNumber" name="uidNumber" size=5 maxlength=5 {$forceMode} value="{$uidNumber}">
 	{/render}
 					</td>
@@ -78,16 +78,16 @@
     <b style="color:red">{t}(Warning: more than 16 groups are not supported by NFS!){/t}</b>
     <br>
    {/if}
-	{render acl=$gidNumberACL}
+	{render acl=$groupMembershipACL}
    <select style="width:100%; height:130px;" name="group_list[]" size=16 multiple >
     {html_options options=$groupMembership}
    </select>
 	{/render}
    <br>
-	{render acl=$gidNumberACL}
+	{render acl=$groupMembershipACL}
    <input type=submit value="{t}Add{/t}" name="edit_groupmembership" >&nbsp;
 	{/render}
-	{render acl=$gidNumberACL}
+	{render acl=$groupMembershipACL}
    <input type=submit value="{t}Delete{/t}" name="delete_groupmembership" >
 	{/render}
   </td>
@@ -108,13 +108,13 @@
   <td style="vertical-align:top;">
    <h2><img alt="" class="center" align="middle" src="images/closedlock.png" /> {t}System trust{/t}</h2>
     {t}Trust mode{/t}&nbsp;
-	{render acl=$gidNumberACL}
+	{render acl=$trustmodeACL}
 	<select name="trustmode" id="trustmode" size=1 onchange="changeSelectState('trustmode', 'wslist'); changeSelectState('trustmode', 'add_ws'); changeSelectState('trustmode', 'del_ws');">
       {html_options options=$trustmodes selected=$trustmode}
     </select>
 	{/render}
-	{render acl=$gidNumberACL}
-   <select style="width:100%" id="wslist" name="workstation_list[]" size=8 multiple {$trusthide}>
+	{render acl=$trustmodeACL}
+   <select style="width:100%" id="wslist" name="workstation_list[]" size=8 multiple>
     {html_options values=$workstations output=$workstations}
 	{if $emptyArrAccess}
 		<option disabled>&nbsp;</option>
@@ -122,13 +122,11 @@
    </select>
 	{/render}
    <br>
-	{render acl=$gidNumberACL}
-   <input type="submit" id="add_ws" value="{t}Add{/t}" name="add_ws"
-        {$trusthide}>&nbsp;
+	{render acl=$trustmodeACL}
+   <input type="submit" id="add_ws" value="{t}Add{/t}" name="add_ws">&nbsp;
 	{/render}
-	{render acl=$gidNumberACL}
-   <input type="submit" id="del_ws" value="{t}Delete{/t}" name="delete_ws"
-       {$trusthide}>
+	{render acl=$trustmodeACL}
+   <input type="submit" id="del_ws" value="{t}Delete{/t}" name="delete_ws">
 	{/render}
   </td>
  </tr>
