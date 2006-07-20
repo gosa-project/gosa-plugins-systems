@@ -1,33 +1,73 @@
 <table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding=0 border=0>
  <tr>
   <td style="width:50%; vertical-align:top;">
-   <input type=checkbox name="must_change_password" value="1" {$must_change_password} {$must_change_passwordACL}>
+
+<!-- must_change_password  -->
+{render acl=$must_change_passwordACL}
+   <input type=checkbox name="must_change_password" value="1" {$must_change_password}>
+{/render}
    {t}User must change password on first login{/t}
    <br>
-   <input type=checkbox name="use_shadowMin" value="1" {$use_shadowMin} {$shadowMinACL}>
+
+<!-- shadowMin -->
+{render acl=$shadowMinACL}
+   <input type=checkbox name="use_shadowMin" value="1" {$use_shadowMin}>
+{/render}
+{render acl=$shadowMinACL}
    {$shadowmins}
+{/render}
    <br>
-   <input type=checkbox name="use_shadowMax" value="1" {$use_shadowMax} {$shadowMaxACL}>
+
+<!-- use_shadowMax -->
+{render acl=$shadowMaxACL}
+   <input type=checkbox name="use_shadowMax" value="1" {$use_shadowMax}>
+{/render}
+{render acl=$shadowMaxACL}
    {$shadowmaxs}
+{/render}
    <br>
-   <input type=checkbox name="use_shadowExpire" value="1" {$use_shadowExpire} {$shadowExpireACL}>
+
+<!-- use_shadowExpire -->
+{render acl=$shadowExpireACL}
+   <input type=checkbox name="use_shadowExpire" value="1" {$use_shadowExpire}>
+{/render}
    {t}Password expires on{/t}
-   <select name=day onChange="createResult(this.form,this.form.shadowExpire);" {$shadowExpireACL}>
+{render acl=$shadowExpireACL}
+   <select name=day onChange="createResult(this.form,this.form.shadowExpire);">
     {html_options values=$days output=$days selected=$day}
    </select>
-   <select name=month onChange="populate(this.form,this.form.shadowExpire);" {$shadowExpireACL}>
+{/render}
+{render acl=$shadowExpireACL}
+   <select name=month onChange="populate(this.form,this.form.shadowExpire);">
     {html_options options=$months selected=$month}
    </select>
-   <select name=year onChange="populate(this.form,this.form.shadowExpire);" {$shadowExpireACL}>
+{/render}
+{render acl=$shadowExpireACL}
+   <select name=year onChange="populate(this.form,this.form.shadowExpire);">
     {html_options values=$years output=$years selected=$year}
    </select>
+{/render}
+{render acl=$must_change_passwordACL}
    <input type="hidden" name="shadowExpire" value="{$shadowExpire}">
+{/render}
    <br>
-   <input type=checkbox name="use_shadowInactive" value="1" {$use_shadowInactive} {$shadowInactiveACL}>
+
+<!-- shadowInactive -->
+{render acl=$shadowInactiveACL}
+   <input type=checkbox name="use_shadowInactive" value="1" {$use_shadowInactive}>
+{/render}
+{render acl=$shadowInactiveACL}
    {$shadowinactives}
+{/render}
    <br>
-   <input type=checkbox name="use_shadowWarning" value="1" {$use_shadowWarning} {$shadowWarningACL}>
+
+<!-- use_shadowWarning -->
+{render acl=$shadowWarningACL}
+   <input type=checkbox name="use_shadowWarning" value="1" {$use_shadowWarning}>
+{/render}
+{render acl=$shadowWarningACL}
    {$shadowwarnings}
+{/render}
   </td>
  </tr>
 </table>

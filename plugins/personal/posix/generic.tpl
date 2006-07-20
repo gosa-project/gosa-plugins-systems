@@ -6,23 +6,29 @@
     <tr>
      <td><label for="homeDirectory">{t}Home directory{/t}</label>{$must}</td>
      <td>
+	{render acl=$homeDirectoryACL}
       <input id="homeDirectory" name="homeDirectory" size=40 maxlength=120 {$homeDirectoryACL} value="{$homeDirectory}">
+	{/render}
      </td>
     </tr>
     <tr>
      <td><label for="loginShell">{t}Shell{/t}</label></td>
      <td>
+	{render acl=$loginShellACL}
       <select id="loginShell" size="1" name="loginShell" {$loginShellACL}>
        {html_options values=$shells output=$shells selected=$loginShell}
       </select> 
+	{/render}
      </td>
     </tr>
     <tr>
      <td><label for="">{t}Primary group{/t}</label></td>
      <td>
+	{render acl=$gidNumberACL}
       <select id="primaryGroup" size="1" name="primaryGroup" {$gidNumberACL}>
        {html_options options=$secondaryGroups selected=$primaryGroup}
       </select> 
+	{/render}
      </td>
     </tr>
     <tr>
@@ -33,7 +39,9 @@
    <table summary="">
     <tr>
      <td>
+	{render acl=$gidNumberACL}
       <input id="force_ids" type=checkbox name="force_ids" value="1" {$force_ids} {$force_idsACL} onclick="changeState('uidNumber'); changeState('gidNumber');">
+	{/render}
 					</td>
 					<td>
       <label for="force_ids">{t}Force UID/GID{/t}</label>
@@ -43,7 +51,9 @@
 						<label for="uidNumber">{t}UID{/t}</label>
 					</td>
 					<td>
+	{render acl=$gidNumberACL}
 						<input id="uidNumber" name="uidNumber" size=5 maxlength=5 {$forceMode} {$uidNumberACL} value="{$uidNumber}">
+	{/render}
 					</td>
 				</tr>
 				<tr>
@@ -52,7 +62,9 @@
 						<label for="gidNumber">{t}GID{/t}</label>
 					</td>
      <td>
+	{render acl=$gidNumberACL}
 						<input id="gidNumber" name="gidNumber" size=5 maxlength=5 {$forceMode} {$gidNumberACL} value="{$gidNumber}">
+	{/render}
 					</td>
 				</tr>
    </table>
@@ -66,12 +78,18 @@
     <b style="color:red">{t}(Warning: more than 16 groups are not supported by NFS!){/t}</b>
     <br>
    {/if}
+	{render acl=$gidNumberACL}
    <select style="width:100%; height:130px;" name="group_list[]" size=16 multiple {$groupMembershipACL}>
     {html_options options=$groupMembership}
    </select>
+	{/render}
    <br>
+	{render acl=$gidNumberACL}
    <input type=submit value="{t}Add{/t}" name="edit_groupmembership" {$groupMembershipACL}>&nbsp;
+	{/render}
+	{render acl=$gidNumberACL}
    <input type=submit value="{t}Delete{/t}" name="delete_groupmembership" {$groupMembershipACL}>
+	{/render}
   </td>
  </tr>
 </table>
@@ -89,20 +107,29 @@
   </td>
   <td style="vertical-align:top;">
    <h2><img alt="" class="center" align="middle" src="images/closedlock.png" /> {t}System trust{/t}</h2>
-    {t}Trust mode{/t}&nbsp;<select name="trustmode" id="trustmode" size=1 onchange="changeSelectState('trustmode', 'wslist'); changeSelectState('trustmode', 'add_ws'); changeSelectState('trustmode', 'del_ws');" {$trustmodeACL}>
+    {t}Trust mode{/t}&nbsp;
+	{render acl=$gidNumberACL}
+	<select name="trustmode" id="trustmode" size=1 onchange="changeSelectState('trustmode', 'wslist'); changeSelectState('trustmode', 'add_ws'); changeSelectState('trustmode', 'del_ws');" {$trustmodeACL}>
       {html_options options=$trustmodes selected=$trustmode}
     </select>
+	{/render}
+	{render acl=$gidNumberACL}
    <select style="width:100%" id="wslist" name="workstation_list[]" size=8 multiple {$trustmodeACL} {$trusthide}>
     {html_options values=$workstations output=$workstations}
 	{if $emptyArrAccess}
 		<option disabled>&nbsp;</option>
 	{/if}
    </select>
+	{/render}
    <br>
+	{render acl=$gidNumberACL}
    <input type="submit" id="add_ws" value="{t}Add{/t}" name="add_ws"
         {$trustmodeACL} {$trusthide}>&nbsp;
+	{/render}
+	{render acl=$gidNumberACL}
    <input type="submit" id="del_ws" value="{t}Delete{/t}" name="delete_ws"
         {$trustmodeACL} {$trusthide}>
+	{/render}
   </td>
  </tr>
 </table>

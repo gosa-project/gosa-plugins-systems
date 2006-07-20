@@ -401,7 +401,7 @@ class posixAccount extends plugin
       /* remove already assigned groups */
       $glist= array();
       foreach ($this->grouplist as $key => $value){
-        if (!isset($this->groupMembership[$key])){
+        if (!isset($this->groupMembership[$key]) && obj_is_writable($key,"group","memberUid")){
           $glist[$key]= $value;
         }
       }
