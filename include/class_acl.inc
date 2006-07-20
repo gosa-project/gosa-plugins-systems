@@ -87,7 +87,7 @@ class acl extends plugin
     /* Objects */
     $tmp= get_global('plist');
     $plist= $tmp->info;
-    if (isset($this->parent)){
+    if (isset($this->parent) && $this->parent != NULL){
       $oc= array();
       foreach ($this->parent->by_object as $key => $obj){
         $oc= array_merge($oc, $obj->objectclasses);
