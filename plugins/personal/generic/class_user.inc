@@ -154,8 +154,6 @@ class user extends plugin
         $this->base= dn2base($dn);
       }
 
-      echo $this->base;
-
       /* get password storage type */
       if (isset ($this->attrs['userPassword'][0])){
       	/* Initialize local array */
@@ -175,8 +173,8 @@ class user extends plugin
       }
 
       /* Load extra attributes: certificate and picture */
-      $this->load_picture();
       $this->load_cert();
+      $this->load_picture();
       if ($this->userCertificate != ""){
         $this->had_userCertificate= TRUE;
       }
