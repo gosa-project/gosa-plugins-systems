@@ -58,16 +58,6 @@ if (!$remove_lock){
     $_SESSION['edit']= TRUE;
   }
 
-  /* MyAccount_mode tell class user that we are editing for my account section
-     edit_mode allows us to force the acls to be not writeable, when not in editing mode */
-  $user->MyAccount_mode = true;
-  if (isset($_SESSION['edit'])){
-    $user->edit_mode = true;
-  } else {
-    $user->edit_mode = false;
-  }
-
-
   /* Perform password change */
   if (isset($_POST['password_finish'])){
 
