@@ -67,10 +67,14 @@ class posixAccount extends plugin
   var $SubSearch        = false;
 
   /* attribute list for save action */
-  var $CopyPasteVars  = array("grouplist","groupMembership","use_shadowMin","use_shadowMax","use_shadowWarning","use_shadowInactive","use_shadowExpire","must_change_password","force_ids","printerList","grouplist","savedGidNumber","savedUidNumber","savedGroupMembership");
+  var $CopyPasteVars  = array("grouplist","groupMembership","use_shadowMin","use_shadowMax",
+      "use_shadowWarning","use_shadowInactive","use_shadowExpire","must_change_password",
+      "force_ids","printerList","grouplist","savedGidNumber","savedUidNumber","savedGroupMembership");
+
   var $attributes     = array("homeDirectory", "loginShell", "uidNumber", "gidNumber", "gecos",
       "shadowMin", "shadowMax", "shadowWarning", "shadowInactive", "shadowLastChange",
       "shadowExpire", "gosaDefaultPrinter", "gosaDefaultLanguage", "uid","accessTo","trustModel");
+
   var $objectclasses= array("posixAccount", "shadowAccount");
 
 
@@ -103,8 +107,8 @@ class posixAccount extends plugin
         $this->was_trust_account= FALSE;
         $this->trustModel= "";
       }
-	 
-	  $this->accessTo = array(); 
+
+      $this->accessTo = array(); 
       if ($this->is_account && isset($this->attrs['accessTo'])){
         for ($i= 0; $i<$this->attrs['accessTo']['count']; $i++){
           $tmp= $this->attrs['accessTo'][$i];
@@ -198,10 +202,11 @@ class posixAccount extends plugin
     }
 
     /* Generate group list */
+    $this->ui = get_userinfo(); 
+    $this->secondaryGroups[]= "- "._("automatic")." -";
     $ldap->cd($this->config->current['BASE']);
     $ldap->search("(objectClass=posixGroup)", array("cn", "gidNumber"));
-    $this->secondaryGroups[]= "- "._("automatic")." -";
-    while ($attrs= $ldap->fetch()){
+    while($attrs = $ldap->fetch()){
       $this->secondaryGroups[$attrs['gidNumber'][0]]= $attrs['cn'][0];
     }
     asort ($this->secondaryGroups);
@@ -221,73 +226,73 @@ class posixAccount extends plugin
   /* execute generates the html output for this node */
   function execute($isCopyPaste = false)
   {
-	/* Call parent execute */
-	plugin::execute();
-  $display= "";
+    /* Call parent execute */
+    plugin::execute();
+    $display= "";
 
-  /* Department has changed? */
-  if(isset($_POST['depselect'])){
-    $_SESSION['CurrentMainBase']= validate($_POST['depselect']);
-  }
-
-  if(!$isCopyPaste){
-    /* Do we need to flip is_account state? */
-    if (isset($_POST['modify_state'])){
-      $this->is_account= !$this->is_account;
+    /* Department has changed? */
+    if(isset($_POST['depselect'])){
+      $_SESSION['CurrentMainBase']= validate($_POST['depselect']);
     }
 
-    /* Do we represent a valid posixAccount? */
-    if (!$this->is_account && $this->parent == NULL ){
-      $display= "<img alt=\"\" src=\"images/stop.png\" align=\"middle\">&nbsp;<b>".
-        _("This account has no unix extensions.")."</b>";
-      $display.= back_to_main();
-      return ($display);
-    }
+    if(!$isCopyPaste){
+      /* Do we need to flip is_account state? */
+      if (isset($_POST['modify_state'])){
+        $this->is_account= !$this->is_account;
+      }
+
+      /* Do we represent a valid posixAccount? */
+      if (!$this->is_account && $this->parent == NULL ){
+        $display= "<img alt=\"\" src=\"images/stop.png\" align=\"middle\">&nbsp;<b>".
+          _("This account has no unix extensions.")."</b>";
+        $display.= back_to_main();
+        return ($display);
+      }
 
 
-    /* Show tab dialog headers */
-    if ($this->parent != NULL){
-      if ($this->is_account){
-        if (isset($this->parent->by_object['sambaAccount'])){
-          $obj= $this->parent->by_object['sambaAccount'];
-        }
-        if (isset($obj) && $obj->is_account == TRUE &&
-            ((isset($this->parent->by_object['sambaAccount']))&&($this->parent->by_object['sambaAccount']->is_account))
-            ||(isset($this->parent->by_object['environment'] ))&&($this->parent->by_object['environment'] ->is_account)){
+      /* Show tab dialog headers */
+      if ($this->parent != NULL){
+        if ($this->is_account){
+          if (isset($this->parent->by_object['sambaAccount'])){
+            $obj= $this->parent->by_object['sambaAccount'];
+          }
+          if (isset($obj) && $obj->is_account == TRUE &&
+              ((isset($this->parent->by_object['sambaAccount']))&&($this->parent->by_object['sambaAccount']->is_account))
+              ||(isset($this->parent->by_object['environment'] ))&&($this->parent->by_object['environment'] ->is_account)){
 
-          /* Samba3 dependency on posix accounts are enabled
-             in the moment, because I need to rely on unique
-             uidNumbers. There'll be a better solution later
-             on. */
-          $display= $this->show_disable_header(_("Remove posix account"),
-              _("This account has unix features enabled. To disable them, you'll need to remove the samba / environment account first."), TRUE);
+            /* Samba3 dependency on posix accounts are enabled
+               in the moment, because I need to rely on unique
+               uidNumbers. There'll be a better solution later
+               on. */
+            $display= $this->show_disable_header(_("Remove posix account"),
+                _("This account has unix features enabled. To disable them, you'll need to remove the samba / environment account first."), TRUE);
+          } else {
+            $display= $this->show_disable_header(_("Remove posix account"),
+                _("This account has posix features enabled. You can disable them by clicking below."));
+          }
         } else {
-          $display= $this->show_disable_header(_("Remove posix account"),
-              _("This account has posix features enabled. You can disable them by clicking below."));
+          $display= $this->show_enable_header(_("Create posix account"),
+              _("This account has posix features disabled. You can enable them by clicking below."));
+          return($display);
         }
-      } else {
-        $display= $this->show_enable_header(_("Create posix account"),
-            _("This account has posix features disabled. You can enable them by clicking below."));
-        return($display);
       }
     }
-  }
-  /* Trigger group edit? */
-  if (isset($_POST['edit_groupmembership'])){
-    $this->group_dialog= TRUE;
-    $this->dialog= TRUE;
-  }
+    /* Trigger group edit? */
+    if (isset($_POST['edit_groupmembership'])){
+      $this->group_dialog= TRUE;
+      $this->dialog= TRUE;
+    }
 
-  /* Cancel group edit? */
-  if (isset($_POST['add_groups_cancel']) ||
-      isset($_POST['add_groups_finish'])){
-    $this->group_dialog= FALSE;
-    $this->dialog= FALSE;
-  }
+    /* Cancel group edit? */
+    if (isset($_POST['add_groups_cancel']) ||
+        isset($_POST['add_groups_finish'])){
+      $this->group_dialog= FALSE;
+      $this->dialog= FALSE;
+    }
 
-  /* Add selected groups */
-  if (isset($_POST['add_groups_finish']) && isset($_POST['groups']) &&
-      count($_POST['groups'])){
+    /* Add selected groups */
+    if (isset($_POST['add_groups_finish']) && isset($_POST['groups']) &&
+        count($_POST['groups'])){
 
       if (chkacl ($this->acl, "memberUid") == ""){
         $this->addGroup ($_POST['groups']);
@@ -474,7 +479,7 @@ class posixAccount extends plugin
     $smarty->assign("shells", $this->loginShellList);
     $smarty->assign("secondaryGroups", $this->secondaryGroups);
     $smarty->assign("primaryGroup", $this->primaryGroup);
-   if (!count($this->groupMembership)){
+    if (!count($this->groupMembership)){
       $smarty->assign("groupMembership", array("&nbsp;"));
     } else {
       $smarty->assign("groupMembership", $this->groupMembership);
@@ -487,7 +492,7 @@ class posixAccount extends plugin
     $smarty->assign("printerList", $this->printerList);
     $smarty->assign("languages", $this->config->data['MAIN']['LANGUAGES']);
 
-	/* Avoid "Undefined index: forceMode" */
+    /* Avoid "Undefined index: forceMode" */
     $smarty->assign("forceMode", "");
 
     /* Checkboxes */
@@ -498,8 +503,8 @@ class posixAccount extends plugin
       }
     } else {
       if ($_SESSION['js']){
-		if($this->acl != "#none#")
-        $smarty->assign("forceMode", "disabled");
+        if($this->acl != "#none#")
+          $smarty->assign("forceMode", "disabled");
       }
       $smarty->assign("force_ids", "");
     }
@@ -508,11 +513,11 @@ class posixAccount extends plugin
     /* Load attributes and acl's */
     foreach($this->attributes as $val){
       if((chkacl($this->acl,$val)=="")&&(($_SESSION["js"])&&(($val=="uidNumber")||($val=="gidNumber"))))
-        {
-          $smarty->assign("$val"."ACL","");
-          $smarty->assign("$val", $this->$val);
-          continue;
-        }
+      {
+        $smarty->assign("$val"."ACL","");
+        $smarty->assign("$val", $this->$val);
+        continue;
+      }
       $smarty->assign("$val", $this->$val);
       $smarty->assign("$val"."ACL", chkacl($this->acl,$val));
     }
@@ -524,11 +529,11 @@ class posixAccount extends plugin
     if ($this->trustModel == "fullaccess"){
       $trustmode= 1;
       // pervent double disable tag in html code, this will disturb our clean w3c html
-    
-    if(chkacl($this->acl, "trustmode")==""){
-          $smarty->assign("trusthide", "disabled");
+
+      if(chkacl($this->acl, "trustmode")==""){
+        $smarty->assign("trusthide", "disabled");
       }else{
-          $smarty->assign("trusthide", "");
+        $smarty->assign("trusthide", "");
       }
 
     } elseif ($this->trustModel == "byhost"){
@@ -537,9 +542,9 @@ class posixAccount extends plugin
     } else {
       // pervent double disable tag in html code, this will disturb our clean w3c html
       if(chkacl($this->acl, "trustmode")==""){
-          $smarty->assign("trusthide", "disabled");
+        $smarty->assign("trusthide", "disabled");
       }else{
-          $smarty->assign("trusthide", "");
+        $smarty->assign("trusthide", "");
       }
       $trustmode= 0;
     }
@@ -553,7 +558,7 @@ class posixAccount extends plugin
       $smarty->assign("emptyArrAccess",true);
     else
       $smarty->assign("emptyArrAccess",false);
-    
+
 
 
     $smarty->assign("workstations", $this->accessTo);
@@ -574,8 +579,8 @@ class posixAccount extends plugin
 
     /* include global link_info */
     $ldap= $this->config->get_ldap_link();
-    
-	/* Remove and write to LDAP */
+
+    /* Remove and write to LDAP */
     plugin::remove_from_parent();
 
     /* Zero out array */
@@ -671,7 +676,7 @@ class posixAccount extends plugin
         }
       }
     }
-  
+
     /* Get regex from alphabet */
     if(isset($_GET['search'])){
       $this->GroupRegex = $_GET['search']."*";
@@ -700,7 +705,7 @@ class posixAccount extends plugin
   /* Save data to LDAP, depending on is_account we save or delete */
   function save()
   {
-	
+
     /* include global link_info */
     $ldap= $this->config->get_ldap_link();
 
@@ -787,9 +792,9 @@ class posixAccount extends plugin
       }
     }
 
-	foreach(array("shadowMin","shadowMax","shadowWarning","shadowInactive","shadowExpire") as $attr){
-		$this->$attr = (int) $this->$attr;
-	}
+    foreach(array("shadowMin","shadowMax","shadowWarning","shadowInactive","shadowExpire") as $attr){
+      $this->$attr = (int) $this->$attr;
+    }
     /* Call parents save to prepare $this->attrs */
     plugin::save();
 
@@ -852,14 +857,14 @@ class posixAccount extends plugin
         $g->save ();
       }
     }
- 
+
     /* Take care about groupMembership values: add to groups */
     foreach ($this->groupMembership as $key => $value){
       $g= new grouptabs($this->config,$this->config->data['TABS']['GROUPTABS'], $key);
       $g->by_object['group']->addUser($this->uid);
       $g->save();
     }
-    
+
     /* Remove from groups not listed in groupMembership */
     foreach ($this->savedGroupMembership as $key => $value){
       if (!isset($this->groupMembership[$key])){
@@ -955,9 +960,9 @@ class posixAccount extends plugin
       }
     }
 
-  //  if(empty($this->gosaDefaultPrinter)){
-  //    $message[]= _("You need to specify a valid default printer.");
-  //  }
+    //  if(empty($this->gosaDefaultPrinter)){
+    //    $message[]= _("You need to specify a valid default printer.");
+    //  }
 
     return ($message);
   }
@@ -1032,14 +1037,14 @@ class posixAccount extends plugin
       $this->primaryGroup= $this->gidNumber;
     }
 
-	$ldap->cd($this->config->current['BASE']);
+    $ldap->cd($this->config->current['BASE']);
     $ldap->search("(&(objectClass=gosaUserTemplate)(uid=".$template."))", array("cn","accessTo"));
-	while($attr = $ldap->fetch()){
-		$tmp = $attr['accessTo'];
-		unset ($tmp['count']);
-		$this->accessTo = $tmp;	
-	}
-	
+    while($attr = $ldap->fetch()){
+      $tmp = $attr['accessTo'];
+      unset ($tmp['count']);
+      $this->accessTo = $tmp;	
+    }
+
     /* Adjust shadow checkboxes */
     foreach (array("shadowMin", "shadowMax", "shadowWarning", "shadowInactive",
           "shadowExpire") as $val){
@@ -1116,7 +1121,7 @@ class posixAccount extends plugin
     /* Create a list of users */
     $this->grouplist = array();
     foreach ($res as $value){
-        $this->grouplist[$value['gidNumber'][0]]= $value;
+      $this->grouplist[$value['gidNumber'][0]]= $value;
     }
 
     $tmp=array();
@@ -1157,9 +1162,9 @@ class posixAccount extends plugin
       }
       $force_ids = "";
     }
-   
+
     $sta = "";
- 
+
     /* Open group add dialog */
     if(isset($_POST['edit_groupmembership'])){
       $this->group_dialog = TRUE;
@@ -1167,7 +1172,7 @@ class posixAccount extends plugin
     }
 
     /* If the group-add dialog is closed, call execute 
-        to ensure that the membership is updatd */
+       to ensure that the membership is updatd */
     if(isset($_POST['add_groups_finish']) || isset($_POST['add_groups_cancel'])){
       $this->execute();
       $this->group_dialog =FALSE;
@@ -1242,7 +1247,7 @@ class posixAccount extends plugin
             "shadowExpire"        =>  _("Shadow expire"),
             "accessTo"            =>  _("System trust"),
             "trustModel"          =>  _("System trust model")))
-           ) ;
+              ) ;
   }
 }
 
