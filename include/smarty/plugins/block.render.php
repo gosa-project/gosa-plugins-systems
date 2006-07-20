@@ -26,7 +26,7 @@ function smarty_block_render($params, $text, &$smarty)
 	/* Disable objects, but keep those active that have mode=read_active */
 	if(!(isset($params['mode']) && $params['mode']=='readable')){
 		$from 	=  array("/name=/i");
-		$to 	=  array("disabled name=");
+		$to 	=  array(" disabled name=");
 		$text = preg_replace($from,$to,$text);
 
 		/* Replace picture if object is disabled */
