@@ -58,6 +58,8 @@ if (!$remove_lock){
     $_SESSION['edit']= TRUE;
   }
 
+  /* MyAccount_mode tell class user that we are editing for my account section
+     edit_mode allows us to force the acls to be not writeable, when not in editing mode */
   $user->MyAccount_mode = true;
   if (isset($_SESSION['edit'])){
     $user->edit_mode = true;
@@ -65,11 +67,12 @@ if (!$remove_lock){
     $user->edit_mode = false;
   }
 
+
   /* Perform password change */
   if (isset($_POST['password_finish'])){
 
     /* For security reasons, check if user is allowed to set password again */
-    if (chkacl($user->acl, "password") == "" || chkacl($user->acl, "create")){
+    if ($user->acl_is_writable("userPassword") || $user->acl_is_createable()){
 
       /* Check input and feed errors into 'message' */
       $message= array();
@@ -104,7 +107,6 @@ if (!$remove_lock){
       print_red (_("You are not allowed to set your password!"));
     }
 
-    $user->acl= "#none#";
     del_lock ($ui->dn);
   }
 
@@ -118,7 +120,6 @@ if (!$remove_lock){
     if (count ($message) == 0){
       $user->save ();
       gosa_log ("User/generic object'".$ui->dn."' has been saved");
-      $user->acl= "#none#";
       del_lock ($ui->dn);
       sess_del ('edit');
 
