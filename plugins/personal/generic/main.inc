@@ -58,14 +58,11 @@ if (!$remove_lock){
     $_SESSION['edit']= TRUE;
   }
 
-  /* Adjust acl's to mode */
+  $user->MyAccount_mode = true;
   if (isset($_SESSION['edit'])){
-    $acl= get_permissions ($ui->dn, $ui->subtreeACL);
-    $user->acl= get_module_permission($acl, "user", $ui->dn);
+    $user->edit_mode = true;
   } else {
-    $acl= get_permissions ($ui->dn, $ui->subtreeACL);
-    $editacl= get_module_permission($acl, "user", $ui->dn);
-    $user->acl= "#none#";
+    $user->edit_mode = false;
   }
 
   /* Perform password change */
@@ -174,7 +171,7 @@ if (!$remove_lock){
         $info= "<img class=\"center\" alt=\"\" align=\"middle\" src=\"".get_template_path('images/openlock.png').
                "\"> ".$ui->dn."&nbsp;";
       }
-      if ($fn == "edit" && isset($editacl) && $editacl != "#none#"){
+      if ($fn == "edit"){
         $info.= "<img class=\"center\" alt=\"\" align=\"middle\" src=\"".get_template_path('images/lamp.png')."\"> ".
                 _("Click the 'Edit' button below to change informations in this dialog");
         $display.= "<input type=submit name=\"$fn\" value=\"$str\">\n";

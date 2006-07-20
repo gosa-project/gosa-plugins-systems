@@ -83,6 +83,9 @@ class user extends plugin
   var $last_pw_storage= "unset";
   var $had_userCertificate= FALSE;
 
+  var $MyAccount_mode = false;
+  var $edit_mode      = false;
+
   /* attribute list for save action */
   var $attributes= array("sn", "givenName", "uid", "personalTitle", "academicTitle",
       "homePostalAddress", "homePhone", "labeledURI", "o", "ou", "dateOfBirth", "gender","preferredLanguage",
@@ -313,7 +316,7 @@ class user extends plugin
     }
 
     /* Remove picture? */
-    if($this->acl_is_writeable("userPicture")) {
+    if($this->acl_is_writeable("userPicture",($this->MyAccount_mode && !$this->edit_mode))) {
       if (isset($_POST['picture_remove'])){
         $this->jpegPhoto= "*removed*";
         $this->set_picture ("./images/default.jpg");
@@ -394,7 +397,7 @@ class user extends plugin
 
 
     /* Remove certificate? */
-    if($this->acl_is_writeable("Certificate")){ 
+    if($this->acl_is_writeable("Certificate",($this->MyAccount_mode && !$this->edit_mode))){ 
       foreach (array ("userCertificate", "userSMIMECertificate", "userPKCS12") as $val){
         if (isset($_POST["remove_$val"])){
 
@@ -406,7 +409,7 @@ class user extends plugin
     }
 
     /* Upload new cert and close dialog? */	
-    if($this->acl_is_writeable("Certificate")){ 
+    if($this->acl_is_writeable("Certificate",($this->MyAccount_mode && !$this->edit_mode))){ 
       if (isset($_POST['cert_edit_finish'])){
 
         /* for all certificates do */
@@ -454,7 +457,7 @@ class user extends plugin
 
     /* Display cert dialog */
     if ($this->cert_dialog){
-      $smarty->assign("CertificateACL",$this->getacl("Certificate"));
+      $smarty->assign("CertificateACL",$this->getacl("Certificate",($this->MyAccount_mode && !$this->edit_mode)));
       $smarty->assign("Certificate_readable",$this->acl_is_readable("Certificate"));
 
       foreach(array("userCertificate", "userSMIMECertificate", "userPKCS12") as $cert){
@@ -491,19 +494,19 @@ class user extends plugin
     $ui =get_userinfo();
     foreach($this->attributes as $val){
       $smarty->assign("$val", $this->$val);
-      $smarty->assign("$val"."ACL", $this->getacl($val));
+      $smarty->assign("$val"."ACL", $this->getacl($val,($this->MyAccount_mode && !$this->edit_mode)));
     }
 
     $smarty->assign("pwmode", $hashes);
     $smarty->assign("pwmode_select", $this->pw_storage);
-    $smarty->assign("passwordStorageACL", $this->getacl("userPassword"));
+    $smarty->assign("passwordStorageACL", $this->getacl("userPassword",($this->MyAccount_mode && !$this->edit_mode)));
     $smarty->assign("base_select",      $this->base);
-    $smarty->assign("CertificatesACL",  $this->getacl("Certificate"));
-    $smarty->assign("userPictureACL",   $this->getacl("userPicture"));
-    $smarty->assign("userPicture_is_readable",   $this->acl_is_readable("userPicture"));
+    $smarty->assign("CertificatesACL",  $this->getacl("Certificate",($this->MyAccount_mode && !$this->edit_mode)));
+    $smarty->assign("userPictureACL",   $this->getacl("userPicture",($this->MyAccount_mode && !$this->edit_mode)));
+    $smarty->assign("userPicture_is_readable",   $this->acl_is_readable("userPicture",($this->MyAccount_mode && !$this->edit_mode)));
 
     /* Create base acls */
-    $baseACL = $this->getacl("base");
+    $baseACL = $this->getacl("base",($this->MyAccount_mode && !$this->edit_mode));
     if(!$this->acl_is_moveable()) {
       $baseACL = preg_replace("/w/","",$baseACL);
     }
@@ -511,7 +514,7 @@ class user extends plugin
 
     /* Show us the edit screen */
     @$smarty->assign("bases", $this->allowedBasesToMoveTo());
-#  $smarty->assign("bases", $this->config->idepartments);
+   #  $smarty->assign("bases", $this->config->idepartments);
 
 
     /* Save government mode attributes */
@@ -523,14 +526,14 @@ class user extends plugin
       $smarty->assign("ivbbmodes", $ivbbmodes);
       foreach ($this->govattrs as $val){
         $smarty->assign("$val", $this->$val);
-        $smarty->assign("$val"."ACL", $this->getacl($val));
+        $smarty->assign("$val"."ACL", $this->getacl($val,($this->MyAccount_mode && !$this->edit_mode)));
       }
     } else {
       $smarty->assign("governmentmode", "false");
     }
 
     /* Special mode for uid */
-    $uidACL= $this->getacl("uid");
+    $uidACL= $this->getacl("uid",($this->MyAccount_mode && !$this->edit_mode));
     if (isset ($this->dn)){
       if ($this->dn != "new"){
         $uidACL= preg_replace("/w/","",$uidACL);
@@ -598,7 +601,7 @@ class user extends plugin
       /* Save government mode attributes */
       if ($this->config->current['GOVERNMENTMODE']){
         foreach ($this->govattrs as $val){
-          if ($this->acl_is_writeable($val) && isset ($_POST["$val"])){
+          if ($this->acl_is_writeable($val,($this->MyAccount_mode && !$this->edit_mode)) && isset ($_POST["$val"])){
             $data= stripcslashes($_POST["$val"]);
             if ($data != $this->$val){
               $this->is_modified= TRUE;
@@ -969,13 +972,13 @@ class user extends plugin
     if ($this->dn == "new" &&  !$this->acl_is_createable()){
       $message[]= _("You have no permissions to create a user on this 'Base'.");
     } elseif ($this->dn != $new_dn && $this->dn != "new"){
-      if (!$this->acl_is_writeable($this->dn, "user","create")){
+      if (!$this->acl_is_writeable($this->dn, "user","create",($this->MyAccount_mode && !$this->edit_mode))){
         $message[]= _("You have no permissions to move a user from the original 'Base'.");
       }
     }
 
     /* must: sn, givenName, uid */
-    if ($this->sn == "" && ($this->acl_is_writeable($this->dn, "user","sn") || ($this->new))){
+    if ($this->sn == "" && ($this->acl_is_writeable("sn",($this->MyAccount_mode && !$this->edit_mode)) || ($this->new))){
       $message[]= _("The required field 'Name' is not set.");
     }
 
@@ -990,10 +993,10 @@ class user extends plugin
 
     /* In template mode, the uid and givenName are autogenerated... */
     if (!$this->is_template){
-      if ($this->givenName == "" && $this->acl_is_writeable("givenName")){
+      if ($this->givenName == "" && $this->acl_is_writeable("givenName",($this->MyAccount_mode && !$this->edit_mode))){
         $message[]= _("The required field 'Given name' is not set.");
       }
-      if ($this->uid == "" && $this->acl_is_writeable("uid")){
+      if ($this->uid == "" && $this->acl_is_writeable("uid",($this->MyAccount_mode && !$this->edit_mode))){
         $message[]= _("The required field 'Login' is not set.");
       }
       if (!(isset($this->config->current['DNMODE']) && $this->config->current['DNMODE'] == "uid")){
@@ -1134,7 +1137,7 @@ class user extends plugin
   /* Load picture from file to object */
   function set_picture($filename)
   {
-    if($this->acl_is_writeable("userPicture")) {
+    if($this->acl_is_writeable("userPicture",($this->MyAccount_mode && !$this->edit_mode))) {
       if (!is_file($filename)){
         $filename= "./images/default.jpg";
         $this->jpegPhoto= "*removed*";
@@ -1154,7 +1157,7 @@ class user extends plugin
   /* Load certificate from file to object */
   function set_cert($cert, $filename)
   {
-    if(!$thsi->acl_is_writeable("Certificate")) return;
+    if(!$thsi->acl_is_writeable("Certificate",($this->MyAccount_mode && !$this->edit_mode))) return;
     $fd = fopen ($filename, "rb");
     if (filesize($filename)>0) {
       $this->$cert= fread ($fd, filesize ($filename));
