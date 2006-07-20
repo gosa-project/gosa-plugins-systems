@@ -25,9 +25,11 @@ function smarty_block_render($params, $text, &$smarty)
 
 	/* Disable objects, but keep those active that have mode=read_active */
 	if(!(isset($params['mode']) && $params['mode']=='readable')){
-		$from 	=  array("/name=/i");
-		$to 	=  array(" disabled name=");
-		$text = preg_replace($from,$to,$text);
+
+		/* Disable options */
+		$from 	= array("/name=/i");
+		$to 	= array(" disabled name=");
+		$text 	= preg_replace($from,$to,$text);
 
 		/* Replace picture if object is disabled */
 		if(isset($params['disable_picture'])){
@@ -35,7 +37,6 @@ function smarty_block_render($params, $text, &$smarty)
 			$new = "src=\"".$params['disable_picture']."\"";
 			$text = preg_replace($syn,$new,$text);
 		}
-
 	}		
 
 	/* Read only */
@@ -49,6 +50,11 @@ function smarty_block_render($params, $text, &$smarty)
 	}else{
 		$text = preg_replace("/value=['\" ].*['\" ]/","",$text);
 	}
+
+	/* Remove select options */
+	$from 	= array("#<option.*<\/option>#i");
+	$to 	= array(" ");
+	$text 	= preg_replace($from,$to,$text);
 
 	return $text;
 }
