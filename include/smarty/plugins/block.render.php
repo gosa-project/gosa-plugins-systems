@@ -33,7 +33,7 @@ function smarty_block_render($params, $text, &$smarty)
 
 		/* Replace picture if object is disabled */
 		if(isset($params['disable_picture'])){
-			$syn = "/src=['\"][a-z0-9\/.]*['\"]/i";
+			$syn = "/src=['\"][^\"']*['\"]/i";
 			$new = "src=\"".$params['disable_picture']."\"";
 			$text = preg_replace($syn,$new,$text);
 		}
@@ -48,7 +48,7 @@ function smarty_block_render($params, $text, &$smarty)
 	if(preg_match("/type['\"= ].*submit/",$text)){
 		$text = preg_replace("/submit/","button",$text);
 	}else{
-		$text = preg_replace("/value=['\" ].*['\" ]/","",$text);
+		$text = preg_replace("/value=['\"][^\"']*['\"]/","",$text);
 	}
 
 	/* Remove select options */
