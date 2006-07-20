@@ -1399,10 +1399,10 @@ echo "FIXME: remove_snapshot uses old acl's<br>";
   }
 
 
-  function acl_is_writeable($attribute)
+  function acl_is_writeable($attribute,$skip_write = FALSE)
   {
     $ui= get_userinfo();
-    return preg_match('/w/', $ui->get_permissions($this->dn, get_class($this), $attribute));
+    return preg_match('/w/', $ui->get_permissions($this->dn, get_class($this), $attribute,$skip_write));
   }
 
 
@@ -1434,10 +1434,10 @@ echo "FIXME: remove_snapshot uses old acl's<br>";
   }
 
 
-  function getacl($attribute)
+  function getacl($attribute,$skip_write= FALSE)
   {
     $ui= get_userinfo();
-    return  $ui->get_permissions($this->dn, get_class($this), $attribute);
+    return  $ui->get_permissions($this->dn, get_class($this), $attribute,$skip_write);
   }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
