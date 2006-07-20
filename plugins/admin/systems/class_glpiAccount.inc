@@ -788,19 +788,7 @@ class glpiAccount extends plugin
             "Attachment_mime"             => _("Attachment mime type"),
             "Attachment_filename"         => _("Attachment filename"),
 
-            "Device_monitor"        => _("Device monitor"),
-            "Device_case"           => _("Device case"),
-            "Device_moboard"        => _("Device motherboard"),
-            "Device_sndcard"        => _("Device soundcard"),
-            "Device_processor"      => _("Device processor"),
-            "Device_iface"          => _("Device misc device"),
-            "Device_ram"            => _("Device ram"),
-            "Device_hdd"            => _("Device hard disk drive"),
-            "Device_drive"          => _("Device drive"),
-            "Device_control"        => _("Device controler"),
-            "Device_gfxcard"        => _("Device graphics card"),
-            "Device_power"          => _("Device power supply"),
-            "Device_pci"            => _("Device pci device"))
+            "Devices"            => _("Peripheral devices"))
           ));
   }
   
