@@ -790,9 +790,23 @@ class printgeneric extends plugin
   /* Delete member */
   function DelMember($type,$id)
   {
+    /* Check if there was a printer "dn" given, or the "cn" */
+    foreach($this->member[$type] as $key => $printer){
+      if($printer['dn'] == $id) {
+        $id = key;
+      }
+    }
+    
+    if(!$this->acl_is_writeable($type)){
+      print_red(sprintf(_("You are not allowed to remove the given object '%s' from the list of members of printer '%s'."),$id,$this->dn));
+      return(FALSE);
+    }
+  
     if(isset($this->member[$type][$id])){
       unset($this->member[$type][$id]);
+      return(TRUE);
     }
+    return(FALSE);
   }
 
 
@@ -802,7 +816,12 @@ class printgeneric extends plugin
     $types = array("AddUser","AddGroup","AddAdminUser","AddAdminGroup");
     if(!in_array_ics($type, $types)){
       print_red(sprintf(_("Illegal printer type while adding '%s' to the list of '%s' printers,"),$dn,$type));
-      return;
+      return(FALSE);
+    }
+
+    if(!$this->acl_is_writeable($type)){
+      print_red(sprintf(_("You are not allowed to add the given object '%s' to the list of members of '%s'."),$dn,$this->dn));
+      return(FALSE);
     }
 
     /* Get name of index attributes */
@@ -824,7 +843,7 @@ class printgeneric extends plugin
       foreach($types as $ctype){
         if(isset(  $this->member[$ctype][$name])){
           print_red(sprintf(_("Can't add '%s' to the list of members, it is already used."),$attrs[$var][0]));
-          return;
+          return(FALSE);
         }
       }
 
@@ -832,11 +851,10 @@ class printgeneric extends plugin
       $this->member[$type][$attrs[$var][0]] = $attrs ;
     }else{
       print_red(sprintf(_("Can't add '%s' to list of members, it is not reachable."),$dn));
+      return(FALSE);
     }
+  return(TRUE);
   }
-
-
-
 }
 
 
