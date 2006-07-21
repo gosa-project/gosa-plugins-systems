@@ -586,6 +586,8 @@ function get_list($filter, $subtreeACL, $base= "", $attributes= array(), $flags=
 {
   global $config, $ui;
 
+  echo "get_list called. Replace it, it doesn't support new acls"
+
   /* Get LDAP link */
   $ldap= $config->get_ldap_link($flags & GL_SIZELIMIT);
 
