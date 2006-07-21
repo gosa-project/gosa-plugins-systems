@@ -226,6 +226,8 @@ class posixAccount extends plugin
   /* execute generates the html output for this node */
   function execute($isCopyPaste = false)
   {
+    echo "Fix get_list for group add";
+
     /* Call parent execute */
     plugin::execute();
     $display= "";
