@@ -1163,16 +1163,20 @@ function printOutHotPlugDevices()
                                                                         "description" => _("Command to extend the list of possible screen resolutions"))),
 
                   "plProvidedAcls"  => array(
-                    "gotoProfileServer"   => _("Profile server") ,
+
                     "gotoProfileFlagL"    => _("Resolution changeable during session") ,
                     "gotoProfileFlagC"    => _("Cache profile localy") ,
-                    "gotoXResolution"     => _("Resolution") ,
+
                     "gotoProfileQuota"    => _("Profile quota") ,
-                    "gotoLogonScripts"    => _("Logon script") ,
-                    "gotoPrinter"         => _("Printer") ,
-                    "gosaDefaultPrinter"  => _("Default printer") ,
+                    "gotoProfileServer"   => _("Profile server") ,
+
+                    "gotoXResolution"     => _("Resolution") ,
                     "gotoKioskProfile"    => _("Kiosk profile") ,
-                    "gotoShare"           => _("Shares")),
+
+                    "gosaDefaultPrinter"  => _("Default printer") ,
+                    "gotoLogonScript"     => _("Logon script") ,
+                    "gotoHotplugDevice"   => _("Hotplug devices"),
+                    "gotoShare"           => _("Shares"))
                    ));
     }
 }
