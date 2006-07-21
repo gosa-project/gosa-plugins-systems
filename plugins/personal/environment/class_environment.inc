@@ -244,6 +244,9 @@ class environment extends plugin
     $smarty= get_smarty();
     $display= "";
 
+    /* Are we editing from MyAccount and not editing a user */
+    $WriteOnly = (!isset($this->parent)|| !$this->parent) && !isset($_SESSION['edit']);
+
     /* Prepare all variables for smarty */
     foreach($this->attributes as $s_attr){
       /* Set value*/
@@ -257,12 +260,13 @@ class environment extends plugin
       }
 
       /* Prepare ACL settings*/
-      $smarty->assign($s_attr."ACL",$this->getacl($s_attr));
+      $smarty->assign($s_attr."ACL",$this->getacl($s_attr,$WriteOnly));
     }
 
     /* Is accout enabled | are we editing from usermenu or admin menu 
        All these tab management is done here
      */
+
 
     /* Working from Usermenu an the Account is currently disbled
      * this->parent :  is only set if we are working in a list of tabs
@@ -373,25 +377,30 @@ class environment extends plugin
       }
 
       /* Prepare ACL settings*/
-      $smarty->assign($s_attr."ACL",$this->getacl($s_attr));
-
+      $smarty->assign($s_attr."ACL",$this->getacl($s_attr,$WriteOnly));
     }
 
     foreach(array("gotoHotplugDevice","gotoProfileFlagC","gotoProfileFlagL") as $s_attr){
-      $smarty->assign($s_attr."ACL",$this->getacl($s_attr));
+      $smarty->assign($s_attr."ACL",$this->getacl($s_attr,$WriteOnly));
+    }
+
+    if($WriteOnly) {
+      $smarty->assign("gotoPrinterACL","r");
+    }else{
+      $smarty->assign("gotoPrinterACL","rw");
     }
 
     if(empty($this->useProfile)){
       $smarty->assign("useProfileCHK","");
-      $smarty->assign("gotoProfileServerACL" , preg_replace("/w/","",$this->getacl("gotoProfileServer")));
-      $smarty->assign("gotoProfileQuotaACL" , preg_replace("/w/","",$this->getacl("gotoProfileQuota")));
-      $smarty->assign("gotoProfileFlagCACL" , preg_replace("/w/","",$this->getacl("gotoProfileFlagC")));
+      $smarty->assign("gotoProfileServerACL" , preg_replace("/w/","",$this->getacl("gotoProfileServer",$WriteOnly)));
+      $smarty->assign("gotoProfileQuotaACL" , preg_replace("/w/","",$this->getacl("gotoProfileQuota",$WriteOnly)));
+      $smarty->assign("gotoProfileFlagCACL" , preg_replace("/w/","",$this->getacl("gotoProfileFlagC",$WriteOnly)));
     }else{
       $smarty->assign("useProfileCHK"," checked ");
     }
 
 
-    $smarty->assign("gotoProfileACL", $this->getacl("gotoProfileServer").$this->getacl("gotoProfileQuota"));
+    $smarty->assign("gotoProfileACL", $this->getacl("gotoProfileServer",$WriteOnly).$this->getacl("gotoProfileQuota",$WriteOnly));
 
     /* HANDLE Profile Settings here 
      * Assign available Quota and resolution settings
@@ -460,19 +469,28 @@ class environment extends plugin
 
     /* Dialog Save */
     if(isset($_POST['LogonSave'])){
-      $this->dialog->save_object();
-      if(count($this->dialog->check())!=0){
-        foreach($this->dialog->check() as $msg){
-          print_red($msg);
-        }
-      }else{
-        $tmp = $this->dialog->save();
+
+      if(!$this->acl_is_writeable("gotoLogonScript")){
+        print_red(_("You are not allowed to write Logon scripts."));
         unset($this->dialog);
         $this->dialog=NULL;
         $this->is_dialog=false;
-        $this->gotoLogonScripts[$tmp['LogonName']]=$tmp; 
+      }else{
+        $this->dialog->save_object();
+        if(count($this->dialog->check())!=0){
+          foreach($this->dialog->check() as $msg){
+            print_red($msg);
+          }
+        }else{
+          $tmp = $this->dialog->save();
+          unset($this->dialog);
+          $this->dialog=NULL;
+          $this->is_dialog=false;
+          $this->gotoLogonScripts[$tmp['LogonName']]=$tmp; 
+        }
       }
     }
+    
 
     /* Dialog Quit without saving */
     if(isset($_POST['LogonCancel'])){
@@ -482,7 +500,8 @@ class environment extends plugin
     }
 
     /* Check Edit Del New Posts for a selected LogonScript */ 
-    if(isset($_POST['gotoLogonScriptNew'])||isset($_POST['gotoLogonScriptEdit'])||isset($_POST['gotoLogonScriptDel'])){
+    if($this->acl_is_writeable("gotoLogonScript") && 
+        (isset($_POST['gotoLogonScriptNew'])) || isset($_POST['gotoLogonScriptEdit']) ||isset($_POST['gotoLogonScriptDel'])){
 
       /* New Logon Script: Open an edit dialog, we don't need a $_POST['gotoLogonScript'] here.
        * In this case we create a new Logon Script.
@@ -528,7 +547,7 @@ class environment extends plugin
     /* if $_POST['gotoShareAdd'] is set, we will try to add a new entry 
      * This entry will be, a combination of mountPoint and sharedefinitions 
      */
-    if(isset($_POST['gotoShareAdd'])){
+    if(isset($_POST['gotoShareAdd']) && $this->acl_is_writeable("gotoShare")){
       /* We assign a share to this user, if we don't know where to mount the share */
       if((!isset($_POST['gotoShareMountPoint']))||(empty($_POST['gotoShareMountPoint']))||(preg_match("/[\|]/i",$_POST['gotoShareMountPoint']))){
         print_red(_("You must specify a valid mount point."));
@@ -559,32 +578,33 @@ class environment extends plugin
      * If there is no defined share selected, we will abort the deletion without any message 
      */
     $once = true;
-    foreach($_POST as $name => $value){
-      if((preg_match("/^gotoShareDel_/",$name)) && ($once)){
-        $once = false;  
-        $key  = preg_replace("/^gotoShareDel_/","",$name);
-        $key  = preg_replace("/_+[xy]$/","",$key);
-        $key  = base64_decode($key);
-        if(isset($this->gotoShares[$key])) {
-          unset($this->gotoShares[$key]);
-        }
+    if($this->acl_is_writeable("gotoShare")){
+      foreach($_POST as $name => $value){
+        if((preg_match("/^gotoShareDel_/",$name)) && ($once)){
+          $once = false;  
+          $key  = preg_replace("/^gotoShareDel_/","",$name);
+          $key  = preg_replace("/_+[xy]$/","",$key);
+          $key  = base64_decode($key);
+          if(isset($this->gotoShares[$key])) {
+            unset($this->gotoShares[$key]);
+          }
 
-        /* Remove corresponding password entry, too. This is a workaround
-           to get rid of old-style entries. */
-        $key= preg_replace("/\|/", "|!", $key);
-        if(isset($this->gotoShares[$key])) {
-          unset($this->gotoShares[$key]);
+          /* Remove corresponding password entry, too. This is a workaround
+             to get rid of old-style entries. */
+          $key= preg_replace("/\|/", "|!", $key);
+          if(isset($this->gotoShares[$key])) {
+            unset($this->gotoShares[$key]);
+          }
         }
-      }
-      if((preg_match("/^gotoShareResetPwd_/",$name)) && ($once)){
-        $once = false;
-        $key  = preg_replace("/^gotoShareResetPwd_/","",$name);
-        $key  = preg_replace("/_+[xy]$/","",$key);
-        $key  = base64_decode($key);
-        $this->gotoShares[$key]['PwdHash'] = "";
+        if((preg_match("/^gotoShareResetPwd_/",$name)) && ($once)){
+          $once = false;
+          $key  = preg_replace("/^gotoShareResetPwd_/","",$name);
+          $key  = preg_replace("/_+[xy]$/","",$key);
+          $key  = base64_decode($key);
+          $this->gotoShares[$key]['PwdHash'] = "";
+        }
       }
     }
-
     $divlistShares = new divSelectBox("gotoShares");
     $divlistShares->SetHeight(100);
     $tmp = $this->printOutAssignedShares();
@@ -636,14 +656,14 @@ class environment extends plugin
     }
 
     /* We have to delete the selected hotplug from the list*/
-    if((isset($_POST['gotoHotplugDeviceDel']))&&(isset($_POST['gotoHotplugDevice']))){
+    if((isset($_POST['gotoHotplugDeviceDel']))&&(isset($_POST['gotoHotplugDevice'])) && $this->acl_is_writeable("gotoHotplugDevice")){
       foreach($_POST['gotoHotplugDevice'] as $name){
         unset($this->gotoHotplugDevices[$name]);
       }
     }
 
     /* There are already defined hotplugs from other users we could use */
-    if(isset($_POST['gotoHotplugDeviceUse'])){
+    if(isset($_POST['gotoHotplugDeviceUse']) && $this->acl_is_writeable("gotoHotplugDevice")){
       $tmp  =array();
       foreach($this->gotoHotplugDevices as $plugs){
         $tmp[] = $plugs['name'];
@@ -661,26 +681,33 @@ class environment extends plugin
 
     /* Dialod saved */
     if(isset($_POST['HotPlugSave'])){
-      $this->dialog->save_object();
-      if(count($this->dialog->check())!=0){
-        foreach($this->dialog->check() as $msg){
-          print_red($msg);
-        }
-      }else{
-        $this->dialog->save_object();
-        $a_tmp = $this->dialog->save();
 
-        if(is_array($a_tmp)){
-          foreach($a_tmp as $name => $hotplug){
-            $this->gotoHotplugDevices[$name]= $hotplug; 
-          }
-        }
+      if(!$this->acl_is_writeable("gotoHotplug")){
         unset($this->dialog);
         $this->dialog= NULL;
         $this->is_dialog = false;
+      }else{
+
+        $this->dialog->save_object();
+        if(count($this->dialog->check())!=0){
+          foreach($this->dialog->check() as $msg){
+            print_red($msg);
+          }
+        }else{
+          $this->dialog->save_object();
+          $a_tmp = $this->dialog->save();
+
+          if(is_array($a_tmp)){
+            foreach($a_tmp as $name => $hotplug){
+              $this->gotoHotplugDevices[$name]= $hotplug; 
+            }
+          }
+          unset($this->dialog);
+          $this->dialog= NULL;
+          $this->is_dialog = false;
+        }
       }
     }
-
     $smarty->assign("gotoHotplugDevices",$this->printOutHotPlugDevices());
     $smarty->assign("gotoHotplugDeviceKeys",array_flip($this->printOutHotPlugDevices()));
 
@@ -693,6 +720,7 @@ class environment extends plugin
 
     /* First handle Add Post. Open a dialog that allows us to select a printer or two */ 
     if(isset($_POST['gotoPrinterAdd'])){
+
       $this->is_dialog=true;
       $this->dialog = new selectPrinterDialog($this->config,$this->dn,$this->gotoPrinter);
     }
@@ -715,8 +743,11 @@ class environment extends plugin
         $tmp2= $this->dialog->getPrinter(true);
 
         foreach($tmp as $pname){
-          $this->gotoPrinter[$pname]=$tmp2[$pname];
-          $this->gotoPrinter[$pname]['mode']="user";
+        $printerObj = new printtabs($this->config,$this->config->data['TABS']['PRINTTABS'],$tmp2[$pname]['dn']);
+          if($printerObj->by_object['printgeneric']->AddMember("AddUser",$this->dn)){
+            $this->gotoPrinter[$pname]=$tmp2[$pname];
+            $this->gotoPrinter[$pname]['mode']="user";
+          }
         }
 
         $this->is_dialog=false;
@@ -728,7 +759,11 @@ class environment extends plugin
     if((isset($_POST['gotoPrinterDel']))&&(isset($_POST['gotoPrinterSel']))&&(!empty($_POST['gotoPrinterSel']))){
       $printer = $_POST['gotoPrinterSel'];
       foreach($printer as $pname){
-        unset($this->gotoPrinter[$pname]);
+
+        $printerObj = new printtabs($this->config,$this->config->data['TABS']['PRINTTABS'],$this->gotoPrinter[$pname]['dn']);
+        if($printerObj->by_object['printgeneric']->DelMember("AddUser",$this->dn)){
+          unset($this->gotoPrinter[$pname]);
+        }
       }
     }
 
