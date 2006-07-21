@@ -403,7 +403,7 @@ class posixAccount extends plugin
       /* remove already assigned groups */
       $glist= array();
       foreach ($this->grouplist as $key => $value){
-        if (!isset($this->groupMembership[$key]) && obj_is_writable($key,"group","memberUid")){
+        if (!isset($this->groupMembership[$key]) && obj_is_writable($key,"group","memberUid",$SkipWrite)){
           $glist[$key]= $value;
         }
       }
@@ -433,23 +433,26 @@ class posixAccount extends plugin
     /* Show main page */
     $smarty= get_smarty();
 
+    /* In 'MyAccount' mode, we must remove write acls if we are not in editing mode. */ 
+    $SkipWrite = (!isset($this->parent) || !$this->parent) && !isset($_SESSION['edit']);
+
     /* Depending on pwmode, currently hardcoded because there are no other methods */
     if ( 1 == 1 ){
       $smarty->assign("pwmode", dirname(__FILE__)."/posix_shadow");
 
-      $shadowMinACL     =  $this->getacl("shadowMin");
+      $shadowMinACL     =  $this->getacl("shadowMin",$SkipWrite);
       $smarty->assign("shadowmins", sprintf(_("Password can't be changed up to %s days after last change"), 
                                               "<input name=\"shadowMin\" size=3 maxlength=4 $shadowMinACL value=\"".$this->shadowMin."\">"));
 
-      $shadowMaxACL     =  $this->getacl("shadowMax");
+      $shadowMaxACL     =  $this->getacl("shadowMax",$SkipWrite);
       $smarty->assign("shadowmaxs", sprintf(_("Password must be changed after %s days"), 
                                               "<input name=\"shadowMax\" size=3 maxlength=4 $shadowMaxACL value=\"".$this->shadowMax."\">"));
 
-      $shadowInactiveACL=  $this->getacl("shadowInactive");
+      $shadowInactiveACL=  $this->getacl("shadowInactive",$SkipWrite);
       $smarty->assign("shadowinactives", sprintf(_("Disable account after %s days of inactivity after password expiery"), 
                                               "<input name=\"shadowInactive\" size=3 maxlength=4 $shadowInactiveACL value=\"".$this->shadowInactive."\">"));
 
-      $shadowWarningACL =  $this->getacl("shadowWarning");
+      $shadowWarningACL =  $this->getacl("shadowWarning",$SkipWrite);
       $smarty->assign("shadowwarnings", sprintf(_("Warn user %s days before password expiery"), 
                                               "<input name=\"shadowWarning\" size=3 maxlength=4 $shadowWarningACL value=\"".$this->shadowWarning."\">"));
 
@@ -460,7 +463,7 @@ class posixAccount extends plugin
         } else {
           $smarty->assign("$val", "");
         }
-        $smarty->assign("$val"."ACL", $this->getacl($val));
+        $smarty->assign("$val"."ACL", $this->getacl($val,$SkipWrite));
       }
 
       if($this->mustchangepassword){
@@ -468,7 +471,7 @@ class posixAccount extends plugin
       } else {
         $smarty->assign("mustchangepassword", "");
       }
-      $smarty->assign("mustchangepasswordACL", $this->getacl("mustchangepassword"));
+      $smarty->assign("mustchangepasswordACL", $this->getacl("mustchangepassword",$SkipWrite));
     }
 
     /* Fill calendar */
@@ -528,35 +531,39 @@ class posixAccount extends plugin
 
     
 
-    $smarty->assign("force_idsACL", $this->getacl("uidNumber").$this->getacl("gidNumber"));
+    $smarty->assign("force_idsACL", $this->getacl("uidNumber",$SkipWrite).$this->getacl("gidNumber",$SkipWrite));
 
     /* Load attributes and acl's */
     foreach($this->attributes as $val){
       if(($_SESSION["js"])&&(($val=="uidNumber")||($val=="gidNumber")))
       {
-        $smarty->assign("$val"."ACL",$this->getacl($val));
+        $smarty->assign("$val"."ACL",$this->getacl($val,$SkipWrite));
         $smarty->assign("$val", $this->$val);
         continue;
       }
       $smarty->assign("$val", $this->$val);
-      $smarty->assign("$val"."ACL", $this->getacl($val));
+      $smarty->assign("$val"."ACL", $this->getacl($val,$SkipWrite));
     }
-    $smarty->assign("groupMembershipACL","rw");//  $this->getacl("groupMembership"));
+    if($SkipWrite){
+      $smarty->assign("groupMembershipACL","r");
+    }else{
+      $smarty->assign("groupMembershipACL","rw");
+    }
     $smarty->assign("status", $this->status);
 
     /* Work on trust modes */
-    $smarty->assign("trustmodeACL",  $this->getacl("trustModel"));
+    $smarty->assign("trustmodeACL",  $this->getacl("trustModel",$SkipWrite));
     if ($this->trustModel == "fullaccess"){
       $trustmode= 1;
       // pervent double disable tag in html code, this will disturb our clean w3c html
-      $smarty->assign("trustmode",  $this->getacl("trustModel"));
+      $smarty->assign("trustmode",  $this->getacl("trustModel",$SkipWrite));
 
     } elseif ($this->trustModel == "byhost"){
       $trustmode= 2;
       $smarty->assign("trusthide", "");
     } else {
       // pervent double disable tag in html code, this will disturb our clean w3c html
-      $smarty->assign("trustmode",  $this->getacl("trustModel"));
+      $smarty->assign("trustmode",  $this->getacl("trustModel",$SkipWrite));
       $trustmode= 0;
     }
     $smarty->assign("trustmode", $trustmode);
@@ -629,7 +636,7 @@ class posixAccount extends plugin
 
   function save_object()
   {
-    if (isset($_POST['posixTab'])){
+    if ((isset($_POST['posixTab'])) && (isset($_SESSION['edit']))){
       /* Save values to object */
       plugin::save_object();
 
@@ -646,18 +653,20 @@ class posixAccount extends plugin
 
 
       /*Save primary group settings */
-      $data= $_POST['primaryGroup'];
-      if ($this->primaryGroup != $data){
-        $this->is_modified= TRUE;
+      if($this->acl_is_writeable("primaryGroup") && isset($_POST['primaryGroup'])){
+        $data= $_POST['primaryGroup'];
+        if ($this->primaryGroup != $data){
+          $this->is_modified= TRUE;
+        }
+        $this->primaryGroup= $_POST['primaryGroup'];
       }
-      $this->primaryGroup= $_POST['primaryGroup'];
 
       foreach(array("shadowMin","shadowMax","shadowExpire","shadowInactive","shadowWarning","mustchangepassword") as $var) {
         if($this->acl_is_writeable($var)){
           $use_var = "use_".$var;
           if(isset($_POST['use_'.$var])){
             $this->$use_var  = true;
-            $this->$var      = $_POST['shadowMin'];
+            $this->$var      = $_POST[$var];
           }else{
             $this->$use_var  = false;
             $this->$var      = 0;
@@ -666,17 +675,19 @@ class posixAccount extends plugin
       }
 
       /* Trust mode - special handling */
-      if (isset($_POST['trustmode'])){
-        $saved= $this->trustModel;
-        if ($_POST['trustmode'] == "1"){
-          $this->trustModel= "fullaccess";
-        } elseif ($_POST['trustmode'] == "2"){
-          $this->trustModel= "byhost";
-        } else {
-          $this->trustModel= "";
-        }
-        if ($this->trustModel != $saved){
-          $this->is_modified= TRUE;
+      if($this->acl_is_writeable("trustModel")){
+        if (isset($_POST['trustmode'])){
+          $saved= $this->trustModel;
+          if ($_POST['trustmode'] == "1"){
+            $this->trustModel= "fullaccess";
+          } elseif ($_POST['trustmode'] == "2"){
+            $this->trustModel= "byhost";
+          } else {
+            $this->trustModel= "";
+          }
+          if ($this->trustModel != $saved){
+            $this->is_modified= TRUE;
+          }
         }
       }
     }
