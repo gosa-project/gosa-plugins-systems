@@ -47,7 +47,7 @@ class environment extends plugin
   var $gotoShare          = "";     // currently selected Share Option
   var $gotoShareSelections= array();// Available Shares for this account in Listbox format
   var $gotoAvailableShares= array();// Available Shares for this account
-  
+
   /* Kiosk profile */
   var $gotoKioskProfile   = "none";     // The selected Kiosk Profile
   var $gotoKioskProfiles  = array();// All available Kiosk profiles
@@ -64,12 +64,12 @@ class environment extends plugin
   var $CopyPasteVars      = array("gotoHotplugDevices","newKioskProfiles","gotoAvailableShares","gotoShareSelections","gotoPrinterSel","gotoProfileFlagL","gotoXResolutions","gotoProfileFlagC","gotoProfileServers","useProfile","is_group","in_dialog","OrigCn");
 
   var $attributes         = array("uid","gotoProfileServer","gotoProfileFlags",
-                                    "gotoXResolution","gotoProfileQuota",
-                                    "gotoLogonScripts","gotoLogonScript",
-                                    "gotoPrinter", "gosaDefaultPrinter",
-                                    "gotoShares","gotoShare",
-                                    "gotoKioskProfile","gotoKioskProfiles"
-                                    );
+      "gotoXResolution","gotoProfileQuota",
+      "gotoLogonScripts","gotoLogonScript",
+      "gotoPrinter", "gosaDefaultPrinter",
+      "gotoShares","gotoShare",
+      "gotoKioskProfile","gotoKioskProfiles"
+      );
   var $objectclasses      = array("gotoEnvironment"); // Specifies the objectClass which contains the attributes edited here 
   var $cn;
   var $OrigCn;
@@ -103,7 +103,7 @@ class environment extends plugin
       $this->gotoPrinter[$printer['cn'][0]]=$printer;
       $this->gotoPrinter[$printer['cn'][0]]['mode']="admin";
     }
-  
+
     /* prepare hotplugs */
     if((isset($this->attrs['gotoHotplugDevice']))&&(is_array($this->attrs['gotoHotplugDevice']))){
       unset($this->attrs['gotoHotplugDevice']['count']);
@@ -122,14 +122,14 @@ class environment extends plugin
         if(!isset($tmp[4])){
           $tmp[4] = "";
         }
-  
+
         $tmp2['produkt']     = $tmp[3]; 
         $tmp2['vendor']      = $tmp[4];
- 
+
         $this->gotoHotplugDevices[$tmp[0]]=$tmp2;
       }
     }
-    
+
     /* prepare LogonScripts */
     if((isset($this->attrs['gotoLogonScript']))&&(is_array($this->attrs['gotoLogonScript']))){
       unset($this->attrs['gotoLogonScript']['count']);
@@ -153,7 +153,7 @@ class environment extends plugin
         $this->gotoLogonScripts[$tmp[0]]=$tmp2;
       }
     }
-    
+
     /* Prepare Shares */
     if((isset($this->attrs['gotoShare']))&&(is_array($this->attrs['gotoShare']))){
       unset($this->attrs['gotoShare']['count']);
@@ -162,7 +162,7 @@ class environment extends plugin
         $tmp = split("\|",$share);
         $tmp2['server']      =$tmp[0];
         $tmp2['name']        =$tmp[1];
-        
+
         /* Decode base64 if needed */
         if (!preg_match('%/%', $tmp[2])){
           $tmp2['mountPoint']  =base64_decode($tmp[2]);
@@ -212,7 +212,7 @@ class environment extends plugin
 
     if(isset($this->config->data['MAIN']['RESOLUTION_HOOK'])){
       $file = $this->config->data['MAIN']['RESOLUTION_HOOK'];
-  
+
       if(is_readable($file)){
         $str = file_get_contents($file);
         $lines = split("\n",$str);
@@ -228,7 +228,7 @@ class environment extends plugin
       }
     }
 
- 
+
     $this->gotoProfileServers= $config->getShareServerList() ;
     $this->gotoShareSelections= $config->getShareList(true);
     $this->gotoAvailableShares= $config->getShareList(false);  
@@ -237,37 +237,37 @@ class environment extends plugin
 
   function execute()
   {
-	/* Call parent execute */
-	plugin::execute();
+    /* Call parent execute */
+    plugin::execute();
 
-  /* Fill templating stuff */
-  $smarty= get_smarty();
-  $display= "";
+    /* Fill templating stuff */
+    $smarty= get_smarty();
+    $display= "";
 
-  /* Prepare all variables for smarty */
-  foreach($this->attributes as $s_attr){
-    /* Set value*/
-    $smarty->assign($s_attr,$this->$s_attr);
+    /* Prepare all variables for smarty */
+    foreach($this->attributes as $s_attr){
+      /* Set value*/
+      $smarty->assign($s_attr,$this->$s_attr);
 
-    /* Set checkbox state*/
-    if(empty($this->$s_attr)){
-      $smarty->assign($s_attr."CHK","");
-    }else{
-      $smarty->assign($s_attr."CHK"," checked ");
+      /* Set checkbox state*/
+      if(empty($this->$s_attr)){
+        $smarty->assign($s_attr."CHK","");
+      }else{
+        $smarty->assign($s_attr."CHK"," checked ");
+      }
+
+      /* Prepare ACL settings*/
+      $smarty->assign($s_attr."ACL",$this->getacl($s_attr));
     }
 
-    /* Prepare ACL settings*/
-    $smarty->assign($s_attr."ACL",$this->getacl($s_attr));
-  }
+    /* Is accout enabled | are we editing from usermenu or admin menu 
+       All these tab management is done here
+     */
 
-  /* Is accout enabled | are we editing from usermenu or admin menu 
-     All these tab management is done here
-   */
-
-  /* Working from Usermenu an the Account is currently disbled
+    /* Working from Usermenu an the Account is currently disbled
      * this->parent :  is only set if we are working in a list of tabs
      * is_account   :  is only true if the needed objectClass is given
-    */
+     */
     if((!isset($this->parent))&&(!$this->is_account)){
       /* We are currently editing this tab from usermenu, but this account is not enabled */
       $smarty->assign("is_account",$this->is_account);
@@ -277,12 +277,12 @@ class environment extends plugin
       $display .= back_to_main(); 
       /* Display our message to the user */
       return $display;
-    
 
-    /* We are currently editing from group tabs, because 
-     * $this->parent is set
-     * posixAccount is not set, so we are not in usertabs.
-     */
+
+      /* We are currently editing from group tabs, because 
+       * $this->parent is set
+       * posixAccount is not set, so we are not in usertabs.
+       */
     }elseif((isset($this->parent))&&(!isset($this->parent->by_object['posixAccount']))){
       $smarty->assign("is_account","true");
       $this->is_group     = true;
@@ -291,19 +291,21 @@ class environment extends plugin
 
       /* Change state if needed */
       if (isset($_POST['modify_state'])){
-        $this->is_account= !$this->is_account;
+        if(($this->acl_is_createable() && !$this->is_account) || 
+            ($this->acl_is_removeable() &&  $this->is_account)){
+          $this->is_account= !$this->is_account;
+        }
       }
-
       /* Group Dialog with enabled environment options */
       if ($this->is_account){
         $display= $this->show_enable_header(_("Remove environment extension"),
             _("Environment extension enabled. You can disable it by clicking below."));
       } else {
-  
-      /* Environment is disabled 
-         If theres is no posixAccount enabled, you won't be able to enable 
-         environment extensions
-       */
+
+        /* Environment is disabled 
+           If theres is no posixAccount enabled, you won't be able to enable 
+           environment extensions
+         */
         if((isset($this->parent->by_object['group']))||(isset($this->attrs['objectClass']))&&((in_array("posixAccount",$this->attrs['objectClass'])))){
           // 4. There is a PosixAccount
           $display= $this->show_enable_header(_("Add environment extension"),
@@ -324,9 +326,12 @@ class environment extends plugin
 
       $this->is_group = false;
 
-      /* Do we need to flip is_account state? */
+      /* Change state if needed */
       if (isset($_POST['modify_state'])){
-        $this->is_account= !$this->is_account;
+        if(($this->acl_is_createable() && !$this->is_account) || 
+            ($this->acl_is_removeable() &&  $this->is_account)){
+          $this->is_account= !$this->is_account;
+        }
       }
 
       if(isset($this->parent)){
@@ -354,22 +359,22 @@ class environment extends plugin
     /* Account is Account : is_accounbt=true.
      * Else we won't reach this. 
      */
-   
+
     /* Prepare all variables for smarty */
     foreach($this->attributes as $s_attr){
       /* Set value*/
       $smarty->assign($s_attr,$this->$s_attr);
-     
+
       /* Set checkbox state*/
       if(empty($this->$s_attr)){
         $smarty->assign($s_attr."CHK","");
       }else{
         $smarty->assign($s_attr."CHK"," checked ");
       }
-    
+
       /* Prepare ACL settings*/
       $smarty->assign($s_attr."ACL",$this->getacl($s_attr));
- 
+
     }
 
     foreach(array("gotoHotplugDevice","gotoProfileFlagC","gotoProfileFlagL") as $s_attr){
@@ -384,8 +389,8 @@ class environment extends plugin
     }else{
       $smarty->assign("useProfileCHK"," checked ");
     }
-   
-     
+
+
     $smarty->assign("gotoProfileACL", $this->getacl("gotoProfileServer").$this->getacl("gotoProfileQuota"));
 
     /* HANDLE Profile Settings here 
@@ -425,7 +430,7 @@ class environment extends plugin
     /* Save */
     if(isset($_POST['KioskClose'])){
       $this->newKioskProfiles = array_merge($this->newKioskProfiles,$this->dialog->save());
-  
+
       unset($this->dialog);
       $this->dialog=NULL;
       $this->is_dialog = false;
@@ -433,7 +438,7 @@ class environment extends plugin
 
     /* Reassign help class */
     $_SESSION['current_class_for_help'] = get_class($this);
- 
+
     /* Open Management Dialog */
     if(isset($_POST['KioskManagementDialog'])){
       $this->dialog = new kioskManagementDialog($this->config,$this->dn,$this->newKioskProfiles); 
@@ -468,14 +473,14 @@ class environment extends plugin
         $this->gotoLogonScripts[$tmp['LogonName']]=$tmp; 
       }
     }
-    
+
     /* Dialog Quit without saving */
     if(isset($_POST['LogonCancel'])){
       $this->is_dialog= false;
       unset($this->dialog);
       $this->dialog= NULL;
     }
-   
+
     /* Check Edit Del New Posts for a selected LogonScript */ 
     if(isset($_POST['gotoLogonScriptNew'])||isset($_POST['gotoLogonScriptEdit'])||isset($_POST['gotoLogonScriptDel'])){
 
@@ -493,7 +498,7 @@ class environment extends plugin
       if((isset($_POST['gotoLogonScriptDel']))&&(isset($_POST['gotoLogonScript']))){
         unset($this->gotoLogonScripts[$_POST['gotoLogonScript']]);
       }
-      
+
       /* In this case we want to edit an existing entry, we open a new Dialog to allow editing.
        * There must be an entry selected to perform edit request.
        */
@@ -503,7 +508,7 @@ class environment extends plugin
         $this->dialog = new logonManagementDialog($this->config,$this->dn,$is_entry);
       }
     }
-     
+
     /* Append List to smarty*/
     $smarty->assign("gotoLogonScripts",   $this->printOutLogonScripts());
     $smarty->assign("gotoLogonScriptKeys",array_flip($this->printOutLogonScripts()));
@@ -512,7 +517,7 @@ class environment extends plugin
      * A user can select one of the given shares and a mount point
      *  and attach this combination to his setup.
      */
-    
+
     $smarty->assign("gotoShareSelections",    $this->gotoShareSelections);
     if(!is_array($this->gotoShareSelections)){
       print $this->gotoShareSelections;
@@ -528,15 +533,15 @@ class environment extends plugin
       if((!isset($_POST['gotoShareMountPoint']))||(empty($_POST['gotoShareMountPoint']))||(preg_match("/[\|]/i",$_POST['gotoShareMountPoint']))){
         print_red(_("You must specify a valid mount point."));
       }elseif(!(
-        preg_match("/^\//",$_POST['gotoShareMountPoint'])  ||
-        preg_match("/^~/",$_POST['gotoShareMountPoint']) ||
-        preg_match("/^\$HOME/",$_POST['gotoShareMountPoint']) ||
-        preg_match("/^.HOME/",$_POST['gotoShareMountPoint']) ||
-        preg_match("/^\$USER/",$_POST['gotoShareMountPoint']) ||
-        preg_match("/^.USER/",$_POST['gotoShareMountPoint']) ||
-        preg_match("/^%/",$_POST['gotoShareMountPoint'])
-        )
-      ){
+            preg_match("/^\//",$_POST['gotoShareMountPoint'])  ||
+            preg_match("/^~/",$_POST['gotoShareMountPoint']) ||
+            preg_match("/^\$HOME/",$_POST['gotoShareMountPoint']) ||
+            preg_match("/^.HOME/",$_POST['gotoShareMountPoint']) ||
+            preg_match("/^\$USER/",$_POST['gotoShareMountPoint']) ||
+            preg_match("/^.USER/",$_POST['gotoShareMountPoint']) ||
+            preg_match("/^%/",$_POST['gotoShareMountPoint'])
+            )
+          ){
         print_red(_("You must specify a valid mount point.")); 
       }else{
         $a_share = $this->gotoAvailableShares[$_POST['gotoShareSelection']];
@@ -583,16 +588,16 @@ class environment extends plugin
     $divlistShares = new divSelectBox("gotoShares");
     $divlistShares->SetHeight(100);
     $tmp = $this->printOutAssignedShares();
-    
+
     foreach($tmp as $key => $value){
       $img = "";
-  
+
       /* Check if entry starts with an ! */
       if(preg_match("/^!/",$this->gotoShares[$key]['server'])){
 
         /* If we are currently editing groups environment, skip those ! entries */ 
         if($this->is_group) continue;
-    
+
         /* Create pwd reset images */
         if($this->gotoShares[$key]['PwdHash'] != ""){
           $img.= "<input type='image' name='gotoShareResetPwd_".base64_encode($key)." 'src='images/list_reset_password.png' alt='"._("Reset password hash")."' 
@@ -653,7 +658,7 @@ class environment extends plugin
       $this->dialog= NULL;
       $this->is_dialog = false;
     }
- 
+
     /* Dialod saved */
     if(isset($_POST['HotPlugSave'])){
       $this->dialog->save_object();
@@ -664,7 +669,7 @@ class environment extends plugin
       }else{
         $this->dialog->save_object();
         $a_tmp = $this->dialog->save();
-       
+
         if(is_array($a_tmp)){
           foreach($a_tmp as $name => $hotplug){
             $this->gotoHotplugDevices[$name]= $hotplug; 
@@ -675,17 +680,17 @@ class environment extends plugin
         $this->is_dialog = false;
       }
     }
-    
+
     $smarty->assign("gotoHotplugDevices",$this->printOutHotPlugDevices());
     $smarty->assign("gotoHotplugDeviceKeys",array_flip($this->printOutHotPlugDevices()));
-  
+
     /* Printer Assignment will managed below 
      * A printer can be assigned in two different ways and two different types
      * There are 2 types of users assigned to a printer : user and admin
      * They only differ in the member attribute they will be assigned to. user: gotoUserPrinter admin: gotoadminPrinter
      * The different types of assigning a user are : 1 assigning a user to a printer 2. assigning a group to a printer
      */ 
-    
+
     /* First handle Add Post. Open a dialog that allows us to select a printer or two */ 
     if(isset($_POST['gotoPrinterAdd'])){
       $this->is_dialog=true;
@@ -693,9 +698,9 @@ class environment extends plugin
     }
 
     if(isset($_POST['PrinterCancel'])){
-        $this->is_dialog=false;
-        unset($this->dialog);
-        $this->dialog=NULL;
+      $this->is_dialog=false;
+      unset($this->dialog);
+      $this->dialog=NULL;
     }
 
     if(isset($_POST['PrinterSave'])){
@@ -708,18 +713,18 @@ class environment extends plugin
         $this->dialog->save_object();
         $tmp = $this->dialog->save();
         $tmp2= $this->dialog->getPrinter(true);
-  
+
         foreach($tmp as $pname){
           $this->gotoPrinter[$pname]=$tmp2[$pname];
           $this->gotoPrinter[$pname]['mode']="user";
         }
-  
+
         $this->is_dialog=false;
         unset($this->dialog);
         $this->dialog   =NULL;
       }
     }
-  
+
     if((isset($_POST['gotoPrinterDel']))&&(isset($_POST['gotoPrinterSel']))&&(!empty($_POST['gotoPrinterSel']))){
       $printer = $_POST['gotoPrinterSel'];
       foreach($printer as $pname){
@@ -751,7 +756,7 @@ class environment extends plugin
 
     $smarty->assign("gotoPrinter",$this->printOutPrinterDevices());
     $smarty->assign("gotoPrinterKeys",array_flip($this->printOutPrinterDevices()));
- 
+
     /* General behavior */
     if((isset($this->dialog))&&($this->dialog!=NULL)&&(!empty($this->dialog))){
       $this->dialog->save_object();
@@ -813,7 +818,7 @@ class environment extends plugin
     /* Get all Posted vars 
      * Setup checkboxes 
      */
- 
+
     if(isset($_POST['iamposted'])){
       if(isset($_POST['useProfile'])){
         $this->useProfile = true;
@@ -851,7 +856,7 @@ class environment extends plugin
   {
     /* Call common method to give check the hook */
     $message= plugin::check();
-  
+
     if(preg_match("/[^0-9]/",$this->gotoProfileQuota)) {
       $message[]=_("Please set a valid profile quota size.");
     } 
@@ -886,7 +891,7 @@ class environment extends plugin
     }else{
       $this->gotoKioskProfile= array();
     }
-    
+
     plugin::save();
     $ldap= $this->config->get_ldap_link();
 
@@ -904,7 +909,7 @@ class environment extends plugin
       }
       @unlink($file['tmp_name']);
     }
- 
+
     /* Save already used objectClasses */
     $ocs        = $this->attrs['objectClass'];
     unset($ocs['count']);
@@ -922,9 +927,9 @@ class environment extends plugin
      * 2.2 And each type has two modes, Admin (e.g. 'gotoUserAdminPrinter') and Normal 
      */
     $types = array( "gotoUserPrinter"       => "AddUser",
-                    "gotoGroupPrinter"      => "AddGroup",
-                    "gotoUserAdminPrinter"  => "AddAdminUser",
-                    "gotoGroupAdminPrinter" => "AddAdminGroup");
+        "gotoGroupPrinter"      => "AddGroup",
+        "gotoUserAdminPrinter"  => "AddAdminUser",
+        "gotoGroupAdminPrinter" => "AddAdminGroup");
 
     if($this->is_group){
       $s_suffix = "Group";
@@ -954,17 +959,17 @@ class environment extends plugin
     foreach($this->gotoPrinter as $printer){
       $printerObj = NULL;
       $printerObj = new printtabs($this->config,$this->config->data['TABS']['PRINTTABS'],$printer['dn']);
-       
+
       if($printer['mode'] == "admin") {
         $attribute = "goto".$s_suffix."AdminPrinter";
       }else{
         $attribute = "goto".$s_suffix."Printer";
       }
-  
+
       $printerObj->by_object['printgeneric']->AddMember($types[$attribute],$this->dn);
       $printerObj->by_object['printgeneric']->save();
     }
- 
+
     /* Prepare HotPlug devices */
     $this->attrs['gotoHotplugDevice'] = array();
     foreach($this->gotoHotplugDevices as $name => $device){
@@ -976,10 +981,10 @@ class environment extends plugin
     $this->attrs['gotoLogonScript'] = array();
     foreach($this->gotoLogonScripts as $name => $script){
       $this->attrs['gotoLogonScript'][] =   $script['LogonName']."|".
-                                            $script['LogonOverload'].$script['LogonLast']."|".
-                                            $script['LogonPriority']."|".
-                                            base64_encode($script['LogonData'])."|".
-                                            $script['LogonDescription'];
+        $script['LogonOverload'].$script['LogonLast']."|".
+        $script['LogonPriority']."|".
+        base64_encode($script['LogonData'])."|".
+        $script['LogonDescription'];
     }
 
     /* Prepare Shares */
@@ -995,7 +1000,7 @@ class environment extends plugin
 
     if($this->gotoXResolution == "auto") $this->gotoXResolution ="";
     $saveThis = array("gotoProfileQuota","gotoXResolution","gotoProfileServer","gotoKioskProfile","gosaDefaultPrinter");
-     
+
     foreach($saveThis as $tosave){
       if(!empty($this->$tosave)){
         $this->attrs[$tosave]=$this->$tosave;
@@ -1003,12 +1008,12 @@ class environment extends plugin
         $this->attrs[$tosave]=array();
       }
     }
- 
+
     /* Prepare Flags */
     $this->attrs['gotoProfileFlags'] = array($this->gotoProfileFlagC.$this->gotoProfileFlagL);
     if(empty($this->attrs['gotoProfileFlags'][0])){
       $this->attrs['gotoProfileFlags']=array();
-      }
+    }
 
     if($this->useProfile == false){
       $this->attrs['gotoProfileFlags'] = preg_replace("/C/i","",$this->attrs['gotoProfileFlags']);
@@ -1031,9 +1036,9 @@ class environment extends plugin
     $this->handle_post_events($mode);
   }
 
-/* Generate ListBox frindly output for the defined shares 
- * Possibly Add or remove an attribute here, 
- */
+  /* Generate ListBox frindly output for the defined shares 
+   * Possibly Add or remove an attribute here, 
+   */
   function printOutAssignedShares()
   {
     $a_return = array();
@@ -1050,10 +1055,10 @@ class environment extends plugin
     return($a_return);
   }
 
-/* Generate ListBox frindly output for the definedhotplugs 
- * Possibly Add or remove an attribute here,
- */
-function printOutHotPlugDevices()
+  /* Generate ListBox frindly output for the definedhotplugs 
+   * Possibly Add or remove an attribute here,
+   */
+  function printOutHotPlugDevices()
   {
     $a_return= array();
     if(is_array($this->gotoHotplugDevices)){
@@ -1100,36 +1105,36 @@ function printOutHotPlugDevices()
 
 
   /* Return plugin informations for acl handling 
-      #FIXME these ACLs should work for groups too */ 
+#FIXME these ACLs should work for groups too */ 
   function plInfo()
   {
     return (array("plShortName"     => _("Environment"),
-                  "plDescription"   => _("Environment settings"),         // Description
-                  "plSelfModify"    => TRUE,                              
-                  "plDepends"       => array("user", "posixAccount"),     // This plugin depends on 
-                  "plPriority"      => 2,                                 // Position in tabs 
-                  "plSection"       => "personal",                        // This belongs to personal
-                  "plCategory"      => array("users", "groups"),          // Add to following categories 
-                  "plOptions"       => array("resolution_hook" => array("type" => "string",
-                                                                        "description" => _("Command to extend the list of possible screen resolutions"))),
+          "plDescription"   => _("Environment settings"),         // Description
+          "plSelfModify"    => TRUE,                              
+          "plDepends"       => array("user", "posixAccount"),     // This plugin depends on 
+          "plPriority"      => 2,                                 // Position in tabs 
+          "plSection"       => "personal",                        // This belongs to personal
+          "plCategory"      => array("users", "groups"),          // Add to following categories 
+          "plOptions"       => array("resolution_hook" => array("type" => "string",
+              "description" => _("Command to extend the list of possible screen resolutions"))),
 
-                  "plProvidedAcls"  => array(
+          "plProvidedAcls"  => array(
 
-                    "gotoProfileFlagL"    => _("Resolution changeable during session") ,
-                    "gotoProfileFlagC"    => _("Cache profile localy") ,
+            "gotoProfileFlagL"    => _("Resolution changeable during session") ,
+            "gotoProfileFlagC"    => _("Cache profile localy") ,
 
-                    "gotoProfileQuota"    => _("Profile quota") ,
-                    "gotoProfileServer"   => _("Profile server") ,
+            "gotoProfileQuota"    => _("Profile quota") ,
+            "gotoProfileServer"   => _("Profile server") ,
 
-                    "gotoXResolution"     => _("Resolution") ,
-                    "gotoKioskProfile"    => _("Kiosk profile") ,
+            "gotoXResolution"     => _("Resolution") ,
+            "gotoKioskProfile"    => _("Kiosk profile") ,
 
-                    "gosaDefaultPrinter"  => _("Default printer") ,
-                    "gotoLogonScript"     => _("Logon script") ,
-                    "gotoHotplugDevice"   => _("Hotplug devices"),
-                    "gotoShare"           => _("Shares"))
-                   ));
-    }
+            "gosaDefaultPrinter"  => _("Default printer") ,
+            "gotoLogonScript"     => _("Logon script") ,
+            "gotoHotplugDevice"   => _("Hotplug devices"),
+            "gotoShare"           => _("Shares"))
+            ));
+  }
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

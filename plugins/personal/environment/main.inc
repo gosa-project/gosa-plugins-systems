@@ -54,16 +54,6 @@ if (!$remove_lock){
     $_SESSION['edit']= TRUE;
   }
 
-  /* Adjust acl's to mode */
-  if (isset($_SESSION['edit'])){
-    $acl= get_permissions ($ui->dn, $ui->subtreeACL);
-    $environment->acl= get_module_permission($acl, "gotoEnvironment", $ui->dn);
-  } else {
-    $acl= get_permissions ($ui->dn, $ui->subtreeACL);
-    $editacl= get_module_permission($acl, "gotoEnvironment",$ui->dn);
-    $environment->acl= "#none#";
-  }
-
   /* save changes to LDAP and disable edit mode */
   if (isset($_POST['edit_finish'])){
 
@@ -109,11 +99,12 @@ if (!$remove_lock){
     } else {
       $info= "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/openlock.png').
              "\"> ".$ui->dn."&nbsp;";
-      if (isset($editacl) && $editacl != "#none#"){
+  #      if (isset($editacl) && $editacl != "#none#"){
+      echo "FIxme, only display edit button if there is at least one attribute writeable";
         $info.= "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lamp.png').
             "\"> "._("Click the 'Edit' button below to change informations in this dialog");
         $display.= "<input type=submit name=\"edit\" value=\""._("Edit")."\">\n";
-      }
+   #   }
 
       $display.= "<input type=\"hidden\" name=\"ignore\">\n";
     }
