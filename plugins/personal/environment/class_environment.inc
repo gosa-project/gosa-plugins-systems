@@ -26,11 +26,11 @@ class environment extends plugin
   var $gotoProfileServer  = "";     // Specifies the selected profile server
   var $gotoProfileServers = array();// Specifies all available and selectable servers
   var $gotoProfileFlags   = "";     // Flags enabled  ? only used to set ACL and save 
-  var $gotoProfileFlag_C  = "";     // Flag is set to C if we have the profile caching fucntion enabled 
+  var $gotoProfileFlagC  = "";     // Flag is set to C if we have the profile caching fucntion enabled 
   
   var $gotoXResolution    = "auto";     // The selected resolution eg: 1024x768
   var $gotoXResolutions   = array();// Contains all available resolutions for this account
-  var $gotoProfileFlag_L  = "";     // Flag is set to L to enable runtime resolution change 
+  var $gotoProfileFlagL  = "";     // Flag is set to L to enable runtime resolution change 
   var $gotoProfileQuota   = "";     // User Quota Settings
 
   /* Logon script section*/
@@ -61,7 +61,7 @@ class environment extends plugin
   /* general settings */
   // Sets the attributes which will kept on page reload, which will be saved, ...
 
-  var $CopyPasteVars      = array("gotoHotplugDevices","newKioskProfiles","gotoAvailableShares","gotoShareSelections","gotoPrinterSel","gotoProfileFlag_L","gotoXResolutions","gotoProfileFlag_C","gotoProfileServers","useProfile","is_group","in_dialog","OrigCn");
+  var $CopyPasteVars      = array("gotoHotplugDevices","newKioskProfiles","gotoAvailableShares","gotoShareSelections","gotoPrinterSel","gotoProfileFlagL","gotoXResolutions","gotoProfileFlagC","gotoProfileServers","useProfile","is_group","in_dialog","OrigCn");
 
   var $attributes         = array("uid","gotoProfileServer","gotoProfileFlags",
                                     "gotoXResolution","gotoProfileQuota",
@@ -186,11 +186,11 @@ class environment extends plugin
 
     for($i = 0 ; $i < strlen($this->gotoProfileFlags) ; $i ++){
       $chr = $this->gotoProfileFlags[$i];
-      $name = "gotoProfileFlag_".$chr;
+      $name = "gotoProfileFlag".$chr;
       $this->$name=$chr;
     }
 
-    if((!empty($this->gotoProfileServer))||($this->gotoProfileFlag_C=="C")){
+    if((!empty($this->gotoProfileServer))||($this->gotoProfileFlagC=="C")){
       $this->useProfile = true;
     }else{
       $this->useProfile = false;
@@ -401,10 +401,10 @@ class environment extends plugin
     $smarty->assign("useProfileACL","");
     if($this->acl != "#none#"){
       $smarty->assign("useProfileACL","");
-      $smarty->assign("gotoProfileFlag_CACL"," ");
+      $smarty->assign("gotoProfileFlagCACL"," ");
       $smarty->assign("gotoProfileQuotaACL"," ");
     }else{
-      $smarty->assign("gotoProfileFlag_CACL"," disabled ");
+      $smarty->assign("gotoProfileFlagCACL"," disabled ");
       $smarty->assign("useProfileACL","disabled");
       $smarty->assign("gotoProfileServer"," disabled ");
       $smarty->assign("gotoProfileQuotaACL"," disabled ");
@@ -417,16 +417,16 @@ class environment extends plugin
      * Assign this all to Smarty 
      */
 
-    if(empty($this->gotoProfileFlag_L)){
-      $smarty->assign("gotoProfileFlag_LCHK"," ");
+    if(empty($this->gotoProfileFlagL)){
+      $smarty->assign("gotoProfileFlagLCHK"," ");
     }else{
-      $smarty->assign("gotoProfileFlag_LCHK"," checked ");
+      $smarty->assign("gotoProfileFlagLCHK"," checked ");
     }
 
-    if(empty($this->gotoProfileFlag_C)){
-      $smarty->assign("gotoProfileFlag_CCHK"," ");
+    if(empty($this->gotoProfileFlagC)){
+      $smarty->assign("gotoProfileFlagCCHK"," ");
     }else{
-      $smarty->assign("gotoProfileFlag_CCHK"," checked ");
+      $smarty->assign("gotoProfileFlagCCHK"," checked ");
     }
 
 
@@ -792,13 +792,13 @@ class environment extends plugin
     if($this->acl != "#none#"){
       $smarty->assign("useProfileACL","");
     }else{
-      $smarty->assign("gotoProfileFlag_CACL"," disabled ");
+      $smarty->assign("gotoProfileFlagCACL"," disabled ");
       $smarty->assign("gotoProfileServerACL"," disabled ");
       $smarty->assign("gotoProfileQuotaACL"," disabled ");
     }
 
     if(!$this->useProfile){
-      $smarty->assign("gotoProfileFlag_CACL"," disabled ");
+      $smarty->assign("gotoProfileFlagCACL"," disabled ");
       $smarty->assign("gotoProfileServerACL"," disabled ");
       $smarty->assign("gotoProfileQuotaACL"," disabled ");
     }
@@ -855,15 +855,15 @@ class environment extends plugin
       }else{
         $this->useProfile = false;
       }
-      if(isset($_POST['gotoProfileFlag_C'])){
-        $this->gotoProfileFlag_C = $_POST['gotoProfileFlag_C'];
+      if(isset($_POST['gotoProfileFlagC'])){
+        $this->gotoProfileFlagC = $_POST['gotoProfileFlagC'];
       }else{
-        $this->gotoProfileFlag_C = false;
+        $this->gotoProfileFlagC = false;
       }
-      if(isset($_POST['gotoProfileFlag_L'])){
-        $this->gotoProfileFlag_L = $_POST['gotoProfileFlag_L'];
+      if(isset($_POST['gotoProfileFlagL'])){
+        $this->gotoProfileFlagL = $_POST['gotoProfileFlagL'];
       }else{
-        $this->gotoProfileFlag_L = false;
+        $this->gotoProfileFlagL = false;
       }
 
       $tmp= $this->gosaDefaultPrinter;
@@ -1046,7 +1046,7 @@ class environment extends plugin
     }
  
     /* Prepare Flags */
-    $this->attrs['gotoProfileFlags'] = array($this->gotoProfileFlag_C.$this->gotoProfileFlag_L);
+    $this->attrs['gotoProfileFlags'] = array($this->gotoProfileFlagC.$this->gotoProfileFlagL);
     if(empty($this->attrs['gotoProfileFlags'][0])){
       $this->attrs['gotoProfileFlags']=array();
       }
@@ -1164,8 +1164,8 @@ function printOutHotPlugDevices()
 
                   "plProvidedAcls"  => array(
                     "gotoProfileServer"   => _("Profile server") ,
-                    "gotoProfileFlag_L"   => _("Resolution changeable during session") ,
-                    "gotoProfileFlag_C"   => _("Cache profile localy") ,
+                    "gotoProfileFlagL"    => _("Resolution changeable during session") ,
+                    "gotoProfileFlagC"    => _("Cache profile localy") ,
                     "gotoXResolution"     => _("Resolution") ,
                     "gotoProfileQuota"    => _("Profile quota") ,
                     "gotoLogonScripts"    => _("Logon script") ,

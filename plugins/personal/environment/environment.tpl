@@ -12,7 +12,7 @@
 				<tr>
 					<td style="vertical-align:top">
 						<input class="center" type="checkbox" value="1" {$useProfileCHK} name="useProfile" {$useProfileACL} id="useProfile"
-									onclick="changeState('gotoProfileServer');changeState('gotoProfileFlag_C');changeState('gotoProfileQuota');">
+									onclick="changeState('gotoProfileServer');changeState('gotoProfileFlagC');changeState('gotoProfileQuota');">
 					</td>
 					<td style="vertical-align:middle;">
 						<label for="useProfile">{t}Use profile managment{/t}</label>
@@ -49,9 +49,9 @@
 							</tr>
 							<tr>
 								<td colspan=2>	
-									<input class="center" type="checkbox" name="gotoProfileFlag_C" value="C" {$gotoProfileFlag_CCHK}
-										id="gotoProfileFlag_C" {$gotoProfileFlag_CACL}>&nbsp;
-									<label for="gotoProfileFlag_C">{t}Cache profile localy{/t}</label>
+									<input class="center" type="checkbox" name="gotoProfileFlagC" value="C" {$gotoProfileFlagCCHK}
+										id="gotoProfileFlagC" {$gotoProfileFlagCACL}>&nbsp;
+									<label for="gotoProfileFlagC">{t}Cache profile localy{/t}</label>
 								</td>
 							</tr>
 						</table>
@@ -75,11 +75,11 @@
 				<tr>
 					<td colspan=2>
 						<br>
-						<input type="checkbox" name="gotoProfileFlag_L" id="gotoProfileFlag_L" value="L"  {$gotoProfileFlag_LCHK}
+						<input type="checkbox" name="gotoProfileFlagL" id="gotoProfileFlagL" value="L"  {$gotoProfileFlagLCHK}
 							{if $gotoProfileFlagsACL=="disabled"}
 								disabled 
 							{/if}>
-						<label for="gotoProfileFlag_L">{t}Resolution changeable during session{/t}</label>
+						<label for="gotoProfileFlagL">{t}Resolution changeable during session{/t}</label>
 					</td>
 				</tr>
 				<tr>
