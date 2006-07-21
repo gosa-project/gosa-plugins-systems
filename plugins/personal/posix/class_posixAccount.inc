@@ -299,7 +299,7 @@ class posixAccount extends plugin
     if (isset($_POST['add_groups_finish']) && isset($_POST['groups']) &&
         count($_POST['groups'])){
 
-      /* FIX ME  put the acl check into addGroup function*/
+      echo "FIXME, 302,  put the acl check into addGroup function ";
       #if (chk acl ($this->acl, "memberUid") == ""){
       #  $this->addGroup ($_POST['groups']);
       #  $this->is_modified= TRUE;
@@ -310,7 +310,7 @@ class posixAccount extends plugin
     if (isset($_POST['delete_groupmembership']) && 
         isset($_POST['group_list']) && count($_POST['group_list'])){
 
-      /* FIX ME  put the acl check into addGroup function*/
+      echo "FIXME, 302,  put the acl check into addGroup function ";
       #if (chk acl ($this->acl, "memberUid") == ""){
       #  $this->delGroup ($_POST['group_list']);
       #  $this->is_modified= TRUE;
@@ -596,7 +596,7 @@ class posixAccount extends plugin
   function remove_from_parent()
   {
     /* Cancel if there's nothing to do here */
-    if (!$this->initially_was_account){
+    if ((!$this->initially_was_account) || (!$this->acl_is_removeable())){
       return;
     }
 
@@ -645,17 +645,19 @@ class posixAccount extends plugin
       /* Save values to object */
       plugin::save_object();
 
-      /* Save force GID checkbox */
-      if (isset ($_POST['force_ids'])){
-        $data= 1;
-      } else {
-        $data= 0;
-      }
-      if ($this->force_ids != $data){
-        $this->is_modified= TRUE;
-      }
-      $this->force_ids= $data;
 
+      /* Save force GID checkbox */
+      if($this->acl_is_writeable("gidNumber") || $this->acl_is_writeable("uidNumber")){
+        if (isset ($_POST['force_ids'])){
+          $data= 1;
+        } else {
+          $data= 0;
+        }
+        if ($this->force_ids != $data){
+          $this->is_modified= TRUE;
+        }
+        $this->force_ids= $data;
+      }
 
       /*Save primary group settings */
       if($this->acl_is_writeable("primaryGroup") && isset($_POST['primaryGroup'])){
