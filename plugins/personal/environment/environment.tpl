@@ -149,7 +149,7 @@
 {render acl=$gotoShareACL}
       <input type="submit" name="gotoShareAdd" value="{t}Add{/t}"> 
 {/render}
-      <!--   <input type="submit" {$gotoShareACL} name="gotoShareDel" value="{t}Remove{/t}"> -->
+      <!--   <input type="submit" name="gotoShareDel" value="{t}Remove{/t}"> -->
      </td>
     </tr>
    </table>
@@ -163,7 +163,7 @@
     <tr>
      <td>
 {render acl=$gotoLogonScriptACL}
-      <select style="width:100%;" name="gotoLogonScript" multiple size=5 {$gotoLogonScriptACL} id="gotoLogonScript">
+      <select style="width:100%;" name="gotoLogonScript" multiple size=5 id="gotoLogonScript">
        {html_options values=$gotoLogonScriptKeys output=$gotoLogonScripts }
        <option disabled>&nbsp;</option>
       </select>
@@ -171,13 +171,13 @@
 
       <br>
 {render acl=$gotoLogonScriptACL}
-      <input type="submit" {$gotoLogonScriptACL} name="gotoLogonScriptNew" value="{t}Add{/t}">
+      <input type="submit" name="gotoLogonScriptNew" value="{t}Add{/t}">
 {/render}
 {render acl=$gotoLogonScriptACL}
-      <input type="submit" {$gotoLogonScriptACL} name="gotoLogonScriptEdit"  value="{t}Edit{/t}">
+      <input type="submit" name="gotoLogonScriptEdit"  value="{t}Edit{/t}">
 {/render}
 {render acl=$gotoLogonScriptACL}
-      <input type="submit" {$gotoLogonScriptACL} name="gotoLogonScriptDel"  value="{t}Delete{/t}" >
+      <input type="submit" name="gotoLogonScriptDel"  value="{t}Delete{/t}" >
 {/render}
      </td>
     </tr>
@@ -199,7 +199,7 @@
     <tr>
      <td>
 {render acl=$gotoHotplugDeviceACL}
-      <select name="gotoHotplugDevice[]" {$gotoHotplugDeviceACL} size=5  style="width:100%;" id="gotoHotplugDevice" multiple>
+      <select name="gotoHotplugDevice[]" size=5  style="width:100%;" id="gotoHotplugDevice" multiple>
        {html_options values=$gotoHotplugDeviceKeys output=$gotoHotplugDevices}
        <option disabled>&nbsp;</option>
       </select>
@@ -209,10 +209,10 @@
     <tr>
      <td>
 {render acl=$gotoHotplugDeviceACL}
-      <input type="submit" {$gotoHotplugDeviceACL} name="gotoHotplugDeviceNew" value="{t}New{/t}">
+      <input type="submit" name="gotoHotplugDeviceNew" value="{t}New{/t}">
 {/render}
 {render acl=$gotoHotplugDeviceACL}
-      <input type="submit" {$gotoHotplugDeviceACL} name="gotoHotplugDeviceUse" value="{t}Existing{/t}">
+      <input type="submit" name="gotoHotplugDeviceUse" value="{t}Existing{/t}">
 {/render}
 {render acl=$gotoHotplugDeviceACL}
       <input type="submit" {$gotoHotplugDeviceACL} name="gotoHotplugDeviceDel" value="{t}Delete{/t}"
@@ -231,23 +231,23 @@
     <tr>
      <td>
 {render acl=$gotoPrinterACL}
-      <select style="width:100%;" name="gotoPrinterSel[]" multiple size=5 {$gotoPrinterACL} id="gotoPrinter">
+      <select style="width:100%;" name="gotoPrinterSel[]" multiple size=5 id="gotoPrinter">
        {html_options values=$gotoPrinterKeys output=$gotoPrinter}
        <option disabled>&nbsp;</option>
       </select>
 {/render}
       <br>
 {render acl=$gotoPrinterACL}
-      <input type="submit" {$gotoPrinterACL} name="gotoPrinterAdd"     value="{t}Add{/t}">
+      <input type="submit"  name="gotoPrinterAdd"     value="{t}Add{/t}">
 {/render}
 {render acl=$gotoPrinterACL}
-      <input type="submit" {$gotoPrinterACL} name="gotoPrinterDel"     value="{t}Delete{/t}" {if !$gotoPrinter } disabled {/if}>
+      <input type="submit" name="gotoPrinterDel"     value="{t}Delete{/t}" {if !$gotoPrinter } disabled {/if}>
 {/render}
 {render acl=$gotoPrinterACL}
-      <input type="submit" {$gotoPrinterACL} name="gotoPrinterEdit"    value="{t}Toggle admin{/t}" {if !$gotoPrinter } disabled {/if}>
+      <input type="submit" name="gotoPrinterEdit"    value="{t}Toggle admin{/t}" {if !$gotoPrinter } disabled {/if}>
 {/render}
 {render acl=$gosaDefaultPrinterACL}
-      <input type="submit" {$gotoPrinterACL} name="gotoPrinterDefault"    value="{t}Toggle default{/t}" {if !$gotoPrinter } disabled {/if}>
+      <input type="submit" name="gotoPrinterDefault"    value="{t}Toggle default{/t}" {if !$gotoPrinter } disabled {/if}>
 {/render}
      </td>
     </tr>

@@ -26,9 +26,9 @@ function smarty_block_render($params, $text, &$smarty)
 	/* Disable objects, but keep those active that have mode=read_active */
 	if(!(isset($params['mode']) && $params['mode']=='readable')){
 
-		/* Disable options */
-		$from 	= array("/name=/i");
-		$to 	= array(" disabled name=");
+		/* Disable options && greyout divlists */
+		$from 	= array("/name=/i" ,		"/list1nohighlight/");
+		$to 	= array(" disabled name=",	"list1nohighlightdisabled");
 		$text 	= preg_replace($from,$to,$text);
 
 		/* Replace picture if object is disabled */
