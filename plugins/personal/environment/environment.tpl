@@ -17,7 +17,7 @@
    <table summary="{t}Profile managment{/t}">
     <tr>
      <td style="vertical-align:top">
-{render acl=$ProfileACL}
+{render acl=$gotoProfileACL}
       <input class="center" type="checkbox" value="1" {$useProfileCHK} name="useProfile" id="useProfile"
      	onclick="changeState('gotoProfileServer');changeState('gotoProfileFlagC');changeState('gotoProfileQuota');">
 {/render}
@@ -36,7 +36,7 @@
          <label for="gotoProfileServer">{t}Profil path{/t}</label>
         </td>
         <td>
-{render acl=$ProfileACL}
+{render acl=$gotoProfileServerACL}
          <select id="gotoProfileServer" name="gotoProfileServer">
           {html_options values=$gotoProfileServerKeys output=$gotoProfileServers selected=$gotoProfileServer}
           <option disabled>&nbsp;</option>
@@ -51,7 +51,7 @@
          <br>
         </td>
         <td>
-{render acl=$ProfileACL}
+{render acl=$gotoProfileQuotaACL}
          <input type="text" name="gotoProfileQuota" value="{$gotoProfileQuota}" size="6" id="gotoProfileQuota">{t}MB{/t}
 {/render}
          <br>
@@ -61,7 +61,7 @@
        <tr>
         <td colspan=2> 
 {render acl=$gotoProfileFlagCACL}
-         <input class="center" type="checkbox" name="gotoProfileFlagC" value="C" {$gotoProfileFlagCCHK id="gotoProfileFlagC"}>&nbsp;
+         <input class="center" type="checkbox" name="gotoProfileFlagC" value="C" {$gotoProfileFlagCCHK} id="gotoProfileFlagC">&nbsp;
 {/render}
          <label for="gotoProfileFlagC">{t}Cache profile localy{/t}</label>
         </td>

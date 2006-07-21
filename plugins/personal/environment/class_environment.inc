@@ -257,12 +257,7 @@ class environment extends plugin
     }
 
     /* Prepare ACL settings*/
-    if(chkacl($this->acl,$s_attr)=="") {
-      $smarty->assign($s_attr."ACL","");
-    }else{
-      $smarty->assign($s_attr."ACL"," disabled ");
-    }
-
+    $smarty->assign($s_attr."ACL",$this->getacl($s_attr));
   }
 
   /* Is accout enabled | are we editing from usermenu or admin menu 
@@ -373,42 +368,25 @@ class environment extends plugin
       }
     
       /* Prepare ACL settings*/
-      if(chkacl($this->acl,$s_attr)=="") {
-        $smarty->assign($s_attr."ACL","");
-      }else{
-        $smarty->assign($s_attr."ACL"," disabled ");
-      }
+      $smarty->assign($s_attr."ACL",$this->getacl($s_attr));
  
     }
 
-    foreach(array("gotoHotplugDevice","gotoPrinterSel") as $s_attr){
-      if(chkacl($this->acl,$s_attr)=="") {
-        $smarty->assign($s_attr."ACL","");
-      }else{
-        $smarty->assign($s_attr."ACL"," disabled ");
-      }
+    foreach(array("gotoHotplugDevice","gotoProfileFlagC","gotoProfileFlagL") as $s_attr){
+      $smarty->assign($s_attr."ACL",$this->getacl($s_attr));
     }
 
     if(empty($this->useProfile)){
-      $smarty->assign("gotoProfileACL","disabled");
       $smarty->assign("useProfileCHK","");
+      $smarty->assign("gotoProfileServerACL" , preg_replace("/w/","",$this->getacl("gotoProfileServer")));
+      $smarty->assign("gotoProfileQuotaACL" , preg_replace("/w/","",$this->getacl("gotoProfileQuota")));
+      $smarty->assign("gotoProfileFlagCACL" , preg_replace("/w/","",$this->getacl("gotoProfileFlagC")));
     }else{
-      $smarty->assign("gotoProfileACL","");
       $smarty->assign("useProfileCHK"," checked ");
     }
-
- 
-    $smarty->assign("useProfileACL","");
-    if($this->acl != "#none#"){
-      $smarty->assign("useProfileACL","");
-      $smarty->assign("gotoProfileFlagCACL"," ");
-      $smarty->assign("gotoProfileQuotaACL"," ");
-    }else{
-      $smarty->assign("gotoProfileFlagCACL"," disabled ");
-      $smarty->assign("useProfileACL","disabled");
-      $smarty->assign("gotoProfileServer"," disabled ");
-      $smarty->assign("gotoProfileQuotaACL"," disabled ");
-    }
+   
+     
+    $smarty->assign("gotoProfileACL", $this->getacl("gotoProfileServer").$this->getacl("gotoProfileQuota"));
 
     /* HANDLE Profile Settings here 
      * Assign available Quota and resolution settings
@@ -789,19 +767,6 @@ class environment extends plugin
       }
       return($disp);
     }
-    if($this->acl != "#none#"){
-      $smarty->assign("useProfileACL","");
-    }else{
-      $smarty->assign("gotoProfileFlagCACL"," disabled ");
-      $smarty->assign("gotoProfileServerACL"," disabled ");
-      $smarty->assign("gotoProfileQuotaACL"," disabled ");
-    }
-
-    if(!$this->useProfile){
-      $smarty->assign("gotoProfileFlagCACL"," disabled ");
-      $smarty->assign("gotoProfileServerACL"," disabled ");
-      $smarty->assign("gotoProfileQuotaACL"," disabled ");
-    }
 
     /* Als smarty vars are set. Get smarty template and generate output */
     $display.= $smarty->fetch(get_template_path('environment.tpl', TRUE,dirname(__FILE__)));
@@ -951,12 +916,6 @@ class environment extends plugin
       }
     }
 
-
-    /* Save usersettings to Printer */
-    if(chkacl($this->acl,"gotoPrinter")!=""){
-      $this->gotoPrinter = array();
-    }  
-    
     /* 1. Search all printers that have our uid/cn as member 
      * 2. Delete this uid/cn from every single entry and save it again.
      * 2.1 There are different types of members: Users / Groups, this will be defined in $suffix
@@ -1054,14 +1013,6 @@ class environment extends plugin
     if($this->useProfile == false){
       $this->attrs['gotoProfileFlags'] = preg_replace("/C/i","",$this->attrs['gotoProfileFlags']);
       $this->attrs['gotoProfileServer']= array(); 
-    }
-
-    foreach($this->attributes as $s_attr){
-      if(chkacl($this->acl,$s_attr)!="") {
-        if(isset($this->attrs[$s_attr])){
-          unset($this->attrs[$s_attr]);
-        }
-      }
     }
 
     $ldap->cat ($this->dn, array('dn'));
