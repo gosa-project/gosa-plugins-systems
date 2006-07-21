@@ -280,8 +280,8 @@ class mailAccount extends plugin
 
     /* Finished adding of locals? */
     if (isset($_POST['add_locals_finish'])){
-      if (count ($_POST['local_list']) &&
-          chkacl ($this->acl, "gosaMailForwardingAddress") == ""){
+
+      echo "CHECK ME LOCAL ADD ACLS";
 
         /* Walk through list of forwarders, ignore own addresses */
         foreach ($_POST['local_list'] as $val){
@@ -291,8 +291,6 @@ class mailAccount extends plugin
             $this->addForwarder($val);
             $this->is_modified= TRUE;
           }
-        }
-      }
       $this->forward_dialog= FALSE;
       $this->dialog= FALSE;
     }
@@ -323,10 +321,11 @@ class mailAccount extends plugin
 
         if ($valid){
           /* Add it */
-          if (chkacl ($this->acl, "gosaMailForwardingAddress") == ""){
-            $this->addForwarder ($address);
-            $this->is_modified= TRUE;
-          }
+
+          echo "CHECK ME ADD CHECK FOR gosaMailForwardingAddress ACLS BLAA";
+
+          $this->addForwarder ($address);
+          $this->is_modified= TRUE;
 
         }
       }
@@ -334,11 +333,10 @@ class mailAccount extends plugin
 
     /* Delete forward email addresses */
     if (isset($_POST['delete_forwarder'])){
-      if (count($_POST['forwarder_list']) 
-          && chkacl ($this->acl, "gosaMailForwardingAddress") == ""){
-
+        
+        echo "ADD CHECK for GOSA forwarder address";
+    
         $this->delForwarder ($_POST['forwarder_list']);
-      }
     }
 
     
@@ -346,8 +344,8 @@ class mailAccount extends plugin
 
     /* Add alternate email addresses */
     if (isset($_POST['add_alternate'])){
-      if ($_POST['alternate_address'] != "" &&
-          chkacl ($this->acl, "gosaMailAlternateAddress") == ""){
+
+        echo "CHECK ME add check for alternative mail address add";
 
         $valid= FALSE;
         if (!is_email($_POST['alternate_address'])){
@@ -375,12 +373,11 @@ class mailAccount extends plugin
     }
 
     /* Delete alternate email addresses */
-    if (isset($_POST['delete_alternate']) && isset ($_POST['alternates_list'])){
-      if (count($_POST['alternates_list']) &&
-          chkacl ($this->acl, "gosaMailAlternateAddress") == ""){
+    if (isset($_POST['delete_alternate']) && isset($_POST['alternates_list'])){
 
+      echo "CHECK ME remove alternate mail addresses ";
+  
         $this->delAlternate ($_POST['alternates_list']);
-      }
     }
 
   
@@ -496,13 +493,17 @@ class mailAccount extends plugin
     /* Display mail account tab */
 
     $smarty->assign("mailServers", $mailserver);
+
+    $tmp  = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $name => $transl){
+      $smarty->assign("$name"."ACL", $this->getacl($name));
+    }
+
     foreach(array("gosaMailServer", "gosaMailQuota", "perms", "mail",
           "gosaMailAlternateAddress", "gosaMailForwardingAddress",
           "gosaVacationMessage", "gosaMailDeliveryMode",
           "gosaMailMaxSize", "gosaSpamSortLevel", "gosaSpamMailbox") as $val){
-
       $smarty->assign("$val", $this->$val);
-      $smarty->assign("$val"."ACL", chkacl($this->acl, "$val"));
     }
 
     if (is_numeric($this->gosaMailQuota) && $this->gosaMailQuota != 0){
@@ -586,8 +587,6 @@ class mailAccount extends plugin
     }
     $smarty->assign("spamlevel", $spamlevel);
     $smarty->assign("spambox", $this->mailboxList);
-    $smarty->assign("custom_sieveACL", chkacl($this->acl, "custom_sieve"));	
-    $smarty->assign("only_localACL", chkacl($this->acl, "only_local"));	
 
     $display.= $smarty->fetch (get_template_path('generic.tpl', TRUE, dirname(__FILE__)));
     return ($display);
@@ -681,12 +680,10 @@ class mailAccount extends plugin
       }
       $tmp= "[$tmp]";
 
-      if (chkacl ($this->acl, "gosaMailDeliveryMode") == ""){
-        if ($this->gosaMailDeliveryMode != $tmp){
-          $this->is_modified= TRUE;
-        }
-        $this->gosaMailDeliveryMode= $tmp;
+      if ($this->gosaMailDeliveryMode != $tmp){
+        $this->is_modified= TRUE;
       }
+      $this->gosaMailDeliveryMode= $tmp;
     }
   }
 
@@ -796,7 +793,7 @@ class mailAccount extends plugin
     }
 
     /* Check quota */
-    if ($this->gosaMailQuota != '' && chkacl ($this->acl, "gosaMailQuota") == ""){
+    if ($this->gosaMailQuota != '' && $this->acl_is_writeable("gosaMailQuota")){
       if (!is_numeric($this->gosaMailQuota)) {
         $message[]= _("Value in 'Quota size' is not valid.");
       } else {
@@ -805,7 +802,7 @@ class mailAccount extends plugin
     }
 
     /* Check rejectsize for integer */
-    if ($this->gosaMailMaxSize != '' && chkacl ($this->acl, "gosaMailQuota") == ""){
+    if ($this->gosaMailMaxSize != '' && $this->acl_is_writeable("gosaMailMaxSize")){
       if (!is_numeric($this->gosaMailMaxSize)){
         $message[]= _("Please specify a vaild mail size for mails to be rejected.");
       } else {
@@ -992,20 +989,24 @@ class mailAccount extends plugin
             "mail"                      =>  _("Mail address"),
             "gosaMailServer"            =>  _("Mail server"),
             "gosaMailQuota"             =>  _("Quota size"),
-            "gosaMailMaxSize"           =>  _("Mail max size"),
-            "gosaMailForwardingAddress" =>  _("Forwarding address"),
-            "gosaMailDeliveryMode_L"    =>  "FIXME"._("Local delivery"),            // This is flag of gosaMailDeliveryMode
-            "gosaMailDeliveryMode_R"    =>  "FIXME"._("Reject due to mailsize"),    // This is flag of gosaMailDeliveryMode
-            "gosaMailDeliveryMode_s"    =>  "FIXME"._("Use spam filter"),           // This is flag of gosaMailDeliveryMode
-            "gosaMailDeliveryMode_V"    =>  "FIXME"._("Add vacation information"),  // This is flag of gosaMailDeliveryMode
-            "gosaMailDeliveryMode_C"    =>  "FIXME"._("Use custom sieve script"),   // This is flag of gosaMailDeliveryMode
-            "gosaMailDeliveryMode_I"    =>  "FIXME"._("Only insider delivery"),     // This is flag of gosaMailDeliveryMode
+
+            "gosaMailDeliveryModeV"     =>  _("Add vacation information"),  // This is flag of gosaMailDeliveryMode
+            "gosaVacationMessage"       =>  _("Vacation message"),
+
+            "gosaMailDeliveryModes"     =>  _("Use spam filter"),           // This is flag of gosaMailDeliveryMode
             "gosaSpamSortLevel"         =>  _("Spam level"),
             "gosaSpamMailbox"           =>  _("Spam mail box"),
+
+            "gosaMailDeliveryModeR"     =>  _("Reject due to mailsize"),    // This is flag of gosaMailDeliveryMode
+            "gosaMailMaxSize"           =>  _("Mail max size"),
+
+            "gosaMailForwardingAddress" =>  _("Forwarding address"),
+            "gosaMailDeliveryModeL"     =>  _("Local delivery"),            // This is flag of gosaMailDeliveryMode
+            "gosaMailDeliveryModeI"     =>  _("Only insider delivery"),     // This is flag of gosaMailDeliveryMode
             "gosaMailAlternateAddress"  =>  _("Mail alternative addresses"),
 
-            "gosaVacationMessage"       =>  _("Vacation message"),
-            "gosaMailForwardingAddress" =>  _("Forwarding address"))
+            "gosaMailForwardingAddress" =>  _("Forwarding address"),
+            "gosaMailDeliveryModeC"     =>  _("Use custom sieve script"))   // This is flag of gosaMailDeliveryMode
         ));
   }
 }
