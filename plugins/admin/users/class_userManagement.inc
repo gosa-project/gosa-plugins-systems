@@ -141,7 +141,7 @@ class userManagement extends plugin
       $this->usertab->current = $s_tab;
 
       /* Set ACL and move DN to the headline */
-      $this->usertab->set_acl($acl);
+#      $this->usertab->set_acl_base();
       $_SESSION['objectinfo']= $this->dn;
     }
 
@@ -470,6 +470,7 @@ class userManagement extends plugin
       /* By default we set 'dn' to 'new', all relevant plugins will
          react on this. */
       $this->dn= "new";
+      
       if (isset($this->config->current['IDGEN'])){
         $this->got_uid= false;
       } else {
@@ -478,8 +479,8 @@ class userManagement extends plugin
 
       /* Create new usertab object */
       $this->usertab= new usertabs($this->config,$this->config->data['TABS']['USERTABS'], $this->dn);
-      $this->usertab->set_acl(array(':all'));
       $this->usertab->by_object['user']->base= $this->DivListUsers->selectedBase;
+      $this->usertab->set_acl_base('dummy,'.$this->DivListUsers->selectedBase);
 
       /* Take care about templates */
       if ($s_action=="new_tpl"){
@@ -800,8 +801,8 @@ class userManagement extends plugin
         $acl= get_permissions ($dn, $this->ui->subtreeACL);
         $obj    = new usertabs($this->config, $this->config->data['TABS']['USERTABS'], $dn);
         $objNew = new usertabs($this->config, $this->config->data['TABS']['USERTABS'], "new");
-        $obj->    set_acl($acl);
-        $objNew-> set_acl($acl);
+        $obj->set_acl($acl);
+        $objNew->set_acl($acl);
         $this->CopyPasteHandler->Copy($obj,$objNew);
       }
 

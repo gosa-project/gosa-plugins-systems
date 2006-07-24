@@ -809,6 +809,11 @@ class acl extends plugin
     $ldap->modify ($this->attrs);
 
     show_ldap_error($ldap->get_error(), sprintf(_("Saving ACLs with dn '%s' failed."),$this->dn));
+
+    /* Refresh users ACLs */
+    $ui= get_userinfo();
+    $ui->loadACL();
+    $_SESSION['ui']= $ui;
   }
 
 

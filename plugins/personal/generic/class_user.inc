@@ -624,6 +624,7 @@ class user extends plugin
           }
         }
       }
+      $this->set_acl_base('dummy,'.$this->base);
     }
   }
 
@@ -689,7 +690,7 @@ class user extends plugin
       foreach ($this->govattrs as $val){
         if ($this->$val != ""){
           $this->attrs["$val"]= $this->$val;
-        } elseif (!$this->new) {
+        } elseif (!$this->is_new) {
           $this->attrs["$val"]= array();
         }
       }
@@ -697,7 +698,7 @@ class user extends plugin
       /* Remove attribute if set to "nein" */
       if ($this->publicVisible == "nein"){
         $this->attrs['publicVisible']= array();
-        if($this->new){
+        if($this->is_new){
           unset($this->attrs['publicVisible']);
         }else{
           $this->attrs['publicVisible']=array();
@@ -717,21 +718,21 @@ class user extends plugin
 
     /* Special handling for dateOfBirth value */
     if ($this->use_dob != "1"){
-      if ($this->new) {
+      if ($this->is_new) {
         unset($this->attrs["dateOfBirth"]);
       } else {
         $this->attrs["dateOfBirth"]= array();
       }
     }
     if (!$this->gender){
-      if ($this->new) {
+      if ($this->is_new) {
         unset($this->attrs["gender"]);
       } else {
         $this->attrs["gender"]= array();
       }
     }
     if (!$this->preferredLanguage){
-      if ($this->new) {
+      if ($this->is_new) {
         unset($this->attrs["preferredLanguage"]);
       } else {
         $this->attrs["preferredLanguage"]= array();
@@ -802,7 +803,7 @@ class user extends plugin
         $this->attrs["jpegPhoto"] = $output;
       }
 
-    } elseif(!$this->new) {
+    } elseif(!$this->is_new) {
       $this->attrs["jpegPhoto"] = array();
     }
 
@@ -856,7 +857,7 @@ class user extends plugin
     /* Remove cert? 
        For some reason, the 'ldap' class doesn't want to remove binary entries, so I need
        to work around myself. */
-    if ($remove_userCertificate == true && !$this->new && $this->had_userCertificate){
+    if ($remove_userCertificate == true && !$this->is_new && $this->had_userCertificate){
 
       /* Reset array, assemble new, this should be reworked */
       $this->attrs= array();
@@ -973,7 +974,7 @@ class user extends plugin
     }
 
     /* must: sn, givenName, uid */
-    if ($this->sn == "" && ($this->acl_is_writeable("sn",(!is_object($this->parent) && !isset($_SESSION['edit'])) || ($this->new)))){
+    if ($this->sn == "" && ($this->acl_is_writeable("sn",(!is_object($this->parent) && !isset($_SESSION['edit'])) || ($this->is_new)))){
       $message[]= _("The required field 'Name' is not set.");
     }
 

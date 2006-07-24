@@ -11,6 +11,7 @@ class usertabs extends tabs
 
     /* Add references/acls/snapshots */
     $this->addSpecialTabs();
+    $this->set_acl_base();
   }
 
   function save_object($save_current= FALSE)
@@ -69,6 +70,9 @@ class usertabs extends tabs
       $number= key($this->by_object['phoneAccount']->phoneNumbers);
       $this->by_object['user']->telephoneNumber= $number;
     }
+
+    /* Possibly change acl base */
+    $this->set_acl_base();
   }
 
   function save()

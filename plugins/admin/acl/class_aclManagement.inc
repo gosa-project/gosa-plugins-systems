@@ -356,7 +356,11 @@ class aclManagement extends plugin
      not needed in this class. */
   function remove_from_parent() { } 
   function check() { } 
-  function save() { } 
+
+  function save() {
+    echo "SAVE ACL";
+  } 
+
   function adapt_from_template($dn) { } 
   function password_change_needed() { } 
 

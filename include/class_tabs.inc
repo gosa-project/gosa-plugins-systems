@@ -24,6 +24,7 @@ class tabs
   var $config;
   var $acl;
   var $is_template;
+  var $is_new= FALSE;
 
   var $last= "";
   var $current= "";
@@ -299,6 +300,23 @@ class tabs
 	$this->by_object['reference']->parent= &$this;
   }
 
+
+  function set_acl_base($base= "")
+  {
+	/* Update reference, transfer variables */
+	$first= ($base == "");
+	foreach ($this->by_object as $name => $obj){
+		if ($first){
+			$first= FALSE;
+echo "Setting base to ".$obj->acl_base."<br>";
+			$base= $obj->acl_base;
+		} else {
+echo "Transfering $base to $name<br>";
+			$obj->set_acl_base($base);
+			$this->by_object[$name]= $obj;
+		}
+	}
+  }
 
 }
 

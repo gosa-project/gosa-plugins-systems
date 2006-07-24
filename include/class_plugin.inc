@@ -105,8 +105,10 @@ class plugin
   /* attribute list for save action */
   var $attributes= array();
   var $objectclasses= array();
-  var $new= TRUE;
+  var $is_new= TRUE;
   var $saved_attributes= array();
+
+  var $acl_base= "";
 
   /* Plugin identifier */
   var $plHeadline= "";
@@ -129,6 +131,9 @@ class plugin
     if ($dn == "new"){
       return;
     }
+
+    /* Save current dn as acl_base */
+    $this->acl_base= $dn;
 
     /* Get LDAP descriptor */
     $ldap= $this->config->get_ldap_link();
@@ -212,7 +217,7 @@ class plugin
    */
   function execute()
   {
-    # This one is empty currently. Fabian - please fill in the docu code
+    /* This one is empty currently. Fabian - please fill in the docu code */
     $_SESSION['current_class_for_help'] = get_class($this);
     /* Reset Lock message POST/GET check array, to prevent perg_match errors*/
     $_SESSION['LOCK_VARS_TO_USE'] =array();
@@ -313,10 +318,10 @@ class plugin
     
     if (isset($tmp['objectClass'])){
       $oc= $tmp["objectClass"];
-      $this->new= FALSE;
+      $this->is_new= FALSE;
     } else {
       $oc= array("count" => 0);
-      $this->new= TRUE;
+      $this->is_new= TRUE;
     }
 
     /* Load (minimum) attributes, add missing ones */
@@ -331,7 +336,7 @@ class plugin
     foreach ($this->attributes as $val){
       if ($this->$val != ""){
         $this->attrs["$val"]= $this->$val;
-      } elseif (!$this->new) {
+      } elseif (!$this->is_new) {
         $this->attrs["$val"]= array();
       }
     }
@@ -1399,46 +1404,59 @@ echo "FIXME: remove_snapshot uses old acl's<br>";
   }
 
 
+  function set_acl_base($base)
+  {
+    $this->acl_base= $base;
+  }
+
+
   function acl_is_writeable($attribute,$skip_write = FALSE)
   {
     $ui= get_userinfo();
-    return preg_match('/w/', $ui->get_permissions($this->dn, get_class($this), $attribute,$skip_write));
+    return preg_match('/w/', $ui->get_permissions($this->acl_base, get_class($this), $attribute,$skip_write));
   }
 
 
   function acl_is_readable($attribute)
   {
     $ui= get_userinfo();
-    return preg_match('/r/', $ui->get_permissions($this->dn, get_class($this), $attribute));
+    return preg_match('/r/', $ui->get_permissions($this->acl_base, get_class($this), $attribute));
   }
 
 
   function acl_is_createable()
   {
     $ui= get_userinfo();
-    return preg_match('/c/', $ui->get_permissions($this->dn, get_class($this), '0'));
+    return preg_match('/c/', $ui->get_permissions($this->acl_base, get_class($this), '0'));
   }
 
 
   function acl_is_removeable()
   {
     $ui= get_userinfo();
-    return preg_match('/d/', $ui->get_permissions($this->dn, get_class($this), '0'));
+    return preg_match('/d/', $ui->get_permissions($this->acl_base, get_class($this), '0'));
   }
 
 
   function acl_is_moveable()
   {
     $ui= get_userinfo();
-    return preg_match('/m/', $ui->get_permissions($this->dn, get_class($this), '0'));
+    return preg_match('/m/', $ui->get_permissions($this->acl_base, get_class($this), '0'));
+  }
+
+
+  function acl_have_any_permissions()
+  {
   }
 
 
   function getacl($attribute,$skip_write= FALSE)
   {
     $ui= get_userinfo();
-    return  $ui->get_permissions($this->dn, get_class($this), $attribute,$skip_write);
+    return  $ui->get_permissions($this->acl_base, get_class($this), $attribute,$skip_write);
   }
+
+
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

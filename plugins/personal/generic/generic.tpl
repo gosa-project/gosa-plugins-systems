@@ -145,7 +145,7 @@
      <td>
       <div style="height:10px;"></div>
       	{render acl=$baseACL}
-		<select id="base" size="1" name="base" title="{t}Choose subtree to place user in{/t}">
+		<select id="base" size="1" name="base" title="{t}Choose subtree to place user in{/t}" onchange="document.mainform.submit()">
 			{html_options options=$bases selected=$base_select}
 		</select>
 	{/render}
