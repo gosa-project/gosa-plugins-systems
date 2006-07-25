@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-07-25 14:16+0200\n"
-"PO-Revision-Date: 2006-07-25 14:21+0200\n"
+"PO-Revision-Date: 2006-07-25 16:12+0200\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -13668,7 +13668,7 @@ msgstr ""
 
 #: plugins/admin/fai/faiPackageNew.tpl:26
 msgid "please choose a release..."
-msgstr "Bitte wählen Sie eine Release..."
+msgstr "Bitte wählen Sie ein Release..."
 
 #: plugins/admin/fai/faiPackageNew.tpl:37
 msgid "Sections for this release"
