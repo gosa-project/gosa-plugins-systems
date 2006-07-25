@@ -138,7 +138,7 @@
      <td><label for="CtxWorkDirectory">{t}Working directory{/t}</label></td>
      <td>
 {render acl=$AllowLoginOnTerminalServerACL}
-      <input id="CtxWorkDirectory" name="CtxWorkDirectory" size=35 maxlength=60	>
+      <input id="CtxWorkDirectory" name="CtxWorkDirectory" size=35 maxlength=60	value='{$CtxWorkDirectory}'>
 {/render}
      </td>
     </tr>
