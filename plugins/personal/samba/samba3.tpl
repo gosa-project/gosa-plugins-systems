@@ -122,7 +122,11 @@
   </td>
   <td style="vertical-align:top;">
 {render acl=$AllowLoginOnTerminalServerACL}
-   <input type=checkbox id="inherit" name="inherit"}> 
+   <input type=checkbox id="inherit" name="inherit"} {if $inheritstate} checked {/if}
+	onClick="changeState('CtxInitialProgram');
+ 		 changeState('CtxWorkDirectory');"
+	
+	> 
 {/render}
    <i>{t}Inherit client config{/t}</i>
    <table summary="">
@@ -130,7 +134,7 @@
      <td><label for="CtxInitialProgram">{t}Initial program{/t}</label></td>
      <td>
 {render acl=$AllowLoginOnTerminalServerACL}
-      <input id="CtxInitialProgram" name="CtxInitialProgram" size=35 maxlength=60 value="{$CtxInitialProgram}">
+      <input id="CtxInitialProgram" name="CtxInitialProgram" size=35 maxlength=60 value="{$CtxInitialProgram}" {$inheritstate}>
 {/render}
      </td>
     </tr>
@@ -138,7 +142,7 @@
      <td><label for="CtxWorkDirectory">{t}Working directory{/t}</label></td>
      <td>
 {render acl=$AllowLoginOnTerminalServerACL}
-      <input id="CtxWorkDirectory" name="CtxWorkDirectory" size=35 maxlength=60	value='{$CtxWorkDirectory}'>
+      <input id="CtxWorkDirectory" name="CtxWorkDirectory" size=35 maxlength=60	value='{$CtxWorkDirectory}' {$inheritstate}>
 {/render}
      </td>
     </tr>
@@ -157,13 +161,17 @@
     <tr>
      <td>
 {render acl=$AllowLoginOnTerminalServerACL}
-      <input id="CtxMaxConnectionTimeF" type=checkbox name="CtxMaxConnectionTimeF" value="1" {$CtxMaxConnectionTimeF} onclick="changeSubselectState('CtxMaxConnectionTimeF','CtxMaxConnectionTime')" {$tsloginstate}>
+      <input 		id="CtxMaxConnectionTimeF" 	type=checkbox 			name="CtxMaxConnectionTimeF" 
+			value="1" 			{$CtxMaxConnectionTimeF} 	
+			onclick="changeState('CtxMaxConnectionTime')" {$tsloginstate}>
 {/render}
+
       <label for="CtxMaxConnectionTimeF">{t}Connection{/t}</label>
      </td>
      <td>
 {render acl=$AllowLoginOnTerminalServerACL}
-      <input name="CtxMaxConnectionTime" id="CtxMaxConnectionTime" size=5 maxlength=5 value="{$CtxMaxConnectionTime}" {$tsloginstate}>
+      <input name="CtxMaxConnectionTime" id="CtxMaxConnectionTime" size=5 maxlength=5 value="{$CtxMaxConnectionTime}" {$tsloginstate}
+			{ if !$CtxMaxConnectionTimeF } disabled  {/if}>
 {/render}
      </td>
     </tr>
@@ -176,7 +184,8 @@
      </td>
      <td>
 {render acl=$AllowLoginOnTerminalServerACL}
-      <input name="CtxMaxDisconnectionTime" id="CtxMaxDisconnectionTime" size=5 maxlength=5 value="{$CtxMaxDisconnectionTime}" {$tsloginstate}>
+      <input name="CtxMaxDisconnectionTime" id="CtxMaxDisconnectionTime" size=5 maxlength=5 value="{$CtxMaxDisconnectionTime}" {$tsloginstate}
+			{ if !$CtxMaxDisconnectionTimeF } disabled  {/if}>
 {/render}
      </td>
     </tr>
@@ -189,7 +198,8 @@
      </td>
      <td>
 {render acl=$AllowLoginOnTerminalServerACL}
-      <input name="CtxMaxIdleTime" id="CtxMaxIdleTime" size=5 maxlength=5 value="{$CtxMaxIdleTime}" {$tsloginstate}>
+      <input name="CtxMaxIdleTime" id="CtxMaxIdleTime" size=5 maxlength=5 value="{$CtxMaxIdleTime}" {$tsloginstate}
+			{ if !$CtxMaxIdleTimeF } disabled  {/if}>
 {/render}
      </td>
     </tr>
