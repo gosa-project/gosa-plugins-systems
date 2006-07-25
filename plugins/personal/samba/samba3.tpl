@@ -290,7 +290,7 @@
 <table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding=4 border=0>
  <tr>
   <td style="width:50%; vertical-align:top;">
-{render acl=$sambaPwdCanChange}
+{render acl=$sambaPwdCanChangeACL}
    <input id="allow_pwchange" type=checkbox name="allow_pwchange" value="1" {$flagsP}>
 {/render}
    <label for="allow_pwchange">{t}Allow user to change password from client{/t}</label>
