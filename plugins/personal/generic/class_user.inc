@@ -614,7 +614,27 @@ class user extends plugin
 
       /* Save base and pw_storage, since these are no LDAP attributes */
       if (isset($_POST['base'])){
-        foreach(array("base", "pw_storage") as $val){
+
+        $this->set_acl_base('dummy,'.$_POST['base']);
+        if($this->acl_is_moveable("base")){
+
+          foreach(array("base") as $val){
+            if(isset($_POST[$val])){
+              $data= validate($_POST[$val]);
+              if ($data != $this->$val){
+                $this->is_modified= TRUE;
+              }
+              $this->$val= $data;
+            }
+          }
+        }else{
+          print_red(sprintf(_("You are not allowed to move this object to '%s'."),LDAP::fix($_POST['base'])));
+        }
+      }
+
+      /* Get pw_storage mode */
+      if (isset($_POST['pw_storage'])){
+        foreach(array("pw_storage") as $val){
           if(isset($_POST[$val])){
             $data= validate($_POST[$val]);
             if ($data != $this->$val){
@@ -624,6 +644,7 @@ class user extends plugin
           }
         }
       }
+
       $this->set_acl_base('dummy,'.$this->base);
     }
   }
