@@ -12,11 +12,18 @@
     <tr>
      <td><label for="smbHome">{t}Samba home{/t}</label></td>
      <td>
-      <input id="smbHome" name="smbHome" size=30 maxlength=60 {$smbHomeACL} value="{$smbHome}">
-      <select size="1" name="homeDrive" {$homeDriveACL}>
+
+{render acl=$smbHomeACL}
+      <input id="smbHome" name="smbHome" size=30 maxlength=60 value="{$smbHome}">
+{/render}
+
+{render acl=$smbDriveACL}
+      <select size="1" name="homeDrive">
        <option disabled>&nbsp;</option>
        {html_options values=$drives output=$drives selected=$homeDrive}
       </select>
+{/render}
+
      </td>
     </tr>
    </table>
@@ -29,13 +36,17 @@
     <tr>
      <td><label for="scriptPath">{t}Script path{/t}</label></td>
      <td>
-      <input id="scriptPath" name="scriptPath" size=35 maxlength=60 {$scriptPathACL} value="{$scriptPath}">
+{render acl=$scriptPathACL}
+      <input id="scriptPath" name="scriptPath" size=35 maxlength=60 value="{$scriptPath}">
+{/render}
      </td>
     </tr>
     <tr>
      <td><label for="profilePath">{t}Profile path{/t}</label></td>
      <td>
-      <input id="profilePath" name="profilePath" size=35 maxlength=60 {$profilePathACL} value="{$profilePath}">
+{render acl=$profilePathACL}
+      <input id="profilePath" name="profilePath" size=35 maxlength=60 value="{$profilePath}">
+{/render}
      </td>
     </tr>
    </table>
@@ -50,13 +61,19 @@
 <table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding="4" border="0">
  <tr>
   <td style="width:50%;">
-   <input id="allow_pwchange" type=checkbox name="allow_pwchange" value="1" {$flagsP} {$allow_pwchangeACL}>
+{render acl=$allow_pwchangeACL}
+   <input id="allow_pwchange" type=checkbox name="allow_pwchange" value="1" {$flagsP}>
+{/render}
    <label for="allow_pwchange">{t}Allow user to change password from client{/t}</label>
    <br>
-   <input id="no_password_required" type=checkbox name="no_password_required" value="1" {$flagsN}  {$no_password_requiredACL}>
+{render acl=$no_password_requiredACL}
+   <input id="no_password_required" type=checkbox name="no_password_required" value="1" {$flagsN}>
+{/render}
    <label for="no_password_required">{t}Login from windows client requires no password{/t}</label>
    <br>
-   <input id="temporary_disable" type=checkbox name="temporary_disable" value="1" {$flagsD} {$temporary_disableACL}>
+{render acl=$temporary_disableACL}
+   <input id="temporary_disable" type=checkbox name="temporary_disable" value="1" {$flagsD}>
+{/render}
    <label for="temporary_disable">{t}Temporary disable samba account{/t}</label>
    <br>
   </td>
@@ -64,17 +81,25 @@
    &nbsp;
   </td>
   <td style="vertical-align:top; width:50%">
-   <input type=checkbox name="password_expires" value="1" {$flagsC} {$password_expiresACL}>
+{render acl=$password_expiresACL}
+   <input type=checkbox name="password_expires" value="1" {$flagsC}>
+{/render}
    <label for="day">{t}Password expires on{/t}</label>
-   <select id="day" name=day onChange="createResult(this.form,this.form.sambaPwdMustChange);" {$sambaPwdMustChangeACL}>
+{render acl=$sambaPwdMustChangeACL}
+   <select id="day" name=day onChange="createResult(this.form,this.form.sambaPwdMustChange);">
     {html_options values=$days output=$days selected=$day}
    </select>
-   <select name=month onChange="populate(this.form,this.form.sambaPwdMustChange);" {$sambaPwdMustChangeACL}>
+{/render}
+{render acl=$sambaPwdMustChangeACL}
+   <select name=month onChange="populate(this.form,this.form.sambaPwdMustChange);">
     {html_options options=$months selected=$month}
    </select>
-   <select name=year onChange="populate(this.form,this.form.sambaPwdMustChange);" {$sambaPwdMustChangeACL}>
+{/render}
+{render acl=$sambaPwdMustChangeACL}
+   <select name=year onChange="populate(this.form,this.form.sambaPwdMustChange);">
     {html_options values=$years output=$years selected=$year}
    </select>
+{/render}
    <input type="hidden" name="sambaPwdMustChange" value="{$sambaPwdMustChange}">
   </td>
  </tr>
