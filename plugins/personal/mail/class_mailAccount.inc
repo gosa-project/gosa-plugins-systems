@@ -281,7 +281,8 @@ class mailAccount extends plugin
     /* Finished adding of locals? */
     if (isset($_POST['add_locals_finish'])){
 
-      echo "CHECK ME LOCAL ADD ACLS";
+      /* Check if we are able to write gosaMailForwardingAddress */
+      if($this->acl_is_writeable("gosaMailForwardingAddress")){
 
         /* Walk through list of forwarders, ignore own addresses */
         foreach ($_POST['local_list'] as $val){
@@ -291,6 +292,8 @@ class mailAccount extends plugin
             $this->addForwarder($val);
             $this->is_modified= TRUE;
           }
+        }
+      }
       $this->forward_dialog= FALSE;
       $this->dialog= FALSE;
     }
@@ -320,64 +323,52 @@ class mailAccount extends plugin
         }
 
         if ($valid){
-          /* Add it */
 
-          echo "CHECK ME ADD CHECK FOR gosaMailForwardingAddress ACLS BLAA";
-
-          $this->addForwarder ($address);
-          $this->is_modified= TRUE;
-
+          /* Add it, if we are able to write gosaMailForwardingAddress */
+          if($this->acl_is_writeable("gosaMailForwardingAddress")){
+            $this->addForwarder ($address);
+            $this->is_modified= TRUE;
+          }
         }
       }
     }
 
     /* Delete forward email addresses */
     if (isset($_POST['delete_forwarder'])){
-        
-        echo "ADD CHECK for GOSA forwarder address";
-    
-        $this->delForwarder ($_POST['forwarder_list']);
+      $this->delForwarder ($_POST['forwarder_list']);
     }
 
-    
-    /* Alternate address handling */
 
     /* Add alternate email addresses */
     if (isset($_POST['add_alternate'])){
 
-        echo "CHECK ME add check for alternative mail address add";
-
-        $valid= FALSE;
-        if (!is_email($_POST['alternate_address'])){
-          if ($this->is_template){
-            if (!(is_email($_POST['alternate_address'], TRUE))){
-              print_red (_("You're trying to add an invalid email address to the list of alternate addresses."));
-            } else {
-              $valid= TRUE;
-            }
-          } else {
+      $valid= FALSE;
+      if (!is_email($_POST['alternate_address'])){
+        if ($this->is_template){
+          if (!(is_email($_POST['alternate_address'], TRUE))){
             print_red (_("You're trying to add an invalid email address to the list of alternate addresses."));
+          } else {
+            $valid= TRUE;
           }
-
         } else {
-          $valid= TRUE;
+          print_red (_("You're trying to add an invalid email address to the list of alternate addresses."));
         }
 
-        if ($valid && ($user= $this->addAlternate ($_POST['alternate_address'])) != ""){
-          $ui= get_userinfo();
-          if ($user != $ui->username){
-            print_red (_("The address you're trying to add is already used by user")." '$user'.");
-          }
+      } else {
+        $valid= TRUE;
+      }
+
+      if ($valid && ($user= $this->addAlternate ($_POST['alternate_address'])) != ""){
+        $ui= get_userinfo();
+        if ($user != $ui->username){
+          print_red (_("The address you're trying to add is already used by user")." '$user'.");
         }
       }
     }
 
     /* Delete alternate email addresses */
     if (isset($_POST['delete_alternate']) && isset($_POST['alternates_list'])){
-
-      echo "CHECK ME remove alternate mail addresses ";
-  
-        $this->delAlternate ($_POST['alternates_list']);
+      $this->delAlternate ($_POST['alternates_list']);
     }
 
   
@@ -851,55 +842,70 @@ class mailAccount extends plugin
   /* Add entry to forwarder list */
   function addForwarder($address)
   {
-    $this->gosaMailForwardingAddress[]= $address;
-    $this->gosaMailForwardingAddress= array_unique ($this->gosaMailForwardingAddress);
-    sort ($this->gosaMailForwardingAddress);
-    reset ($this->gosaMailForwardingAddress);
-    $this->is_modified= TRUE;
+    if($this->acl_is_writeable("gosaMailForwardingAddress")){
+      $this->gosaMailForwardingAddress[]= $address;
+      $this->gosaMailForwardingAddress= array_unique ($this->gosaMailForwardingAddress);
+      sort ($this->gosaMailForwardingAddress);
+      reset ($this->gosaMailForwardingAddress);
+      $this->is_modified= TRUE;
+    }else{
+      print_red(_("You are not allowed to write mail forwarding."));
+    }
   }
 
 
   /* Remove list of addresses from forwarder list */
   function delForwarder($addresses)
   {
-    $this->gosaMailForwardingAddress= array_remove_entries ($addresses, $this->gosaMailForwardingAddress);
-    $this->is_modified= TRUE;
+    if($this->acl_is_writeable("gosaMailForwardingAddress")){
+      $this->gosaMailForwardingAddress= array_remove_entries ($addresses, $this->gosaMailForwardingAddress);
+      $this->is_modified= TRUE;
+    }else{
+      print_red(_("You are not allowed to write mail forwarding."));
+    }
   }
 
 
   /* Add given mail address to the list of alternate adresses , 
-      check if this mal address is used, skip adding in this case */
+     check if this mal address is used, skip adding in this case */
   function addAlternate($address)
   {
-    $ldap= $this->config->get_ldap_link();
-    $address= strtolower($address);
-      
-    /* Is this address already assigned in LDAP? */
-    $ldap->cd ($this->config->current['BASE']);
-    $ldap->search ("(&(objectClass=gosaMailAccount)(|(mail=$address)"."(gosaMailAlternateAddress=$address)))", array("uid"));
+    if($this->acl_is_writeable("gosaMailAlternateAddress")){
+      $ldap= $this->config->get_ldap_link();
+      $address= strtolower($address);
 
-    if ($ldap->count() > 0){
-      $attrs= $ldap->fetch ();
-      return ($attrs["uid"][0]);
+      /* Is this address already assigned in LDAP? */
+      $ldap->cd ($this->config->current['BASE']);
+      $ldap->search ("(&(objectClass=gosaMailAccount)(|(mail=$address)"."(gosaMailAlternateAddress=$address)))", array("uid"));
+
+      if ($ldap->count() > 0){
+        $attrs= $ldap->fetch ();
+        return ($attrs["uid"][0]);
+      }
+
+      /* Add to list of alternates */
+      if (!in_array($address, $this->gosaMailAlternateAddress)){
+        $this->gosaMailAlternateAddress[]= $address;
+        $this->is_modified= TRUE;
+      }
+
+      sort ($this->gosaMailAlternateAddress);
+      reset ($this->gosaMailAlternateAddress);
+      return ("");
+    }else{
+      print_red(_("You are not allowed to write mail alternate address."));
     }
-
-    /* Add to list of alternates */
-    if (!in_array($address, $this->gosaMailAlternateAddress)){
-      $this->gosaMailAlternateAddress[]= $address;
-      $this->is_modified= TRUE;
-    }
-
-    sort ($this->gosaMailAlternateAddress);
-    reset ($this->gosaMailAlternateAddress);
-    return ("");
   }
 
 
   function delAlternate($addresses)
   {
-    $this->gosaMailAlternateAddress= array_remove_entries ($addresses,
-                                                           $this->gosaMailAlternateAddress);
-    $this->is_modified= TRUE;
+    if($this->acl_is_writeable("gosaMailAlternateAddress")){
+      $this->gosaMailAlternateAddress= array_remove_entries ($addresses,$this->gosaMailAlternateAddress);
+      $this->is_modified= TRUE;
+    }else{
+      print_red(_("You are not allowed to write mail alternate address."));
+    }
   }
 
   function make_name($attrs)
