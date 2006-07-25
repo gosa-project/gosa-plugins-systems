@@ -228,11 +228,16 @@ class sambaAccount extends plugin
     /* Prepare templating */
     $smarty= get_smarty();
 
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $var => $rest){
+      $smarty->assign($var."ACL",$this->getacl($var));
+    }
+
 /* PHP Fehler "Undefined index: sambaPwdMustChangeACL" */
     #hickert test
-    $smarty->assign("sambaPwdMustChangeACL", chkacl($this->acl, "sambaPwdMustChangeACL"));
+#    $smarty->assign("sambaPwdMustChangeACL", chkacl($this->acl, "sambaPwdMustChangeACL"));
     #hickert test
-    $smarty->assign("sambaPwdMustChange",$this->sambaPwdMustChange);
+#    $smarty->assign("sambaPwdMustChange",$this->sambaPwdMustChange);
 
     if ($this->sambaPwdMustChange=="0"){
       $date= getdate();
@@ -448,7 +453,6 @@ class sambaAccount extends plugin
         } else {
           $smarty->assign("$attr", "");
         }
-        $smarty->assign("$attr"."ACL", chkacl($this->acl, $attr));
       }
 
       /* Assign enum values for preset items */
@@ -471,11 +475,11 @@ class sambaAccount extends plugin
 
       /* Fill preset items with values */
       $smarty->assign("shadowmode", $this->mungedObject->getShadow());
-      $smarty->assign("shadowACL", chkacl($this->acl,"shadow"));
+#      $smarty->assign("shadowACL", chkacl($this->acl,"shadow"));
       $smarty->assign("brokenconnmode", $this->mungedObject->getBrokenConn());
-      $smarty->assign("brokenconnACL", chkacl($this->acl,"brokenconn"));
+#      $smarty->assign("brokenconnACL", chkacl($this->acl,"brokenconn"));
       $smarty->assign("reconnmode", $this->mungedObject->getReConn());
-      $smarty->assign("reconnACL", chkacl($this->acl,"reconn"));
+#      $smarty->assign("reconnACL", chkacl($this->acl,"reconn"));
 
       if($_SESSION['js']){
         /* Set form elements to disabled/enable state */
@@ -488,21 +492,21 @@ class sambaAccount extends plugin
 
       /* Set checkboxes to checked or unchecked state */
       $smarty->assign("tslogin", $this->mungedObject->getTsLogin()?"checked":"");
-      $smarty->assign("tsloginACL", chkacl($this->acl,"tslogin"));
+ #     $smarty->assign("tsloginACL", chkacl($this->acl,"tslogin"));
 
       $smarty->assign("inherit", $this->mungedObject->getInheritMode()?"checked":"");
-      $smarty->assign("inheritACL", chkacl($this->acl,"inherit"));
+  #    $smarty->assign("inheritACL", chkacl($this->acl,"inherit"));
 
 
       $smarty->assign("connectclientdrives",
                       $this->mungedObject->getConnectClientDrives()?"checked":"");
-      $smarty->assign("connectclientdrivesACL", chkacl($this->acl,"connectclientdrives"));
+#      $smarty->assign("connectclientdrivesACL", chkacl($this->acl,"connectclientdrives"));
       $smarty->assign("connectclientprinters",
                       $this->mungedObject->getConnectClientPrinters()?"checked":"");
-      $smarty->assign("connectclientprintersACL", chkacl($this->acl,"connectclientprinters"));
+#      $smarty->assign("connectclientprintersACL", chkacl($this->acl,"connectclientprinters"));
       $smarty->assign("defaultprinter",
                       $this->mungedObject->getDefaultPrinter()?"checked":"");
-      $smarty->assign("defaultprinterACL", chkacl($this->acl,"defaultprinter"));
+#      $smarty->assign("defaultprinterACL", chkacl($this->acl,"defaultprinter"));
       $smarty->assign("CtxMaxConnectionTimeF",
                       $this->mungedObject->getCtxMaxConnectionTimeF()?"checked":"");
       $smarty->assign("CtxMaxDisconnectionTimeF",
@@ -525,10 +529,8 @@ class sambaAccount extends plugin
     /* Variables */
     foreach($this->attributes as $val){
       $smarty->assign("$val", $this->$val);
-      $smarty->assign("$val"."ACL", chkacl($this->acl,$val));
     }
 
-    
     /* 'sambaAcctFlags' checkboxes */
     /* Check for 'lock-account'-flag: 'D' or 'L' */
     if (is_integer(strpos($this->sambaAcctFlags, "D")) ||
@@ -571,7 +573,8 @@ class sambaAccount extends plugin
     } else {
       $smarty->assign("flagsK", "");
     }
-    
+   
+  /* 
     $smarty->assign("allow_pwchangeACL",        chkacl($this->acl, "allow_pwchange"));
     $smarty->assign("password_expiresACL",      chkacl($this->acl, "password_expires"));
     $smarty->assign("no_password_requiredACL",  chkacl($this->acl, "no_password_required"));
@@ -583,7 +586,7 @@ class sambaAccount extends plugin
     $smarty->assign("sambaLogonTimeACL",        chkacl($this->acl, "sambaLogonTime"));
     $smarty->assign("sambaLogoffTimeACL",       chkacl($this->acl, "sambaLogoffTime"));
     $smarty->assign("sambaKickoffTimeACL",      chkacl($this->acl, "sambaKickoffTime"));
-
+*/
 
     /* In case of javascript, disable some fields on demand */
     if ($this->samba3){
@@ -1047,14 +1050,18 @@ class sambaAccount extends plugin
           "plProvidedAcls"  => array(
             "AllowLoginOnTerminalServer"  => _("Allow login on terminal server"),
             "InheritClientConfig"         => _("Inherit client config"),
-            "sambaAcctFlags_N"            => _("Login from windows client requires no password"),
-            "sambaAcctFlags_L"            => _("Lock samba account"),
+
+            "sambaPwdCanChange"     => _("Allow user to change password") ,
+            "sambaAcctFlagsN"            => _("Login from windows client requires no password"),
+            "sambaAcctFlagsL"            => _("Lock samba account"),
+
+
+            "sambaKickoffTime"      => _("Account expires") ,
+            "sambaPwdMustChange"    => _("Password expires") ,
 
             "sambaLogonTime"        => _("Limit Logon Time") ,
             "sambaLogoffTime"       => _("Limit Logoff Time") ,
-            "sambaKickoffTime"      => _("Account expires") ,
-            "sambaPwdCanChange"     => _("Allow user to change password") ,
-            "sambaPwdMustChange"    => _("Password expires") ,
+
             "sambaHomePath"         => _("Generic home directory") ,
             "sambaHomeDrive"        => _("Generic samba home drive") ,
             "sambaLogonScript"      => _("Generic script path") ,
