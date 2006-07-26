@@ -18,7 +18,7 @@ class kolabAccount extends plugin
 
   /* Helper */
   var $imapping= array();
-
+  var $mail_Account   = false;
 
   function kolabAccount ($config, $dn= NULL)
   {
@@ -50,6 +50,13 @@ class kolabAccount extends plugin
         $this->is_account = true;
       }
     } 
+
+    /* Transfer account states for this union */
+    if (isset($this->parent) && $this->parent->by_object['mailAccount']->is_account){
+      $this->mail_Account = true;
+    } elseif($this-> initially_was_account && (isset($this->attrs['objectClass']) && (in_array("kolabInetOrgPerson",$this->attrs['objectClass'])))){
+      $this->mail_Account = true;
+    }
   }
 
 
@@ -67,9 +74,16 @@ class kolabAccount extends plugin
     /* Load attributes */
     foreach($this->attributes as $val){
       $smarty->assign("$val", $this->$val);
-      $smarty->assign($val."ACL", chkacl($this->acl, "$val"));
     }
-    $smarty->assign("kolabAccountACL", chkacl($this->acl, "kolabAccountACL"));
+
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $acl => $description){
+      $smarty->assign($acl."ACL",$this->getacl($acl));
+      $smarty->assign($acl."_W", $this->acl_is_writeable($acl));
+    }
+    $smarty->assign("is_account" ,  $this->is_account); 
+    $smarty->assign("is_removeable",$this->acl_is_removeable()); 
+    $smarty->assign("is_createable",$this->acl_is_createable()); 
 
     /* Check for invitation action */
     $nr= 0;
@@ -125,7 +139,7 @@ class kolabAccount extends plugin
 
         if ($valid){
           /* Add it */
-          if (chkacl ($this->acl, "kolabDelegate") == ""){
+          if ($this->acl_is_writeable("kolabDelegate")){
             $this->addDelegate ($address);
             $this->is_modified= TRUE;
           }
@@ -136,9 +150,7 @@ class kolabAccount extends plugin
 
     /* Delete forward email addresses */
     if (isset($_POST['delete_delegation'])){
-      if (count($_POST['delegate_list'])
-          && chkacl ($this->acl, "kolabDelegate") == ""){
-
+      if (count($_POST['delegate_list']) && $this->acl_is_writeable("kolabDelegate")){
         $this->delDelegate ($_POST['delegate_list']);
       }
     }
@@ -158,15 +170,6 @@ class kolabAccount extends plugin
       $smarty->assign('unrestrictedMailSizeState', "");
     }
 
-    /* Transfer account states for this union */
-    if (isset($this->parent) && $this->parent->by_object['mailAccount']->is_account){
-      $smarty->assign('mail_account', 'true');
-    } elseif($this-> initially_was_account && (isset($this->attrs['objectClass']) && (in_array("kolabInetOrgPerson",$this->attrs['objectClass'])))){
-      $smarty->assign('mail_account', 'true');
-    }else{
-      $smarty->assign('mail_account', '');
-    }
-
     /* Transfer delegation list */
     if (!count($this->kolabDelegate)){
       /* Smarty will produce <option value=""></option> and tidy don't like that, so tell smarty to create no option (array();)*/
@@ -174,26 +177,34 @@ class kolabAccount extends plugin
     } else {
       $smarty->assign("kolabDelegate", $this->kolabDelegate);
     }
-    $smarty->assign("kolabDelegateACL", chkacl($this->acl, $this->kolabDelegate));
+
+    $smarty->assign("mail_account",$this->mail_Account);
 
     /* Create InvitationPolicy table */
     $invitation= "";
     $this->imapping= array();
     $nr= 0;
-    $acl= chkacl($this->acl, "kolabInvitationPolicy");
-    $changeState = "";
+    $changeState  = "";
     foreach ($this->kolabInvitationPolicy as $entry){
 
-      $changeState .= "changeState('address".$nr."'); \n changeState('policy".$nr."'); \n
-                         changeState('add".$nr."'); \n changeState('remove".$nr."'); \n";
-
-      $invitation.= "<tr><td>";
-      if($this->is_account){
-        $dis = " ";
-      }else{
-        $dis = " disabled ";
+      if($this->acl_is_writeable("kolabInvitationPolicy")){
+        $changeState .= "changeState('address".$nr."'); \n changeState('policy".$nr."'); \n
+          changeState('add".$nr."'); \n changeState('remove".$nr."'); \n";
       }
-    
+
+      if(!$this->acl_is_writeable("kolabInvitationPolicy")){
+        $dis = " disabled ";
+      }else{
+        if($this->is_account){
+          $dis = " ";
+        }else{
+          $dis = " disabled ";
+        }
+      }
+      $invitation.= "<tr><td>";
+
+      if(!$this->acl_is_readable("kolabInvitationPolicy"))    {
+      }
 
       /* The default entry does not have colons... */
       if (!preg_match('/:/', $entry)){
@@ -203,6 +214,10 @@ class kolabAccount extends plugin
       } else {
         $name= preg_replace('/:.*$/', '', $entry);
         $mode= preg_replace('/^[^:]*: */', '', $entry);
+
+        if(!$this->acl_is_readable("kolabInvitationPolicy")){
+          $name='';
+        }
         $invitation.= "<input name=\"address$nr\" size=16 maxlength=60 $acl value=\"$name\" id='address".$nr."' ".$dis.">";
       }
       $invitation.= "</td>";
@@ -409,17 +424,18 @@ class kolabAccount extends plugin
           "plShortName"     => _("Kolab"),
           "plDescription"   => _("Kolab account settings"),
           "plSelfModify"    => TRUE,
-          "plDepends"       => array("connectivity"),
+          "plDepends"       => array("user"),
           "plPriority"      => 2,                                 // Position in tabs
           "plSection"       => "personal",                        // This belongs to personal
-          "plCategory"      => array("gosaAccount"),
+          "plCategory"      => array("users"),
           "plOptions"       => array(),
 
           "plProvidedAcls"  => array(
             "kolabFreeBusyFuture"   => _("Free busy future"),
             "unrestrictedMailSize"  => _("Mail size restriction"),
             "calFBURL"              => _("Free busy information"),
-            "kolabDelegate"         => _("Delegations"))
+            "kolabDelegate"         => _("Delegations"),
+            "kolabInvitationPolicy" => _("Invitation policy"))
           ));
   }
 }
