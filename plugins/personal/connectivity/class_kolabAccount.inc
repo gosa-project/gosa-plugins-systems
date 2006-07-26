@@ -324,12 +324,16 @@ class kolabAccount extends plugin
     if (isset($_POST['connectivityTab'])){
 
       if(isset($_POST["kolabState"])){
-        $this->is_account = true;
+        if($this->acl_is_createable()){
+          $this->is_account = true;
+        }
       }else{
-        $this->is_account = false;
+        if($this->acl_is_removeable()){
+          $this->is_account = false;
+        }
       }
-
-      if (chkacl('unrestrictedMailSize', $this->acl == "")){
+      
+      if ($this->acl_is_writeable("unrestrictedMailSize")){
         if (isset($_POST['unrestrictedMailSize']) && $_POST['unrestrictedMailSize'] == 1){
           $this->unrestrictedMailSize= 1;
         } else {
@@ -341,25 +345,26 @@ class kolabAccount extends plugin
     plugin::save_object();
 
     /* Save changes done in invitation policies */
-    $nr= 0;
-    $this->kolabInvitationPolicy= array();
-    while (isset($_POST["policy$nr"])){
+    if($this->acl_is_writeable("kolabInvitationPolicy")){
+      $nr= 0;
+      $this->kolabInvitationPolicy= array();
+      while (isset($_POST["policy$nr"])){
 
-      /* Anonymous? */
-      if (!isset($_POST["address$nr"])){
-        $this->kolabInvitationPolicy[]= $_POST["policy$nr"];
-      } else {
-        $this->kolabInvitationPolicy[]= $_POST["address$nr"].": ".$_POST["policy$nr"];
+        /* Anonymous? */
+        if (!isset($_POST["address$nr"])){
+          $this->kolabInvitationPolicy[]= $_POST["policy$nr"];
+        } else {
+          $this->kolabInvitationPolicy[]= $_POST["address$nr"].": ".$_POST["policy$nr"];
+        }
+
+        $nr++;
       }
-      
-      $nr++;
-    }
-    
-    /* If this one is empty, preset with ACT_MANUAL for anonymous users */
-    if (count ($this->kolabInvitationPolicy) == 0){
-      $this->kolabInvitationPolicy= array("ACT_MANUAL");
-    }
 
+      /* If this one is empty, preset with ACT_MANUAL for anonymous users */
+      if (count ($this->kolabInvitationPolicy) == 0){
+        $this->kolabInvitationPolicy= array("ACT_MANUAL");
+      }
+    }
   }
 
 
