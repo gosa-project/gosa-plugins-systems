@@ -2,9 +2,6 @@
 
 function smarty_block_render($params, $text, &$smarty)
 {
-	$text = stripslashes($text);
-	$acl = "";
-
 	/* Skip closing tag </render> */	
 	if(empty($text)) {
 		return("");
