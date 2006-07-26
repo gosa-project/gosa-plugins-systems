@@ -197,13 +197,13 @@ class userinfo
 
           /* Per object ACL? */
           if (isset($subacl['acl'][$object][0])){
-            $acl= $this->mergeACL($acl, $subacl['type'], preg_replace('/[cdm]/', '', $subacl['acl'][$object][0]));
+            $acl= $this->mergeACL($acl, $subacl['type'], $subacl['acl'][$object][0]);
             continue;
           }
 
           /* Global ACL? */
           if (isset($subacl['acl']['all'])){
-            $acl= $this->mergeACL($acl, $subacl['type'], preg_replace('/[cdm]/', '', $subacl['acl']['all'][0]));
+            $acl= $this->mergeACL($acl, $subacl['type'], $subacl['acl']['all'][0]);
             continue;
           }
 
