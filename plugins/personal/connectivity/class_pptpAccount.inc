@@ -1,24 +1,24 @@
 <?php
 
 /*
-  This code is part of GOsa (https://gosa.gonicus.de)
-  Copyright (C) 2005 Guillaume Delecourt
-  Copyright (C) 2005 Benoit Mortier
+   This code is part of GOsa (https://gosa.gonicus.de)
+   Copyright (C) 2005 Guillaume Delecourt
+   Copyright (C) 2005 Benoit Mortier
 
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation; either version 2 of the License, or
-  (at your option) any later version.
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2 of the License, or
+   (at your option) any later version.
 
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-  You should have received a copy of the GNU General Public License
-  along with this program; if not, write to the Free Software
-  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-*/
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 
 class pptpAccount extends plugin
 {
@@ -37,8 +37,8 @@ class pptpAccount extends plugin
 
   function execute()
   {
-	/* Call parent execute */
-//	plugin::execute();
+    /* Call parent execute */
+    //	plugin::execute();
 
     /* Show tab dialog headers */
     $display= "";
@@ -53,8 +53,6 @@ class pptpAccount extends plugin
       $smarty->assign("wstate", "disabled");
     }
 
-
-    
     if(($this->is_account && $this->acl_is_removeable()) || (!$this->is_account && $this->acl_is_createable())) {
       $smarty->assign('gosapptpACL', "");
     }else{
@@ -67,7 +65,7 @@ class pptpAccount extends plugin
 
   function remove_from_parent()
   {
-     if($this->acl_is_removeable())
+    if($this->acl_is_removeable()){
       /* Cancel if there's nothing to do here */
       if (!$this->initially_was_account){
         return;
@@ -150,13 +148,13 @@ class pptpAccount extends plugin
           "plShortName"     => _("PPTP"),
           "plDescription"   => _("PPTP account"),
           "plSelfModify"    => TRUE,
-          "plDepends"       => array("connectivity"),
+          "plDepends"       => array("user"),
           "plPriority"      => 1,                                 // Position in tabs
           "plSection"       => "personal",                        // This belongs to personal
-          "plCategory"      => array("gosaAccount"),
+          "plCategory"      => array("users"),
           "plOptions"       => array(),
 
-          "plProvidedAcls"  => array(
+          "plProvidedAcls"  => array()
           ));
   }
 }
