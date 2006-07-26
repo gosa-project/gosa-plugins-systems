@@ -308,10 +308,8 @@ class tabs
 	foreach ($this->by_object as $name => $obj){
 		if ($first){
 			$first= FALSE;
-echo "Setting base to ".$obj->acl_base."<br>";
 			$base= $obj->acl_base;
 		} else {
-echo "Transfering $base to $name<br>";
 			$obj->set_acl_base($base);
 			$this->by_object[$name]= $obj;
 		}
