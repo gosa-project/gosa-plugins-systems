@@ -1,13 +1,21 @@
 {if !$pg}
 <h2>{t}Open-Xchange Account{/t} - {t}disabled, no Postgresql support detected. Or the specified database can't be reached{/t}</h2>
 {else}
-
+<h2>
 <input type="checkbox" name="oxchange" value="B" 
 	{$oxchangeState} {$oxchangeAccountACL} 
-	onCLick="	changeState('OXAppointmentDays');
-				changeState('OXTaskDays');
-				changeState('OXTimeZone');" >
-<h2>{t}Open-Xchange account{/t}</h2>
+	onCLick="	
+	{if $OXAppointmentDays_W} 
+		changeState('OXAppointmentDays');
+	{/if}
+	{if $OXTaskDays_W} 
+		changeState('OXTaskDays');
+	{/if}
+	{if $OXTimeZone_W} 
+		changeState('OXTimeZone'); 
+	{/if}
+	">
+{t}Open-Xchange account{/t}</h2>
 
 
 <table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding=0 border=0>
@@ -23,11 +31,23 @@
        </tr>
        <tr>
          <td><LABEL for="OXAppointmentDays">{t}Appointment Days{/t}</LABEL></td>
-	 <td><input name="OXAppointmentDays" id="OXAppointmentDays" size=7 maxlength=7 {$OXAppointmentDaysACL} value="{$OXAppointmentDays}" {$oxState}> {t}days{/t}</td>
+	 <td>
+
+{render acl=$OXAppointmentDaysACL}	
+<input name="OXAppointmentDays" id="OXAppointmentDays" size=7 maxlength=7 {$OXAppointmentDaysACL} value="{$OXAppointmentDays}" {$oxState}>
+{/render}
+	 {t}days{/t}</td>
        </tr>
        <tr>
          <td><LABEL for="OXTaskDays">{t}Task Days{/t}</LABEL></td>
-	 <td><input name="OXTaskDays" id="OXTaskDays" size=7 maxlength=7 {$OXTaskDaysACL} value="{$OXTaskDays}" {$oxState}> {t}days{/t}</td>
+	 <td>
+
+{render acl=$OXTaskDaysACL}	
+<input name="OXTaskDays" id="OXTaskDays" size=7 maxlength=7 value="{$OXTaskDays}" {$oxState}>
+{/render}
+
+	 {t}days{/t}
+	</td>
        </tr>
      </table>
    </td>
@@ -43,9 +63,14 @@
        </tr>
        <tr>
          <td><LABEL for="OXTimeZone">{t}User Timezone{/t}</LABEL></td>
-	 <td><select size="1" name="OXTimeZone" id="OXTimeZone" {$OXTimeZoneACL} {$oxState}> 
-	 {html_options values=$timezones output=$timezones selected=$OXTimeZone}
-	 </select>
+	 <td>
+
+{render acl=$OXTimeZoneACL}	
+<select size="1" name="OXTimeZone" id="OXTimeZone" {$oxState}> 
+ {html_options values=$timezones output=$timezones selected=$OXTimeZone}
+ </select>
+{/render}
+
 	 </td>
        </tr>
        <tr>

@@ -29,11 +29,12 @@ class oxchangeAccount extends plugin
   var $OXTaskDays="5";
   var $OXTimeZone="GMT";
   var $mailEnabled="OK";
+  var $dnModeValue = "";
 
   /* attribute list for save action */
   var $attributes= array("OXAppointmentDays", "OXTaskDays", "OXTimeZone","mailEnabled");
   var $objectclasses= array("OXUserObject");
-
+  var $ReadOnly =false;
   var $oxconf = array();
   var $timezones=array(
       "Africa/Abidjan",
@@ -588,6 +589,7 @@ class oxchangeAccount extends plugin
     }
 
     $this->dnmode= $this->config->current['DNMODE'];
+    $this->dnModeValue = $this->attrs[$this->dnmode][0];
   }
 
   function execute()
@@ -595,29 +597,9 @@ class oxchangeAccount extends plugin
 	/* Call parent execute */
 	//plugin::execute();
   
-    print_red(_("New ACLs are not implemeneted yet."));
 
 	$display="";
-    /* Show tab dialog headers  * /
-    $display="";
-    if ($this->parent != NULL){
-      if ($this->is_account){
-	$display="";
-      } else {
-        $obj= $this->parent->by_object['posixAccount'];
-	$obj2= $this->parent->by_object['mailAccount'];
-        if (! $obj->is_account){
-          $display= "<BR><BR><CENTER>".sprintf(_("This account has %s features disabled. Posix features are needed for openXchange accounts, enable them first."), "<b>"._("OpenXchange")."</b>")."</CENTER><BR><BR>";
 
-        } else {
-	  if (! $obj2->is_account){
-	    $display= "<BR><BR><CENTER>".sprintf(_("This account has %s features disabled. Mail features are needed for openXchange accounts, enable them first."), "<b>"._("OpenXchange")."</b>")."</CENTER><BR><BR>";
-            return ($display);
-	  }
-        }
-      }
-    }
-*/
     /* Show main page */
     $smarty= get_smarty();
 
@@ -630,15 +612,25 @@ class oxchangeAccount extends plugin
     /* Load attributes */
     foreach($this->attributes as $val){
       $smarty->assign("$val", $this->$val);
-      $smarty->assign($val."ACL", chkacl($this->acl, "$val"));
     }
-    $smarty->assign("oxchangeAccountACL", chkacl($this->acl, "oxchangeAccount"));
     if ($this->is_account){
       $smarty->assign("oxchangeState", "checked");
       $smarty->assign("oxState", "");
     } else {
       $smarty->assign("oxchangeState", "");
       $smarty->assign("oxState", "disabled");
+    }
+
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $key => $desc){
+      $smarty->assign($key."ACL",$this->getacl($key,$this->ReadOnly));
+      $smarty->assign($key."_W",$this->acl_is_writeable($key));
+    }
+
+    if((!$this->ReadOnly) && (($this->is_account && $this->acl_is_removeable()) || (!$this->is_account && $this->acl_is_createable())) ){
+      $smarty->assign('oxchangeAccountACL', "");
+    }else{
+      $smarty->assign('oxchangeAccountACL', " disabled ");
     }
 
     $smarty->assign("timezones", $this->timezones);
@@ -670,6 +662,8 @@ class oxchangeAccount extends plugin
 
   function remove_from_parent()
   {
+    if(!$this->acl_is_removeable())  return;
+    $this->attrs[$this->dnmode][0] = $this->dnModeValue;
     $sqldeluser=array(
         "delete from prg_notes where (user_right like '".$this->attrs[$this->dnmode][0]."') and (group_right like 's')",
         "delete from prg_documents_read where (user_right like '".$this->attrs[$this->dnmode][0]."')",
@@ -744,7 +738,7 @@ class oxchangeAccount extends plugin
 
     /* Finally remove data from postgresql server */
     foreach ($sqldeluser as $sqls){
-      pg_exec($pgcon,$sqls);
+       @pg_exec($pgcon,$sqls);
     }
     pg_close();
   }
@@ -755,15 +749,26 @@ class oxchangeAccount extends plugin
     /* Do we need to flip is_account state? */
     if (isset($_POST['connectivityTab'])){
       if (isset($_POST['oxchange'])){
-        if (!$this->is_account && $_POST['oxchange'] == "B"){
-          $this->is_account= TRUE;
+        if (!$this->is_account && $_POST['oxchange'] == "B") {
+          if($this->acl_is_createable()){
+            $this->is_account= TRUE;
+          }
         }
       } else {
-        $this->is_account= FALSE;
+        if($this->acl_is_removeable()){
+          $this->is_account= FALSE;
+        }
       }
     }
 
-    plugin::save_object();
+    /* Get objects */
+    foreach(array("OXTimeZone","OXTaskDays","OXAppointmentDays") as $name) {
+      if($this->acl_is_writeable($name) && isset($_POST[$name])){
+        $this->$name = $_POST[$name];
+      } 
+    }
+  
+//    plugin::save_object();
     if (isset($_POST["oxchangeStatus"])){
       $this->oxchangeStatus = "disabled";
     } else {
@@ -846,35 +851,34 @@ class oxchangeAccount extends plugin
       $os = "insert into oxfolder_standardfolders (owner,module_calendar,module_contact,module_task) VALUES ('%s',%d,%d,%d)";
       $ugr= "INSERT INTO usr_general_rights SELECT creating_date, created_from, changing_date, changed_from,text('%s'),  addr_u, addr_r, addr_d, cont_u, cont_r, cont_d, data_u, data_r, data_d, serie_u, serie_r, serie_d, task_u, task_r, task_d,  refer, proj_u, proj_r, proj_d, dfolder_u, dfolder_r, dfolder_d, doc_u, doc_r, doc_d, knowl_u, knowl_r, knowl_d, bfolder_u,  bfolder_r, bfolder_d, bookm_u, bookm_r, bookm_d, pin_u, pin_r, pin_d, forum_n, fentrie_n, setup, pin_public, internal,  int_groups, kfolder_u, kfolder_r, kfolder_d, webmail FROM sys_gen_rights_template WHERE login LIKE 'default_template'";
 
-      $res=pg_exec($pgcon,$nv); $calendarid=pg_fetch_row($res); pg_freeresult($res);
+      $res=@pg_exec($pgcon,$nv); $calendarid=pg_fetch_row($res); pg_freeresult($res);
       $q=sprintf($ot,$calendarid[0],'My Appointments','calendar',$uid,$uid);
-      pg_exec($pgcon,$q);
-      $res=pg_exec($pgcon,$nv); $nid=pg_fetch_row($res); pg_freeresult($res);
+      @pg_exec($pgcon,$q);
+      $res=@pg_exec($pgcon,$nv); $nid=pg_fetch_row($res); pg_freeresult($res);
       $q=sprintf($op,$nid[0],$calendarid[0],$uid);
-      pg_exec($pgcon,$q);
-      $res=pg_exec($pgcon,$nv); $contactsid=pg_fetch_row($res); pg_freeresult($res);
+      @pg_exec($pgcon,$q);
+      $res=@pg_exec($pgcon,$nv); $contactsid=pg_fetch_row($res); pg_freeresult($res);
       $q=sprintf($ot,$contactsid[0],'My Contacts','contact',$uid,$uid);
-      pg_exec($pgcon,$q);
-      $res=pg_exec($pgcon,$nv); $nid=pg_fetch_row($res); pg_freeresult($res);
+      @pg_exec($pgcon,$q);
+      $res=@pg_exec($pgcon,$nv); $nid=pg_fetch_row($res); pg_freeresult($res);
       $q=sprintf($op,$nid[0],$contactsid[0],$uid);
-      pg_exec($pgcon,$q);
-      $res=pg_exec($pgcon,$nv); $tasksid=pg_fetch_row($res); pg_freeresult($res);
+      @pg_exec($pgcon,$q);
+      $res=@pg_exec($pgcon,$nv); $tasksid=pg_fetch_row($res); pg_freeresult($res);
       $q=sprintf($ot,$tasksid[0],'My Tasks','task',$uid,$uid);
-      pg_exec($pgcon,$q);
-      $res=pg_exec($pgcon,$nv); $nid=pg_fetch_row($res); pg_freeresult($res);
+      @pg_exec($pgcon,$q);
+      $res=@pg_exec($pgcon,$nv); $nid=pg_fetch_row($res); pg_freeresult($res);
       $q=sprintf($op,$nid[0],$tasksid[0],$uid);
-      pg_exec($pgcon,$q);
+      @pg_exec($pgcon,$q);
       $q=sprintf($os,$uid,$calendarid[0],$contactsid[0],$tasksid[0]);
-      pg_exec($pgcon,$q);
+      @pg_exec($pgcon,$q);
       $q=sprintf($ugr,$uid);
-      pg_exec($pgcon,$q);
+      qpg_exec($pgcon,$q);
       pg_close($pgcon);
     }
   }
 
 
-  /* Return plugin informations for acl handling
-    #FIXME ACL attributes aren't translated yet.	*/
+  /* Return plugin informations for acl handling */
   function plInfo()
   {
     return (array(
@@ -888,9 +892,8 @@ class oxchangeAccount extends plugin
           "plOptions"       => array(),
 
           "plProvidedAcls"  => array(
-            "OXAppointmentDays" => "!!! FIXME "._("OXAppointmentDays"),
+            "OXAppointmentDays" => _("OXAppointmentDays"),
             "OXTaskDays"   	    => _("OXTaskDays"),
-            "mailEnabled"   	  => _("mailEnabled"),
             "OXTimeZone"   	    => _("OXTimeZone"))
           ));
   }
