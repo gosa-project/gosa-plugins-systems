@@ -138,8 +138,7 @@ class webdavAccount extends plugin
           "plCategory"      => array("users"),
           "plOptions"       => array(),
 
-          "plProvidedAcls"  => array(
-            "gosaWebdavAccount" => "!!! FIXME "._("WebDAV account"))
+          "plProvidedAcls"  => array()
           ));
   }
 }
