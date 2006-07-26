@@ -37,7 +37,11 @@ class webdavAccount extends plugin
       $smarty->assign("tabbed", 1);
     }
 
-    $smarty->assign('webdavAccountACL', chkacl($this->acl, 'webdavAccount'));
+    if(($this->is_account && $this->acl_is_removeable()) || (!$this->is_account && $this->acl_is_createable())) {
+      $smarty->assign('webdavAccountACL', "");
+    }else{
+      $smarty->assign('webdavAccountACL', " disabled ");
+    }
 
     $display.= $smarty->fetch (get_template_path('webdav.tpl', TRUE, dirname(__FILE__)));
     return ($display);
@@ -75,10 +79,14 @@ class webdavAccount extends plugin
     if (isset($_POST['connectivityTab'])){
       if (isset($_POST['webdav'])){
         if (!$this->is_account && $_POST['webdav'] == "B"){
-          $this->is_account= TRUE;
+          if($this->acl_is_createable()){
+            $this->is_account= TRUE;
+          }
         }
       } else {
-        $this->is_account= FALSE;
+        if($this->acl_is_removeable()){
+          $this->is_account= FALSE;
+        }
       }
     }
 
@@ -124,10 +132,10 @@ class webdavAccount extends plugin
           "plShortName"     => _("WebDAV"),
           "plDescription"   => _("WebDAV account"),
           "plSelfModify"    => TRUE,
-          "plDepends"       => array("connectivity"),
+          "plDepends"       => array("user"),
           "plPriority"      => 9,                                 // Position in tabs
           "plSection"       => "personal",                        // This belongs to personal
-          "plCategory"      => array("gosaAccount"),
+          "plCategory"      => array("users"),
           "plOptions"       => array(),
 
           "plProvidedAcls"  => array(

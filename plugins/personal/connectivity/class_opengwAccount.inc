@@ -336,10 +336,10 @@ class opengwAccount extends plugin
           "plShortName"     => _("Opengroupware"),
           "plDescription"   => _("Open groupware account settings"),
           "plSelfModify"    => TRUE,
-          "plDepends"       => array("connectivity"),
+          "plDepends"       => array("user"),
           "plPriority"      => 3,                                 // Position in tabs
           "plSection"       => "personal",                        // This belongs to personal
-          "plCategory"      => array("gosaAccount"),
+          "plCategory"      => array("users"),
           "plOptions"       => array(),
 
           "plProvidedAcls"  => array(

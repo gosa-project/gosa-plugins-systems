@@ -164,7 +164,7 @@ class connectivity extends plugin
     }
   }
 
-  /* Return plugin informations for acl handling 
+/* Return plugin informations for acl handling 
 #FIXME We should check here, if the user has access to one of the subClasses */ 
   function plInfo()
   {
@@ -177,8 +177,7 @@ class connectivity extends plugin
           "plSection"       => "personal",                        // This belongs to personal
           "plCategory"      => array("users"),
           "plOptions"       => array(),
-          "plProvidedAcls"  => array(
-            "connectivity"      => "!!! FIXME "._("Connectivity  account"))
+          "plProvidedAcls"  => array()
           ));
   }
 }

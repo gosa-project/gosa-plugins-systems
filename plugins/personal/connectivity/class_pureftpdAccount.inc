@@ -48,7 +48,6 @@ class pureftpdAccount extends plugin
       $smarty->assign($key."_W", $this->acl_is_writeable($key));
   
       if($this->acl_is_writeable($key)){
-        echo "JOP";
         $changeState.= " changeState('".$key."'); \n";
       }
     }

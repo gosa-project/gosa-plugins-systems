@@ -881,10 +881,10 @@ class oxchangeAccount extends plugin
           "plShortName"     => _("Open xchange"),
           "plDescription"   => _("Open xchange account settings"),
           "plSelfModify"    => TRUE,
-          "plDepends"       => array("connectivity"),
+          "plDepends"       => array("user"),
           "plPriority"      => 4,                                 // Position in tabs
           "plSection"       => "personal",                        // This belongs to personal
-          "plCategory"      => array("gosaAccount"),
+          "plCategory"      => array("users"),
           "plOptions"       => array(),
 
           "plProvidedAcls"  => array(
