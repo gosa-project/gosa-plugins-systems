@@ -27,6 +27,7 @@ class acl extends plugin
   var $currentIndex= 0;
   var $wasNewEntry= FALSE;
   var $ocMapping= array();
+  var $multiClass= array();
   var $savedAclContents= array();
 
 
@@ -106,6 +107,11 @@ class acl extends plugin
       /* Only feed categories */
       if (isset($acls['plCategory'])){
 
+        /* Find multi homed classes */
+        if (count($acls['plCategory']) > 1){
+          $this->multiClass[]= $class;
+        }
+
         /* Walk through supplied list and feed only translated categories */
         foreach($acls['plCategory'] as $idx => $data){
 
@@ -145,7 +151,6 @@ class acl extends plugin
 
     /* Sort categories */
     asort($this->aclObjects);
-
 
     /* Fill acl types */
     if ($this->isContainer){
@@ -377,6 +382,13 @@ class acl extends plugin
         foreach($this->ocMapping[$section] as $oc){
           if (isset($this->aclContents[$oc]) && count($this->aclContents[$oc]) && isset($this->aclContents[$oc][0]) &&
               $this->aclContents[$oc][0] != ""){
+
+            $summary.= "$oc, ";
+            continue;
+          }
+          if (isset($this->aclContents["$section/$oc"]) && count($this->aclContents["$section/$oc"]) && isset($this->aclContents["$section/$oc"][0]) &&
+              $this->aclContents["$section/$oc"][0] != ""){
+
             $summary.= "$oc, ";
             continue;
           }
