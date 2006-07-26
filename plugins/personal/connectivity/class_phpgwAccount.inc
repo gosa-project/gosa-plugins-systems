@@ -41,7 +41,11 @@ class phpgwAccount extends plugin
       $smarty->assign("phpgwState", "");
     }
 
-    $smarty->assign('phpgwAccountACL', chkacl($this->acl, 'phpgwAccount'));
+    if(($this->is_account && $this->acl_is_removeable()) || (!$this->is_account && $this->acl_is_createable())) {
+      $smarty->assign('phpgwAccountACL', "");
+    }else{
+      $smarty->assign('phpgwAccountACL', " disabled ");
+    }
 
     $display.= $smarty->fetch (get_template_path('phpgw.tpl', TRUE, dirname(__FILE__)));
     return ($display);
@@ -49,7 +53,7 @@ class phpgwAccount extends plugin
 
   function remove_from_parent()
   {
-    if(chkacl($this->acl,"phpgwAccount") == ""){
+    if($this->acl_is_removeable()){
       /* Cancel if there's nothing to do here */
       if (!$this->initially_was_account){
         return;
@@ -79,10 +83,14 @@ class phpgwAccount extends plugin
     if (isset($_POST['connectivityTab'])){
       if (isset($_POST['phpgw'])){
         if (!$this->is_account && $_POST['phpgw'] == "B"){
-          $this->is_account= TRUE;
+          if($this->acl_is_createable()){
+            $this->is_account= TRUE;
+          }
         }
       } else {
-        $this->is_account= FALSE;
+        if($this->acl_is_removeable()){
+          $this->is_account= FALSE;
+        }
       }
     }
 
@@ -98,47 +106,41 @@ class phpgwAccount extends plugin
   /* Save to LDAP */
   function save()
   {
-    if(chkacl($this->acl,"phpgwAccount") == ""){
-      plugin::save();
-      
-      /* Write back to ldap */
-      $ldap= $this->config->get_ldap_link();
-      $ldap->cd($this->dn);
-      $this->cleanup();
-      $ldap->modify ($this->attrs); 
+    plugin::save();
 
-      show_ldap_error($ldap->get_error(), sprintf(_("Saving of user/PHPgw account with dn '%s' failed."),$this->dn));
+    /* Write back to ldap */
+    $ldap= $this->config->get_ldap_link();
+    $ldap->cd($this->dn);
+    $this->cleanup();
+    $ldap->modify ($this->attrs); 
 
-      /* Optionally execute a command after we're done */
-      if ($this->initially_was_account == $this->is_account){
-        if ($this->is_modified){
-          $this->handle_post_events("mofify");
-        }
-      } else {
-        $this->handle_post_events("add");
+    show_ldap_error($ldap->get_error(), sprintf(_("Saving of user/PHPgw account with dn '%s' failed."),$this->dn));
+
+    /* Optionally execute a command after we're done */
+    if ($this->initially_was_account == $this->is_account){
+      if ($this->is_modified){
+        $this->handle_post_events("mofify");
       }
+    } else {
+      $this->handle_post_events("add");
     }
   }
 
 
-  /* Return plugin informations for acl handling 
-    #FIME ACL attributes arn't translated yet */
+  /* Return plugin informations for acl handling */
   function plInfo()
   {
     return (array(
           "plShortName"     => _("PHP GW"),
           "plDescription"   => _("PHP GW account settings"),
           "plSelfModify"    => TRUE,
-          "plDepends"       => array("connectivity"),
+          "plDepends"       => array("user"),
           "plPriority"      => 5,                                 // Position in tabs
           "plSection"       => "personal",                        // This belongs to personal
-          "plCategory"      => array("gosaAccount"),
+          "plCategory"      => array("users"),
           "plOptions"       => array(),
 
-          "plProvidedAcls"  => array(
-          "phpgwAccountExpires" =>"!!! FIXME "._("phpgwAccountExpires"),
-          "phpgwAccountStatus"  =>_("phpgwAccountStatus"),
-          "phpgwAccountType"    =>_("phpgwAccountType"))
+          "plProvidedAcls"  => array()
           ));
   }
 }
