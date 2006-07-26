@@ -12,6 +12,11 @@ class usertabs extends tabs
     /* Add references/acls/snapshots */
     $this->addSpecialTabs();
     $this->set_acl_base();
+
+    /* Set category for environment tab */
+    if (isset($this->by_object['environment'])){
+      $this->by_object['environment']->set_acl_category('users');
+    }
   }
 
   function save_object($save_current= FALSE)

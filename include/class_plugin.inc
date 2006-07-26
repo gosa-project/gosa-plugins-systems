@@ -109,6 +109,7 @@ class plugin
   var $saved_attributes= array();
 
   var $acl_base= "";
+  var $acl_category= "";
 
   /* Plugin identifier */
   var $plHeadline= "";
@@ -1410,38 +1411,44 @@ echo "FIXME: remove_snapshot uses old acl's<br>";
   }
 
 
+  function set_acl_category($category)
+  {
+    $this->acl_category= "$category/";
+  }
+
+
   function acl_is_writeable($attribute,$skip_write = FALSE)
   {
     $ui= get_userinfo();
-    return preg_match('/w/', $ui->get_permissions($this->acl_base, get_class($this), $attribute,$skip_write));
+    return preg_match('/w/', $ui->get_permissions($this->acl_base, $this->acl_category.get_class($this), $attribute, $skip_write));
   }
 
 
   function acl_is_readable($attribute)
   {
     $ui= get_userinfo();
-    return preg_match('/r/', $ui->get_permissions($this->acl_base, get_class($this), $attribute));
+    return preg_match('/r/', $ui->get_permissions($this->acl_base, $this->acl_category.get_class($this), $attribute));
   }
 
 
   function acl_is_createable()
   {
     $ui= get_userinfo();
-    return preg_match('/c/', $ui->get_permissions($this->acl_base, get_class($this), '0'));
+    return preg_match('/c/', $ui->get_permissions($this->acl_base, $this->acl_category.get_class($this), '0'));
   }
 
 
   function acl_is_removeable()
   {
     $ui= get_userinfo();
-    return preg_match('/d/', $ui->get_permissions($this->acl_base, get_class($this), '0'));
+    return preg_match('/d/', $ui->get_permissions($this->acl_base, $this->acl_category.get_class($this), '0'));
   }
 
 
   function acl_is_moveable()
   {
     $ui= get_userinfo();
-    return preg_match('/m/', $ui->get_permissions($this->acl_base, get_class($this), '0'));
+    return preg_match('/m/', $ui->get_permissions($this->acl_base, $this->acl_category.get_class($this), '0'));
   }
 
 
@@ -1453,7 +1460,7 @@ echo "FIXME: remove_snapshot uses old acl's<br>";
   function getacl($attribute,$skip_write= FALSE)
   {
     $ui= get_userinfo();
-    return  $ui->get_permissions($this->acl_base, get_class($this), $attribute,$skip_write);
+    return  $ui->get_permissions($this->acl_base, $this->acl_category.get_class($this), $attribute,$skip_write);
   }
 
 
