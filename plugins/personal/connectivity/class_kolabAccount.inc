@@ -19,6 +19,7 @@ class kolabAccount extends plugin
   /* Helper */
   var $imapping= array();
   var $mail_Account   = false;
+  var $ReadOnly = false;
 
   function kolabAccount ($config, $dn= NULL)
   {
@@ -78,12 +79,18 @@ class kolabAccount extends plugin
 
     $tmp = $this->plInfo();
     foreach($tmp['plProvidedAcls'] as $acl => $description){
-      $smarty->assign($acl."ACL",$this->getacl($acl));
-      $smarty->assign($acl."_W", $this->acl_is_writeable($acl));
+      $smarty->assign($acl."ACL",$this->getacl($acl,$this->ReadOnly));
+      $smarty->assign($acl."_W", $this->acl_is_writeable($acl,$this->ReadOnly));
     }
     $smarty->assign("is_account" ,  $this->is_account); 
-    $smarty->assign("is_removeable",$this->acl_is_removeable()); 
-    $smarty->assign("is_createable",$this->acl_is_createable()); 
+
+    if($this->ReadOnly){
+      $smarty->assign("is_removeable",false); 
+      $smarty->assign("is_createable",false); 
+    }else{
+      $smarty->assign("is_removeable",$this->acl_is_removeable()); 
+      $smarty->assign("is_createable",$this->acl_is_createable()); 
+    }
 
     /* Check for invitation action */
     $nr= 0;

@@ -21,6 +21,7 @@ class pureftpdAccount extends plugin
   var $attributes= array("FTPQuotaFiles","FTPQuotaMBytes","FTPUploadRatio","FTPDownloadRatio",
       "FTPUploadBandwidth","FTPDownloadBandwidth","FTPStatus","FTPuid","FTPgid");
   var $objectclasses= array("PureFTPdUser");
+  var $ReadOnly;
 
   function pureftpdAccount ($config, $dn= NULL)
   {
@@ -44,8 +45,8 @@ class pureftpdAccount extends plugin
     $tmp = $this->plInfo();
     $changeState = "";
     foreach($tmp['plProvidedAcls'] as $key => $desc){
-      $smarty->assign($key."ACL", $this->getacl($key));
-      $smarty->assign($key."_W", $this->acl_is_writeable($key));
+      $smarty->assign($key."ACL", $this->getacl($key,$this->ReadOnly));
+      $smarty->assign($key."_W", $this->acl_is_writeable($key,$this->ReadOnly));
   
       if($this->acl_is_writeable($key)){
         $changeState.= " changeState('".$key."'); \n";
@@ -69,7 +70,7 @@ class pureftpdAccount extends plugin
     }
     $smarty->assign("use_FTPStatus", ($this->FTPStatus == "disabled") ? "checked" : "");
     
-    if(($this->is_account && $this->acl_is_removeable()) || (!$this->is_account && $this->acl_is_createable())) {
+    if((!$this->ReadOnly)&&($this->is_account && $this->acl_is_removeable()) || (!$this->is_account && $this->acl_is_createable())) {
       $smarty->assign('pureftpdACL', "");
     }else{
       $smarty->assign('pureftpdACL', " disabled ");

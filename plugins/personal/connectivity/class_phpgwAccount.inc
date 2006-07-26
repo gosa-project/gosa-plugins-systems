@@ -13,6 +13,7 @@ class phpgwAccount extends plugin
   /* attribute list for save action */
   var $attributes= array("phpgwAccountExpires", "phpgwAccountStatus", "phpgwAccountType");
   var $objectclasses= array("phpgwAccount");
+  var $ReadOnly = false;
 
   function phpgwAccount ($config, $dn= NULL)
   {
@@ -41,7 +42,7 @@ class phpgwAccount extends plugin
       $smarty->assign("phpgwState", "");
     }
 
-    if(($this->is_account && $this->acl_is_removeable()) || (!$this->is_account && $this->acl_is_createable())) {
+    if((!$this->ReadOnly)&&($this->is_account && $this->acl_is_removeable()) || (!$this->is_account && $this->acl_is_createable())) {
       $smarty->assign('phpgwAccountACL', "");
     }else{
       $smarty->assign('phpgwAccountACL', " disabled ");

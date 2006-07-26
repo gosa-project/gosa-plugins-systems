@@ -30,6 +30,8 @@ class pptpAccount extends plugin
   var $attributes= array();
   var $objectclasses= array("pptpServerAccount");
 
+  var $ReadOnly = false;
+
   function pptpAccount ($config, $dn= NULL)
   {
     plugin::plugin ($config, $dn);
@@ -53,7 +55,7 @@ class pptpAccount extends plugin
       $smarty->assign("wstate", "disabled");
     }
 
-    if(($this->is_account && $this->acl_is_removeable()) || (!$this->is_account && $this->acl_is_createable())) {
+    if((!$this->ReadOnly) && ($this->is_account && $this->acl_is_removeable()) || (!$this->is_account && $this->acl_is_createable())) {
       $smarty->assign('gosapptpACL', "");
     }else{
       $smarty->assign('gosapptpACL', " disabled ");

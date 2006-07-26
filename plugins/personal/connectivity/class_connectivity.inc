@@ -77,7 +77,11 @@ class connectivity extends plugin
 
     /* Execude  objects */
     $is_first= true;
+
+    $ReadOnly = (!is_object($this->parent) && !isset($_SESSION['edit']));
+
     foreach ($this->plugin_name as $name){
+      $this->plugin[$name]->ReadOnly = $ReadOnly;
       if (!$is_first){
         $display.= '<p class="seperator">&nbsp;</p>';
       } else {

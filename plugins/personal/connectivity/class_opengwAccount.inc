@@ -31,6 +31,7 @@ class opengwAccount extends plugin
 	var $is_account           = false;
 	var $initialy_was_account = false;
   var $OGWPassword          = "";
+  var $ReadOnly = false;
 
 	function opengwAccount ($config, $dn= NULL)
 	{

@@ -30,6 +30,7 @@ class phpscheduleitAccount extends plugin
   /* attribute list for save action */
   var $attributes= array();
   var $objectclasses= array("phpscheduleitAccount");
+  var $ReadOnly =false;
 
   function phpscheduleitAccount ($config, $dn= NULL)
   {
@@ -51,7 +52,7 @@ class phpscheduleitAccount extends plugin
       $smarty->assign("wstate", "disabled");
     }
 
-    if(($this->is_account && $this->acl_is_removeable()) || (!$this->is_account && $this->acl_is_createable())) {
+    if((!$this->ReadOnly) && (($this->is_account && $this->acl_is_removeable()) || (!$this->is_account && $this->acl_is_createable()))) {
       $smarty->assign('gosaphpscheduleitACL', "");
     }else{
       $smarty->assign('gosaphpscheduleitACL', " disabled ");

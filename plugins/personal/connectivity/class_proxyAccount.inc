@@ -17,6 +17,7 @@ class proxyAccount extends plugin
   var $attributes= array("gosaProxyID", "gosaProxyAcctFlags", "gosaProxyWorkingStart",
       "gosaProxyWorkingStop", "gosaProxyQuota", "gosaProxyQuotaPeriod");
   var $objectclasses= array("gosaProxyAccount");
+  var $ReadOnly = false;
 
   function proxyAccount ($config, $dn= NULL)
   {
@@ -34,7 +35,7 @@ class proxyAccount extends plugin
     $smarty= get_smarty();
 
     
-    if(($this->is_account && $this->acl_is_removeable()) || (!$this->is_account && $this->acl_is_createable())) {
+    if((!$this->ReadOnly)&& ($this->is_account && $this->acl_is_removeable()) || (!$this->is_account && $this->acl_is_createable())) {
       $smarty->assign('proxyAccountACL', "");
     }else{
       $smarty->assign('proxyAccountACL', " disabled ");
@@ -63,8 +64,8 @@ class proxyAccount extends plugin
 
     $tmp = $this->plInfo();
     foreach($tmp['plProvidedAcls'] as $acl => $desc){
-      $smarty->assign($acl."ACL",$this->getacl($acl));
-      $smarty->assign($acl."_W",$this->acl_is_writeable($acl));
+      $smarty->assign($acl."ACL",$this->getacl($acl,$this->ReadOnly));
+      $smarty->assign($acl."_W",$this->acl_is_writeable($acl,$this->ReadOnly));
     }
 
     /* Assign working time */
