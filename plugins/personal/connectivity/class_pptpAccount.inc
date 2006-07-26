@@ -53,7 +53,13 @@ class pptpAccount extends plugin
       $smarty->assign("wstate", "disabled");
     }
 
-    $smarty->assign('gosapptpACL', chkacl($this->acl, 'gosapptp'));
+
+    
+    if(($this->is_account && $this->acl_is_removeable()) || (!$this->is_account && $this->acl_is_createable())) {
+      $smarty->assign('gosapptpACL', "");
+    }else{
+      $smarty->assign('gosapptpACL', " disabled ");
+    }
 
     $display.= $smarty->fetch (get_template_path('pptp.tpl', TRUE, dirname(__FILE__)));
     return ($display);
@@ -61,7 +67,7 @@ class pptpAccount extends plugin
 
   function remove_from_parent()
   {
-    if(chkacl($this->acl, 'gosapptp') == ""){
+     if($this->acl_is_removeable())
       /* Cancel if there's nothing to do here */
       if (!$this->initially_was_account){
         return;
@@ -91,10 +97,14 @@ class pptpAccount extends plugin
     if (isset($_POST['connectivityTab'])){
       if (isset($_POST['pptp'])){
         if (!$this->is_account && $_POST['pptp'] == "B"){
-          $this->is_account= TRUE;
+          if($this->acl_is_createable()){
+            $this->is_account= TRUE;
+          }
         }
       } else {
-        $this->is_account= FALSE;
+        if($this->acl_is_removeable()){
+          $this->is_account= FALSE;
+        }
       }
     }
 
@@ -133,8 +143,7 @@ class pptpAccount extends plugin
   }
 
 
-  /* Return plugin informations for acl handling 
-      #FIXME This is only an enable/disable checkbox for this account, there is possibly a better solution available later */ 
+  /* Return plugin informations for acl handling */ 
   function plInfo()
   {
     return (array(
@@ -148,7 +157,6 @@ class pptpAccount extends plugin
           "plOptions"       => array(),
 
           "plProvidedAcls"  => array(
-            "pptpServerAccount" => "!!! FIXME "._("PPTP account"))
           ));
   }
 }
