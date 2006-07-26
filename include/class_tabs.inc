@@ -33,7 +33,7 @@ class tabs
   var $by_object= array();
   var $SubDialog = false;
 
-  function tabs($config, $data, $dn)
+  function tabs($config, $data, $dn, $acl_category= "")
   {
 	/* Save dn */
 	$this->dn= $dn;
@@ -43,13 +43,13 @@ class tabs
 		$this->by_name[$tab['CLASS']]= $tab['NAME'];
 		$this->by_object[$tab['CLASS']]= new $tab['CLASS']($this->config, $this->dn);
 		$this->by_object[$tab['CLASS']]->parent= &$this;
+		$this->by_object[$tab['CLASS']]->set_acl_category($acl_category);
 
 		/* Initialize current */
 		if ($this->current == ""){
 			$this->current= $tab['CLASS'];
 		}
 	}
-
   }
 
   function execute()

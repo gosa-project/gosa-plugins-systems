@@ -46,6 +46,12 @@ class pluglist {
                                 $this->info[$cname]= @call_user_func(array($cname, 'plInfo'));
                         }
                 }
+
+		/* Provide field for 'all' */
+		$this->info['all']= array();
+		$this->info['all']['plProvidedAcls']= array();
+		$this->info['all']['plDescription']= _("All objects in this category");
+		$this->info['all']['plSelfModify']= FALSE;
 	}
 
 	function get_plugins($list, $config)

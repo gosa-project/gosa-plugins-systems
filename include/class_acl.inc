@@ -27,7 +27,6 @@ class acl extends plugin
   var $currentIndex= 0;
   var $wasNewEntry= FALSE;
   var $ocMapping= array();
-  var $multiClass= array();
   var $savedAclContents= array();
 
 
@@ -107,11 +106,6 @@ class acl extends plugin
       /* Only feed categories */
       if (isset($acls['plCategory'])){
 
-        /* Find multi homed classes */
-        if (count($acls['plCategory']) > 1){
-          $this->multiClass[$class]= $class;
-        }
-
         /* Walk through supplied list and feed only translated categories */
         foreach($acls['plCategory'] as $idx => $data){
 
@@ -134,21 +128,13 @@ class acl extends plugin
             if (is_array($data['objectClass'])){
               foreach($data['objectClass'] as $objectClass){
                 if (in_array_ics($objectClass, $oc)){
-                  if (isset($this->multiClass[$class])){
-                    $this->myAclObjects[$idx.'/'.$class]= $acls['plDescription'];
-                  } else {
-                    $this->myAclObjects[$class]= $acls['plDescription'];
-                  }
+                  $this->myAclObjects[$idx.'/'.$class]= $acls['plDescription'];
                   break;
                 }
               }
             } else {
               if (in_array_ics($data['objectClass'], $oc)){
-                if (isset($this->multiClass[$class])){
-                  $this->myAclObjects[$idx.'/'.$class]= $acls['plDescription'];
-                } else {
-                  $this->myAclObjects[$class]= $acls['plDescription'];
-                }
+                $this->myAclObjects[$idx.'/'.$class]= $acls['plDescription'];
               }
             }
           }
@@ -156,6 +142,8 @@ class acl extends plugin
         }
       }
     }
+    $this->aclObjects['all']= '*&nbsp;'._("All categories");
+    $this->ocMapping['all']= array('0' => '0');
 
     /* Sort categories */
     asort($this->aclObjects);
@@ -461,16 +449,14 @@ class acl extends plugin
       $smarty->assign('headline', sprintf(_("Edit ACL for '%s', scope is '%s'"), $this->aclObjects[$this->aclObject], $this->aclTypes[$this->aclType]));
 
       /* Collect objects for selected category */
-      $aclObjects= array();
       foreach ($this->ocMapping[$this->aclObject] as $idx => $class){
         if ($idx == 0){
           continue;
         }
-        if (isset($this->multiClass[$class])){
-          $aclObjects[$this->aclObject.'/'.$class]= $plist[$class]['plDescription'];
-        } else {
-          $aclObjects[$class]= $plist[$class]['plDescription'];
-        }
+        $aclObjects[$this->aclObject.'/'.$class]= $plist[$class]['plDescription'];
+      }
+      if ($this->aclObject == 'all'){
+        $aclObjects['all']= _("All objects in current subtree");
       }
       $smarty->assign('aclSelector', $this->buildAclSelector($aclObjects));
     }

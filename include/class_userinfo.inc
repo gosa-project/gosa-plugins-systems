@@ -160,7 +160,7 @@ class userinfo
 
   function get_permissions($dn, $object, $attribute, $skip_write= FALSE)
   {
-    $acl= array("r" => "", "w" => "", "c" => "", "d" => "", "m" => "");
+    $acl= array("r" => "", "w" => "", "c" => "", "d" => "", "m" => "", "a" => "");
 
     /* Build dn array */
     $path= split(',', $dn);
@@ -202,8 +202,8 @@ class userinfo
           }
 
           /* Global ACL? */
-          if (isset($subacl['acl'][0])){
-            $acl= $this->mergeACL($acl, $subacl['type'], preg_replace('/[cdm]/', '', $subacl['acl'][0]));
+          if (isset($subacl['acl']['all'])){
+            $acl= $this->mergeACL($acl, $subacl['type'], preg_replace('/[cdm]/', '', $subacl['acl']['all'][0]));
             continue;
           }
 
@@ -256,7 +256,7 @@ class userinfo
     $ldap->cd($this->config->current['BASE']);
     $ldap->search('objectClass=gosaDepartment', array('dn'));
     while ($attrs= $ldap->fetch()){
-      $acl= array("r" => "", "w" => "", "c" => "", "d" => "", "m" => "");
+      $acl= array("r" => "", "w" => "", "c" => "", "d" => "", "m" => "", "a" => "");
 
       /* Build dn array */
       $path= split(',', $attrs['dn']);

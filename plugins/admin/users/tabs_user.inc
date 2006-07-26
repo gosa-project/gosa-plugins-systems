@@ -6,17 +6,12 @@ class usertabs extends tabs
 
   function usertabs($config, $data, $dn)
   {
-    tabs::tabs($config, $data, $dn);
+    tabs::tabs($config, $data, $dn, 'users');
     $this->base= $this->by_object['user']->base;
 
     /* Add references/acls/snapshots */
     $this->addSpecialTabs();
     $this->set_acl_base();
-
-    /* Set category for environment tab */
-    if (isset($this->by_object['environment'])){
-      $this->by_object['environment']->set_acl_category('users');
-    }
   }
 
   function save_object($save_current= FALSE)
