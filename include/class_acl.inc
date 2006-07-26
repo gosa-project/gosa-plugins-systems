@@ -109,7 +109,7 @@ class acl extends plugin
 
         /* Find multi homed classes */
         if (count($acls['plCategory']) > 1){
-          $this->multiClass[]= $class;
+          $this->multiClass[$class]= $class;
         }
 
         /* Walk through supplied list and feed only translated categories */
@@ -134,13 +134,21 @@ class acl extends plugin
             if (is_array($data['objectClass'])){
               foreach($data['objectClass'] as $objectClass){
                 if (in_array_ics($objectClass, $oc)){
-                  $this->myAclObjects[$class]= $acls['plDescription'];
+                  if (isset($this->multiClass[$class])){
+                    $this->myAclObjects[$idx.'/'.$class]= $acls['plDescription'];
+                  } else {
+                    $this->myAclObjects[$class]= $acls['plDescription'];
+                  }
                   break;
                 }
               }
             } else {
               if (in_array_ics($data['objectClass'], $oc)){
-                $this->myAclObjects[$class]= $acls['plDescription'];
+                if (isset($this->multiClass[$class])){
+                  $this->myAclObjects[$idx.'/'.$class]= $acls['plDescription'];
+                } else {
+                  $this->myAclObjects[$class]= $acls['plDescription'];
+                }
               }
             }
           }
@@ -265,8 +273,12 @@ class acl extends plugin
     if ($aclDialog && isset($this->ocMapping[$this->aclObject])){
       foreach ($this->ocMapping[$this->aclObject] as $oc){
         unset($this->aclContents[$oc]);
+        unset($this->aclContents[$this->aclObject.'/'.$oc]);
         if (isset($new_acl[$oc])){
           $this->aclContents[$oc]= $new_acl[$oc];
+        }
+        if (isset($new_acl[$this->aclObject.'/'.$oc])){
+          $this->aclContents[$this->aclObject.'/'.$oc]= $new_acl[$this->aclObject.'/'.$oc];
         }
       }
     }
@@ -454,7 +466,11 @@ class acl extends plugin
         if ($idx == 0){
           continue;
         }
-        $aclObjects[$class]= $plist[$class]['plDescription'];
+        if (isset($this->multiClass[$class])){
+          $aclObjects[$this->aclObject.'/'.$class]= $plist[$class]['plDescription'];
+        } else {
+          $aclObjects[$class]= $plist[$class]['plDescription'];
+        }
       }
       $smarty->assign('aclSelector', $this->buildAclSelector($aclObjects));
     }
@@ -493,13 +509,13 @@ class acl extends plugin
         $options= $this->mkchkbx($key."_0_c",  _("Create objects"), preg_match('/c/', $currentAcl[0])).$spc;
         $options.= $this->mkchkbx($key."_0_m", _("Move objects"), preg_match('/m/', $currentAcl[0])).$spc;
         $options.= $this->mkchkbx($key."_0_d", _("Remove objects"), preg_match('/d/', $currentAcl[0])).$spc;
-        if ($plist[$key]['plSelfModify']){
+        if ($plist[preg_replace('%^.*/%', '', $key)]['plSelfModify']){
           $options.= $this->mkchkbx($key."_0_s", _("Modifyable by owner"), preg_match('/s/', $currentAcl[0])).$spc;
         }
       } else {
         $options= $this->mkchkbx($key."_0_m", _("Move object"), preg_match('/m/', $currentAcl[0])).$spc;
         $options.= $this->mkchkbx($key."_0_d", _("Remove object"), preg_match('/d/', $currentAcl[0])).$spc;
-        if ($plist[$key]['plSelfModify']){
+        if ($plist[preg_replace('%^.*/%', '', $key)]['plSelfModify']){
           $options.= $this->mkchkbx($key."_0_s", _("Modifyable by owner"), preg_match('/s/', $currentAcl[0])).$spc;
         }
       }
@@ -512,7 +528,7 @@ class acl extends plugin
 
       /* Walk through the list of attributes */
       $cnt= 1;
-      $splist= $plist[$key]['plProvidedAcls'];
+      $splist= $plist[preg_replace('%^.*/%', '', $key)]['plProvidedAcls'];
       asort($splist);
       foreach($splist as $attr => $dsc){
 
