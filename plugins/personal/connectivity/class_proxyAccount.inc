@@ -32,14 +32,17 @@ class proxyAccount extends plugin
 
     /* Prepare templating */
     $smarty= get_smarty();
-    $smarty->assign("proxyAccountACL",          chkacl($this->acl, "proxyAccount"));
-    $smarty->assign("gosaProxyAcctFlagsACL",    chkacl($this->acl, "gosaProxyAcctFlags"));
-    $smarty->assign("gosaProxyWorkingStartACL", chkacl($this->acl, "gosaProxyWorkingStart"));
-    $smarty->assign("gosaProxyWorkingStopACL",  chkacl($this->acl, "gosaProxyWorkingStop"));
-    $smarty->assign("gosaProxyQuotaACL",        chkacl($this->acl, "gosaProxyQuota"));
+
+    
+    if(($this->is_account && $this->acl_is_removeable()) || (!$this->is_account && $this->acl_is_createable())) {
+      $smarty->assign('proxyAccountACL', "");
+    }else{
+      $smarty->assign('proxyAccountACL', " disabled ");
+    }
 
     /* Assign radio boxes */
     foreach (array("F", "T", "B", "N") as $val){
+
       if (is_integer(strpos($this->gosaProxyAcctFlags, "$val"))) {
         $smarty->assign("filter$val", "checked");
 
@@ -56,6 +59,12 @@ class proxyAccount extends plugin
           $smarty->assign($val."state", "");
         }
       }
+    }
+
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $acl => $desc){
+      $smarty->assign($acl."ACL",$this->getacl($acl));
+      $smarty->assign($acl."_W",$this->acl_is_writeable($acl));
     }
 
     /* Assign working time */
@@ -91,32 +100,24 @@ class proxyAccount extends plugin
 
     $changeA = "";
   
-    if(chkacl($this->acl,"gosaProxyAcctFlags")==""){
+    if($this->acl_is_writeable("gosaProxyFlag_F")){
       $changeA .="changeState('filterF');\n";
     }
-    $smarty->assign("Working_allowedACL","disabled");
-    if((chkacl($this->acl,"gosaProxyWorkingStart")=="")||(chkacl($this->acl,"gosaProxyWorkingStop")=="")){
-      $smarty->assign("Working_allowedACL","");
+    $ProxyWorkingStateChange ="\n";
+    if($this->acl_is_writeable("gosaProxyWorkingTime")){
       $changeA .= "changeState('filterT');\n";
+      $ProxyWorkingStateChange.=  "changeState('startHour'); \n";
+      $ProxyWorkingStateChange.=  "changeState('startMinute'); \n";
+      $ProxyWorkingStateChange.=  "changeState('stopHour'); \n";
+      $ProxyWorkingStateChange.=  "changeState('stopMinute'); \n";
     }
 
-    $ProxyWorkingStateChange ="";
-    if(chkacl($this->acl,"gosaProxyWorkingStart")==""){
-      $ProxyWorkingStateChange.=  "changeState('startHour');\n";
-      $ProxyWorkingStateChange.=  "changeState('startMinute');\n";
-    }
-
-    if(chkacl($this->acl,"gosaProxyWorkingStop")=="")  {
-      $ProxyWorkingStateChange.=  "changeState('stopHour');\n";
-      $ProxyWorkingStateChange.=  "changeState('stopMinute');\n";
-    }
-    
     $changeA .= $ProxyWorkingStateChange;
   
     $smarty->assign("ProxyWorkingStateChange",$ProxyWorkingStateChange);
 
     $changeB = "";
-    if(chkacl($this->acl,"gosaProxyQuota")==""){
+    if($this->acl_is_writeable("gosaProxyQuota")){
       $changeA .= "changeState('filterB');";
       $changeB = 
         "changeSubselectState('filterB', 'quota_size');
@@ -134,24 +135,22 @@ class proxyAccount extends plugin
 
   function remove_from_parent()
   {
-    /* Cancel if there's nothing to do here */
-    if (!$this->initially_was_account){
-      return;
+    if($this->acl_is_removeable()){   
+
+      plugin::remove_from_parent();
+
+      $ldap= $this->config->get_ldap_link();
+      @DEBUG (DEBUG_LDAP, __LINE__, __FUNCTION__, __FILE__,
+          $this->attributes, "Save");
+      $ldap->cd($this->dn);
+      $this->cleanup();
+      $ldap->modify ($this->attrs); 
+
+      show_ldap_error($ldap->get_error(), sprintf(_("Removing of user/proxy account with dn '%s' failed."),$this->dn));
+
+      /* Optionally execute a command after we're done */
+      $this->handle_post_events("remove");
     }
-    
-    plugin::remove_from_parent();
-
-    $ldap= $this->config->get_ldap_link();
-    @DEBUG (DEBUG_LDAP, __LINE__, __FUNCTION__, __FILE__,
-        $this->attributes, "Save");
-    $ldap->cd($this->dn);
-    $this->cleanup();
-    $ldap->modify ($this->attrs); 
-
-    show_ldap_error($ldap->get_error(), sprintf(_("Removing of user/proxy account with dn '%s' failed."),$this->dn));
-
-    /* Optionally execute a command after we're done */
-    $this->handle_post_events("remove");
   }
 
   /* Check values */
@@ -162,12 +161,13 @@ class proxyAccount extends plugin
     
     /* We've got only one value to check for positive integer or emtpy field */
     if ($this->is_account){
-      if (isset($_POST["quota_size"])){
-        if ($_POST["quota_size"] == ""){
-          $message[]= _("Numerical value for Quota Setting is empty.");
-        }
-        else if ($_POST["quota_size"] <= 0){
-          $message[]= _("Numerical value for Quota Setting is not valid.");
+      if($this->acl_is_writeable("gosaProxyQuota")){
+        if (isset($_POST["quota_size"])){
+          if ($_POST["quota_size"] == "gosaProxyQuota"){
+            $message[]= _("Numerical value for Quota Setting is empty.");
+          }elseif ($_POST["quota_size"] <= 0){
+            $message[]= _("Numerical value for Quota Setting is not valid.");
+          }
         }
       }
     }
@@ -183,63 +183,73 @@ class proxyAccount extends plugin
       if (isset($_POST['connectivityTab'])){
         if (isset($_POST['proxy'])){
           if (!$this->is_account && $_POST['proxy'] == "B"){
-            $this->is_account= TRUE;
+            if($this->acl_is_createable()){
+              $this->is_account= TRUE;
+            }
           }
         } else {
-          $this->is_account= FALSE;
+          if($this->acl_is_removeable()){
+            $this->is_account= FALSE;
+          }
         }
       }
-    }
-
-    if(isset($_POST['proxy'])){
-      $this->is_account = TRUE; 
-    }else{
-      $this->is_account = FALSE;
     }
 
     /* Save flag value */
     if ($this->is_account){
-      if (chkacl ($this->acl, "gosaProxyAcctFlags") == ""){
-        $flags= "";
-        foreach(array("F", "T", "B") as $key){
+
+
+      $flags= "";
+      $acl= "";
+      foreach(array("F", "T", "B") as $key){
+        if($this->acl_is_writeable("gosaProxyFlag".$key)){
+  
+          /* Add acl */
           if (isset($_POST["filter$key"])){
             $flags.= $key;
           }
+        }else{
+          
+          /* Keep all flags that can't be written*/
+          if(preg_match("/".$key."/",$this->gosaProxyAcctFlags)){
+            $flags .=$key;
+          }
         }
-        if ("[$flags]" != $this->gosaProxyAcctFlags){
-          $this->is_modified= TRUE;
-        }
-        $this->gosaProxyAcctFlags= "[$flags]";
       }
+      if ("[$flags]" != $this->gosaProxyAcctFlags){
+        $this->is_modified= TRUE;
+      }
+      $this->gosaProxyAcctFlags= "[$flags]";
 
       /* Save time values */
-      if ((chkacl ($this->acl, "gosaProxyWorkingStart") == "")&&(isset($_POST['startMinute']))){
-        $old= $this->gosaProxyWorkingStart;
-        $this->gosaProxyWorkingStart= $_POST["startHour"] * 60 + $_POST["startMinute"];
-        $this->is_modified= ($old != $this->gosaProxyWorkingStart)?TRUE:$this->is_modified;
-      }
-      
-      if ((chkacl ($this->acl, "gosaProxyWorkingStop") == "")&&(isset($_POST['stopMinute']))){
-        $old= $this->gosaProxyWorkingStop;
-        $this->gosaProxyWorkingStop = $_POST["stopHour"]  * 60 + $_POST["stopMinute"];
-        $this->is_modified= ($old != $this->gosaProxyWorkingStop)?TRUE:$this->is_modified;
+      if ($this->acl_is_writeable("gosaProxyWorkingTime")){
+        if(isset($_POST['startMinute'])){
+          $old= $this->gosaProxyWorkingStart;
+          $this->gosaProxyWorkingStart= $_POST["startHour"] * 60 + $_POST["startMinute"];
+          $this->is_modified= ($old != $this->gosaProxyWorkingStart)?TRUE:$this->is_modified;
+        }
+
+        if (isset($_POST['stopMinute'])){
+          $old= $this->gosaProxyWorkingStop;
+          $this->gosaProxyWorkingStop = $_POST["stopHour"]  * 60 + $_POST["stopMinute"];
+          $this->is_modified= ($old != $this->gosaProxyWorkingStop)?TRUE:$this->is_modified;
+        }
       }
 
       /* Save quota values */
-      if (chkacl ($this->acl, "gosaProxyQuota") == ""){
-        $old= $this->gosaProxyQuota;
+      if ($this->acl_is_writeable("gosaProxyQuota")){
         if(isset($_POST["quota_size"]) && isset($_POST["quota_unit"])){
           $this->gosaProxyQuota= $_POST["quota_size"].$_POST["quota_unit"];
         }
-        $this->is_modified= ($old != $this->gosaProxyQuota)?TRUE:$this->is_modified;
-        $old= $this->gosaProxyQuotaPeriod;
+      }
+  
+      /*Save quota period */
+      if($this->acl_is_writeable("gosaProxyQuotaPeriod")){
         if(isset($_POST["gosaProxyQuotaPeriod"])){
           $this->gosaProxyQuotaPeriod = $_POST["gosaProxyQuotaPeriod"];
         }
-        $this->is_modified= ($old != $this->gosaProxyQuotaPeriod)?TRUE:$this->is_modified;
       }
     }
-
   }
 
 
@@ -275,18 +285,18 @@ class proxyAccount extends plugin
           "plShortName"     => _("Proxy"),
           "plDescription"   => _("Proxy account"),
           "plSelfModify"    => TRUE,
-          "plDepends"       => array("connectivity"),
+          "plDepends"       => array("user"),
           "plPriority"      => 7,                                 // Position in tabs
           "plSection"       => "personal",                        // This belongs to personal
-          "plCategory"      => array("gosaAccount"),
+          "plCategory"      => array("users"),
           "plOptions"       => array(),
 
           "plProvidedAcls"  => array(
-            "gosaProxyID"           => "!!! FIXME "._("gosaProxyID"),
+            "gosaProxyID"           => _("gosaProxyID"),
 
-            "gosaProxyFlag_F"       => _("Filter unwanted content"), 
-            "gosaProxyFlag_T"       => _("Limit proxy access"),
-            "gosaProxyFlag_B"       => _("Restrict proxy usage by quota"),
+            "gosaProxyFlagF"       => _("Filter unwanted content"), 
+            "gosaProxyFlagT"       => _("Limit proxy access"),
+            "gosaProxyFlagB"       => _("Restrict proxy usage by quota"),
 
             "gosaProxyWorkingTime"  => _("Limit proxy access"),
             "gosaProxyQuota"        => _("Limit quota"),
