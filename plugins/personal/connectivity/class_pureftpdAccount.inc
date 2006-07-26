@@ -29,9 +29,6 @@ class pureftpdAccount extends plugin
 
   function execute()
   {
-	/* Call parent execute */
-//	plugin::execute();
-
     /* Show tab dialog headers */
     $display= "";
 
@@ -41,8 +38,23 @@ class pureftpdAccount extends plugin
     /* Load attributes */
     foreach($this->attributes as $val){
       $smarty->assign("$val", $this->$val);
-      $smarty->assign($val."ACL", chkacl($this->acl, "$val"));
     }
+
+
+    $tmp = $this->plInfo();
+    $changeState = "";
+    foreach($tmp['plProvidedAcls'] as $key => $desc){
+      $smarty->assign($key."ACL", $this->getacl($key));
+      $smarty->assign($key."_W", $this->acl_is_writeable($key));
+  
+      if($this->acl_is_writeable($key)){
+        echo "JOP";
+        $changeState.= " changeState('".$key."'); \n";
+      }
+    }
+    $smarty->assign("changeState",$changeState);
+
+
     $smarty->assign("fstate", "");
     if ($this->is_account){
       $smarty->assign("pureftpdState", "checked");
@@ -57,17 +69,13 @@ class pureftpdAccount extends plugin
       }
     }
     $smarty->assign("use_FTPStatus", ($this->FTPStatus == "disabled") ? "checked" : "");
-
-    $smarty->assign("pureftpdACL", chkacl($this->acl, 'pureftpd'));
-
-    $changeState = "";
-    foreach($this->attributes as $attr){
-      $smarty->assign($attr."ACL",chkacl($this->acl,$attr));
-      if(chkacl($this->acl,$attr)==""){
-        $changeState .= "changeState('".$attr."');\n";
-      }
+    
+    if(($this->is_account && $this->acl_is_removeable()) || (!$this->is_account && $this->acl_is_createable())) {
+      $smarty->assign('pureftpdACL', "");
+    }else{
+      $smarty->assign('pureftpdACL', " disabled ");
     }
-    $smarty->assign("changeState",$changeState);
+
     $display.= $smarty->fetch (get_template_path('pureftpd.tpl', TRUE, dirname(__FILE__)));
     return ($display);
   }
@@ -75,7 +83,7 @@ class pureftpdAccount extends plugin
   function remove_from_parent()
   {
     /* Cancel if there's nothing to do here */
-    if (!$this->initially_was_account){
+    if ((!$this->initially_was_account) || (!$this->acl_is_removeable())){
       return;
     }
 
@@ -129,20 +137,25 @@ class pureftpdAccount extends plugin
 
     /* Check for positive integer values */
     if ($this->is_account){
-      if ((!is_id($this->FTPUploadBandwidth))&&(chkacl($this->acl,"FTPUploadBandwidth")=="")){
+
+      if($this->acl_is_writeable("FTPUploadBandwidth") && !is_id($this->FTPUploadBandwidth)){
         $message[]= _("Value specified as 'Upload bandwidth' is not valid.");
       }
-      if ((!is_id($this->FTPDownloadBandwidth))&&(chkacl($this->acl,"FTPDownloadBandwidth")=="")){
+      if($this->acl_is_writeable("FTPDownloadBandwidth") && !is_id($this->FTPDownloadBandwidth)){
         $message[]= _("Value specified as 'Download bandwidth' is not valid.");
       }
-      if ((!is_id($this->FTPQuotaFiles))&&(chkacl($this->acl,"FTPQuotaFiles")=="")){
+
+      if($this->acl_is_writeable("FTPQuotaFiles") && !is_id($this->FTPQuotaFiles)){
         $message[]= _("Value specified as 'Files' is not valid.");
       }
-      if ((!is_id($this->FTPQuotaMBytes))&&(chkacl($this->acl,"FTPQuotaMBytes")=="")){
+      if($this->acl_is_writeable("FTPQuotaMBytes") && !is_id($this->FTPQuotaMBytes)){
         $message[]= _("Value specified as 'Size' is not valid.");
       }
-      if ((!is_id($this->FTPUploadRatio) || !is_id($this->FTPDownloadRatio))&&(chkacl($this->acl,"FTPUploadRatio")=="")&&(chkacl($this->acl,"FTPDownloadRatio")=="")){
-        $message[]= _("Value specified as 'Ratio' is not valid.");
+      if($this->acl_is_writeable("FTPUploadRatio") && !is_id($this->FTPUploadRatio)){
+        $message[]= _("Value specified as 'Upload ratio' is not valid.");
+      }
+      if($this->acl_is_writeable("FTPDownloadRatio") && !is_id($this->FTPDownloadRatio)){
+        $message[]= _("Value specified as 'Download ratio' is not valid.");
       }
     }
 
@@ -155,9 +168,10 @@ class pureftpdAccount extends plugin
   {
     plugin::save();
 
-    foreach($this->attributes as $attr){
-      if(chkacl($this->acl,$attr)!=""){
-        unset($this->attrs[$attr]);
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $key => $desc){
+      if(!$this->acl_is_writeable($key)){
+        unset($this->attrs[$key]);
       }
     }
 
@@ -189,10 +203,10 @@ class pureftpdAccount extends plugin
           "plShortName"     => _("Ftp"),
           "plDescription"   => _("Pure ftp account"),
           "plSelfModify"    => TRUE,
-          "plDepends"       => array("connectivity"),
+          "plDepends"       => array("user"),
           "plPriority"      => 8,                                 // Position in tabs
           "plSection"       => "personal",                        // This belongs to personal
-          "plCategory"      => array("gosaAccount"),
+          "plCategory"      => array("users"),
           "plOptions"       => array(),
 
           "plProvidedAcls"  => array(
