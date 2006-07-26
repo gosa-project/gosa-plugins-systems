@@ -125,7 +125,7 @@ class opengwAccount extends plugin
       $smarty->assign($acl."ACL",$this->getacl($acl,$this->ReadOnly));
     } 
 
-    if((!$this->ReadOnly)&&($this->is_account && $this->acl_is_removeable()) || (!$this->is_account && $this->acl_is_createable())) {
+    if((!$this->ReadOnly)&&(($this->is_account && $this->acl_is_removeable()) || (!$this->is_account && $this->acl_is_createable()))) {
       $smarty->assign('opengwAccountACL', "");
     }else{
       $smarty->assign('opengwAccountACL', " disabled ");

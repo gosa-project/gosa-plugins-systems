@@ -70,7 +70,7 @@ class pureftpdAccount extends plugin
     }
     $smarty->assign("use_FTPStatus", ($this->FTPStatus == "disabled") ? "checked" : "");
     
-    if((!$this->ReadOnly)&&($this->is_account && $this->acl_is_removeable()) || (!$this->is_account && $this->acl_is_createable())) {
+    if((!$this->ReadOnly)&&(($this->is_account && $this->acl_is_removeable()) || (!$this->is_account && $this->acl_is_createable())) ){
       $smarty->assign('pureftpdACL', "");
     }else{
       $smarty->assign('pureftpdACL', " disabled ");

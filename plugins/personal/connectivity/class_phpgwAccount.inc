@@ -42,7 +42,7 @@ class phpgwAccount extends plugin
       $smarty->assign("phpgwState", "");
     }
 
-    if((!$this->ReadOnly)&&($this->is_account && $this->acl_is_removeable()) || (!$this->is_account && $this->acl_is_createable())) {
+    if((!$this->ReadOnly)&&(($this->is_account && $this->acl_is_removeable()) || (!$this->is_account && $this->acl_is_createable()))) {
       $smarty->assign('phpgwAccountACL', "");
     }else{
       $smarty->assign('phpgwAccountACL', " disabled ");

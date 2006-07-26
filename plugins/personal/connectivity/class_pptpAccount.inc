@@ -55,7 +55,7 @@ class pptpAccount extends plugin
       $smarty->assign("wstate", "disabled");
     }
 
-    if((!$this->ReadOnly) && ($this->is_account && $this->acl_is_removeable()) || (!$this->is_account && $this->acl_is_createable())) {
+    if((!$this->ReadOnly) && (($this->is_account && $this->acl_is_removeable()) || (!$this->is_account && $this->acl_is_createable()))) {
       $smarty->assign('gosapptpACL', "");
     }else{
       $smarty->assign('gosapptpACL', " disabled ");
