@@ -38,9 +38,6 @@ class phpscheduleitAccount extends plugin
 
   function execute()
   {
-	/* Call parent execute */
-//	plugin::execute();
-
     /* Show tab dialog headers */
     $display= "";
 
@@ -54,7 +51,11 @@ class phpscheduleitAccount extends plugin
       $smarty->assign("wstate", "disabled");
     }
 
-    $smarty->assign('gosaphpscheduleitACL', chkacl($this->acl, 'gosaphpscheduleit'));
+    if(($this->is_account && $this->acl_is_removeable()) || (!$this->is_account && $this->acl_is_createable())) {
+      $smarty->assign('gosaphpscheduleitACL', "");
+    }else{
+      $smarty->assign('gosaphpscheduleitACL', " disabled ");
+    }
 
     $display.= $smarty->fetch (get_template_path('phpscheduleit.tpl', TRUE, dirname(__FILE__)));
     return ($display);
@@ -63,22 +64,21 @@ class phpscheduleitAccount extends plugin
   function remove_from_parent()
   {
     /* Cancel if there's nothing to do here */
-    if (!$this->initially_was_account){
-      return;
+    if ($this->acl_is_removeable()){
+
+      plugin::remove_from_parent();
+      $ldap= $this->config->get_ldap_link();
+
+      $ldap->cd($this->dn);
+      @DEBUG (DEBUG_LDAP, __LINE__, __FUNCTION__, __FILE__,
+          $this->attributes, "Save");
+      $this->cleanup();
+      $ldap->modify ($this->attrs); 
+      show_ldap_error($ldap->get_error(), sprintf(_("Removing of user/PHPscheduleit account with dn '%s' failed."),$this->dn));
+
+      /* Optionally execute a command after we're done */
+      $this->handle_post_events('remove');
     }
-
-    plugin::remove_from_parent();
-    $ldap= $this->config->get_ldap_link();
-
-    $ldap->cd($this->dn);
-    @DEBUG (DEBUG_LDAP, __LINE__, __FUNCTION__, __FILE__,
-        $this->attributes, "Save");
-    $this->cleanup();
-    $ldap->modify ($this->attrs); 
-    show_ldap_error($ldap->get_error(), sprintf(_("Removing of user/PHPscheduleit account with dn '%s' failed."),$this->dn));
-
-    /* Optionally execute a command after we're done */
-    $this->handle_post_events('remove');
   }
 
 
@@ -89,10 +89,14 @@ class phpscheduleitAccount extends plugin
     if (isset($_POST['connectivityTab'])){
       if (isset($_POST['phpscheduleit'])){
         if (!$this->is_account && $_POST['phpscheduleit'] == "B"){
-          $this->is_account= TRUE;
+          if($this->acl_is_createable()) {
+            $this->is_account= TRUE;
+          }
         }
       } else {
-        $this->is_account= FALSE;
+        if($this->acl_is_removeable()){
+          $this->is_account= FALSE;
+        }
       }
     }
 
@@ -138,14 +142,13 @@ class phpscheduleitAccount extends plugin
           "plShortName"     => _("PHP Schedule it"),
           "plDescription"   => _("PHP Schedule it settings"),
           "plSelfModify"    => TRUE,
-          "plDepends"       => array("connectivity"),
+          "plDepends"       => array("user"),
           "plPriority"      => 6,                                 // Position in tabs
           "plSection"       => "personal",                        // This belongs to personal
-          "plCategory"      => array("gosaAccount"),
+          "plCategory"      => array("users"),
           "plOptions"       => array(),
 
-          "plProvidedAcls"  => array(
-            "phpscheduleitAccount" => "!!! FIXME "._("PHPscheduleit account"))
+          "plProvidedAcls"  => array()
           ));
   }
 }
