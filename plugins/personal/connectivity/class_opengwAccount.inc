@@ -118,18 +118,18 @@ class opengwAccount extends plugin
 		/* Show tab dialog headers */
 		$display= "";
 		$smarty= get_smarty();
-    print_red(_("New ACLs are not implemeneted yet."));
 
 		/* set default values */
-		foreach(array("validLocationTeam","validTemplateUser","validLocationTeams","validTemplateUsers") as $ar){
-			$smarty->assign($ar,array());
-		}
-		$smarty->assign("OGWstate"," disabled ");
-		foreach(array("LocationTeam","TemplateUser","is_locked","validTeams","opengwAccount","is_account"/*,"OGWPassword"*/) as $ar){
-			$smarty->assign($ar,"");
-			$smarty->assign($ar."CHK","");
-			$smarty->assign($ar."ACL"," disabled ");
-		}
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $acl => $desc){
+      $smarty->assign($acl."ACL",$this->getacl($acl,$this->ReadOnly));
+    } 
+
+    if((!$this->ReadOnly)&&($this->is_account && $this->acl_is_removeable()) || (!$this->is_account && $this->acl_is_createable())) {
+      $smarty->assign('opengwAccountACL', "");
+    }else{
+      $smarty->assign('opengwAccountACL', " disabled ");
+    }
 
 		/* Check database extension */    
 		if(!is_callable("pg_connect")){
@@ -148,12 +148,6 @@ class opengwAccount extends plugin
 				if(!$this->handle->connected){
 					print_red(_("OpenGroupware: Can't connect to specified database. Please check given configuration twice."));
 				}else{
-
-					/* Show main page */
-					$smarty->assign("OGWstate"," disabled ");
-					foreach(array("LocationTeam","TemplateUser","is_locked","validTeams","opengwAccount"/*,"OGWPassword"*/) as $ar){
-						$smarty->assign($ar."ACL",chkacl($this->acl,$ar));
-					}
 
 					/* Assign LocationTeams */
 					$tmp = array(""=>"none");
@@ -175,21 +169,23 @@ class opengwAccount extends plugin
 
 					/* Create Team membership */ 
 					$str = "";
-					if(($this->is_account)&&(chkacl($this->acl,"TeamIDs")=="")){
+					if(($this->is_account)==""){
 						$dis = "";
 					}else{
 						$dis = " disabled ";
 					}
 
-					foreach($this->handle->validTeams as $id){
-						if(in_array($id['company_id'],$this->info['TeamIDis'])){
-							$str .= "<input ".$dis." type='checkbox' value='".$id['company_id']."' 
-								checked name='team_".base64_encode($id['description'])."'>".$id['description']."<br>";
-						}else{
-							$str .= "<input ".$dis." type='checkbox' value='".$id['company_id']."' 
-								name='team_".base64_encode($id['description'])."'>".$id['description']."<br>";
-						}
-					}
+          if($this->acl_is_readable("Teams")){
+            foreach($this->handle->validTeams as $id){
+              if(in_array($id['company_id'],$this->info['TeamIDis'])){
+                $str .= "<input ".$dis." type='checkbox' value='".$id['company_id']."' 
+                  checked name='team_".base64_encode($id['description'])."'>".$id['description']."<br>";
+              }else{
+                $str .= "<input ".$dis." type='checkbox' value='".$id['company_id']."' 
+                  name='team_".base64_encode($id['description'])."'>".$id['description']."<br>";
+              }
+            }
+          }
 					$smarty->assign("validTeams",$str);
 
 					/* Assign ogw checkbox */
@@ -199,11 +195,6 @@ class opengwAccount extends plugin
 					}else{
 						$smarty->assign("is_account", " ");
 						$smarty->assign("OGWstate"," disabled ");
-					}
-
-					/* Assign acls */
-					foreach(array("LocationTeam","TemplateUser","Teams","is_locked") as $atr){
-						$smarty->assign($atr."ACL",chkacl($this->acl,$atr));
 					}
 
 					/* Assign lock status */
@@ -216,21 +207,6 @@ class opengwAccount extends plugin
 
 				} 
 			}
-      /*
-      if($this->SetPassword == false){
-        if($_SESSION['js'] == 1){
-          $smarty->assign("OGWPasswordACL"," disabled ");
-        }else{
-          $smarty->assign("OGWPasswordACL","");
-        }
-        $smarty->assign("OGWPassword","");
-        $smarty->assign("OGWPasswordCHK"," ");
-      }else{
-        $smarty->assign("OGWPasswordACL","");
-        $smarty->assign("OGWPassword",$this->OGWPassword);
-        $smarty->assign("OGWPasswordCHK"," checked ");
-      }
-      */
 		$display.= $smarty->fetch (get_template_path('opengw.tpl', TRUE, dirname(__FILE__)));
 		return ($display);
 	}
@@ -252,60 +228,49 @@ class opengwAccount extends plugin
 		/* get post data */
 		if($this->is_account){
 
-      /*
-      if(isset($_POST['SetPassword'])){
-        $this->SetPassword =true;
-      }else{
-        $this->SetPassword = false;
-      }
-
-      if((isset($_POST['OGWPassword']))&&($this->SetPassword)){
-        $this->OGWPassword      = $_POST['OGWPassword'];
-        $pwd = new passwordMethodCrypt($this->config);
-        
-        $this->info['password'] = preg_replace("/^{crypt}/","",$pwd->generate_hash($_POST['OGWPassword']));
-      }else{
-        if(isset($this->info['password'])){
-          unset($this->info['password']);
+      /* Get selected team chkboxes */
+      $this->info['TeamIDis'] = array();
+      if($this->acl_is_writeable("Teams")) {
+        foreach($_POST as $name => $value ){
+          if(preg_match("/team_/i",$name)){
+            if(!in_array($value,$this->info['TeamIDis'])){
+              $this->info['TeamIDis'][]=$value;
+            }
+          }
         }
       }
-      */
 
-			/* Get selected team chkboxes */
-			$this->info['TeamIDis'] = array();
-			foreach($_POST as $name => $value ){
-				if(preg_match("/team_/i",$name)){
-					if(!in_array($value,$this->info['TeamIDis'])){
-						$this->info['TeamIDis'][]=$value;
-					}
-				}
-			}
 
 			/* Get location Team*/
-			if(isset($_POST['LocationTeam'])){
+			if(isset($_POST['LocationTeam']) && $this->acl_is_writeable("LocationTeam")){
 				$this->info['LocationTeamID'] = $_POST['LocationTeam'];
 			}
 
 			/* Get template user */
-			if(isset($_POST['TemplateUser'])){
+			if(isset($_POST['TemplateUser']) && $this->acl_is_writeable("TemplateUser") ){
 				$this->info['template_user_id'] = $_POST['TemplateUser'];
 			}
 
-			/* get lock status */
-			if(isset($_POST['is_locked'])){
-				$this->info['is_locked'] = $_POST['is_locked'];
-			}else{
-				$this->info['is_locked'] = 0;
-			}
+      /* get lock status */
+      if($this->acl_is_writeable("Locked")){
+        if(isset($_POST['is_locked'])){
+          $this->info['is_locked'] = $_POST['is_locked'];
+        }else{
+          $this->info['is_locked'] = 0;
+        }
+      }
 		}
 
 		/* change account status */
 		if(isset($_POST['is_account'])){
-			$this->is_account = $_POST['is_account'];
-		}else{
-			$this->is_account = false;//$_POST['is_account'];
+      if($this->acl_is_createable()){
+        $this->is_account = $_POST['is_account'];
+      }
+    }else{
+      if($this->acl_is_removeable()){
+        $this->is_account = false;//$_POST['is_account'];
+      }
 		}
-
 	}
 
 
@@ -344,7 +309,10 @@ class opengwAccount extends plugin
           "plOptions"       => array(),
 
           "plProvidedAcls"  => array(
-            "opengwAccount"   => "!!! FIXME "._("Open groupware account"))
+            "LocationTeam"  => _("Location team"),
+            "TemplateUser"  => _("Template user"),
+            "Locked"        => _("Locked"),
+            "Teams"         => _("Teams"))
           ));
   }
 }
