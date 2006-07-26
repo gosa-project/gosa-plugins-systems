@@ -117,6 +117,7 @@ class opengwAccount extends plugin
 		/* Show tab dialog headers */
 		$display= "";
 		$smarty= get_smarty();
+    print_red(_("New ACLs are not implemeneted yet."));
 
 		/* set default values */
 		foreach(array("validLocationTeam","validTemplateUser","validLocationTeams","validTemplateUsers") as $ar){
