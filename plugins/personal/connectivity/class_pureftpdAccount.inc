@@ -146,10 +146,10 @@ class pureftpdAccount extends plugin
       }
 
       if($this->acl_is_writeable("FTPQuotaFiles") && !is_id($this->FTPQuotaFiles)){
-        $message[]= _("Value specified as 'Files' is not valid.");
+        $message[]= _("Value specified as 'Quota files' is not valid.");
       }
       if($this->acl_is_writeable("FTPQuotaMBytes") && !is_id($this->FTPQuotaMBytes)){
-        $message[]= _("Value specified as 'Size' is not valid.");
+        $message[]= _("Value specified as 'Quota size' is not valid.");
       }
       if($this->acl_is_writeable("FTPUploadRatio") && !is_id($this->FTPUploadRatio)){
         $message[]= _("Value specified as 'Upload ratio' is not valid.");
