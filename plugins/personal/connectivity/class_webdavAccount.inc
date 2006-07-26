@@ -9,6 +9,7 @@ class webdavAccount extends plugin
   /* attribute list for save action */
   var $attributes= array();
   var $objectclasses= array("gosaWebdavAccount");
+  var $ReadOnly = false;
 
   function webdavAccount ($config, $dn= NULL)
   {
@@ -37,7 +38,7 @@ class webdavAccount extends plugin
       $smarty->assign("tabbed", 1);
     }
 
-    if(($this->is_account && $this->acl_is_removeable()) || (!$this->is_account && $this->acl_is_createable())) {
+    if((!$this->ReadOnly) && (($this->is_account && $this->acl_is_removeable()) || (!$this->is_account && $this->acl_is_createable()))) {
       $smarty->assign('webdavAccountACL', "");
     }else{
       $smarty->assign('webdavAccountACL', " disabled ");
