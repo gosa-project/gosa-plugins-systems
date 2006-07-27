@@ -1,6 +1,11 @@
 Target for 2.6:
 ===============
 
+* Remove.tpls have different text alignments
+
+* WorkstationStartup -> The available Classes/Releases arn't working correctly.
+  You can't select some of the releses && there are classes shown that are not available within the selected release.
+
 * Add new smarty gettext plugin -> requires fixing of <b> and <i> tags in
   translations
 
