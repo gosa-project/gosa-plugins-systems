@@ -508,7 +508,11 @@ class printgeneric extends plugin
     $smarty->assign("AdminMember"    ,$this->AdminMember);
     $smarty->assign("AdminMembers"   ,$adminlist);
     $smarty->assign("AdminMemberKeys",array_flip($adminlist));
-    $smarty->assign("netconfig", $this->netConfigDNS->execute());
+    if($this->BelongsTo == "Printer"){
+      $smarty->assign("netconfig", $this->netConfigDNS->execute());
+    } else {
+      $smarty->assign("netconfig", "");
+    }
 
     return($display.$smarty->fetch (get_template_path('printer.tpl', TRUE)));
   }
@@ -577,7 +581,9 @@ class printgeneric extends plugin
   {
     /* Call common method to give check the hook */
     $message= plugin::check();
-    $message= array_merge($message, $this->netConfigDNS->check());
+    if ($this->BelongsTo == 'printer'){
+      $message= array_merge($message, $this->netConfigDNS->check());
+    }
 
     /* Don't display check messages if this is a template object */
     if(isset($this->parent->by_object['workgeneric'])){
@@ -736,9 +742,11 @@ class printgeneric extends plugin
     }
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of system print/generic with dn '%s' failed."),$this->dn));
 
-    $this->netConfigDNS->cn = $this->cn;
-    $this->netConfigDNS->dn = $this->dn;
-    $this->netConfigDNS->save($this->dn);
+    if($this->BelongsTo == "Printer"){
+      $this->netConfigDNS->cn = $this->cn;
+      $this->netConfigDNS->dn = $this->dn;
+      $this->netConfigDNS->save($this->dn);
+    }
 
     /* Optionally execute a command after we're done */
     $this->postcreate();
@@ -853,7 +861,7 @@ class printgeneric extends plugin
       print_red(sprintf(_("Can't add '%s' to list of members, it is not reachable."),$dn));
       return(FALSE);
     }
-  return(TRUE);
+    return(TRUE);
   }
 }
 
