@@ -202,7 +202,7 @@ class userinfo
           }
 
           /* Global ACL? */
-          if (isset($subacl['acl']['all'])){
+          if (isset($subacl['acl']['all'][0])){
             $acl= $this->mergeACL($acl, $subacl['type'], $subacl['acl']['all'][0]);
             continue;
           }
