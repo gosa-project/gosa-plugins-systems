@@ -409,7 +409,7 @@ class workgeneric extends plugin
 
     /* Update ntp server settings */
     if($this->inheritTimeServer){
-      if($this->new){
+      if($this->is_new){
         if(isset($this->attrs['gotoNtpServer'])){
           unset($this->attrs['gotoNtpServer']);
         }
