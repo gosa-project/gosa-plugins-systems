@@ -730,14 +730,16 @@ class printgeneric extends plugin
 
     /* Write back to ldap */
     $ldap= $this->config->get_ldap_link();
-    if ($this->orig_dn == 'new'){
+    $ldap->cat($this->dn);
+    if($ldap->count() == 0){
       $ldap->cd($this->config->current['BASE']);
       $ldap->create_missing_trees(preg_replace('/^[^,]+,/', '', $this->dn));
       $ldap->cd($this->dn);
       $ldap->add($this->attrs);
       $this->handle_post_events("add");
     } else {
-      if ($this->orig_dn != $this->dn){
+      
+      if (($this->orig_dn != $this->dn) && (!$this->orig_dn == 'new')){
         $this->move($this->orig_dn, $this->dn);
       }
 
