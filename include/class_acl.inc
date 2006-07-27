@@ -143,7 +143,7 @@ class acl extends plugin
       }
     }
     $this->aclObjects['all']= '*&nbsp;'._("All categories");
-    $this->ocMapping['all']= array('0' => '0');
+    $this->ocMapping['all']= array('0' => 'all');
 
     /* Sort categories */
     asort($this->aclObjects);
