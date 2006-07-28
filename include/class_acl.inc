@@ -487,7 +487,15 @@ class acl extends plugin
       $currentAcl= $this->aclContents[$key];
 
       /* Object header */
-      $display.= "<table style='width:100%;border:1px solid #A0A0A0' cellspacing=0 cellpadding=2><tr><td style='background-color:#C8C8C8;height:1.8em' colspan=$cols><b>"._("Object").": $name</b></td></tr>";
+      if($_SESSION['js']) {
+        if(isset($_SERVER['HTTP_USER_AGENT']) && preg_match("/firefox/i",$_SERVER['HTTP_USER_AGENT'])) {
+          $display.= "<table style='width:100%;border:1px solid #A0A0A0' cellspacing=0 cellpadding=2><tr><td style='background-color:#C8C8C8;height:1.8em;' colspan=".($cols-1)."><b>"._("Object").": $name</b></td><td align='right' style='background-color:#C8C8C8;height:1.8em;'><input type='button' onclick='divtoggle(\"$name\");' value='"._("Show/Hide Advanced Settings")."' /></td></tr>";
+        } else {
+          $display.= "<table style='width:100%;border:1px solid #A0A0A0' cellspacing=0 cellpadding=2><tr><td style='background-color:#C8C8C8;height:1.8em;' colspan=$cols><b>"._("Object").": $name</b></td></tr>";
+        }
+      } else {
+          $display.= "<table style='width:100%;border:1px solid #A0A0A0' cellspacing=0 cellpadding=2><tr><td style='background-color:#C8C8C8;height:1.8em;' colspan=$cols><b>"._("Object").": $name</b></td></tr>";
+      }
 
       /* Generate options */
       $spc= "&nbsp;&nbsp;";
@@ -516,6 +524,11 @@ class acl extends plugin
       $cnt= 1;
       $splist= $plist[preg_replace('%^.*/%', '', $key)]['plProvidedAcls'];
       asort($splist);
+      if($_SESSION['js']) {
+        if(isset($_SERVER['HTTP_USER_AGENT']) && preg_match("/firefox/i",$_SERVER['HTTP_USER_AGENT'])) {
+          $display.= "<tr id='tr_$name' style='vertical-align:top;height:0px;'><td colspan=".$cols."><div id='$name' style='visibility:hidden;height:0px;vertical-align:top;width:100%;'><table style='width:100%;'>";
+        }
+      }
       foreach($splist as $attr => $dsc){
 
         /* Skip pl* attributes, they are internal... */
@@ -552,7 +565,13 @@ class acl extends plugin
        $display.= str_repeat("<td style='border-top:1px solid #A0A0A0; width:".(int)(100/$cols)."%'>&nbsp;</td>", $cols-$cnt); 
       }
 
-      $display.= "</table><br>";
+      if($_SESSION['js']) {
+        if(isset($_SERVER['HTTP_USER_AGENT']) && preg_match("/firefox/i",$_SERVER['HTTP_USER_AGENT'])) {
+          $display.= "</table></div></td></tr>";
+        }
+      }
+
+      $display.= "</table><br />";
     }
 
     return ($display);

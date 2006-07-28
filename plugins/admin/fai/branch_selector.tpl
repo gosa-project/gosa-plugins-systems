@@ -16,16 +16,16 @@
         <table summary="" style="width:100%;">
      <tr>
       <td>
-    <input type="image" align="middle" value="branch" name="branch_branch" src="images/branch_small.png">
+    <input type="image" align="middle" value="branch" name="branch_branch" src="images/branch_small.png" class="center" />
     &nbsp;
     {t}Create new branch{/t}
     <br>
-    <input type="image" align="middle" value="freeze" name="freeze_branch" src="images/closedlock.png">
+    <input type="image" align="middle" value="freeze" name="freeze_branch" src="images/closedlock.png" class="center" />
     &nbsp;
     {t}Create new locked branch{/t}
     {if $selectedBranch != "main"}
     <br>
-    <input type="image" align="middle" value="delete" name="remove_branch" src="images/edittrash.png">
+    <input type="image" align="middle" value="delete" name="remove_branch" src="images/edittrash.png" />
     &nbsp;
     {t}Delete current release{/t}
     {/if}

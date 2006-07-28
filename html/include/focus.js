@@ -195,6 +195,28 @@ function js_check(form) {
 	form.javascript.value = 'true';
 }
 
+function divtoggle(element) {
+	var cell;
+	var cellname="tr_"+(element);
+
+	if (browserType == "gecko" ) {
+    document.poppedLayer = document.getElementById(element);
+		cell= document.getElementById(cellname);
+
+	  if (document.poppedLayer.style.visibility == "visible") {
+		  hide (element);
+			document.poppedLayer.style.height="0px";
+			cell.style.height="1px";
+		} else {
+		  show (element);
+			document.poppedLayer.style.height="";
+			if(document.defaultView) {
+				cell.style.height=document.defaultView.getComputedStyle(document.poppedLayer,"").getPropertyValue('height');
+			}
+		}
+	}
+}
+
 window.onload = adjust;
 window.onresize = adjust;
 
