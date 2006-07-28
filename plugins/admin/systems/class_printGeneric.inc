@@ -728,25 +728,24 @@ class printgeneric extends plugin
       }
     }
 
+    /* Move object in necessary*/
+    if (($this->orig_dn != $this->dn) && ($this->orig_dn != 'new')){
+      $this->move($this->orig_dn, $this->dn);
+    }
+
     /* Write back to ldap */
     $ldap= $this->config->get_ldap_link();
     $ldap->cat($this->dn);
-    if($ldap->count() == 0){
+    if(!$ldap->count()){
       $ldap->cd($this->config->current['BASE']);
       $ldap->create_missing_trees(preg_replace('/^[^,]+,/', '', $this->dn));
       $ldap->cd($this->dn);
       $ldap->add($this->attrs);
       $this->handle_post_events("add");
     } else {
-      
-      if (($this->orig_dn != $this->dn) && (!$this->orig_dn == 'new')){
-        $this->move($this->orig_dn, $this->dn);
-      }
-
       $ldap->cd($this->dn);
       $this->cleanup();
       $ldap->modify ($this->attrs); 
-
       $this->handle_post_events("modify");
     }
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of system print/generic with dn '%s' failed."),$this->dn));
