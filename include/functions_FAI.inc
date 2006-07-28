@@ -13,12 +13,16 @@ function get_all_objects_for_given_base($Current_DN,$filter,$detailed = false)
   global $config;
   $ldap = $config->get_ldap_link();
   $ldap->cd($config->current['BASE']);
+  $res = array();
+  $tmp = array();
+
+  if(!is_release_department($Current_DN)) {
+    return($res);
+  }
 
   /* Collect some basic informations and initialize some variables */ 
   $base_release       = get_release_dn($Current_DN);
   $previous_releases  = array_reverse(get_previous_releases_of_this_release($base_release,true));
-  $res = array();
-  $tmp = array();
 
   /* We must also include the given release dn */
   $previous_releases[] = $base_release;
