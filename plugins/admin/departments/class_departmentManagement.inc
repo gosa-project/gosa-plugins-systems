@@ -205,6 +205,11 @@ class departmentManagement extends plugin
         if($this->deptabs->by_object['department']->am_i_moved()){	
           $this->RecursiveRemoveRequested = true;
         }		
+      
+        $this->config->get_departments($this->dn);
+        $this->config->make_idepartments();
+ 
+        $this->DivListDepartment->config=$this->config;
 
         /* This var indicated that there is an object which isn't saved right now. */
         $this->ObjectInSaveMode = true;
