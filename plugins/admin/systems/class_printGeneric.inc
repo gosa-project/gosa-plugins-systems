@@ -758,6 +758,9 @@ class printgeneric extends plugin
 
     /* Optionally execute a command after we're done */
     $this->postcreate();
+
+    /* This is a multi object. Handle tagging here... */
+    $this->handle_object_tagging();
   }
 
   function generateList(){
