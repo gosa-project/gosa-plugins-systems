@@ -205,8 +205,8 @@ function divtoggle(element) {
 
 	  if (document.poppedLayer.style.visibility == "visible") {
 		  hide (element);
+			cell.style.height="0px";
 			document.poppedLayer.style.height="0px";
-			cell.style.height="1px";
 		} else {
 		  show (element);
 			document.poppedLayer.style.height="";
