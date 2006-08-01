@@ -487,8 +487,14 @@ class acl extends plugin
       $currentAcl= $this->aclContents[$key];
 
       /* Object header */
-      if($_SESSION['js'] && (isset($_SERVER['HTTP_USER_AGENT']) && preg_match("/gecko/i",$_SERVER['HTTP_USER_AGENT']))) {
+      if($_SESSION['js']) {
+        if(isset($_SERVER['HTTP_USER_AGENT']) && preg_match("/gecko/i",$_SERVER['HTTP_USER_AGENT'])) {
           $display.= "<table style='width:100%;border:1px solid #A0A0A0' cellspacing=0 cellpadding=2><tr><td style='background-color:#C8C8C8;height:1.8em;' colspan=".($cols-1)."><b>"._("Object").": $name</b></td><td align='right' style='background-color:#C8C8C8;height:1.8em;'><input type='button' onclick='divtoggle(\"$name\");' value='"._("Show/Hide Advanced Settings")."' /></td></tr>";
+        } else if (isset($_SERVER['HTTP_USER_AGENT']) && preg_match("/ie/i",$_SERVER['HTTP_USER_AGENT'])) {
+          $display.= "<table style='width:100%;border:1px solid #A0A0A0' cellspacing=0 cellpadding=2><tr><td style='background-color:#C8C8C8;height:1.8em;' colspan=".($cols-1)."><b>"._("Object").": $name</b></td><td align='right' style='background-color:#C8C8C8;height:1.8em;'><input type='button' onclick='divtoggle(\"$name\");' value='"._("Show/Hide Advanced Settings")."' /></td></tr>";
+        } else {
+          $display.= "<table style='width:100%;border:1px solid #A0A0A0' cellspacing=0 cellpadding=2><tr><td style='background-color:#C8C8C8;height:1.8em;' colspan=$cols><b>"._("Object").": $name</b></td></tr>";
+        }
       } else {
           $display.= "<table style='width:100%;border:1px solid #A0A0A0' cellspacing=0 cellpadding=2><tr><td style='background-color:#C8C8C8;height:1.8em;' colspan=$cols><b>"._("Object").": $name</b></td></tr>";
       }
@@ -522,7 +528,9 @@ class acl extends plugin
       asort($splist);
       if($_SESSION['js']) {
         if(isset($_SERVER['HTTP_USER_AGENT']) && preg_match("/gecko/i",$_SERVER['HTTP_USER_AGENT'])) {
-          $display.= "<tr id='tr_$name' style='vertical-align:top;height:1px;'><td colspan=".$cols."><div id='$name' style='overflow:hidden;visibility:hidden;height:0px;vertical-align:top;width:100%;'><table style='width:100%;'>";
+          $display.= "<tr id='tr_$name' style='vertical-align:top;height:0px;'><td colspan=".$cols."><div id='$name' style='overflow:hidden;visibility:hidden;height:0px;vertical-align:top;width:100%;'><table style='width:100%;'>";
+        } else if (isset($_SERVER['HTTP_USER_AGENT']) && preg_match("/ie/i",$_SERVER['HTTP_USER_AGENT'])) {
+          $display.= "<tr id='tr_$name' style='vertical-align:top;height:0px;'><td colspan=".$cols."><div id='$name' style='position:absolute;overflow:hidden;visibility:hidden;height:0px;vertical-align:top;width:100%;'><table style='width:100%;'>";
         }
       }
       foreach($splist as $attr => $dsc){
@@ -562,7 +570,7 @@ class acl extends plugin
       }
 
       if($_SESSION['js']) {
-        if(isset($_SERVER['HTTP_USER_AGENT']) && preg_match("/gecko/i",$_SERVER['HTTP_USER_AGENT'])) {
+        if(isset($_SERVER['HTTP_USER_AGENT']) && (preg_match("/gecko/i",$_SERVER['HTTP_USER_AGENT'])) || (preg_match("/ie/i",$_SERVER['HTTP_USER_AGENT']))) {
           $display.= "</table></div></td></tr>";
         }
       }

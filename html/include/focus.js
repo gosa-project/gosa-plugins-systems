@@ -214,6 +214,20 @@ function divtoggle(element) {
 				cell.style.height=document.defaultView.getComputedStyle(document.poppedLayer,"").getPropertyValue('height');
 			}
 		}
+	} else if (browserType == "ie") {
+    document.poppedLayer = document.getElementById(element);
+		cell= document.getElementById(cellname);
+	  if (document.poppedLayer.style.visibility == "visible") {
+		  hide (element);
+			cell.style.height="0px";
+			document.poppedLayer.style.height="0px";
+			document.poppedLayer.style.position="absolute";
+		} else {
+		  show (element);
+			cell.style.height="";
+			document.poppedLayer.style.height="";
+			document.poppedLayer.style.position="relative";
+		}
 	}
 }
 
