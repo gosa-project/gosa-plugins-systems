@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-28 12:39+0200\n"
-"PO-Revision-Date: 2006-07-28 13:16+0200\n"
+"POT-Creation-Date: 2006-08-01 13:33+0200\n"
+"PO-Revision-Date: 2006-08-01 13:38+0200\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -56,7 +56,7 @@ msgstr "Zusätzliches"
 #: plugins/admin/systems/class_servGeneric.inc:315
 #: plugins/admin/systems/class_workstationGeneric.inc:465
 #: plugins/admin/systems/servkolab.tpl:6
-#: plugins/admin/systems/class_printGeneric.inc:787
+#: plugins/admin/systems/class_printGeneric.inc:790
 #: plugins/admin/systems/class_componentGeneric.inc:233
 #: plugins/admin/systems/glpiPrinter.tpl:6 plugins/admin/systems/glpi.tpl:6
 #: plugins/admin/systems/class_phoneGeneric.inc:409
@@ -90,7 +90,7 @@ msgstr "Unix"
 
 #: contrib/gosa.conf:82 contrib/gosa.conf:98
 #: plugins/personal/environment/class_environment.inc:12
-#: plugins/personal/environment/class_environment.inc:1146
+#: plugins/personal/environment/class_environment.inc:1149
 #: plugins/admin/groups/class_divListGroup.inc:149
 #: plugins/admin/users/class_divListUsers.inc:163
 msgid "Environment"
@@ -210,7 +210,7 @@ msgstr "Geräte"
 #: contrib/gosa.conf:122 contrib/gosa.conf:138
 #: plugins/personal/environment/environment.tpl:228
 #: plugins/admin/systems/class_systemManagement.inc:783
-#: plugins/admin/systems/class_printGeneric.inc:793
+#: plugins/admin/systems/class_printGeneric.inc:796
 #: plugins/admin/ogroups/class_ogroupManagement.inc:390
 #: plugins/generic/references/class_reference.inc:52
 msgid "Printer"
@@ -526,7 +526,7 @@ msgstr "Hinzufügen"
 #: plugins/admin/applications/remove.tpl:15
 #: plugins/admin/applications/class_applicationManagement.inc:356
 #: plugins/admin/departments/remove.tpl:16
-#: plugins/admin/departments/class_departmentManagement.inc:300
+#: plugins/admin/departments/class_departmentManagement.inc:305
 #: plugins/admin/systems/class_systemManagement.inc:494
 #: plugins/admin/systems/servdns.tpl:23
 #: plugins/admin/systems/servkolab.tpl:205 plugins/admin/systems/remove.tpl:16
@@ -656,7 +656,7 @@ msgstr "Liste alternativer Mail-Adressen"
 #: plugins/personal/environment/environment.tpl:180
 #: plugins/personal/environment/environment.tpl:218
 #: plugins/personal/environment/environment.tpl:244
-#: plugins/personal/environment/class_environment.inc:636
+#: plugins/personal/environment/class_environment.inc:639
 #: plugins/gofax/blocklists/generic.tpl:69
 #: plugins/gofax/blocklists/remove.tpl:14
 #: plugins/gofax/faxaccount/generic.tpl:78
@@ -2438,7 +2438,7 @@ msgstr "Anstellungsart"
 #: plugins/admin/departments/generic.tpl:55
 #: plugins/admin/departments/class_departmentGeneric.inc:539
 #: plugins/admin/systems/workstation.tpl:17
-#: plugins/admin/systems/class_printGeneric.inc:798
+#: plugins/admin/systems/class_printGeneric.inc:801
 #: plugins/admin/systems/class_glpiAccount.inc:780
 #: plugins/admin/systems/class_glpiPrinterAccount.inc:778 html/getxls.php:174
 msgid "Location"
@@ -2666,7 +2666,7 @@ msgstr "Bild entfernen"
 #: plugins/personal/generic/generic_certs.tpl:91
 #: plugins/personal/environment/hotplugDialogNew.tpl:53
 #: plugins/addons/addressbook/address_edit.tpl:233
-#: plugins/admin/departments/class_departmentManagement.inc:298
+#: plugins/admin/departments/class_departmentManagement.inc:303
 #: plugins/admin/systems/servdns.tpl:21
 #: plugins/admin/systems/servkolab.tpl:203
 #: plugins/admin/systems/goNtpServer.tpl:22
@@ -3289,34 +3289,6 @@ msgstr "Profil-Kontingent"
 msgid "Quota limit period"
 msgstr "Frequenz der Host-Meldungen"
 
-#: plugins/personal/connectivity/opengw.tpl:1
-#: plugins/personal/connectivity/class_opengwAccount.inc:302
-msgid "Opengroupware"
-msgstr "Opengroupware"
-
-#: plugins/personal/connectivity/opengw.tpl:8
-#: plugins/personal/connectivity/class_opengwAccount.inc:312
-msgid "Location team"
-msgstr "Örtliches Team"
-
-#: plugins/personal/connectivity/opengw.tpl:21
-#: plugins/personal/connectivity/class_opengwAccount.inc:313
-msgid "Template user"
-msgstr "Benutzer-Vorlage"
-
-#: plugins/personal/connectivity/opengw.tpl:33
-#: plugins/personal/connectivity/class_opengwAccount.inc:314
-#: plugins/admin/systems/class_servGeneric.inc:44
-#: plugins/admin/systems/class_workstationGeneric.inc:103
-#: plugins/admin/ogroups/class_termgroup.inc:46
-msgid "Locked"
-msgstr "Gesperrt"
-
-#: plugins/personal/connectivity/opengw.tpl:48
-#: plugins/personal/connectivity/class_opengwAccount.inc:315
-msgid "Teams"
-msgstr "Teams"
-
 #: plugins/personal/connectivity/pptp.tpl:3
 #: plugins/personal/connectivity/class_pptpAccount.inc:151
 msgid "PPTP account"
@@ -3359,6 +3331,34 @@ msgstr "Entfernen von Benutzer/PPTP-Konto mit dn '%s' fehlgeschlagen."
 #, php-format
 msgid "Saving of user/PPTP account with dn '%s' failed."
 msgstr "Speichern von Benutzer/PPTP-Konto mit dn '%s' fehlgeschlagen."
+
+#: plugins/personal/connectivity/opengw.tpl:1
+#: plugins/personal/connectivity/class_opengwAccount.inc:302
+msgid "Opengroupware"
+msgstr "Opengroupware"
+
+#: plugins/personal/connectivity/opengw.tpl:8
+#: plugins/personal/connectivity/class_opengwAccount.inc:312
+msgid "Location team"
+msgstr "Örtliches Team"
+
+#: plugins/personal/connectivity/opengw.tpl:21
+#: plugins/personal/connectivity/class_opengwAccount.inc:313
+msgid "Template user"
+msgstr "Benutzer-Vorlage"
+
+#: plugins/personal/connectivity/opengw.tpl:33
+#: plugins/personal/connectivity/class_opengwAccount.inc:314
+#: plugins/admin/systems/class_servGeneric.inc:44
+#: plugins/admin/systems/class_workstationGeneric.inc:103
+#: plugins/admin/ogroups/class_termgroup.inc:46
+msgid "Locked"
+msgstr "Gesperrt"
+
+#: plugins/personal/connectivity/opengw.tpl:48
+#: plugins/personal/connectivity/class_opengwAccount.inc:315
+msgid "Teams"
+msgstr "Teams"
 
 #: plugins/personal/connectivity/phpscheduleit.tpl:3
 msgid "PHPscheduleit account"
@@ -3445,7 +3445,7 @@ msgid "Profil quota"
 msgstr "Profil-Kontingent"
 
 #: plugins/personal/environment/environment.tpl:66
-#: plugins/personal/environment/class_environment.inc:1159
+#: plugins/personal/environment/class_environment.inc:1162
 msgid "Cache profile localy"
 msgstr "Profil lokal zwischenspeichern"
 
@@ -3454,7 +3454,7 @@ msgid "Kiosk profile settings"
 msgstr "Kiosk-Profil-Einstellungen"
 
 #: plugins/personal/environment/environment.tpl:78
-#: plugins/personal/environment/class_environment.inc:1165
+#: plugins/personal/environment/class_environment.inc:1168
 msgid "Kiosk profile"
 msgstr "Kiosk-Profil"
 
@@ -3463,19 +3463,19 @@ msgid "Manage"
 msgstr "Verwalten"
 
 #: plugins/personal/environment/environment.tpl:98
-#: plugins/personal/environment/class_environment.inc:1158
+#: plugins/personal/environment/class_environment.inc:1161
 msgid "Resolution changeable during session"
 msgstr "Auflösung änderbar während des Betriebs"
 
 #: plugins/personal/environment/environment.tpl:103
-#: plugins/personal/environment/class_environment.inc:1164
+#: plugins/personal/environment/class_environment.inc:1167
 #: plugins/admin/systems/workstationService.tpl:94
 #: plugins/admin/systems/terminalService.tpl:94
 msgid "Resolution"
 msgstr "Auflösung"
 
 #: plugins/personal/environment/environment.tpl:126
-#: plugins/personal/environment/class_environment.inc:1170
+#: plugins/personal/environment/class_environment.inc:1173
 #: plugins/admin/systems/servservice.tpl:11
 #: plugins/admin/systems/class_workstationStartup.inc:1096
 #: plugins/admin/systems/workstationStartup.tpl:129
@@ -3509,7 +3509,7 @@ msgid "Logon script management"
 msgstr "Verwaltung der Anmelde-Skripte"
 
 #: plugins/personal/environment/environment.tpl:196
-#: plugins/personal/environment/class_environment.inc:1169
+#: plugins/personal/environment/class_environment.inc:1172
 msgid "Hotplug devices"
 msgstr "Hotplug-Geräte"
 
@@ -3654,15 +3654,14 @@ msgstr ""
 "zuerst aktiviert werden."
 
 #: plugins/personal/environment/class_environment.inc:460
-#: plugins/personal/environment/class_environment.inc:802
+#: plugins/personal/environment/class_environment.inc:805
 #: plugins/admin/systems/class_glpiDeviceManagement.inc:406
 msgid "None"
 msgstr "keine"
 
 #: plugins/personal/environment/class_environment.inc:474
-#, fuzzy
 msgid "You are not allowed to write Logon scripts."
-msgstr "Sie haben keine Berechtigung, diesen Benutzer zu löschen!"
+msgstr "Sie haben keine Berechtigung, Anmeldeskripte zu speichern."
 
 #: plugins/personal/environment/class_environment.inc:553
 #: plugins/personal/environment/class_environment.inc:564
@@ -3671,18 +3670,18 @@ msgstr "Sie haben keine Berechtigung, diesen Benutzer zu löschen!"
 msgid "You must specify a valid mount point."
 msgstr "Bitte geben Sie einen gültigen Mount-Pfad an!"
 
-#: plugins/personal/environment/class_environment.inc:623
-#: plugins/personal/environment/class_environment.inc:624
-#: plugins/personal/environment/class_environment.inc:632
-#: plugins/personal/environment/class_environment.inc:633
+#: plugins/personal/environment/class_environment.inc:626
+#: plugins/personal/environment/class_environment.inc:627
+#: plugins/personal/environment/class_environment.inc:635
+#: plugins/personal/environment/class_environment.inc:636
 msgid "Reset password hash"
 msgstr "Passwort zurücksetzen"
 
-#: plugins/personal/environment/class_environment.inc:637
+#: plugins/personal/environment/class_environment.inc:640
 msgid "Delete share entry"
 msgstr "Diesen Freigabe-Eintrag entfernen"
 
-#: plugins/personal/environment/class_environment.inc:805
+#: plugins/personal/environment/class_environment.inc:808
 #, php-format
 msgid ""
 "The selected kiosk profile '%s' is no longer available, setting current "
@@ -3691,16 +3690,16 @@ msgstr ""
 "Das ausgewählte Kiosk-Profil '%s' ist nicht mehr verfügbar, die Einstellung "
 "wurde auf 'keins' zurückgesetzt."
 
-#: plugins/personal/environment/class_environment.inc:843
+#: plugins/personal/environment/class_environment.inc:846
 #, php-format
 msgid "Removing of user/environment account with dn '%s' failed."
 msgstr "Entfernen von Benutzer/Umgebungs-Konto mit dn '%s' fehlgeschlagen."
 
-#: plugins/personal/environment/class_environment.inc:896
+#: plugins/personal/environment/class_environment.inc:899
 msgid "Please set a valid profile quota size."
 msgstr "Bitte wählen Sie eine gültige Kontingent-Grösse."
 
-#: plugins/personal/environment/class_environment.inc:903
+#: plugins/personal/environment/class_environment.inc:906
 msgid ""
 "You need to setup a valid posix extension in order to enable evironment "
 "features."
@@ -3708,47 +3707,47 @@ msgstr ""
 "Sie benötigen eine gültige UNIX-Erweiterung, um die Umgebungs-Erweiterung zu "
 "aktivieren."
 
-#: plugins/personal/environment/class_environment.inc:941
+#: plugins/personal/environment/class_environment.inc:944
 msgid "Can't save new kiosk profiles, possibly permission denied for folder"
 msgstr ""
 "Das neue Kiosk-Profil kann nicht gespeichert werden. Wahrscheinlich besitzen "
 "Sie nicht die nötigen Rechte."
 
-#: plugins/personal/environment/class_environment.inc:1070
+#: plugins/personal/environment/class_environment.inc:1073
 #, php-format
 msgid "Saving of user/environment account with dn '%s' failed."
 msgstr "Speichern von Benutzer/Umgebungs-Konto mit dn '%s' fehlgeschlagen."
 
-#: plugins/personal/environment/class_environment.inc:1083
+#: plugins/personal/environment/class_environment.inc:1086
 msgid "group share"
 msgstr "Gruppen-Freigabe"
 
-#: plugins/personal/environment/class_environment.inc:1116
+#: plugins/personal/environment/class_environment.inc:1119
 msgid "Administrator"
 msgstr "Administrator"
 
-#: plugins/personal/environment/class_environment.inc:1121
-#: plugins/personal/environment/class_environment.inc:1167
+#: plugins/personal/environment/class_environment.inc:1124
+#: plugins/personal/environment/class_environment.inc:1170
 msgid "Default printer"
 msgstr "Standard Drucker"
 
-#: plugins/personal/environment/class_environment.inc:1147
+#: plugins/personal/environment/class_environment.inc:1150
 msgid "Environment settings"
 msgstr "Umgebungs-Einstellungen"
 
-#: plugins/personal/environment/class_environment.inc:1154
+#: plugins/personal/environment/class_environment.inc:1157
 msgid "Command to extend the list of possible screen resolutions"
 msgstr "Befehl um die Liste der möglichen Auflösungen zu erweitern"
 
-#: plugins/personal/environment/class_environment.inc:1161
+#: plugins/personal/environment/class_environment.inc:1164
 msgid "Profile quota"
 msgstr "Profil-Kontingent"
 
-#: plugins/personal/environment/class_environment.inc:1162
+#: plugins/personal/environment/class_environment.inc:1165
 msgid "Profile server"
 msgstr "Profilserver"
 
-#: plugins/personal/environment/class_environment.inc:1168
+#: plugins/personal/environment/class_environment.inc:1171
 #: plugins/personal/environment/logonManagement.tpl:56
 msgid "Logon script"
 msgstr "Anmelde-Skript"
@@ -3807,7 +3806,7 @@ msgstr "Skriptname"
 #: plugins/admin/systems/class_servGeneric.inc:325
 #: plugins/admin/systems/wingeneric.tpl:25
 #: plugins/admin/systems/component.tpl:30
-#: plugins/admin/systems/class_printGeneric.inc:797
+#: plugins/admin/systems/class_printGeneric.inc:800
 #: plugins/admin/systems/class_componentGeneric.inc:243
 #: plugins/admin/systems/servnfs.tpl:17
 #: plugins/admin/systems/class_phoneGeneric.inc:419
@@ -4360,7 +4359,7 @@ msgstr "Fax-Sperrlisten"
 #: plugins/admin/applications/class_applicationGeneric.inc:490
 #: plugins/admin/systems/class_terminalGeneric.inc:502
 #: plugins/admin/systems/class_servGeneric.inc:324
-#: plugins/admin/systems/class_printGeneric.inc:796
+#: plugins/admin/systems/class_printGeneric.inc:799
 #: plugins/admin/systems/class_componentGeneric.inc:242
 #: plugins/admin/systems/servnfs.tpl:9
 #: plugins/admin/systems/class_phoneGeneric.inc:418
@@ -4967,7 +4966,7 @@ msgstr "Suchen"
 
 #: plugins/gofax/faxreports/contents.tpl:30
 #: plugins/gofax/faxreports/detail.tpl:21
-#: plugins/admin/systems/class_printGeneric.inc:775
+#: plugins/admin/systems/class_printGeneric.inc:778
 #: plugins/admin/ogroups/class_ogroupManagement.inc:382
 #: plugins/admin/fai/faiTemplateEntry.tpl:94
 msgid "User"
@@ -6199,8 +6198,8 @@ msgstr "Kategorie hinzufügen"
 msgid "Available applications"
 msgstr "Verfügbare Anwendungen"
 
-#: plugins/admin/groups/class_groupMail.inc:284 include/class_acl.inc:510
-#: include/class_acl.inc:573
+#: plugins/admin/groups/class_groupMail.inc:284 include/class_acl.inc:520
+#: include/class_acl.inc:596
 msgid "read"
 msgstr "lesen"
 
@@ -6216,8 +6215,8 @@ msgstr "extern posten"
 msgid "append"
 msgstr "anhängen"
 
-#: plugins/admin/groups/class_groupMail.inc:288 include/class_acl.inc:511
-#: include/class_acl.inc:574
+#: plugins/admin/groups/class_groupMail.inc:288 include/class_acl.inc:521
+#: include/class_acl.inc:597
 msgid "write"
 msgstr "schreiben"
 
@@ -6275,7 +6274,7 @@ msgstr "Weiterleitungs-Adressen"
 
 #: plugins/admin/groups/class_groupMail.inc:993
 #: plugins/admin/systems/printer.tpl:63
-#: plugins/admin/systems/class_printGeneric.inc:801
+#: plugins/admin/systems/class_printGeneric.inc:804
 msgid "Permissions"
 msgstr "Berechtigungen"
 
@@ -7225,9 +7224,9 @@ msgid ""
 "check if your really want to do this since there is no way for GOsa to get "
 "your data back."
 msgstr ""
-"Dies umfasst 'alle' Konten, System- und Setup-Informationen dieses Teilbaums. Bitte prüfen "
-"Sie genau, da es keine Möglichkeit für GOsa gibt, die Daten "
-"wiederherzustellen. "
+"Dies umfasst 'alle' Konten, System- und Setup-Informationen dieses "
+"Teilbaums. Bitte prüfen Sie genau, da es keine Möglichkeit für GOsa gibt, "
+"die Daten wiederherzustellen. "
 
 #: plugins/admin/departments/remove.tpl:10 plugins/admin/systems/remove.tpl:10
 #: plugins/admin/acl/remove.tpl:10 plugins/admin/fai/remove.tpl:11
@@ -7319,8 +7318,9 @@ msgid "Moving '%s' to '%s'"
 msgstr "Verschiebe '%s' nach '%s'"
 
 #: plugins/admin/departments/class_departmentGeneric.inc:496
-#: include/class_ldap.inc:455 include/class_acl.inc:490
-#: ihtml/themes/default/snapshotdialog.tpl:14
+#: include/class_ldap.inc:455 include/class_acl.inc:492
+#: include/class_acl.inc:494 include/class_acl.inc:496
+#: include/class_acl.inc:499 ihtml/themes/default/snapshotdialog.tpl:14
 #: ihtml/themes/default/snapshotdialog.tpl:54
 msgid "Object"
 msgstr "Objekt"
@@ -7364,7 +7364,7 @@ msgstr ""
 msgid "You have no permission to remove this department."
 msgstr "Sie haben keine Berechtigung, diese Abteilung zu entfernen."
 
-#: plugins/admin/departments/class_departmentManagement.inc:334
+#: plugins/admin/departments/class_departmentManagement.inc:339
 msgid ".."
 msgstr ".."
 
@@ -7450,7 +7450,7 @@ msgstr "vorhanden"
 #: plugins/admin/systems/class_terminalStartup.inc:151
 #: plugins/admin/systems/class_terminalGeneric.inc:230
 #: plugins/admin/systems/class_workstationStartup.inc:456
-#: plugins/admin/systems/class_workstationService.inc:241
+#: plugins/admin/systems/class_workstationService.inc:252
 msgid "This 'dn' has no terminal features."
 msgstr "Dieser 'DN' hat keine Terminal-Erweiterungen."
 
@@ -7796,6 +7796,13 @@ msgstr "unbekannt"
 #: plugins/admin/systems/class_workstationService.inc:213
 #: plugins/admin/systems/class_workstationService.inc:216
 #: plugins/admin/systems/class_workstationService.inc:219
+#: plugins/admin/systems/class_workstationService.inc:229
+#: plugins/admin/systems/class_workstationService.inc:230
+#: plugins/admin/systems/class_workstationService.inc:231
+#: plugins/admin/systems/class_workstationService.inc:232
+#: plugins/admin/systems/class_workstationService.inc:233
+#: plugins/admin/systems/class_workstationService.inc:234
+#: plugins/admin/systems/class_workstationService.inc:235
 msgid "inherited"
 msgstr "geerbt"
 
@@ -7845,21 +7852,21 @@ msgid "Bit"
 msgstr "Bit"
 
 #: plugins/admin/systems/class_terminalService.inc:303
-#: plugins/admin/systems/class_workstationService.inc:291
+#: plugins/admin/systems/class_workstationService.inc:302
 msgid "Choose the phone located at the current terminal"
 msgstr "Wählen Sie das sich am momentanen Arbeitsplatz befindende Telefon."
 
 #: plugins/admin/systems/class_terminalService.inc:365
 #: plugins/admin/systems/class_terminalService.inc:370
-#: plugins/admin/systems/class_workstationService.inc:359
-#: plugins/admin/systems/class_workstationService.inc:364
+#: plugins/admin/systems/class_workstationService.inc:370
+#: plugins/admin/systems/class_workstationService.inc:375
 msgid "Please specify a valid VSync range."
 msgstr "Bitte geben Sie einen gültigen VSync-Bereich an."
 
 #: plugins/admin/systems/class_terminalService.inc:380
 #: plugins/admin/systems/class_terminalService.inc:385
-#: plugins/admin/systems/class_workstationService.inc:374
-#: plugins/admin/systems/class_workstationService.inc:379
+#: plugins/admin/systems/class_workstationService.inc:385
+#: plugins/admin/systems/class_workstationService.inc:390
 msgid "Please specify a valid HSync range."
 msgstr "Bitte geben Sie einen gültigen HSync-Bereich an."
 
@@ -7870,7 +7877,7 @@ msgstr ""
 "Speichern von Objekt System Terminal/Dienst mit dn '%s' fehlgeschlagen."
 
 #: plugins/admin/systems/class_terminalService.inc:425
-#: plugins/admin/systems/class_workstationService.inc:429
+#: plugins/admin/systems/class_workstationService.inc:440
 msgid "Service"
 msgstr "Dienst"
 
@@ -7883,7 +7890,7 @@ msgid "Terminal service"
 msgstr "Terminal-Dienst"
 
 #: plugins/admin/systems/class_terminalService.inc:434
-#: plugins/admin/systems/class_workstationService.inc:438
+#: plugins/admin/systems/class_workstationService.inc:449
 msgid "Monitor"
 msgstr "Monitor"
 
@@ -7898,27 +7905,27 @@ msgid "Remote desktop"
 msgstr "Entfernte Arbeitsfläche"
 
 #: plugins/admin/systems/class_terminalService.inc:438
-#: plugins/admin/systems/class_workstationService.inc:439
+#: plugins/admin/systems/class_workstationService.inc:450
 msgid "Gfx driver"
 msgstr "Grafiktreiber"
 
 #: plugins/admin/systems/class_terminalService.inc:439
-#: plugins/admin/systems/class_workstationService.inc:440
+#: plugins/admin/systems/class_workstationService.inc:451
 msgid "Gfx resolution"
 msgstr "Auflösung"
 
 #: plugins/admin/systems/class_terminalService.inc:440
-#: plugins/admin/systems/class_workstationService.inc:441
+#: plugins/admin/systems/class_workstationService.inc:452
 msgid "Gfx color depth"
 msgstr "Farbtiefe"
 
 #: plugins/admin/systems/class_terminalService.inc:441
-#: plugins/admin/systems/class_workstationService.inc:442
+#: plugins/admin/systems/class_workstationService.inc:453
 msgid "Hsync"
 msgstr "HSync"
 
 #: plugins/admin/systems/class_terminalService.inc:442
-#: plugins/admin/systems/class_workstationService.inc:443
+#: plugins/admin/systems/class_workstationService.inc:454
 msgid "Vsync"
 msgstr "VSync"
 
@@ -7932,7 +7939,7 @@ msgid "Spool server"
 msgstr "Spool-Server"
 
 #: plugins/admin/systems/class_terminalService.inc:445
-#: plugins/admin/systems/class_workstationService.inc:444
+#: plugins/admin/systems/class_workstationService.inc:455
 msgid "Scanner enabled"
 msgstr "Scanner aktiviert"
 
@@ -7941,32 +7948,32 @@ msgid "Scanner model"
 msgstr "Scanner-Modell"
 
 #: plugins/admin/systems/class_terminalService.inc:449
-#: plugins/admin/systems/class_workstationService.inc:445
+#: plugins/admin/systems/class_workstationService.inc:456
 msgid "Keyboard model"
 msgstr "Tastatur-Modell"
 
 #: plugins/admin/systems/class_terminalService.inc:450
-#: plugins/admin/systems/class_workstationService.inc:446
+#: plugins/admin/systems/class_workstationService.inc:457
 msgid "Keyboard layout"
 msgstr "Tastatur-Layout"
 
 #: plugins/admin/systems/class_terminalService.inc:451
-#: plugins/admin/systems/class_workstationService.inc:447
+#: plugins/admin/systems/class_workstationService.inc:458
 msgid "Keyboard variant"
 msgstr "Tastatur-Variante"
 
 #: plugins/admin/systems/class_terminalService.inc:452
-#: plugins/admin/systems/class_workstationService.inc:448
+#: plugins/admin/systems/class_workstationService.inc:459
 msgid "Mouse type"
 msgstr "Maus-Typ"
 
 #: plugins/admin/systems/class_terminalService.inc:453
-#: plugins/admin/systems/class_workstationService.inc:449
+#: plugins/admin/systems/class_workstationService.inc:460
 msgid "Mouse port"
 msgstr "Maus-Anschluß"
 
 #: plugins/admin/systems/class_terminalService.inc:454
-#: plugins/admin/systems/class_workstationService.inc:450
+#: plugins/admin/systems/class_workstationService.inc:461
 #: plugins/admin/systems/workstationService.tpl:66
 #: plugins/admin/systems/terminalService.tpl:66
 #: plugins/gofon/phoneaccount/generic.tpl:24
@@ -8171,7 +8178,7 @@ msgstr ""
 #: plugins/admin/systems/class_terminalGeneric.inc:476
 #, php-format
 msgid "Saving of object system terminal/generic with dn '%s' failed."
-msgstr ""
+msgstr "Speichern von Objekt Terminal/Allgemein mit dn '%s' fehlgeschlagen."
 
 #: plugins/admin/systems/class_terminalGeneric.inc:487
 #: plugins/admin/systems/class_terminalGeneric.inc:493
@@ -9034,8 +9041,8 @@ msgstr "Entfernen von System Drucker/Allgemein mit dn '%s' fehlgeschlagen."
 msgid "Saving of system print/generic with dn '%s' failed."
 msgstr "Speichern von System Drucker/Allgemein mit dn '%s' fehlgeschlagen."
 
-#: plugins/admin/systems/class_printGeneric.inc:770
-#: plugins/admin/systems/class_printGeneric.inc:772
+#: plugins/admin/systems/class_printGeneric.inc:773
+#: plugins/admin/systems/class_printGeneric.inc:775
 #: plugins/admin/ogroups/class_ogroupManagement.inc:383
 #: plugins/admin/fai/faiTemplateEntry.tpl:71
 #: plugins/admin/fai/faiTemplateEntry.tpl:103
@@ -9043,20 +9050,20 @@ msgstr "Speichern von System Drucker/Allgemein mit dn '%s' fehlgeschlagen."
 msgid "Group"
 msgstr "Gruppe"
 
-#: plugins/admin/systems/class_printGeneric.inc:788
+#: plugins/admin/systems/class_printGeneric.inc:791
 #, fuzzy
 msgid "Print generic"
 msgstr "Druck-Dienst"
 
-#: plugins/admin/systems/class_printGeneric.inc:799
+#: plugins/admin/systems/class_printGeneric.inc:802
 msgid "LabeledURL"
 msgstr ""
 
-#: plugins/admin/systems/class_printGeneric.inc:800
+#: plugins/admin/systems/class_printGeneric.inc:803
 msgid "Printer PPD"
 msgstr "Drucker-PPD"
 
-#: plugins/admin/systems/class_printGeneric.inc:817
+#: plugins/admin/systems/class_printGeneric.inc:820
 #, php-format
 msgid ""
 "You are not allowed to remove the given object '%s' from the list of members "
@@ -9065,14 +9072,14 @@ msgstr ""
 "Sie haben keine Berechtigung, das gewählte Objekt '%s' von der "
 "Mitgliedsliste des Druckers '%s' zu entfernen."
 
-#: plugins/admin/systems/class_printGeneric.inc:834
+#: plugins/admin/systems/class_printGeneric.inc:837
 #, php-format
 msgid "Illegal printer type while adding '%s' to the list of '%s' printers,"
 msgstr ""
 "Ungültiger Drucker während des Hinzufügens von '%s' zu der Liste von '%s' "
 "Druckern."
 
-#: plugins/admin/systems/class_printGeneric.inc:839
+#: plugins/admin/systems/class_printGeneric.inc:842
 #, php-format
 msgid ""
 "You are not allowed to add the given object '%s' to the list of members of '%"
@@ -9081,14 +9088,14 @@ msgstr ""
 "Ihnen ist es nicht erlaubt das gewählte Objekt '%s' zu der Mitgliedsliste "
 "von '%s' hinzuzufügen."
 
-#: plugins/admin/systems/class_printGeneric.inc:861
+#: plugins/admin/systems/class_printGeneric.inc:864
 #, php-format
 msgid "Can't add '%s' to the list of members, it is already used."
 msgstr ""
 "Kann '%s' nicht zur Liste der Mitglieder hinzufügen, er wird bereits "
 "verwendet."
 
-#: plugins/admin/systems/class_printGeneric.inc:869
+#: plugins/admin/systems/class_printGeneric.inc:872
 #, php-format
 msgid "Can't add '%s' to list of members, it is not reachable."
 msgstr ""
@@ -9162,10 +9169,10 @@ msgid ""
 msgstr ""
 "Linux Terminals und Arbeitsstationen werden beim Systemstart automatisch "
 "hinzugefügt. Aus diesem Grund können Sie für diese Systemtypen nur Vorlagen "
-"für einen Teilbaum anlegen. Server werden ebenfalls automatisch "
-"hinzugefügt, in einigen Fällen benötigen Sie Pseudo-Einträge um GOsa mit "
-"benötigten Informationen zu versorgen. Weitere Netzwerk-Komponenten können z."
-"B. für Nagios Umgebungen genutzt werden um die Abhängigkeiten aufzulösen."
+"für einen Teilbaum anlegen. Server werden ebenfalls automatisch hinzugefügt, "
+"in einigen Fällen benötigen Sie Pseudo-Einträge um GOsa mit benötigten "
+"Informationen zu versorgen. Weitere Netzwerk-Komponenten können z.B. für "
+"Nagios Umgebungen genutzt werden um die Abhängigkeiten aufzulösen."
 
 #: plugins/admin/systems/chooser.tpl:7
 msgid "Linux thin client template"
@@ -9792,12 +9799,12 @@ msgstr ""
 msgid "Printer ppd selection."
 msgstr "Auswahl der Drucker-PPD"
 
-#: plugins/admin/systems/class_workstationService.inc:421
+#: plugins/admin/systems/class_workstationService.inc:432
 #, php-format
 msgid "Saving of system workstation/service with dn '%s' failed."
 msgstr "Speichern von System Arbeitsstation/Dienst mit dn '%s' fehlgeschlagen."
 
-#: plugins/admin/systems/class_workstationService.inc:430
+#: plugins/admin/systems/class_workstationService.inc:441
 msgid "Workstation service"
 msgstr "Arbeitsstations-Dienst"
 
@@ -11176,8 +11183,8 @@ msgid ""
 "Step in the prefered tree and click save to use the current subtree as base. "
 "Or click the image at the end of each entry."
 msgstr ""
-"Wechseln Sie in den gewünschten Teilbaum und klicken Sie \"Speichern\", um den "
-"Baum als Basis zu nutzen (Oder klicken sie auf das Bild am Ende des "
+"Wechseln Sie in den gewünschten Teilbaum und klicken Sie \"Speichern\", um "
+"den Baum als Basis zu nutzen (Oder klicken sie auf das Bild am Ende des "
 "Eintrags)."
 
 #: plugins/admin/systems/class_baseSelectDialog.inc:51
@@ -15197,9 +15204,8 @@ msgid "Can't use ssha for encryption. (Missing function mhash / sha1)"
 msgstr "Kann SSHA nicht benutzen (Fehlende Funktion mhash / sha1)"
 
 #: include/class_pluglist.inc:53
-#, fuzzy
 msgid "All objects in this category"
-msgstr "Keine ACL-Einstellungen für diese Kategorie"
+msgstr "Keine Objekte dieser Kategorie"
 
 #: include/class_pluglist.inc:131
 msgid ""
@@ -15989,9 +15995,8 @@ msgid "Access control"
 msgstr "Zugriffskontrolle"
 
 #: include/class_acl.inc:145
-#, fuzzy
 msgid "All categories"
-msgstr "Kategorie hinzufügen"
+msgstr "Alle Kategorien"
 
 #: include/class_acl.inc:153
 msgid "Reset ACLs"
@@ -16051,54 +16056,58 @@ msgstr "ACL für '%s' bearbeiten, Bereich ist '%s'"
 msgid "All objects in current subtree"
 msgstr "Alle Objekte im aktuellen Teilbaum"
 
-#: include/class_acl.inc:495
+#: include/class_acl.inc:492 include/class_acl.inc:494
+msgid "Show/Hide Advanced Settings"
+msgstr "Zeige/Verstecke Erweiterte Einstellungen"
+
+#: include/class_acl.inc:505
 msgid "Create objects"
 msgstr "Erstelle Objekte"
 
-#: include/class_acl.inc:496
+#: include/class_acl.inc:506
 msgid "Move objects"
 msgstr "Objekte verschieben"
 
-#: include/class_acl.inc:497
+#: include/class_acl.inc:507
 msgid "Remove objects"
 msgstr "Objekte entfernen"
 
-#: include/class_acl.inc:499 include/class_acl.inc:505
+#: include/class_acl.inc:509 include/class_acl.inc:515
 msgid "Modifyable by owner"
 msgstr "Änderbar vom Eigentümer"
 
-#: include/class_acl.inc:502
+#: include/class_acl.inc:512
 msgid "Move object"
 msgstr "Objekt verschieben"
 
-#: include/class_acl.inc:503
+#: include/class_acl.inc:513
 msgid "Remove object"
 msgstr "Objekt entfernen"
 
-#: include/class_acl.inc:602
+#: include/class_acl.inc:625
 #, php-format
 msgid "Unkown ACL type '%s'. Don't know how to handle it."
 msgstr "Unbekannter ACL-Typ '%s'. Verarbeitung nicht möglich."
 
-#: include/class_acl.inc:642
+#: include/class_acl.inc:665
 #, php-format
 msgid "Unknown entry '%s'!"
 msgstr "Unbekannter Eintrag '%s'!"
 
-#: include/class_acl.inc:703
+#: include/class_acl.inc:726
 #, php-format
 msgid "Contains settings for these objects: %s"
 msgstr "Enthält Einstellungen für diese Objekte: %s"
 
-#: include/class_acl.inc:711
+#: include/class_acl.inc:734
 msgid "Members:"
 msgstr "Mitglieder:"
 
-#: include/class_acl.inc:717
+#: include/class_acl.inc:740
 msgid "ACL is valid for all users"
 msgstr "ACL ist gültig für alle Benutzer"
 
-#: include/class_acl.inc:825
+#: include/class_acl.inc:848
 #, php-format
 msgid "Saving ACLs with dn '%s' failed."
 msgstr "Speichern der ACLs von dn '%s' fehlgeschlagen."
