@@ -39,7 +39,7 @@ class gofaxAccount extends plugin
   var $current_blocklist= array();
 
   /* attribute list for save action */
-  var $attributes= array("goFaxDeliveryMode", "goFaxIsEnabled","goFaxRBlockgroups","facsimileAlternateTelephoneNumber",
+  var $attributes= array("goFaxDeliveryMode", "goFaxIsEnabled","goFaxRBlockgroups","facsimileAlternateTelephoneNumber","facsimileTelephoneNumber",
       "goFaxPrinter", "goFaxDivertNumber", "goFaxLanguage", "goFaxFormat", "mail");
   var $objectclasses= array("goFaxAccount");
 
@@ -58,7 +58,7 @@ class gofaxAccount extends plugin
 
     if ($dn != "new"){
       /* Get arrays */
-      foreach (array("goFaxRBlocklist", "goFaxRBlockgroups", "goFaxSBlocklist",
+      foreach (array("goFaxRBlocklist", "goFaxRBlockgroups", "goFaxSBlocklist","facsimileTelephoneNumber",
             "goFaxSBlockgroups", "facsimileAlternateTelephoneNumber") as $val){
         $this->$val =array();
         if (isset($this->attrs["$val"]["count"])){
@@ -71,9 +71,6 @@ class gofaxAccount extends plugin
       /* Set up has_mailAccount */
       if (in_array("gosaMailAccount", $this->attrs['objectClass'])){
         $this->has_mailAccount= TRUE;
-      }
-      if (isset($this->attrs["facsimileTelephoneNumber"][0])){
-        $this->facsimileTelephoneNumber= $this->attrs["facsimileTelephoneNumber"][0];
       }
     }
 
@@ -154,15 +151,15 @@ class gofaxAccount extends plugin
 
     /* Trigger Add local fax alternatives dialog */
     if (isset($_POST['add_local_alternate'])){
-      $this->locals_dialog= TRUE;	
-      $this->dialog= TRUE;	
+      if($this->acl_is_writeable("facsimileAlternateTelephoneNumber")){
+        $this->locals_dialog= TRUE;	
+        $this->dialog= TRUE;	
+      }
     }
 
     /* Add alternatives from dialog */
-    if (isset($_POST['add_locals_finish'])){
-      if (isset($_POST['local_list']) &&
-          chkacl ($this->acl, "facsimileAlternateTelephoneNumber") == ""){
-
+    if (isset($_POST['add_locals_finish']) && isset($_POST['local_list'])){
+      if($this->acl_is_writeable("facsimileAlternateTelephoneNumber")){
         foreach ($_POST['local_list'] as $val){
           $this->addAlternate($val);
           $this->is_modified= TRUE;
@@ -171,20 +168,15 @@ class gofaxAccount extends plugin
     }
 
     /* Add alternatives */
-    if (isset($_POST['add_alternate'])){
-      if ($_POST['forward_address'] != "" &&
-          is_phone_nr($_POST['forward_address']) &&
-          chkacl ($this->acl, "facsimileAlternateTelephoneNumber") == ""){
-
+    if (isset($_POST['add_alternate']) && !empty($_POST['forward_address']) && is_phone_nr($_POST['forward_address'])){ 
+      if($this->acl_is_writeable("facsimileAlternateTelephoneNumber")){
         $this->addAlternate($_POST['forward_address']);
       }
     }
 
     /* Delete alternate fax number */
-    if (isset($_POST['delete_alternate'])){
-      if (isset($_POST['alternate_list']) && count($_POST['alternate_list']) &&
-          chkacl ($this->acl, "facsimileAlternateTelephoneNumber") == ""){
-
+    if (isset($_POST['delete_alternate']) && isset($_POST['alternate_list']) && count($_POST['alternate_list'])){ 
+      if($this->acl_is_writeable("facsimileAlternateTelephoneNumber")){
         $this->delAlternate ($_POST['alternate_list']);
       }
     }
@@ -192,19 +184,19 @@ class gofaxAccount extends plugin
 
     /* Edit incoming blocklists */
     if (isset($_POST['edit_incoming'])){
-      $this->current_blocklist= array_merge($this->goFaxRBlocklist,
-          $this->goFaxRBlockgroups);
-      sort($this->current_blocklist);
-      reset($this->current_blocklist);
+      if($this->acl_is_writeable("goFaxRBlocklist"))  {
+        $this->current_blocklist= array_merge($this->goFaxRBlocklist,$this->goFaxRBlockgroups);
+        sort($this->current_blocklist);
+        reset($this->current_blocklist);
 
-      $this->in_blocklist_dialog= TRUE;
-      $this->dialog= TRUE;
+        $this->in_blocklist_dialog= TRUE;
+        $this->dialog= TRUE;
+      }
     }
 
     /* Edit outgoing blocklists */
     if (isset($_POST['edit_outgoing'])){
-      $this->current_blocklist= array_merge($this->goFaxSBlocklist,
-          $this->goFaxSBlockgroups);
+      $this->current_blocklist= array_merge($this->goFaxSBlocklist,$this->goFaxSBlockgroups);
       sort($this->current_blocklist);
       reset($this->current_blocklist);
 
@@ -294,10 +286,8 @@ class gofaxAccount extends plugin
 
 
     /* Set departments */
-    if ($this->locals_dialog ||
-        $this->in_blocklist_dialog ||
-        $this->out_blocklist_dialog){
-
+    if ($this->locals_dialog || $this->in_blocklist_dialog || $this->out_blocklist_dialog){
+      
       $list= array ();
       $ldap= $this->config->get_ldap_link();
       if (isset ($_POST['department'])){
@@ -334,7 +324,6 @@ class gofaxAccount extends plugin
         }
         $faxfilter['fuser']= $s;
       }
-      register_global("faxfilter", $faxfilter);
 
       if ($faxfilter['regex'] != '*' && $faxfilter['regex'] != ""){
         $regex= $faxfilter['regex'];
@@ -434,7 +423,7 @@ class gofaxAccount extends plugin
       /* Fetch all returned departments an add them to our divlist */
       while($value = $ldap->fetch()){
         if($value["description"][0]!=".."){
-          $this->departments[$value['dn']]=convert_department_dn($value['dn'])." - [".$value["description"][0]."]";
+          $this->departments[$value['dn']]=@LDAP::fix(convert_department_dn($value['dn'])." - [".$value["description"][0]."]");
         }else{
           $this->departments[$value['dn']]=$value["description"][0];
         }
@@ -465,7 +454,6 @@ class gofaxAccount extends plugin
 
       /* Show dialog */
       $smarty->assign("cblocklist", $this->current_blocklist);
-      $smarty->assign("goFaxBlockListACL", chkacl($this->acl, "goFaxBlockList"));
       $smarty->assign("departments", $this->config->idepartments);
       $smarty->assign("divSelectPredefined", $divSel->DrawList());
       $display.= $smarty->fetch (get_template_path('lists.tpl', TRUE, dirname(__FILE__)));
@@ -516,7 +504,7 @@ class gofaxAccount extends plugin
       /* Get all departments */
       while($value = $ldap->fetch()){
         if(isset($value["description"][0])){
-          $this->departments[$value['dn']]=convert_department_dn($value['dn'])." - [".$value["description"][0]."]";
+          $this->departments[$value['dn']]=@LDAP::fix(convert_department_dn($value['dn'])." - [".$value["description"][0]."]");
         }else{
           $this->departments[$value['dn']]=$value["description"][0];
         }
@@ -548,7 +536,6 @@ class gofaxAccount extends plugin
 
       /* Show dialog */
       $smarty->assign("cblocklist", $this->current_blocklist);
-      $smarty->assign("goFaxBlockListACL", chkacl($this->acl, "goFaxBlockList"));
       $smarty->assign("departments", $this->config->idepartments);
       $smarty->assign("divSelectPredefined", $divSel->DrawList());
       $display.= $smarty->fetch (get_template_path('lists.tpl', TRUE, dirname(__FILE__)));
@@ -567,10 +554,12 @@ class gofaxAccount extends plugin
           "facsimileAlternateTelephoneNumber", "mail") as $val){
 
       $smarty->assign("$val", $this->$val);
-      $smarty->assign($val."ACL", chkacl($this->acl, "$val"));
     }
-    $smarty->assign("goFaxRBlockgroupsACL", chkacl($this->acl, "goFaxRBlockgroups"));
-    $smarty->assign("goFaxSBlockgroupsACL", chkacl($this->acl, "goFaxSBlockgroups"));
+
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $acl => $desc){
+      $smarty->assign($acl."ACL",$this->getacl($acl));
+    }
 
     /* Load checkboxes */
     if ($this->goFaxIsEnabled == "1"){
@@ -580,14 +569,14 @@ class gofaxAccount extends plugin
     }
     /* goFaxAccount has "mail" as must! Block if no mailaddress is specified... */
     if ($this->goFaxDeliveryMode & 32) {
-      $smarty->assign("fax_to_mail", "checked");
+      $smarty->assign("faxtomail", "checked");
     } else {
-      $smarty->assign("fax_to_mail", "");
+      $smarty->assign("faxtomail", "");
     }
     if ($this->goFaxDeliveryMode & 64) {
-      $smarty->assign("fax_to_printer", "checked");
+      $smarty->assign("faxtoprinter", "checked");
     } else {
-      $smarty->assign("fax_to_printer", "");
+      $smarty->assign("faxtoprinter", "");
     }
 
 
@@ -668,15 +657,26 @@ class gofaxAccount extends plugin
     if (isset($_POST['faxTab'])){
       plugin::save_object();
 
-      /* Adapt combobox values */
-      $tmp= 0;
-      if (isset($_POST["fax_to_mail"]) && $_POST["fax_to_mail"] == 1){
-        $tmp+= 32;
+
+      $tmp = 0+$this->goFaxDeliveryMode;
+
+      if($this->acl_is_writeable("faxtomail")){
+        if (isset($_POST["faxtomail"]) && $_POST["faxtomail"] == 1){  
+          $tmp |= 32;
+        }elseif($tmp & 32){
+          $tmp &= (!32);
+        }
       }
-      if (isset($_POST["fax_to_printer"]) && $_POST["fax_to_printer"] == 1){
-        $tmp+= 64;
+      if($this->acl_is_writeable("faxtoprinter")){
+        if (isset($_POST["faxtoprinter"]) && $_POST["faxtoprinter"] == 1){  
+          $tmp |= 64;
+        }elseif($tmp & 64){
+          $tmp &= !64;
+        }
       }
-      if (chkacl ($this->acl, "goFaxIsEnabled") == ""){
+      $this->goFaxDeliveryMode = $tmp;
+
+      if($this->acl_is_writeable("goFaxIsEnabled")){
         if (isset($_POST["goFaxIsEnabled"]) && $_POST["goFaxIsEnabled"] == "1"){
           $this->goFaxIsEnabled= "0";
         } else {
@@ -684,26 +684,9 @@ class gofaxAccount extends plugin
         }
       }
 
-      if (isset($_POST['facsimileTelephoneNumber'])){
-        if ($_POST['facsimileTelephoneNumber'] != $this->facsimileTelephoneNumber){
-          $this->is_modified= TRUE;
-        }
-        $this->facsimileTelephoneNumber= $_POST['facsimileTelephoneNumber'];
-      }
-
-      if (isset($_POST['mail'])){
-        if ($this->mail != $_POST['mail']){
-          $this->is_modified= TRUE;
-        }
+    
+      if (isset($_POST['mail']) && $this->acl_is_writeable("faxtomail")){
         $this->mail= $_POST['mail'];
-      }
-
-      /* Write to object */
-      if (chkacl ($this->acl, "goFaxDeliveryMode") == ""){
-        if ($tmp != $this->goFaxDeliveryMode){
-          $this->is_modified= TRUE;
-        }
-        $this->goFaxDeliveryMode= "$tmp";
       }
 
       /* Check if mail account is active and correct the internal
@@ -728,6 +711,10 @@ class gofaxAccount extends plugin
       $this->attrs[$val]= $this->$val;
     }
 
+    if(!$this->attrs['goFaxDeliveryMode']){
+      $this->attrs['goFaxDeliveryMode'] = 0;
+    }
+  
     /* Adapt mail settings if needed */
     unset($this->attrs['mail']);
     if (!$this->has_mailAccount && $this->goFaxDeliveryMode && 32){
@@ -824,7 +811,9 @@ class gofaxAccount extends plugin
             "goFaxRBlocklist"                   => _("Receive blocklist"),
             "goFaxSBlocklist"                   => _("Send blocklist"),
             "facsimileTelephoneNumber"          => _("Fax number"), // goFaxDeliveryMode
-            "goFaxPrinter"                      => _("Deliver fax to printer"),
+            "facsimileAlternateTelephoneNumber" => _("Alternate fax number"), // goFaxDeliveryMode
+            "faxtomail"                         => _("Deliver fax as mail"),
+            "faxtoprinter"                      => _("Deliver fax to printer"),
             "goFaxFormat"                       => _("Delivery format"),
             "goFaxLanguage"                     => _("Language"))
           ));

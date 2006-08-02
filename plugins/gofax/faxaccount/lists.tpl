@@ -9,9 +9,9 @@
 		<option disabled>&nbsp;</option>
    </select>
    <br>
-   <input name="block_number" size=25 align="middle" maxlength=30 {$goFaxBlockListACL} value="">
-   <input type=submit value="{t}Add{/t}" name="add_blocklist_number" {$goFaxBlockListACL}>&nbsp;
-   <input type=submit value="{t}Delete{/t}" name="delete_blocklist_number" {$goFaxBlockListACL}>
+   <input name="block_number" size=25 align="middle" maxlength=30 value="">
+   <input type=submit value="{t}Add{/t}" name="add_blocklist_number" >&nbsp;
+   <input type=submit value="{t}Delete{/t}" name="delete_blocklist_number" >
   </td>
   <td>
 	<b>{t}List of predefined blocklists{/t}</b><br>
@@ -22,7 +22,7 @@
 			</td>
 		</tr>
 	</table>
-   <input type=submit value="{t}Add the list to the blocklists{/t}" name="add_blocklist" {$goFaxBlockListACL}><br>
+   <input type=submit value="{t}Add the list to the blocklists{/t}" name="add_blocklist"><br>
   </td>
  </tr>
 </table>
