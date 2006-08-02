@@ -132,12 +132,14 @@ class printgeneric extends plugin
         foreach($this->attrs[$attr] as $mem){
           if(preg_match("/Group/",$type)){
             $ldap->search("(&(objectClass=posixGroup)(cn=".$mem."))",array("cn","description"));
-            $entry = $ldap->fetch();
-            $this->member[$type][$entry['cn'][0]]=$entry;
+            if($ldap->count()){
+              $entry = $ldap->fetch();
+              $this->member[$type][$entry['cn'][0]]=$entry;
+            }
           }else{
             $ldap->search("(&(objectClass=person)(objectClass=inetOrgPerson)(uid=".$mem."))",array("cn","uid"));
-            $entry = $ldap->fetch();
-            if(isset($entry['uid'])){
+            if($ldap->count()){
+              $entry = $ldap->fetch();
               $this->member[$type][$entry['uid'][0]]=$entry;
             }
           }
