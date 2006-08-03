@@ -45,7 +45,7 @@ if (!$remove_lock){
   }
 
   /* Enter edit mode? */
-  if (isset($_POST['edit'])){
+  if ((isset($_POST['edit'])) && (!isset( $_SESSION['edit']))){
 
     /* Check locking */
     if (($username= get_lock($ui->dn)) != ""){
@@ -139,6 +139,7 @@ if (!$remove_lock){
   }
 
   $info = "";
+
   /* Show page footer depending on the mode */
   if (!$user->cert_dialog && !$user->picture_dialog && $user->is_account){
     $display.= "<p class=\"plugbottom\">";
