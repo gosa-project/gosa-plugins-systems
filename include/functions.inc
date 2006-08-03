@@ -582,7 +582,7 @@ function get_lock ($object)
 }
 
 
-function get_list($filter, $object, $base= "", $attributes= array(), $flags= GL_SUBSEARCH)
+function get_list($filter, $category, $base= "", $attributes= array(), $flags= GL_SUBSEARCH)
 {
   global $config, $ui;
 
@@ -616,9 +616,9 @@ function get_list($filter, $object, $base= "", $attributes= array(), $flags= GL_
     $dn= $ldap->getDN();
 
     /* Sort in every value that fits the permissions */
-    if (is_array($object)){
-      foreach ($object as $o){
-        if ($ui->get_permissions($dn, $o, "") != ""){
+    if (is_array($category)){
+      foreach ($category as $o){
+        if ($ui->get_category_permissions($dn, $o) != ""){
           if ($flags & GL_CONVERT){
             $attrs["dn"]= convert_department_dn($dn);
           } else {
@@ -630,7 +630,7 @@ function get_list($filter, $object, $base= "", $attributes= array(), $flags= GL_
         }
       }
     } else {
-      if ($ui->get_permissions($dn, $object, "") != ""){
+      if ($ui->get_category_permissions($dn, $category) != ""){
         if ($flags & GL_CONVERT){
           $attrs["dn"]= convert_department_dn($dn);
         } else {
