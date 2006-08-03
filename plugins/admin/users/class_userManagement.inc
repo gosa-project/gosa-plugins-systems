@@ -717,11 +717,11 @@ class userManagement extends plugin
     $ldap= $this->config->get_ldap_link(TRUE);
 
     if ($SubSearch){
-      $ListTemp =  get_list($filter, "user", $base,
+      $ListTemp =  get_list($filter, "users", $base,
                             array("uid", "givenName", "sn", "objectClass"), GL_SUBSEARCH | GL_SIZELIMIT);
     } else {
       $base= get_people_ou().$base;
-      $ListTemp = get_list($filter, "user", $base, 
+      $ListTemp = get_list($filter, "users", $base, 
                             array("uid", "givenName", "sn", "objectClass"), GL_SIZELIMIT);
     }
     $SortTemp = array();

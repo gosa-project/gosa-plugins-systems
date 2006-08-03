@@ -157,6 +157,11 @@ textdomain($domain);
 /* Prepare plugin list */
 if (!isset($_SESSION['plist'])){
   $_SESSION['plist']= new pluglist($config, $ui);
+  
+  /* Load ocMapping into userinfo */
+  $tmp= new acl($config, NULL, $ui->dn);
+  $ui->ocMapping= $tmp->ocMapping;
+  $_SESSION['ui']= $ui;
 }
 $plist= $_SESSION['plist'];
 

@@ -31,6 +31,7 @@ class userinfo
   var $gosaUnitTag= "";
   var $subtreeACL= array();
   var $ACL= array();
+  var $ocMapping= array();
   var $groups= array();
 
   /* get acl's an put them into the userinfo object
@@ -93,6 +94,7 @@ class userinfo
 #echo "NEW ACL LOADING --------------------------------------------------------------------------------------------<br>";
 
     $this->ACL= array();    
+    $this->ocMapping= array();
     $this->groups= array();    
     $ldap= $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
@@ -155,12 +157,21 @@ class userinfo
       }
 
     }
+
   }
 
 
   function get_category_permissions($dn, $category)
   {
-    return ("cdmrw");
+    /* Get list of objectClasses and get the permissions for it */
+    $acl= "";
+    if (isset($this->ocMapping[$category])){
+      foreach($this->ocMapping[$category] as $oc){
+        $acl.= $this->get_permissions($dn, $oc, "");
+      }
+    }
+
+    return ($acl);
   }
 
 
@@ -210,6 +221,14 @@ class userinfo
           /* Global ACL? */
           if (isset($subacl['acl']['all'][0])){
             $acl= $this->mergeACL($acl, $subacl['type'], $subacl['acl']['all'][0]);
+            continue;
+          }
+
+          /* If attribute is "", we want to know, if we've *any* permissions here... */
+          if ($attribute == "" && isset($subacl['acl'][$object])){
+            foreach($subacl['acl'][$object] as $attr => $dummy){
+              $acl= $this->mergeACL($acl, $subacl['type'], $subacl['acl'][$object][$attr]);
+            }
             continue;
           }
 
