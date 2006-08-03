@@ -158,6 +158,12 @@ class userinfo
   }
 
 
+  function get_category_permissions($dn, $category)
+  {
+    return ("cdmrw");
+  }
+
+
   function get_permissions($dn, $object, $attribute, $skip_write= FALSE)
   {
     $acl= array("r" => "", "w" => "", "c" => "", "d" => "", "m" => "", "a" => "");
@@ -204,14 +210,6 @@ class userinfo
           /* Global ACL? */
           if (isset($subacl['acl']['all'][0])){
             $acl= $this->mergeACL($acl, $subacl['type'], $subacl['acl']['all'][0]);
-            continue;
-          }
-
-          /* If attribute is "", we want to know, if we've *any* permissions here... */
-          if ($attribute == "" && isset($subacl['acl'][$object])){
-            foreach($subacl['acl'][$object] as $attr => $dummy){
-              $acl= $this->mergeACL($acl, $subacl['type'], $subacl['acl'][$object][$attr]);
-            }
             continue;
           }
 
