@@ -17,16 +17,16 @@
 	   <tr>
 		<td width="147" height="200" bgcolor="gray">
 		{if !$userPicture_is_readable}
-			<img align="center" valign="center" border="0" width="100%" src="images/default.jpg" alt="{t}Personal picture{/t}">
+			<img class='center' border="0" width="100%" src="images/default.jpg" alt="{t}Personal picture{/t}">
 		{else}
-			<img align="center" valign="center" border="0" width="100%" src="getbin.php?rand={$rand}" alt="{t}Personal picture{/t}">
+			<img class='center' border="0" width="100%" src="getbin.php?rand={$rand}" alt="{t}Personal picture{/t}">
 		{/if}
 		</td>
 	   </tr>
 	   <tr>
 		<td>
 		{render acl=$userPictureACL}
-		 	<input valign="top" type="submit" name="edit_picture" value="{t}Change picture{/t}...">
+		 	<input style='vertical-align:top;' type="submit" name="edit_picture" value="{t}Change picture{/t}...">
 		{/render}
 		</td>
 	   </tr>
@@ -349,7 +349,7 @@
   <td style="vertical-align:top;">
    <table summary="" style="width:100%"> 
     <tr>
-     <td><label for="l">{t}Location{/t}</l></td>
+     <td><label for="l">{t}Location{/t}</label></td>
      <td>
       	{render acl=$lACL}
 		<input id="l" name="l" size=22 maxlength=60 value="{$l}">
