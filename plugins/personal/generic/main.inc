@@ -165,12 +165,15 @@ if (!$remove_lock){
                "\"> ".$ui->dn."&nbsp;";
       }
 
-      echo "Check acl here; Only display edit button if we are able to edit at least one attribute.  Line 168";
-      if ($fn == "edit"){
-        $info.= "<img class=\"center\" alt=\"\" align=\"middle\" src=\"".get_template_path('images/lamp.png')."\"> ".
-                _("Click the 'Edit' button below to change informations in this dialog");
-        $display.= "<input type=submit name=\"$fn\" value=\"$str\">\n";
+      /* Only display edit button if there is at least one attribute editable */
+      if(preg_match("/w/",$ui->get_category_permissions($ui->dn,"users"))){
+        if ($fn == "edit"){
+          $info.= "<img class=\"center\" alt=\"\" align=\"middle\" src=\"".get_template_path('images/lamp.png')."\"> ".
+            _("Click the 'Edit' button below to change informations in this dialog");
+          $display.= "<input type=submit name=\"$fn\" value=\"$str\">\n";
+        }
       }
+
       $display.= "<input type=\"hidden\" name=\"ignore\">\n";
     }
     $display.= "</p>\n";
