@@ -13,7 +13,7 @@ function smarty_block_render($params, $text, &$smarty)
 		unset($params['acl']);
 	}
 
-	echo "<font color='blue' size='2'>".$acl."</font>";
+	echo "<font color='blue' size='2'>&nbsp;".$acl."</font>";
 
 	/* Read / Write*/
 	if(preg_match("/w/i",$acl)){
