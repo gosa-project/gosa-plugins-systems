@@ -221,7 +221,7 @@ class user extends plugin
         $date = $this->dateOfBirth;
       }else{
         $date = getdate($this->dateOfBirth);
-      } 
+      }
     }
 
     $days= array();
@@ -299,7 +299,7 @@ class user extends plugin
     }
 
     /* Want picture edit dialog? */
-    if($this->acl_is_readable("userPicture")) {
+    if($this->acl_is_writeable("userPicture")) {
       if (isset($_POST['edit_picture'])){
         /* Save values for later recovery, in case some presses
            the cancel button. */
@@ -669,15 +669,16 @@ class user extends plugin
     /* Only force save of changes .... 
        If this attributes aren't changed, avoid saving.
      */
-    if ($this->use_dob == "1"){
-      $this->dateOfBirth= date("Y-m-d", $this->dateOfBirth);
-    }
     if($this->gender=="0") $this->gender ="";
     if($this->preferredLanguage=="0") $this->preferredLanguage ="";
     
  
     /* First use parents methods to do some basic fillup in $this->attrs */
     plugin::save ();
+
+    if ($this->use_dob == "1"){
+      $this->attrs['dateOfBirth'] = date("Y-m-d", $this->dateOfBirth);
+    }
 
     /* Remove additional objectClasses */
     $tmp= array();

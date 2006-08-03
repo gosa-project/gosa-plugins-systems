@@ -34,6 +34,8 @@ if (!$remove_lock){
   /* Create user object on demand */
   if (!isset($_SESSION['user']) || (isset($_GET['reset']) && $_GET['reset'] == 1)){
     $_SESSION['user']= new user ($config, $ui->dn);
+    $_SESSION['user']->set_acl_base($ui->dn);
+    $_SESSION['user']->set_acl_category("users");
   }
   $user= $_SESSION['user'];
 
