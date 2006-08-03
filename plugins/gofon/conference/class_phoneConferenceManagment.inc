@@ -299,7 +299,7 @@ class phoneConferenceManagment extends plugin
       $Flags |= GL_SUBSEARCH;
     }
 
-    $this->conferences= get_list($Filter,  $this->ui->subtreeACL, $Base, $Attrs, $Flags);
+    $this->conferences= get_list($Filter, "gofon", $Base, $Attrs, $Flags);
   }
 
   function remove_from_parent()

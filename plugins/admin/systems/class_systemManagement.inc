@@ -610,14 +610,14 @@ class systems extends plugin
         if($this->DivListSystem->SubSearch){
           if($oc['CLASS'] != ""){
             $filter = "(|(&".$userregex."(objectClass=".$oc['CLASS'].")(cn=".$this->DivListSystem->Regex.")))";
-            $res = array_merge($res,get_list($filter,$this->ui->subtreeACL, $base,
+            $res = array_merge($res,get_list($filter, array("terminal", "workstation", "server", "phone" ,"printer"), $base,
                   array("cn", "description", "macAddress", "objectClass", "sambaDomainName", "FAIstate"), GL_NONE | GL_SUBSEARCH | GL_SIZELIMIT));
           }
         }else{
           /* User filter? */
           if($oc['CLASS'] != ""){
             $filter = "(|(&".$userregex."(objectClass=".$oc['CLASS'].")(cn=".$this->DivListSystem->Regex.")))";
-            $res = array_merge($res,get_list($filter,$this->ui->subtreeACL, $oc['TREE'].$base,
+            $res = array_merge($res,get_list($filter,array("terminal", "workstation", "server", "phone" ,"printer"),$oc['TREE'].$base,
                   array("cn", "description", "macAddress", "objectClass", "sambaDomainName", "FAIstate"), GL_NONE | GL_SIZELIMIT));
           }
         }
@@ -626,7 +626,7 @@ class systems extends plugin
 
     /* Search for incoming objects */ 
     $filter = "(|(&".$userregex."(objectClass=goHard)(cn=".$this->DivListSystem->Regex.")))";
-    $res = array_merge($res,get_list($filter,$this->ui->subtreeACL, "ou=incoming,".$base,
+    $res = array_merge($res,get_list($filter,array("terminal", "workstation", "server", "phone" ,"printer"),"ou=incoming,".$base,
           array("cn", "description", "macAddress", "objectClass", "sambaDomainName"), GL_NONE | GL_SIZELIMIT));
 
     /* Get all gotoTerminal's */

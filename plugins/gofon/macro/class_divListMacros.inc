@@ -22,7 +22,7 @@ class divListMacro extends MultiSelectWindow
 
   function divListMacro ($config,$parent)
   {
-    MultiSelectWindow::MultiSelectWindow($config,"Macros");
+    MultiSelectWindow::MultiSelectWindow($config,"Macros", "gofon");
     
     $this->parent       = $parent;
     $this->ui           = get_userinfo();

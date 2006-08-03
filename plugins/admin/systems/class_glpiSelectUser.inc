@@ -209,7 +209,7 @@ class glpiSelectUser extends plugin
      */
 
     $res3= get_list("(&(|(ou=*)(description=*))(objectClass=gosaDepartment))",
-                    $this->ui->subtreeACL, $base, array("ou", "description"), GL_SIZELIMIT | GL_CONVERT);
+                    "glpi", $base, array("ou", "description"), GL_SIZELIMIT | GL_CONVERT);
 
     $this->departments= array();
     $tmp = array();
@@ -228,7 +228,7 @@ class glpiSelectUser extends plugin
     /* END NEW LIST MANAGMENT
      */
     $ou = get_people_ou();
-    $res2= get_list("(&(|(cn=$regex)(sn=$regex))(objectClass=person))", $this->ui->subtreeACL,
+    $res2= get_list("(&(|(cn=$regex)(sn=$regex))(objectClass=person))", "glpi",
                     $ou.$base, array("cn", "sn", "uid", "givenName", "description"),
                     GL_SUBSEARCH | GL_SIZELIMIT);
 

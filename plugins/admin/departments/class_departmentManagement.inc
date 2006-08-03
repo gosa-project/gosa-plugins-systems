@@ -342,10 +342,10 @@ class departmentManagement extends plugin
 
     if($this->DivListDepartment->SubSearch){
       $res= get_list("(&(|(ou=$Regex)(description=$Regex))(objectClass=gosaDepartment))",
-          $this->ui->subtreeACL, $base, array("ou", "description"), GL_SIZELIMIT | GL_SUBSEARCH);
+          "department", $base, array("ou", "description"), GL_SIZELIMIT | GL_SUBSEARCH);
     }else{
       $res= get_list("(&(|(ou=$Regex)(description=$Regex))(objectClass=gosaDepartment))",
-          $this->ui->subtreeACL, $base, array("ou", "description"), GL_SIZELIMIT );
+          "department", $base, array("ou", "description"), GL_SIZELIMIT );
     }
 
     $this->departments= array();

@@ -226,8 +226,6 @@ class posixAccount extends plugin
   /* execute generates the html output for this node */
   function execute($isCopyPaste = false)
   {
-    echo "Fix get_list for group add";
-
     /* Call parent execute */
     plugin::execute();
     $display= "";
@@ -377,10 +375,9 @@ class posixAccount extends plugin
       if ($exclude != ""){
         $exclude= "(!(|$exclude))";
       }
-      $acl= array($this->config->current['BASE'] => ":all");
       $regex= $sysfilter['regex'];
       $filter= "(&(|(objectClass=goServer)(objectClass=gotoWorkstation)(objectClass=gotoTerminal))$exclude(cn=*)(cn=$regex))";
-      $res= get_list($filter, $acl, $sysfilter['depselect'], array("cn"), GL_SUBSEARCH | GL_SIZELIMIT);
+      $res= get_list($filter, "groups", $sysfilter['depselect'], array("cn"), GL_SUBSEARCH | GL_SIZELIMIT);
       $wslist= array();
       foreach ($res as $attrs){
         $wslist[]= preg_replace('/\$/', '', $attrs['cn'][0]);
@@ -530,6 +527,7 @@ class posixAccount extends plugin
       }
     } else {
       if ($_SESSION['js']){
+#FIXME: whats up here. remove acl?
         if($this->acl != "#none#")
           $smarty->assign("forceMode", "disabled");
       }
@@ -1134,8 +1132,7 @@ class posixAccount extends plugin
       $base = get_groups_ou().$base;
     }
 
-
-    $res= get_list($filter, $this->ui->subtreeACL, $base,$attrs, $Flags);
+    $res= get_list($filter, "groups", $base,$attrs, $Flags);
 
     /* check sizelimit */
     if (preg_match("/size limit/i", $ldap->error)){

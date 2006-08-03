@@ -329,7 +329,7 @@ class aclManagement extends plugin
     }
 
     /* Get objects */
-    $res= get_list($Filter, $this->ui->subtreeACL,$base, $Attrs, $Flags);
+    $res= get_list($Filter, "acl", $base, $Attrs, $Flags);
 
     $this->list = $res;
   }

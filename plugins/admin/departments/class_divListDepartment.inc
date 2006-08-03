@@ -18,7 +18,7 @@ class divListDepartment extends MultiSelectWindow
 
   function divListDepartment ($config,$parent)
   {
-    MultiSelectWindow::MultiSelectWindow($config,"Department");
+    MultiSelectWindow::MultiSelectWindow($config, "Department", "department");
     
     $this->parent       = $parent;
     $this->ui           = get_userinfo();

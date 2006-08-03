@@ -323,7 +323,7 @@ class gofonMacro extends plugin
     }
 
     /* Generate macro list */
-    $res= get_list($Filter, $this->ui->subtreeACL,$base, $Attrs, $Flags);
+    $res= get_list($Filter, "gofon", $base, $Attrs, $Flags);
 
     $tmp=array();
     foreach($res as $tkey => $val ){

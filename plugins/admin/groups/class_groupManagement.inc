@@ -432,8 +432,8 @@ class groupManagement extends plugin
     /* Collect primary groupIDs to show primary groups 
        if this option is enabled in gosa conf && the checkbox is checked */  
     if ($this->ShowPrimaryCheckBox){
-      $res = get_list("(&(uid=$Regex)(!(uid=*$))(objectClass=posixAccount)(gidNumber=*))", $this->ui->subtreeACL,
-          $base,array("gidNumber", "cn"),  GL_SUBSEARCH);
+      $res = get_list("(&(uid=$Regex)(!(uid=*$))(objectClass=posixAccount)(gidNumber=*))",
+          "groups", $base,array("gidNumber", "cn"),  GL_SUBSEARCH);
       foreach ($res as $attrs){
         $primaries[$attrs['gidNumber'][0]]= $attrs['cn'][0];
       }
@@ -442,7 +442,7 @@ class groupManagement extends plugin
     /* Collect all GroupIDs from those groups which are functional.
        Only perfrom this search if  ShowFunctionalGroups  is unchecked, else leave arre empty  */ 
     $ff = "(&(cn=$Regex)(objectClass=posixGroup)(!(|(objectClass=gosaMailAccount)(objectClass=gosaApplicationGroup)$sfilter)))";
-    $res = get_list($ff,$this->ui->subtreeACL,$base,array("gidNumber", "cn", "description"), GL_SUBSEARCH);
+    $res = get_list($ff, "groups", $base,array("gidNumber", "cn", "description"), GL_SUBSEARCH);
     foreach($res as $attrs){
       if (!isset($primaries[$attrs['gidNumber'][0]])){
         $functional[$attrs['gidNumber'][0]]= $attrs['gidNumber'][0];
@@ -458,9 +458,9 @@ class groupManagement extends plugin
     $attrs = array("cn", "description", "gidNumber", "objectClass","FAIrelease");
 
     if ($SubSearch){
-      $res= get_list($filter, $this->ui->subtreeACL, $base, $attrs, GL_SIZELIMIT| GL_SUBSEARCH);
+      $res= get_list($filter, "groups", $base, $attrs, GL_SIZELIMIT| GL_SUBSEARCH);
     } else {
-      $res= get_list($filter, $this->ui->subtreeACL, get_groups_ou().$base, $attrs, GL_SIZELIMIT);
+      $res= get_list($filter, "groups", get_groups_ou().$base, $attrs, GL_SIZELIMIT);
     }
 
     /* Sort values into grouplist*/

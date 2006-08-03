@@ -29,7 +29,7 @@ class divListOGroup extends MultiSelectWindow
 
   function divListOGroup ($config,$parent)
   {
-    MultiSelectWindow::MultiSelectWindow($config,"OGroups");
+    MultiSelectWindow::MultiSelectWindow($config, "OGroups", "ogroups");
     
     $this->parent       = $parent;
     $this->ui           = get_userinfo();

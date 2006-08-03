@@ -450,9 +450,9 @@ class ogroupManagement extends plugin
     $filter= "(&(cn=$Regex)(objectClass=gosaGroupOfNames)(|$filter))";
 
     if($this->DivListOGroup->SubSearch){
-      $res= get_list($filter, $this->ui->subtreeACL, $base, array("cn","objectClass","gosaGroupObjects"), GL_SIZELIMIT | GL_SUBSEARCH);
+      $res= get_list($filter, "ogroups", $base, array("cn","objectClass","gosaGroupObjects"), GL_SIZELIMIT | GL_SUBSEARCH);
     }else{
-      $res= get_list($filter, $this->ui->subtreeACL, get_groups_ou().$base, array("cn","objectClass","gosaGroupObjects"), GL_SIZELIMIT );
+      $res= get_list($filter, "ogroups", get_groups_ou().$base, array("cn","objectClass","gosaGroupObjects"), GL_SIZELIMIT );
     }
 
     $this->ogrouplist= $res;

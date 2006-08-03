@@ -51,13 +51,13 @@ class askClassName extends plugin
     }
     $ldap = $this->config->get_ldap_link();
     
-    $res= get_list("(&(objectClass=organizationalUnit)(!(objectClass=FAIbranch)))", $this->ui->subtreeACL, $base,
+    $res= get_list("(&(objectClass=organizationalUnit)(!(objectClass=FAIbranch)))", "fai", $base,
                    array("cn","description","objectClass"), GL_SIZELIMIT );
 
     $delete = array();
     $used   = array();
     foreach($res as $objecttypes){
-      $res2= get_list("(objectClass=*)", $this->ui->subtreeACL, $objecttypes['dn'],
+      $res2= get_list("(objectClass=*)", "fai", $objecttypes['dn'],
                       array("cn","description","objectClass","FAIclass","FAIstate"), GL_SIZELIMIT | GL_CONVERT );
       foreach($res2 as $object){
 

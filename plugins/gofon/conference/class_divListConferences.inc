@@ -22,7 +22,7 @@ class divListConference extends MultiSelectWindow
 
   function divListConference ($config,$parent)
   {
-    MultiSelectWindow::MultiSelectWindow($config,"Conferences");
+    MultiSelectWindow::MultiSelectWindow($config,"Conferences", "gofon");
     
     $this->parent       = $parent;
     $this->ui           = get_userinfo();

@@ -441,7 +441,7 @@ class mailAccount extends plugin
       }
 
       $acl= array($this->config->current['BASE'] => ":all");
-      $res= get_list("(&(objectClass=gosaMailAccount)$filter)", $acl, $mailfilter['depselect'], 
+      $res= get_list("(&(objectClass=gosaMailAccount)$filter)", "users", $mailfilter['depselect'], 
                      array("sn", "mail", "givenName"), GL_SIZELIMIT | GL_SUBSEARCH);
       $ldap->cd($mailfilter['depselect']);
       $ldap->search ("(&(objectClass=gosaMailAccount)$filter)", array("sn", "mail", "givenName"));

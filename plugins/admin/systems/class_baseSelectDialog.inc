@@ -12,7 +12,9 @@ class baseSelectDialog extends MultiSelectWindow
  
   function baseSelectDialog ($config,$parent,$onlyAllowThisBases = array())
   {
-    MultiSelectWindow::MultiSelectWindow($config,"BASEselectWindow");
+    echo "Need to pass module via parameter!<br>";
+    $module= "all";
+    MultiSelectWindow::MultiSelectWindow($config, "BASEselectWindow", $module);
    
     $this->parent = $parent;
  

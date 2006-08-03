@@ -207,8 +207,15 @@ class userinfo
             continue;
           }
 
-        }
+          /* If attribute is "", we want to know, if we've *any* permissions here... */
+          if ($attribute == "" && isset($subacl['acl'][$object])){
+            foreach($subacl['acl'][$object] as $attr => $dummy){
+              $acl= $this->mergeACL($acl, $subacl['type'], $subacl['acl'][$object][$attr]);
+            }
+            continue;
+          }
 
+        }
       }
     }
 
@@ -238,6 +245,9 @@ class userinfo
 
     /* Extract all relevant objects for this module from plist */
     foreach ($plist->info as $object => $info){
+      if (!isset($info['plCategory'])){
+        continue;
+      }
       foreach ($info['plCategory'] as $idx => $data){
         if (preg_match('/^[0-9]+$/', $idx)){
           if ($data == $module){

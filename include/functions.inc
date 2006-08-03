@@ -582,11 +582,9 @@ function get_lock ($object)
 }
 
 
-function get_list($filter, $subtreeACL, $base= "", $attributes= array(), $flags= GL_SUBSEARCH)
+function get_list($filter, $object, $base= "", $attributes= array(), $flags= GL_SUBSEARCH)
 {
   global $config, $ui;
-
-  echo "get_list called. Replace it, it doesn't support new acls";
 
   /* Get LDAP link */
   $ldap= $config->get_ldap_link($flags & GL_SIZELIMIT);
@@ -596,12 +594,6 @@ function get_list($filter, $subtreeACL, $base= "", $attributes= array(), $flags=
     $ldap->cd ($config->current['BASE']);
   } else {
     $ldap->cd ($base);
-  }
-
-  /* Strict filter for administrative units? */
-  if ($ui->gosaUnitTag != "" && isset($config->current['STRICT_UNITS']) &&
-      preg_match('/TRUE/i', $config->current['STRICT_UNITS'])){
-    $filter= "(&(gosaUnitTag=".$ui->gosaUnitTag.")$filter)";
   }
 
   /* Perform ONE or SUB scope searches? */
@@ -619,12 +611,26 @@ function get_list($filter, $subtreeACL, $base= "", $attributes= array(), $flags=
   /* Crawl through reslut entries and perform the migration to the
      result array */
   $result= array();
+
   while($attrs = $ldap->fetch()) {
     $dn= $ldap->getDN();
 
-    foreach ($subtreeACL as $key => $value){
-      if (preg_match("/$key/", $dn)){
+    /* Sort in every value that fits the permissions */
+    if (is_array($object)){
+      foreach ($object as $o){
+        if ($ui->get_permissions($dn, $o, "") != ""){
+          if ($flags & GL_CONVERT){
+            $attrs["dn"]= convert_department_dn($dn);
+          } else {
+            $attrs["dn"]= $dn;
+          }
 
+          /* We found what we were looking for, break speeds things up */
+          $result[]= $attrs;
+        }
+      }
+    } else {
+      if ($ui->get_permissions($dn, $object, "") != ""){
         if ($flags & GL_CONVERT){
           $attrs["dn"]= convert_department_dn($dn);
         } else {
@@ -633,7 +639,6 @@ function get_list($filter, $subtreeACL, $base= "", $attributes= array(), $flags=
 
         /* We found what we were looking for, break speeds things up */
         $result[]= $attrs;
-        break;
       }
     }
   }

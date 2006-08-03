@@ -20,7 +20,7 @@ class divListApplication extends MultiSelectWindow
 
   function divListApplication ($config,$parent)
   {
-    MultiSelectWindow::MultiSelectWindow($config,"Application");
+    MultiSelectWindow::MultiSelectWindow($config,"Application", "application");
    
     $this->selectedRelease = "ou=apps,".$_SESSION['CurrentMainBase'];
  

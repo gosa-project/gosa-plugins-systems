@@ -337,8 +337,7 @@ class gofaxAccount extends plugin
       }
 
       $base= $faxfilter['depselect'];
-      $acl= array($this->config->current['BASE'] => ":all");
-      $res= get_list("(&(objectClass=goFaxAccount)$filter)", $acl, $base, 
+      $res= get_list("(&(objectClass=goFaxAccount)$filter)", "gofax", $base, 
                      array("sn", "givenName", "facsimileTelephoneNumber"), GL_SIZELIMIT | GL_SUBSEARCH);
 
       foreach ($res as $attrs){

@@ -23,7 +23,7 @@ class divListMimeTypes extends MultiSelectWindow
   function divListMimeTypes ($config,$parent)
   {
     /* Create divlist and setup */
-    MultiSelectWindow::MultiSelectWindow($config,"Mimetypes");
+    MultiSelectWindow::MultiSelectWindow($config, "Mimetypes", "mimetypes");
   
     /* initialize required attributes */ 
     $this->selectedRelease  = "ou=mime,".$_SESSION['CurrentMainBase'];

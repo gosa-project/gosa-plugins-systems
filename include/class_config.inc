@@ -670,7 +670,8 @@ class config  {
     $return = array();
     $ui = get_userinfo();
     $base = $config->current['BASE'];
-    $res = get_list("(&(objectClass=goShareServer)(goExportEntry=*))",$ui->subtreeACL,$base,array("goExportEntry","cn"),GL_SUBSEARCH);
+echo "Need to adapt share list loading<br>";
+    $res= get_list("(&(objectClass=goShareServer)(goExportEntry=*))", "all", $base,array("goExportEntry","cn"),GL_SUBSEARCH);
     foreach($res as $entry){
       if(isset($entry['goExportEntry']['count'])){
         unset($entry['goExportEntry']['count']);

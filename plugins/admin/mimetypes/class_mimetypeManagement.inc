@@ -415,7 +415,7 @@ class mimetypeManagement extends plugin
     }
   
     /* Get results and create index */ 
-    $res= get_list($Filter, $this->ui->subtreeACL,$use_base, array("cn","description","dn","objectClass"), $Flags);
+    $res= get_list($Filter, "mimetypes", $use_base, array("cn","description","dn","objectClass"), $Flags);
     foreach ($res as $val){
       $tmp[strtolower($val['cn'][0]).$val['cn'][0]]=$val;
     }

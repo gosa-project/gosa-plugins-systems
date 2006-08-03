@@ -22,7 +22,7 @@ class divListBlocklist extends MultiSelectWindow
 
   function divListBlocklist ($config,$parent)
   {
-    MultiSelectWindow::MultiSelectWindow($config,"Blocklists");
+    MultiSelectWindow::MultiSelectWindow($config, "Blocklists", "gofax");
     
     $this->parent       = $parent;
     $this->ui           = get_userinfo();

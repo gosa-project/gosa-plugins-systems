@@ -29,10 +29,6 @@ class blocklist extends plugin
     $this->dn     = "";
     $this->config = $config;
 
-    $ui           = get_userinfo();
-    $acl          = get_permissions ($ui->dn, $ui->subtreeACL);
-    $this->acl    = get_module_permission($acl, "blocklists", $ui->dn);
-
     $this->DivListBlocklist = new divListBlocklist($this->config,$this);
   }
 
@@ -383,11 +379,11 @@ class blocklist extends plugin
     /* Create filter */
     if ($ShowSendBocklists){
       $filter = "(&(objectClass=goFaxSBlock)(|(cn=".$Regex.")(goFaxSBlocklist=".$Regex.")))";
-      $res= get_list($filter, $this->ui->subtreeACL, $base,array("*"), $Flags);
+      $res= get_list($filter, "gofax", $base,array("*"), $Flags);
     }
     if ($ShowReceiveBlocklists){
       $filter2= "(&(objectClass=goFaxRBlock)(|(cn=".$Regex.")(goFaxRBlocklist=".$Regex.")))";
-      $res2= get_list($filter2, $this->ui->subtreeACL, $base,array("*"), $Flags);
+      $res2= get_list($filter2, "gofax", $base,array("*"), $Flags);
     }
    
     $this->blocklists = array_merge($res,$res2);

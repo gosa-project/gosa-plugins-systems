@@ -613,7 +613,7 @@ class appgroup extends plugin
     /* get departments */  
     $ui = get_userinfo();
     $departments = array();
-    $res = get_list("(objectClass=gosaDepartment)",$ui->subtreeACL,$this->curbase,array("description","cn","ou"),GL_SIZELIMIT);
+    $res = get_list("(objectClass=gosaDepartment)", "department", $this->curbase,array("description","cn","ou"),GL_SIZELIMIT);
     foreach($res as $value){
       $fdn= @LDAP::fix($value['dn']);
       if($value["description"][0]!=".."){

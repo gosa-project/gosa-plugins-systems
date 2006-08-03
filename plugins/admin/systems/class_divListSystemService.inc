@@ -8,7 +8,7 @@ class divListSystemService extends MultiSelectWindow
 
   function divListSystemService ($config,$parent)
   {
-    MultiSelectWindow::MultiSelectWindow($config,"SystemService");
+    MultiSelectWindow::MultiSelectWindow($config,"SystemService", "server");
     
     $this->parent       = $parent;
     $this->ui           = get_userinfo();

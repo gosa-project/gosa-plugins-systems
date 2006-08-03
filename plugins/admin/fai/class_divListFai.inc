@@ -28,7 +28,7 @@ class divListFai extends MultiSelectWindow
 
   function divListFai ($config,$parent)
   {
-    MultiSelectWindow::MultiSelectWindow($config,"Fai");
+    MultiSelectWindow::MultiSelectWindow($config, "Fai", "fai");
     
     $this->parent       = $parent;
     $this->ui           = get_userinfo();

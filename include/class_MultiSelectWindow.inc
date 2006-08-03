@@ -34,6 +34,7 @@ class MultiSelectWindow{
   var $HideFilterPart     = false;
 
   var $SaveAdditionalVars = array();  // Additional Post vars to store 
+  var $module= "";
 
 	function ClearElementsList()
 	{
@@ -72,9 +73,10 @@ class MultiSelectWindow{
 	}
 
 	/* Contrucktion */
-	function MultiSelectWindow($config,$filterName)
+	function MultiSelectWindow($config, $filterName, $module)
 	{
 		$this->config = $config;
+		$this->module = $module;
 		$this->SaveButtonString		= _("Save");
 		$this->CloseButtonString	= _("Close");
 		$this->filterName			= $filterName;
@@ -552,8 +554,8 @@ class MultiSelectWindow{
 		$this->departments = array();
 
 		/* Get all departments within this subtree */
-		$deps= get_list("(&(|(ou=*)(description=*))(objectClass=gosaDepartment))", $this->ui->subtreeACL,
-				$base, array("ou", "description"), GL_SIZELIMIT | GL_CONVERT);
+		$deps= get_list("(&(|(ou=*)(description=*))(objectClass=gosaDepartment))", $this->module, $base,
+                    array("ou", "description"), GL_SIZELIMIT | GL_CONVERT);
 
 		/* Edit delete link for system types
 		 */

@@ -26,7 +26,7 @@ class divListUsers extends MultiSelectWindow
 
   function divListUsers ($config,$parent)
   {
-    MultiSelectWindow::MultiSelectWindow($config,"Users");
+    MultiSelectWindow::MultiSelectWindow($config, "Users", "users");
     
     $this->parent       = $parent;
     $this->ui           = get_userinfo();
@@ -79,6 +79,10 @@ class divListUsers extends MultiSelectWindow
        which are shown in the listbox on top of the listbox
      */
     $options= "";
+#print_a($this->config->idepartments);
+#$ui= get_userinfo();
+#$t= $ui->get_module_departments("users");
+#print_a($t);
     foreach ($this->config->idepartments as $key => $value){
       if ($this->selectedBase == $key){
         $options.= "<option selected='selected' value='$key'>$value</option>";
