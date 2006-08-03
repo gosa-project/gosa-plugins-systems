@@ -328,11 +328,10 @@ class user extends plugin
       if ($_FILES['picture_file']['name'] != ""){
         if (!is_uploaded_file($_FILES['picture_file']['tmp_name'])) {
           print_red(_("The specified file has not been uploaded via HTTP POST! Aborted."));
-          exit;
+        }else{
+          /* Activate new picture */
+          $this->set_picture($_FILES['picture_file']['tmp_name']);
         }
-
-        /* Activate new picture */
-        $this->set_picture($_FILES['picture_file']['tmp_name']);
       }
       $this->picture_dialog= FALSE;
       $this->dialog= FALSE;

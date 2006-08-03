@@ -164,6 +164,8 @@ if (!$remove_lock){
         $info= "<img class=\"center\" alt=\"\" align=\"middle\" src=\"".get_template_path('images/openlock.png').
                "\"> ".$ui->dn."&nbsp;";
       }
+
+      echo "Check acl here; Only display edit button if we are able to edit at least one attribute.  Line 168";
       if ($fn == "edit"){
         $info.= "<img class=\"center\" alt=\"\" align=\"middle\" src=\"".get_template_path('images/lamp.png')."\"> ".
                 _("Click the 'Edit' button below to change informations in this dialog");

@@ -446,19 +446,19 @@ class posixAccount extends plugin
 
       $shadowMinACL     =  $this->getacl("shadowMin",$SkipWrite);
       $smarty->assign("shadowmins", sprintf(_("Password can't be changed up to %s days after last change"), 
-                                              "<input name=\"shadowMin\" size=3 maxlength=4 $shadowMinACL value=\"".$this->shadowMin."\">"));
+                                              "<input name=\"shadowMin\" size=3 maxlength=4 value=\"".$this->shadowMin."\">"));
 
       $shadowMaxACL     =  $this->getacl("shadowMax",$SkipWrite);
       $smarty->assign("shadowmaxs", sprintf(_("Password must be changed after %s days"), 
-                                              "<input name=\"shadowMax\" size=3 maxlength=4 $shadowMaxACL value=\"".$this->shadowMax."\">"));
+                                              "<input name=\"shadowMax\" size=3 maxlength=4 value=\"".$this->shadowMax."\">"));
 
       $shadowInactiveACL=  $this->getacl("shadowInactive",$SkipWrite);
       $smarty->assign("shadowinactives", sprintf(_("Disable account after %s days of inactivity after password expiery"), 
-                                              "<input name=\"shadowInactive\" size=3 maxlength=4 $shadowInactiveACL value=\"".$this->shadowInactive."\">"));
+                                              "<input name=\"shadowInactive\" size=3 maxlength=4 value=\"".$this->shadowInactive."\">"));
 
       $shadowWarningACL =  $this->getacl("shadowWarning",$SkipWrite);
       $smarty->assign("shadowwarnings", sprintf(_("Warn user %s days before password expiery"), 
-                                              "<input name=\"shadowWarning\" size=3 maxlength=4 $shadowWarningACL value=\"".$this->shadowWarning."\">"));
+                                              "<input name=\"shadowWarning\" size=3 maxlength=4 value=\"".$this->shadowWarning."\">"));
 
       foreach( array("use_shadowMin", "use_shadowMax",
                      "use_shadowExpire", "use_shadowInactive","use_shadowWarning") as $val){
@@ -641,7 +641,7 @@ class posixAccount extends plugin
 
   function save_object()
   {
-    if ((isset($_POST['posixTab'])) && (isset($_SESSION['edit']))){
+    if (isset($_POST['posixTab'])){
       /* Save values to object */
       plugin::save_object();
 

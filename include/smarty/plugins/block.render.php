@@ -24,14 +24,21 @@ function smarty_block_render($params, $text, &$smarty)
 	if(!(isset($params['mode']) && $params['mode']=='readable')){
 
 		/* Disable options && greyout divlists */
-		$from 	= array("/name=/i" ,		
-				"/class=['\"]list1nohighlight['\"]/i",
+
+
+
+		$from 	= array("/class=['\"]list1nohighlight['\"]/i",
 				"/class=['\"]list0['\"]/i",
 				"/class=['\"]list1['\"]/i");
-		$to 	= array(" disabled name=",	
-				"class='list1nohighlightdisabled'",
+		$to 	= array("class='list1nohighlightdisabled'",
 				"class='list1nohighlightdisabled'",
 				"class='list1nohighlightdisabled'");
+				
+		if(!preg_match("/ disabled /",$text)){
+			$from [] = "/name=/i" ;
+			$to   [] = "disabled name=";
+		}
+
 		$text 	= preg_replace($from,$to,$text);
 
 		/* Replace picture if object is disabled */

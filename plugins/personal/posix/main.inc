@@ -24,9 +24,7 @@ $display= "";
 if (!$remove_lock){
 
   /* Reset requested? */
-  if (isset($_POST['edit_cancel']) ||
-      (isset($_GET['reset']) && $_GET['reset'] == 1)){
-
+  if (isset($_POST['edit_cancel']) ||  (isset($_GET['reset']) && $_GET['reset'] == 1)){
     del_lock ($ui->dn);
     sess_del ('edit');
     sess_del ('posixAccount');
@@ -35,6 +33,8 @@ if (!$remove_lock){
   /* Create posixAccount object on demand */
   if (!isset($_SESSION['posixAccount']) || (isset($_GET['reset']) && $_GET['reset'] == 1)){
     $_SESSION['posixAccount']= new posixAccount ($config, $ui->dn);
+    $_SESSION['posixAccount']->set_acl_base($ui->dn);
+    $_SESSION['posixAccount']->set_acl_category("users");
   }
   $posixAccount= $_SESSION['posixAccount'];
 
@@ -44,7 +44,7 @@ if (!$remove_lock){
   }
 
   /* Enter edit mode? */
-  if (isset($_POST['edit'])){
+  if ((isset($_POST['edit'])) && (!isset($_SESSION['edit']))){
 
     /* Check locking */
     if (($username= get_lock($ui->dn)) != ""){
@@ -106,7 +106,7 @@ if (!$remove_lock){
       $info= "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/openlock.png').
              "\"> ".$ui->dn."&nbsp;";
       
-      echo "FIXME : user -> posix, 109, Only display edit button if there is at least one attribute editable.";
+    $display .= "FIXME : user -> posix, 109, Only display edit button if there is at least one attribute editable.";
         $info.= "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lamp.png')."\"> ".
                 _("Click the 'Edit' button below to change informations in this dialog");
 
