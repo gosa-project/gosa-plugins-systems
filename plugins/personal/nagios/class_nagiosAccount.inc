@@ -82,9 +82,13 @@ class nagiosAccount extends plugin
     $display= "";
 
     /* Do we need to flip is_account state? */
-    if (isset($_POST['modify_state'])){
-      $this->is_account= !$this->is_account;
-    }
+    if(isset($_POST['modify_state'])){
+      if($this->is_account && $this->acl_is_removeable()){
+        $this->is_account= FALSE;
+      }elseif(!$this->is_account && $this->acl_is_createable()){
+        $this->is_account= TRUE;
+      }
+    }    
 
     /* Do we represent a valid account? */
     if (!$this->is_account && $this->parent == NULL){
@@ -106,10 +110,16 @@ class nagiosAccount extends plugin
       }
     }
 
+    /* Assign acls */
+    $tmp = $this->plInfo();
+    $SkipWrite = (!isset($this->parent) || !$this->parent) && !isset($_SESSION['edit']);
+    foreach($tmp['plProvidedAcls'] as $acl => $desc){
+      $smarty->assign($acl."ACL",$this->getacl($acl,$SkipWrite));
+    }
+
     /* Assign attributes an ACL to smarty */
     foreach($this->attributes as $val) { 
       $smarty->assign("$val", $this->$val);
-      $smarty->assign("$val"."ACL", chkacl($this->acl, "$val"));
       if(in_array($val,$this->is_chk_box)){
         if($this->$val == "checked"){
           $smarty->assign($val."CHK", " checked ");
@@ -191,10 +201,12 @@ class nagiosAccount extends plugin
 
       /* Specialhandling for checkboxes */
       foreach($this->is_chk_box as $val){
-        if(isset($_POST[$val])){
-          $this->$val = "checked";
-        }else{
-          $this->$val = "unchecked";
+        if($this->acl_is_writeable($val)){
+          if(isset($_POST[$val])){
+            $this->$val = "checked";
+          }else{
+            $this->$val = "unchecked";
+          }
         }
       }
     }
