@@ -36,7 +36,8 @@ class phoneAccount extends plugin
   /* attribute list for save action */
   var $CopyPasteVars          = array("phoneNumbers");
   var $attributes             = array("goFonDeliveryMode", "goFonFormat","uid","cn",
-      "goFonHardware","goFonPIN","goFonVoicemailPIN","telephoneNumber", "goFonMacro","macro");
+                                      "goFonHardware","goFonPIN","goFonVoicemailPIN",
+                                      "telephoneNumber", "goFonMacro","macro");
   var $objectclasses= array("goFonAccount");
 
   function phoneAccount ($config, $dn= NULL)
@@ -694,12 +695,17 @@ class phoneAccount extends plugin
         $choosen    = $paras['choosen'] ; 
         $str        = $default;
 
+        $dis = "";
+        if(!$this->acl_is_writeable("goFonMacro")){
+          $dis = " disabled ";
+        }
+
         /* in case of a combo box display a combobox with selected attr */
         $macrotab.= "<tr>";
         switch ($type){
 
           case "combo":
-            $str= "<select name='".$var."' ".chkacl($this->acl, "goFonMacro")." >";
+            $str= "<select name='".$var."' ".chkacl($this->acl, "goFonMacro")." ".$dis.">";
           foreach(split(":",$default) as $choice){
             if($choosen==$choice){
               $str.= "\n<option value='".$choice."' selected>".$choice."&nbsp;</option>";
@@ -713,15 +719,15 @@ class phoneAccount extends plugin
 
           case "bool":
             if(!$choosen){
-              $str="\n<input type='checkbox' name='".$var."' value='1' ".chkacl($this->acl, "goFonMacro")." >";
+              $str="\n<input type='checkbox' name='".$var."' value='1' ".chkacl($this->acl, "goFonMacro")." ".$dis.">";
             }else{
-              $str="\n<input type='checkbox' name='".$var."' value='1' checked  ".chkacl($this->acl, "goFonMacro").">";
+              $str="\n<input type='checkbox' name='".$var."' value='1' checked  ".chkacl($this->acl, "goFonMacro")." ".$dis.">";
             }
           $macrotab.= "<td colspan='2'>$str&nbsp;".base64_decode($name)."";
           break;
 
           case "string":
-            $str="<input name='".$var."' value='".$choosen."' ".chkacl($this->acl, "goFonMacro")." style='width:340px;'>";
+            $str="<input name='".$var."' value='".$choosen."' ".chkacl($this->acl, "goFonMacro")." style='width:340px;' ".$dis.">";
           $macrotab.= "<td>".base64_decode($name)."</td><td>$str";
           break;
 
@@ -783,7 +789,7 @@ class phoneAccount extends plugin
 
     /* Transfer ACL's */
     foreach($this->attributes as $val){
-      $smarty->assign($val."ACL", chkacl($this->acl,$val));
+      $smarty->assign($val."ACL",$this->getacl($val));
       if(isset($this->$val)){
         $smarty->assign($val,$this->$val);
       }else{
@@ -798,14 +804,22 @@ class phoneAccount extends plugin
     } else {
       $smarty->assign ("phoneNumbers", $this->phoneNumbers);
     }
-    $hl= "<select size=\"1\" name=\"goFonHardware\" title=\"".
-      _("Choose your private phone")."\" ".chkacl($this->acl, "goFonHardware").">\n";
+
+
+    $dis = "";
+    if(!$this->acl_is_writeable("goFonHardware")){
+      $dis= " disabled ";
+    }
+    $hl= "<select size=\"1\" name=\"goFonHardware\" ".$dis." title=\"".
+      _("Choose your private phone")." >\n";
     foreach ($this->hardware_list as $cn => $description){
+
       if ($cn == $this->goFonHardware){
         $selected= "selected";
       } else {
         $selected= "";
       }
+
       if (isset($this->used_hardware[$cn])){
         $color= "style=\"color:#A0A0A0\"";
       } else {
@@ -828,19 +842,6 @@ class phoneAccount extends plugin
     if (isset($_POST["phoneTab"])){
       plugin::save_object();
 
-      /* Save checkbox */
-      if (isset($_POST['fon_to_mail'])){
-        $tmp= "[M]";
-      } else {
-        $tmp= "[]";
-      }
-      if (chkacl ($this->acl, "goFonDeliveryMode") == ""){
-        if ($this->goFonDeliveryMode != $tmp){
-          $this->is_modified= TRUE;
-        }
-        $this->goFonDeliveryMode= $tmp;
-      }
-
       /* Every macro in the select box are available */
       if((isset($_POST['macro']))){
         $this->macrostillavailable=true;
@@ -855,22 +856,24 @@ class phoneAccount extends plugin
       }
 
       /* get all Postvars */
-      if(isset($this->macroarray[$this->macro])){ 
-        foreach($this->macroarray[$this->macro] as $key => $paras){
-          if(isset($_POST[$paras['var']])){
-            $this->macroarray[$this->macro][$key]['choosen'] = $_POST[$paras['var']];
-          }
+      if(isset($this->macroarray[$this->macro])){
+        if($this->acl_is_writeable("goFonMarco")){ 
+          foreach($this->macroarray[$this->macro] as $key => $paras){
+            if(isset($_POST[$paras['var']])){
+              $this->macroarray[$this->macro][$key]['choosen'] = $_POST[$paras['var']];
+            }
 
-          /* Checkboxes are special, they are not Posted if they are not selected, so the won't be changed with the above code 
-             We need this code below to read and save checkboxes correct
-           */
+            /* Checkboxes are special, they are not Posted if they are not selected, so the won't be changed with the above code 
+               We need this code below to read and save checkboxes correct
+             */
 
-          if(isset($_POST['post_success'])){
-            if($this->macroarray[$this->macro][$key]['type']=="bool"){
-              if(isset($_POST[$this->macroarray[$this->macro][$key]['var']])) {
-                $this->macroarray[$this->macro][$key]['choosen']=$_POST[$paras['var']];
-              }else{
-                $this->macroarray[$this->macro][$key]['choosen']=false;
+            if(isset($_POST['post_success'])){
+              if($this->macroarray[$this->macro][$key]['type']=="bool"){
+                if(isset($_POST[$this->macroarray[$this->macro][$key]['var']])) {
+                  $this->macroarray[$this->macro][$key]['choosen']=$_POST[$paras['var']];
+                }else{
+                  $this->macroarray[$this->macro][$key]['choosen']=false;
+                }
               }
             }
           }
@@ -1209,12 +1212,11 @@ class phoneAccount extends plugin
           "plOptions"       => array(),
 
           "plProvidedAcls"  => array(
-            "goFonDeliveryMode"   => _("Delivery mode"),
+            "telephoneNumber"     => _("Telephone number"),
+            "goFonMacro"          => _("Macro settings"),
             "goFonHardware"       => _("Phone hardware"),
             "goFonPIN"            => _("Telephone pin"),
-            "goFonVoicemailPIN"   => _("Voicemail pin"),
-            "telephoneNumber"     => _("Telephone number"),
-            "goFonMacro"          => _("Macro settings"))
+            "goFonVoicemailPIN"   => _("Voicemail pin"))
             ));
   }
 }
