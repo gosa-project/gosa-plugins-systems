@@ -484,10 +484,11 @@ class mailAccount extends plugin
     /* Display mail account tab */
 
     $smarty->assign("mailServers", $mailserver);
+    $SkipWrite = (!isset($this->parent) || !$this->parent) && !isset($_SESSION['edit']);
 
     $tmp  = $this->plInfo();
     foreach($tmp['plProvidedAcls'] as $name => $transl){
-      $smarty->assign("$name"."ACL", $this->getacl($name));
+      $smarty->assign("$name"."ACL", $this->getacl($name,$SkipWrite));
     }
 
     foreach(array("gosaMailServer", "gosaMailQuota", "perms", "mail",
@@ -507,7 +508,7 @@ class mailAccount extends plugin
     /* Disable mail field if needed */
     $method= new $this->method($this->config);
     if ($method->uattrib == "mail" && $this->initially_was_account){
-      $smarty->assign("mailACL", "disabled");
+      $smarty->assign("mailACL", preg_replace("/w/","",$this->getacl("mail",$SkipWrite)));
     }
 
 
