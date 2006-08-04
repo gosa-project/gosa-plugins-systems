@@ -175,7 +175,7 @@ class userinfo
   }
 
 
-  function get_permissions($dn, $object, $attribute, $skip_write= FALSE)
+  function get_permissions($dn, $object, $attribute= "", $skip_write= FALSE)
   {
     $acl= array("r" => "", "w" => "", "c" => "", "d" => "", "m" => "", "a" => "");
 
