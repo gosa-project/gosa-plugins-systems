@@ -30,6 +30,8 @@ if (!$remove_lock){
   /* Create mail object on demand */
   if (!isset($_SESSION['mailAccount']) || (isset($_GET['reset']) && $_GET['reset'] == 1)){
     $_SESSION['mailAccount']= new mailAccount ($config, $ui->dn);
+    $_SESSION['mailAccount']->set_acl_base($ui->dn);
+    $_SESSION['mailAccount']->set_acl_category("users");
   }
   $mailAccount= $_SESSION['mailAccount'];
 
@@ -54,16 +56,6 @@ if (!$remove_lock){
     $_SESSION['edit']= TRUE;
   }
 
-  /* Adjust acl's to mode */
-  if (isset($_SESSION['edit'])){
-    $acl= get_permissions ($ui->dn, $ui->subtreeACL);
-    $mailAccount->acl= get_module_permission($acl, "mail", $ui->dn);
-  } else {
-    $acl= get_permissions ($ui->dn, $ui->subtreeACL);
-    $editacl= get_module_permission($acl, "mail", $ui->dn);
-    $mailAccount->acl= "#none#";
-  }
-
   /* save changes to LDAP and disable edit mode */
   if (isset($_POST['edit_finish'])){
 
@@ -74,7 +66,6 @@ if (!$remove_lock){
     if (count ($message) == 0){
       $mailAccount->save ();
       gosa_log ("User/mail object'".$ui->dn."' has been saved");
-      $mailAccount->acl= "#none#";
       del_lock ($ui->dn);
       sess_del ('edit');
 
@@ -109,11 +100,11 @@ if (!$remove_lock){
     } else {
       $info= "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/openlock.png').
              "\"> ".$ui->dn."&nbsp;";
-      if (isset($editacl) && $editacl != "#none#"){
+      
+      $display.= "Add acl check for edit button.";;
         $info.= "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lamp.png').
             "\"> "._("Click the 'Edit' button below to change informations in this dialog");
         $display.= "<input type=submit name=\"edit\" value=\""._("Edit")."\">\n";
-      }
 
       $display.= "<input type=\"hidden\" name=\"ignore\">\n";
     }
