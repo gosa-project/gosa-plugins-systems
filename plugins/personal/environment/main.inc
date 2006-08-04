@@ -31,6 +31,7 @@ if (!$remove_lock){
   if (!isset($_SESSION['environment']) || (isset($_GET['reset']) && $_GET['reset'] == 1)){
     $_SESSION['environment']= new environment ($config, $ui->dn);
     $_SESSION['environment']->set_acl_category('users');
+    $_SESSION['environment']->set_acl_base($ui->dn);
   }
   $environment= $_SESSION['environment'];
 
@@ -65,7 +66,6 @@ if (!$remove_lock){
     if (count ($message) == 0){
       $environment->save ();
       gosa_log ("User/environment object'".$ui->dn."' has been saved");
-      $environment->acl= "#none#";
       del_lock ($ui->dn);
       sess_del ('edit');
 
@@ -101,7 +101,7 @@ if (!$remove_lock){
       $info= "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/openlock.png').
              "\"> ".$ui->dn."&nbsp;";
   #      if (isset($editacl) && $editacl != "#none#"){
-      echo "FIxme, only display edit button if there is at least one attribute writeable";
+      $display .=  "FIxme, only display edit button if there is at least one attribute writeable";
         $info.= "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lamp.png').
             "\"> "._("Click the 'Edit' button below to change informations in this dialog");
         $display.= "<input type=submit name=\"edit\" value=\""._("Edit")."\">\n";

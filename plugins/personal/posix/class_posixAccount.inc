@@ -1132,8 +1132,9 @@ class posixAccount extends plugin
       $base = get_groups_ou().$base;
     }
 
-    $res= get_list($filter, "groups", $base,$attrs, $Flags);
-
+    $res= get_list($filter, "groups/group", $base,$attrs, $Flags);
+    print_a($res);
+  
     /* check sizelimit */
     if (preg_match("/size limit/i", $ldap->error)){
       $_SESSION['limit_exceeded']= TRUE;

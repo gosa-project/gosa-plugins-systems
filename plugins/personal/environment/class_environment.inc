@@ -653,15 +653,17 @@ class environment extends plugin
      */
 
     /* If there is a new entry wanted, open a new entry by initilising the dialog */
-    if(isset($_POST['gotoHotplugDeviceNew'])){
+    if((isset($_POST['gotoHotplugDeviceNew'])) && ($this->acl_is_writeable("gotoHotplugDevice"))){
       $this->dialog = new hotplugDialog($this->config,$this->dn);
       $this->is_dialog = true;
     }
 
     /* We have to delete the selected hotplug from the list*/
     if((isset($_POST['gotoHotplugDeviceDel']))&&(isset($_POST['gotoHotplugDevice'])) && $this->acl_is_writeable("gotoHotplugDevice")){
-      foreach($_POST['gotoHotplugDevice'] as $name){
-        unset($this->gotoHotplugDevices[$name]);
+      if($this->acl_is_writeable("gotoHotplugDevice")){
+        foreach($_POST['gotoHotplugDevice'] as $name){
+          unset($this->gotoHotplugDevices[$name]);
+        }
       }
     }
 
@@ -685,30 +687,23 @@ class environment extends plugin
     /* Dialod saved */
     if(isset($_POST['HotPlugSave'])){
 
-      if(!$this->acl_is_writeable("gotoHotplug")){
+      $this->dialog->save_object();
+      if(count($this->dialog->check())!=0){
+        foreach($this->dialog->check() as $msg){
+          print_red($msg);
+        }
+      }else{
+        $this->dialog->save_object();
+        $a_tmp = $this->dialog->save();
+
+        if(is_array($a_tmp)){
+          foreach($a_tmp as $name => $hotplug){
+            $this->gotoHotplugDevices[$name]= $hotplug; 
+          }
+        }
         unset($this->dialog);
         $this->dialog= NULL;
         $this->is_dialog = false;
-      }else{
-
-        $this->dialog->save_object();
-        if(count($this->dialog->check())!=0){
-          foreach($this->dialog->check() as $msg){
-            print_red($msg);
-          }
-        }else{
-          $this->dialog->save_object();
-          $a_tmp = $this->dialog->save();
-
-          if(is_array($a_tmp)){
-            foreach($a_tmp as $name => $hotplug){
-              $this->gotoHotplugDevices[$name]= $hotplug; 
-            }
-          }
-          unset($this->dialog);
-          $this->dialog= NULL;
-          $this->is_dialog = false;
-        }
       }
     }
     $smarty->assign("gotoHotplugDevices",$this->printOutHotPlugDevices());
@@ -796,6 +791,7 @@ class environment extends plugin
     $smarty->assign("gotoPrinterKeys",array_flip($this->printOutPrinterDevices()));
 
     /* General behavior */
+    if($this->acl_is_writeable("gotoKioskProfile")){
     if((isset($this->dialog))&&($this->dialog!=NULL)&&(!empty($this->dialog))){
       $this->dialog->save_object();
       $disp =$this->dialog->execute();
@@ -809,6 +805,7 @@ class environment extends plugin
         $this->gotoKioskProfile = 'none';
       }
       return($disp);
+      }
     }
 
     /* Als smarty vars are set. Get smarty template and generate output */

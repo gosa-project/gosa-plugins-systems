@@ -215,7 +215,7 @@
       <input type="submit" name="gotoHotplugDeviceUse" value="{t}Existing{/t}">
 {/render}
 {render acl=$gotoHotplugDeviceACL}
-      <input type="submit" {$gotoHotplugDeviceACL} name="gotoHotplugDeviceDel" value="{t}Delete{/t}"
+      <input type="submit" name="gotoHotplugDeviceDel" value="{t}Delete{/t}"
       {if !$gotoHotplugDevices} disabled {/if}>
 {/render}
      </td>

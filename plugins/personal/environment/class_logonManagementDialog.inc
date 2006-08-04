@@ -81,9 +81,16 @@ class logonManagementDialog extends plugin
       foreach($this->attributes as $attr){
         if(isset($_POST[$attr])){
           $this->$attr = stripslashes($_POST[$attr]); 
-        }else{
-          $this->$attr = false;
         }
+      }
+
+      foreach(array("LogonLast","LogonOverload") as $checkBoxes){
+        if(isset($_POST[$checkBoxes])){
+          $this->$checkBoxes = stripslashes($_POST[$checkBoxes]);
+        }else{
+          $this->$checkBoxes = "";
+        }
+
       }
     }
   }

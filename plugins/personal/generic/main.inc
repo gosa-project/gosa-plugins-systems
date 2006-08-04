@@ -166,7 +166,8 @@ if (!$remove_lock){
       }
 
       /* Only display edit button if there is at least one attribute editable */
-      if(preg_match("/w/",$ui->get_category_permissions($ui->dn,"users"))){
+      $display .= "edit buttons does not work.";
+      if(preg_match("/w/",$ui->get_category_permissions($ui->dn,"users/user"))){
         if ($fn == "edit"){
           $info.= "<img class=\"center\" alt=\"\" align=\"middle\" src=\"".get_template_path('images/lamp.png')."\"> ".
             _("Click the 'Edit' button below to change informations in this dialog");
