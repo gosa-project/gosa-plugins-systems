@@ -299,22 +299,14 @@ class posixAccount extends plugin
     if (isset($_POST['add_groups_finish']) && isset($_POST['groups']) &&
         count($_POST['groups'])){
 
-      echo "FIXME, 302,  put the acl check into addGroup function ";
-      #if (chk acl ($this->acl, "memberUid") == ""){
-      #  $this->addGroup ($_POST['groups']);
-      #  $this->is_modified= TRUE;
-      #}
+      $this->addGroup ($_POST['groups']);
     }
 
     /* Delete selected groups */
     if (isset($_POST['delete_groupmembership']) && 
         isset($_POST['group_list']) && count($_POST['group_list'])){
 
-      echo "FIXME, 302,  put the acl check into addGroup function ";
-      #if (chk acl ($this->acl, "memberUid") == ""){
-      #  $this->delGroup ($_POST['group_list']);
-      #  $this->is_modified= TRUE;
-      #}
+      $this->delGroup ($_POST['group_list']);
     }
 
     /* Add user workstation? */
@@ -407,7 +399,7 @@ class posixAccount extends plugin
       /* remove already assigned groups */
       $glist= array();
       foreach ($this->grouplist as $key => $value){
-        if (!isset($this->groupMembership[$key]) && obj_is_writable($key,"group","memberUid",$SkipWrite)){
+        if (!isset($this->groupMembership[$key]) && obj_is_writable($key,"groups/group","memberUid")){
           $glist[$key]= $value;
         }
       }
@@ -1007,7 +999,10 @@ class posixAccount extends plugin
           $entry= $attrs["cn"][0]." [$dsc]";
         }
         error_reporting (E_ALL);
-        $this->groupMembership[$attrs['dn']]= $entry;
+
+        if(obj_is_writable($attrs['dn'],"groups/group","memberUid")){
+          $this->groupMembership[$attrs['dn']]= $entry;
+        }
       }
     }
 
@@ -1023,7 +1018,7 @@ class posixAccount extends plugin
     $dest= array();
 
     foreach ($this->groupMembership as $key => $value){
-      if (!in_array($key, $groups)){
+      if ((!in_array($key, $groups)) || (obj_is_writable($attrs['dn'],"groups/group","memberUid"))){
         $dest[$key]= $value;
       }
     }
@@ -1132,8 +1127,7 @@ class posixAccount extends plugin
       $base = get_groups_ou().$base;
     }
 
-    $res= get_list($filter, "groups/group", $base,$attrs, $Flags);
-    print_a($res);
+    $res= get_list($filter, "groups", $base,$attrs, $Flags);
   
     /* check sizelimit */
     if (preg_match("/size limit/i", $ldap->error)){
@@ -1163,6 +1157,7 @@ class posixAccount extends plugin
         $this->grouplist[$val['dn']]=$val['cn'][0];
       }
     }
+
     reset ($this->grouplist);
   }
 
