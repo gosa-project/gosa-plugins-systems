@@ -549,6 +549,7 @@ class posixAccount extends plugin
     $smarty->assign("status", $this->status);
 
     /* Work on trust modes */
+    $smarty->assign("trusthide", " disabled ");
     $smarty->assign("trustmodeACL",  $this->getacl("trustModel",$SkipWrite));
     if ($this->trustModel == "fullaccess"){
       $trustmode= 1;

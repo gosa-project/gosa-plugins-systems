@@ -114,7 +114,7 @@
     </select>
 	{/render}
 	{render acl=$trustmodeACL}
-   <select style="width:100%" id="wslist" name="workstation_list[]" size=8 multiple>
+   <select style="width:100%" id="wslist" name="workstation_list[]" size=8 multiple {$trusthide}>
     {html_options values=$workstations output=$workstations}
 	{if $emptyArrAccess}
 		<option disabled>&nbsp;</option>
@@ -123,10 +123,10 @@
 	{/render}
    <br>
 	{render acl=$trustmodeACL}
-   <input type="submit" id="add_ws" value="{t}Add{/t}" name="add_ws">&nbsp;
+   <input type="submit" id="add_ws" value="{t}Add{/t}" name="add_ws" {$trusthide}>&nbsp;
 	{/render}
 	{render acl=$trustmodeACL}
-   <input type="submit" id="del_ws" value="{t}Delete{/t}" name="delete_ws">
+   <input type="submit" id="del_ws" value="{t}Delete{/t}" name="delete_ws" {$trusthide}>
 	{/render}
   </td>
  </tr>
