@@ -225,12 +225,14 @@ class sambaAccount extends plugin
       }
     }
 
+    $SkipWrite = (!isset($this->parent) || !$this->parent) && !isset($_SESSION['edit']);
+
     /* Prepare templating */
     $smarty= get_smarty();
 
     $tmp = $this->plInfo();
     foreach($tmp['plProvidedAcls'] as $var => $rest){
-      $smarty->assign($var."ACL",$this->getacl($var));
+      $smarty->assign($var."ACL",$this->getacl($var,$SkipWrite));
     }
 
     if ($this->sambaPwdMustChange=="0"){
@@ -260,7 +262,7 @@ class sambaAccount extends plugin
     /* Remove user workstations? */
     if (isset($_POST["delete_ws"]) && isset($_POST['workstation_list'])){
 
-      if($this->acl_is_writeable("sambaUserWorkstations")){
+      if($this->acl_is_writeable("sambaUserWorkstations",$SkipWrite)){
 
         $tmp= $this->sambaUserWorkstations;
         foreach($_POST['workstation_list'] as $name){
@@ -274,7 +276,7 @@ class sambaAccount extends plugin
 
     /* Add user workstation? */
     if (isset($_POST["add_ws"])){
-      if($this->acl_is_writeable("sambaUserWorkstations")){
+      if($this->acl_is_writeable("sambaUserWorkstations",$SkipWrite)){
         $this->show_ws_dialog= TRUE;
         $this->dialog= TRUE;
       }
@@ -482,7 +484,7 @@ class sambaAccount extends plugin
         $smarty->assign("tsloginstate", $this->mungedObject->getTsLogin()?"":"disabled");
 
         $smarty->assign("inheritstate", "");
-        if($this->acl_is_writeable("AllowLoginOnTerminalServer")){
+        if($this->acl_is_writeable("AllowLoginOnTerminalServer",$SkipWrite)){
           $smarty->assign("inheritstate", $this->mungedObject->getInheritMode()?"disabled":"");
         }
   
@@ -655,13 +657,14 @@ class sambaAccount extends plugin
   function save_object()
   {
 
+    $SkipWrite = (!isset($this->parent) || !$this->parent) && !isset($_SESSION['edit']);
 
     /* We only care if we are on the sambaTab... */
     if (isset($_POST['sambaTab'])){
       plugin::save_object();
 
       /* Take care about access options */
-      if ($this->acl_is_writeable("sambaAcctFlagsL") || ($this->acl_is_writeable("sambaAcctFlagsN"))){
+      if ($this->acl_is_writeable("sambaAcctFlagsL",$SkipWrite) || ($this->acl_is_writeable("sambaAcctFlagsN",$SkipWrite))){
         if ($this->samba3){
           $attrname= "sambaPwdCanChange";
         } else {
@@ -730,7 +733,7 @@ class sambaAccount extends plugin
       $tmp= "[$tmp$fill]";
 
       /* Only save if acl's are set */
-      if ($this->acl_is_writeable("sambaAcctFlagsL") || ($this->acl_is_writeable("sambaAcctFlagsN"))){
+      if ($this->acl_is_writeable("sambaAcctFlagsL",$SkipWrite) || ($this->acl_is_writeable("sambaAcctFlagsN",$SkipWrite))){
         if ($this->samba3){
           $attrname= "sambaAcctFlags";
         } else {
@@ -743,7 +746,7 @@ class sambaAccount extends plugin
       }
 
       /* Save sambaDomain attribute */
-      if ($this->acl_is_writeable("sambaDomainName") && $this->samba3 && isset ($_POST['sambaDomainName'])){
+      if ($this->acl_is_writeable("sambaDomainName",$SkipWrite) && $this->samba3 && isset ($_POST['sambaDomainName'],$SkipWrite)){
         $this->sambaDomainName= validate($_POST['sambaDomainName']);
       }
 
@@ -752,7 +755,7 @@ class sambaAccount extends plugin
 
         /* Save obvious values */
         foreach($this->ctxattributes as $val){
-          if (isset($_POST[$val]) && $this->acl_is_writeable("AllowLoginOnTerminalServer")){
+          if (isset($_POST[$val]) && $this->acl_is_writeable("AllowLoginOnTerminalServer",$SkipWrite)){
             if (get_magic_quotes_gpc()) {
               $this->mungedObject->ctx[$val]= stripcslashes(validate($_POST[$val]));
             } else {
@@ -763,35 +766,35 @@ class sambaAccount extends plugin
 
         /* Save checkbox states. */
         $this->mungedObject->setTsLogin(!isset($_POST['tslogin'])
-                        && $this->acl_is_writeable("AllowLoginOnTerminalServer"));
+                        && $this->acl_is_writeable("AllowLoginOnTerminalServer",$SkipWrite));
         // Need to do some index checking to avoid messages like "index ... not found"
         if(isset($_POST['brokenconn'])) {
           $this->mungedObject->setBrokenConn($_POST['brokenconn'] == '1'
-                        && $this->acl_is_writeable("AllowLoginOnTerminalServer"));
+                        && $this->acl_is_writeable("AllowLoginOnTerminalServer",$SkipWrite));
         }
         if(isset($_POST['reconn'])) {
           $this->mungedObject->setReConn($_POST['reconn'] == '1'
-                        && $this->acl_is_writeable("AllowLoginOnTerminalServer"));
+                        && $this->acl_is_writeable("AllowLoginOnTerminalServer",$SkipWrite));
         }
         $this->mungedObject->setInheritMode(isset($_POST['inherit'])
-                        && $this->acl_is_writeable("AllowLoginOnTerminalServer"));
+                        && $this->acl_is_writeable("AllowLoginOnTerminalServer",$SkipWrite));
         $this->mungedObject->setCtxMaxConnectionTimeF(!isset($_POST['CtxMaxConnectionTimeF'])
-                        && $this->acl_is_writeable("AllowLoginOnTerminalServer"));
+                        && $this->acl_is_writeable("AllowLoginOnTerminalServer",$SkipWrite));
         $this->mungedObject->setCtxMaxDisconnectionTimeF(
                         !isset($_POST['CtxMaxDisconnectionTimeF']) 
-                        && $this->acl_is_writeable("AllowLoginOnTerminalServer"));
+                        && $this->acl_is_writeable("AllowLoginOnTerminalServer",$SkipWrite));
         $this->mungedObject->setCtxMaxIdleTimeF(!isset($_POST['CtxMaxIdleTimeF'])
-                        && $this->acl_is_writeable("AllowLoginOnTerminalServer"));
+                        && $this->acl_is_writeable("AllowLoginOnTerminalServer",$SkipWrite));
         $this->mungedObject->setConnectClientDrives(isset($_POST['connectclientdrives'])
-                        && $this->acl_is_writeable("AllowLoginOnTerminalServer"));
+                        && $this->acl_is_writeable("AllowLoginOnTerminalServer",$SkipWrite));
         $this->mungedObject->setConnectClientPrinters(isset($_POST['connectclientprinters'])  
-                        && $this->acl_is_writeable("AllowLoginOnTerminalServer"));
+                        && $this->acl_is_writeable("AllowLoginOnTerminalServer",$SkipWrite));
         $this->mungedObject->setDefaultPrinter(isset($_POST['defaultprinter'])
-                        && $this->acl_is_writeable("AllowLoginOnTerminalServer"));
+                        && $this->acl_is_writeable("AllowLoginOnTerminalServer",$SkipWrite));
 
         /* Save combo boxes. Takes two values */
         if(isset($_POST['reconn'])) {
-          $this->mungedObject->setShadow(isset($_POST['shadow']) && $this->acl_is_writeable("AllowLoginOnTerminalServer"),$_POST['shadow']);
+          $this->mungedObject->setShadow(isset($_POST['shadow']) && $this->acl_is_writeable("AllowLoginOnTerminalServer",$SkipWrite),$_POST['shadow']);
         }
 
         /* Check for changes */

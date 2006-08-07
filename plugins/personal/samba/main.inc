@@ -31,6 +31,8 @@ if (!$remove_lock){
   /* Create sambaAccount object on demand */
   if (!isset($_SESSION['sambaAccount']) || (isset($_GET['reset']) && $_GET['reset'] == 1)){
     $_SESSION['sambaAccount']= new sambaAccount ($config, $ui->dn);
+    $_SESSION['sambaAccount']->set_acl_base($ui->dn);
+    $_SESSION['sambaAccount']->set_acl_category("users");
   }
   $sambaAccount= $_SESSION['sambaAccount'];
 
@@ -65,7 +67,6 @@ if (!$remove_lock){
     if (count ($message) == 0){
       $sambaAccount->save ();
       gosa_log ("User/samba object'".$ui->dn."' has been saved");
-      $sambaAccount->acl= "#none#";
       del_lock ($ui->dn);
       sess_del ('edit');
 
@@ -99,7 +100,9 @@ if (!$remove_lock){
     } else {
       $info= "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/openlock.png').
              "\"> ".$ui->dn."&nbsp;";
-      if (isset($editacl) && $editacl != "#none#"){
+
+      if(preg_match("/w/",$ui->get_permissions($ui->dn,"users/sambaAccount"))){
+
         $info.= "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lamp.png')."\"> ".
                 _("Click the 'Edit' button below to change informations in this dialog");
         $display.= "<input type=submit name=\"edit\" value=\""._("Edit")."\">\n";
