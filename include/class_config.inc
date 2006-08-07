@@ -677,15 +677,16 @@ class config  {
 
     $res= get_list("(&(objectClass=goShareServer)(goExportEntry=*))", $categories, $base,array("goExportEntry","cn"),GL_SUBSEARCH);
     foreach($res as $entry){
-      if(isset($entry['goExportEntry']['count'])){
-        unset($entry['goExportEntry']['count']);
+      if(obj_is_readable($entry['dn'], "server/goShareServer","goExportEntry")){
+        if(isset($entry['goExportEntry']['count'])){
+          unset($entry['goExportEntry']['count']);
+        }
+        foreach($entry['goExportEntry'] as $share){
+          $a_share = split("\|",$share);
+          $sharename = $a_share[0];
+          $return[$entry['cn'][0]."|".$sharename] = $entry['cn'][0]." [".$sharename."]";
+        }
       }
-      foreach($entry['goExportEntry'] as $share){
-        $a_share = split("\|",$share);
-        $sharename = $a_share[0];
-        $return[$entry['cn'][0]."|".$sharename] = $entry['cn'][0]." [".$sharename."]";
-      }
-
     }
     return($return);
   }
