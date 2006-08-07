@@ -55,16 +55,6 @@ if (!$remove_lock){
     $_SESSION['edit']= TRUE;
   }
 
-  /* Adjust acl's to mode */
-  if (isset($_SESSION['edit'])){
-    $acl= get_permissions ($ui->dn, $ui->subtreeACL);
-    $sambaAccount->acl= get_module_permission($acl, "samba", $ui->dn);
-  } else {
-    $acl= get_permissions ($ui->dn, $ui->subtreeACL);
-    $editacl= get_module_permission($acl, "samba", $ui->dn);
-    $sambaAccount->acl= "#none#";
-  }
-
   /* save changes to LDAP and disable edit mode */
   if (isset($_POST['edit_finish'])){
 

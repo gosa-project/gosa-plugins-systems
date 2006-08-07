@@ -480,7 +480,14 @@ class sambaAccount extends plugin
       if($_SESSION['js']){
         /* Set form elements to disabled/enable state */
         $smarty->assign("tsloginstate", $this->mungedObject->getTsLogin()?"":"disabled");
-        $smarty->assign("inheritstate", $this->mungedObject->getInheritMode()?"disabled":"");
+
+        $smarty->assign("inheritstate", "");
+        if($this->acl_is_writeable("AllowLoginOnTerminalServer")){
+          $smarty->assign("inheritstate", $this->mungedObject->getInheritMode()?"disabled":"");
+        }
+  
+
+  
       }else{
         $smarty->assign("tsloginstate", "");
         $smarty->assign("inheritstate", "");

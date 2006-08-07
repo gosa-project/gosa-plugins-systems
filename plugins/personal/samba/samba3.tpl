@@ -122,7 +122,7 @@
   </td>
   <td style="vertical-align:top;">
 {render acl=$AllowLoginOnTerminalServerACL}
-   <input type=checkbox id="inherit" name="inherit"} {if $inheritstate} checked {/if}
+   <input type=checkbox id="inherit" name="inherit" {if $inheritstate} checked {/if}
 	onClick="changeState('CtxInitialProgram');
  		 changeState('CtxWorkDirectory');"
 	
@@ -350,7 +350,7 @@
 {/render}
    <label for="logoff_time_set">{t}Limit Logoff Time{/t}</label>
 {render acl=$sambaLogoffTimeACL}
-   <select name=sambaLogoffTime_day onChange="createResult_sambaLogoffTime(this.form,this.form.sambaLogoffTime);>"
+   <select name=sambaLogoffTime_day onChange="createResult_sambaLogoffTime(this.form,this.form.sambaLogoffTime);">
    {html_options values=$sambaLogoffTime_days output=$sambaLogoffTime_days selected=$sambaLogoffTime_day}
    </select>
 {/render}
