@@ -237,10 +237,13 @@ class mailAccount extends plugin
     }
 
     /* Handle account state */
-
     /* Do we need to flip is_account state? */
-    if (isset($_POST['modify_state'])){
-      $this->is_account= !$this->is_account;
+    if(isset($_POST['modify_state'])){
+      if($this->is_account && $this->acl_is_removeable()){
+        $this->is_account= FALSE;
+      }elseif(!$this->is_account && $this->acl_is_createable()){
+        $this->is_account= TRUE;
+      }
     }
 
     /* Do we represent a valid account? */
@@ -534,32 +537,6 @@ class mailAccount extends plugin
       }
     }
     
-    if (preg_match("/V/", $this->gosaMailDeliveryMode)) {
-      $smarty->assign("use_vacation", "checked");
-    } else {
-      $smarty->assign("use_vacation", "");
-    }
-    if (preg_match("/S/", $this->gosaMailDeliveryMode)) {
-      $smarty->assign("use_spam_filter", "checked");
-    } else {
-      $smarty->assign("use_spam_filter", "");
-    }
-    if (preg_match("/R/", $this->gosaMailDeliveryMode)) {
-      $smarty->assign("use_mailsize_limit", "checked");
-    } else {
-      $smarty->assign("use_mailsize_limit", "");
-    }
-    if (preg_match("/I/", $this->gosaMailDeliveryMode)) {
-      $smarty->assign("only_local", "checked");
-    } else {
-      $smarty->assign("only_local", "");
-    }
-    if (preg_match("/C/", $this->gosaMailDeliveryMode)) {
-      $smarty->assign("own_script", "checked");
-    } else {
-      $smarty->assign("own_script", "");
-    }
-
     /* Have vacation templates? */
     $smarty->assign("template", "");
     if (count($this->vacation)){
@@ -651,27 +628,36 @@ class mailAccount extends plugin
          C: Use custm sieve script
          I: Only insider delivery */
 
-      $tmp= "";
-      if (!isset($_POST["drop_own_mails"])){
-        $tmp.= "L";
-      }
-      if (isset($_POST["use_mailsize_limit"])){
-        $tmp.= "R";
-      }
-      if (isset($_POST["use_spam_filter"])){
-        $tmp.= "S";
-      }
-      if (isset($_POST["use_vacation"])){
-        $tmp.= "V";
-      }
-      if (isset($_POST["own_script"])){
-        $tmp.= "C";
-      }
-      if (isset($_POST["only_local"])){
-        $tmp.= "I";
-      }
-      $tmp= "[$tmp]";
+      $tmp= preg_replace("/[^a-z]/i","",$this->gosaMailDeliveryMode);
 
+
+      /* Handle delivery flags */ 
+      if($this->acl_is_writeable("gosaMailDeliveryModeL")){
+        if(!preg_match("/L/",$tmp) && !isset($_POST['drop_own_mails'])){
+          $tmp.="L";
+        }elseif(preg_match("/L/",$tmp) && isset($_POST['drop_own_mails'])){
+          $tmp = preg_replace("/L/","",$tmp);
+        }
+      }
+
+      $opts = array(     
+          "R"   => "use_mailsize_limit",
+          "S"   => "use_spam_filter",
+          "V"   => "use_vacation",
+          "C"   => "own_script",
+          "I"   => "only_local");
+
+      foreach($opts as $flag => $post){
+        if($this->acl_is_writeable("gosaMailDeliveryMode".$flag)){
+          if(!preg_match("/".$flag."/",$tmp) && isset($_POST[$post])){
+            $tmp.= $flag;
+          }elseif(preg_match("/".$flag."/",$tmp) && !isset($_POST[$post])){
+            $tmp = preg_replace("/".$flag."/","",$tmp);
+          }
+        }
+      }
+
+      $tmp= "[$tmp]";
       if ($this->gosaMailDeliveryMode != $tmp){
         $this->is_modified= TRUE;
       }
