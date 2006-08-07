@@ -664,14 +664,18 @@ class config  {
   }
 
   /* This function returns all available ShareServer */
-  function getShareServerList()
+  function getShareServerList($categories = "")
   {
     global $config;
     $return = array();
     $ui = get_userinfo();
     $base = $config->current['BASE'];
-echo "Need to adapt share list loading<br>";
-    $res= get_list("(&(objectClass=goShareServer)(goExportEntry=*))", "all", $base,array("goExportEntry","cn"),GL_SUBSEARCH);
+
+    if(empty($categories)){
+      echo "Need to adapt share list loading<br>";
+    }
+
+    $res= get_list("(&(objectClass=goShareServer)(goExportEntry=*))", $categories, $base,array("goExportEntry","cn"),GL_SUBSEARCH);
     foreach($res as $entry){
       if(isset($entry['goExportEntry']['count'])){
         unset($entry['goExportEntry']['count']);
