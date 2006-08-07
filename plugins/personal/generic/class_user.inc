@@ -174,7 +174,6 @@ class user extends plugin
 
       /* Load extra attributes: certificate and picture */
       $this->load_cert();
-      $this->load_picture();
       if ($this->userCertificate != ""){
         $this->had_userCertificate= TRUE;
       }
@@ -265,6 +264,8 @@ class user extends plugin
     /* Get random number for pictures */
     srand((double)microtime()*1000000); 
     $smarty->assign("rand", rand(0, 10000));
+    $this->load_picture();
+
 
     /* Do we represent a valid gosaAccount? */
     if (!$this->is_account){
