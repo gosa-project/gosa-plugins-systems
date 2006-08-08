@@ -68,10 +68,11 @@ class intranetAccount extends plugin
       $smarty->assign("tabbed", 0);	
     }
 
-    if((!$this->ReadOnly) && (($this->is_account && $this->acl_is_removeable()) || (!$this->is_account && $this->acl_is_createable())) ){
+
+    $smarty->assign('gosaIntranetACL', " disabled ");
+    if((!$this->ReadOnly) && (    ($this->is_account && $this->acl_is_removeable()) 
+                               || (!$this->is_account && $this->acl_is_createable()))){
       $smarty->assign('gosaIntranetACL', "");
-    }else{
-      $smarty->assign('gosaIntranetACL', " disabled ");
     }
 
     $display.= $smarty->fetch (get_template_path('intranet.tpl', TRUE, dirname(__FILE__)));

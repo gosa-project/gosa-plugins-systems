@@ -30,14 +30,12 @@ class connectivity extends plugin
     /* Preseed permissions */
     $this->dn= $dn;
     $ui= get_userinfo();
-    $acl= get_permissions ($ui->dn, $ui->subtreeACL);
 
     /* Load accounts */
     foreach ($config->data['TABS']['CONNECTIVITY'] as $plug){
       $name= $plug['CLASS'];
       $this->plugin_name[]= $name;
       $this->plugin[$name]= new $name($config, $dn);
-      $this->plugin[$name]->acl= get_module_permission($acl, "$name", $ui->dn);
     }
   }
 
@@ -78,7 +76,7 @@ class connectivity extends plugin
     /* Execude  objects */
     $is_first= true;
 
-    $ReadOnly = (!is_object($this->parent) && !isset($_SESSION['edit']));
+    $ReadOnly = (!isset($this->parent) || !$this->parent) && !isset($_SESSION['edit']);
 
     foreach ($this->plugin_name as $name){
       $this->plugin[$name]->ReadOnly = $ReadOnly;

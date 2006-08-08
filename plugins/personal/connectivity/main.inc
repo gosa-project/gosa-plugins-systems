@@ -32,6 +32,14 @@ if (!$remove_lock){
   if (!isset($_SESSION['connectivity']) || (isset($_GET['reset']) &&
       $_GET['reset'] == 1)){
     $_SESSION['connectivity']= new connectivity ($config, $ui->dn);
+    $_SESSION['connectivity']->set_acl_base($ui->dn);
+    $_SESSION['connectivity']->set_acl_category("users");
+
+    /* Adjust acl's to mode */
+    foreach ($_SESSION['connectivity']->plugin_name as $name){
+      $_SESSION['connectivity']->plugin[$name]->set_acl_category( "users");
+      $_SESSION['connectivity']->plugin[$name]->set_acl_base($ui->dn);
+    }
   }
   $connectivity= $_SESSION['connectivity'];
 
@@ -44,11 +52,12 @@ if (!$remove_lock){
   if (isset($_POST['edit'])){
 
     /* Check locking */
-    if (($username= get_lock($ui->dn)) != ""){
+    if ((($username= get_lock($ui->dn)) != "") && (!isset($_SESSION['edit']))){
       $_SESSION['back_plugin']= $plug;
       gen_locked_message ($username, $ui->dn);
       exit ();
     }
+
 
     /* Lock the current entry */
     add_lock ($ui->dn, $ui->dn);
@@ -66,7 +75,6 @@ if (!$remove_lock){
     if (count ($message) == 0){
       $connectivity->save ();
       gosa_log ("User/connectivity object'".$ui->dn."' has been saved");
-      $connectivity->acl= "#none#";
       del_lock ($ui->dn);
       sess_del ('edit');
 
@@ -75,22 +83,6 @@ if (!$remove_lock){
     } else {
       /* Errors found, show message */
       show_errors ($message);
-    }
-  }
-
-  /* Adjust acl's to mode */
-  if (isset($_SESSION['edit'])){
-    $acl= get_permissions ($ui->dn, $ui->subtreeACL);
-    $connectivity->acl= get_module_permission($acl, "connectivity", $ui->dn);
-    foreach ($connectivity->plugin_name as $name){
-      $connectivity->plugin[$name]->acl= get_module_permission($acl, "$name", $ui->dn);
-    }
-  } else {
-    $acl= get_permissions ($ui->dn, $ui->subtreeACL);
-    $editacl= get_module_permission($acl, "connectivity", $ui->dn);
-    $connectivity->acl= "#none#";
-    foreach ($connectivity->plugin_name as $name){
-      $connectivity->plugin[$name]->acl= "#none#";
     }
   }
 
@@ -104,39 +96,27 @@ if (!$remove_lock){
 
   $info= "";
 
-  /* Are we in edit mode? */
-  $in_edit_mode= false;
-  foreach ($connectivity->plugin_name as $name){
-    $acls = get_module_permission($acl, "$name", $ui->dn);
-    if($acls != "#none#"){
-      $in_edit_mode|= true;
-    }
+  $display.="<div align='right'>";
+  if (isset($_SESSION['edit'])){
+    $display.= "<input type=submit name=\"edit_finish\" style=\"width:80px\" value=\""._("Ok")."\">\n";
+    $display.= "&nbsp;";
+    $display.= "<input type=submit name=\"edit_cancel\" value=\""._("Cancel")."\">\n";
+    $info= "<img class=\"center\" alt=\"\" align=\"middle\" src=\"".get_template_path('images/closedlock.png').
+      "\"> ".$ui->dn."&nbsp;";
+  } else {
+    $info= "<img class=\"center\" alt=\"\" align=\"middle\" src=\"".get_template_path('images/openlock.png').
+      "\"> ".$ui->dn."&nbsp;";
+
+    $info.= "<img class=\"center\" alt=\"\" align=\"middle\" src=\"".get_template_path('images/lamp.png').
+      "\">"._("Click the 'Edit' button below to change informations in this dialog");
+    $display.= "<input type=submit name=\"edit\" value=\""._("Edit")."\">\n";
+    $display.= "<input type=\"hidden\" name=\"ignore\">\n";
   }
-  if ($in_edit_mode){
-    $display.="<div align='right'>";
-    if (isset($_SESSION['edit'])){
-      $display.= "<input type=submit name=\"edit_finish\" style=\"width:80px\" value=\""._("Ok")."\">\n";
-      $display.= "&nbsp;";
-      $display.= "<input type=submit name=\"edit_cancel\" value=\""._("Cancel")."\">\n";
-      $info= "<img class=\"center\" alt=\"\" align=\"middle\" src=\"".get_template_path('images/closedlock.png').
-             "\"> ".$ui->dn."&nbsp;";
-    } else {
-      $info= "<img class=\"center\" alt=\"\" align=\"middle\" src=\"".get_template_path('images/openlock.png').
-             "\"> ".$ui->dn."&nbsp;";
-      if ($editacl != "#none#"){
-        $info.= "<img class=\"center\" alt=\"\" align=\"middle\" src=\"".get_template_path('images/lamp.png').
-                "\">"._("Click the 'Edit' button below to change informations in this dialog");
-        $display.= "<input type=submit name=\"edit\" value=\""._("Edit")."\">\n";
-      }
-      $display.= "<input type=\"hidden\" name=\"ignore\">\n";
-    }
-    $display.="</div>";
-  }
-//  $display.= "</p>\n";
+  $display.="</div>";
 
   /* Page header*/
   $display= print_header(get_template_path('images/proxy.png'),
-                         _("Connectivity"), $info).$display;
+      _("Connectivity"), $info).$display;
 
 }
 
