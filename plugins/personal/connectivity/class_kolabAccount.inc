@@ -156,7 +156,7 @@ class kolabAccount extends plugin
     }
 
     /* Delete forward email addresses */
-    if (isset($_POST['delete_delegation'])){
+    if ((isset($_POST['delete_delegation'])) && (isset($_POST['delegate_list']))){
       if (count($_POST['delegate_list']) && $this->acl_is_writeable("kolabDelegate")){
         $this->delDelegate ($_POST['delegate_list']);
       }
