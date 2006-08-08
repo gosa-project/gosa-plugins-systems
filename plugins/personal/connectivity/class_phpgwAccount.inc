@@ -34,7 +34,6 @@ class phpgwAccount extends plugin
     /* Load attributes */
     foreach($this->attributes as $val){
       $smarty->assign("$val", $this->$val);
-      $smarty->assign($val."ACL", chkacl($this->acl, "$val"));
     }
     if ($this->is_account){
       $smarty->assign("phpgwState", "checked");

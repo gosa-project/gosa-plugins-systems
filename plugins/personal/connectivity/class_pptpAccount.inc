@@ -120,7 +120,7 @@ class pptpAccount extends plugin
   /* Save to LDAP */
   function save()
   {
-    if(chkacl($this->acl, 'gosapptp') == ""){
+    if($this->acl_is_createable()){
       plugin::save();
 
       /* Write back to ldap */

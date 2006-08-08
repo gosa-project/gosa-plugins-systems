@@ -50,7 +50,7 @@ class webdavAccount extends plugin
 
   function remove_from_parent()
   {
-    if(chkacl($this->acl,"webdavAccount")==""){
+    if($this->acl_is_createable() || $this->is_account){
       /* Cancel if there's nothing to do here */
       if (!$this->initially_was_account){
         return;
@@ -103,7 +103,7 @@ class webdavAccount extends plugin
   /* Save to LDAP */
   function save()
   {
-    if(chkacl($this->acl,"webdavAccount")==""){
+    if($this->acl_is_createable()){
       plugin::save();
 
       /* Write back to ldap */

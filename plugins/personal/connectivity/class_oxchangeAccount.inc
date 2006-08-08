@@ -872,8 +872,8 @@ class oxchangeAccount extends plugin
       $q=sprintf($os,$uid,$calendarid[0],$contactsid[0],$tasksid[0]);
       @pg_exec($pgcon,$q);
       $q=sprintf($ugr,$uid);
-      qpg_exec($pgcon,$q);
-      pg_close($pgcon);
+      @pg_exec($pgcon,$q);
+      @pg_close($pgcon);
     }
   }
 
