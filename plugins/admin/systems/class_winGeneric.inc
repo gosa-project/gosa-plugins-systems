@@ -227,6 +227,26 @@ class wingeneric extends plugin
     $this->postcreate();
   }
 
+  /* Return plugin informations for acl handling
+  #FIXME FAIscript seams to ununsed within this class... */
+  function plInfo()
+  {
+    return (array(
+          "plShortName"   => _("Win generic"),
+          "plDescription" => _("Windows workstation generic"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("winworkstation" => array("description"  => _("Win workstation"),
+                                                          "objectClass"  => "gotoWorkstation")),
+          "plProvidedAcls"=> array(
+            "cn"                  => _("Workstation name"),
+            "description"         => _("Description"))
+          ));
+  }
+
+
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

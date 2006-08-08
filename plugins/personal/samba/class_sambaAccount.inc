@@ -328,7 +328,8 @@ class sambaAccount extends plugin
       }
       $regex= $sambafilter['regex'];
       $filter= "(&(objectClass=sambaSAMAccount)$exclude(uid=*$)(|(uid=$regex)(cn=$regex)))";
-      $res= get_list($filter, "workstation", $sambafilter['depselect'], array("uid"), GL_SUBSEARCH | GL_SIZELIMIT);
+      $res= get_list($filter, "winworkstation", $sambafilter['depselect'], array("uid"), GL_SUBSEARCH | GL_SIZELIMIT);
+        
       $wslist= array();
       foreach ($res as $attrs){
         $wslist[]= preg_replace('/\$/', '', $attrs['uid'][0]);
