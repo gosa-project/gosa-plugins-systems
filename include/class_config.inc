@@ -637,45 +637,47 @@ class config  {
   function getShareList($listboxEntry = false)
   {
     $ldap= $this->get_ldap_link();
-    $a_res = $ldap->search("(objectClass=goShareServer)",array("goExportEntry","cn"));
-    $return= array();
-    while($entry = $ldap->fetch($a_res)){
-      if(isset($entry['goExportEntry']['count'])){
-        unset($entry['goExportEntry']['count']);
-      }
-      if(isset($entry['goExportEntry'])){
-        foreach($entry['goExportEntry'] as $export){
-          $shareAttrs = split("\|",$export);
-          if($listboxEntry) {
-            $return[$shareAttrs[0]."|".$entry['cn'][0]] = $shareAttrs[0]." - ".$entry['cn'][0];
-          }else{
-            $return[$shareAttrs[0]."|".$entry['cn'][0]]['server']       = $entry['cn'][0];
-            $return[$shareAttrs[0]."|".$entry['cn'][0]]['name']         = $shareAttrs[0];
-            $return[$shareAttrs[0]."|".$entry['cn'][0]]['description']  = $shareAttrs[1];
-            $return[$shareAttrs[0]."|".$entry['cn'][0]]['type']         = $shareAttrs[2];
-            $return[$shareAttrs[0]."|".$entry['cn'][0]]['charset']      = $shareAttrs[3];
-            $return[$shareAttrs[0]."|".$entry['cn'][0]]['path']         = $shareAttrs[4];
-            $return[$shareAttrs[0]."|".$entry['cn'][0]]['option']       = $shareAttrs[5];
+    $base =  $this->current['BASE'];
+    $res= get_list("(&(objectClass=goShareServer)(goExportEntry=*))","server",$base,array("goExportEntry","cn"),GL_SUBSEARCH);
+    $return = array();
+
+    foreach($res as $entry){
+      if(obj_is_readable($entry['dn'], "server/goShareServer","goExportEntry")){
+
+        if(isset($entry['goExportEntry']['count'])){
+          unset($entry['goExportEntry']['count']);
+        }
+        if(isset($entry['goExportEntry'])){
+          foreach($entry['goExportEntry'] as $export){
+            $shareAttrs = split("\|",$export);
+            if($listboxEntry) {
+              $return[$shareAttrs[0]."|".$entry['cn'][0]] = $shareAttrs[0]." - ".$entry['cn'][0];
+            }else{
+              $return[$shareAttrs[0]."|".$entry['cn'][0]]['server']       = $entry['cn'][0];
+              $return[$shareAttrs[0]."|".$entry['cn'][0]]['name']         = $shareAttrs[0];
+              $return[$shareAttrs[0]."|".$entry['cn'][0]]['description']  = $shareAttrs[1];
+              $return[$shareAttrs[0]."|".$entry['cn'][0]]['type']         = $shareAttrs[2];
+              $return[$shareAttrs[0]."|".$entry['cn'][0]]['charset']      = $shareAttrs[3];
+              $return[$shareAttrs[0]."|".$entry['cn'][0]]['path']         = $shareAttrs[4];
+              $return[$shareAttrs[0]."|".$entry['cn'][0]]['option']       = $shareAttrs[5];
+            }
           }
         }
-      }
+      } 
     }
+
     return($return);
   }
 
   /* This function returns all available ShareServer */
-  function getShareServerList($categories = "")
+  function getShareServerList()
   {
     global $config;
     $return = array();
     $ui = get_userinfo();
     $base = $config->current['BASE'];
 
-    if(empty($categories)){
-      echo "Need to adapt share list loading<br>";
-    }
-
-    $res= get_list("(&(objectClass=goShareServer)(goExportEntry=*))", $categories, $base,array("goExportEntry","cn"),GL_SUBSEARCH);
+    $res= get_list("(&(objectClass=goShareServer)(goExportEntry=*))", "server", $base,array("goExportEntry","cn"),GL_SUBSEARCH);
     foreach($res as $entry){
       if(obj_is_readable($entry['dn'], "server/goShareServer","goExportEntry")){
         if(isset($entry['goExportEntry']['count'])){
