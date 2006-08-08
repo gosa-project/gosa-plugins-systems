@@ -228,7 +228,7 @@ class environment extends plugin
       }
     }
 
-    $this->gotoProfileServers= $config->getShareServerList("server") ;
+    $this->gotoProfileServers= $config->getShareServerList() ;
     $this->gotoShareSelections= $config->getShareList(true);
     $this->gotoAvailableShares= $config->getShareList(false);  
 
