@@ -101,7 +101,6 @@ if (!$remove_lock){
       $info= "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/openlock.png').
              "\"> ".$ui->dn."&nbsp;";
       
-      $display.= "Add acl check for edit button.";;
         $info.= "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lamp.png').
             "\"> "._("Click the 'Edit' button below to change informations in this dialog");
         $display.= "<input type=submit name=\"edit\" value=\""._("Edit")."\">\n";
