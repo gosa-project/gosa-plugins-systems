@@ -24,6 +24,11 @@ if (!$remove_lock){
   $smarty->assign ('headimage', get_template_path('images/password.png'));
   $display= "";
 
+  $password_ACLS = $ui->get_permissions($ui->dn,"users/password");
+  $password_ACLS = "cmdr";
+  $smarty->assign("ChangeACL" ,  $password_ACLS);   
+  $smarty->assign("NotAllowed" , !preg_match("/w/i",$password_ACLS));   
+
   /* Check for interaction */
   if ($_SERVER["REQUEST_METHOD"] == "POST"){
     if (isset($_POST['password_finish'])){
@@ -65,9 +70,7 @@ if (!$remove_lock){
         }
       }
 
-      $ca= get_permissions ($ui->dn, $ui->subtreeACL);
-      $ca= get_module_permission($ca, "user", $ui->dn);
-      if (chkacl($ca, "password") != ""){
+      if(!preg_match("/w/i",$password_ACLS)){
         $message[]= _("You have no permissions to change your password.");
       }
 
@@ -105,7 +108,7 @@ if (!$remove_lock){
       $display= $smarty->fetch(get_template_path("password.tpl", TRUE));
     }else{
       $expired= ldap_expired_account($config, $ui->dn, $ui->username);
-      
+     
       if($expired == 4){
         $display= $smarty->fetch(get_template_path("nochange.tpl", TRUE));
       }else{
