@@ -222,10 +222,12 @@ class ogw{
     foreach($this->validTeams as $id){
       $tmp[]= $id['company_id'];
     }
-    foreach($this->info['TeamIDis'] as $id){
-      if(!in_array($id,$tmp)){
-        $this->LastError = sprintf("Given 'Team ID':%s is invalid.",$id);
-       return(false);
+    if(is_array($this->info['TeamIDis'])){
+      foreach($this->info['TeamIDis'] as $id){
+        if(!in_array($id,$tmp)){
+          $this->LastError = sprintf("Given 'Team ID':%s is invalid.",$id);
+          return(false);
+        }
       }
     }
     return(true);
