@@ -806,7 +806,7 @@ class gofaxAccount extends plugin
           "plOptions"       => array(),
 
           "plProvidedAcls"  => array(
-            "goFaxIsEnabled"                    => "!!! FIXME "._("Enable/Disable fax"),
+            "goFaxIsEnabled"                    => _("Enable/Disable fax"),
             "goFaxRBlocklist"                   => _("Receive blocklist"),
             "goFaxSBlocklist"                   => _("Send blocklist"),
             "facsimileTelephoneNumber"          => _("Fax number"), // goFaxDeliveryMode

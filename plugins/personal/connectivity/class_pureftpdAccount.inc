@@ -210,7 +210,7 @@ class pureftpdAccount extends plugin
           "plOptions"       => array(),
 
           "plProvidedAcls"  => array(
-            "FTPQuotaFiles"         => "!!! FIXME "._("Quota files"),
+            "FTPQuotaFiles"         => _("Quota files"),
             "FTPUploadRatio"        => _("Upload ratio"),
             "FTPQuotaMBytes"        => _("Quota MBytes"),
             "FTPDownloadRatio"      => _("Download ratio"),
