@@ -165,23 +165,6 @@ class connectivity extends plugin
       $this->plugin[$key]->PrepareForCopyPaste($plug);
     }
   }
-
-/* Return plugin informations for acl handling 
-#FIXME We should check here, if the user has access to one of the subClasses */ 
-  function plInfo()
-  {
-    return (array(  
-          "plShortName"       => _("Connectivity"),
-          "plDescription"     => _("Connectivity settings"),
-          "plSelfModify"      => TRUE,
-          "plDepends"         => array("user"),
-          "plPriority"        => 5,                                 // Position in tabs
-          "plSection"       => "personal",                        // This belongs to personal
-          "plCategory"      => array("users"),
-          "plOptions"       => array(),
-          "plProvidedAcls"  => array()
-          ));
-  }
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
