@@ -11,7 +11,7 @@
          <td>
 
 {render acl=$facsimileTelephoneNumberACL}
-           <input name="facsimileTelephoneNumber" id="facsimileTelephoneNumber" ze=20 maxlength=65
+           <input name="facsimileTelephoneNumber" id="facsimileTelephoneNumber" size=20 maxlength=65
 		value="{$facsimileTelephoneNumber}" title="{t}Fax number for GOfax to trigger on{/t}">
 {/render}
 

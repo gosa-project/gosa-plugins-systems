@@ -13,6 +13,9 @@ if (!$remove_lock){
 	/* Create gofaxAccount object on demand */
 	if (!isset($_SESSION['gofaxAccount']) || (isset($_GET['reset']) && $_GET['reset'] == 1)){
 		$_SESSION['gofaxAccount']= new gofaxAccount ($config, $ui->dn);
+		$_SESSION['gofaxAccount']->set_acl_base($ui->dn);
+		$_SESSION['gofaxAccount']->set_acl_category("users");
+
 	}
 	$gofaxAccount= $_SESSION['gofaxAccount'];
 
@@ -37,16 +40,6 @@ if (!$remove_lock){
 		$_SESSION['edit']= TRUE;
 	}
 
-	/* Adjust acl's to mode */
-	if (isset($_SESSION['edit'])){
-		$acl= get_permissions ($ui->dn, $ui->subtreeACL);
-		$gofaxAccount->acl= get_module_permission($acl, "gofax", $ui->dn);
-	} else {
-		$acl= get_permissions ($ui->dn, $ui->subtreeACL);
-		$editacl= get_module_permission($acl, "gofax", $ui->dn);
-		$gofaxAccount->acl= "#none#";
-	}
-
 	/* save changes to LDAP and disable edit mode */
 	if (isset($_POST['edit_finish'])){
 
@@ -57,7 +50,6 @@ if (!$remove_lock){
                 if (count ($message) == 0){
                         $gofaxAccount->save ();
 			gosa_log ("User/fax object'".$ui->dn."' has been saved");
-                        $gofaxAccount->acl= "#none#";
                         del_lock ($ui->dn);
                         sess_del ('edit');
 
@@ -92,7 +84,8 @@ if (!$remove_lock){
 			$info= "<img alt='' align=\"middle\" src=\"".get_template_path('images/closedlock.png')."\"> ".$ui->dn."&nbsp;";
 		} else {
 			$info= "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/openlock.png')."\"> ".$ui->dn."&nbsp;";
-			if (isset($editacl) && $editacl != "#none#"){
+
+			if(preg_match("/w/",$ui->get_permissions($ui->dn,"users/gofaxAccount"))){
 				$info.= "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lamp.png')."\">"._("Click the 'Edit' button below to change informations in this dialog");
 				$display.= "<input type=submit name=\"edit\" value=\""._("Edit")."\">";
 			}

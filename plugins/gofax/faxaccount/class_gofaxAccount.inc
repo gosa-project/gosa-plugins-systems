@@ -58,7 +58,7 @@ class gofaxAccount extends plugin
 
     if ($dn != "new"){
       /* Get arrays */
-      foreach (array("goFaxRBlocklist", "goFaxRBlockgroups", "goFaxSBlocklist","facsimileTelephoneNumber",
+      foreach (array("goFaxRBlocklist", "goFaxRBlockgroups", "goFaxSBlocklist",
             "goFaxSBlockgroups", "facsimileAlternateTelephoneNumber") as $val){
         $this->$val =array();
         if (isset($this->attrs["$val"]["count"])){
