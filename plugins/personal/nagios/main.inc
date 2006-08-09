@@ -30,6 +30,8 @@ if (!$remove_lock){
   /* Create mail object on demand */
   if (!isset($_SESSION['nagiosAccount']) || (isset($_GET['reset']) && $_GET['reset'] == 1)){
     $_SESSION['nagiosAccount']= new nagiosAccount ($config, $ui->dn);
+    $_SESSION['nagiosAccount']->set_acl_base($ui->dn);
+    $_SESSION['nagiosAccount']->set_acl_category("users");
   }
   $nagiosAccount= $_SESSION['nagiosAccount'];
 
@@ -99,11 +101,11 @@ if (!$remove_lock){
       $info= "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/openlock.png').
              "\"> ".$ui->dn."&nbsp;";
 
-      echo "FIXME : user -> nagios, 102 Only display edit button if there is at least one attribute editable.";
-      $info.= "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lamp.png').
-        "\"> "._("Click the 'Edit' button below to change informations in this dialog");
-      $display.= "<input type=submit name=\"edit\" value=\""._("Edit")."\">\n";
-
+      if(preg_match("/w/",$ui->get_permissions($ui->dn,"users/nagiosAccount"))){
+        $info.= "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lamp.png').
+          "\"> "._("Click the 'Edit' button below to change informations in this dialog");
+        $display.= "<input type=submit name=\"edit\" value=\""._("Edit")."\">\n";
+      }
       $display.= "<input type=\"hidden\" name=\"ignore\">\n";
     }
     $display.= "</p>\n";
