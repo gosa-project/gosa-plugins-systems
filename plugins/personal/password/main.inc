@@ -25,7 +25,6 @@ if (!$remove_lock){
   $display= "";
 
   $password_ACLS = $ui->get_permissions($ui->dn,"users/password");
-  $password_ACLS = "cmdr";
   $smarty->assign("ChangeACL" ,  $password_ACLS);   
   $smarty->assign("NotAllowed" , !preg_match("/w/i",$password_ACLS));   
 
