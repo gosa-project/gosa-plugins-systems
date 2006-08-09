@@ -40,7 +40,7 @@
   <td style="width:50%; vertical-align:top;">
    <b><LABEL for="delegate_list">{t}Delegations{/t}</LABEL></b><br>
 {render acl=$kolabDelegateACL}
-   <select id="delegate_list" style="width:350px; height:100px;" name="delegate_list[]" size=15 multiple  {if !$kolabState} disabled {/if} >
+   <select id="delegate_list" style="width:350px; height:100px;" name="delegate_list[]" size=15 multiple  {if !$kolabState}disabled{/if} >
     {html_options values=$kolabDelegate output=$kolabDelegate}
 	<option disabled>&nbsp;</option>
    </select>
@@ -82,7 +82,7 @@
   <td><LABEL for="kolabFreeBusyFuture">{t}Future{/t}</LABEL></td>
   <td>
 {render acl=$kolabFreeBusyFutureACL}
-   <input id="kolabFreeBusyFuture" name="kolabFreeBusyFuture" size=5 maxlength=6 i {if !$kolabState} disabled {/if} value="{$kolabFreeBusyFuture}"> 
+   <input id="kolabFreeBusyFuture" name="kolabFreeBusyFuture" size=5 maxlength=6 {if !$kolabState} disabled {/if} value="{$kolabFreeBusyFuture}"> 
 	{t}days{/t}
 {/render}
    </td>
@@ -91,11 +91,11 @@
 
 
  <b>{t}Invitation policy{/t}</b><br>
- <table summary="">
 {render acl=$kolabInvitationPolicyACL}
+ <table summary="">
    {$invitation}
-{/render}
  </table>
+{/render}
 
   </td>
  </tr>

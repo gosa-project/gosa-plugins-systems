@@ -225,12 +225,12 @@ class kolabAccount extends plugin
         if(!$this->acl_is_readable("kolabInvitationPolicy")){
           $name='';
         }
-        $invitation.= "<input name=\"address$nr\" size=16 maxlength=60 $acl value=\"$name\" id='address".$nr."' ".$dis.">";
+        $invitation.= "<input name=\"address$nr\" size=16 maxlength=60  value=\"$name\" id='address".$nr."' ".$dis.">";
       }
       $invitation.= "</td>";
 
       /* Add mode switch */
-      $invitation.= "<td><select size=\"1\" name=\"policy$nr\" $acl  id='policy".$nr."' ".$dis.">";
+      $invitation.= "<td><select size=\"1\" name=\"policy$nr\" id='policy".$nr."' ".$dis.">";
       foreach($policies as $key => $value){
         if ($key == $mode){
           $invitation.= "<option value=\"$key\" selected>$value</option>";
