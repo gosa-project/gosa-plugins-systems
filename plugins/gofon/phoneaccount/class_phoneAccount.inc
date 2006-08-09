@@ -576,6 +576,8 @@ class phoneAccount extends plugin
 
     $display = "";
 
+    $SkipWrite = (!isset($this->parent) || !$this->parent) && !isset($_SESSION['edit']);
+
     if(empty($this->macro)&&(!empty($this->goFonMacro))){
 
       /* Go through already saved values, for a parameter */
@@ -696,7 +698,7 @@ class phoneAccount extends plugin
         $str        = $default;
 
         $dis = "";
-        if(!$this->acl_is_writeable("goFonMacro")){
+        if(!$this->acl_is_writeable("goFonMacro",$SkipWrite)){
           $dis = " disabled ";
         }
 
@@ -789,7 +791,7 @@ class phoneAccount extends plugin
 
     /* Transfer ACL's */
     foreach($this->attributes as $val){
-      $smarty->assign($val."ACL",$this->getacl($val));
+      $smarty->assign($val."ACL",$this->getacl($val,$SkipWrite));
       if(isset($this->$val)){
         $smarty->assign($val,$this->$val);
       }else{
@@ -807,7 +809,7 @@ class phoneAccount extends plugin
 
 
     $dis = "";
-    if(!$this->acl_is_writeable("goFonHardware")){
+    if(!$this->acl_is_writeable("goFonHardware",$SkipWrite)){
       $dis= " disabled ";
     }
     $hl= "<select size=\"1\" name=\"goFonHardware\" ".$dis." title=\"".
@@ -838,7 +840,8 @@ class phoneAccount extends plugin
 
 
   function save_object()
-  {
+  { 
+    $SkipWrite = (!isset($this->parent) || !$this->parent) && !isset($_SESSION['edit']);
     if (isset($_POST["phoneTab"])){
       plugin::save_object();
 
@@ -858,7 +861,7 @@ class phoneAccount extends plugin
 
       /* Save checkbox */
       $tmp = preg_replace("/[^a-z]/i","",$this->goFonDeliveryMode);
-      if($this->acl_is_writeable("goFonDeliveryMode")){
+      if($this->acl_is_writeable("goFonDeliveryMode",$SkipWrite)){
         if(isset($_POST['fon_to_mail']) && !preg_match("/M/",$this->goFonDeliveryMode)){
           $tmp .= "M";
         }elseif(!isset($_POST['fon_to_mail']) && preg_match("/M/",$this->goFonDeliveryMode)){
@@ -871,7 +874,7 @@ class phoneAccount extends plugin
 
       /* get all Postvars */
       if(isset($this->macroarray[$this->macro])){
-        if($this->acl_is_writeable("goFonMarco")){ 
+        if($this->acl_is_writeable("goFonMarco",$SkipWrite)){ 
           foreach($this->macroarray[$this->macro] as $key => $paras){
             if(isset($_POST[$paras['var']])){
               $this->macroarray[$this->macro][$key]['choosen'] = $_POST[$paras['var']];
