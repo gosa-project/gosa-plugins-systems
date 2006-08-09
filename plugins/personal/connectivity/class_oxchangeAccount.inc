@@ -851,29 +851,86 @@ class oxchangeAccount extends plugin
       $os = "insert into oxfolder_standardfolders (owner,module_calendar,module_contact,module_task) VALUES ('%s',%d,%d,%d)";
       $ugr= "INSERT INTO usr_general_rights SELECT creating_date, created_from, changing_date, changed_from,text('%s'),  addr_u, addr_r, addr_d, cont_u, cont_r, cont_d, data_u, data_r, data_d, serie_u, serie_r, serie_d, task_u, task_r, task_d,  refer, proj_u, proj_r, proj_d, dfolder_u, dfolder_r, dfolder_d, doc_u, doc_r, doc_d, knowl_u, knowl_r, knowl_d, bfolder_u,  bfolder_r, bfolder_d, bookm_u, bookm_r, bookm_d, pin_u, pin_r, pin_d, forum_n, fentrie_n, setup, pin_public, internal,  int_groups, kfolder_u, kfolder_r, kfolder_d, webmail FROM sys_gen_rights_template WHERE login LIKE 'default_template'";
 
-      $res=@pg_exec($pgcon,$nv); $calendarid=pg_fetch_row($res); pg_freeresult($res);
-      $q=sprintf($ot,$calendarid[0],'My Appointments','calendar',$uid,$uid);
-      @pg_exec($pgcon,$q);
-      $res=@pg_exec($pgcon,$nv); $nid=pg_fetch_row($res); pg_freeresult($res);
-      $q=sprintf($op,$nid[0],$calendarid[0],$uid);
-      @pg_exec($pgcon,$q);
-      $res=@pg_exec($pgcon,$nv); $contactsid=pg_fetch_row($res); pg_freeresult($res);
-      $q=sprintf($ot,$contactsid[0],'My Contacts','contact',$uid,$uid);
-      @pg_exec($pgcon,$q);
-      $res=@pg_exec($pgcon,$nv); $nid=pg_fetch_row($res); pg_freeresult($res);
-      $q=sprintf($op,$nid[0],$contactsid[0],$uid);
-      @pg_exec($pgcon,$q);
-      $res=@pg_exec($pgcon,$nv); $tasksid=pg_fetch_row($res); pg_freeresult($res);
-      $q=sprintf($ot,$tasksid[0],'My Tasks','task',$uid,$uid);
-      @pg_exec($pgcon,$q);
-      $res=@pg_exec($pgcon,$nv); $nid=pg_fetch_row($res); pg_freeresult($res);
-      $q=sprintf($op,$nid[0],$tasksid[0],$uid);
-      @pg_exec($pgcon,$q);
-      $q=sprintf($os,$uid,$calendarid[0],$contactsid[0],$tasksid[0]);
-      @pg_exec($pgcon,$q);
-      $q=sprintf($ugr,$uid);
-      @pg_exec($pgcon,$q);
+      $error = FALSE;
+      $res=@pg_exec($pgcon,$nv); 
+
+      if(!$res){
+        $error = TRUE;
+      }else{
+        $calendarid=pg_fetch_row($res); 
+        pg_freeresult($res);
+
+        $q=sprintf($ot,$calendarid[0],'My Appointments','calendar',$uid,$uid);
+        @pg_exec($pgcon,$q);
+      }
+
+      $res=@pg_exec($pgcon,$nv); 
+
+      if(!$res){
+        $error = TRUE;
+      }else{
+        $nid=pg_fetch_row($res); 
+        pg_freeresult($res);
+
+        $q=sprintf($op,$nid[0],$calendarid[0],$uid);
+        @pg_exec($pgcon,$q);
+      }
+
+      $res=@pg_exec($pgcon,$nv); 
+      if(!$res){
+        $error = TRUE;
+      }else{
+        $contactsid=pg_fetch_row($res); 
+        pg_freeresult($res);
+
+        $q=sprintf($ot,$contactsid[0],'My Contacts','contact',$uid,$uid);
+        @pg_exec($pgcon,$q);
+      }
+
+      $res=@pg_exec($pgcon,$nv); 
+      if(!$res){
+        $error = TRUE;
+      }else{
+        $nid=pg_fetch_row($res); 
+        pg_freeresult($res);
+
+        $q=sprintf($op,$nid[0],$contactsid[0],$uid);
+        @pg_exec($pgcon,$q);
+      }
+
+      $res=@pg_exec($pgcon,$nv); 
+      if(!$res){
+        $error = TRUE;
+      }else{
+        $tasksid=pg_fetch_row($res); 
+        pg_freeresult($res);
+
+        $q=sprintf($ot,$tasksid[0],'My Tasks','task',$uid,$uid);
+        @pg_exec($pgcon,$q);
+      }
+
+      $res=@pg_exec($pgcon,$nv); 
+      if(!$res){
+        $error = TRUE;
+      }else{
+        $nid=pg_fetch_row($res); 
+        pg_freeresult($res);
+
+        $q=sprintf($op,$nid[0],$tasksid[0],$uid);
+        @pg_exec($pgcon,$q);
+      
+        $q=sprintf($os,$uid,$calendarid[0],$contactsid[0],$tasksid[0]);
+        @pg_exec($pgcon,$q);
+      
+        $q=sprintf($ugr,$uid);
+        @pg_exec($pgcon,$q);
+      }
+    
       @pg_close($pgcon);
+
+      if($error){
+        print_red(_("Something went wrong while saving oxchange account. Please check the error log file."));
+      }
     }
   }
 
