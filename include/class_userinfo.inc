@@ -94,7 +94,6 @@ class userinfo
 #echo "NEW ACL LOADING --------------------------------------------------------------------------------------------<br>";
 
     $this->ACL= array();    
-    $this->ocMapping= array();
     $this->groups= array();    
     $ldap= $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
@@ -226,6 +225,7 @@ class userinfo
 
           /* If attribute is "", we want to know, if we've *any* permissions here... */
           if ($attribute == "" && isset($subacl['acl'][$object])){
+echo "Global $object<br>";
             foreach($subacl['acl'][$object] as $attr => $dummy){
               $acl= $this->mergeACL($acl, $subacl['type'], $subacl['acl'][$object][$attr]);
             }
