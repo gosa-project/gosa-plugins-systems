@@ -70,6 +70,44 @@ class netatalk extends plugin {
   var $is_chk_box = array ();
   
 
+  function get_shares()
+  {
+    /* Get netatalk shares */
+    $this->shares = array();
+    $ldap = $this->config->get_ldap_link();
+
+    if($this->dn === "new" || $this->dn == NULL) {
+      $ldap->cd($this->parent->by_object['user']->base);
+    } else {
+      $ldap->cd ($this->dn);
+      $ldap->cd ('..'); $ldap->cd ('..');
+    }
+    $ldap->search ("(&(objectClass=mount)(|(mountType=url)(mountType=nfs))(cn=*))");
+    
+    while ($attrs = $ldap->fetch()){
+      $tmp = split(":", $attrs["cn"][0]);
+      $host = trim($tmp[0]);
+      $dir = trim($tmp[1]);
+      $mountType = trim($attrs["mountType"][0]);
+      if ($mountType == "url") {
+        $mountTypeReal = "netatalk";
+      } else {
+        $mountTypeReal = $mountType;
+      } 
+      $share = $attrs["cn"][0]. " (" . $mountTypeReal . ")";
+      $this->shares[$share] = $share;
+      $this->shares_settings[$share]["mountType"]=$mountType;
+      $this->shares_settings[$share]["dir"]=$dir;
+      $this->shares_settings[$share]["host"]=$host;
+
+      $test = $host.$dir;
+      if(preg_match("#".$test."#",$this->apple_user_homeDirectory)){
+        $this->apple_user_share = $this->selectedshare = $share;
+      }
+    }
+    asort($this->shares);
+  }
+
   /* The constructor just saves a copy of the config. You may add what ever you need. */
   function netatalk($config, $dn = NULL) {
 
@@ -88,7 +126,9 @@ class netatalk extends plugin {
     if (strlen($this->apple_user_homeDirectory) >0) {
       $this->apple_user_homepath_raw = substr($this->apple_user_homeDirectory, strrpos($this->apple_user_homeDirectory, '/') + 1 );
     }
-    
+   
+    $this->get_shares();
+ 
     /* Save initial account state */
     $this->initially_was_account = $this->is_account;
   }
@@ -114,20 +154,6 @@ class netatalk extends plugin {
       return ($display);
     }
     
-    
-    /* Get netatalk shares */
-    $this->shares = array();
-    $ldap = $this->config->get_ldap_link();
-
-    if($this->dn === "new" || $this->dn == NULL) {
-      $ldap->cd($this->parent->by_object['user']->base);
-    } else {
-      $ldap->cd ($this->dn);
-      $ldap->cd ('..'); $ldap->cd ('..');
-    }
-    $ldap->search ("(&(objectClass=mount)(|(mountType=url)(mountType=nfs))(cn=*))");
-
-
     /* Show tab dialog headers */
     if ($this->parent != NULL) {
       if ($this->is_account) {
@@ -138,7 +164,7 @@ class netatalk extends plugin {
         if  (!($obj->is_account) ) {
           $errmsg.="Posix features are needed for netatalk accounts, enable them first. ";
         }
-        if ($ldap->count() == 0) {
+        if (count($this->shares)== 0) {
           $errmsg.="At least one share with netatalk or NFS mount entry needed.";
         }
         if($errmsg==""){
@@ -149,31 +175,7 @@ class netatalk extends plugin {
         return ($display);
       }
     }
-    
-    
-    while ($attrs = $ldap->fetch()){
-      $tmp = split(":", $attrs["cn"][0]);
-      $host = trim($tmp[0]);
-      $dir = trim($tmp[1]);
-      $mountType = trim($attrs["mountType"][0]);
-      if ($mountType == "url") {
-        $mountTypeReal = "netatalk";
-      } else {
-        $mountTypeReal = $mountType;
-      } 
-      $share = $attrs["cn"][0]. " (" . $mountTypeReal . ")";
-      $this->shares[$share] = $share;
-      $this->shares_settings[$share]["mountType"]=$mountType;
-      $this->shares_settings[$share]["dir"]=$dir;
-      $this->shares_settings[$share]["host"]=$host;
-
-      $oldShare=substr($this->apple_user_homeDirectory, 0, strrpos($this->apple_user_homeDirectory, '/'));
-      $newShare=($this->mountDirectory . "/". $host . $dir );
-      if (strcmp($oldShare, $newShare)==0) {
-            $this->selectedshare = $share;
-      }
-    }
-    asort($this->shares);
+   
     /* Assign attributes and ACL to smarty */
     $SkipWrite = (!isset($this->parent) || !$this->parent) && !isset($_SESSION['edit']); 
     $smarty->assign("netatalkShareACL", $this->getacl("netatalkShare",$SkipWrite));
