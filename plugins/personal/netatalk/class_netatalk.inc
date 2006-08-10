@@ -76,7 +76,7 @@ class netatalk extends plugin {
     $this->shares = array();
     $ldap = $this->config->get_ldap_link();
 
-    if($this->dn === "new" || $this->dn == NULL) {
+    if(($this->dn != "new" && $this->dn != NULL)) {
       $ldap->cd($this->parent->by_object['user']->base);
     } else {
       $ldap->cd ($this->dn);

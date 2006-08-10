@@ -130,9 +130,6 @@ class userManagement extends plugin
          above dialog */
       add_lock ($this->dn, $this->ui->dn);
 
-      /* Set up the users ACL's for this 'dn' */
-      $acl= get_permissions ($this->dn, $this->ui->subtreeACL);
-
       /* Register usertab to trigger edit dialog */
       $this->usertab= new usertabs($this->config, 
           $this->config->data['TABS']['USERTABS'], $this->dn);
@@ -182,13 +179,11 @@ class userManagement extends plugin
 
       /* Load permissions for selected 'dn' and check if
          we're allowed to remove this 'dn' */
-      $acl= get_permissions ($this->dn, $this->ui->subtreeACL);
-      $acl= get_module_permission($acl, "user", $this->dn);
-      if (chkacl($acl, "password") == ""){
+      $ui = get_userinfo();
+      if (preg_match("/w/",$ui->get_permissions($this->dn,"users/password"))){
 
         /* User is allowed to change passwords, save 'dn' and 'acl' for next
            dialog. */
-        $this->acl= $acl;
         $_SESSION['objectinfo']= $this->dn;
         return ($smarty->fetch(get_template_path('password.tpl', TRUE)));
 
@@ -297,26 +292,17 @@ class userManagement extends plugin
 
       /* Load permissions for selected 'dn' and check if
          we're allowed to remove this 'dn' */
-      $acl= get_permissions ($this->dn, $this->ui->subtreeACL);
-      $this->acl= get_module_permission($acl, "user", $this->dn);
-      if (chkacl($this->acl, "delete") == ""){
 
-        /* Check locking, save current plugin in 'back_plugin', so
-           the dialog knows where to return. */
-        if (($user= get_lock($this->dn)) != ""){
-          return(gen_locked_message ($user, $this->dn));
-        }
-
-        /* Lock the current entry, so nobody will edit it during deletion */
-        add_lock ($this->dn, $this->ui->dn);
-        $smarty->assign("info", sprintf(_("You're about to delete the user %s."), @LDAP::fix($this->dn)));
-        return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
-      } else {
-
-        /* Obviously the user isn't allowed to delete. Show message and
-           clean session. */
-        print_red (_("You are not allowed to delete this user!"));
+      /* Check locking, save current plugin in 'back_plugin', so
+         the dialog knows where to return. */
+      if (($user= get_lock($this->dn)) != ""){
+        return(gen_locked_message ($user, $this->dn));
       }
+
+      /* Lock the current entry, so nobody will edit it during deletion */
+      add_lock ($this->dn, $this->ui->dn);
+      $smarty->assign("info", sprintf(_("You're about to delete the user %s."), @LDAP::fix($this->dn)));
+      return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
     }
 
 
@@ -434,11 +420,11 @@ class userManagement extends plugin
       foreach ($this->config->departments as $key => $value){
     
         /* Get acls from different ou's */
-        $acl= get_permissions (get_people_ou().$value, $this->ui->subtreeACL);
-        $acl= get_module_permission($acl, "user", get_people_ou().$value);
-  
+        $ui  = get_userinfo();
+        $acl = $ui->get_permissions("cn=dummy,".$this->DivListUsers->selectedBase,"users/user")       ; 
+ 
         /* If creation of a new user is allowed, append this template */
-        if (chkacl($acl, "create") == ""){
+        if (preg_match("/cw/",$acl)){
           
           /* Search all templates from the current dn */
           $ldap->cd (get_people_ou().$value);
@@ -596,10 +582,6 @@ class userManagement extends plugin
       $this->usertab->adapt_from_template($template_dn);
       $template_base            = preg_replace("/^[^,]+,".normalizePreg(get_people_ou())."/", '', $template_dn);
       $this->usertab->by_object['user']->base= $template_base;
-
-      /* Set up the users ACL's for this 'dn' */
-      $acl= get_permissions ($template_base, $this->ui->subtreeACL);
-      $this->usertab->set_acl($acl);
     }
    
  
@@ -798,11 +780,8 @@ class userManagement extends plugin
       if($s_action == "copy"){
         $this->CopyPasteHandler->Clear();
         $dn= $this->list[trim($s_entry)]['dn'];
-        $acl= get_permissions ($dn, $this->ui->subtreeACL);
         $obj    = new usertabs($this->config, $this->config->data['TABS']['USERTABS'], $dn);
         $objNew = new usertabs($this->config, $this->config->data['TABS']['USERTABS'], "new");
-        $obj->set_acl($acl);
-        $objNew->set_acl($acl);
         $this->CopyPasteHandler->Copy($obj,$objNew);
       }
 
@@ -811,9 +790,7 @@ class userManagement extends plugin
       if($s_action == "cut"){
         $this->CopyPasteHandler->Clear();
         $dn= $this->list[trim($s_entry)]['dn'];
-        $acl= get_permissions ($dn, $this->ui->subtreeACL);
         $obj= new usertabs($this->config, $this->config->data['TABS']['USERTABS'], $dn);
-        $obj->set_acl($acl);
         $this->CopyPasteHandler->Cut($obj);
       }
     }

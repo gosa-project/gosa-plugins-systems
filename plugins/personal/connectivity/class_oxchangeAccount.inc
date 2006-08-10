@@ -589,7 +589,9 @@ class oxchangeAccount extends plugin
     }
 
     $this->dnmode= $this->config->current['DNMODE'];
-    $this->dnModeValue = $this->attrs[$this->dnmode][0];
+    if(isset($this->attrs[$this->dnmode][0])){
+      $this->dnModeValue = $this->attrs[$this->dnmode][0];
+    }
   }
 
   function execute()
