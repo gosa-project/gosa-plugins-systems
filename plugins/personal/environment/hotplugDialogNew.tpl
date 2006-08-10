@@ -37,7 +37,7 @@
 			<td>
 				<input type="text" value="{$HOT_id}" name="HOT_id" id="HOT_id">
 			</td>
-			<td cols="2">&nbsp;</td>
+			<td colspan="2">&nbsp;</td>
 		</tr>
 		<tr>
 			<td><LABEL for="HOT_produkt">{t}Product ID{/t}</LABEL>{$must}

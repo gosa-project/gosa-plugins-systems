@@ -19,7 +19,7 @@
          <td>{t}Upload bandwidth{/t}</td>
 	 <td>
 {render acl=$FTPUploadBandwidthACL}
-<input name="FTPUploadBandwidth" id="FTPUploadBandwidth" size=7 maxlength=7 value="{$FTPUploadBandwidth}" {$fstate}>
+<input name="FTPUploadBandwidth" id="FTPUploadBandwidth" size=7 maxlength=7 value="{$FTPUploadBandwidth}" {$fstate} >
 {/render}
 	 {t}kb/s{/t}</td>
        </tr>
@@ -27,7 +27,7 @@
          <td>{t}Download bandwidth{/t}</td>
 	 <td>
 {render acl=$FTPDownloadBandwidthACL}
-<input name="FTPDownloadBandwidth" id="FTPDownloadBandwidth" size=7 maxlength=7 value="{$FTPDownloadBandwidth}" {$fstate}>
+<input name="FTPDownloadBandwidth" id="FTPDownloadBandwidth" size=7 maxlength=7 value="{$FTPDownloadBandwidth}" {$fstate} >
 {/render}
 	 {t}kb/s{/t}</td>
        </tr>
@@ -47,7 +47,7 @@
          <td>{t}Files{/t}</td>
 	 <td>
 {render acl=$FTPQuotaFilesACL}
-<input name="FTPQuotaFiles" id="FTPQuotaFiles" size=7 maxlength=10 value="{$FTPQuotaFiles}" {$fstate}>
+<input name="FTPQuotaFiles" id="FTPQuotaFiles" size=7 maxlength=10 value="{$FTPQuotaFiles}" {$fstate} >
 {/render}
 	</td>
        </tr>
@@ -55,7 +55,7 @@
          <td>{t}Size{/t}</td>
 	 <td>
 {render acl=$FTPQuotaMBytesACL}
-<input name="FTPQuotaMBytes" id="FTPQuotaMBytes" size=7 maxlength=10 value="{$FTPQuotaMBytes}" {$fstate}> 
+<input name="FTPQuotaMBytes" id="FTPQuotaMBytes" size=7 maxlength=10 value="{$FTPQuotaMBytes}" {$fstate} > 
 {/render}
 	{t}MB{/t}
 	</td>
@@ -76,11 +76,11 @@
 	 <td>
 
 {render acl=$FTPUploadRatioACL}
-<input name="FTPUploadRatio" id="FTPUploadRatio" size=5 maxlength=20 value="{$FTPUploadRatio}" {$fstate}>
+<input name="FTPUploadRatio" id="FTPUploadRatio" size=5 maxlength=20 value="{$FTPUploadRatio}" {$fstate} >
 {/render}
 	 / 
 {render acl=$FTPDownloadRatioACL}
-<input name="FTPDownloadRatio" id="FTPDownloadRatio" size=5 maxlength=20 value="{$FTPDownloadRatio}" {$fstate}>
+<input name="FTPDownloadRatio" id="FTPDownloadRatio" size=5 maxlength=20 value="{$FTPDownloadRatio}" {$fstate} >
 {/render}
 	</td>
        </tr>
@@ -95,7 +95,7 @@
        <tr>
          <td>
 {render acl=$FTPStatusACL}
-<input type=checkbox name="FTPStatus" id="FTPStatus" value="disabled" {$use_FTPStatus} title="{t}Check to disable FTP Access{/t}" {$fstate}>
+<input type=checkbox name="FTPStatus" id="FTPStatus" value="disabled" {$use_FTPStatus} title="{t}Check to disable FTP Access{/t}" {$fstate} >
 {/render}
 {t}Temporary disable FTP access{/t}</td>
        </tr>

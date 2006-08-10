@@ -34,7 +34,7 @@
 	</table>
     <table summary="" width="100%" style="border-top:1px solid #B0B0B0;background-color:#F8F8F8">
 		<tr>
-			<td width="18px">
+			<td width="18">
 				<img class="center" alt="" src="{$search_image}" align="middle" title="{t}Display numbers matching{/t}">
 			</td>
     		<td>
@@ -43,7 +43,7 @@
 	</table>
     <table summary="" width="100%" style="border-top:1px solid #B0B0B0;background-color:#F8F8F8">
 		<tr>
-			<td width="18px">
+			<td width="18">
 				<img class="center" alt="" src="{$usearch_image}" align="middle" title="{t}Display numbers of user{/t}">
 			</td>
 		    <td>
