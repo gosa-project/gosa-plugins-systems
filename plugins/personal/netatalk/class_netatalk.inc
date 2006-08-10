@@ -54,7 +54,8 @@ class netatalk extends plugin {
   var $mountDirectory         = "/Network/Servers";
   
   /* Attributes to save to LDAP */
-  var $attributes = array ("apple-user-homeurl", "apple-user-homeDirectory");
+  /* Slip setting those attributes, we can't define class variables with - */
+//  var $attributes = array ("apple-user-homeurl", "apple-user-homeDirectory");
 
   /* Attributes to use in smarty template */
   var $smarty_attributes = array ("apple_user_homepath_raw", "shares", "selectedshare");
@@ -175,8 +176,8 @@ class netatalk extends plugin {
     asort($this->shares);
     /* Assign attributes and ACL to smarty */
     
-    $smarty->assign("netatalkShareACL", chkacl($this->acl, "netatalkShare"));
-    $smarty->assign("netatalkUserHomepathACL", chkacl($this->acl, "netatalkUserHomepath"));
+    $smarty->assign("netatalkShareACL", $this->getacl("netatalkShare"));
+    $smarty->assign("netatalkUserHomepathACL", $this->getacl("netatalkUserHomepath"));
     foreach ($this->smarty_attributes as $val) {
       $smarty->assign("$val", $this-> $val);
       if (in_array($val, $this->is_chk_box)) {
@@ -247,7 +248,7 @@ class netatalk extends plugin {
       }
       unset ($this->attrs[$name]);
     }
-      
+
     /* Write back to ldap */
     $ldap->cd($this->dn);
     $this->cleanup();
@@ -269,7 +270,7 @@ class netatalk extends plugin {
   function save_object() {
     if (isset ($_POST['netatalkTab'])) {
       /* Save ldap attributes */
-      plugin :: save_object();
+//      plugin :: save_object();
       
       foreach($this->post_attributes as $val) {
         if (isset ($_POST[$val])) {
@@ -323,20 +324,23 @@ class netatalk extends plugin {
   }
 
   
-  /* Return plugin informations for acl handling
-      #FIXME Attributes aren't translated */
+  /* Return plugin informations for acl handling*/
   function plInfo()
   {
     return (array(
-          "plDescription"     => _("Apple talk"),
+          "plDescription"     => _("Netatalk"),
           "plSelfModify"      => TRUE,
-          "plDepends"         => array("objectClass" => "gosaAccount"),
-          "apple-user-homeurl"        => _("apple-user-homeurl"),
-          "apple-user-homeDirectory"  => _("apple-user-homeDirectory")));
+          "plDepends"         => array("user"),
+          "plPriority"        => 1,
+          "plSection"         => "personal",
+          "plCategory"        => array("users"),
+          "plOptions"         => array(),
+
+          "plProvidedAcls"  => array(
+            "netatalkUserHomepath"   =>  _("User home path"),
+            "netatalkShare"          =>  _("Share"))
+          ));
   }
-
-
-
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
