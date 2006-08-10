@@ -13,7 +13,7 @@ class kolabAccount extends plugin
   var $kolabDelegate          = array();
 
   /* attribute list for save action */
-  var $attributes     = array("kolabFreeBusyFuture", "unrestrictedMailSize", "calFBURL","kolabDelegate");
+  var $attributes     = array("kolabFreeBusyFuture", "unrestrictedMailSize", "calFBURL","kolabDelegate","kolabInvitationPolicy");
   var $objectclasses  = array("kolabInetOrgPerson");
 
   /* Helper */
@@ -55,8 +55,11 @@ class kolabAccount extends plugin
     /* Transfer account states for this union */
     if (isset($this->parent) && $this->parent->by_object['mailAccount']->is_account){
       $this->mail_Account = true;
-    } elseif($this-> initially_was_account && (isset($this->attrs['objectClass']) && (in_array("kolabInetOrgPerson",$this->attrs['objectClass'])))){
-      $this->mail_Account = true;
+     }elseif( isset($this->attrs) && isset($this->attrs['kolabHomeServer'])){
+       $this->mail_Account= true;
+     }else{
+       $this->is_account  = false;
+      $this->mail_Account = false;
     }
   }
 
