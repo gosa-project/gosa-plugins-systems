@@ -83,11 +83,24 @@ class divListUsers extends MultiSelectWindow
 #$ui= get_userinfo();
 #$t= $ui->get_module_departments("users");
 #print_a($t);
-    foreach ($this->config->idepartments as $key => $value){
-      if ($this->selectedBase == $key){
-        $options.= "<option selected='selected' value='$key'>$value</option>";
-      } else {
-        $options.= "<option value='$key'>$value</option>";
+
+    
+    /* Get all departments within this subtree */ 
+    $base = $this->config->current['BASE'];
+    $deps= get_list("(&(|(ou=*)(description=*))(objectClass=gosaDepartment))", $this->module, $base,
+                    array("ou", "description"), GL_SIZELIMIT);
+  
+    $ids = $this->config->idepartments;
+  
+    foreach($deps as $dep){
+      if(isset($ids[$dep['dn']])){
+
+        $value = $ids[$dep['dn']]; 
+        if ($this->selectedBase == $dep){
+          $options.= "<option selected='selected' value='$dep'>$value</option>";
+        } else {
+          $options.= "<option value='$dep'>$value</option>";
+        }
       }
     }
 
