@@ -86,7 +86,7 @@ class user extends plugin
   /* attribute list for save action */
   var $attributes= array("sn", "givenName", "uid", "personalTitle", "academicTitle",
       "homePostalAddress", "homePhone", "labeledURI", "o", "ou", "dateOfBirth", "gender","preferredLanguage",
-      "departmentNumber", "employeeNumber", "employeeType", "l", "st",
+      "departmentNumber", "employeeNumber", "employeeType", "l", "st","jpegPhoto",
       "roomNumber", "telephoneNumber", "mobile", "pager", "cn", "userPKCS12",
       "postalAddress", "facsimileTelephoneNumber", "userSMIMECertificate");
 
@@ -174,6 +174,7 @@ class user extends plugin
 
       /* Load extra attributes: certificate and picture */
       $this->load_cert();
+      $this->load_picture();
       if ($this->userCertificate != ""){
         $this->had_userCertificate= TRUE;
       }
@@ -264,7 +265,6 @@ class user extends plugin
     /* Get random number for pictures */
     srand((double)microtime()*1000000); 
     $smarty->assign("rand", rand(0, 10000));
-    $this->load_picture();
 
 
     /* Do we represent a valid gosaAccount? */
@@ -314,10 +314,9 @@ class user extends plugin
     /* Remove picture? */
     if($this->acl_is_writeable("userPicture",(!is_object($this->parent) && !isset($_SESSION['edit']))) ){
       if (isset($_POST['picture_remove'])){
+        $this->set_picture ();
         $this->jpegPhoto= "*removed*";
-        $this->set_picture ("./images/default.jpg");
         $this->is_modified= TRUE;
-
         return($smarty->fetch (get_template_path('generic_picture.tpl', TRUE, dirname(__FILE__))));
       }
     }
@@ -1153,10 +1152,10 @@ class user extends plugin
 
 
   /* Load picture from file to object */
-  function set_picture($filename)
+  function set_picture($filename ="")
   {
     if($this->acl_is_writeable("userPicture",(!is_object($this->parent) && !isset($_SESSION['edit'])))){
-      if (!is_file($filename)){
+      if (!is_file($filename) || $filename =="" ){
         $filename= "./images/default.jpg";
         $this->jpegPhoto= "*removed*";
       }
