@@ -175,9 +175,9 @@ class netatalk extends plugin {
     }
     asort($this->shares);
     /* Assign attributes and ACL to smarty */
-    
-    $smarty->assign("netatalkShareACL", $this->getacl("netatalkShare"));
-    $smarty->assign("netatalkUserHomepathACL", $this->getacl("netatalkUserHomepath"));
+    $SkipWrite = (!isset($this->parent) || !$this->parent) && !isset($_SESSION['edit']); 
+    $smarty->assign("netatalkShareACL", $this->getacl("netatalkShare",$SkipWrite));
+    $smarty->assign("netatalkUserHomepathACL", $this->getacl("netatalkUserHomepath",$SkipWrite));
     foreach ($this->smarty_attributes as $val) {
       $smarty->assign("$val", $this-> $val);
       if (in_array($val, $this->is_chk_box)) {
