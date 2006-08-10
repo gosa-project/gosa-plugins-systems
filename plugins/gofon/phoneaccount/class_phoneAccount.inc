@@ -707,7 +707,7 @@ class phoneAccount extends plugin
         switch ($type){
 
           case "combo":
-            $str= "<select name='".$var."' ".chkacl($this->acl, "goFonMacro")." ".$dis.">";
+            $str= "<select name='".$var."' ".$dis.">";
           foreach(split(":",$default) as $choice){
             if($choosen==$choice){
               $str.= "\n<option value='".$choice."' selected>".$choice."&nbsp;</option>";
@@ -721,15 +721,15 @@ class phoneAccount extends plugin
 
           case "bool":
             if(!$choosen){
-              $str="\n<input type='checkbox' name='".$var."' value='1' ".chkacl($this->acl, "goFonMacro")." ".$dis.">";
+              $str="\n<input type='checkbox' name='".$var."' value='1' ".$dis.">";
             }else{
-              $str="\n<input type='checkbox' name='".$var."' value='1' checked  ".chkacl($this->acl, "goFonMacro")." ".$dis.">";
+              $str="\n<input type='checkbox' name='".$var."' value='1' checked  ".$dis.">";
             }
           $macrotab.= "<td colspan='2'>$str&nbsp;".base64_decode($name)."";
           break;
 
           case "string":
-            $str="<input name='".$var."' value='".$choosen."' ".chkacl($this->acl, "goFonMacro")." style='width:340px;' ".$dis.">";
+            $str="<input name='".$var."' value='".$choosen."' style='width:340px;' ".$dis.">";
           $macrotab.= "<td>".base64_decode($name)."</td><td>$str";
           break;
 
@@ -813,7 +813,7 @@ class phoneAccount extends plugin
       $dis= " disabled ";
     }
     $hl= "<select size=\"1\" name=\"goFonHardware\" ".$dis." title=\"".
-      _("Choose your private phone")." >\n";
+      _("Choose your private phone")."\">\n";
     foreach ($this->hardware_list as $cn => $description){
 
       if ($cn == $this->goFonHardware){

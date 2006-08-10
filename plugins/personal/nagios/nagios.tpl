@@ -118,8 +118,7 @@
     <tr>
      <td>
 {render acl=$AuthorizedSystemInformationACL}
-      <input type="checkbox" name="AuthorizedSystemInformation" value="1" {$AuthorizedSystemInformationACL}  
-       $AuthorizedSystemInformationCHK}>{t}view system informations{/t}
+      <input type="checkbox" name="AuthorizedSystemInformation" value="1" {$AuthorizedSystemInformationCHK}>{t}view system informations{/t}
 {/render}
      </td>
     </tr>
@@ -127,7 +126,7 @@
     <tr>
      <td>
 {render acl=$AuthorizedConfigurationInformationACL}
-      <input type="checkbox" name="AuthorizedConfigurationInformation" {$AuthorizedConfigurationInformationACL} value="1" 
+      <input type="checkbox" name="AuthorizedConfigurationInformation" value="1" 
        {$AuthorizedConfigurationInformationCHK}>{t}view configuration information{/t}
 {/render}
      </td>
@@ -136,7 +135,7 @@
     <tr>
      <td>
 {render acl=$AuthorizedSystemCommandsACL}
-      <input type="checkbox" name="AuthorizedSystemCommands" {$AuthorizedSystemCommandsACL} value="1" 
+      <input type="checkbox" name="AuthorizedSystemCommands" value="1" 
        {$AuthorizedSystemCommandsCHK}>{t}trigger system commands{/t}
 {/render}
      </td>
