@@ -27,18 +27,12 @@ class kioskManagementDialog extends plugin
 
   function execute()
   {
-	/* Call parent execute */
-	plugin::execute();
+    /* Call parent execute */
+    plugin::execute();
 
     /* Fill templating stuff */
     $smarty= get_smarty();
     $display= "";
-
-    $smarty->assign("gotoKioskProfileACL",chkacl($this->acl,"gotoKioskProfile"));
-
-    foreach($this->attributes as $attr){
-      $smarty->assign($attr."ACL",chkacl($this->acl,$attr));
-    }
 
     /* Add new kiosk profile 
      * in profile directory ($this->baseDir); 
