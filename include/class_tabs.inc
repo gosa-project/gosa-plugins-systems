@@ -141,11 +141,14 @@ class tabs
 		$display.= "<td style=\"vertical-align:bottom;width:1px;\">";
 
 		/* Shorten string if its too long for the tab headers*/
-		$title= '<nobr>'._($name).'</nobr>';
+		$title= _($name);
 		if (mb_strlen($title, 'UTF-8') > 28){
 			$title= mb_substr($title,0, 25, 'UTF-8')."...";
 		}
-		
+			
+		/* nobr causes w3c warnings so we use &nbsp; to keep the tab name in one line */
+		$title= preg_replace("/ /","&nbsp;",$title);
+
 		if ($_SESSION['js']==FALSE){	
 			$display.= "<div class=\"$style[$index]\"><input type=\"submit\" name=\"$class\"".
 		                   " class=\"$style[$index]\" value=\"$title\"";
