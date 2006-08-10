@@ -107,15 +107,15 @@ class divListUsers extends MultiSelectWindow
       " <input class='center' type='image' align='middle' src='images/list_home.png' 
       title='"._("Go to users department")."' alt='"._("Home")."'            name='dep_home'>&nbsp;".
       " <input class='center' type='image' src='images/list_reload.png' align='middle' 
-      title='"._("Reload list")."' name='submit_department' alt='".        _("Submit")."'>&nbsp;".
-      " <img   class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
+      title='"._("Reload list")."' name='submit_department' alt='"._("Submit")."'>&nbsp;".
+      " <img   class='center' src='images/list_seperator.png' align='middle' alt='-' height='16' width='1'>&nbsp;";
     $listhead .= $this->get_snapshot_header($this->selectedBase);
     $listhead .= " <input class='center' type='image' align='middle' src='images/list_new_user.png' 
       title='"._("Create new user")."' alt='"._("New user")."'           name='user_new'>&nbsp;".
       " <input class='center' type='image' align='middle' src='images/list_new.png' 
       title='"._("Create new template")."' alt='"._("New template")."'        name='user_tplnew'>&nbsp;".
       $Copy_Paste.
-      " <img   class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;".
+      " <img   class='center' src='images/list_seperator.png' align='middle' alt='-' height='16' width='1'>&nbsp;".
       _("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
       " <input class='center' type='image' src='images/list_submit.png' align='middle' 
       title='"._("Submit department")."' name='submit_department' alt='".  _("Submit")."'>&nbsp;".
@@ -139,7 +139,7 @@ class divListUsers extends MultiSelectWindow
 
     /* Variable initialation */
     $enviro     = $posix = $maila = $faxac = $samba = $netatalk = "";
-    $empty      = "<img class='center' src='images/empty.png' style='width:16px;height:16px;' alt=''>";
+    $empty      = "<img class='center' src='images/empty.png' style='width:16px;height:16px;' alt='-'>";
     $userimg    = "<img class='center' src='images/select_user.png' alt='User' title='%s'>";
     $tplimg     = "<img class='center' src='images/select_template.png' alt='Template' title='%s'>";
     $editlink   = "<a href='?plug=".validate($_GET['plug'])."&amp;id=%s&amp;act=edit_entry'>%s</a>";

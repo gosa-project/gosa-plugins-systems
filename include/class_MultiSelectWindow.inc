@@ -504,7 +504,7 @@ class MultiSelectWindow{
           title='"._("Restore snapshopts of already deleted objects")."' 
           alt='"._("Restore")."' name='RestoreDeletedSnapShot'>&nbsp;"; 
       }else{
-        $str = "<img class='center' src='images/restore_grey.png'>&nbsp;";
+        $str = "<img class='center' src='images/restore_grey.png' alt=''>&nbsp;";
       }
 
       $str .= "<img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
@@ -522,7 +522,7 @@ class MultiSelectWindow{
         $str.= "<input class='center' type='image' src='images/restore.png'
           alt='"._("Restore snapshot")."' name='RestoreSnapShotDialog_".base64_encode($dn)."' title='"._("Restore snapshot")."'>&nbsp;";
       } else {
-        $str = "<img class='center' src='images/restore_grey.png'>&nbsp;";
+        $str = "<img class='center' src='images/restore_grey.png' alt=''>&nbsp;";
       }
 
       $str.= "<input class='center' type='image' src='images/snapshot.png'
