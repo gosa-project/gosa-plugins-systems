@@ -312,17 +312,20 @@ class workstartup extends plugin
         $fh= popen($command, "r");
         while (!feof($fh)) {
           $buffer= trim(fgets($fh, 256));
+          
+          if(!empty($buffer)){
+          
+            $name=$value = $buffer;
 
-          $name= $value = $buffer;
-
-          if(preg_match("/:/",$buffer)){
-            $name  = preg_replace("/:.*$/","",$buffer);
-            $value = preg_replace("/^.*:/","",$buffer);
+            if(preg_match("/:/",$buffer)){
+              $name = preg_replace("/:.*$/","",$buffer);
+              $value= preg_replace("/^.*:/","",$buffer);
+              $this->gotoBootKernels[$name]= $name.":".$value;
+            }else{
+              $this->gotoBootKernels[$name]= $value;
+            }
           }
 
-          if ($buffer != ""){
-            $this->gotoBootKernels[$name]= $value;
-          }
         }
         pclose($fh);
       }
