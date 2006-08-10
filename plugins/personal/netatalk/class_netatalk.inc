@@ -55,7 +55,7 @@ class netatalk extends plugin {
   
   /* Attributes to save to LDAP */
   /* Slip setting those attributes, we can't define class variables with - */
-//  var $attributes = array ("apple-user-homeurl", "apple-user-homeDirectory");
+  var $use_save_attributes = array ("apple-user-homeurl", "apple-user-homeDirectory");
 
   /* Attributes to use in smarty template */
   var $smarty_attributes = array ("apple_user_homepath_raw", "shares", "selectedshare");
@@ -78,7 +78,7 @@ class netatalk extends plugin {
     plugin :: plugin($config, $dn);
 
     /* Copy needed attributes */
-    foreach($this->attributes as $val) {
+    foreach($this->use_save_attributes as $val) {
       if (isset($this->attrs["$val"][0])) {
         $name = str_replace('-', '_', $val);
         $this->$name = $this->attrs["$val"][0];
@@ -239,7 +239,7 @@ class netatalk extends plugin {
     plugin :: save();
 
     /* Do attribute conversion */
-    foreach ($this->attributes as $val) {
+    foreach ($this->use_save_attributes as $val) {
       $name = str_replace('-', '_', $val);
       if ($this->$name != "") {
         $this->attrs[$val] = $this->$name;
@@ -248,7 +248,6 @@ class netatalk extends plugin {
       }
       unset ($this->attrs[$name]);
     }
-
     /* Write back to ldap */
     $ldap->cd($this->dn);
     $this->cleanup();
