@@ -1154,20 +1154,18 @@ class user extends plugin
   /* Load picture from file to object */
   function set_picture($filename ="")
   {
-    if($this->acl_is_writeable("userPicture",(!is_object($this->parent) && !isset($_SESSION['edit'])))){
-      if (!is_file($filename) || $filename =="" ){
-        $filename= "./images/default.jpg";
-        $this->jpegPhoto= "*removed*";
-      }
-
-      $fd = fopen ($filename, "rb");
-      $this->photoData= fread ($fd, filesize ($filename));
-      $_SESSION['binary']= $this->photoData;
-      $_SESSION['binarytype']= "image/jpeg";
-      $this->jpegPhoto= "";
-
-      fclose ($fd);
+    if (!is_file($filename) || $filename =="" ){
+      $filename= "./images/default.jpg";
+      $this->jpegPhoto= "*removed*";
     }
+
+    $fd = fopen ($filename, "rb");
+    $this->photoData= fread ($fd, filesize ($filename));
+    $_SESSION['binary']= $this->photoData;
+    $_SESSION['binarytype']= "image/jpeg";
+    $this->jpegPhoto= "";
+
+    fclose ($fd);
   }
 
 
