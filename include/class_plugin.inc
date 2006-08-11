@@ -517,14 +517,13 @@ class plugin
   /* Show header message for tab dialogs */
   function show_enable_header($button_text, $text, $disabled= FALSE)
   {
-    if ($disabled == TRUE){
+    if (($disabled == TRUE) || (!$this->acl_is_createable())){
       $state= "disabled";
     } else {
       $state= "";
     }
     $display= "<table summary=\"\" width=\"100%\"><tr>\n<td colspan=2><p><b>$text</b></p>\n";
-    $display.= "<input type=submit value=\"$button_text\" name=\"modify_state\" ".
-      ($this->acl_is_createable()?'':'disabled')." ".$state.
+    $display.= "<input type=submit value=\"$button_text\" name=\"modify_state\" ".$state.
       "><p class=\"seperator\">&nbsp;</p></td></tr></table>";
 
     return($display);
@@ -534,14 +533,13 @@ class plugin
   /* Show header message for tab dialogs */
   function show_disable_header($button_text, $text, $disabled= FALSE)
   {
-    if ($disabled == TRUE){
+    if (($disabled == TRUE) || !$this->acl_is_removeable()){
       $state= "disabled";
     } else {
       $state= "";
     }
     $display= "<table summary=\"\" width=\"100%\"><tr>\n<td colspan=2><p><b>$text</b></p>\n";
-    $display.= "<input type=submit value=\"$button_text\" name=\"modify_state\" ".
-      ($this->acl_is_removeable()?'':'disabled')." ".$state.
+    $display.= "<input type=submit value=\"$button_text\" name=\"modify_state\" ".$state.
       "><p class=\"seperator\">&nbsp;</p></td></tr></table>";
 
     return($display);
