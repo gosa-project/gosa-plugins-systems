@@ -36,6 +36,12 @@ class connectivity extends plugin
       $name= $plug['CLASS'];
       $this->plugin_name[]= $name;
       $this->plugin[$name]= new $name($config, $dn);
+
+      /* Acl base && category configuration, 
+          these settings will be overloaded in main.inc, 
+          if we are editing ourself */
+      $this->plugin[$name]-> set_acl_category("users");
+      $this->plugin[$name]-> set_acl_base($this->dn);
     }
   }
 
