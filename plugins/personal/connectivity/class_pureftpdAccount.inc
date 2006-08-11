@@ -115,17 +115,24 @@ class pureftpdAccount extends plugin
       } else {
         $this->is_account= FALSE;
       }
-    }
 
-    plugin::save_object();
+      plugin::save_object();
 
-    $old= $this->FTPStatus;
-    if (isset($_POST["FTPStatus"])){
-      $this->FTPStatus = "disabled";
-    } else {
-      $this->FTPStatus = "enabled";
+      $old= $this->FTPStatus;
+      if (isset($_POST["FTPStatus"])){
+        $this->FTPStatus = "disabled";
+      } else {
+        $this->FTPStatus = "enabled";
+      }
+      $this->is_modified= ($old != $this->FTPStatus)?TRUE:$this->is_modified;
+
+      /* Ensure that these vars are numeric. Values starting with 0 like '0123' cause ldap errors */
+      foreach(array("FTPQuotaFiles","FTPQuotaMBytes","FTPUploadRatio","FTPDownloadRatio","FTPUploadBandwidth","FTPDownloadBandwidth") as $testVar){
+        $this->$testVar = (int) ($this->$testVar);
+      }
+    
+
     }
-    $this->is_modified= ($old != $this->FTPStatus)?TRUE:$this->is_modified;
   }
 
 
