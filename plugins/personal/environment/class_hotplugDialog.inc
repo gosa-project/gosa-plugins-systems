@@ -92,14 +92,18 @@ class hotplugDialog extends plugin
   function save_object()
   {
     if(isset($_POST['dialogissubmitted'])){
+      plugin::save_object();
       foreach($this->attributes as $s_attr){
         if(isset($_POST[$s_attr])){
-          $this->$s_attr = stripslashes($_POST[$s_attr]);
+          if(in_array($s_attr,array("HOT_produkt","HOT_vendor"))){
+            $this->$s_attr = strtolower(stripslashes($_POST[$s_attr]));
+          }else{
+            $this->$s_attr = stripslashes($_POST[$s_attr]);
+          }
         }else{
           $this->$s_attr = false;
         }
       }
-      plugin::save_object();
     }
   }
 
@@ -111,20 +115,22 @@ class hotplugDialog extends plugin
     $message= plugin::check();
 
     if(!$this->use_existing){
-      if((empty($this->HOT_name))||(preg_match("/[^a-z0-9]/i",$this->HOT_name))){
+
+      if(empty($this->HOT_name)||(preg_match("/[^a-z0-9]/i",$this->HOT_name))){
         $message[]=_("Please specify a valid name. Only 0-9 a-Z is allowed.");
       }
-      if((empty($this->HOT_description))||(preg_match("/[^a-z0-9!\"?.,;:-_\(\) ]/i",$this->HOT_description))){
+      if(preg_match("/[^a-z0-9!\"?.,;:-_\(\) ]/i",$this->HOT_description)){
         $message[]=_("Invalid character in description. Please specify a valid description.");
       }
-      if((empty($this->HOT_id))||(preg_match("/[\|]/i",$this->HOT_id))){
+
+      if(preg_match("/[\|]/i",$this->HOT_id)){
         $message[]=_("Please specify a valid id.");
       }
-      if((empty($this->HOT_vendor))||(preg_match("/[\|]/i",$this->HOT_vendor))){
-        $message[]=_("Please specify a valid id.");
+      if(!$this->is_2byteHex($this->HOT_vendor)){
+        $message[]=_("Please specify a valid vendor id. (2 byte hex like '0xFFFF')");
       }
-      if((empty($this->HOT_produkt))||(preg_match("/[\|]/i",$this->HOT_produkt))){
-        $message[]=_("Please specify a valid id.");
+      if(!$this->is_2byteHex($this->HOT_produkt)){
+        $message[]=_("Please specify a valid product id. (2 byte hex like '0xFFFF')");
       }
 
     $ldap = $this->config->get_ldap_link();
@@ -141,6 +147,13 @@ class hotplugDialog extends plugin
 
     return ($message);
   }
+
+  function is_2byteHex($str)
+  {
+    return empty($str) || preg_match("/^(0x|x|)[a-f0-9][a-f0-9][a-f0-9][a-f0-9]/i",$str);
+  }
+  
+
 
 
   /* Save to LDAP */
