@@ -283,8 +283,20 @@ class ServerService extends plugin
             $this->plugins[$name]->$var = $this->$var;  
           }
         }
-        if($this->plugins[$name]->initially_was_account && $this->plugins[$name]->is_account){
-          $this->plugins[$name]->setStatus($action);
+
+        /* check if services can be restarted */
+        $map =array(SERVICE_STARTED=> "AllowStart" ,
+                    SERVICE_STOPPED => "AllowStop",
+                    SERVICE_RESTARTED => "AllowRestart");
+
+        /* get plugins informations, restart/start/stop actions allowed ?*/
+        $tmp = $this->plugins[$name]->getListEntry();
+
+        /* Check if given action is allowed for this service */
+        if($tmp[$map[$action]]){
+          if($this->plugins[$name]->initially_was_account && $this->plugins[$name]->is_account){
+            $this->plugins[$name]->setStatus($action);
+          }
         }
       }
     }else{
