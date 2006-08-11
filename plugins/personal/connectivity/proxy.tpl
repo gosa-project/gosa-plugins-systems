@@ -29,7 +29,7 @@
     <tr><td colspan=2>
 
 {render acl=$gosaProxyFlagFACL}
-    <input type="checkbox" name="filterF" id="filterF" value="F" {$filterF} {$pstate}>
+    <input type="checkbox" name="filterF" id="filterF" value="F" {$filterF} {$pstate} >
 {/render}
     {t}Filter unwanted content (i.e. pornographic or violence related){/t}
     </td></tr>
@@ -48,25 +48,25 @@
       <td>
 
 {render acl=$gosaProxyFlagTACL}
-        <select size="1" id="startHour" name="startHour" {if $Tstate!=""} disabled {/if} {$pstate}>
+        <select size="1" id="startHour" name="startHour" {if $Tstate!="" || $pstate!=""} disabled {/if}  >
          {html_options values=$hours output=$hours selected=$starthour}
         </select>
 {/render}
         &nbsp;:&nbsp;
 {render acl=$gosaProxyFlagTACL}
-        <select size="1" id="startMinute" name="startMinute" {if  $Tstate!=""} disabled {/if} {$pstate}>
+        <select size="1" id="startMinute" name="startMinute" {if $Tstate!="" || $pstate!=""} disabled {/if}  >
          {html_options values=$minutes output=$minutes selected=$startminute}
         </select>
 {/render}
         &nbsp;-&nbsp;
 {render acl=$gosaProxyFlagTACL}
-        <select size="1" id="stopHour" name="stopHour" {if $Tstate!=""}disabled {/if} {$pstate}>
+        <select size="1" id="stopHour" name="stopHour" {if $Tstate!="" || $pstate!=""} disabled {/if} >
    {html_options values=$hours output=$hours selected=$stophour}
         </select>
 {/render}
         &nbsp;:&nbsp;
 {render acl=$gosaProxyFlagTACL}
-        <select size="1" id="stopMinute" name="stopMinute" {if $Tstate!=""} disabled {/if} {$pstate} >
+        <select size="1" id="stopMinute" name="stopMinute" {if $Tstate!="" || $pstate!=""} disabled {/if}>
          {html_options values=$minutes output=$minutes selected=$stopminute}
         </select>
 {/render}
@@ -87,18 +87,18 @@
      <tr>
       <td>
 {render acl=$gosaProxyFlagBACL}
-       <input name="quota_size" id="quota_size" size=7 maxlength=10 value="{$quota_size}" {if $Bstate=="disabled"} disabled {/if} {$pstate}>
+       <input name="quota_size" id="quota_size" size=7 maxlength=10 value="{$quota_size}" {if $Tstate!="" || $pstate!=""} disabled {/if} >
 {/render}
        &nbsp;
 {render acl=$gosaProxyFlagBACL}
-       <select size="1" name="quota_unit" id="quota_unit" {if $Bstate=="disabled" } disabled {/if} {$pstate}>
+       <select size="1" name="quota_unit" id="quota_unit" {if $Tstate!="" || $pstate!=""} disabled {/if} >
 	{html_options options=$quota_unit selected=$quota_u}
        </select>
 {/render}
     
        <LABEL for="gosaProxyQuotaPeriod">{t}per{/t}</LABEL>
 {render acl=$gosaProxyFlagBACL}
-       <select size="1" name="gosaProxyQuotaPeriod" id="gosaProxyQuotaPeriod" {if $Bstate=="disabled"} disabled {/if} {$pstate}>
+       <select size="1" name="gosaProxyQuotaPeriod" id="gosaProxyQuotaPeriod" {if $Tstate!="" || $pstate!=""} disabled {/if} >
         {html_options options=$quota_time selected=$gosaProxyQuotaPeriod}
        </select>
 {/render}

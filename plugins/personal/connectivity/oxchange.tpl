@@ -34,7 +34,7 @@
 	 <td>
 
 {render acl=$OXAppointmentDaysACL}	
-<input name="OXAppointmentDays" id="OXAppointmentDays" size=7 maxlength=7 value="{$OXAppointmentDays}" {$oxState}>
+<input name="OXAppointmentDays" id="OXAppointmentDays" size=7 maxlength=7 value="{$OXAppointmentDays}" {$oxState} >
 {/render}
 	 {t}days{/t}</td>
        </tr>
@@ -43,7 +43,7 @@
 	 <td>
 
 {render acl=$OXTaskDaysACL}	
-<input name="OXTaskDays" id="OXTaskDays" size=7 maxlength=7 value="{$OXTaskDays}" {$oxState}>
+<input name="OXTaskDays" id="OXTaskDays" size=7 maxlength=7 value="{$OXTaskDays}" {$oxState} >
 {/render}
 
 	 {t}days{/t}
@@ -66,7 +66,7 @@
 	 <td>
 
 {render acl=$OXTimeZoneACL}	
-<select size="1" name="OXTimeZone" id="OXTimeZone" {$oxState}> 
+<select size="1" name="OXTimeZone" id="OXTimeZone" {$oxState} > 
  {html_options values=$timezones output=$timezones selected=$OXTimeZone}
  </select>
 {/render}
