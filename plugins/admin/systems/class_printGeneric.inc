@@ -814,7 +814,7 @@ class printgeneric extends plugin
     /* Check if there was a printer "dn" given, or the "cn" */
     foreach($this->member[$type] as $key => $printer){
       if($printer['dn'] == $id) {
-        $id = key;
+        $id = $key;
       }
     }
     
