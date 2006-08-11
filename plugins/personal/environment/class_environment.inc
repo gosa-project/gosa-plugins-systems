@@ -855,35 +855,49 @@ class environment extends plugin
     /* Get all Posted vars 
      * Setup checkboxes 
      */
-
+    $WriteOnly = (!isset($this->parent)|| !$this->parent) && !isset($_SESSION['edit']);
     if(isset($_POST['iamposted'])){
-      if(isset($_POST['useProfile'])){
-        $this->useProfile = true;
-      }else{
-        $this->useProfile = false;
-      }
-      if(isset($_POST['gotoProfileFlagC'])){
-        $this->gotoProfileFlagC = $_POST['gotoProfileFlagC'];
-      }else{
-        $this->gotoProfileFlagC = false;
-      }
-      if(isset($_POST['gotoProfileFlagL'])){
-        $this->gotoProfileFlagL = $_POST['gotoProfileFlagL'];
-      }else{
-        $this->gotoProfileFlagL = false;
-      }
 
-      $tmp= $this->gosaDefaultPrinter;
-      plugin::save_object();
-      foreach($this->attributes as $s_attr){
-        if(in_array($s_attr,array("gotoShares","gotoHotplugDevices","gotoPrinter","gotoLogonScripts","uid"))) continue;
-        if(isset($_POST[$s_attr])){
-          $this->$s_attr = $_POST[$s_attr];
+      $PACL =  $this->getacl("gotoProfileServer",$WriteOnly).$this->getacl("gotoProfileQuota",$WriteOnly);
+
+      if(preg_match("/w/",$PACL)){
+        if(isset($_POST['useProfile'])){
+          $this->useProfile = true;
         }else{
-          $this->$s_attr = false;
+          $this->useProfile = false;
         }
       }
-      $this->gosaDefaultPrinter= $tmp;
+
+      if($this->acl_is_writeable("gotoProfileFlagC")){
+        if(isset($_POST['gotoProfileFlagC'])){
+          $this->gotoProfileFlagC = $_POST['gotoProfileFlagC'];
+        }else{
+          $this->gotoProfileFlagC = false;
+        }
+      }
+
+      if($this->acl_is_writeable("gotoProfileFlagL")){
+        if(isset($_POST['gotoProfileFlagL'])){
+          $this->gotoProfileFlagL = $_POST['gotoProfileFlagL'];
+        }else{
+          $this->gotoProfileFlagL = false;
+        }
+      }
+
+      plugin::save_object();
+      foreach($this->attributes as $s_attr){
+        if((!isset($_POST[$s_attr])) || 
+            in_array($s_attr,array("gosaDefaultPrinter","gotoShares","gotoHotplugDevices","gotoPrinter","gotoLogonScripts","uid"))) continue;
+        if(!$this->acl_is_writeable($s_attr)){
+          continue;
+        }else{ 
+          if(isset($_POST[$s_attr])){
+            $this->$s_attr = $_POST[$s_attr];
+          }else{
+            $this->$s_attr = false;
+          }
+        }
+      }
     }
   }
 
