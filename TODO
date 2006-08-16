@@ -68,8 +68,6 @@ Target for 2.6:
   - Administrators documentation: how to install / contributed scripts, etc.
   - Developer documentation: how to extend, own plugins, themes, etc.
 
-* amavis-new support
-
 * Automatic passwords?
   Generate a password for a newly created user and display it.
 
