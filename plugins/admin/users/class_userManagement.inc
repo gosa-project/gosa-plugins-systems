@@ -202,7 +202,11 @@ class userManagement extends plugin
     if (isset($_POST['password_finish'])){
 
       /* For security reasons, check if user is allowed to set password again */
-      if (chkacl($this->acl, "password") == "" || chkacl($this->acl, "create")){
+      $ui= get_userinfo();
+      $acl= $ui->get_permissions($this->dn, "users/user", 'userPassword');
+      $cacl= $ui->get_permissions($this->dn, "users/all");
+
+      if (preg_match('/w/', $acl) || preg_match('/c/', $cacl)){
 
         /* Check input and feed errors into 'message' */
         $message= array();
