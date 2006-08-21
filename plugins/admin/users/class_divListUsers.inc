@@ -85,16 +85,14 @@ class divListUsers extends MultiSelectWindow
     $deps= get_list("(&(|(ou=*)(description=*))(objectClass=gosaDepartment))", $this->module, $base,
                     array("ou", "description"), GL_SIZELIMIT | GL_SUBSEARCH);
 
-$ui= get_userinfo();
-$t= $ui->get_module_departments("users");
-print_a($t);
+    /* Load possible departments */
+    $ui= get_userinfo();
+    $tdeps= $ui->get_module_departments("users");
 
     $ids = $this->config->idepartments;
  
-print_a($ids);
-
     foreach($deps as $dep){
-      if(isset($ids[$dep['dn']])){
+      if(isset($ids[$dep['dn']]) && in_array_ics($dep['dn'], $tdeps)){
 
         $value = $ids[$dep['dn']]; 
         if ($this->selectedBase == $dep['dn']){
