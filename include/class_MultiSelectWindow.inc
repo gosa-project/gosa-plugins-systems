@@ -574,6 +574,7 @@ class MultiSelectWindow{
 
 		/* Add deps to this dialog object list */
 		foreach($this->departments as $key=> $val){
+
 			/* Add missing entries ... */
 			if(!isset($this->config->departments[trim($key)])){
 				$this->config->departments[trim($key)]="";

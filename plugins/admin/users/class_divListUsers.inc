@@ -79,27 +79,28 @@ class divListUsers extends MultiSelectWindow
        which are shown in the listbox on top of the listbox
      */
     $options= "";
-#print_a($this->config->idepartments);
-#$ui= get_userinfo();
-#$t= $ui->get_module_departments("users");
-#print_a($t);
 
-    
     /* Get all departments within this subtree */ 
     $base = $this->config->current['BASE'];
     $deps= get_list("(&(|(ou=*)(description=*))(objectClass=gosaDepartment))", $this->module, $base,
                     array("ou", "description"), GL_SIZELIMIT | GL_SUBSEARCH);
 
+$ui= get_userinfo();
+$t= $ui->get_module_departments("users");
+print_a($t);
+
     $ids = $this->config->idepartments;
  
+print_a($ids);
+
     foreach($deps as $dep){
       if(isset($ids[$dep['dn']])){
 
         $value = $ids[$dep['dn']]; 
-        if ($this->selectedBase == $dep){
-          $options.= "<option selected='selected' value='$dep'>$value</option>";
+        if ($this->selectedBase == $dep['dn']){
+          $options.= "<option selected='selected' value='".$dep['dn']."'>$value</option>";
         } else {
-          $options.= "<option value='$dep'>$value</option>";
+          $options.= "<option value='".$dep['dn']."'>$value</option>";
         }
       }
     }

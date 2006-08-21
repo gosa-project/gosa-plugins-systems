@@ -132,18 +132,19 @@ class userinfo
         /* No members? This is good for all users... */
         if (!count($type['members'])){
           $interresting= TRUE;
-        }
+        } else {
 
-        /* Inspect members... */
-        foreach ($type['members'] as $grp => $grpdsc){
-          /* Some group inside the members that is relevant for us? */
-          if (in_array_ics(preg_replace('/^G:/', '', $grp), $this->groups)){
-            $interresting= TRUE;
-          }
+          /* Inspect members... */
+          foreach ($type['members'] as $grp => $grpdsc){
+            /* Some group inside the members that is relevant for us? */
+            if (in_array_ics(preg_replace('/^G:/', '', $grp), $this->groups)){
+              $interresting= TRUE;
+            }
 
-          /* User inside the members? */
-          if (preg_replace('/^U:/', '', $grp) == $this->dn){
-            $interresting= TRUE;
+            /* User inside the members? */
+            if (preg_replace('/^U:/', '', $grp) == $this->dn){
+              $interresting= TRUE;
+            }
           }
         }
 
@@ -166,7 +167,7 @@ class userinfo
     $acl= "";
     if (isset($this->ocMapping[$category])){
       foreach($this->ocMapping[$category] as $oc){
-        $acl.= $this->get_permissions($dn, $category."/".$oc, "");
+        $acl.= $this->get_permissions($dn, $category."/".$oc);
       }
     }
 
@@ -253,6 +254,8 @@ echo "Global $object<br>";
   }
 
 
+  /* Extract all departments that are accessible (direct or 'on the way' to an
+     accessible department) */
   function get_module_departments($module)
   {
     global $plist;
@@ -278,15 +281,12 @@ echo "Global $object<br>";
       }
     }
 
-    /* Get all gosaDepartments */
-    $ldap= $this->config->get_ldap_link();
-    $ldap->cd($this->config->current['BASE']);
-    $ldap->search('objectClass=gosaDepartment', array('dn'));
-    while ($attrs= $ldap->fetch()){
+    /* For all gosaDepartments */
+    foreach ($this->config->departments as $dn){
       $acl= array("r" => "", "w" => "", "c" => "", "d" => "", "m" => "", "a" => "");
 
       /* Build dn array */
-      $path= split(',', $attrs['dn']);
+      $path= split(',', $dn);
       $path= array_reverse($path);
 
       /* Walk along the path to evaluate the acl */
@@ -314,28 +314,32 @@ echo "Global $object<br>";
 
             /* Per object ACL? */
             foreach ($objects as $object){
-              if (isset($subacl['acl'][$object])){
-                foreach($subacl['acl'][$object] as $attribute => $dcl){
-                  if (isset($subacl['acl'][$object][$attribute])){
-                    $acl= $this->mergeACL($acl, $subacl['type'], preg_replace('/[cdm]/', '', $subacl['acl'][$object][$attribute]));
-                  }
+              if (isset($subacl['acl']["$module/$object"])){
+                foreach($subacl['acl']["$module/$object"] as $attribute => $dcl){
+                  $acl= $this->mergeACL($acl, $subacl['type'], $subacl['acl']["$module/$object"][$attribute]);
                 }
               }
             }
 
             /* Global ACL? */
-            if (isset($subacl['acl'][0])){
-              $acl= $this->mergeACL($acl, $subacl['type'], preg_replace('/[cdm]/', '', $subacl['acl'][0]));
+            if (isset($subacl['acl']["$module/all"][0])){
+              $acl= $this->mergeACL($acl, $subacl['type'], $subacl['acl']["$module/all"][0]);
+              continue;
+            }
+
+            /* Global ACL? */
+            if (isset($subacl['acl']["all"][0])){
+              $acl= $this->mergeACL($acl, $subacl['type'], $subacl['acl']["all"][0]);
               continue;
             }
           }
         }
       }
 
-      /* Add department, if we have (some) permissions for the requred module */
+      /* Add department, if we have (some) permissions for the required module */
       foreach ($acl as $val){
         if ($val != ""){
-          $deps[]= $attrs['dn'];
+          $deps[]= $dn;
           break;
         }
       }

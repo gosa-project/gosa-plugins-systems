@@ -138,7 +138,7 @@ class userManagement extends plugin
       $this->usertab->current = $s_tab;
 
       /* Set ACL and move DN to the headline */
-#      $this->usertab->set_acl_base();
+      $this->usertab->set_acl_base();
       $_SESSION['objectinfo']= $this->dn;
     }
 
