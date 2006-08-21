@@ -315,11 +315,15 @@ class userManagement extends plugin
 
       /* Some nice guy may send this as POST, so we've to check
          for the permissions again. */
-      if (chkacl($this->acl, "delete") == ""){
+
+      $ui  = get_userinfo();
+      $acl = $ui->get_permissions($this->dn, "users/all"); 
+ 
+      if (preg_match('/d/', $acl)){
 
         /* Delete request is permitted, perform LDAP action */
         $this->usertab= new usertabs($this->config, $this->config->data['TABS']['USERTABS'],$this->dn);
-        $this->usertab->set_acl(array($this->acl));
+        $this->usertab->set_acl_base();
         $this->usertab->delete ();
         gosa_log ("User object '".$this->dn."' has been removed");
         unset ($this->usertab);
