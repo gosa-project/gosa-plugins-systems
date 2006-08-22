@@ -320,27 +320,15 @@ class termgroup extends plugin
 
     /* Write back to ldap */
     $ldap= $this->config->get_ldap_link();
-    if ($this->orig_dn == 'new'){
-      $ldap->cd($this->config->current['BASE']);
-      $ldap->create_missing_trees(preg_replace('/^[^,]+,/', '', $this->dn));
-      $ldap->cd($this->dn);
-      $ldap->add($this->attrs);
-      if(!$this->didAction){
-        $this->handle_post_events("add");
-      }
-    } else {
-      if ($this->orig_dn != $this->dn){
-        $this->move($this->orig_dn, $this->dn);
-      }
-      $ldap->cd($this->dn);
-      $this->cleanup();
-      $ldap->modify ($this->attrs);
+    $ldap->cd($this->dn);
+    $this->cleanup();
+    $ldap->modify ($this->attrs);
 
-      if(!$this->didAction){
-        $this->handle_post_events("modify");
-      }
+    if(!$this->didAction){
+      $this->handle_post_events("modify");
     }
-    show_ldap_error($ldap->get_error(), sprintf(_("Removing of object group/workstation with dn '%s' failed."),$this->dn));
+    show_ldap_error($ldap->get_error(), _("Saving workstation failed"));
+
   }
   
   function plInfo()
