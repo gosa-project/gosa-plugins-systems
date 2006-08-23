@@ -1092,15 +1092,33 @@ class posixAccount extends plugin
       $ids[]= (int)$attrs["$attrib"][0];
     }
 
+    /* Add the nobody id */
+    $ids[]=  65534;
+
+    /* get the ranges */
+    if (preg_match('/posixAccount/', $oc)) {
+      $tmp= split('-',$this->config->current['UIDBASE']);
+    } else {
+      $tmp= split('-',$this->config->current['GIDBASE']);
+    }
+
+    /* Set hwm to max if not set - for backward compatibility */
+    $lwm= $tmp[0];
+    if (isset($tmp[1])){
+      $hwm= $tmp[1];
+    } else {
+      $hwm= 65535;
+    }
+
     /* Find out next free id near to UID_BASE */
-    for ($id= $this->config->current['UIDBASE']; $id++; $id<65000){
+    for ($id=$lwm; $id++; $id<$hwm){
       if (!in_array($id, $ids)){
         return ($id);
       }
     }
 
     /* Should not happen */
-    if ($id == 65000){
+    if ($id == $hwm){
       print_red(_("Too many users, can't allocate a free ID!"));
       exit;
     }
