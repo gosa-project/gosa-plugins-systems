@@ -3,6 +3,7 @@ GOsa2 changelog
 
 * gosa 2.6
   - New "OK", "Apply", "Cancel" schema for tabbed dialogs
+  - New ACL implementation
 
 * gosa 2.5
   - Improved FAI support
