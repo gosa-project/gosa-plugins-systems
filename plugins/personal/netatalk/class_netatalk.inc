@@ -52,6 +52,7 @@ class netatalk extends plugin {
   var $shares_settings        = array();
   var $selectedshare        = "";
   var $mountDirectory         = "/Network/Servers";
+  var $shares_loaded= false;
   
   /* Attributes to save to LDAP */
   /* Slip setting those attributes, we can't define class variables with - */
@@ -72,6 +73,8 @@ class netatalk extends plugin {
 
   function get_shares()
   {
+    $this->shares_loaded= TRUE;
+
     /* Get netatalk shares */
     $this->shares = array();
     $ldap = $this->config->get_ldap_link();
@@ -126,8 +129,6 @@ class netatalk extends plugin {
     if (strlen($this->apple_user_homeDirectory) >0) {
       $this->apple_user_homepath_raw = substr($this->apple_user_homeDirectory, strrpos($this->apple_user_homeDirectory, '/') + 1 );
     }
-   
-    $this->get_shares();
  
     /* Save initial account state */
     $this->initially_was_account = $this->is_account;
@@ -135,7 +136,11 @@ class netatalk extends plugin {
 
   /* Execute the plugin, produce the output. */
   function execute() {
-    plugin :: execute();
+    if (!$this->shares_loaded){
+      $this->get_shares();
+    }
+
+    plugin::execute();
 
     /* Use the smarty templating engine here... */
     $smarty = get_smarty();
