@@ -81,7 +81,7 @@ class genkey{
 		for ($i=0;$i<count($this->intg_dkey);$i++){
 			$data.=chr($this->intg_dkey[$i]);
 		}
-		$sha1_hmac_raw=hash_hmac("sha1",$hash_key,$data,true);
+		$sha1_hmac_raw=$this->hmacsha1($data,$hash_key);
 		$this->sha1hmac=array();
 		for ($i=0;$i<strlen($sha1_hmac_raw);$i++){
 			$this->sha1hmac[$i]=ord(substr($sha1_hmac_raw,$i,1));
@@ -149,6 +149,27 @@ class genkey{
 
 	function printKey(){
 		printf("key(base64):\n".$this->b64."\n");
+	}
+
+	function hmacsha1($key,$data){
+		$blocksize=64;
+		$hashfunc='sha1';
+		if (strlen($key)>$blocksize)
+			$key=pack('H*', $hashfunc($key));
+		$key=str_pad($key,$blocksize,chr(0x00));
+		$ipad=str_repeat(chr(0x36),$blocksize);
+		$opad=str_repeat(chr(0x5c),$blocksize);
+		$hmac = pack(
+			'H*',$hashfunc(
+				($key^$opad).pack(
+					'H*',$hashfunc(
+						($key^$ipad).$data
+					)
+				)
+			)
+		);
+		return($hmac);
+		//return bin2hex($hmac);
 	}
 
 };
