@@ -1,7 +1,7 @@
 <?php
 /*****************************************************************************
   newldap.inc - version 1.0
-  Copyright (C) 2003 Alejandro Escanero Blanco <alex@ofmin.com>
+  Copyright (C) 2003 Alejandro Escanero Blanco <aescanero@chaosdimension.org>
   Copyright (C) 2004-2006 Cajus Pollmeier <pollmeier@gonicus.de>
 
   Based in code of ldap.inc of
