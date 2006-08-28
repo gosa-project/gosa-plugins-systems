@@ -507,7 +507,7 @@ class MultiSelectWindow{
         $str = "<img class='center' src='images/restore_grey.png' alt=''>&nbsp;";
       }
 
-      $str .= "<img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
+#      $str .= "<img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
     }
     return($str);
   }

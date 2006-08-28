@@ -104,7 +104,7 @@ class divListUsers extends MultiSelectWindow
     }
 
     /* Get copy & paste icon */ 
-    if($this->parent->CopyPasteHandler){
+    if(preg_match("/w/",$ui->get_permissions($this->selectedBase,"users/user")) &&  $this->parent->CopyPasteHandler){
       $Copy_Paste = $this->parent->CopyPasteHandler->generatePasteIcon();
     }else{
       $Copy_Paste ="";
@@ -122,12 +122,18 @@ class divListUsers extends MultiSelectWindow
       title='"._("Reload list")."' name='submit_department' alt='"._("Submit")."'>&nbsp;".
       " <img   class='center' src='images/list_seperator.png' align='middle' alt='-' height='16' width='1'>&nbsp;";
     $listhead .= $this->get_snapshot_header($this->selectedBase);
-    $listhead .= " <input class='center' type='image' align='middle' src='images/list_new_user.png' 
-      title='"._("Create new user")."' alt='"._("New user")."'           name='user_new'>&nbsp;".
-      " <input class='center' type='image' align='middle' src='images/list_new.png' 
-      title='"._("Create new template")."' alt='"._("New template")."'        name='user_tplnew'>&nbsp;".
+
+    $acls  = $ui->get_permissions($this->selectedBase,"users/user");
+    if(preg_match("/c/",$acls)) {
+      $listhead .= " <input class='center' type='image' align='middle' src='images/list_new_user.png' 
+        title='"._("Create new user")."' alt='"._("New user")."' name='user_new'>&nbsp;";
+      $listhead .= " <input class='center' type='image' align='middle' src='images/list_new.png' 
+        title='"._("Create new template")."' alt='"._("New template")."'        name='user_tplnew'>&nbsp;";
+#      $listhead .=  " <img   class='center' src='images/list_seperator.png' align='middle' alt='-' height='16' width='1'>&nbsp;";
+    }
+  
+    $listhead .=
       $Copy_Paste.
-      " <img   class='center' src='images/list_seperator.png' align='middle' alt='-' height='16' width='1'>&nbsp;".
       _("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
       " <input class='center' type='image' src='images/list_submit.png' align='middle' 
       title='"._("Submit department")."' name='submit_department' alt='".  _("Submit")."'>&nbsp;".
@@ -223,25 +229,46 @@ class divListUsers extends MultiSelectWindow
       Append entries to divlist 
      ********************/
  
+    $ui = get_userinfo(); 
+  
     // Test Every Entry and generate divlist Array
     foreach($list as $key => $val){
 
       /* Create action icons */
       $action= "";
-      if($this->parent->CopyPasteHandler){
+
+      /* Add copy & cut icons */      
+      if($this->parent->CopyPasteHandler && preg_match("/w/",$ui->get_category_permissions($val['dn'],"users"))) {
         $action .= "<input class='center' type='image'
           src='images/editcut.png' alt='"._("cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
         $action.= "<input class='center' type='image'
           src='images/editcopy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
       }
+
+      /* Generate edit icon */
       $action.= "<input class='center' type='image' src='images/edit.png' alt='"._("edit")."'
         name='user_edit_%KEY%' title='"._("Edit user")."'>";
-      $action.= "<input class='center' type='image' src='images/list_password.png' alt='"._("password")."'
-        name='user_chgpw_%KEY%' title='"._("Change password")."'>";
-      $action.= $this->GetSnapShotActions($val['dn']);
-      $action.= "<input class='center' type='image' src='images/edittrash.png' alt='"._("delete")."'
-        name='user_del_%KEY%' title='"._("Delete user")."'>";
 
+      /* Add Password change icon, if we are able to write users/password */
+      if(preg_match("/w/",$ui->get_permissions($val['dn'],"users/password"))) {
+        $action.= "<input class='center' type='image' src='images/list_password.png' alt='"._("password")."'
+          name='user_chgpw_%KEY%' title='"._("Change password")."'>";
+      }else{
+        $action.= "<img class='center' src='images/empty.png' alt='&nbsp;' 
+          title='"._("You are not allowed to change the password for this user.")."'>";
+      }
+
+      /* Add snapshot icon */
+      $action.= $this->GetSnapShotActions($val['dn']);
+
+      /* Add remove icon, if we are allowed to remove the current user */
+      if(preg_match("/d/",$ui->get_permissions($val['dn'],"users/user"))) {
+        $action.= "<input class='center' type='image' src='images/edittrash.png' alt='"._("delete")."'
+          name='user_del_%KEY%' title='"._("Delete user")."'>";
+      }else{
+        $action.= "<img class='center' src='images/empty.png' alt='&nbsp;'  
+          title='"._("You are not allowed to remove this user.")."'>";
+      }
 
       /* Create phonaccopunt informationm, if conencted && is phoneAccount */ 
       $connected  = ""; // This string represents timestamp or offline status
