@@ -168,9 +168,6 @@ class group extends plugin
 	/* Call parent execute */
 	plugin::execute();
 
-  $ui= get_userinfo();
-  $acla= get_permissions ($ui->dn, $ui->subtreeACL);
-  $this->acl= get_module_permission($acla, "group", $ui->dn);
   /* Do we represent a valid group? */
     if (!$this->is_account && $this->parent == NULL){
       $display= "<img alt=\"\" src=\"images/stop.png\" align=\"middle\">&nbsp;<b>".
@@ -343,31 +340,32 @@ class group extends plugin
     }else{
       $smarty->assign("forceMode", "");
     }
-    $smarty->assign("force_gidACL", chkacl($this->acl, "gidNumber"));
-    $smarty->assign("sambaDomainNameACL", chkacl($this->acl, "sambaDomainName"));
     if ($this->fon_group){
       $smarty->assign("fon_group", "checked");
     } else {
       $smarty->assign("fon_group", "");
     }
-    $smarty->assign("fon_groupACL", chkacl($this->acl, "fon_group"));
 
     if ($this->nagios_group){
       $smarty->assign("nagios_group", "checked");
     } else {
       $smarty->assign("nagios_group", "");
     }
-    $smarty->assign("nagios_groupACL", chkacl($this->acl, "nagios_group"));
 
     /* Fields */
     foreach (array("cn", "description", "gidNumber") as $val){
       $smarty->assign("$val", $this->$val);
-      $smarty->assign("$val"."ACL", chkacl($this->acl, "$val"));
     }
 
-    /* Missing ACL's */
-    foreach (array("base", "smbgroup", "members") as $val){
-      $smarty->assign("$val"."ACL", chkacl($this->acl, "$val"));
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $name => $translation){
+      $smarty->assign($name."ACL",$this->getacl($name));
+    }
+    
+    if($this->acl_is_writeable("base")){
+      $smarty->assign("baseSelect",true);
+    }else{
+      $smarty->assign("baseSelect",false);
     }
 
     /* Show main page */
@@ -520,28 +518,26 @@ class group extends plugin
       $this->force_gid= 0;
       $this->smbgroup= 0;
       foreach (array("force_gid", "department", "base", "smbgroup") as $val) {
-        if (chkacl ($this->acl, "$val") == "" && isset($_POST["$val"])){
+        if ($this->acl_is_writeable("$val")  && isset($_POST["$val"])){
           $this->$val= $_POST["$val"];
         }
       }
 
       /* Save sambaDomain attribute */
-      if (chkacl ($this->acl, "sambaDomainName") == "" && $this->samba3 &&
-          isset ($_POST['sambaDomainName'])){
-
+      if ($this->acl_is_writeable("sambaDomainName") && $this->samba3 && isset ($_POST['sambaDomainName'])){
         $this->sambaDomainName= $_POST['sambaDomainName'];
         $this->groupType= $_POST['groupType'];
       }
 
       /* Save fon attribute */
-      if (chkacl ($this->acl, "fon_group") == ""){
+      if ($this->acl_is_writeable("fon_group")){
         if (isset ($_POST['fon_group'])){
           $this->fon_group= TRUE;
         } else {
           $this->fon_group= FALSE;
         }
       }
-	 if (chkacl ($this->acl, "nagios_group") == ""){
+	 if ($this->acl_is_writeable("nagios_group")){
         if (isset ($_POST['nagios_group'])){
           $this->nagios_group= TRUE;
         } else {
@@ -715,15 +711,12 @@ class group extends plugin
       $new_dn= $this->dn;
     }
 
-    $ui= get_userinfo();
-    $acl= get_permissions ($ui->dn, $ui->subtreeACL);
-    $acl= get_module_permission($acl, "group", $ui->dn);
-    if (chkacl($this->acl, "create") != ""){
+    if (!$this->acl_is_createable()){
       $message[]= _("You have no permissions to create a group on this 'Base'.");
     }
 
     /* must: cn */
-    if ($this->cn == "" && chkacl ($this->acl, "cn") == ""){
+    if ($this->cn == "" && $this->acl_is_writeable("cn")){
       $message[]= "The required field 'Name' is not set.";
     }
 
@@ -731,7 +724,6 @@ class group extends plugin
     if (!is_uid($this->cn)){
       $message[]= _("The field 'Name' contains invalid characters. Lowercase, numbers and dashes are allowed.");
     }
-
 
     if($this->allowGroupsWithSameNameInOtherSubtrees == true){
 
@@ -871,12 +863,13 @@ class group extends plugin
             "description"       => _("Description"),
             "base"              => _("Base"),
 
-            "fon_group"         => _("Phone pickup group"),
-            "nagios_group"      => _("Nagios group"),
+            "fonGroup"         => _("Phone pickup group"),
+            "nagiosGroup"      => _("Nagios group"),
 
             "gidNumber"         => _("GID"),
             "memberUid"         => _("Group member"),
             "sambaGroupType"    => _("Samba group type"),
+            "sambaDomainName"   => _("Samba domain name"),
             "sambaSID"          => _("Samba SID"))
         ));
   }
