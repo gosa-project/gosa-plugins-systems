@@ -27,7 +27,6 @@ class group extends plugin
   var $members= array();
   var $users= array();
   var $allusers= array();
-  var $department= "";
   var $saved_gidNumber= "";
   var $oldgroupType= "";
   var $orig_dn= "";
@@ -302,7 +301,6 @@ class group extends plugin
 
     $smarty->assign("bases", $this->config->idepartments);
     $smarty->assign("base_select", $this->base);
-    $smarty->assign("department", $this->department);
 
     if ($this->samba3){
       $domains= array();
@@ -516,9 +514,18 @@ class group extends plugin
       plugin::save_object();
 
       $this->force_gid= 0;
-      $this->smbgroup= 0;
-      foreach (array("force_gid", "department", "base", "smbgroup") as $val) {
-        if ($this->acl_is_writeable("$val")  && isset($_POST["$val"])){
+
+
+      /* Only reset sambagroup flag if we are able to write this flag */
+      if($this->acl_is_writeable("sambaGroupType")){
+        $this->smbgroup = 0;
+      }
+
+      foreach (array(
+            "force_gid"  => "gidNumber", 
+            "base"       => "base", 
+            "smbgroup"   => "sambaGroupType") as $val => $aclname) {
+        if ($this->acl_is_writeable($aclname)  && isset($_POST["$val"])){
           $this->$val= $_POST["$val"];
         }
       }
@@ -537,7 +544,7 @@ class group extends plugin
           $this->fon_group= FALSE;
         }
       }
-	 if ($this->acl_is_writeable("nagios_group")){
+      if ($this->acl_is_writeable("nagios_group")){
         if (isset ($_POST['nagios_group'])){
           $this->nagios_group= TRUE;
         } else {
