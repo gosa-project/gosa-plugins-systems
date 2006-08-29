@@ -372,10 +372,8 @@ class appgroup extends plugin
     plugin::execute();
 
     if((isset($_GET['act']))&&($_GET['act']=="depopen")){
-      $dep = base64_decode($_GET['depid']);  
-      if(isset($this->config->idepartments[$dep])){
-        $this->curbase =$dep;
-      }
+      $dep = base64_decode($_GET['depid']); 
+      $this->curbase =$dep;
     }
 
     if((isset($_GET['act']))&&($_GET['act']=="open")){
@@ -619,7 +617,7 @@ class appgroup extends plugin
     $departments = array();
     $res = get_list("(objectClass=gosaDepartment)", "department", $this->curbase,array("description","cn","ou"),GL_SIZELIMIT);
     foreach($res as $value){
-      $fdn= @LDAP::fix($value['dn']);
+      $fdn= @LDAP::fix(str_replace($this->curbase,"",$value['dn']));
       if($value["description"][0]!=".."){
         $departments[$value['dn']]= convert_department_dn($fdn)." - [".$value["description"][0]."]";
       }else{
@@ -627,8 +625,13 @@ class appgroup extends plugin
       }
     }
 
+    if($this->acl_is_writeable("gosaMemberApplication")){
+      $linkadd  = "<a href='?plug=".$_GET['plug']."&amp;act=add&amp;id=%s'>%s</a>";
+    }else{
+      $linkadd = "%s";
+    }
+
     $linkopen = "<a href='?plug=".$_GET['plug']."&amp;act=depopen&amp;depid=%s'>%s</a>";
-    $linkadd  = "<a href='?plug=".$_GET['plug']."&amp;act=add&amp;id=%s'>%s</a>";
 
     $base_back = preg_replace("/^[^,]+,/","",$this->curbase);
     if((strlen($base_back)>= strlen($this->config->current['BASE']))&&($this->curbase!=$this->config->current['BASE'])){
@@ -677,13 +680,20 @@ class appgroup extends plugin
     $div2 = new DivSelectBox("appgroup");
     $div2->SetHeight(300);
 
-    $linkopen       = "<img class='center' src='images/folder.png' alt=\"\">&nbsp;<a href='?plug=".$_GET['plug']."&amp;act=open&amp;id=%s'>%s</a>";
-    $catremove      = "&nbsp;<input type='image' src='images/edittrash.png' title='"._("Delete entry")."' name='DelCat_%s' value='%s'>";
-    $app            = "<img class='center' src='images/select_application.png' alt=\"\">&nbsp;%s";
-    
-    $catupdown        = "<a href='?plug=".$_GET['plug']."&amp;act=cat_up&amp;id=%s'>
-                       <img align='top' alt=\"\" src='images/sort_up.png' border=0 title='"._("Move up")."'></a>&nbsp;<a href='?plug=".$_GET['plug']."&amp;act=cat_down&amp;id=%s'> 
-                       <img alt=\"\" src='images/sort_down.png' title='"._("Move down")."' border=0></a>";
+    if(!$this->acl_is_writeable("gosaMemberApplication")){
+      $linkopen       = "<img class='center' src='images/folder.png' alt=\"\">&nbsp;<a href='?plug=".$_GET['plug']."&amp;act=open&amp;id=%s'>%s</a>";
+      $catremove      = "&nbsp;<img sry='images/empty.png' alt='&nbsp;'>";
+      $catupdown      = "";
+    }else{
+      $linkopen       = "<img class='center' src='images/folder.png' alt=\"\">&nbsp;<a href='?plug=".$_GET['plug']."&amp;act=open&amp;id=%s'>%s</a>";
+      $catremove      = "&nbsp;<input type='image' src='images/edittrash.png' title='"._("Delete entry")."' name='DelCat_%s' value='%s'>";
+      $catupdown      = "<a href='?plug=".$_GET['plug']."&amp;act=cat_up&amp;id=%s'>".
+        "<img align='top' alt=\"\" src='images/sort_up.png' border=0 title='"._("Move up")."'>".
+        "</a>&nbsp;".
+        "<a href='?plug=".$_GET['plug']."&amp;act=cat_down&amp;id=%s'>".
+        "<img alt=\"\" src='images/sort_down.png' title='"._("Move down")."' border=0>".
+        "</a>";
+    }
 
     if(empty($this->curCatDir)){
       $cnt =0;
@@ -710,12 +720,25 @@ class appgroup extends plugin
 
     $separator ="<hr size=1>"; 
 
-    $sep = "<input type='image' src='images/back.png' title='"._("Insert seperator")."' value='%s' name='AddSep_%s'>";
-  
-    $upudown ="<a href='?plug=".$_GET['plug']."&amp;act=one_up&amp;id=%s'>   <img alt='{t}sort{/t}' align='top' src='images/sort_up.png' title='"._("Move up")."' border=0></a>".
-      "&nbsp;<a href='?plug=".$_GET['plug']."&amp;act=one_down&amp;id=%s'> <img alt='{t}sort{/t}' src='images/sort_down.png' title='"._("Move down")."' border=0></a>".
-      "&nbsp;<input type='image' src='images/edittrash.png' title='"._("Delete entry")."' name='DelApp_%s' value='%s' alt='{t}delete{/t}' >";
-    $edit=      "&nbsp;<input type='image' src='images/edit.png' title='"._("Edit entry")."' name='EdiApp_%s' value='%s' alt='{t}edit{/t}' >";
+    if($this->acl_is_writeable("gosaMemberApplication")){
+      $sep      = "<input type='image' src='images/back.png' title='"._("Insert seperator")."' value='%s' name='AddSep_%s'>";
+      $upudown  = "<a href='?plug=".$_GET['plug']."&amp;act=one_up&amp;id=%s'>".
+                  " <img alt='{t}sort{/t}' align='top' src='images/sort_up.png' title='"._("Move up")."' border=0>".
+                  "</a>&nbsp;".
+                  "<a href='?plug=".$_GET['plug']."&amp;act=one_down&amp;id=%s'>".
+                  " <img alt='{t}sort{/t}' src='images/sort_down.png' title='"._("Move down")."' border=0>".
+                  "</a>&nbsp;".
+                  "<input type='image' src='images/edittrash.png' title='"._("Delete entry")."' name='DelApp_%s' value='%s' alt='{t}delete{/t}' >";
+    }else{
+      $sep      = "";
+      $upudown  = "";
+    }
+      
+    if($this->acl_is_writeable("gosaApplicationParameter")){
+      $edit=      "&nbsp;<input type='image' src='images/edit.png' title='"._("Edit entry")."' name='EdiApp_%s' value='%s' alt='{t}edit{/t}' >";
+    }else{
+      $edit=      "";
+    }
 
     $Differences = $this->diffAppsInReleases();
 
@@ -775,7 +798,13 @@ class appgroup extends plugin
         $smarty->assign("ReleaseSelectAble", true);
       }
     }
-        $smarty->assign("ReleaseSelectAble", true);
+    $smarty->assign("ReleaseSelectAble", true);
+
+    /* Set acls to  template */
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $acl => $translation){
+      $smarty->assign($acl."ACL",$this->getacl($acl));
+    }
 
     /* Show main page */
     if ($this->dialog){
@@ -784,6 +813,7 @@ class appgroup extends plugin
     } else {
       $display.= $smarty->fetch (get_template_path('application.tpl', TRUE));
     }
+    
     return ($display);
   }
 
