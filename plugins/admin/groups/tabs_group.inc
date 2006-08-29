@@ -3,9 +3,9 @@
 class grouptabs extends tabs
 {
 
-	function grouptabs($config, $data, $dn)
+	function grouptabs($config, $data, $dn,$acl_category)
 	{
-		tabs::tabs($config, $data, $dn);
+		tabs::tabs($config, $data, $dn,$acl_category);
 		$baseobject= $this->by_object['group'];
 		foreach ($this->by_object as $name => $obj){
 			if(isset($obj->parent)){
