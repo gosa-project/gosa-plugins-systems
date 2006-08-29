@@ -2,9 +2,11 @@
 	<br>
 	<b>{t}Release focus{/t}</b>&nbsp;
 	{if $ReleaseSelectAble}
+{render acl=$FAIreleaseACL}
 		<select name="FAIrelease" title="{t}Select release name{/t}" onChange="javascript: document.mainform.submit();">
 			{html_options output=$Releases values=$Releases selected=$FAIrelease}
 		</select>
+{/render}
 	{else}
 		{$Release}
 	{/if}

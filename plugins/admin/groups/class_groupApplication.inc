@@ -411,20 +411,22 @@ class appgroup extends plugin
 
 
     /* Add Categorie */ 
-
-
     if((isset($_POST['AddCat']))&&(isset($_POST['CatName']))&&(!empty($_POST['CatName']))){
 
-      if(preg_match("/[\\\\\/]/i",$_POST['CatName'])){
-        print_red(_("Invalid character in category name."));
-      }elseif(!in_array($_POST['CatName'],$this->Categories)){ 
-        if(empty($this->curCatDir)){
-          $this->Categories[$_POST['CatName']]=$_POST['CatName'];
+      /* Only allow adding a category, if it is allowed */  
+      if($this->acl_is_writeable("gosaMemberApplication")){
+
+        if(preg_match("/[\\\\\/]/i",$_POST['CatName'])){
+          print_red(_("Invalid character in category name."));
+        }elseif(!in_array($_POST['CatName'],$this->Categories)){ 
+          if(empty($this->curCatDir)){
+            $this->Categories[$_POST['CatName']]=$_POST['CatName'];
+          }else{
+            $this->Categories[$this->curCatDir."/".$_POST['CatName']]=$_POST['CatName'];
+          }
         }else{
-          $this->Categories[$this->curCatDir."/".$_POST['CatName']]=$_POST['CatName'];
+          print_red(_("The specified category already exists."));
         }
-      }else{
-        print_red(_("The specified category already exists."));
       }
     }
 
@@ -433,134 +435,137 @@ class appgroup extends plugin
 
     $this->diffAppsInReleases();
     $only_once = false;
-    foreach($_POST as $name => $value){
-      
-      if((preg_match("/AddSep_/",$name))&&(!$only_once)){
-        $only_once = true;
-        $n = preg_replace("/AddSep_/","",$name);
-        $val= preg_replace("/_.*$/","",$n);
-        $this->AddSeperator($val);
-      }
 
-      if((preg_match("/DelApp_/",$name))&&(!$only_once)){
-        $only_once = true;
-   
+    /* Check POST variables for commands to add/remove some applications */
+    if($this->acl_is_writeable("gosaMemberApplication")){
+      foreach($_POST as $name => $value){
 
-        if(preg_match("/DelApp___SEPARATOR__/",$name)) {
-          $n=  preg_replace("/DelApp___SEPARATOR__/","",$name);
-          $val= "__SEPARATOR__".preg_replace("/_.*$/","",$n);
-        }else{
-          $n = preg_replace("/DelApp_/","",$name);
+        if((preg_match("/AddSep_/",$name))&&(!$only_once)){
+          $only_once = true;
+          $n = preg_replace("/AddSep_/","",$name);
           $val= preg_replace("/_.*$/","",$n);
+          $this->AddSeperator($val);
         }
 
-        foreach($this->gosaMemberApplication as $key =>  $cat){
-          foreach($cat as $key2 => $app){
-            
-            if($app['App'] == $val){
-              unset($this->gosaMemberApplication[$key][$key2]);
-              if(isset($this->used_apps[$val])){
-                foreach($this->getParameters($val) as $para){
-                  if(isset($this->appoption[$para])){
-                    unset($this->appoption[$para]);
+        if((preg_match("/DelApp_/",$name))&&(!$only_once)){
+          $only_once = true;
+
+          if(preg_match("/DelApp___SEPARATOR__/",$name)) {
+            $n=  preg_replace("/DelApp___SEPARATOR__/","",$name);
+            $val= "__SEPARATOR__".preg_replace("/_.*$/","",$n);
+          }else{
+            $n = preg_replace("/DelApp_/","",$name);
+            $val= preg_replace("/_.*$/","",$n);
+          }
+
+          foreach($this->gosaMemberApplication as $key =>  $cat){
+            foreach($cat as $key2 => $app){
+
+              if($app['App'] == $val){
+                unset($this->gosaMemberApplication[$key][$key2]);
+                if(isset($this->used_apps[$val])){
+                  foreach($this->getParameters($val) as $para){
+                    if(isset($this->appoption[$para])){
+                      unset($this->appoption[$para]);
+                    }
                   }
+                  unset($this->used_apps[$val]);
                 }
-                unset($this->used_apps[$val]);
               }
             }
           }
         }
-      }
-  
-      if(preg_match("/DelCat_/",$name)){
-        $n = preg_replace("/DelCat_/","",$name);
-        $app = base64_decode( preg_replace("/_.*$/","",$n));
-        foreach($this->Categories as $key =>  $cat){
-          if($cat == $app){
-            foreach($this->Categories as $p => $n){
-              if(preg_match("/^".$key."\/.*/",$p)){
-                unset($this->Categories[$p]);    
+
+        if(preg_match("/DelCat_/",$name)){
+          $n = preg_replace("/DelCat_/","",$name);
+          $app = base64_decode( preg_replace("/_.*$/","",$n));
+          foreach($this->Categories as $key =>  $cat){
+            if($cat == $app){
+              foreach($this->Categories as $p => $n){
+                if(preg_match("/^".$key."\/.*/",$p)){
+                  unset($this->Categories[$p]);    
+                }
               }
+              unset($this->Categories[$key]);
             }
-            unset($this->Categories[$key]);
           }
         }
-      }
-      
-      if((preg_match("/EdiApp_/",$name))&&(!$only_once)){
 
-        $only_once = true;
-        $appname = $value;
-        $appname = preg_replace("/EdiApp_/","",$name);  
-        $appname = preg_replace("/_.*$/","",$appname);
+        if((preg_match("/EdiApp_/",$name))&&(!$only_once)){
 
-        /* We've got the appname, get parameters from ldap 
-         */
-        $ldap= $this->config->get_ldap_link();
+          $only_once = true;
+          $appname = $value;
+          $appname = preg_replace("/EdiApp_/","",$name);  
+          $appname = preg_replace("/_.*$/","",$appname);
 
-        $tmp = search_config($this->config->data,"faiManagement","CLASS");
-        if(!empty($tmp)){
-          $tmp = array_flip($this->Releases);
-          $base = $tmp[$this->FAIrelease];
+          /* We've got the appname, get parameters from ldap 
+           */
+          $ldap= $this->config->get_ldap_link();
 
-          $ldap->cd($this->config->current['BASE']);
-          $ldap->search("(&(objectClass=gosaApplication)(cn=$appname))",array("gosaApplicationParameter"));
-          $found = "";
-          while($attrs = $ldap->fetch()) {
-            if(preg_match("/cn=".$appname.",".$base."/",$attrs['dn'])){
-              $found = $attrs['dn'];
+          $tmp = search_config($this->config->data,"faiManagement","CLASS");
+          if(!empty($tmp)){
+            $tmp = array_flip($this->Releases);
+            $base = $tmp[$this->FAIrelease];
+
+            $ldap->cd($this->config->current['BASE']);
+            $ldap->search("(&(objectClass=gosaApplication)(cn=$appname))",array("gosaApplicationParameter"));
+            $found = "";
+            while($attrs = $ldap->fetch()) {
+              if(preg_match("/cn=".$appname.",".$base."/",$attrs['dn'])){
+                $found = $attrs['dn'];
+              }
             }
+            $ldap->cat($found, array("gosaApplicationParameter"));
+          }else{
+            $ldap->cd($this->config->current['BASE']);
+            $ldap->search("(&(objectClass=gosaApplication)(cn=$appname))",array("gosaApplicationParameter"));
           }
-          $ldap->cat($found, array("gosaApplicationParameter"));
-        }else{
-          $ldap->cd($this->config->current['BASE']);
-          $ldap->search("(&(objectClass=gosaApplication)(cn=$appname))",array("gosaApplicationParameter"));
-        }
 
 
-        if ($ldap->count() != 1){
-          print_red (_("The selected application name is not uniq. Please check your LDAP."));
-        } else {
-          $attrs= $ldap->fetch();
-          if(isset($attrs['gosaApplicationParameter'])){
-            $this->dialog= TRUE;
-
-            /* Fill name and value arrays */
-            for ($i= 0; $i<$attrs['gosaApplicationParameter']['count']; $i++){
-              $option= preg_replace('/^[^:]+:/', '',
-                  $attrs['gosaApplicationParameter'][$i]);
-              $name= preg_replace('/:.*$/', '', 
-                  $attrs['gosaApplicationParameter'][$i]);
-              $this->option_name[$i]= $name;
-
-              /* Fill with values from application, default should be
-                 loaded by the external scripts */
-              if (isset($this->appoption[$name])){
-                $this->option_value[$i]= $this->appoption[$name];
-              }
-            }
-
-            /* Create edit field */
-            $table= "<table summary=\"\">";
-            for ($i= 0; $i < count($this->option_name); $i++){
-              if (isset($this->option_value[$i])){
-                $value= $this->option_value[$i];
-              } else {
-                $value= "";
-              }
-              $table.="<tr><td>".$this->option_name[$i]."</td><td>".
-                "<input name=\"value$i\" size=60 maxlength=250 ".
-                "value=\"".$value."\"><br></td></tr>";
-            }
-            $table.= "</table>";
-            $this->table= $table;
+          if ($ldap->count() != 1){
+            print_red (_("The selected application name is not uniq. Please check your LDAP."));
           } else {
-            print_red (_("The selected application has no options."));
+            $attrs= $ldap->fetch();
+            if(isset($attrs['gosaApplicationParameter'])){
+              $this->dialog= TRUE;
+
+              /* Fill name and value arrays */
+              for ($i= 0; $i<$attrs['gosaApplicationParameter']['count']; $i++){
+                $option= preg_replace('/^[^:]+:/', '',
+                    $attrs['gosaApplicationParameter'][$i]);
+                $name= preg_replace('/:.*$/', '', 
+                    $attrs['gosaApplicationParameter'][$i]);
+                $this->option_name[$i]= $name;
+
+                /* Fill with values from application, default should be
+                   loaded by the external scripts */
+                if (isset($this->appoption[$name])){
+                  $this->option_value[$i]= $this->appoption[$name];
+                }
+              }
+
+              /* Create edit field */
+              $table= "<table summary=\"\">";
+              for ($i= 0; $i < count($this->option_name); $i++){
+                if (isset($this->option_value[$i])){
+                  $value= $this->option_value[$i];
+                } else {
+                  $value= "";
+                }
+                $table.="<tr><td>".$this->option_name[$i]."</td><td>".
+                  "<input name=\"value$i\" size=60 maxlength=250 ".
+                  "value=\"".$value."\"><br></td></tr>";
+              }
+              $table.= "</table>";
+              $this->table= $table;
+            } else {
+              print_red (_("The selected application has no options."));
+            }
           }
         }
       }
     }
-
+  
     $this->reload();
 
     /* Add group with post */
@@ -1096,10 +1101,11 @@ class appgroup extends plugin
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
           "plPriority"    => 0,
-          "plSection"     => array("administration"),
+          "plSection"     => array("admin"),
           "plCategory"    => array("groups"),
           "plProvidedAcls"=> array(
             "gosaMemberApplication"     => _("Application"),
+            "FAIrelease"                => _("Release"),
             "gosaApplicationParameter"  => _("Application parameter"))
           ));
   }
