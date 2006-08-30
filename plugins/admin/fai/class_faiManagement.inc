@@ -492,7 +492,7 @@ class faiManagement extends plugin
 
       $this->dialog = new $a_setup[0]($this->config,
           $this->config->data['TABS'][$a_setup[2]],$this->dn);
-      $this->is_dialog = true;
+      $this->is_dialog = false;
     }
 
 
@@ -596,8 +596,14 @@ class faiManagement extends plugin
           $display.= "<input type=\"submit\" name=\"edit_cancel\" value=\""._("Cancel")."\">\n";
           $display.= "</p>";
         }
+      }else{
+        $display.= "<p style=\"text-align:right\">\n";
+        $display.= "<input type=\"submit\" name=\"edit_continue\" value=\""._("Continue")."\">&nbsp;";
+        $display.= "<input type=\"submit\" name=\"edit_cancel\" value=\""._("Cancel")."\">\n";
+        $display.= "</p>";
+
       }
-			return($display);
+      return($display);
 		}
 		
 
