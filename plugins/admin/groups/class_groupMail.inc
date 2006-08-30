@@ -302,8 +302,6 @@ class mailgroup extends plugin
       $smarty->assign($name."ACL",$this->getacl($name));
     }
 
-
-
     if ($_SESSION['js']==FALSE){
       $smarty->assign("javascript", "false");
     } else {
@@ -311,9 +309,14 @@ class mailgroup extends plugin
     }
 
     /* Do we need to flip is_account state? */
-    if (isset($_POST['modify_state'])){
-      $this->is_account= !$this->is_account;
+    if(isset($_POST['modify_state'])){
+      if($this->is_account && $this->acl_is_removeable()){
+        $this->is_account= FALSE;
+      }elseif(!$this->is_account && $this->acl_is_createable()){
+        $this->is_account= TRUE;
+      }
     }
+
 
     /* Do we represent a valid account? */
     if (!$this->is_account && $this->parent == NULL){
@@ -336,29 +339,35 @@ class mailgroup extends plugin
     }
 
     /* Add ACL? */
-    foreach ($this->indexed_user as $nr => $user){
-      if (isset($_POST["add_$nr"])){
-        $this->imapacl[""]= "l";
-      }
-      if (isset($_POST["del_$nr"])){
-        unset ($this->imapacl[$user]);
+    if($this->acl_is_writeable("acl")){
+      foreach ($this->indexed_user as $nr => $user){
+        if (isset($_POST["add_$nr"])){
+          $this->imapacl[""]= "l";
+        }
+        if (isset($_POST["del_$nr"])){
+          unset ($this->imapacl[$user]);
+        }
       }
     }
 
     /* Trigger forward add dialog? */
-    if (isset($_POST['add_local_forwarder'])){
-      $this->forward_dialog= TRUE;
-      $this->dialog= TRUE;
+    if($this->acl_is_writeable("gosaMailForwardingAddress")){
+      if (isset($_POST['add_local_forwarder'])){
+        $this->forward_dialog= TRUE;
+        $this->dialog= TRUE;
+      }
     }
 
     /* Cancel forward add dialog? */
-    if (isset($_POST['add_locals_cancel'])){
-      $this->forward_dialog= FALSE;
-      $this->dialog= FALSE;
+    if($this->acl_is_writeable("gosaMailForwardingAddress")){
+      if (isset($_POST['add_locals_cancel'])){
+        $this->forward_dialog= FALSE;
+        $this->dialog= FALSE;
+      }
     }
 
     /* Finished adding of locals? */
-    if (isset($_POST['add_locals_finish'])){
+    if ((isset($_POST['add_locals_finish'])) && ($this->acl_is_writeable("gosaMailForwardingAddress"))) {
       if (count ($_POST['local_list']) && $this->acl_is_writeable("gosaMailForwardingAddress")){
 
         /* Walk through list of forwarders, ignore own addresses */
@@ -375,7 +384,7 @@ class mailgroup extends plugin
     }
 
     /* Add forward email addresses */
-    if (isset($_POST['add_forwarder'])){
+    if ((isset($_POST['add_forwarder'])) && ($this->acl_is_writeable("gosaMailForwardingAddress"))){
       if ($_POST['forward_address'] != ""){
 
         /* Valid email address specified? */
@@ -402,7 +411,7 @@ class mailgroup extends plugin
     }
 
     /* Delete forward email addresses */
-    if (isset($_POST['delete_forwarder'])){
+    if (isset($_POST['delete_forwarder']) && ($this->acl_is_writeable("gosaMailForwardingAddress"))){
       if (count($_POST['forwarder_list'])&& $this->acl_is_writeable("gosaMailForwardingAddress")){
 
         $this->delForwarder ($_POST['forwarder_list']);
@@ -426,10 +435,11 @@ class mailgroup extends plugin
     }
 
     /* Delete alternate email addresses */
-    if (isset($_POST['delete_alternate']) && isset ($_POST['alternates_list'])){
-      if (count($_POST['alternates_list']) && $this->acl_is_writeable("gosaMailAlternateAddress")){
-
-        $this->delAlternate ($_POST['alternates_list']);
+    if($this->acl_is_writeable("gosaMailAlternateAddress")){
+      if (isset($_POST['delete_alternate']) && isset ($_POST['alternates_list'])){
+        if (count($_POST['alternates_list']) && $this->acl_is_writeable("gosaMailAlternateAddress")){
+          $this->delAlternate ($_POST['alternates_list']);
+        }
       }
     }
 
@@ -664,36 +674,44 @@ C: Use custom sieve script
 I: Only insider delivery */
     if (isset($_POST['mailedit'])){
 
-      /* Save ldap attributes */
       plugin::save_object();
 
-      $tmp= "";
-      if (!isset($_POST["drop_own_mails"])){
-        $tmp.= "L";
-      }
-      if (isset($_POST["use_mailsize_limit"])){
-        $tmp.= "R";
-      }
-      if (isset($_POST["use_spam_filter"])){
-        $tmp.= "S";
-      }
-      if (isset($_POST["use_vacation"])){
-        $tmp.= "V";
-      }
-      if (isset($_POST["own_script"])){
-        $tmp.= "C";
-      }
-      if (isset($_POST["only_local"])){
-        $tmp.= "I";
-      }
-      $tmp= "[$tmp]";
+      $tmp= preg_replace("/[^a-z]/i","",$this->gosaMailDeliveryMode);
 
-      if ($this->getacl("gosaMailDeliveryMode")){
-        $this->gosaMailDeliveryMode= $tmp;
+      /* Handle delivery flags */
+      if($this->acl_is_writeable("gosaMailDeliveryModeL")){
+        if(!preg_match("/L/",$tmp) && !isset($_POST['drop_own_mails'])){
+          $tmp.="L";
+        }elseif(preg_match("/L/",$tmp) && isset($_POST['drop_own_mails'])){
+          $tmp = preg_replace("/L/","",$tmp);
+        }
       }
+
+      $opts = array(
+          "R"   => "use_mailsize_limit",
+          "S"   => "use_spam_filter",
+          "V"   => "use_vacation",
+          "C"   => "own_script",
+          "I"   => "only_local");
+
+      foreach($opts as $flag => $post){
+        if($this->acl_is_writeable("gosaMailDeliveryMode".$flag)){
+          if(!preg_match("/".$flag."/",$tmp) && isset($_POST[$post])){
+            $tmp.= $flag;
+          }elseif(preg_match("/".$flag."/",$tmp) && !isset($_POST[$post])){
+            $tmp = preg_replace("/".$flag."/","",$tmp);
+          }
+        }
+      }
+
+      $tmp= "[$tmp]";
+      if ($this->gosaMailDeliveryMode != $tmp){
+        $this->is_modified= TRUE;
+      }
+      $this->gosaMailDeliveryMode= $tmp;
 
       /* Collect data and re-assign it to the imapacl array */
-      if ($this->acl_is_writeable("permissions")){
+      if ($this->acl_is_writeable("acl")){
         $this->imapacl= array();
         $this->imapacl['%members%']= $_POST['member_permissions'];
         $this->imapacl['anyone']= $_POST['default_permissions'];
