@@ -571,13 +571,13 @@ class mailgroup extends plugin
         if ($nr == $count - 1){
           if($this->acl_is_writeable("acl")){
             $tmp.= "<input type=submit value=\""._("Add")."\" ".
-              "name=\"add_$nr\" $perm>";
+              "name=\"add_$nr\" >";
           }
         }
         if ($count > 3){
           if($this->acl_is_writeable("acl")){
             $tmp.= "<input type=submit value=\""._("Remove")."\" ".
-              "name=\"del_$nr\" $perm></td></tr>";        
+              "name=\"del_$nr\" ></td></tr>";        
           }
         }
       }
