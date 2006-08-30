@@ -295,6 +295,15 @@ class mailgroup extends plugin
 
     /* Load templating engine */
     $smarty= get_smarty();
+
+    /* Assign acls */
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $name => $translation) {
+      $smarty->assign($name."ACL",$this->getacl($name));
+    }
+
+
+
     if ($_SESSION['js']==FALSE){
       $smarty->assign("javascript", "false");
     } else {
@@ -350,8 +359,7 @@ class mailgroup extends plugin
 
     /* Finished adding of locals? */
     if (isset($_POST['add_locals_finish'])){
-      if (count ($_POST['local_list']) &&
-          chkacl ($this->acl, "gosaMailForwardingAddress") == ""){
+      if (count ($_POST['local_list']) && $this->acl_is_writeable("gosaMailForwardingAddress")){
 
         /* Walk through list of forwarders, ignore own addresses */
         foreach ($_POST['local_list'] as $val){
@@ -385,7 +393,7 @@ class mailgroup extends plugin
         } else {
 
           /* Add it */
-          if (chkacl ($this->acl, "gosaMailForwardingAddress") == ""){
+          if ($this->acl_is_writeable("gosaMailForwardingAddress")){
             $this->addForwarder ($address);
           }
 
@@ -395,8 +403,7 @@ class mailgroup extends plugin
 
     /* Delete forward email addresses */
     if (isset($_POST['delete_forwarder'])){
-      if (count($_POST['forwarder_list'])
-          && chkacl ($this->acl, "gosaMailForwardingAddress") == ""){
+      if (count($_POST['forwarder_list'])&& $this->acl_is_writeable("gosaMailForwardingAddress")){
 
         $this->delForwarder ($_POST['forwarder_list']);
       }
@@ -404,8 +411,7 @@ class mailgroup extends plugin
 
     /* Add alternate email addresses */
     if (isset($_POST['add_alternate'])){
-      if ($_POST['alternate_address'] != "" &&
-          chkacl ($this->acl, "gosaMailAlternateAddress") == ""){
+      if ($_POST['alternate_address'] != "" && $this->acl_is_writeable("gosaMailAlternateAddress")){
 
         if (!is_email($_POST['alternate_address'])){
           print_red (_("You're trying to add an invalid email address to the list of alternate addresses."));
@@ -421,8 +427,7 @@ class mailgroup extends plugin
 
     /* Delete alternate email addresses */
     if (isset($_POST['delete_alternate']) && isset ($_POST['alternates_list'])){
-      if (count($_POST['alternates_list']) &&
-          chkacl ($this->acl, "gosaMailAlternateAddress") == ""){
+      if (count($_POST['alternates_list']) && $this->acl_is_writeable("gosaMailAlternateAddress")){
 
         $this->delAlternate ($_POST['alternates_list']);
       }
@@ -507,7 +512,6 @@ class mailgroup extends plugin
     }
 
     /* Assemble normal permissions */
-    $smarty->assign("permissionsACL", chkacl($this->acl, "permissions"));
     if (isset($this->imapacl['anyone'])){
       $smarty->assign("default_permissions", $this->imapacl['anyone']);
     }
@@ -517,31 +521,54 @@ class mailgroup extends plugin
     }
 
     /* Assemble extra attributes */
-    $perm= chkacl($this->acl, "permissions");
+    $perm= $this->getacl( "permissions");
     $tmp= "";
     $nr= 0;
     $count= count($this->imapacl);
     $this->indexed_user= array();
     $this->indexed_acl= array();
     foreach($this->imapacl as $user => $acl){
+
+      /* Add additional acl settings */
       if ($user != "anyone" && $user != "%members%"){
-        $tmp.= "<tr><td><input name=\"user_$nr\" size=20 maxlength=60 ".
-          "value=\"$user\" $perm></td><td><select size=\"1\" name=\"perm_$nr\" $perm>";
-        foreach ($this->perms as $key => $value){
-          if ($acl == $key){
-            $tmp.= "<option value=$key selected>$value</option>";
-          } else {
-            $tmp.= "<option value=$key>$value</option>";
+
+        $Dis  = "";
+        if(!preg_match("/w/",$perm)){
+          $Dis = " disabled ";
+        }
+  
+        $tmp.= "<tr>  
+                 <td>
+                  <input name=\"user_$nr\" size=20 maxlength=60 value=\"$user\" ".$Dis.">
+                 </td>
+                 <td>
+                 <select size=\"1\" name=\"perm_$nr\" ".$Dis.">";
+
+        /* Add acl options for this additional acl setting */
+        if(preg_match("/r/",$perm)){
+          foreach ($this->perms as $key => $value){
+            if ($acl == $key){
+              $tmp.= "<option value=$key selected>$value</option>";
+            } else {
+              $tmp.= "<option value=$key>$value</option>";
+            }
           }
         }
         $tmp.= "</select>&nbsp;";
+
+
+        
         if ($nr == $count - 1){
-          $tmp.= "<input type=submit value=\""._("Add")."\" ".
-            "name=\"add_$nr\" $perm>";
+          if($this->acl_is_writeable("acl")){
+            $tmp.= "<input type=submit value=\""._("Add")."\" ".
+              "name=\"add_$nr\" $perm>";
+          }
         }
         if ($count > 3){
-          $tmp.= "<input type=submit value=\""._("Remove")."\" ".
-            "name=\"del_$nr\" $perm></td></tr>";
+          if($this->acl_is_writeable("acl")){
+            $tmp.= "<input type=submit value=\""._("Remove")."\" ".
+              "name=\"del_$nr\" $perm></td></tr>";        
+          }
         }
       }
       $this->indexed_user[$nr]= $user;
@@ -558,11 +585,15 @@ class mailgroup extends plugin
     foreach(array("gosaMailServer", "gosaMailQuota", "perms", "mail",
           "gosaMailAlternateAddress", "gosaMailForwardingAddress") as $val){
       $smarty->assign("$val", $this->$val);
-      $smarty->assign("$val"."ACL", chkacl($this->acl, "$val"));
     }
     if (is_numeric($this->gosaMailQuota) && $this->gosaMailQuota != 0){
-      $smarty->assign("quotausage", progressbar(round(($this->quotaUsage * 100)/ $this->gosaMailQuota),100,15,true));
-      $smarty->assign("quotadefined", "true");
+      if($this->acl_is_readable("gosaMailQuota")){
+        $smarty->assign("quotausage", progressbar(round(($this->quotaUsage * 100)/ $this->gosaMailQuota),100,15,true));
+        $smarty->assign("quotadefined", "true");
+      }else{
+        $smarty->assign("quotadefined", "true");
+        $smarty->assign("quotausage", "-");
+      }
     } else {
       $smarty->assign("quotadefined", "false");
     }
@@ -657,12 +688,12 @@ I: Only insider delivery */
       }
       $tmp= "[$tmp]";
 
-      if (chkacl ($this->acl, "gosaMailDeliveryMode") == ""){
+      if ($this->getacl("gosaMailDeliveryMode")){
         $this->gosaMailDeliveryMode= $tmp;
       }
 
       /* Collect data and re-assign it to the imapacl array */
-      if (chkacl($this->acl, "permissions") == ""){
+      if ($this->acl_is_writeable("permissions")){
         $this->imapacl= array();
         $this->imapacl['%members%']= $_POST['member_permissions'];
         $this->imapacl['anyone']= $_POST['default_permissions'];
@@ -812,7 +843,7 @@ I: Only insider delivery */
     }
   
     /* Check quota */
-    if ($this->gosaMailQuota != '' && chkacl ($this->acl, "gosaMailQuota") == ""){
+    if ($this->gosaMailQuota != '' && $this->acl_is_writeable("gosaMailQuota")){
       if (!is_numeric($this->gosaMailQuota)) {
         $message[]= _("Value in 'Quota size' is not valid.");
       } else {
@@ -821,7 +852,7 @@ I: Only insider delivery */
     }
 
     /* Check rejectsize for integer */
-    if ($this->gosaMailMaxSize != '' && chkacl ($this->acl, "gosaMailQuota") == ""){
+    if ($this->gosaMailMaxSize != '' && $this->acl_is_writeable("gosaMailQuota")){
       if (!is_numeric($this->gosaMailMaxSize)){
         $message[]= _("Please specify a vaild mail size for mails to be rejected.");
       } else {

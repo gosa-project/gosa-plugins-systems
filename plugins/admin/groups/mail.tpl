@@ -8,15 +8,21 @@
    <table summary="">
     <tr>
      <td><LABEL for="mail">{t}Primary address{/t}</LABEL>{$must}</td>
-     <td><input id="mail" name="mail" size="25" maxlength="65" {$mailACL} value="{$mail}" title="{t}Primary mail address for this shared folder{/t}"></td>
+     <td>
+{render acl=$mailACL}
+	<input id="mail" name="mail" size="25" maxlength="65" value="{$mail}" title="{t}Primary mail address for this shared folder{/t}">
+{/render}
+     </td>
     </tr>
     <tr>
      <td><LABEL for="gosaMailServer">{t}Server{/t}</LABEL></td>
      <td>
-      <select size="1" name="gosaMailServer" {$gosaMailServerACL} title="{t}Select mail server to place user on{/t}">
+{render acl=$gosaMailServerACL}
+      <select size="1" name="gosaMailServer" title="{t}Select mail server to place user on{/t}">
        {html_options values=$mailServers output=$mailServers selected=$gosaMailServer}
 	   <option disabled>&nbsp;</option>
       </select>
+{/render}
      </td>
     </tr>
     <tr>
@@ -26,30 +32,49 @@
      </td>
      <td>
       <br>
-      {if $quotadefined eq "true"}
-      {$quotausage}
-      {else}
-      {t}not defined{/t}
-      {/if}
+{if $quotadefined eq "true"}
+	{$quotausage}
+{else}
+      	{t}not defined{/t}
+{/if}
      </td>
     </tr>
     <tr>
      <td>{t}Quota size{/t}</td>
-     <td><input id="gosaMailQuota" name="gosaMailQuota" size="6" align=middle maxlength="30" {$gosaMailQuotaACL} value="{$gosaMailQuota}"> MB</td>
+     <td>
+{render acl=$gosaMailQuotaACL}
+	<input id="gosaMailQuota" name="gosaMailQuota" size="6" align=middle maxlength="30" value="{$gosaMailQuota}">
+{/render}
+ {t}MB{/t}
+</td>
     </tr>
    </table>
      
   </td>
   <td style="vertical-align:top;padding-left:2px;">
    <h2><img class="center" alt="" align="middle" src="images/alternatemail.png"> {t}Alternative addresses{/t}</h2>
+
+{render acl=$gosaMailAlternateAddressACL}
    <select style="width:100%;" name="alternates_list[]" size=10 multiple title="{t}List of alternative mail addresses{/t}">
     {html_options values=$gosaMailAlternateAddress output=$gosaMailAlternateAddress}
 	<option disabled>&nbsp;</option>
    </select>
+{/render}
+
    <br>
-   <input name="alternate_address" size="30" align=middle maxlength="60" {$gosaMailAlternateAddressACL} value="">
-   <input type=submit value="{t}Add{/t}" name="add_alternate" {$gosaMailAlternateAddressACL}>&nbsp;
-   <input type=submit value="{t}Delete{/t}" name="delete_alternate" {$gosaMailAlternateAddressACL}>
+
+{render acl=$gosaMailAlternateAddressACL}
+   <input name="alternate_address" size="30" align=middle maxlength="60" value="">
+{/render}
+
+{render acl=$gosaMailAlternateAddressACL}
+   <input type=submit value="{t}Add{/t}" name="add_alternate">&nbsp;
+{/render}
+
+{render acl=$gosaMailAlternateAddressACL}
+   <input type=submit value="{t}Delete{/t}" name="delete_alternate">
+{/render}
+
   </td>
  </tr>
 
@@ -66,18 +91,22 @@
     <tr>
      <td><LABEL for="default_permissions">{t}Default permission{/t}</LABEL></td>
      <td>
-      <select size="1" id="default_permissions" name="default_permissions" {$permissionsACL}>
+{render acl=$aclACL}
+      <select size="1" id="default_permissions" name="default_permissions">
        {html_options options=$perms selected=$default_permissions}
 	   <option disabled>&nbsp;</option>
       </select>
+{/render}
      </td>
     </tr>
     <tr>
      <td><LABEL for="member_permissions">{t}Member permission{/t}</LABEL></td>
      <td>
-      <select id="member_permissions" size="1" name="member_permissions" {$permissionsACL}>
+{render acl=$aclACL}
+      <select id="member_permissions" size="1" name="member_permissions">
        {html_options options=$perms selected=$member_permissions}
       </select>
+{/render}
      </td>
     </tr>
 	{$plusattributes}
@@ -85,16 +114,32 @@
       
   </td>
   <td style="vertical-align:top;width:50%">
-   <h2><img class="center" alt="" align="middle" src="images/envelope.png"> {t}Forward messages to non group members{/t}</h2>
+   <h2>
+	<img class="center" alt="" align="middle" src="images/envelope.png">
+	{t}Forward messages to non group members{/t}
+   </h2>
+
+{render acl=$gosaMailForwardingAddressACL}
    <select style="width:100%;" name="forwarder_list[]" size=10 multiple>
     {html_options values=$gosaMailForwardingAddress output=$gosaMailForwardingAddress}
 	<option disabled>&nbsp;</option>
    </select>
+{/render}
+
    <br>
-   <input name="forward_address" size=20 align=middle maxlength=65 {$gosaMailForwardingAddressACL} value="">
-   <input type=submit value="{t}Add{/t}" name="add_forwarder" {$gosaMailForwardingAddressACL}>&nbsp;
-   <input type=submit value="{t}Add local{/t}" name="add_local_forwarder" {$gosaMailForwardingAddressACL}>&nbsp;
-   <input type=submit value="{t}Delete{/t}" name="delete_forwarder" {$gosaMailForwardingAddressACL}>
+
+{render acl=$gosaMailForwardingAddressACL}
+   <input name="forward_address" size=20 align=middle maxlength=65 value="">
+{/render}
+{render acl=$gosaMailForwardingAddressACL}
+   <input type=submit value="{t}Add{/t}" name="add_forwarder">&nbsp;
+{/render}
+{render acl=$gosaMailForwardingAddressACL}
+   <input type=submit value="{t}Add local{/t}" name="add_local_forwarder">&nbsp;
+{/render}
+{render acl=$gosaMailForwardingAddressACL}
+   <input type=submit value="{t}Delete{/t}" name="delete_forwarder">
+{/render}
   </td>
  </tr>
 </table>
