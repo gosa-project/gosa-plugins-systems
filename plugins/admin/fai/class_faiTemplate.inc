@@ -24,8 +24,10 @@ class faiTemplate extends plugin
   var $subClassName     = "faiTemplateEntry";      
 
   /* Attributes to initialise for each subObject */
-  var $subAttributes    = array("cn","description","FAItemplateFile","FAItemplatePath","FAIowner","FAImode"); 
+  var $subAttributes    = array("cn","description","FAItemplatePath","FAIowner","FAImode");
+  var $sub_Load_Later   = array("FAItemplateFile"); 
   var $sub64coded       = array();
+  var $subBinary        = array("FAItemplateFile");
 
   /* Specific attributes */
   var $cn               = "";       // The class name for this object
@@ -73,34 +75,47 @@ class faiTemplate extends plugin
       $ldap->search("(&(objectClass=FAIclass)(objectClass=".$this->subClass."))",$attrs_to_search);
 
       while($object = $ldap->fetch()){
-        
-        /* Skip objects, that are tagged as removed */
-        if(isset($object['FAIstate'][0])){
-          if(preg_match("/removed$/",$object['FAIstate'][0])){
-            continue;
-          }
-        }      
-
         /* Set status for save management */
-        foreach($this->subAttributes as $attrs){
-          if(!isset($object[$attrs][0])){
-            $this->SubObjects[$object['cn'][0]][$attrs]="";
-          }else{
-            $this->SubObjects[$object['cn'][0]][$attrs]=$object[$attrs][0];
-          }
-        }
-
-        foreach($this->sub64coded as $codeIt){
-          $this->SubObjects[$object['cn'][0]][$codeIt]= base64_decode($this->SubObjects[$object['cn'][0]][$codeIt]);
-        }       
-
-        $this->SubObjects[$object['cn'][0]]['FAItemplateFile']= $ldap->get_attribute($object['dn'], "FAItemplateFile",$r_array=0);
-        
-        $this->SubObjects[$object['cn'][0]]['status']= "edited";
-        $this->SubObjects[$object['cn'][0]]['dn']= $object['dn'];
+        $objects = array();
+        $objects['status']      = "FreshLoaded";
+        $objects['dn']          = $object['dn'];
+        $objects                = $this->get_object_attributes($objects,$this->subAttributes);
+        $this->SubObjects[$objects['cn']] = $objects;
       }
     }
   }
+
+
+  /* Reload some attributes */
+  function get_object_attributes($object,$attributes)
+  {
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd($this->config->current['BASE']);
+    $ldap->cat($object['dn'],$attributes);
+    $tmp  = $ldap->fetch();
+
+    foreach($attributes as $attrs){
+      if(isset($tmp[$attrs][0])){
+        $var = $tmp[$attrs][0];
+
+        /* Check if we must decode some attributes */
+        if(in_array_ics($attrs,$this->sub64coded)){
+          $var = base64_decode($var);
+        }
+
+        /*  check if this is a binary entry */
+        if(in_array_ics($attrs,$this->subBinary)){
+          $var = addslashes( $ldap->get_attribute($object['dn'], $attrs,$r_array=0));
+        }
+
+        /* Fix slashes */
+        $var = addslashes($var);
+        $object[$attrs] = $var;
+      }
+    }
+    return($object);
+  }
+
 
   function execute()
   {
@@ -119,9 +134,14 @@ class faiTemplate extends plugin
         $once = false;
         $entry = preg_replace("/^editscript_/","",$name);
         $entry = base64_decode(preg_replace("/_.*/","",$entry));
-        $this->dialog= new $this->subClassName($this->config,$this->dn,$this->SubObjects[$entry]);
-        $this->dialog->acl = $this->acl;
-        $_SESSION['objectinfo'] = $this->SubObjects[$entry]['dn'];
+
+        $obj  = $this->SubObjects[$entry];
+        if($obj['status'] == "FreshLoaded"){
+          $obj  = $this->get_object_attributes($obj,$this->sub_Load_Later);
+        }
+        $this->dialog= new $this->subClassName($this->config,$this->dn,$obj);
+
+        $_SESSION['objectinfo'] = $obj['dn'];
         $this->dialog->parent = &$this;
         $this->is_dialog=true;
       }
@@ -129,7 +149,7 @@ class faiTemplate extends plugin
         $once = false;
         $entry = preg_replace("/^deletescript_/","",$name);
         $entry = base64_decode(preg_replace("/_.*/","",$entry));
-        if($this->SubObjects[$entry]['status'] == "edited"){
+        if(($this->SubObjects[$entry]['status'] == "edited")||($this->SubObjects[$entry]['status'] == "FreshLoaded")){
           $this->SubObjects[$entry]['status']= "delete";
         }else{
           unset($this->SubObjects[$entry]);
@@ -157,9 +177,14 @@ class faiTemplate extends plugin
           print_red($msg);
         }
       }else{
+        /* Get return object */
         $obj = $this->dialog->save();
         if(isset($obj['remove'])){
-          if($this->SubObjects[$obj['remove']['from']]['status']=="edited"){
+
+          $old_stat = $this->SubObjects[$obj['remove']['from']]['status'];
+
+          /* Depending on status, set new status */
+          if($old_stat == "edited" || $old_stat == "FreshLoaded"){
             $this->SubObjects[$obj['remove']['from']]['status'] = "delete";
           }elseif($this->SubObjects[$obj['remove']['from']]['status']=="new"){
             unset($this->SubObjects[$obj['remove']['from']]);
@@ -168,6 +193,9 @@ class faiTemplate extends plugin
           $this->SubObjects[$obj['remove']['to']] = $obj;
           unset($this->SubObjects[$obj['remove']['to']]['remove']);
         }else{
+          if($obj['status'] == "FreshLoaded"){
+            $obj['status'] = "edited";
+          }
           $this->SubObjects[$obj['cn']]=$obj;
         }
         $this->is_dialog=false;
@@ -345,6 +373,12 @@ class faiTemplate extends plugin
      */
     $Objects = array();
     foreach($this->SubObjects as $name => $obj){
+      if($obj['status'] == "FreshLoaded"){
+        unset($this->SubObjects[$name]);
+      }
+    }
+
+    foreach($this->SubObjects as $name => $obj){
       if($obj['status'] == "delete"){
         $Objects[$name] = $obj; 
       }
@@ -361,7 +395,8 @@ class faiTemplate extends plugin
         $obj[$codeIt]=base64_encode($obj[$codeIt]);
       }
       $tmp = array();
-      foreach($this->subAttributes as $attrs){
+      $attributes = array_merge($this->sub_Load_Later,$this->subAttributes);
+      foreach($attributes as $attrs){
         if(empty($obj[$attrs])){
           $obj[$attrs] = array();
         }
