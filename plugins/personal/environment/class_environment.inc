@@ -197,11 +197,6 @@ class environment extends plugin
       $this->useProfile = false;
     }
 
-    /* Set to group environment if we editing a group */
-    if(!isset($this->parent)){
-      $this->is_group = true;
-    }
-
     /* Set resolutions */
     $this->gotoXResolutions = array("auto"=>_("auto"),
                                     "640x480"   =>  "640x480",
@@ -235,10 +230,26 @@ class environment extends plugin
 
   }
 
+
+  /* Detect type of edited object (user|group)*/
+  function detect_grouptype()
+  {
+    if((!isset($this->parent))&&(!$this->is_account)){
+      $this->is_group     = false;
+    }elseif((isset($this->parent))&&(!isset($this->parent->by_object['posixAccount']))){
+      $this->is_group     = true;
+    }else{
+      $this->is_group     = false;
+    }
+  }
+
+
   function execute()
   {
     /* Call parent execute */
     plugin::execute();
+
+    $this->detect_grouptype();
 
     /* Fill templating stuff */
     $smarty= get_smarty();
@@ -289,7 +300,6 @@ class environment extends plugin
        */
     }elseif((isset($this->parent))&&(!isset($this->parent->by_object['posixAccount']))){
       $smarty->assign("is_account","true");
-      $this->is_group     = true;
       $this->uid          = $this->cn;
       $this->attrs['uid'] = $this->cn;
 
@@ -327,8 +337,6 @@ class environment extends plugin
        *  Tell smarty that this accoutn is enabled 
        */
       $smarty->assign("is_account","true");
-
-      $this->is_group = false;
 
       /* Change state if needed */
       if (isset($_POST['modify_state'])){
@@ -908,6 +916,8 @@ class environment extends plugin
     /* Call common method to give check the hook */
     $message= plugin::check();
 
+    $this->detect_grouptype
+
     if(preg_match("/[^0-9]/",$this->gotoProfileQuota)) {
       $message[]=_("Please set a valid profile quota size.");
     } 
@@ -978,6 +988,8 @@ class environment extends plugin
      * 2.2 And each type has two modes, Admin (e.g. 'gotoUserAdminPrinter') and Normal 
      */
     
+    $this->detect_grouptype();
+
     if($this->add_del_printer_member_was_called){
 
       $types = array( "gotoUserPrinter"       => "AddUser",
