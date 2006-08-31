@@ -14,7 +14,6 @@ class termgroup extends plugin
   var $gotoNtpServers     = array();
   var $modes              = array();
   var $inheritTimeServer  = true;
-  var $acl                ;
   var $is_account		      = true; 
   var $orig_dn            = "";
   var $didAction          = FALSE;
@@ -38,10 +37,6 @@ class termgroup extends plugin
     $ldap= $config->get_ldap_link();
 
     $this->is_account = true;
-    $ui               = get_userinfo();
-    $acl              = get_permissions ($this->dn, $ui->subtreeACL);
-    $this->acl        = get_module_permission($acl, "group", $this->dn);
-
     $this->modes["active"]= _("Activated");
     $this->modes["locked"]= _("Locked");
 //    $this->modes["memcheck"]= _("Memory test");
@@ -109,7 +104,7 @@ class termgroup extends plugin
      /* Call common method to give check the hook */
     $message= plugin::check();
 
-    if (chkacl($this->acl, "create") != ""){
+    if ($this->acl_is_createable()){
       $message[]= _("You have no permissions to create a workstation on this 'Base'.");
     }
 
@@ -235,15 +230,18 @@ class termgroup extends plugin
     /* Set government mode */
     $smarty= get_smarty();
 
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $name => $translated) {
+      $smarty->assign($name."ACL",$this->getacl($name));
+    }
+
     foreach($this->attributes as $attr){
       $smarty->assign($attr,      $this->$attr);
-      $smarty->assign($attr."ACL",chkacl($this->acl,$this->$attr));
     }
 
     /* Variables */
     foreach(array("gotoMode","gotoNtpServer") as $val){
       $smarty->assign($val."_select", $this->$val);
-      $smarty->assign($val."ACL", chkacl($this->acl, $val));
     }
 
     $smarty->assign("actions", array("halt" => _("Switch off"), "reboot" => _("Reboot"),
@@ -256,7 +254,6 @@ class termgroup extends plugin
 
     $smarty->assign("inheritTimeServer",$this->inheritTimeServer);
     $smarty->assign("modes", $this->modes);
-    $smarty->assign("actionACL", chkacl($this->acl, 'action'));
 
     $tmp = array();
     foreach($this->gotoNtpServers as $server){

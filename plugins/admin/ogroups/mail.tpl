@@ -8,7 +8,11 @@
    <table summary="">
     <tr>
      <td><LABEL for="mail">{t}Primary address{/t}</LABEL>{$must}</td>
-     <td><input id="mail" name="mail" size=25 maxlength=65 {$mailACL} value="{$mail}" title="{t}Primary mail address for this distribution list{/t}"></td>
+     <td>
+{render acl=$mailACL}
+	<input id="mail" name="mail" size=50 maxlength=65 value="{$mail}" title="{t}Primary mail address for this distribution list{/t}">
+{/render}
+     </td>
     </tr>
    </table>
   </td>

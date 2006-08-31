@@ -48,9 +48,13 @@ class mailogroup extends plugin
     /* Initialize templating engine */
     $smarty= get_smarty();
 
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $name => $translation){
+      $smarty->assign($name."ACL",$this->getacl("mail"));
+    }
+
     /* Assign mail attribute */
     $smarty->assign("mail", $this->mail);
-    $smarty->assign("mailACL", chkacl($this->acl, "mail"));
 
     /* Show main page */
     return ($display.$smarty->fetch (get_template_path('mail.tpl', TRUE)));
@@ -149,7 +153,7 @@ class mailogroup extends plugin
   }
 
 
-     function plInfo()
+   function plInfo()
   {
     return (array(
           "plShortName"   => _("Mail"),

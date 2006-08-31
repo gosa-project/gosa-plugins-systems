@@ -3,7 +3,8 @@
 class ogrouptabs extends tabs
 {
   var $base= "";
-  
+  var $acl_category; 
+ 
   function reload($dd){
     $objects= preg_replace('/[\[\]]/', '', $dd);
     
@@ -117,6 +118,12 @@ class ogrouptabs extends tabs
       unset($this->by_name['reference']);
       $this->by_name['reference'] = $tmp;
     }
+
+    /* Reset acls */
+    $this->set_acl_base($this->base);
+    foreach($this->by_object as $name => $obj){
+      $this->by_object[$name]->set_acl_category($this->acl_category);
+    }
   }
 
   function execute(){
@@ -133,6 +140,7 @@ class ogrouptabs extends tabs
 
     tabs::tabs($config, $data, $dn, $category);
     $this->base= $this->by_object['ogroup']->base;
+    $this->acl_category = $category;
 
     /* Insert extra tabs for several object types - if present */
 

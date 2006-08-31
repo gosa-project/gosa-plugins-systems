@@ -12,18 +12,27 @@
 			   <table width="100%">
 				<tr>
 				 <td colspan="2" style='padding-top:5px;'><LABEL for="gotoNtpServerSelected">{t}NTP server{/t}</LABEL><br>
+{render acl=$gotoNtpServerACL}
 				  <select name="gotoNtpServerSelected[]" id="gotoNtpServerSelected" multiple size=5 style="width:100%;"
-						title="{t}Choose server to use for synchronizing time{/t}" {$gotoNtpServerACL} {if $inheritTimeServer} disabled {/if}>
+						title="{t}Choose server to use for synchronizing time{/t}" {if $inheritTimeServer} disabled {/if}>
 				   {html_options options=$gotoNtpServer_select}
 				  </select>
+{/render}
 				 <br>
-				  <select name="gotoNtpServers" id="gotoNtpServers" {$gotoNtpServerACL} {if $inheritTimeServer} disabled {/if} >
+{render acl=$gotoNtpServerACL}
+				  <select name="gotoNtpServers" id="gotoNtpServers" {if $inheritTimeServer} disabled {/if} >
 				   {html_options output=$gotoNtpServers values=$gotoNtpServers}
 				  </select>
-					<input type="submit" name="addNtpServer" value="{t}Add{/t}"     id="addNtpServer" {$gotoNtpServerACL}
+{/render}
+{render acl=$gotoNtpServerACL}
+					<input type="submit" name="addNtpServer" value="{t}Add{/t}"     id="addNtpServer"
 					 {if ($inheritTimeServer) || (!$gotoNtpServers)} disabled {/if}>
-					<input type="submit" name="delNtpServer" value="{t}Delete{/t}"  id="delNtpServer" {$gotoNtpServerACL}
+{/render}
+
+{render acl=$gotoNtpServerACL}
+					<input type="submit" name="delNtpServer" value="{t}Delete{/t}"  id="delNtpServer"
 					 {if ($inheritTimeServer) || (!$gotoNtpServer_select)} disabled {/if} >
+{/render}
 				 </td>
 				</tr>
 			   </table>
@@ -37,18 +46,22 @@
 				<tr>
 				 <td>{t}Mode{/t}</td>
 				 <td>
-				  <select name="gotoMode" title="{t}Select terminal mode{/t}" {$gotoModeACL}>
+{render acl=$gotoModeACL}
+				  <select name="gotoMode" title="{t}Select terminal mode{/t}">
 				   {html_options options=$modes selected=$gotoMode_select}
 				  </select>
+{/render}
 				 </td>
 				</tr>
 				<tr><td colspan="2">&nbsp;</td></tr>
 				<tr>
 				 <td><LABEL for="gotoSyslogServer">{t}Syslog server{/t}</LABEL></td>
 				 <td>
-				  <select id="gotoSyslogServer" name="gotoSyslogServer" title="{t}Choose server to use for logging{/t}" {$gotoSyslogServerACL}>
+{render acl=$gotoSyslogServerACL}
+				  <select id="gotoSyslogServer" name="gotoSyslogServer" title="{t}Choose server to use for logging{/t}">
 				   {html_options values=$syslogservers output=$syslogservers selected=$gotoSyslogServer_select}
 				  </select>
+{/render}
 				 </td>
 				</tr>
 				</table>
@@ -76,13 +89,17 @@
 				<table summary="">
 				 <tr>
 				  <td>
-				   <select size="1" name="saction" {$actionACL} title="{t}Select action to execute for this terminal{/t}">
+{render acl=$FAIstateACL}
+				   <select size="1" name="saction" {$FAIstateACL} title="{t}Select action to execute for this terminal{/t}">
 					<option>&nbsp;</option>
 					{html_options options=$actions}
 				   </select>
+{/render}
 				  </td>
 				  <td>
+{render acl=$FAIstateACL}
 				   <input type=submit name="action" value="{t}Execute{/t}">
+{/render}
 				  </td>
 				 </tr>
 				</table>
