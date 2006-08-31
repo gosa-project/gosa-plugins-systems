@@ -79,15 +79,34 @@ class divListGroup extends MultiSelectWindow
        which are shown in the listbox on top of the listbox
      */
     $options= "";
-    foreach ($this->config->idepartments as $key => $value){
-      if ($this->selectedBase == $key){
-        $options.= "<option selected='selected' value='$key'>$value</option>";
-      } else {
-        $options.= "<option value='$key'>$value</option>";
+
+
+    
+    /* Get all departments within this subtree */
+    $base = $this->config->current['BASE'];
+    $deps= get_list("(&(|(ou=*)(description=*))(objectClass=gosaDepartment))", $this->module, $base,
+                    array("ou", "description"), GL_SIZELIMIT | GL_SUBSEARCH);
+
+    /* Load possible departments */
+    $ui= get_userinfo();
+    $tdeps= $ui->get_module_departments("groups");
+
+    $ids = $this->config->idepartments;
+
+    foreach($deps as $dep){
+      if(isset($ids[$dep['dn']]) && in_array_ics($dep['dn'], $tdeps)){
+
+        $value = $ids[$dep['dn']];
+        if ($this->selectedBase == $dep['dn']){
+          $options.= "<option selected='selected' value='".$dep['dn']."'>$value</option>";
+        } else {
+          $options.= "<option value='".$dep['dn']."'>$value</option>";
+        }
       }
     }
 
-    if($this->parent->CopyPasteHandler){
+    /* Get copy & paste icon */
+    if(preg_match("/w/",$ui->get_permissions($this->selectedBase,"groups/group")) &&  $this->parent->CopyPasteHandler){
       $Copy_Paste = $this->parent->CopyPasteHandler->generatePasteIcon();
     }else{
       $Copy_Paste ="";
@@ -102,8 +121,14 @@ class divListGroup extends MultiSelectWindow
       " <input class='center' type='image' src='images/list_reload.png' align='middle' title='"._("Reload list")."' name='submit_department' alt='".        _("Submit")."'>&nbsp;".
       " <img class='center' src='images/list_seperator.png' alt='' height='16' width='1'>&nbsp;";
     $listhead .= $this->get_snapshot_header($this->selectedBase);
-    $listhead.=" <input type='image' class='center' src='images/list_new_group.png' title='"._("Create new group")."' alt='"._("New")."' name='group_new'>&nbsp;".
-      $Copy_Paste.
+
+    $acls  = $ui->get_permissions($this->selectedBase,"groups/group");
+    if(preg_match("/c/",$acls)) {
+      $listhead.=" <input type='image' class='center' src='images/list_new_group.png' 
+        title='"._("Create new group")."' alt='"._("New")."' name='group_new'>&nbsp;";
+    }
+
+    $listhead.=      $Copy_Paste.
       " <img class='center' src='images/list_seperator.png' alt='' height='16' width='1'>&nbsp;".
       _("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
       " <input type='image' class='center' src='images/list_submit.png' title='"._("Submit department")."' name='submit_department' alt='"._("Submit").
@@ -154,22 +179,31 @@ class divListGroup extends MultiSelectWindow
     // User and Template  Images
     $editlink = "<a href='?plug=".$_GET['plug']."&amp;id=%s&amp;act=edit_entry'>%s</a>";
 
+    $ui = get_userinfo();
+
     // Test Every Entry and generate divlist Array
     foreach($groups as $key => $val){
     
       /* Create action icons - copy & paste icons */
       $actions= "";
-      if($this->parent->CopyPasteHandler){
+      if(($this->parent->CopyPasteHandler) && preg_match("/w/",$ui->get_category_permissions($val['dn'],"group"))){
         $actions.= "<input class='center' type='image'
           src='images/editcut.png' alt='"._("cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
         $actions.= "<input class='center' type='image'
           src='images/editcopy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
       }
-      $actions.= "<input class='center' type='image'
-        src='images/edit.png' alt='"._("edit")."' name='group_edit_%KEY%' title='"._("Edit this entry")."'>";
+
+      if(preg_match("/r/",$ui->get_category_permissions($val['dn'],"groups"))){
+        $actions.= "<input class='center' type='image'
+          src='images/edit.png' alt='"._("edit")."' name='group_edit_%KEY%' title='"._("Edit this entry")."'>";
+      }
+
       $actions.= $this->GetSnapShotActions($val['dn']);
-      $actions.= "<input class='center' type='image'
-        src='images/edittrash.png' alt='"._("delete")."' name='group_del_%KEY%' title='"._("Delete this entry")."'>";
+
+      if(preg_match("/d/",$ui->get_permissions($val['dn'],"groups/group"))){
+        $actions.= "<input class='center' type='image'
+          src='images/edittrash.png' alt='"._("delete")."' name='group_del_%KEY%' title='"._("Delete this entry")."'>";
+      }
 
 
       $posix=$mail=$samba=$appl=$phone=$enviro=$empty;
