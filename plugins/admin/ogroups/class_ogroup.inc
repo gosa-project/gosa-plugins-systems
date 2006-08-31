@@ -85,12 +85,6 @@ class ogroup extends plugin
      $this->base = $_SESSION['CurrentMainBase'];
     }
 
-     /* set permissions */
-    $ui= get_userinfo();
-    $acl= get_permissions ($ui->dn, $ui->subtreeACL);
-    $this->acl= get_module_permission($acl, "ogroup", $ui->dn);
-
-
     /* Load member data */
     $this->reload();
   }
@@ -175,6 +169,12 @@ class ogroup extends plugin
 
     /* Load templating engine */
     $smarty= get_smarty();
+
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $name => $translation){
+      $smarty->assign($name."ACL",$this->getacl($name));
+    }
+
 
     /* Base select dialog */
     $once = true;
@@ -312,12 +312,6 @@ class ogroup extends plugin
     /* Fields */
     foreach ($this->attributes as $val){
       $smarty->assign("$val", $this->$val);
-      $smarty->assign("$val"."ACL", chkacl($this->acl, "$val"));
-    }
-
-    /* Assign ACL's */
-    foreach (array("base", "members") as $val){
-      $smarty->assign("$val"."ACL", chkacl($this->acl, "$val"));
     }
 
     return ($smarty->fetch (get_template_path('generic.tpl', TRUE)));
@@ -330,11 +324,6 @@ class ogroup extends plugin
     /* Save additional values for possible next step */
     if (isset($_POST['ogroupedit'])){
       plugin::save_object();
-
-      if (chkacl ($this->acl, "base") == "" && isset($_POST["base"])){
-        $this->base= $_POST["base"];
-      }
-
     }
   }
 
@@ -649,15 +638,13 @@ class ogroup extends plugin
       $message[]= _("There is already an object with this cn.");
     } 
 
-    $ui= get_userinfo();
-    $acl= get_permissions ($new_dn, $ui->subtreeACL);
-    $acl= get_module_permission($acl, "group", $new_dn);
-    if (chkacl($acl, "create") != ""){
+    print_a($this);
+    if ($this->acl_is_createable()){
       $message[]= _("You have no permissions to create a group on this 'Base'.");
     }
 
     /* must: cn */
-    if ($this->cn == "" && chkacl ($this->acl, "cn") == ""){
+    if ($this->cn == "" && $this->acl_is_writeable("cn")){
       $message[]= "The required field 'Name' is not set.";
     }
 
@@ -760,6 +747,7 @@ class ogroup extends plugin
                                                       "objectClass"  => "gosaGroupOfNames")),
           "plProvidedAcls"=> array(
             "cn"                => _("Name"),
+            "base"              => _("Base"),
             "description"       => _("Description"),
             "member"            => _("Member"))
           ));
