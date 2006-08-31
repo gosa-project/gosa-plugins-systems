@@ -128,10 +128,10 @@ class ogrouptabs extends tabs
     return ( $str);
   }  
 
-  function ogrouptabs($config, $data, $dn)
+  function ogrouptabs($config, $data, $dn,$category ="")
   {
 
-    tabs::tabs($config, $data, $dn);
+    tabs::tabs($config, $data, $dn, $category);
     $this->base= $this->by_object['ogroup']->base;
 
     /* Insert extra tabs for several object types - if present */

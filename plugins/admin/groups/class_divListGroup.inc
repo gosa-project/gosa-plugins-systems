@@ -199,11 +199,8 @@ class divListGroup extends MultiSelectWindow
           src='images/editcopy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
       }
 
-      if(preg_match("/r/",$ui->get_category_permissions($val['dn'],"groups"))){
-        $actions.= "<input class='center' type='image'
-          src='images/edit.png' alt='"._("edit")."' name='group_edit_%KEY%' title='"._("Edit this entry")."'>";
-      }
-
+      $actions.= "<input class='center' type='image'
+        src='images/edit.png' alt='"._("edit")."' name='group_edit_%KEY%' title='"._("Edit this entry")."'>";
 
       if(preg_match("/w/",$ui->get_permissions($val['dn'],"groups/group"))){
         $actions.= $this->GetSnapShotActions($val['dn']);

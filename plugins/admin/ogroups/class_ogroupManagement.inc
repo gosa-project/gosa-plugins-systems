@@ -156,8 +156,8 @@ class ogroupManagement extends plugin
       $this->dn= "new";
 
       /* Create new usertab object */
-      $this->ogroup= new ogrouptabs($this->config,
-          $this->config->data['TABS']['OGROUPTABS'], $this->dn);
+      $this->ogroup= new ogrouptabs($this->config,$this->config->data['TABS']['OGROUPTABS'], $this->dn,"ogroups");
+      $this->ogroup->set_acl_base($this->DivListOGroup->selectedBase);
     }
 
 
