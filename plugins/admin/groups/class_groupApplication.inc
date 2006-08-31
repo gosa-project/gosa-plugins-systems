@@ -687,7 +687,7 @@ class appgroup extends plugin
 
     if(!$this->acl_is_writeable("gosaMemberApplication")){
       $linkopen       = "<img class='center' src='images/folder.png' alt=\"\">&nbsp;<a href='?plug=".$_GET['plug']."&amp;act=open&amp;id=%s'>%s</a>";
-      $catremove      = "&nbsp;<img sry='images/empty.png' alt='&nbsp;'>";
+      $catremove      = "&nbsp;<img src='images/empty.png' alt='&nbsp;'>";
       $catupdown      = "";
     }else{
       $linkopen       = "<img class='center' src='images/folder.png' alt=\"\">&nbsp;<a href='?plug=".$_GET['plug']."&amp;act=open&amp;id=%s'>%s</a>";
