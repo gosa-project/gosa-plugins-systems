@@ -718,7 +718,7 @@ class group extends plugin
       $new_dn= $this->dn;
     }
 
-    if (!$this->acl_is_createable()){
+    if ($this->orig_dn == "new" && !$this->acl_is_createable()){
       $message[]= _("You have no permissions to create a group on this 'Base'.");
     }
 
