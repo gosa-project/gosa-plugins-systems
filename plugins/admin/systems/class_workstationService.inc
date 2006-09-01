@@ -256,6 +256,13 @@ class workservice extends plugin
     /* Show main page */
     $smarty= get_smarty();
 
+    /* Assign ACLs */
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $name => $translated){
+      $smarty->assign($name."ACL",$this->getacl($name));
+    }
+
+
     /* Arrays */ 
     foreach(array("XMethods", "XDrivers", "XResolutions", "XColordepths",
           "XKbModels", "XKbVariants",
@@ -277,13 +284,11 @@ class workservice extends plugin
           "gotoXKbVariant", "gotoXMouseType", "gotoXMouseport") as $val){
 
       $smarty->assign($val."_select", $this->$val);
-      $smarty->assign($val."ACL", chkacl($this->acl, $val));
     }
 
     /* Variables */
     foreach(array("gotoXHsync", "gotoXVsync") as $val){
       $smarty->assign($val, $this->$val);
-      $smarty->assign($val."ACL", chkacl($this->acl, $val));
     }
     $smarty->assign("staticAddress", "");
 
@@ -298,9 +303,14 @@ class workservice extends plugin
 
     /* Phone stuff */
     $smarty->assign ("goFonHardware", $this->goFonHardware);
-    $hl= "<select size=\"1\" name=\"goFonHardware\" title=\"".
-      _("Choose the phone located at the current terminal")."\" ".
-      chkacl($this->acl, "goFonHardware").">\n";
+
+    $perms = "";
+    if($this->acl_is_writeable("goFonHardware")){
+      $perms = " disabled ";
+    }
+
+    $hl= "<select size=\"1\" name=\"goFonHardware\" ".$perms." title=\"".
+      _("Choose the phone located at the current terminal")."\" >";
     foreach ($this->hardware_list as $cn => $description){
       if ($cn == $this->goFonHardware){
         $selected= "selected";
@@ -317,7 +327,6 @@ class workservice extends plugin
     $hl.= "</select>\n";
     $smarty->assign ("hardware_list", $hl);
     $smarty->assign ("gotoXMonitor", $this->gotoXMonitor);
-    $smarty->assign("AutoSyncACL",chkacl($this->acl,"AutoSync"));
 
     if($this->AutoSync){
       $smarty->assign("AutoSyncCHK"," checked ");
@@ -364,30 +373,31 @@ class workservice extends plugin
 
         /* Check vsync for correct usage */
         $val= preg_replace ("/\s/", "", $this->gotoXVsync);
-        if (!preg_match ("/^\d+(\.\d+)?([-]\d+(\.\d+)?)?$/", $val)
-            && chkacl ($this->acl, "gotoXVsync") == ""){
 
-          $message[]= _("Please specify a valid VSync range.");
-        } elseif (chkacl ($this->acl, "gotoXVsync") == ""){
-          list($v1,$v2)= preg_split ("/[-+]/", $val);
-          if ($v2 != ""){
-            if ($v1 > $v2){
-              $message[]= _("Please specify a valid VSync range.");
+        if($this->acl_is_writeable("gotoXVsync")){
+          if (!preg_match ("/^\d+(\.\d+)?([-]\d+(\.\d+)?)?$/", $val)){
+            $message[]= _("Please specify a valid VSync range.");
+          } else{
+            list($v1,$v2)= preg_split ("/[-+]/", $val);
+            if ($v2 != ""){
+              if ($v1 > $v2){
+                $message[]= _("Please specify a valid VSync range.");
+              }
             }
           }
         }
 
         /* Check hsync for correct usage */
         $val= preg_replace ("/\s/", "", $this->gotoXHsync);
-        if (!preg_match ("/^\d+(\.\d+)?([-]\d+(\.\d+)?)?$/", $val)
-            && chkacl ($this->acl, "gotoXHsync") == ""){
-
-          $message[]= _("Please specify a valid HSync range.");
-        } elseif (chkacl ($this->acl, "gotoXHsync") == ""){
-          list($v1,$v2)= preg_split ("/[-+]/", $val);
-          if ($v2 != ""){
-            if ($v1 > $v2){
-              $message[]= _("Please specify a valid HSync range.");
+        if($this->acl_is_writeable("gotoXHsync")){
+          if (!preg_match ("/^\d+(\.\d+)?([-]\d+(\.\d+)?)?$/", $val)){
+            $message[]= _("Please specify a valid HSync range.");
+          } else{
+            list($v1,$v2)= preg_split ("/[-+]/", $val);
+            if ($v2 != ""){
+              if ($v1 > $v2){
+                $message[]= _("Please specify a valid HSync range.");
+              }
             }
           }
         }
@@ -452,6 +462,7 @@ class workservice extends plugin
             "gotoXColordepth"       => _("Gfx color depth"),
             "gotoXHsync"            => _("Hsync"),
             "gotoXVsync"            => _("Vsync"),
+            "AutoSync"              => _("Use DDC"),
             "gotoScannerEnable"     => _("Scanner enabled"),
             "gotoXKbModel"          => _("Keyboard model"),
             "gotoXKbLayout"         => _("Keyboard layout"),

@@ -6,25 +6,37 @@
     <tr>
      <td><LABEL for="gotoXKbModel">{t}Model{/t}</LABEL></td>
      <td>
-      <select id="gotoXKbModel" name="gotoXKbModel" title="{t}Choose keyboard model{/t}" {$gotoXKbModelACL}>
+
+{render acl=$gotoXKbModelACL}
+      <select id="gotoXKbModel" name="gotoXKbModel" title="{t}Choose keyboard model{/t}">
        {html_options options=$XKbModels selected=$gotoXKbModel_select}
       </select>
+{/render}
+
      </td>
     </tr>
     <tr>
      <td><LABEL for="gotoXKbLayout">{t}Layout{/t}</LABEL></td>
      <td>
-      <select id="gotoXKbLayout" name="gotoXKbLayout" title="{t}Choose keyboard layout{/t}" {$gotoXKbLayoutACL}>
+
+{render acl=$gotoXKbLayoutACL}
+      <select id="gotoXKbLayout" name="gotoXKbLayout" title="{t}Choose keyboard layout{/t}">
        {html_options options=$XKbLayouts selected=$gotoXKbLayout_select}
       </select>
+{/render}
+
      </td>
     </tr>
     <tr>
      <td><LABEL for="gotoXKbVariant">{t}Variant{/t}</LABEL></td>
      <td>
-      <select id="gotoXKbVariant" name="gotoXKbVariant" title="{t}Choose keyboard variant{/t}" {$gotoXKbVariantACL}>
+
+{render acl=$gotoXKbVariantACL}
+      <select id="gotoXKbVariant" name="gotoXKbVariant" title="{t}Choose keyboard variant{/t}">
        {html_options options=$XKbVariants selected=$gotoXKbVariant_select}
       </select>
+{/render}
+
      </td>
     </tr>
    </table>
@@ -41,17 +53,25 @@
     <tr>
      <td><LABEL for="gotoXMouseType">{t}Type{/t}</LABEL></td>
      <td>
-      <select name="gotoXMouseType" id="gotoXMouseType" title="{t}Choose mouse type{/t}" {$gotoXMouseTypeACL}>
+
+{render acl=$gotoXMouseTypeACL}
+      <select name="gotoXMouseType" id="gotoXMouseType" title="{t}Choose mouse type{/t}">
        {html_options options=$MouseTypes selected=$gotoXMouseType_select}
       </select>
      </td>
+{/render}
+
     </tr>
     <tr>
      <td><LABEL for="gotoXMouseport">{t}Port{/t}</LABEL></td>
      <td>
-      <select id="gotoXMouseport" name="gotoXMouseport" title="{t}Choose mouse port{/t}" {$gotoXMouseportACL}>
+
+{render acl=$gotoXMouseportACL}
+      <select id="gotoXMouseport" name="gotoXMouseport" title="{t}Choose mouse port{/t}">
        {html_options options=$MousePorts selected=$gotoXMouseport_select}
       </select>
+{/render}
+
      </td>
     </tr>
    </table>
@@ -67,7 +87,11 @@
    <table style="width:100%" border=0 summary="">
     <tr>
      <td>{t}Telephone{/t}&nbsp;
+
+{render acl=$goFonHardwareACL}
 	  {$hardware_list}
+{/render}
+
      </td>
     </tr>
    </table>
@@ -85,25 +109,37 @@
     <tr>
      <td><LABEL for="gotoXDriver">{t}Driver{/t}</LABEL></td>
      <td>
-      <select id="gotoXDriver" name="gotoXDriver" title="{t}Choose graphic driver that is needed by the installed graphic board{/t}" {$gotoXDriverACL}>
+
+{render acl=$gotoXDriverACL}
+      <select id="gotoXDriver" name="gotoXDriver" title="{t}Choose graphic driver that is needed by the installed graphic board{/t}">
        {html_options values=$XDrivers output=$XDrivers selected=$gotoXDriver_select}
       </select>
+{/render}
+
      </td>
     </tr>
     <tr>
      <td><LABEL for="gotoXResolution">{t}Resolution{/t}</LABEL></td>
      <td>
-      <select id="gotoXResolution" name="gotoXResolution" title="{t}Choose screen resolution used in graphic mode{/t}" {$gotoXResolutionACL}>
+
+{render acl=$gotoXResolutionACL}
+      <select id="gotoXResolution" name="gotoXResolution" title="{t}Choose screen resolution used in graphic mode{/t}">
        {html_options options=$XResolutions selected=$gotoXResolution_select}
       </select>
+{/render}
+
      </td>
     </tr>
     <tr>
      <td><LABEL for="gotoXColordepth">{t}Color depth{/t}</LABEL></td>
      <td>
-      <select id="gotoXColordepth" name="gotoXColordepth" title="{t}Choose colordepth used in graphic mode{/t}" {$gotoXColordepthACL}>
+
+{render acl=$gotoXColordepthACL}
+      <select id="gotoXColordepth" name="gotoXColordepth" title="{t}Choose colordepth used in graphic mode{/t}">
        {html_options options=$XColordepths selected=$gotoXColordepth_select}
       </select>
+{/render}
+
      </td>
     </tr>
    </table>
@@ -121,18 +157,36 @@
      <td>{if $gotoXMonitor==""}{t}unknown{/t}{/if}{$gotoXMonitor}</td>
     </tr>
     <tr>
-    	<td><input type="checkbox" name="AutoSync" value="1" {$AutoSyncACL} {$AutoSyncCHK} onChange="changeState('gotoXHsync');changeState('gotoXVsync');"></td>
+    	<td>
+
+{render acl=$AutoSyncACL}
+	 <input type="checkbox" name="AutoSync" value="1" {$AutoSyncCHK} onChange="changeState('gotoXHsync');changeState('gotoXVsync');">
+{/render}
+
+        </td>
 	<td>{t}Use DDC for automatic detection{/t}</td>
     </tr>
     <tr>
      <td><LABEL for="gotoXHsync">{t}HSync{/t}</LABEL></td>
-     <td><input id="gotoXHsync" name="gotoXHsync" size=10 maxlength=60 {$gotoXHsyncACL} {$hiddenState}
-                value="{$gotoXHsync}" title="{t}Horizontal refresh frequency for installed monitor{/t}"> kHz</td>
+     <td>
+
+{render acl=$gotoXHsyncACL}
+	<input id="gotoXHsync" name="gotoXHsync" size=10 maxlength=60 {$hiddenState}
+                value="{$gotoXHsync}" title="{t}Horizontal refresh frequency for installed monitor{/t}"> kHz
+{/render}
+
+     </td>
     </tr>
     <tr>
      <td><LABEL for="gotoXVsync">{t}VSync{/t}</LABEL></td>
-     <td><input id="gotoXVsync"  name="gotoXVsync" size=10 maxlength=60 {$gotoXVsyncACL} {$hiddenState}
-                value="{$gotoXVsync}" title="{t}Vertical refresh frequency for installed monitor{/t}"> Hz</td>
+     <td>
+
+{render acl=$gotoXVsyncACL}
+	<input id="gotoXVsync"  name="gotoXVsync" size=10 maxlength=60 {$hiddenState}
+                value="{$gotoXVsync}" title="{t}Vertical refresh frequency for installed monitor{/t}"> Hz
+{/render}
+
+     </td>
     </tr>
    </table>
 
@@ -145,7 +199,11 @@
   
 
    <h2><img class="center" alt="" align="middle" src="images/scanner.png"> {t}Scan device{/t}</h2>
-   <input type=checkbox name="gotoScannerEnable" value="1" title="{t}Select to start SANE scan service on terminal{/t}" {$gotoScannerEnable} {$gotoScannerEnableACL}>
+
+{render acl=$gotoScannerEnableACL}
+   <input type=checkbox name="gotoScannerEnable" value="1" title="{t}Select to start SANE scan service on terminal{/t}" {$gotoScannerEnable}>
+{/render}
+
    {t}Provide scan services{/t}
    <br>
 	</td>
