@@ -7,20 +7,28 @@
     <tr>
      <td><LABEL for="gotoBootKernel">{t}Boot kernel{/t}</LABEL></td>
      <td style="width:70%">
-        <select id="gotoBootKernel" name="gotoBootKernel" {$gotoBootKernelACL}>
+{render acl=$gotoBootKernelACL}
+        <select id="gotoBootKernel" name="gotoBootKernel">
          {html_options options=$gotoBootKernels selected=$gotoBootKernel}
          <option disabled>&nbsp;</option>
 	</select>
+{/render}
       </td>
     </tr>
     <tr>
      <td><LABEL for="customParameters">{t}Custom options{/t}</LABEL></td>
-     <td><input name="customParameters" id="customParameters" size=25 maxlength=500 {$gotoKernelParametersACL}
-                value="{$customParameters}" title="{t}Enter any parameters that should be passed to the kernel as append line during bootup{/t}"></td>
+     <td>
+{render acl=$gotoKernelParametersACL}
+	<input name="customParameters" id="customParameters" size=25 maxlength=500
+                value="{$customParameters}" title="{t}Enter any parameters that should be passed to the kernel as append line during bootup{/t}">
+{/render}
+     </td>
     </tr>
     <tr>
      <td colspan="2" style='vertical-align:top;padding-top:3px;'><LABEL for="gotoLdapServer">{t}LDAP server{/t}</LABEL><br>
+{render acl=$gotoLdapServerACL}
 	  {$SelectBoxLdapServer}	
+{/render}
      </td>
     </tr>
    </table>
@@ -48,9 +56,11 @@
 			</tr>
 			<tr>
 				<td>
+{render acl=$FAIdebianMirrorACL}
 					<select name="FAIdebianMirror"   onchange='document.mainform.submit()'>
 						{html_options options=$FAIdebianMirrors output=$FAIdebianMirrors selected=$FAIdebianMirror}
 					</select>
+{/render}
 				</td>
 				<td>
 					<select name="FAIrelease"  disabled>
@@ -62,7 +72,9 @@
 		<h2>
 			<img class="center" alt="" align="middle" src="images/fai_profile.png">&nbsp;{t}Assigned FAI classes{/t}
 		</h2>
+{render acl=$FAIclassACL}
 		{$FAIScriptlist}	
+{/render}
 	{else}
 
 		<table>
@@ -78,25 +90,34 @@
 			</tr>
 			<tr>
 				<td>
-					<select name="FAIdebianMirror" {$FAIdebianMirrorACL} onchange='document.mainform.submit()'>
+{render acl=$FAIdebianMirrorACL}
+					<select name="FAIdebianMirror" onchange='document.mainform.submit()'>
 						{html_options options=$FAIdebianMirrors output=$FAIdebianMirrors selected=$FAIdebianMirror}
-						<option disabled>&nbsp;</option>
 					</select>
-					{if $javascript eq 'false'}<input type="submit" value="{t}set{/t}" name="refresh">{/if}
+{/render}
+{if $javascript eq 'false'}
+{render acl=$FAIdebianMirrorACL}
+	<input type="submit" value="{t}set{/t}" name="refresh">
+{/render}
+{/if}
 				</td>
 				<td>
+{render acl=$FAIreleaseACL}
 					<select name="FAIrelease"  onchange='document.mainform.submit()'>
 					{html_options options=$FAIreleases output=$FAIreleases selected=$FAIrelease}
 					</select>
+{/render}
 				</td>
 			</tr>
 		</table>
 		<h2>
 			<img class="center" alt="" align="middle" src="images/fai_profile.png">&nbsp;{t}Assigned FAI classes{/t}
 		</h2>
+{render acl=$FAIclassACL}
 		{$FAIScriptlist}	
+{/render}
 
-		<select name="FAIclassesSel" {$FAIclassACL}>
+		<select name="FAIclassesSel">
 			{html_options values=$FAIclassesKeys output=$FAIclasses}
 			<option disabled>&nbsp;</option>
 		</select>	
@@ -115,14 +136,22 @@
    <h2>
     <img class="center" alt="" align="middle" src="images/hardware.png"> {t}Kernel modules (format: name parameters){/t}
    </h2>
+{render acl=$gotoModulesACL}
     <select style="width:100%; height:150px;" name="modules_list[]" size=15 multiple title="{t}Add additional modules to load on startup{/t}">
      {html_options values=$gotoModules output=$gotoModules}
 	 <option disabled>&nbsp;</option>
     </select>
+{/render}
     <br>
-    <input name="module" size=30 align=middle maxlength=30 {$gotoModulesACL}>
-    <input type=submit value="{t}Add{/t}" name="add_module" {$gotoModulesACL}>&nbsp;
-    <input type=submit value="{t}Delete{/t}" name="delete_module" {$gotoModulesACL}>
+{render acl=$gotoModulesACL}
+    <input name="module" size=30 align=middle maxlength=30>
+{/render}
+{render acl=$gotoModulesACL}
+    <input type=submit value="{t}Add{/t}" name="add_module">&nbsp;
+{/render}
+{render acl=$gotoModulesACL}
+    <input type=submit value="{t}Delete{/t}" name="delete_module">
+{/render}
   </td>
 
   <td style="vertical-align:top;">
@@ -130,18 +159,28 @@
         <table summary="" style="width:100%">
                 <tr>
                         <td>
-                        <select style="width:100%;height:150px;" name="gotoShare" multiple size=4 {$gotoShareACL} id="gotoShare">
+{render acl=$gotoShareACL}
+                        <select style="width:100%;height:150px;" name="gotoShare" multiple size=4 id="gotoShare">
    					     {html_options values=$gotoShareKeys output=$gotoShares}
 								<option disabled>&nbsp;</option>
                                 </select>
+{/render}
                                 <br>
-                        <select name="gotoShareSelection" {$gotoShareACL}>
+{render acl=$gotoShareACL}
+                        <select name="gotoShareSelection">
     						    {html_options values=$gotoShareSelectionKeys output=$gotoShareSelections}
 						        <option disabled>&nbsp;</option>
                                 </select>
-                                <input type="text" size=15 {$gotoShareACL} name="gotoShareMountPoint" value="{t}Mountpoint{/t}">
-                                <input type="submit" {$gotoShareACL} name="gotoShareAdd" value="{t}Add{/t}">
-                                <input type="submit" {$gotoShareACL} name="gotoShareDel" value="{t}Remove{/t}" {if $gotoSharesCount == 0} disabled {/if}>
+{/render}
+{render acl=$gotoShareACL}
+                                <input type="text" size=15 name="gotoShareMountPoint" value="{t}Mountpoint{/t}">
+{/render}
+{render acl=$gotoShareACL}
+                                <input type="submit" name="gotoShareAdd" value="{t}Add{/t}">
+{/render}
+{render acl=$gotoShareACL}
+                                <input type="submit" name="gotoShareDel" value="{t}Remove{/t}" {if $gotoSharesCount == 0} disabled {/if}>
+{/render}
                         </td>
                 </tr>
         </table>
@@ -154,3 +193,4 @@
   <!-- // First input field on page
   document.mainform.gotoLdapServer.focus();
   -->
+</script>

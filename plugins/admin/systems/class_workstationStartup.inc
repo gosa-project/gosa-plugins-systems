@@ -469,14 +469,14 @@ class workstartup extends plugin
 
     /* Add module */
     if (isset ($_POST['add_module'])){
-      if ($_POST['module'] != "" && chkacl ($this->acl, "gotoModule") == ""){
+      if ($_POST['module'] != "" && $this->acl_is_writeable("gotoModule")){
         $this->add_list ($this->gotoModules, $_POST['module']);
       }
     }
 
     /* Delete module */
     if (isset ($_POST['delete_module'])){
-      if (count($_POST['modules_list']) && chkacl ($this->acl, "gotoModule") == ""){
+      if (count($_POST['modules_list']) && $this->acl_is_writeable("gotoModule")){
         $this->del_list ($this->gotoModules, $_POST['modules_list']);
       }
     }
@@ -580,6 +580,13 @@ class workstartup extends plugin
 
     /* Show main page */
     $smarty= get_smarty();
+
+    /* Assign ACLs to smarty */
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $name => $translation){
+      $smarty->assign($name."ACL",$this->getacl($name));
+    } 
+
     $smarty->assign("SelectBoxLdapServer","");
 
     /* In this section server shares will be defined
@@ -658,7 +665,6 @@ class workstartup extends plugin
 
     $smarty->assign("SelectBoxLdapServer",$SelectBoxLdapServer->DrawList());
 
-    $smarty->assign("gotoLdapServerACL", chkacl($this->acl, "gotoLdapServer"));
     foreach (array("gotoModules", "gotoAutoFs", "gotoFilesystem") as $val){
       $smarty->assign("$val", $this->$val);
     }
@@ -666,7 +672,6 @@ class workstartup extends plugin
     /* Values */
     foreach(array("gotoBootKernel", "customParameters", "gotoShare","FAIclasses","FAIclass","FAIdebianMirror","FAIrelease") as $val){
       $smarty->assign($val, $this->$val);
-      $smarty->assign($val."ACL", chkacl($this->acl, $val));
     }
 
     $smarty->assign("FAIdebianMirrors",$this->getFAIdebianMirrors());
@@ -675,8 +680,13 @@ class workstartup extends plugin
     $smarty->assign("FAIclasses",$this->selectFriendlyClasses());
     $smarty->assign("FAIclassesKeys",array_flip($this->selectFriendlyClasses()));
     $smarty->assign("FAIclassKeys",$this->FAIclass);
-    $smarty->assign("InheritedFAIrelease",$this->InheritedFAIrelease);
-    
+  
+    $inheritedRelease = array();
+    if(!empty($this->InheritedFAIrelease)){
+      $inheritedRelease[$this->InheritedFAIrelease]= $this->InheritedFAIrelease;
+    } 
+    $smarty->assign("InheritedFAIrelease",$inheritedRelease);
+ 
     $div = new divSelectBox("WSFAIscriptClasses");
     $div -> SetHeight("110");
     $str_up     = " &nbsp;<input type='image' src='images/sort_up.png'    name='sort_up_%s'    value='%s'>";
@@ -730,11 +740,6 @@ class workstartup extends plugin
       $smarty->assign("debugbootup", "checked");
     } else {
       $smarty->assign("debugbootup", "");
-    }
-
-    /* ACL's */
-    foreach (array("gotoKernelParameters", "gotoModules", "gotoFilesystem","FAIclass") as $value){
-      $smarty->assign($value."ACL", chkacl($this->acl, "$value"));
     }
 
     /* Show main page */
@@ -864,12 +869,12 @@ class workstartup extends plugin
     plugin::save_object();
 
     /* Save group radio buttons */
-    if (chkacl ($this->acl, "bootmode") == "" && isset($_POST["bootmode"])){
+    if ($this->acl_is_writeable("bootmode") && isset($_POST["bootmode"])){
       $this->bootmode= $_POST["bootmode"];
     }
 
     /* Save kernel parameters */
-    if (chkacl ($this->acl, "gotoKernelParameters") == "" && isset($_POST["customParameters"])){
+    if ($this->acl_is_writeable("gotoKernelParameters") && isset($_POST["customParameters"])){
       $this->customParameters= $_POST["customParameters"];
     }
 
@@ -1094,11 +1099,15 @@ class workstartup extends plugin
             "gotoLdapServer"        => _("Ldap server"),
             "gotoBootKernel"        => _("Boot kernel"),
             "gotoKernelParameters"  => _("Kernel parameter"),
-            "FAIclass"              => _("FAI classes"),
-            "FAIstatus"             => _("FAI status flag"),
+
+            "gotoModules"           => _("Kernel modules"),
             "gotoShare"             => _("Shares"),
+
+            "FAIclass"              => _("FAI classes"),
             "FAIdebianMirror"       => _("Debian mirror"),
-            "FAIrelease"            => _("Debian release"))
+            "FAIrelease"            => _("Debian release"),
+
+            "FAIstatus"             => _("FAI status flag")) // #FIXME is this acl realy necessary ?
           ));
   }
 }
