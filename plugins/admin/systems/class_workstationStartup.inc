@@ -456,8 +456,12 @@ class workstartup extends plugin
   	plugin::execute();
 
     /* Do we need to flip is_account state? */
-    if (isset($_POST['modify_state'])){
-      $this->is_account= !$this->is_account;
+    if(isset($_POST['modify_state'])){
+      if($this->is_account && $this->acl_is_removeable()){
+        $this->is_account= FALSE;
+      }elseif(!$this->is_account && $this->acl_is_createable()){
+        $this->is_account= TRUE;
+      }
     }
 
     /* Do we represent a valid terminal? */
@@ -482,7 +486,7 @@ class workstartup extends plugin
     }
 
     /* FAI class management */
-    if((isset($_POST['AddClass']))&&(isset($_POST['FAIclassesSel']))){
+    if(((isset($_POST['AddClass']))&&(isset($_POST['FAIclassesSel']))) && ($this->acl_is_writeable("FAIclass"))){
       $found = 0 ; 
 
       /* If this new class/profile will attach a second partition table
@@ -508,73 +512,79 @@ class workstartup extends plugin
     }
 
     $sort = false;
-    foreach($_POST as $name => $val){
-      
-      $sort_type = false;
-      if((preg_match("/sort_up/",$name))&&(!$sort)){
-        $sort_type = "sort_up_";
-      }
-      if((preg_match("/sort_down/",$name))&&(!$sort)){
-        $sort_type = "sort_down_";
-      }
-    
-      if(($sort_type)&&(!$sort)){
-        $value = base64_decode(preg_replace("/_.*$/i","",preg_replace("/".$sort_type."/i","",$name)));
-        $sort = true;
-        
-        $last = -1;
-        $change_down  = -1;
- 
-        /* Create array with numeric index */ 
-        $tmp = array();
-        foreach($this->FAIclass as $class){
-          $tmp [] = $class;
+
+    /* Move one used class class one position up or down */
+    if($this->acl_is_writeable("FAIclass")){
+      foreach($_POST as $name => $val){
+
+        $sort_type = false;
+        if((preg_match("/sort_up/",$name))&&(!$sort)){
+          $sort_type = "sort_up_";
+        }
+        if((preg_match("/sort_down/",$name))&&(!$sort)){
+          $sort_type = "sort_down_";
         }
 
-        /* Walk trough array */
-        foreach($tmp as $key => $faiName){
-          if($faiName == $value){
-            if($sort_type == "sort_up_"){
-              if($last != -1){
-                 $change_down= $last;
-              }
-            }else{
-              if(isset($tmp[$key+1])){
-                $change_down = $key;
+        if(($sort_type)&&(!$sort)){
+          $value = base64_decode(preg_replace("/_.*$/i","",preg_replace("/".$sort_type."/i","",$name)));
+          $sort = true;
+
+          $last = -1;
+          $change_down  = -1;
+
+          /* Create array with numeric index */ 
+          $tmp = array();
+          foreach($this->FAIclass as $class){
+            $tmp [] = $class;
+          }
+
+          /* Walk trough array */
+          foreach($tmp as $key => $faiName){
+            if($faiName == $value){
+              if($sort_type == "sort_up_"){
+                if($last != -1){
+                  $change_down= $last;
+                }
+              }else{
+                if(isset($tmp[$key+1])){
+                  $change_down = $key;
+                }
               }
             }
+            $last = $key;
           }
-          $last = $key;
-        }
- 
-        $tmp2 = array();
-        $skip = false;    
-  
-        foreach($tmp as $ky => $vl){
 
-          if($ky == $change_down){
-            $skip = $vl;
-          }else{
-            $tmp2[$vl] = $vl;
-          }
-          if(($skip != false)&&($ky != $change_down)){
-            $tmp2[$skip]  = $skip;
-            $skip =false;
-          }
-        }   
-        $this->FAIclass = $tmp2; 
-      }
-  
-      if(preg_match("/fai_remove/i",$name)){
-        $value = base64_decode(preg_replace("/_.*$/i","",preg_replace("/fai_remove_/i","",$name)));
-        unset($this->FAIclass[$value]);
+          $tmp2 = array();
+          $skip = false;    
+
+          foreach($tmp as $ky => $vl){
+
+            if($ky == $change_down){
+              $skip = $vl;
+            }else{
+              $tmp2[$vl] = $vl;
+            }
+            if(($skip != false)&&($ky != $change_down)){
+              $tmp2[$skip]  = $skip;
+              $skip =false;
+            }
+          }   
+          $this->FAIclass = $tmp2; 
+        }
+
+        if(preg_match("/fai_remove/i",$name)){
+          $value = base64_decode(preg_replace("/_.*$/i","",preg_replace("/fai_remove_/i","",$name)));
+          unset($this->FAIclass[$value]);
+        }
       }
     }
 
     /* Delete selected class from our list */
-    if((isset($_POST['DelClass']))&&(isset($_POST['FAIclassSel']))){
-      if(isset($this->FAIclass[$_POST['FAIclassSel']])){
-        unset($this->FAIclass[$_POST['FAIclassSel']]);
+    if($this->acl_is_writeable("FAIclass")){
+      if((isset($_POST['DelClass']))&&(isset($_POST['FAIclassSel']))){
+        if(isset($this->FAIclass[$_POST['FAIclassSel']])){
+          unset($this->FAIclass[$_POST['FAIclassSel']]);
+        }
       }
     }
 
@@ -599,7 +609,7 @@ class workstartup extends plugin
     /* if $_POST['gotoShareAdd'] is set, we will try to add a new entry
      * This entry will be, a combination of mountPoint and sharedefinitions
      */
-    if(isset($_POST['gotoShareAdd'])){
+    if((isset($_POST['gotoShareAdd'])) && ($this->acl_is_writeable("gotoShare"))) {
       /* We assign a share to this user, if we don't know where to mount the share */
       if((!isset($_POST['gotoShareMountPoint']))||(empty($_POST['gotoShareMountPoint']))||(preg_match("/[\|]/i",$_POST['gotoShareMountPoint']))){
         print_red(_("You must specify a valid mount point."));
@@ -617,7 +627,7 @@ class workstartup extends plugin
     /* if the Post  gotoShareDel is set, someone asked GOsa to delete the selected entry (if there is one selected)
      * If there is no defined share selected, we will abort the deletion without any message
      */
-    if((isset($_POST['gotoShareDel']))&&(isset($_POST['gotoShare']))){
+    if(($this->acl_is_writeable("gotoShare"))&& (isset($_POST['gotoShareDel']))&&(isset($_POST['gotoShare']))){
       unset($this->gotoShares[$_POST['gotoShare']]);
     }
 
