@@ -733,16 +733,20 @@ class mailAccount extends plugin
         $method->setQuota($this->folder_prefix.$this->$id, $this->gosaMailQuota);
         $method->disconnect();
 
-        /* Write sieve information only if not in C mode */
-        if (!is_integer(strpos($this->gosaMailDeliveryMode, "C"))){
-          $method->configureFilter($this->$id,
-              $this->gosaMailDeliveryMode,
-              $this->mail,
-              $this->gosaMailAlternateAddress,
-              $this->gosaMailMaxSize,
-              $this->gosaSpamMailbox,
-              $this->gosaSpamSortLevel,
-              $this->gosaVacationMessage);
+        /* Ensure that this is an existing account */
+        if($this->initially_was_account){
+
+          /* Write sieve information only if not in C mode */
+          if (!is_integer(strpos($this->gosaMailDeliveryMode, "C"))){
+            $method->configureFilter($this->$id,
+                $this->gosaMailDeliveryMode,
+                $this->mail,
+                $this->gosaMailAlternateAddress,
+                $this->gosaMailMaxSize,
+                $this->gosaSpamMailbox,
+                $this->gosaSpamSortLevel,
+                $this->gosaVacationMessage);
+          }
         }
       }
     }
