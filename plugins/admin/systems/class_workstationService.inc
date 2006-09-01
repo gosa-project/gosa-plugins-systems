@@ -246,11 +246,13 @@ class workservice extends plugin
       $this->is_account= !$this->is_account;
     }
 
-    /* Do we represent a valid terminal? */
-    if (!$this->is_account && $this->parent == NULL){
-      $display= "<img alt=\"\" src=\"images/stop.png\" align=\"middle\">&nbsp;<b>".
-        _("This 'dn' has no terminal features.")."</b>";
-      return ($display);
+    /* Do we need to flip is_account state? */
+    if(isset($_POST['modify_state'])){
+      if($this->is_account && $this->acl_is_removeable()){
+        $this->is_account= FALSE;
+      }elseif(!$this->is_account && $this->acl_is_createable()){
+        $this->is_account= TRUE;
+      }
     }
 
     /* Show main page */
@@ -261,7 +263,6 @@ class workservice extends plugin
     foreach($tmp['plProvidedAcls'] as $name => $translated){
       $smarty->assign($name."ACL",$this->getacl($name));
     }
-
 
     /* Arrays */ 
     foreach(array("XMethods", "XDrivers", "XResolutions", "XColordepths",
@@ -350,7 +351,7 @@ class workservice extends plugin
   {
     plugin::save_object();
 
-    if(isset($_POST['gotoXDriver'])){
+    if((isset($_POST['gotoXDriver'])) && $this->acl_is_writeable("AutoSync")) {
       if(isset($_POST['AutoSync'])){
         $this->AutoSync = true;
       }else{
