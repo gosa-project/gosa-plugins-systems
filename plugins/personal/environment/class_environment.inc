@@ -916,7 +916,7 @@ class environment extends plugin
     /* Call common method to give check the hook */
     $message= plugin::check();
 
-    $this->detect_grouptype
+    $this->detect_grouptype();
 
     if(preg_match("/[^0-9]/",$this->gotoProfileQuota)) {
       $message[]=_("Please set a valid profile quota size.");
