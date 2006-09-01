@@ -8,21 +8,33 @@
 		  <table summary="{t}Generic queue Settings{/t}">
 		   <tr>
 		    <td>
-			<select style="width:300px; height:60px;" name="goFonQueueNumber_List" size=6 {$telephoneNumberACL}>
+{render acl=$telephoneNumberACL}
+			<select style="width:300px; height:60px;" name="goFonQueueNumber_List" size=6>
 			{html_options options=$telephoneNumber}
 			<option disabled>&nbsp;</option>
 			</select>
+{/render}
 		</td>
 		<td style="vertical-align:center">
-			<input type="submit" value="{t}Up{/t}" 		name="up_phonenumber" 		{$telephoneNumberACL}><br>
-			<input type="submit" value="{t}Down{/t}" 	name="down_phonenumber" 	{$telephoneNumberACL}>
+{render acl=$telephoneNumberACL}
+			<input type="submit" value="{t}Up{/t}" 		name="up_phonenumber"><br>
+{/render}
+{render acl=$telephoneNumberACL}
+			<input type="submit" value="{t}Down{/t}" 	name="down_phonenumber">
+{/render}
 		</td>
 		</tr>
 		<tr>
 		 <td colspan=2>
-			<input name="phonenumber" size=20 align=middle maxlength=60 			{$telephoneNumberACL} value="">
-			<input type="submit" value="{t}Add{/t}" 	name="add_phonenumber" 		{$telephoneNumberACL}>&nbsp;
-			<input type="submit" value="{t}Delete{/t}" 	name="delete_phonenumber" 	{$telephoneNumberACL}>
+{render acl=$telephoneNumberACL}
+			<input name="phonenumber" size=20 align=middle maxlength=60 value="">
+{/render}
+{render acl=$telephoneNumberACL}
+			<input type="submit" value="{t}Add{/t}" 	name="add_phonenumber" >&nbsp;
+{/render}
+{render acl=$telephoneNumberACL}
+			<input type="submit" value="{t}Delete{/t}" 	name="delete_phonenumber" >
+{/render}
 	     </td>
 		</tr>
 		</table>
@@ -35,10 +47,12 @@
 			{t}Language{/t}	
 		</td>
 		<td>
-			<select name="goFonQueueLanguage" {$goFonQueueLanguageACL}>
+{render acl=$goFonQueueLanguageACL}
+			<select name="goFonQueueLanguage">
 			{html_options options=$goFonQueueLanguageOptions selected=$goFonQueueLanguage}
 			<option disabled>&nbsp;</option>
 			</select>
+{/render}
 		</td>
 		</tr>
 		<tr>
@@ -46,7 +60,9 @@
 			{t}Timeout{/t}
 		</td>
 		<td>
-			<input name='goFonTimeOut' value='{$goFonTimeOut}' {$goFonTimeOutACL}>
+{render acl=$goFonTimeOutACL}
+			<input name='goFonTimeOut' value='{$goFonTimeOut}'>
+{/render}
 		</td>
 		</tr>
 		<tr>
@@ -54,7 +70,9 @@
 			{t}Retry{/t}
 		</td>
 		<td>
-			<input name='goFonQueueRetry' value='{$goFonQueueRetry}' {$goFonQueueRetryACL}>
+{render acl=$goFonQueueRetryACL}
+			<input name='goFonQueueRetry' value='{$goFonQueueRetry}'>
+{/render}
 		</td>
 		</tr>
 		<tr>
@@ -62,10 +80,12 @@
 			{t}Strategy{/t}	
 		</td>
 		<td>
-			<select name="goFonQueueStrategy" {$goFonQueueStrategyACL}>
+{render acl=$goFonQueueStrategyACL}
+			<select name="goFonQueueStrategy">
             {html_options options=$goFonQueueStrategyOptions selected=$goFonQueueStrategy}
             <option disabled>&nbsp;</option>
             </select>
+{/render}
 	
 		</td>
 		</tr>
@@ -74,7 +94,9 @@
 			{t}Max queue length{/t}
 		</td>
 		<td>
-			<input name='goFonMaxLen' value='{$goFonMaxLen}' {$goFonMaxLenACL}>	
+{render acl=$goFonMaxLenACL}
+			<input name='goFonMaxLen' value='{$goFonMaxLen}'>	
+{/render}
 		</td>
 		</tr>
 		<tr>
@@ -82,7 +104,9 @@
 			{t}Announce frequency{/t}
 		</td>
 		<td>
-			<input name='goFonAnnounceFrequency' value='{$goFonAnnounceFrequency}' {$goFonAnnounceFrequencyACL}>
+{render acl=$goFonAnnounceFrequencyACL}
+			<input name='goFonAnnounceFrequency' value='{$goFonAnnounceFrequency}'>
+{/render}
 			{t}(in seconds){/t}	
 		</td>
 		</tr>
@@ -99,7 +123,9 @@
 			{t}Use music on hold instead of ringing{/t}
 		</td>
 		<td>
-			<input type="checkbox" name='goFonMusiconHold' value='1' {$goFonMusiconHoldCHK} {$goFonMusiconHoldACL}>
+{render acl=goFonMusiconHoldACL}
+			<input type="checkbox" name='goFonMusiconHold' value='1' {$goFonMusiconHoldCHK}>
+{/render}
 		</td>
 		</tr>
 		-->
@@ -108,7 +134,9 @@
 			{t}Music on hold{/t}
 		</td>
 		<td>
-			<input type="text" style='width:250px;' name='goFonMusiconHold' value='{$goFonMusiconHold}' {$goFonMusiconHoldACL}>
+{render acl=$goFonMusiconHoldACL}
+			<input type="text" style='width:250px;' name='goFonMusiconHold' value='{$goFonMusiconHold}'>
+{/render}
 		</td>
 		</tr>
 		<tr>
@@ -116,7 +144,9 @@
 			{t}Welcome sound file{/t}
 		</td>
 		<td>
-			<input type="text" style='width:250px;' name='goFonWelcomeMusic' value='{$goFonWelcomeMusic}' {$goFonWelcomeMusicACL}>
+{render acl=$goFonWelcomeMusicACL}
+			<input type="text" style='width:250px;' name='goFonWelcomeMusic' value='{$goFonWelcomeMusic}'>
+{/render}
 		</td>
 		</tr>
 		<tr>
@@ -124,7 +154,9 @@
 			{t}Announce message{/t}
 		</td>
 		<td>
-			<input type="text" style='width:250px;' name='goFonQueueAnnounce' value='{$goFonQueueAnnounce}' {$goFonQueueAnnounceACL}>
+{render acl=$goFonQueueAnnounceACL}
+			<input type="text" style='width:250px;' name='goFonQueueAnnounce' value='{$goFonQueueAnnounce}'>
+{/render}
 		</td>
 		</tr>
 		<tr>
@@ -132,7 +164,9 @@
 			{t}Sound file for 'You are next ...'{/t}
 		</td>
 		<td>
-			<input type="text" style='width:250px;' name='goFonQueueYouAreNext' value='{$goFonQueueYouAreNext}' {$goFonQueueYouAreNextACL}>
+{render acl=$goFonQueueYouAreNextACL}
+			<input type="text" style='width:250px;' name='goFonQueueYouAreNext' value='{$goFonQueueYouAreNext}'>
+{/render}
 		</td>
 		</tr>
 		<tr>
@@ -140,7 +174,9 @@
 			{t}'There are ...'{/t}
 		</td>
 		<td>
-			<input type="text" style='width:250px;' name='goFonQueueThereAre' value='{$goFonQueueThereAre}' {$goFonQueueThereAreACL}>
+{render acl=$goFonQueueThereAreACL}
+			<input type="text" style='width:250px;' name='goFonQueueThereAre' value='{$goFonQueueThereAre}'>
+{/render}
 		</td>
 		</tr>
 		<tr>
@@ -148,7 +184,9 @@
 			{t}'... calls waiting'{/t}
 		</td>
 		<td>
-			<input type="text" style='width:250px;' name='goFonQueueCallsWaiting' value='{$goFonQueueCallsWaiting}' {$goFonQueueCallsWaitingACL}>
+{render acl=$goFonQueueCallsWaitingACL}
+			<input type="text" style='width:250px;' name='goFonQueueCallsWaiting' value='{$goFonQueueCallsWaiting}'>
+{/render}
 		</td>
 		</tr>
 		<tr>
@@ -156,7 +194,9 @@
 			{t}'Thank you' message{/t}
 		</td>
 		<td>
-			<input type="text" style='width:250px;' name='goFonQueueThankYou' value='{$goFonQueueThankYou}' {$goFonQueueThankYouACL}>
+{render acl=$goFonQueueThankYouACL}
+			<input type="text" style='width:250px;' name='goFonQueueThankYou' value='{$goFonQueueThankYou}'>
+{/render}
 		</td>
 		</tr>
 		<tr>
@@ -164,7 +204,9 @@
 			{t}'minutes' sound file{/t}
 		</td>
 		<td>
-			<input type="text" style='width:250px;' name='goFonQueueMinutes' value='{$goFonQueueMinutes}' {$goFonQueueMinutesACL}>
+{render acl=$goFonQueueMinutesACL}
+			<input type="text" style='width:250px;' name='goFonQueueMinutes' value='{$goFonQueueMinutes}'>
+{/render}
 		</td>
 		</tr>
 		<tr>
@@ -172,7 +214,9 @@
 			{t}'seconds' sound file{/t}
 		</td>
 		<td>
-			<input type="text" style='width:250px;' name='goFonQueueSeconds' value='{$goFonQueueSeconds}' {$goFonQueueSecondsACL}>
+{render acl=$goFonQueueSecondsACL}
+			<input type="text" style='width:250px;' name='goFonQueueSeconds' value='{$goFonQueueSeconds}'>
+{/render}
 		</td>
 		</tr>
 		<tr>
@@ -180,7 +224,9 @@
 			{t}Hold sound file{/t}
 		</td>
 		<td>
-			<input type="text" style='width:250px;' name='goFonQueueReportHold' value='{$goFonQueueReportHold}' {$goFonQueueReportHoldACL}>
+{render acl=$goFonQueueReportHoldACL}
+			<input type="text" style='width:250px;' name='goFonQueueReportHold' value='{$goFonQueueReportHold}'>
+{/render}
 		</td>
 		</tr>
 		<tr>
@@ -188,7 +234,9 @@
 			{t}Less Than sound file{/t}
 		</td>
 		<td>
-			<input type="text" style='width:250px;' name='goFonQueueLessThan' value='{$goFonQueueLessThan}' {$goFonQueueLessThanACL}>
+{render acl=$goFonQueueLessThanACL}
+			<input type="text" style='width:250px;' name='goFonQueueLessThan' value='{$goFonQueueLessThan}'>
+{/render}
 		</td>
 		</tr>
 
@@ -208,19 +256,25 @@
 		<table summary="" style="width: 100%; vertical-align: top; text-align: left;" border="0" cellpadding="0">
         <tr>
         <td colspan=2>
-            <input type="checkbox" name='goFonQueueAnnounceHoldtime' value='yes'  {$goFonQueueAnnounceHoldtimeCHK} {$goFonQueueAnnounceHoldtimeACL}>
+{render acl=$goFonQueueAnnounceHoldtimeACL}
+            <input type="checkbox" name='goFonQueueAnnounceHoldtime' value='yes'  {$goFonQueueAnnounceHoldtimeCHK}{$goFonQueueAnnounceHoldtimeACL}>
+{/render}
             {t}Announce holdtime{/t}
         </td>
         </tr>
         <tr>
         <td colspan=2>
-            <input type="checkbox" name='goFonDialOption_t' value='t'  {$goFonDialOption_tCHK} {$goFonDialOption_tACL}>
+{render acl=$goFonDialOptiontACL}
+            <input type="checkbox" name='goFonDialOptiont' value='t'  {$goFonDialOptiontCHK}>
+{/render}
             {t}Allow the called user to transfer his call{/t}
         </td>
         </tr>
         <tr>
         <td colspan=2>
-            <input type="checkbox" name='goFonDialOption_T' value='T' {$goFonDialOption_TCHK} {$goFonDialOption_TACL}>
+{render acl=$goFonDialOptionTACL}
+            <input type="checkbox" name='goFonDialOptionT' value='T' {$goFonDialOptionTCHK}>
+{/render}
             {t}Allows calling user to transfer call{/t}
         </td>
         </table>
@@ -230,19 +284,25 @@
 	 	<table summary=""  style="width: 100%; vertical-align: top; text-align: left;" border="0" cellpadding="0">
         <tr>
         <td colspan=2>
-            <input type="checkbox" name='goFonDialOption_h' value='h' {$goFonDialOption_hCHK} {$goFonDialOption_hACL}>
+{render acl=$goFonDialOptionhACL}
+            <input type="checkbox" name='goFonDialOptionh' value='h' {$goFonDialOptionhCHK}>
+{/render}
             {t}Allow the called to hangup by pressing *{/t}
         </td>
         </tr>
         <tr>
         <td colspan=2>
-            <input type="checkbox" name='goFonDialOption_H' value='H' {$goFonDialOption_HCHK} {$goFonDialOption_HACL}>
+{render acl=$goFonDialOptionHACL}
+            <input type="checkbox" name='goFonDialOptionH' value='H' {$goFonDialOptionHCHK}>
+{/render}
             {t}Allows calling to hangup by pressing *{/t}
         </td>
         </tr>
         <tr>
         <td colspan=2>
-            <input type="checkbox" name='goFonDialOption_r' value='r' {$goFonDialOption_rCHK} {$goFonDialOption_rACL}>
+{render acl=$goFonDialOptionrACL}
+            <input type="checkbox" name='goFonDialOptionr' value='r' {$goFonDialOptionrCHK}>
+{/render}
             {t}Ring instead of playing background music{/t}
         </td>
         </tr>

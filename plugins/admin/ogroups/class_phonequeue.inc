@@ -10,12 +10,12 @@ class phonequeue extends plugin
   var $goFonTimeOut             ="20"; 
   var $goFonMaxLen              ="20"; // 
   var $goFonAnnounceFrequency   ="60"; // Annouce Frequency in seconds
-  var $goFonDialOption_t        ="";
-  var $goFonDialOption_T        ="";
-  var $goFonDialOption_h        ="";
-  var $goFonDialOption_r        ="";
+  var $goFonDialOptiont        ="";
+  var $goFonDialOptionT        ="";
+  var $goFonDialOptionh        ="";
+  var $goFonDialOptionr        ="";
   var $goFonQueueAnnounce       ="gonicus-berlin-welcome";
-  var $goFonDialOption_H        ="";
+  var $goFonDialOptionH        ="";
   var $goFonMusiconHold         ="default";
   var $goFonWelcomeMusic        ="gonicus-berlin-welcome";
   var $goFonQueueReportHold     ="yes";
@@ -41,9 +41,9 @@ class phonequeue extends plugin
   var $old_phone_numbers        =array();
 
   /* attribute list for save action */
-  var $attributes= array( "goFonTimeOut","goFonMaxLen","goFonAnnounceFrequency","goFonDialOption_t","goFonDialOption_T",
-      "goFonDialOption_h","goFonDialOption_r","cn",
-      "goFonDialOption_H","goFonMusiconHold","goFonWelcomeMusic","goFonQueueReportHold","goFonQueueYouAreNext",
+  var $attributes= array( "goFonTimeOut","goFonMaxLen","goFonAnnounceFrequency","goFonDialOptiont","goFonDialOptionT",
+      "goFonDialOptionh","goFonDialOptionr","cn",
+      "goFonDialOptionH","goFonMusiconHold","goFonWelcomeMusic","goFonQueueReportHold","goFonQueueYouAreNext",
       "goFonQueueThereAre","goFonQueueCallsWaiting","goFonQueueThankYou","goFonQueueMinutes","goFonQueueSeconds","goFonQueueLessThan",
       "telephoneNumber","goFonQueueLanguage","goFonQueueStrategy","goFonQueueAnnounceHoldtime","goFonQueueAnnounce","goFonDialOption","goFonQueueRetry");
   /* ObjectClass */
@@ -66,7 +66,7 @@ class phonequeue extends plugin
       }
 
       for($i = 0; $i < strlen($this->goFonDialOption); $i++){
-        $name = "goFonDialOption_".$this->goFonDialOption[$i];
+        $name = "goFonDialOption".$this->goFonDialOption[$i];
         $this->$name=$this->goFonDialOption[$i];
       }
     }
@@ -99,12 +99,16 @@ class phonequeue extends plugin
 
   function execute()
   {
-	/* Call parent execute */
-	plugin::execute();
+    /* Call parent execute */
+    plugin::execute();
 
     /* Do we need to flip is_account state? */
-    if (isset($_POST['modify_state'])){
-      $this->is_account= !$this->is_account;
+    if(isset($_POST['modify_state'])){
+      if($this->is_account && $this->acl_is_removeable()){
+        $this->is_account= FALSE;
+      }elseif(!$this->is_account && $this->acl_is_createable()){
+        $this->is_account= TRUE;
+      }
     }
 
     /* Show tab dialog headers */
@@ -120,15 +124,19 @@ class phonequeue extends plugin
     }
 
     /* Add queue number */ 
-    if(isset($_POST['add_phonenumber'])&&(isset($_POST['phonenumber']))&&(!empty($_POST['phonenumber']))){
-      if((!in_array($_POST['phonenumber'],$this->telephoneNumber))&&(is_numeric($_POST['phonenumber']))){
-        $this->telephoneNumber[]=$_POST['phonenumber'];
+    if($this->acl_is_writeable("telephoneNumber")){
+      if(isset($_POST['add_phonenumber'])&&(isset($_POST['phonenumber']))&&(!empty($_POST['phonenumber']))){
+        if((!in_array($_POST['phonenumber'],$this->telephoneNumber))&&(is_numeric($_POST['phonenumber']))){
+          $this->telephoneNumber[]=$_POST['phonenumber'];
+        }
       }
     }
 
     /* Delete queue number */ 
-    if(isset($_POST['delete_phonenumber'])&&(isset($_POST['goFonQueueNumber_List']))){
-      unset($this->telephoneNumber[$_POST['goFonQueueNumber_List']]);
+    if($this->acl_is_writeable("telephoneNumber")){
+      if(isset($_POST['delete_phonenumber'])&&(isset($_POST['goFonQueueNumber_List']))){
+        unset($this->telephoneNumber[$_POST['goFonQueueNumber_List']]);
+      }
     }
   
     $tmp = array();
@@ -140,26 +148,34 @@ class phonequeue extends plugin
     $this->telephoneNumber=$tmp;
 
     /* queue number up */ 
-    if(isset($_POST['up_phonenumber'])&&(isset($_POST['goFonQueueNumber_List']))){
-      if($_POST['goFonQueueNumber_List']>0){
-        $up   = $this->telephoneNumber[$_POST['goFonQueueNumber_List']];
-        $down = $this->telephoneNumber[$_POST['goFonQueueNumber_List']-1];
-        $this->telephoneNumber[$_POST['goFonQueueNumber_List']]    = $down; 
-        $this->telephoneNumber[$_POST['goFonQueueNumber_List']-1]  = $up;
+    if($this->acl_is_writeable("telephoneNumber")){
+      if(isset($_POST['up_phonenumber'])&&(isset($_POST['goFonQueueNumber_List']))){
+        if($_POST['goFonQueueNumber_List']>0){
+          $up   = $this->telephoneNumber[$_POST['goFonQueueNumber_List']];
+          $down = $this->telephoneNumber[$_POST['goFonQueueNumber_List']-1];
+          $this->telephoneNumber[$_POST['goFonQueueNumber_List']]    = $down; 
+          $this->telephoneNumber[$_POST['goFonQueueNumber_List']-1]  = $up;
+        }
       }
-    }
 
-    /* Queuenumber down */ 
-    if(isset($_POST['down_phonenumber'])&&(isset($_POST['goFonQueueNumber_List']))){
-      if(isset($this->telephoneNumber[($_POST['goFonQueueNumber_List']+1)])){
-        $up   = $this->telephoneNumber[$_POST['goFonQueueNumber_List']+1];
-        $down = $this->telephoneNumber[$_POST['goFonQueueNumber_List']];
-        $this->telephoneNumber[$_POST['goFonQueueNumber_List']+1]    = $down; 
-        $this->telephoneNumber[$_POST['goFonQueueNumber_List']]  = $up;
+      /* Queuenumber down */ 
+      if(isset($_POST['down_phonenumber'])&&(isset($_POST['goFonQueueNumber_List']))){
+        if(isset($this->telephoneNumber[($_POST['goFonQueueNumber_List']+1)])){
+          $up   = $this->telephoneNumber[$_POST['goFonQueueNumber_List']+1];
+          $down = $this->telephoneNumber[$_POST['goFonQueueNumber_List']];
+          $this->telephoneNumber[$_POST['goFonQueueNumber_List']+1]    = $down; 
+          $this->telephoneNumber[$_POST['goFonQueueNumber_List']]  = $up;
+        }
       }
     }
 
     $smarty= get_smarty();
+
+    /* Set acls */
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $name => $translated){
+      $smarty->assign($name."ACL",$this->getacl($name));
+    }
 
     $smarty->assign("goFonQueueLanguageOptions",array('de'=>_('German')));
     $smarty->assign("goFonQueueStrategyOptions", $this->goFonQueueStrategyOptions);
@@ -171,12 +187,6 @@ class phonequeue extends plugin
         $smarty->assign($val."CHK","");
       }else{
         $smarty->assign($val."CHK"," checked ");
-      }
-
-      if(chkacl($this->acl,$key)==""){
-        $smarty->assign($val."ACL","");
-      }else{
-        $smarty->assign($val."ACL"," disabled ");
       }
     }
     return ($display.$smarty->fetch (get_template_path('phonequeue.tpl', TRUE)));
@@ -410,11 +420,11 @@ class phonequeue extends plugin
           $a_ext[$i]['app']      = "Queue";
           $a_ext[$i]['appdata']  =  $this->attrs['cn'][0].
             "|".
-            $this->goFonDialOption_t.
-            $this->goFonDialOption_T.
-            $this->goFonDialOption_h.
-            $this->goFonDialOption_H.
-            $this->goFonDialOption_r;
+            $this->goFonDialOptiont.
+            $this->goFonDialOptionT.
+            $this->goFonDialOptionh.
+            $this->goFonDialOptionH.
+            $this->goFonDialOptionr;
         }
 
         if($this->goFonQueueAnnounceHoldtime != false) {
@@ -538,7 +548,7 @@ class phonequeue extends plugin
   {
     plugin::save_object();  
     if(isset($_POST['phonenumber'])){
-      foreach(array("goFonDialOption_t","goFonDialOption_T","goFonDialOption_h","goFonDialOption_r","goFonDialOption_H","goFonMusiconHold") as $val){
+      foreach(array("goFonDialOptiont","goFonDialOptionT","goFonDialOptionh","goFonDialOptionr","goFonDialOptionH","goFonMusiconHold") as $val){
         if(isset($_POST[$val])){
           $this->$val = $_POST[$val];
         }else{
@@ -565,7 +575,7 @@ class phonequeue extends plugin
 
     plugin::save();
     $this->attrs['goFonDialOption'] = "";
-    foreach(array("goFonDialOption_t","goFonDialOption_T","goFonDialOption_r","goFonDialOption_h","goFonDialOption_H","cn") as $val){
+    foreach(array("goFonDialOptiont","goFonDialOptionT","goFonDialOptionr","goFonDialOptionh","goFonDialOptionH","cn") as $val){
       $this->attrs['goFonDialOption'].=$this->$val; 
       unset($this->attrs[$val]); 
     }
@@ -627,7 +637,7 @@ class phonequeue extends plugin
 
     /* Remove all temporary attributes */
     $tmp = array_flip($this->attributes);
-    foreach(array("goFonDialOption_t","goFonDialOption_T","goFonDialOption_r","goFonDialOption_h","goFonDialOption_H","cn") as $val){
+    foreach(array("goFonDialOptiont","goFonDialOptionT","goFonDialOptionr","goFonDialOptionh","goFonDialOptionH","cn") as $val){
       unset($this->$val);
       unset($this->attrs[$val]);
       unset($tmp[$val]);
@@ -717,11 +727,11 @@ class phonequeue extends plugin
             "goFonTimeOut"              => _("Timeout"),
             "goFonMaxLen"               => _("Max queue length"),
             "goFonAnnounceFrequency"    => _("Announce frequency"),
-            "goFonDialOption_t"         => _("Allow the called user to transfer his call"),
-            "goFonDialOption_T"         => _("Allows calling user to transfer call"),
-            "goFonDialOption_h"         => _("Allow the called to hangup by pressing *"),
-            "goFonDialOption_r"         => _("Ring instead of playing background music"),
-            "goFonDialOption_H"         => _("Allows calling to hangup by pressing *"),
+            "goFonDialOptiont"         => _("Allow the called user to transfer his call"),
+            "goFonDialOptionT"         => _("Allows calling user to transfer call"),
+            "goFonDialOptionh"         => _("Allow the called to hangup by pressing *"),
+            "goFonDialOptionr"         => _("Ring instead of playing background music"),
+            "goFonDialOptionH"         => _("Allows calling to hangup by pressing *"),
 
             "goFonMusiconHold"          => _("Music on hold"),
             "goFonWelcomeMusic"         => _("Welcome music"),
