@@ -226,7 +226,6 @@ class userinfo
 
           /* If attribute is "", we want to know, if we've *any* permissions here... */
           if ($attribute == "" && isset($subacl['acl'][$object])){
-echo "Global $object<br>";
             foreach($subacl['acl'][$object] as $attr => $dummy){
               $acl= $this->mergeACL($acl, $subacl['type'], $subacl['acl'][$object][$attr]);
             }
