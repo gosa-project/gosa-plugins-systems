@@ -500,7 +500,7 @@ class acl extends plugin
                      "\n  <tr>".
                      "\n    <td style='background-color:#C8C8C8;height:1.8em;' colspan=".($cols-1)."><b>"._("Object").": $name</b></td>".
                      "\n    <td align='right' style='background-color:#C8C8C8;height:1.8em;'>".
-                     "\n    <input type='button' onclick='divtoggle(\"$name\");' value='"._("Show/Hide Advanced Settings")."' /></td>".
+                     "\n    <input type='button' onclick='divtoggle(\"".preg_replace("/[^a-z0-9]/i","_",$name)."\");' value='"._("Show/Hide Advanced Settings")."' /></td>".
                      "\n  </tr>";
         } else {
           $display.= "\n<table style='width:100%;border:1px solid #A0A0A0' cellspacing=0 cellpadding=2>".
