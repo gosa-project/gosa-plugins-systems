@@ -950,12 +950,15 @@ class appgroup extends plugin
       if(isset($tmp[$this->FAIrelease])){
         $base =  $tmp[$this->FAIrelease];
       }else{
+        $old_r =  $this->FAIrelease;
         $k = key($tmp);
         $r = $tmp[$k];
         $this->FAIrelease = $k;
         $base = $r; 
-    
-        print_red(sprintf(_("Can't resolve the release name '%s', setting release name to '%s'. Possibly the objects base has changed."),$this->FAIrelease,$k));
+
+        if(!(!$this->initially_was_account && $old_r =="/")){
+          print_red(sprintf(_("Can't resolve the release name '%s', setting release name to '%s'. Possibly the objects base has changed."),$this->FAIrelease,$k));    
+        }
       }
 
       $base = preg_replace("/ou=apps,.*$/","ou=apps,".$this->curbase,$base);
