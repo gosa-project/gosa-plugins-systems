@@ -108,8 +108,6 @@ class faiTemplate extends plugin
           $var = $ldap->get_attribute($object['dn'], $attrs,$r_array=0);
         }
 
-        /* Fix slashes */
-        $var = addslashes($var);
         $object[$attrs] = $var;
       }
     }
