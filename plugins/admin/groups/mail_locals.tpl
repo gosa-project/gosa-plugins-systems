@@ -38,7 +38,7 @@
 	</table>
     <table summary="" width="100%" style="width:100%;border-top:1px solid #B0B0B0; background-color:#F8F8F8">
 		<tr>
-			<td width="18px">
+			<td width="18">
 				<img alt="" src="{$search_image}" align=middle title="{t}Display addresses matching{/t}">
 			</td>
     		<td>
@@ -48,7 +48,7 @@
 	</table>
     <table summary="" width="100%"  style="width:100%;border-top:1px solid #B0B0B0; background-color:#F8F8F8">
 		<tr>
-			<td width="18px">
+			<td width="18">
 				<img alt="" src="{$usearch_image}" align=middle title="{t}Display addresses of user{/t}">
 			</td>
     		<td>
