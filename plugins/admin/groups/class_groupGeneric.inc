@@ -205,12 +205,32 @@ class group extends plugin
       $this->reload();
     }
 
+    /* Only display bases that we are able to read/write */
+    $ui = get_userinfo();
+    $bases = array();
+    if($this->dn == "new") {
+      foreach($this->config->idepartments as $dn => $name){
+        $acl = $ui->get_permissions($dn,"groups/group") ;
+        if(preg_match("/c/",$acl)){
+          $bases[$dn]=$name;
+        }
+      }
+    }else{
+      foreach($this->config->idepartments as $dn => $name){
+        $acl = $ui->get_category_permissions($dn,"groups") ;
+        if(preg_match("/w/",$acl)){
+          $bases[$dn]=$name;
+        }
+      }
+    }
+
+
     /* Base select dialog */
     $once = true;
     foreach($_POST as $name => $value){
       if(preg_match("/^chooseBase/",$name) && $once){
         $once = false;
-        $this->dialog = new baseSelectDialog($this->config,$this);
+        $this->dialog = new baseSelectDialog($this->config,$this,$bases);
         $this->dialog->setCurrentBase($this->base);
       }
     }
@@ -282,7 +302,15 @@ class group extends plugin
       $smarty->assign("search_image", get_template_path('images/search.png'));
       $smarty->assign("launchimage", get_template_path('images/small_filter.png'));
       $smarty->assign("tree_image", get_template_path('images/tree.png'));
-      $smarty->assign("deplist", $this->config->idepartments);
+
+      /* Generate list of bases */
+      $check = $ui->get_module_departments("users");
+      $bases_user_select = array();
+      foreach($check as $dn_allowed){
+        $bases_user_select[$dn_allowed] = $this->config->idepartments[$dn_allowed];
+      }
+  
+      $smarty->assign("deplist", $bases_user_select);
       $smarty->assign("alphabet", generate_alphabet());
       foreach( array("dselect", "regex","SubSearchGroup") as $type){
         $smarty->assign("$type", $gufilter[$type]);
@@ -299,7 +327,7 @@ class group extends plugin
       $this->base= $_POST['base'];
     }
 
-    $smarty->assign("bases", $this->config->idepartments);
+    $smarty->assign("bases", $bases);
     $smarty->assign("base_select", $this->base);
 
     if ($this->samba3){
@@ -439,14 +467,19 @@ class group extends plugin
 
     /* Search in current tree or within subtrees depending on the checkbox from filter section */
     if($gufilter['SubSearchGroup']){
-      $ldap->search($filter, array("uid", "sn","givenName"));
+      $flag = GL_SIZELIMIT | GL_SUBSEARCH;
+      $base = $gufilter['dselect'];
     }else{
-      $ldap->ls ($filter, get_people_ou().$gufilter['dselect'],array("uid", "sn", "givenName"));
+      $flag = GL_SIZELIMIT ;
+      $base = get_people_ou().$gufilter['dselect'];
     }
     $i = 0;
-    
+  
+
+    $res = get_list($filter,"users",$base,array("uid", "sn", "givenName"),$flag);
+
     /* Fetch all users and skip already used users */
-    while($attrs = $ldap->fetch()){
+    foreach($res as $attrs){
       if(in_array($attrs['uid'][0], $this->memberUid)) {
         continue;
       }
