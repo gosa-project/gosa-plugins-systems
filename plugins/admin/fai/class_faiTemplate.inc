@@ -108,6 +108,8 @@ class faiTemplate extends plugin
           $var = $ldap->get_attribute($object['dn'], $attrs,$r_array=0);
         }
 
+        $var = stripslashes($var);
+  
         $object[$attrs] = $var;
       }
     }
@@ -398,7 +400,7 @@ class faiTemplate extends plugin
         if(empty($obj[$attrs])){
           $obj[$attrs] = array();
         }
-        $tmp[$attrs] = $obj[$attrs];
+        $tmp[$attrs] = stripslashes($obj[$attrs]);
       }    
         
       $tmp['objectClass'] = $this->subClasses;
