@@ -364,7 +364,7 @@ class acl extends plugin
         $action.= "<input class='center' type='image' src='images/edit.png' alt='"._("edit")."' name='acl_edit_$key' title='"._("Edit ACL")."'>";
         $action.= "<input class='center' type='image' src='images/edittrash.png' alt='"._("delete")."' name='acl_del_$key' title='"._("Delete ACL")."'>";
 
-        $field3= array("string" => $action, "attach" => "style='border-right:0px;width:50px';text-align:right");
+        $field3= array("string" => $action, "attach" => "style='border-right:0px;width:50px;text-align:right;'");
         $aclList->AddEntry(array($field1, $field2, $field3));
       }
 
