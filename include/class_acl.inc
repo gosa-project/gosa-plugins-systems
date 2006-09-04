@@ -489,14 +489,30 @@ class acl extends plugin
       /* Object header */
       if($_SESSION['js']) {
         if(isset($_SERVER['HTTP_USER_AGENT']) && preg_match("/gecko/i",$_SERVER['HTTP_USER_AGENT'])) {
-          $display.= "<table style='width:100%;border:1px solid #A0A0A0' cellspacing=0 cellpadding=2><tr><td style='background-color:#C8C8C8;height:1.8em;' colspan=".($cols-1)."><b>"._("Object").": $name</b></td><td align='right' style='background-color:#C8C8C8;height:1.8em;'><input type='button' onclick='divtoggle(\"$name\");' value='"._("Show/Hide Advanced Settings")."' /></td></tr>";
+          $display.= "\n<table style='width:100%;border:1px solid #A0A0A0' cellspacing=0 cellpadding=2>".
+                     "\n  <tr>".
+                     "\n    <td style='background-color:#C8C8C8;height:1.8em;' colspan=".($cols-1)."><b>"._("Object").": $name</b></td>".
+                     "\n    <td align='right' style='background-color:#C8C8C8;height:1.8em;'>".
+                     "\n    <input type='button' onclick='divtoggle(\"".preg_replace("/[^a-z0-9]/i","_",$name)."\");' value='"._("Show/Hide Advanced Settings")."' /></td>".
+                     "\n  </tr>";
         } else if (isset($_SERVER['HTTP_USER_AGENT']) && preg_match("/ie/i",$_SERVER['HTTP_USER_AGENT'])) {
-          $display.= "<table style='width:100%;border:1px solid #A0A0A0' cellspacing=0 cellpadding=2><tr><td style='background-color:#C8C8C8;height:1.8em;' colspan=".($cols-1)."><b>"._("Object").": $name</b></td><td align='right' style='background-color:#C8C8C8;height:1.8em;'><input type='button' onclick='divtoggle(\"$name\");' value='"._("Show/Hide Advanced Settings")."' /></td></tr>";
+          $display.= "\n<table style='width:100%;border:1px solid #A0A0A0' cellspacing=0 cellpadding=2>".
+                     "\n  <tr>".
+                     "\n    <td style='background-color:#C8C8C8;height:1.8em;' colspan=".($cols-1)."><b>"._("Object").": $name</b></td>".
+                     "\n    <td align='right' style='background-color:#C8C8C8;height:1.8em;'>".
+                     "\n    <input type='button' onclick='divtoggle(\"$name\");' value='"._("Show/Hide Advanced Settings")."' /></td>".
+                     "\n  </tr>";
         } else {
-          $display.= "<table style='width:100%;border:1px solid #A0A0A0' cellspacing=0 cellpadding=2><tr><td style='background-color:#C8C8C8;height:1.8em;' colspan=$cols><b>"._("Object").": $name</b></td></tr>";
+          $display.= "\n<table style='width:100%;border:1px solid #A0A0A0' cellspacing=0 cellpadding=2>".
+                     "\n  <tr>".
+                     "\n    <td style='background-color:#C8C8C8;height:1.8em;' colspan=$cols><b>"._("Object").": $name</b></td>".
+                     "\n  </tr>";
         }
       } else {
-          $display.= "<table style='width:100%;border:1px solid #A0A0A0' cellspacing=0 cellpadding=2><tr><td style='background-color:#C8C8C8;height:1.8em;' colspan=$cols><b>"._("Object").": $name</b></td></tr>";
+          $display.= "\n<table style='width:100%;border:1px solid #A0A0A0' cellspacing=0 cellpadding=2>".
+                     "\n  <tr>".
+                     "\n    <td style='background-color:#C8C8C8;height:1.8em;' colspan=$cols><b>"._("Object").": $name</b></td>".
+                     "\n  </tr>";
       }
 
       /* Generate options */
@@ -520,7 +536,10 @@ class acl extends plugin
       $more_options= $this->mkchkbx($key."_0_r",  _("read"), preg_match('/r/', $currentAcl[0])).$spc;
       $more_options.= $this->mkchkbx($key."_0_w", _("write"), preg_match('/w/', $currentAcl[0]));
 
-      $display.= "<tr><td style='background-color:#E0E0E0' colspan=".($cols-1).">$options</td><td style='background-color:#D4D4D4'>&nbsp;".("Complete object:")." $more_options</td></tr>";
+      $display.= "\n  <tr>".
+                 "\n    <td style='background-color:#E0E0E0' colspan=".($cols-1).">$options</td>".
+                 "\n    <td style='background-color:#D4D4D4'>&nbsp;".("Complete object:")." $more_options</td>".
+                 "\n  </tr>";
 
       /* Walk through the list of attributes */
       $cnt= 1;
@@ -528,9 +547,15 @@ class acl extends plugin
       asort($splist);
       if($_SESSION['js']) {
         if(isset($_SERVER['HTTP_USER_AGENT']) && preg_match("/gecko/i",$_SERVER['HTTP_USER_AGENT'])) {
-          $display.= "<tr id='tr_$name' style='vertical-align:top;height:0px;'><td colspan=".$cols."><div id='$name' style='overflow:hidden;visibility:hidden;height:0px;vertical-align:top;width:100%;'><table style='width:100%;'>";
+          $display.= "\n  <tr id='tr_".preg_replace("/[^a-z0-9]/i","_",$name)."' style='vertical-align:top;height:0px;'>".
+                     "\n    <td colspan=".$cols.">".
+                     "\n      <div id='".preg_replace("/[^a-z0-9]/i","_",$name)."' style='overflow:hidden;visibility:hidden;height:0px;vertical-align:top;width:100%;'>".
+                     "\n        <table style='width:100%;'>";
         } else if (isset($_SERVER['HTTP_USER_AGENT']) && preg_match("/ie/i",$_SERVER['HTTP_USER_AGENT'])) {
-          $display.= "<tr id='tr_$name' style='vertical-align:top;height:0px;'><td colspan=".$cols."><div id='$name' style='position:absolute;overflow:hidden;visibility:hidden;height:0px;vertical-align:top;width:100%;'><table style='width:100%;'>";
+          $display.= "\n  <tr id='tr_".preg_replace("/[^a-z0-9]/i","_",$name)."' style='vertical-align:top;height:0px;'>".
+                     "\n    <td colspan=".$cols.">".
+                     "\n      <div id='".preg_replace("/[^a-z0-9]/i","_",$name)."' style='position:absolute;overflow:hidden;visibility:hidden;height:0px;vertical-align:top;width:100%;'>".
+                     "\n        <table style='width:100%;'>";
         }
       }
       foreach($splist as $attr => $dsc){
@@ -542,14 +567,14 @@ class acl extends plugin
 
         /* Open table row */
         if ($cnt == 1){
-          $display.= "<tr>";
+          $display.= "\n  <tr>";
         }
 
         /* Close table row */
         if ($cnt == $cols){
           $cnt= 1;
           $rb= "";
-          $end= "</tr>";
+          $end= "\n  </tr>";
         } else {
           $cnt++;
           $rb= "border-right:1px solid #A0A0A0;";
@@ -561,21 +586,25 @@ class acl extends plugin
         if (isset($currentAcl[$attr])){
           $state= $currentAcl[$attr];
         }
-        $display.= "<td style='border-top:1px solid #A0A0A0;${rb}width:".(int)(100/$cols)."%'><b>$dsc</b> ($attr)<br>".$this->mkrwbx($key."_".$attr, $state)."</td>$end";
+        $display.= "\n    <td style='border-top:1px solid #A0A0A0;${rb}width:".(int)(100/$cols)."%'>".
+                   "\n      <b>$dsc</b> ($attr)<br>".$this->mkrwbx($key."_".$attr, $state)."</td>$end";
       }
       
       /* Fill missing td's if needed */
       if (--$cnt != $cols && $cnt != 0){
-       $display.= str_repeat("<td style='border-top:1px solid #A0A0A0; width:".(int)(100/$cols)."%'>&nbsp;</td>", $cols-$cnt); 
+       $display.= str_repeat("\n    <td style='border-top:1px solid #A0A0A0; width:".(int)(100/$cols)."%'>&nbsp;</td>", $cols-$cnt); 
       }
 
       if($_SESSION['js']) {
         if(isset($_SERVER['HTTP_USER_AGENT']) && (preg_match("/gecko/i",$_SERVER['HTTP_USER_AGENT'])) || (preg_match("/ie/i",$_SERVER['HTTP_USER_AGENT']))) {
-          $display.= "</table></div></td></tr>";
+          $display.= "\n        </table>".
+                     "\n      </div>".
+                     "\n    </td>".
+                     "\n  </tr>";
         }
       }
 
-      $display.= "</table><br />";
+      $display.= "\n</table><br />\n";
     }
 
     return ($display);
@@ -585,7 +614,8 @@ class acl extends plugin
   function mkchkbx($name, $text, $state= FALSE)
   {
     $state= $state?"checked":"";
-    return "<input id='acl_$name' type=checkbox name='acl_$name' $state><label for='acl_$name'>$text</label>";
+    return "\n      <input id='acl_".preg_replace("/[^a-z0-9]/i","_",$name)."' type=checkbox name='acl_$name' $state>".
+           "\n      <label for='acl_$name'>$text</label>";
   }
 
 
@@ -593,8 +623,10 @@ class acl extends plugin
   {
     $rstate= preg_match('/r/', $state)?'checked':'';
     $wstate= preg_match('/w/', $state)?'checked':'';
-    return ("<input id='acl_${name}_r' type=checkbox name='acl_${name}_r' $rstate><label for='acl_${name}_r'>"._("read")."</label>".
-            "<input id='acl_${name}_w' type=checkbox name='acl_${name}_w' $wstate><label for='acl_${name}_w'>"._("write")."</label>");
+    return ("\n      <input id='acl_".preg_replace("/[^a-z0-9]/i","_",$name)."_r' type=checkbox name='acl_${name}_r' $rstate>".
+            "\n      <label for='acl_${name}_r'>"._("read")."</label>".
+            "\n      <input id='acl_".preg_replace("/[^a-z0-9]/i","_",$name)."_w' type=checkbox name='acl_${name}_w' $wstate>".
+            "\n      <label for='acl_${name}_w'>"._("write")."</label>");
   }
 
 
