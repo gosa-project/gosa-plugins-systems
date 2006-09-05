@@ -808,8 +808,8 @@ class environment extends plugin
         }else{
           if(isset($this->NewAddedPrinters[$pname])){
             $type = "User";
-          }elseif($printerObj->by_object['printgeneric']->DelMember("AddUser",$this->cn)){
-              $type = "User";
+          }elseif($printerObj->by_object['printgeneric']->DelMember("AddUser",$this->uid)){
+            $type = "User";
           }
         }
         if($type){
@@ -825,10 +825,8 @@ class environment extends plugin
     }
 
     if((isset($_POST['gotoPrinterEdit']))&&(isset($_POST['gotoPrinterSel']))&&(!empty($_POST['gotoPrinterSel']))){
-
-
       $printers = $_POST['gotoPrinterSel'];
-
+      $this->add_del_printer_member_was_called = true;
       foreach($printers as $printer){
         if($this->gotoPrinter[$printer]['mode']=="user"){
           $this->gotoPrinter[$printer]['mode']="admin";
@@ -1059,21 +1057,21 @@ class environment extends plugin
       }
 
       /* Remove old entries */
-      $ldap->search("(&(objectClass=gotoPrinter)(goto".$s_suffix."Printer=".$this->uid."))",array("*"));
+      $ldap->search("(&(objectClass=gotoPrinter)(goto".$s_suffix."Printer=".$this->$useVar."))",array("*"));
       while($attr = $ldap->fetch()){
         $printerObj = NULL;
         $printerObj = new printtabs($this->config,$this->config->data['TABS']['PRINTTABS'],$attr['dn'],"printer");
         $printerObj->set_acl_base($attr['dn']);
-        $printerObj->by_object['printgeneric']->DelMember($types["goto".$s_suffix."Printer"],$this->uid);
+        $printerObj->by_object['printgeneric']->DelMember($types["goto".$s_suffix."Printer"],$this->$useVar);
         $printerObj->by_object['printgeneric']->save();
       }
 
-      $ldap->search("(&(objectClass=gotoPrinter)(goto".$s_suffix."AdminPrinter=".$this->uid."))",array("*"));
+      $ldap->search("(&(objectClass=gotoPrinter)(goto".$s_suffix."AdminPrinter=".$this->$useVar."))",array("*"));
       while($attr = $ldap->fetch()){
         $printerObj = NULL;
         $printerObj = new printtabs($this->config,$this->config->data['TABS']['PRINTTABS'],$attr['dn'],"printer");
         $printerObj->set_acl_base($attr['dn']);
-        $printerObj->by_object['printgeneric']->DelMember($types["goto".$s_suffix."AdminPrinter"],$this->uid);
+        $printerObj->by_object['printgeneric']->DelMember($types["goto".$s_suffix."AdminPrinter"],$this->$useVar);
         $printerObj->by_object['printgeneric']->save();
       }
 
