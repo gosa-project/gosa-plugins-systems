@@ -817,12 +817,12 @@ class printgeneric extends plugin
         $id = $key;
       }
     }
-    
-    if(!$this->acl_is_writeable($type)){
+  
+    if(!$this->acl_is_writeable("gotoUserPrinter")){
       print_red(sprintf(_("You are not allowed to remove the given object '%s' from the list of members of printer '%s'."),$id,$this->dn));
       return(FALSE);
     }
-  
+ 
     if(isset($this->member[$type][$id])){
       unset($this->member[$type][$id]);
       return(TRUE);

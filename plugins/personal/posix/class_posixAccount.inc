@@ -875,7 +875,8 @@ class posixAccount extends plugin
 
     /* Take care about groupMembership values: add to groups */
     foreach ($this->groupMembership as $key => $value){
-      $g= new grouptabs($this->config,$this->config->data['TABS']['GROUPTABS'], $key);
+      $g= new grouptabs($this->config,$this->config->data['TABS']['GROUPTABS'], $key,"groups");
+      $g->set_acl_base($key);
       $g->by_object['group']->addUser($this->uid);
       $g->save();
     }
@@ -883,7 +884,8 @@ class posixAccount extends plugin
     /* Remove from groups not listed in groupMembership */
     foreach ($this->savedGroupMembership as $key => $value){
       if (!isset($this->groupMembership[$key])){
-        $g= new grouptabs($this->config,$this->config->data['TABS']['GROUPTABS'], $key);
+        $g= new grouptabs($this->config,$this->config->data['TABS']['GROUPTABS'], $key,"groups");
+        $g->set_acl_base($key);
         $g->by_object['group']->removeUser ($this->uid);
         $g->save();
       }

@@ -825,7 +825,7 @@ class user extends plugin
       }
 
     } elseif(!$this->is_new) {
-      echo "I think this is not currect, but can't test it right now. ";
+      // # FIXME User picture saveing ...  seams to work.
       // This should be set to array in all cases ... else we write *removed* into this attribute ...
       $this->attrs["jpegPhoto"] = array();
     }
