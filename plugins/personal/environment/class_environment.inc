@@ -749,12 +749,23 @@ class environment extends plugin
         $tmp2= $this->dialog->getPrinter(true);
 
         foreach($tmp as $pname){
-        $printerObj = new printtabs($this->config,$this->config->data['TABS']['PRINTTABS'],$tmp2[$pname]['dn']);
+        $printerObj = new printtabs($this->config,$this->config->data['TABS']['PRINTTABS'],$tmp2[$pname]['dn'],"printer");
+        $printerObj->set_acl_base($tmp2[$pname]['dn']);
+
+        if($this->is_group){
+          if($printerObj->by_object['printgeneric']->AddMember("AddGroup",$this->dn)){
+            $this->gotoPrinter[$pname]=$tmp2[$pname];
+            $this->gotoPrinter[$pname]['mode']="user";
+            $this->add_del_printer_member_was_called = true;
+          }
+        }else{
           if($printerObj->by_object['printgeneric']->AddMember("AddUser",$this->dn)){
             $this->gotoPrinter[$pname]=$tmp2[$pname];
             $this->gotoPrinter[$pname]['mode']="user";
             $this->add_del_printer_member_was_called = true;
           }
+        }
+
         }
 
         $this->is_dialog=false;

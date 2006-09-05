@@ -840,7 +840,7 @@ class printgeneric extends plugin
       return(FALSE);
     }
 
-    if(!$this->acl_is_writeable($type)){
+    if(!$this->acl_is_writeable("gotoUserPrinter")){
       print_red(sprintf(_("You are not allowed to add the given object '%s' to the list of members of '%s'."),$dn,$this->dn));
       return(FALSE);
     }
@@ -854,22 +854,38 @@ class printgeneric extends plugin
 
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($dn);
-    $ldap->cat($dn,array("cn","uid"));
+    $ldap->cat($dn,array($var));
     if($ldap->count()){
 
       $attrs = $ldap->fetch();
-      $name = $attrs[$var][0];
-  
-      /* Check if this uid/cn is already assigned to any permission */
-      foreach($types as $ctype){
-        if(isset(  $this->member[$ctype][$name])){
-          print_red(sprintf(_("Can't add '%s' to the list of members, it is already used."),$attrs[$var][0]));
-          return(FALSE);
-        }
-      }
 
-      /* Everything is fine. So add the given object to members */
-      $this->member[$type][$attrs[$var][0]] = $attrs ;
+      if(isset($attrs[$var][0])){
+        $name = $attrs[$var][0];
+
+        /* Check if this uid/cn is already assigned to any permission */
+        foreach($types as $ctype){
+
+          /* If we want to add a user, only check user/userAdmin members */
+          if((preg_match("/user/i",$type)) && (!preg_match("/user/i",$ctype))){
+            continue;
+          }
+
+          /* If we want to add a group, only check groups/adminGroups .. */
+          if((preg_match("/group/i",$type)) && (!preg_match("/group/i",$ctype))){
+            continue;
+          }
+
+          if(isset(  $this->member[$ctype][$name])){
+            print_red(sprintf(_("Can't add '%s' to the list of members, it is already used."),$attrs[$var][0]));
+            return(FALSE);
+          }
+        }
+
+        /* Everything is fine. So add the given object to members */
+        $this->member[$type][$attrs[$var][0]] = $attrs ;
+      }else{
+        print_a($attrs);
+      }
     }else{
       print_red(sprintf(_("Can't add '%s' to list of members, it is not reachable."),$dn));
       return(FALSE);
