@@ -247,7 +247,7 @@
       <input type="submit" name="gotoPrinterEdit"    value="{t}Toggle admin{/t}" {if !$gotoPrinter } disabled {/if}>
 {/render}
 {render acl=$gosaDefaultPrinterACL}
-      <input type="submit" name="gotoPrinterDefault"    value="{t}Toggle default{/t}" {if !$gotoPrinter } disabled {/if}>
+      <input type="submit" name="gotoPrinterDefault"    value="{t}Toggle default{/t}" {if !$gotoPrinter | $is_group} disabled {/if}>
 {/render}
      </td>
     </tr>

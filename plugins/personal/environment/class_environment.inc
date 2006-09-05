@@ -57,6 +57,8 @@ class environment extends plugin
   var $gotoHotplugDevice  = array();     // Selected hotplug
   var $gotoHotplugDevices = array();// Already configured hotplug devices 
 
+  var $NewAddedPrinters   = array();
+  var $NewDeletedPrinters = array();
 
   /* general settings */
   // Sets the attributes which will kept on page reload, which will be saved, ...
@@ -254,6 +256,8 @@ class environment extends plugin
     /* Fill templating stuff */
     $smarty= get_smarty();
     $display= "";
+
+    $smarty->assign("is_group",$this->is_group);
 
     /* Are we editing from MyAccount and not editing a user */
     $WriteOnly = (!isset($this->parent)|| !$this->parent) && !isset($_SESSION['edit']);
@@ -749,23 +753,36 @@ class environment extends plugin
         $tmp2= $this->dialog->getPrinter(true);
 
         foreach($tmp as $pname){
-        $printerObj = new printtabs($this->config,$this->config->data['TABS']['PRINTTABS'],$tmp2[$pname]['dn'],"printer");
-        $printerObj->set_acl_base($tmp2[$pname]['dn']);
+          $printerObj = new printtabs($this->config,$this->config->data['TABS']['PRINTTABS'],$tmp2[$pname]['dn'],"printer");
+          $printerObj->set_acl_base($tmp2[$pname]['dn']);
 
-        if($this->is_group){
-          if($printerObj->by_object['printgeneric']->AddMember("AddGroup",$this->dn)){
+          $type = false;
+
+          if($this->is_group){
+
+            if(isset($this->NewDeletedPrinters[$pname])){
+              $type = "AddGroup";
+            }elseif($printerObj->by_object['printgeneric']->AddMember("AddGroup",$this->dn)){
+              $type = "AddGroup";
+            }
+          }else{
+            if(isset($this->NewDeletedPrinters[$pname])){
+              $type = "AddUser";
+            }elseif($printerObj->by_object['printgeneric']->AddMember("AddUser",$this->dn)){
+              $type = "AddUser";
+            }
+          }
+
+          if($type){
             $this->gotoPrinter[$pname]=$tmp2[$pname];
             $this->gotoPrinter[$pname]['mode']="user";
             $this->add_del_printer_member_was_called = true;
-          }
-        }else{
-          if($printerObj->by_object['printgeneric']->AddMember("AddUser",$this->dn)){
-            $this->gotoPrinter[$pname]=$tmp2[$pname];
-            $this->gotoPrinter[$pname]['mode']="user";
-            $this->add_del_printer_member_was_called = true;
-          }
-        }
 
+            $this->NewAddedPrinters[$pname] = $pname;
+            if(isset($this->NewDeletedPrinters[$pname])){
+              unset($this->NewDeletedPrinters[$pname]);
+            }
+          }
         }
 
         $this->is_dialog=false;
@@ -778,10 +795,31 @@ class environment extends plugin
       $printer = $_POST['gotoPrinterSel'];
       foreach($printer as $pname){
 
-        $printerObj = new printtabs($this->config,$this->config->data['TABS']['PRINTTABS'],$this->gotoPrinter[$pname]['dn']);
-        if($printerObj->by_object['printgeneric']->DelMember("AddUser",$this->dn)){
-          unset($this->gotoPrinter[$pname]);
+        $printerObj = new printtabs($this->config,$this->config->data['TABS']['PRINTTABS'],$this->gotoPrinter[$pname]['dn'],"printer");
+        $printerObj->set_acl_base($this->gotoPrinter[$pname]['dn']);
+
+        $type = false;
+        if($this->is_group){
+          if(isset($this->NewAddedPrinters[$pname])){
+            $type = "Group";
+          }elseif($printerObj->by_object['printgeneric']->DelMember("AddGroup",$this->cn)){
+            $type = "Group";
+          }
+        }else{
+          if(isset($this->NewAddedPrinters[$pname])){
+            $type = "User";
+          }elseif($printerObj->by_object['printgeneric']->DelMember("AddUser",$this->cn)){
+              $type = "User";
+          }
+        }
+        if($type){
           $this->add_del_printer_member_was_called = true;
+          unset($this->gotoPrinter[$pname]);
+
+          $this->NewDeletedPrinters[$pname] = $pname;
+          if(isset($this->NewAddedPrinters[$pname])){
+            UNSET($this->NewAddedPrinters[$pname]);
+          }
         }
       }
     }
@@ -801,10 +839,14 @@ class environment extends plugin
     }
 
     if((isset($_POST['gotoPrinterDefault']))&&(isset($_POST['gotoPrinterSel']))&&(!empty($_POST['gotoPrinterSel']))){
-      if ($this->gosaDefaultPrinter == $_POST['gotoPrinterSel'][0]){
-        $this->gosaDefaultPrinter= "";
-      } else {
-        $this->gosaDefaultPrinter= $_POST['gotoPrinterSel'][0];
+      if($this->is_group){
+        print_red(_("GOsa default printer flag is not allowed within groups."));
+      }else{
+        if ($this->gosaDefaultPrinter == $_POST['gotoPrinterSel'][0]){
+          $this->gosaDefaultPrinter= "";
+        } else {
+          $this->gosaDefaultPrinter= $_POST['gotoPrinterSel'][0];
+        }
       }
     }
 
@@ -1020,7 +1062,8 @@ class environment extends plugin
       $ldap->search("(&(objectClass=gotoPrinter)(goto".$s_suffix."Printer=".$this->uid."))",array("*"));
       while($attr = $ldap->fetch()){
         $printerObj = NULL;
-        $printerObj = new printtabs($this->config,$this->config->data['TABS']['PRINTTABS'],$attr['dn']);
+        $printerObj = new printtabs($this->config,$this->config->data['TABS']['PRINTTABS'],$attr['dn'],"printer");
+        $printerObj->set_acl_base($attr['dn']);
         $printerObj->by_object['printgeneric']->DelMember($types["goto".$s_suffix."Printer"],$this->uid);
         $printerObj->by_object['printgeneric']->save();
       }
@@ -1028,14 +1071,17 @@ class environment extends plugin
       $ldap->search("(&(objectClass=gotoPrinter)(goto".$s_suffix."AdminPrinter=".$this->uid."))",array("*"));
       while($attr = $ldap->fetch()){
         $printerObj = NULL;
-        $printerObj = new printtabs($this->config,$this->config->data['TABS']['PRINTTABS'],$attr['dn']);
+        $printerObj = new printtabs($this->config,$this->config->data['TABS']['PRINTTABS'],$attr['dn'],"printer");
+        $printerObj->set_acl_base($attr['dn']);
         $printerObj->by_object['printgeneric']->DelMember($types["goto".$s_suffix."AdminPrinter"],$this->uid);
         $printerObj->by_object['printgeneric']->save();
       }
 
       foreach($this->gotoPrinter as $printer){
         $printerObj = NULL;
-        $printerObj = new printtabs($this->config,$this->config->data['TABS']['PRINTTABS'],$printer['dn']);
+        $printerObj = new printtabs($this->config,$this->config->data['TABS']['PRINTTABS'],$printer['dn'],"printer");
+        $printerObj->set_acl_base($printer['dn']);
+
 
         if($printer['mode'] == "admin") {
           $attribute = "goto".$s_suffix."AdminPrinter";
