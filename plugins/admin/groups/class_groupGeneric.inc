@@ -228,7 +228,8 @@ class group extends plugin
     /* Base select dialog */
     $once = true;
     foreach($_POST as $name => $value){
-      if(preg_match("/^chooseBase/",$name) && $once){
+      if((preg_match("/^chooseBase/",$name) && $once) && ($this->acl_is_moveable())){
+          
         $once = false;
         $this->dialog = new baseSelectDialog($this->config,$this,$bases);
         $this->dialog->setCurrentBase($this->base);
@@ -243,7 +244,9 @@ class group extends plugin
       if($this->dialog->isClosed()){
         $this->dialog = false;
       }elseif($this->dialog->isSelected()){
-        $this->base = $this->dialog->isSelected();
+        if($this->acl_is_moveable()){
+          $this->base = $this->dialog->isSelected();
+        }
         $this->dialog= false;
       }else{
         return($this->dialog->execute());
@@ -269,6 +272,13 @@ class group extends plugin
     }else{
       $smarty->assign("pickupGroup",false);
     }
+
+    /* Assign base ACL */
+    $baseACL = $this->getacl("base");
+    if(!$this->acl_is_moveable()) {
+      $baseACL = preg_replace("/w/","",$baseACL);
+    }
+    $smarty->assign("baseACL",          $baseACL);
 
     /* Manage object add dialog */
     if ($this->group_dialog){
@@ -554,9 +564,13 @@ class group extends plugin
         $this->smbgroup = 0;
       }
 
+      /* Get base selection */
+      if($this->acl_is_moveable() && isset($_POST['base'])){
+        $this->base = $_POST['base'];
+      }
+
       foreach (array(
             "force_gid"  => "gidNumber", 
-            "base"       => "base", 
             "smbgroup"   => "sambaGroupType") as $val => $aclname) {
         if ($this->acl_is_writeable($aclname)  && isset($_POST["$val"])){
           $this->$val= $_POST["$val"];
@@ -901,7 +915,6 @@ class group extends plugin
           "plProvidedAcls"    => array(
             "cn"                => _("Name"),
             "description"       => _("Description"),
-            "base"              => _("Base"),
 
             "fonGroup"         => _("Phone pickup group"),
             "nagiosGroup"      => _("Nagios group"),
