@@ -4,9 +4,9 @@ class deptabs extends tabs
 {
   var $base= "";
 
-  function deptabs($config, $data, $dn)
+  function deptabs($config, $data, $dn,$category)
   {
-    tabs::tabs($config, $data, $dn);
+    tabs::tabs($config, $data, $dn,$category);
     $this->base= $this->by_object['department']->base;
 
     /* Add references/acls/snapshots */

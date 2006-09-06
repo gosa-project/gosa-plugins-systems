@@ -103,7 +103,8 @@ class department extends plugin
 
     /* Get bases */
     $ui = get_userinfo();
-    $check = $ui->get_module_departments("groups");
+    $check = $ui->get_module_departments("department");
+    $check[] = $this->base;
     $bases = array();
     foreach($check as $dn_allowed){
       $bases[$dn_allowed] = $this->config->idepartments[$dn_allowed];
@@ -112,7 +113,7 @@ class department extends plugin
 		/* Base select dialog */
 		$once = true;
 		foreach($_POST as $name => $value){
-			if(preg_match("/^chooseBase/",$name) && $once){
+			if((preg_match("/^chooseBase/",$name) && $once) && ($this->acl_is_moveable())){
 				$once = false;
 				$this->dialog = new baseSelectDialog($this->config,$this,$bases);
 				$this->dialog->setCurrentBase($this->base);
@@ -227,7 +228,7 @@ class department extends plugin
 
 		/* Permissions for that base? */
 		//	$this->dn= "ou=$this->ou,".$this->base;
-		if (chkacl($this->acl, "create") != ""){
+		if ($this->acl_is_createable() && $this->dn != "new"){
 			$message[]= _("You have no permissions to create a department on this 'Base'.");
 		}
 
