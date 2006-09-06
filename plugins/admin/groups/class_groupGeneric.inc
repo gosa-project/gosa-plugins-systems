@@ -205,25 +205,13 @@ class group extends plugin
       $this->reload();
     }
 
-    /* Only display bases that we are able to read/write */
+    /* Get bases */
     $ui = get_userinfo();
+    $check = $ui->get_module_departments("groups");
     $bases = array();
-    if($this->dn == "new") {
-      foreach($this->config->idepartments as $dn => $name){
-        $acl = $ui->get_permissions($dn,"groups/group") ;
-        if(preg_match("/c/",$acl)){
-          $bases[$dn]=$name;
-        }
-      }
-    }else{
-      foreach($this->config->idepartments as $dn => $name){
-        $acl = $ui->get_category_permissions($dn,"groups") ;
-        if(preg_match("/w/",$acl)){
-          $bases[$dn]=$name;
-        }
-      }
+    foreach($check as $dn_allowed){
+      $bases[$dn_allowed] = $this->config->idepartments[$dn_allowed];
     }
-
 
     /* Base select dialog */
     $once = true;
@@ -313,13 +301,14 @@ class group extends plugin
       $smarty->assign("launchimage", get_template_path('images/small_filter.png'));
       $smarty->assign("tree_image", get_template_path('images/tree.png'));
 
-      /* Generate list of bases */
-      $check = $ui->get_module_departments("users");
-      $bases_user_select = array();
+      /* Get bases */
+      $ui = get_userinfo();
+      $check = $ui->get_module_departments("groups");
+      $bases = array();
       foreach($check as $dn_allowed){
-        $bases_user_select[$dn_allowed] = $this->config->idepartments[$dn_allowed];
+        $bases[$dn_allowed] = $this->config->idepartments[$dn_allowed];
       }
-  
+ 
       $smarty->assign("deplist", $bases_user_select);
       $smarty->assign("alphabet", generate_alphabet());
       foreach( array("dselect", "regex","SubSearchGroup") as $type){
