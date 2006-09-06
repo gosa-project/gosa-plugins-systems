@@ -107,8 +107,8 @@ class departmentManagement extends plugin
      */
     if ($s_action=="new"){
       $this->dn= "new";
-      $this->deptabs= new deptabs($this->config,
-          $this->config->data['TABS']['DEPTABS'], $this->dn);
+      $this->deptabs= new deptabs($this->config,$this->config->data['TABS']['DEPTABS'], $this->dn,"department");
+      $this->deptabs->set_acl_base($this->DivListDepartment->selectedBase);
     }
 
 
@@ -129,12 +129,10 @@ class departmentManagement extends plugin
       /* Lock the current entry, so everyone will get the  above dialog */
       add_lock ($this->dn, $this->ui->dn);
 
-      /* Set up the users ACL's for this 'dn' */
-      $this->acl= get_permissions ($this->dn, $this->ui->subtreeACL);
-
       /* Register deptabs to trigger edit dialog */
-      $this->deptabs= new deptabs($this->config,$this->config->data['TABS']['DEPTABS'], $this->dn);
-      $this->deptabs->set_acl($this->acl);
+      $this->deptabs= new deptabs($this->config,$this->config->data['TABS']['DEPTABS'], $this->dn,"department");
+      $this->deptabs->set_acl_base($this->dn);
+
       $_SESSION['objectinfo']= $this->dn;
     }
 
@@ -170,9 +168,7 @@ class departmentManagement extends plugin
      * Finally delete department 
      */
     if (isset($_POST['delete_department_confirm'])){
-      $acl= get_permissions ($this->dn, $this->ui->subtreeACL);
-      $acl= get_module_permission($acl, "department", $this->dn);
-      if (chkacl($acl, "delete") == ""){
+      if($this->acl_is_removeable()){
         $this->remove_from_parent();
         gosa_log ("Department object'".$this->dn."' has been removed");
       } else {

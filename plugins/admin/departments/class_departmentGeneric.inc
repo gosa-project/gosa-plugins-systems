@@ -72,11 +72,6 @@ class department extends plugin
 			$this->base= preg_replace ("/^[^,]+,/", "", $this->dn);
 		}
 
-		/* set permissions */
-		$ui= get_userinfo();
-		$acl= get_permissions ($ui->dn, $ui->subtreeACL);
-		$this->acl= get_module_permission($acl, "department", $ui->dn);
-
 		/* Is administrational Unit? */
 		if ($dn != "new" && in_array_ics('gosaAdministrativeUnit', $this->attrs['objectClass'])){
 			$this->is_administrational_unit= true;
@@ -94,12 +89,32 @@ class department extends plugin
 		$this->config->make_idepartments();
 		$smarty= get_smarty();
 
+    /* Assign base ACL */
+    $baseACL = $this->getacl("base");
+    if(!$this->acl_is_moveable()) {
+      $baseACL = preg_replace("/w/","",$baseACL);
+    }
+    $smarty->assign("baseACL",          $baseACL);
+
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $name => $translation){
+      $smarty->assign($name."ACL",$this->getacl($name));
+    }
+
+    /* Get bases */
+    $ui = get_userinfo();
+    $check = $ui->get_module_departments("groups");
+    $bases = array();
+    foreach($check as $dn_allowed){
+      $bases[$dn_allowed] = $this->config->idepartments[$dn_allowed];
+    }
+
 		/* Base select dialog */
 		$once = true;
 		foreach($_POST as $name => $value){
 			if(preg_match("/^chooseBase/",$name) && $once){
 				$once = false;
-				$this->dialog = new baseSelectDialog($this->config,$this);
+				$this->dialog = new baseSelectDialog($this->config,$this,$bases);
 				$this->dialog->setCurrentBase($this->base);
 			}
 		}
@@ -120,7 +135,6 @@ class department extends plugin
 		}
 
 		/* Hide all departments, that are subtrees of this department */
-		$bases 	= $this->config->idepartments;
 		if(($this->dn == "new")||($this->dn == "")){
 			$tmp = $bases;
 		}else{
@@ -137,9 +151,7 @@ class department extends plugin
 
 		foreach ($this->attributes as $val){
 			$smarty->assign("$val", $this->$val);
-			$smarty->assign("$val"."ACL", chkacl($this->acl, "$val"));
 		}
-    $smarty->assign("baseACL", chkacl($this->acl,"base"));
 		$smarty->assign("base_select", $this->base);
 
 		/* Set admin unit flag */
@@ -148,16 +160,14 @@ class department extends plugin
 		} else {
 			$smarty->assign("unitTag", "");
 		}
-		$smarty->assign("unitTag"."ACL", chkacl($this->acl, "unitTag"));
 
 		return($smarty->fetch (get_template_path('generic.tpl', TRUE)));
 	}
 
 	function clear_fields()
 	{
-		$this->dn= "";
-		$this->base= "";
-		$this->acl= "#none#";
+		$this->dn   = "";
+		$this->base = "";
 
 		foreach ($this->attributes as $val){
 			$this->$val= "";
@@ -189,16 +199,16 @@ class department extends plugin
 	/* Save data to object */
 	function save_object()
 	{
-		if (isset($_POST['base'])){
+		if (isset($_POST['dep_generic_posted'])){
 			plugin::save_object();
 
 			/* Save base, since this is no LDAP attribute */
-			if (chkacl($this->acl, "create") == ""){
+      if($this->acl_is_moveable() && isset($_POST['base'])){
 				$this->base= $_POST['base'];
 			}
 
 			/* Save tagging flag */
-			if (chkacl($this->acl, "unitTag") == ""){
+			if ($this->acl_is_writeable("unitTag")){
 				if (isset($_POST['unitTag'])){
 					$this->is_administrational_unit= true;
 				} else {
