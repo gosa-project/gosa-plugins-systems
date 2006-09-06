@@ -175,19 +175,34 @@ class ogroup extends plugin
       $smarty->assign($name."ACL",$this->getacl($name));
     }
 
+    /* Create base acls */
+    $baseACL = $this->getacl("base",(!is_object($this->parent) && !isset($_SESSION['edit'])));
+    if(!$this->acl_is_moveable()) {
+      $baseACL = preg_replace("/w/","",$baseACL);
+    }
+    $smarty->assign("baseACL",          $baseACL);
+
+
+    /* Get bases */ 
+    $ui = get_userinfo();
+    $check = $ui->get_module_departments("ogroups");
+    $bases = array();
+    foreach($check as $dn_allowed){
+      $bases[$dn_allowed] = $this->config->idepartments[$dn_allowed];
+    }
 
     /* Base select dialog */
     $once = true;
     foreach($_POST as $name => $value){
-      if(preg_match("/^chooseBase/",$name) && $once){
+      if(preg_match("/^chooseBase/",$name) && $once && $this->acl_is_moveable()){
         $once = false;
-        $this->dialog = new baseSelectDialog($this->config,$this);
+        $this->dialog = new baseSelectDialog($this->config,$this,$bases);
         $this->dialog->setCurrentBase($this->base);
       }
     }
 
     /* Dialog handling */
-    if(is_object($this->dialog)){
+    if(is_object($this->dialog) && $this->acl_is_moveable()){
       /* Must be called before save_object */
       $this->dialog->save_object();
 
@@ -267,8 +282,7 @@ class ogroup extends plugin
     }
 
     /* Bases / Departments */
-   
-      if (isset($_POST['base'])){
+      if ((isset($_POST['base'])) && ($this->acl_is_moveable())){
         $this->base= $_POST['base'];
       }
 
@@ -301,7 +315,7 @@ class ogroup extends plugin
     }
 
     /* Assign variables */
-    $smarty->assign("bases", $this->config->idepartments);
+    $smarty->assign("bases", $bases);
     $smarty->assign("base_select", $this->base);
     $smarty->assign("department", $this->department);
     $smarty->assign("members", $this->convert_list($this->memberList));
@@ -324,6 +338,7 @@ class ogroup extends plugin
     /* Save additional values for possible next step */
     if (isset($_POST['ogroupedit'])){
       plugin::save_object();
+  
     }
   }
 
@@ -746,7 +761,6 @@ class ogroup extends plugin
                                                       "objectClass"  => "gosaGroupOfNames")),
           "plProvidedAcls"=> array(
             "cn"                => _("Name"),
-            "base"              => _("Base"),
             "description"       => _("Description"),
             "member"            => _("Member"))
           ));
