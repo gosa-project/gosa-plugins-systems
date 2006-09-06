@@ -1228,43 +1228,24 @@ class user extends plugin
    */
   function allowedBasesToMoveTo()
   {
-    $allowed = array();
-    $ret_all = false;
-    if($this->uid == $_SESSION['ui']->username){
-      $ldap= $this->config->get_ldap_link(); 
-      $ldap->cd($this->config->current['BASE']); 
-      $ldap->search("(&(objectClass=posixGroup)(memberUid=".$_SESSION['ui']->username."))",array("gosaSubtreeACL"));
-       
-      while($attrs = $ldap->fetch()){
-    
-        if(isset($attrs['gosaSubtreeACL'])){
-        
-          foreach($attrs['gosaSubtreeACL'] as $attr){
-            if((preg_match("/:user#/",$attr))||(preg_match("/:all/",$attr))){
-              $s =  preg_replace("/^.*ou=groups,/","",$attrs['dn']);
+    /* Get bases */
+    $ui     = get_userinfo();
+    $check  = $ui->get_module_departments("ogroups");
+    $bases  = array();
 
-              foreach($this->config->idepartments as $key => $dep) {
-                if(preg_match("/".$s."/i",$key)){
-                  $allowed[$key] = $dep;
-                }
-              }
-            }
-          }
-        }
-      }
-      if(count($allowed) == 0){
-        foreach($this->config->idepartments as $key => $dep) {
-          if($this->base==$key){
-            $allowed[$key] = $dep;
-          }
-        }
-      }  
-  
-      return($allowed);
-      
-    }else{
-      return($this->config->idepartments);
+    foreach($check as $dn_allowed){
+      $bases[$dn_allowed] = $this->config->idepartments[$dn_allowed];
     }
+
+    foreach($bases as $key => $base ){
+      $acl =  $ui->get_permissions($key,"users/user");
+     
+      /* Remove those bases, which are not allowed to move to, but keep current base ...  */ 
+      if(!preg_match("/m/",$acl) && $key != $this->base){
+        unset($bases[$key]);
+      }
+    }
+    return($bases);
   } 
 
 
