@@ -132,7 +132,7 @@
 {render acl=$gotoLogonScriptACL}
 			<input type="submit" name="upLoad" value="{t}Upload{/t}">
 {/render}
-			<input type='image' name='downloadScript'  src='images/save.png' title='{t}Download{/t}'>
+			<input type='image' name='downloadScript'  src='images/save.png' title='{t}Download{/t}' class='center'>
 		</td>
 	</tr>
 </table>
