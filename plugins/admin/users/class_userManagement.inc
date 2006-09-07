@@ -79,6 +79,7 @@ class userManagement extends plugin
       foreach(array("del"       => "user_del",    "edit"      => "user_edit",
                     "new"       => "user_new",
                     "new_tpl"   => "user_tplnew",
+                    "create_user_from_tpl"          => "userfrom_tpl",
                     "change_pw" => "user_chgpw", 
                     "editPaste" => "editPaste",   "copy"      => "copy",
                     "cut"       => "cut") as $act => $name){
@@ -459,6 +460,38 @@ class userManagement extends plugin
       Create a new user,template, user from template 
      ********************/
 
+    /* Check selected options for template */
+    if (isset($_POST['template_continue'])){
+      if(!isset($_POST['template']) || (empty($_POST['template']))){
+        $message[] = _("Please select a valid template.");
+      }
+      if(!isset($_POST['sn']) || (empty($_POST['sn']))){
+        $message[]= _("The required field 'Name' is not set.");
+      }
+      if(!isset($_POST['givenName']) || (empty($_POST['givenName']))){
+        $message[]= _("The required field 'Given name' is not set.");
+      }
+    
+      /* Show error message / continue editing */
+      if (count($message) > 0){
+        show_errors ($message);
+
+        foreach(array("sn", "givenName", "uid", "template") as $attr){
+          if(isset($_POST[$attr])){
+            $smarty->assign("$attr", $_POST[$attr]);
+          }else{
+            $smarty->assign("$attr", "");
+          }
+        }
+        $smarty->assign("templates",$this->templates);
+        $smarty->assign("got_uid",$this->got_uid);
+        $smarty->assign("edit_uid",false);
+
+        return($smarty->fetch(get_template_path('template.tpl', TRUE)));
+
+      }
+    }
+
     /* New user/template request */
     if (($s_action=="create_user_from_tpl")||($s_action=="new") || ($s_action=="new_tpl")){
       /* By default we set 'dn' to 'new', all relevant plugins will
@@ -504,7 +537,8 @@ class userManagement extends plugin
      ********************/
 
     /* Continue template editing */
-    if ((isset($_POST['template_continue']) && $_POST['template'] != 'none' && !isset($_POST['uid']))){
+    if ((isset($_POST['template_continue'])) && ($_POST['template'] != 'none') && (!isset($_POST['uid']))){
+
       $this->sn             = $_POST['sn'];
       $this->givenName      = $_POST['givenName'];
 
@@ -554,7 +588,6 @@ class userManagement extends plugin
       }
       return($smarty->fetch(get_template_path('template.tpl', TRUE)));
     }
-
 
     /********************
       No template selected continue edit
