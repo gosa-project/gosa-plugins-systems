@@ -228,7 +228,7 @@ class department extends plugin
 
 		/* Permissions for that base? */
 		//	$this->dn= "ou=$this->ou,".$this->base;
-		if ($this->acl_is_createable() && $this->dn != "new"){
+		if ($this->acl_is_createable() && $this->dn == "new"){
 			$message[]= _("You have no permissions to create a department on this 'Base'.");
 		}
 

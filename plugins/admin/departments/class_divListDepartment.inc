@@ -65,17 +65,32 @@ class divListDepartment extends MultiSelectWindow
     }
 
     /* Generate list head */
-      $listhead = "<div style='background:#F0F0F9;padding:5px;'>".
-        " <input type='image' class='center' src='images/list_root.png' align='middle' title='"._("Go to root department")."' name='dep_root' alt='".       _("Root")."'>&nbsp;".
-        " <input type='image' class='center' src='images/list_up.png' align='middle' title='"._("Go up one department")."' name='dep_back' alt='"._("Up").  "'>&nbsp;".
-        " <input type='image' class='center' src='images/list_home.png' align='middle' title='"._("Go to users home department")."' name='dep_home' alt='". _("Home")."'>&nbsp;".
-        " <input class='center' type='image' src='images/list_reload.png' align='middle' title='"._("Reload list")."' name='submit_department' alt='".      _("Submit")."'>&nbsp;".
-        " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;".
-        " <input class='center' type='image' src='images/list_new_department.png' align='middle' alt='"._("Create new department")."' name='dep_new'>&nbsp; ".
-        " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;".
-        _("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
-        " <input class='center' type='image' src='images/list_submit.png' align='middle' title='"._("Submit department")."' name='submit_department' alt='"._("Submit")."'>&nbsp;".
-        "</div>";
+    $ui = get_userinfo();
+    $acl = $ui->get_permissions("ou=dummy,",$this->selectedBase  ,"department/department");
+
+    $listhead = "<div style='background:#F0F0F9;padding:5px;'>".
+      " <input type='image' class='center' src='images/list_root.png' align='middle' ".
+      "   title='"._("Go to root department")."' name='dep_root' alt='".       _("Root")."'>&nbsp;".
+      " <input type='image' class='center' src='images/list_up.png' align='middle' ".
+      "   title='"._("Go up one department")."' name='dep_back' alt='"._("Up").  "'>&nbsp;".
+      " <input type='image' class='center' src='images/list_home.png' align='middle' ".
+      "   title='"._("Go to users home department")."' name='dep_home' alt='". _("Home")."'>&nbsp;".
+      " <input class='center' type='image' src='images/list_reload.png' align='middle' ".
+      "   title='"._("Reload list")."' name='submit_department' alt='".      _("Submit")."'>&nbsp;";
+      
+    if(preg_match("/c/",$acl)){
+      $listhead .=  " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;".
+        " <input class='center' type='image' src='images/list_new_department.png' ".
+        "   align='middle' alt='"._("Create new department")."' name='dep_new'>&nbsp; ";
+    }
+  
+
+    $listhead .= " <img class='center' src='images/list_seperator.png' align='middle' ".
+      " alt='' height='16' width='1'>&nbsp;".
+      " "._("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
+      " <input class='center' type='image' src='images/list_submit.png' align='middle' ".
+      "   title='"._("Submit department")."' name='submit_department' alt='"._("Submit")."'>&nbsp;".
+      "</div>";
 
     $this->SetListHeader($listhead);
   }
@@ -88,14 +103,24 @@ class divListDepartment extends MultiSelectWindow
 
   function setEntries($list)
   {
-    $actions= "<input class='center' type='image' src='images/edit.png'
-      alt='"._("edit")."'   name='dep_edit_%KEY%' title='"._("Edit this entry")."'>";
-    $actions.= "<input class='center' type='image' src='images/edittrash.png'
-      alt='"._("delete")."'   name='dep_del_%KEY%' title='"._("Delete this entry")."'>";
-
     $linkopen = "<a href='?plug=".$_GET['plug']."&amp;act=dep_open&amp;dep_id=%s'>%s</a>";
 
+    $ui = get_userinfo();
     foreach($list as $key => $val) {
+
+      $actions= "";      
+
+      $acl = $ui->get_permissions($this->config->departments[$key] ,"department/department");
+      if(preg_match("/r/",$acl)){
+        $actions.= "<input class='center' type='image' src='images/edit.png'
+          alt='"._("edit")."'   name='dep_edit_%KEY%' title='"._("Edit this entry")."'>";
+      }
+
+      if(preg_match("/c/",$acl)){
+        $actions.= "<input class='center' type='image' src='images/edittrash.png'
+          alt='"._("delete")."'   name='dep_del_%KEY%' title='"._("Delete this entry")."'>";
+      }
+
       if(!isset($this->config->departments[trim($key)])){
         $this->config->departments[trim($key)]="";
       }
