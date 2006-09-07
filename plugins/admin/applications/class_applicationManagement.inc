@@ -31,7 +31,6 @@ class applicationManagement extends plugin
   var $CopyPasteHandler         = NULL;
   var $DivListApplication       = NULL;
   var $applications             = array();
-  var $acl                      = "";
   var $enableReleaseManagement  = false;
 
   function IsReleaseManagementActivated()
@@ -171,9 +170,8 @@ class applicationManagement extends plugin
       $this->dn= "new";
 
       /* Create new usertab object */
-      $this->apptabs= new apptabs($this->config,
-          $this->config->data['TABS']['APPSTABS'], $this->dn);
-      $this->apptabs->set_acl(array(':all'));
+      $this->apptabs= new apptabs($this->config,$this->config->data['TABS']['APPSTABS'], $this->dn,"application");
+      $this->apptabs->set_acl_base($this->dn);
     }
 
 
@@ -250,13 +248,9 @@ class applicationManagement extends plugin
          above dialog */
       add_lock ($this->dn, $this->ui->dn);
 
-      /* Set up the users ACL's for this 'dn' */
-      $acl= get_permissions ($this->dn, $this->ui->subtreeACL);
-
       /* Register apptabs to trigger edit dialog */
-      $this->apptabs= new apptabs($this->config,
-          $this->config->data['TABS']['APPSTABS'], $this->dn);
-      $this->apptabs->set_acl($acl);
+      $this->apptabs= new apptabs($this->config,$this->config->data['TABS']['APPSTABS'], $this->dn,"application");
+      $this->apptabs->set_acl_base($this->dn);
       $_SESSION['objectinfo']= $this->dn;
     }
 
@@ -273,10 +267,10 @@ class applicationManagement extends plugin
 
       /* Load permissions for selected 'dn' and check if
          we're allowed to remove this 'dn' */
-      $acl= get_permissions ($this->dn, $this->ui->subtreeACL);
-      $this->acl= get_module_permission($acl, "application", $this->dn);
-      if (chkacl($this->acl, "delete") == ""){
+      $ui = get_userinfo();
+      $acl = $ui->get_permissions($this->dn ,"application/application");
 
+      if(preg_match("/d/",$acl)){
         /* Check locking, save current plugin in 'back_plugin', so
            the dialog knows where to return. */
         if (($user= get_lock($this->dn)) != ""){
@@ -306,12 +300,14 @@ class applicationManagement extends plugin
 
       /* Some nice guy may send this as POST, so we've to check
          for the permissions again. */
-      if (chkacl($this->acl, "delete") == ""){
+      $ui = get_userinfo();
+      $acl = $ui->get_permissions($this->dn ,"application/application");
+
+      if(preg_match("/d/",$acl)){
 
         /* Delete request is permitted, perform LDAP action */
-        $this->apptabs= new apptabs($this->config,
-            $this->config->data['TABS']['APPSTABS'], $this->dn);
-        $this->apptabs->set_acl(array($this->acl));
+        $this->apptabs= new apptabs($this->config, $this->config->data['TABS']['APPSTABS'], $this->dn,"application");
+        $this->apptabs->set_acl_base($this->dn);
         $this->apptabs->delete ();
         gosa_log ("Application object'".$this->dn."' has been removed");
         unset ($this->apptabs);

@@ -94,6 +94,8 @@ class divListApplication extends MultiSelectWindow
     /* Create listhead, it will be shown on top of the divlist.
      * It provides general navigation and object creation
      */
+    $ui  = get_userinfo();
+    $acl = $ui->get_permissions("cn=dummy,".$this->selectedBase,"application/application");
     $listhead = "<div style='background:#F0F0F9;padding:5px;'>".
       " <input class='center' type='image' src='images/list_root.png' align='middle' ".
       "title='"._("Go to root department")."' name='dep_root' alt='"._("Root")."'>&nbsp;".
@@ -105,9 +107,13 @@ class divListApplication extends MultiSelectWindow
       "title='"._("Reload list")."' name='submit_department' alt='"._("Submit")."'>&nbsp;".
       " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
     $listhead .= $this->get_snapshot_header($this->selectedBase);
-    $listhead .= " <input class='center' type='image' align='middle' src='images/list_new_app.png' alt='"._("new").
-      "' title='"._("Create new application")."' name='appl_new'>&nbsp;".
-      $Copy_Paste.
+
+    if(preg_match("/c/",$acl)){
+    $listhead .= " <input class='center' type='image' align='middle' src='images/list_new_app.png' alt='"._("new")."'
+       title='"._("Create new application")."' name='appl_new'>&nbsp;";
+    }
+
+    $listhead.=  $Copy_Paste.
       " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;".
       _("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
       " <input class='center' type='image' src='images/list_submit.png' align='middle' 
@@ -147,22 +153,44 @@ class divListApplication extends MultiSelectWindow
     /********************
       Attach objects
      ********************/
-
+    
+    $ui = get_userinfo();
     foreach($list as $key => $val){
+
+      $acl = $ui->get_permissions($val['dn'],"application/application");
 
       /* Create action icons */
       $actions= "";
+
+
+      /* Add Copy & Paste icon */
       if($this->parent->CopyPasteHandler){
-        $actions.= "<input class='center' type='image'
-          src='images/editcut.png' alt='"._("cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
+
+        /* Only add cut icon, if we are allowed to move this user */
+        if(preg_match("/m/",$acl)){
+          $actions.= "<input class='center' type='image'
+            src='images/editcut.png' alt='"._("cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
+        }else{
+          $actions.= "<img src='images/empty.png' alt='&nbsp;'>";
+        }
+
+        /* Copy is allowed everytime */
         $actions.= "<input class='center' type='image'
           src='images/editcopy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
       }
+
+      /* Add edit icon */
       $actions.= "<input class='center' type='image'
         src='images/edit.png' alt='"._("edit")."' name='appl_edit_%KEY%' title='"._("Edit this entry")."'>";
       $actions.= $this->GetSnapShotActions($val['dn']);
-      $actions.= "<input class='center' type='image'
-        src='images/edittrash.png' alt='"._("delete")."' name='appl_del_%KEY%' title='"._("Delete this entry")."'>";
+
+      /* If we are allowed to remove the application account, display remove icon */
+      if(preg_match("/d/",$acl)){
+        $actions.= "<input class='center' type='image'
+          src='images/edittrash.png' alt='"._("delete")."' name='appl_del_%KEY%' title='"._("Delete this entry")."'>";
+      }else{
+        $actions.= "<img src='images/empty.png' alt='&nbsp;'>";
+      }
 
       $title = "title='".preg_replace('/ /', '&nbsp;', @LDAP::fix($val['dn']))."'";
 
