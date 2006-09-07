@@ -132,7 +132,7 @@
 {render acl=$gotoLogonScriptACL}
 			<input type="submit" name="upLoad" value="{t}Upload{/t}">
 {/render}
-			<a href='getbin?rand={$rand}'><img src='images/save.png' title='{t}Download{/t}' alt='{t}Download{/t}'></a>
+			<input type='image' name='downloadScript'  src='images/save.png' title='{t}Download{/t}'>
 		</td>
 	</tr>
 </table>

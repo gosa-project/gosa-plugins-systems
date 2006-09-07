@@ -90,14 +90,38 @@ class applicationParameters extends plugin
 		$this->option_name[]= "";
 		$this->option_value[]= "";
 	}
+
+	
+	$acl = $this->getacl("gosaApplicationParameter")	;
 	$table= "<table summary=\"\"><tr><td>"._("Variable")."</td><td>"._("Default value")."</td><td></td></tr>";
 	if (count ($this->option_name)){
+		
 		for ($i= 0; $i < count($this->option_name); $i++){
-			$table.="<tr><td><input name=\"option$i\" size=25 maxlength=50 ".
-				"value=\"".$this->option_name[$i]."\"></td><td><input name=\"value$i\" ".
-				"size=60 maxlength=250 value=\"".$this->option_value[$i]."\"><br></td><td>".
-				"<input type=\"submit\" name=\"remove$i\" value=\"".
-				_("Remove")."\"></td></tr>";
+			$name = $this->option_name[$i];
+			$value= $this->option_value[$i];
+
+			$tag = "";
+			if(!preg_match("/w/",$acl)){
+				$tag = " disabled ";
+			}
+
+			if(!preg_match("/r/",$acl)){
+				$name = "";
+				$value= "";
+			}
+
+			$table.="<tr>".
+				" <td>".
+				"  <input name=\"option$i\" size=25 maxlength=50 value=\"".$name."\" ".$tag.">".
+				" </td>".
+				" <td>".
+				"  <input name=\"value$i\" size=60 maxlength=250 value=\"".$value."\" ".$tag.">".
+				"  <br>".
+                                " </td>".
+				" <td>".
+				"  <input type=\"submit\" name=\"remove$i\" value=\""._("Remove")."\" ".$tag.">".
+				" </td>".
+				"</tr>";
 		}
 	}
 	$table.= "</table>";
@@ -105,6 +129,11 @@ class applicationParameters extends plugin
 
 	/* Show main page */
 	$smarty= get_smarty();
+	$tmp = $this->plInfo();
+	foreach($tmp['plProvidedAcls'] as $name => $translation){
+		$smarty->assign($name."ACL",$this->getacl($name));
+	}
+
 	$smarty->assign("table", $table);
 	$display.= $smarty->fetch(get_template_path('parameters.tpl', TRUE));
 	$this->parent->by_object['application']->generateTemplate();
@@ -192,6 +221,25 @@ class applicationParameters extends plugin
 	/* Optionally execute a command after we're done */
 	$this->handle_post_events('modify');
   }
+
+  /* Return plugin informations for acl handling
+      #FIXME FAIscript seams to ununsed within this class... */
+  function plInfo()
+  {
+    return (array(
+          "plShortName"   => _("Parameter"),
+          "plDescription" => _("Parameter configuration"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("application"),
+
+          "plProvidedAcls"=> array(
+            "gosaApplicationParameter"      => _("Application parameter settings"))  
+           ));
+  }
+
 
 }
 

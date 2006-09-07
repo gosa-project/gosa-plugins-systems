@@ -128,9 +128,21 @@ class application extends plugin
       return ($display);
     }
 
-    $_SESSION['binary']       = $this->gotoLogonScript;
-    $_SESSION['binarytype']   = "octet-stream";
-    $_SESSION['binaryfile']   = $this->cn.".gosaApplication";
+    /* Download requested */
+    foreach($_POST as $name => $value){
+      if(preg_match("/^downloadScript/",$name)){
+        $_SESSION['binary']       = $this->gotoLogonScript;
+        $_SESSION['binarytype']   = "octet-stream";
+        $_SESSION['binaryfile']   = $this->cn.".gosaApplication";
+        header("location: getbin.php ");
+        exit();
+      }
+    }
+
+    /* Reassign picture data, sometimes its corrupt cause we started a download of application scripts */
+    $_SESSION['binary']     = $this->iconData;
+    $_SESSION['binarytype'] = "image/jpeg";
+    
     $smarty->assign("rand", rand(0, 10000));
     $head = $this->generateTemplate();
     $this->gotoLogonScript= $this->generateTemplate().preg_replace('/.*### END HEADER ###/s', '', $this->gotoLogonScript);
@@ -509,7 +521,6 @@ class application extends plugin
             "gosaApplicationIcon"     => _("Icon"),
             "gosaApplicationFlags"    => _("Flag"),
             "gotoLogonScript"         => _("Script content"),
-            "gosaApplicationParameter"=> _("Application parameter"),
 
             "exec_for_groupmembers" => _("Only executable for members"),              // G
             "place_on_desktop"      => _("Place icon on members desktop"),            // D
