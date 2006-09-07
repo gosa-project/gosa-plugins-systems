@@ -5,42 +5,51 @@
    <table summary="">
      <tr>
       <td><LABEL for="cn">{t}Application name{/t}{$must}</LABEL></td>
-      <td><input id="cn" name="cn" size=25 maxlength=60 value="{$cn}" title="{t}Application name{/t}" {$cnACL}></td>
+      <td>
+{render acl=$cnACL}
+	<input id="cn" name="cn" size=25 maxlength=60 value="{$cn}" title="{t}Application name{/t}">
+{/render}
+      </td>
     </tr>
     <tr>
      <td><LABEL for="gosaApplicationName">{t}Display name{/t}</LABEL></td>
      <td>
-        <input id="gosaApplicationName" name="gosaApplicationName" size=35 maxlength=60 {$gosaApplicationNameACL} value="{$gosaApplicationName}" title="{t}Application name to be displayed (i.e. below icons){/t}">
+{render acl=$gosaApplicationNameACL}
+        <input id="gosaApplicationName" name="gosaApplicationName" size=35 maxlength=60 
+	  value="{$gosaApplicationName}" title="{t}Application name to be displayed (i.e. below icons){/t}">
+{/render}
      </td>
     </tr>
     <tr>
      <td><LABEL for="gosaApplicationExecute">{t}Execute{/t}{$must}</LABEL></td>
      <td>
-        <input id="gosaApplicationExecute" name="gosaApplicationExecute" size=35 maxlength=60 {$gosaApplicationExecuteACL} value="{$gosaApplicationExecute}" title="{t}Path and/or binary name of application{/t}">
+{render acl=$gosaApplicationExecuteACL}
+        <input id="gosaApplicationExecute" name="gosaApplicationExecute" size=35 maxlength=60 
+	  value="{$gosaApplicationExecute}" title="{t}Path and/or binary name of application{/t}">
+{/render}
      </td>
     </tr>
     <tr>
      <td><LABEL for="description">{t}Description{/t}</LABEL></td>
      <td>
-      <input id="description" name="description" size=35 maxlength=80 {$descriptionACL} value="{$description}">
+{render acl=$descriptionACL}
+      <input id="description" name="description" size=35 maxlength=80 value="{$description}">
+{/render}
      </td>
     </tr>
-
     <tr><td colspan=2><div style="height:15px;"></div></td></tr>
- 
     <tr>
       <td><LABEL for="base">{t}Base{/t}{$must}</LABEL></td>
       <td>
+{render acl=$baseACL}
        <select size="1" id="base" name="base" title="{t}Choose subtree to place application in{/t}" 
-        {if $isReleaseApplikation} disabled {/if} {$baseACL}>
+        {if $isReleaseApplikation} disabled {/if}>
         {html_options options=$bases selected=$base_select}
        </select>
-		{if $baseACL == "" && !$isReleaseApplikation}
-            <input type="image" name="chooseBase" src="images/folder.png" class="center" title="{t}Select a base{/t}">
-        {else}
-            <img src="images/folder_gray.png" class="center" title="{t}Select a base{/t}">
-        {/if}
-
+{/render}
+{render acl=$baseACL disable_picture='images/folder_gray.png'}
+      <input type="image" name="chooseBase" src="images/folder.png" class="center" title="{t}Select a base{/t}">
+{/render}
       </td>
      </tr>
    </table>
@@ -58,9 +67,14 @@
     </td>
     <td style="vertical-align:top">
     &nbsp;<br>
+
     <input type="hidden" name="MAX_FILE_SIZE" value="100000">
+{render acl=$gosaApplicationIconACL}
     <input name="picture_file" type="file" size="20" maxlength="255" accept="image/*.png" id="picture_file">
+{/render}
+{render acl=$gosaApplicationIconACL}
     <input type="submit" name="update" value="{t}Update{/t}" title="{t}Reload picture from LDAP{/t}">
+{/render}
     </td>
     </tr>
    </table>
@@ -74,18 +88,30 @@
 <table summary="" style="width:100%;">
   <tr>
     <td style="width:50%;border-right:1px solid #B0B0B0; vertical-align:top">
-      <input type=checkbox name="exec_for_groupmembers" value="1" {$gosaApplicationFlagsACL} {$exec_for_groupmembers}>{t}Only executable for members{/t}
+{render acl=$gosaApplicationFlagsACL}
+      <input type=checkbox name="exec_for_groupmembers" value="1" {$exec_for_groupmembers}>
+{/render}
+	{t}Only executable for members{/t}
       <br>
-      <input type=checkbox name="overwrite_config" value="1" {$gosaApplicationFlagsACL} {$overwrite_config}>{t}Replace user configuration on startup{/t}
+{render acl=$gosaApplicationFlagsACL}
+      <input type=checkbox name="overwrite_config" value="1" {$overwrite_config}>
+{/render}
+	{t}Replace user configuration on startup{/t}
     </td>
     <td>
-      <input type=checkbox name="place_on_desktop" value="1" {$gosaApplicationFlagsACL} {$place_on_desktop}>
+{render acl=$gosaApplicationFlagsACL}
+      <input type=checkbox name="place_on_desktop" value="1" {$place_on_desktop}>
+{/render}
       {t}Place icon on members desktop{/t}
       <br>
-      <input type=checkbox name="place_in_startmenu" value="1" {$gosaApplicationFlagsACL} {$place_in_startmenu}>
+{render acl=$gosaApplicationFlagsACL}
+      <input type=checkbox name="place_in_startmenu" value="1" {$place_in_startmenu}>
+{/render}
       {t}Place entry in members startmenu{/t}
       <br>
-      <input type=checkbox name="place_on_kicker" value="1" {$gosaApplicationFlagsACL} {$place_on_kicker}>
+{render acl=$gosaApplicationFlagsACL}
+      <input type=checkbox name="place_on_kicker" value="1" {$place_on_kicker}>
+{/render}
       {t}Place entry in members launch bar{/t}
     </td>
   </tr>
@@ -97,9 +123,15 @@
 	<tr>
 		<td>
 			<h2><img src="images/fai_script.png" alt="{t}Script{/t}" align="middle">&nbsp;{t}Script{/t}</h2>
+{render acl=$gotoLogonScriptACL}
 			<textarea name="gotoLogonScript" style='width:99%;height:220px;'>{$gotoLogonScript}</textarea>
+{/render}
+{render acl=$gotoLogonScriptACL}
 			<input type="file" name="ScriptFile" value="{t}Import{/t}">
+{/render}
+{render acl=$gotoLogonScriptACL}
 			<input type="submit" name="upLoad" value="{t}Upload{/t}">
+{/render}
 			<a href='getbin?rand={$rand}'><img src='images/save.png' title='{t}Download{/t}' alt='{t}Download{/t}'></a>
 		</td>
 	</tr>

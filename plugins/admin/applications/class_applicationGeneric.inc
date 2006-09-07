@@ -110,6 +110,17 @@ class application extends plugin
 
     $smarty= get_smarty();
 
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $name => $translation){
+      $smarty->assign($name."ACL",$this->getacl($name));
+    }
+ 
+    $baseACL = $this->getacl("base");
+    if(!$this->acl_is_moveable()) {
+      $baseACL = preg_replace("/w/","",$baseACL);
+    }
+    $smarty->assign("baseACL",          $baseACL);
+
     /* Do we represent a valid group? */
     if (!$this->is_account && $this->parent == NULL){
       $display= "<img alt=\"\" src=\"images/stop.png\" align=\"middle\">&nbsp;<b>".
@@ -172,9 +183,7 @@ class application extends plugin
     /* Variables */
     foreach(array("description", "gosaApplicationExecute", "gosaApplicationName","cn") as $val){
       $smarty->assign($val, $this->$val);
-      $smarty->assign($val."ACL", chkacl($this->acl, $val));
     }
-    $smarty->assign("baseACL", chkacl($this->acl,"base"));
 
     /* Checkboxes */
     foreach (array("G" => "exec_for_groupmembers", "O" => "overwrite_config",
@@ -190,7 +199,6 @@ class application extends plugin
     $smarty->assign("isReleaseApplikation" , $this->isReleaseApplikation);
     $smarty->assign("gotoLogonScript",htmlentities($this->gotoLogonScript, ENT_COMPAT, 'UTF-8'));
     $smarty->assign("base_select", $this->base);
-    $smarty->assign("gosaApplicationFlagsACL", chkacl($this->acl, "gosaApplicationFlags"));
     /* Show main page */
     return($smarty->fetch (get_template_path('generic.tpl', TRUE)));
   }
@@ -254,7 +262,7 @@ class application extends plugin
       if (isset($_POST['overwrite_config']) && $_POST['overwrite_config'] == 1){
         $flag.= "O";
       }
-      if (chkacl ($this->acl, "gosaApplicationFlags") ==""){
+      if ($this->acl_is_writeable("gosaApplicationFlags")){
         $this->gosaApplicationFlags= "[$flag]";
       }
 
@@ -317,11 +325,7 @@ class application extends plugin
         $this->set_picture($_FILES['picture_file']['tmp_name']);
       }	
 
-
-      /* Save base, since this is no LDAP attribute */
-      if (isset($_POST['base']) && chkacl($this->acl, "create") == ""){
-        $this->base= $_POST['base'];
-      }
+      $this->base= $_POST['base'];
     }
 
     if($this->isReleaseApplikation){
@@ -348,9 +352,7 @@ class application extends plugin
     }
 
     $ui= get_userinfo();
-    $acl= get_permissions ($new_dn, $ui->subtreeACL);
-    $acl= get_module_permission($acl, "application", $new_dn);
-    if (chkacl($acl, "create") != ""){
+    if (!$this->acl_is_createable() && $this->dn == "new"){
       $message[]= _("You have no permissions to create a application on this 'Base'.");
     }
 
@@ -500,6 +502,7 @@ class application extends plugin
                                                           "objectClass"  => "gosaApplication")),
           "plProvidedAcls"=> array(
             "cn"                => _("Name"),
+            "base"              => _("Base"),
             "description"       => _("Description"),
             "gosaApplicationExecute"  => _("Execute"),
             "gosaApplicationName"     => _("Name"),
