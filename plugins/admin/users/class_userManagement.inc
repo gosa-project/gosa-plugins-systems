@@ -433,7 +433,7 @@ class userManagement extends plugin
         $acl = $ui->get_permissions("cn=dummy,".$this->DivListUsers->selectedBase,"users/user")       ; 
  
         /* If creation of a new user is allowed, append this template */
-        if (preg_match("/cw/",$acl)){
+        if (preg_match("/r/",$acl)){
           
           /* Search all templates from the current dn */
           $ldap->cd (get_people_ou().$value);
@@ -462,6 +462,7 @@ class userManagement extends plugin
 
     /* Check selected options for template */
     if (isset($_POST['template_continue'])){
+      $message = array();
       if(!isset($_POST['template']) || (empty($_POST['template']))){
         $message[] = _("Please select a valid template.");
       }
@@ -486,7 +487,6 @@ class userManagement extends plugin
         $smarty->assign("templates",$this->templates);
         $smarty->assign("got_uid",$this->got_uid);
         $smarty->assign("edit_uid",false);
-
         return($smarty->fetch(get_template_path('template.tpl', TRUE)));
 
       }
