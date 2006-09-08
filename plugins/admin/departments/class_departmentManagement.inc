@@ -202,11 +202,6 @@ class departmentManagement extends plugin
           $this->RecursiveRemoveRequested = true;
         }		
       
-        $this->config->get_departments($this->dn);
-        $this->config->make_idepartments();
- 
-        $this->DivListDepartment->config=$this->config;
-
         /* This var indicated that there is an object which isn't saved right now. */
         $this->ObjectInSaveMode = true;
 
@@ -402,9 +397,9 @@ class departmentManagement extends plugin
   {
     /* reload department */
     $this->config->get_departments();
-    $config = $this->config;
 
     $this->config->make_idepartments();
+    $this->DivListDepartment->config= $this->config;
     $this->DivListDepartment->save_object();
   }
 
