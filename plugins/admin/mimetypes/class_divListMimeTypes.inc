@@ -169,7 +169,6 @@ class divListMimeTypes extends MultiSelectWindow
     $ui = get_userinfo();
     $acl = $ui->get_permissions("cn=dummy,ou=mimetypes,".$this->selectedBase,"mimetypes/mimetype");
 
-    print_a($list);
     foreach($list as $key => $val){
 
       /* Create action icons */

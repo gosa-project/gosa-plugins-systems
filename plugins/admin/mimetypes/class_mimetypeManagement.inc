@@ -165,7 +165,7 @@ class mimetypeManagement extends plugin
       $this->dn= "new";
 
       /* Create new usertab object */
-      $this->mimetabs= new mimetabs($this->config, $this->config->data['TABS']['MIMETABS'], $this->dn,"mimetypes/mimetype");
+      $this->mimetabs= new mimetabs($this->config, $this->config->data['TABS']['MIMETABS'], $this->dn,"mimetypes");
       $this->mimetabs->set_acl_base($this->DivListMimeTypes->selectedBase);
     }   
 
@@ -405,8 +405,6 @@ class mimetypeManagement extends plugin
   
     /* Get results and create index */ 
     $res= get_list($Filter, "mimetypes", $use_base, array("cn","description","dn","objectClass"), $Flags);
-    echo $Filter;
-    print_a(array($res));
     foreach ($res as $val){
       $tmp[strtolower($val['cn'][0]).$val['cn'][0]]=$val;
     }

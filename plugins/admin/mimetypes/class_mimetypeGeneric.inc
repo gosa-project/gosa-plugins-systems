@@ -342,8 +342,6 @@ class mimetype extends plugin
     if(isset($_POST['MimeGeneric'])){
       plugin::save_object();
   
-      print_a($this);
-  
       /* Only save base if we are not in release mode */
       if(!$this->isReleaseMimeType){
         if(isset($_POST['base'])){
