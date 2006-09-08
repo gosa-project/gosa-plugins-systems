@@ -3,9 +3,9 @@
 class componenttabs extends tabs
 {
 
-  function componenttabs($config, $data, $dn)
+  function componenttabs($config, $data, $dn,$category)
   {
-    tabs::tabs($config, $data, $dn);
+    tabs::tabs($config, $data, $dn,$category);
 
     /* Add references/acls/snapshots */
     $this->addSpecialTabs();

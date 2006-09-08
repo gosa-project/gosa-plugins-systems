@@ -3,9 +3,9 @@
 class servtabs extends tabs
 {
 
-  function servtabs($config, $data, $dn)
+  function servtabs($config, $data, $dn,$category)
   {
-    tabs::tabs($config, $data, $dn);
+    tabs::tabs($config, $data, $dn, $category);
 
     /* Add references/acls/snapshots */
     $this->addSpecialTabs();

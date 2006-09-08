@@ -3,7 +3,7 @@
 class termtabs extends tabs
 {
 
-  function termtabs($config, $data, $dn)
+  function termtabs($config, $data, $dn, $category)
   {
     /* Save dn */
     $this->dn= $dn;
@@ -12,11 +12,11 @@ class termtabs extends tabs
     foreach ($data as $tab){
       if($tab['CLASS'] == "printgeneric"){
         $this->by_name[$tab['CLASS']]= $tab['NAME'];
-        $this->by_object[$tab['CLASS']]= new $tab['CLASS']($this->config, $this->dn,$this);
+        $this->by_object[$tab['CLASS']]= new $tab['CLASS']($this->config, $this->dn, $category);
         $this->by_object[$tab['CLASS']]->parent= &$this;
       }else{
         $this->by_name[$tab['CLASS']]= $tab['NAME'];
-        $this->by_object[$tab['CLASS']]= new $tab['CLASS']($this->config, $this->dn);
+        $this->by_object[$tab['CLASS']]= new $tab['CLASS']($this->config, $this->dn, $category);
         $this->by_object[$tab['CLASS']]->parent= &$this;
       }
       /* Initialize current */

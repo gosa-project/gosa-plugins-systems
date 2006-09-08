@@ -3,9 +3,9 @@
 class phonetabs extends tabs
 {
 
-  function phonetabs($config, $data, $dn)
+  function phonetabs($config, $data, $dn,$category)
   {
-    tabs::tabs($config, $data, $dn);
+    tabs::tabs($config, $data, $dn,$category);
 
     /* Add references/acls/snapshots */
     $this->addSpecialTabs();
