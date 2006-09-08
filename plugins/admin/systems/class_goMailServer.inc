@@ -111,18 +111,24 @@ class goMailServer extends plugin{
     if(isset($this->attrs['postfixTransportTable'])){
       $tmp = array();
       unset($this->attrs['postfixTransportTable']['count']);
-      foreach($this->attrs['postfixTransportTable'] as $entry){ 
-        $nr  = preg_replace("/:.*$/","",$entry);
-        $rest= trim(preg_replace("/^[^:]+:/","",$entry));
-        $src = preg_replace("/ .*$/","",$rest);
-        $rest= preg_replace("/^[^ ]+ /","",$rest);
-        $dst = preg_replace("/^.*:/","",$rest); 
-        $prt = preg_replace("/:.*$/","",$rest);
-      
-        $tmp[$nr]['src'] = $src;
-        $tmp[$nr]['dst'] = $dst;
-        $tmp[$nr]['prt'] = $prt;
-        
+      foreach($this->attrs['postfixTransportTable'] as $entry){
+
+        //0: offshore.vip.ms-europa.lhsystems.com smtp:172.28.0.2
+
+        $Number   = preg_replace('/^([^:]+):.*$/', '\\1', $entry);
+        $Rest     = trim(preg_replace("/^[0-9]*:/","",$entry));
+
+        $Protocol_Destination = preg_replace("/^.*\ /","",$Rest);
+        $Source               = preg_replace("/\ .*$/","",$Rest);
+
+        $Protocol     = preg_replace ('/^([^:]+):.*$/', '\\1' ,trim($Protocol_Destination));
+        $Destination  = preg_replace ('/^[^:]+:(.*)$/', '\\1'    ,trim($Protocol_Destination));
+
+        $Destination  = preg_replace ("/[\[\]]/","",$Destination);
+
+        $tmp[$Number]['src'] = $Source;
+        $tmp[$Number]['dst'] = $Destination;
+        $tmp[$Number]['prt'] = $Protocol;
       }
       ksort($tmp);
       foreach($tmp as $entry){
