@@ -215,7 +215,7 @@ class acl extends plugin
       if (preg_match('/^cat_del_.*_x/', $name)){
         $idx= preg_replace('/^cat_del_([^_]+)_.*$/', '\1', $name);
         foreach ($this->ocMapping[$idx] as $key){
-          unset($this->aclContents[$key]);
+          unset($this->aclContents["$idx/$key"]);
         }
         continue;
       }
@@ -245,6 +245,11 @@ class acl extends plugin
         $aclDialog= TRUE;
         list($dummy, $object, $attribute, $value)= split('_', $name);
 
+        /* Skip for detection entry */
+        if ($object == 'dummy') {
+          continue;
+        }
+
         /* Ordinary ACLs */
         if (!isset($new_acl[$object])){
           $new_acl[$object]= array();
@@ -258,7 +263,8 @@ class acl extends plugin
     }
     
     /* Only be interested in new acl's, if we're in the right _POST place */
-    if ($aclDialog && isset($this->ocMapping[$this->aclObject])){
+    if ($aclDialog && is_array($this->ocMapping[$this->aclObject])){
+
       foreach ($this->ocMapping[$this->aclObject] as $oc){
         unset($this->aclContents[$oc]);
         unset($this->aclContents[$this->aclObject.'/'.$oc]);
@@ -470,7 +476,7 @@ class acl extends plugin
   
   function buildAclSelector($list)
   {
-    $display= "";
+    $display= "<input type='hidden' name='acl_dummy_0_0_0' value='1'>";
     $cols= 3;
     $tmp= get_global('plist');
     $plist= $tmp->info;
