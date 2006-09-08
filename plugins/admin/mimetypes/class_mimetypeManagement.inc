@@ -32,7 +32,6 @@ class mimetypeManagement extends plugin
   var $enableReleaseManagement        = false;
   var $mimetabs                       = NULL;
   var $snapDialog                     = NULL;
-  var $acl                            = NULL;
   var $CopyPasteHandler               = NULL;
 
   function mimetypeManagement ($config, $ui)
@@ -58,9 +57,6 @@ class mimetypeManagement extends plugin
       $this->DivListMimeTypes->DisableCheckBox("SubSearch");
     }
 
-    /* Get acls */
-    $acl= get_permissions ($ui->dn, $ui->subtreeACL);
-    $this->acl= get_module_permission($acl, "mimetype", $ui->dn);
   }
 
 
@@ -169,12 +165,9 @@ class mimetypeManagement extends plugin
       $this->dn= "new";
 
       /* Create new usertab object */
-      $this->mimetabs= new mimetabs($this->config, $this->config->data['TABS']['MIMETABS'], $this->dn);
-
-      /* set acl */
-      $acl= get_permissions ($this->DivListMimeTypes->selectedBase, $this->ui->subtreeACL);
-      $this->mimetabs->set_acl($acl);
-    }
+      $this->mimetabs= new mimetabs($this->config, $this->config->data['TABS']['MIMETABS'], $this->dn,"mimetypes/mimetype");
+      $this->mimetabs->set_acl_base($this->DivListMimeTypes->selectedBase);
+    }   
 
 
     /**************** 
@@ -249,11 +242,8 @@ class mimetypeManagement extends plugin
 
 
       /* Register mimetabs to trigger edit dialog */
-      $this->mimetabs= new mimetabs($this->config,$this->config->data['TABS']['MIMETABS'], $this->dn);
-
-      /* Set up the users ACL's for this 'dn' */
-      $acl= get_permissions ($this->dn, $this->ui->subtreeACL);
-      $this->mimetabs->set_acl($acl);
+      $this->mimetabs= new mimetabs($this->config,$this->config->data['TABS']['MIMETABS'], $this->dn,"mimetypes/mimetype");
+      $this->mimetabs->set_acl_base($this->dn);
       $_SESSION['objectinfo']= $this->dn;
     }
 
@@ -270,7 +260,7 @@ class mimetypeManagement extends plugin
 
       /* Load permissions for selected 'dn' and check if
          we're allowed to remove this 'dn' */
-      if (chkacl($this->acl, "delete") == ""){
+      if ($this->acl_is_removeable()){
 
         /* Check locking, save current plugin in 'back_plugin', so
            the dialog knows where to return. */
@@ -301,12 +291,11 @@ class mimetypeManagement extends plugin
 
       /* Some nice guy may send this as POST, so we've to check
          for the permissions again. */
-      if (chkacl($this->acl, "delete") == ""){
+      if ($this->acl_is_removeable()){
 
         /* Delete request is permitted, perform LDAP action */
-        $this->mimetabs= new mimetabs($this->config, $this->config->data['TABS']['MIMETABS'], $this->dn);
-        $acl= get_permissions ($this->dn, $this->ui->subtreeACL);
-        $this->mimetabs->set_acl($acl);
+        $this->mimetabs= new mimetabs($this->config, $this->config->data['TABS']['MIMETABS'], $this->dn,"mimetypes/mimetype");
+        $this->mimetabs->set_acl_base($this->dn);
         $this->mimetabs->delete ();
         gosa_log ("Mime type object'".$this->dn."' has been removed");
         unset ($this->mimetabs);
@@ -416,6 +405,8 @@ class mimetypeManagement extends plugin
   
     /* Get results and create index */ 
     $res= get_list($Filter, "mimetypes", $use_base, array("cn","description","dn","objectClass"), $Flags);
+    echo $Filter;
+    print_a(array($res));
     foreach ($res as $val){
       $tmp[strtolower($val['cn'][0]).$val['cn'][0]]=$val;
     }

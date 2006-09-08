@@ -12,7 +12,6 @@ class mimetype extends plugin
 									"gotoMimeGroup");	
 
 	/* Class vars */
-	var $acl;
 	var $ui;
 	var $cn									              = "";					
 	var $gotoMimeLeftClickAction			    = "I";
@@ -149,6 +148,18 @@ class mimetype extends plugin
   {
     $smarty = get_smarty();
 
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $name => $translation){
+      $smarty->assign($name."ACL",$this->getacl($name));
+    }
+
+    /* Assign base ACL */
+    $baseACL = $this->getacl("base");
+    if(!$this->acl_is_moveable()) {
+      $baseACL = preg_replace("/w/","",$baseACL);
+    }
+    $smarty->assign("baseACL",          $baseACL);
+
     /* Base select dialog */
     $once = true;
     foreach($_POST as $name => $value){
@@ -209,7 +220,7 @@ class mimetype extends plugin
 
           /* Execute a command with the given attribute and entry 
              e.g. $this->gotoMimeFilePattern = $this->ArrayUp(3,$this->gotoMimeFilePattern) */
-          if(chkacl($this->acl,$attr) == ""){
+          if($this->acl_is_writeable($attr)){
             $this->$attr= $this->$func($s_entry,$this->$attr,true);					 
           }
         }
@@ -223,7 +234,7 @@ class mimetype extends plugin
 
     /* Add gotoMimeFilePattern */
     if(isset($_POST['AddNewFilePattern']) && isset($_POST['NewFilePattern'])){
-      if(chkacl($this->acl,"gotoMimeFilePattern") == ""){
+      if($this->acl_is_writeable("gotoMimeFilePattern")){
         $str = $_POST['NewFilePattern'];
         if(!empty($str)){
           $this->use_gotoMimeFilePattern[] = $str;
@@ -233,7 +244,7 @@ class mimetype extends plugin
 
     /* Add gotoMimeFilePattern */
     if(isset($_POST['AddNewApplication']) && isset($_POST['NewApplication'])){
-      if(chkacl($this->acl,"gotoMimeApplication") == ""){
+      if($this->acl_is_writeable("gotoMimeApplication")){
         $str = $_POST['NewApplication'];
         if(!empty($str)){
           $this->use_gotoMimeApplication[] = $str;
@@ -243,7 +254,7 @@ class mimetype extends plugin
 
     /* Add gotoMimeFilePattern */
     if(isset($_POST['AddNewEmbeddedApplication']) && isset($_POST['NewEmbeddedApplication'])){
-      if(chkacl($this->acl,"gotoMimeEmbeddedApplication") == ""){
+      if($this->acl_is_writeable("gotoMimeEmbeddedApplication")){
         $str = $_POST['NewEmbeddedApplication'];
         if(!empty($str)){
           $this->use_gotoMimeEmbeddedApplication[] = $str;
@@ -260,7 +271,7 @@ class mimetype extends plugin
     $DivEApps		-> SetHeight(100);
 
 
-    if(chkacl($this->acl,"gotoMimeFilePattern") == ""){
+    if($this->acl_is_writeable("gotoMimeFilePattern")){
       $Pattern_Actions= " <input type='image' src='images/sort_up.png' 	class='center'	name='Pattern_SortUp_%s' >&nbsp;
       <input type='image' src='images/sort_down.png' 	class='center'  name='Pattern_SortDown_%s'>&nbsp;
       <input type='image' src='images/edittrash.png'	class='center'  name='Pattern_Remove_%s'>";
@@ -268,7 +279,7 @@ class mimetype extends plugin
       $Pattern_Actions= "";	
     }
 
-    if(chkacl($this->acl,"gotoMimeApplication") == ""){
+    if($this->acl_is_writeable("gotoMimeApplication")){
       $Apps_Actions 	= " <input type='image' src='images/sort_up.png' 	class='center'	name='Apps_SortUp_%s' >&nbsp;
       <input type='image' src='images/sort_down.png' 	class='center'  name='Apps_SortDown_%s'>&nbsp;
       <input type='image' src='images/edittrash.png'	class='center'  name='Apps_Remove_%s'>";
@@ -276,7 +287,7 @@ class mimetype extends plugin
       $Apps_Actions= "";	
     }
 
-    if(chkacl($this->acl,"gotoMimeEmbeddedApplication") == ""){
+    if($this->acl_is_writeable("gotoMimeEmbeddedApplication")){
       $EApps_Actions 	= " <input type='image' src='images/sort_up.png' 	class='center'	name='EApps_SortUp_%s' >&nbsp;
       <input type='image' src='images/sort_down.png' 	class='center'  name='EApps_SortDown_%s'>&nbsp;
       <input type='image' src='images/edittrash.png'	class='center'  name='EApps_Remove_%s'>";
@@ -302,7 +313,6 @@ class mimetype extends plugin
       $fields = array($field1,$field2);
       $DivEApps -> AddEntry($fields);
     }
-    $smarty->assign("baseACL", 						chkacl($this->acl,"base"));	
     $smarty->assign("bases", 						$this->config->idepartments);		
     $smarty->assign("base_select", 					$this->base);		
     $smarty->assign("isReleaseMimeType",			$this->isReleaseMimeType);
@@ -313,7 +323,6 @@ class mimetype extends plugin
     /* Assign class vars to smarty */
     foreach($this->attributes as $attr){
       $smarty->assign($attr,$this->$attr);
-      $smarty->assign($attr."ACL",chkacl($this->acl,$attr));
     }	
 
     /* Assign additional vars that are not included in attributes*/
@@ -332,7 +341,9 @@ class mimetype extends plugin
   {
     if(isset($_POST['MimeGeneric'])){
       plugin::save_object();
-
+  
+      print_a($this);
+  
       /* Only save base if we are not in release mode */
       if(!$this->isReleaseMimeType){
         if(isset($_POST['base'])){
@@ -341,7 +352,7 @@ class mimetype extends plugin
       }
 
       /* Save radio buttons */
-      if(chkacl($this->acl,"gotoMimeLeftClickAction")== ""){
+      if($this->acl_is_writeable("gotoMimeLeftClickAction")){
         if(isset($_POST['gotoMimeLeftClickAction_IE'])){
           $chr = $_POST['gotoMimeLeftClickAction_IE'];
           if($chr == "E"){
@@ -497,7 +508,7 @@ class mimetype extends plugin
     } else {
       $new_dn= $this->dn;
     }
-    if (chkacl($this->acl, "create") != ""){
+    if (!$this->acl_is_createable() && $this->dn == "new"){
       $message[]= _("You have no permissions to create a mime type on this 'Base'.");
     }
 

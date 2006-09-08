@@ -4,9 +4,9 @@ class mimetabs extends tabs
 {
   var $Release= "";
 
-  function mimetabs($config, $data, $dn)
+  function mimetabs($config, $data, $dn,$category)
   {
-    tabs::tabs($config, $data, $dn);
+    tabs::tabs($config, $data, $dn,$category);
 
     /* Add references/acls/snapshots */
     $this->addSpecialTabs();

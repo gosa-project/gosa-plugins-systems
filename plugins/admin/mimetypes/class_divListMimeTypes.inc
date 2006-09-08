@@ -103,6 +103,9 @@ class divListMimeTypes extends MultiSelectWindow
     /* Create listhead, it will be shown on top of the divlist.
      * It provides general navigation and object creation
      */
+    $ui = get_userinfo();
+    $acl = $ui->get_permissions("cn=dummy,ou=mimetypes,".$this->selectedBase,"mimetypes/mimetype");
+
     $listhead = "<div style='background:#F0F0F9;padding:5px;'>".
       " <input class='center' type='image' src='images/list_root.png' align='middle' ".
       "title='"._("Go to root department")."' name='dep_root' alt='"._("Root")."'>&nbsp;".
@@ -114,8 +117,13 @@ class divListMimeTypes extends MultiSelectWindow
       "title='"._("Reload list")."' name='submit_department' alt='"._("Submit")."'>&nbsp;".
       " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
     $listhead .= $this->get_snapshot_header($this->selectedBase);
-    $listhead .= " <input class='center' type='image' align='middle' src='images/list_new_mime.png' alt='"._("new").
-      "' title='"._("Create new mime type")."' name='mime_new'>&nbsp;".
+    
+    if(preg_match("/c/",$acl)){
+      $listhead .= " <input class='center' type='image' align='middle' src='images/list_new_mime.png' alt='"._("new").
+        "' title='"._("Create new mime type")."' name='mime_new'>&nbsp;";
+    }
+  
+    $listhead .= 
       $Copy_Paste.
       " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;".
       _("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
@@ -158,20 +166,43 @@ class divListMimeTypes extends MultiSelectWindow
       Attach objects
      ********************/
 
+    $ui = get_userinfo();
+    $acl = $ui->get_permissions("cn=dummy,ou=mimetypes,".$this->selectedBase,"mimetypes/mimetype");
+
+    print_a($list);
     foreach($list as $key => $val){
 
       /* Create action icons */
       $actions = $this->GetSnapShotActions($val['dn']);
+
+
+      /* Get copy Paste icons */
       if($this->parent->CopyPasteHandler){
-        $actions.= "<input class='center' type='image'
-          src='images/editcut.png' alt='"._("cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
+
+        /* Only add cut icon, if we are allowed to move this user */
+        if(preg_match("/m/",$acl)){
+          $actions.= "<input class='center' type='image'
+            src='images/editcut.png' alt='"._("cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
+        }else{
+          $actions.= "<img src='images/empty.png' alt='&nbsp;'>";
+        }
+
+        /* Copy is allowed everytime */
         $actions.= "<input class='center' type='image'
           src='images/editcopy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
       }
+
+      /* Add edit button */
       $actions.= "<input class='center' type='image'
         src='images/edit.png' alt='"._("edit")."' name='mime_edit_%KEY%' title='"._("Edit this entry")."'>";
-      $actions.= "<input class='center' type='image'
-        src='images/edittrash.png' alt='"._("delete")."' name='mime_del_%KEY%' title='"._("Delete this entry")."'>";
+
+      /* Add delete button */
+      if(preg_match("/d/",$acl)){
+        $actions.= "<input class='center' type='image'
+          src='images/edittrash.png' alt='"._("delete")."' name='mime_del_%KEY%' title='"._("Delete this entry")."'>";
+      }else{
+        $actions.= "<img src='images/empty.png' alt='&nbsp;'>";
+      }
 
       $title = "title='".preg_replace('/ /', '&nbsp;', @LDAP::fix($val['dn']))."'";
 
@@ -185,7 +216,6 @@ class divListMimeTypes extends MultiSelectWindow
       $field3 = array("string" => preg_replace("/%KEY%/", $key, $actions), "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'");
       $this->AddElement(array($field1,$field2,$field3));
     }
-
   }
 
   function Save()
