@@ -242,7 +242,7 @@ class mimetypeManagement extends plugin
 
 
       /* Register mimetabs to trigger edit dialog */
-      $this->mimetabs= new mimetabs($this->config,$this->config->data['TABS']['MIMETABS'], $this->dn,"mimetypes/mimetype");
+      $this->mimetabs= new mimetabs($this->config,$this->config->data['TABS']['MIMETABS'], $this->dn,"mimetypes");
       $this->mimetabs->set_acl_base($this->dn);
       $_SESSION['objectinfo']= $this->dn;
     }
@@ -294,7 +294,7 @@ class mimetypeManagement extends plugin
       if ($this->acl_is_removeable()){
 
         /* Delete request is permitted, perform LDAP action */
-        $this->mimetabs= new mimetabs($this->config, $this->config->data['TABS']['MIMETABS'], $this->dn,"mimetypes/mimetype");
+        $this->mimetabs= new mimetabs($this->config, $this->config->data['TABS']['MIMETABS'], $this->dn,"mimetypes");
         $this->mimetabs->set_acl_base($this->dn);
         $this->mimetabs->delete ();
         gosa_log ("Mime type object'".$this->dn."' has been removed");
@@ -443,8 +443,10 @@ class mimetypeManagement extends plugin
     if($s_action == "copy"){
       $this->CopyPasteHandler->Clear();
       $dn = $this->mimetypes[$s_entry]['dn'];
-      $obj    = new mimetabs($this->config, $this->config->data['TABS']['MIMETABS'], $dn);
-      $objNew = new mimetabs($this->config, $this->config->data['TABS']['MIMETABS'], "new");
+      $obj    = new mimetabs($this->config, $this->config->data['TABS']['MIMETABS'], $dn,"mimetypes");
+      $obj->set_acl_base($this->dn);
+      $objNew = new mimetabs($this->config, $this->config->data['TABS']['MIMETABS'], "new","mimetypes");
+      $objNew->set_acl_base($this->dn);
       $this->CopyPasteHandler->Copy($obj,$objNew);
     }
 
