@@ -547,6 +547,7 @@ class department extends plugin
                   "plProvidedAcls" => array(
                     "description"       => _("Description"),
                     "c"                 => _("Country"),
+                    "base"              => _("Base"),
                     "l"                 => _("Location"),
                     "telephoneNumber"   => _("Telephone"),
                     "ou"                => _("Department name"),

@@ -903,10 +903,11 @@ class group extends plugin
 
           "plProvidedAcls"    => array(
             "cn"                => _("Name"),
+            "base"              => _("Base"),
             "description"       => _("Description"),
 
-            "fonGroup"         => _("Phone pickup group"),
-            "nagiosGroup"      => _("Nagios group"),
+            "fonGroup"          => _("Phone pickup group"),
+            "nagiosGroup"       => _("Nagios group"),
 
             "gidNumber"         => _("GID"),
             "memberUid"         => _("Group member"),

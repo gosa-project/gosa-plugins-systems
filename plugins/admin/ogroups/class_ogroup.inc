@@ -761,6 +761,7 @@ class ogroup extends plugin
                                                       "objectClass"  => "gosaGroupOfNames")),
           "plProvidedAcls"=> array(
             "cn"                => _("Name"),
+            "base"              => _("Base"),
             "description"       => _("Description"),
             "member"            => _("Member"))
           ));
