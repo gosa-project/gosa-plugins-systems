@@ -171,7 +171,7 @@ class applicationManagement extends plugin
 
       /* Create new usertab object */
       $this->apptabs= new apptabs($this->config,$this->config->data['TABS']['APPSTABS'], $this->dn,"application");
-      $this->apptabs->set_acl_base($this->dn);
+      $this->apptabs->set_acl_base($this->DivListApplication->selectedBase);
     }
 
 
