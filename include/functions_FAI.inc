@@ -44,7 +44,8 @@ function get_all_objects_for_given_base($Current_DN,$filter,$detailed = false)
       while($attr = $ldap->fetch()){
         
         $buffer = array();
-        $name = str_ireplace($release,"",$attr['dn']);
+#        $name = str_ireplace($release,"",$attr['dn']);
+        $name = preg_replace("/".normalizePreg($release)."/i","",$attr['dn']);
 
         if(isset($attr['FAIstate'][0])){
           if(preg_match("/removed$/",$attr['FAIstate'][0])){
@@ -402,7 +403,8 @@ function clean_up_releases($Current_DN)
       while($attr = $ldap->fetch()){
         
         $buffer = array();
-        $name = str_ireplace($release,"",$attr['dn']);
+#        $name = str_ireplace($release,"",$attr['dn']);
+        $name = preg_replace("/".normalizePreg($release)."/i","",$attr['dn']);
 
         if(isset($attr['FAIstate'][0])&&(preg_match("/removed$/",$attr['FAIstate'][0]))){
 
@@ -507,7 +509,8 @@ function get_following_releases_that_inherit_this_object($dn)
   $sub_releases = get_sub_releases_of_this_release($base_release);
 
   /* Get dn suffix. Example  "FAIvairableEntry=keksdose,FAIvariable=Keksregal," */
-  $dn_suffix = str_ireplace($base_release,"",$dn);
+#  $dn_suffix = str_ireplace($base_release,"",$dn);
+  $dn_suffix = preg_replace("/".normalizePreg($base_release)."/i","",$dn);
 
   /* Check if given object also exists whitin one of these releases */
   foreach($sub_releases as $p_release => $name){
@@ -547,7 +550,8 @@ function get_parent_release_object($dn,$include_myself=true)
   }
 
   /* Get dn suffix. Example  "FAIvairableEntry=keksdose,FAIvariable=Keksregal," */
-  $dn_suffix = str_ireplace($base_release,"",$dn);
+#  $dn_suffix = str_ireplace($base_release,"",$dn);
+  $dn_suffix = preg_replace("/".normalizePreg($base_release)."/i","",$dn);
     
   /* Check if given object also exists whitin one of these releases */
   foreach($previous_releases as $p_release){
@@ -571,7 +575,10 @@ function get_previous_releases_of_this_release($dn,$flat)
   $ret = array();
 
   /* Explode dns into pieces, to be able to build parent dns */
-  $dns_to_check = ldap_explode_dn(str_ireplace(",".$config->current['BASE'],"",$dn),0);
+#  $dns_to_check = ldap_explode_dn(str_ireplace(",".$config->current['BASE'],"",$dn),0);
+  $dns_to_check = ldap_explode_dn(preg_replace("/".normalizePreg(",".$config->current['BASE'])."/i","",$dn),0);
+  echo "<font color='red'>Replace ldap_explode_dn it is evil, it changes characters within result... </font><br>";
+
   if(!is_array($dns_to_check)){
     return;  
   }
@@ -675,7 +682,10 @@ function get_release_dn($Current_DN)
   $ldap->cd($config->current['BASE']);
 
   /* Split dn into pices */ 
-  $dns_to_check = ldap_explode_dn(str_ireplace(",".$config->current['BASE'],"",$Current_DN),0);
+#  $dns_to_check = ldap_explode_dn(str_ireplace(",".$config->current['BASE'],"",$Current_DN),0);
+  $dns_to_check = ldap_explode_dn(preg_replace("/".normalizePreg(",".$config->current['BASE'])."/i","",$Current_DN),0);
+  echo "<font color='red'>Replace ldap_explode_dn it is evil, it changes characters within result... </font><br>";
+
   if(!is_array($dns_to_check)){
     return;  
   }
