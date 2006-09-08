@@ -305,7 +305,8 @@ class faiPartitionTable extends plugin
     $ldap = $this->config->get_ldap_link();
     $ldap->cd ($this->dn);
 
-    $use_dn = str_ireplace( get_release_dn($this->dn), $_SESSION['faifilter']['branch'], $this->dn);
+#    $use_dn = str_ireplace( get_release_dn($this->dn), $_SESSION['faifilter']['branch'], $this->dn);
+    $use_dn = preg_replace("/".normalizePreg(get_release_dn($this->dn))."/i", $_SESSION['faifilter']['branch'], $this->dn);
     if($_SESSION['faifilter']['branch'] == "main"){
       $use_dn = $this->dn;
     }
@@ -315,7 +316,8 @@ class faiPartitionTable extends plugin
     foreach($this->disks as $disk){
 
       $disk_dn = "cn=".$disk['cn'].",".$this->dn;
-      $use_dn = str_ireplace( get_release_dn($this->dn), $_SESSION['faifilter']['branch'], $disk_dn);
+#      $use_dn = str_ireplace( get_release_dn($this->dn), $_SESSION['faifilter']['branch'], $disk_dn);
+      $use_dn = preg_replace("/".normalizePreg(get_release_dn($this->dn))."/i", $_SESSION['faifilter']['branch'], $disk_dn);
       if($_SESSION['faifilter']['branch'] == "main"){
         $use_dn = $disk_dn;
       }
@@ -324,7 +326,8 @@ class faiPartitionTable extends plugin
       foreach($disk['partitions'] as $key => $partition){    
      
         $partition_dn= "FAIpartitionNr=".$partition['FAIpartitionNr'].",".$disk_dn;      
-        $use_dn = str_ireplace( get_release_dn($this->dn), $_SESSION['faifilter']['branch'], $partition_dn);
+#        $use_dn = str_ireplace( get_release_dn($this->dn), $_SESSION['faifilter']['branch'], $partition_dn);
+        $use_dn = preg_replace("/".normalizePreg(get_release_dn($this->dn))."/i", $_SESSION['faifilter']['branch'], $partition_dn);
         if($_SESSION['faifilter']['branch'] == "main"){
           $use_dn = $disk_dn;
         }

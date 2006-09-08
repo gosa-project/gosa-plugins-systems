@@ -310,7 +310,8 @@ class faiTemplate extends plugin
     $ldap = $this->config->get_ldap_link();
     $ldap->cd ($this->dn);
 
-    $use_dn = str_ireplace( get_release_dn($this->dn), $_SESSION['faifilter']['branch'], $this->dn);
+#    $use_dn = str_ireplace( get_release_dn($this->dn), $_SESSION['faifilter']['branch'], $this->dn);
+    $use_dn = preg_replace("/".normalizePreg(get_release_dn($this->dn))."/i", $_SESSION['faifilter']['branch'], $this->dn);
     if($_SESSION['faifilter']['branch'] == "main"){
       $use_dn = $this->dn;
     }
@@ -318,7 +319,8 @@ class faiTemplate extends plugin
     prepare_to_save_FAI_object($use_dn,array(),true);
 
     foreach($this->SubObjects as $name => $obj){
-      $use_dn = str_ireplace( get_release_dn($this->dn), $_SESSION['faifilter']['branch'], $obj['dn']);
+#      $use_dn = str_ireplace( get_release_dn($this->dn), $_SESSION['faifilter']['branch'], $obj['dn']);
+      $use_dn = preg_replace("/".normalizePreg(get_release_dn($this->dn))."/i", $_SESSION['faifilter']['branch'], $obj['dn']);
       if($_SESSION['faifilter']['branch'] == "main"){
         $use_dn = $obj['dn'];
       }
