@@ -521,6 +521,8 @@ class mimetype extends plugin
     if (empty($filename)){
       $filename= "./images/default_icon.png";
       $this->use_gotoMimeIcon= "*removed*";
+    }else{
+      $this->use_gotoMimeIcon= $filename;
     }
 
     if (file_exists($filename)){

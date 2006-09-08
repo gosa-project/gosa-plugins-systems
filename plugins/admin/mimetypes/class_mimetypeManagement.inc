@@ -260,7 +260,9 @@ class mimetypeManagement extends plugin
 
       /* Load permissions for selected 'dn' and check if
          we're allowed to remove this 'dn' */
-      if ($this->acl_is_removeable()){
+      $ui = get_userinfo();
+      $acl = $ui->get_permissions($this->dn,"mimetypes/mimetype");
+      if (preg_match("/d/",$acl)){
 
         /* Check locking, save current plugin in 'back_plugin', so
            the dialog knows where to return. */
@@ -291,8 +293,9 @@ class mimetypeManagement extends plugin
 
       /* Some nice guy may send this as POST, so we've to check
          for the permissions again. */
-      if ($this->acl_is_removeable()){
-
+      $ui = get_userinfo();
+      $acl = $ui->get_permissions($this->dn,"mimetypes/mimetype");
+      if(preg_match("/d/",$acl)){
         /* Delete request is permitted, perform LDAP action */
         $this->mimetabs= new mimetabs($this->config, $this->config->data['TABS']['MIMETABS'], $this->dn,"mimetypes");
         $this->mimetabs->set_acl_base($this->dn);
