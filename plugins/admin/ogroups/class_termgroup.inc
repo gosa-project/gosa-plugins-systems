@@ -25,6 +25,13 @@ class termgroup extends plugin
                             "memcheck"        => "memcheck",
                             "sysinfo"         => "sysinfo");
 
+  var $mapActions   = array("reboot"          => "localboot",
+                            "instant_update"  => "softupdate",
+                            "update"          => "sceduledupdate",
+                            "reinstall"       => "install",
+                            "rescan"          => "",
+                            "memcheck"        => "memcheck",
+                            "sysinfo"         => "sysinfo");
 
   function termgroup ($config, $dn= NULL)
   {
@@ -131,6 +138,50 @@ class termgroup extends plugin
     $this->handle_post_events("remove");
   }
 
+
+  function update_term_member_FAIstate($act)
+  {
+    /* Get required informations */
+    $og     = $this->parent->by_object['ogroup'];
+    $allobs = $og->allobjects;
+
+    /* Get correct value for FAIstate */
+    $action = $this->mapActions[$act];
+
+    /* Get ldap connection */
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd ($this->config->current['BASE']);
+
+    /* Foreach member of mthis ogroup  ... */
+    foreach($og->mem  as $key ){
+  
+      /* check objectClasses and create attributes array */
+      $attrs = array("FAIstate"=>$action);  
+      for($i = 0; $i < $allobs[$key]['objectClass']['count'] ; $i ++){
+        $attrs['objectClass'][] = $allobs[$key]['objectClass'][$i];
+      }
+      if(($attrs['FAIstate'] != "") && (!in_array("FAIobject",$attrs['objectClass']))){
+        $attrs['objectClass'][] = "FAIobject";
+      }
+      if($attrs['FAIstate'] == ""){
+        $attrs['FAIstate'] = array();
+      }
+
+      /* If this objects is workstation,terminal or server upodate FAIstate */ 
+      if(preg_match("/(w|t|s)/i",$allobs[$key]['type'])){
+        $ldap->cd ($key);
+        $ldap->modify($attrs);
+        show_ldap_error($ldap->get_error(),sprintf(_("Setting action state (FAIstate) failed for object '%s', value was '%s'."),$key,$action));
+        
+        if(!preg_match("/success/i",$ldap->get_error())) {
+          gosa_log("FAILED !! Updating FAIstate to '".$action."' : ".$key);
+        }else{
+          gosa_log("OK.  Updating FAIstate to '".$action."' : ".$key);
+        }
+      }
+    }
+  }
+
   function execute()
   {
     /* Call parent execute */
@@ -151,6 +202,10 @@ class termgroup extends plugin
       }
 
       if (isset($_POST['action'])){
+  
+        /* Update members fai state */
+        $this->update_term_member_FAIstate(trim($_POST['saction']));
+
         $cmd= search_config($this->config->data['TABS'], "workgeneric", "ACTIONCMD");
 
         if ($cmd == ""){
