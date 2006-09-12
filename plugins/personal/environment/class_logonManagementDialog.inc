@@ -101,7 +101,7 @@ class logonManagementDialog extends plugin
     $message= plugin::check();
   
     if(preg_match("/[^a-zA-Z]/",$this->LogonName)){
-      $message[] = _("Specified name should only consist of uper-/lowercase characters.");
+      $message[] = _("Specified name should only consist of upper-/lowercase characters.");
     }
 
     if(empty($this->LogonName)){
