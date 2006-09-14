@@ -17,14 +17,6 @@ class termgroup extends plugin
   var $is_account		      = true; 
   var $orig_dn            = "";
   var $didAction          = FALSE;
-  var $mapActions         = array("reboot"          => "",
-                            "instant_update"  => "softupdate",
-                            "update"          => "sceduledupdate",
-                            "reinstall"       => "install",
-                            "rescan"          => "",
-                            "memcheck"        => "memcheck",
-                            "sysinfo"         => "sysinfo");
-
   var $mapActions   = array("reboot"          => "localboot",
                             "instant_update"  => "softupdate",
                             "update"          => "sceduledupdate",
