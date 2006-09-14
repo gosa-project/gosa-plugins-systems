@@ -29,15 +29,14 @@ require "tabs_winstation.inc";
 class systems extends plugin
 {
   /* Definitions */
-  var $plHeadline= "Systems";
-  var $plDescription= "This does something";
-  var $departments=array();
+  var $plHeadline     = "Systems";
+  var $plDescription  = "This does something";
+  var $departments    = array();
 
   /* Dialog attributes */
-  var $systab= NULL;
+  var $systab   = NULL;
   var $terminals= array();
-  var $ui= NULL;
-  var $acl= "";
+  var $ui       = NULL;
   var $DivListSystem;
 
   function systems ($config, $ui)
@@ -140,21 +139,21 @@ class systems extends plugin
         }
         $this->dn= "new";
       }
-      $this->acl= array(":all");
       $tabs = array(
-          "terminal"    => array("CLASS"=>"TERMTABS",     "TABNAME"=>"termgeneric",     "TABCLASS" =>"termtabs"),
-          "workstation" => array("CLASS"=>"WORKTABS",     "TABNAME"=>"workgeneric",     "TABCLASS" =>"worktabs"),
-          "server"      => array("CLASS"=>"SERVTABS",     "TABNAME"=>"servgeneric",     "TABCLASS" =>"servtabs"),
-          "printer"     => array("CLASS"=>"PRINTTABS",    "TABNAME"=>"printgeneric",    "TABCLASS" =>"printtabs"),
-          "phone"       => array("CLASS"=>"PHONETABS",    "TABNAME"=>"phonegeneric",    "TABCLASS" =>"phonetabs"),
-          "component"   => array("CLASS"=>"COMPONENTTABS","TABNAME"=>"componentgeneric","TABCLASS" =>"componenttabs"));
+          "terminal"    => array("CLASS"=>"TERMTABS",     "TABNAME"=>"termgeneric",     "TABCLASS" =>"termtabs",      "ACL"=> "terminal"),
+          "workstation" => array("CLASS"=>"WORKTABS",     "TABNAME"=>"workgeneric",     "TABCLASS" =>"worktabs",      "ACL"=> "workstation"),
+          "server"      => array("CLASS"=>"SERVTABS",     "TABNAME"=>"servgeneric",     "TABCLASS" =>"servtabs",      "ACL"=> "server"),
+          "printer"     => array("CLASS"=>"PRINTTABS",    "TABNAME"=>"printgeneric",    "TABCLASS" =>"printtabs",     "ACL"=> "printer"),
+          "phone"       => array("CLASS"=>"PHONETABS",    "TABNAME"=>"phonegeneric",    "TABCLASS" =>"phonetabs",     "ACL"=> "phone"),
+          "component"   => array("CLASS"=>"COMPONENTTABS","TABNAME"=>"componentgeneric","TABCLASS" =>"componenttabs", "ACL"=> "component"));
 
       if(isset($tabs[$sw])){
         $class    = $tabs[$sw]["CLASS"];
         $tabname  = $tabs[$sw]["TABNAME"];
         $tabclass = $tabs[$sw]["TABCLASS"];
-        $this->systab= new $tabclass($this->config, $this->config->data['TABS'][$class], $this->dn);
-        $this->systab->set_acl ($this->acl);
+        $acl_cat  = $tabs[$sw]["ACL"];
+        $this->systab= new $tabclass($this->config, $this->config->data['TABS'][$class], $this->dn,$acl_cat);
+        $this->systab->set_acl_base($this->base);
         $this->systab->by_object[$tabname]->base = $this->DivListSystem->selectedBase;
         $this->systab->base = $this->DivListSystem->selectedBase;
       }
@@ -175,9 +174,6 @@ class systems extends plugin
         return(gen_locked_message ($user, $this->dn));
       }
 
-      /* Set up the users ACL's for this 'dn' */
-      $acl= get_permissions ($this->dn, $this->ui->subtreeACL);
-
       /* Find out more about the object type */
       $ldap= $this->config->get_ldap_link();
       $ldap->cat($this->dn, array('objectClass'));
@@ -187,13 +183,13 @@ class systems extends plugin
       /* Lock the current entry, so everyone will get the
          above dialog */
       $tabs = array(
-          "terminal"    => array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs"),
-          "workstation" => array("CLASS"=>"WORKTABS",     "TABCLASS" =>"worktabs"),
-          "server"      => array("CLASS"=>"SERVTABS",     "TABCLASS" =>"servtabs"),
-          "printer"     => array("CLASS"=>"PRINTTABS",    "TABCLASS" =>"printtabs"),
-          "phone"       => array("CLASS"=>"PHONETABS",    "TABCLASS" =>"phonetabs"),
-          "winstation"  => array("CLASS"=>"WINTABS",      "TABCLASS" =>"wintabs"),
-          "component"   => array("CLASS"=>"COMPONENTTABS","TABCLASS" =>"componenttabs"));
+          "terminal"    => array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "terminal"),
+          "workstation" => array("CLASS"=>"WORKTABS",     "TABCLASS" =>"worktabs",      "ACL"=> "workstation"),
+          "server"      => array("CLASS"=>"SERVTABS",     "TABCLASS" =>"servtabs",      "ACL"=> "server"),
+          "printer"     => array("CLASS"=>"PRINTTABS",    "TABCLASS" =>"printtabs",     "ACL"=> "printer"),
+          "phone"       => array("CLASS"=>"PHONETABS",    "TABCLASS" =>"phonetabs",     "ACL"=> "phone"),
+          "winstation"  => array("CLASS"=>"WINTABS",      "TABCLASS" =>"wintabs",       "ACL"=> "winworkstation"),
+          "component"   => array("CLASS"=>"COMPONENTTABS","TABCLASS" =>"componenttabs", "ACL"=> "component"));
 
 
       if($type == "NewDevice"){
@@ -201,10 +197,11 @@ class systems extends plugin
       }elseif(isset($tabs[$type])){
 
         $class    = $tabs[$type]["CLASS"];
+        $acl_cat  = $tabs[$type]["ACL"];
         $tabclass = $tabs[$type]["TABCLASS"];
 
-        $this->systab= new $tabclass($this->config, $this->config->data['TABS'][$class], $this->dn);
-        $this->systab->set_acl($acl);
+        $this->systab= new $tabclass($this->config, $this->config->data['TABS'][$class], $this->dn,$acl_cat);
+        $this->systab->set_acl_base($this->dn);
         $_SESSION['objectinfo']= $this->dn;
         add_lock ($this->dn, $this->ui->dn);
       }else{ 
@@ -247,9 +244,9 @@ class systems extends plugin
         $_POST['new_password'] == $_POST['repeated_password']){
 
       /* Check if user is allowed to set password */
-      $acl= get_permissions ($this->dn, $this->ui->subtreeACL);
-      $acl= get_module_permission($acl, "terminal", $this->dn);
-      if (chkacl($acl, "password") != ""){
+      $ui  = get_userinfo();
+      $acl = $ui -> get_category_permissions($this->dn,"terminal");
+      if(preg_match("/w/",$acl)){ 
         print_red (_("You are not allowed to set this systems password!"));
       } else {
         $ldap= $this->config->get_ldap_link();
@@ -292,9 +289,9 @@ class systems extends plugin
 
       /* Load permissions for selected 'dn' and check if
          we're allowed to remove this 'dn' */
-      $acl= get_permissions ($this->dn, $this->ui->subtreeACL);
-      $this->acl= get_module_permission($acl, "terminal", $this->dn);
-      if (chkacl($this->acl, "delete") == ""){
+      $ui  = get_userinfo();
+      $acl = $ui -> get_category_permissions($this->dn,"terminal");
+      if(preg_match("/w/",$acl)){ 
 
         /* Check locking, save current plugin in 'back_plugin', so
            the dialog knows where to return. */
@@ -321,45 +318,46 @@ class systems extends plugin
     /* Confirmation for deletion has been passed. Terminal should be deleted. */
     if (isset($_POST['delete_terminal_confirm'])){
 
-      /* Some nice guy may send this as POST, so we've to check
-         for the permissions again. */
-      if (chkacl($this->acl, "delete") == ""){
+      /* Find out more about the object type */
+      $ldap= $this->config->get_ldap_link();
+      $ldap->cat($this->dn, array('objectClass'));
+      $attrs= $ldap->fetch();
+      $type= $this->get_system_type($attrs['objectClass']);
 
-        /* Find out more about the object type */
-        $ldap= $this->config->get_ldap_link();
-        $ldap->cat($this->dn, array('objectClass'));
-        $attrs= $ldap->fetch();
-        $type= $this->get_system_type($attrs['objectClass']);
+      $ui = get_userinfo();
 
-        $tabs = array(
-            "terminal"    => array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs"),
-            "workstation" => array("CLASS"=>"WORKTABS",     "TABCLASS" =>"worktabs"),
-            "server"      => array("CLASS"=>"SERVTABS",     "TABCLASS" =>"servtabs"),
-            "printer"     => array("CLASS"=>"PRINTTABS",    "TABCLASS" =>"printtabs"),
-            "phone"       => array("CLASS"=>"PHONETABS",    "TABCLASS" =>"phonetabs"),
-            "winstation"  => array("CLASS"=>"WINTABS",      "TABCLASS" =>"wintabs"),
-            "component"   => array("CLASS"=>"COMPONENTTABS","TABCLASS" =>"componenttabs"));
+      $tabs = array(
+          "terminal"    => array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "terminal"),
+          "workstation" => array("CLASS"=>"WORKTABS",     "TABCLASS" =>"worktabs",      "ACL"=> "workstation"),
+          "server"      => array("CLASS"=>"SERVTABS",     "TABCLASS" =>"servtabs",      "ACL"=> "server"),
+          "printer"     => array("CLASS"=>"PRINTTABS",    "TABCLASS" =>"printtabs",     "ACL"=> "printer"),
+          "phone"       => array("CLASS"=>"PHONETABS",    "TABCLASS" =>"phonetabs",     "ACL"=> "phone"),
+          "winstation"  => array("CLASS"=>"WINTABS",      "TABCLASS" =>"wintabs",       "ACL"=> "winworkstation"),
+          "component"   => array("CLASS"=>"COMPONENTTABS","TABCLASS" =>"componenttabs", "ACL"=> "component"));
 
+        
         /* get object type */
         $tabtype  = "termtabs";
         $tabobj   = "TERMTABS";
+        $tabacl   = "";
         if(isset($tabs[$type])){
           $tabtype = $tabs[$type]['TABCLASS'];
           $tabobj  = $tabs[$type]['CLASS'];
+          $tabacl  = $ui->get_permissions($this->dn,$tabs[$type]['ACL']);
         }
+
+      /* Check if we are allowed to remove this object */
+      if(preg_match("/d/",$tabacl)){
 
         /* Delete request is permitted, perform LDAP action */
         if($tabtype=="phonetabs"){
-          $this->systab= new $tabtype($this->config,
-              $this->config->data['TABS'][$tabobj], $this->dn);
-          $this->systab->set_acl(array($this->acl));
+          $this->systab= new $tabtype($this->config, $this->config->data['TABS'][$tabobj], $this->dn,$tabs[$type]['ACL']);
+          $this->systab->set_acl_base($this->dn);
           $this->systab->by_object['phonegeneric']->remove_from_parent ();
         }else{  
-          $this->systab= new $tabtype($this->config,
-              $this->config->data['TABS'][$tabobj], $this->dn);
-          $this->systab->set_acl(array($this->acl));
+          $this->systab= new $tabtype($this->config,$this->config->data['TABS'][$tabobj], $this->dn,$tabs[$type]['ACL']);
+          $this->systab->set_acl_base($this->dn);
           $this->systab->delete();
-#$this->systab->by_object['termgeneric']->remove_from_parent ();
         }
         unset ($this->systab);
         gosa_log ("System object'".$this->dn."' has been removed");
@@ -563,16 +561,8 @@ class systems extends plugin
 
   function reload()
   {
-    /* Load terminal shortcuts */
-    $responsible= array();
-    foreach ($this->config->departments as $key => $value){
-      if (get_module_permission(get_permissions ($value, $this->ui->subtreeACL),
-            "terminal", $value) == "#all#"){
-        $responsible[$key]= $value;
-      }
-    }
-
     /* some var init */
+    $ui = get_userinfo();
     $res              = array();
     $this->terminals  = array();
     $userregex        = "";
@@ -655,8 +645,14 @@ class systems extends plugin
 
       /* Detect type of object and create an entry for $this->terminals */
       $terminal = array();
-      if ((in_array ($tmp, $responsible)) || ($add != "")){
-        if (in_array_ics('gotoTerminal', $value["objectClass"])){
+
+
+      if (in_array_ics('gotoTerminal', $value["objectClass"])){
+
+        /* check acl */
+        $acl = $ui->get_permissions($value['dn'],"terminal");
+        if($add != "" || preg_match("/r/",$acl)) {
+
           if (isset($value["macAddress"][0]) && $value["macAddress"][0] != "-"){
             $terminal             = $value;
             $terminal['type']     = "T";
@@ -667,7 +663,12 @@ class systems extends plugin
             $terminal['message']  = _("Terminal template for");
             $terminal['location'] = array_search($tmp, $this->config->departments); 
           }
-        } elseif (in_array_ics('gotoWorkstation', $value["objectClass"])){
+        }
+      } elseif (in_array_ics('gotoWorkstation', $value["objectClass"])){
+
+        $acl = $ui->get_permissions($value['dn'],"workstation");
+        if($add != "" || preg_match("/r/",$acl)) {
+
           if (isset($value["macAddress"][0]) &&  $value["macAddress"][0] != "-"){
             $terminal             = $value;
             $terminal['type']     = "L";
@@ -681,36 +682,65 @@ class systems extends plugin
           if (isset($value["FAIstate"][0])){
             $terminal['type']= $this->getState($terminal['type'], $value["FAIstate"][0]);
           }
-        } elseif (in_array_ics('gotoPrinter', $value["objectClass"])){
+        }
+      } elseif (in_array_ics('gotoPrinter', $value["objectClass"])){
+        
+        $acl = $ui->get_permissions($value['dn'],"printer");
+        if($add != "" || preg_match("/r/",$acl)) {
+
           $terminal             = $value;
           $terminal['type']     = "P";
-        } elseif (in_array_ics('goServer', $value["objectClass"])){
+        }
+      } elseif (in_array_ics('goServer', $value["objectClass"])){
+
+        $acl = $ui->get_permissions($value['dn'],"server");
+        if($add != "" || preg_match("/r/",$acl)) {
+
           $terminal             = $value;
           $terminal['type']     = "S";
           if (isset($value["FAIstate"][0])){
             $terminal['type']= $this->getState($terminal['type'], $value["FAIstate"][0]);
           }
-        } elseif (in_array_ics('goFonHardware', $value["objectClass"])){
+        }
+      } elseif (in_array_ics('goFonHardware', $value["objectClass"])){
+
+        $acl = $ui->get_permissions($value['dn'],"phone");
+        if($add != "" || preg_match("/r/",$acl)) {
+
           $terminal             = $value;
           $terminal['type']     = "F";
-        }elseif (in_array_ics("GOhard",$value['objectClass'])){
+        }
+      }elseif (in_array_ics("GOhard",$value['objectClass'])){
+
+        $acl = $ui->get_permissions($value['dn'],"server").$ui->get_permissions($value['dn'],"terminal").$ui->get_permissions($value['dn'],"workstation");
+        if($add != "" || preg_match("/r/",$acl)) {
+
           $terminal = $value;
           $terminal['type']   = "Q";
           $terminal['is_new'] = $add;
-        } elseif (in_array_ics('ieee802Device', $value["objectClass"])){
+        }
+      } elseif (in_array_ics('ieee802Device', $value["objectClass"])){
+
+        $acl = $ui->get_permissions($value['dn'],"component");
+        if($add != "" || preg_match("/r/",$acl)) {
+
           $terminal             = $value;
           $terminal['type']     = "C";
-        } else{
-          $name= preg_replace('/\$$/', '', $value['cn'][0]);
-          if (isset($value['sambaDomainName'])){
-            $domain= " [".$value['sambaDomainName'][0]."]";
-          } else {
-            $domain= "";
-          }
-          $terminal=$value;
-          $terminal['type']     ="W";
-          $terminal['domain']   = $name.$domain;
         }
+      } else{
+
+        $name= preg_replace('/\$$/', '', $value['cn'][0]);
+        if (isset($value['sambaDomainName'])){
+          $domain= " [".$value['sambaDomainName'][0]."]";
+        } else {
+          $domain= "";
+        }
+        $terminal=$value;
+        $terminal['type']     ="W";
+        $terminal['domain']   = $name.$domain;
+      }
+
+      if(count($terminal)){
         $this->terminals[]=$terminal;
       }
     }
