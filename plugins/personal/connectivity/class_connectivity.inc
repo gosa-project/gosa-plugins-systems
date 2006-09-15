@@ -133,10 +133,8 @@ class connectivity extends plugin
       $this->plugin[$name]->dn= $this->dn;
       if ($this->plugin[$name]->is_account){
         $this->plugin[$name]->save();
-        $this->plugin[$name]->postcreate();
       } else {
         $this->plugin[$name]->remove_from_parent();
-        $this->plugin[$name]->postremove();
       }
     }
   }
@@ -147,7 +145,6 @@ class connectivity extends plugin
     foreach ($this->plugin_name as $name){
       $this->plugin[$name]->dn= $this->dn;
       $this->plugin[$name]->remove_from_parent();
-      $this->plugin[$name]->postremove();
     }
   }
 
