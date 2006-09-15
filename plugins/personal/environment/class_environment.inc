@@ -81,6 +81,11 @@ class environment extends plugin
   {
     plugin::plugin ($config, $dn);
 
+    /* Setting uid to default */
+    if(isset($this->attrs['uid'][0])){
+      $this->uid = $this->attrs['uid'][0];
+    }
+
     /* Check : Are we currently editing a group or user dialog */
     if((isset($this->attrs['cn'][0]))&&(!isset($this->attrs['uid'][0]))){
       $suffix="Group";
@@ -906,7 +911,7 @@ class environment extends plugin
     show_ldap_error($ldap->get_error(), sprintf(_("Removing of user/environment account with dn '%s' failed."),$this->dn));
 
     /* Optionally execute a command after we're done */
-    $this->handle_post_events("remove");
+    $this->handle_post_events("remove",array("uid" => $this->uid));
   }
 
 
@@ -1157,7 +1162,7 @@ class environment extends plugin
     $this->cleanup();
     $ldap->$mode($this->attrs);
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of user/environment account with dn '%s' failed."),$this->dn));
-    $this->handle_post_events($mode);
+    $this->handle_post_events($mode,array("uid"=>$this->uid));
   }
 
   /* Generate ListBox frindly output for the defined shares 

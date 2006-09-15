@@ -70,7 +70,7 @@ class netatalk extends plugin {
   /* Checkboxes */
   var $is_chk_box = array ();
   
-
+  var $uid = "";
   function get_shares()
   {
     $this->shares_loaded= TRUE;
@@ -117,6 +117,11 @@ class netatalk extends plugin {
     /* Include config object */
     $this->config = $config;
     plugin :: plugin($config, $dn);
+
+    /* Setting uid to default */
+    if(isset($this->attrs['uid'][0])){
+      $this->uid = $this->attrs['uid'][0];
+    }
 
     /* Copy needed attributes */
     foreach($this->use_save_attributes as $val) {
@@ -265,10 +270,10 @@ class netatalk extends plugin {
     /* Optionally execute a command after we're done */
     if ($this->initially_was_account == $this->is_account) {
       if ($this->is_modified) {
-        $this->handle_post_events("modify");
+        $this->handle_post_events("modify", array("uid" => $this->uid));
       }
     } else {
-      $this->handle_post_events("add");
+      $this->handle_post_events("add", array("uid" => $this->uid));
     }
   }
 
@@ -326,7 +331,7 @@ class netatalk extends plugin {
     unset ($this->attrs['uid']);
 
     /* Optionally execute a command after we're done */
-    $this->handle_post_events('remove');
+    $this->handle_post_events('remove',array("uid" => $this->uid));
   }
 
   

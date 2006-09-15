@@ -580,7 +580,7 @@ class user extends plugin
     }
 
     /* Optionally execute a command after we're done */
-    $this->handle_post_events("remove");
+    $this->handle_post_events("remove",array("uid" => $this->uid));
   }
 
 
@@ -960,9 +960,9 @@ class user extends plugin
 
     /* Optionally execute a command after we're done */
     if ($mode == "add"){
-      $this->handle_post_events("add");
+      $this->handle_post_events("add", array("uid" => $this->uid));
     } elseif ($this->is_modified){
-      $this->handle_post_events("modify");
+      $this->handle_post_events("modify", array("uid" => $this->uid));
     }
 
     /* Fix tagging if needed */

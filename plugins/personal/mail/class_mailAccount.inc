@@ -61,7 +61,7 @@ class mailAccount extends plugin
       "gosaMailDeliveryMode", "gosaSpamSortLevel", "gosaSpamMailbox","gosaMailAlternateAddress",
       "gosaVacationMessage", "gosaMailAlternateAddress", "gosaMailForwardingAddress");
   var $objectclasses= array("gosaMailAccount");
-
+  var $uid;
 
   /* constructor, if 'dn' is set, the node loads the given
      'dn' from LDAP */
@@ -70,6 +70,7 @@ class mailAccount extends plugin
     /* Load bases attributes */
     plugin::plugin($config, $dn);
 
+    /* Set uid */
     if(isset($this->attrs['uid'])){
       $this->uid = $this->attrs['uid'][0];
     }
@@ -609,7 +610,7 @@ class mailAccount extends plugin
     }
 
     /* Optionally execute a command after we're done */
-    $this->handle_post_events("remove");
+    $this->handle_post_events("remove",array("uid" => $this->uid));
   }
 
   
@@ -754,10 +755,10 @@ class mailAccount extends plugin
     /* Optionally execute a command after we're done */
     if ($this->initially_was_account == $this->is_account){
       if ($this->is_modified){
-        $this->handle_post_events("modify");
+        $this->handle_post_events("modify", array("uid" => $this->uid));
       }
     } else {
-      $this->handle_post_events("add");
+      $this->handle_post_events("add", array("uid" => $this->uid));
     }
 
   }
