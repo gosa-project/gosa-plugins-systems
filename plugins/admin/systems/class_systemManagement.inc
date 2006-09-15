@@ -582,7 +582,7 @@ class systems extends plugin
 
     /* This array represents the combination between checkboxes and search filters */
     $objs = array( "ShowServers"        => array("CLASS" => "goServer"        ,"TREE" => "ou=servers,ou=systems," ),
-        "ShowTerminals"      => array("CLASS" => "goHard"          ,"TREE" => "ou=terminals,ou=systems,"), 
+        "ShowTerminals"      => array("CLASS" => "gotoTerminal"    ,"TREE" => "ou=terminals,ou=systems,"), 
         "ShowPrinters"       => array("CLASS" => "gotoPrinter"     ,"TREE" => "ou=printers,ou=systems," ),
         "ShowDevices"        => array("CLASS" => "ieee802Device"   ,"TREE" => "ou=netdevices,ou=systems," ),
         "ShowPhones"         => array("CLASS" => "goFonHardware"   ,"TREE" => "ou=phones,ou=systems," ),
@@ -646,13 +646,11 @@ class systems extends plugin
       /* Detect type of object and create an entry for $this->terminals */
       $terminal = array();
 
-
       if (in_array_ics('gotoTerminal', $value["objectClass"])){
 
         /* check acl */
-        $acl = $ui->get_permissions($value['dn'],"terminal");
+        $acl = $ui->get_permissions($value['dn'],"terminal/termgeneric");
         if($add != "" || preg_match("/r/",$acl)) {
-
           if (isset($value["macAddress"][0]) && $value["macAddress"][0] != "-"){
             $terminal             = $value;
             $terminal['type']     = "T";
@@ -666,9 +664,8 @@ class systems extends plugin
         }
       } elseif (in_array_ics('gotoWorkstation', $value["objectClass"])){
 
-        $acl = $ui->get_permissions($value['dn'],"workstation");
+        $acl = $ui->get_permissions($value['dn'],"workstation/workgeneric");
         if($add != "" || preg_match("/r/",$acl)) {
-
           if (isset($value["macAddress"][0]) &&  $value["macAddress"][0] != "-"){
             $terminal             = $value;
             $terminal['type']     = "L";
@@ -684,8 +681,9 @@ class systems extends plugin
           }
         }
       } elseif (in_array_ics('gotoPrinter', $value["objectClass"])){
-        
-        $acl = $ui->get_permissions($value['dn'],"printer");
+       
+   
+        $acl = $ui->get_permissions($value['dn'],"printer/printgeneric");
         if($add != "" || preg_match("/r/",$acl)) {
 
           $terminal             = $value;
@@ -693,7 +691,7 @@ class systems extends plugin
         }
       } elseif (in_array_ics('goServer', $value["objectClass"])){
 
-        $acl = $ui->get_permissions($value['dn'],"server");
+        $acl = $ui->get_permissions($value['dn'],"server/servgeneric");
         if($add != "" || preg_match("/r/",$acl)) {
 
           $terminal             = $value;
@@ -704,7 +702,7 @@ class systems extends plugin
         }
       } elseif (in_array_ics('goFonHardware', $value["objectClass"])){
 
-        $acl = $ui->get_permissions($value['dn'],"phone");
+        $acl = $ui->get_permissions($value['dn'],"phone/phoneGeneric");
         if($add != "" || preg_match("/r/",$acl)) {
 
           $terminal             = $value;
@@ -712,7 +710,9 @@ class systems extends plugin
         }
       }elseif (in_array_ics("GOhard",$value['objectClass'])){
 
-        $acl = $ui->get_permissions($value['dn'],"server").$ui->get_permissions($value['dn'],"terminal").$ui->get_permissions($value['dn'],"workstation");
+        $acl =  $ui->get_permissions($value['dn'],"server/servgeneric"). 
+                $ui->get_permissions($value['dn'],"terminal/termgeneric").
+                $ui->get_permissions($value['dn'],"workstation/workgeneric");
         if($add != "" || preg_match("/r/",$acl)) {
 
           $terminal = $value;
@@ -721,7 +721,7 @@ class systems extends plugin
         }
       } elseif (in_array_ics('ieee802Device', $value["objectClass"])){
 
-        $acl = $ui->get_permissions($value['dn'],"component");
+        $acl = $ui->get_permissions($value['dn'],"component/componentGeneric");
         if($add != "" || preg_match("/r/",$acl)) {
 
           $terminal             = $value;
