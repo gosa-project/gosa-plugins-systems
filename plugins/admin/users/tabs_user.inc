@@ -22,13 +22,21 @@ class usertabs extends tabs
     $baseobject= $this->by_object['user'];
     foreach ($this->by_object as $name => $obj){
 
+      /* Adding uid to sub plugins of connectivity */
+      if($name == "connectivity"){
+        foreach ($obj->plugin_name as $plg_name){
+          if(isset($obj->plugin[$plg_name]->uid)){
+            $obj->plugin[$plg_name]->uid = $baseobject->uid;
+          }
+        }
+      }
+
       /* Don't touch base object */
       if ($name != 'user'){
         $obj->parent= &$this;
         $obj->uid= $baseobject->uid;
         $obj->sn= $baseobject->uid;
         $obj->givenName= $baseobject->uid;
-        $this->by_object[$name]= $obj;
       }
 
       /* Copy mail if needed */
@@ -37,6 +45,8 @@ class usertabs extends tabs
           $obj->mail= $this->by_object['mailAccount']->mail;
         }
       }
+
+      $this->by_object[$name]= $obj;
 
       /* Update parent in base object */
       $this->by_object['user']->parent= &$this;
