@@ -38,6 +38,8 @@ class gofaxAccount extends plugin
   var $out_blocklist_dialog= FALSE;
   var $current_blocklist= array();
 
+  var $uid ="";
+
   /* attribute list for save action */
   var $attributes= array("goFaxDeliveryMode", "goFaxIsEnabled","goFaxRBlockgroups","facsimileAlternateTelephoneNumber","facsimileTelephoneNumber",
       "goFaxPrinter", "goFaxDivertNumber", "goFaxLanguage", "goFaxFormat", "mail");
@@ -48,6 +50,10 @@ class gofaxAccount extends plugin
     /* General initialization */
     plugin::plugin ($config, $dn);
 
+    /* Set uid, it is used in handle_post_events */
+    if(isset($this->attrs['uid'])){
+      $this->uid = $this->attrs['uid'][0];
+    }
 
     /* Hickert : 11.11.05
      * Added to be able to handle department selection in divSelelect
@@ -612,7 +618,7 @@ class gofaxAccount extends plugin
     show_ldap_error($ldap->get_error(), sprintf(_("Removing of user/fax account with dn '%s' failed."),$this->dn));
 
     /* Optionally execute a command after we're done */
-    $this->handle_post_events('remove');
+    $this->handle_post_events('remove',array("uid"=> $this->uid));
   }
 
 
@@ -731,10 +737,10 @@ class gofaxAccount extends plugin
     /* Optionally execute a command after we're done */
     if ($this->initially_was_account == $this->is_account){
       if ($this->is_modified){
-        $this->handle_post_events("mofify");
+        $this->handle_post_events("mofidy",array("uid" => $this->uid));
       }
     } else {
-      $this->handle_post_events("add");
+      $this->handle_post_events("add",array("uid" => $this->uid));
     }
 
   }

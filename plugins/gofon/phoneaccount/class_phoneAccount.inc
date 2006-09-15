@@ -40,9 +40,16 @@ class phoneAccount extends plugin
                                       "telephoneNumber", "goFonMacro","macro");
   var $objectclasses= array("goFonAccount");
 
+  var $uid ="";
+
   function phoneAccount ($config, $dn= NULL)
   {
     plugin::plugin ($config, $dn);
+
+    /* Set uid, it is used in handle_post_events */    
+    if(isset($this->attrs['uid'])){
+      $this->uid = $this->attrs['uid'][0];
+    }
 
     /* Set phone hardware */
     if (!isset($this->attrs['goFonHardware'])){
@@ -987,10 +994,10 @@ class phoneAccount extends plugin
 
     if ($this->initially_was_account == $this->is_account){
       if ($this->is_modified){
-        $this->handle_post_events("modify");
+        $this->handle_post_events("modify",array("uid"=> $this->uid));
       }
     } else {
-      $this->handle_post_events("add");
+      $this->handle_post_events("add",array("uid" => $this->uid));
     }
 
   }
@@ -1146,7 +1153,7 @@ class phoneAccount extends plugin
 
     /* Optionally execute a command after we're done */
     @mysql_close($r_con);
-    $this->handle_post_events('remove');
+    $this->handle_post_events('remove',array("uid" => $this->uid));
   }
 
 
