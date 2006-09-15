@@ -21,6 +21,8 @@ class intranetAccount extends plugin
   var $objectclasses= array("gosaIntranetAccount");
   var $ReadOnly = false;  
 
+  var $uid ="";
+
   /*! \brief Konstructor  
 
     \param $config 	The Config Object used to initialise plugin
@@ -32,6 +34,11 @@ class intranetAccount extends plugin
   function intranetAccount ($config, $dn= NULL)
   {
     plugin::plugin ($config, $dn);
+
+     /* Setting uid to default */
+     if(isset($this->attrs['uid'][0])){
+       $this->uid = $this->attrs['uid'][0];
+     }
   }
 
   /*!
@@ -101,7 +108,7 @@ class intranetAccount extends plugin
       show_ldap_error($ldap->get_error(), sprintf(_("Removing of user/intranet account with dn '%s' failed."),$this->dn));
 
       /* Optionally execute a command after we're done */
-      $this->postremove();
+      $this->postremove(array("uid"=>$this->uid));
     }
   }
 
@@ -159,7 +166,7 @@ class intranetAccount extends plugin
       show_ldap_error($ldap->get_error(), sprintf(_("Saving of user/intranet account with dn '%s' failed."),$this->dn));
 
       /* Optionally execute a command after we're done */
-      $this->postcreate();
+      $this->postcreate(array("uid" = $this->uid));
   }
 
 

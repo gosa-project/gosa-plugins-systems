@@ -11,9 +11,17 @@ class webdavAccount extends plugin
   var $objectclasses= array("gosaWebdavAccount");
   var $ReadOnly = false;
 
+  var $uid ="";
+
   function webdavAccount ($config, $dn= NULL)
   {
     plugin::plugin ($config, $dn);
+    
+    /* Setting uid to default */
+    if(isset($this->attrs['uid'][0])){
+      $this->uid = $this->attrs['uid'][0];
+    }
+
   }
 
   function execute()
@@ -68,7 +76,7 @@ class webdavAccount extends plugin
       show_ldap_error($ldap->get_error(), sprintf(_("Removing of user/webDAV account with dn '%s' failed."),$this->dn));
 
       /* Optionally execute a command after we're done */
-      $this->handle_post_events('remove');
+      $this->handle_post_events('remove',array("uid" => $this->uid));
     }
   }
 
@@ -117,10 +125,10 @@ class webdavAccount extends plugin
       /* Optionally execute a command after we're done */
       if ($this->initially_was_account == $this->is_account){
         if ($this->is_modified){
-          $this->handle_post_events("modify");
+          $this->handle_post_events("modify",array("uid" => $this->uid));
         }
       } else {
-        $this->handle_post_events("add");
+        $this->handle_post_events("add",array("uid" => $this->uid));
       }
     }
   }

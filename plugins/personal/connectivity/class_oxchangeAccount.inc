@@ -577,6 +577,7 @@ class oxchangeAccount extends plugin
         );
 
   var $dnmode= "";
+  var $uid ="";
 
   function oxchangeAccount ($config, $dn= NULL)
   {
@@ -586,6 +587,11 @@ class oxchangeAccount extends plugin
         $this->oxconf=$this->config->data['TABS']['CONNECTIVITY'][$i];
         break;
       }
+    }
+
+    /* Setting uid to default */
+    if(isset($this->attrs['uid'][0])){
+      $this->uid = $this->attrs['uid'][0];
     }
 
     $this->dnmode= $this->config->current['DNMODE'];
@@ -736,7 +742,7 @@ class oxchangeAccount extends plugin
 		show_ldap_error($ldap->get_error(), sprintf(_("Removing of user/oxchange addressbook account with dn '%s' failed."),$this->dn));
 
     /* Optionally execute a command after we're done */
-    $this->postremove();
+    $this->postremove(array("uid" => $this->uid));
 
     /* Finally remove data from postgresql server */
     foreach ($sqldeluser as $sqls){
@@ -840,7 +846,7 @@ class oxchangeAccount extends plugin
 		show_ldap_error($ldap->get_error(), sprintf(_("Saving of user/oxchange account with dn '%s' failed."),$this->dn));
 
     /* Optionally execute a command after we're done */
-    $this->postcreate();
+    $this->postcreate(array("uid" => $this->uid));
 
     if($needupdate){
       $ldap->create_missing_trees("ou=addr,".$this->dn);
