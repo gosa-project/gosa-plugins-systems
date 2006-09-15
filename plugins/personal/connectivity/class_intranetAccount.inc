@@ -166,7 +166,7 @@ class intranetAccount extends plugin
       show_ldap_error($ldap->get_error(), sprintf(_("Saving of user/intranet account with dn '%s' failed."),$this->dn));
 
       /* Optionally execute a command after we're done */
-      $this->postcreate(array("uid" = $this->uid));
+      $this->postcreate(array("uid" => $this->uid));
   }
 
 

@@ -30,7 +30,6 @@ class mailAccount extends plugin
 
   /* plugin specific values */
   var $mail                               = "";
-  var $uid                                = "";
   var $gosaMailAlternateAddress           = array();
   var $gosaMailForwardingAddress          = array();
   var $gosaMailDeliveryMode               = "[L        ]";
