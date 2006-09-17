@@ -24,6 +24,7 @@ GOsa2 changelog
   - Moved from "guru mediation style" to div-popups
   - Several css fixes
   - Fixed series of bugs that lead to not shown groups
+	- Work in progress on CA Management (by Zeph)
 
 * gosa 2.4
   - Updated layout to work cleanly with IE6+, Firefox 1.0.4+, khtml 3.4+
