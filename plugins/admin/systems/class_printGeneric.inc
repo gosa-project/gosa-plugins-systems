@@ -588,7 +588,7 @@ class printgeneric extends plugin
     $this->netConfigDNS->save_object();
 
     /* Save base, since this is no LDAP attribute */
-    if(isset($_POST['base'])){
+    if((isset($_POST['base'])) && ($this->acl_is_moveable()) ) {
       $this->set_acl_base('dummy,'.$_POST['base']);
       if($this->acl_is_moveable()){
 
@@ -723,7 +723,7 @@ class printgeneric extends plugin
     }
 
     /* If no ppd is selected, remove this attribute */
-    if(count($this->gotoPrinterPPD)) {
+    if(!empty($this->gotoPrinterPPD)) {
       $this->attrs['gotoPrinterPPD'] = $method.str_replace("//","/",$_SERVER['SERVER_NAME']."/ppd/".$this->gotoPrinterPPD);
     }else{
       $this->attrs['gotoPrinterPPD'] = array();
@@ -838,7 +838,7 @@ class printgeneric extends plugin
                                                     "objectClass"  => "gotoPrinter")),
           "plProvidedAcls"=> array(
             "cn"                => _("Name"),
-             
+            "base"                => _("Base") ,         
             "description"       => _("Description"), 
             "l"                 => _("Location"), 
             "labeledURI"        => _("LabeledURL"), 
