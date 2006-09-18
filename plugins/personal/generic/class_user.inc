@@ -628,6 +628,7 @@ class user extends plugin
           }
         }else{
           print_red(sprintf(_("You are not allowed to move this object to '%s'."),LDAP::fix($_POST['base'])));
+          $this->set_acl_base('dummy,'.$this->base);
         }
       }
 
