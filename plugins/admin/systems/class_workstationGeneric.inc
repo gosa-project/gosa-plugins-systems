@@ -494,7 +494,8 @@ class workgeneric extends plugin
           "plCategory"    => array("workstation" => array("description"  => _("Workstation"),
                                                           "objectClass"  => "gotoWorkstation")),
           "plProvidedAcls"=> array(
-            "cn"                  => _("Workstation name"), 
+            "cn"                  => _("Workstation name"),
+            "l"                   => _("Location") ,
             "base"                => _("Base") ,
             "gotoMode"            => _("Goto mode"), 
             "gotoSyslogServer"    => _("Syslog server"), 
