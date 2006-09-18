@@ -49,7 +49,7 @@ class printgeneric extends plugin
                               "gotoUserAdminPrinter","gotoGroupAdminPrinter","gotoUserPrinter","gotoGroupPrinter");
   var $objectclasses  = array("top", "gotoPrinter");
 
-  function printgeneric ($config, $dn= NULL,$parent = NULL)
+  function printgeneric ($config, $dn,$parent)
   {
     $this->config = $config;
     $this->dn = $dn; 
@@ -263,6 +263,21 @@ class printgeneric extends plugin
     }
 
     $smarty= get_smarty();
+
+    /* Assign acls */
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $name => $translation){
+      $smarty->assign($name."ACL", $this->getacl($name));
+    }
+
+    /* Create base acls */
+    $baseACL = $this->getacl("base");
+    if(!$this->acl_is_moveable()) {
+      $baseACL = preg_replace("/w/","",$baseACL);
+    }
+    $smarty->assign("baseACL",          $baseACL);
+
+
     $display="";
 
     /* Tell smarty if this is a standalone object or a terminal / WS depending printer */
@@ -350,11 +365,8 @@ class printgeneric extends plugin
 
     /* Assign attributes */
     foreach ($this->attributes as $attr){
-      $smarty->assign($attr."ACL", chkacl($this->acl, $attr));
       $smarty->assign("$attr", $this->$attr);
     }
-
-    $smarty->assign("baseACL", chkacl($this->acl,"base"));
 
     if(isset($_POST['AddUser'])){
       $this->dialog = new selectUserToPrinterDialog($this->config, NULL,"AddUser");
@@ -499,7 +511,7 @@ class printgeneric extends plugin
       }else{
         $smarty->assign("desc"    ,sprintf(_("This printer belongs to workstation %s. You can't rename this printer."),"<b>".$this->cn."</b>"));
       }
-      $smarty->assign("cnACL"    ," disabled ");
+      $smarty->assign("cnACL"    , $this->getacl("cn",true));
     }else{
       $smarty->assign("desc"    ,"");
     }
@@ -572,9 +584,23 @@ class printgeneric extends plugin
   {
     plugin::save_object();
     $this->netConfigDNS->save_object();
+
     /* Save base, since this is no LDAP attribute */
-    if (isset($_POST['base']) && chkacl($this->acl, "create") == ""){
-      $this->base= $_POST['base'];
+    if(isset($_POST['base'])){
+      $this->set_acl_base('dummy,'.$_POST['base']);
+      if($this->acl_is_moveable()){
+
+        if(isset($this->config->idepartments[$_POST['base']])){
+          $this->base = $_POST['base'];
+          if ($_POST['base'] != $this->base){
+            $this->is_modified= TRUE;
+          }
+        }
+      }else{
+
+        print_red(sprintf(_("You are not allowed to move this object to '%s'."),LDAP::fix($_POST['base'])));
+        $this->set_acl_base('dummy,'.$this->base);
+      }
     }
   }
 
@@ -606,10 +632,7 @@ class printgeneric extends plugin
     }
 
     if($this->BelongsTo == "Printer"){
-      $ui= get_userinfo();
-      $acl= get_permissions ($dn, $ui->subtreeACL);
-      $acl= get_module_permission($acl, "printer", $this->dn);
-      if (chkacl($acl, "create") != ""){
+      if($this->acl_is_createable()){
         $message[]= _("You have no permissions to create a printer on this 'Base'.");
       }
     }
@@ -808,7 +831,8 @@ class printgeneric extends plugin
           "plCategory"    => array("printer" => array("description"  => _("Printer"),
                                                     "objectClass"  => "gotoPrinter")),
           "plProvidedAcls"=> array(
-            "cn"                => _("Name"), 
+            "cn"                => _("Name"),
+             
             "description"       => _("Description"), 
             "l"                 => _("Location"), 
             "labeledURI"        => _("LabeledURL"), 
