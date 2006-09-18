@@ -224,6 +224,20 @@ class workgeneric extends plugin
 
     /* Fill templating stuff */
     $smarty= get_smarty();
+
+    /* Create base acls */
+    $baseACL = $this->getacl("base");
+    if(!$this->acl_is_moveable()) {
+      $baseACL = preg_replace("/w/","",$baseACL);
+    }
+    $smarty->assign("baseACL",          $baseACL);
+
+    /* Set acls */
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $name => $translation){
+      $smarty->assign($name."ACL",$this->getacl($name));
+    }
+
     $smarty->assign("cn", $this->cn);
     $smarty->assign("l", $this->l);
     $smarty->assign("bases", $this->config->idepartments);
@@ -273,9 +287,7 @@ class workgeneric extends plugin
     /* Variables */
     foreach(array("base", "gotoMode", "gotoSyslogServer", "gotoNtpServer") as $val){
       $smarty->assign($val."_select", $this->$val);
-      $smarty->assign($val."ACL", chkacl($this->acl, $val));
     }
-    $smarty->assign("actionACL", chkacl($this->acl, 'action'));
 
     /* tell smarty the inherit checkbox state */
     $smarty->assign("inheritTimeServer",$this->inheritTimeServer);
@@ -312,13 +324,26 @@ class workgeneric extends plugin
     plugin::save_object();
 
     /* Save base, since this is no LDAP attribute */
-    if (isset($_POST['base']) && chkacl($this->acl, "create") == ""){
-      $this->base= $_POST['base'];
+    if((isset($_POST['base'])) && ($this->acl_is_moveable())){
+      $this->set_acl_base('dummy,'.$_POST['base']);
+      if($this->acl_is_moveable()){
+
+        if(isset($this->config->idepartments[$_POST['base']])){
+          $this->base = $_POST['base'];
+          if ($_POST['base'] != $this->base){
+            $this->is_modified= TRUE;
+          }
+        }
+      }else{
+
+        print_red(sprintf(_("You are not allowed to move this object to '%s'."),LDAP::fix($_POST['base'])));
+        $this->set_acl_base('dummy,'.$this->base);
+      }
     }
     $this->netConfigDNS->save_object();
 
     /* Set inherit mode */
-    if(isset($_POST['workgeneric_posted'])){
+    if((isset($_POST['workgeneric_posted'])) && ($this->acl_is_writeable("gotoNtpServer"))){
       if(isset($_POST["inheritTimeServer"])){
         $this->inheritTimeServer = true;
       }else{
@@ -336,15 +361,13 @@ class workgeneric extends plugin
     $message= plugin::check();
     $message= array_merge($message, $this->netConfigDNS->check());
 
-    $ui= get_userinfo();
     $this->dn= "cn=".$this->cn.",ou=workstations,ou=systems,".$this->base;
-    $acl= get_permissions ($this->dn, $ui->subtreeACL);
-    $acl= get_module_permission($acl, "group", $this->dn);
-    if (chkacl($acl, "create") != ""){
+    if ($this->orig_dn == "new" && !$this->acl_is_createable()){
       $message[]= _("You have no permissions to create a workstation on this 'Base'.");
     }
 
-    if ($this->cn == "" && chkacl ($this->acl, "cn") == ""){
+
+    if ($this->cn == ""){
       $message[]= _("The required field 'Workstation name' is not set.");
     }
 
@@ -472,6 +495,7 @@ class workgeneric extends plugin
                                                           "objectClass"  => "gotoWorkstation")),
           "plProvidedAcls"=> array(
             "cn"                  => _("Workstation name"), 
+            "base"                => _("Base") ,
             "gotoMode"            => _("Goto mode"), 
             "gotoSyslogServer"    => _("Syslog server"), 
             "gotoNtpServer"       => _("Ntp server"), 
