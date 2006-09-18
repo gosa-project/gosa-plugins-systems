@@ -58,7 +58,7 @@
    <table width="100%">
     <tr>
      <td colspan="2">
-{render acl=gotoNtpServerACL}
+{render acl=$gotoNtpServerACL}
         <input type="checkbox" value="1" name="inheritTimeServer"
             {if $inheritTimeServer } checked {/if}
             onClick="javascript:

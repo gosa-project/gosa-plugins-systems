@@ -14,10 +14,12 @@ class worktabs extends tabs
         $this->by_name[$tab['CLASS']]= $tab['NAME'];
         $this->by_object[$tab['CLASS']]= new $tab['CLASS']($this->config, $this->dn,$this);
         $this->by_object[$tab['CLASS']]->parent= &$this;
+        $this->by_object[$tab['CLASS']]->set_acl_category($category);
       }else{
         $this->by_name[$tab['CLASS']]= $tab['NAME'];
         $this->by_object[$tab['CLASS']]= new $tab['CLASS']($this->config, $this->dn);
         $this->by_object[$tab['CLASS']]->parent= &$this;
+        $this->by_object[$tab['CLASS']]->set_acl_category($category);
       }
       /* Initialize current */
       if ($this->current == ""){

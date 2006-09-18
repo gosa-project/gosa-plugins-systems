@@ -21,7 +21,7 @@ function smarty_block_render($params, $text, &$smarty)
 	}
 
 	/* Disable objects, but keep those active that have mode=read_active */
-	if(!(isset($params['mode']) && $params['mode']=='readable')){
+	if(!(isset($params['mode']) && $params['mode']=='read_active')){
 
 		/* Disable options && greyout divlists */
 

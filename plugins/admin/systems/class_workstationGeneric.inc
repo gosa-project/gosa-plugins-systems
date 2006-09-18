@@ -130,11 +130,15 @@ class workgeneric extends plugin
     plugin::execute();
 
     /* Do we need to flip is_account state? */
-    if (isset($_POST['modify_state'])){
-      $this->is_account= !$this->is_account;
+    if(isset($_POST['modify_state'])){
+      if($this->is_account && $this->acl_is_removeable()){
+        $this->is_account= FALSE;
+      }elseif(!$this->is_account && $this->acl_is_createable()){
+        $this->is_account= TRUE;
+      }
     }
 
-    if (isset($_POST['action'])){
+    if ((isset($_POST['action'])) && ($this->acl_is_writeable("FAIstate"))){
       $cmd= search_config($this->config->data['TABS'], "workgeneric", "ACTIONCMD");
       if ($cmd == ""){
         print_red(_("No ACTIONCMD definition found in your gosa.conf"));
@@ -188,7 +192,7 @@ class workgeneric extends plugin
     /* Base select dialog */
     $once = true;
     foreach($_POST as $name => $value){
-      if(preg_match("/^chooseBase/",$name) && $once){
+      if(preg_match("/^chooseBase/",$name) && $once && $this->acl_is_writeable("base")){
         $once = false;
         $this->dialog = new baseSelectDialog($this->config,$this);
         $this->dialog->setCurrentBase($this->base);
@@ -211,12 +215,12 @@ class workgeneric extends plugin
     }
 
     /* Add new ntp Server to our list */ 
-    if((isset($_POST['addNtpServer'])) && (isset($_POST['gotoNtpServers']))){
+    if((isset($_POST['addNtpServer'])) && (isset($_POST['gotoNtpServers'])) && $this->acl_is_writeable("gotoNtpServer")){
       $this->gotoNtpServer[$_POST['gotoNtpServers']] = $_POST['gotoNtpServers'];
     }
 
     /* Delete selected NtpServer for list of used servers  */
-    if((isset($_POST['delNtpServer'])) && (isset($_POST['gotoNtpServerSelected']))){
+    if((isset($_POST['delNtpServer'])) && (isset($_POST['gotoNtpServerSelected'])) && $this->acl_is_writeable("gotoNtpServer")){
       foreach($_POST['gotoNtpServerSelected'] as $name){
         unset($this->gotoNtpServer[$name]);
       }

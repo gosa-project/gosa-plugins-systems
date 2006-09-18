@@ -835,7 +835,7 @@ class printgeneric extends plugin
           "plPriority"    => 0,
           "plSection"     => array("administration"),
           "plCategory"    => array("printer" => array("description"  => _("Printer"),
-                                                    "objectClass"  => "gotoPrinter")),
+                                                    "objectClass"  => "gotoPrinter"),"workstation"),
           "plProvidedAcls"=> array(
             "cn"                => _("Name"),
             "base"                => _("Base") ,         
