@@ -211,7 +211,6 @@ class printgeneric extends plugin
 
       /* Detect if this is a valid printer account;
        */
-      //FIXME: do we need to do this? we've already everything we need in $this->attrs...
       $ldap = $this->config->get_ldap_link();
       $ldap->cat($this->dn, array('objectClass'));
 
@@ -288,9 +287,12 @@ class printgeneric extends plugin
     }
 
     /* Do we need to flip is_account state? */
-    if (isset($_POST['modify_state'])){
-      $this->is_modified = true;
-      $this->is_account= !$this->is_account;
+    if(isset($_POST['modify_state'])){
+      if($this->is_account && $this->acl_is_removeable()){
+        $this->is_account= FALSE;
+      }elseif(!$this->is_account && $this->acl_is_createable()){
+        $this->is_account= TRUE;
+      }
     }
 
     /* Do we represent a valid printer? */
@@ -632,11 +634,10 @@ class printgeneric extends plugin
     }
 
     if($this->BelongsTo == "Printer"){
-      if($this->acl_is_createable()){
-        $message[]= _("You have no permissions to create a printer on this 'Base'.");
+      if ($this->orig_dn == "new" && !$this->acl_is_createable()){
+        $message[]= _("You have no permissions to create a group on this 'Base'.");
       }
     }
-
     
     /* must: labeledURI */
     if(empty($this->labeledURI)){
@@ -720,8 +721,13 @@ class printgeneric extends plugin
     }else{
       $method="http://";
     }
- 
-    $this->attrs['gotoPrinterPPD'] = $method.str_replace("//","/",$_SERVER['SERVER_NAME']."/ppd/".$this->gotoPrinterPPD);
+
+    /* If no ppd is selected, remove this attribute */
+    if(count($this->gotoPrinterPPD)) {
+      $this->attrs['gotoPrinterPPD'] = $method.str_replace("//","/",$_SERVER['SERVER_NAME']."/ppd/".$this->gotoPrinterPPD);
+    }else{
+      $this->attrs['gotoPrinterPPD'] = array();
+    }
 
     /* Append printer user 
      */
