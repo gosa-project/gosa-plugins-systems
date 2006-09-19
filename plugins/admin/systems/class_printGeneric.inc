@@ -336,7 +336,7 @@ class printgeneric extends plugin
     foreach($_POST as $name => $value){
       if(preg_match("/^chooseBase/",$name) && $once){
         $once = false;
-        $this->dialog = new baseSelectDialog($this->config,$this);
+        $this->dialog = new baseSelectDialog($this->config,$this,$this->acl_get_bases());
         $this->dialog->setCurrentBase($this->base);
         $this->baseSelection = true;
       }
@@ -362,7 +362,7 @@ class printgeneric extends plugin
     }
 
     /* Fill templating stuff */
-    $smarty->assign("bases", $this->config->idepartments);
+    $smarty->assign("bases", $this->acl_get_bases());
     $smarty->assign("base_select", $this->base);
 
     /* Assign attributes */

@@ -138,6 +138,9 @@ class baseSelectDialog extends MultiSelectWindow
 
   function save_object()
   {
+    /* Save current base */
+    $old_base = $this->selectedBase;
+  
     /* Save automatic created POSTs like regex, checkboxes */
     MultiSelectWindow::save_object();   
     
@@ -183,6 +186,11 @@ class baseSelectDialog extends MultiSelectWindow
       }else{
         $this->selectedBase= $this->config->departments["/"];
       }
+    }
+
+    /* Restore old base, if selected base is not allowed */
+    if(count($this->allowedBases) && !isset($this->allowedBases[$this->selectedBase])){
+      $this->selectedBase = $old_base;
     }
   }
 }
