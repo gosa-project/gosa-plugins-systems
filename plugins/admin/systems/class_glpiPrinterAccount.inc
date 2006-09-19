@@ -136,18 +136,23 @@ class glpiPrinterAccount extends plugin
     $smarty= get_smarty();
     $display= "";
 
-    $smarty->assign("CartridgesACL",chkacl($this->acl,"Cartridges"));
+    $smarty->assign("CartridgesACL",$this->getacl("Cartridges"));
 
     /*  Assign smarty defaults 
         To avoid undefined indexes, if there is an error with the glpi db
      */ 
-    foreach(array("PrinterTypeKeys","PrinterTypes","ManufacturerKeys","Manufacturers","Attachments","AttachmentKeys","CartridgeKeys","Cartridges") as $attr){
+    foreach(array("PrinterTypeKeys","PrinterTypes","ManufacturerKeys","Manufacturers",
+                  "Attachments","AttachmentKeys","CartridgeKeys","Cartridges") as $attr){
       $smarty->assign($attr,array());
-      $smarty->assign($attr."ACL"," disabled ");
     }
     foreach(array("type","FK_glpi_enterprise","tech_num","contact_num","comments","flags_serial","flags_par","flags_usb","AttachmentsDiv") as $attr){
       $smarty->assign($attr,"");
-      $smarty->assign($attr."ACL"," disabled ");
+    }
+
+    /* Assign acls */
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $name => $translation){
+      $smarty->assign($name."ACL",$this->getacl($name));
     }
 
     /* Check if there is a glpi database server defined 
@@ -190,8 +195,12 @@ class glpiPrinterAccount extends plugin
      */
 
     /* Do we need to flip is_account state? */
-    if (isset($_POST['modify_state'])){
-      $this->is_account= !$this->is_account;
+    if(isset($_POST['modify_state'])){
+      if($this->is_account && $this->acl_is_removeable()){
+        $this->is_account= FALSE;
+      }elseif(!$this->is_account && $this->acl_is_createable()){
+        $this->is_account= TRUE;
+      }
     }
 
     /* Show tab dialog headers */
@@ -211,7 +220,7 @@ class glpiPrinterAccount extends plugin
      */
 
     /* Rename was requested */
-    if(isset($_POST['Rename_PType_OK'])){
+    if(isset($_POST['Rename_PType_OK']) && $this->acl_is_writeable("type")){
       $tmp = $this->handle->getPrinterTypes();
       $allok = true;
       foreach($tmp as $id => $name){
@@ -235,7 +244,7 @@ class glpiPrinterAccount extends plugin
 
     /* Printer type management
      */
-    if(isset($_POST['edit_type'])){
+    if(isset($_POST['edit_type']) && $this->acl_is_writeable("type")){
       $this->dialog = true;
       $this->edit_type=true;
     }
@@ -249,7 +258,7 @@ class glpiPrinterAccount extends plugin
 
     /* This appends a new printer to our sytem types
      */
-    if((isset($_POST['add_type']))&&(!empty($_POST['type_string']))){
+    if((isset($_POST['add_type']))&&(!empty($_POST['type_string'])) && $this->acl_is_writeable("type")){
     
       $tmp = $this->handle->getPrinterTypes();
       $allok = true;
@@ -267,7 +276,7 @@ class glpiPrinterAccount extends plugin
 
     /* Remove selected type from our printer types list
      */
-    if((isset($_POST['del_type']))&&(!empty($_POST['select_type']))){
+    if((isset($_POST['del_type']))&&(!empty($_POST['select_type'])) && $this->acl_is_writeable("type")){
       $tmp = $this->handle->is_printerTypeUsed($_POST['select_type']);
       if(count($tmp)){
         $str = "";
@@ -283,7 +292,7 @@ class glpiPrinterAccount extends plugin
 
     /* Rename selected printer type to given string
      */
-    if((isset($_POST['rename_type']))&&(!empty($_POST['select_type']))||($this->rename)){
+    if((isset($_POST['rename_type']))&&(!empty($_POST['select_type']))||($this->rename) && $this->acl_is_writeable("type")){
       $this->rename = true;
 
       $smarty->assign("Method","rename");
@@ -321,7 +330,7 @@ class glpiPrinterAccount extends plugin
 
     /* Open dialog which allows to edit the manufacturers
      */
-    if(isset($_POST['edit_manufacturer'])){
+    if(isset($_POST['edit_manufacturer']) && $this->acl_is_writeable("FK_glpi_enterprise")){
       $this->cur_dialog = new glpiManufacturer($this->config,$this->dn);
       $this->dialog = true;
       $this->editManufacturer =true;
@@ -345,14 +354,14 @@ class glpiPrinterAccount extends plugin
     /* Show dialog to select a new contact person
      * Select a contact person
      */
-    if(isset($_POST['SelectContactPerson'])){
+    if(isset($_POST['SelectContactPerson']) && $this->acl_is_writeable("contact_num")){
       $this->addUser = "contact";
       $this->cur_dialog= new glpiSelectUser($this->config,$this->dn,"user_tech_num");
     }
 
     /* Selecte technical responsible person
      */
-    if(isset($_POST['SelectTechPerson'])){
+    if(isset($_POST['SelectTechPerson']) && $this->acl_is_writeable("tech_num")){
       $this->addUser ="tech";
       $this->cur_dialog= new glpiSelectUser($this->config,$this->dn,"user_tech_num");
     }
@@ -418,7 +427,7 @@ class glpiPrinterAccount extends plugin
     
     /* Attachment pool was closed with use
      */
-    if(isset($_POST['UseAttachment'])){
+    if(isset($_POST['UseAttachment']) && $this->acl_is_writeable("Attachments")){
       if(count($this->cur_dialog->check())){
         foreach($this->cur_dialog->check() as $msg){
           print_red($msg);
@@ -440,7 +449,7 @@ class glpiPrinterAccount extends plugin
 
     /* Open Attachment pool to add/edit Attachments
      */
-    if(isset($_POST['AddAttachment'])){
+    if(isset($_POST['AddAttachment']) && $this->acl_is_writeable("Attachments")){
       $this->cur_dialog = new glpiAttachmentPool($this->config,$this->dn,$this->usedAttachments);
       $this->dialog = true;
     }
@@ -449,7 +458,7 @@ class glpiPrinterAccount extends plugin
      */
     $once = true;
     foreach($_POST as $name => $value){
-      if((preg_match("/^delAttachment_/",$name))&&($once)){
+      if((preg_match("/^delAttachment_/",$name))&&($once) && $this->acl_is_writeable("Attachments")){
         $once= false;
         $name = preg_replace("/^delAttachment_/","",$name);
         $entry = preg_replace("/_.*$/","",$name);
@@ -458,7 +467,7 @@ class glpiPrinterAccount extends plugin
         }
       }
     }
-    if((isset($_POST['RemoveAttachment']))&&(isset($_POST['Attachments']))){
+    if((isset($_POST['RemoveAttachment']))&&(isset($_POST['Attachments'])) && $this->acl_is_writeable("Attachments")){
       if(isset($this->usedAttachments[$_POST['Attachments']])){
         unset($this->usedAttachments[$_POST['Attachments']]);
       }
@@ -490,7 +499,7 @@ class glpiPrinterAccount extends plugin
 
     /* Remove cartridge  
      */
-    if((isset($_POST['RemoveCartridge']))&&(isset($_POST['Cartridges']))){
+    if((isset($_POST['RemoveCartridge']))&&(isset($_POST['Cartridges'])) && $this->acl_is_writeable("ManageCartridges")){
 
       foreach($_POST['Cartridges'] as $cartID){
 
@@ -506,7 +515,7 @@ class glpiPrinterAccount extends plugin
 
     /* Open Attachment pool to add/edit Attachments
      */
-    if(isset($_POST['AddCartridge'])){
+    if(isset($_POST['AddCartridge']) && $this->acl_is_writeable("ManageCartridges")){
       $this->cur_dialog = new glpiPrinterCartridges($this->config,$this->dn,$this->type);
       $this->dialog = true;
     }
@@ -534,20 +543,12 @@ class glpiPrinterAccount extends plugin
     /* Assign smarty defaults */ 
     foreach(array("PrinterTypes","PrinterTypeKeys","Manufacturers","TechnicalResponsibles","Attachments","Cartridges") as $attr){
       $smarty->assign($attr,array());
-      $smarty->assign($attr."ACL",chkacl($this->acl,$attr));
     }
 
     /* Assign some vars to smarty 
      */
     foreach(array("type","FK_glpi_enterprise","tech_num","contact_num","flags_serial","flags_par","flags_usb") as $attr){
       $smarty->assign($attr,"");
-      $smarty->assign($attr."ACL",chkacl($this->acl,$attr));
-    }
-
-
-    /* Assign ACLs to smarty*/
-    foreach($this->attributes as $attr){
-      $smarty->assign($attr."ACL",chkacl($this->acl,$attr));
     }
 
     $smarty->assign("comments",               $this->comments);
@@ -636,7 +637,7 @@ class glpiPrinterAccount extends plugin
       }
     }
     if($disp==false){
-      $smarty->assign("typeACL","disabled");
+      $smarty->assign("typeACL", $this->getacl("type",true));
     }
 
     $display.= $smarty->fetch(get_template_path('glpiPrinter.tpl', TRUE));
@@ -664,10 +665,12 @@ class glpiPrinterAccount extends plugin
       }
 
       foreach(array("flags_serial","flags_par","flags_usb") as $checkboxes){
-        if(isset($_POST[$checkboxes])){
-          $this->$checkboxes = 1;
-        }else{
-          $this->$checkboxes = 0;
+        if($this->acl_is_writeable($checkboxes)){
+          if(isset($_POST[$checkboxes])){
+            $this->$checkboxes = 1;
+          }else{
+            $this->$checkboxes = 0;
+          }
         }
       }
     }
@@ -780,10 +783,7 @@ class glpiPrinterAccount extends plugin
             "type"                 => _("Type"),
             "FK_glpi_enterprise"   => _("Manufacturer"),
 
-            "Attachment_name"             => _("Attachment name"),
-            "Attachment_comment"          => _("Attachment comment"),
-            "Attachment_mime"             => _("Attachment mime type"),
-            "Attachment_filename"         => _("Attachment filename"),
+            "Attachments"          => _("Attachments"),
         
             "ManageCartridges"            => _("Cartridge settings"))
           ));

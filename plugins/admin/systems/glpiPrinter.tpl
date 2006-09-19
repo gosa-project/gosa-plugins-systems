@@ -9,20 +9,28 @@
 					<td width="150">{t}Printer type{/t}
 					</td>
 					<td>
-						<select name="type" {$typeACL}>
+{render acl=$typeACL}
+						<select name="type" >
 							{html_options values=$PrinterTypeKeys output=$PrinterTypes selected=$type}
 						</select>
-						<input type="submit" value="{t}edit{/t}" name="edit_type" {$typeACL}>	
+{/render}
+{render acl=$typeACL}
+						<input type="submit" value="{t}edit{/t}" name="edit_type" >	
+{/render}
 					</td>
 				</tr>
 				<tr>
 					<td>{t}Manufacturer{/t}
 					</td>
 					<td>
-						<select name="FK_glpi_enterprise" {$FK_glpi_enterpriseACL}>
+{render acl=$FK_glpi_enterpriseACL}
+						<select name="FK_glpi_enterprise" >
 							{html_options values=$ManufacturerKeys output=$Manufacturers selected=$FK_glpi_enterprise}
 						</select>	
-						<input type="submit" value="{t}edit{/t}" name="edit_manufacturer" {$FK_glpi_enterpriseACL}>	
+{/render}
+{render acl=$FK_glpi_enterpriseACL}
+						<input type="submit" value="{t}edit{/t}" name="edit_manufacturer" >	
+{/render}
 					</td>
 				</tr>
 			</table>
@@ -32,7 +40,9 @@
 			<table summary="" width="100%">
 				<tr>
 					<td width="20">
-						<input type="checkbox" name="flags_serial" {if $flags_serial=="1"} checked {/if} value="1" {$flags_serialACL}>
+{render acl=$flags_serialACL}
+						<input type="checkbox" name="flags_serial" {if $flags_serial=="1"} checked {/if} value="1" >
+{/render}
 					</td>
 					<td>
 						{t}Serial{/t}
@@ -40,7 +50,9 @@
 				</tr>
 				<tr>
 					<td width="20">
-						<input type="checkbox" name="flags_par" {if $flags_par=="1"} checked {/if} value="1" {$flags_parACL}>
+{render acl=$flags_parACL}
+						<input type="checkbox" name="flags_par" {if $flags_par=="1"} checked {/if} value="1" >
+{/render}
 					</td>
 					<td>
 						{t}Parallel{/t}
@@ -48,7 +60,9 @@
 				</tr>
 				<tr>
 					<td width="20">
-						<input type="checkbox" name="flags_usb" {if $flags_usb=="1"} checked {/if} value="1" {$flags_usbACL}>
+{render acl=$flags_usbACL}
+						<input type="checkbox" name="flags_usb" {if $flags_usb=="1"} checked {/if} value="1" >
+{/render}
 					</td>
 					<td>
 						{t}USB{/t}
@@ -70,7 +84,9 @@
 					</td>
 					<td>
 						<i>{$tech_num}&nbsp; </i>&nbsp;
-						<input type="submit" value="{t}Edit{/t}" name="SelectTechPerson" {$tech_numACL}>
+{render acl=$tech_numACL}
+						<input type="submit" value="{t}Edit{/t}" name="SelectTechPerson" >
+{/render}
 					</td>
 				</tr>
 				<tr>
@@ -79,7 +95,10 @@
 					</td>
 					<td>
 						<i>{$contact_num}&nbsp; </i>&nbsp;
-						<input {$contact_numACL} type="submit" name="SelectContactPerson" value="{t}Edit{/t}">
+{render acl=$contact_numACL}
+						<input type="submit" name="SelectContactPerson" value="{t}Edit{/t}">
+{/render}
+
 					</td>
 				</tr>
 			</table>
@@ -89,8 +108,12 @@
 			<table summary="" width="100%">	
 				<tr>
 					<td>
+{render acl=$AttachmentsACL}
 						{$AttachmentsDiv}
-						<input name="AddAttachment" 	value="{t}Add{/t}" type="submit" {$AttachmentsACL}>	
+{/render}
+{render acl=$AttachmentsACL}
+						<input name="AddAttachment" 	value="{t}Add{/t}" type="submit" >	
+{/render}
 					</td>
 				</tr>
 			</table>
@@ -105,7 +128,9 @@
 			<table summary="" width="100%">
 				<tr>
 					<td width="100%">
-						<textarea name="comments" style="width:100%;height:100px;" {$commentsACL}>{$comments}</textarea>
+{render acl=$commentsACL}
+						<textarea name="comments" style="width:100%;height:100px;" >{$comments}</textarea>
+{/render}
 					</td>
 				</tr>
 			</table>
@@ -115,11 +140,17 @@
 			<table summary="" width="100%">	
 				<tr>
 					<td>
-						<select name="Cartridges[]" {$CartridgesACL} style="height:100px;width:100%;" multiple>
+{render acl=$CartridgesACL}
+						<select name="Cartridges[]"  style="height:100px;width:100%;" multiple>
 							{html_options values=$CartridgeKeys output=$Cartridges}
 						</select>
-						<input name="AddCartridge" 	value="{t}Add{/t}" type="submit" {$CartridgesACL}>	
-						<input name="RemoveCartridge" 	value="{t}Remove{/t}" type="submit" {$CartridgesACL}>	
+{/render}
+{render acl=$CartridgesACL}
+						<input name="AddCartridge" 	value="{t}Add{/t}" type="submit" >	
+{/render}
+{render acl=$CartridgesACL}
+						<input name="RemoveCartridge" 	value="{t}Remove{/t}" type="submit" >	
+{/render}
 					</td>
 				</tr>
 			</table>
