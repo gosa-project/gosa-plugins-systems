@@ -30,9 +30,9 @@ class faiSummaryTab extends plugin{
   var $InitCalled     = false;
   var $usedClasses    = array();
   var $base           = ""; 
-  var $parent         = ""; 
+  var $parent         = NULL; 
 
-  function faiSummaryTab($config,$dni,$parent)
+  function faiSummaryTab($config,$dn,$parent)
   {
     plugin::plugin($config,$dn,$parent);
 
@@ -56,7 +56,6 @@ class faiSummaryTab extends plugin{
     $this->InitCalled = true;
     $this->Result = array();
     $_SESSION['faiSummaryTab']['UniqueID'] = 0; 
-    $tmp = array_flip($this->getBranches());
    
     /* Get classes & release name 
        There are 2 different tabs which use the summary tab
@@ -81,6 +80,8 @@ class faiSummaryTab extends plugin{
         $this->Classes[] = $this->parent->by_object['workgeneric']->cn;
       }
     }
+
+    $tmp = array_flip($this->getBranches());
 
     $this->Classes[] = "LAST";
 
@@ -172,6 +173,8 @@ class faiSummaryTab extends plugin{
 
     /* Get smarty class & assign created summary results */
     $smarty = get_smarty();
+    $smarty->assign("readable",$this->acl_is_readable("readable"));
+
     $this->ObjectList = $this->createSummary($this->Result);
     $smarty->assign("objectList",$this->ObjectList);
     return($smarty->fetch (get_template_path('faiSummary.tpl', TRUE, dirname(__FILE__))));
@@ -211,17 +214,19 @@ class faiSummaryTab extends plugin{
         if(in_array($key,array("FAItemplate","FAIhook","FAIscript"))){
 
           $nums = array();          
-
+          $tmp  = array();
           if($key == "FAIscript"){
-            foreach($entry['Entries'] as $scripts){
-              foreach($scripts as $script){
-                
-                if(!isset($nums[$script['cn'][0]])){
-                  $nums[$script['cn'][0]]= 0;
-                } 
-                $nums[$script['cn'][0]] ++;
-            
-                $tmp[$script['FAIpriority'][0].$script['cn'][0].$script['CLASS']] = $script;
+            if(is_array($entry['Entries'])){
+              foreach($entry['Entries'] as $scripts){
+                foreach($scripts as $script){
+
+                  if(!isset($nums[$script['cn'][0]])){
+                    $nums[$script['cn'][0]]= 0;
+                  } 
+                  $nums[$script['cn'][0]] ++;
+
+                  $tmp[$script['FAIpriority'][0].$script['cn'][0].$script['CLASS']] = $script;
+                }
               }
             }
             krsort($tmp);;
@@ -351,6 +356,11 @@ class faiSummaryTab extends plugin{
     $ldap 	          = $this->config->get_ldap_link();
     $dn 	            = $this->Releases [$this->Release];
     $resolvedClasses  = get_all_objects_for_given_base($dn,"(&(objectClass=FAIclass)(cn=".$class."))");
+
+    /* Check acls -> are we allowed to view the sonfig summary ? */
+    if(!$this->acl_is_readable("readable")) {
+      return;
+    }
 
     /* Try to fetch all types of fai objects with the given cn  */
     foreach($resolvedClasses as $obj){
@@ -527,6 +537,23 @@ class faiSummaryTab extends plugin{
       $this->resolveObject($class);
     }
   }
+
+  /* Return plugin informations for acl handling */
+  function plInfo()
+  {
+    return (array(
+          "plShortName"   => _("Summary"),
+          "plDescription" => _("FAI summary"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("workstation","server","fai") ,
+          "plProvidedAcls"=> array(
+            "readable" => _("Viewable")),
+          ));
+  }
+
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
