@@ -140,14 +140,25 @@ class servgeneric extends plugin
 
     /* Fill templating stuff */
     $smarty= get_smarty();
+
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $name => $translated){
+      $smarty->assign($name."ACL",$this->getacl($name));
+    }
+
+    /* Assign base ACL */
+    $baseACL = $this->getacl("base");
+    if(!$this->acl_is_moveable()) {
+      $baseACL = preg_replace("/w/","",$baseACL);
+    }
+    $smarty->assign("baseACL",          $baseACL);
+
     $smarty->assign("bases", $this->config->idepartments);
 
     /* Assign attributes */
     foreach ($this->attributes as $attr){
-      $smarty->assign($attr."ACL", chkacl($this->acl, $attr));
       $smarty->assign("$attr", $this->$attr);
     }
-    $smarty->assign("baseACL", chkacl($this->acl, "base"));
 
     $smarty->assign("staticAddress", "");
     $smarty->assign("base_select", $this->base);
@@ -204,10 +215,12 @@ class servgeneric extends plugin
   {
     plugin::save_object();
     $this->netConfigDNS->save_object();
-    /* Save base, since this is no LDAP attribute */
-    if (isset($_POST['base']) && chkacl($this->acl, "create") == ""){
-      $this->base= $_POST['base'];
+
+    /* Get base selection */
+    if($this->acl_is_moveable() && isset($_POST['base'])){
+      $this->base = $_POST['base'];
     }
+
   }
 
 
@@ -220,14 +233,14 @@ class servgeneric extends plugin
     $this->dn= "cn=".$this->cn.",ou=servers,ou=systems,".$this->base;
 
     /* must: cn */
-    if ($this->cn == "" && chkacl ($this->acl, "cn") == ""){
+    if ($this->cn == ""){
       $message[]= _("The required field 'Server name' is not set.");
     }
 
     $ui= get_userinfo();
     $acl= get_permissions ($this->dn, $ui->subtreeACL);
     $acl= get_module_permission($acl, "server", $this->dn);
-    if (chkacl($acl, "create") != ""){
+    if (!$this->acl_is_createable() && $this->dn == "new"){
       $message[]= _("You have no permissions to create a server on this 'Base'.");
     }
 

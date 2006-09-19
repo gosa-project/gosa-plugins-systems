@@ -4,25 +4,34 @@
 	<table summary="">
 	 <tr>
 	  <td><LABEL for="cn">{t}Server name{/t}</LABEL>{$must}</td>
-	  <td><input name="cn" id="cn" size=20 maxlength=60 value="{$cn}"></td>
+	  <td>
+{render acl=$cnACL}
+	   <input name="cn" id="cn" size=20 maxlength=60 value="{$cn}">
+{/render}
+	  </td>
 	 </tr>
 	 <tr>
 	  <td><LABEL for="description">{t}Description{/t}</LABEL></td>
-	  <td><input name="description" id="description" size=25 maxlength=80 value="{$description}"></td>
+	  <td>
+{render acl=$descriptionACL}
+           <input name="description" id="description" size=25 maxlength=80 value="{$description}">
+{/render}
+          </td>
 	 </tr>
  	 <tr>
 	  <td><br><LABEL for="base">{t}Base{/t}</LABEL>{$must}</td>
 	  <td>
 	   <br>
-	   <select size="1" name="base" id="base" title="{t}Choose subtree to place terminal in{/t}" {$baseACL}>
-	    {html_options options=$bases selected=$base_select}
-	   </select>
-     	{if $baseACL == ""}
-            <input type="image" name="chooseBase" src="images/folder.png" class="center" title="{t}Select a base{/t}">
-        {else}
-            <img src="images/folder_gray.png" class="center" title="{t}Select a base{/t}">
-        {/if}
-		</td>
+{render acl=$baseACL}
+      <select id="base" size="1" name="base" title="{t}Choose subtree to place group in{/t}">
+       {html_options options=$bases selected=$base_select}
+      </select>
+{/render}
+
+{render acl=$baseACL disable_picture='images/folder_gray.png'}
+        <input type="image" name="chooseBase" src="images/folder.png" class="center" title="{t}Select a base{/t}">
+{/render}
+	   </td>
 	  </tr>
 	</table>
   </td>
@@ -31,9 +40,11 @@
    	<tr>
      <td>{t}Mode{/t}</td>
      <td>
-      <select name="gotoMode" title="{t}Select terminal mode{/t}" {$gotoModeACL}>
+{render acl=$gotoModeACL}
+      <select name="gotoMode" title="{t}Select terminal mode{/t}">
        {html_options options=$modes selected=$gotoMode}
       </select>
+{/render}
      </td>
     </tr>
 	</table>
@@ -51,10 +62,12 @@
 <table summary="">
  <tr>
   <td>
+{render acl=$FAIstateACL}
    <select size="1" name="saction" title="{t}Select action to execute for this server{/t}">
     <option disabled>&nbsp;</option>
     {html_options options=$actions}
    </select>
+{/render}
   </td>
   <td>
    <input type=submit name="action" value="{t}Execute{/t}">
