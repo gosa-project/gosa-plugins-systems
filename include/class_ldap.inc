@@ -197,6 +197,7 @@ class LDAP{
         }
       }
 
+      $this->log("LDAP operation: time=".get_MicroTimeDiff($start,microtime())." operation=search('".$this->fix($this->basedn)."', '$filter')");
       return($this->sr);
     }else{
       $this->error = "Could not connect to LDAP server";
@@ -228,6 +229,8 @@ class LDAP{
           print_red(sprintf(_("The ldapserver is answering very slow (%.2f), this may be responsible for performance breakdowns."),$diff)) ;
         }
       }
+
+      $this->log("LDAP operation: time=".get_MicroTimeDiff($start,microtime())." operation=ls('".$this->fix($basedn)."', '$filter')");
 
       return($this->sr);
     }else{
@@ -1205,6 +1208,15 @@ class LDAP{
 	  return $objectclasses;
   }
 
+  function log($string)
+  {
+    if (isset($_SESSION['config'])){
+      $cfg= $_SESSION['config'];
+      if (isset($cfg->current['LDAPSTATS']) && preg_match('/true/i', $cfg->current['LDAPSTATS'])){
+        syslog (LOG_INFO, $string);
+      }
+    }
+  }
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

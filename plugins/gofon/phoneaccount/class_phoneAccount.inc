@@ -42,9 +42,9 @@ class phoneAccount extends plugin
 
   var $uid ="";
 
-  function phoneAccount ($config, $dn= NULL)
+  function phoneAccount ($config, $dn= NULL, $parent= NULL)
   {
-    plugin::plugin ($config, $dn);
+    plugin::plugin ($config, $dn, $parent);
 
     /* Set uid, it is used in handle_post_events */    
     if(isset($this->attrs['uid'])){

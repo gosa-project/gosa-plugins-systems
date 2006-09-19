@@ -25,7 +25,7 @@ class connectivity extends plugin
   var $CopyPasteVars = array("plugin","plugin_name");
 
 
-  function connectivity ($config, $dn= NULL)
+  function connectivity ($config, $dn= NULL,$parent =NULL)
   {
     /* Preseed permissions */
     $this->dn= $dn;
@@ -35,7 +35,7 @@ class connectivity extends plugin
     foreach ($config->data['TABS']['CONNECTIVITY'] as $plug){
       $name= $plug['CLASS'];
       $this->plugin_name[]= $name;
-      $this->plugin[$name]= new $name($config, $dn);
+      $this->plugin[$name]= new $name($config, $dn,$parent);
 
       /* Acl base && category configuration, 
           these settings will be overloaded in main.inc, 

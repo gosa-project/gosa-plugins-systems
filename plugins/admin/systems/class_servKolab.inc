@@ -40,14 +40,14 @@ class servkolab extends plugin {
   var $DisplayName  = "Kolab mail service";
   var $StatusFlag   = "";
 
-  function servkolab($config, $dn = NULL) 
+  function servkolab($config, $dn = NULL, $parent= NULL) 
   {
     /* Setting the hostname and tell this Plugin that we are the kolab extension*/
     $this->hostname = preg_replace('/^cn=([^,]+),.*$/', '\1', $dn);
     $this->dn       = "k=kolab,".$config->current['BASE'];
 
     /* Load variables, if given*/
-    plugin::plugin($config, $this->dn);
+    plugin::plugin($config, $this->dn, $parent);
 
     /* Copy needed attributes */
     foreach($this->attributes as $val) {

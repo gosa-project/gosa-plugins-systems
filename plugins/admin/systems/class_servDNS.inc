@@ -25,9 +25,9 @@ class servdns extends plugin
   var $DisplayName      = "";
   var $StatusFlag       = "";
 
-  function servdns ($config, $dn= NULL)
+  function servdns ($config, $dn= NULL, $parent= NULL)
   {
-    plugin::plugin ($config, $dn);
+    plugin::plugin ($config, $dn, $parent);
 
     $this->DisplayName = _("Domain name system service");
 

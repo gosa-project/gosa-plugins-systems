@@ -28,9 +28,9 @@ class servrepository extends plugin
   var $StatusFlag            = "";
 
 
-  function servrepository ($config, $dn= NULL)
+  function servrepository ($config, $dn= NULL, $parent= NULL)
   {
-    plugin::plugin ($config, $dn);
+    plugin::plugin ($config, $dn, $parent);
 
     $this->DisplayName = _("Repository service");
 

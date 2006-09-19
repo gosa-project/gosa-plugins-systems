@@ -25,9 +25,9 @@ class pureftpdAccount extends plugin
   var $objectclasses= array("PureFTPdUser");
   var $ReadOnly;
 
-  function pureftpdAccount ($config, $dn= NULL)
+  function pureftpdAccount ($config, $dn= NULL, $parent= NULL)
   {
-    plugin::plugin ($config, $dn);
+    plugin::plugin ($config, $dn, $parent);
     
     /* Setting uid to default */
     if(isset($this->attrs['uid'][0])){
