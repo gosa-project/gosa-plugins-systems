@@ -29,10 +29,12 @@ class faiSummaryTab extends plugin{
   var $is_dialog      = false;
   var $InitCalled     = false;
   var $usedClasses    = array();
-  
-  function faiSummaryTab($config,$dn)
+  var $base           = ""; 
+  var $parent         = ""; 
+
+  function faiSummaryTab($config,$dni,$parent)
   {
-    plugin::plugin($config,$dn);
+    plugin::plugin($config,$dn,$parent);
 
     /* Base object configuration */
     $this->objs = array(	
@@ -65,12 +67,14 @@ class faiSummaryTab extends plugin{
       
       /* Get Classes and release */
       $this->Classes = $this->parent->by_object['faiProfile']->FAIclasses;
+      $this->base    = $this->parent->by_object['faiProfile']->base;
       $str = preg_replace("/^.*ou=profiles,/","",$this->dn);
   
     /* Check if parent tab is work tab */
     }elseif(isset($this->parent->by_name['workstartup'])){
       $this->Classes = $this->parent->by_object['workstartup']->FAIclass;
       $this->Release = $this->parent->by_object['workstartup']->FAIrelease;
+      $this->base    = $this->parent->by_object['workgeneric']->base;
 
       /* Append workstation class && LAST */
       if(isset($this->parent->by_object['workgeneric']->cn)){
@@ -137,7 +141,7 @@ class faiSummaryTab extends plugin{
   function getBranches($base = false,$prefix = "")
   {
     if(!$base){
-      $base = $this->config->current['BASE'];
+      $base = $this->base;
     }
     return(get_all_releases_from_base($base,true));
   }
