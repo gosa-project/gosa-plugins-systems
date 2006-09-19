@@ -63,7 +63,12 @@ class application extends plugin
         $this->base= dn2base($ui->dn);
       }
     } else {
-      $this->base= preg_replace ("/^[^,]+,[^,]+,/", "", $this->dn);
+
+      if($this->isReleaseApplikation){
+        $this->base = preg_replace("/^.*,ou=apps,/","",$this->dn);
+      }else{
+        $this->base= preg_replace ("/^[^,]+,[^,]+,/", "", $this->dn);
+      }
     }
   }
 
@@ -337,7 +342,9 @@ class application extends plugin
         $this->set_picture($_FILES['picture_file']['tmp_name']);
       }	
 
-      $this->base= $_POST['base'];
+      if(isset($_POST['base'])){
+        $this->base= $_POST['base'];
+      }
     }
 
     if($this->isReleaseApplikation){

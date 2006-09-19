@@ -1488,7 +1488,7 @@ echo "FIXME: remove_snapshot uses old acl's<br>";
     if(isset($this->base) && isset($this->config->idepartments[$this->base])){
       $deps[$this->base] = $this->config->idepartments[$this->base];
     }else{
-      echo "No default base found. <br>";
+      echo "No default base found. ".$this->base."<br> ";
     }
 
     foreach($this->config->idepartments as $dn => $name){
