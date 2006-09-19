@@ -205,21 +205,13 @@ class group extends plugin
       $this->reload();
     }
 
-    /* Get bases */
-    $ui = get_userinfo();
-    $check = $ui->get_module_departments("groups");
-    $bases = array();
-    foreach($check as $dn_allowed){
-      $bases[$dn_allowed] = $this->config->idepartments[$dn_allowed];
-    }
-
     /* Base select dialog */
     $once = true;
     foreach($_POST as $name => $value){
       if((preg_match("/^chooseBase/",$name) && $once) && ($this->acl_is_moveable())){
           
         $once = false;
-        $this->dialog = new baseSelectDialog($this->config,$this,$bases);
+        $this->dialog = new baseSelectDialog($this->config,$this,$this->acl_get_bases());
         $this->dialog->setCurrentBase($this->base);
       }
     }
@@ -301,15 +293,7 @@ class group extends plugin
       $smarty->assign("launchimage", get_template_path('images/small_filter.png'));
       $smarty->assign("tree_image", get_template_path('images/tree.png'));
 
-      /* Get bases */
-      $ui = get_userinfo();
-      $check = $ui->get_module_departments("groups");
-      $bases = array();
-      foreach($check as $dn_allowed){
-        $bases[$dn_allowed] = $this->config->idepartments[$dn_allowed];
-      }
- 
-      $smarty->assign("deplist", $bases_user_select);
+      $smarty->assign("deplist", $this->acl_get_bases("users/user"));
       $smarty->assign("alphabet", generate_alphabet());
       foreach( array("dselect", "regex","SubSearchGroup") as $type){
         $smarty->assign("$type", $gufilter[$type]);
@@ -326,7 +310,7 @@ class group extends plugin
       $this->base= $_POST['base'];
     }
 
-    $smarty->assign("bases", $bases);
+    $smarty->assign("bases", $this->acl_get_bases());
     $smarty->assign("base_select", $this->base);
 
     if ($this->samba3){

@@ -141,7 +141,7 @@ if (!$remove_lock){
   $info = "";
 
   /* Show page footer depending on the mode */
-  if (!$user->cert_dialog && !$user->picture_dialog && $user->is_account){
+  if (!$user->cert_dialog && !$user->picture_dialog && !$user->dialog && $user->is_account){
     $display.= "<p class=\"plugbottom\">";
 
     /* Are we in edit mode? */

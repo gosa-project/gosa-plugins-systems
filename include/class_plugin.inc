@@ -1465,6 +1465,42 @@ echo "FIXME: remove_snapshot uses old acl's<br>";
     return  $ui->get_permissions($this->acl_base, $this->acl_category.get_class($this), $attribute,$skip_write);
   }
 
+  /* Get all allowed bases to move an object to or to create a new object.
+     Idepartments also contains all base departments which lead to the allowed bases */
+  function acl_get_bases($category = "")
+  {
+    $ui = get_userinfo();
+    $deps = array();
+ 
+    /* Set category */ 
+    if(empty($category)){
+      $category = $this->acl_category.get_class($this);
+    }
+
+    /* Is this a new object ? Or just an edited existing object */
+    if(!$this->initially_was_account && $this->is_account){
+      $new = true;
+    }else{
+      $new = false;
+    }
+
+    /* Add current base */      
+    if(isset($this->base) && isset($this->config->idepartments[$this->base])){
+      $deps[$this->base] = $this->config->idepartments[$this->base];
+    }else{
+      echo "No default base found. <br>";
+    }
+
+    foreach($this->config->idepartments as $dn => $name){
+      $acl = $ui->get_permissions($dn,$category);
+      if($new && preg_match("/c/",$acl)){
+        $deps[$dn] = $name;
+      }elseif(!$new && preg_match("/m/",$acl)){
+        $deps[$dn] = $name;
+      }
+    }
+    return($deps);
+  }
 
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

@@ -1230,22 +1230,7 @@ class user extends plugin
   function allowedBasesToMoveTo()
   {
     /* Get bases */
-    $ui     = get_userinfo();
-    $check  = $ui->get_module_departments("ogroups");
-    $bases  = array();
-
-    foreach($check as $dn_allowed){
-      $bases[$dn_allowed] = $this->config->idepartments[$dn_allowed];
-    }
-
-    foreach($bases as $key => $base ){
-      $acl =  $ui->get_permissions($key,"users/user");
-     
-      /* Remove those bases, which are not allowed to move to, but keep current base ...  */ 
-      if(!preg_match("/m/",$acl) && $key != $this->base){
-        unset($bases[$key]);
-      }
-    }
+    $bases  = $this->acl_get_bases();
     return($bases);
   } 
 

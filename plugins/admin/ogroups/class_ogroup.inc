@@ -182,21 +182,12 @@ class ogroup extends plugin
     }
     $smarty->assign("baseACL",          $baseACL);
 
-
-    /* Get bases */ 
-    $ui = get_userinfo();
-    $check = $ui->get_module_departments("ogroups");
-    $bases = array();
-    foreach($check as $dn_allowed){
-      $bases[$dn_allowed] = $this->config->idepartments[$dn_allowed];
-    }
-
     /* Base select dialog */
     $once = true;
     foreach($_POST as $name => $value){
       if(preg_match("/^chooseBase/",$name) && $once && $this->acl_is_moveable()){
         $once = false;
-        $this->dialog = new baseSelectDialog($this->config,$this,$bases);
+        $this->dialog = new baseSelectDialog($this->config,$this,$this->acl_get_bases());
         $this->dialog->setCurrentBase($this->base);
       }
     }
@@ -315,7 +306,7 @@ class ogroup extends plugin
     }
 
     /* Assign variables */
-    $smarty->assign("bases", $bases);
+    $smarty->assign("bases", $this->acl_get_bases());
     $smarty->assign("base_select", $this->base);
     $smarty->assign("department", $this->department);
     $smarty->assign("members", $this->convert_list($this->memberList));

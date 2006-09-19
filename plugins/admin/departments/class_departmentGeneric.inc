@@ -101,21 +101,12 @@ class department extends plugin
       $smarty->assign($name."ACL",$this->getacl($name));
     }
 
-    /* Get bases */
-    $ui = get_userinfo();
-    $check = $ui->get_module_departments("department");
-    $check[] = $this->base;
-    $bases = array();
-    foreach($check as $dn_allowed){
-      $bases[$dn_allowed] = $this->config->idepartments[$dn_allowed];
-    }
-
 		/* Base select dialog */
 		$once = true;
 		foreach($_POST as $name => $value){
 			if((preg_match("/^chooseBase/",$name) && $once) && ($this->acl_is_moveable())){
 				$once = false;
-				$this->dialog = new baseSelectDialog($this->config,$this,$bases);
+				$this->dialog = new baseSelectDialog($this->config,$this,$this->acl_get_bases());
 				$this->dialog->setCurrentBase($this->base);
 			}
 		}
@@ -136,6 +127,7 @@ class department extends plugin
 		}
 
 		/* Hide all departments, that are subtrees of this department */
+    $bases = $this->acl_get_bases();
 		if(($this->dn == "new")||($this->dn == "")){
 			$tmp = $bases;
 		}else{
