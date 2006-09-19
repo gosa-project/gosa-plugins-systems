@@ -9,30 +9,42 @@
 					<td >{t}System type{/t}
 					</td>
 					<td>
-						<select name="type" {$typeACL}>
+{render acl=$typeACL}
+						<select name="type">
 							{html_options values=$SystemTypeKeys output=$SystemTypes selected=$type}
 						</select>
-						<input type="submit" value="{t}edit{/t}" name="edit_type" {$typeACL}>	
+{/render}
+{render acl=$typeACL}
+						<input type="submit" value="{t}edit{/t}" name="edit_type">	
+{/render}
 					</td>
 				</tr>
 				<tr>
 					<td>{t}Operating system{/t}
 					</td>
 					<td>
-						<select name="os" {$osACL}>
+{render acl=$osACL}
+						<select name="os">
 							{html_options values=$OSKeys output=$OSs selected=$os}
 						</select>	
-						<input type="submit" value="{t}edit{/t}" name="edit_os" {$osACL}>	
+{/render}
+{render acl=$osACL}
+						<input type="submit" value="{t}edit{/t}" name="edit_os">	
+{/render}
 					</td>
 				</tr>
 				<tr>
 					<td>{t}Manufacturer{/t}
 					</td>
 					<td>
-						<select name="FK_glpi_enterprise" {$FK_glpi_enterpriseACL}>
+{render acl=$FK_glpi_enterpriseACL}
+						<select name="FK_glpi_enterprise">
 							{html_options values=$ManufacturerKeys output=$Manufacturers selected=$FK_glpi_enterprise}
 						</select>	
-						<input type="submit" value="{t}edit{/t}" name="edit_manufacturer" {$FK_glpi_enterpriseACL}>	
+{/render}
+{render acl=$FK_glpi_enterpriseACL}
+						<input type="submit" value="{t}edit{/t}" name="edit_manufacturer">	
+{/render}
 					</td>
 				</tr>
 			<!--</table>
@@ -45,7 +57,9 @@
 					</td>
 					<td>
 						<i>{$contact_num}&nbsp; </i>&nbsp;
-						<input {$contact_numACL} type="submit" name="SelectContactPerson" value="{t}Edit{/t}">
+{render acl=$contact_numACL}
+						<input type="submit" name="SelectContactPerson" value="{t}Edit{/t}">
+{/render}
 					</td>
 				</tr>
 				<tr>
@@ -53,7 +67,9 @@
 					</td>
 					<td>
 						<i>{$tech_num}&nbsp; </i>&nbsp;
-						<input type="submit" value="{t}Edit{/t}" name="SelectTechPerson" {$tech_numACL}>
+{render acl=$tech_numACL}
+						<input type="submit" value="{t}Edit{/t}" name="SelectTechPerson">
+{/render}
 					</td>
 				</tr>
 			</table>
@@ -64,7 +80,9 @@
 			<table summary="" width="100%">
 				<tr>
 					<td valign="top" colspan="2">
-						<textarea name="comments" style="width:100%;height:180px;" {$commentsACL}>{$comments}</textarea>
+{render acl=$commentsACL}
+						<textarea name="comments" style="width:100%;height:180px;">{$comments}</textarea>
+{/render}
 					</td>
 				</tr>
 			</table>
@@ -79,10 +97,14 @@
 			<table summary="" width="100%">	
 				<tr>
 					<td>
-						<select name="InstalledDevices" {$InstalledDevicesACL} style="height:130px;width:100%;" multiple>
+{render acl=$DevicesACL}
+						<select name="InstalledDevices" style="height:130px;width:100%;" multiple>
 							{html_options values=$InstalledDeviceKeys output=$InstalledDevices}
 						</select>
-						<input name="AddDevice" value="{t}Edit{/t}" type="submit" {$InstalledDevicesACL}>	
+{/render}
+{render acl=$DevicesACL}
+						<input name="AddDevice" value="{t}Edit{/t}" type="submit">	
+{/render}
 					</td>
 				</tr>
 			</table>
@@ -96,12 +118,15 @@
 			<table summary="" width="100%">	
 				<tr>
 					<td>
+{render acl=$AttachmentsACL}
 						{$AttachmentsDiv}
-						<input name="AddAttachment" 	value="{t}Add{/t}" type="submit" {$AttachmentsACL}>	
+{/render}
+{render acl=$AttachmentsACL}
+						<input name="AddAttachment" 	value="{t}Add{/t}" type="submit">	
+{/render}
 					</td>
 				</tr>
 			</table>
-			
 		</td>
 	</tr>
 </table>
@@ -110,4 +135,4 @@
   <!-- // First input field on page
   document.mainform.type.focus();
   -->
-</script></td></tr></table><p style="text-align:right">
+</script><p style="text-align:right">
