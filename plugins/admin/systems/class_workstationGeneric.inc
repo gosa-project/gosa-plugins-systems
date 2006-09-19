@@ -194,7 +194,7 @@ class workgeneric extends plugin
     foreach($_POST as $name => $value){
       if(preg_match("/^chooseBase/",$name) && $once && $this->acl_is_writeable("base")){
         $once = false;
-        $this->dialog = new baseSelectDialog($this->config,$this);
+        $this->dialog = new baseSelectDialog($this->config,$this,$this->acl_get_bases());
         $this->dialog->setCurrentBase($this->base);
       }
     }
@@ -244,7 +244,7 @@ class workgeneric extends plugin
 
     $smarty->assign("cn", $this->cn);
     $smarty->assign("l", $this->l);
-    $smarty->assign("bases", $this->config->idepartments);
+    $smarty->assign("bases", $this->acl_get_bases());
     $smarty->assign("staticAddress", "");
 
     $tmp = array();
@@ -338,10 +338,6 @@ class workgeneric extends plugin
             $this->is_modified= TRUE;
           }
         }
-      }else{
-
-        print_red(sprintf(_("You are not allowed to move this object to '%s'."),LDAP::fix($_POST['base'])));
-        $this->set_acl_base('dummy,'.$this->base);
       }
     }
     $this->netConfigDNS->save_object();
