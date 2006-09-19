@@ -49,11 +49,13 @@ class printgeneric extends plugin
                               "gotoUserAdminPrinter","gotoGroupAdminPrinter","gotoUserPrinter","gotoGroupPrinter");
   var $objectclasses  = array("top", "gotoPrinter");
 
-  function printgeneric ($config, $dn,$parent)
+  var $parent;
+
+  function printgeneric ($config, $dn,$parent_init,$parent)
   {
     $this->config = $config;
     $this->dn = $dn; 
-    
+ 
     /* If parent was posted(the tabs object) we can detect the printer type. */
     if($parent){
       $this->parent = $parent;
@@ -75,7 +77,7 @@ class printgeneric extends plugin
     $this->orig_dn = $this->dn;
 
     /* Get printer settings, possibly dn has changed */
-    plugin::plugin ($config, $this->dn);
+    plugin::plugin ($config, $this->dn,$parent_init);
 
     /* Get is_account initially_was_account status */
     $this->getTypeOfPrinter(true);
@@ -161,6 +163,9 @@ class printgeneric extends plugin
 
     /* Detect type of printer via parent tabs.
      */
+
+    $class = get_class($this->parent);
+    echo $class;
     if(isset($this->parent->by_object['workgeneric'])){
 
       /* Exclude templates 
@@ -585,7 +590,10 @@ class printgeneric extends plugin
   function save_object()
   {
     plugin::save_object();
-    $this->netConfigDNS->save_object();
+    
+    if(is_object($this->netConfigDNS)){
+      $this->netConfigDNS->save_object();
+    }
 
     /* Save base, since this is no LDAP attribute */
     if((isset($_POST['base'])) && ($this->acl_is_moveable()) ) {
