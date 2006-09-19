@@ -194,7 +194,7 @@ class workgeneric extends plugin
     foreach($_POST as $name => $value){
       if(preg_match("/^chooseBase/",$name) && $once && $this->acl_is_writeable("base")){
         $once = false;
-        $this->dialog = new baseSelectDialog($this->config,$this,$this->acl_get_bases());
+        $this->dialog = new baseSelectDialog($this->config,$this,$this->get_allowed_bases());
         $this->dialog->setCurrentBase($this->base);
       }
     }
@@ -244,7 +244,7 @@ class workgeneric extends plugin
 
     $smarty->assign("cn", $this->cn);
     $smarty->assign("l", $this->l);
-    $smarty->assign("bases", $this->acl_get_bases());
+    $smarty->assign("bases", $this->get_allowed_bases());
     $smarty->assign("staticAddress", "");
 
     $tmp = array();

@@ -1467,11 +1467,11 @@ echo "FIXME: remove_snapshot uses old acl's<br>";
 
   /* Get all allowed bases to move an object to or to create a new object.
      Idepartments also contains all base departments which lead to the allowed bases */
-  function acl_get_bases($category = "")
+  function get_allowed_bases($category = "")
   {
     $ui = get_userinfo();
     $deps = array();
- 
+
     /* Set category */ 
     if(empty($category)){
       $category = $this->acl_category.get_class($this);
@@ -1491,7 +1491,13 @@ echo "FIXME: remove_snapshot uses old acl's<br>";
       echo "No default base found. ".$this->base."<br> ";
     }
 
+    $cat_bases = $ui->get_module_departments(preg_replace("/\/.*$/","",$category));
     foreach($this->config->idepartments as $dn => $name){
+      
+      if(!in_array_ics($dn,$cat_bases)){
+        continue;
+      }
+      
       $acl = $ui->get_permissions($dn,$category);
       if($new && preg_match("/c/",$acl)){
         $deps[$dn] = $name;

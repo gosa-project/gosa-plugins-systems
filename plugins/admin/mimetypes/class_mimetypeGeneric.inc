@@ -165,7 +165,7 @@ class mimetype extends plugin
     foreach($_POST as $name => $value){
       if(preg_match("/^chooseBase/",$name) && $once){
         $once = false;
-        $this->dialog = new baseSelectDialog($this->config,$this,$this->acl_get_bases());
+        $this->dialog = new baseSelectDialog($this->config,$this,$this->get_allowed_bases());
         echo $this->base;
         $this->dialog->setCurrentBase($this->base);
       }
@@ -313,7 +313,7 @@ class mimetype extends plugin
       $fields = array($field1,$field2);
       $DivEApps -> AddEntry($fields);
     }
-    $smarty->assign("bases", 						$this->acl_get_bases());		
+    $smarty->assign("bases", 						$this->get_allowed_bases());		
     $smarty->assign("base_select", 					$this->base);		
     $smarty->assign("isReleaseMimeType",			$this->isReleaseMimeType);
     $smarty->assign("gotoMimeFilePatterns",			$DivPatterns->DrawList());

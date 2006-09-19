@@ -211,7 +211,7 @@ class group extends plugin
       if((preg_match("/^chooseBase/",$name) && $once) && ($this->acl_is_moveable())){
           
         $once = false;
-        $this->dialog = new baseSelectDialog($this->config,$this,$this->acl_get_bases());
+        $this->dialog = new baseSelectDialog($this->config,$this,$this->get_allowed_bases());
         $this->dialog->setCurrentBase($this->base);
       }
     }
@@ -293,7 +293,7 @@ class group extends plugin
       $smarty->assign("launchimage", get_template_path('images/small_filter.png'));
       $smarty->assign("tree_image", get_template_path('images/tree.png'));
 
-      $smarty->assign("deplist", $this->acl_get_bases("users/user"));
+      $smarty->assign("deplist", $this->get_allowed_bases("users/user"));
       $smarty->assign("alphabet", generate_alphabet());
       foreach( array("dselect", "regex","SubSearchGroup") as $type){
         $smarty->assign("$type", $gufilter[$type]);
@@ -310,7 +310,7 @@ class group extends plugin
       $this->base= $_POST['base'];
     }
 
-    $smarty->assign("bases", $this->acl_get_bases());
+    $smarty->assign("bases", $this->get_allowed_bases());
     $smarty->assign("base_select", $this->base);
 
     if ($this->samba3){

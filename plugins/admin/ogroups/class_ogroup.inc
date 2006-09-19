@@ -187,7 +187,7 @@ class ogroup extends plugin
     foreach($_POST as $name => $value){
       if(preg_match("/^chooseBase/",$name) && $once && $this->acl_is_moveable()){
         $once = false;
-        $this->dialog = new baseSelectDialog($this->config,$this,$this->acl_get_bases());
+        $this->dialog = new baseSelectDialog($this->config,$this,$this->get_allowed_bases());
         $this->dialog->setCurrentBase($this->base);
       }
     }
@@ -306,7 +306,7 @@ class ogroup extends plugin
     }
 
     /* Assign variables */
-    $smarty->assign("bases", $this->acl_get_bases());
+    $smarty->assign("bases", $this->get_allowed_bases());
     $smarty->assign("base_select", $this->base);
     $smarty->assign("department", $this->department);
     $smarty->assign("members", $this->convert_list($this->memberList));

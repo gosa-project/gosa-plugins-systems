@@ -1230,7 +1230,7 @@ class user extends plugin
   function allowedBasesToMoveTo()
   {
     /* Get bases */
-    $bases  = $this->acl_get_bases();
+    $bases  = $this->get_allowed_bases();
     return($bases);
   } 
 

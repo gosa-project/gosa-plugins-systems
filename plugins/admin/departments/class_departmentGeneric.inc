@@ -106,7 +106,7 @@ class department extends plugin
 		foreach($_POST as $name => $value){
 			if((preg_match("/^chooseBase/",$name) && $once) && ($this->acl_is_moveable())){
 				$once = false;
-				$this->dialog = new baseSelectDialog($this->config,$this,$this->acl_get_bases());
+				$this->dialog = new baseSelectDialog($this->config,$this,$this->get_allowed_bases());
 				$this->dialog->setCurrentBase($this->base);
 			}
 		}
@@ -127,7 +127,7 @@ class department extends plugin
 		}
 
 		/* Hide all departments, that are subtrees of this department */
-    $bases = $this->acl_get_bases();
+    $bases = $this->get_allowed_bases();
 		if(($this->dn == "new")||($this->dn == "")){
 			$tmp = $bases;
 		}else{
