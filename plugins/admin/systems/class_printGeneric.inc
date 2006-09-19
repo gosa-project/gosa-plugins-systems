@@ -165,7 +165,6 @@ class printgeneric extends plugin
      */
 
     $class = get_class($this->parent);
-    echo $class;
     if(isset($this->parent->by_object['workgeneric'])){
 
       /* Exclude templates 
