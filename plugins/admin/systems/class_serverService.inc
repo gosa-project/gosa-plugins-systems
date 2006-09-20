@@ -37,16 +37,11 @@ class ServerService extends plugin
   {
     plugin::plugin($config);
     $this->dn= $dn;
-    $ui= get_userinfo();
-    $this->acl= get_permissions ($ui->dn, $ui->subtreeACL);
-
     foreach ($config->data['TABS']['SERVERSERVICE'] as $plug){
       $name= $plug['CLASS'];
       $this->plugin_names[]= $name;
       $this->plugins[$name]= new $name($config, $dn);
-      $this->plugins[$name]->acl= get_module_permission($this->acl, "$name", $ui->dn);
     }
-    
     $this->divList = new divListSystemService($config,$this);
 	}
 
@@ -87,11 +82,12 @@ class ServerService extends plugin
 
 
     /* Handle state changes for services */
-    $map =  array( "startServices"          => array("type" => START_SERVICE , "service" => ALL_SERVICES),
-                      "stopServices"          => array("type" => STOP_SERVICE  , "service" => ALL_SERVICES),
-                      "restartServices"         => array("type" => RESTART_SERVICE , "service" => ALL_SERVICES),                      "StartSingleService"    => array("type" => START_SERVICE , "service" => $s_entry),
-                      "StopSingleService"     => array("type" => STOP_SERVICE , "service" => $s_entry),
-                      "RestartSingleService"    => array("type" => RESTART_SERVICE , "service" => $s_entry));
+    $map =  array(    "startServices"         => array("type" => START_SERVICE ,   "service" => ALL_SERVICES),
+                      "stopServices"          => array("type" => STOP_SERVICE  ,   "service" => ALL_SERVICES),
+                      "restartServices"       => array("type" => RESTART_SERVICE , "service" => ALL_SERVICES),                 
+                      "StartSingleService"    => array("type" => START_SERVICE ,   "service" => $s_entry),
+                      "StopSingleService"     => array("type" => STOP_SERVICE ,    "service" => $s_entry),
+                      "RestartSingleService"  => array("type" => RESTART_SERVICE , "service" => $s_entry));
     if(isset($map[$s_action])){
       $type     = $map[$s_action]['type'];
       $service  = $map[$s_action]['service'];
@@ -107,10 +103,7 @@ class ServerService extends plugin
 
     /* Remove service */
     if($s_action == "RemoveSingleService"){
-      $this->plugins[$s_entry]->is_account= false;
-      $this->plugins[$s_entry] = NULL;
       $this->plugins[$s_entry] = new $s_entry($this->config,$this->dn);
-      $this->plugins[$s_entry]->acl = $this->acl;
       $this->plugins[$s_entry]->is_account = false;
     }
 
