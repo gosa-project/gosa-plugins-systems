@@ -215,6 +215,7 @@ class govirusserver extends goService{
   {
     $fields       = goService::getListEntry();
     $fields['AllowEdit']    = true;
+    $fields['Message']      = _("Anti virus");
     return($fields);
   }
 
