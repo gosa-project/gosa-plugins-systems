@@ -2,18 +2,27 @@
   <table summary="">
     <tr>
      <td>{t}Logging DB user{/t}{$must}</td>
-     <td><input name="goGlpiAdmin" id="goGlpiAdmin" size=30 maxlength=60 {$goGlpiAdminACL}
-value="{$goGlpiAdmin}"></td>
+     <td>
+{render acl=$goGlpiAdminACL}
+      <input name="goGlpiAdmin" id="goGlpiAdmin" size=30 maxlength=60 value="{$goGlpiAdmin}">
+{/render}
+     </td>
     </tr>
     <tr>
      <td>{t}Password{/t}</td>
-     <td><input type="password" name="goGlpiPassword" id="goGlpiPassword" size=30 maxlength=60 {$goGlpiPasswordACL}
-value="{$goGlpiPassword}"></td>
+     <td>
+{render acl=$goGlpiPasswordACL}
+      <input type="password" name="goGlpiPassword" id="goGlpiPassword" size=30 maxlength=60 value="{$goGlpiPassword}">
+{/render}
+     </td>
     </tr>
     <tr>
      <td>{t}Database{/t}{$must}</td>
-     <td><input name="goGlpiDatabase" id="goGlpiDatabase" size=30 maxlength=60 {$goGlpiDatabaseACL}
-value="{$goGlpiDatabase}"></td>
+     <td>
+{render acl=$goGlpiDatabaseACL}
+      <input name="goGlpiDatabase" id="goGlpiDatabase" size=30 maxlength=60 value="{$goGlpiDatabase}">
+{/render}
+     </td>
     </tr>
    </table>
 
