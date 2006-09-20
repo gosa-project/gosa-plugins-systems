@@ -1,6 +1,8 @@
 <?php
 
-class goFaxServer extends plugin{
+require_once("class_goService.inc");
+
+class goFaxServer extends goService {
 	
   var $cli_summary      = "This pluign is used within the ServerService Pluign \nand indicates that this server supports fax informations.";
   var $cli_description  = "Some longer text\nfor help";

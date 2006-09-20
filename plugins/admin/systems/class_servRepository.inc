@@ -355,6 +355,9 @@ class servrepository extends goService
 
           "plProvidedAcls"=> array(
               "cn"            => _("Name"),
+              "start"         => _("Start"),
+              "stop"          => _("Stop"),
+              "restart"       => _("Restart"),
               "Release"       => _("Releases"),
               "Section"       => _("Sections"),
               "ParentServer"  => _("Parent server"),

@@ -233,6 +233,9 @@ class govirusserver extends goService{
           "plCategory"    => array("server"),
           "plProvidedAcls"=> array(
 
+          "start"         => _("Start"),
+          "stop"          => _("Stop"),
+          "restart"       => _("Restart"),
 
           "avFlagsD"         =>_("Enable debugging"),
           "avFlagsS"         =>_("Enable mail scanning"),

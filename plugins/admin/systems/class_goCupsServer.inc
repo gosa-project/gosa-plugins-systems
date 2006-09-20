@@ -68,6 +68,10 @@ class goCupsServer extends goService{
           "plSection"     => array("administration"),
           "plCategory"    => array("server"),
 
+          "start"         => _("Start"),
+          "stop"          => _("Stop"),
+          "restart"       => _("Restart"),
+
           "plProvidedAcls"=> array()
           ));
   }
