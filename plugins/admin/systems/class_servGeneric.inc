@@ -69,7 +69,7 @@ class servgeneric extends plugin
     }
 
     /* Check for action */
-    if (isset($_POST['action'])){
+    if (isset($_POST['action']) && $this->acvl_is_writeable("FAIstate")){
       $cmd= search_config($this->config->data['TABS'], "workgeneric", "ACTIONCMD");
       if ($cmd == ""){
         print_red(_("No ACTIONCMD definition found in your gosa.conf"));
@@ -116,9 +116,9 @@ class servgeneric extends plugin
     /* Base select dialog */
     $once = true;
     foreach($_POST as $name => $value){
-      if(preg_match("/^chooseBase/",$name) && $once){
+      if(preg_match("/^chooseBase/",$name) && $once && $this->acl_is_moveable()){
         $once = false;
-        $this->dialog = new baseSelectDialog($this->config,$this);
+        $this->dialog = new baseSelectDialog($this->config,$this,$this->get_allowed_bases());
         $this->dialog->setCurrentBase($this->base);
       }
     }
@@ -153,7 +153,7 @@ class servgeneric extends plugin
     }
     $smarty->assign("baseACL",          $baseACL);
 
-    $smarty->assign("bases", $this->config->idepartments);
+    $smarty->assign("bases", $this->get_allowed_bases());
 
     /* Assign attributes */
     foreach ($this->attributes as $attr){
@@ -193,6 +193,11 @@ class servgeneric extends plugin
 
   function remove_from_parent()
   {
+    /* Cancel if there's nothing to do here */
+    if ((!$this->initially_was_account) || (!$this->acl_is_removeable())){
+      return;
+    }
+
     $this->netConfigDNS->remove_from_parent();
     $ldap= $this->config->get_ldap_link();
     $ldap->rmdir($this->dn);
