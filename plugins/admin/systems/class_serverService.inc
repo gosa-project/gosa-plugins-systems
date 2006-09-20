@@ -103,8 +103,15 @@ class ServerService extends plugin
 
     /* Remove service */
     if($s_action == "RemoveSingleService"){
-      $this->plugins[$s_entry] = new $s_entry($this->config,$this->dn);
-      $this->plugins[$s_entry]->is_account = false;
+
+      /* Create resetted obj */
+      $new_obj = new $s_entry($this->config,$this->dn);
+      $tmp     = $new_obj->getListEntry();
+
+      if($tmp['AllowRemove']){
+        $this->plugins[$s_entry] = new $s_entry($this->config,$this->dn);
+        $this->plugins[$s_entry]->is_account = false;
+      }
     }
 
 
