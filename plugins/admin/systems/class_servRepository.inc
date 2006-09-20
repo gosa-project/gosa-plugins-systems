@@ -1,6 +1,8 @@
 <?php
 
-class servrepository extends plugin
+require_once("class_goService.inc");
+
+class servrepository extends goService
 {
   /* CLI vars */
   var $cli_summary          = "Manage server basic objects";
@@ -21,8 +23,6 @@ class servrepository extends plugin
   /* Repositories */
   var $repositories          = array();
   var $FAIrepository         = array();
-
-
   var $conflicts             = array("FAIrepositoryServer");
   var $DisplayName           = "";
   var $StatusFlag            = "";
@@ -83,6 +83,7 @@ class servrepository extends plugin
 
     /* Fill templating stuff */
     $smarty= get_smarty();
+    $smarty->assign("is_createable",$this->acl_is_createable());
     $display= "";
 
     /* Smarty vars*/
@@ -103,13 +104,13 @@ class servrepository extends plugin
     if(isset($_POST['servRepository'])){
       foreach($_POST as $name => $value){
 
-        if(preg_match("/AddRepository/",$name)){
+        if(preg_match("/AddRepository/",$name) && $this->acl_is_createable()){
           $once = true;
           $this->dialog = new servRepositorySetup($this->config,$this->dn);
-          $this->dialog->acl = $this->acl;
+          $this->dialog->parent = $this;
         }
 
-        if((preg_match("/^delete_/",$name))&&(!$once)){
+        if((preg_match("/^delete_/",$name)) && (!$once) && $this->acl_is_removeable()){
           $once = true;
           $value = preg_replace("/delete_/","",$name);
           $value = base64_decode(preg_replace("/_.*$/","",$value));
@@ -178,7 +179,7 @@ class servrepository extends plugin
               /* to be able to detect if this was renamed */
               $obj['initialy_was'] = $obj['Release'];
               $this->dialog = new servRepositorySetup($this->config,$this->dn,$obj);
-              $this->dialog->acl = $this->acl;
+              $this->dialog->parent = $this;
             }
           }
         }
@@ -188,15 +189,8 @@ class servrepository extends plugin
       $obj = $this->repositories[base64_decode($_GET['id'])];
       $obj['initialy_was'] = $obj['Release'];
       $this->dialog = new servRepositorySetup($this->config,$this->dn,$obj);
-      $this->dialog->acl = $this->acl;
+      $this->dialog->parent = $this;
     }
-
-    /*
-    if(isset($_POST['AddRepository'])){
-      $this->dialog = new servRepositorySetup($this->config,$this->dn);
-      $this->dialog->acl = $this->acl;
-    }
-    */
 
     if(isset($_POST['repository_setup_save'])){
       $this->dialog->save_object();
@@ -248,23 +242,25 @@ class servrepository extends plugin
 
     $link   = "<a href='?plug=".$_GET['plug']."&amp;act=open&amp;id=%s'>%s</a>";
     $edit   = "<input type='image' value='%s' name='edit_%s'   src='images/edit.png'>&nbsp;";
-    $delete = "<input type='image' value='%s' name='delete_%s' src='images/edittrash.png'>";
+   
+    /* Hide delete icon, if delete is not allowed */ 
+    if($this->acl_is_removeable()){
+      $delete = "<input type='image' value='%s' name='delete_%s' src='images/edittrash.png'>";
+    }else{
+      $delete = "<img src='images/empty.png' alt='&nbsp;'>";
+    }
   
     foreach($this->repositories as $name => $reps){
 
       $str = " ";
-
       if(preg_match("/".str_replace("*",".*",$this->regex)."/",$reps['Release'])){
-    
-
       foreach($reps['Sections'] as $sec){
         $str.=$sec." ";  
       }    
-  
       $divlist->AddEntry(array(
-                              array("string"=>sprintf($link,base64_encode($name),$name),"attach"=>"style='width:80px;'"),
-                              array("string"=>sprintf($link,base64_encode($name),_("Sections")." :".$str)),
-                              array("string"=>preg_replace("/%s/",base64_encode($name),$edit.$delete),"attach"=>"style='border-right:0px;width:55px;text-align:right;'")
+          array("string"=>sprintf($link,base64_encode($name),$name),"attach"=>"style='width:80px;'"),
+          array("string"=>sprintf($link,base64_encode($name),_("Sections")." :".$str)),
+          array("string"=>preg_replace("/%s/",base64_encode($name),$edit.$delete),"attach"=>"style='border-right:0px;width:55px;text-align:right;'")
                               ));
       }
     }
@@ -273,30 +269,6 @@ class servrepository extends plugin
 
     $display.= $smarty->fetch(get_template_path('servRepository.tpl', TRUE));
     return($display);
-  }
-
-  function remove_from_parent()
-  {
-    plugin::remove_from_parent();    
-
-     /* Remove status flag, it is not a memeber of
-        this->attributes, so ensure that it is deleted too */
-    if(!empty($this->StatusFlag)){
-      $this->attrs[$this->StatusFlag] = array();
-    }
-
-    $ldap= $this->config->get_ldap_link();
-    $ldap->cd ($this->config->current['BASE']);
-    
-    $ldap->cat($this->dn, array('dn'));
-    
-    if($ldap->count()){
-      $ldap->cd($this->dn);
-      $this->cleanup();
-      $ldap->modify ($this->attrs); 
-
-      $this->handle_post_events("modify");
-    }
   }
 
 
@@ -315,7 +287,6 @@ class servrepository extends plugin
   {
     /* Call common method to give check the hook */
     $message= plugin::check();
-        
     return ($message);
   }
 
@@ -361,68 +332,14 @@ class servrepository extends plugin
     }
   }
 
-  /* Get updates for status flag */
-  function updateStatusState()
-  {
-    if(empty($this->StatusFlag)) return;
-
-    $attrs = array();
-    $flag = $this->StatusFlag;
-    $ldap = $this->config->get_ldap_link();
-    $ldap->cd($this->cn);
-    $ldap->cat($this->dn,array($flag));
-    if($ldap->count()){
-      $attrs = $ldap->fetch();
-    }
-    if(isset($attrs[$flag][0])){
-      $this->$flag = $attrs[$flag][0];
-    }
-  }
-
 
   function getListEntry()
   {
-    $this->updateStatusState();
-    $flag = $this->StatusFlag;
-    if(empty($flag)){
-      $fields['Status']      = "";
-    }else{
-      $fields['Status']      = $this->$flag;
-    }
+    $fields = goService::getListEntry();
     $fields['Message']    = _("Repository service");
-    $fields['AllowStart'] = true;
-    $fields['AllowStop']  = true;
-    $fields['AllowRestart'] = true;
-    $fields['AllowRemove']= true;
     $fields['AllowEdit']  = true;
     return($fields);
   }
-
-
-  /* Directly save new status flag */
-  function setStatus($value)
-  {
-    if($value == "none") return;
-    if(!$this->initially_was_account) return;
-    if(empty($this->StatusFlag)) return;
-    $ldap = $this->config->get_ldap_link();
-    $ldap->cd($this->dn);
-    $ldap->cat($this->dn,array("objectClass"));
-    if($ldap->count()){
-
-      $tmp = $ldap->fetch();
-      for($i = 0; $i < $tmp['objectClass']['count']; $i ++){
-        $attrs['objectClass'][] = $tmp['objectClass'][$i];
-      }
-      $flag = $this->StatusFlag;
-      $attrs[$flag] = $value;
-      $this->$flag = $value;
-      $ldap->modify($attrs);
-      show_ldap_error($ldap->get_error(), sprintf(_("Set status flag for server services/repository with dn '%s' failed."),$this->dn));
-      $this->action_hook();
-    }
-  }
-
 
   /* Return plugin informations for acl handling */
   function plInfo()
@@ -439,6 +356,7 @@ class servrepository extends plugin
           "plProvidedAcls"=> array(
               "cn"            => _("Name"),
               "Release"       => _("Releases"),
+              "Section"       => _("Sections"),
               "ParentServer"  => _("Parent server"),
               "Url"           => _("Url"))
             ));

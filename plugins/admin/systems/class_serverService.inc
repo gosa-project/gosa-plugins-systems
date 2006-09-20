@@ -45,6 +45,21 @@ class ServerService extends plugin
     $this->divList = new divListSystemService($config,$this);
 	}
 
+  function set_acl_base($base)
+  {
+    plugin::set_acl_base($base);
+    foreach($this->plugins as $name => $obj){
+      $this->plugins[$name]->set_acl_base($base);
+    }
+  }
+
+  function set_acl_category($category)
+  {
+    plugin::set_acl_category($category);
+    foreach($this->plugins as $name => $obj){
+      $this->plugins[$name]->set_acl_category($category);
+    }
+  }
 
   function execute()
   {
@@ -106,10 +121,12 @@ class ServerService extends plugin
 
       /* Create resetted obj */
       $new_obj = new $s_entry($this->config,$this->dn);
+      $new_obj -> set_acl_base($this->acl_base);
+      $new_obj -> set_acl_category(preg_replace("/\/$/","",$this->acl_category));
       $tmp     = $new_obj->getListEntry();
 
       if($tmp['AllowRemove']){
-        $this->plugins[$s_entry] = new $s_entry($this->config,$this->dn);
+        $this->plugins[$s_entry] = $new_obj;
         $this->plugins[$s_entry]->is_account = false;
       }
     }
@@ -137,6 +154,9 @@ class ServerService extends plugin
     if(isset($_POST['CancelService'])){
       if($this->backup == NULL){
         $this->plugins[$this->current] = new $this->current($this->config,$this->dn);
+        $this->plugins[$this->current]-> set_acl_base($this->acl_base);
+        $this->plugins[$this->current]-> set_acl_category(preg_replace("/\/$/","",$this->acl_category));
+
       }else{
         foreach($this->backup as $name => $value){
           $this->plugins[$this->current]->$name = $value;

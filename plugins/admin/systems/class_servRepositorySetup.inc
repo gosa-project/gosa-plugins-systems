@@ -20,6 +20,7 @@ class servRepositorySetup  extends plugin
   var $ParentServers    = "";
   var $initialy_was     = false;
   var $cn               = "";
+  var $parent           = "";
 
   function servRepositorySetup ($config, $dn= NULL,$data = false)
   {
@@ -107,9 +108,15 @@ class servRepositorySetup  extends plugin
   
     $smarty->assign("Sections",$divlist->DrawList());
 
+    /* Get && assign acls */
+    $tmp = $this->parent->plInfo();
+    foreach($tmp['plProvidedAcls'] as $name => $translated){
+      $smarty->assign($name."ACL",$this->parent->getacl($name));
+    }
+
+    /* Assign values */
     foreach($this->attributes as $attr){
       $smarty->assign($attr       ,$this->$attr);
-      $smarty->assign($attr."ACL" ,chkacl($this->acl,$attr));
     }
   
     $tmp = $this->getParentServers();
@@ -121,7 +128,7 @@ class servRepositorySetup  extends plugin
 
   /* Save data to object */
   function save_object()
-  {
+  { 
     plugin::save_object();
   }
 
