@@ -213,7 +213,7 @@ class govirusserver extends goService{
   /* For newer service management dialogs */
   function getListEntry()
   {
-    $fields['Status']       = goService::getListEntry();
+    $fields       = goService::getListEntry();
     $fields['AllowEdit']    = true;
     return($fields);
   }
