@@ -6,31 +6,46 @@
 				<tr>
 					<td>{t}Server identifier{/t}{$must}
 					</td>
-					<td><input name="goImapName" id="goImapName" size=40 maxlength=60 {$goImapNameACL} value="{$goImapName}" >
+					<td>
+{render acl=$goImapNameACL}
+						<input name="goImapName" id="goImapName" size=40 maxlength=60 value="{$goImapName}" >
+{/render}
 					</td>
 				</tr>
 				<tr>
 					<td>{t}Connect URL{/t}{$must}
 					</td>
-					<td><input name="goImapConnect" id="goImapConnect" size=40 maxlength=60 {$goImapConnectACL} value="{$goImapConnect}" >
+					<td>
+{render acl=$goImapConnectACL}
+						<input name="goImapConnect" id="goImapConnect" size=40 maxlength=60 value="{$goImapConnect}" >
+{/render}
 					</td>
 				</tr>
 				<tr>
 					<td>{t}Admin user{/t}{$must}
 					</td>
-					<td><input name="goImapAdmin" id="goImapAdmin" size=30 maxlength=60 {$goImapAdminACL} value="{$goImapAdmin}" >
+					<td>
+{render acl=$goImapAdminACL}
+						<input name="goImapAdmin" id="goImapAdmin" size=30 maxlength=60 value="{$goImapAdmin}" >
+{/render}
 					</td>
 				</tr>
 				<tr>
 					<td>{t}Password{/t}{$must}
 					</td>
-					<td><input type=password name="goImapPassword" id="goImapPassword" size=30 maxlength=60 {$goImapPasswordACL} value="{$goImapPassword}" >
+					<td>
+{render acl=$goImapPasswordACL}
+					<input type=password name="goImapPassword" id="goImapPassword" size=30 maxlength=60 value="{$goImapPassword}" >
+{/render}
 					</td>
 				</tr>
 				<tr>
 					<td>{t}Sieve port{/t}{$must}
 					</td>
-					<td><input name="goImapSievePort" id="goImapSievePort" size=10 maxlength=30 {$goImapSievePortACL} value="{$goImapSievePort}">
+					<td>
+{render acl=$goImapSievePortACL}
+						<input name="goImapSievePort" id="goImapSievePort" size=10 maxlength=30 value="{$goImapSievePort}">
+{/render}
 					</td>
 				</tr>
 			</table>
@@ -39,28 +54,36 @@
 			<table>
 				<tr>
 					<td>
+{render acl=$cyrusImapACL}
 						<input type='checkbox' name='cyrusImap' value=1 {if $cyrusImap} checked {/if} {$cyrusImapACL}> 
+{/render}
 					</td>
 					<td>{t}Start IMAP service{/t}
 					</td>
 				</tr>
 				<tr>
 					<td>
+{render acl=$cyrusImapSSLACL}
 						<input type='checkbox' name='cyrusImapSSL' value=1 {if $cyrusImapSSL} checked {/if} {$cyrusImapSSLACL}> 
+{/render}
 					</td>
 					<td>{t}Start IMAP SSL service{/t}
 					</td>
 				</tr>
 				<tr>
 					<td>
+{render acl=$cyrusPop3ACL}
 						<input type='checkbox' name='cyrusPop3' value=1 {if $cyrusPop3} checked {/if} {$cyrusPop3ACL}> 
+{/render}
 					</td>
 					<td>{t}Start POP3 service{/t}
 					</td>
 				</tr>
 				<tr>
 					<td>
+{render acl=$cyrusPop3SSLACL}
 						<input type='checkbox' name='cyrusPop3SSL' value=1 {if $cyrusPop3SSL} checked {/if} {$cyrusPop3SSLACL}> 
+{/render}
 					</td>
 					<td>{t}Start POP3 SSL service{/t}
 					</td>
