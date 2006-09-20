@@ -1,6 +1,8 @@
 <?php
 
-class govirusserver extends plugin{
+require_once("class_goService.inc");
+
+class govirusserver extends goService{
 	
   /* This plugin only writes its objectClass */
   var $objectclasses    = array("goVirusServer");
@@ -18,7 +20,6 @@ class govirusserver extends plugin{
 
   var $dialog           = NULL;
   var $ui               = NULL;
-  var $acl              = NULL;
 
   var $Flags            = array("D","S","A","E");
   
@@ -48,10 +49,6 @@ class govirusserver extends plugin{
     /* Get userinfo & acls */
     $this->ui = get_userinfo();
 
-    /* Set up the users ACL's for this 'dn' */
-    $acl= get_permissions ($this->dn, $this->ui->subtreeACL);
-    $this->acl= get_module_permission($acl, "goVirusServer", $this->ui->dn);
-
     /* Get Flags */
     foreach($this->Flags as $flag){
       $var = "avFlags".$flag;
@@ -65,6 +62,13 @@ class govirusserver extends plugin{
   function execute()
   {
     $smarty = get_smarty(); 
+
+    /* Set acls */
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $name => $translation) { 
+      $smarty->assign($name."ACL",$this->getacl($name));
+    }
+
     if(get_class($this->parent) == "servtabs"){
 
       $smarty->assign("servtabs",TRUE);
@@ -94,13 +98,11 @@ class govirusserver extends plugin{
     /* Assign smarty vars */
     foreach($this->attributes as $attr){
       $smarty->assign($attr,$this->$attr);
-      $smarty->assign($attr."ACL",chkacl($this->acl,$attr));
     }
 
     /* Assign checkbox states */
     foreach($this->Flags as $Flag){
       $var = "avFlags".$Flag;
-      $smarty->assign("avFlags".$Flag."ACL",chkacl($this->acl,$Flag));
       if($this->$var){
         $smarty->assign("avFlags".$Flag."CHK"," checked " );
       }else{
@@ -331,7 +333,7 @@ class govirusserver extends plugin{
     }
   }
 
-  /* Return plugin informations for acl handling 
+  /* Return plugin informations for acl handling */ 
   function plInfo()
   {
     return (array(
@@ -361,7 +363,6 @@ class govirusserver extends plugin{
           "avHttpProxyURL"               =>_("Http proxy URL"))
           ));
   }
-  */
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

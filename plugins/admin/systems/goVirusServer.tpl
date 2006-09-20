@@ -13,7 +13,9 @@
 	 	{t}Database user{/t}
 	  </td>
 	  <td>
-	  	<input type='text' name='avUser' value='{$avUser}' {$avUserACL} style='width:220px;'>
+{render acl=$avUserACL}
+	  	<input type='text' name='avUser' value='{$avUser}' style='width:220px;'>
+{/render}
 	  </td>
 	 </tr>
 	 <tr>
@@ -21,7 +23,9 @@
 	 	{t}Database mirror{/t}
 	  </td>
 	  <td>
-	  	<input type='text' name='avDatabaseMirror' value='{$avDatabaseMirror}' {$avDatabaseMirrorACL} style='width:220px;'>
+{render acl=$avDatabaseMirrorACL}
+	  	<input type='text' name='avDatabaseMirror' value='{$avDatabaseMirror}' style='width:220px;'>
+{/render}
 	  </td>
 	 </tr>
 	 <tr>
@@ -29,7 +33,9 @@
 	 	{t}Http proxy URL{/t}
 	  </td>
 	  <td>
-	  	<input type='text' name='avHttpProxyURL' value='{$avHttpProxyURL}' {$avHttpProxyURLACL} style='width:220px;'>
+{render acl=$avHttpProxyURLACL}
+	  	<input type='text' name='avHttpProxyURL' value='{$avHttpProxyURL}' style='width:220px;'>
+{/render}
 	  </td>
 	 </tr>
 	 <tr>
@@ -37,9 +43,11 @@
 	 	{t}Maximum threads{/t}
 	  </td>
 	  <td>
+{render acl=$avMaxThreadsACL}
 		<select name="avMaxThreads" title='{t}Select number of maximal threads{/t}'>
 		 {html_options options=$ThreadValues selected=$avMaxThreads}
 	 	</select>
+{/render}
 	  </td>
 	 </tr>
 	</table>
@@ -53,7 +61,9 @@
 	 	{t}Max directory recursions{/t}
 	  </td>
 	  <td>
-	  	<input type='text' name='avMaxDirectoryRecursions' value='{$avMaxDirectoryRecursions}' {$avMaxDirectoryRecursionsACL}>
+{render acl=$avMaxDirectoryRecursionsACL}
+	  	<input type='text' name='avMaxDirectoryRecursions' value='{$avMaxDirectoryRecursions}' >
+{/render}
 	  </td>
 	 </tr>
 	 <tr>
@@ -61,18 +71,24 @@
 	 	{t}Checks per day{/t}
 	  </td>
 	  <td>
-	  	<input type='text' name='avChecksPerDay' value='{$avChecksPerDay}' {$avChecksPerDayACL}>
+{render acl=$avChecksPerDayACL}
+	  	<input type='text' name='avChecksPerDay' value='{$avChecksPerDay}'> 
+{/render}
 	  </td>
 	 </tr>
 	 <tr>
 	  <td colspan=2>
-	  	<input type='checkbox' name='avFlagsD' {$avFlagsDACL} {$avFlagsDCHK} value='1'>
+{render acl=$avFlagsDACL}
+	  	<input type='checkbox' name='avFlagsD' {$avFlagsDCHK} value='1'>
+{/render}
 		{t}Enable debugging{/t}
 	  </td>
 	 </tr>
 	 <tr>
 	  <td colspan=2>
-	  	<input type='checkbox' name='avFlagsS' {$avFlagsSACL} {$avFlagsSCHK} value='1'>
+{render acl=$avFlagsSACL}
+	  	<input type='checkbox' name='avFlagsS' {$avFlagsSCHK} value='1'>
+{/render}
 		{t}Enable mail scanning{/t}
 	  </td>
 	 </tr>
@@ -90,18 +106,22 @@
 	<table>
 	 <tr>
 	  <td>
-	  	<input type='checkbox' name='avFlagsA' {$avFlagsAACL} {$avFlagsACHK} value='1'
+{render acl=$avFlagsAACL}
+	  	<input type='checkbox' name='avFlagsA' {$avFlagsACHK} value='1'
 			onClick=" changeState('avFlagsE') ; 
 				  changeState('avArchiveMaxFileSize') ; 
 				  changeState('avArchiveMaxRecursion') ; 
 				  changeState('avArchiveMaxCompressionRatio') ; "
 		>
+{/render}
 		{t}Enable scanning of archives{/t}
 	  </td>
 	 </tr>
 	 <tr>
 	  <td>
-	  	<input type='checkbox' name='avFlagsE' {$avFlagsEACL} {$avFlagsECHK} {$avFlagsAState} value='1' id='avFlagsE'>
+{render acl=$avFlagsEACL}
+	  	<input type='checkbox' name='avFlagsE' {$avFlagsECHK} {$avFlagsAState} value='1' id='avFlagsE'>
+{/render}
 		{t}Block encrypted archives{/t}
 	  </td>
 	 </tr>
@@ -114,21 +134,27 @@
 	  <td>{t}Maximum file size{/t}
 	  </td>
 	  <td>
-	   <input name='avArchiveMaxFileSize' id='avArchiveMaxFileSize' value='{$avArchiveMaxFileSize}'  {$avFlagsAState} {$avArchiveMaxFileSizeACL} >
+{render acl=$avArchiveMaxFileSizeACL}
+	   <input name='avArchiveMaxFileSize' id='avArchiveMaxFileSize' value='{$avArchiveMaxFileSize}'  {$avFlagsAState} >
+{/render}
 	  </td>
 	 </tr>
 	 <tr>
 	  <td>{t}Maximum recursion{/t}
 	  </td>
 	  <td>
-	   <input name='avArchiveMaxRecursion' id='avArchiveMaxRecursion' value='{$avArchiveMaxRecursion}'  {$avFlagsAState} {$avArchiveMaxRecursionACL} >
+{render acl=$avArchiveMaxRecursionACL}
+	   <input name='avArchiveMaxRecursion' id='avArchiveMaxRecursion' value='{$avArchiveMaxRecursion}'  {$avFlagsAState} >
+{/render}
 	  </td>
 	 </tr>
 	 <tr>
 	  <td>{t}Maximum compression ratio{/t}
 	  </td>
 	  <td>
-	   <input name='avArchiveMaxCompressionRatio' id='avArchiveMaxCompressionRatio' value='{$avArchiveMaxCompressionRatio}' {$avFlagsAState}  {$avArchiveMaxCompressionRatioACL} >
+{render acl=$avArchiveMaxCompressionRatioACL}
+	   <input name='avArchiveMaxCompressionRatio' id='avArchiveMaxCompressionRatio' value='{$avArchiveMaxCompressionRatio}' {$avFlagsAState}>
+{/render}
 	  </td>
 	 </tr>
 	</table>
