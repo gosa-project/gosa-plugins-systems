@@ -664,6 +664,10 @@ class glpiPrinterAccount extends plugin
         }
       }
 
+      if(isset($_POST['FK_glpi_enterprise']) && $this->acl_is_writeable("FKglpienterprise")){
+        $this->FK_glpi_enterprise = $_POST['FK_glpi_enterprise'];
+      }
+
       foreach(array("flags_serial","flags_par","flags_usb") as $checkboxes){
         if($this->acl_is_writeable($checkboxes)){
           if(isset($_POST[$checkboxes])){
@@ -781,7 +785,7 @@ class glpiPrinterAccount extends plugin
             "location"             => _("Location"),
             "contact_num"          => _("Contact person"),
             "type"                 => _("Type"),
-            "FK_glpi_enterprise"   => _("Manufacturer"),
+            "FKglpienterprise"   => _("Manufacturer"),
 
             "Attachments"          => _("Attachments"),
         

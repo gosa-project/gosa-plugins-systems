@@ -23,12 +23,12 @@
 					<td>{t}Manufacturer{/t}
 					</td>
 					<td>
-{render acl=$FK_glpi_enterpriseACL}
+{render acl=$FKglpienterpriseACL}
 						<select name="FK_glpi_enterprise" >
 							{html_options values=$ManufacturerKeys output=$Manufacturers selected=$FK_glpi_enterprise}
 						</select>	
 {/render}
-{render acl=$FK_glpi_enterpriseACL}
+{render acl=$FKglpienterpriseACL}
 						<input type="submit" value="{t}edit{/t}" name="edit_manufacturer" >	
 {/render}
 					</td>
