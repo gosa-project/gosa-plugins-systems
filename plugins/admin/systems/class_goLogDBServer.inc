@@ -34,9 +34,14 @@ class goLogDBServer extends goService{
   function execute()
   { 
     $smarty = get_smarty(); 
+
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $name => $translation){
+      $smarty->assign($name."ACL",$this->getacl($name));
+    }
+
     foreach($this->attributes as $attr){
       $smarty->assign($attr,$this->$attr);
-      $smarty->assign($attr."ACL",chkacl($this->acl,$attr));
     }
     return($smarty->fetch(get_template_path("goLogDBServer.tpl",TRUE,dirname(__FILE__))));
   }

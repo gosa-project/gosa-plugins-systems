@@ -2,11 +2,19 @@
 <table summary="">
     <tr>
      <td>{t}Logging DB user{/t}{$must}</td>
-     <td><input name="goLogAdmin" id="goLogAdmin" size=30 maxlength=60 {$goLogAdminACL} value="{$goLogAdmin}"></td>
+     <td>
+{render acl=$goLogAdminACL}
+	<input name="goLogAdmin" id="goLogAdmin" size=30 maxlength=60 value="{$goLogAdmin}">
+{/render}
+     </td>
     </tr>
     <tr>
      <td>{t}Password{/t}{$must}</td>
-     <td><input type=password name="goLogPassword" id="goLogPassword" size=30 maxlength=60 {$goLogPasswordACL} value="{$goLogPassword}"></td>
+     <td>
+{render acl=$goLogPasswordACL}
+ 	<input type=password name="goLogPassword" id="goLogPassword" size=30 maxlength=60 value="{$goLogPassword}">
+{/render}
+     </td>
     </tr>
    </table>
 
