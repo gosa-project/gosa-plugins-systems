@@ -2,11 +2,19 @@
  <table summary="">
     <tr>
      <td>{t}FAX DB user{/t}{$must}</td>
-     <td><input name="goFaxAdmin" size=30 maxlength=60 {$goFaxAdminACL} id="goFaxAdmin" value="{$goFaxAdmin}" ></td>
+     <td>
+{render acl=$goFaxAdminACL}
+	<input name="goFaxAdmin" size=30 maxlength=60 id="goFaxAdmin" value="{$goFaxAdmin}" >
+{/render}
+     </td>
     </tr>
     <tr>
      <td>{t}Password{/t}{$must}</td>
-     <td><input type=password name="goFaxPassword" id="goFaxPassword" size=30 maxlength=60 {$goFaxPasswordACL}   value="{$goFaxPassword}" ></td>
+     <td>
+{render acl=$goFaxPasswordACL}
+	<input type=password name="goFaxPassword" id="goFaxPassword" size=30 maxlength=60 value="{$goFaxPassword}" >
+{/render}
+     </td>
     </tr>
    </table>
 
