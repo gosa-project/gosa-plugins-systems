@@ -2,15 +2,27 @@
   <table summary="">
     <tr>
      <td>{t}Kerberos Realm{/t}{$must}</td>
-     <td><input name="goKrbRealm" id="goKrbRealm" size=30 maxlength=60 {$goKrbRealmACL} value="{$goKrbRealm}"></td>
+     <td>
+{render acl=$goKrbRealmACL}
+      <input name="goKrbRealm" id="goKrbRealm" size=30 maxlength=60  value="{$goKrbRealm}">
+{/render}
+     </td>
     </tr>
     <tr>
      <td>{t}Admin user{/t}{$must}</td>
-     <td><input name="goKrbAdmin" id="goKrbAdmin" size=30 maxlength=60 {$goKrbAdminACL} value="{$goKrbAdmin}"></td>
+     <td>
+{render acl=$goKrbAdminACL}
+      <input name="goKrbAdmin" id="goKrbAdmin" size=30 maxlength=60 value="{$goKrbAdmin}">
+{/render}
+     </td>
     </tr>
     <tr>
      <td>{t}Password{/t}{$must}</td>
-     <td><input type=password name="goKrbPassword" id="goKrbPassword" size=30 maxlength=60 {$goKrbPasswordACL} value="{$goKrbPassword}"></td>
+     <td>
+{render acl=$goKrbPasswordACL}
+      <input type=password name="goKrbPassword" id="goKrbPassword" size=30 maxlength=60 value="{$goKrbPassword}">
+{/render}
+     </td>
     </tr>
    </table>
 <p class='seperator'>&nbsp;</p>
