@@ -9,7 +9,9 @@
 						{t}Name{/t} {$must}
 					</td>
 					<td>
+{render acl=$nameACL}
 						<input type="text" name="name" value="{$name}" {$nameACL}>
+{/render}
 					</td>
 				</tr>
 				<tr>
@@ -17,7 +19,9 @@
 						{t}Description{/t}
 					</td>
 					<td>
+{render acl=$descriptionACL}
 						<input type="text" size="40" name="description" value="{$description}">
+{/render}
 					</td>
 				</tr>
 				<tr>
@@ -25,7 +29,9 @@
 						{t}Path{/t} / {t}Volume{/t}
 					</td>
 					<td>
+{render acl=$pathACL}
 						<input type="text" size="40" name="path" value="{$path}">
+{/render}
 					</td>
 				</tr>
 				<tr>
@@ -33,7 +39,9 @@
 						<div id="vlabel">{t}Server{/t}</div>
 					</td>
 					<td>
+{render acl=$volumeACL}
 						<input type="text" id="volume" size="40" name="volume" value="{$volume}">
+{/render}
 					</td>
 				</tr>
 			</table>
@@ -44,14 +52,21 @@
 			<table summary="">
 				<tr>
 					<td style="vertical-align:top">
+
 						{t}Type{/t}
 					</td>
 					<td>
+{render acl=$typeACL}
 						<select size="1" name="type" id="sharetype">
 		   					{html_options options=$types selected=$type}
 						</select>
+{/render}
 						{if $allow_mounts == TRUE}
-							<br><br><input type="checkbox" name="netatalk_mount" id="netatalk_mount" {$mount_checked} {$appleMountsACL}/><label for="netatalk_mount">{t}Auto-mount share on Apple systems{/t}</label>
+						<br><br>
+{render acl=$netatalkmountACL}
+						<input type="checkbox" name="netatalk_mount" id="netatalk_mount" {$mount_checked} {$appleMountsACL}/>
+{/render}
+						<label for="netatalk_mount">{t}Auto-mount share on Apple systems{/t}</label>
 							<br>
 							<br>
 						{/if}
@@ -94,9 +109,11 @@
 						{t}Codepage{/t}
 					</td>
 					<td>
+{render acl=$charsetACL}
 						<select size="1" name="charset">
    							{html_options options=$charsets selected=$charset}
 						</select>	
+{/render}
 					</td>
 				</tr>
 				<tr>
@@ -104,7 +121,9 @@
 					{t}Option{/t}
 				    </td>
 				    <td>
+{render acl=$optionACL}
 								<input type="text" name="option" value="{$option}">
+{/render}
 				    </td>
 				</tr>
 			</table>

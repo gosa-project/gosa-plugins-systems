@@ -1,6 +1,8 @@
 <?php
 
-class goShareServer extends plugin{
+require_once("class_goService.inc");
+
+class goShareServer extends goService{
 
   var $cli_summary      = "This plugin is used within the ServerService Pluign \nand indicates that this server supports shares.";
   var $cli_description  = "Some longer text\nfor help";
@@ -16,7 +18,6 @@ class goShareServer extends plugin{
 
   var $DisplayName      = "";
   var $dn               = NULL;
-  var $acl;
   var $cn                   = "";
   var $goShareServerStatus  = "";
   var $goExportEntry        = array();
@@ -67,7 +68,9 @@ class goShareServer extends plugin{
 
     if(isset($_POST['NewNfsAdd'])){
       $this->oldone = NULL;
-      $this->o_subWindow = new servnfs($this->config,$this->acl, $this->allow_mounts, $this->dn);
+      $this->o_subWindow = new servnfs($this->config, $this);
+      $this->o_subWindow->set_acl_category("server");
+      $this->o_subWindow->set_acl_base($this->dn);
       $this->dialog = true;
     }
 
@@ -75,7 +78,9 @@ class goShareServer extends plugin{
       $entry = $this->goExportEntryList[$_POST['goExportEntryList'][0]];
       $add_mount=isset($this->mounts_to_add[$entry]);
       $this->oldone=$entry;
-      $this->o_subWindow = new servnfs($this->config,$this->acl,$this->allow_mounts,$this->dn,$entry,$add_mount);
+      $this->o_subWindow = new servnfs($this->config,$this,$entry,$add_mount);
+      $this->o_subWindow->set_acl_base($this->dn);
+      $this->o_subWindow->set_acl_category("server");
       $this->dialog = true;
     }
     if(isset($this->o_subWindow)){
@@ -117,14 +122,20 @@ class goShareServer extends plugin{
       return $this->o_subWindow->execute();
     }
 
-
-
-
-
     foreach($this->attributes as $attr){
       $smarty->assign($attr,$this->$attr);
-      $smarty->assign($attr."ACL",chkacl($this->acl,$attr));
     }
+
+    /* Set acls */
+    $tmp = $this->plInfo();
+    $acl = ""; 
+    foreach($tmp['plProvidedAcls'] as $name => $translated){
+      $acl .= $this->getacl($name);
+    }
+    $smarty->assign("goExportEntryACL",$acl);
+    $smarty->assign("createable",$this->acl_is_createable());
+    $smarty->assign("removeable",$this->acl_is_removeable());
+
     $tellSmarty= array();
     ksort($this->goExportEntryList);
     foreach($this->goExportEntryList as $name=>$values){
@@ -133,50 +144,16 @@ class goShareServer extends plugin{
     }
     $smarty->assign("goExportEntry",array_keys($tellSmarty));
     $smarty->assign("goExportEntryKeys",($tellSmarty));
-    $smarty->assign("goExportEntryACL", chkacl($this->acl, "goExportEntry"));
-
-
     return($smarty->fetch(get_template_path("goShareServer.tpl",TRUE,dirname(__FILE__))));
   }
 
 
   function getListEntry()
   {
-    $this->updateStatusState();
-    $flag = $this->StatusFlag;
-    $fields['Status']     = $this->$flag;
-    $fields['Message']    = _("Shares");
-    $fields['AllowStart'] = true;
-    $fields['AllowStop']  = true;
-    $fields['AllowRestart'] = true;
-    $fields['AllowRemove']= true;
+    $fields = goService::getListEntry();
+    $fields['Message']    = _("File service (Shares)");
     $fields['AllowEdit']  = true;
     return($fields);
-  }
-
-
-  function remove_from_parent()
-  {
-    plugin::remove_from_parent();
-
-    /* Remove status flag, it is not a memeber of 
-        this->attributes, so ensure that it is deleted too */
-    if(!empty($this->StatusFlag)){
-      $this->attrs[$this->StatusFlag] = array();
-    }
-
-    /* Check if this is a new entry ... add/modify */
-    $ldap = $this->config->get_ldap_link();
-    $ldap->cat($this->dn,array("objectClass"));
-    if($ldap->count()){
-      $ldap->cd($this->dn);
-      $ldap->modify($this->attrs);
-    }else{
-      $ldap->cd($this->dn);
-      $ldap->add($this->attrs);
-    }
-    show_ldap_error($ldap->get_error(), sprintf(_("Removing of system server/shares with dn '%s' failed."),$this->dn));
-    $this->handle_post_events("remove");
   }
 
 
@@ -198,7 +175,6 @@ class goShareServer extends plugin{
       $this->process_mounts();
     }
 
-
     /* Check if this is a new entry ... add/modify */
     $ldap = $this->config->get_ldap_link();
     $ldap->cat($this->dn,array("objectClass"));
@@ -214,30 +190,6 @@ class goShareServer extends plugin{
       $this->handle_post_events("modify");
     }else{
       $this->handle_post_events("add");
-    }
-  }
-
-
-  /* Directly save new status flag */
-  function setStatus($value)
-  {
-    if($value == "none") return;
-    if(!$this->initially_was_account) return;
-    $ldap = $this->config->get_ldap_link();
-    $ldap->cd($this->dn);
-    $ldap->cat($this->dn,array("objectClass"));
-    if($ldap->count()){
-
-      $tmp = $ldap->fetch();
-      for($i = 0; $i < $tmp['objectClass']['count']; $i ++){
-        $attrs['objectClass'][] = $tmp['objectClass'][$i];
-      }
-      $flag = $this->StatusFlag;
-      $attrs[$flag] = $value;
-      $this->$flag = $value;
-      $ldap->modify($attrs);
-      show_ldap_error($ldap->get_error(), sprintf(_("Set status flag for system server/shares with dn '%s' failed."),$this->dn));
-      $this->action_hook();
     }
   }
 
@@ -313,66 +265,6 @@ class goShareServer extends plugin{
       gosa_log("Mount object '".$mountdn."' has been added");
     }
   }
-
-   function action_hook($add_attrs= array())
-  {
-    /* Find postcreate entries for this class */
-    $command= search_config($this->config->data['MENU'], get_class($this), "ACTION_HOOK");
-    if ($command == "" && isset($this->config->data['TABS'])){
-      $command= search_config($this->config->data['TABS'], get_class($this), "ACTION_HOOK");
-    }
-    if ($command != ""){
-      /* Walk through attribute list */
-      foreach ($this->attributes as $attr){
-        if (!is_array($this->$attr)){
-          $command= preg_replace("/%$attr/", $this->$attr, $command);
-        }
-      }
-      $command= preg_replace("/%dn/", $this->dn, $command);
-      /* Additional attributes */
-      foreach ($add_attrs as $name => $value){
-        $command= preg_replace("/%$name/", $value, $command);
-      }
-
-      /* If there are still some %.. in our command, try to fill these with some other class vars */
-      if(preg_match("/%/",$command)){
-        $attrs = get_object_vars($this);
-        foreach($attrs as $name => $value){
-          if(!is_string($value)) continue;
-          $command= preg_replace("/%$name/", $value, $command);
-        }
-      }
-
-      if (check_command($command)){
-        @DEBUG (DEBUG_SHELL, __LINE__, __FUNCTION__, __FILE__,
-            $command, "Execute");
-
-        exec($command);
-      } else {
-        $message= sprintf(_("Command '%s', specified as ACTION_HOOK for plugin '%s' doesn't seem to exist."), $command, get_class($this));
-        print_red ($message);
-      }
-    }
-  }
-
-  /* Get updates for status flag */
-  function updateStatusState()
-  {
-    if(empty($this->StatusFlag)) return;
-
-    $attrs = array();
-    $flag = $this->StatusFlag;
-    $ldap = $this->config->get_ldap_link();
-    $ldap->cd($this->cn);
-    $ldap->cat($this->dn,array($flag));
-    if($ldap->count()){
-      $attrs = $ldap->fetch();
-    }
-    if(isset($attrs[$flag][0])){
-      $this->$flag = $attrs[$flag][0];
-    }
-  }
-
 
   function addToMountList($entry) 
   {
@@ -454,7 +346,15 @@ class goShareServer extends plugin{
           "plCategory"    => array("server"),
 
           "plProvidedAcls"=> array(
-            "goExportEntry"     =>_("Share entry"))
+              "name"        => _("Name"),
+              "netatalkmount" => _("Apple mounts"),
+              "description" => _("Description"),
+              "type"        => _("Type"),
+              "charset"     => _("Charset"),
+              "path"        => _("Path"),
+              "option"      => _("Option"),
+              "volume"      => _("Volume"))
+
           ));
   }
 

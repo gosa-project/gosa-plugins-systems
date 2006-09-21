@@ -2,14 +2,19 @@
    <table summary="" style="width:100%">
     <tr>
      <td>
-        <select style="width:100%" id="goExportEntry" name="goExportEntryList[]" {$goExportEntryACL} size=12 multiple >
+{render acl=$goExportEntryACL}
+        <select style="width:100%" id="goExportEntry" name="goExportEntryList[]" size=12 multiple >
             {html_options values=$goExportEntry output=$goExportEntryKeys}
             <option disabled>&nbsp;</option>
         </select>
+{/render}
     <br>
-        <input type="submit"    value="{t}Add{/t}"  name="NewNfsAdd"   {$goExportEntryACL}  id="NewNfsAddId">
-        <input type="submit"    value="{t}Edit{/t}"     name="NewNfsEdit"  {$goExportEntryACL}  id="NewNfsEditId">
-        <input type="submit"    value="{t}Delete{/t}"   name="DelNfsEnt"   {$goExportEntryACL}  id="DelNfsEntId">
+	
+        <input type="submit"    value="{t}Add{/t}"  	name="NewNfsAdd"   id="NewNfsAddId" {if !$createable} disabled {/if}>
+{render acl=$goExportEntryACL}
+        <input type="submit"    value="{t}Edit{/t}"     name="NewNfsEdit"  id="NewNfsEditId">
+{/render}
+        <input type="submit"    value="{t}Delete{/t}"   name="DelNfsEnt"   id="DelNfsEntId" {if !$removeable} disabled {/if}>
     </td>
     </tr>
    </table>

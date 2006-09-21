@@ -24,22 +24,22 @@ class servnfs extends plugin
   var $volume        ="";  // Volume
   var $option        ="";  // Options
   var $is_edit           =false;
-  var $allow_mounts = false; //do we allow mount entries?
   var $create_mount_init = false; //mount entry set for this entry (while editing)?
   var $create_mount = false; //save mount entry
 
-  function servnfs ($config, $acl, $allow_mounts, $dn= NULL,$entry = false,$mount = false)
+  var $parent       = NULL;
+
+  function servnfs ($config, $parent,$entry= false,$mount =false)
   {
+    $this->parent = $parent;
+    $dn = $parent->dn;
     plugin::plugin ($config, $dn);
-    
+  
     $this->types   = array("CIFS" => "CIFS", "NFS"=>"NFS","samba"=>"samba","netatalk"=>"netatalk","NCP"=>"NCP");
     if($dn){
       $this->host = substr($dn, 3, strpos($dn, ',')-3);
     }
     
-    $this->acl = $acl;
-	$this->allow_mounts=$allow_mounts;
-	
     $this->charsets = array();
 
     if(!file_exists("/etc/gosa/encodings")){
@@ -96,21 +96,20 @@ class servnfs extends plugin
       $smarty->assign($attr,$this->$attr);
     }
 
-    $smarty->assign("nameACL","");    
-    $smarty->assign("name",$this->name);
+    $tmp = $this->parent->plInfo();
+    foreach($tmp['plProvidedAcls'] as $name => $translation){
+      $smarty->assign($name."ACL",$this->parent->getacl($name));
+    }
 
+    $smarty->assign("name",$this->name);
     if($this->is_edit){
-      $smarty->assign("nameACL"," disabled ");
+      $smarty->assign("nameACL", preg_replace("/w/",$this->getacl("name")));
     }
     
-    $smarty->assign("allow_mounts", $this->allow_mounts);
+    $smarty->assign("allow_mounts", $this->parent->allow_mounts);
     $smarty->assign("mount_checked", "");
     
-    
-    $appleMountsACL=chkacl($this->acl,"gotoShareAppleMounts");
-    $appleMountsACLset=strpos($appleMountsACL, "disabled");
-    $smarty->assign("appleMountsACL", $appleMountsACL);
-    $smarty->assign("appleMountsACLset", $appleMountsACLset);
+    $smarty->assign("appleMountsACL",    $this->getacl("appleMounts"));
   
     if (($this->type == "netatalk") || ($this->type == "NFS")) {
         if ($this->create_mount_init) {
@@ -154,17 +153,19 @@ class servnfs extends plugin
   /* Save data to object */
   function save_object()
   {
-    plugin::save_object(TRUE);
     if(isset($_POST['path'])){
-      foreach($this->attributes as $attr){
-        $this->$attr = $_POST[$attr];
+
+      foreach($this->attributes as $name){
+        if($this->parent->acl_is_writeable($name) && isset($_POST[$name])){
+          $this->$name = $_POST[$name];
+        }
       }
-    }
-    
-    if ((isset($_POST['netatalk_mount'])) && (($this->type == "netatalk") || ($this->type == "NFS"))) {
+
+      if ((isset($_POST['netatalk_mount'])) && (($this->type == "netatalk") || ($this->type == "NFS"))) {
         $this->create_mount = true;
-    } else {
+      } else {
         $this->create_mount = false;
+      }
     }
   }
 
@@ -256,27 +257,7 @@ class servnfs extends plugin
     return $this->create_mount;
   }
 
-  /* Return plugin informations for acl handling */
-  function plInfo()
-  {
-    return (array(
-          "plShortName"   => _("NFS"),
-          "plDescription" => _("NFS service"),
-          "plSelfModify"  => FALSE,
-          "plDepends"     => array(),
-          "plPriority"    => 0,
-          "plSection"     => array("administration"),
-          "plCategory"    => array("server"),
 
-          "plProvidedAcls"=> array(
-              "description" => _("Description"),
-              "type"        => _("Type"),
-              "charset"     => _("Charset"),
-              "path"        => _("Path"),
-              "option"      => _("Option"), 
-              "volume"      => _("Volume"))
-            ));
-  }
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
