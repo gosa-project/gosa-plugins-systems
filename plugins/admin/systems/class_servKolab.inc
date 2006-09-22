@@ -1,6 +1,8 @@
 <?php
 
-class servkolab extends plugin {
+require_once("class_goService.inc");
+
+class servkolab extends goService {
   /* CLI vars */
   var $cli_summary = "Manage server basic objects";
   var $cli_description = "Some longer text\nfor help";
@@ -93,15 +95,13 @@ class servkolab extends plugin {
 
 
     /* Assemble free/busy string */
-    $edit       = sprintf('<input name="kolabFreeBusyFuture" value="%s" %s type="text" maxlength="3" size="4">',
-                    $this->kolabFreeBusyFuture, 
-                    chkacl($this->acl, 'kolabFreeBusyFuture'));
+    $edit       = sprintf('<input name="kolabFreeBusyFuture" value="%s" type="text" maxlength="3" size="4">',
+                    $this->kolabFreeBusyFuture);
     $fbfuture   = sprintf(_("Include data from %s days in the past when creating free/busy lists"), $edit);
 
     /* Assemble quota string */
-    $edit       = sprintf('<input name="cyrus_quotawarn" value="%s" type="text" maxlength="3" size="4" %s>',
-                    $this->cyrus_quotawarn, 
-                    chkacl($this->acl, 'cyrus_quotawarn'));
+    $edit       = sprintf('<input name="cyrus_quotawarn" value="%s" type="text" maxlength="3" size="4">',
+                    $this->cyrus_quotawarn);
     $quotastr   = sprintf(_("Warn users when using more than %s%% of their mail quota"), $edit);
 
     /***************
@@ -115,11 +115,15 @@ class servkolab extends plugin {
       $smarty->assign("RelayMxSupportCheck","");
     }
 
+    /* Set acls */
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $name => $translation){
+      $smarty->assign($name."ACL",$this->getacl($name));
+    }
+
     /* Initialize all attributes, that were submitted */
     foreach($this->attributes as $val) 
     {
-      $smarty->assign($val."ACL",chkacl($this->acl,str_replace("_","-",$val)));
-
       /* Tell smarty which variables we are useing */
       $smarty->assign($val, $this->$val);
       if (($this->$val != "FALSE") && !empty($this->$val)){
@@ -218,15 +222,25 @@ class servkolab extends plugin {
     if (isset($_POST['kolabtab'])){
       plugin::save_object();
 
+
+      foreach($this->attributes as $attr){
+        if(($this->acl_is_writeable(preg_replace("/_/","",$attr))) && (isset($_POST[$attr]))){
+          $this->$attr = $_POST[$attr];
+        }
+      }
+
       /* Save checkboxes */
       foreach (array( "postfix_enable_virus_scan", "postfix_allow_unauthenticated",
             "cyrus_admins", "cyrus_imap", "cyrus_pop3", "cyrus_imaps",
             "cyrus_pop3s", "cyrus_sieve", "apache_allow_unauthenticated_fb",
             "proftpd_ftp", "apache_http") as $cb){
-        if (isset($_POST[$cb])){
-          $this->$cb= "TRUE";
-        } else {
-          $this->$cb= "FALSE";
+
+        if($this->acl_is_writeable(preg_replace("/_/","",$cb))){
+          if (isset($_POST[$cb])){
+            $this->$cb= "TRUE";
+          } else {
+            $this->$cb= "FALSE";
+          }
         }
       }
 
@@ -344,66 +358,11 @@ class servkolab extends plugin {
 
   function getListEntry()
   {
-    $this->updateStatusState();
-    $flag = $this->StatusFlag;
-    if(empty($flag)){
-      $fields['Status']       = "";
-    }else{
-      $fields['Status']       = $this->$flag;
-    }
+    $fields                 = goService::getListEntry();
     $fields['Message']      = _("Kolab mail service");
-    $fields['AllowStart']   = true;
-    $fields['AllowStop']    = true;
-    $fields['AllowRestart'] = true;
-    $fields['AllowRemove']  = true;
     $fields['AllowEdit']    = true;
     return($fields);
   }
-
-    /* Directly save new status flag */
-  function setStatus($value)
-  { 
-    return;
-  
-    if($value == "none") return;
-    if(!$this->initially_was_account) return;
-    $ldap = $this->config->get_ldap_link();
-    $ldap->cd($this->dn);
-    $ldap->cat($this->dn,array("objectClass"));
-    if($ldap->count()){
-
-      $tmp = $ldap->fetch();
-      for($i = 0; $i < $tmp['objectClass']['count']; $i ++){
-        $attrs['objectClass'][] = $tmp['objectClass'][$i];
-      }
-      $flag = $this->StatusFlag;
-      $attrs[$flag] = $value;
-      $this->$flag = $value;
-      $ldap->modify($attrs);
-      show_ldap_error($ldap->get_error(), sprintf(_("Set status flag for system server/kolab with dn '%s' failed."),$this->dn)); 
-      $this->action_hook();
-    }
-  }
-
-
-  /* Get updates for status flag */
-  function updateStatusState()
-  {
-    if(empty($this->StatusFlag)) return;
-
-    $attrs = array();
-    $flag = $this->StatusFlag;
-    $ldap = $this->config->get_ldap_link();
-    $ldap->cd($this->cn);
-    $ldap->cat($this->dn,array($flag));
-    if($ldap->count()){
-      $attrs = $ldap->fetch();
-    }
-    if(isset($attrs[$flag][0])){
-      $this->$flag = $attrs[$flag][0];
-    }
-  }
-
 
 
   /* Return plugin informations for acl handling */
@@ -419,21 +378,22 @@ class servkolab extends plugin {
           "plCategory"    => array("server"),
 
           "plProvidedAcls"=> array(
-            "postfix_mydomain"                => _("Postfix mydomain") ,
-            "postfix_mydestination"           => _("My destination") ,
-            "proftpd_ftp"                     => _("FTP FreeBusy service") ,
-            "postfix_mynetworks"              => _("SMTP privileged networks") ,
-            "postfix_enable_virus_scan"       => _("Enable virus scan") ,
-            "postfix_relayhost"               => _("Relayhost") ,
-            "apache_http"                     => _("HTTP FreeBusy service") ,
-            "postfix_allow_unauthenticated"   => _("Accept Internet Mail") ,
-            "cyrus_imap"                      => _("IMAP service") ,
-            "kolabFreeBusyFuture"             => _("kolabFreeBusyFuture") ,
-            "cyrus_pop3"                      => _("POP3 service") ,
-            "cyrus_imaps"                     => _("IMAP/SSL service") ,
-            "cyrus_pop3s"                     => _("POP3/SSL service") ,
-            "cyrus_sieve"                     => _("Sieve service") ,
-            "cyrus_quotawarn"                 => _("Quota settings")) 
+            "postfixmydomain"                => _("Postfix mydomain") ,
+            "postfixmydestination"           => _("My destination") ,
+            "proftpdftp"                     => _("FTP FreeBusy service") ,
+            "postfixmynetworks"              => _("SMTP privileged networks") ,
+            "postfixenablevirusscan"         => _("Enable virus scan") ,
+            "postfixrelayhost"               => _("Relayhost") ,
+            "apachehttp"                     => _("HTTP FreeBusy service") ,
+            "apacheallowunauthenticatedfb"   => _("Allow unauthenticated free busy"),
+            "postfixallowunauthenticated"    => _("Accept Internet Mail") ,
+            "cyrusimap"                      => _("IMAP service") ,
+            "kolabFreeBusyFuture"            => _("kolabFreeBusyFuture") ,
+            "cyruspop3"                      => _("POP3 service") ,
+            "cyrusimaps"                     => _("IMAP/SSL service") ,
+            "cyruspop3s"                     => _("POP3/SSL service") ,
+            "cyrussieve"                     => _("Sieve service") ,
+            "cyrusquotawarn"                 => _("Quota settings")) 
             ));
   }
 }
