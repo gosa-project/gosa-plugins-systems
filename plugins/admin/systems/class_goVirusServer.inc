@@ -187,6 +187,12 @@ class govirusserver extends goService{
       }
     }
 
+    foreach(array("avUser"=>_("Database user"),"avHttpProxyURL"=>_("Http proxy URL"),"avDatabaseMirror"=>_("Database mirror")) as $attr => $name){
+      if(!preg_match("/^[a-z0-9:_\-\.\/]*$/",$this->$attr)){
+        $message[] = sprintf(_("Please specify a valid value for '%s'."),$name);
+      }
+    }
+  
     return($message);
   }
   
