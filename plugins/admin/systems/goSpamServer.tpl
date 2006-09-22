@@ -1,4 +1,4 @@
-<table style='width:100%;'>
+<table style='width:100%'>
  <tr>
   <td style='width:50%;vertical-align:top;'><h2>Spam tagging</h2>
 
@@ -8,7 +8,9 @@
       {t}Rewrite header{/t}      
      </td>
      <td>
-      <input type='text' name='saRewriteHeader' value='{$saRewriteHeader}' {$saRewriteHeaderACL}>
+{render acl=$saRewriteHeaderACL}
+      <input type='text' name='saRewriteHeader' value='{$saRewriteHeader}'>
+{/render}
      </td>
     </tr>
     <tr>
@@ -16,9 +18,11 @@
       {t}Required score{/t}      
      </td>
      <td>
+{render acl=$saRequiredScoreACL}
       <select name='saRequiredScore' title='{t}Select required score to tag mail as spam{/t}'>
        {html_options options=$SpamScore selected=$saRequiredScore}
       </select>
+{/render}
      </td>
     </tr>
    </table>
@@ -29,12 +33,20 @@
    <table width='100%'>
     <tr>
      <td>
-      <select name='TrustedNetworks[]' size=4 style='width:100%;' multiple {$saTrustedNetworksACL}>
+{render acl=$saTrustedNetworksACL}
+      <select name='TrustedNetworks[]' size=4 style='width:100%;' multiple>
        {html_options options=$TrustedNetworks}
       </select><br>
-      <input type='text'	{$saTrustedNetworksACL} name='NewTrustName' value=''>&nbsp;
-      <input type='submit'      {$saTrustedNetworksACL}	name='AddNewTrust'  value='{t}Add{/t}'>
-      <input type='submit'      {$saTrustedNetworksACL}	name='DelTrust'     value='{t}Remove{/t}'>
+{/render}
+{render acl=$saTrustedNetworksACL}
+      <input type='text'	name='NewTrustName' value=''>&nbsp;
+{/render}
+{render acl=$saTrustedNetworksACL}
+      <input type='submit'      name='AddNewTrust'  value='{t}Add{/t}'>
+{/render}
+{render acl=$saTrustedNetworksACL}
+      <input type='submit'      name='DelTrust'     value='{t}Remove{/t}'>
+{/render}
      </td>
     </tr>
    </table>
@@ -53,9 +65,15 @@
    <table>
     <tr>
      <td>
-      <input type='checkbox' {$saFlagsBACL} name='saFlagsB' value='1' {$saFlagsBCHK}> &nbsp;{t}Enable use of bayes filtering{/t}<br>
-      <input type='checkbox' {$saFlagsbACL} name='saFlagsb' value='1' {$saFlagsbCHK}> &nbsp;{t}Enable bayes auto learning{/t}<br>
-      <input type='checkbox' {$saFlagsCACL} name='saFlagsC' value='1' {$saFlagsCCHK}> &nbsp;{t}Enable RBL checks{/t}
+{render acl=$saFlagsBACL}
+      <input type='checkbox' name='saFlagsB' value='1' {$saFlagsBCHK}> &nbsp;{t}Enable use of bayes filtering{/t}<br>
+{/render}
+{render acl=$saFlagsbACL}
+      <input type='checkbox' name='saFlagsb' value='1' {$saFlagsbCHK}> &nbsp;{t}Enable bayes auto learning{/t}<br>
+{/render}
+{render acl=$saFlagsCACL}
+      <input type='checkbox' name='saFlagsC' value='1' {$saFlagsCCHK}> &nbsp;{t}Enable RBL checks{/t}
+{/render}
      </td>
     </tr>
    </table>
@@ -64,9 +82,15 @@
    <table>
     <tr>
      <td>
-      <input type='checkbox' {$saFlagsRACL} name='saFlagsR' value='1' {$saFlagsRCHK}> &nbsp;{t}Enable use of Razor{/t}<br>
-      <input type='checkbox' {$saFlagsDACL} name='saFlagsD' value='1' {$saFlagsDCHK}> &nbsp;{t}Enable use of DDC{/t}<br>
-      <input type='checkbox' {$saFlagsPACL} name='saFlagsP' value='1' {$saFlagsPCHK}> &nbsp;{t}Enable use of Pyzor{/t}
+{render acl=$saFlagsRACL}
+      <input type='checkbox' name='saFlagsR' value='1' {$saFlagsRCHK}> &nbsp;{t}Enable use of Razor{/t}<br>
+{/render}
+{render acl=$saFlagsDACL}
+      <input type='checkbox' name='saFlagsD' value='1' {$saFlagsDCHK}> &nbsp;{t}Enable use of DDC{/t}<br>
+{/render}
+{render acl=$saFlagsPACL}
+      <input type='checkbox' name='saFlagsP' value='1' {$saFlagsPCHK}> &nbsp;{t}Enable use of Pyzor{/t}
+{/render}
      </td>
     </tr>
    </table>
@@ -81,11 +105,15 @@
  <tr>
   <td colspan='2'><h2>Rules</h2>
 
-   <table width='100%;'>
+   <table width='100%'>
     <tr>
      <td>
+{render acl=$saTrustedNetworksACL}
       {$divRules}<br>
-      <input type='submit' name='AddRule' value='{t}Add{/t}' {$saTrustedNetworksACL}> 
+{/render}
+{render acl=$saTrustedNetworksACL}
+      <input type='submit' name='AddRule' value='{t}Add{/t}'> 
+{/render}
      </td>
     </tr>
    </table>
@@ -94,14 +122,12 @@
 </table>
 <input type='hidden' value='1' name='goSpamServer'>
 
-{if !$servtabs}
 <p class='seperator'>&nbsp;</p>
-<p>
 <div style="width:100%; text-align:right;">
+<p>
     <input type='submit' name='SaveService' value='{t}Save{/t}'>
     &nbsp;
     <input type='submit' name='CancelService' value='{t}Cancel{/t}'>
-</div>
 </p>
-{/if}
+</div>
 
