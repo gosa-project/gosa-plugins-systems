@@ -299,10 +299,13 @@ class gospamserver extends goService{
       /* Check flags */
       foreach($this->Flags as $flag){
         $var = "saFlags".$flag;
-        if(isset($_POST[$var])){
-          $this->$var = TRUE;
-        }else{
-          $this->$var = FALSE;
+
+        if($this->acl_is_writeable($var)){
+          if(isset($_POST[$var])){
+            $this->$var = TRUE;
+          }else{
+            $this->$var = FALSE;
+          }
         }
       }
     }    

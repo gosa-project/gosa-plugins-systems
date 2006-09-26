@@ -108,9 +108,7 @@
    <table width='100%'>
     <tr>
      <td>
-{render acl=$saTrustedNetworksACL}
       {$divRules}<br>
-{/render}
 {render acl=$saTrustedNetworksACL}
       <input type='submit' name='AddRule' value='{t}Add{/t}'> 
 {/render}
