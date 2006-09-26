@@ -109,12 +109,10 @@ class servkolab extends goService {
      ***************/
 
     /* Set relayhost and if we have MX lookup enabled*/ 
-    if($this->acl_is_writeable("postfixmxrelayenabled")){
-      if($this->postfix_mxrelayenabled) {
-        $smarty->assign("RelayMxSupportCheck"," checked ");
-      } else {
-        $smarty->assign("RelayMxSupportCheck","");
-      }
+    if($this->postfix_mxrelayenabled) {
+      $smarty->assign("RelayMxSupportCheck"," checked ");
+    } else {
+      $smarty->assign("RelayMxSupportCheck","");
     }
 
     /* Set acls */
@@ -246,8 +244,10 @@ class servkolab extends goService {
         }
       }
 
-      /* Toggle relay check */
-      $this->postfix_mxrelayenabled= isset($_POST['RelayMxSupport']);
+      /* Toggell relay check */
+      if($this->acl_is_writeable("postfixmxrelayenabled")){
+        $this->postfix_mxrelayenabled= isset($_POST['RelayMxSupport']);
+      }
     }
 
   }
