@@ -35,4 +35,4 @@
     <input type='submit' name='CancelService' value='{t}Cancel{/t}'>
 </div>
 </p>
-<input type="hidden" name="goLogDBServerPosted" value="1">
+<input type="hidden" name="goGlpiServer_posted" value="1">

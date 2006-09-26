@@ -52,7 +52,6 @@ class goGlpiServer extends goService {
   {
     $fields               = goService::getListEntry();
     $fields['Message']    = _("Inventory database service");
-    $fields['AllowRemove']= true;
     $fields['AllowEdit']  = true;
     return($fields);
   }
@@ -72,7 +71,7 @@ class goGlpiServer extends goService {
 
   function save_object()
   {
-    if(isset($_POST['goLogDBServerPosted'])){
+    if(isset($_POST['goGlpiServer_posted'])){
       plugin::save_object();
     }
   } 
