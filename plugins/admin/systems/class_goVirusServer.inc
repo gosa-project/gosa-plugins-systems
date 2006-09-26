@@ -69,31 +69,9 @@ class govirusserver extends goService{
       $smarty->assign($name."ACL",$this->getacl($name));
     }
 
-    if(get_class($this->parent) == "servtabs"){
-
-      $smarty->assign("servtabs",TRUE);
-
-      /* Do we need to flip is_account state? */
-      if (isset($_POST['modify_state'])) {
-        $this->is_account = !$this->is_account;
-      }
-
-      /* Show tab dialog headers */
-      if ($this->is_account) {
-        /* call Add Acoount to add account */
-        $display = $this->show_header(_("Remove anti virus extension"), 
-            _("This server has anti virus features enabled. You can disable them by clicking below."));
-      } else {
-        /* call remove Account */
-        $display = $this->show_header(_("Add anti virus service"), 
-            _("This server has anti virus features disabled. You can enable them by clicking below."));
-        return ($display);
-      }
-    }else{
-      $display = "";
-      $smarty->assign("servtabs",FALSE);
-      $this->is_account = true;
-    }
+    $display = "";
+    $smarty->assign("servtabs",FALSE);
+    $this->is_account = true;
 
     /* Assign smarty vars */
     foreach($this->attributes as $attr){
