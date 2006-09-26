@@ -261,6 +261,12 @@ class ServerService extends plugin
           }
         }
       }
+
+      /* Only show createable services */
+      if(!$obj->acl_is_createable()){
+        $skip = true;
+      }
+
       if(!$skip){
         if(isset($obj->DisplayName)){
           $ret[$name] = $obj->DisplayName;
