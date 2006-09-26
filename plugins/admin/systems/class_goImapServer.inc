@@ -63,7 +63,16 @@ class goImapServer extends goService {
     /* set new status */
     if(isset($_POST['ExecAction'])){
       if(isset($this->Actions[$_POST['action']])){
-        $this->setStatus($_POST['action']);
+
+        $tmp = $this->plInfo();
+        foreach($tmp['plProvidedAcls'] as $name => $translation) {
+          if(preg_match("/^".$_POST['action']."$/i",$name)){
+            if($this->acl_is_writeable($name)){
+              $this->setStatus($_POST['action']);
+            }
+          }
+        }
+
       }
     }
 
@@ -125,10 +134,13 @@ class goImapServer extends goService {
       plugin::save_object(); 
 
       foreach(array("cyrusImap","cyrusImapSSL","cyrusPop3","cyrusPop3SSL") as $checkbox) { 
-        if(!isset($_POST[$checkbox])){
-          $this->$checkbox = false;
-        }else{
-          $this->$checkbox = true;
+
+        if($this->acl_is_writeable($checkbox)){
+          if(!isset($_POST[$checkbox])){
+            $this->$checkbox = false;
+          }else{
+            $this->$checkbox = true;
+          }
         }
       }
     }
@@ -149,9 +161,10 @@ class goImapServer extends goService {
 
           "plProvidedAcls"=> array(
 
-            "start"         => _("Start"),
-            "stop"          => _("Stop"),
-            "restart"       => _("Restart"),
+            "start"           => _("Start"),
+            "stop"            => _("Stop"),
+            "restart"         => _("Restart"),
+            "repair_database" => _("Repair database"),
 
             "goImapName"        =>_("Server identifier"),
             "goImapConnect"     =>_("Connect URL"),
