@@ -108,11 +108,13 @@ class servkolab extends goService {
       Assign informations to smarty 
      ***************/
 
-    /* Set relayhost and if we have MX lookup enabled*/
-    if($this->postfix_mxrelayenabled) {
-      $smarty->assign("RelayMxSupportCheck"," checked ");
-    } else {
-      $smarty->assign("RelayMxSupportCheck","");
+    /* Set relayhost and if we have MX lookup enabled*/ 
+    if($this->acl_is_writeable("postfixmxrelayenabled")){
+      if($this->postfix_mxrelayenabled) {
+        $smarty->assign("RelayMxSupportCheck"," checked ");
+      } else {
+        $smarty->assign("RelayMxSupportCheck","");
+      }
     }
 
     /* Set acls */
@@ -294,7 +296,7 @@ class servkolab extends goService {
 
     /* Adapt relayhost */
     $this->postfix_relayhost= preg_replace('/[\[\]]/', '', $this->postfix_relayhost);
-    if (!$this->postfix_mxrelayenabled && $this->postfix_relayhost != ""){
+    if ($this->postfix_mxrelayenabled && $this->postfix_relayhost != ""){
       $this->postfix_relayhost= "[".$this->postfix_relayhost."]";
     }
 
@@ -384,6 +386,7 @@ class servkolab extends goService {
             "postfixmynetworks"              => _("SMTP privileged networks") ,
             "postfixenablevirusscan"         => _("Enable virus scan") ,
             "postfixrelayhost"               => _("Relayhost") ,
+            "postfixmxrelayenabled"          => _("Enable MX lookup for relayhost"),
             "apachehttp"                     => _("HTTP FreeBusy service") ,
             "apacheallowunauthenticatedfb"   => _("Allow unauthenticated free busy"),
             "postfixallowunauthenticated"    => _("Accept Internet Mail") ,
