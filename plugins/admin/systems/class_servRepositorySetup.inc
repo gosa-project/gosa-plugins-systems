@@ -128,8 +128,15 @@ class servRepositorySetup  extends plugin
 
   /* Save data to object */
   function save_object()
-  { 
-    plugin::save_object();
+  {
+    if(isset($_POST['servRepositorySetup_Posted'])) {
+  
+      foreach($this->attributes as $attr){
+        if(($this->parent->acl_is_writeable($attr)) && (isset($_POST[$attr]))){
+          $this->$attr = $_POST[$attr];      
+        }
+      }
+    }
   }
 
 
