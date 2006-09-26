@@ -34,12 +34,12 @@ class servnfs extends plugin
     $this->parent = $parent;
     $dn = $parent->dn;
     plugin::plugin ($config, $dn);
-  
+
     $this->types   = array("CIFS" => "CIFS", "NFS"=>"NFS","samba"=>"samba","netatalk"=>"netatalk","NCP"=>"NCP");
     if($dn){
       $this->host = substr($dn, 3, strpos($dn, ',')-3);
     }
-    
+
     $this->charsets = array();
 
     if(!file_exists("/etc/gosa/encodings")){
@@ -53,7 +53,7 @@ class servnfs extends plugin
         while(!feof($fp)&&$i){
           $i -- ;
           $str = trim(fgets($fp,256));
-      
+
           /* Skip comments */
           if(!preg_match("/^#/",$str)){
             $arr = split("\=",$str);
@@ -62,21 +62,19 @@ class servnfs extends plugin
             }
           }
         }
-
-    
       }
     }
 
     if($entry){
       list($this->name, $this->description, $this->type, $this->charset,
-           $this->path, $this->option, $this->volume)= split("\|",$entry."|");
+          $this->path, $this->option, $this->volume)= split("\|",$entry."|");
       $this->is_edit          = true;
 
     }else{
       $this->attributes[] = "name";
     }
 
-    
+
     $this->create_mount_init = $mount;
   }
 
@@ -103,41 +101,40 @@ class servnfs extends plugin
 
     $smarty->assign("name",$this->name);
     if($this->is_edit){
-      $smarty->assign("nameACL", preg_replace("/w/",$this->getacl("name")));
-    }
-    
+      $smarty->assign("nameACL", preg_replace("/w/","",$this->parent->getacl("name")));
+    } 
     $smarty->assign("allow_mounts", $this->parent->allow_mounts);
     $smarty->assign("mount_checked", "");
-    
+
     $smarty->assign("appleMountsACL",    $this->getacl("appleMounts"));
-  
+
     if (($this->type == "netatalk") || ($this->type == "NFS")) {
-        if ($this->create_mount_init) {
-          $smarty->assign("mount_checked", "checked");
-        } else {
+      if ($this->create_mount_init) {
+        $smarty->assign("mount_checked", "checked");
+      } else {
         $tmp = split(",", $this->dn);
         $clip = $tmp[0] . ",ou=servers,ou=systems,";
         $mountsdn = "cn=mounts," . substr($this->dn, strlen($clip));
-          switch ($this->type) {
-            case "netatalk" : {
-              $mountdn = "cn=".$this->host.":/".$this->name.",".$mountsdn;
-              break;
-            }
-            case "NFS" : {
-              $mountdn = "cn=".$this->host.":".$this->path.",".$mountsdn;
-              break;
-            }
-            default : {
-              continue;
-            }
+        switch ($this->type) {
+          case "netatalk" : {
+            $mountdn = "cn=".$this->host.":/".$this->name.",".$mountsdn;
+            break;
           }
+          case "NFS" : {
+            $mountdn = "cn=".$this->host.":".$this->path.",".$mountsdn;
+            break;
+          }
+          default : {
+                      continue;
+                    }
+        }
         $ldap = $this->config->get_ldap_link();
         $ldap->cat($mountdn, array('dn'));
         $attrs = $ldap->fetch();
         if (count($attrs) > 0) {
-            $smarty->assign("mount_checked", "checked");
+          $smarty->assign("mount_checked", "checked");
         }
-        }        
+      }        
     }
 
     $display= $smarty->fetch(get_template_path('servnfs.tpl', TRUE));
@@ -153,7 +150,7 @@ class servnfs extends plugin
   /* Save data to object */
   function save_object()
   {
-    if(isset($_POST['path'])){
+    if(isset($_POST['servnfs_posted'])){
 
       foreach($this->attributes as $name){
         if($this->parent->acl_is_writeable($name) && isset($_POST[$name])){
@@ -198,7 +195,7 @@ class servnfs extends plugin
     if(preg_match("/[^a-z0-9._+ |-]/i",$this->volume)){
       $message[]=_("Volume contains invalid characters.");
     }
-  
+
     if(preg_match("/\|/",$this->path)){
       $message[]=_("Path contains invalid characters.");
     }
@@ -207,13 +204,13 @@ class servnfs extends plugin
       $message[]=_("Option contains invalid characters.");
     }
 
-  /* remove a / at the end of the path, we neither need it there nor
-   * do we want to check for it later.
-   */
-  if(substr($this->path, -1, 1) == '/') {
-    $this->path=substr($this->path, 0, -1);
-  }
-  
+    /* remove a / at the end of the path, we neither need it there nor
+     * do we want to check for it later.
+     */
+    if(substr($this->path, -1, 1) == '/') {
+      $this->path=substr($this->path, 0, -1);
+    }
+
     $ldap= $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
     $ldap->search("(objectClass=goShareServer)", array("goExportEntry"));
@@ -252,7 +249,7 @@ class servnfs extends plugin
 
     return(array($this->name=>$s_return));
   }
-  
+
   function should_create_mount() {
     return $this->create_mount;
   }

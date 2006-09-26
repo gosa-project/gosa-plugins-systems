@@ -55,7 +55,7 @@ class goShareServer extends goService{
     $smarty = get_smarty(); 
 
 
-    if((isset($_POST['DelNfsEnt']))&&(isset($_POST['goExportEntryList']))){
+    if((isset($_POST['DelNfsEnt']))&&(isset($_POST['goExportEntryList'])) && ($this->acl_is_writeable("name"))){
       if($this->allow_mounts){
         foreach($_POST['goExportEntryList'] as $entry){
           $this->deleteFromMountList($this->goExportEntryList[$entry]);
@@ -66,7 +66,7 @@ class goShareServer extends goService{
       }
     }
 
-    if(isset($_POST['NewNfsAdd'])){
+    if(isset($_POST['NewNfsAdd']) && ($this->acl_is_writeable("name"))){
       $this->oldone = NULL;
       $this->o_subWindow = new servnfs($this->config, $this);
       $this->o_subWindow->set_acl_category("server");
@@ -96,6 +96,7 @@ class goShareServer extends goService{
       }else{
         $this->o_subWindow->save_object();
         $newone = $this->o_subWindow->save();
+
         $this->addToList($newone);
         if($this->allow_mounts){
           if($this->oldone) {
@@ -128,11 +129,9 @@ class goShareServer extends goService{
 
     /* Set acls */
     $tmp = $this->plInfo();
-    $acl = ""; 
     foreach($tmp['plProvidedAcls'] as $name => $translated){
-      $acl .= $this->getacl($name);
+      $smarty->assign($name."ACL",$this->getacl($name));
     }
-    $smarty->assign("goExportEntryACL",$acl);
     $smarty->assign("createable",$this->acl_is_createable());
     $smarty->assign("removeable",$this->acl_is_removeable());
 
@@ -268,20 +267,24 @@ class goShareServer extends goService{
 
   function addToMountList($entry) 
   {
-    $key =  key($entry);
-    $type = $this->get_share_type($entry[$key]);
-    if (($type == "netatalk") || ($type == "NFS")) {
-      $this->mounts_to_add[$entry[$key]] = $entry[$key];
-      unset($this->mounts_to_remove[$entry[$key]]);
+    if($this->acl_is_writeable("name")){
+      $key =  key($entry);
+      $type = $this->get_share_type($entry[$key]);
+      if (($type == "netatalk") || ($type == "NFS")) {
+        $this->mounts_to_add[$entry[$key]] = $entry[$key];
+        unset($this->mounts_to_remove[$entry[$key]]);
+      }
     }
   }
 
   function deleteFromMountList($entry) 
   {
-    $type = $this->get_share_type($entry);
-    if (($type == "netatalk") || ($type == "NFS")) {
-      $this->mounts_to_remove[$entry] = $entry;
-      unset($this->mounts_to_add[$entry]);
+    if($this->acl_is_writeable("name")){
+      $type = $this->get_share_type($entry);
+      if (($type == "netatalk") || ($type == "NFS")) {
+        $this->mounts_to_remove[$entry] = $entry;
+        unset($this->mounts_to_add[$entry]);
+      }
     }
   }
 

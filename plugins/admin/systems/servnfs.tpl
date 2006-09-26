@@ -141,3 +141,4 @@
 		</td>
 	</tr>
 </table>
+<input type='hidden' name='servnfs_posted' value='1'>
