@@ -99,10 +99,12 @@ class goTerminalServer extends goService{
   {
     if(isset($_POST['goTerminalServerPosted'])){
       plugin::save_object();
-      if(isset($_POST['goXdmcpIsEnabled'])){
-        $this->goXdmcpIsEnabled = true;
-      }else{
-        $this->goXdmcpIsEnabled = false;
+      if($this->acl_is_writeable("goXdmcpIsEnabled")){
+        if(isset($_POST['goXdmcpIsEnabled'])){
+          $this->goXdmcpIsEnabled = true;
+        }else{
+          $this->goXdmcpIsEnabled = false;
+        }
       }
     }
   } 
