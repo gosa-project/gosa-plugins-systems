@@ -270,7 +270,7 @@ class glpiAccount extends plugin
 
     /* System type management
      */
-    if(isset($_POST['edit_type']) && $this->acl->acl_is_writeable("type")){
+    if(isset($_POST['edit_type']) && $this->acl_is_writeable("type")){
       $this->dialog = true;
       $this->edit_type=true;
     }
