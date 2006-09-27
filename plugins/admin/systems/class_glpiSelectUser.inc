@@ -147,7 +147,8 @@ class glpiSelectUser extends plugin
        which are shown in the listbox on top of the listbox
      */
     $options= "";
-    foreach ($this->config->idepartments as $key => $value){
+    $this->base = $_SESSION['glpi_user_filter']['base'];
+    foreach ($this->get_allowed_bases("users/user") as $key => $value){
       if ($_SESSION['glpi_user_filter']['base'] == $key){
         $options.= "<option selected='selected' value='$key'>$value</option>";
       } else {
@@ -208,8 +209,8 @@ class glpiSelectUser extends plugin
      * So we are able to navigate like in konquerer
      */
 
-    $res3= get_list("(&(|(ou=*)(description=*))(objectClass=gosaDepartment))",
-                    "glpi", $base, array("ou", "description"), GL_SIZELIMIT | GL_CONVERT);
+    $res3= get_list("(&(|(ou=*)(description=*))(objectClass=gosaDepartment))",preg_replace("/\//","",$this->acl_category),
+       $base, array("ou", "description"), GL_SIZELIMIT | GL_CONVERT);
 
     $this->departments= array();
     $tmp = array();
@@ -228,7 +229,8 @@ class glpiSelectUser extends plugin
     /* END NEW LIST MANAGMENT
      */
     $ou = get_people_ou();
-    $res2= get_list("(&(|(cn=$regex)(sn=$regex))(objectClass=person))", "glpi",
+
+    $res2= get_list("(&(|(cn=$regex)(sn=$regex))(objectClass=person))", preg_replace("/\//","",$this->acl_category),
                     $ou.$base, array("cn", "sn", "uid", "givenName", "description"),
                     GL_SUBSEARCH | GL_SIZELIMIT);
 

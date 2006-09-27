@@ -453,6 +453,9 @@ class glpiAccount extends plugin
     if(isset($_POST['SelectContactPerson']) && $this->acl_is_writeable("contact_num")){
       $this->addUser = "contact";
       $this->cur_dialog= new glpiSelectUser($this->config,$this->dn,"user_tech_num");
+      $this->cur_dialog->set_acl_category(preg_replace("/\//","",$this->acl_category));
+      $this->cur_dialog->set_acl_base($this->dn);
+
     }
 
     /* Open dialog which allows to edit the manufacturers
@@ -483,6 +486,8 @@ class glpiAccount extends plugin
     if(isset($_POST['SelectTechPerson']) && $this->acl_is_writeable("tech_num")){
       $this->addUser ="tech";
       $this->cur_dialog= new glpiSelectUser($this->config,$this->dn,"user_tech_num");
+      $this->cur_dialog->set_acl_category(preg_replace("/\//","",$this->acl_category));
+      $this->cur_dialog->set_acl_base($this->dn);
     }
 
     /* Technical responsible person selected*/
