@@ -2176,6 +2176,59 @@ function obj_is_writable($dn, $object, $attribute)
 }
 
 
+function gosa_ldap_explode_dn($dn,$config = NULL,$verify_in_ldap=false)
+{
+  /* Initialize variables */
+  $ret  = array("count" => 0);  // Set count to 0
+  $next = true;                 // if false, then skip next loops and return
+  $cnt  = 0;                    // Current number of loops
+  $max  = 100;                  // Just for security, prevent looops
+  $ldap = NULL;                 // To check if created result a valid
+  $keep = "";                   // save last failed parse string
+
+  /* Check each parsed dn in ldap ? */
+  if($config!=NULL && $verify_in_ldap){
+    $ldap = $config->get_ldap_link();
+  }
+
+  $Diff = ldap_explode_dn($dn,0);
+
+  /* Lets start */
+  while(preg_match("/,/",$dn) && $next &&  $cnt < $max){
+
+    $cnt ++;
+    if(!preg_match("/,/",$dn)){
+      $next = false;
+    }
+    $object = preg_replace("/[,].*$/","",$dn);
+    $dn     = preg_replace("/^[^,]+,/","",$dn);
+
+    /* Check if current dn is valid */
+    if($ldap!=NULL){
+      $ldap->cd($dn);
+      $ldap->cat($dn,array("dn"));
+      if($ldap->count()){
+        $ret[]  = $keep.$object;
+        $keep   = "";
+      }else{
+        $keep  .= $object.",";
+      }
+    }else{
+      $ret[]  = $keep.$object;
+      $keep   = "";
+    }
+  }
+
+  /* Append the rest */
+  $ret[] = $keep.$dn;
+  $ret['count'] = count($ret) - 1;
+
+  $diff = array_diff($ret,$Diff);
+  if($diff){
+    print_a(array("Diff" => $diff,"OLD" => $Diff,"NEW"=> $ret,"DEBUG"=> debug_backtrace()));
+  }
+  return($ret);
+}
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

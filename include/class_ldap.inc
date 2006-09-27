@@ -645,7 +645,7 @@ class LDAP{
     }
 
     $real_path= substr($target, 0, strlen($target) - strlen($this->basedn) -1 );
-    $l= array_reverse(ldap_explode_dn($real_path,0));
+    $l= array_reverse(gosa_ldap_explode_dn($real_path));
     unset($l['count']);
     $cdn= $this->basedn;
     $tag= "";
@@ -1098,7 +1098,7 @@ class LDAP{
     if(isset($data['dn'])) {
 
       /* Fix dn */
-      $tmp = ldap_explode_dn($data['dn'],0);
+      $tmp = gosa_ldap_explode_dn($data['dn']);
       unset($tmp['count']);
       $newdn ="";
       foreach($tmp as $tm){

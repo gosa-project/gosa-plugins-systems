@@ -153,7 +153,7 @@ class systems extends plugin
         $tabclass = $tabs[$sw]["TABCLASS"];
         $acl_cat  = $tabs[$sw]["ACL"];
         $this->systab= new $tabclass($this->config, $this->config->data['TABS'][$class], $this->dn,$acl_cat);
-        $this->systab->set_acl_base($this->base);
+        $this->systab->set_acl_base($this->DivListSystem->selectedBase);
         $this->systab->by_object[$tabname]->base = $this->DivListSystem->selectedBase;
         $this->systab->base = $this->DivListSystem->selectedBase;
       }
