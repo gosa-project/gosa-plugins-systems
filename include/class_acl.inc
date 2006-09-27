@@ -473,7 +473,28 @@ class acl extends plugin
     return ($smarty->fetch (get_template_path('acl.tpl')));
   }
 
-  
+  function sort_by_priority($list)
+  {
+    $tmp= get_global('plist');
+    $plist= $tmp->info;
+    asort($plist);
+
+    foreach($list as $name => $translation){
+      $na  =  preg_replace("/^.*\//","",$name);
+      $prio=  $plist[$na]['plPriority'] ;
+
+      $newSort[$name] = $prio;
+    }
+
+    asort($newSort);
+
+    $ret = array();
+    foreach($newSort as $name => $prio){
+      $ret[$name] = $list[$name];
+    }
+    return($ret);
+  }
+
   function buildAclSelector($list)
   {
     $display= "<input type='hidden' name='acl_dummy_0_0_0' value='1'>";
@@ -483,6 +504,8 @@ class acl extends plugin
     asort($plist);
 
     /* Build general objects */
+
+    $list =$this->sort_by_priority($list);
     foreach ($list as $key => $name){
 
       /* Create sub acl if it does not exist */
