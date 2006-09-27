@@ -76,8 +76,7 @@
        <td style="vertical-align:top;"><LABEL for="postalAddress">{t}Address{/t}</LABEL></td>
        <td>
 {render acl=$postalAddressACL}
-	<textarea id="postalAddress" name="postalAddress" style="width:100%" rows=3 cols=22 title="{t}Postal address of this subtree{/t}">{$postalAddress}
-        </textarea>
+	<textarea id="postalAddress" name="postalAddress" style="width:100%" rows=3 cols=22 title="{t}Postal address of this subtree{/t}">{$postalAddress}</textarea>
 {/render}
       </tr>
       <tr>
