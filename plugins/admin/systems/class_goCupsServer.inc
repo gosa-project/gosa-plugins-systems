@@ -61,10 +61,10 @@ class goCupsServer extends goService{
   {
     return (array(
           "plShortName"   => _("Cups"),
-          "plDescription" => _("Cups service"),
+          "plDescription" => _("Print service")." ("._("Services").")",
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
-          "plPriority"    => 0,
+          "plPriority"    => 100,
           "plSection"     => array("administration"),
           "plCategory"    => array("server"),
 
