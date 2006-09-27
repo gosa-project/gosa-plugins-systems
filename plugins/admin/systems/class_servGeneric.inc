@@ -52,6 +52,9 @@ class servgeneric extends plugin
       $this->base= preg_replace ("/^[^,]+,[^,]+,[^,]+,/", "", $this->dn);
     }
     $this->netConfigDNS = new termDNS($this->config,$this->dn,$this->objectclasses);
+    $this->netConfigDNS->set_acl_category("server");
+    $this->netConfigDNS->set_acl_base($this->base);
+  
     /* Save dn for later references */
     $this->orig_dn= $this->dn;
   }

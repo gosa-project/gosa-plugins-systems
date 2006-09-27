@@ -118,6 +118,12 @@ class termDNS extends plugin
   {
 	  /* Call parent execute */
     $smarty= get_smarty();
+
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $name => $translation){
+      $smarty->assign($name."ACL",$this->getacl($name));
+    }
+
     $display= "";
 
     $smarty->assign("staticAddress", ""); 
@@ -166,7 +172,15 @@ class termDNS extends plugin
     }else{
       $smarty->assign("DNS_is_account",true); 
     }
- 
+
+    $accountACL = false; 
+    if($this->DNSenabled && $this->acl_is_removeable()){
+      $accountACL = true;
+    }elseif(!$this->DNSenabled && $this->acl_is_createable()){
+      $accountACL = true;
+    }
+    $smarty->assign("accountACL",$accountACL);
+
     /* Add new empty array to our record list */
     if(isset($_POST['AddNewRecord'])){
       $this->dnsEntry['RECORDS'][]  =array("type"=>"aRecord","value"=>"");
@@ -243,7 +257,7 @@ class termDNS extends plugin
     
     /* Ge all non dns attributes (IP/MAC)*/
     foreach($this->attributes as $attr){
-      if(isset($_POST[$attr])){
+      if(isset($_POST[$attr]) && $this->acl_is_writeable($attr)){
         $this->$attr = $_POST[$attr];
       }
     }
@@ -252,7 +266,7 @@ class termDNS extends plugin
     if(($this->DNSenabled) && (isset($_POST['network_tpl_posted']))){
 
       /* Check for posted record changes */
-      if(is_array($this->dnsEntry['RECORDS'])){
+      if(is_array($this->dnsEntry['RECORDS']) && $this->acl_is_writeable("Records")){
         foreach($this->dnsEntry['RECORDS'] as $key => $value){
 
           /* Check if type has changed */
@@ -267,16 +281,15 @@ class termDNS extends plugin
       }
       /* Get all basic DNS attributes (TTL, Clas ..)*/
       foreach($this->DNSattributes as $attr){
-        if(isset($_POST[$attr])){
+        if(isset($_POST[$attr]) && $this->acl_is_writeable($attr)){
           $this->dnsEntry[$attr] = $_POST[$attr];
         }
       }
 
-      /* Enable diable DNS */
-      if(isset($_POST['enableDNS'])){
-        $this->DNS_is_account = true;
-      }else{
+      if($this->DNSenabled && $this->acl_is_removeable() && !isset($_POST['enableDNS'])){
         $this->DNS_is_account = false;
+      }elseif(!$this->DNSenabled && $this->acl_is_createable() && isset($_POST['enableDNS'])){
+        $this->DNS_is_account = true;
       }
     }
   }
@@ -294,7 +307,7 @@ class termDNS extends plugin
   
       /* Check if ip is empty 
        */
-      if ($this->ipHostNumber == "" && chkacl ($this->acl, "ipHostNumber") == ""){
+      if ($this->ipHostNumber == "" && $this->acl_is_writeable("ipHostNumber")){
         $message[]= _("The required field 'IP-address' is not set.");
       }
 
@@ -308,7 +321,7 @@ class termDNS extends plugin
 
     /* Check if mac is empty 
      */
-    if ($this->macAddress == "" && chkacl ($this->acl, "macAddress") == ""){
+    if ($this->macAddress == "" && $this->acl_is_writeable("macAddress")){
       $message[]= _("The required field 'MAC-address' is not set.");
     }
 
@@ -506,22 +519,31 @@ class termDNS extends plugin
   /* Return plugin informations for acl handling  */ 
   function plInfo()
   {
-    return (array(
-          "plShortName"   => _("DNS"),
-          "plDescription" => _("DNS settings"),
-          "plSelfModify"  => FALSE,
-          "plDepends"     => array(),
-          "plPriority"    => 5,
-          "plSection"     => array("administration"),
-          "plCategory"    => array("workstation","terminal","phone","server","component","printer"),
+    $tmp =  array(
+        "plShortName"   => _("DNS"),
+        "plDescription" => _("DNS settings"),
+        "plSelfModify"  => FALSE,
+        "plDepends"     => array(),
+        "plPriority"    => 5,
+        "plSection"     => array("administration"),
+        "plCategory"    => array("workstation","terminal","phone","server","component","printer"),
 
-          "plProvidedAcls"=> array(
-            "Records"       => _("DNS records"),
-            "zoneName"      => _("Zone name"),
-            "dNSTTL"        => _("TTL"),
-            "ipHostNumber"  => _("IP address"),
-            "macAddress"    => _("MAC address"))
-          ));
+        "plProvidedAcls"=> array(
+          "ipHostNumber"  => _("IP address"),
+          "macAddress"    => _("MAC address"))
+        );
+
+    /* Hide all dns specific code, if dns is not available
+     */
+    $DNSenabled = false;
+    foreach($_SESSION['config']->data['TABS']['SERVERSERVICE'] as $tab){
+      if(preg_match("/^servdns$/",$tab['CLASS'])){
+        $tmp['plProvidedAcls']["Records"]        = _("DNS records");
+        $tmp['plProvidedAcls']["zoneName"]       = _("Zone name");
+        $tmp['plProvidedAcls']["dNSTTL"]         = _("TTL");
+      }
+    }
+    return($tmp);
   }
 }
 
