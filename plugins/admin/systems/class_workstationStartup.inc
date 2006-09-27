@@ -1101,7 +1101,7 @@ class workstartup extends plugin
           "plDescription" => _("System startup"),
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
-          "plPriority"    => 0,
+          "plPriority"    => 9,
           "plSection"     => array("administration"),           
           "plCategory"    => array("workstation","server","ogroups"),
 

@@ -26,7 +26,7 @@ class goNtpServer extends goService{
   function goNtpServer($config,$dn)
   {
     plugin::plugin($config,$dn);
-    $this->DisplayName = _("Time service");
+    $this->DisplayName = _("Time service (NTP)");
 
     /* Load arrays */
     $tmp = array();
@@ -67,7 +67,7 @@ class goNtpServer extends goService{
   function getListEntry()
   {
     $fields               = goService::getListEntry();
-    $fields['Message']    = _("NTP service");
+    $fields['Message']    = _("Time service (NTP)");
     $fields['AllowEdit']  = true;
     return($fields);
   }
@@ -103,11 +103,11 @@ class goNtpServer extends goService{
   function plInfo()
   {
     return (array(
-          "plShortName"   => _("NTP"),
-          "plDescription" => _("NTP service"),
+          "plShortName"   => _("Time service"),
+          "plDescription" => _("Time service - NTP")." ("._("Services").")",
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
-          "plPriority"    => 0,
+          "plPriority"    => 91,
           "plSection"     => array("administration"),
           "plCategory"    => array("server"),
 

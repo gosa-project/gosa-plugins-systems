@@ -372,10 +372,10 @@ class servkolab extends goService {
   {
     return (array(
           "plShortName"   => _("Kolab"),
-          "plDescription" => _("Kolab service"),
+          "plDescription" => _("Kolab mail service")." ("._("Services").")",
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
-          "plPriority"    => 0,
+          "plPriority"    => 85,
           "plSection"     => array("administration"),
           "plCategory"    => array("server"),
 

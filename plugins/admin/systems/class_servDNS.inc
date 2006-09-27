@@ -1,6 +1,8 @@
 <?php
 
-class servdns extends plugin
+require_once("class_goService.inc");
+
+class servdns extends goService
 {
   /* CLI vars */
   var $cli_summary= "Manage server basic objects";
@@ -29,7 +31,7 @@ class servdns extends plugin
   {
     plugin::plugin ($config, $dn, $parent);
 
-    $this->DisplayName = _("Domain name system service");
+    $this->DisplayName = _("DNS service");
 
     $this->orig_dn = $dn;
 
@@ -347,18 +349,8 @@ class servdns extends plugin
 
   function getListEntry()
   {
-    $this->updateStatusState();
-    $flag = $this->StatusFlag;
-    if(empty($flag)){
-      $fields['Status']      = "";
-    }else{
-      $fields['Status']      = $this->$flag;
-    }
+    $fields               = goService::getListEntry(); 
     $fields['Message']    = _("DNS service");
-    $fields['AllowStart'] = true;
-    $fields['AllowStop']  = true;
-    $fields['AllowRestart'] = true;
-    $fields['AllowRemove']= true;
     $fields['AllowEdit']  = true;
     return($fields);
   }
@@ -387,11 +379,11 @@ class servdns extends plugin
   function plInfo()
   {
     return (array(
-          "plShortName"   => _("DNS"),
-          "plDescription" => _("DNS service"),
+          "plShortName"   => _("DNS service"),
+          "plDescription" => _("DNS service")." ("._("Services").")",
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
-          "plPriority"    => 0,
+          "plPriority"    => 83,
           "plSection"     => array("administration"),
           "plCategory"    => array("server"),
 

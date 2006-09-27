@@ -80,11 +80,11 @@ class goGlpiServer extends goService {
   function plInfo()
   {
     return (array(
-          "plShortName"   => _("Glpi server"),
-          "plDescription" => _("Glpi server service"),
+          "plShortName"   => _("Inventory database"),
+          "plDescription" => _("Inventory database")." ("._("Services").")" ,
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
-          "plPriority"    => 0,
+          "plPriority"    => 93,
           "plSection"     => array("administration"),
           "plCategory"    => array("server"),
 

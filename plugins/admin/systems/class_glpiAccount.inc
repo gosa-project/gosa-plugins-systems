@@ -762,7 +762,7 @@ class glpiAccount extends plugin
           "plDescription" => _("Inventory extension"),
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
-          "plPriority"    => 0,
+          "plPriority"    => 20,
           "plSection"     => array("administration"),
           "plCategory"    => array("workstation","terminal","component","server","phone") ,
           "plProvidedAcls"=> array(

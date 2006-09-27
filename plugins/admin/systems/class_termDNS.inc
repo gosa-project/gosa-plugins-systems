@@ -511,7 +511,7 @@ class termDNS extends plugin
           "plDescription" => _("DNS settings"),
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
-          "plPriority"    => 0,
+          "plPriority"    => 5,
           "plSection"     => array("administration"),
           "plCategory"    => array("workstation","terminal","phone","server","component","printer"),
 

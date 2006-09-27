@@ -50,7 +50,7 @@ class goKrbServer extends goService{
   function getListEntry()
   {
     $fields               = goService::getListEntry();
-    $fields['Message']    = _("Kerberos kadmin access informations");
+    $fields['Message']    = _("Kerberos service (kadmin access informations)");
     $fields['AllowEdit']  = true;
     return($fields);
   }
@@ -85,10 +85,10 @@ class goKrbServer extends goService{
   {
     return (array(
           "plShortName"   => _("Kerberos"),
-          "plDescription" => _("Kerberos service"),
+          "plDescription" => _("Kerberos access information")." ("._("Services").")",
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
-          "plPriority"    => 0,
+          "plPriority"    => 95,
           "plSection"     => array("administration"),
           "plCategory"    => array("server"),
 

@@ -114,11 +114,11 @@ class goTerminalServer extends goService{
   function plInfo()
   {
     return (array(
-          "plShortName"   => _("Terminal"),
-          "plDescription" => _("Terminal service"),
+          "plShortName"   => _("Terminal service"),
+          "plDescription" => _("Terminal service")." ("._("Services").")",
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
-          "plPriority"    => 0,
+          "plPriority"    => 87,
           "plSection"     => array("administration"),
           "plCategory"    => array("server"),
 

@@ -39,7 +39,7 @@ class goSyslogServer extends goService{
   function getListEntry()
   {
     $fields               = goService::getListEntry();
-    $fields['Message']    = _("Syslog service");
+    $fields['Message']    = _("Logging service");
     $fields['AllowEdit']  = false;
     return($fields);
   }
@@ -60,11 +60,11 @@ class goSyslogServer extends goService{
   function plInfo()
   {
     return (array(
-          "plShortName"   => _("Syslog"),
-          "plDescription" => _("Syslog service"),
+          "plShortName"   => _("Logging service"),
+          "plDescription" => _("Logging service")." ("._("Services").")",
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
-          "plPriority"    => 0,
+          "plPriority"    => 88,
           "plSection"     => array("administration"),
           "plCategory"    => array("server"),
 

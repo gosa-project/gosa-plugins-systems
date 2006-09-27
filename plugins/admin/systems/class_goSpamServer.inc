@@ -317,10 +317,10 @@ class gospamserver extends goService{
   {
     return (array(
           "plShortName"   => _("Spamassassin"),
-          "plDescription" => _("Spamassassin service"),
+          "plDescription" => _("Spamassassin")." ("._("Services").")",
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
-          "plPriority"    => 0,
+          "plPriority"    => 89,
           "plSection"     => array("administration"),
           "plCategory"    => array("server"),
           "plProvidedAcls"=> array(

@@ -76,10 +76,10 @@ class goLdapServer extends goService{
   {
     return (array(
           "plShortName"   => _("Ldap"),
-          "plDescription" => _("Ldap service"),
+          "plDescription" => _("Ldap")." ("._("Services").")",
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
-          "plPriority"    => 0,
+          "plPriority"    => 96,
           "plSection"     => array("administration"),
           "plCategory"    => array("server"),
 

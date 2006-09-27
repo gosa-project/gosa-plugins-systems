@@ -151,11 +151,11 @@ class goImapServer extends goService {
   function plInfo()
   {
     return (array(
-          "plShortName"   => _("Imap"),
-          "plDescription" => _("Imap service"),
+          "plShortName"   => _("IMAP/POP3"),
+          "plDescription" => _("IMAP/POP3")." ("._("Services").")",
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
-          "plPriority"    => 0,
+          "plPriority"    => 94,
           "plSection"     => array("administration"),
           "plCategory"    => array("server"),
 

@@ -340,11 +340,11 @@ class goShareServer extends goService{
   function plInfo()
   {
     return (array(
-          "plShortName"   => _("Shares"),
-          "plDescription" => _("Share service"),
+          "plShortName"   => _("File servive (Shares)"),
+          "plDescription" => _("File service - Shares")." ("._("Services").")",
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
-          "plPriority"    => 0,
+          "plPriority"    => 90,
           "plSection"     => array("administration"),
           "plCategory"    => array("server"),
 

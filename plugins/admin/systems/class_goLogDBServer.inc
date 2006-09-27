@@ -80,11 +80,11 @@ class goLogDBServer extends goService{
   function plInfo()
   {
     return (array(
-          "plShortName"   => _("Log"),
-          "plDescription" => _("Log service"),
+          "plShortName"   => _("Logging database"),
+          "plDescription" => _("Logging database")." ("._("Services").")",
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
-          "plPriority"    => 0,
+          "plPriority"    => 97,
           "plSection"     => array("administration"),
           "plCategory"    => array("server"),
 

@@ -334,7 +334,7 @@ class servgeneric extends plugin
           "plDescription" => _("Server generic"),
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
-          "plPriority"    => 0,
+          "plPriority"    => 1,
           "plSection"     => array("administration"),           
           "plCategory"    => array("server" => array("description"  => _("Server"),
                                                      "objectClass"  => "gotoWorkstation")),

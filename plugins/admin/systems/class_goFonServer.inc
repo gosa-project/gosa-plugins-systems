@@ -55,7 +55,7 @@ class goFonServer extends goService{
   function getListEntry()
   {
     $fields = goService::getListEntry();
-    $fields['Message']    = _("Asterisk management");
+    $fields['Message']    = _("VoIP service - Asterisk management");
     $fields['AllowEdit']  = true;
     return($fields);
   }
@@ -90,11 +90,11 @@ class goFonServer extends goService{
   function plInfo()
   {
     return (array(
-          "plShortName"   => _("GoFon server"),
-          "plDescription" => _("GoFon server service"),
+          "plShortName"   => _("VoIP service"),
+          "plDescription" => _("VoIP - asterisk management")." ("._("Services").")",
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
-          "plPriority"    => 0,
+          "plPriority"    => 92,
           "plSection"     => array("administration"),
           "plCategory"    => array("server"),
 

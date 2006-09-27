@@ -43,7 +43,7 @@ class goMailServer extends goService{
   function goMailServer($config,$dn)
   {
     plugin::plugin($config,$dn);
-    $this->DisplayName = _("Mail service (SMTP)");
+    $this->DisplayName = _("Mail smtp service (Postfix)");
 
     $this->Actions = array( SERVICE_STOPPED=>SERVICE_STOPPED,
                             SERVICE_STARTED => SERVICE_STARTED,
@@ -505,7 +505,7 @@ class goMailServer extends goService{
   function getListEntry()
   {
     $fields               = goService::getListEntry();
-    $fields['Message']    = _("Mail service (SMTP)");
+    $fields['Message']    = _("Mail smtp service (Postfix)");
     $fields['AllowEdit']  = true;
     return($fields);
   }
@@ -682,11 +682,11 @@ class goMailServer extends goService{
   function plInfo()
   {
     return (array(
-          "plShortName"   => _("Postfix mail"),
-          "plDescription" => _("Postfix mail service"),
+          "plShortName"   => _("Mail smtp (Postfix)"),
+          "plDescription" => _("Mail smtp - Postfix")." ("._("Services").")",
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
-          "plPriority"    => 0,
+          "plPriority"    => 98,
           "plSection"     => array("administration"),
           "plCategory"    => array("server"),
 

@@ -347,10 +347,10 @@ class servrepository extends goService
   {
     return (array(
           "plShortName"   => _("Repository"),
-          "plDescription" => _("Repository service"),
+          "plDescription" => _("Repository service")." ("._("Services").")",
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
-          "plPriority"    => 0,
+          "plPriority"    => 84,
           "plSection"     => array("administration"),
           "plCategory"    => array("server"),
 

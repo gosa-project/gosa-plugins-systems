@@ -546,7 +546,7 @@ class faiSummaryTab extends plugin{
           "plDescription" => _("FAI summary"),
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
-          "plPriority"    => 0,
+          "plPriority"    => 15,
           "plSection"     => array("administration"),
           "plCategory"    => array("workstation","server","fai") ,
           "plProvidedAcls"=> array(

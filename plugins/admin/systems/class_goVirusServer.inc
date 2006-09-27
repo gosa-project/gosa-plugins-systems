@@ -209,10 +209,10 @@ class govirusserver extends goService{
   {
     return (array(
           "plShortName"   => _("Anti virus"),
-          "plDescription" => _("Anti virus service"),
+          "plDescription" => _("Anti virus")." ("._("Services").")",
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
-          "plPriority"    => 0,
+          "plPriority"    => 96,
           "plSection"     => array("administration"),
           "plCategory"    => array("server"),
           "plProvidedAcls"=> array(
