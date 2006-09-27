@@ -491,7 +491,11 @@ class glpiAccount extends plugin
     }
 
     /* Technical responsible person selected*/
-    if(isset($_GET['act'])&&($_GET['act']=="user_tech_num")){
+    if(isset($_GET['act'])&&($_GET['act']=="user_tech_num")&&(strlen($_GET['id']) > 100)){
+      print_red(sprintf(_("Could not add the given user, the users dn is too long, only 100 characters are allowed here.")));
+
+    }elseif(isset($_GET['act'])&&($_GET['act']=="user_tech_num") && strlen($_GET['id'])){
+
 
       /* Get posted id */
       $id = base64_decode($_GET['id']);
