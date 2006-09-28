@@ -119,6 +119,18 @@ class termgeneric extends plugin
     $this->orig_dn= $this->dn;
   }
 
+  function set_acl_base($base)
+  {
+    plugin::set_acl_base($base);
+    $this->netConfigDNS->set_acl_base($base);
+  }
+
+  function set_acl_category($cat)
+  {
+    plugin::set_acl_category($cat);
+    $this->netConfigDNS->set_acl_category($cat);
+  }
+
   function execute()
   {
     /* Call parent execute */
@@ -129,7 +141,7 @@ class termgeneric extends plugin
       $this->is_account= !$this->is_account;
     }
 
-    if (isset($_POST['action'])){
+    if (isset($_POST['action']) && $this->acl_is_writeable("FAIstate")){
 
       /* Set FAIstate */
       $ldap = $this->config->get_ldap_link();
@@ -202,7 +214,7 @@ class termgeneric extends plugin
     /* Base select dialog */
     $once = true;
     foreach($_POST as $name => $value){
-      if(preg_match("/^chooseBase/",$name) && $once){
+      if(preg_match("/^chooseBase/",$name) && $once && $this->acl_is_moveable()){
         $once = false;
         $this->dialog = new baseSelectDialog($this->config,$this);
         $this->dialog->setCurrentBase($this->base);
@@ -232,12 +244,12 @@ class termgeneric extends plugin
     }
 
     /* Add new ntp Server to our list */
-    if((isset($_POST['addNtpServer'])) && (isset($_POST['gotoNtpServers']))){
+    if((isset($_POST['addNtpServer'])) && (isset($_POST['gotoNtpServers'])) && $this->acl_is_writeable("gotoNtpServer")){
       $this->gotoNtpServer[$_POST['gotoNtpServers']] = $_POST['gotoNtpServers'];
     }
 
     /* Delete selected NtpServer for list of used servers  */
-    if((isset($_POST['delNtpServer'])) && (isset($_POST['gotoNtpServerSelected']))){
+    if((isset($_POST['delNtpServer'])) && (isset($_POST['gotoNtpServerSelected'])) && $this->acl_is_writeable("gotoNtpServer")){
       foreach($_POST['gotoNtpServerSelected'] as $name){
         unset($this->gotoNtpServer[$name]);
       } 
@@ -245,6 +257,12 @@ class termgeneric extends plugin
 
     /* Fill templating stuff */
     $smarty= get_smarty();
+    
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $name => $translation){
+      $smarty->assign($name."ACL",$this->getacl($name));
+    }
+
     $smarty->assign("cn", $this->cn);
     $smarty->assign("staticAddress", "");
 
@@ -294,40 +312,37 @@ class termgeneric extends plugin
     $smarty->assign("ntpservers",     $tmp);
 
     /* Variables */
-    foreach(array("base", "gotoMode", "gotoTerminalPath", "gotoSwapServer",
-          "gotoSyslogServer", "gotoNtpServer") as $val){
-
+    foreach(array("base", "gotoMode", "gotoTerminalPath", "gotoSwapServer","gotoSyslogServer", "gotoNtpServer") as $val){
       $smarty->assign($val."_select", $this->$val);
-      $smarty->assign($val."ACL", chkacl($this->acl, $val));
     }
 
     /* Show main page */
     $smarty->assign("netconfig", $this->netConfigDNS->execute());
-    $smarty->assign("actionACL", chkacl($this->acl, 'action'));
     return($smarty->fetch (get_template_path('terminal.tpl', TRUE)));
   }
 
   function remove_from_parent()
   {
-    
-    $ldap= $this->config->get_ldap_link();
-    $ldap->cd($this->dn);
-    $ldap->cat($this->dn, array('dn'));
-    if($ldap->count()){
-      $this->netConfigDNS->remove_from_parent();
-      $ldap->rmDir($this->dn);
-      show_ldap_error($ldap->get_error(), sprintf(_("Removing of object system terminal/generic with dn '%s' failed."),$this->dn));
+    if($this->acl_is_removeable()){   
+      $ldap= $this->config->get_ldap_link();
+      $ldap->cd($this->dn);
+      $ldap->cat($this->dn, array('dn'));
+      if($ldap->count()){
+        $this->netConfigDNS->remove_from_parent();
+        $ldap->rmDir($this->dn);
+        show_ldap_error($ldap->get_error(), sprintf(_("Removing of object system terminal/generic with dn '%s' failed."),$this->dn));
 
-      /* Optionally execute a command after we're done */
-      $this->handle_post_events("remove", array("macAddress" => $this->netConfigDNS->macAddress));
+        /* Optionally execute a command after we're done */
+        $this->handle_post_events("remove", array("macAddress" => $this->netConfigDNS->macAddress));
 
-      /* Delete references to object groups */
-      $ldap->cd ($this->config->current['BASE']);
-      $ldap->search ("(&(objectClass=gosaGroupOfNames)(member=".$this->dn."))", array("cn"));
-      while ($ldap->fetch()){
-        $og= new ogroup($this->config, $ldap->getDN());
-        unset($og->member[$this->dn]);
-        $og->save ();
+        /* Delete references to object groups */
+        $ldap->cd ($this->config->current['BASE']);
+        $ldap->search ("(&(objectClass=gosaGroupOfNames)(member=".$this->dn."))", array("cn"));
+        while ($ldap->fetch()){
+          $og= new ogroup($this->config, $ldap->getDN());
+          unset($og->member[$this->dn]);
+          $og->save ();
+        }
       }
     }
   }
@@ -338,10 +353,6 @@ class termgeneric extends plugin
   {
     plugin::save_object();
     $this->netConfigDNS->save_object();
-    /* Save base, since this is no LDAP attribute */
-    if (isset($_POST['base']) && chkacl($this->acl, "create") == ""){
-      $this->base= $_POST['base'];
-    }
 
     /* Save terminal path to parent since it is used by termstartup, too */
     $this->parent->by_object['termstartup']->gotoTerminalPath=
@@ -368,13 +379,11 @@ class termgeneric extends plugin
     $this->dn= "cn=".$this->cn."ou=terminals,ou=systems,".$this->base;
 
     $ui= get_userinfo();
-    $acl= get_permissions ($this->dn, $ui->subtreeACL);
-    $acl= get_module_permission($acl, "group", $this->dn);
-    if (chkacl($acl, "create") != ""){
+    if ($this->dn == "new" && !$this->acl_is_createable()){
       $message[]= _("You have no permissions to create a terminal on this 'Base'.");
     }
 
-    if ($this->cn == "" && chkacl ($this->acl, "cn") == ""){
+    if ($this->cn == ""){
       $message[]= _("The required field 'Terminal name' is not set.");
     }
 
@@ -488,7 +497,7 @@ class termgeneric extends plugin
           "plDescription" => _("Terminal generic"),
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
-          "plPriority"    => 0,
+          "plPriority"    => 1,
           "plSection"     => array("administration"),
           "plCategory"    => array("terminal" => array( "description"  => _("Terminal"),
                                                         "objectClass"  => "gotoTerminal")),

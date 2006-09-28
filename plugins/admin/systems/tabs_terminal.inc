@@ -9,16 +9,21 @@ class termtabs extends tabs
     $this->dn= $dn;
     $this->config= $config;
 
+    $baseobject= NULL;
+
     foreach ($data as $tab){
-      if($tab['CLASS'] == "printgeneric"){
-        $this->by_name[$tab['CLASS']]= $tab['NAME'];
-        $this->by_object[$tab['CLASS']]= new $tab['CLASS']($this->config, $this->dn, $category);
-        $this->by_object[$tab['CLASS']]->parent= &$this;
-      }else{
-        $this->by_name[$tab['CLASS']]= $tab['NAME'];
-        $this->by_object[$tab['CLASS']]= new $tab['CLASS']($this->config, $this->dn, $category);
-        $this->by_object[$tab['CLASS']]->parent= &$this;
+      $this->by_name[$tab['CLASS']]= $tab['NAME'];
+
+      if ($baseobject == NULL){
+        $baseobject= new $tab['CLASS']($this->config, $this->dn,NULL,$this);
+        $this->by_object[$tab['CLASS']]= $baseobject;
+      } else {
+        $this->by_object[$tab['CLASS']]= new $tab['CLASS']($this->config, $this->dn, $baseobject,$this);
       }
+
+      $this->by_object[$tab['CLASS']]->parent= &$this;
+      $this->by_object[$tab['CLASS']]->set_acl_category($category);
+
       /* Initialize current */
       if ($this->current == ""){
         $this->current= $tab['CLASS'];
