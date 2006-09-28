@@ -20,7 +20,8 @@ class selectUserToPrinterDialog extends plugin
   var $searchAppend         = "";
   var $baseAddition         = "";
   var $type                 = "";
-  
+  var $search_cat           = ""; 
+ 
   function selectUserToPrinterDialog ($config, $dn= NULL,$type=false )
   {
     plugin::plugin ($config, $dn);
@@ -32,24 +33,28 @@ class selectUserToPrinterDialog extends plugin
         $this->searchAttrs   = array("cn","uid");
         $this->searchAppend  = "uid"; 
         $this->baseAddition  = get_people_ou(); 
+        $this->search_cat    = "users";
           ;break;
       case "AddGroup" :
         $this->searchObjects = "(objectClass=posixGroup)";
         $this->searchAttrs   = array("cn","description");
         $this->searchAppend  = "cn"; 
         $this->baseAddition  = get_groups_ou(); 
+        $this->search_cat    = "groups";
           ;break;
       case "AddAdminUser" : 
         $this->searchObjects = "(objectClass=gosaAccount)(!(uid=*$))";
         $this->searchAttrs   = array("cn","uid");
         $this->searchAppend  = "uid"; 
         $this->baseAddition  = get_people_ou(); 
+        $this->search_cat    = "users";
           ;break;
       case "AddAdminGroup" :
         $this->searchObjects = "(objectClass=posixGroup)";
         $this->searchAttrs   = array("cn","description");
         $this->searchAppend  = "cn"; 
         $this->baseAddition  = get_groups_ou(); 
+        $this->search_cat    = "groups";
           ;break;
     }
     $this->type = $type;
@@ -122,11 +127,14 @@ class selectUserToPrinterDialog extends plugin
   function getPrinter($detailed = false)
   {
     $a_return=array();
-    $ldap = $this->config->get_ldap_link();
-    $ldap->cd($this->depselect);
-    #$ldap->search("(&".$this->searchObjects."(cn=".$this->regex."))", $this->depselect, $this->searchAttrs);
-    $ldap->ls("(&".$this->searchObjects."(cn=".$this->regex."))", $this->baseAddition.$this->depselect, $this->searchAttrs);
-    while($printer = $ldap->fetch()){
+
+    $filter = "(&".$this->searchObjects."(cn=".$this->regex."))";
+    $base   = $this->baseAddition.$this->depselect;
+    $attrs  = $this->searchAttrs;
+    $cat    = $this->search_cat;
+
+    $res = get_list($filter,$cat,$base,$attrs);
+    foreach($res as $printer){
       if(($detailed ==true)){
         if(isset($printer[$this->searchAppend])){
           $a_return[$printer[$this->searchAppend][0]] = $printer;

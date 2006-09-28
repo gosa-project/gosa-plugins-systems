@@ -349,7 +349,7 @@ class printgeneric extends plugin
     /* Base select dialog */
     $once = true;
     foreach($_POST as $name => $value){
-      if(preg_match("/^chooseBase/",$name) && $once){
+      if(preg_match("/^chooseBase/",$name) && $once && $this->acl_is_moveable()){
         $once = false;
         $this->dialog = new baseSelectDialog($this->config,$this,$this->get_allowed_bases());
         $this->dialog->setCurrentBase($this->base);
@@ -824,6 +824,7 @@ class printgeneric extends plugin
 
   function generateList(){
     $a_return=array();
+
     foreach($this->member as $type => $values){
       $a_return[$type]=array();
       foreach($values as $value){
@@ -912,7 +913,7 @@ class printgeneric extends plugin
 
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($dn);
-    $ldap->cat($dn,array($var));
+    $ldap->cat($dn,array($var,"cn"));
     if($ldap->count()){
 
       $attrs = $ldap->fetch();
