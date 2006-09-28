@@ -452,7 +452,7 @@ class workservice extends plugin
           "plDescription" => _("Workstation service"),
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
-          "plPriority"    => 0,
+          "plPriority"    => 10,
           "plSection"     => array("administration"),
           "plCategory"    => array("workstation","ogroups"), 
 

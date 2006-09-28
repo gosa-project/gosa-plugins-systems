@@ -37,7 +37,7 @@ class terminfo extends plugin
 
   function terminfo ($config, $dn= NULL, $parent= NULL)
   {
-    plugin::plugin ($config, $dn, $parent);
+    plugin::plugin ($config,$dn);
 
     /* Read arrays */
     foreach (array("ghNetNic", "ghIdeDev", "ghScsiDev") as $val){

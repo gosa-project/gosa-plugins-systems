@@ -839,7 +839,7 @@ class printgeneric extends plugin
           "plDescription" => _("Print generic"),
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
-          "plPriority"    => 0,
+          "plPriority"    => 11,
           "plSection"     => array("administration"),
           "plCategory"    => array("printer" => array("description"  => _("Printer"),
                                                     "objectClass"  => "gotoPrinter"),"workstation"),
