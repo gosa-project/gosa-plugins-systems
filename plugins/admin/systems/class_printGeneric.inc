@@ -150,6 +150,17 @@ class printgeneric extends plugin
     }
   }
 
+  function set_acl_base($base)
+  {
+    plugin::set_acl_base($base);
+    $this->netConfigDNS->set_acl_base($base);
+  }
+
+  function set_acl_category($cat)
+  {
+    plugin::set_acl_category($cat);
+    $this->netConfigDNS->set_acl_category($cat);
+  }
 
   /* Detect type of printer.
    * Printer can be stand alone, belong to a workstation or belong to a terminal. 
@@ -704,6 +715,19 @@ class printgeneric extends plugin
       $this->PPDdialogToSave->save_ppd();
     }
 
+    if(preg_match("/https/i",$_SERVER['HTTP_REFERER'])){
+      $method="https://";
+    }else{
+      $method="http://";
+    }
+
+    /* If no ppd is selected, remove this attribute */
+    if(!empty($this->gotoPrinterPPD)) {
+      $this->gotoPrinterPPD = $method.str_replace("//","/",$_SERVER['SERVER_NAME']."/ppd/".$this->gotoPrinterPPD);
+    }else{
+      $this->gotoPrinterPPD = array();
+    }
+
     $dn= $this->dn;
     plugin::save();
     $ldap= $this->config->get_ldap_link();
@@ -721,19 +745,6 @@ class printgeneric extends plugin
         $attrs[$key]= $val;
       }
       $this->attrs= $attrs;
-    }
-
-    if(preg_match("/https/i",$_SERVER['HTTP_REFERER'])){
-      $method="https://";
-    }else{
-      $method="http://";
-    }
-
-    /* If no ppd is selected, remove this attribute */
-    if(!empty($this->gotoPrinterPPD)) {
-      $this->attrs['gotoPrinterPPD'] = $method.str_replace("//","/",$_SERVER['SERVER_NAME']."/ppd/".$this->gotoPrinterPPD);
-    }else{
-      $this->attrs['gotoPrinterPPD'] = array();
     }
 
     /* Append printer user 
