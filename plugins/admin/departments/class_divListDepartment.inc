@@ -66,7 +66,7 @@ class divListDepartment extends MultiSelectWindow
 
     /* Generate list head */
     $ui = get_userinfo();
-    $acl = $ui->get_permissions("ou=dummy,",$this->selectedBase  ,"department/department");
+    $acl = $ui->get_permissions("ou=dummy,".$this->selectedBase  ,"department/department");
 
     $listhead = "<div style='background:#F0F0F9;padding:5px;'>".
       " <input type='image' class='center' src='images/list_root.png' align='middle' ".
@@ -85,7 +85,7 @@ class divListDepartment extends MultiSelectWindow
     }
   
 
-    $listhead .= " <img class='center' src='images/list_seperator.png' align='middle' ".
+    $listhead .= $acl." <img class='center' src='images/list_seperator.png' align='middle' ".
       " alt='' height='16' width='1'>&nbsp;".
       " "._("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
       " <input class='center' type='image' src='images/list_submit.png' align='middle' ".
