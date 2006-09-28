@@ -124,6 +124,19 @@ class workgeneric extends plugin
     $this->orig_dn= $this->dn;
   }
 
+
+  function set_acl_base($base)
+  {
+    plugin::set_acl_base($base);
+    $this->netConfigDNS->set_acl_base($base);
+  }
+
+  function set_acl_category($cat)
+  {
+    plugin::set_acl_category($cat);
+    $this->netConfigDNS->set_acl_category($cat);
+  }
+
   function execute()
   {
     /* Call parent execute */
@@ -303,21 +316,24 @@ class workgeneric extends plugin
 
   function remove_from_parent()
   {
-    $this->netConfigDNS->remove_from_parent();
-    $ldap= $this->config->get_ldap_link();
-    $ldap->rmdir($this->dn);
-    show_ldap_error($ldap->get_error(), sprintf(_("Removing of system workstation/generic with dn '%s' failed."),$this->dn));
+    if($this->acl_is_removeable()){
 
-    /* Optionally execute a command after we're done */
-    $this->handle_post_events("remove", array("macAddress" => $this->netConfigDNS->macAddress));
+      $this->netConfigDNS->remove_from_parent();
+      $ldap= $this->config->get_ldap_link();
+      $ldap->rmdir($this->dn);
+      show_ldap_error($ldap->get_error(), sprintf(_("Removing of system workstation/generic with dn '%s' failed."),$this->dn));
 
-    /* Delete references to object groups */
-    $ldap->cd ($this->config->current['BASE']);
-    $ldap->search ("(&(objectClass=gosaGroupOfNames)(member=".$this->dn."))", array("cn"));
-    while ($ldap->fetch()){
-      $og= new ogroup($this->config, $ldap->getDN());
-      unset($og->member[$this->dn]);
-      $og->save ();
+      /* Optionally execute a command after we're done */
+      $this->handle_post_events("remove", array("macAddress" => $this->netConfigDNS->macAddress));
+
+      /* Delete references to object groups */
+      $ldap->cd ($this->config->current['BASE']);
+      $ldap->search ("(&(objectClass=gosaGroupOfNames)(member=".$this->dn."))", array("cn"));
+      while ($ldap->fetch()){
+        $og= new ogroup($this->config, $ldap->getDN());
+        unset($og->member[$this->dn]);
+        $og->save ();
+      }
     }
   }
 
