@@ -153,13 +153,17 @@ class printgeneric extends plugin
   function set_acl_base($base)
   {
     plugin::set_acl_base($base);
-    $this->netConfigDNS->set_acl_base($base);
+    if(is_object($this->netConfigDNS)){
+      $this->netConfigDNS->set_acl_base($base);
+    }
   }
 
   function set_acl_category($cat)
   {
     plugin::set_acl_category($cat);
-    $this->netConfigDNS->set_acl_category($cat);
+    if(is_object($this->netConfigDNS)){
+      $this->netConfigDNS->set_acl_category($cat);
+    }
   }
 
   /* Detect type of printer.
