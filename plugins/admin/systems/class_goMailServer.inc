@@ -218,37 +218,37 @@ class goMailServer extends goService{
       }
   
 
-      if(preg_match("/^TranslationUp_/",$name) && $once && ($this->acl_iw_writeablei("postfixTransportTableACL"))){
+      if(preg_match("/^TranslationUp_/",$name) && $once && ($this->acl_is_writeablei("postfixTransportTableACL"))){
         $once = false;
         $key = preg_replace("/^TranslationUp_/","",$name);
         $key = preg_replace("/_[xy]$/","",$key);
         $this->postfixTransportTable = $this->ArrayUp($key,$this->postfixTransportTable) ;
       }
-      if(preg_match("/^TranslationDown_/",$name) && $once && ($this->acl_iw_writeable("postfixTransportTableACL"))){
+      if(preg_match("/^TranslationDown_/",$name) && $once && ($this->acl_is_writeable("postfixTransportTableACL"))){
         $once = false;
         $key = preg_replace("/^TranslationDown_/","",$name);
         $key = preg_replace("/_[xy]$/","",$key);
         $this->postfixTransportTable = $this->ArrayDown($key,$this->postfixTransportTable) ;
       }
-      if(preg_match("/^SenderRestrictUp_/",$name) && $once && ($this->acl_iw_writeable("postfixSenderRestrictionsACL"))){
+      if(preg_match("/^SenderRestrictUp_/",$name) && $once && ($this->acl_is_writeable("postfixSenderRestrictionsACL"))){
         $once = false;
         $key = preg_replace("/^SenderRestrictUp_/","",$name);
         $key = preg_replace("/_[xy]$/","",$key);
         $this->postfixSenderRestrictions = $this->ArrayUp($key,$this->postfixSenderRestrictions) ;
       }
-      if(preg_match("/^SenderRestrictDown_/",$name) && $once && ($this->acl_iw_writeable("postfixSenderRestrictionsACL"))){
+      if(preg_match("/^SenderRestrictDown_/",$name) && $once && ($this->acl_is_writeable("postfixSenderRestrictionsACL"))){
         $once = false;
         $key = preg_replace("/^SenderRestrictDown_/","",$name);
         $key = preg_replace("/_[xy]$/","",$key);
         $this->postfixSenderRestrictions = $this->ArrayDown($key,$this->postfixSenderRestrictions) ;
       }
-      if(preg_match("/^RecipientRestrictUp_/",$name) && $once && ($this->acl_iw_writeable("postfixRecipientRestrictionsACL"))){
+      if(preg_match("/^RecipientRestrictUp_/",$name) && $once && ($this->acl_is_writeable("postfixRecipientRestrictionsACL"))){
         $once = false;
         $key = preg_replace("/^RecipientRestrictUp_/","",$name);
         $key = preg_replace("/_[xy]$/","",$key);
         $this->postfixRecipientRestrictions = $this->ArrayUp($key,$this->postfixRecipientRestrictions) ;
       }
-      if(preg_match("/^RecipientRestrictDown_/",$name) && $once && ($this->acl_iw_writeable("postfixRecipientRestrictionsACL"))){
+      if(preg_match("/^RecipientRestrictDown_/",$name) && $once && ($this->acl_is_writeable("postfixRecipientRestrictionsACL"))){
         $once = false;
         $key = preg_replace("/^RecipientRestrictDown_/","",$name);
         $key = preg_replace("/_[xy]$/","",$key);
