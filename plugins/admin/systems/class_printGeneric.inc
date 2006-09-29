@@ -779,15 +779,15 @@ class printgeneric extends plugin
       $this->attrs['gotoGroupAdminPrinter'][]=$mem['cn'][0];
     }
 
-    if(($this->gosaUnitTag) && (!in_array_ics("gosaAdministrativeUnitTag",$this->attrs['objectClass']))){
-      $this->attrs['objectClass'][] = "gosaAdministrativeUnitTag";
-    }
-
     if($this->orig_dn == 'new'){
       foreach(array("gotoGroupPrinter","gotoUserAdminPrinter","gotoGroupAdminPrinter","gotoUserPrinter") as $checkVar){
         if(count($this->attrs[$checkVar])  == 0 || empty($this->attrs[$checkVar])){
           unset($this->attrs[$checkVar]);
         }
+      }
+    }else{
+      if(($this->gosaUnitTag) && (!in_array_ics("gosaAdministrativeUnitTag",$this->attrs['objectClass']))){
+        $this->attrs['objectClass'][] = "gosaAdministrativeUnitTag";
       }
     }
 
@@ -858,7 +858,7 @@ class printgeneric extends plugin
           "plPriority"    => 11,
           "plSection"     => array("administration"),
           "plCategory"    => array("printer" => array("description"  => _("Printer"),
-                                                    "objectClass"  => "gotoPrinter"),"workstation"),
+                                                    "objectClass"  => "gotoPrinter"),"workstation","terminal"),
           "plProvidedAcls"=> array(
             "cn"                => _("Name"),
             "base"                => _("Base") ,         
