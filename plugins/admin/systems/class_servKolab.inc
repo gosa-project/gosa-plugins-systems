@@ -9,6 +9,7 @@ class servkolab extends goService {
   var $cli_parameters = array("eins"=>"Eins ist toll", "zwei"=>"Zwei ist noch besser");
 
   var $postfix_mydomain                 = "";
+  var $cyrus_admins                     = "";
   var $postfix_mydestination            = "";
   var $postfix_mynetworks               = "127.0.0.1/8";
   var $postfix_enable_virus_scan        = "TRUE";
@@ -18,7 +19,6 @@ class servkolab extends goService {
   var $cyrus_quotawarn                  = "80";
   var $kolabFreeBusyFuture              = "1";
   var $k                                = "kolab";
-  var $cyrus_admins                     = "TRUE";
   var $cyrus_imap                       = "TRUE";
   var $cyrus_pop3                       = "TRUE";
   var $cyrus_imaps                      = "TRUE";
@@ -49,7 +49,7 @@ class servkolab extends goService {
     $this->dn       = "k=kolab,".$config->current['BASE'];
 
     /* Load variables, if given*/
-    plugin::plugin($config, $this->dn, $parent);
+    plugin::plugin($config, $this->dn);
 
     /* Copy needed attributes */
     foreach($this->attributes as $val) {
@@ -231,7 +231,7 @@ class servkolab extends goService {
 
       /* Save checkboxes */
       foreach (array( "postfix_enable_virus_scan", "postfix_allow_unauthenticated",
-            "cyrus_admins", "cyrus_imap", "cyrus_pop3", "cyrus_imaps",
+            "cyrus_imap", "cyrus_pop3", "cyrus_imaps",
             "cyrus_pop3s", "cyrus_sieve", "apache_allow_unauthenticated_fb",
             "proftpd_ftp", "apache_http") as $cb){
 
@@ -382,6 +382,7 @@ class servkolab extends goService {
           "plProvidedAcls"=> array(
             "postfixmydomain"                => _("Postfix mydomain") ,
             "postfixmydestination"           => _("My destination") ,
+            "cyrusadmins"                    => _("Cyrus admins") ,
             "proftpdftp"                     => _("FTP FreeBusy service") ,
             "postfixmynetworks"              => _("SMTP privileged networks") ,
             "postfixenablevirusscan"         => _("Enable virus scan") ,
