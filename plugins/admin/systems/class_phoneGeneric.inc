@@ -192,7 +192,20 @@ class phoneGeneric extends plugin
   
     /* Fill templating stuff */
     $smarty= get_smarty();
-    $smarty->assign("bases", $this->config->idepartments);
+
+     /* Assign base ACL */
+    $baseACL = $this->getacl("base");
+    if(!$this->acl_is_moveable()) {
+      $baseACL = preg_replace("/w/","",$baseACL);
+    }
+    $smarty->assign("baseACL",          $baseACL);
+    $smarty->assign("bases", $this->get_allowed_bases());
+
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $name => $translation){
+      $smarty->assign($name."ACL",$this->getacl($name));
+    }
+
     $smarty->assign("staticAddress","<font class=\"must\">*</font>");// $this->config->idepartments);
 
     /* Create Arrays for samrty select boxes */
@@ -204,7 +217,7 @@ class phoneGeneric extends plugin
 
     /* deativate all fields that are not used by the specified type */
     foreach($this->attributes as $att){
-      if((!in_array($att,$this->usedattrs[$this->selected_categorie]))||(chkacl($this->acl,$att)!="")){
+      if((!in_array($att,$this->usedattrs[$this->selected_categorie]))){
         $smarty->assign($att."USED", "disabled" );
         $smarty->assign($att, "");
       }else{
@@ -216,11 +229,9 @@ class phoneGeneric extends plugin
     $smarty->assign("selected_categorie",$this->selected_categorie);
 
     /* Assign attributes */
-    foreach ($this->attributes as $attr){
-      $smarty->assign($attr."ACL", chkacl($this->acl, $attr));
-    }
+    
+
     $smarty->assign("base_select", $this->base);
-    $smarty->assign("baseACL", chkacl($this->acl,"base"));
    
     $smarty->assign("goFonDefaultIPs",array("dynamic"=>_("dynamic"),"network"=>_("Networksettings")));
  
@@ -264,7 +275,7 @@ class phoneGeneric extends plugin
     plugin::save_object();
     $this->netConfigDNS->save_object();
     /* Save base, since this is no LDAP attribute */
-    if (isset($_POST['base']) && chkacl($this->acl, "create") == ""){
+    if (isset($_POST['base']) && $this->acl_is_moveable()){
       $this->base= $_POST['base'];
     }
   }
@@ -288,17 +299,15 @@ class phoneGeneric extends plugin
       }
     }
 
-    if ($this->cn == "" && chkacl ($this->acl, "cn") == ""){
+    if ($this->cn == ""){
       $message[]= _("The required field 'Phone name' is not set.");
     }
-    if ($this->cn == "0" && chkacl ($this->acl, "cn") == ""){
+    if ($this->cn == "0"){ 
       $message[]= _("The 'Phone name' '0' is reserved and cannot be used.");
     }
 
     $ui= get_userinfo();
-    $acl= get_permissions ($this->dn, $ui->subtreeACL);
-    $acl= get_module_permission($acl, "phone", $this->dn);
-    if (chkacl($acl, "create") != ""){
+    if ($this->dn == "new" && $this->acl_is_createable()){
       $message[]= _("You have no permissions to create a phone on this 'Base'.");
     }
 
@@ -335,11 +344,6 @@ class phoneGeneric extends plugin
       /* Check all attributes, if they are needed for this type of phone */
       if(!in_array($att,$this->usedattrs[$mode])){
         $this->attrs[$att] = array();
-      }
-    
-      /* Test rights of this user ... */
-      if(chkacl($this->acl,$att)!=""){
-        unset($this->attrs[$att]);
       }
     }
 
@@ -417,11 +421,18 @@ class phoneGeneric extends plugin
           "plProvidedAcls"=> array(
             "cn"                  => _("Name"),
             "description"         => _("Description"),
-            "goFonType"           => _("Mode"),
-            "goFonDmtfMode"       => _("DTMF mode"),
-            "goFonDefaultIP"      => _("Default ip"),
-            "goFonQualify"        => _("Qualify"),
-            "selected_categorie"  => _("Hardware type"))
+            "goFonType"           => _("SIP Mode"),
+            "goFonDmtfMode"       => _("SIP DTMF mode"),
+            "goFonDefaultIP"      => _("SIP Default ip"),
+            "goFonQualify"        => _("SIP Qualify"),
+            "goFonAuth"           => _("IAX authentication type"),
+            "goFonSecret"         => _("IAX secret"),
+            "goFonAccountCode"    => _("IAX account code"),
+            "goFonTrunk"          => _("IAX trunk lines"),
+            "goFonPermit"         => _("IAX permit settings"),
+            "goFonDeny"           => _("IAX deny settings"),
+            "goFonMSN"            => _("CAPI MSN"),
+            "categorie"  => _("Hardware type"))
           ));
   }
 
