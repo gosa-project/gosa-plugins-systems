@@ -142,7 +142,7 @@ class wingeneric extends plugin
     plugin::save_object();
     $this->netConfigDNS->save_object();
     /* Save base, since this is no LDAP attribute */
-    if (isset($_POST['base']) && $this->acl_is_moveable(){
+    if (isset($_POST['base']) && $this->acl_is_moveable()){
       $this->base= $_POST['base'];
     }
   }

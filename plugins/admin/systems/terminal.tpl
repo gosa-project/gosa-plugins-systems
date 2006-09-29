@@ -114,11 +114,11 @@
       </select>
 {/render}
 {render acl=$gotoNtpServerACL}
-		<input type="submit" name="addNtpServer" value="{t}Add{/t}"		id="addNtpServer" {$gotoNtpServerACL}
+		<input type="submit" name="addNtpServer" value="{t}Add{/t}"		id="addNtpServer"
 		 {if $inheritTimeServer} disabled {/if}>
 {/render}
 {render acl=$gotoNtpServerACL}
-		<input type="submit" name="delNtpServer" value="{t}Delete{/t}"	id="delNtpServer" {$gotoNtpServerACL}
+		<input type="submit" name="delNtpServer" value="{t}Delete{/t}"	id="delNtpServer" 
 		 {if $inheritTimeServer} disabled {/if}>
 {/render}
      </td>

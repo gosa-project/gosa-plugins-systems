@@ -7,14 +7,14 @@
 					<td>{t}Name{/t}
 					</td>
 					<td>
-						<input type="text" name="name" value="{$name}" {$nameACL}>
+						<input type="text" name="name" value="{$name}">
 					</td>
 				</tr>
 				<tr>
 					<td>{t}Reference{/t}
 					</td>
 					<td>
-						<input type="text" name="ref" value="{$ref}" {$refACL}>
+						<input type="text" name="ref" value="{$ref}">
 					</td>
 				</tr>
 			</table>
@@ -25,7 +25,7 @@
 					<td>{t}Comment{/t}
 					</td>
 					<td>
-						<textarea name="comments" {$commentsACL} style="width:100%;">{$comments}</textarea>	
+						<textarea name="comments" style="width:100%;">{$comments}</textarea>	
 					</td>
 				</tr>
 			</table>
@@ -37,20 +37,20 @@
                     <td>{t}Type{/t}
                     </td>
                     <td>
-						<select name="type" {$typeACL}>
+						<select name="type" >
                             {html_options values=$typeKeys output=$types selected=$type}
                         </select>
-                        <input type="submit" value="{t}edit{/t}" name="edit_type_cartridge" {$typeACL}>
+                        <input type="submit" value="{t}edit{/t}" name="edit_type_cartridge">
                     </td>
 	    		</tr>
                 <tr>
                     <td>{t}Manufacturer{/t}
                     </td>
                     <td>
-						<select name="FK_glpi_enterprise" {$FK_glpi_enterpriseACL}>
+						<select name="FK_glpi_enterprise">
                             {html_options values=$ManufacturerKeys output=$Manufacturers selected=$FK_glpi_enterprise}
                         </select>
-                        <input type="submit" value="{t}edit{/t}" name="edit_manufacturer_cartridges" {$FK_glpi_enterpriseACL}>
+                        <input type="submit" value="{t}edit{/t}" name="edit_manufacturer_cartridges">
                     </td>
 	    		</tr>
 				<tr>
@@ -58,7 +58,7 @@
                     </td>
                     <td>
                         <i>{$tech_num}&nbsp; </i>&nbsp;
-                        <input type="submit" value="{t}Choose{/t}" name="SelectCartridgeTechPerson" {$tech_numACL}>
+                        <input type="submit" value="{t}Choose{/t}" name="SelectCartridgeTechPerson">
                     </td>
                 </tr>
 			</table>

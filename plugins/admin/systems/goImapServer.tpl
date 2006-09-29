@@ -55,7 +55,7 @@
 				<tr>
 					<td>
 {render acl=$cyrusImapACL}
-						<input type='checkbox' name='cyrusImap' value=1 {if $cyrusImap} checked {/if} {$cyrusImapACL}> 
+						<input type='checkbox' name='cyrusImap' value=1 {if $cyrusImap} checked {/if} > 
 {/render}
 					</td>
 					<td>{t}Start IMAP service{/t}
@@ -64,7 +64,7 @@
 				<tr>
 					<td>
 {render acl=$cyrusImapSSLACL}
-						<input type='checkbox' name='cyrusImapSSL' value=1 {if $cyrusImapSSL} checked {/if} {$cyrusImapSSLACL}> 
+						<input type='checkbox' name='cyrusImapSSL' value=1 {if $cyrusImapSSL} checked {/if}> 
 {/render}
 					</td>
 					<td>{t}Start IMAP SSL service{/t}
@@ -73,7 +73,7 @@
 				<tr>
 					<td>
 {render acl=$cyrusPop3ACL}
-						<input type='checkbox' name='cyrusPop3' value=1 {if $cyrusPop3} checked {/if} {$cyrusPop3ACL}> 
+						<input type='checkbox' name='cyrusPop3' value=1 {if $cyrusPop3} checked {/if} > 
 {/render}
 					</td>
 					<td>{t}Start POP3 service{/t}
@@ -82,7 +82,7 @@
 				<tr>
 					<td>
 {render acl=$cyrusPop3SSLACL}
-						<input type='checkbox' name='cyrusPop3SSL' value=1 {if $cyrusPop3SSL} checked {/if} {$cyrusPop3SSLACL}> 
+						<input type='checkbox' name='cyrusPop3SSL' value=1 {if $cyrusPop3SSL} checked {/if} > 
 {/render}
 					</td>
 					<td>{t}Start POP3 SSL service{/t}

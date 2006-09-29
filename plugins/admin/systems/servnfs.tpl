@@ -10,7 +10,7 @@
 					</td>
 					<td>
 {render acl=$nameACL}
-						<input type="text" name="name" value="{$name}" {$nameACL}>
+						<input type="text" name="name" value="{$name}" >
 {/render}
 					</td>
 				</tr>
@@ -64,7 +64,7 @@
 						{if $allow_mounts == TRUE}
 						<br><br>
 {render acl=$netatalkmountACL}
-						<input type="checkbox" name="netatalk_mount" id="netatalk_mount" {$mount_checked} {$appleMountsACL}/>
+						<input type="checkbox" name="netatalk_mount" id="netatalk_mount" {$mount_checked} />
 {/render}
 						<label for="netatalk_mount">{t}Auto-mount share on Apple systems{/t}</label>
 							<br>

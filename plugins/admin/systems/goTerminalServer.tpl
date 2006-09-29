@@ -12,7 +12,7 @@
      <td>{t}Font path{/t}</td>
      <td> 
 {render acl=$goXdmcpIsEnabledACL}
-      <input type="text" value="{$goFontPath}" name="goFontPath" {$goXdmcpIsEnabledACL}  id="FontPathId">
+      <input type="text" value="{$goFontPath}" name="goFontPath" id="FontPathId">
 {/render}
      </td>
     </tr>
