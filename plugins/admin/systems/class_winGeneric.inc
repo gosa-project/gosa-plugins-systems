@@ -107,7 +107,6 @@ class wingeneric extends plugin
 
     /* Assign attributes */
     foreach ($this->attributes as $attr){
-      $smarty->assign($attr."ACL", chkacl($this->acl, $attr));
       $smarty->assign("$attr", $this->$attr);
     }
     
@@ -143,7 +142,7 @@ class wingeneric extends plugin
     plugin::save_object();
     $this->netConfigDNS->save_object();
     /* Save base, since this is no LDAP attribute */
-    if (isset($_POST['base']) && chkacl($this->acl, "create") == ""){
+    if (isset($_POST['base']) && $this->acl_is_moveable(){
       $this->base= $_POST['base'];
     }
   }
@@ -160,7 +159,7 @@ class wingeneric extends plugin
     $ui= get_userinfo();
     $acl= get_permissions ($this->dn, $ui->subtreeACL);
     $acl= get_module_permission($acl, "component", $this->dn);
-    if (chkacl($acl, "create") != ""){
+    if(!$this->acl_is_createable() && $this->dn == "new"){
       $message[]= _("You have no permissions to create a component on this 'Base'.");
     }
 

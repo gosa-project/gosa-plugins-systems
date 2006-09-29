@@ -136,17 +136,9 @@ class glpiPrinterCartridgesEdit extends plugin
       return($display);
     }
 
-
-
-
-
-
-
- 
     /* Assign attributes */ 
     foreach($this->attributes as $attr){
       $smarty->assign($attr,$this->$attr);
-      $smarty->assign($attr."ACL",chkacl($this->acl,$attr));
     }
 
     /* Selecte technical responsible person
