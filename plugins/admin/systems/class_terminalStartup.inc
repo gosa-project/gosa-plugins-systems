@@ -147,8 +147,8 @@ class termstartup extends plugin
 
   function execute()
   {
-	/* Call parent execute */
-	plugin::execute();
+    /* Call parent execute */
+    plugin::execute();
 
     /* Do we need to flip is_account state? */
     if (isset($_POST['modify_state'])){
@@ -164,20 +164,26 @@ class termstartup extends plugin
 
     /* Add module */
     if (isset ($_POST['add_module'])){
-      if ($_POST['module'] != "" && chkacl ($this->acl, "gotoModule") == ""){
+      if ($_POST['module'] != "" && $this->acl_is_writeable("gotoMode")){
         $this->add_list ($this->gotoModules, $_POST['module']);
       }
     }
 
     /* Delete module */
     if (isset ($_POST['delete_module'])){
-      if (count($_POST['modules_list']) && chkacl ($this->acl, "gotoModule") == ""){
+      if (count($_POST['modules_list']) && $this->acl_is_writeable("gotoMode")){
         $this->del_list ($this->gotoModules, $_POST['modules_list']);
       }
     }
 
     /* Show main page */
     $smarty= get_smarty();
+
+    /* Assign acls */
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $name => $translation){
+      $smarty->assign($name."ACL",$this->getacl($name));
+    }
 
 
        /* In this section server shares will be defined
@@ -248,7 +254,6 @@ class termstartup extends plugin
 
     $smarty->assign("SelectBoxLdapServer",$SelectBoxLdapServer->DrawList());
 
-    $smarty->assign("gotoShareACL", chkacl($this->acl, "gotoShareACL"));
     foreach (array("gotoModules" ) as $val){
       $smarty->assign("$val", $this->$val);
     }
@@ -256,7 +261,6 @@ class termstartup extends plugin
     /* Values */
     foreach(array("gotoBootKernel", "customParameters") as $val){
       $smarty->assign($val, $this->$val);
-      $smarty->assign($val."ACL", chkacl($this->acl, $val));
     }
 
     /* Radio button group */
@@ -276,18 +280,15 @@ class termstartup extends plugin
       $smarty->assign("debugbootup", "");
     }
 
-    /* ACL's */
-    foreach (array("gotoKernelParameters", "gotoModules") as $value){
-      $smarty->assign($value."ACL", chkacl($this->acl, "$value"));
-    }
-
     /* Show main page */
     return($smarty->fetch (get_template_path('terminalStartup.tpl', TRUE)));
   }
 
   function remove_from_parent()
   {
+    if($this->acl_is_removeable()){
       $this->handle_post_events("remove");
+    }
   }
 
 
@@ -297,12 +298,12 @@ class termstartup extends plugin
     plugin::save_object();
 
     /* Save group radio buttons */
-    if (chkacl ($this->acl, "bootmode") == "" && isset($_POST["bootmode"])){
+    if ($this->acl_is_writeable("bootmode") && isset($_POST["bootmode"])){
       $this->bootmode= $_POST["bootmode"];
     }
 
     /* Save kernel parameters */
-    if (chkacl ($this->acl, "gotoKernelParameters") == "" && isset($_POST["customParameters"])){
+    if ($this->acl_is_writeable("gotoKernelParameters") && isset($_POST["customParameters"])){
       $this->customParameters= $_POST["customParameters"];
     }
   }
@@ -447,7 +448,9 @@ class termstartup extends plugin
           "plCategory"    => array("terminal"),
 
           "plProvidedAcls"=> array(
-            "gotoLdapServer"      => _("Ldap server"), 
+            "gotoLdapServer"      => _("Ldap server"),
+            "gotoShare"           => _("Shares"),
+            "gotoModules"         => _("Kernel modules"),
             "gotoBootKernel"      => _("Boot kernel"), 
             "gotoKernelParameters"=> _("Kernel parameter"))
           ));

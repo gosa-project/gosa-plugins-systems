@@ -7,20 +7,27 @@
     <tr>
      <td style="width:30%"><LABEL for="gotoBootKernel">{t}Boot kernel{/t}</LABEL></td>
      <td>
-	<select id="gotoBootKernel" name="gotoBootKernel" {$gotoBootKernelACL}>
+{render acl=$gotoBootKernelACL}
+	<select id="gotoBootKernel" name="gotoBootKernel">
 	{html_options options=$gotoBootKernels  selected=$gotoBootKernel}
 	<option disabled>&nbsp;</option>
 	</select>
+{/render}
      </td>
     </tr>
     <tr>
      <td><LABEL for="customParameters">{t}Custom options{/t}</LABEL></td>
-     <td><input name="customParameters" id="customParameters"  size=25 maxlength=500 {$gotoKernelParametersACL}
+     <td>
+{render acl=$gotoKernelParametersACL}
+      <input name="customParameters" id="customParameters"  size=25 maxlength=500
                 value="{$customParameters}" title="{t}Enter any parameters that should be passed to the kernel as append line during bootup{/t}"></td>
+{/render}
     </tr>
     <tr>
      <td colspan="2" style='vertical-align:top;padding-top:3px;width:100%'><LABEL for="gotoLdapServer">{t}LDAP server{/t}</LABEL>
+{render acl=$gotoLdapServerACL}
 		{$SelectBoxLdapServer}
+{/render}
      </td>
     </tr>
    </table>
@@ -32,13 +39,19 @@
   </td>
   
   <td style="vertical-align:top;">
-    <input type="radio" name="bootmode" value="G" title="{t}Select if terminal supports graphical startup with progress bar{/t}" {$graphicalbootup} {$gotoKernelParametersACL}>
+{render acl=$gotoKernelParametersACL}
+    <input type="radio" name="bootmode" value="G" title="{t}Select if terminal supports graphical startup with progress bar{/t}" {$graphicalbootup}>
+{/render}
     {t}use graphical bootup{/t}
     <br>
-    <input type="radio" name="bootmode" value="T" title="{t}Select if terminal should boot in text mode{/t}" {$textbootup} {$gotoKernelParametersACL}>
+{render acl=$gotoKernelParametersACL}
+    <input type="radio" name="bootmode" value="T" title="{t}Select if terminal should boot in text mode{/t}" {$textbootup}>
+{/render}
     {t}use standard linux textual bootup{/t}
     <br>
-    <input type="radio" name="bootmode" value="D" title="{t}Select to get more verbose output during startup{/t}" {$debugbootup} {$gotoKernelParametersACL}>
+{render acl=$gotoKernelParametersACL}
+    <input type="radio" name="bootmode" value="D" title="{t}Select to get more verbose output during startup{/t}" {$debugbootup}>
+{/render}
     {t}use debug mode for startup{/t}
   </td>
  </tr>
@@ -52,14 +65,22 @@
    <h2>
     <img class="center" alt="" align="middle" src="images/hardware.png"> {t}Kernel modules (format: name parameters){/t}
    </h2>
+{render acl=$gotoModulesACL}
     <select style="width:100%;" name="modules_list[]" size=15 multiple title="{t}Add additional modules to load on startup{/t}">
      {html_options values=$gotoModules output=$gotoModules}
 	 <option disabled>&nbsp;</option>
     </select>
+{/render}
     <br>
-    <input name="module" size=30 align=middle maxlength=30 {$gotoModulesACL}>
-    <input type=submit value="{t}Add{/t}" name="add_module" {$gotoModulesACL}>&nbsp;
-    <input type=submit value="{t}Delete{/t}" name="delete_module" {$gotoModulesACL}>
+{render acl=$gotoModulesACL}
+    <input name="module" size=30 align=middle maxlength=30>
+{/render}
+{render acl=$gotoModulesACL}
+    <input type=submit value="{t}Add{/t}" name="add_module">&nbsp;
+{/render}
+{render acl=$gotoModulesACL}
+    <input type=submit value="{t}Delete{/t}" name="delete_module">
+{/render}
   </td>
 
   <td style="padding-left:10px;border-left:1px solid #A0A0A0;vertical-align:top">
@@ -67,18 +88,28 @@
         <table summary="" style="width:100%">
                 <tr>
                         <td>
-                        <select style="width:100%;" name="gotoShare" multiple size=15 {$gotoShareACL} id="gotoShare">
-        {html_options values=$gotoShareKeys output=$gotoShares}
-        <option disabled>&nbsp;</option>
-                                </select>
+{render acl=$gotoShareACL}
+                        <select style="width:100%;" name="gotoShare" multiple size=15 id="gotoShare">
+        			{html_options values=$gotoShareKeys output=$gotoShares}
+			        <option disabled>&nbsp;</option>
+                        </select>
+{/render}
                                 <br>
-                        <select name="gotoShareSelection" {$gotoShareACL}>
-        {html_options values=$gotoShareSelectionKeys output=$gotoShareSelections}
-        <option disabled>&nbsp;</option>
+{render acl=$gotoShareACL}
+        	                <select name="gotoShareSelection">
+				        {html_options values=$gotoShareSelectionKeys output=$gotoShareSelections}
+				        <option disabled>&nbsp;</option>
                                 </select>
-                                <input type="text" size=15 {$gotoShareACL} name="gotoShareMountPoint" value="{t}Mountpoint{/t}">
-                                <input type="submit" {$gotoShareACL} name="gotoShareAdd" value="{t}Add{/t}">
-                                <input type="submit" {$gotoShareACL} name="gotoShareDel" value="{t}Remove{/t}">
+{/render}
+{render acl=$gotoShareACL}
+                                <input type="text" size=15 name="gotoShareMountPoint" value="{t}Mountpoint{/t}">
+{/render}
+{render acl=$gotoShareACL}
+                                <input type="submit" name="gotoShareAdd" value="{t}Add{/t}">
+{/render}
+{render acl=$gotoShareACL}
+                                <input type="submit" name="gotoShareDel" value="{t}Remove{/t}">
+{/render}
                         </td>
                 </tr>
         </table>
