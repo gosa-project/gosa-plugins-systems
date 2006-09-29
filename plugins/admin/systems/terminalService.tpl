@@ -6,25 +6,31 @@
     <tr>
      <td><LABEL for="gotoXKbModel">{t}Model{/t}</LABEL></td>
      <td>
-      <select id="gotoXKbModel" name="gotoXKbModel" title="{t}Choose keyboard model{/t}" {$gotoXKbModelACL}>
+{render acl=$gotoXKbModelACL}
+      <select id="gotoXKbModel" name="gotoXKbModel" title="{t}Choose keyboard model{/t}" >
        {html_options options=$XKbModels selected=$gotoXKbModel_select}
       </select>
+{/render}
      </td>
     </tr>
     <tr>
      <td><LABEL for="gotoXKbLayout">{t}Layout{/t}</LABEL></td>
      <td>
-      <select id="gotoXKbLayout" name="gotoXKbLayout" title="{t}Choose keyboard layout{/t}" {$gotoXKbLayoutACL}>
+{render acl=$gotoXKbLayoutACL}
+      <select id="gotoXKbLayout" name="gotoXKbLayout" title="{t}Choose keyboard layout{/t}" >
        {html_options options=$XKbLayouts selected=$gotoXKbLayout_select}
       </select>
+{/render}
      </td>
     </tr>
     <tr>
      <td><LABEL for="gotoXKbVariant">{t}Variant{/t}</LABEL></td>
      <td>
-      <select id="gotoXKbVariant" name="gotoXKbVariant" title="{t}Choose keyboard variant{/t}" {$gotoXKbVariantACL}>
+{render acl=$gotoXKbVariantACL}
+      <select id="gotoXKbVariant" name="gotoXKbVariant" title="{t}Choose keyboard variant{/t}" >
        {html_options options=$XKbVariants selected=$gotoXKbVariant_select}
       </select>
+{/render}
      </td>
     </tr>
    </table>
@@ -41,17 +47,21 @@
     <tr>
      <td><LABEL for="gotoXMouseType">{t}Type{/t}</LABEL></td>
      <td>
-      <select name="gotoXMouseType" id="gotoXMouseType" title="{t}Choose mouse type{/t}" {$gotoXMouseTypeACL}>
+{render acl=$gotoXMouseTypeACL}
+      <select name="gotoXMouseType" id="gotoXMouseType" title="{t}Choose mouse type{/t}" >
        {html_options options=$MouseTypes selected=$gotoXMouseType_select}
       </select>
+{/render}
      </td>
     </tr>
     <tr>
      <td><LABEL for="gotoXMouseport">{t}Port{/t}</LABEL></td>
      <td>
-      <select id="gotoXMouseport" name="gotoXMouseport" title="{t}Choose mouse port{/t}" {$gotoXMouseportACL}>
+{render acl=$gotoXMouseportACL}
+      <select id="gotoXMouseport" name="gotoXMouseport" title="{t}Choose mouse port{/t}" >
        {html_options options=$MousePorts selected=$gotoXMouseport_select}
       </select>
+{/render}
      </td>
     </tr>
    </table>
@@ -67,7 +77,9 @@
    <table style="width:100%" border=0 summary="">
     <tr>
      <td>{t}Telephone{/t}&nbsp;
+{render acl=$goFonHardwareACL}
 	  {$hardware_list}
+{/render}
      </td>
     </tr>
    </table>
@@ -85,25 +97,31 @@
     <tr>
      <td><LABEL for="gotoXDriver">{t}Driver{/t}</LABEL></td>
      <td>
-      <select id="gotoXDriver" name="gotoXDriver" title="{t}Choose graphic driver that is needed by the installed graphic board{/t}" {$gotoXDriverACL}>
+{render acl=$gotoXDriverACL}
+      <select id="gotoXDriver" name="gotoXDriver" title="{t}Choose graphic driver that is needed by the installed graphic board{/t}" >
        {html_options values=$XDrivers output=$XDrivers selected=$gotoXDriver_select}
       </select>
+{/render}
      </td>
     </tr>
     <tr>
      <td><LABEL for="gotoXResolution">{t}Resolution{/t}</LABEL></td>
      <td>
-      <select id="gotoXResolution" name="gotoXResolution" title="{t}Choose screen resolution used in graphic mode{/t}" {$gotoXResolutionACL}>
+{render acl=$gotoXResolutionACL}
+      <select id="gotoXResolution" name="gotoXResolution" title="{t}Choose screen resolution used in graphic mode{/t}" >
        {html_options options=$XResolutions selected=$gotoXResolution_select}
       </select>
+{/render }
      </td>
     </tr>
     <tr>
      <td><LABEL for="gotoXColordepth">{t}Color depth{/t}</LABEL></td>
      <td>
-      <select id="gotoXColordepth" name="gotoXColordepth" title="{t}Choose colordepth used in graphic mode{/t}" {$gotoXColordepthACL}>
+{render acl=$gotoXColordepthACL}
+      <select id="gotoXColordepth" name="gotoXColordepth" title="{t}Choose colordepth used in graphic mode{/t}" >
        {html_options options=$XColordepths selected=$gotoXColordepth_select}
       </select>
+{/render}
      </td>
     </tr>
    </table>
@@ -122,13 +140,19 @@
     </tr>
     <tr>
      <td><LABEL for="gotoXHsync">{t}HSync{/t}</LABEL></td>
-     <td><input id="gotoXHsync" name="gotoXHsync" size=10 maxlength=60 {$gotoXHsyncACL}
+     <td>
+{render acl=$gotoXHsyncACL}
+	<input id="gotoXHsync" name="gotoXHsync" size=10 maxlength=60 
                 value="{$gotoXHsync}" title="{t}Horizontal refresh frequency for installed monitor{/t}"> kHz</td>
+{/render}
     </tr>
     <tr>
      <td><LABEL for="gotoXVsync">{t}VSync{/t}</LABEL></td>
-     <td><input id="gotoXVsync"  name="gotoXVsync" size=10 maxlength=60 {$gotoXVsyncACL}
+     <td>
+{render acl=$gotoXVsyncACL}
+      <input id="gotoXVsync"  name="gotoXVsync" size=10 maxlength=60 
                 value="{$gotoXVsync}" title="{t}Vertical refresh frequency for installed monitor{/t}"> Hz</td>
+{/render}
     </tr>
    </table>
 
@@ -144,27 +168,33 @@
      <td></td>
      <td><LABEL for="gotoXMethod">{t}Connect method{/t}</LABEL></td>
      <td>
-      <select name="gotoXMethod" id="gotoXMethod" title="{t}Choose method to connect to terminal server{/t}" {$gotoXMethodACL}>
+{render acl=$gotoXMethodACL}
+      <select name="gotoXMethod" id="gotoXMethod" title="{t}Choose method to connect to terminal server{/t}" >
        {html_options options=$XMethods selected=$gotoXMethod_select}
       </select>
+{/render}
      </td>
     </tr>
     <tr>
      <td></td>
      <td><LABEL for="gotoXdmcpServer">{t}Terminal server{/t}</LABEL></td>
      <td>
-      <select id="gotoXdmcpServer" name="gotoXdmcpServer" title="{t}Select specific terminal server to use{/t}" {$gotoXdmcpServerACL}>
+{render acl=$gotoXdmcpServerACL}
+      <select id="gotoXdmcpServer" name="gotoXdmcpServer" title="{t}Select specific terminal server to use{/t}" >
        {html_options values=$xdmcpservers output=$xdmcpservers selected=$gotoXdmcpServer_select}
       </select>
+{/render}
      </td>
     </tr>
     <tr>
      <td></td>
      <td><LABEL for="gotoFontPath">{t}Font server{/t}</LABEL></td>
      <td>
-      <select name="gotoFontPath" id="gotoFontPath" title="{t}Select specific font server to use{/t}" {$gotoFontPathACL}>
+{render acl=$gotoFontPathACL}
+      <select name="gotoFontPath" id="gotoFontPath" title="{t}Select specific font server to use{/t}" >
        {html_options values=$fontservers output=$fontservers selected=$gotoFontPath_select}
       </select>
+{/render}
      </td>
     </tr>
    </table>
@@ -179,7 +209,9 @@
  <tr>
   <td style="width:50%; vertical-align:top;">
    <h2><img class="center" alt="" align="middle" src="images/printer.png"><LABEL for="gotoLpdEnable"> {t}Print device{/t}</LABEL></h2>
-   <input id="gotoLpdEnable" type=checkbox name="gotoLpdEnable" value="1" {$gotoLpdEnable} {$gotoLpdEnableACL} title="{t}Select to start IPP based printing service on terminal{/t}">
+{render acl=$gotoLpdEnableACL}
+   <input id="gotoLpdEnable" type=checkbox name="gotoLpdEnable" value="1" {$gotoLpdEnable} title="{t}Select to start IPP based printing service on terminal{/t}">
+{/render}
    {t}Provide print services{/t}
    <br>
 
@@ -188,9 +220,11 @@
      <td><div style="width:20px;"></div></td>
      <td><LABEL for="gotoLpdServer">{t}Spool server{/t}</LABEL></td>
      <td>
-      <select name="gotoLpdServer" id="gotoLpdServer" title="{t}Select NFS filesystem to place spool files on{/t}" {$gotoLpdServerACL}>
+{render acl=$gotoLpdServerACL}
+      <select name="gotoLpdServer" id="gotoLpdServer" title="{t}Select NFS filesystem to place spool files on{/t}" >
        {html_options values=$nfsservers output=$nfsservers selected=$gotoLpdServer_select}
       </select>
+{/render}
      </td>
     </tr>
   </table>
@@ -201,7 +235,9 @@
 
   <td style="vertical-align:top;">
    <h2><img class="center" alt="" align="middle" src="images/scanner.png"> {t}Scan device{/t}</h2>
-   <input type=checkbox name="gotoScannerEnable" value="1" title="{t}Select to start SANE scan service on terminal{/t}" {$gotoScannerEnable} {$gotoScannerEnableACL}>
+{render acl=$gotoScannerEnableACL}
+   <input type=checkbox name="gotoScannerEnable" value="1" title="{t}Select to start SANE scan service on terminal{/t}" {$gotoScannerEnable} >
+{/render}
    {t}Provide scan services{/t}
    <br>
    <table summary="">
@@ -209,9 +245,11 @@
      <td><div style="width:20px;"></div></td>
      <td><LABEL for="gotoScannerModel">{t}Model{/t}</LABEL></td>
      <td>
-      <select name="gotoScannerModel" id="gotoScannerModel" title="{t}Select scanner driver to use{/t}" {$gotoScannerEnableACL}>
+{render acl=$gotoScannerEnableACL}
+      <select name="gotoScannerModel" id="gotoScannerModel" title="{t}Select scanner driver to use{/t}" >
        {html_options values=$gotoScannerModels output=$gotoScannerModels selected=$gotoScannerModel_select}
       </select>
+{/render}
      </td>
     </tr>
   </table>

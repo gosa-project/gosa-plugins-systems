@@ -256,6 +256,13 @@ class termservice extends plugin
     /* Show main page */
     $smarty= get_smarty();
 
+    /* Assign acls */
+    $tmp= $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $name => $translation){
+      $smarty->assign($name."ACL",$this->getacl($name));
+    }
+
+
     /* Arrays */ 
     foreach(array("XMethods", "XDrivers", "XResolutions", "XColordepths",
           "gotoScannerModels", "XKbModels","XKbVariants",
@@ -277,13 +284,11 @@ class termservice extends plugin
           "gotoXKbVariant", "gotoXMouseType", "gotoXMouseport") as $val){
 
       $smarty->assign($val."_select", $this->$val);
-      $smarty->assign($val."ACL", chkacl($this->acl, $val));
     }
 
     /* Variables */
     foreach(array("gotoXHsync", "gotoXVsync") as $val){
       $smarty->assign($val, $this->$val);
-      $smarty->assign($val."ACL", chkacl($this->acl, $val));
     }
     $smarty->assign("staticAddress", "");
 
@@ -294,14 +299,12 @@ class termservice extends plugin
       } else {
         $smarty->assign("$val", "");
       }
-      $smarty->assign($val."ACL", chkacl($this->acl, "gotoLpdEnable"));
     }
 
     /* Phone stuff */
     $smarty->assign ("goFonHardware", $this->goFonHardware);
     $hl= "<select size=\"1\" name=\"goFonHardware\" title=\"".
-         _("Choose the phone located at the current terminal")."\" ".
-         chkacl($this->acl, "goFonHardware").">\n";
+         _("Choose the phone located at the current terminal")."\" >\n";
     foreach ($this->hardware_list as $cn => $description){
       if ($cn == $this->goFonHardware){
         $selected= "selected";
@@ -338,10 +341,12 @@ class termservice extends plugin
     if (isset ($_POST['gotoXMethod'])){
       foreach (array("gotoLpdEnable", "gotoScannerEnable") as $val){
 
-        if (!isset ($_POST["$val"]) && chkacl ($this->acl, "$val") == ""){
-          $this->$val= FALSE;
-        } else {
-          $this->$val= TRUE;
+        if($this->acl_is_writeable($val)){
+          if (!isset ($_POST["$val"])){
+            $this->$val= FALSE;
+          } else {
+            $this->$val= TRUE;
+          }
         }
       }
     }
@@ -360,10 +365,10 @@ class termservice extends plugin
       /* Check vsync for correct usage */
       $val= preg_replace ("/\s/", "", $this->gotoXVsync);
       if (!preg_match ("/^\d+(\.\d+)?(\-\d+(\.\d+)?)?$/", $val)
-          && chkacl ($this->acl, "gotoXVsync") == ""){
+          && $this->acl_is_writeable("gotoXVsync")){
 
         $message[]= _("Please specify a valid VSync range.");
-      } elseif (chkacl ($this->acl, "gotoXVsync") == ""){
+      } elseif ($this->acl_is_writeable("gotoXVsync")){
         list($v1,$v2)= split ("-", $val);
         if ($v2 != ""){
           if ($v1 > $v2){
@@ -375,10 +380,10 @@ class termservice extends plugin
       /* Check hsync for correct usage */
       $val= preg_replace ("/\s/", "", $this->gotoXHsync);
       if (!preg_match ("/^\d+(\.\d+)?(\-\d+(\.\d+)?)?$/", $val)
-          && chkacl ($this->acl, "gotoXHsync") == ""){
+          && $this->acl_is_writeable("gotoXHsync")){
 
         $message[]= _("Please specify a valid HSync range.");
-      } elseif (chkacl ($this->acl, "gotoXHsync") == ""){
+      } elseif ($this->acl_is_writeable("gotoXHsync")){
         list($v1,$v2)= split ("-", $val);
         if ($v2 != ""){
           if ($v1 > $v2){

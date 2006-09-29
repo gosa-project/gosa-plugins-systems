@@ -197,7 +197,7 @@ class termstartup extends plugin
     /* if $_POST['gotoShareAdd'] is set, we will try to add a new entry
      * This entry will be, a combination of mountPoint and sharedefinitions
      */
-    if(isset($_POST['gotoShareAdd'])){
+    if(isset($_POST['gotoShareAdd']) && $this->acl_is_writeable("gotoShare")){
       /* We assign a share to this user, if we don't know where to mount the share */
       if((!isset($_POST['gotoShareMountPoint']))||(empty($_POST['gotoShareMountPoint']))||(preg_match("/[\|]/i",$_POST['gotoShareMountPoint']))){
         print_red(_("You must specify a valid mount point."));
@@ -213,7 +213,7 @@ class termstartup extends plugin
     /* if the Post  gotoShareDel is set, someone asked GOsa to delete the selected entry (if there is one selected)
      * If there is no defined share selected, we will abort the deletion without any message
      */
-    if((isset($_POST['gotoShareDel']))&&(isset($_POST['gotoShare']))){
+    if((isset($_POST['gotoShareDel']))&&(isset($_POST['gotoShare'])) && $this->acl_is_writeable("gotoShare")){
       unset($this->gotoShares[$_POST['gotoShare']]);
     }
 
