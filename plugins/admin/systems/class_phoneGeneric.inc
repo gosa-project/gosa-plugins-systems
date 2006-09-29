@@ -94,6 +94,19 @@ class phoneGeneric extends plugin
     $this->orig_dn= $this->dn;
   }
 
+  function set_acl_base($base)
+  {
+    plugin::set_acl_base($base);
+    $this->netConfigDNS->set_acl_base($base);
+  }
+
+  function set_acl_category($cat)
+  {
+    plugin::set_acl_category($cat);
+    $this->netConfigDNS->set_acl_category($cat);
+  }
+
+
   function execute()
   {
 	/* Call parent execute */
@@ -132,7 +145,7 @@ class phoneGeneric extends plugin
     }
 
     /* handle Permit Add*/
-    if(isset($_POST['goFonPermitAdd'])){
+    if(isset($_POST['goFonPermitAdd']) && $this->acl_is_writeable("goFonPermit")){
       if(isset($_POST['goFonPermitNew'])){
         if(is_string($this->goFonPermit)){
           $this->goFonPermit=array();
@@ -145,7 +158,7 @@ class phoneGeneric extends plugin
     }
       
     /* handle Deny Add*/
-    if(isset($_POST['goFonDenyAdd'])){
+    if(isset($_POST['goFonDenyAdd']) && $this->acl_is_writeable("goFonDeny")){
       if(isset($_POST['goFonDenyNew'])){
         if(is_string($this->goFonDeny)){
           $this->goFonDeny=array();
@@ -158,7 +171,7 @@ class phoneGeneric extends plugin
     }
 
     /* Handle Permit Deletion*/
-    if(isset($_POST['goFonPermitDel'])){
+    if(isset($_POST['goFonPermitDel']) && $this->acl_is_writeable("goFonPermit")){
       if(isset($_POST['goFonPermitS'])){
         if(is_string($this->goFonPermit)){
           $this->goFonPermit=array();
@@ -175,7 +188,7 @@ class phoneGeneric extends plugin
 
 
     /* Handle Permit Deletion*/
-    if(isset($_POST['goFonDenyDel'])){
+    if(isset($_POST['goFonDenyDel']) && $this->acl_is_writeable("goFonDeny")){
       if(isset($_POST['goFonDenyS'])){
         if(is_string($this->goFonDeny)){
           $this->goFonDeny=array();
@@ -229,10 +242,7 @@ class phoneGeneric extends plugin
     $smarty->assign("selected_categorie",$this->selected_categorie);
 
     /* Assign attributes */
-    
-
     $smarty->assign("base_select", $this->base);
-   
     $smarty->assign("goFonDefaultIPs",array("dynamic"=>_("dynamic"),"network"=>_("Networksettings")));
  
     /* Show main page */
@@ -243,28 +253,30 @@ class phoneGeneric extends plugin
 
   function remove_from_parent()
   {
-    $ldap= $this->config->get_ldap_link();
-    $ldap->cd($this->config->current['BASE']);
+    if($this->acl_is_removeable()){
+      $ldap= $this->config->get_ldap_link();
+      $ldap->cd($this->config->current['BASE']);
 
-    $ldap->search ("(&(objectClass=goFonAccount)(goFonHardware=".$this->cn."))", array("uid","cn"));
-    while ($attr =  $ldap->fetch()){
-      print_red(sprintf(_("Can't delete because there are user which are depending on this phone. One of them is user '%s'."),
-        ($attr['uid'][0]." - ".$attr['cn'][0])));
-      return;
-    }
+      $ldap->search ("(&(objectClass=goFonAccount)(goFonHardware=".$this->cn."))", array("uid","cn"));
+      while ($attr =  $ldap->fetch()){
+        print_red(sprintf(_("Can't delete because there are user which are depending on this phone. One of them is user '%s'."),
+              ($attr['uid'][0]." - ".$attr['cn'][0])));
+        return;
+      }
 
-    $this->netConfigDNS->remove_from_parent();
-    $ldap->rmdir($this->dn);
-    show_ldap_error($ldap->get_error(), sprintf(_("Removing of system phone/generic with dn '%s' failed."),$this->dn));
-    $this->handle_post_events("remove");
+      $this->netConfigDNS->remove_from_parent();
+      $ldap->rmdir($this->dn);
+      show_ldap_error($ldap->get_error(), sprintf(_("Removing of system phone/generic with dn '%s' failed."),$this->dn));
+      $this->handle_post_events("remove");
 
-    /* Delete references to object groups */
-    $ldap->cd ($this->config->current['BASE']);
-    $ldap->search ("(&(objectClass=gosaGroupOfNames)(member=".$this->dn."))", array("cn"));
-    while ($ldap->fetch()){
-      $og= new ogroup($this->config, $ldap->getDN());
-      unset($og->member[$this->dn]);
-      $og->save ();
+      /* Delete references to object groups */
+      $ldap->cd ($this->config->current['BASE']);
+      $ldap->search ("(&(objectClass=gosaGroupOfNames)(member=".$this->dn."))", array("cn"));
+      while ($ldap->fetch()){
+        $og= new ogroup($this->config, $ldap->getDN());
+        unset($og->member[$this->dn]);
+        $og->save ();
+      }
     }
   }
 
