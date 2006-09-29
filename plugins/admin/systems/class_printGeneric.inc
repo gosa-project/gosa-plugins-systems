@@ -77,7 +77,7 @@ class printgeneric extends plugin
     $this->orig_dn = $this->dn;
 
     /* Get printer settings, possibly dn has changed */
-    plugin::plugin ($config, $this->dn,$parent_init);
+    plugin::plugin ($config, $this->dn);
 
     /* Get is_account initially_was_account status */
     $this->getTypeOfPrinter(true);

@@ -80,17 +80,43 @@ class componentGeneric extends plugin
     $smarty= get_smarty();
     $smarty->assign("bases", $this->config->idepartments);
 
+    /* Create base acls */
+    $baseACL = $this->getacl("base");
+    if(!$this->acl_is_moveable()) {
+      $baseACL = preg_replace("/w/","",$baseACL);
+    }
+    $smarty->assign("baseACL",          $baseACL);
+
+    /* Set acls */
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $name => $translation){
+      $smarty->assign($name."ACL",$this->getacl($name));
+    }
+
+    $smarty->assign("bases", $this->get_allowed_bases());
+
+
     /* Assign attributes */
     foreach ($this->attributes as $attr){
-      $smarty->assign($attr."ACL", chkacl($this->acl, $attr));
       $smarty->assign("$attr", $this->$attr);
     }
     $smarty->assign("base_select", $this->base);
-    $smarty->assign("baseACL", chkacl($this->acl,"base"));
 
     /* Show main page */
     $smarty->assign("netconfig", $this->netConfigDNS->execute());
     return($smarty->fetch (get_template_path('component.tpl', TRUE)));
+  }
+
+  function set_acl_base($base)
+  {
+    plugin::set_acl_base($base);
+    $this->netConfigDNS->set_acl_base($base);
+  }
+
+  function set_acl_category($cat)
+  {
+    plugin::set_acl_category($cat);
+    $this->netConfigDNS->set_acl_category($cat);
   }
 
   function remove_from_parent()
@@ -120,7 +146,7 @@ class componentGeneric extends plugin
     $this->netConfigDNS->save_object();
 
     /* Save base, since this is no LDAP attribute */
-    if (isset($_POST['base']) && chkacl($this->acl, "create") == ""){
+    if (isset($_POST['base']) && $this->acl_is_moveable()){
       $this->base= $_POST['base'];
     }
   }
@@ -135,7 +161,7 @@ class componentGeneric extends plugin
 
     $this->dn= "cn=".$this->cn.",ou=netdevices,ou=systems,".$this->base;
 
-    if ($this->cn == "" && chkacl ($this->acl, "cn") == ""){
+    if ($this->cn == "" ){
       $message[]= _("The required field 'Component name' is not set.");
     }
 
@@ -149,9 +175,7 @@ class componentGeneric extends plugin
     }
 
     $ui= get_userinfo();
-    $acl= get_permissions ($this->dn, $ui->subtreeACL);
-    $acl= get_module_permission($acl, "component", $this->dn);
-    if (chkacl($acl, "create") != ""){
+    if ($this->dn == "new" && !$this->acl_is_createable()){
       $message[]= _("You have no permissions to create a component on this 'Base'.");
     }
 
@@ -240,6 +264,7 @@ class componentGeneric extends plugin
                                                         "objectClass"  => array("device", "ipHost", "ieee802Device"))),
           "plProvidedAcls"=> array(
             "cn"                  => _("Name"),
+            "base"                => _("Base"),
             "description"         => _("Description"))
           ));
   }
