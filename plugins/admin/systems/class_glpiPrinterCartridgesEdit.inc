@@ -37,12 +37,6 @@ class glpiPrinterCartridgesEdit extends plugin
   function glpiPrinterCartridgesEdit ($config, $dn,$printer_type,$values = NULL )
   {
     plugin::plugin ($config, $dn);
-
-    $ui= get_userinfo();
-    $acl= get_permissions ($this->dn, $ui->subtreeACL);
-    $this->acl= get_module_permission($acl, "component", $this->dn);
-    
-
     foreach($this->attributes as $val){
       if(isset($values[$val])){
         $this->$val = $values[$val];
@@ -50,11 +44,8 @@ class glpiPrinterCartridgesEdit extends plugin
         $this->$val = "";
       }
     }
-
     $this->needToCatch = true;
-    
     $this->printer_type = $printer_type;
-
   }
 
   function remove_from_parent()

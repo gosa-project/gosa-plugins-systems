@@ -156,9 +156,6 @@ class wingeneric extends plugin
     $message= array_merge($message, $this->netConfigDNS->check());
     $this->dn= "cn=".$this->cn.",ou=netdevices,ou=systems,".$this->base;
 
-    $ui= get_userinfo();
-    $acl= get_permissions ($this->dn, $ui->subtreeACL);
-    $acl= get_module_permission($acl, "component", $this->dn);
     if(!$this->acl_is_createable() && $this->dn == "new"){
       $message[]= _("You have no permissions to create a component on this 'Base'.");
     }
