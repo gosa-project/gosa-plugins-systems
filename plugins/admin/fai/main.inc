@@ -29,6 +29,8 @@ if ($remove_lock){
 	/* Create usermanagement object on demand */
 	if (!isset($_SESSION['FAI']) || (isset($_GET['reset']) && $_GET['reset'] == 1)){
 		$_SESSION['FAI']= new faiManagement($config, $ui);
+		$_SESSION['FAI']->set_acl_category("fai");
+		$_SESSION['FAI']->set_acl_base($_SESSION['CurrentMainBase']);
 	}
 	$FAI= $_SESSION['FAI'];
 	$FAI->save_object();

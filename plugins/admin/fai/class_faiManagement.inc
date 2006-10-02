@@ -129,20 +129,28 @@ class faiManagement extends plugin
     }
 
 
+    $type_acl_mapping = array(
+        "FAIpartitionTable"  => "faiPartitionTable", 
+        "FAIpackageList"     => "faiPackage",
+        "FAIscript"          => "faiScript",
+        "FAIvariable"        => "faiVariable",
+        "FAIhook"            => "faiHook",
+        "FAIprofile"         => "faiProfile",
+        "FAItemplate"        => "faiTemplate");
+
     /****************
       Delete confirme dialog 
      ****************/
 
 		if ($s_action=="delete"){
 
-			/* Get 'dn' from posted termlinst */
-			$this->dn= $this->objects[$s_entry]['dn'];
-
 			/* Load permissions for selected 'dn' and check if
 			   we're allowed to remove this 'dn' */
-			$acl= get_permissions ($this->dn, $this->ui->subtreeACL);
-			$this->acl= get_module_permission($acl, "FAIclass", $this->dn);
-			if (chkacl($this->acl, "delete") == ""){
+      $acl  = $this->ui->get_permissions($this->dn,"fai/".$type_acl_mapping[$this->objects[$s_entry]['type']]);
+      if(preg_match("/d/",$acl)){
+
+        /* Get 'dn' from posted termlinst */
+        $this->dn= $this->objects[$s_entry]['dn'];
 
 				/* Check locking, save current plugin in 'back_plugin', so the dialog knows where to return. */
 				if (($user= get_lock($this->dn)) != ""){
@@ -182,7 +190,8 @@ class faiManagement extends plugin
 
 			/* Some nice guy may send this as POST, so we've to check
 			   for the permissions again. */
-			if (chkacl($this->acl, "delete") == ""){
+      $acl  = $this->ui->get_permissions($this->dn,"fai/".$type_acl_mapping[$this->objects[$s_entry]['type']]);
+      if(preg_match("/d/",$acl)){
 
 				/* Find out more about the object type */
 				$ldap	  = $this->config->get_ldap_link();
@@ -190,8 +199,6 @@ class faiManagement extends plugin
 				$attrs	= $ldap->fetch();
 				$type	  = $this->get_type($attrs);			
 				$this->dialog = new $type[0]($this->config,	$this->config->data['TABS'][$type[2]], $this->dn);
-				$this->dialog->set_acl(array($this->acl));
-
 				$this->dialog->by_object[$type[1]]->remove_from_parent ();
 				unset ($this->dialog);
 				gosa_log ("FAI class '".$this->dn."' has been tagged as removed");
@@ -237,7 +244,8 @@ class faiManagement extends plugin
 			$this->is_dialog  = true;
 
       if($entry['FAIstate'] == "freeze"){
-        $this->dialog->set_acl(array("*none*"))  ;
+        #$this->dialog->set_acl(array("*none*"))  ;    
+        echo "Dawn it is freezed.";
       }
 			$_SESSION['objectinfo'] = $this->dn;
 		}
@@ -258,9 +266,9 @@ class faiManagement extends plugin
 
       /* Load permissions for selected 'dn' and check if
          we're allowed to remove this 'dn' */
-      $acl= get_permissions ($this->DivListFai->selectedBase, $this->ui->subtreeACL);
-      $this->acl= get_module_permission($acl, "FAIclass", $base);
-      if (chkacl($this->acl, "delete") == ""){
+      $this->set_acl_base($base);
+      if($this->acl_is_removeable()){
+
         $smarty->assign("info", sprintf(_("You're about to delete a fai branch / freeze  '%s'."), $this->DivListFai->selectedBranch));
         return($smarty->fetch(get_template_path('remove_branch.tpl',TRUE)));
       } else {
@@ -281,7 +289,7 @@ class faiManagement extends plugin
 
       $br = $this->getBranches();
 
-      if(isset($br[$bb])){
+      if(isset($br[$bb]) && $this->acl_is_removeable()){
         $name = $br[$bb];
         $ldap->cd($bb);
         $ldap->recursive_remove();
@@ -348,103 +356,108 @@ class faiManagement extends plugin
      ****************/
 
     if(isset($_GET['PerformBranch'])){
-      /* Create it know */
-      $this->dispNewBranch = false;
-      $this->dispNewFreeze = false;
-      $base = $_SESSION['LASTPOST']['base'];
-      $_POST = $_SESSION['LASTPOST'];      
-      $name = $_POST['BranchName'];
 
-      $type = $_SESSION['LASTPOST']['type'];
-      $ldap = $this->config->get_ldap_link();
-
-      $baseToUse = $base;
-      if($this->DivListFai->selectedBranch != "main" ){
-        $baseToUse = $this->DivListFai->selectedBranch;
-      }
-  
-      /* Create new Release name to be able to set faidebianRelease for FAIpackageList */
-      
-      $CurrentReleases  = $this->getBranches();
-      $NewReleaseName   = $name;
-      if(isset($CurrentReleases[$this->DivListFai->selectedBranch])) {
-        if($this->DivListFai->selectedBranch != "main"){
-          $NewReleaseName = $CurrentReleases[$this->DivListFai->selectedBranch]."/".$name;
-          $NewReleaseName = preg_replace("#\/#","/",$NewReleaseName); 
-        }else{
-          $NewReleaseName   = $name;
-        }
-      }
-
-      $appsrc = preg_replace("/ou=fai,ou=configs,ou=systems,/","ou=apps,",$baseToUse); 
-      $appdst = preg_replace("/ou=fai,ou=configs,ou=systems,/","ou=apps,","ou=".$name.",".$baseToUse) ; 
-
-      $mimesrc = preg_replace("/ou=fai,ou=configs,ou=systems,/","ou=mime,",$baseToUse); 
-      $mimedst = preg_replace("/ou=fai,ou=configs,ou=systems,/","ou=mime,","ou=".$name.",".$baseToUse) ; 
-
-      /* Print header to have styles included */
-      echo "<!-- headers.tpl-->".$smarty->fetch(get_template_path('headers.tpl'));
-      echo "<body style='background-image:none;margin:3px;color:black'>";
-
-      /* Duplicate applications 
-       */
-      $ldap->cat($appsrc,array("dn")) ;
-      if($ldap->count()){
-        $ldap->cd ($appdst);
-        $ldap->recursive_remove();
-        $ldap->cd ($this->config->current['BASE']);
-        $ldap->copy_FAI_resource_recursive($appsrc,$appdst,$NewReleaseName,$type,true);
-      }
-  
-      /* Duplicate mime types 
-       */
-      $ldap->cat($mimesrc,array("dn")) ;
-      if($ldap->count()){
-        $ldap->cd ($appdst);
-        $ldap->recursive_remove();
-        $ldap->cd ($this->config->current['BASE']);
-        $ldap->copy_FAI_resource_recursive($mimesrc,$mimedst,$NewReleaseName,$type,true);
-      }
-
-      $attr = array();
-      $attr['objectClass'] = array("organizationalUnit","FAIbranch");
-      $attr['ou']       = $name;
-      $attr['FAIstate'] = $type;
-      $ldap->cd($this->config->current['BASE']);
-      $ldap->cd("ou=".$name.",".$baseToUse);
-      $ldap->cat("ou=".$name.",".$baseToUse);
-      if($ldap->count()){
-        $ldap->modify($attr);
+      if(!$this->acl_is_createable()){
+        print_red(_("You are not allowed to create a new branch."));
       }else{
-        $ldap->add($attr);
+
+        /* Create it know */
+        $this->dispNewBranch = false;
+        $this->dispNewFreeze = false;
+        $base = $_SESSION['LASTPOST']['base'];
+        $_POST = $_SESSION['LASTPOST'];      
+        $name = $_POST['BranchName'];
+
+        $type = $_SESSION['LASTPOST']['type'];
+        $ldap = $this->config->get_ldap_link();
+
+        $baseToUse = $base;
+        if($this->DivListFai->selectedBranch != "main" ){
+          $baseToUse = $this->DivListFai->selectedBranch;
+        }
+
+        /* Create new Release name to be able to set faidebianRelease for FAIpackageList */
+
+        $CurrentReleases  = $this->getBranches();
+        $NewReleaseName   = $name;
+        if(isset($CurrentReleases[$this->DivListFai->selectedBranch])) {
+          if($this->DivListFai->selectedBranch != "main"){
+            $NewReleaseName = $CurrentReleases[$this->DivListFai->selectedBranch]."/".$name;
+            $NewReleaseName = preg_replace("#\/#","/",$NewReleaseName); 
+          }else{
+            $NewReleaseName   = $name;
+          }
+        }
+
+        $appsrc = preg_replace("/ou=fai,ou=configs,ou=systems,/","ou=apps,",$baseToUse); 
+        $appdst = preg_replace("/ou=fai,ou=configs,ou=systems,/","ou=apps,","ou=".$name.",".$baseToUse) ; 
+
+        $mimesrc = preg_replace("/ou=fai,ou=configs,ou=systems,/","ou=mime,",$baseToUse); 
+        $mimedst = preg_replace("/ou=fai,ou=configs,ou=systems,/","ou=mime,","ou=".$name.",".$baseToUse) ; 
+
+        /* Print header to have styles included */
+        echo "<!-- headers.tpl-->".$smarty->fetch(get_template_path('headers.tpl'));
+        echo "<body style='background-image:none;margin:3px;color:black'>";
+
+        /* Duplicate applications 
+         */
+        $ldap->cat($appsrc,array("dn")) ;
+        if($ldap->count()){
+          $ldap->cd ($appdst);
+          $ldap->recursive_remove();
+          $ldap->cd ($this->config->current['BASE']);
+          $ldap->copy_FAI_resource_recursive($appsrc,$appdst,$NewReleaseName,$type,true);
+        }
+
+        /* Duplicate mime types 
+         */
+        $ldap->cat($mimesrc,array("dn")) ;
+        if($ldap->count()){
+          $ldap->cd ($appdst);
+          $ldap->recursive_remove();
+          $ldap->cd ($this->config->current['BASE']);
+          $ldap->copy_FAI_resource_recursive($mimesrc,$mimedst,$NewReleaseName,$type,true);
+        }
+
+        $attr = array();
+        $attr['objectClass'] = array("organizationalUnit","FAIbranch");
+        $attr['ou']       = $name;
+        $attr['FAIstate'] = $type;
+        $ldap->cd($this->config->current['BASE']);
+        $ldap->cd("ou=".$name.",".$baseToUse);
+        $ldap->cat("ou=".$name.",".$baseToUse);
+        if($ldap->count()){
+          $ldap->modify($attr);
+        }else{
+          $ldap->add($attr);
+        }
+
+        /* Duplicate fai objects 
+         */
+        //      $ldap->cd ("ou=".$name.",".$baseToUse);
+        //      $ldap->recursive_remove();
+        //      $ldap->cd ($this->config->current['BASE']);
+        //      $ldap->copy_FAI_resource_recursive($baseToUse,"ou=".$name.",".$baseToUse,$NewReleaseName,$type,true);
+
+        echo "<div style='width:100%;text-align:right;'><form name='form' method='post' action='?plug=".$_GET['plug']."' target='_parent'>
+          <br><input type='submit' name='CloseIFrame' value='"._("Continue")."'>
+          </form></div>";
+
+        /* Print footer to have valid html */
+        echo "</body></html>";
+
+        $this->dispNewFreeze = false; 
+
+        /* Postcreate */ 
+
+        /* Assign possible attributes */
+        $this->lock_type  = $type; 
+        $this->lock_name  = $name; 
+        $this->lock_dn    = $baseToUse;
+        $this->postcreate();
+        exit();
       }
-
-      /* Duplicate fai objects 
-       */
-//      $ldap->cd ("ou=".$name.",".$baseToUse);
-//      $ldap->recursive_remove();
-//      $ldap->cd ($this->config->current['BASE']);
-//      $ldap->copy_FAI_resource_recursive($baseToUse,"ou=".$name.",".$baseToUse,$NewReleaseName,$type,true);
-
-      echo "<div style='width:100%;text-align:right;'><form name='form' method='post' action='?plug=".$_GET['plug']."' target='_parent'>
-              <br><input type='submit' name='CloseIFrame' value='"._("Continue")."'>
-            </form></div>";
-
-      /* Print footer to have valid html */
-      echo "</body></html>";
-
-      $this->dispNewFreeze = false; 
-
-      /* Postcreate */ 
-
-      /* Assign possible attributes */
-      $this->lock_type  = $type; 
-      $this->lock_name  = $name; 
-      $this->lock_dn    = $baseToUse;
-      $this->postcreate();
-      exit();
     }
-
 
     /****************
       Display dialog to enter new Branch name
@@ -482,17 +495,26 @@ class faiManagement extends plugin
                     "new_package"       =>  "FAIpackageList");
 
     if(isset($types[$s_action])){
-      $this->dialog = new askClassName($this->config,$this->dn,$this->ui,$types[$s_action]);
+      $acl = $this->ui->get_permissions($this->DivListFai->selectedBase,"fai/".$type_acl_mapping[$types[$s_action]]);
+      if(preg_match("/c/",$acl)){
+        $this->dialog = new askClassName($this->config,$this->dn,$this->ui,$types[$s_action]);
+      }else{
+        print_red(sprintf(_("You are not allowed to create a new '%s' object."),$types[$s_action]));
+      }
     }
 
     /* New Profile */
     if($s_action == "new_profile"){
       $this->dn = "new" ;
-      $a_setup= $this->get_type(array("objectClass"=>array("FAIprofile")));
 
-      $this->dialog = new $a_setup[0]($this->config,
-          $this->config->data['TABS'][$a_setup[2]],$this->dn);
-      $this->is_dialog = false;
+      $acl = $this->ui->get_permissions($this->DivListFai->selectedBase,"fai/faiProfile");
+      if(preg_match("/c/",$acl)){
+        $a_setup= $this->get_type(array("objectClass"=>array("FAIprofile")));
+        $this->dialog = new $a_setup[0]($this->config,$this->config->data['TABS'][$a_setup[2]],$this->dn);
+        $this->is_dialog = false;
+      }else{
+        print_red(sprintf(_("You are not allowed to create a new '%s' object."),"FAIprofile"));
+      }
     }
 
 
@@ -811,8 +833,8 @@ class faiManagement extends plugin
   function plInfo()
   {
     return (array( 
-          "plShortName"   => _("Management"),
-          "plDescription" => _("FAI management"),
+          "plShortName"   => _("FAI releases"),
+          "plDescription" => _("FAI release management"),
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
           "plPriority"    => 0,
