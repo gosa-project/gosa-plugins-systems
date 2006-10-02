@@ -703,21 +703,28 @@ class faiManagement extends plugin
 
     $this->lock_type = get_release_tag(get_release_dn($base));
 
-    /* Get resolved release dependencies */
-    $tmp = get_all_objects_for_given_base($base,"(&(|(objectClass=FAIpartitionTable)(objectClass=FAIpackageList)(objectClass=FAIscript)
-      (objectClass=FAIvariable)(objectClass=FAIhook)(objectClass=FAIprofile)(objectClass=FAItemplate))(cn=$Regex))");
-
     /* Create a new list of FAI object 
      * Generate List of Partitions,Hooks,Scripts,Templates,Profiles ... 
      */
     $ObjectTypes = array(
-        "FAIpartitionTable"  => array("OU"=>"ou=disk,"        , "CHKBOX"=>"ShowPartitions"),
-        "FAIpackageList"     => array("OU"=>"ou=packages,"    , "CHKBOX"=>"ShowPackages"),
-        "FAIscript"          => array("OU"=>"ou=scripts,"     , "CHKBOX"=>"ShowScripts"),
-        "FAIvariable"        => array("OU"=>"ou=variables,"   , "CHKBOX"=>"ShowVariables"),
-        "FAIhook"            => array("OU"=>"ou=hooks,"       , "CHKBOX"=>"ShowHooks"),
-        "FAIprofile"         => array("OU"=>"ou=profiles,"    , "CHKBOX"=>"ShowProfiles"),
-        "FAItemplate"        => array("OU"=>"ou=templates,"   , "CHKBOX"=>"ShowTemplates"));
+        "FAIpartitionTable"  => array("OU"=>"ou=disk,"        , "CHKBOX"=>"ShowPartitions"  ,"ACL" => "faiPartitionTable"),
+        "FAIpackageList"     => array("OU"=>"ou=packages,"    , "CHKBOX"=>"ShowPackages"    ,"ACL" => "faiPackage"),
+        "FAIscript"          => array("OU"=>"ou=scripts,"     , "CHKBOX"=>"ShowScripts"     ,"ACL" => "faiScript"),
+        "FAIvariable"        => array("OU"=>"ou=variables,"   , "CHKBOX"=>"ShowVariables"   ,"ACL" => "faiVariable"),
+        "FAIhook"            => array("OU"=>"ou=hooks,"       , "CHKBOX"=>"ShowHooks"       ,"ACL" => "faiHook"),
+        "FAIprofile"         => array("OU"=>"ou=profiles,"    , "CHKBOX"=>"ShowProfiles"    ,"ACL" => "faiProfile"),
+        "FAItemplate"        => array("OU"=>"ou=templates,"   , "CHKBOX"=>"ShowTemplates"   ,"ACL" => "faiTemplate"));
+
+    $filter = "";
+    foreach($ObjectTypes as $key => $data){
+      if($this->DivListFai->$data['CHKBOX']){
+        $filter.= "(objectClass=".$key.")";
+      }
+    }
+    $filter = "(&(|".$filter.")(cn=$Regex))";
+    
+    /* Get resolved release dependencies */
+    $tmp = get_all_objects_for_given_base($base,$filter);
 
     /* Ge listed ldap objects */
     $ldap = $this->config->get_ldap_link();
@@ -731,12 +738,9 @@ class faiManagement extends plugin
       /* Walk through possible types */
       foreach($ObjectTypes as $type => $rest){  
 
-        /* Skip all unchecked types */
-        if(! $this->DivListFai->$rest['CHKBOX']){
-          continue;
-        }
+        $acl = $this->ui->get_permissions($object['dn'],"fai/".$rest ['ACL']);
 
-        if(in_array($type,$object['objectClass'])){
+        if(in_array($type,$object['objectClass']) && preg_match("/r/",$acl)){
 
           /* Prepare object */
           unset($object['objectClass']['count']);
@@ -748,6 +752,7 @@ class faiManagement extends plugin
           $obj                  = array();
           $obj['cn'] 			      = $object['cn'][0];
           $obj['dn'] 			      = $object['dn'];
+          $obj['acl'] 			    = $acl;
           $obj['description']   = $object['description'][0];
           $obj['objectClass']   = $object['objectClass'];
 

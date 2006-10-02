@@ -95,6 +95,7 @@ class divListFai extends MultiSelectWindow
 
   function GenHeader()
   {
+    $ui = get_userinfo();
     /* Prepare departments,
        which are shown in the listbox on top of the listbox
      */
@@ -125,32 +126,34 @@ class divListFai extends MultiSelectWindow
       " <input class='center' type='image' src='images/list_reload.png' align='middle' title='"._("Reload list")."' name='submit_department' alt='".
 _("Submit")."'>&nbsp;".
 
-      "<img class='center' src=\"images/list_seperator.png\" alt=\"\" align=\"middle\" height=\"16\" width=\"1\">&nbsp;".
-
-      " <input class='center' type='image' src='images/fai_new_profile.png' align='middle'
-      title='"._("New profile")."' name='Create_profile' alt='"._("P")."'>&nbsp;".
-
       "<img class='center' src=\"images/list_seperator.png\" alt=\"\" align=\"middle\" height=\"16\" width=\"1\">&nbsp;";
-      $listhead .= $this->get_snapshot_header($this->selectedBase);
-      $listhead .= " <input class='center' type='image' src='images/fai_new_partitionTable.png' align='middle'
-      title='"._("New partition table")."' name='Create_partition' alt='"._("PT")."'>&nbsp;".
 
-      " <input class='center' type='image' src='images/fai_new_script.png' align='middle'
-      title='"._("New scripts")."' name='Create_script' alt='"._("S")."'>&nbsp;".
+    $acl = $ui->get_permissions($this->selectedBase,"fai/faiProfile");
+    if(preg_match("/c/",$acl)){
+      $listhead .=" <input class='center' type='image' src='images/fai_new_profile.png' align='middle'
+        title='"._("New profile")."' name='Create_profile' alt='"._("P")."'>&nbsp;";
+    }
 
-      " <input class='center' type='image' src='images/fai_new_hook.png' align='middle'
-      title='"._("New hooks")."' name='Create_hook' alt='"._("H")."'>&nbsp;".
+    $listhead .= "<img class='center' src=\"images/list_seperator.png\" alt=\"\" align=\"middle\" height=\"16\" width=\"1\">&nbsp;";
+    $listhead .= $this->get_snapshot_header($this->selectedBase);
 
-      " <input class='center' type='image' src='images/fai_new_variable.png' align='middle'
-      title='"._("New variables")."' name='Create_variable' alt='"._("V")."'>&nbsp;".
 
-      " <input class='center' type='image' src='images/fai_new_template.png' align='middle'
-      title='"._("New templates")."' name='Create_template' alt='"._("T")."'>&nbsp;".
+    $arr = array(
+        array("images/fai_new_partitionTable.png" , _("New partition table")  ,"Create_partition" , _("PT") , "faiPartitionTable"),
+        array("images/fai_new_script.png"         , _("New scripts")          ,"Create_script"    , _("S")  , "faiScript"),
+        array("images/fai_new_hook.png"           , _("New hooks")            ,"Create_hook"      , _("H")  , "faiHook"),
+        array("images/fai_new_variable.png"       , _("New variables")        ,"Create_variable"  , _("V")  , "faiVariable"),
+        array("images/fai_new_template.png"       , _("New templates ")       ,"Create_template"  , _("I")  , "faiTemplate"),
+        array("images/fai_new_packages.png"       , _("New package list")     ,"Create_package"   , _("PK") , "faiPackage"));
 
-      " <input class='center' type='image' src='images/fai_new_packages.png' align='middle'
-      title='"._("New package list")."' name='Create_package' alt='"._("PK")."'>&nbsp;".
+    foreach($arr as $ar){
 
-      " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;".
+      $acl = $ui->get_permissions($this->selectedBase,"fai/".$ar[4]);
+      if(preg_match("/c/",$acl)){
+        $listhead .=" <input class='center' type='image' src='".$ar[0]."' align='middle' title='".$ar[1]."' name='".$ar[2]."' alt='".$ar[3]."'>&nbsp;";
+      }
+    }
+    $listhead .=" <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;".
 
       _("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
       " <input class='center' type='image' src='images/list_submit.png' align='middle' title='"._("Submit department")."' name='submit_department' alt='".  _("Submit")."'>&nbsp;".
@@ -217,20 +220,27 @@ _("Submit")."'>&nbsp;".
          $desc= "";
        }
 
+
        if($value['FAIstate'] == "freeze"){
-         $action= "<input class='center' type='image' src='images/edit.png'  alt='"._("edit")."'
+         $action=  "<img src='images/closedlock.png' alt='F' class='center'><img src='images/empty.png' width='38' height='2' class='center' alt=''>";
+         $action.= "<input class='center' type='image' src='images/edit.png'  alt='"._("edit")."'
            name='entry_edit_%KEY%' title='"._("Edit class")."'>";
-         $edi = $editlink;
-         $acti = $action;
        }else{
          $action= "<input class='center' type='image' src='images/edit.png'  alt='"._("edit")."'
            name='entry_edit_%KEY%' title='"._("Edit class")."'>";
-         $action.= $this->GetSnapShotActions($value['dn']);;
-         $action.= "<input class='center' type='image' src='images/edittrash.png' alt='"._("delete")."'
-           name='entry_delete_%KEY%' title='"._("Delete class")."'>";
-         $acti = $action;
-         $edi = $editlink;
+
+         if(preg_match("/(c&w)/",$value['acl'])){
+           $action.= $this->GetSnapShotActions($value['dn']);;
+         }
+
+         if(preg_match("/d/",$value['acl'])){
+           $action.= "<input class='center' type='image' src='images/edittrash.png' alt='"._("delete")."'
+             name='entry_delete_%KEY%' title='"._("Delete class")."'>";
+         }
        }
+
+       $edi = $editlink;
+       $acti = $action;
 
        $field1 = array("string" => $img , "attach" => "style='text-align:center;width:20px;'");
        $field2 = array("string" => preg_replace(array("/%KEY%/","/%NAME%/","/%TITLE%/"),array($key,$value['cn'].$desc,preg_replace('/ /', '&nbsp;', @LDAP::fix($value['dn']))),$edi) , "attach" => "style=''");
