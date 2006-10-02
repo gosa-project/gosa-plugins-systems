@@ -526,7 +526,7 @@ class termDNS extends plugin
         "plDepends"     => array(),
         "plPriority"    => 5,
         "plSection"     => array("administration"),
-        "plCategory"    => array("workstation","terminal","phone","server","component","printer"),
+        "plCategory"    => array("workstation","terminal","phone","server","component","printer","winworkstation"),
 
         "plProvidedAcls"=> array(
           "ipHostNumber"  => _("IP address"),

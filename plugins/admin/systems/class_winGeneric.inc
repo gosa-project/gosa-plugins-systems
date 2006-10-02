@@ -62,6 +62,20 @@ class wingeneric extends plugin
     $this->orig_dn= $this->dn;
   }
 
+
+  function set_acl_base($base)
+  {
+    plugin::set_acl_base($base);
+    $this->netConfigDNS->set_acl_base($base);
+  }
+
+  function set_acl_category($cat)
+  {
+    plugin::set_acl_category($cat);
+    $this->netConfigDNS->set_acl_category($cat);
+  }
+
+
   function execute()
   {
 	/* Call parent execute */
@@ -195,6 +209,10 @@ class wingeneric extends plugin
       $this->attrs= $attrs;
     }
 
+    if(($this->gosaUnitTag) && (!in_array_ics("gosaAdministrativeUnitTag",$this->attrs['objectClass']))){
+      $this->attrs['objectClass'][] = "gosaAdministrativeUnitTag";
+    }
+
     /* Write back to ldap */
     $ldap= $this->config->get_ldap_link();
     if ($this->orig_dn == 'new'){
@@ -215,8 +233,9 @@ class wingeneric extends plugin
       $this->handle_post_events("modify");
     }
 
-    $this->netConfigDNS->cn = $this->cn;
-    $this->netConfigDNS->save($this->dn);
+    # FIXME can't save mac address
+    #$this->netConfigDNS->cn = $this->cn;
+    #$this->netConfigDNS->save($this->dn);
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of system wingeneric/generic with dn '%s' failed."),$this->dn));
 
     /* Optionally execute a command after we're done */
