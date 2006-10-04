@@ -4,9 +4,9 @@ class tabsVariable extends tabs
 {
   var $base= "";
 
-  function tabsVariable($config, $data, $dn)
+  function tabsVariable($config, $data, $dn,$category)
   {
-	tabs::tabs($config, $data, $dn);
+	tabs::tabs($config, $data, $dn, $category);
 
 	/* Add references/acls/snapshots */
 	$this->addSpecialTabs();

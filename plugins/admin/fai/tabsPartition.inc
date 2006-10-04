@@ -4,9 +4,9 @@ class tabsPartition extends tabs
 {
   var $base= "";
 
-  function tabsPartition($config, $data, $dn)
+  function tabsPartition($config, $data, $dn,$category)
   {
-	tabs::tabs($config, $data, $dn);
+	tabs::tabs($config, $data, $dn,$category);
 
 	/* Add references/acls/snapshots */
 	$this->addSpecialTabs();

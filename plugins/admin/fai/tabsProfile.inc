@@ -4,9 +4,9 @@ class tabsProfile extends tabs
 {
   var $base= "";
 
-  function tabsProfile($config, $data, $dn)
+  function tabsProfile($config, $data, $dn,$category)
   {
-	tabs::tabs($config, $data, $dn);
+	tabs::tabs($config, $data, $dn,$category);
 
 	/* Add references/acls/snapshots */
 	$this->addSpecialTabs();

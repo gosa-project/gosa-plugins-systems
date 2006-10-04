@@ -4,9 +4,9 @@ class tabsPackage extends tabs
 {
   var $base= "";
 
-  function tabsPackage($config, $data, $dn)
+  function tabsPackage($config, $data, $dn,$category)
   {
-	tabs::tabs($config, $data, $dn);
+	tabs::tabs($config, $data, $dn,$category);
 
 	/* Add references/acls/snapshots */
 	$this->addSpecialTabs();

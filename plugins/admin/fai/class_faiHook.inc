@@ -43,21 +43,12 @@ class faiHook extends plugin
     /* Load Attributes */
     plugin::plugin ($config, $dn);
 
-    $this->acl ="#all#";
-
     /* If "dn==new" we try to create a new entry
      * Else we must read all objects from ldap which belong to this entry.
      */
     if($dn != "new"){
       $this->dn =$dn;
     
-      /* Set acls 
-       */
-      $ui   = get_userinfo();
-      $acl  = get_permissions ($this->dn, $ui->subtreeACL);
-      $acli = get_module_permission($acl, "FAIclass", $this->dn);
-      $this->acl=$acli;
-
       /* Get FAIstate
        */
       if(isset($this->attrs['FAIstate'][0])){
@@ -152,7 +143,8 @@ class faiHook extends plugin
           $obj  = $this->get_object_attributes($obj,$this->sub_Load_Later);
         }
         $this->dialog= new $this->subClassName($this->config,$this->dn,$obj);
-
+        $this->dialog->set_acl_base($_SESSION['CurrentMainBase']);
+        $this->dialog->set_acl_category("fai");
 
         $_SESSION['objectinfo'] = $obj['dn'];
         $this->dialog->parent = &$this;
@@ -175,7 +167,8 @@ class faiHook extends plugin
     /* Add new sub object */
     if(isset($_POST['AddSubObject'])){
       $this->dialog= new $this->subClassName($this->config,"new");
-      $this->dialog->acl = $this->acl;
+      $this->dialog->set_acl_base($_SESSION['CurrentMainBase']);
+      $this->dialog->set_acl_category("fai");
       $this->dialog->parent = &$this;
       $this->is_dialog=true;
     }
@@ -257,7 +250,7 @@ class faiHook extends plugin
 
     $divlist = new divSelectBox("FAIhooks");
     $divlist->setHeight(400);
-    if((chkacl($this->acl,"cn")!="") || ($this->FAIstate == "freeze")){
+    if($this->FAIstate == "freeze"){
       $img_edit = "<input type='image' src='images/edit.png'      name='editscript_%s'    title='"._("edit")."' alt='"._("edit")."'>";
       $img_remo = ""; 
     }else{
@@ -297,8 +290,17 @@ class faiHook extends plugin
       }
     }
 
-    foreach($this->attributes as $attr){
-      $smarty->assign($attr."ACL",chkacl($this->acl,$attr));
+    $tmp = $this->plInfo();
+    $this->ui = get_userinfo();
+      
+    $c_dn = $this->dn;
+    if($c_dn == "new"){
+      $c_dn = $_SESSION['CurrentMainBase'];
+    }
+
+    $smarty->assign("sub_object_is_addable", preg_match("/c/",$this->ui->get_permissions($c_dn,"fai/faiScriptEntry")) && $this->FAIstate!="freeze");
+    foreach($tmp['plProvidedAcls'] as $name => $translation){
+      $smarty->assign($name."ACL",$this->getacl($name));
     }
 
     $display.= $smarty->fetch(get_template_path('faiHook.tpl', TRUE));

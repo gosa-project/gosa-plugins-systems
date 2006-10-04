@@ -4,9 +4,9 @@ class tabsHook extends tabs
 {
   var $base= "";
 
-  function tabsHook($config, $data, $dn)
+  function tabsHook($config, $data, $dn,$category)
   {
-	tabs::tabs($config, $data, $dn);
+	tabs::tabs($config, $data, $dn,$category);
 	/* Add references/acls/snapshots */
 	$this->addSpecialTabs();
   }

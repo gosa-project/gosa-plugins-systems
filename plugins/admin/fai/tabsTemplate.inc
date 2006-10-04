@@ -4,9 +4,9 @@ class tabsTemplate extends tabs
 {
   var $base= "";
 
-  function tabsTemplate($config, $data, $dn)
+  function tabsTemplate($config, $data, $dn,$category)
   {
-	tabs::tabs($config, $data, $dn);
+	tabs::tabs($config, $data, $dn, $category);
 
 	/* Add references/acls/snapshots */
 	$this->addSpecialTabs();
