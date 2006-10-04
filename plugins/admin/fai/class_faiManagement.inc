@@ -144,13 +144,13 @@ class faiManagement extends plugin
 
 		if ($s_action=="delete"){
 
+      /* Get 'dn' from posted termlinst */
+      $this->dn= $this->objects[$s_entry]['dn'];
+
 			/* Load permissions for selected 'dn' and check if
 			   we're allowed to remove this 'dn' */
       $acl  = $this->ui->get_permissions($this->dn,"fai/".$type_acl_mapping[$this->objects[$s_entry]['type']]);
       if(preg_match("/d/",$acl)){
-
-        /* Get 'dn' from posted termlinst */
-        $this->dn= $this->objects[$s_entry]['dn'];
 
 				/* Check locking, save current plugin in 'back_plugin', so the dialog knows where to return. */
 				if (($user= get_lock($this->dn)) != ""){
@@ -190,20 +190,22 @@ class faiManagement extends plugin
 
 			/* Some nice guy may send this as POST, so we've to check
 			   for the permissions again. */
-      $acl  = $this->ui->get_permissions($this->dn,"fai/".$type_acl_mapping[$this->objects[$s_entry]['type']]);
+
+      /* Find out more about the object type */
+      $ldap	  = $this->config->get_ldap_link();
+      $ldap->cat($this->dn, array('objectClass'));
+      $attrs	= $ldap->fetch();
+      $type	  = $this->get_type($attrs);			
+
+      $acl  = $this->ui->get_permissions($this->dn,"fai/".$type[1]);
       if(preg_match("/d/",$acl)){
 
-				/* Find out more about the object type */
-				$ldap	  = $this->config->get_ldap_link();
-				$ldap->cat($this->dn, array('objectClass'));
-				$attrs	= $ldap->fetch();
-				$type	  = $this->get_type($attrs);			
-				$this->dialog = new $type[0]($this->config,	$this->config->data['TABS'][$type[2]], $this->dn,"fai");
+        $this->dialog = new $type[0]($this->config,	$this->config->data['TABS'][$type[2]], $this->dn,"fai");
         $this->dialog->set_acl_base($this->dn);
-				$this->dialog->by_object[$type[1]]->remove_from_parent ();
-				unset ($this->dialog);
-				gosa_log ("FAI class '".$this->dn."' has been tagged as removed");
-				$this->dialog= NULL;
+        $this->dialog->by_object[$type[1]]->remove_from_parent ();
+        unset ($this->dialog);
+        gosa_log ("FAI class '".$this->dn."' has been tagged as removed");
+        $this->dialog= NULL;
         $to_del = clean_up_releases($this->dn);
         save_release_changes_now();
 
@@ -212,18 +214,18 @@ class faiManagement extends plugin
           gosa_log(sprintf(_("Release cleanup : Removing object (tagged as remvoed) that is no longer in use '%s'."),$dn));
         }
 
-			} else {
+      } else {
 
-				/* Normally this shouldn't be reached, send some extra
-				   logs to notify the administrator */
-				print_red (_("You are not allowed to delete this component!"));
-				gosa_log ("Warning: '".$this->ui->uid."' tried to trick system ".
-						"deletion.");
-			}
+        /* Normally this shouldn't be reached, send some extra
+           logs to notify the administrator */
+        print_red (_("You are not allowed to delete this component!"));
+        gosa_log ("Warning: '".$this->ui->uid."' tried to trick system ".
+            "deletion.");
+      }
 
-			/* Remove lock file after successfull deletion */
-			del_lock ($this->dn);
-		}
+      /* Remove lock file after successfull deletion */
+      del_lock ($this->dn);
+    }
 
 
     /****************
