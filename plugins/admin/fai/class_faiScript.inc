@@ -285,7 +285,12 @@ class faiScript extends plugin
 
     $tmp = $this->plInfo();
     $this->ui = get_userinfo();
-    $smarty->assign("sub_object_is_addable", preg_match("/c/",$this->ui->get_permissions($this->dn,"fai/faiScriptEntry")));
+
+    $c_dn = $this->dn;  
+    if($c_dn == "new"){
+      $c_dn = $_SESSION['CurrentMainBase'];
+    }
+    $smarty->assign("sub_object_is_addable", preg_match("/c/",$this->ui->get_permissions($c_dn,"fai/faiScriptEntry")) && $this->FAIstate!="freeze");
     foreach($tmp['plProvidedAcls'] as $name => $translated){
       $smarty->assign($name."ACL",$this->getacl($name));
     }
