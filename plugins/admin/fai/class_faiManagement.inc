@@ -199,6 +199,8 @@ class faiManagement extends plugin
 				$attrs	= $ldap->fetch();
 				$type	  = $this->get_type($attrs);			
 				$this->dialog = new $type[0]($this->config,	$this->config->data['TABS'][$type[2]], $this->dn);
+        $this->dialog->set_acl_base($this->dn);
+        $this->dialog->set_acl_category("fai");
 				$this->dialog->by_object[$type[1]]->remove_from_parent ();
 				unset ($this->dialog);
 				gosa_log ("FAI class '".$this->dn."' has been tagged as removed");
@@ -240,7 +242,9 @@ class faiManagement extends plugin
 			}
 			add_lock ($this->dn, $this->ui->dn);
 
-			$this->dialog     = new $a_setup[0]($this->config,$this->config->data['TABS'][$a_setup[2]],$this->dn);
+			$this->dialog     = new $a_setup[0]($this->config,$this->config->data['TABS'][$a_setup[2]],$this->dn,"fai");
+      $this->dialog->set_acl_base($this->dn);
+//      $this->dialog->set_acl_category("fai");
 			$this->is_dialog  = true;
 
       if($entry['FAIstate'] == "freeze"){

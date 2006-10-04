@@ -43,20 +43,11 @@ class faiScript extends plugin
     /* Load Attributes */
     plugin::plugin ($config, $dn);
 
-    $this->acl ="#all#";
-    
     /* If "dn==new" we try to create a new entry
      * Else we must read all objects from ldap which belong to this entry.
      * First read SubObjects from ldap ... and then the partition definitions for the SubObjects.
      */
     if($dn != "new"){
-
-      /* Set acls
-       */
-      $ui   = get_userinfo();
-      $acl  = get_permissions ($this->dn, $ui->subtreeACL);
-      $acli = get_module_permission($acl, "FAIclass", $this->dn);
-      $this->acl=$acli;
 
       $this->dn =$dn;
 
@@ -130,7 +121,8 @@ class faiScript extends plugin
     /* Add new sub object */
     if(isset($_POST['AddSubObject'])){
       $this->dialog= new $this->subClassName($this->config,"new");
-      $this->dialog->acl = $this->acl;
+      $this->dialog->set_acl_base($_SESSION['CurrentMainBase']);
+      $this->dialog->set_acl_category("fai");
       $this->is_dialog=true;
     }
 
@@ -154,6 +146,8 @@ class faiScript extends plugin
           $obj  = $this->get_object_attributes($obj,$this->sub_Load_Later);
         }
         $this->dialog= new $this->subClassName($this->config,$this->dn,$obj);
+        $this->dialog->set_acl_base($this->dn);
+        $this->dialog->set_acl_category("fai");
 
 
         $_SESSION['objectinfo'] = $obj['dn'];
@@ -179,7 +173,8 @@ class faiScript extends plugin
     if((isset($_POST['EditSubObject']))&&(isset($_POST['SubObject']))){
       $script = $_POST['SubObject'][0];
       $this->dialog= new $this->subClassName($this->config,$this->dn,$this->SubObjects[$script]);
-      $this->dialog->acl = $this->acl;
+      $this->dialog->set_acl_base($_SESSION['CurrentMainBase']);
+      $this->dialog->set_acl_category("fai");
       $_SESSION['objectinfo'] = $this->SubObjects[$script]['dn'];
       $this->is_dialog=true;
     }
@@ -252,7 +247,7 @@ class faiScript extends plugin
      */
     $divlist = new divSelectBox("FAIscripts");
     $divlist->setHeight(400);
-    if((chkacl($this->acl,"cn")!="") || ($this->FAIstate == "freeze")){
+    if(($this->FAIstate == "freeze")){
       $img_edit = "<input type='image' src='images/edit.png'      name='editscript_%s'    title='"._("edit")."' alt='"._("edit")."'>";
       $img_remo = "";
     }else{
@@ -288,8 +283,11 @@ class faiScript extends plugin
       }
     }
 
-    foreach($this->attributes as $attr){
-      $smarty->assign($attr."ACL",chkacl($this->acl,$attr));
+    $tmp = $this->plInfo();
+    $this->ui = get_userinfo();
+    $smarty->assign("sub_object_is_addable", preg_match("/c/",$this->ui->get_permissions($this->dn,"fai/faiScriptEntry")));
+    foreach($tmp['plProvidedAcls'] as $name => $translated){
+      $smarty->assign($name."ACL",$this->getacl($name));
     }
 
     $display.= $smarty->fetch(get_template_path('faiScript.tpl', TRUE));
@@ -485,10 +483,8 @@ class faiScript extends plugin
           "plSection"     => array("administration"),
           "plCategory"    => array("fai"),
           "plProvidedAcls" => array(
-            "cn"                => _("Name"),
-            "description"       => _("Description"),
-            "FAIpriority"       => _("Script priority"),
-            "FAIscript"         => _("FAI script"))
+            "cn"                => _("Name")." ("._("Readonly").")",
+            "description"       => _("Description"))
           ));
   }
 }

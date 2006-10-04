@@ -4,9 +4,9 @@ class tabsScript extends tabs
 {
   var $base= "";
 
-  function tabsScript($config, $data, $dn)
+  function tabsScript($config, $data, $dn,$category)
   {
-	tabs::tabs($config, $data, $dn);
+	tabs::tabs($config, $data, $dn,$category);
 
 	/* Add references/acls/snapshots */
 	$this->addSpecialTabs();

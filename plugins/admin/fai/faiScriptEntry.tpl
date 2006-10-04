@@ -9,7 +9,9 @@
 							{t}Name{/t}{$must}&nbsp;
 						</td>
 						<td>
-							<input value="{$cn}" size="45" maxlength="80" name="cn"  {$cnACL}>
+{render acl=$cnACL}
+							<input value="{$cn}" size="45" maxlength="80" name="cn">
+{/render}
 						</td>
 					</tr>
 					<tr>
@@ -17,7 +19,9 @@
 							{t}Description{/t}&nbsp;
 						</td>
 						<td>
-							<input size="45" maxlength="80" value="{$description}" name="description" {$descriptionACL}>
+{render acl=$descriptionACL}
+							<input size="45" maxlength="80" value="{$description}" name="description">
+{/render}
 						</td>
 					</tr>
 				</table>
@@ -35,9 +39,11 @@
 							</LABEL>
 						</td>
 						<td>
-						    <select name="FAIpriority" title="{t}Choose a priority{/t}" {$FAIpriorityACL}>
+{render acl=$FAIpriorityACL}
+						    <select name="FAIpriority" title="{t}Choose a priority{/t}">
                 				{html_options options=$FAIprioritys selected=$FAIpriority}
             				</select>
+{/render}
 						</td>
 					</tr>
 				</table>
@@ -53,15 +59,23 @@
 <table summary="" width="99%">
     <tr>
         <td>
+{render acl=$FAIscriptACL}
             <textarea name="FAIscript" style="width:100%;height:300px;" id="FAIscript"  >{$FAIscript}</textarea>
+{/render}
         </td>
     </tr>
 </table>
 <br>
 <div>
-	<input type="file" name="ImportFile"  {$FAIscriptACL}>&nbsp;
-	<input type="submit" name="ImportUpload" value="{t}Import script{/t}" {$FAIscriptACL}>
+{render acl=$FAIscriptACL}
+	<input type="file" name="ImportFile">&nbsp;
+{/render}
+{render acl=$FAIscriptACL}
+	<input type="submit" name="ImportUpload" value="{t}Import script{/t}">
+{/render}
+{render acl=$FAIscriptACL}
 	{$DownMe}
+{/render}
 </div>
 <br>
 <div style="align:right;" align="right">

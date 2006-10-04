@@ -96,12 +96,13 @@ class faiScriptEntry extends plugin
       $FAIprioritys[$i]=$i;
     }
 
-    foreach($this->attributes as $attr){
-      if(($this->FAIstate == "freeze") || (chkacl($this->acl,$attr)!= "")){
-        $smarty->assign($attr."ACL"," disabled ");
-      }else{
-        $smarty->assign($attr."ACL","  ");
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $name => $translated){
+      $acl = $this->getacl($name);
+      if($this->FAIstate == "freezed"){
+        $acl = preg_replace("/w/","",$acl);
       }
+      $smarty->assign($name."ACL",$acl);
     }
 
     $smarty->assign("FAIprioritys",$FAIprioritys);
@@ -159,6 +160,28 @@ class faiScriptEntry extends plugin
     $tmp['status']  = $this->status; 
     return($tmp);
   }
+
+  
+  /* Return plugin informations for acl handling */
+  function plInfo()
+  {
+    return (array(
+          "plShortName" => _("Script entry"),
+          "plDescription" => _("FAI script entry"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("fai"),
+          "plProvidedAcls" => array(
+            "cn"              => _("Name"),
+            "description"     => _("Description"),
+            "FAIscript"       => _("Script entry"),
+            "FAIpriority"     => _("Script Priority"))
+          ));
+  }
+
+
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
