@@ -2194,6 +2194,7 @@ function gosa_ldap_explode_dn($dn,$config = NULL,$verify_in_ldap=false)
   $Diff = ldap_explode_dn($dn,0);
 
   /* Lets start */
+  $called = false;
   while(preg_match("/,/",$dn) && $next &&  $cnt < $max){
 
     $cnt ++;
@@ -2202,6 +2203,8 @@ function gosa_ldap_explode_dn($dn,$config = NULL,$verify_in_ldap=false)
     }
     $object = preg_replace("/[,].*$/","",$dn);
     $dn     = preg_replace("/^[^,]+,/","",$dn);
+
+    $called = true;
 
     /* Check if current dn is valid */
     if($ldap!=NULL){
@@ -2220,7 +2223,10 @@ function gosa_ldap_explode_dn($dn,$config = NULL,$verify_in_ldap=false)
   }
 
   /* Append the rest */
-  $ret[] = $keep.$dn;
+  $test = $keep.$dn;
+  if($called && !empty($test)){
+    $ret[] = $keep.$dn;
+  }
   $ret['count'] = count($ret) - 1;
 
   $diff = array_diff($ret,$Diff);
