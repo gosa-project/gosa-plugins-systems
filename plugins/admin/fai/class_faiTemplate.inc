@@ -452,7 +452,7 @@ class faiTemplate extends plugin
           "plDescription" => _("FAI template"),
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
-          "plPriority"    => 0,
+          "plPriority"    => 24,
           "plSection"     => array("administration"),
           "plCategory"    => array("fai"),
           "plProvidedAcls" => array(

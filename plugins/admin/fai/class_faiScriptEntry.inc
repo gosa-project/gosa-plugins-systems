@@ -63,7 +63,7 @@ class faiScriptEntry extends plugin
     $smarty     = get_smarty();
     $display = "";
   
-    if(isset($_POST['ImportUpload'])){
+    if(isset($_POST['ImportUpload']) && $this->acl_is_writeable("FAIscript")){
       if(($_FILES['ImportFile']['error']!=0)){
         print_red(_("Please select a valid file."));
       }else
@@ -115,10 +115,12 @@ class faiScriptEntry extends plugin
   {
     if((isset($_POST['SubObjectFormSubmitted'])) && ($this->FAIstate != "freeze")){
       foreach($this->attributes as $attrs){
-        if(isset($_POST[$attrs])){
-          $this->$attrs = $_POST[$attrs];
-        }else{
-          $this->$attrs = "";
+        if($this->acl_is_writeable($attrs)){
+          if(isset($_POST[$attrs])){
+            $this->$attrs = $_POST[$attrs];
+          }else{
+            $this->$attrs = "";
+          }
         }
       }
     }
@@ -170,7 +172,7 @@ class faiScriptEntry extends plugin
           "plDescription" => _("FAI script entry"),
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
-          "plPriority"    => 0,
+          "plPriority"    => 19,
           "plSection"     => array("administration"),
           "plCategory"    => array("fai"),
           "plProvidedAcls" => array(

@@ -143,7 +143,7 @@ class faiHook extends plugin
           $obj  = $this->get_object_attributes($obj,$this->sub_Load_Later);
         }
         $this->dialog= new $this->subClassName($this->config,$this->dn,$obj);
-        $this->dialog->set_acl_base($_SESSION['CurrentMainBase']);
+        $this->dialog->set_acl_base($this->dn);
         $this->dialog->set_acl_category("fai");
 
         $_SESSION['objectinfo'] = $obj['dn'];
@@ -166,8 +166,14 @@ class faiHook extends plugin
 
     /* Add new sub object */
     if(isset($_POST['AddSubObject'])){
+
+      $c_dn = $this->dn;
+      if($c_dn == "new"){
+        $c_dn = $_SESSION['CurrentMainBase'];
+      }
+
       $this->dialog= new $this->subClassName($this->config,"new");
-      $this->dialog->set_acl_base($_SESSION['CurrentMainBase']);
+      $this->dialog->set_acl_base($c_dn);
       $this->dialog->set_acl_category("fai");
       $this->dialog->parent = &$this;
       $this->is_dialog=true;
@@ -488,14 +494,12 @@ class faiHook extends plugin
           "plDescription" => _("FAI hook"),
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
-          "plPriority"    => 0,
+          "plPriority"    => 20,
           "plSection"     => array("administration"),
           "plCategory"    => array("fai"),
           "plProvidedAcls" => array(
-            "cn"                => _("Name"),
-            "description"       => _("Description"),
-            "FAItast"           => _("Task"),
-            "FAIscript"         => _("FAI script"))
+            "cn"                => _("Name")." ("._("Read only").")",
+            "description"       => _("Description"))
           ));
   }
 }

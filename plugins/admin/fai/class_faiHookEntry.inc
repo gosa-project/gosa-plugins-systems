@@ -107,12 +107,13 @@ class faiHookEntry extends plugin
       }
     }
 
-    foreach($this->attributes as $attr){
-      if(($this->FAIstate == "freeze") || (chkacl($this->acl,$attr)!= "")){
-        $smarty->assign($attr."ACL"," disabled ");
-      }else{
-        $smarty->assign($attr."ACL","  ");
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $name => $translated){
+      $acl = $this->getacl($name);
+      if($this->FAIstate == "freezed"){
+        $acl = preg_replace("/w/","",$acl);
       }
+      $smarty->assign($name."ACL",$acl);
     }
 
     $display.= $smarty->fetch(get_template_path('faiHookEntry.tpl', TRUE));
@@ -169,6 +170,26 @@ class faiHookEntry extends plugin
     $tmp['status']  = $this->status;  
     return($tmp);
   }
+
+    /* Return plugin informations for acl handling */
+  function plInfo()
+  {
+    return (array(
+          "plShortName" => _("Hook entry"),
+          "plDescription" => _("FAI hook entry"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 21,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("fai"),
+          "plProvidedAcls" => array(
+            "cn"                => _("Name"),
+            "description"       => _("Description"),
+            "FAItask"           => _("Task"),
+            "FAIscript"         => _("FAI script"))
+          ));
+  }
+
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

@@ -385,7 +385,7 @@ class faiVariable extends plugin
           "plDescription" => _("FAI variable"),
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
-          "plPriority"    => 0,
+          "plPriority"    => 22,
           "plSection"     => array("administration"),
           "plCategory"    => array("fai"),
           "plProvidedAcls" => array(

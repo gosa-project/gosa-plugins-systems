@@ -120,8 +120,14 @@ class faiScript extends plugin
 
     /* Add new sub object */
     if(isset($_POST['AddSubObject'])){
+
+      $c_dn = $this->dn;
+      if($c_dn == "new"){
+        $c_dn = $_SESSION['CurrentMainBase'];
+      }
+
       $this->dialog= new $this->subClassName($this->config,"new");
-      $this->dialog->set_acl_base($_SESSION['CurrentMainBase']);
+      $this->dialog->set_acl_base($c_dn);
       $this->dialog->set_acl_category("fai");
       $this->is_dialog=true;
     }
@@ -159,10 +165,20 @@ class faiScript extends plugin
         $entry = preg_replace("/^deletescript_/","",$name);
         $entry = base64_decode(preg_replace("/_.*/","",$entry));
 
-        if(($this->SubObjects[$entry]['status'] == "edited")||($this->SubObjects[$entry]['status'] == "FreshLoaded")){
-          $this->SubObjects[$entry]['status']= "delete";
-        }else{
-          unset($this->SubObjects[$entry]);
+    
+        $dn = $this->SubObjects[$entry]['dn'];
+
+        if($dn == "new"){
+          $dn = $_SESSION['CurrentMainBase'];
+        }
+        $acl = $this->ui -> get_permissions($dn,"fai/faiScriptEntry")  ;
+
+        if(preg_match("/d/",$acl)){
+          if(($this->SubObjects[$entry]['status'] == "edited")||($this->SubObjects[$entry]['status'] == "FreshLoaded")){
+            $this->SubObjects[$entry]['status']= "delete";
+          }else{
+             unset($this->SubObjects[$entry]);
+          }
         }
       }
     }
@@ -247,15 +263,23 @@ class faiScript extends plugin
      */
     $divlist = new divSelectBox("FAIscripts");
     $divlist->setHeight(400);
-    if(($this->FAIstate == "freeze")){
-      $img_edit = "<input type='image' src='images/edit.png'      name='editscript_%s'    title='"._("edit")."' alt='"._("edit")."'>";
-      $img_remo = "";
-    }else{
-      $img_edit = "<input type='image' src='images/edit.png'      name='editscript_%s'    title='"._("edit")."' alt='"._("edit")."'>";
-      $img_remo = "<input type='image' src='images/edittrash.png' name='deletescript_%s'  title='"._("delete")."' alt='"._("delete")."'>";
-    }
-
     foreach($this->getList(true) as $key => $name){
+
+      $dn= $name['dn'];
+      if($dn == "new"){
+        $dn = $_SESSION['CurrentMainBase'];
+      }
+      $acl = $this->ui -> get_permissions($dn,"fai/faiScriptEntry")  ;
+      $act = "";
+      
+      if($this->FAIstate == "freeze"){
+        $act .= "<input type='image' src='images/edit.png'      name='editscript_%s'    title='"._("edit")."' alt='"._("edit")."'>";
+      }else{
+        $act .= "<input type='image' src='images/edit.png'      name='editscript_%s'    title='"._("edit")."' alt='"._("edit")."'>";
+        if(preg_match("/d/",$acl)){
+          $act .="<input type='image' src='images/edittrash.png' name='deletescript_%s'  title='"._("delete")."' alt='"._("delete")."'>";
+        }
+      }
 
       if(($this->SubObjects[$key]['status'] == "new") || ($this->SubObjects[$key]['dn'] == "new")){
         $down = "";
@@ -267,7 +291,7 @@ class faiScript extends plugin
 
       $divlist->AddEntry(array( array("string"=>$name['name']),
             array("string"=>$down , "attach" => "style='width:20px;'"),
-            array("string"=>str_replace("%s",base64_encode($key),$img_edit.$img_remo),
+            array("string"=>str_replace("%s",base64_encode($key),$act),
               "attach"=>"style='border-right: 0px;width:50px;text-align:right;'")));
     }
     $smarty->assign("Entry_divlist",$divlist->DrawList());
@@ -484,7 +508,7 @@ class faiScript extends plugin
           "plDescription" => _("FAI script"),
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
-          "plPriority"    => 0,
+          "plPriority"    => 18,
           "plSection"     => array("administration"),
           "plCategory"    => array("fai"),
           "plProvidedAcls" => array(

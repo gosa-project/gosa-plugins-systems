@@ -548,7 +548,7 @@ class faiPackage extends plugin
           "plDescription" => _("FAI Package list"),
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
-          "plPriority"    => 0,
+          "plPriority"    => 30,
           "plSection"     => array("administration"),
           "plCategory"    => array("fai"),
           "plProvidedAcls" => array(
