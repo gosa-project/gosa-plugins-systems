@@ -62,13 +62,16 @@ class faiVariableEntry extends plugin
       }
     }
 
-    foreach($this->attributes as $attr){
-      if(($this->FAIstate == "freeze") || (chkacl($this->acl,$attr)!= "")){
-        $smarty->assign($attr."ACL"," disabled ");
-      }else{
-        $smarty->assign($attr."ACL","  ");
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $name => $translated){
+      $acl = $this->getacl($name);
+      if($this->FAIstate == "freezed"){
+        $acl = preg_replace("/w/","",$acl);
       }
+      $smarty->assign($name."ACL",$acl);
     }
+
+
 
     $display.= $smarty->fetch(get_template_path('faiVariableEntry.tpl', TRUE));
     return($display);
@@ -77,12 +80,14 @@ class faiVariableEntry extends plugin
   /* Save data to object */
   function save_object()
   {
-    if((isset($_POST['SubObjectFormSubmitted'])) && ($this->FAIstate != "freeze")){
+     if((isset($_POST['SubObjectFormSubmitted'])) && ($this->FAIstate != "freeze")){
       foreach($this->attributes as $attrs){
-        if(isset($_POST[$attrs])){
-          $this->$attrs = $_POST[$attrs];
-        }else{
-          $this->$attrs = "";
+        if($this->acl_is_writeable($attrs)){
+          if(isset($_POST[$attrs])){
+            $this->$attrs = $_POST[$attrs];
+          }else{
+            $this->$attrs = "";
+          }
         }
       }
     }

@@ -9,7 +9,9 @@
 							{t}Name{/t}{$must}&nbsp;
 						</td>
 						<td>
-							<input value="{$cn}" size="45" maxlength="80" name="cn" {$cnACL}>
+{render acl=$cnACL}
+							<input value="{$cn}" size="45" maxlength="80" name="cn">
+{/render}
 						</td>
 					</tr>
 					<tr>
@@ -17,7 +19,9 @@
 							{t}Description{/t}&nbsp;
 						</td>
 						<td>
-							<input value="{$description}" size="45" maxlength="80" name="description" {$descriptionACL}>
+{render acl=$descriptionACL}
+							<input value="{$description}" size="45" maxlength="80" name="description">
+{/render}
 						</td>
 					</tr>
 				</table>
@@ -35,7 +39,9 @@
 							</LABEL>
 						</td>
 						<td>
-							<input type="text" name="FAIvariableContent" value="{$FAIvariableContent}" id="Content" style="width:250px;" {$FAIvariableContentACL}>
+{render acl=$FAIvariableContentACL}
+							<input type="text" name="FAIvariableContent" value="{$FAIvariableContent}" id="Content" style="width:250px;">
+{/render}
 						</td>
 					</tr>
 				</table>
@@ -45,7 +51,7 @@
 <p class="seperator">&nbsp;</p>
 <br>
 <div style="align:right;" align="right">
-	<input type="submit" value="{t}Apply{/t}" 	name="SaveSubObject" {$cnACL}>&nbsp;
+	<input type="submit" value="{t}Apply{/t}" 	name="SaveSubObject" >&nbsp;
 	<input type="submit" value="{t}Cancel{/t}" 	name="CancelSubObject">
 </div>
 
