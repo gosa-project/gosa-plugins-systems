@@ -35,6 +35,7 @@ class faiVariable extends plugin
   var $SubObjects       = array();  // All leafobjects of this object
 
   var $FAIstate         = "";
+  var $ui   ;
 
   function faiVariable ($config, $dn= NULL)
   {
@@ -85,12 +86,27 @@ class faiVariable extends plugin
         $this->SubObjects[$object['cn'][0]]['dn']          = $object['dn'];
       }
     }
+    $this->ui = get_userinfo();
   }
+
+
+  function acl_base_for_current_object($dn)
+  {
+    if($dn == "new"){
+      if($this->dn == "new"){
+        $dn= $_SESSION['CurrentMainBase'];
+      }else{
+        $dn = $this->dn;
+      }
+    }
+    return($dn);
+  }
+
 
   function execute()
   {
-	/* Call parent execute */
-	plugin::execute();
+    /* Call parent execute */
+    plugin::execute();
 
     /* Fill templating stuff */
     $smarty= get_smarty();
@@ -99,7 +115,7 @@ class faiVariable extends plugin
     /* Add new sub object */
     if(isset($_POST['AddSubObject'])){
       $this->dialog= new $this->subClassName($this->config,"new");
-      $this->dialog->set_acl_base($_SESSION['CurrentMainBase']);
+      $this->dialog->set_acl_base($this->acl_base_for_current_object($this->dn));
       $this->dialog->set_acl_category("fai");
       $this->is_dialog=true;
     }
@@ -113,10 +129,7 @@ class faiVariable extends plugin
     if((isset($_POST['EditSubObject']))&&(isset($_POST['SubObject']))){
 
       $var = $_POST['SubObject'][0];
-      $c_dn = $this->SubObjects[$var]['dn'];
-      if($c_dn=="new"){
-        $c_dn = $_SESSION['CurrentMainBase'];
-      }
+      $c_dn = $this->acl_base_for_current_object($this->SubObjects[$var]['dn']);
       $this->dialog= new $this->subClassName($this->config,$this->dn,$this->SubObjects[$var]);
       $this->dialog->set_acl_category("fai");
       $this->dialog->set_acl_base($c_dn);
@@ -128,12 +141,8 @@ class faiVariable extends plugin
     if((isset($_POST['DelSubObject']))&&(isset($_POST['SubObject']))){
       foreach($_POST['SubObject'] as $var){
 
-        $c_dn = $this->SubObjects[$var]['dn'];
-        if($c_dn=="new"){
-          $c_dn = $_SESSION['CurrentMainBase'];
-        }
-        $ui = get_userinfo();
-        $acl = $ui->get_permissions($c_dn,"fai/faiVariable");
+        $c_dn = $this->acl_base_for_current_object($this->SubObjects[$var]['dn']);
+        $acl = $this->ui->get_permissions($c_dn,"fai/faiVariable");
         if(preg_match("/d/",$acl)){
           if($this->SubObjects[$var]['status'] == "edited"){
             $this->SubObjects[$var]['status']= "delete";
@@ -211,14 +220,9 @@ class faiVariable extends plugin
       }
     }
 
-    $this->ui = get_userinfo();
-    $c_dn = $this->dn;
-    if($c_dn == "new"){
-      $c_dn = $_SESSION['CurrentMainBase'];
-    }
+    $c_dn = $this->acl_base_for_current_object($this->dn);
     $smarty->assign("is_createable",     preg_match("/c/",$this->ui->get_permissions($c_dn,"fai/faiVariableEntry")) && $this->FAIstate!="freeze");
     $smarty->assign("is_removeable",  preg_match("/d/",$this->ui->get_permissions($c_dn,"fai/faiVariableEntry")) && $this->FAIstate!="freeze");
-
 
     $tmp = $this->plInfo();
     foreach($tmp['plProvidedAcls'] as $name => $translation) {
@@ -259,26 +263,26 @@ class faiVariable extends plugin
    */
   function remove_from_parent()
   {
-    $ldap = $this->config->get_ldap_link();
-    $ldap->cd ($this->dn);
+    if($this->acl_is_removeable()){
+      $ldap = $this->config->get_ldap_link();
+      $ldap->cd ($this->dn);
 
-#    $use_dn = str_ireplace( get_release_dn($this->dn), $_SESSION['faifilter']['branch'], $this->dn);
-    $use_dn = preg_replace("/".normalizePreg(get_release_dn($this->dn))."/i", $_SESSION['faifilter']['branch'], $this->dn);
-    if($_SESSION['faifilter']['branch'] == "main"){
-      $use_dn = $this->dn;
-    }
-
-    prepare_to_save_FAI_object($use_dn,array(),true);
-
-    foreach($this->SubObjects as $name => $obj){
-#      $use_dn = str_ireplace( get_release_dn($this->dn), $_SESSION['faifilter']['branch'], $obj['dn']);
-      $use_dn = preg_replace("/".normalizePreg(get_release_dn($this->dn))."/i", $_SESSION['faifilter']['branch'], $obj['dn']);
+      $use_dn = preg_replace("/".normalizePreg(get_release_dn($this->dn))."/i", $_SESSION['faifilter']['branch'], $this->dn);
       if($_SESSION['faifilter']['branch'] == "main"){
-        $use_dn = $obj['dn'];
+        $use_dn = $this->dn;
       }
+
       prepare_to_save_FAI_object($use_dn,array(),true);
+
+      foreach($this->SubObjects as $name => $obj){
+        $use_dn = preg_replace("/".normalizePreg(get_release_dn($this->dn))."/i", $_SESSION['faifilter']['branch'], $obj['dn']);
+        if($_SESSION['faifilter']['branch'] == "main"){
+          $use_dn = $obj['dn'];
+        }
+        prepare_to_save_FAI_object($use_dn,array(),true);
+      }
+      $this->handle_post_events("remove");
     }
-    $this->handle_post_events("remove");
   }
 
 
