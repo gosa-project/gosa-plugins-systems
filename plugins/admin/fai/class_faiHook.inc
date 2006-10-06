@@ -37,6 +37,7 @@ class faiHook extends plugin
   var $SubObjects       = array();  // All leafobjects of this object
 
   var $FAIstate         = "";  
+  var $ui;
 
   function faiHook ($config, $dn= NULL)
   {
@@ -72,6 +73,7 @@ class faiHook extends plugin
         $this->SubObjects[$objects['cn']] = $objects;
       }
     }
+    $this->ui = get_userinfo();
   }
 
 
@@ -103,6 +105,19 @@ class faiHook extends plugin
       }
     }
     return($object);
+  }
+
+
+  function acl_base_for_current_object($dn)
+  {
+    if($dn == "new"){
+      if($this->dn == "new"){
+        $dn= $_SESSION['CurrentMainBase'];
+      }else{
+        $dn = $this->dn;
+      }
+    }
+    return($dn);
   }
 
 
@@ -142,8 +157,9 @@ class faiHook extends plugin
         if($obj['status'] == "FreshLoaded"){
           $obj  = $this->get_object_attributes($obj,$this->sub_Load_Later);
         }
+
         $this->dialog= new $this->subClassName($this->config,$this->dn,$obj);
-        $this->dialog->set_acl_base($this->dn);
+        $this->dialog->set_acl_base($this->acl_base_for_current_object($obj['dn']));
         $this->dialog->set_acl_category("fai");
 
         $_SESSION['objectinfo'] = $obj['dn'];
@@ -151,17 +167,14 @@ class faiHook extends plugin
         $this->is_dialog=true;
       }
       if(preg_match("/^deletescript_/",$name)&&($once)){
+        $entry = preg_replace("/^deletescript_/","",$name);
+        $entry = base64_decode(preg_replace("/_.*/","",$entry));
 
-        $dn= $name['dn'];
-        if($dn == "new"){
-          $dn = $_SESSION['CurrentMainBase'];
-        }
+        $dn = $this->acl_base_for_current_object($this->SubObjects[$entry]['dn']);
         $acl = $this->ui -> get_permissions($dn,"fai/faiScriptEntry")  ;
 
         if(preg_match("/d/",$acl)){
           $once = false;
-          $entry = preg_replace("/^deletescript_/","",$name);
-          $entry = base64_decode(preg_replace("/_.*/","",$entry));
 
           if(($this->SubObjects[$entry]['status'] == "edited")||($this->SubObjects[$entry]['status'] == "FreshLoaded")){
             $this->SubObjects[$entry]['status']= "delete";
@@ -176,11 +189,7 @@ class faiHook extends plugin
     /* Add new sub object */
     if(isset($_POST['AddSubObject'])){
 
-      $c_dn = $this->dn;
-      if($c_dn == "new"){
-        $c_dn = $_SESSION['CurrentMainBase'];
-      }
-
+      $c_dn = $this->acl_base_for_current_object($this->dn);
       $this->dialog= new $this->subClassName($this->config,"new");
       $this->dialog->set_acl_base($c_dn);
       $this->dialog->set_acl_category("fai");
@@ -268,12 +277,8 @@ class faiHook extends plugin
 
     foreach($this->getList(true) as $key => $name){
 
-      $dn= $name['dn'];
-      if($dn == "new"){
-        $dn = $_SESSION['CurrentMainBase'];
-      }
-      $ui  = get_userinfo();
-      $acl = $ui->get_permissions($dn,"fai/faiScriptEntry")  ;
+      $dn= $this->acl_base_for_current_object($name['dn']);
+      $acl = $this->ui->get_permissions($dn,"fai/faiScriptEntry")  ;
       $act = "";
 
       if($this->FAIstate == "freeze"){
@@ -285,8 +290,7 @@ class faiHook extends plugin
         }
       }
 
-
-      $s_acl = $ui->get_permissions($dn,"fai/faiScriptEntry","FAIscript")  ;
+      $s_acl = $this->ui->get_permissions($dn,"fai/faiScriptEntry","FAIscript")  ;
       if(($this->SubObjects[$key]['status'] == "new") || ($this->SubObjects[$key]['dn'] == "new") || !preg_match("/r/",$s_acl)){
         $down = "";
       }else{
@@ -318,13 +322,8 @@ class faiHook extends plugin
     }
 
     $tmp = $this->plInfo();
-    $this->ui = get_userinfo();
       
-    $c_dn = $this->dn;
-    if($c_dn == "new"){
-      $c_dn = $_SESSION['CurrentMainBase'];
-    }
-
+    $c_dn = $this->acl_base_for_current_object($this->dn);
     $smarty->assign("sub_object_is_addable", preg_match("/c/",$this->ui->get_permissions($c_dn,"fai/faiScriptEntry")) && $this->FAIstate!="freeze");
     foreach($tmp['plProvidedAcls'] as $name => $translation){
       $smarty->assign($name."ACL",$this->getacl($name));
