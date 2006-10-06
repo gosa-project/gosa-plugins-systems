@@ -99,7 +99,7 @@ class faiVariable extends plugin
     /* Add new sub object */
     if(isset($_POST['AddSubObject'])){
       $this->dialog= new $this->subClassName($this->config,"new");
-      $this->dialog->sel_acl_base($_SESSION['CurrentMainBase']);
+      $this->dialog->set_acl_base($_SESSION['CurrentMainBase']);
       $this->dialog->set_acl_category("fai");
       $this->is_dialog=true;
     }
