@@ -38,6 +38,8 @@ class faiScript extends plugin
 
   var $FAIstate         ="";
 
+  var $ui;
+
   function faiScript ($config, $dn= NULL)
   {
     /* Load Attributes */
@@ -75,6 +77,7 @@ class faiScript extends plugin
         $this->SubObjects[$objects['cn']] = $objects;
       }
     }
+    $this->ui = get_userinfo();
   }
 
 
@@ -108,6 +111,18 @@ class faiScript extends plugin
     return($object);
   }
 
+  function acl_base_for_current_object($dn)
+  {
+    if($dn == "new"){
+      if($this->dn == "new"){
+        $dn= $_SESSION['CurrentMainBase'];
+      }else{
+        $dn = $this->dn;
+      }
+    }
+    return($dn);
+  }
+
 
   function execute()
   {
@@ -120,14 +135,8 @@ class faiScript extends plugin
 
     /* Add new sub object */
     if(isset($_POST['AddSubObject'])){
-
-      $c_dn = $this->dn;
-      if($c_dn == "new"){
-        $c_dn = $_SESSION['CurrentMainBase'];
-      }
-
       $this->dialog= new $this->subClassName($this->config,"new");
-      $this->dialog->set_acl_base($c_dn);
+      $this->dialog->set_acl_base($this->acl_base);
       $this->dialog->set_acl_category("fai");
       $this->is_dialog=true;
     }
@@ -135,7 +144,6 @@ class faiScript extends plugin
     if($this->dn != "new"){
       $_SESSION['objectinfo']= $this->dn;
     }
-
 
     /* New Listhandling 
      */
@@ -152,7 +160,7 @@ class faiScript extends plugin
           $obj  = $this->get_object_attributes($obj,$this->sub_Load_Later);
         }
         $this->dialog= new $this->subClassName($this->config,$this->dn,$obj);
-        $this->dialog->set_acl_base($this->dn);
+        $this->dialog->set_acl_base($this->acl_base_for_current_object($obj['dn']));
         $this->dialog->set_acl_category("fai");
 
 
@@ -165,14 +173,7 @@ class faiScript extends plugin
         $entry = preg_replace("/^deletescript_/","",$name);
         $entry = base64_decode(preg_replace("/_.*/","",$entry));
 
-    
-        $dn = $this->SubObjects[$entry]['dn'];
-
-        if($dn == "new"){
-          $dn = $_SESSION['CurrentMainBase'];
-        }
-        $acl = $this->ui -> get_permissions($dn,"fai/faiScriptEntry")  ;
-
+        $acl = $this->ui->get_permissions($this->acl_base_for_current_object($this->SubObjects[$entry]['dn']),"fai/faiScriptEntry")  ;
         if(preg_match("/d/",$acl)){
           if(($this->SubObjects[$entry]['status'] == "edited")||($this->SubObjects[$entry]['status'] == "FreshLoaded")){
             $this->SubObjects[$entry]['status']= "delete";
@@ -189,7 +190,7 @@ class faiScript extends plugin
     if((isset($_POST['EditSubObject']))&&(isset($_POST['SubObject']))){
       $script = $_POST['SubObject'][0];
       $this->dialog= new $this->subClassName($this->config,$this->dn,$this->SubObjects[$script]);
-      $this->dialog->set_acl_base($_SESSION['CurrentMainBase']);
+      $this->dialog->set_acl_base($this->acl_base_for_current_object($this->SubObjects[$script]['dn']));
       $this->dialog->set_acl_category("fai");
       $_SESSION['objectinfo'] = $this->SubObjects[$script]['dn'];
       $this->is_dialog=true;
@@ -265,12 +266,8 @@ class faiScript extends plugin
     $divlist->setHeight(400);
     foreach($this->getList(true) as $key => $name){
 
-      $dn= $name['dn'];
-      if($dn == "new"){
-        $dn = $_SESSION['CurrentMainBase'];
-      }
-      $ui = get_userinfo();
-      $acl = $ui->get_permissions($dn,"fai/faiScriptEntry")  ;
+      $dn= $this->acl_base_for_current_object($name['dn']);
+      $acl = $this->ui->get_permissions($dn,"fai/faiScriptEntry")  ;
       $act = "";
       
       if($this->FAIstate == "freeze"){
@@ -282,7 +279,7 @@ class faiScript extends plugin
         }
       }
 
-      $s_acl = $ui->get_permissions($dn,"fai/faiScriptEntry","FAIscript")  ;
+      $s_acl = $this->ui->get_permissions($dn,"fai/faiScriptEntry","FAIscript")  ;
       if(($this->SubObjects[$key]['status'] == "new") || ($this->SubObjects[$key]['dn'] == "new") || !preg_match("/r/",$s_acl)){
         $down = "";
       }else{
@@ -309,14 +306,9 @@ class faiScript extends plugin
       }
     }
 
+    $dn = $this->acl_base_for_current_object($this->dn);
+    $smarty->assign("sub_object_is_addable", preg_match("/c/",$this->ui->get_permissions($dn,"fai/faiScriptEntry")) && $this->FAIstate!="freeze");
     $tmp = $this->plInfo();
-    $this->ui = get_userinfo();
-
-    $c_dn = $this->dn;  
-    if($c_dn == "new"){
-      $c_dn = $_SESSION['CurrentMainBase'];
-    }
-    $smarty->assign("sub_object_is_addable", preg_match("/c/",$this->ui->get_permissions($c_dn,"fai/faiScriptEntry")) && $this->FAIstate!="freeze");
     foreach($tmp['plProvidedAcls'] as $name => $translated){
       $smarty->assign($name."ACL",$this->getacl($name));
     }
@@ -354,26 +346,26 @@ class faiScript extends plugin
    */
   function remove_from_parent()
   {
-    $ldap = $this->config->get_ldap_link();
-    $ldap->cd ($this->dn);
+    if($this->acl_is_removeable()){
+      $ldap = $this->config->get_ldap_link();
+      $ldap->cd ($this->dn);
 
-#    $use_dn = str_ireplace( get_release_dn($this->dn), $_SESSION['faifilter']['branch'], $this->dn);
-    $use_dn = preg_replace("/".normalizePreg(get_release_dn($this->dn))."/i", $_SESSION['faifilter']['branch'], $this->dn);
-    if($_SESSION['faifilter']['branch'] == "main"){
-      $use_dn = $this->dn;
-    }
-  
-    prepare_to_save_FAI_object($use_dn,array(),true);
-    
-    foreach($this->SubObjects as $name => $obj){
-#      $use_dn = str_ireplace( get_release_dn($this->dn), $_SESSION['faifilter']['branch'], $obj['dn']);
-      $use_dn = preg_replace("/".normalizePreg(get_release_dn($this->dn))."/i", $_SESSION['faifilter']['branch'], $obj['dn']);
+      $use_dn = preg_replace("/".normalizePreg(get_release_dn($this->dn))."/i", $_SESSION['faifilter']['branch'], $this->dn);
       if($_SESSION['faifilter']['branch'] == "main"){
-        $use_dn = $obj['dn'];
+        $use_dn = $this->dn;
       }
+    
       prepare_to_save_FAI_object($use_dn,array(),true);
+      
+      foreach($this->SubObjects as $name => $obj){
+        $use_dn = preg_replace("/".normalizePreg(get_release_dn($this->dn))."/i", $_SESSION['faifilter']['branch'], $obj['dn']);
+        if($_SESSION['faifilter']['branch'] == "main"){
+          $use_dn = $obj['dn'];
+        }
+        prepare_to_save_FAI_object($use_dn,array(),true);
+      }
+      $this->handle_post_events("remove");
     }
-    $this->handle_post_events("remove");
   }
 
 
