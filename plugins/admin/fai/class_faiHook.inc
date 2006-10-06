@@ -151,14 +151,23 @@ class faiHook extends plugin
         $this->is_dialog=true;
       }
       if(preg_match("/^deletescript_/",$name)&&($once)){
-        $once = false;
-        $entry = preg_replace("/^deletescript_/","",$name);
-        $entry = base64_decode(preg_replace("/_.*/","",$entry));
 
-        if(($this->SubObjects[$entry]['status'] == "edited")||($this->SubObjects[$entry]['status'] == "FreshLoaded")){
-          $this->SubObjects[$entry]['status']= "delete";
-        }else{
-          unset($this->SubObjects[$entry]);
+        $dn= $name['dn'];
+        if($dn == "new"){
+          $dn = $_SESSION['CurrentMainBase'];
+        }
+        $acl = $this->ui -> get_permissions($dn,"fai/faiScriptEntry")  ;
+
+        if(preg_match("/d/",$acl)){
+          $once = false;
+          $entry = preg_replace("/^deletescript_/","",$name);
+          $entry = base64_decode(preg_replace("/_.*/","",$entry));
+
+          if(($this->SubObjects[$entry]['status'] == "edited")||($this->SubObjects[$entry]['status'] == "FreshLoaded")){
+            $this->SubObjects[$entry]['status']= "delete";
+          }else{
+            unset($this->SubObjects[$entry]);
+          }
         }
       }
     }
@@ -256,17 +265,29 @@ class faiHook extends plugin
 
     $divlist = new divSelectBox("FAIhooks");
     $divlist->setHeight(400);
-    if($this->FAIstate == "freeze"){
-      $img_edit = "<input type='image' src='images/edit.png'      name='editscript_%s'    title='"._("edit")."' alt='"._("edit")."'>";
-      $img_remo = ""; 
-    }else{
-      $img_edit = "<input type='image' src='images/edit.png'      name='editscript_%s'    title='"._("edit")."' alt='"._("edit")."'>";
-      $img_remo = "<input type='image' src='images/edittrash.png' name='deletescript_%s'  title='"._("delete")."' alt='"._("delete")."'>";
-    }
 
     foreach($this->getList(true) as $key => $name){
 
-      if(($this->SubObjects[$key]['status'] == "new") || ($this->SubObjects[$key]['dn'] == "new")){
+      $dn= $name['dn'];
+      if($dn == "new"){
+        $dn = $_SESSION['CurrentMainBase'];
+      }
+      $ui  = get_userinfo();
+      $acl = $ui->get_permissions($dn,"fai/faiScriptEntry")  ;
+      $act = "";
+
+      if($this->FAIstate == "freeze"){
+        $act .= "<input type='image' src='images/edit.png'      name='editscript_%s'    title='"._("edit")."' alt='"._("edit")."'>";
+      }else{
+        $act .= "<input type='image' src='images/edit.png'      name='editscript_%s'    title='"._("edit")."' alt='"._("edit")."'>";
+        if(preg_match("/d/",$acl)){
+          $act .="<input type='image' src='images/edittrash.png' name='deletescript_%s'  title='"._("delete")."' alt='"._("delete")."'>";
+        }
+      }
+
+
+      $s_acl = $ui->get_permissions($dn,"fai/faiScriptEntry","FAIscript")  ;
+      if(($this->SubObjects[$key]['status'] == "new") || ($this->SubObjects[$key]['dn'] == "new") || !preg_match("/r/",$s_acl)){
         $down = "";
       }else{
         $down = "<a href='getFAIscript.php?id=".base64_encode($name['dn'])."'>
@@ -276,7 +297,7 @@ class faiHook extends plugin
 
       $divlist->AddEntry(array( array("string"=>$name['name']),
             array("string"=>$down , "attach" => "style='width:20px;'"),
-            array("string"=>str_replace("%s",base64_encode($key),$img_edit.$img_remo),
+            array("string"=>str_replace("%s",base64_encode($key),$act),
               "attach"=>"style='border-right: 0px;width:50px;text-align:right;'")));
     }
     $smarty->assign("Entry_divlist",$divlist->DrawList());

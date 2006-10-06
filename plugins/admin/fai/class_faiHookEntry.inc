@@ -79,9 +79,9 @@ class faiHookEntry extends plugin
     }
 
     /* Create download button*/
-    if($this->dn != "new"){
+    if($this->dn != "new" && $this->acl_is_readable("FAIscript")){
       $smarty->assign("DownMe","<a href='getFAIscript.php?id=".base64_encode($this->dn)."'>
-        <input type='button' value='"._("Download")."'>
+          <img src='images/save.png' alt='"._("Download")."' title='"._("Download")."' border=0 class='center'>
         </a>");
     }else{
       $smarty->assign("DownMe","");  
@@ -125,10 +125,12 @@ class faiHookEntry extends plugin
   {
     if((isset($_POST['SubObjectFormSubmitted'])) && ($this->FAIstate != "freeze")){
       foreach($this->attributes as $attrs){
-        if(isset($_POST[$attrs])){
-          $this->$attrs = $_POST[$attrs];
-        }else{
-          $this->$attrs = "";
+        if($this->acl_is_writeable($attrs)){
+          if(isset($_POST[$attrs])){
+            $this->$attrs = $_POST[$attrs];
+          }else{
+            $this->$attrs = "";
+          }
         }
       }
     }

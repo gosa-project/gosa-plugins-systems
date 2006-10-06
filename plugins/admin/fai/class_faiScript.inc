@@ -269,7 +269,8 @@ class faiScript extends plugin
       if($dn == "new"){
         $dn = $_SESSION['CurrentMainBase'];
       }
-      $acl = $this->ui -> get_permissions($dn,"fai/faiScriptEntry")  ;
+      $ui = get_userinfo();
+      $acl = $ui->get_permissions($dn,"fai/faiScriptEntry")  ;
       $act = "";
       
       if($this->FAIstate == "freeze"){
@@ -281,7 +282,8 @@ class faiScript extends plugin
         }
       }
 
-      if(($this->SubObjects[$key]['status'] == "new") || ($this->SubObjects[$key]['dn'] == "new")){
+      $s_acl = $ui->get_permissions($dn,"fai/faiScriptEntry","FAIscript")  ;
+      if(($this->SubObjects[$key]['status'] == "new") || ($this->SubObjects[$key]['dn'] == "new") || !preg_match("/r/",$s_acl)){
         $down = "";
       }else{
         $down = "<a href='getFAIscript.php?id=".base64_encode($name['dn'])."' >
