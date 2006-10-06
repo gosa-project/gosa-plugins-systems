@@ -10,7 +10,9 @@
 							</LABEL>
 						</td>
 						<td>
+{render acl=$cnACL}
 							<input value="{$cn}" size="45" maxlength="80" disabled id="cn">
+{/render}
 						</td>
 					</tr>
 					<tr>
@@ -20,7 +22,9 @@
 							</LABEL>
 						</td>
 						<td>
-							<input size="45" maxlength="80" value="{$description}" name="description" id="description" {$descriptionACL}>
+{render acl=$descriptionACL}
+							<input size="45" maxlength="80" value="{$description}" name="description" id="description">
+{/render}
 						</td>
 					</tr>
 				</table>
@@ -41,9 +45,17 @@
 							style="width:100%;" size="20" id="SubObject">
 							{html_options options=$SubObjects}
 						</select><br>
-						<input type="submit" name="AddSubObject"     value="{t}Add{/t}"		title="{t}Add{/t}" {$cnACL}>
-						<input type="submit" name="EditSubObject"    value="{t}Edit{/t}"    title="{t}Edit{/t}" >
-						<input type="submit" name="DelSubObject"     value="{t}Delete{/t}"  title="{t}Delete{/t}" {$cnACL}>
+{if $is_createable}
+					<input type="submit" name="AddSubObject"     value="{t}Add{/t}"		title="{t}Add{/t}" {$cnACL}>
+{else}
+					<input disabled type="submit" name="AddSubObject"     value="{t}Add{/t}"		title="{t}Add{/t}" {$cnACL}>
+{/if}
+					<input type="submit" name="EditSubObject"    value="{t}Edit{/t}"    title="{t}Edit{/t}" >
+{if $is_removeable}
+					<input type="submit" name="DelSubObject"     value="{t}Delete{/t}"  title="{t}Delete{/t}" {$cnACL}>
+{else}
+					<input disabled type="submit" name="DelSubObject"     value="{t}Delete{/t}"  title="{t}Delete{/t}" {$cnACL}>
+{/if}
 					</td>
 				</tr>
 				</table>

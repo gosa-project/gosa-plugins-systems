@@ -41,22 +41,8 @@ class faiVariable extends plugin
     /* Load Attributes */
     plugin::plugin ($config, $dn);
 
-    $this->acl ="#all#";
-
-    /* If "dn==new" we try to create a new entry
-     * Else we must read all objects from ldap which belong to this entry.
-     * First read SubObjects from ldap ... and then the partition definitions for the SubObjects.
-     */
-
     if($dn != "new"){
       $this->dn =$dn;
-
-      /* Set acls
-       */
-      $ui   = get_userinfo();
-      $acl  = get_permissions ($this->dn, $ui->subtreeACL);
-      $acli = get_module_permission($acl, "FAIclass", $this->dn);
-      $this->acl=$acli;
 
       /* Get FAIstate
        */
@@ -113,7 +99,8 @@ class faiVariable extends plugin
     /* Add new sub object */
     if(isset($_POST['AddSubObject'])){
       $this->dialog= new $this->subClassName($this->config,"new");
-      $this->dialog->acl = $this->acl;
+      $this->dialog->sel_acl_base($_SESSION['CurrentMainBase']);
+      $this->dialog->set_acl_category("fai");
       $this->is_dialog=true;
     }
 
@@ -126,8 +113,13 @@ class faiVariable extends plugin
     if((isset($_POST['EditSubObject']))&&(isset($_POST['SubObject']))){
 
       $var = $_POST['SubObject'][0];
+      $c_dn = $this->SubObjects[$var]['dn'];
+      if($c_dn=="new"){
+        $c_dn = $_SESSION['CurrentMainBase'];
+      }
       $this->dialog= new $this->subClassName($this->config,$this->dn,$this->SubObjects[$var]);
-      $this->dialog->acl = $this->acl;
+      $this->dialog->set_acl_category("fai");
+      $this->dialog->set_acl_base($c_dn);
       $_SESSION['objectinfo'] = $this->SubObjects[$var]['dn'];
       $this->is_dialog=true;
     }
@@ -135,10 +127,19 @@ class faiVariable extends plugin
     /* Remove Sub object */
     if((isset($_POST['DelSubObject']))&&(isset($_POST['SubObject']))){
       foreach($_POST['SubObject'] as $var){
-        if($this->SubObjects[$var]['status'] == "edited"){
-          $this->SubObjects[$var]['status']= "delete";
-        }else{
-          unset($this->SubObjects[$var]);
+
+        $c_dn = $this->SubObjects[$var]['dn'];
+        if($c_dn=="new"){
+          $c_dn = $_SESSION['CurrentMainBase'];
+        }
+        $ui = get_userinfo();
+        $acl = $ui->get_permissions($c_dn,"fai/faiVariable");
+        if(preg_match("/d/",$acl)){
+          if($this->SubObjects[$var]['status'] == "edited"){
+            $this->SubObjects[$var]['status']= "delete";
+          }else{
+            unset($this->SubObjects[$var]);
+          }
         }
       }
     }
@@ -210,10 +211,20 @@ class faiVariable extends plugin
       }
     }
 
-      foreach($this->attributes as $attr){
-      $smarty->assign($attr."ACL",chkacl($this->acl,$attr));
+    $this->ui = get_userinfo();
+    $c_dn = $this->dn;
+    if($c_dn == "new"){
+      $c_dn = $_SESSION['CurrentMainBase'];
     }
+    $smarty->assign("is_createable",     preg_match("/c/",$this->ui->get_permissions($c_dn,"fai/faiVariableEntry")) && $this->FAIstate!="freeze");
+    $smarty->assign("is_removeable",  preg_match("/d/",$this->ui->get_permissions($c_dn,"fai/faiVariableEntry")) && $this->FAIstate!="freeze");
 
+
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $name => $translation) {
+      $smarty->assign($name."ACL",$this->getacl($name));
+    }
+    
 
     $display.= $smarty->fetch(get_template_path('faiVariable.tpl', TRUE));
     return($display);
@@ -389,9 +400,8 @@ class faiVariable extends plugin
           "plSection"     => array("administration"),
           "plCategory"    => array("fai"),
           "plProvidedAcls" => array(
-            "cn"                => _("Name"),
-            "description"       => _("Description"),
-            "FAIvariableContent"=> _("Variable content"))
+            "cn"                => _("Name")." ("._("Read only").")",
+            "description"       => _("Description"))
           ));
   }
 }
