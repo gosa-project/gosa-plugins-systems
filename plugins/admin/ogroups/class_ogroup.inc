@@ -85,6 +85,13 @@ class ogroup extends plugin
      $this->base = $_SESSION['CurrentMainBase'];
     }
 
+    /* Set base */
+    if ($this->dn == "new"){
+      $this->base= $_SESSION['CurrentMainBase'];
+    } else {
+      $this->base= preg_replace("/^[^,]+,".get_groups_ou()."/","",$this->dn);
+    }
+
     /* Load member data */
     $this->reload();
   }
