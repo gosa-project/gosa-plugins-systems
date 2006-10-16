@@ -270,6 +270,7 @@ class faiScript extends plugin
       $acl = $this->ui->get_permissions($dn,"fai/faiScriptEntry")  ;
       $act = "";
       
+      /* Hide delete icon if this object is freezed */
       if($this->FAIstate == "freeze"){
         $act .= "<input type='image' src='images/edit.png'      name='editscript_%s'    title='"._("edit")."' alt='"._("edit")."'>";
       }else{
@@ -279,6 +280,7 @@ class faiScript extends plugin
         }
       }
 
+      /* Check acls for download icon */
       $s_acl = $this->ui->get_permissions($dn,"fai/faiScriptEntry","FAIscript")  ;
       if(($this->SubObjects[$key]['status'] == "new") || ($this->SubObjects[$key]['dn'] == "new") || !preg_match("/r/",$s_acl)){
         $down = "";
@@ -288,10 +290,14 @@ class faiScript extends plugin
           </a>"; 
       } 
 
-      $divlist->AddEntry(array( array("string"=>$name['name']),
-            array("string"=>$down , "attach" => "style='width:20px;'"),
-            array("string"=>str_replace("%s",base64_encode($key),$act),
-              "attach"=>"style='border-right: 0px;width:50px;text-align:right;'")));
+      /* Check if we are allowed to view this object */
+      $s_acl = $this->ui->get_permissions($dn,"fai/faiScriptEntry","cn")  ;
+      if(preg_match("/r/",$s_acl)){
+        $divlist->AddEntry(array( array("string"=>$name['name']),
+              array("string"=>$down , "attach" => "style='width:20px;'"),
+              array("string"=>str_replace("%s",base64_encode($key),$act),
+                "attach"=>"style='border-right: 0px;width:50px;text-align:right;'")));
+      }
     }
     $smarty->assign("Entry_divlist",$divlist->DrawList());
 
