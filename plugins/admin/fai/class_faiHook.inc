@@ -281,6 +281,7 @@ class faiHook extends plugin
       $acl = $this->ui->get_permissions($dn,"fai/faiScriptEntry")  ;
       $act = "";
 
+      /* Check if this object is freezed, in this case hide the delete icon */
       if($this->FAIstate == "freeze"){
         $act .= "<input type='image' src='images/edit.png'      name='editscript_%s'    title='"._("edit")."' alt='"._("edit")."'>";
       }else{
@@ -290,6 +291,7 @@ class faiHook extends plugin
         }
       }
 
+      /* Check if we are allowed to use the export button for this object */
       $s_acl = $this->ui->get_permissions($dn,"fai/faiScriptEntry","FAIscript")  ;
       if(($this->SubObjects[$key]['status'] == "new") || ($this->SubObjects[$key]['dn'] == "new") || !preg_match("/r/",$s_acl)){
         $down = "";
@@ -299,10 +301,14 @@ class faiHook extends plugin
           </a>";
       }
 
-      $divlist->AddEntry(array( array("string"=>$name['name']),
-            array("string"=>$down , "attach" => "style='width:20px;'"),
-            array("string"=>str_replace("%s",base64_encode($key),$act),
-              "attach"=>"style='border-right: 0px;width:50px;text-align:right;'")));
+      /* Check if we are allowed to view the object */
+      $s_acl = $this->ui->get_permissions($dn,"fai/faiScriptEntry","cn")  ;
+      if(preg_match("/r/",$s_acl)){
+        $divlist->AddEntry(array( array("string"=>$name['name']),
+              array("string"=>$down , "attach" => "style='width:20px;'"),
+              array("string"=>str_replace("%s",base64_encode($key),$act),
+                "attach"=>"style='border-right: 0px;width:50px;text-align:right;'")));
+      }
     }
     $smarty->assign("Entry_divlist",$divlist->DrawList());
     /* Divlist creation complete
