@@ -58,7 +58,7 @@ class faiVariable extends plugin
 
       $attrs_to_search = $this->subAttributes;
       $attrs_to_search[] = "FAIstate";
-      $ldap->search("(&(objectClass=FAIclass)(objectClass=".$this->subClass."))",$this->subAttributes);
+      $ldap->search("(&(objectClass=FAIclass)(objectClass=".$this->subClass."))",$attrs_to_search);
 
       while($object = $ldap->fetch()){
       

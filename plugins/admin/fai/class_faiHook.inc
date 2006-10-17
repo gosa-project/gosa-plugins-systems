@@ -62,9 +62,17 @@ class faiHook extends plugin
       $ldap->cd ($this->dn);
       $attrs_to_search = $this->subAttributes;
       $attrs_to_search[] = "FAIstate";
-      $ldap->search("(&(objectClass=FAIclass)(objectClass=".$this->subClass."))", array("dn"));
+      $ldap->search("(&(objectClass=FAIclass)(objectClass=".$this->subClass."))", $attrs_to_search);
 
       while($object = $ldap->fetch()){
+
+       /* Skip objects, that are tagged as removed */
+        if(isset($object['FAIstate'][0])){
+          if(preg_match("/removed$/",$object['FAIstate'][0])){
+            continue;
+          }
+        }
+
         /* Set status for save management */
         $objects = array();
         $objects['status']      = "FreshLoaded";
