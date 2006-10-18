@@ -10,7 +10,9 @@
 							</LABEL>
 						</td>
 						<td>
+{render acl=$cnACL}
 							<input value="{$cn}" size="45" maxlength="80" disabled id="cn">
+{/render}
 						</td>
 					</tr>
 					<tr>
@@ -20,7 +22,9 @@
 							</LABEL>
 						</td>
 						<td>
-							<input value="{$description}" size="45" maxlength="80" {$description} name="description" id="description" {$descriptionACL}>
+{render acl=$descriptionACL}
+							<input value="{$description}" size="45" maxlength="80" {$description} name="description" id="description">
+{/render}
 						</td>
 					</tr>
 				</table>
@@ -32,7 +36,11 @@
 					</LABEL>
 				</h2>
 			{$Entry_divlist}
-				<input type="submit" name="AddSubObject"     value="{t}Add{/t}"		title="{t}Add{/t}" {$cnACL}>
+{if $sub_object_is_addable}
+				<input type="submit" name="AddSubObject"     value="{t}Add{/t}"		title="{t}Add{/t}">
+{else}
+				<input type="submit" name="AddSubObject"     value="{t}Add{/t}"		title="{t}Add{/t}" disabled>
+{/if}
 		</td>
 	</tr>
 </table>

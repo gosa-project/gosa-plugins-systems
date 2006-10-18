@@ -226,6 +226,29 @@ class faiTemplateEntry extends plugin
 
     return($tmp);
   }
+
+  
+  /* Return plugin informations for acl handling */
+  function plInfo()
+  {
+    return (array(
+          "plShortName" => _("Template entry"),
+          "plDescription" => _("FAI template entry"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 25,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("fai"),
+          "plProvidedAcls" => array(
+            "cn"                => _("Name"),
+            "description"       => _("Description"),
+            "FAItemplateFile"   => _("Template file"),
+            "FAItemplatePath"   => _("Template path"),
+            "FAIowner"          => _("File owner"),
+            "FAImode"           => _("File permissions"))
+          ));
+  }
+
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

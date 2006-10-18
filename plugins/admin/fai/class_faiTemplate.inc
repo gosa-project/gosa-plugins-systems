@@ -37,13 +37,12 @@ class faiTemplate extends plugin
   var $SubObjects       = array();  // All leafobjects of this object
 
   var $FAIstate         = "";
+  var $ui;
 
   function faiTemplate ($config, $dn= NULL)
   {
     /* Load Attributes */
     plugin::plugin ($config, $dn);
-
-    $this->acl="#all#";
 
     /* If "dn==new" we try to create a new entry
      * Else we must read all objects from ldap which belong to this entry.
@@ -51,13 +50,6 @@ class faiTemplate extends plugin
      */
     if($dn != "new"){
       $this->dn =$dn;
-
-      /* Set acls
-       */
-      $ui   = get_userinfo();
-      $acl  = get_permissions ($this->dn, $ui->subtreeACL);
-      $acli = get_module_permission($acl, "FAIclass", $this->dn);
-      $this->acl=$acli;
 
       /* Get FAIstate
        */
@@ -83,6 +75,7 @@ class faiTemplate extends plugin
         $this->SubObjects[$objects['cn']] = $objects;
       }
     }
+    $this->ui = get_userinfo();
   }
 
 
@@ -119,8 +112,8 @@ class faiTemplate extends plugin
 
   function execute()
   {
-	/* Call parent execute */
-	plugin::execute();
+    /* Call parent execute */
+    plugin::execute();
 
     /* Fill templating stuff */
     $smarty= get_smarty();
@@ -134,34 +127,47 @@ class faiTemplate extends plugin
         $once = false;
         $entry = preg_replace("/^editscript_/","",$name);
         $entry = base64_decode(preg_replace("/_.*/","",$entry));
-
         $obj  = $this->SubObjects[$entry];
-        if($obj['status'] == "FreshLoaded"){
-          $obj  = $this->get_object_attributes($obj,$this->sub_Load_Later);
-        }
-        $this->dialog= new $this->subClassName($this->config,$this->dn,$obj);
 
-        $_SESSION['objectinfo'] = $obj['dn'];
-        $this->dialog->parent = &$this;
-        $this->is_dialog=true;
+        $acl_dn = $this->acl_base_for_current_object($obj['dn']);
+        $acl = $this->ui->get_permissions($acl_dn,"fai/faiTemplateEntry");
+        if(preg_match("/r/",$acl)){
+          if($obj['status'] == "FreshLoaded"){
+            $obj  = $this->get_object_attributes($obj,$this->sub_Load_Later);
+          }
+          $this->dialog= new $this->subClassName($this->config,$this->dn,$obj);
+          $_SESSION['objectinfo'] = $obj['dn'];
+          $this->dialog->parent = &$this;
+          $this->is_dialog=true;
+        }
       }
       if(preg_match("/^deletescript_/",$name)&&($once)){
         $once = false;
         $entry = preg_replace("/^deletescript_/","",$name);
         $entry = base64_decode(preg_replace("/_.*/","",$entry));
-        if(($this->SubObjects[$entry]['status'] == "edited")||($this->SubObjects[$entry]['status'] == "FreshLoaded")){
-          $this->SubObjects[$entry]['status']= "delete";
-        }else{
-          unset($this->SubObjects[$entry]);
+        $obj  = $this->SubObjects[$entry];
+
+        $acl_dn = $this->acl_base_for_current_object($obj['dn']);
+        $acl = $this->ui->get_permissions($acl_dn,"fai/faiTemplateEntry");
+        if(preg_match("/d/",$acl)){
+          if(($this->SubObjects[$entry]['status'] == "edited")||($this->SubObjects[$entry]['status'] == "FreshLoaded")){
+            $this->SubObjects[$entry]['status']= "delete";
+          }else{
+            unset($this->SubObjects[$entry]);
+          }
         }
       }
     }
 
     /* Add new sub object */
     if(isset($_POST['AddSubObject'])){
-      $this->dialog= new $this->subClassName($this->config,"new");
-      $this->dialog->acl = $this->acl;
-      $this->is_dialog=true;
+      $acl_dn = "cn=dummy,".$this->acl_base_for_current_object($this->dn);
+      $acl    = $this->ui->get_permissions($acl_dn,"fai/faiTemplateEntry");
+
+      if(preg_match("/c/",$acl)){
+        $this->dialog= new $this->subClassName($this->config,"new");
+        $this->is_dialog=true;
+      }
     }
 
     if($this->dn != "new"){
@@ -232,37 +238,47 @@ class faiTemplate extends plugin
      /* Divlist Containing FAItemplates */
     $divlist = new divSelectBox("FAItemplates");
     $divlist->setHeight(400);
-    if((chkacl($this->acl,"cn")!="") || ($this->FAIstate == "freeze")){
-      $img_edit = "<input type='image' src='images/edit.png'      name='editscript_%s'    title='"._("edit")."' alt='"._("edit")."'>";
-      $img_remo = "";
-    }else{
-      $img_edit = "<input type='image' src='images/edit.png'      name='editscript_%s'    title='"._("edit")."' alt='"._("edit")."'>";
-      $img_remo = "<input type='image' src='images/edittrash.png' name='deletescript_%s'  title='"._("delete")."' alt='"._("delete")."'>";
-    }
 
-    foreach($this->getList(true) as $key => $name){
+    $tmp = $this->getList(true);
+  
+    foreach($this->SubObjects as $key => $name){
 
-      if(($this->SubObjects[$key]['status'] == "new") || ($this->SubObjects[$key]['dn'] == "new")){
+      $dn  = $this->acl_base_for_current_object($name['dn']);
+      $acl = $this->ui->get_permissions($dn,"fai/faiTemplateEntry")  ;
+      $act = "";
+
+      /* Hide delete icon if this object is freezed */
+      if(preg_match("/freeze/",$this->FAIstate)){
+        $act .= "<input type='image' src='images/edit.png'      name='editscript_%s'    title='"._("edit")."' alt='"._("edit")."'>";
+      }else{
+        $act .= "<input type='image' src='images/edit.png'      name='editscript_%s'    title='"._("edit")."' alt='"._("edit")."'>";
+        if(preg_match("/d/",$acl)){
+          $act .="<input type='image' src='images/edittrash.png' name='deletescript_%s'  title='"._("delete")."' alt='"._("delete")."'>";
+        }
+      }
+
+      /* Check acls for download icon */
+      $s_acl = $this->ui->get_permissions($dn,"fai/faiTemplateEntry","FAItemplateFile")  ;
+      if(($this->SubObjects[$key]['status'] == "new") || ($this->SubObjects[$key]['dn'] == "new") || !preg_match("/r/",$s_acl)){
         $down = "";
       }else{
-  
-        $dn = $this->SubObjects[$key]['dn'];       
- 
         $down = "<a href='getFAIscript.php?is_template&id=".base64_encode($dn)."'>
           <img src='images/save.png' alt='"._("Download")."' title='"._("Download")."' border=0>
           </a>";
       }
 
-      $divlist->AddEntry(array( array("string"=>$name),
-            array("string"=>$down , "attach" => "style='width:20px;'"),
-            array("string"=>str_replace("%s",base64_encode($key),$img_edit.$img_remo),
-              "attach"=>"style='border-right: 0px;width:50px;text-align:right;'")));
+      /* Check if we are allowed to view this object */
+      $s_acl = $this->ui->get_permissions($dn,"fai/faiTemplateEntry","cn")  ;
+      if(preg_match("/r/",$s_acl)){
+        $divlist->AddEntry(array( array("string"=> $tmp[$key] ),
+              array("string"=>$down , "attach" => "style='width:20px;'"),
+              array("string"=>str_replace("%s",base64_encode($key),$act),
+                "attach"=>"style='border-right: 0px;width:50px;text-align:right;'")));
+      }
     }
     $smarty->assign("Entry_divlist",$divlist->DrawList());
     /* Divlist creation complete
      */
-
-    $smarty->assign("SubObjects",$this->getList());
 
      /* Magic quotes GPC, escapes every ' " \, to solve some security risks
      * If we post the escaped strings they will be escaped again
@@ -275,13 +291,32 @@ class faiTemplate extends plugin
       }
     }
 
+    $dn = $this->acl_base_for_current_object($this->dn);
+    $smarty->assign("sub_object_is_addable", 
+            preg_match("/c/",$this->ui->get_permissions($dn,"fai/faiTemplateEntry")) && 
+            !preg_match("/freeze/",$this->FAIstate));
+
     foreach($this->attributes as $attr){
-      $smarty->assign($attr."ACL",chkacl($this->acl,$attr));
+      $smarty->assign($attr."ACL",$this->getacl($attr));
     }
 
     $display.= $smarty->fetch(get_template_path('faiTemplate.tpl', TRUE));
     return($display);
   }
+
+
+  function acl_base_for_current_object($dn)
+  {
+    if($dn == "new"){
+      if($this->dn == "new"){
+        $dn= $_SESSION['CurrentMainBase'];
+      }else{
+        $dn = $this->dn;
+      }
+    }
+    return($dn);
+  }
+
 
   /* Generate listbox friendly SubObject list
   */
@@ -334,13 +369,8 @@ class faiTemplate extends plugin
    */
   function save_object()
   {
-    if((isset($_POST['FAItemplate_posted'])) && ($this->FAIstate != "freeze") ){
+    if((isset($_POST['FAItemplate_posted'])) && (!preg_match("/freeze/",$this->FAIstate))){
       plugin::save_object();
-      foreach($this->attributes as $attrs){
-        if(isset($_POST[$attrs])){
-          $this->$attrs = $_POST[$attrs];
-        } 
-      }
     }
   }
 
@@ -456,12 +486,8 @@ class faiTemplate extends plugin
           "plSection"     => array("administration"),
           "plCategory"    => array("fai"),
           "plProvidedAcls" => array(
-            "cn"                => _("Name"),
-            "description"       => _("Description"),
-            "FAItemplateFile"   => _("Template file"),
-            "FAItemplatePath"   => _("Template path"),
-            "FAIowner"          => _("File owner"),
-            "FAImode"           => _("File permissions"))
+            "cn"                => _("Name")." ("._("Readonly").")",
+            "description"       => _("Description"))
           ));
   }
 }
