@@ -136,6 +136,9 @@ class faiTemplate extends plugin
             $obj  = $this->get_object_attributes($obj,$this->sub_Load_Later);
           }
           $this->dialog= new $this->subClassName($this->config,$this->dn,$obj);
+          $this->dialog->set_acl_base($this->acl_base);
+          $this->dialog->set_acl_category("fai");
+
           $_SESSION['objectinfo'] = $obj['dn'];
           $this->dialog->parent = &$this;
           $this->is_dialog=true;
@@ -166,6 +169,8 @@ class faiTemplate extends plugin
 
       if(preg_match("/c/",$acl)){
         $this->dialog= new $this->subClassName($this->config,"new");
+        $this->dialog->set_acl_base($this->acl_base);
+        $this->dialog->set_acl_category("fai");
         $this->is_dialog=true;
       }
     }
@@ -432,7 +437,7 @@ class faiTemplate extends plugin
         if(empty($obj[$attrs])){
           $obj[$attrs] = array();
         }
-        $tmp[$attrs] = stripslashes($obj[$attrs]);
+        $tmp[$attrs] =($obj[$attrs]);
       }    
         
       $tmp['objectClass'] = $this->subClasses;

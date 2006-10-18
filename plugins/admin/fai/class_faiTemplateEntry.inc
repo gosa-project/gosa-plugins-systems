@@ -52,9 +52,16 @@ class faiTemplateEntry extends plugin
     $this->user = explode( '.', $this->FAIowner );
     $this->group = $this->user[1];
     $this->user = $this->user[0];
+
     $_SESSION['binary'] = $this->FAItemplateFile;
     $_SESSION['binarytype'] = 'octet-stream';
     $_SESSION['binaryfile'] = basename( $this->FAItemplatePath );
+
+    if(!empty($this->dn) && $this->dn != "new"){
+      $ldap = $this->config->get_ldap_link();
+      $_SESSION['binary'] =$ldap->get_attribute($this->dn,"FAItemplateFile");
+      $this->FAItemplateFile = $_SESSION['binary'];
+    }
     
     $this->FAImode= sprintf("%0.4s", $this->FAImode)." ";
   }
@@ -70,7 +77,7 @@ class faiTemplateEntry extends plugin
     $smarty->assign("rand", rand(0, 10000));
     $display = "";
 
-    if(isset($_POST['TmpFileUpload'])){
+    if(isset($_POST['TmpFileUpload']) && $this->acl_is_writeable("FAItemplateFile")){
       if($str=file_get_contents($_FILES['FAItemplateFile']['tmp_name'])){
         $this->FAItemplateFile = $str;
 
@@ -90,6 +97,7 @@ class faiTemplateEntry extends plugin
     $bStatus = false; // Hide download icon on default 
     
     if(strlen($this->FAItemplateFile)){
+
       $status= sprintf(_("exists in database (size: %s bytes)"),strlen($this->FAItemplateFile));
       $bStatus = true;  // Display download icon 
     }
@@ -126,11 +134,7 @@ class faiTemplateEntry extends plugin
     $smarty->assign("FAItemplateFile","");
 
     foreach($this->attributes as $attr){
-      if(($this->FAIstate == "freeze") || (chkacl($this->acl,$attr)!= "")){
-        $smarty->assign($attr."ACL"," disabled ");
-      }else{
-        $smarty->assign($attr."ACL","  ");
-      }
+      $smarty->assign($attr."ACL",$this->getacl($attr,preg_match("/freeze/",$this->FAIstate)));
     }
 
     $display.= "<h2><font color='red'>Fix / problen and ensure that size and content are correct if you download this template. Revision > 4582 (gosa-2.5 is already patched)</font></h2>".$smarty->fetch(get_template_path('faiTemplateEntry.tpl', TRUE));
