@@ -206,7 +206,20 @@ class faiVariable extends plugin
       return($display);
     }
 
-    $smarty->assign("SubObjects",$this->getList());
+    $ui = get_userinfo();
+    $ret = $this->getList();
+    $tmp = array();
+    foreach($this->SubObjects as $key => $obj){
+      
+      $acl = $ui->get_permissions($obj['dn'],"fai/faiVariableEntry");
+     
+      if(preg_match("/r/",$acl)){
+        $tmp[$key] = $ret[$key];
+      } 
+      
+      $smarty->assign("SubObjects",$tmp);
+    }
+
 
       /* Magic quotes GPC, escapes every ' " \, to solve some security risks
      * If we post the escaped strings they will be escaped again
