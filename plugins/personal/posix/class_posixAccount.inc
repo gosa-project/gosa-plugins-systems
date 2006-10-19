@@ -175,12 +175,7 @@ class posixAccount extends plugin
     }
 
     /* Convert to seconds */
-    if ($this->shadowExpire != 0){
-      $this->shadowExpire*= 60 * 60 * 24;
-    } else {
-      $date= getdate();
-      $this->shadowExpire= floor($date[0] / (60*60*24)) * 60 * 60 * 24;
-    }
+    $this->shadowExpire= $this->convertToSeconds($this->shadowExpire);
 
     /* Generate shell list from /etc/gosa/shells */
     if (file_exists('/etc/gosa/shells')){
@@ -1082,7 +1077,21 @@ class posixAccount extends plugin
         $this->$oval= "1";
       }
     }
+
+    $this->shadowExpire= $this->convertToSeconds($this->shadowExpire);
   }
+
+
+  function convertToSeconds($val)
+  {
+    if ($val != 0){
+      $val*= 60 * 60 * 24;
+    } else {
+      $date= getdate();
+      $val= floor($date[0] / (60*60*24)) * 60 * 60 * 24;
+    }
+  }
+
 
   function get_next_id($attrib)
   {
