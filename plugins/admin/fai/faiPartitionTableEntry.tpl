@@ -5,12 +5,16 @@
 		<td style='width:50%;border-right:1px solid #909090;'><LABEL for="DISK_cn">
 			{t}Name{/t}
 			</LABEL>{$must}&nbsp;
-			<input value="{$DISK_cn}" size="45" maxlength="80" name="DISK_cn" id="DISK_cn" {$cnACL}>
+{render acl=$cnACL}
+			<input value="{$DISK_cn}" size="45" maxlength="80" name="DISK_cn" id="DISK_cn">
+{/render}
 		</td>
 		<td><LABEL for="DISK_description">
 			&nbsp;{t}Description{/t}
 			</LABEL>&nbsp;
-			<input value="{$DISK_description}" size="45" maxlength="80" name="DISK_description" id="DISK_description" {$descriptionACL}>
+{render acl=$descriptionACL}
+			<input value="{$DISK_description}" size="45" maxlength="80" name="DISK_description" id="DISK_description">
+{/render}
 		</td>
 	</tr>
 </table>
@@ -20,13 +24,19 @@
 <h2><img class="center" alt="" src="images/editpaste.png" align="middle" title="{t}Partition entries{/t}">&nbsp;{t}Partition entries{/t}</h2>
 {$setup}
 <br>
-<input type="submit" name="AddPartition" value="{t}Add partition{/t}" {$cnACL}>
+{if $sub_object_is_createable}
+	<input type="submit" name="AddPartition" value="{t}Add partition{/t}">
+{else}
+	<input type="submit" name="restricted" value="{t}Add partition{/t}" disabled>
+{/if}
 <br>	
 <br>
 <p class="seperator">&nbsp;</p>
 <br>
 <div style="align:right;" align="right">
-<input type="submit" name="SaveDisk" value="{t}Save{/t}" {$cnACL}>
+{render acl=$allowSave}
+<input type="submit" name="SaveDisk" value="{t}Save{/t}">
+{/render}
 <input type="submit" name="CancelDisk" value="{t}Cancel{/t}" >
 </div>
 <!-- Place cursor -->

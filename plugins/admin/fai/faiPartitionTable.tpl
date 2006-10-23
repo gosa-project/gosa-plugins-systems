@@ -10,7 +10,9 @@
 							</LABEL>
 						</td>
 						<td>
-							<input value="{$cn}" size="45" maxlength="80" disabled id="cn">
+{render acl=$cnACL}
+							<input value="{$cn}" size="45" maxlength="80" id='cn' disabled >
+{/render}
 						</td>
 					</tr>
 					<tr>
@@ -20,7 +22,9 @@
 							</LABEL>
 						</td>
 						<td>
-							<input value="{$description}" size="45" maxlength="80" name="description" id="description" {$descriptionACL}>
+{render acl=$descriptionACL}
+							<input value="{$description}" size="45" maxlength="80" name="description" id="description">
+{/render}
 						</td>
 					</tr>
 				</table>
@@ -40,9 +44,14 @@
 						<select name="disks[]" title="{t}Choose a disk to delete or edit{/t}" style="width:100%" size="20" id="SubObject" multiple>
 							{html_options options=$disks}
 						</select><br>
-						<input type="submit" name="AddDisk"     value="{t}Add{/t}"		title="{t}Add{/t}" {$cnACL}>
-						<input type="submit" name="EditDisk"    value="{t}Edit{/t}"    title="{t}Edit{/t}" >
-						<input type="submit" name="DelDisk"     value="{t}Delete{/t}"  title="{t}Delete{/t}"  {$cnACL}>
+{if $sub_object_is_addable}
+						<input type="submit" name="AddDisk"     value="{t}Add{/t}"     title="{t}Add{/t}">
+{else}
+						<input type="submit" name="AddDisk"     value="{t}Add{/t}"     title="{t}Add{/t}" disabled >
+{/if}
+
+						<input type="submit" name="EditDisk"    value="{t}Edit{/t}"    title="{t}Edit{/t}">
+						<input type="submit" name="DelDisk"     value="{t}Delete{/t}"  title="{t}Delete{/t}">
 					</td>
 				</tr>
 				</table>

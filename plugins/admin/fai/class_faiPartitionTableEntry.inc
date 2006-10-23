@@ -109,7 +109,7 @@ class faiPartitionTableEntry extends plugin
      * The number specifies the index we want to delete
      */
     foreach($_POST as $name => $value){
-      if(preg_match("/Delete_.*/",$name)){
+      if((preg_match("/Delete_.*/",$name)) && $this->acl_is_removeable()){
         $tmp = split("_",$name);
         $s_action = "remove";
         $s_entry  = $tmp[1]; 
@@ -120,7 +120,7 @@ class faiPartitionTableEntry extends plugin
      * We must sort the index again, else we possibly got problems 
      * with partitions order.
      */
-    if($s_action == "remove"){
+    if($s_action == "remove" && $this->acl_is_removeable()){
       if($this->partitions[$s_entry]['status'] == "edited"){
         $this->deletePartitions[]= $this->partitions[$s_entry];
         unset($this->partitions[$s_entry]);
@@ -137,7 +137,7 @@ class faiPartitionTableEntry extends plugin
     /* To add a partitions we only append an empty 
      *  array to the already defined partitions.
      */
-    if(isset($_POST['AddPartition'])){
+    if(isset($_POST['AddPartition']) && $this->acl_is_createable()){
       foreach($this->UsedAttrs as $attr){
         $tmp[$attr]                = "";     
       }
@@ -153,26 +153,21 @@ class faiPartitionTableEntry extends plugin
       $smarty->assign($attr,$this->$attr);
     }
 
-    foreach($this->UsedAttrs as $attr){
-      if(($this->FAIstate == "freeze") || (chkacl($this->acl,$attr)!= "")){
-        $smarty->assign($attr."ACL"," disabled ");
-      }else{
-        $smarty->assign($attr."ACL","  ");
+    $tmp = $this->plInfo();
+    $sacl = "";
+    foreach($tmp['plProvidedAcls'] as $name => $translated){
+
+      $acl = $this->getacl($name);
+      $sacl .= $acl;
+      if($this->FAIstate == "freezed"){
+        $acl = preg_replace("/w/","",$acl);
       }
+      $smarty->assign($name."ACL",$acl);
     }
-
-
-    /* The user can't change a diskname 
-     *  if we are currently in edit mode for the specified disk 
-     */
-//    if($this->is_edit){
-//      $smarty->assign("DISK_cnACL"," disabled ");
-//    }else{
-      $smarty->assign("DISK_cnACL","");
-//    }
-
-  
-
+    $smarty->assign("allowSave",$sacl);
+   
+    $smarty->assign("sub_object_is_createable",$this->acl_is_createable());
+ 
     /* Fetch template and show the result
      */
     $display.= $smarty->fetch(get_template_path('faiPartitionTableEntry.tpl', TRUE));
@@ -189,13 +184,13 @@ class faiPartitionTableEntry extends plugin
     $str = "<table summary='' style='width:100%'>";
     if (count($this->partitions)){
       $str .= "<tr>";
-      $str .= "<td>"._("Type")."</td>";
-      $str .= "<td>"._("FS type")."</td>";
-      $str .= "<td>"._("Mount point")."</td>";
-      $str .= "<td>"._("Size in MB")."</td>";
-      $str .= "<td>"._("Mount options")."</td>";
-      $str .= "<td>"._("FS option")."</td>";
-      $str .= "<td>"._("Preserve")."</td>";
+      $str .= "<td><b>"._("Type")."</b></td>";
+      $str .= "<td><b>"._("FS type")."</b></td>";
+      $str .= "<td><b>"._("Mount point")."</b></td>";
+      $str .= "<td><b>"._("Size in MB")."</b></td>";
+      $str .= "<td><b>"._("Mount options")."</b></td>";
+      $str .= "<td><b>"._("FS option")."</b></td>";
+      $str .= "<td><b>"._("Preserve")."</b></td>";
       $str .= "<td>&nbsp;</td>";
       $str .= "</tr>";
     }
@@ -218,38 +213,61 @@ class faiPartitionTableEntry extends plugin
       }
 
       if($part['status']!="delete"){
+
         /* Generate Partition select box  
          */
-        $PartitionType = "<select name='FAIpartitionType_".$key."' id='FAIpartitionType_".$key."' ".$disableALL.">";
-        foreach($PartitionTypes as $type => $PTname){
-          if($part['FAIpartitionType'] == $type){
-            $PartitionType .="<option value='".$type."' selected >".$PTname."</option>";
-          }else{
-            $PartitionType .="<option value='".$type."'>".$PTname."</option>";
-          }
-        }        
-        $PartitionType.="</select>";   
+        $PartitionType = "";
+        if($this->acl_is_writeable("FAIpartitionType")){
+          $PartitionType = "<select name='FAIpartitionType_".$key."' id='FAIpartitionType_".$key."' ".$disableALL.">";
+          foreach($PartitionTypes as $type => $PTname){
+            if($part['FAIpartitionType'] == $type){
+              $PartitionType .="<option value='".$type."' selected >".$PTname."</option>";
+            }else{
+              $PartitionType .="<option value='".$type."'>".$PTname."</option>";
+            }
+          }        
+          $PartitionType.="</select>";   
+        }elseif($this->acl_is_readable("FAIpartitionType")){
+          $PartitionType = $part['FAIpartitionType'];
+        }
 
 
         /* Generate fsType select box  
          */
-        $FAIfsType= "<select name='FAIfsType_".$key."' id='FAIfsType_".$key."' ".$dis." ".$disableALL.">";
-        foreach($FAIfsTypes as $type){
-          if($part['FAIfsType'] == $type){
-            $FAIfsType  .="<option value='".$type."' selected >".$type."</option>";
-          }else{
-            $FAIfsType .="<option value='".$type."'>".$type."</option>";
+        $FAIfsType= "";
+        if($this->acl_is_writeable("FAIfsType")){
+          $FAIfsType= "<select name='FAIfsType_".$key."' id='FAIfsType_".$key."' ".$dis." ".$disableALL.">";
+          foreach($FAIfsTypes as $type){
+            if($part['FAIfsType'] == $type){
+              $FAIfsType  .="<option value='".$type."' selected >".$type."</option>";
+            }else{
+              $FAIfsType .="<option value='".$type."'>".$type."</option>";
+            }
+          }        
+          $FAIfsType.="</select>";   
+        }elseif($this->acl_is_readable("FAIfsType")){
+          $FAIfsType = $part['FAIfsType'];
+        }
+
+        foreach(array("FAImountPoint","FAIpartitionSize","FAImountOptions","FAIfsOptions") as $attr){
+          $$attr  = "";
+          if($this->acl_is_writeable($attr)){
+            $$attr = "<input name='".$attr."_".$key."'  ".$disableALL."  ".$dis."
+                        value='".$part[$attr]."'    id='".$attr."_".$key."'>";
+
+          }elseif($this->acl_is_readable($attr)){
+            $$attr = $part[$attr];
           }
-        }        
-        $FAIfsType.="</select>";   
+        }
+
 
         $str .= "\n<tr>";
         $str .= "\n<td>".$PartitionType."</td>";
         $str .= "\n<td>".$FAIfsType."</td>";
-        $str .= "\n<td><input name='FAImountPoint_".$key."'  ".$disableALL."  ".$dis."  value='".$part['FAImountPoint']."'    id='FAImountPoint_".$key."'></td>";
-        $str .= "\n<td><input name='FAIpartitionSize_".$key."' ".$disableALL." ".$dis." value='".$part['FAIpartitionSize']."' id='FAIpartitionSize_".$key."' size=12></td>";
-        $str .= "\n<td><input name='FAImountOptions_".$key."' ".$disableALL."  ".$dis."  value='".$part['FAImountOptions']."'  id='FAImountOptions_".$key."' style='width:100px;'></td>";
-        $str .= "\n<td><input name='FAIfsOptions_".$key."'   ".$disableALL."  ".$dis."  value='".$part['FAIfsOptions']."'     id='FAIfsOptions_".$key."' style='width:100px;'></td>";
+        $str .= "\n<td>".$FAImountPoint."</td>";
+        $str .= "\n<td>".$FAIpartitionSize."</td>";
+        $str .= "\n<td>".$FAImountOptions."</td>";
+        $str .= "\n<td>".$FAIfsOptions."</td>";
 
         $changeState = "onClick=\"changeState('FAImountPoint_".$key."') ; ".
                                  "changeState('FAIpartitionSize_".$key."') ; ".
@@ -257,13 +275,24 @@ class faiPartitionTableEntry extends plugin
                                  "changeState('FAIfsType_".$key."') ; ".
                                  "changeState('FAIfsOptions_".$key."') ; \"";
   
-
-        if($part['FAIpartitionFlags']!=false){
-          $str .= "\n<td><input type='checkbox' name='FAIpartitionFlags_".$key."' value='preserve' checked ".$changeState." ".$disableALL."></td>";
+        if($this->acl_is_writeable("FAIpartitionFlags")){
+          if($part['FAIpartitionFlags']!=false){
+            $str .= "\n<td><input type='checkbox' name='FAIpartitionFlags_".$key."' value='preserve' checked ".$changeState." ".$disableALL."></td>";
+          }else{
+            $str .= "\n<td><input type='checkbox' name='FAIpartitionFlags_".$key."' value='preserve' ".$changeState." ".$disableALL."></td>";
+          }
         }else{
-          $str .= "\n<td><input type='checkbox' name='FAIpartitionFlags_".$key."' value='preserve' ".$changeState." ".$disableALL."></td>";
+          if($part['FAIpartitionFlags']!=false){
+            $str .= "<td>"._("False")."</td>";
+          }else{
+            $str .= "<td>"._("True")."</td>";
+          }
         }
-        $str .= "\n<td><input type='submit' name='Delete_".$key."' value='"._("Remove")."' ".$disableALL."></td>";
+        if($this->acl_is_removeable()){
+          $str .= "\n<td><input type='submit' name='Delete_".$key."' value='"._("Remove")."' ".$disableALL."></td>";    
+        }else{
+          $str .= "\n<td><input type='submit' name='restricted' disabled value='"._("Remove")."'></td>";    
+        }
         $str .= "\n</tr>";    
       }
     }
@@ -307,19 +336,16 @@ class faiPartitionTableEntry extends plugin
     if((isset($_POST['TableEntryFrameSubmitted'])) && ($this->FAIstate != "freeze") ){
       plugin::save_object();
 
-      /* Check base attributes */
-      foreach($this->attributes as $attrs){
-        if(isset($_POST[$attrs])){
-          $this->$attrs = $_POST[$attrs];
-        }
-      }
-     
       foreach($this->partitions as $key => $part){
         foreach($this->UsedAttrs as $attrs){
-          if(isset($_POST[$attrs."_".$key])){
-            $this->partitions[$key][$attrs] = $_POST[$attrs."_".$key];
-          }else{
-            $this->partitions[$key][$attrs] = false;
+
+          if($this->acl_is_writeable($attrs)){
+
+            if(isset($_POST[$attrs."_".$key])){
+              $this->partitions[$key][$attrs] = $_POST[$attrs."_".$key];
+            }else{
+              $this->partitions[$key][$attrs] = false;
+            }
           }
         }
       }

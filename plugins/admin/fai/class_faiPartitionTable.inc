@@ -136,7 +136,7 @@ class faiPartitionTable extends plugin
         $usedDiskNames[]= $key;
       }
       $this->dialog = new faiPartitionTableEntry($this->config,$this->dn,$usedDiskNames); 
-      $this->dialog->set_acl_base($this->acl_base_for_current_object($obj['dn']));
+      $this->dialog->set_acl_base($this->acl_base_for_current_object($this->dn));
       $this->dialog->set_acl_category("fai");
       $this->dialog->FAIstate = $this->FAIstate;
       $this->is_dialog = true;
@@ -160,18 +160,21 @@ class faiPartitionTable extends plugin
           $usedDiskNames[]= $key;
         }
       }
-      $this->dialog = new faiPartitionTableEntry($this->config,$this->dn,$usedDiskNames,$this->disks[$Udisk]); 
-      $this->dialog->set_acl_base($this->acl_base_for_current_object($obj['dn']));
-      $this->dialog->set_acl_category("fai");
-      $this->dialog->FAIstate = $this->FAIstate;
-     
+    
       /* Set object info string, which will be displayed in plugin info line */ 
       if(isset($this->disks[$Udisk]['dn'])){
         $_SESSION['objectinfo'] = $this->disks[$Udisk]['dn'];
+        $dn = $this->disks[$Udisk]['dn'];
       }else{
         $_SESSION['objectinfo'] = "";
+        $dn = "new";
       }
-    
+
+      $this->dialog = new faiPartitionTableEntry($this->config,$this->dn,$usedDiskNames,$this->disks[$Udisk]); 
+      $this->dialog->set_acl_base($this->acl_base_for_current_object($dn));
+      $this->dialog->set_acl_category("fai");
+      $this->dialog->FAIstate = $this->FAIstate;
+     
       $this->is_dialog = true;
     }
 
@@ -270,14 +273,13 @@ class faiPartitionTable extends plugin
    
     $dn = $this->acl_base_for_current_object($this->dn);
     $smarty->assign("sub_object_is_addable",
-        preg_match("/c/",$this->ui->get_permissions($dn,"fai/faiScriptEntry")) &&
+        preg_match("/c/",$this->ui->get_permissions($dn,"fai/faiPartitionTableEntry")) &&
         !preg_match("/freeze/",$this->FAIstate));
 
     $tmp = $this->plInfo();
     foreach($tmp['plProvidedAcls'] as $name => $translated){
       $smarty->assign($name."ACL",$this->getacl($name));
     }
-
     $disks = $this->getDisks();
     $smarty->assign("disks"   ,$disks);
     $display.= $smarty->fetch(get_template_path('faiPartitionTable.tpl', TRUE));
@@ -290,24 +292,34 @@ class faiPartitionTable extends plugin
      */
     $a_return = array();
     foreach($this->disks as $key => $disk){
-      if($disk['status'] != "delete"){
-        $cnt=0;
-        foreach($disk['partitions'] as $val){
-          if($val['status']!="delete"){
-            $cnt ++;
+
+      $dn = "new";
+      if(isset($obj['dn'])){
+        $dn = $obj['dn'];
+      }
+      $dn = $this->acl_base_for_current_object($dn);
+      $acl = $this->ui->get_permissions($dn,"fai/faiPartitionTableEntry");
+      if(preg_match("/(r|w)/",$acl)) {
+
+        if($disk['status'] != "delete"){
+          $cnt=0;
+          foreach($disk['partitions'] as $val){
+            if($val['status']!="delete"){
+              $cnt ++;
+            }
           }
-        }
-        if(!empty($disk['description'])){
-          if($cnt == 1){
-            $a_return[$key]=  $disk['cn']." [".$disk['description']."], ".sprintf(_("%s partition"), $cnt);
+          if(!empty($disk['description'])){
+            if($cnt == 1){
+              $a_return[$key]=  $disk['cn']." [".$disk['description']."], ".sprintf(_("%s partition"), $cnt);
+            }else{
+              $a_return[$key]=  $disk['cn']." [".$disk['description']."], ".sprintf(_("%s partition(s)"), $cnt);
+            }
           }else{
-            $a_return[$key]=  $disk['cn']." [".$disk['description']."], ".sprintf(_("%s partition(s)"), $cnt);
-          }
-        }else{
-          if($cnt == 1){
-            $a_return[$key]=  $disk['cn'].", ".sprintf(_("%s partition"), $cnt);
-          }else{
-            $a_return[$key]=  $disk['cn'].", ".sprintf(_("%s partition(s)"), $cnt);
+            if($cnt == 1){
+              $a_return[$key]=  $disk['cn'].", ".sprintf(_("%s partition"), $cnt);
+            }else{
+              $a_return[$key]=  $disk['cn'].", ".sprintf(_("%s partition(s)"), $cnt);
+            }
           }
         }
       }
