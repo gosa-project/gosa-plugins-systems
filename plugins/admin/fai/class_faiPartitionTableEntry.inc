@@ -410,6 +410,34 @@ class faiPartitionTableEntry extends plugin
 
     return ($message);
   }
+
+  
+
+  /* Return plugin informations for acl handling */
+  function plInfo()
+  {
+    return (array(
+          "plShortName" => _("Partition table entry"),
+          "plDescription" => _("FAI partition table entry"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 27,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("fai"),
+          "plProvidedAcls" => array(
+            "cn"                => _("Name"),
+            "description"       => _("Description"),
+            "FAIpartitionType"  => _("Partition type"),
+            "FAIpartitionNr"    => _("Partition no."),
+            "FAIfsType"         => _("File system type"),
+            "FAImountPoint"     => _("Mount point"),
+            "FAIpartitionSize"  => _("Partition size"),
+            "FAImountOptions"   => _("Mount options"),
+            "FAIfsOptions"      => _("File system options"),
+            "FAIpartitionFlags" => _("Partition flags"))
+          ));
+  }
+
  
 }
 

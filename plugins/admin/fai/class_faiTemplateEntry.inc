@@ -137,7 +137,7 @@ class faiTemplateEntry extends plugin
       $smarty->assign($attr."ACL",$this->getacl($attr,preg_match("/freeze/",$this->FAIstate)));
     }
 
-    $display.= "<h2><font color='red'>Fix / problen and ensure that size and content are correct if you download this template. Revision > 4582 (gosa-2.5 is already patched)</font></h2>".$smarty->fetch(get_template_path('faiTemplateEntry.tpl', TRUE));
+    $display.=  $smarty->fetch(get_template_path('faiTemplateEntry.tpl', TRUE));
     return($display);
   }
 

@@ -20,6 +20,7 @@ class faiPartitionTable extends plugin
   var $dialog           = NULL;     // a dialog, e.g. new disk dialog
 
   var $FAIstate         = "";
+  var $ui;
 
   function faiPartitionTable ($config, $dn= NULL)
   {
@@ -28,19 +29,14 @@ class faiPartitionTable extends plugin
 
     $this->acl ="#all#";
 
+    $this->ui = get_userinfo();    
+
     /* If "dn==new" we try to create a new entry
      * Else we must read all objects from ldap which belong to this entry.
      * First read disks from ldap ... and then the partition definitions for the disks.
      */
     if($dn != "new"){
       $this->dn =$dn;
-
-      /* Set acls
-       */
-      $ui   = get_userinfo();
-      $acl  = get_permissions ($this->dn, $ui->subtreeACL);
-      $acli = get_module_permission($acl, "FAIclass", $this->dn);
-      $this->acl=$acli;
 
       /* Get FAIstate
        */
@@ -107,6 +103,20 @@ class faiPartitionTable extends plugin
     ksort($this->disks);
   }
 
+
+  function acl_base_for_current_object($dn)
+  {
+    if($dn == "new"){
+      if($this->dn == "new"){
+        $dn= $_SESSION['CurrentMainBase'];
+      }else{
+        $dn = $this->dn;
+      }
+    }
+    return($dn);
+  }
+
+
   function execute()
   {
 	/* Call parent execute */
@@ -126,7 +136,8 @@ class faiPartitionTable extends plugin
         $usedDiskNames[]= $key;
       }
       $this->dialog = new faiPartitionTableEntry($this->config,$this->dn,$usedDiskNames); 
-      $this->dialog->acl = $this->acl;
+      $this->dialog->set_acl_base($this->acl_base_for_current_object($obj['dn']));
+      $this->dialog->set_acl_category("fai");
       $this->dialog->FAIstate = $this->FAIstate;
       $this->is_dialog = true;
     }
@@ -150,7 +161,8 @@ class faiPartitionTable extends plugin
         }
       }
       $this->dialog = new faiPartitionTableEntry($this->config,$this->dn,$usedDiskNames,$this->disks[$Udisk]); 
-      $this->dialog->acl = $this->acl;
+      $this->dialog->set_acl_base($this->acl_base_for_current_object($obj['dn']));
+      $this->dialog->set_acl_category("fai");
       $this->dialog->FAIstate = $this->FAIstate;
      
       /* Set object info string, which will be displayed in plugin info line */ 
@@ -256,8 +268,14 @@ class faiPartitionTable extends plugin
       }
     }
    
-    foreach($this->attributes as $attr){
-      $smarty->assign($attr."ACL",chkacl($this->acl,$attr));
+    $dn = $this->acl_base_for_current_object($this->dn);
+    $smarty->assign("sub_object_is_addable",
+        preg_match("/c/",$this->ui->get_permissions($dn,"fai/faiScriptEntry")) &&
+        !preg_match("/freeze/",$this->FAIstate));
+
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $name => $translated){
+      $smarty->assign($name."ACL",$this->getacl($name));
     }
 
     $disks = $this->getDisks();
@@ -495,15 +513,8 @@ class faiPartitionTable extends plugin
           "plSection"     => array("administration"),
           "plCategory"    => array("fai"),
           "plProvidedAcls" => array(
-            "cn"                => _("Name"),
-            "FAIpartitionType"  => _("Partition type"),
-            "FAIpartitionNr"    => _("Partition no."),
-            "FAIfsType"         => _("File system type"),
-            "FAImountPoint"     => _("Mount point"),
-            "FAIpartitionSize"  => _("Partition size"),
-            "FAImountOptions"   => _("Mount options"),
-            "FAIfsOptions"      => _("File system options"),
-            "FAIpartitionFlags" => _("Partition flags"))
+            "cn"                => _("Name")."&nbsp;("._("Read only").")",
+            "description"       => _("Description"))
           ));
   }
 }
