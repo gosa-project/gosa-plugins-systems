@@ -35,51 +35,6 @@ class mailMethodKolab extends mailMethodCyrus
     $this->config= $config->data['SERVERS']['IMAP'];
   }
 
-   /* return all folders of the users mailbox*/
-  function getMailboxList($folder, $uid= "")
-  {
-    global $config;
-    $result = array();
-
-    /* Get domain an mail address if uid is an mail address */
-    $domain = "";
-    if(preg_match("/@/",$folder)){
-      $domain = preg_replace("/^.*@/","",$folder);
-      $folder = preg_replace("/@.*$/","",$folder);
-    }
-
-    /* Get list of mailboxes for combo box */
-    $cfg= $this->config[$this->gosaMailServer];
-
-    /* Create search pattern
-         (user/kekse*@domain.de
-          user.kekse*@domain.de
-          user.kekse*  )
-       depending on given folder name) */
-    $q = $folder."*@".$domain;
-    $list = imap_listmailbox($this->mbox, $cfg["connect"], $q);
-
-    /* Create list of returned folder names */
-    if (is_array($list)){
-      foreach ($list as $val){
-
-        /* Cut domain name */
-        $val = preg_replace("/@.*$/","",$val);
-        $result[]=preg_replace ("/^.*".normalizePreg($folder)."/","INBOX", imap_utf7_decode ($val));
-      }
-    }
-
-    /* Append "INBOX" to the folder array if result is empty and request comes from user dialog */
-    if(empty($result) && !empty($uid)){
-      $result[] = "INBOX";
-    }
-
-    return ($result);
-  }
-
-
-
-
   function updateMailbox($folder)
   {
   }
@@ -89,17 +44,16 @@ class mailMethodKolab extends mailMethodCyrus
     return (TRUE);
   }
 
-  function deleteMailbox($folder)
-  {
-    return (TRUE);
-  }
-
-
   /* Get quota and divide it by 1024, because in gosa we display in MB
       but we get Kb */
   function getQuota($folder)
   {
     $result= array('quotaUsage' => '', 'gosaMailQuota' => '');
+
+    /* Only use lower case folder names, if folder name is like "@domain.com" */
+    if(preg_match("/@/",$folder)){
+      $folder = strtolower($folder);
+    }
 
     error_reporting(0);  
   
@@ -131,7 +85,7 @@ class mailMethodKolab extends mailMethodCyrus
         So overwrite uid to match these folder names. Else we can't read quota settings etc. 
         #FIXME is there a better way to detect if it is 'shared.' or 'shared+' or 'kolab+shared.' or what ever ?*/
     if(get_class($mailObject) == "mailgroup"){
-      $mailObject->uid = "shared.".$mailObject->uid."@".preg_replace("/^.*@/","",$mailObject->mail);
+     $mailObject->uid = "shared.".$mailObject->uid."@".preg_replace("/^.*@/","",$mailObject->mail);
     }
 
     /* Convert attributes and objectClasses */
@@ -283,6 +237,12 @@ class mailMethodKolab extends mailMethodCyrus
     /* Only add kolab delete Flag in case of an user.mailAccount */
     if(!in_array("posixGroup", $mailObject->attrs['objectClass'])){
       $mailObject->attrs['kolabDeleteFlag']= preg_replace('%imap://%', '', $mailObject->gosaMailServer);
+    }else{
+      /* Kolab shared folder names are like ' shared.uid@server.de ' 
+        So overwrite uid to match these folder names. Else we can't read quota settings etc. 
+        #FIXME is there a better way to detect if it is 'shared.' or 'shared+' or 'kolab+shared.' or what ever ?*/
+      $mailObject->uid = "shared.".$mailObject->uid."@".preg_replace("/^.*@/","",$mailObject->mail);
+      
     }
   }
 
