@@ -82,17 +82,47 @@ class divListSystem extends MultiSelectWindow
 
   function GenHeader()
   {
-    /* Prepare departments,
+   /* Prepare departments,
        which are shown in the listbox on top of the listbox
      */
     $options= "";
-    foreach ($this->config->idepartments as $key => $value){
-      if ($this->selectedBase == $key){
-        $options.= "<option selected='selected' value='$key'>$value</option>";
-      } else {
-        $options.= "<option value='$key'>$value</option>";
+
+    /* Get all departments within this subtree */
+    $base = $this->config->current['BASE'];
+    $deps= get_list("(&(|(ou=*)(description=*))(objectClass=gosaDepartment))", $this->module, $base,
+                    array("ou", "description"), GL_SIZELIMIT | GL_SUBSEARCH);
+
+    $tmp =array();
+    foreach($deps as $dep){
+      $tmp[$dep['dn']] = $dep;
+    }
+    $deps = $tmp;
+
+    /* Load possible departments */
+    $ui= get_userinfo();
+    $department = array();
+    foreach($this->module as $module){
+  
+      $d = $ui->get_module_departments($module);      
+      foreach($d as $department){
+        $departments[$department] = $department;
       }
     }
+
+    $ids = $this->config->idepartments;
+
+    foreach($deps as $dep){
+      if(isset($ids[$dep['dn']]) && in_array_ics($dep['dn'], $departments)){
+
+        $value = $ids[$dep['dn']];
+        if ($this->selectedBase == $dep['dn']){
+          $options.= "<option selected='selected' value='".$dep['dn']."'>$value</option>";
+        } else {
+          $options.= "<option value='".$dep['dn']."'>$value</option>";
+        }
+      }
+    }
+
     $listhead = "<div style='background:#F0F0F9;padding:5px;'>".
       " <input class='center' type='image' src='images/list_root.png' align='middle'
       title='"._("Go to root department")."' name='dep_root' alt='"._("Root")."'>&nbsp;".
