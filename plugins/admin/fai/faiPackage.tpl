@@ -10,7 +10,9 @@
 							</LABEL>
 						</td>
 						<td>
+{render acl=$cnACL}
 							<input value="{$cn}" size="45" disabled id="cn">
+{/render}
 						</td>
 					</tr>
 					<tr>
@@ -20,7 +22,9 @@
 							</LABEL>
 						</td>
 						<td>
-							<input value="{$description}" size="45" {$descriptionACL} name="description" id="description">
+{render acl=$descriptionACL}
+							<input value="{$description}" size="45" name="description" id="description">
+{/render}
 						</td>
 					</tr>
 				</table>
@@ -49,9 +53,11 @@
 						  {t}Install method{/t} :
 						</td>
 						<td>
-							<select name="FAIinstallMethod" {$cnACL} >
+{render acl=$FAIinstallMethodACL}
+							<select name="FAIinstallMethod" title='{t}Please select the installation method{/t}'>
 							  {html_options options=$FAIinstallMethods output=$FAIinstallMethod selected=$FAIinstallMethod}
 							</select>
+{/render}
 						</td>
 					</tr>
 				</table>
@@ -68,10 +74,10 @@
        			{html_options options=$usedPackages}
       		</select>
 			<br>
-			<input type="submit" name="Addpkg" value="{t}Add{/t}" {$OptionsACL} {$cnACL}>
-			<input type="submit" name="Delpkg" value="{t}Remove{/t}"  {$OptionsACL} {$cnACL}>
-			<input type="submit" name="Conpkg" value="{t}Configure{/t}"  {$OptionsACL} >
-			<input type="submit" name="Markpkg" value="{t}Toggle remove flag{/t}"  {$OptionsACL} {$cnACL}>
+			<input type="submit" name="Addpkg" value="{t}Add{/t}" {$FAIpackageACL}>
+			<input type="submit" name="Delpkg" value="{t}Remove{/t}"  {$FAIpackageACL}>
+			<input type="submit" name="Conpkg" value="{t}Configure{/t}"  {$FAIdebconfInfoACL} >
+			<input type="submit" name="Markpkg" value="{t}Toggle remove flag{/t}"  {$FAIpackageACL}>
 		</td>
 	</tr>
 </table>

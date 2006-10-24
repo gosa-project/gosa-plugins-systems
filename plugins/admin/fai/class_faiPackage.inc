@@ -67,21 +67,12 @@ class faiPackage extends plugin
     /* Load Attributes */
     plugin::plugin ($config, $dn);
 
-    $this->acl ="#all#";
-
     /* If "dn==new" we try to create a new entry
      * Else we must read all objects from ldap which belong to this entry.
      * First read SubObjects from ldap ... and then the partition definitions for the SubObjects.
      */
     if($dn != "new"){
       $this->dn =$dn;
-
-      /* Set acls
-       */
-      $ui   = get_userinfo();
-      $acl  = get_permissions ($this->dn, $ui->subtreeACL);
-      $acli = get_module_permission($acl, "FAIclass", $this->dn);
-      $this->acl=$acli;
 
       /* Get FAIstate
        */
@@ -280,7 +271,6 @@ class faiPackage extends plugin
       }
 
       $this->dialog = new faiPackageConfiguration($this->config, $this->dn,$pkg, $path, $pkg_config);
-      $this->dialog ->acl = $this->acl;
       $this->is_dialog =true;
     }
 
@@ -327,11 +317,10 @@ class faiPackage extends plugin
       $strsec .= $sec." ";
     }
 
-    foreach($this->attributes as $attr){
-      $smarty->assign($attr."ACL",chkacl($this->acl,$attr));
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $name => $translated){
+      $smarty->assign($name."ACL",$this->getacl($name,preg_match("/freeze/",$this->FAIstate)));
     }
-
-    $smarty->assign("OptionsACL","");
 
     $smarty->assign("releases",$this->releases);
     $smarty->assign("release" ,$this->FAIdebianRelease);
@@ -557,6 +546,7 @@ class faiPackage extends plugin
             "FAIpackage"        => _("Packages"),
             "FAIdebianSection"  => _("Section"),
             "FAIinstallMethod"  => _("Install Method"),
+            "FAIdebconfInfo"    => _("Package configuration"),
             "FAIdebianRelease"  => _("Release"))
           ));
   }
