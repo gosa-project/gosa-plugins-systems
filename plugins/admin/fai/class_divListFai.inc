@@ -95,20 +95,35 @@ class divListFai extends MultiSelectWindow
 
   function GenHeader()
   {
-    $ui = get_userinfo();
     /* Prepare departments,
        which are shown in the listbox on top of the listbox
      */
     $options= "";
-    foreach ($this->config->idepartments as $key => $value){
-      if ($this->selectedBase == $key){
-        $options.= "<option selected='selected' value='$key'>$value</option>";
-      } else {
-        $options.= "<option value='$key'>$value</option>";
+
+    /* Get all departments within this subtree */
+    $base = $this->config->current['BASE'];
+    $deps= get_list("(&(|(ou=*)(description=*))(objectClass=gosaDepartment))", $this->module, $base,
+                    array("ou", "description"), GL_SIZELIMIT | GL_SUBSEARCH);
+
+    /* Load possible departments */
+    $ui= get_userinfo();
+    $tdeps= $ui->get_module_departments("fai");
+
+    $ids = $this->config->idepartments;
+
+    foreach($deps as $dep){
+      if(isset($ids[$dep['dn']]) && in_array_ics($dep['dn'], $tdeps)){
+
+        $value = $ids[$dep['dn']];
+        if ($this->selectedBase == $dep['dn']){
+          $options.= "<option selected='selected' value='".$dep['dn']."'>$value</option>";
+        } else {
+          $options.= "<option value='".$dep['dn']."'>$value</option>";
+        }
       }
     }
 
-        /* Create listhead, it will be shown on top of the divlist.
+     /* Create listhead, it will be shown on top of the divlist.
      * It provides general navigation and object creation
      */
     $listhead =
