@@ -217,13 +217,13 @@ class faiPackage extends plugin
     $this->list=$this->genPkgs();
 
     /* + was pressed to open the package dialog */
-    if(isset($_POST['Addpkg'])){
+    if(isset($_POST['Addpkg']) && $this->acl_is_writeable("FAIpackage")){
       $this->dialog = new faiPackageEntry($this->config, $this->dn,$this->list,$this->usedPackages);
       $this->is_dialog =true;
     }
 
     /* Delte selected package */ 
-    if(isset($_POST['Delpkg'])){
+    if(isset($_POST['Delpkg']) && $this->acl_is_writeable("FAIpackage")){
       if($this->FAIstate != "freeze"){
         foreach($_POST['usedPackages'] as $del){
           if(isset($this->usedPackages[$del])){
@@ -261,7 +261,7 @@ class faiPackage extends plugin
     }
 
     /* Configuration dialog open*/
-    if((isset($_POST['Conpkg']))&&(isset($_POST['usedPackages']))&&(!empty($_POST['usedPackages']))){
+    if((isset($_POST['Conpkg']))&&(isset($_POST['usedPackages']))&&(!empty($_POST['usedPackages'])) && $this->acl_is_writeable("FAIdebconfInfo")){
       $path = "/etc/gosa/fai/".$this->FAIdebianRelease."/debconf.d";
       $pkg_config = array();
       $pkg = $_POST['usedPackages'][0];
@@ -275,7 +275,7 @@ class faiPackage extends plugin
     }
 
     /* Configuration dialog open*/
-    if($this->FAIstate != "freeze"){
+    if($this->FAIstate != "freeze" && $this->acl_is_writeable("FAIpackage")){
       if((isset($_POST['Markpkg']))&&(isset($_POST['usedPackages']))&&(!empty($_POST['usedPackages']))){
         foreach($_POST['usedPackages'] as $pkg){
           if (isset($this->usedPackages[$pkg])){
@@ -365,16 +365,8 @@ class faiPackage extends plugin
    */
   function save_object()
   {
-
     if($this->FAIstate == "freeze") return;  
     plugin::save_object();
-
-
-    foreach($this->attributes as $attrs){
-      if(isset($_POST[$attrs])){
-        $this->$attrs = $_POST[$attrs];
-      }
-    }
   }
 
 
