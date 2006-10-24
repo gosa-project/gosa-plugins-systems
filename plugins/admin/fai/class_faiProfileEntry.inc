@@ -14,6 +14,7 @@ class faiProfileEntry extends plugin
 
   /* Array with available class names */
   var $FAIAllclasses        = array();
+  var $ui;
 
   function faiProfileEntry ($config, $dn= NULL,$used=array(),$objects=false)
   {
@@ -22,8 +23,15 @@ class faiProfileEntry extends plugin
     /* Search only in fai tree */
     $base = "ou=fai,ou=configs,ou=systems,".$_SESSION['CurrentMainBase'];
 
+    $this->ui = get_userinfo();
+
     /* Create array with categories to be able to sort different types of objects */
-    $categories = array("FAIscript","FAItemplate","FAIhook","FAIvariable","FAIpartitionTable","FAIpackageList");
+    $categories = array("FAIscript"         => "faiScript",
+                        "FAItemplate"       => "faiTemplate",
+                        "FAIhook"           => "faiHook",
+                        "FAIvariable"       => "faiVariable",
+                        "FAIpartitionTable" => "faiPartitionTable",
+                        "FAIpackageList"    => "faiPackageList");
 
     /* Read out all objects from fai tree */
     $ldap= $this->config->get_ldap_link();
@@ -36,11 +44,18 @@ class faiProfileEntry extends plugin
       
       /* Only use objects which have cn set */
       if((isset($attrs['cn'][0]))&&(!in_array($attrs['cn'][0],$used))){
-        foreach($categories as $cat){
+        foreach($categories as $cat => $acl){
           if(in_array($cat,$attrs['objectClass'])){
         
+            $acl =  $this->ui->get_permissions($attrs['dn'],"fai/".$acl); 
+
             /* Append different types of objects */
             $this->FAIAllclasses[$attrs['cn'][0]]['objects'][$cat]=$cat;
+      
+            if(!isset($this->FAIAllclasses[$attrs['cn'][0]]['acl'])){
+              $this->FAIAllclasses[$attrs['cn'][0]]['acl']="";
+            }
+            $this->FAIAllclasses[$attrs['cn'][0]]['acl'].=$acl;
 
             /* Set selected status to false */
             $this->FAIAllclasses[$attrs['cn'][0]]['status']=false;
@@ -50,6 +65,8 @@ class faiProfileEntry extends plugin
         }
       }
     }
+
+
     $tmp = array();
     ksort($sort);
     foreach($sort as $name){
@@ -57,7 +74,6 @@ class faiProfileEntry extends plugin
     }
     $this->FAIAllclasses = array();
     $this->FAIAllclasses = $tmp;
-
 
     /* If no search filter is set, create one */
     if (!is_global("SUBfaifilter")){
@@ -160,6 +176,11 @@ class faiProfileEntry extends plugin
 
     /* Check every single class name to match the current search filter */
     foreach($this->FAIAllclasses as $usedClass => $classes){
+
+      /* Skip those entries that we are not allowed to read. */
+      if(!preg_match("/r/",$classes['acl'])){
+        continue;
+      }
 
       $fi = str_replace("*",".*",$SUBfaifilter['Sregex']);  
  

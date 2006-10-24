@@ -10,7 +10,9 @@
 						</LABEL>
 					</td>
 					<td>
-						<input value="{$cn}" size="45" maxlength="80" id="cn" name="cn" {$cnACL}>
+{render acl=$cnACL}
+						<input value="{$cn}" size="45" maxlength="80" id="cn" name="cn">
+{/render}
 					</td>
 				</tr>
 				<tr>
@@ -20,7 +22,9 @@
 						</LABEL>
 					</td>
 					<td>
-						<input value="{$description}" size="45" maxlength="80" name="description" id="description" {$descriptionACL}>
+{render acl=$descriptionACL}
+						<input value="{$description}" size="45" maxlength="80" name="description" id="description">
+{/render}
 					</td>
 				</tr>
 			</table>
@@ -35,7 +39,9 @@
 						</select>-->
 						{$divlist}
 						<br>
-						<input type="submit" name="AddClass" value="{t}Add{/t}" {$cnACL}>
+{render acl=$FAIclassACL}
+						<input type="submit" name="AddClass" value="{t}Add{/t}">
+{/render}
 						<input type="hidden" name="edit_helper">
 					</td>
 				</tr>

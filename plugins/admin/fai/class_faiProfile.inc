@@ -25,7 +25,7 @@ class faiProfile extends plugin
   var $FAIclass         = "";       // Classnames used for this profile
   var $FAIclasses       = array();  // Contains classname seperated in an array
   var $FAIAllclasses    = array();  // Contains all possible Classnames
-
+  var $ui               ;
   var $FAIstate      = "";
 
   function faiProfile($config, $dn= NULL)
@@ -34,16 +34,7 @@ class faiProfile extends plugin
     plugin::plugin ($config, $dn);
     $ldap=$this->config->get_ldap_link();
 
-    $this->acl = "#all#";
-
-    if($this->dn != "new"){
-      /* Set acls
-       */
-      $ui   = get_userinfo();
-      $acl  = get_permissions ($this->dn, $ui->subtreeACL);
-      $acli = get_module_permission($acl, "FAIclass", $this->dn);
-      $this->acl=$acli;
-    }
+    $this->ui = get_userinfo();
 
     /* Parse ldap attribute to get all assigned classes */
     $tmp = split(" ",$this->FAIclass);
@@ -133,6 +124,20 @@ class faiProfile extends plugin
     return($ret);
   }
 
+
+  function acl_base_for_current_object($dn)
+  {
+    if($dn == "new"){
+      if($this->dn == "new"){
+        $dn= $_SESSION['CurrentMainBase'];
+      }else{
+        $dn = $this->dn;
+      }
+    }
+    return($dn);
+  }
+
+
   /* returns position in array */
   function getpos($atr,$attrs)
   {
@@ -209,21 +214,21 @@ class faiProfile extends plugin
     /* Remove class name From list */
     $sort_once = false;
     foreach($_POST as $name => $post){
-      if(preg_match("/DEL_/i",$name)){
+      if(preg_match("/DEL_/i",$name) && $this->acl_is_writeable("FAIclass")){
         $s_action = "delete";
         $s_entry  = preg_replace("/DEL_/","",$name);
         $s_entry  = base64_decode(preg_replace("/_.*$/","",$s_entry));
-      }elseif(preg_match("/Add_class/i",$name)){
+      }elseif(preg_match("/Add_class/i",$name)&& $this->acl_is_writeable("FAIclass")){
         $s_action  = "add";
-      }elseif(preg_match("/DelClass/i",$name)){
+      }elseif(preg_match("/DelClass/i",$name) && $this->acl_is_writeable("FAIclass")){
         $s_action  = "delete";
         $s_entry = $_POST['FAIclass'];
-      }elseif(preg_match("/AddClass/i",$name)){
+      }elseif(preg_match("/AddClass/i",$name) && $this->acl_is_writeable("FAIclass")){
         $s_action  = "add";
       }
 
       /* Check if a list element should be pushed one position up */
-      if((preg_match("/sortup_/",$name))&&(!$sort_once)){
+      if((preg_match("/sortup_/",$name))&&(!$sort_once) && $this->acl_is_writeable("FAIclass")){
         $sort_once = true;
         $val = preg_replace("/sortup_/","",$name);
         $val = preg_replace("/_.*$/","",$val);
@@ -232,7 +237,7 @@ class faiProfile extends plugin
       }
       
       /* Check if a list element should be pushed one position down */
-      if((preg_match("/sortdown_/",$name))&&(!$sort_once)){
+      if((preg_match("/sortdown_/",$name))&&(!$sort_once) && $this->acl_is_writeable("FAIclass")){
         $sort_once = true;
         $val = preg_replace("/sortdown_/","",$name);
         $val = preg_replace("/_.*$/","",$val);
@@ -242,11 +247,11 @@ class faiProfile extends plugin
 
     }
 
-    if($s_action == "delete"){
+    if($s_action == "delete" && $this->acl_is_writeable("FAIclass")){
       unset($this->FAIclasses[$s_entry]);
     }
 
-    if($s_action == "add"){
+    if($s_action == "add" && $this->acl_is_writeable("FAIclass")){
       $this->dialog = new faiProfileEntry($this->config,$this->dn,$this->FAIclasses);
       $this->is_dialog  =true;
     }
@@ -300,25 +305,28 @@ class faiProfile extends plugin
     $linkupdown.= "<input type='image' name='sortdown_%s' alt='down'  title='"._("Down")."' src='images/sort_down.png' >";
 
     /* Append fai classes to divlist */
-    foreach($this->FAIclasses as $usedClass){
-      $str = "&nbsp;";
+    if($this->acl_is_readable("FAIclass")){
+      foreach($this->FAIclasses as $usedClass){
+        $str = "&nbsp;";
+        $act = "";
 
-      if(isset($this->FAIAllclasses[$usedClass])){
-        foreach($this->FAIAllclasses[$usedClass] as $class => $obj){
-          $str.= $objTypes[$class]; 
+        if(isset($this->FAIAllclasses[$usedClass])){
+          foreach($this->FAIAllclasses[$usedClass] as $class => $obj){
+            $str.= $objTypes[$class]; 
+          }
         }
+
+        $field1 = array("string"=> $usedClass,"attach"=>"");
+        $field2 = array("string"=> $str,"attach"=>"");
+        if(($this->FAIstate != "freeze") && $this->acl_is_writeable("FAIclass")){
+          $field3 = array("string"=> preg_replace("/%KEY%/",base64_encode($usedClass),$actions).
+              preg_replace("/%s/",base64_encode($usedClass),$linkupdown),
+              "attach"=>"style='border-right:none;'");
+        }else{
+          $field3 = array("string"=>"&nbsp;", "attach"=>"style='border-right:none;'");
+        }
+        $divlist->AddEntry(array($field1,$field2,$field3));
       }
-  
-      $field1 = array("string"=> $usedClass,"attach"=>"");
-      $field2 = array("string"=> $str,"attach"=>"");
-      if($this->FAIstate != "freeze"){
-        $field3 = array("string"=> preg_replace("/%KEY%/",base64_encode($usedClass),$actions).
-            preg_replace("/%s/",base64_encode($usedClass),$linkupdown),
-            "attach"=>"style='border-right:none;'");
-      }else{
-        $field3 = array("string"=>"&nbsp;", "attach"=>"style='border-right:none;'");
-      }
-      $divlist->AddEntry(array($field1,$field2,$field3));
     }
 
     $smarty->assign("FAIclasses"  ,$this->FAIclasses);
@@ -335,12 +343,15 @@ class faiProfile extends plugin
       }
     }
 
-    foreach($this->attributes as $attr){
-      if(($this->FAIstate == "freeze") || (chkacl($this->acl,$attr)!= "")){
-        $smarty->assign($attr."ACL"," disabled ");
-      }else{
-        $smarty->assign($attr."ACL","  ");
-      }
+    
+    $dn = $this->acl_base_for_current_object($this->dn);
+    $smarty->assign("sub_object_is_addable",
+        preg_match("/c/",$this->ui->get_permissions($dn,"fai/faiScriptEntry")) &&
+        !preg_match("/freeze/",$this->FAIstate));
+
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $name => $translated){
+      $smarty->assign($name."ACL",$this->getacl($name));
     }
 
     $display.= $smarty->fetch(get_template_path('faiProfile.tpl', TRUE));
@@ -368,11 +379,6 @@ class faiProfile extends plugin
   function save_object()
   {
     plugin::save_object();
-    foreach($this->attributes as $attrs){
-      if(isset($_POST[$attrs])){
-        $this->$attrs = $_POST[$attrs];
-      }
-    }
   }
 
 
