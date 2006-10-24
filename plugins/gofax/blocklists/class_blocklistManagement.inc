@@ -177,7 +177,7 @@ class blocklist extends plugin
 
     /* Finally delete blocklist */
     if (isset($_POST['delete_blocklist_confirm'])){
-      if (chkacl($this->acl, "delete") == ""){
+      if ($this->acl_is_removeable()){
         $this->remove_from_parent();
         gosa_log ("Blocklist object'".$this->dn."' has been removed");
         $this->reload ();
@@ -250,6 +250,10 @@ class blocklist extends plugin
 
     if($this->dn){
 
+      $this->set_acl_category("gofax");
+      $this->set_acl_base($this->dn);
+
+
       /* Base select dialog */
       $once = true;
       foreach($_POST as $name => $value){
@@ -298,15 +302,24 @@ class blocklist extends plugin
         $smarty->assign("mode", "readonly");
         $smarty->assign("apply", "1");
       }
-      foreach(array("cn", "description", "type", "goFaxBlocklist") as $val){
-        $smarty->assign("$val", $this->$val);
-        $smarty->assign("$val"."ACL", chkacl($this->acl, "$val"));
+
+      $tmp = $this->plInfo();
+      foreach($tmp['plProvidedAcls'] as $name => $translation){
+        $smarty->assign($name."ACL",$this->getacl($name));
       }
 
-      /* Lock blocklist type for non new entries */
-      if ($this->dn != "new"){
-        $smarty->assign('typeACL', "disabled");
+      foreach(array("cn", "description", "type", "goFaxBlocklist") as $val){
+        $smarty->assign("$val", $this->$val);
       }
+
+      $baseACL = $this->getacl("base");
+      if(!$this->acl_is_moveable()) {
+        $baseACL = preg_replace("/w/","",$baseACL);
+      }
+      $smarty->assign("baseACL",          $baseACL);
+
+      /* Lock blocklist type for non new entries */
+      $smarty->assign('typeACL',$this->getacl("type", ($this->dn != "new")));
 
       /* Show main page */
       return($smarty->fetch (get_template_path('generic.tpl', TRUE)));
@@ -418,15 +431,21 @@ class blocklist extends plugin
     $this->DivListBlocklist->save_object();
     plugin::save_object();
 
-    if(isset($_POST['base'])){
+    $baseACL = $this->getacl("base");
+    if(!$this->acl_is_moveable()) {
+      $baseACL = preg_replace("/w/","",$baseACL);
+    }
+
+    if(isset($_POST['base']) && preg_match("/w/",$baseACL)){
       $this->base = $_POST['base'];
     }
+    
     foreach($this->attributes as $attr){
-      if(isset($_POST[$attr])){
+      if(isset($_POST[$attr]) && $this->acl_is_writeable($attr)){
         $this->$attr = $_POST[$attr];
       }
     }
-    if(isset($_POST['type'])){
+    if(isset($_POST['type']) && $this->acl_is_writeable("type",($this->dn != "new"))){
       $this->type = $_POST['type'];
     }
   }
@@ -445,10 +464,9 @@ class blocklist extends plugin
       $new_dn= $this->dn;
     }
 
-    if (chkacl($this->acl, "create") != ""){
+    if (!$this->acl_is_createable() && $this->dn == "new"){
       $message[]= _("You have no permissions to create a blocklist on this 'Base'.");
     }
-
 
     /* check syntax: must cn */
     if ($this->cn == ""){
@@ -465,11 +483,6 @@ class blocklist extends plugin
           $message[]= _("Specified name is already used.");
         }
       }
-    }
-
-    /* Is user allowed to create in 'base'? */
-    if (chkacl($this->acl, "create") != ""){
-      $message[]= _("No permission to create a blocklist on this base.");
     }
 
     return $message;
@@ -565,13 +578,11 @@ class blocklist extends plugin
           "plSection"     => array("administration" => _("FAX Blocklists")),
           "plCategory"    => array("gofax"          => array("description" => _("Fax"),
                                                              "objectClass" => array("goFaxRBlock","goFaxSBlock"))),
-      
-  
-
           "plProvidedAcls" => array(
             "cn"              => _("Name"),
             "description"     => _("Description"),
             "base"            => _("Base"),
+            "goFaxBlocklist"  => _("Blocklist"),
             "type"            => _("Blocklist type"))
           ));
   }

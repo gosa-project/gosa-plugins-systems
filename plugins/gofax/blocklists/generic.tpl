@@ -7,21 +7,24 @@
      <tr>
       <td><LABEL for="cn">{t}List name{/t}</LABEL>{$must}</td>
       <td>
-       <input name="cn" id="cn" size=25 maxlength=60 {$mode} {$cnACL} value="{$cn}" title="{t}Name of blocklist{/t}">
+
+{render acl=$cnACL}
+       <input name="cn" id="cn" size=25 maxlength=60 {$mode} value="{$cn}" title="{t}Name of blocklist{/t}">
+{/render}
       </td>
      </tr>
      <tr>
       <td><LABEL for="base">{t}Base{/t}</LABEL>{$must}</td>
       <td>
-       <select size="1" id="base" name="base" {$selectmode} title="{t}Select subtree to place blocklist in{/t}">
-        {html_options options=$bases selected=$base_select}
-		<option disabled>&nbsp;</option>
-       </select>
-        {if $selectmode == ""}
-            <input type="image" name="chooseBase" src="images/folder.png" class="center" title="{t}Select a base{/t}">
-        {else}
-            <img src="images/folder_gray.png" class="center" title="{t}Select a base{/t}">
-        {/if}
+{render acl=$baseACL}
+      <select id="base" size="1" name="base" title="{t}Choose subtree to place group in{/t}">
+       {html_options options=$bases selected=$base_select}
+      </select>
+{/render}
+
+{render acl=$baseACL disable_picture='images/folder_gray.png'}
+        <input type="image" name="chooseBase" src="images/folder.png" class="center" title="{t}Select a base{/t}">
+{/render}
       </td>
      </tr>
     </table>
@@ -36,16 +39,20 @@
      <tr>
        <td><LABEL for="type">{t}Type{/t}</LABEL></td>
        <td>
-        <select size="1" id="type" name="type" {$goFaxBlocklistACL} title="{t}Select wether to filter incoming or outgoing calls{/t}">
-        {html_options options=$types selected=$type}
+{render acl=$typeACL}
+        <select size="1" id="type" name="type" title="{t}Select wether to filter incoming or outgoing calls{/t}">
+	        {html_options options=$types selected=$type}
 		<option disabled>&nbsp;</option>
         </select>
+{/render}
         </td>
       </tr>
       <tr>
        <td><LABEL for="description">{t}Description{/t}</LABEL></td>
        <td>
-         <input name="description" id="description" size=25 maxlength=80 {$descriptionACL} value="{$description}" title="{t}Descriptive text for this blocklist{/t}">
+{render acl=$descriptionACL}
+         <input name="description" id="description" size=25 maxlength=80 value="{$description}" title="{t}Descriptive text for this blocklist{/t}">
+{/render}
        </td>
       </tr>
     </table>
@@ -59,14 +66,22 @@
  <tr>
    <td style="width:50%;">
      <h2><img class="center" alt="" align="middle" src="images/false.png"> {t}Blocked numbers{/t}</h2>
+{render acl=$goFaxBlocklistACL}
      <select style="width:100%; height:200px;" name="numbers[]" size=15 multiple>
       {html_options values=$goFaxBlocklist output=$goFaxBlocklist}
 	  <option disabled>&nbsp;</option>
      </select>
+{/render}
      <br>
+{render acl=$goFaxBlocklistACL}
      <input id="number" name="number" size=25 maxlength=60 {$goFaxBlocklistACL}>&nbsp;
+{/render}
+{render acl=$goFaxBlocklistACL}
      <input type=submit value="{t}Add{/t}" {$goFaxBlocklistACL} name="add_number">&nbsp;
+{/render}
+{render acl=$goFaxBlocklistACL}
      <input type=submit value="{t}Delete{/t}" {$goFaxBlocklistACL} name="delete_number">
+{/render}
    </td>
   <td style="border-left:1px solid #A0A0A0">
    &nbsp;
