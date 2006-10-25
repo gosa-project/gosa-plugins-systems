@@ -100,7 +100,7 @@ class blocklist extends plugin
 
 
     /***************
-      Cancel some dialogs  
+      Create a new blocklist (dialog)
      ***************/
 
     /* Create new blocklist? */
@@ -250,8 +250,13 @@ class blocklist extends plugin
 
     if($this->dn){
 
+      $dn = $this->dn;
+      if($dn == "new"){
+        $dn = "cn=dummy,ou=gofax,ou=systems,".$this->base; 
+      }
+
       $this->set_acl_category("gofax");
-      $this->set_acl_base($this->dn);
+      $this->set_acl_base($dn);
 
 
       /* Base select dialog */
@@ -404,7 +409,11 @@ class blocklist extends plugin
     /* appen && sort */
     $tmp=array();
     foreach($this->blocklists as $tkey => $val ){
-      $tmp[strtolower($val['cn'][0]).$val['cn'][0]]=$val;
+
+      $acl = $this->ui ->get_permissions($base,"gofax/blocklist");
+      if(preg_match("/r/",$acl)){
+        $tmp[strtolower($val['cn'][0]).$val['cn'][0]]=$val;
+      }
     }
     ksort($tmp);
     $this->blocklists=array();
