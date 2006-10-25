@@ -4,12 +4,19 @@
    			<table summary="">
      			<tr>
       				<td><LABEL for="cn">{t}Macro name{/t}</LABEL>{$must}</td>
-      				<td><input {$disable_cn} name="cn" id="id" size=13 maxlength=13 value="{$cn}" {$cnACL} title="{t}Macro name{/t}"></td>
+      				<td>
+{render acl=$cnACL}
+					<input name="cn" id="id" size=13 maxlength=13 value="{$cn}" title="{t}Macro name{/t}">
+{/render}
+				</td>
     			</tr>
     			<tr>
      				<td><LABEL for="displayName">{t}Display name{/t}</LABEL>{$must}</td>
      				<td>
-        				<input {$displayNameACL} name="displayName" id="displayName" size=35 maxlength=60 value="{$displayName}" title="{t}Macro name to be displayed{/t}">
+{render acl=$displayNameACL}
+        				<input name="displayName" id="displayName" size=35 maxlength=60 value="{$displayName}" 
+						title="{t}Macro name to be displayed{/t}">
+{/render}
      				</td>
     			</tr>
     			<tr>
@@ -19,15 +26,16 @@
     			<tr>
       				<td><LABEL for="base">{t}Base{/t}</LABEL>{$must}</td>
       				<td>
-					   <select size="1" id="base" name="base" title="{t}Choose subtree to place macro in{/t}" {$baseACL}>
-							{html_options options=$bases selected=$base_select}
-							<option disabled>&nbsp;</option>
-					   </select>
-						{if $baseACL == ""}
-							<input type="image" name="chooseBase" src="images/folder.png" class="center" title="{t}Select a base{/t}">
-						{else}
-							<img src="images/folder_gray.png" class="center" title="{t}Select a base{/t}">
-						{/if}
+					{render acl=$baseACL}
+					      <select id="base" size="1" name="base" title="{t}Choose subtree to place group in{/t}">
+					       {html_options options=$bases selected=$base_select}
+					      </select>
+					{/render}
+
+					{render acl=$baseACL disable_picture='images/folder_gray.png'}
+						<input type="image" name="chooseBase" src="images/folder.png" class="center" title="{t}Select a base{/t}">
+					{/render}
+
 		      		</td>
 	     		</tr>
    			</table>
@@ -40,12 +48,17 @@
     			<tr>
      				<td><LABEL for="description">{t}Description{/t}</LABEL></td>
      				<td>
-      					<input name="description" id="description" size=35 maxlength=80 value="{$description}"  {$descriptionACL}>
+{render acl=$descriptionACL}
+      					<input name="description" id="description" size=35 maxlength=80 value="{$description}">
+{/render}
      				</td>
     			</tr>
     			<tr>
      				<td colspan=2>
-      					<input type="checkbox" name="goFonMacroVisible" size=35 maxlength=60 value="1" {$goFonMacroVisibleACL} {$goFonMacroVisibleChecked}> {t}Visible for user{/t}
+{render acl=$goFonMacroVisibleACL}
+      					<input type="checkbox" name="goFonMacroVisible" size=35 maxlength=60 value="1" 
+						{$goFonMacroVisibleChecked}> {t}Visible for user{/t}
+{/render}
      				</td>
     			</tr>
 			</table>
@@ -56,7 +69,9 @@
 <br>
 {t}Macro text{/t}
 <br>
-<textarea name="goFonMacroContent" style="width:99%;height:300px;font-size:14px;font-family:Arial;" {$goFonMacroContentACL}>{$goFonMacroContent}</textarea>
+{render acl=$goFonMacroContentACL}
+<textarea name="goFonMacroContent" style="width:99%;height:300px;font-size:14px;font-family:Arial;">{$goFonMacroContent}</textarea>
+{/render}
 
 <!-- Place cursor -->
 <script language="JavaScript" type="text/javascript">

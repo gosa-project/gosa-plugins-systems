@@ -35,6 +35,7 @@ class macroParameter extends plugin
   
   /*! Objectclasses needed by the class*/  
   var $objectclasses= array("top", "goFonMacro");
+  var $ui;
 
   //! The konstructor of macroParameter    
   /*! The konstructor of macroParameter...
@@ -102,9 +103,7 @@ class macroParameter extends plugin
 
     $this->para_count = count ($tmp2);
    
-    $ui= get_userinfo();
-    $acl= get_permissions ($ui->dn, $ui->subtreeACL);
-    $this->acl= get_module_permission($acl, "goFonMacro", $ui->dn);
+    $this->ui= get_userinfo();
   }
 
   //! Perform Parameter check 
@@ -322,14 +321,6 @@ class macroParameter extends plugin
   {
     /* Call common method to give check the hook */
     $message= plugin::check();
-
-    foreach($this->attributes as $attr){
-      if(chkacl($this->acl,"edit")){
-        $str =  sprintf( _("Insufficient permissions, can't change attribute '%s' in goFonMacro."),$attr) ;
-        return(array($str));
-      }
-    }
-
 
     foreach($this->goFonMacroParameter as $key=>$val){
       if((strstr($val['default'],"!"))||(strstr($val['default'],"#"))) {

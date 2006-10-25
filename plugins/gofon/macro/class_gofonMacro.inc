@@ -48,6 +48,8 @@ class macro extends plugin
   /*! Objectclasses that this calls handles */
   var $objectclasses  = array("top", "goFonMacro");
 
+  var $ui ;
+
   //! The Konstructor   
   /*!  Konstructor, load class with  attributes of the given dn*/
   function macro ($config, $dn= NULL, $parent= NULL)
@@ -55,12 +57,10 @@ class macro extends plugin
     plugin::plugin ($config, $dn, $parent);
 
     $ldap= $config->get_ldap_link();
-
     $this->dn = $dn;
 
     /* This is always an account */
     $this->is_account= TRUE;
-
 
     /* Edit or new one ?*/
     if ($this->dn == "new"){
@@ -77,16 +77,14 @@ class macro extends plugin
       $this->orig_cn=$this->cn;
       $this->base= preg_replace("/ou=macros,ou=asterisk,ou=configs,ou=systems,/","",dn2base($this->dn));
     }
-    $ui= get_userinfo();
-    $acl= get_permissions ($ui->dn, $ui->subtreeACL);
-    $this->acl= get_module_permission($acl, "goFonMacro", $ui->dn);
+    $this->ui = get_userinfo();
   }
 
   /*!  Execute this plugin */
   function execute()
   {
-	/* Call parent execute */
-	plugin::execute();
+    /* Call parent execute */
+    plugin::execute();
 
     /* Variables */
     $vars 	= "";
@@ -129,16 +127,31 @@ class macro extends plugin
       }
     }
 
-
-
     /* Fill templating stuff */
     $smarty= get_smarty();
-    $smarty->assign("bases", $this->config->idepartments);
+    $smarty->assign("bases", $this->get_allowed_bases());
+  
+    /* Assign base ACL */
+    $baseACL = $this->getacl("base");
+    if(!$this->acl_is_moveable()) {
+      $baseACL = preg_replace("/w/","",$baseACL);
+    }
+    $smarty->assign("baseACL",          $baseACL);
+
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $name => $translation){
+      $smarty->assign($name."ACL",$this->getacl($name));
+    }
+
+    if($this->acl_is_writeable("base")){
+      $smarty->assign("baseSelect",true);
+    }else{
+      $smarty->assign("baseSelect",false);
+    }
 
     /* Assign all vars to Smarty */
     foreach($this->attributes as $ar){
       $smarty->assign($ar, $this->$ar);
-      $smarty->assign($ar."ACL", chkacl($this->acl,$ar));
     }
     /* Checkboxes */
     $smarty->assign("base_select", $this->base);
@@ -150,23 +163,8 @@ class macro extends plugin
       $smarty->assign("goFonMacroVisibleChecked","");
     }
 
-    if(isset($_POST['goFonMacroVisible'])) {
-      $this->goFonMacroVisible= 1 ;
-      $smarty->assign("goFonMacroVisibleChecked"," checked ");
-    }else  {
-      if(isset($_POST['displayName'])){
-        $this->goFonMacroVisible= 0 ;
-        $smarty->assign("goFonMacroVisibleChecked","");
-      }
-    }
-    
-    if(!$this->is_new){
-      $smarty->assign("disable_cn"," disabled ");
-      $smarty->assign("cn",$this->orig_cn);
-    }else{
-      $smarty->assign("disable_cn","  ");
-      $smarty->assign("cn",$this->cn);
-    }
+    $smarty->assign("cnACL",$this->getacl("cn",!$this->is_new));
+    $smarty->assign("cn",$this->cn);
     $this->generate_mysql_entension_entries();
     /* Show main page */
     return($smarty->fetch (get_template_path('generic.tpl', TRUE)));
@@ -360,11 +358,29 @@ class macro extends plugin
   function save_object()
   {
     if (isset($_POST['displayName'])){
+      $old_cn= $this->cn;
+      $old_visible = $this->goFonMacroVisible;
+
       plugin::save_object();
-    }
-    foreach($this->attributes as $attr){
-      if(isset($_POST[$attr])){
-        $this->$attr= $_POST [$attr];
+
+      /* Restore old cn if we have insuficient acls to change cn ... */
+      if(!$this->acl_is_writeable("cn",!$this->is_new)){
+        $this->cn = $old_cn;
+      }
+
+      /* check if we are allowed to toggle visibility */
+      if($this->acl_is_writeable("goFonMacroVisible")) {
+    
+        /* Checkbox selected ? */
+        if(isset($_POST['goFonMacroVisible'])) {
+          $this->goFonMacroVisible= 1 ;
+        }else  {
+          if(isset($_POST['displayName'])){
+            $this->goFonMacroVisible= 0 ;
+          }
+        }
+      }else{
+        $this->goFonMacroVisible = $old_visible;
       }
     }
   }
@@ -398,13 +414,6 @@ class macro extends plugin
       $message[]=_("The given cn is too long, to create a Makro entry, maximum 20 chars.");
     }
  
-    foreach($this->attributes as $attr){
-      if(chkacl($this->acl,"edit")){
-        $str =  sprintf( _("Insufficient permissions, can't change attribute '%s' in goFonMacro"),$attr) ;
-        return(array($str));
-        }
-      }
-    
     if(count(split("\n",$this->goFonMacroContent))>100){
       $message[] = _("Makro length must be lower than 100 lines");
     }
@@ -471,6 +480,7 @@ class macro extends plugin
         "plCategory"    => array("gofon"),
 
         "plProvidedAcls" => array(
+          "cn"                            => _("Macro name"),
           "base"                          => _("Base"), 
           "description"                   => _("Description"), 
           "displayName"                   => _("Display name"),

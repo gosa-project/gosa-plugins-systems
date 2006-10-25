@@ -96,7 +96,7 @@ class gofonMacro extends plugin
       $this->dn= "new";
 
       /* Create new usertab object */
-      $this->macrotabs= new macrotabs($this->config,$this->config->data['TABS']['MACROTABS'], $this->dn);
+      $this->macrotabs= new macrotabs($this->config,$this->config->data['TABS']['MACROTABS'], $this->dn,"gofon");
     }
 
 
@@ -161,8 +161,7 @@ class gofonMacro extends plugin
     if (($s_action=="edit") && (!isset($this->macrotabs->config))){
 
       $dn  = $this->macros[$s_entry]['dn'];
-      $acl = $this->ui->get_permissions($dn,"gofon/marco");
-
+      $acl = $this->ui->get_permissions($dn,"gofon/macro");
       if(preg_match("/r/",$acl)){
         $this->dn = $dn;
 
@@ -177,13 +176,13 @@ class gofonMacro extends plugin
         add_lock ($this->dn, $this->ui->dn);
         /* Register macrotabs to trigger edit dialog */
         $this->macrotabs= new macrotabs($this->config,
-            $this->config->data['TABS']['MACROTABS'], $this->dn);
+            $this->config->data['TABS']['MACROTABS'], $this->dn,"gofon");
         $_SESSION['objectinfo']= $this->dn;
       }
     }
 
     /*****************
-      Remove marco
+      Remove macro
      *****************/
     
     /* Remove user was requested */
@@ -191,7 +190,7 @@ class gofonMacro extends plugin
 
       /* Get 'dn' from posted 'uid' */
       $dn  = $this->macros[$s_entry]['dn'];
-      $acl = $this->ui->get_permissions($dn,"gofon/marco");
+      $acl = $this->ui->get_permissions($dn,"gofon/macro");
 
       if(preg_match("/d/",$acl)){
 
@@ -224,14 +223,12 @@ class gofonMacro extends plugin
     /* Confirmation for deletion has been passed. Macro should be deleted. */
     if (isset($_POST['delete_macro_confirm'])){
 
-      $acl = $this->ui->get_permissions($this->dn,"gofon/marco");
+      $acl = $this->ui->get_permissions($this->dn,"gofon/macro");
 
       if(preg_match("/r/",$acl)){
 
         /* Delete request is permitted, perform LDAP action */
-        $this->macrotabs= new macrotabs($this->config,$this->config->data['TABS']['MACROTABS'], $this->dn);
-        $this->macrotabs->set_acl(array($this->acl));
-
+        $this->macrotabs= new macrotabs($this->config,$this->config->data['TABS']['MACROTABS'], $this->dn,"gofon");
         $this->macrotabs->delete ();
         gosa_log ("macro object'".$this->dn."' has been removed");
         unset ($this->macrotabs);
