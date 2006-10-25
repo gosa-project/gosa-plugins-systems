@@ -94,6 +94,8 @@ class divListBlocklist extends MultiSelectWindow
       }
     }
 
+    $ui = get_userinfo();
+    $acl = $ui->get_permissions($this->selectedBase,"gofax/blocklist");
 
     /* NEW LIST MANAGMENT */
     $listhead = "<div style='background:#F0F0F9;padding:5px;'>".
@@ -107,10 +109,14 @@ class divListBlocklist extends MultiSelectWindow
           title='"._("Reload list")."' name='submit_department' alt='".      _("Submit")."'>&nbsp;".
           " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
     $listhead .= $this->get_snapshot_header($this->selectedBase);
-    $listhead .= " <input class='center' type='image' align='middle' src='images/list_new_blocklist.png' 
-      title='"._("Create new blocklist")."' alt='"._("New Blocklist")."' name='user_new'>&nbsp;".
-      " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>".
-          "&nbsp;"._("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
+
+    if(preg_match("/c/",$acl)){
+      $listhead .= " <input class='center' type='image' align='middle' src='images/list_new_blocklist.png' ".
+        "  title='"._("Create new blocklist")."' alt='"._("New Blocklist")."' name='user_new'>&nbsp;".
+        " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>";
+    }
+  
+    $listhead .= "&nbsp;"._("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
       " <input class='center' type='image' src='images/list_submit.png' align='middle' 
           title='"._("Submit department")."' name='submit_department' alt='"._("Submit")."'>&nbsp;".
       "</div>";
@@ -137,14 +143,34 @@ class divListBlocklist extends MultiSelectWindow
     }
 
     /* Append to list */
+    $ui = get_userinfo();
     foreach($list as $key => $val){
-  
-      $action= "<input class='center' type='image' src='images/edit.png' alt='"._("edit")."'     name='user_edit_%KEY%' title='"._("Edit user")."'>";
-      $action.= $this->GetSnapShotActions($val['dn']);
-      $action.= "<input class='center' type='image' src='images/edittrash.png' alt='"._("delete")."'   name='user_del_%KEY%' title='"._("Delete user")."'>";
 
+      $acl = $ui->get_permissions($val['dn'],"gofax/blocklist");
+      if(!preg_match("/r/",$acl)){
+        continue;
+      }  
+
+      /* Edit link ; requires read access */
+      $action= "<input class='center' type='image' src='images/edit.png' alt='"._("edit")."'     name='user_edit_%KEY%' title='"._("Edit user")."'>";
+
+      
+      /* Create snapshot ; requires write access && create access */
+      if(preg_match("/w/",$acl) && preg_match("/c/",$acl)){
+        $action.= $this->GetSnapShotActions($val['dn']);
+      }
+      
+      /* Delete entry ; requires remove access */
+      if(preg_match("/d/",$acl)){
+        $action.= "<input class='center' type='image' src='images/edittrash.png' alt='"._("delete")."' name='user_del_%KEY%' title='"._("Delete user")."'>";
+      }
+      
       // Generate Array to Add
-      $display= "[".$val["cn"][0]."]";
+      if(isset($val["description"][0])){
+        $display= $val["cn"][0]." [".$val["description"][0]."]";
+      }else{
+        $display= $val["cn"][0];
+      }
       $field1 = array("string" => sprintf($blockimg,$val['dn']), "attach" => "style='text-align:center;width:20px;'");
       $field2 = array("string" => sprintf($editlink,$key,$display), "attach" => "style='' title='".preg_replace('/ /', '&nbsp;', @LDAP::fix($val['dn']))."'");
       $field3 = array("string" => preg_replace("/%KEY%/", "$key", $action), "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'");
