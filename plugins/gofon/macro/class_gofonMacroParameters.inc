@@ -175,14 +175,20 @@ class macroParameter extends plugin
   */
   function execute()
   {
-	/* Call parent execute */
-	plugin::execute();
+    /* Call parent execute */
+    plugin::execute();
 
     /* Variables */
     $vars 	= "";
     $tmp  	= array();
     $number = 0; 
-  
+ 
+    /* Get acls for this tab, 
+        there is only one attribute to write,
+         so we use the acls from gofon/marco */
+    $ACLs = $this->ui->get_permissions($this->dn,"gofon/macro","goFonMarcoContent");
+
+    /* get current content */ 
     $content = $_SESSION['macroManagment']->macrotabs->by_object['macro']->goFonMacroContent;
 
     if(strstr($content,"ARG")){
@@ -200,13 +206,8 @@ class macroParameter extends plugin
     /* Fill templating stuff */
     $smarty= get_smarty();
 
-    /* Assign all vars to Smarty */
-    foreach($this->attributes as $ar){
-      $smarty->assign($ar, $this->$ar);
-    }
-
     /* Add an empty Parameter */
-    if(isset($_POST['addvar'])){
+    if(isset($_POST['addvar']) && preg_match("/w/",$ACLs)){
       if(!is_array($this->goFonMacroParameter)){
         $vars = $this->goFonMacroParameter;
         $this->goFonMacroParameter = array();
@@ -223,36 +224,50 @@ class macroParameter extends plugin
     /* Sort by Parameterid, and keep keys */    
     ksort($FonParas);
 
-    foreach($FonParas as $key=>$para)	{
+    
 
-      /* Select correct item of combobox */
-      if(isset($para['type'])){
-        list($sel1, $sel2, $sel3)= $this->type_shortcut[$para['type']];
-      }else{
-        list($sel1, $sel2, $sel3)= array("", "", "");
+    if(!preg_match("/r/",$ACLs)){
+      $smarty->assign("readable",false);      
+    }else{
+      $smarty->assign("readable",true);      
+      foreach($FonParas as $key=>$para)	{
+
+        /* Select correct item of combobox */
+        if(isset($para['type'])){
+          list($sel1, $sel2, $sel3)= $this->type_shortcut[$para['type']];
+        }else{
+          list($sel1, $sel2, $sel3)= array("", "", "");
+        }
+   
+        /* Disable all input fields if we are not allowed to change the parameters */ 
+        $disabled = "";
+        if(!preg_match("/w/",$ACLs)){
+          $key = "";
+          $disabled = " disabled ";
+        }
+
+        /* Assemble output table */
+        $vars .="<tr>
+          <td>
+            <input name=\"number".$key."\" value='".$key."' type='hidden' ".$disabled.">
+            <input name='var".$key."' type='hidden'   value='".$para['var']."' ".$disabled.">ARG".$key."
+          </td>
+          <td><input size=\"45\" name='varname".$key."'  value='".$para['name']."' ".$disabled."></td>
+          <td>
+            <select name='vartype".$key."'  ".$disabled.">
+              <option  value='string' ".$sel1.">"._("String")."&nbsp;</option>
+              <option  value='combo'   ".$sel2.">"._("Combobox")."&nbsp;</option>
+              <option  value='bool'   ".$sel3.">"._("Bool")."&nbsp;</option>
+            </select>
+          </td>
+          <td><input size=\"45\" name='default".$key."'   value='".$para['default']."'  ".$disabled."></td>
+          <td>&nbsp;";
+        if($para['check']==false) {
+          $vars.="<input name='del".$key."' value='"._("Delete unused")."' type='submit'>";
+        }
+
+        $vars.=" </td></tr>";
       }
-
-      /* Assemble output table */
-      $vars .="<tr>
-        <td>
-          <input name=\"number".$key."\" value='".$key."' type='hidden'>
-          <input name='var".$key."' type='hidden'   value='".$para['var']."'>ARG".$key."
-        </td>
-        <td><input size=\"45\" name='varname".$key."'  value='".$para['name']."'></td>
-        <td>
-          <select name='vartype".$key."'>
-            <option  value='string' ".$sel1.">"._("String")."&nbsp;</option>
-            <option  value='combo'   ".$sel2.">"._("Combobox")."&nbsp;</option>
-            <option  value='bool'   ".$sel3.">"._("Bool")."&nbsp;</option>
-          </select>
-        </td>
-        <td><input size=\"45\" name='default".$key."'   value='".$para['default']."'></td>
-        <td>&nbsp;";
-      if($para['check']==false) {
-        $vars.="<input name='del".$key."' value='"._("Delete unused")."' type='submit'>";
-      }
-
-      $vars.=" </td></tr>";
     }
 
     /* Checkboxes */
@@ -300,7 +315,7 @@ class macroParameter extends plugin
 
         /* Set Post vars */
         $key = $_POST[$name];
-
+    
         $this->goFonMacroParameter[$key]['var']   = $_POST["var".$key];
         $this->goFonMacroParameter[$key]['name']   = $_POST["varname".$key];
         $this->goFonMacroParameter[$key]['type']   = $_POST["vartype".$key];

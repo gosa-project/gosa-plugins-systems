@@ -1,3 +1,4 @@
+{if $readable}
 <table width="100%" summary="">
 	<tr>
 		<td>{t}Argument{/t}
@@ -14,7 +15,9 @@
 	</tr>
 		{$vars}
 </table>
-
+{else}
+	<h2>{t}You are not allowed to view the marco parameter settings{/t}</h2>
+{/if}
 <input type="hidden" name="phoneparemeters">
 
 <!-- Place cursor -->

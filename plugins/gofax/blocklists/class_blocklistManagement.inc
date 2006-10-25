@@ -295,7 +295,7 @@ class blocklist extends plugin
       }
 
       /* Fill templating stuff */
-      $smarty->assign("bases", $this->config->idepartments);
+      $smarty->assign("bases", $this->get_allowed_bases());
       $smarty->assign("base_select", $this->base);
       $smarty->assign("types", array(0 => _("send"), 1 => _("receive")));
       if ($this->dn == "new" || preg_match ("/,ou=incoming,/", $this->dn)){
