@@ -66,13 +66,31 @@ class divListMacro extends MultiSelectWindow
        which are shown in the listbox on top of the listbox
      */
     $options= "";
-    foreach ($this->config->idepartments as $key => $value){
-      if ($this->selectedBase == $key){
-        $options.= "<option selected='selected' value='$key'>$value</option>";
-      } else {
-        $options.= "<option value='$key'>$value</option>";
+
+    /* Get all departments within this subtree */
+    $base = $this->config->current['BASE'];
+    $deps= get_list("(&(|(ou=*)(description=*))(objectClass=gosaDepartment))", $this->module, $base,
+                    array("ou", "description"), GL_SIZELIMIT | GL_SUBSEARCH);
+
+    /* Load possible departments */
+    $ui= get_userinfo();
+    $tdeps= $ui->get_module_departments("groups");
+
+    $ids = $this->config->idepartments;
+
+    foreach($deps as $dep){
+      if(isset($ids[$dep['dn']]) && in_array_ics($dep['dn'], $tdeps)){
+
+        $value = $ids[$dep['dn']];
+        if ($this->selectedBase == $dep['dn']){
+          $options.= "<option selected='selected' value='".$dep['dn']."'>$value</option>";
+        } else {
+          $options.= "<option value='".$dep['dn']."'>$value</option>";
+        }
       }
     }
+
+    $acls  = $ui->get_permissions($this->selectedBase,"gofon/macro");
 
     /* NEW LIST MANAGMENT */
     $listhead = "<div style='background:#F0F0F9;padding:5px;'>".
@@ -85,11 +103,15 @@ class divListMacro extends MultiSelectWindow
       " <input class='center' type='image' src='images/list_reload.png' align='middle' 
         title='"._("Reload list")."' name='submit_department' alt='"._("Submit")."'>&nbsp;".
         " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
-    $listhead .= $this->get_snapshot_header($this->selectedBase);
-    $listhead .=  " <input class='center' type='image' align='middle' src='images/list_new_macro.png' 
-      title='"._("Create new phone macro")."' alt='"._("New")."' name='user_new'>&nbsp;".
-      " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;".
-      _("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
+    if(preg_match("/w/",$acls) && preg_match("/c/",$acls)){
+      $listhead .= $this->get_snapshot_header($this->selectedBase);
+    }
+    if(preg_match("/c/",$acls)){
+      $listhead .=  " <input class='center' type='image' align='middle' src='images/list_new_macro.png' 
+        title='"._("Create new phone macro")."' alt='"._("New")."' name='user_new'>&nbsp;";
+      $listhead .= " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
+    }
+    $listhead .= _("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
       " <input class='center' type='image' src='images/list_submit.png' align='middle' 
       title='"._("Submit department")."' name='submit_department' alt='"._("Submit")."'>&nbsp;".
       "</div>";
@@ -123,16 +145,30 @@ class divListMacro extends MultiSelectWindow
       $action_col_size += 20;
     }
 
+    $ui = get_userinfo();
+
     foreach($list as $key => $val){
-   
-      $action= "<input class='center' type='image' src='images/edit.png' alt='"._("edit")."'     
+       
+      $sacl  = $ui->get_permissions($val['dn'],"gofon/macro");
+
+      $action = "";
+      if(!preg_match("/r/",$sacl)){
+        continue;
+      }
+
+      $action.= "<input class='center' type='image' src='images/edit.png' alt='"._("edit")."'     
         name='user_edit_%KEY%' title='"._("Edit macro")."'>";
-      $action.= $this->GetSnapShotActions($val['dn']); 
-      $action.= "<input class='center' type='image' src='images/edittrash.png' alt='"._("delete")."'   
-        name='user_del_%KEY%' title='"._("Delete macro")."'>";
+
+      if(preg_match("/c/",$sacl) && preg_match("/w/",$sacl)){
+        $action.= $this->GetSnapShotActions($val['dn']); 
+      }
+
+      if(preg_match("/d/",$sacl)){
+        $action.= "<input class='center' type='image' src='images/edittrash.png' alt='"._("delete")."'   
+          name='user_del_%KEY%' title='"._("Delete macro")."'>";
+      }
 
       $display= $val["displayName"][0];
-
       if(isset($val['goFonMacroVisible']['0'])&&($val['goFonMacroVisible']['0'] == "1")){
         $pic1 = $visible;
       }else{

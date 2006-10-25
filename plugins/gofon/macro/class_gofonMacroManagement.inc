@@ -29,7 +29,6 @@ class gofonMacro extends plugin
   var $macrotabs		    = NULL;
   var $macros		        = array();
   var $ui				        = NULL;
-  var $acl				      = "";
   var $DivListMacro     = NULL;
 
   function gofonMacro($config, $ui)
@@ -37,9 +36,6 @@ class gofonMacro extends plugin
     /* Save configuration for internal use */
     $this->config= $config;
     $this->ui= $ui;
-
-    $acl= get_permissions ($ui->dn, $ui->subtreeACL);
-    $this->acl= get_module_permission($acl, "goFonMacro", $ui->dn);
 
     $this->DivListMacro = new divListMacro($this->config,$this);
   }
@@ -164,41 +160,43 @@ class gofonMacro extends plugin
     /* User wants to edit data */
     if (($s_action=="edit") && (!isset($this->macrotabs->config))){
 
-      /* Get 'dn' from posted 'macrolists', must be unique */
-      $this->dn= $this->macros[$s_entry]['dn']; 
+      $dn  = $this->macros[$s_entry]['dn'];
+      $acl = $this->ui->get_permissions($dn,"gofon/marco");
 
-      /* Check locking, save current plugin in 'back_plugin', so
-         the dialog knows where to return. */
-      if (($user= get_lock($this->dn)) != ""){
-        return(gen_locked_message ($user, $this->dn));
+      if(preg_match("/r/",$acl)){
+        $this->dn = $dn;
+
+        /* Check locking, save current plugin in 'back_plugin', so
+           the dialog knows where to return. */
+        if (($user= get_lock($this->dn)) != ""){
+          return(gen_locked_message ($user, $this->dn));
+        }
+
+        /* Lock the current entry, so everyone will get the
+           above dialog */
+        add_lock ($this->dn, $this->ui->dn);
+        /* Register macrotabs to trigger edit dialog */
+        $this->macrotabs= new macrotabs($this->config,
+            $this->config->data['TABS']['MACROTABS'], $this->dn);
+        $_SESSION['objectinfo']= $this->dn;
       }
-
-      /* Lock the current entry, so everyone will get the
-         above dialog */
-      add_lock ($this->dn, $this->ui->dn);
-      /* Register macrotabs to trigger edit dialog */
-      $this->macrotabs= new macrotabs($this->config,
-          $this->config->data['TABS']['MACROTABS'], $this->dn);
-      $_SESSION['objectinfo']= $this->dn;
     }
-
 
     /*****************
       Remove marco
      *****************/
-
+    
     /* Remove user was requested */
     if ($s_action=="del"){
 
       /* Get 'dn' from posted 'uid' */
-      $this->dn= $this->macros[$s_entry]['dn'];
+      $dn  = $this->macros[$s_entry]['dn'];
+      $acl = $this->ui->get_permissions($dn,"gofon/marco");
 
-      /* Load permissions for selected 'dn' and check if
-         we're allowed to remove this 'dn' */
-      $acl= get_permissions ($this->dn, $this->ui->subtreeACL);
-      $this->acl= get_module_permission($acl, "goFonMacro", $this->dn);
-      if (chkacl($this->acl, "delete") == ""){
+      if(preg_match("/d/",$acl)){
 
+        $this->dn = $dn;
+  
         /* Check locking, save current plugin in 'back_plugin', so
            the dialog knows where to return. */
         if (($user= get_lock($this->dn)) != ""){
@@ -226,9 +224,9 @@ class gofonMacro extends plugin
     /* Confirmation for deletion has been passed. Macro should be deleted. */
     if (isset($_POST['delete_macro_confirm'])){
 
-      /* Some nice guy may send this as POST, so we've to check
-         for the permissions again. */
-      if (chkacl($this->acl, "delete") == ""){
+      $acl = $this->ui->get_permissions($this->dn,"gofon/marco");
+
+      if(preg_match("/r/",$acl)){
 
         /* Delete request is permitted, perform LDAP action */
         $this->macrotabs= new macrotabs($this->config,$this->config->data['TABS']['MACROTABS'], $this->dn);
