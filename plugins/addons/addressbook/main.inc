@@ -22,13 +22,11 @@ if (!$remove_lock){
 	/* Create phonelist object on demand */
 	if (!isset($_SESSION['addressbook']) || (isset($_GET['reset']) && $_GET['reset'] == 1)){
 		$_SESSION['addressbook']= new addressbook ($config);
+		$_SESSION['addressbook']->set_acl_base($ui->dn);
+		$_SESSION['addressbook']->set_acl_category("gofon");
 	}
 	$addressbook= $_SESSION['addressbook'];
 
-	/* set permissions */	
-	$acl= get_permissions ($ui->dn, $ui->subtreeACL);
-    $addressbook->acl= get_module_permission($acl, "addressbook", $ui->dn);
-	
 	/* Execute formular */
 	$display= $addressbook->execute ();
 	$display.= "<input type=\"hidden\" name=\"ignore\">\n";
