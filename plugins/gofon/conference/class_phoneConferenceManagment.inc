@@ -118,17 +118,21 @@ class phoneConferenceManagment extends plugin
      * The entry which will be deleted is defined in $s_entry
      */
     if ($s_action =="del"){
-      $this->dn= $this->conferences[$s_entry]['dn'];
 
-      /* Check locking */
-      if (($conf= get_lock($this->dn)) != ""){
-        $_SESSION['dn']= $this->dn;
-        return(gen_locked_message($conf, $this->dn));
-      } else {
-        add_lock ($this->dn, $this->ui->dn);
-        $smarty->assign("info", sprintf(_("You're about to delete the whole LDAP subtree placed under '%s'."), $this->dn));
-        $display.= $smarty->fetch (get_template_path('remove.tpl', TRUE));
-        return ($display);
+      $acl = $this->ui->get_permissions($this->conferences[$s_entry]['dn'],"gofon/conference"); 
+      if(preg_match("/d/",$acl)){
+        $this->dn= $this->conferences[$s_entry]['dn'];
+
+        /* Check locking */
+        if (($conf= get_lock($this->dn)) != ""){
+          $_SESSION['dn']= $this->dn;
+          return(gen_locked_message($conf, $this->dn));
+        } else {
+          add_lock ($this->dn, $this->ui->dn);
+          $smarty->assign("info", sprintf(_("You're about to delete the whole LDAP subtree placed under '%s'."), $this->dn));
+          $display.= $smarty->fetch (get_template_path('remove.tpl', TRUE));
+          return ($display);
+        }
       }
     }
 
@@ -140,9 +144,8 @@ class phoneConferenceManagment extends plugin
     /* If department deletion is accepted ...
      * Finally delete department
      */
-    $acl = $this->ui->get_permissions($this->dn,"gofon/conference"); 
     if (isset($_POST['delete_department_confirm'])){
-      echo "What the hell is going on here ? Huh ?!!";
+      $acl = $this->ui->get_permissions($this->dn,"gofon/conference"); 
       if(preg_match("/d/",$acl)){
         $this->remove_from_parent();
         gosa_log ("Department object'".$this->dn."' has been removed");
@@ -183,12 +186,16 @@ class phoneConferenceManagment extends plugin
   
     /* Insert new entry*/    
     if($s_action == "new" ){
-      
-      /* Set up the users ACL's for this 'dn' */
-      $this->dn= "new";
-      $this->conftab= new conferencetabs($this->config,$this->config->data['TABS']['CONFERENCETABS'], $this->dn,"gofon");
-      $this->conftab->set_acl_base("cn=dummy,ou=conferences,ou=asterisk,ou=configs,ou=systems,".$this->DivListConference->selectedBase);
-      unset($_SESSION['objectinfo']);
+
+      $dummy_dn = "cn=dummy,ou=conferences,ou=asterisk,ou=configs,ou=systems,".$this->DivListConference->selectedBase;      
+      $acl = $this->ui->get_permissions($dummy_dn,"gofon/conference"); 
+      if(preg_match("/c/",$acl)){
+        /* Set up the users ACL's for this 'dn' */
+        $this->dn= "new";
+        $this->conftab= new conferencetabs($this->config,$this->config->data['TABS']['CONFERENCETABS'], $this->dn,"gofon");
+        $this->conftab->set_acl_base($dummy_dn);
+        unset($_SESSION['objectinfo']);
+      }
     }
 
 

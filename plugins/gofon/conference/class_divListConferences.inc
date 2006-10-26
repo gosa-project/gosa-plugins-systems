@@ -67,13 +67,29 @@ class divListConference extends MultiSelectWindow
        which are shown in the listbox on top of the listbox
      */
     $options= "";
-    foreach ($this->config->idepartments as $key => $value){
-      if ($this->selectedBase == $key){
-        $options.= "<option selected='selected' value='$key'>$value</option>";
-      } else {
-        $options.= "<option value='$key'>$value</option>";
+
+    /* Get all departments within this subtree */
+    $base = $this->config->current['BASE'];
+    $deps= get_list("(&(|(ou=*)(description=*))(objectClass=gosaDepartment))", $this->module, $base,
+                    array("ou", "description"), GL_SIZELIMIT | GL_SUBSEARCH);
+
+    /* Load possible departments */
+    $ui= get_userinfo();
+    $tdeps= $ui->get_module_departments("gofon");
+    $ids = $this->config->idepartments;
+
+    foreach($deps as $dep){
+      if(isset($ids[$dep['dn']]) && in_array_ics($dep['dn'], $tdeps)){
+        $value = $ids[$dep['dn']];
+        if ($this->selectedBase == $dep['dn']){
+          $options.= "<option selected='selected' value='".$dep['dn']."'>$value</option>";
+        } else {
+          $options.= "<option value='".$dep['dn']."'>$value</option>";
+        }
       }
     }
+
+    $acls = $ui->get_permissions($this->selectedBase,"gofon/conference");
 
     /* NEW LIST MANAGMENT */
     $listhead = "<div style='background:#F0F0F9;padding:5px;'>".
@@ -84,12 +100,22 @@ class divListConference extends MultiSelectWindow
       " <input class='center' type='image' align='middle' src='images/list_home.png' 
       title='"._("Go to users department")."' alt='"._("Home")."'            name='dep_home'>&nbsp;".
       " <input class='center' type='image' src='images/list_reload.png' align='middle' 
-      title='"._("Reload list")."' name='submit_department' alt='".        _("Submit")."'>&nbsp;".
-      " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;".
-      " <input class='center' type='image' align='middle' src='images/list_new_conference.png' 
-      title='"._("Create new conference")."' alt='"._("New conference")."' name='user_new'>&nbsp;".
-      " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
-    $listhead .= $this->get_snapshot_header($this->selectedBase);
+      title='"._("Reload list")."' name='submit_department' alt='".        _("Submit")."'>&nbsp;";
+
+    /* Only display create new conference if we are allowed to create new confe... */
+    if(preg_match("/c/",$acls)){
+      $listhead .=" <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;".
+        " <input class='center' type='image' align='middle' src='images/list_new_conference.png' 
+        title='"._("Create new conference")."' alt='"._("New conference")."' name='user_new'>&nbsp;".
+        " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
+    }
+
+    /* Only display snapshot settings if we are able to write && create new entries */
+    if(preg_match("/[cw]/",$acls)){
+      $listhead .= $this->get_snapshot_header($this->selectedBase);
+    }
+  
+    /* Add the rest (base select ....)*/
     $listhead .= _("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
       " <input class='center' type='image' src='images/list_submit.png' align='middle' 
       title='"._("Submit department")."' name='submit_department' alt='".  _("Submit").     "'>&nbsp;".

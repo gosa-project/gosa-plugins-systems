@@ -138,7 +138,7 @@ class conference extends plugin
 
     $once = true; 
     foreach($_POST as $name => $value){
-      if(preg_match("/^chooseBase/",$name) && $once){
+      if(preg_match("/^chooseBase/",$name) && $once && $this->acl_is_writeable("base")){
         $once = false;
         $this->dialog = new baseSelectDialog($this->config,$this);
         $this->dialog->setCurrentBase($this->base);
@@ -202,14 +202,23 @@ class conference extends plugin
   /* Save data to object */
   function save_object()
   {
-    plugin::save_object();
     if(isset($_POST['cn'])){
+
+      plugin::save_object();
+
       foreach(array("goFonConferenceOption_P","goFonConferenceOption_r","goFonConferenceOption_M","goFonConferenceOption_s",
-            "goFonConferenceOption_i","goFonConferenceOption_c","goFonConferenceOption_D","goFonPIN") as $attrs){
-        if(isset($_POST[$attrs])){
-          $this->$attrs = $_POST[$attrs];
-        }else{
-          $this->$attrs = false;
+            "goFonConferenceOption_i","goFonConferenceOption_c","goFonConferenceOption_D") as $attrs){
+
+        /* Acl can't contain _ so we remove it here. */
+        $acl_name = preg_replace("/_/","",$attrs);
+
+        /* Attribute writeable ? */
+        if($this->acl_is_writeable($acl_name)){
+          if(isset($_POST[$attrs])){
+            $this->$attrs = $_POST[$attrs];
+          }else{
+            $this->$attrs = false;
+          }
         }
       }
     }
