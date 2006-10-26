@@ -172,7 +172,6 @@ class phoneConferenceManagment extends plugin
 
       /* Register conftab to trigger edit dialog */
       $this->conftab= new conferencetabs($this->config,$this->config->data['TABS']['CONFERENCETABS'], $this->dn,"gofon");
-      $this->conftab->set_acl_category("gofon");
       $this->conftab->set_acl_base($this->dn);
       $_SESSION['objectinfo']= $this->dn;
     }
@@ -188,8 +187,7 @@ class phoneConferenceManagment extends plugin
       /* Set up the users ACL's for this 'dn' */
       $this->dn= "new";
       $this->conftab= new conferencetabs($this->config,$this->config->data['TABS']['CONFERENCETABS'], $this->dn,"gofon");
-      $this->conftab->set_acl_category("gofon");
-      $this->conftab->set_acl_base($this->DivListConference->selectedBase);
+      $this->conftab->set_acl_base("cn=dummy,ou=conferences,ou=asterisk,ou=configs,ou=systems,".$this->DivListConference->selectedBase);
       unset($_SESSION['objectinfo']);
     }
 

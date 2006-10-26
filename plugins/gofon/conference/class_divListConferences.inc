@@ -120,54 +120,65 @@ class divListConference extends MultiSelectWindow
     /* Insert conferneces*/
     foreach($list as $conferencekey => $conference ){
 
-      $actions= "<input class='center' type='image' src='images/edit.png'     
-        alt='"._("edit")."'    name='conf_edit_%KEY%' title='"._("Edit this entry")."'>";
-      $actions.= $this->GetSnapShotActions($conference['dn']);
-      $actions.= "<input class='center' type='image' src='images/edittrash.png' 
-        alt='"._("delete")."'   name='conf_del_%KEY%'  title='"._("Delete this entry")."'>";
-      $actions2= "<input class='center' type='image' src='images/edittrash.png' 
-        alt='"._("delete")."'   name='conf_del_%KEY%'  title='"._("Delete this entry")."'>";
+      $acl = $this->ui -> get_permissions($conference['dn'],"gofon/conference");
 
-      if((isset($conference['goFonPIN'][0]))&&(($this->parent->ui->dn==$conference['goFonConferenceOwner'][0])||($this->parent->acl=="#all#"))){
+      /* You will need at least read access for the 
+          current conference informations to display it */  
+      if(!preg_match("/r/",$acl)){
+        continue;
+      }
+
+      /* Add edit icon - This is allowed when we have at least read access. */
+      $actions= "<input class='center' type='image' src='images/edit.png'     
+                    alt='"._("edit")."'    name='conf_edit_%KEY%' title='"._("Edit this entry")."'>";
+
+      /* Add snapshot icon - This is allowed when we have create and write access for the current entry */
+      if(preg_match("/[cw]/",$acl)){
+        $actions.= $this->GetSnapShotActions($conference['dn']);
+      }
+
+      /* Create delete link - Only if we are allowed to delete this entry */
+      if(preg_match("/d/",$acl)){
+        $actions.= "<input class='center' type='image' src='images/edittrash.png' 
+          alt='"._("delete")."'   name='conf_del_%KEY%'  title='"._("Delete this entry")."'>";
+      }
+
+      /* Display PIN icon, only if we are the owner of the given conference */
+      $owner = $this->parent->ui->dn==$conference['goFonConferenceOwner'][0];
+      $p_acl = $this->ui->get_permissions($conference['dn'],"gofon/conference","goFonPIN");
+      if((isset($conference['goFonPIN'][0])) && $owner && preg_match("/r/",$p_acl)){
         $pin = "<img class='center' src='images/list_password.png' title='PIN : ".$conference['goFonPIN'][0]."' alt='PIN'>";
       }else{
         $pin = "&nbsp;";
       }
 
-      if(isset($conference['telephoneNumber'][0])){
+      /* Display numer of the conference if we are allowed to view it */
+      $n_acl = $this->ui->get_permissions($conference['dn'],"gofon/conference","telephoneNumber");
+      if(isset($conference['telephoneNumber'][0]) && preg_match("/r/",$n_acl)){
         $number = " - ".$conference['telephoneNumber'][0];
       }else{
         $number = "&nbsp; - ?";
       }
 
+      /* Get conference owner name */
       $ldap= $this->parent->config->get_ldap_link();
       $ldap->cat($conference['goFonConferenceOwner'][0], array('cn'));
       $data = $ldap->fetch();
       if(isset($data['cn'][0])){
         $cn = $data['cn'][0];
       }else{
-        $cn =""; 
+        $cn = _("Unknown"); 
       }  
 
+      /* Create title */
       $title = " title='".preg_replace("/ /","&nbsp;",@LDAP::fix($data['dn']))."' ";
 
       $a_field1 = array("string"=>sprintf($userimg,_("Conference")), "attach" => $title." style='text-align:center;width:20px;'");
-
-      if(($this->parent->acl=="#all#")||(($this->parent->ui->dn==$conference['goFonConferenceOwner'][0])&&(chkacl($this->parent->acl,"goFonConferenceOwner")==""))){
-        $a_field2 = array("string"=>sprintf($editlink,$conferencekey,$conference['cn'][0].$number), "attach" => $title." style=''");
-      }else{
-        $a_field2 = array("string"=>$conference['cn'][0].$number, "attach" => $title." style=''");
-      }
-      $a_field3 = array("string"=> $cn, "attach" =>  $title." style='width:200px;'");
+      $a_field2 = array("string"=>sprintf($editlink,$conferencekey,$conference['cn'][0].$number), "attach" => $title." style=''");
+      $a_field3 = array("string"=> $cn , "attach" =>  $title." style='width:200px;'");
       $a_field4 = array("string"=> $pin, "attach" =>  $title." style='width:50px;'");
-
-      if(($this->parent->ui->dn==$conference['goFonConferenceOwner'][0])&&(chkacl($this->parent->acl,"goFonConferenceOwner")=="")){
-        $a_field5 = array("string"=>preg_replace("/%KEY%/",$conferencekey,$actions), "attach" =>  $title."style='width:".$action_col_size."px;border-right:0px;text-align:right;'");
-      }elseif(chkacl($this->parent->acl,"goFonConferenceOwner")==""){
-        $a_field5 = array("string"=>preg_replace("/%KEY%/",$conferencekey,$action.$actions2), "attach" =>  $title."style='width:52px;border-right:0px;text-align:right;'");
-      }else{
-        $a_field5 = array("string"=>"&nbsp;", "attach" =>  $title."style='width:52px;border-right:0px;text-align:right;'");
-      }
+      $a_field5 = array("string"=> preg_replace("/%KEY%/",$conferencekey,$actions), 
+                        "attach"=> $title."style='width:52px;border-right:0px;text-align:right;'");
 
       $this->AddElement(array($a_field1,$a_field2,$a_field3,$a_field4,$a_field5));
     }

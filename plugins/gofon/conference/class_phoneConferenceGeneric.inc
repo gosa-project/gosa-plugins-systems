@@ -81,7 +81,7 @@ class conference extends plugin
         $this->base= dn2base($ui->dn);
       }
     } else {
-      $this->base= preg_replace ("/^[^,]+,/", "", $this->dn);
+      $this->base= preg_replace ("/^[^,]+,ou=conferences,ou=asterisk,ou=configs,ou=systems,/", "", $this->dn);
     }
 
     $this->goFonConferenceOwner=$this->ui->dn;
