@@ -36,19 +36,15 @@ class phoneConferenceManagment extends plugin
 
   var $conferences			  = array();
   var $conftab            = false;
-
+  var $ui                 = NULL;
   var $DivListConference  = NULL;
 
   /* Initialise Class */
   function phoneConferenceManagment ($config, $ui)
   {
-    $this->ui			= $ui;
-    $this->dn			= "";
+    $this->ui			  = $ui;
+    $this->dn			  = "";
     $this->config		= $config;
-
-    $acl= get_permissions ($ui->dn, $ui->subtreeACL);
-    $this->acl= get_module_permission($acl, "conference", $ui->dn);
-
     $this->DivListConference = new divListConference($this->config,$this);
   }
 
@@ -144,8 +140,10 @@ class phoneConferenceManagment extends plugin
     /* If department deletion is accepted ...
      * Finally delete department
      */
+    $acl = $this->ui->get_permissions($this->dn,"gofon/conference"); 
     if (isset($_POST['delete_department_confirm'])){
-      if (chkacl($this->acl, "delete") == ""){
+      echo "What the hell is going on here ? Huh ?!!";
+      if(preg_match("/d/",$acl)){
         $this->remove_from_parent();
         gosa_log ("Department object'".$this->dn."' has been removed");
       } else {
@@ -173,7 +171,9 @@ class phoneConferenceManagment extends plugin
       add_lock ($this->dn, $this->ui->dn);
 
       /* Register conftab to trigger edit dialog */
-      $this->conftab= new conferencetabs($this->config,$this->config->data['TABS']['CONFERENCETABS'], $this->dn);
+      $this->conftab= new conferencetabs($this->config,$this->config->data['TABS']['CONFERENCETABS'], $this->dn,"gofon");
+      $this->conftab->set_acl_category("gofon");
+      $this->conftab->set_acl_base($this->dn);
       $_SESSION['objectinfo']= $this->dn;
     }
 
@@ -183,11 +183,13 @@ class phoneConferenceManagment extends plugin
      ***************/
   
     /* Insert new entry*/    
-    if($s_action == "new"){
+    if($s_action == "new" ){
       
       /* Set up the users ACL's for this 'dn' */
       $this->dn= "new";
-      $this->conftab= new conferencetabs($this->config,$this->config->data['TABS']['CONFERENCETABS'], $this->dn);
+      $this->conftab= new conferencetabs($this->config,$this->config->data['TABS']['CONFERENCETABS'], $this->dn,"gofon");
+      $this->conftab->set_acl_category("gofon");
+      $this->conftab->set_acl_base($this->DivListConference->selectedBase);
       unset($_SESSION['objectinfo']);
     }
 
@@ -304,7 +306,11 @@ class phoneConferenceManagment extends plugin
 
   function remove_from_parent()
   {
+    /* Ehm what are we doinf here ? */
+  
     $cfg = new conference($this->config, $this->dn);
+    $cfg->set_acl_category("gofon");
+    $cfg->set_acl_base($this->dn);
 
     $cfg->remove_from_parent();
     $ldap= $this->config->get_ldap_link();

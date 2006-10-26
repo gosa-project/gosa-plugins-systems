@@ -84,9 +84,6 @@ class conference extends plugin
       $this->base= preg_replace ("/^[^,]+,/", "", $this->dn);
     }
 
-    $ui= get_userinfo();
-    $acl= get_permissions ($ui->dn, $this->ui->subtreeACL);
-    $this->acl= get_module_permission($acl, "conference", $ui->dn);
     $this->goFonConferenceOwner=$this->ui->dn;
 
     /* Parse Options ... 
@@ -118,8 +115,26 @@ class conference extends plugin
 
     $smarty= get_smarty();
 
-    $smarty->assign("bases" ,$this->config->idepartments);
-    $smarty->assign("base"  ,$this->base);
+    /* Assign base ACL */
+    $baseACL = $this->getacl("base");
+    if(!$this->acl_is_moveable()) {
+      $baseACL = preg_replace("/w/","",$baseACL);
+    }
+    $smarty->assign("baseACL",          $baseACL);
+
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $name => $translation){
+      $smarty->assign($name."ACL",$this->getacl($name));
+    }
+
+    if($this->acl_is_writeable("base")){
+      $smarty->assign("baseSelect",true);
+    }else{
+      $smarty->assign("baseSelect",false);
+    }
+
+    $smarty->assign("bases" ,$this->get_allowed_bases());
+    $smarty->assign("base_select"  ,$this->base);
 
     $once = true; 
     foreach($_POST as $name => $value){
@@ -151,7 +166,6 @@ class conference extends plugin
 
     foreach ($this->attributes as $val){
       $smarty->assign("$val", $this->$val);
-      $smarty->assign("$val"."ACL", chkacl($this->acl, "$val"));
       if(!$this->$val){
         $smarty->assign($val."CHK", "");
       }else{
@@ -161,11 +175,11 @@ class conference extends plugin
 
     if($_SESSION['js']==1){
       if($this->goFonConferenceOption_P != "P"){
-        $smarty->assign("goFonPINACL"," disabled ");
+        $smarty->assign("goFonPINACL", $this->getacl("goFonPIN",TRUE));
         $smarty->assign("goFonPIN","");
       }
       if($this->goFonConferenceOption_r != "r"){
-        $smarty->assign("goFonConferenceOptionFormatACL"," disabled ");
+        $smarty->assign("goFonConferenceOptionFormatACL", $this->getacl("goFonConferenceOptionr",TRUE));
       }
     }
     return($smarty->fetch (get_template_path('generic.tpl', TRUE)));
@@ -486,12 +500,6 @@ class conference extends plugin
 
     unset($this->attrs['base']);
 
-    foreach($this->attributes as $atr){
-      if(chkacl($this->acl, $atr)!=""){
-        unset($this->attrs[$atr]);
-      }
-    }
-
     $ldap= $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
     $ldap->cat($this->dn, array('dn'));
@@ -518,7 +526,7 @@ class conference extends plugin
   function plInfo()
   {
     return (array(
-          "plShortName"   => _("Phone conferences"),
+          "plShortName"   => _("Conference"),
           "plDescription" => _("Phone conference management"),
           "plSelfModify"  => TRUE,
           "plDepends"     => array(),
@@ -528,17 +536,18 @@ class conference extends plugin
                                                   "objectClass" => "gofonConference")),
 
           "plProvidedAcls" => array(
+            "cn"                            => _("Name"),
             "base"                          => _("Base"), 
             "description"                   => _("Description"), 
             "goFonPIN"                      => _("Conference PIN"),
 
-            "goFonConferenceOption_P"       => _("Preset PIN"),
-            "goFonConferenceOption_r"       => _("Record conference"),
-            "goFonConferenceOption_M"       => _("Play music on hold"),
-            "goFonConferenceOption_s"       => _("Activate menu"),
-            "goFonConferenceOption_i"       => _("Announce user activity"),
-            "goFonConferenceOption_c"       => _("Count user"),
-            "goFonConferenceOption_D"       => _("Conference type"),
+            "goFonConferenceOptionP"       => _("Preset PIN"),
+            "goFonConferenceOptionr"       => _("Record conference"),
+            "goFonConferenceOptionM"       => _("Play music on hold"),
+            "goFonConferenceOptions"       => _("Activate menu"),
+            "goFonConferenceOptioni"       => _("Announce user activity"),
+            "goFonConferenceOptionc"       => _("Count user"),
+            "goFonConferenceOptionD"       => _("Conference type"),
 
             "goFonConferenceOptionFormat"   => _("Format"),
             "goFonConferenceOptionLifetime" => _("Lifetime"),
