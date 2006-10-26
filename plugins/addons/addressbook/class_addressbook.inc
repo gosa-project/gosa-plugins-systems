@@ -6,6 +6,9 @@ class addressbook extends plugin
 	var $plHeadline   = "Addressbook";
 	var $plDescription= "This does something";
 
+  /* Generic */
+  var $ui;  
+
 	/* Phonelist attributes */
 	var $telephone_list   = array();
 	var $new_dn           = "";
@@ -75,6 +78,8 @@ class addressbook extends plugin
           "object_type"       => "*");
       register_global("phonefilter", $phonefilter);
     }
+    
+    $this->ui = get_userinfo();
   }
 
   function execute()
@@ -84,10 +89,10 @@ class addressbook extends plugin
 
     $smarty= get_smarty();
 
-
-#! Hickert
-    /*prevent empty variables for smarty*/
-    foreach($this->attributes as $atr) $smarty->assign($atr,"");
+    /* Prevent empty variables for smarty */
+    foreach($this->attributes as $atr) {
+      $smarty->assign($atr,"");
+    }
 
     /* Save formular information */
     $phonefilter= get_global("phonefilter");
@@ -121,6 +126,7 @@ class addressbook extends plugin
       $phonefilter['search_for']= $s;
     }
     register_global("phonefilter", $phonefilter);
+
 
     /* Perform actions with CTI hook */
     if (isset($_GET['target'])
@@ -176,6 +182,7 @@ class addressbook extends plugin
       unset($_SESSION['target']);
     }
 
+
     /* Delete entry? */
     if (isset($_POST['delete_entry_confirm'])){
 
@@ -208,10 +215,12 @@ class addressbook extends plugin
       unset($_SESSION['saved_start']);
     }
 
+
     /* Delete entry? */
     if (isset($_POST['delete_cancel'])){
       del_lock ($this->dn);
     }
+
 
     /* Save address entry? */
     if (isset($_POST['save'])){
@@ -238,6 +247,7 @@ class addressbook extends plugin
       }
     }
 
+
     /* Close info window */
     if (isset($_GET['close']) || isset($_POST['cancel'])){
       if (isset($_SESSION['saved_start'])){
@@ -246,6 +256,7 @@ class addressbook extends plugin
       unset($_SESSION['show_info']);
       unset($_SESSION['saved_start']);
     }
+
 
     /* Start address book edit mode? */
     if (isset($_GET['global'])){
@@ -302,6 +313,7 @@ class addressbook extends plugin
       $_SESSION['show_info']= "ADD";
     }
 
+
     /* Open info window */
     if (isset($_GET['show'])){
       if (!isset($_SESSION['saved_start'])){
@@ -310,11 +322,15 @@ class addressbook extends plugin
       $_SESSION['show_info']= base64_decode($_GET['show']);
     }
 
+
     /* Get ldap link / build filter */
     $ldap= $this->config->get_ldap_link();
     $this->telephone_list= array ();
 
-    /* Assemble bases */
+
+    /* Assemble bases 
+        (Depending on checkboxes, we search for organisational entries or seperated 
+        adressbook entries within dc=adressbook, ) */
     $bases= array();
     $filter= "";
     if ($phonefilter['global'] == "checked"){
@@ -325,24 +341,35 @@ class addressbook extends plugin
     if ($phonefilter['organizational'] == "checked"){
       $bases[]= $this->search_base;
     }
+
+
+    /* Only display those entries that have at least on of this attributes set */
+    $must_have_this = array("telephoneNumber","facsimileTelephoneNumber","mobile","homePhone","mail");
+
+    /* Requested attributes in ldap search */
+    $attributes = array("sn", "givenName", "telephoneNumber", "facsimileTelephoneNumber", "mobile", "homePhone", "uid", "mail", "cn");
+
+    /* Create attribute filter part */
+    $attribute_filter = "";
+    foreach($attributes as $att){
+      $attribute_filter .= "(".$att."=".$s.")";
+    }
+
+    /* Walk through bases an check for usable entries */
     foreach ($bases as $base){
+
       $ldap->cd ($base);
+
       if ($phonefilter['object_type'] == '*'){
-        $ldap->search ("(&(objectClass=person)$filter(!(objectClass=gosaUserTemplate))(!(uid=*$))". //array
-            "(|(uid=$s)(homePhone=$s)(telephoneNumber=$s)".
-            "(facsimileTelephoneNumber=$s)(mobile=$s)(givenName=$s)(sn=$s)))", array("sn", "givenName", "telephoneNumber", "facsimileTelephoneNumber", "mobile", "homePhone", "uid", "mail", "cn"));
+        $ldap->search (
+            "(&(objectClass=person)$filter(!(objectClass=gosaUserTemplate))".   // Skip templates etc ..
+            "(!(uid=*$))".                                                      // Skip entries with ...$ as uid 
+            "(|".$attribute_filter."))"                                         
+          ,$attributes); 
       } else {
         $ldap->search ("(&$filter(!(uid=*$))(!(objectClass=gosaUserTemplate))".                     //array
-            "(".$phonefilter['object_type']."=$s))", array("sn", "givenName", "telephoneNumber", "facsimileTelephoneNumber", "mobile", "homePhone", "uid", "mail", "cn"));
+            "(".$phonefilter['object_type']."=$s))", $attributes);
       }
-
-      /* Build current list, error reporting is off, because many of the
-         objects may not be defined after LDAP queries. Asking for presence
-         first is too much overhead. */
-      error_reporting(0);
-
-
-
 
       /* Walk through LDAP results */
       while ($attrs= $ldap->fetch()){
@@ -353,16 +380,34 @@ class addressbook extends plugin
             $attrs[$atr][0] = "";
           }
         }
-        if(!isset($_GET['start'])) $_GET['start']="";
 
+        /* Check if page number was posted */
+        if(!isset($_GET['start'])) {
+          $_GET['start']="";
+        }
 
+        /* Check if at least one attribute is specified */
+        $skip = true;
+        foreach($must_have_this as $attr)      {
+          if(isset($attrs[$attr][0]) && !empty($attrs[$attr][0])){
+            $skip =false;
+            break;
+          }
+        }
+
+        /* Skip all attributes that we are not allowed to read */
+        $any = false;
+        foreach($attributes as $attr){
+          if(!preg_match("/r/",$this->ui->get_permissions($attrs['dn'],"users/user",$attr))){
+            $attrs[$attr][0] = "Not allowed";
+          }else{
+            $any = true;
+          }
+        }
+        
         /* Only show lines that have set any mail or phone informations */
-        if (isset($attrs['telephoneNumber'][0]) ||
-            isset($attrs['facsimileTelephoneNumber'][0]) ||
-            isset($attrs['mobile'][0]) ||
-            isset($attrs['homePhone'][0]) ||
-            isset($attrs['mail'][0])){
-
+        if(!$skip && $any){      
+  
           $this->telephone_list[$attrs['sn'][0].$attrs['dn']]=
 
             "<td class=\"phonelist\" title=\"".$attrs['sn'][0].", ".$attrs['givenName'][0]."\" onClick='location.href=\"main.php?plug=".validate($_GET['plug'])."&amp;start=".validate($_GET['start'])."&amp;show=".base64_encode($attrs['dn'])."\"'><a style='vertical-align:middle;' href=\"main.php?plug=".validate($_GET['plug'])."&amp;start=".validate($_GET['start'])."&amp;show=".base64_encode($attrs['dn'])."\">".$attrs['sn'][0].", ".$attrs['givenName'][0].
