@@ -444,7 +444,7 @@ class addressbook extends plugin
             <img align=\"top\" border=0 src=\"images/save.png\" alt=\"vcf\" title=\"".sprintf(_("Save contact for %s as vcard"), $attrs['givenName'][0]." ".$attrs['sn'][0])."\">
             </a>";
 
-          if (isset($attrs['mail'])){
+          if (isset($attrs['mail'][0]) && !empty($attrs['mail'][0])){
             $dest= sprintf(_("Send mail to %s"), $attrs['mail'][0]);
             $this->telephone_list[$attrs['sn'][0].$attrs['dn']].=
 
@@ -464,7 +464,9 @@ class addressbook extends plugin
     /* Fill template variables */
     $smarty->assign("search_for", $this->search_for);
     $smarty->assign("object_type", $this->object_type);
-    $smarty->assign("deplist", $this->config->idepartments);
+
+    $this->base = $phonefilter['search_base'];
+    $smarty->assign("deplist", $this->get_allowed_bases());
     $smarty->assign("depselect", $this->search_base);
     $smarty->assign("global", $phonefilter['global']);
     $smarty->assign("organizational", $phonefilter['organizational']);
@@ -601,9 +603,16 @@ class addressbook extends plugin
   {
     plugin::save_object();
     foreach($this->attributes as $attr){
-      if(isset($_POST[$attr])){
-        $this->$attr = $_POST[$attr];
+
+      /* save attributes depending on acls */
+      $acl = $this->get_entry_acls($this->dn,$attr);
+
+      if(preg_match("/w/",$acl)){
+        if(isset($_POST[$attr])){
+          $this->$attr = $_POST[$attr];
+        }
       }
+
     }
   }
 

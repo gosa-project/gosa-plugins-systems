@@ -35,10 +35,10 @@
 								</td>
    								<td>
 {render acl=$snACL}	
-									<input id="sn" name="sn" size=10 maxlength=60 value="{$info_sn}" {$snACL}>, 
+									<input id="sn" name="sn" size=10 maxlength=60 value="{$info_sn}">, 
 {/render}
 {render acl=$givenNameACL}
-									<input id="givenName" name="givenName" size=10 maxlength=60 value="{$info_givenName}" {$givenNameACL}>
+									<input id="givenName" name="givenName" size=10 maxlength=60 value="{$info_givenName}">
 {/render}
 								<td>
   							</tr>
@@ -50,7 +50,7 @@
 								</td>
 								<td>
 {render acl=$initialsACL}
-									<input id="initials" name="initials" size=5 maxlength=20 value="{$info_initials}" {$initialsACL}>
+									<input id="initials" name="initials" size=5 maxlength=20 value="{$info_initials}">
 {/render}
 								</td>
   							</tr>
@@ -62,7 +62,7 @@
 								</td>
 								<td>
 {render acl=$titleACL}
-									<input id="title" name="title" size=10 maxlength=20 value="{$info_title}" {$titleACL}>
+									<input id="title" name="title" size=10 maxlength=20 value="{$info_title}">
 {/render}
 								</td>
   							</tr>
@@ -84,8 +84,7 @@
 								</td>
 						   		<td style="vertical-align:top;">
 {render acl=$homePostalAddressACL}
-									<textarea id="homePostalAddress" name="homePostalAddress" 
-										rows=1 cols=20 {$homePostalAddressACL}>{$info_homePostalAddress}</textarea>
+									<textarea id="homePostalAddress" name="homePostalAddress" rows=1 cols=20>{$info_homePostalAddress}</textarea>
 {/render}
 								</td>
 						  	</tr>
@@ -97,7 +96,7 @@
 								</td>
 								<td>
 {render acl=$homePhoneACL}
-									<input id="homePhone" name="homePhone" size=15 maxlength=60 value="{$info_homePhone}" {$homePhoneACL}>
+									<input id="homePhone" name="homePhone" size=15 maxlength=60 value="{$info_homePhone}">
 {/render}
 								</td>
 						  	</tr>
@@ -109,7 +108,7 @@
 								</td>
 								<td>
 {render acl=$mobileACL}
-									<input id="mobile" name="mobile" size=15 maxlength=60 value="{$info_mobile}" {$mobileACL}>
+									<input id="mobile" name="mobile" size=15 maxlength=60 value="{$info_mobile}">
 {/render}
 								</td>
 						  	</tr>
@@ -121,7 +120,7 @@
 								</td>
 								<td>
 {render acl=$mailACL}
-									<input id="mail" name="mail" size=15 maxlength=60 value="{$info_mail}" {$mailACL}>
+									<input id="mail" name="mail" size=15 maxlength=60 value="{$info_mail}">
 {/render}
 								</td>
 						  	</tr>
@@ -146,7 +145,7 @@
 											</td>
 											<td>
 {render acl=$oACL}
-												<input id="o" name="o" size=15 maxlength=60 value="{$info_o}" {$oACL}>
+												<input id="o" name="o" size=15 maxlength=60 value="{$info_o}">
 {/render}
 											</td>
 									 	</tr>
@@ -158,7 +157,7 @@
 											</td>
 											<td>
 {render acl=$ouACL}
-												<input id="ou" name="ou" size=15 maxlength=60 value="{$info_ou}" {$ouACL}>
+												<input id="ou" name="ou" size=15 maxlength=60 value="{$info_ou}">
 {/render}
 											</td>
 									 	</tr>
@@ -170,7 +169,7 @@
 											</td>
 											<td>
 {render acl=$lACL}
-												<input id="l" name="l" size=15 maxlength=60 value="{$info_l}" {$lACL}>
+												<input id="l" name="l" size=15 maxlength=60 value="{$info_l}">
 {/render}
 											</td>
 									 	</tr>
@@ -182,7 +181,7 @@
 											</td>
 											<td>
 {render acl=$postalCodeACL}
-												<input id="postalCode" name="postalCode" size=15 maxlength=60 value="{$info_postalCode}" {$postalCodeACL}>
+												<input id="postalCode" name="postalCode" size=15 maxlength=60 value="{$info_postalCode}">
 {/render}
 											</td>
 									 	</tr>
@@ -194,7 +193,7 @@
 											</td>
 											<td>
 {render acl=$stACL}
-												<input id="st" name="st" size=15 maxlength=60 value="{$info_st}" {$stACL}>
+												<input id="st" name="st" size=15 maxlength=60 value="{$info_st}">
 {/render}
 											</td>
 									 	</tr>
@@ -212,8 +211,7 @@
 											</td>
 											<td style="vertical-align:top;">
 {render acl=$postalAddressACL}
-												<textarea id="postalAddress" name="postalAddress" rows=1 cols=20 
-													{$postalAddressACL}>{$info_postalAddress}</textarea>
+												<textarea id="postalAddress" name="postalAddress" rows=1 cols=20 >{$info_postalAddress}</textarea>
 {/render}
 											</td>
 										</tr>
@@ -225,8 +223,7 @@
 											</td>
 											<td>
 {render acl=$telephoneNumberACL}
-												<input id="telephoneNumber" name="telephoneNumber" {$telephoneNumberACL}
-													size=15 maxlength=60 value="{$info_telephoneNumber}">
+												<input id="telephoneNumber" name="telephoneNumber" size=15 maxlength=60 value="{$info_telephoneNumber}">
 {/render}
 											</td>
 										</tr>
@@ -238,7 +235,7 @@
 											</td>
 											<td>
 {render acl=$facsimileTelephoneNumberACL}
-												<input id="facsimileTelephoneNumber" name="facsimileTelephoneNumber" {$facsimileTelephoneNumberACL}
+												<input id="facsimileTelephoneNumber" name="facsimileTelephoneNumber"
 													size=15 maxlength=60 value="{$info_facsimileTelephoneNumber}">
 {/render}
 											</td>
@@ -251,7 +248,7 @@
 											</td>
 											<td>
 {render acl=$pagerACL}
-												<input id="pager" name="pager" size=15 maxlength=60 value="{$info_pager}" {$pagerACL}>
+												<input id="pager" name="pager" size=15 maxlength=60 value="{$info_pager}">
 {/render}
 											</td>
 										</tr>

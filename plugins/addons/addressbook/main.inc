@@ -23,7 +23,7 @@ if (!$remove_lock){
 	if (!isset($_SESSION['addressbook']) || (isset($_GET['reset']) && $_GET['reset'] == 1)){
 		$_SESSION['addressbook']= new addressbook ($config);
 		$_SESSION['addressbook']->set_acl_base($ui->dn);
-		$_SESSION['addressbook']->set_acl_category("gofon");
+		$_SESSION['addressbook']->set_acl_category("addressbook");
 	}
 	$addressbook= $_SESSION['addressbook'];
 
