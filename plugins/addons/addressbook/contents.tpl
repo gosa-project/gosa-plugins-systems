@@ -43,13 +43,17 @@
    </div>
    <div class="contentboxb">
     <p class="contentboxb" style="vertical-align:middle;">
+     {if $internal_createable}
      <img class="center" alt="" src="{$add_image}">&nbsp;
      <a href="main.php{$plug}&amp;global=add" style="text-align:center;vertical-align:middle;">{t}Add entry{/t}</a><br>
+     {/if}
      {if $internal eq 0}
      <img alt="" src="{$edit_image}" class="center">&nbsp;
      <a href="main.php{$plug}&amp;global=edit">{t}Edit entry{/t}</a><br>
-     <img alt="" src="{$delete_image}" class="center">&nbsp;
-     <a href="main.php{$plug}&amp;global=remove" style="vertical-align:middle;">{t}Remove entry{/t}</a><br>
+	{if $internal_removeable}
+	     <img alt="" src="{$delete_image}" class="center">&nbsp;
+	     <a href="main.php{$plug}&amp;global=remove" style="vertical-align:middle;">{t}Remove entry{/t}</a><br>
+	{/if}
      {/if}
     </p>
    </div>

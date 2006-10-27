@@ -127,6 +127,10 @@ class addressbook extends plugin
     }
     register_global("phonefilter", $phonefilter);
 
+    /* Assign create acl */
+    $acl = $this->get_entry_acls($this->abobjectclass.",".$phonefilter['search_base']);
+    $smarty->assign("internal_createable", preg_match("/c/",$acl));
+    $smarty->assign("internal_removeable", preg_match("/d/",$acl));
 
     /* Perform actions with CTI hook */
     if (isset($_GET['target'])
@@ -188,7 +192,9 @@ class addressbook extends plugin
 
       /* Some nice guy may send this as POST, so we've to check
          for the permissions again. */
-      if (chkacl($this->acl, "delete") == ""){
+      
+      $acl = $this->get_entry_acls($this->dn);
+      if(preg_match("/d/",$acl)){
 
         /* Delete request is permitted, perform LDAP action */
         $ldap= $this->config->get_ldap_link();
@@ -288,9 +294,11 @@ class addressbook extends plugin
         case "remove":
           $this->dn= $_SESSION['show_info']; 
         $this->load();
+
         /* Load permissions for selected 'dn' and check if
            we're allowed to remove this 'dn' */
-        if (chkacl($this->acl, "delete") == ""){
+        $acl = $this->get_entry_acls($this->dn);
+        if(preg_match("/d/",$acl)){
 
           /* Check locking, save current plugin in 'back_plugin', so
              the dialog knows where to return. */
@@ -387,7 +395,8 @@ class addressbook extends plugin
         }
 
         /* Check if at least one attribute is specified */
-        $skip = true;
+        $skip = false;
+
         foreach($must_have_this as $attr)      {
           if(isset($attrs[$attr][0]) && !empty($attrs[$attr][0])){
             $skip =false;
@@ -398,13 +407,15 @@ class addressbook extends plugin
         /* Skip all attributes that we are not allowed to read */
         $any = false;
         foreach($attributes as $attr){
-          if(!preg_match("/r/",$this->ui->get_permissions($attrs['dn'],"users/user",$attr))){
+    
+          $acls = $this->get_entry_acls($attrs['dn'],$attr);  
+          if(!preg_match("/r/",$acls)){
             $attrs[$attr][0] = "Not allowed";
           }else{
             $any = true;
           }
         }
-        
+ 
         /* Only show lines that have set any mail or phone informations */
         if(!$skip && $any){      
   
@@ -471,25 +482,29 @@ class addressbook extends plugin
     $output= "";
     $mod= 0;
 
-#! hickert
-    if(!isset($_SESSION['show_info'])) 	$smarty->assign("show_info", "");;
 
+    /* View detailed infos */
+    $smarty->assign("show_info", "");
     if (isset($_SESSION['show_info'])){
+
       $range= 4;
       $smarty->assign("show_info", "1");
       $smarty->assign("url", "main.php?plug=".validate($_GET['plug'])."&amp;close=1");
+
+      $tmp = $this->plInfo();
+      foreach($tmp['plProvidedAcls'] as $name => $translated){
+        $smarty->assign($name."ACL",$this->get_entry_acls($this->dn,$name));
+      }
 
       switch ($_SESSION['show_info']){
 
         case "ADD":
           $smarty->assign ('storage_base', $this->storage_base);
-        $smarty->assign ('address_info',
-            get_template_path('address_edit.tpl', TRUE));
+          $smarty->assign ('address_info', get_template_path('address_edit.tpl', TRUE));
         break;
 
         default:
-        $smarty->assign ('address_info',
-            get_template_path('address_info.tpl', TRUE));
+          $smarty->assign ('address_info', get_template_path('address_info.tpl', TRUE));
         break;
       }
 
@@ -657,10 +672,6 @@ class addressbook extends plugin
     $this->new_dn= $this->dn;
   }
 
-  if ($_SESSION['show_info'] == "ADD" && chkacl($this->acl, "add") != ""){
-    $message[]= _("You have no permissions to create or modify a global address book entry.");
-  }
-
   return ($message);
   }
 
@@ -708,6 +719,61 @@ class addressbook extends plugin
     }
   }
 
+  
+  /* Return entry acls */
+  function get_entry_acls($dn,$attr = "")
+  {
+    $acls = "";
+  
+    /* Use addressbook acls */
+    if(preg_match("/".normalizePreg($this->abobjectclass)."/",$dn))  {
+      $dn = preg_replace("/".normalizePreg($this->abobjectclass).",/","",$dn);
+      $acls = $this->ui->get_permissions($dn,"addressbook/addressbook",$attr);
+    }
+    
+    /* Use Organizational Person acls */
+    else{
+      $acls = $this->ui->get_permissions($dn,"users/user",$attr);
+    }
+
+    return($acls);
+  }
+
+
+  /* Return plugin informations for acl handling  */
+  function plInfo()
+  {
+    return (array(
+          "plShortName" => _("Addressbook"),
+          "plDescription" => _("Addressbook entry acls"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("addons" => _("Addons")),
+          "plCategory"    => array("addressbook" => array("objectClass" => "inetOrgPerson", "description" => _("Addressbook"))),
+
+          "plProvidedAcls"    => array(
+            "sn"                        => _("Surename"),         
+            "givenName"                 => _("Given name"), 
+            "telephoneNumber"           => _("Telefon number"), 
+            "facsimileTelephoneNumber"  => _("Fax number"), 
+            "mobile"                    => _("Mobile number"), 
+            "homePhone"                 => _("Home phone number"), 
+            "uid"                       => _("User identification"), 
+            "mail"                      => _("Mail address"), 
+            "pager"                     => _("Pgaer"),
+            "o"                         => _("Organization"),
+            "ou"                        => _("Department"),
+            "l"                         => _("Location"),
+            "postalAddress"             => _("Postal address"),
+            "postalCode"                => _("Postal address"),
+            "st"                        => _("State"),
+            "initials"                  => _("Initials"), 
+            "title"                     => _("Title"), 
+            "homePostalAddress"         => _("Home postal address"), 
+            "cn"                        => _("Common name"))
+            ));
+  }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
