@@ -410,7 +410,7 @@ class addressbook extends plugin
     
           $acls = $this->get_entry_acls($attrs['dn'],$attr);  
           if(!preg_match("/r/",$acls)){
-            $attrs[$attr][0] = "Not allowed";
+            $attrs[$attr][0] = "";
           }else{
             $any = true;
           }
@@ -444,12 +444,15 @@ class addressbook extends plugin
             <img align=\"top\" border=0 src=\"images/save.png\" alt=\"vcf\" title=\"".sprintf(_("Save contact for %s as vcard"), $attrs['givenName'][0]." ".$attrs['sn'][0])."\">
             </a>";
 
-          if (isset($attrs['mail'][0]) && !empty($attrs['mail'][0])){
-            $dest= sprintf(_("Send mail to %s"), $attrs['mail'][0]);
-            $this->telephone_list[$attrs['sn'][0].$attrs['dn']].=
 
-              "<a href=\"mailto:".htmlentities($attrs['mail'][0])."\">".
-              "<img  align=\"top\" border=0 src=\"images/mailto.png\" alt=\"vcf\" title=\"$dest\"></a>";
+          if(preg_match("/r/",$this->get_entry_acls($attrs['dn'],"mail"))){
+            if (isset($attrs['mail'][0]) && !empty($attrs['mail'][0])){
+              $dest= sprintf(_("Send mail to %s"), $attrs['mail'][0]);
+              $this->telephone_list[$attrs['sn'][0].$attrs['dn']].=
+
+                "<a href=\"mailto:".htmlentities($attrs['mail'][0])."\">".
+                "<img  align=\"top\" border=0 src=\"images/mailto.png\" alt=\"vcf\" title=\"$dest\"></a>";
+            }
           }
           $this->telephone_list[$attrs['sn'][0].$attrs['dn']].= "</td>";
         }
@@ -494,19 +497,33 @@ class addressbook extends plugin
       $smarty->assign("url", "main.php?plug=".validate($_GET['plug'])."&amp;close=1");
 
       $tmp = $this->plInfo();
-      foreach($tmp['plProvidedAcls'] as $name => $translated){
-        $smarty->assign($name."ACL",$this->get_entry_acls($this->dn,$name));
-      }
+
+      
 
       switch ($_SESSION['show_info']){
 
         case "ADD":
+
+          $a_bases = $this->get_allowed_bases();
+  
+          if(!in_array_ics($this->storage_base,$a_bases)){
+            $base = key($this->get_allowed_bases());
+            $this->storage_base = $base;
+          } 
+
           $smarty->assign ('storage_base', $this->storage_base);
           $smarty->assign ('address_info', get_template_path('address_edit.tpl', TRUE));
+
+          foreach($tmp['plProvidedAcls'] as $name => $translated){
+            $smarty->assign($name."ACL",$this->get_entry_acls($this->abobjectclass.",".$base,$name));
+          }
         break;
 
         default:
           $smarty->assign ('address_info', get_template_path('address_info.tpl', TRUE));
+          foreach($tmp['plProvidedAcls'] as $name => $translated){
+            $smarty->assign($name."ACL",$this->get_entry_acls($this->dn,$name));
+          }
         break;
       }
 
@@ -516,6 +533,12 @@ class addressbook extends plugin
         $info= $ldap->fetch();
       }
       foreach ($this->attributes as $name){
+
+        /* Skip entries we are not allowed to read */
+        if(!preg_match("/r/",$this->get_entry_acls($_SESSION['show_info'],$name))){
+          $smarty->assign("info_$name", "");
+        }else
+
         if ($_SESSION['show_info'] != "ADD" && isset($info["$name"][0])){
           error_reporting(0);
           /* Special treatment for phone attributes */
