@@ -498,7 +498,9 @@ class addressbook extends plugin
 
       $tmp = $this->plInfo();
 
-      
+      if(isset($_POST['storage_base'])){
+        $this->storage_base = $_POST['storage_base'];  
+      }
 
       switch ($_SESSION['show_info']){
 
@@ -506,7 +508,7 @@ class addressbook extends plugin
 
           $a_bases = $this->get_allowed_bases();
   
-          if(!in_array_ics($this->storage_base,$a_bases)){
+          if(!isset($a_bases[$this->storage_base])){
             $base = key($this->get_allowed_bases());
             $this->storage_base = $base;
           } 
