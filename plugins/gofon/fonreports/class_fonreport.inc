@@ -209,7 +209,7 @@ class fonreport extends plugin
 
         if($attr == "duration") continue;
   
-        $acl = $this->ui->get_permissions($this->search_base,"gofon/fonreport",$value);
+        $acl = $this->ui->get_permissions($this->search_base,"gofon/fonreport",$attr);
         if(!preg_match("/r/",$acl)){
           $line[$attr] = $no_acl;
         }
