@@ -444,8 +444,14 @@ class faxreport extends plugin
     foreach( array("year", "month", "search_for", "search_base") as $type){
       if (isset($_POST[$type])){
         $faxreportfilter[$type]= $_POST[$type];
+
+        /* reset start page, if filter has changed */ 
+        if(!isset($_GET['start'])){
+          $this->start = 0;
+        }
       }
       $this->$type= $faxreportfilter[$type];
+   
     }
     foreach($this->attributes_SO as $name){
       $faxreportfilter[$name] = $this->$name;
