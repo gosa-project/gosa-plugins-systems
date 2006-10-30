@@ -26,6 +26,7 @@ if (!$remove_lock){
 	$logview= $_SESSION['logview'];
 
 	/* Execute formular */
+	$display= $logview->save_object();
 	$display= $logview->execute ();
 	$display.= "<input type=\"hidden\" name=\"ignore\">\n";
 
