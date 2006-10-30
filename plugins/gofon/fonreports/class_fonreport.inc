@@ -126,12 +126,23 @@ class fonreport extends plugin
     /*****************
       Smarty 
      *****************/
+    $bases      = array();
+    $cat_bases  = $this->ui->get_module_departments("gofon");
+    foreach($this->config->idepartments as $dn => $name){
+      if(in_array_ics($dn,$cat_bases)){
+        $bases[$dn] = $name;
+      }
+    }
+
+    if(!isset($bases[$this->search_base])){
+      $this->search_base = key($bases);
+    }
 
     $smarty->assign("plug",           "?plug=".validate($_GET['plug']));
     $smarty->assign("launchimage",    get_template_path('images/launch.png'));
     $smarty->assign("search_image",   get_template_path('images/search.png'));
     $smarty->assign("search_for",     $this->search_for);
-    $smarty->assign("bases",          $this->config->idepartments);
+    $smarty->assign("bases",          $bases);
     $smarty->assign("base_select",    $this->search_base);
     $smarty->assign("months",         $months);
     $smarty->assign("month_select",   $this->month);
@@ -187,22 +198,48 @@ class fonreport extends plugin
      *****************/
   
     $report_list= array();
+    
+    /* Restricted attributes will not be displayed, this will be displayed instead */
+    $no_acl = "<img class='center' src='images/closedlock.png'
+      title='"._("Insufficient permissions to view this attribute")."' alt='"._("Insufficient permissions")."'>";
+
     while ($line = mysql_fetch_array($result, MYSQL_ASSOC)) {
+   
+      foreach($line as $attr => $value){
+
+        if($attr == "duration") continue;
+  
+        $acl = $this->ui->get_permissions($this->search_base,"gofon/fonreport",$value);
+        if(!preg_match("/r/",$acl)){
+          $line[$attr] = $no_acl;
+        }
+      }
+
+      if($this->ui->get_permissions($this->search_base,"gofon/fonreport","calldate")){
+        $hour=  substr($line["calldate"], 11, 2);
+        $minute=substr($line["calldate"], 14, 2);
+        $format= _("Y-M-D");
+        $date= preg_replace("/Y/", substr($line["calldate"], 0, 4), $format);
+        $date= preg_replace("/M/", substr($line["calldate"], 5, 2), $date);
+        $date= preg_replace("/D/", substr($line["calldate"], 8, 2), $date);
+        $date_str = $date." ".$hour.":".$minute;
+      }else{
+        $date_str = $no_acl;
+      }
+  
       $append_str = "";
-      $hour=  substr($line["calldate"], 11, 2);
-      $minute=substr($line["calldate"], 14, 2);
-      $format= _("Y-M-D");
-      $date= preg_replace("/Y/", substr($line["calldate"], 0, 4), $format);
-      $date= preg_replace("/M/", substr($line["calldate"], 5, 2), $date);
-      $date= preg_replace("/D/", substr($line["calldate"], 8, 2), $date);
-      $append_str .= 	"<td>$date $hour:$minute</td>";
+      $append_str .= 	"<td>".$date_str."</td>";
+
       foreach(array("src","dst","channel","lastapp","disposition") as $atr){
         if(isset($line[$atr])){
           $append_str .= 	"<td>".$line[$atr]."</td>";
         }
       }
-      if(isset($line['duration'])){
+
+      if($this->ui->get_permissions($this->search_base,"gofon/fonreport","duration")){
         $append_str .= 	"<td>".$this->gen_duration($line["duration"])."</td>";
+      }else{
+        $append_str .= 	"<td>".$no_acl."</td>";
       }
       $report_list[] = $append_str;
     }
@@ -281,14 +318,18 @@ class fonreport extends plugin
     $s          = preg_replace("/\%/","",$s);  
     $s2         = preg_replace("/\*/","%",$s);  
 
-    /* Perform ldap search for potential users */
-    $ldap->search ("(&(objectClass=gosaAccount)(!(objectClass=gosaUserTemplate))(objectClass=gofonAccount)".
+    $filter = "(&(objectClass=gosaAccount)(!(objectClass=gosaUserTemplate))(objectClass=gofonAccount)".
         "(|(uid=$s)(l=$s)(homePhone=$s)(telephoneNumber=$s)(facsimileTelephoneNumber=$s)(mobile=$s)".
-        "(pager=$s)(cn=$s)(givenName=$s)(sn=$s)(personalTitle=$s)(title=$s)))" ,array("uid"));
+        "(pager=$s)(cn=$s)(givenName=$s)(sn=$s)(personalTitle=$s)(title=$s)))";
+
+    $attrs  = array("uid");
+
+    $res    = get_list($filter,"users",$this->search_base,$attrs);
+    
     $str = " AND (";
     $fields = array("dstchannel","channel");
-    if($ldap->count()){
-      while ($attrs= $ldap->fetch()){
+    if(count($res)){
+      foreach($res as $attrs){
         $uid =  $attrs["uid"][0];
         foreach($fields as $name){
           $str .= $name." like '%".$uid."%' OR ";
@@ -354,7 +395,13 @@ class fonreport extends plugin
         "plCategory"    => array("gofon"),
   
         "plProvidedAcls" => array(
-          "fonreport" => "!!! FIXME "._("Phone reports"))
+          "calldate"      =>_("Date"), 
+          "src"           =>_("Source"), 
+          "dst"           =>_("Destination"), 
+          "channel"       =>_("Channel"), 
+          "lastapp"       =>_("Application called"),
+          "disposition"   =>_("Disposition"), 
+          "duration"      =>_("Duration"))
         ));
   }
 }
