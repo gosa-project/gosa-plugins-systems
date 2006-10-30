@@ -64,16 +64,16 @@ class goFonServer extends goService{
   { 
     $message = plugin::check();
     if (empty($this->goFonAdmin)){
-      $message[]= sprintf(_("The attribute DB user is empty or contains invalid characters."), $attr);
+      $message[]= _("The attribute DB user is empty or contains invalid characters.");
     }
     if (empty($this->goFonPassword)){
-      $message[]= sprintf(_("The attribute password is empty or contains invalid characters."), $attr);
+      $message[]= _("The attribute password is empty or contains invalid characters.");
     }
     if (empty($this->goFonAreaCode)){
-      $message[]= sprintf(_("The attribute local dial prefix is empty or contains invalid characters."), $attr);
+      $message[]= _("The attribute local dial prefix is empty or contains invalid characters.");
     }
     if (empty($this->goFonCountryCode)){
-      $message[]= sprintf(_("The attribute country dial prefix is empty or contains invalid characters."), $attr);
+      $message[]= _("The attribute country dial prefix is empty or contains invalid characters.");
     }
     return($message);
   }
