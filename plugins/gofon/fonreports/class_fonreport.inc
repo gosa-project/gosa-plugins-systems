@@ -127,14 +127,6 @@ class fonreport extends plugin
       Smarty 
      *****************/
 
-    foreach($this->fields as $field){
-      if(chkacl($this->acl,$field)==""){
-        $smarty->assign($field."ACL","");	
-      }else{
-        $smarty->assign($field."ACL"," disabled ");	
-      }
-    }
-
     $smarty->assign("plug",           "?plug=".validate($_GET['plug']));
     $smarty->assign("launchimage",    get_template_path('images/launch.png'));
     $smarty->assign("search_image",   get_template_path('images/search.png'));
@@ -321,10 +313,10 @@ class fonreport extends plugin
     /* Create string with all fields seperated by ,*/
     $fields_str ="";
     foreach($this->fields as $field){
-      if($field == "calldate") continue;	
-      if(chkacl($this->acl,$field)==""){
-        $fields_str .= $field.", ";
+      if($field == "calldate") {
+        continue;	
       }
+      $fields_str .= $field.", ";
     }
     $fields_str = preg_replace("/, $/","",$fields_str);
 

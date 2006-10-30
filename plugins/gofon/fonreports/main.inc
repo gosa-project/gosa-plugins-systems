@@ -7,11 +7,6 @@ if (!$remove_lock){
 	}
 	$fonreport= $_SESSION['fonreport'];
 
-	/* set permissions */
-	$acl= get_permissions ($ui->dn, $ui->subtreeACL);
-	$fonreport->acl= get_module_permission($acl, "fonreport", $ui->dn);
-
-
 	/* Execute formular */
 	$fonreport->save_object();
 	$display= $fonreport->execute ();
