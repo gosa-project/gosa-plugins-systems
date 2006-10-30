@@ -7,10 +7,6 @@ if (!$remove_lock){
 	}
 	$faxreport= $_SESSION['faxreport'];
 
-	/* set permissions */
-	$acl= get_permissions ($ui->dn, $ui->subtreeACL);
-	$faxreport->acl= get_module_permission($acl, "faxreport", $ui->dn);
-
 	/* Execute formular */
 	$faxreport->save_object();
 	$display= $faxreport->execute ();

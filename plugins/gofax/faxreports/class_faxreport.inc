@@ -28,6 +28,7 @@ class faxreport extends plugin
   /* these vars will be stored in session to be able to remember last search config */
   var $attributes_SO= array("search_for","search_base","month","year","start","year","month","sort","sort_direction","range");
   var $objectclasses= array();
+  var $fax_users    = array();
 
   /* Create class */
   function faxreport ($config, $ui)
@@ -158,11 +159,29 @@ class faxreport extends plugin
         return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
       }
 
+      /* Check acls */
+      $fax_uids = array_flip($this->fax_users);
+      $uid = $line['uid'];
+      $dn = $fax_uids[$uid];
+      $acls = $this->ui->get_permissions($dn,"gofax/faxreport");
+      if(!preg_match("/r/",$acls)){
+        print_red (_("You have no permission to retrieve informations about this fax id!"));
+        return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
+      }
+
       $parts= array( "id", "uid", "queuing_time", "status", "sender_id", "sender_msn",
           "receiver_id", "receiver_msn", "pages", "status_message", "transfer_time" );
+
       foreach ($parts as $vname) {
+
         $final="fax_$vname";
-        if ($line[$vname] != ""){
+        if($vname != "uid"){
+          $v_acl = $this->ui->get_permissions($dn,"gofax/faxreport",preg_replace("/_/","",$vname));
+        }else{
+          $v_acl = "r";
+        }
+
+        if ($line[$vname] != "" && preg_match("/r/",$v_acl)){
           $smarty->assign("$final", $line[$vname]);
         } else {
           $smarty->assign("$final", "-");
@@ -202,23 +221,25 @@ class faxreport extends plugin
       $ldap->cd ($this->search_base);
 
       /* Perform ldap search for potential users */
-      $ldap->search ("(&(objectClass=gosaAccount)(!(objectClass=gosaUserTemplate))".
+      $filter= "(&(objectClass=gosaAccount)(!(objectClass=gosaUserTemplate))".
           "(objectClass=goFaxAccount)".
           "(|(uid=$s)(l=$s)(homePhone=$s)".
           "(telephoneNumber=$s)(facsimileTelephoneNumber=$s)(mobile=$s)".
           "(pager=$s)(cn=$s)(givenName=$s)(sn=$s)(personalTitle=$s)".
-          "(title=$s)))");
+          "(title=$s)))";
+  
+      $res = get_list($filter, "users", $this->search_base, array("uid"), GL_SUBSEARCH );
 
+      /* Check if we are allowed to collect fax data */
       $fax_users= array();
-      while ($attrs= $ldap->fetch()){
-        $ui = get_userinfo();
-        $acl= get_permissions ($ui->dn, $ui->subtreeACL);
-        $acl2= get_module_permission($acl, "faxreport", $attrs['dn']);
-        
-        if (chkacl ($acl2, "faxreport") == ""){
-          $fax_users[]= $attrs["uid"][0];
+      foreach($res as $attrs){
+        $acl = $this->ui->get_permissions($attrs['dn'],"users/user","uid");
+        if(preg_match("/r/",$acl)){
+          $fax_users[ $attrs['dn']]= $attrs["uid"][0];
         }
       }
+
+      $this->fax_users = $fax_users;
 
       /* Prepare SQL query */
       $this->userfilter= "";
@@ -228,7 +249,6 @@ class faxreport extends plugin
       $this->userfilter= preg_replace("/OR $/", "", $this->userfilter);
     }
 
-    
     /************ 
       Create filter  
      ************/
@@ -267,30 +287,86 @@ class faxreport extends plugin
         return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
       }
 
-      $report_list= array();
+      $this->report_list= array();
+      $user_ids = array_flip($fax_users);
       while ($line = mysql_fetch_array($result, MYSQL_ASSOC)) {
-        $hour=  substr($line["queuing_time"], 8, 2);
-        $minute=substr($line["queuing_time"], 10, 2);
-        $format= _("Y-M-D");
-        $date= preg_replace("/Y/", substr($line["queuing_time"], 0, 4), $format);
-        $date= preg_replace("/M/", substr($line["queuing_time"], 4, 2), $date);
-        $date= preg_replace("/D/", substr($line["queuing_time"], 6, 2), $date);
 
+        /* Check permissions for each field */
+        $dn = $user_ids[$line['uid']];
 
-        $report_list[]= "<td class=\"phonelist\"><a href=\"main.php?plug=".validate($_GET['plug'])."&amp;detail=".
-          $line["id"]."\"><img alt=\"\" align=\"middle\" border=0 src=\"".get_template_path('images/info_small.png')."\">&nbsp;".$line["uid"]."</a></td>".
-          "<td>$date $hour:$minute</td>".
-          "<td>".$this->status[$line["status"]]."</td>".
-          "<td>".$line["sender_id"]."</td>".
-          "<td>".$line["receiver_id"]."</td>".
-          "<td>".$line["pages"]."</td>";
+        /* Hide restricted attributes */ 
+        foreach(array("pages","receiverid","senderid","status","queuingtime","detailedView") as $attr){
+          $var = $attr."ACL";
+          $$var = $this->ui->get_permissions($dn,"gofax/faxreport",$attr);
+        }
+
+        /* Restricted attributes will not be displayed, this will be displayed instead */
+        $no_acl = "<img class='center' src='images/closedlock.png' 
+                    title='"._("Insufficient permissions to view this attribute")."' alt='"._("Insufficient permissions")."'>";
+
+        /* Create date */ 
+        if((!empty($line["queuing_time"])) && preg_match("/r/",$queuingtimeACL)){
+          $hour=  substr($line["queuing_time"], 8, 2);
+          $minute=substr($line["queuing_time"], 10, 2);
+          $format= _("Y-M-D");
+          $date= preg_replace("/Y/", substr($line["queuing_time"], 0, 4), $format);
+          $date= preg_replace("/M/", substr($line["queuing_time"], 4, 2), $date);
+          $date= preg_replace("/D/", substr($line["queuing_time"], 6, 2), $date);
+          $str_date = $date." ".$hour.":".$minute;
+        }else{
+          $str_date = $no_acl;
+        }
+  
+        /* Create entry html str */
+
+        if(preg_match("/r/",$detailedViewACL)){
+          $str = "<td class=\"phonelist\">
+            <a href=\"main.php?plug=".validate($_GET['plug'])."&amp;detail=".$line["id"]."\">
+            <img class='center' alt=\"\" align=\"middle\" border=0 src=\"".get_template_path('images/info_small.png')."\">
+            &nbsp;".$line["uid"].
+            "</a>
+            </td>
+            <td>$str_date</td>";
+        }else{
+          $str = "<td>
+            <img class='center' alt=\"\" align=\"middle\" border=0 src=\"".get_template_path('images/info_small.png')."\">
+            &nbsp;".$line["uid"]."</td>
+            <td>$str_date</td>";
+        }
+        
+        /* Add Status td */
+        if(preg_match("/r/",$statusACL)){
+          $str.="<td>".$this->status[$line["status"]]."</td>";
+        }else{
+          $str.="<td>".$no_acl."</td>";
+        }
+
+        /* Add sender_id td */
+        if(preg_match("/r/",$senderidACL)){
+          $str.="<td>".$line["sender_id"]."</td>";
+        }else{
+          $str.="<td>".$no_acl."</td>";
+        }
+
+        /* Add receiver_id td */
+        if(preg_match("/r/",$receiveridACL)){
+          $str.="<td>".$line["receiver_id"]."</td>";
+        }else{
+          $str.="<td>".$no_acl."</td>";
+        }
+
+        /* Add receiver_id td */
+        if(preg_match("/r/",$pagesACL)){
+          $str.="<td>".$line["pages"]."</td>";
+        }else{
+          $str.="<td>".$no_acl."</td>";
+        }
+      $this->report_list[] =  $str;
       }
 
-      $this->report_list= $report_list;
       mysql_close($link);
     }
 
-    
     /************ 
       Create output out of results  
      ************/
@@ -382,12 +458,10 @@ class faxreport extends plugin
     #FIXME You can only read attributes within this report plugin */
   function plInfo()
   {
-
-  
   
     return (array(
           "plShortName"     => _("Fax report"),
-          "plDescription"   => _("Fax report"),
+          "plDescription"   => _("Fax report")."&nbsp;<i>"._("All entries are readonly")."</i>",
           "plSelfModify"    => TRUE,
           "plDepends"       => array(),
           "plPriority"      => 1,                                 // Position in tabs
@@ -396,8 +470,18 @@ class faxreport extends plugin
           "plOptions"       => array(),
 
           "plProvidedAcls" => array(
-            "detailedView" => _("Detailed view"))
-          ));
+            "detailedView"   => _("Detailed view"),
+            "id"             => _("Fax ID"),
+            "queuingtime"    => _("Date")."&nbsp;/&nbsp;"._("Time"),
+            "status"         => _("Status"),
+            "senderid"       => _("Sender ID"),
+            "sendermsn"      => _("Sender MSN"),
+            "receiverid"     => _("Receiver ID"),
+            "receivermsn"    => _("Receiver MSN"),
+            "pages"          => _("Number of pages"),
+            "statusmessage"  => _("Status Message"),
+            "transfertime"   => _("Transfer time"))
+        ));
   }
 
 }
