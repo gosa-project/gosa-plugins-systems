@@ -301,7 +301,7 @@ class kolabAccount extends plugin
     }
 
     /* Check for URL scheme... */
-    if ($this->calFBURL != "" && !@preg_match('/^[^:/]+://[a-z0-9_/.+~-]+$/i', $this->calFBURL)){
+    if(!empty($this->calFBURL) && !preg_match("/(https|https):\/\//",$this->calFBURL)){
       $message[]= _("The value specified as Free Busy Information URL is invalid.");
     }
 
