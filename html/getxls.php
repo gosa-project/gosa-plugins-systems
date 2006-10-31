@@ -406,7 +406,7 @@ session_start ();
 
 /* Logged in? Simple security check */
 if (!isset($_SESSION['ui'])){
-  gosa_log ("Error: getldif.php called without session");
+  gosa_log ("Error: getxls.php called without session");
   header ("Location: index.php");
   exit;
 }
