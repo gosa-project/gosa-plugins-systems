@@ -36,7 +36,7 @@ function dump_ldap ($mode= 0)
     $dn=$d.$n;
     $date=date('dS \of F Y ');
     $fname = tempnam("/tmp", "demo.xls");
-    $workbook=& new writeexcel_workbook($fname);
+    $workbook= new writeexcel_workbook($fname);
 
     $title_title=& $workbook->addformat(array(
           bold    => 1,
@@ -238,12 +238,12 @@ function dump_ldap ($mode= 0)
     $name_section=_("Full");
     $date=date('dS \of F Y ');
     $fname = tempnam("/tmp", "demo.xls");
-    $workbook =& new writeexcel_workbook($fname);
-    $worksheet =& $workbook->addworksheet(_("Users"));
-    $worksheet2 =& $workbook->addworksheet(_("Groups"));
-    $worksheet3 =& $workbook->addworksheet(_("Servers"));
-    $worksheet4 =& $workbook->addworksheet(_("Computers"));
-    $worksheet5 =& $workbook->addworksheet(_("Adressbook"));
+    $workbook =  new writeexcel_workbook($fname);
+    $worksheet = $workbook->addworksheet(_("Users"));
+    $worksheet2 = $workbook->addworksheet(_("Groups"));
+    $worksheet3 = $workbook->addworksheet(_("Servers"));
+    $worksheet4 =$workbook->addworksheet(_("Computers"));
+    $worksheet5 = $workbook->addworksheet(_("Adressbook"));
 
     $worksheet->set_column('A:B', 51);
     $worksheet2->set_column('A:B', 51);
@@ -413,7 +413,12 @@ $config = $_SESSION['config'];
 
 
 /* Check ACL's */
-$dn =  base64_decode($_GET['n']);
+$dn ="";
+if(isset($_GET['n'])){
+  $dn =  base64_decode($_GET['n']);
+}elseif(isset($_GET['dn'])){
+  $dn =  base64_decode($_GET['dn']);
+}
 $acl = $ui->get_permissions($dn,"ldapmanager/xlsexport");
 if(!preg_match("/r/",$acl)){
   echo "insufficient permissions";
