@@ -10,16 +10,14 @@ class ldifimport extends plugin
   /* attribute list for save action */
   var $attributes= array();
   var $objectclasses= array();
+  var $ui;
 
   function ldifimport ($config, $dn= NULL)
   {
     /* Include config object */
     $this->config= $config;
 
-    /* set permissions */
-    $ui= get_userinfo();
-    $acl= get_permissions ($ui->dn, $ui->subtreeACL);
-    $this->acl= get_module_permission($acl, "ldapmanager", $ui->dn);
+    $this->ui = get_userinfo();
   }
 
   function execute()
@@ -36,20 +34,21 @@ class ldifimport extends plugin
     $smarty->assign("LDIFError",FALSE);
     $smarty->assign("type",FALSE);
 
-    /* Check permissions for export */
-    if (chkacl($this->acl,"import")!=""){
-      print_red(_("You've no permission to do LDAP imports."));
-    } else { 
-      if((isset($_FILES['userfile']['name']))&&(isset($_POST['fileup'])))
-      {
+    /* Get acls */
+    $acl = $this->ui->get_permissions($this->config->current['BASE'],"all/all");
+    
+    /* Import requested check file and acls */
+    if((isset($_FILES['userfile']['name']))&&(isset($_POST['fileup']))){
 
+      /* Check acls */
+      if(!preg_match("/r/",$acl)){
+        print_red(_("You need full access to all objects, to execute the import command."));
+      }else{
 
         $smarty->assign("type","importfile");
-
         $handle = NULL;
 
         // Check if there is a file submitted
-
         if(!$_FILES['userfile']['size'] > 0 )
         {
           print_red(_("The specified file is empty."));
@@ -82,15 +81,10 @@ class ldifimport extends plugin
           }
           @fclose($handle);
 
-          // Try to Import the Data
-
-
-
           // Should we use Overwrite ?
           if(!empty($_POST['overwrite'])) $overwrite = true; else $overwrite = false;;
           if(!empty($_POST['cleanup']))   $cleanup   = true; else $cleanup = false;
 
-          //
           $ErrorStr="";
           $check = $ldap->import_complete_ldif($str,$ErrorStr,$overwrite,$cleanup);
 
@@ -111,7 +105,6 @@ class ldifimport extends plugin
       }
     }
     return ($smarty->fetch (get_template_path('contentimport.tpl', TRUE)));
-
   }
 
   /* Return plugin informations for acl handling
