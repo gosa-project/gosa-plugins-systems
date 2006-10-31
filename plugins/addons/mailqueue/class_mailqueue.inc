@@ -80,7 +80,7 @@ class mailqueue extends plugin
       foreach(array("unhold_all","hold_all","del_all","requeue_all") as $attr){
         foreach($_POST as $name => $value){
           if((preg_match("/".$attr."/",$name))&&($only_once)){
-            if(chkacl($this->acl,$attr)!=""){
+            if(!$this->acl_is_readable($attr)){
               $only_once = false;
               print_red(sprintf(_("You do not have permission to execute the command '%s' on the mailqueue."),$attr));
             }else{
@@ -108,7 +108,7 @@ class mailqueue extends plugin
         if(in_array($opt,array("unhold","hold","del","requeue","query","header"))){
           $only_once = false;
 
-          if(chkacl($this->acl,$opt)!=""){
+          if(!$this->acl_is_readable($opt)){
               print_red(sprintf(_("You do not have permission to execute the command '%s' on the mailqueue."),$opt));
           }else{
             /* Create cmd */
@@ -167,7 +167,7 @@ class mailqueue extends plugin
         $q_cmd = preg_replace("/%server/" ,$this->Server,$q_cmd);
         $q_cmd = preg_replace("/%id/"     ,"all"        ,$q_cmd);
 
-        if(chkacl($this->acl,"query")!=""){
+        if(!$this->acl_is_readable("query")){
           print_red(sprintf(_("You do not have permission to execute the command '%s' on the mailqueue."),"query"));
           $mailQueueParser = new parseMailQueue("",$this->Server);
         }else{
@@ -194,7 +194,8 @@ class mailqueue extends plugin
           $q_cmd = preg_replace("/%server/" ,$ServerName  ,$q_cmd);
           $q_cmd = preg_replace("/%id/"     ,"ALL"           ,$q_cmd);
 
-          if(chkacl($this->acl,"query")!=""){
+          
+          if(!$this->acl_is_readable("query")){
             print_red(sprintf(_("You do not have permission to execute the command '%s' on the mailqueue."),"query"));
             $mailQueueParser = new parseMailQueue("",$this->Server);
           }else{
@@ -374,6 +375,36 @@ class mailqueue extends plugin
           "nonactive"  =>_("Not active")
           ));
   }
+
+  /* Return plugin informations for acl handling
+     #FIXME You can only read attributes within this report plugin */
+  function plInfo()
+  {
+    return (array(
+        "plShortName"   => _("Mailqueue"),
+        "plDescription" => _("Mailqueue addon"),
+        "plSelfModify"  => FALSE,
+        "plDepends"     => array(),
+        "plPriority"    => 1,
+        "plSection"     => array("addon"),
+        "plCategory"    => array("mailqueue" => array("objectClass" => "none", "description" => _("Mail queue addon"))),
+
+        "plProvidedAcls" => array(
+            "unhold_all"      => _("Unhold all messages"),
+            "hold_all"        => _("Hold all messages"),
+            "del_all"         => _("Delete all messages"),
+            "requeue_all"     => _("Requeue all messages"),
+            "unhold"          => _("Unhold message"),
+            "hold"            => _("Hold message"),
+            "del"             => _("Delete message"),
+            "requeue"         => _("Requeue message"),
+            "query"           => _("Gathering queue data"),
+            "header"          => _("Get header information")
+          )
+        ));
+  }
+
+
 
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

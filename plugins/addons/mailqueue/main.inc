@@ -21,13 +21,13 @@
 if (!$remove_lock){
 	/* Create mailqueue object on demand */
 	if (!isset($_SESSION['mailqueue']) || (isset($_GET['reset']) && $_GET['reset'] == 1)){
+		$ui = get_userinfo();
 		$_SESSION['mailqueue']= new mailqueue ($config);
+		#$_SESSION['mailqueue']->set_acl_base($ui->dn);
+		$_SESSION['mailqueue']->set_acl_base($config->current['BASE']);
+		$_SESSION['mailqueue']->set_acl_category("mailqueue");
 	}
 	$mailqueue= $_SESSION['mailqueue'];
-
- /* set permissions */
-    $acl= get_permissions ($ui->dn, $ui->subtreeACL);
-    $mailqueue->acl= get_module_permission($acl, "mailqueue", $ui->dn);
 
 	/* Execute formular */
 	$mailqueue->save_object();
