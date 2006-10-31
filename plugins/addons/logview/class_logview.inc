@@ -34,6 +34,8 @@ class logview extends plugin
 
       register_global("logfilter", $logfilter);
     }
+
+    $this->ui = get_userinfo();
   }
 
   function execute()
@@ -147,6 +149,27 @@ class logview extends plugin
 
     $smarty->assign("regex", $logfilter['regex']);
 
+
+    /* Get acls */
+    
+    $tmp_cat_bases = $this->ui->get_module_departments("logview");
+    $all_acls = "";
+    foreach($tmp_cat_bases as $acl_base){
+      $all_acls .= $this->ui->get_permissions($acl_base,"logview/logview");
+    }
+    if(count($tmp_cat_bases) == 0 || !preg_match("/r/",$all_acls)){
+      $res = "<tr>
+        <td colspan=4>
+        "._("You have insufficient permissions to view syslog entries.")."
+        </td>
+        </tr>";
+
+      /* Show main page */
+      $smarty->assign("range_selector", "");
+      $smarty->assign("search_result", $res);
+      return ($smarty->fetch (get_template_path('contents.tpl', TRUE)));
+    }
+
     /* Query stuff */
     $res= "";
     $cfg    = $this->config->data['SERVERS']['LOG'];
@@ -220,13 +243,13 @@ class logview extends plugin
         }
         $end= date ("YmdHis");
         $query_base= "  FROM 
-                          golog 
-                        WHERE 
-                          message like '".preg_replace("/\*/","%",$logfilter['regex'])."' 
-                          $ll 
-                          $hf 
-                        AND 
-                          time_stamp <= $end AND time_stamp >= $start";
+          golog 
+          WHERE 
+          message like '".preg_replace("/\*/","%",$logfilter['regex'])."' 
+          $ll 
+          $hf 
+          AND 
+          time_stamp <= $end AND time_stamp >= $start";
 
         /* Get number of entries */
         $query= "SELECT COUNT(*)".$query_base.";";
@@ -246,7 +269,11 @@ class logview extends plugin
 
         /* Display results */
         $mod= 0;
+
+        /* Add entries to result str */
         while ($line = mysql_fetch_array($result, MYSQL_ASSOC)){
+
+          /* Toggle background color */
           if ( ($mod++) & 1){
             $col= "background-color: #ECECEC;";
           } else {
@@ -255,19 +282,19 @@ class logview extends plugin
 
           $res.=" <tr style=\"$col\">\n";
           $res.="   <td style=\"text-align:center\">
-                    <img alt=\"".$line['log_level']."\" 
-                      src=\"".get_template_path('images/log_'.strtolower($line['log_level'])).".png\" 
-                      title=\"Log level is '".$line['log_level']."'\">
-                    </td>
-                    <td>".
-                      $line['host']."
-                    </td>";
+            <img alt=\"".$line['log_level']."\" 
+            src=\"".get_template_path('images/log_'.strtolower($line['log_level'])).".png\" 
+            title=\"Log level is '".$line['log_level']."'\">
+            </td>";
           $res.="   <td>".
-                      $line['time_stamp']."
-                    </td>
-                    <td width=\"100%\">".
-                      $line['message']."
-                    </td>";
+            $line['host']."
+            </td>"; 
+            $res.=" <td>".
+            $line['time_stamp']."
+            </td>";
+          $res .= "<td width=\"100%\">".
+            $line['message']."
+            </td>";
           $res.=" </tr>\n";
         }
         mysql_close($link);
@@ -346,6 +373,24 @@ class logview extends plugin
         $this->sort= 0;
       }
     }
+  }
+
+
+  /* Return plugin informations for acl handling
+     #FIXME You can only read attributes within this report plugin */
+  function plInfo()
+  {
+    return (array(
+        "plShortName"   => _("Log view"),
+        "plDescription" => _("Log view addon"),
+        "plSelfModify"  => FALSE,
+        "plDepends"     => array(),
+        "plPriority"    => 0,
+        "plSection"     => array("addon"),
+        "plCategory"    => array("logview" => array("objectClass" => "none", "description" => _("System logs"))),
+
+        "plProvidedAcls" => array()
+        ));
   }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

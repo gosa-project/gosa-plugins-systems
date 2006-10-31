@@ -53,15 +53,16 @@
    <td style="border-left:1px solid #A0A0A0">
     &nbsp;
    </td>
-   
    <td>
     <table summary="" width="100%">
+  <!-- 
      <tr>
       <td><img class="center" alt="" align="middle" border=0 src="{$ruleset_image}">&nbsp;<LABEL for="edit_rules">{t}Ruleset{/t}</LABEL></td>
       <td width="100%">
        <input id="edit_rules" name="edit_rules" type="submit" value="{t}Edit{/t}" disabled>
       </td>
      </tr>
+-->
      <tr>
       <td colspan=2 style="text-align:right;">
        <input name="search" type="submit" value="{t}Search{/t}">
@@ -69,7 +70,6 @@
      </tr>
     </table>
    </td>
-
   </tr>
  </table>
 </div>

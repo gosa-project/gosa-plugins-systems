@@ -19,9 +19,11 @@
 */
 
 if (!$remove_lock){
+
 	/* Create logview object on demand */
 	if (!isset($_SESSION['logview']) || (isset($_GET['reset']) && $_GET['reset'] == 1)){
 		$_SESSION['logview']= new logview ($config);
+		$_SESSION['logview']->set_acl_category("logview");
 	}
 	$logview= $_SESSION['logview'];
 
