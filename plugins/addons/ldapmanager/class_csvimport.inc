@@ -495,25 +495,6 @@ class csvimport extends plugin
     return ($smarty->fetch (get_template_path('contentcsv.tpl', TRUE)));
   }
 
-
-  /* Return plugin informations for acl handling
-     #FIXME You can only read attributes within this report plugin */
-  function plInfo()
-  {
-    return (array(
-        "plShortName"   => _("CSV import"),
-        "plDescription" => _("CSV import"),
-        "plSelfModify"  => FALSE,
-        "plDepends"     => array(),
-        "plPriority"    => 4,
-        "plSection"     => array("addon"),
-        "plCategory"    => array("ldapmanager"),
-
-        "plProvidedAcls" => array()
-        ));
-  }
-
-
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

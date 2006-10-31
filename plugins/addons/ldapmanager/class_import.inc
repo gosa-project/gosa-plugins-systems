@@ -41,7 +41,7 @@ class ldifimport extends plugin
     if((isset($_FILES['userfile']['name']))&&(isset($_POST['fileup']))){
 
       /* Check acls */
-      if(!preg_match("/r/",$acl)){
+      if(!preg_match("/w/",$acl)){
         print_red(_("You need full access to all objects, to execute the import command."));
       }else{
 
@@ -105,23 +105,6 @@ class ldifimport extends plugin
       }
     }
     return ($smarty->fetch (get_template_path('contentimport.tpl', TRUE)));
-  }
-
-  /* Return plugin informations for acl handling
-     #FIXME You can only read attributes within this report plugin */
-  function plInfo()
-  {
-    return (array(
-        "plShortName"   => _("Import"),
-        "plDescription" => _("Import"),
-        "plSelfModify"  => FALSE,
-        "plDepends"     => array(),
-        "plPriority"    => 3,
-        "plSection"     => array("addon"),
-        "plCategory"    => array("ldapmanager"),
-
-        "plProvidedAcls" => array()
-        ));
   }
 }
 
