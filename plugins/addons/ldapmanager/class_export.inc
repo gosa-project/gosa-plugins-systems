@@ -83,7 +83,7 @@ class ldifexport extends plugin
     if(isset($dn)){
       $acls = $this->ui->get_permissions($dn,"ldapmanager/ldifexport");
     }
-    if(!preg_match("/r/",$acls)){
+    if((!preg_match("/r/",$acls)) && (isset($dn))){
 
       /* Show error msg */      
       print_red(sprintf(_("You are not allowed to export the given ldap entry (%s)"),@LDAP::fix($dn)));
