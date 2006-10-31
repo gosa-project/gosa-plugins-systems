@@ -28,17 +28,27 @@ function dump_ldap ($mode= 0)
 {
   global $config;
   $ldap= $config->get_ldap_link();
-
   $display = "";
+
+
   if($mode == 2){	// Single Entry Export !
+
+    /* Get required attributes */
     $d =  base64_decode($_GET['d']);
     $n =  base64_decode($_GET['n']);
+
+    /* Create dn to search entries in */
     $dn=$d.$n;
+
+    /* Create some strings */
     $date=date('dS \of F Y ');
     $fname = tempnam("/tmp", "demo.xls");
+
+    /* Create xls workbench */
     $workbook= new writeexcel_workbook($fname);
 
-    $title_title=& $workbook->addformat(array(
+    /* Create some styles to generate xls */
+    $title_title= $workbook->addformat(array(
           bold    => 1,
           color   => 'green',
           size    => 11,
@@ -46,174 +56,222 @@ function dump_ldap ($mode= 0)
           font    => 'Helvetica'
           ));
 
-    $title_bold=& $workbook->addformat(array(
+    $title_bold= $workbook->addformat(array(
           bold    => 1,
           color   => 'black',
           size    => 10,
           font    => 'Helvetica'
           ));
-   # Create a format for the phone numbers
-   $f_phone =& $workbook->addformat();
-   $f_phone->set_align('left');
-   $f_phone->set_num_format('\0#');
+
+    # Create a format for the phone numbers
+    $f_phone = $workbook->addformat();
+    $f_phone->set_align('left');
+    $f_phone->set_num_format('\0#');
 
 
+    /* If the switch reaches default (it should not), 
+        this will be set to false, so nothig will be created ... */
+    $save = true;
+
+    /* Check which type of data was requested */
     switch ($d){
+
+
+      /* PEOPLE 
+          Get all peoples from this $dn 
+          and put them into the xls work sheet */
       case "ou=people," : 
-        $user= 				   $ldap->gen_xls($dn,"(objectClass=*)",array("uid","dateOfBirth","gender","givenName","preferredLanguage"));
-      $intitul=array(_("Birthday").":", _("Sex").":", _("Surname")."/"._("Given name").":",_("Language").":");
 
-      //name of the xls file
-      $name_section=_("Users");
-	
-      $worksheet=& $workbook->addworksheet(_("Users"));
-      $worksheet->set_column('A:B', 51);
+        $user    =  $ldap->gen_xls($dn,"(objectClass=*)",array("uid","dateOfBirth","gender","givenName","preferredLanguage"));
+        $intitul =  array(_("Birthday").":", _("Sex").":", _("Surname")."/"._("Given name").":",_("Language").":");
 
-      $user_nbr=count($user);
-      $worksheet->write('A1',sprintf(_("User list of %s on %s"),$n,$date),$title_title);
-      $r=3;
-      for($i=1;$i<$user_nbr;$i++)
-      {
-        if($i>1)
-          $worksheet->write('A'.$r++,"");
-        $worksheet->write('A'.$r++,_("User ID").": ".$user[$i][0],$title_bold);
+        // name of the xls file
+        $name_section = _("Users");
+        $worksheet    = $workbook->addworksheet(_("Users"));
+        $worksheet->set_column('A:B', 51);
 
-        for($j=1;$j<5;$j++)
+        $user_nbr =  count($user);
+        $worksheet->write('A1',sprintf(_("User list of %s on %s"),$n,$date),$title_title);
+        $r=3;
+        for($i=1;$i<$user_nbr;$i++)
         {
-          $r++;
-          $worksheet->write('A'.$r,$intitul[$j-1]);
-          $user[$i][$j]=utf8_decode ($user[$i][$j]);
-          $worksheet->write('B'.$r,$user[$i][$j]);
+          if($i>1)
+            $worksheet->write('A'.$r++,"");
+          $worksheet->write('A'.$r++,_("User ID").": ".$user[$i][0],$title_bold);
+
+          for($j=1;$j<5;$j++)
+          {
+            $r++;
+            $worksheet->write('A'.$r,$intitul[$j-1]);
+            $user[$i][$j]=utf8_decode ($user[$i][$j]);
+            $worksheet->write('B'.$r,$user[$i][$j]);
+          }
+          $worksheet->write('A'.$r++,"");
         }
-        $worksheet->write('A'.$r++,"");
-      }
       break;
 
-      case "ou=groups,": $groups= $ldap->gen_xls($dn,"(objectClass=*)",array("cn","memberUid"),TRUE,1);
-      $intitul=array(_("Members").":");
 
-      //name of the xls file
-      $name_section=_("Groups");
+      /* GROUPS 
+          Get all groups from th $dn 
+          and put them into the xls work sheet */
+      case "ou=groups,": 
 
-      $worksheet =& $workbook->addworksheet(_("Groups"));
-      $worksheet->set_column('A:B', 51);
+        /* Get group data */
+        $groups    = $ldap->gen_xls($dn,"(objectClass=*)",array("cn","memberUid"),TRUE,1);
+        $intitul   = array(_("Members").":");
 
-      //count number of groups
-      $groups_nbr=count($groups);
-      $worksheet->write('A1', sprintf(_("Groups of %s on %s"), $n, $date),$title_title);
-      $r=3;
-      for($i=1;$i<$groups_nbr;$i++)
-      {
-        $worksheet->write('A'.$r++,_("User ID").": ".$groups[$i][0][0],$title_bold);
-        for($j=1;$j<=2;$j++)
+        //name of the xls file
+        $name_section=_("Groups");
+
+        $worksheet = $workbook->addworksheet(_("Groups"));
+        $worksheet->set_column('A:B', 51);
+
+        //count number of groups
+        $groups_nbr=count($groups);
+        $worksheet->write('A1', sprintf(_("Groups of %s on %s"), $n, $date),$title_title);
+        $r=3;
+        for($i=1;$i<$groups_nbr;$i++)
         {
-          $r++;
-          $worksheet->write('A'.$r,$intitul[$j-1]);
-          for($k=0;$k<= $groups[$i][$j]['count'];$k++)
+          $worksheet->write('A'.$r++,_("User ID").": ".$groups[$i][0][0],$title_bold);
+          for($j=1;$j<=2;$j++)
           {
-            $worksheet->write('B'.$r,$groups[$i][$j][$k]);
             $r++;
+            $worksheet->write('A'.$r,$intitul[$j-1]);
+            for($k=0;$k<= $groups[$i][$j]['count'];$k++)
+            {
+              $worksheet->write('B'.$r,$groups[$i][$j][$k]);
+              $r++;
+            }
           }
         }
-      }
-      break;
-
-      case "ou=computers,": $computers= $ldap->gen_xls($dn,"(objectClass=*)",array("cn","description","uid"));
-      $intitul=array(_("Description").":",_("User ID").":");
-      $worksheet =& $workbook->addworksheet(_("Computers"));
-      $worksheet->set_column('A:B', 32);
-      //count number of computers
-      $computers_nbr=count($computers);
-      $r=1;
-      for($i=1;$i<$computers_nbr;$i++)
-      {
-        if($i>1)
-          $worksheet->write('A'.$r++,"");
-        $worksheet->write('A'.$r++,_("Common name").": ".$computers[$i][0],$title_bold);
-        for($j=1;$j<3;$j++)
-        {
-          $r++;
-          $worksheet->write('A'.$r,$intitul[$j-1]);
-          $computers[$i][$j]=utf8_decode ($computers[$i][$j]);
-          $worksheet->write('B'.$r,$computers[$i][$j]);
-        }
-        $worksheet->write('A'.$r++,"");
-      }
-      break;
-
-      case "ou=servers,ou=systems,": $servers= $ldap->gen_xls($dn,"(objectClass=*)",array("cn"));
-      $intitul=array(_("Server name").":");
-
-      //name of the xls file
-      $name_section=_("Servers");
-
-      $worksheet =& $workbook->addworksheet(_("Servers"));
-      $worksheet->set_column('A:B', 51);
-
-      //count number of servers
-      $servers_nbr=count($servers);
-      $worksheet->write('A1',sprintf(_("Servers of %s on %s"), $n, $date),$title_title);
-      $r=3;
-      $worksheet->write('A'.$r++,_("Servers").": ",$title_bold);
-      for($i=1;$i<$servers_nbr;$i++)
-      {
-        for($j=0;$j<1;$j++)
-        {
-          $r++;
-          $worksheet->write('A'.$r,$intitul[$j]);
-          $servers[$i][$j]=utf8_decode ($servers[$i][$j]);
-          $worksheet->write('B'.$r,$servers[$i][$j]);
-        }
-      }
-      break;
-
-      case "dc=addressbook,": //data about addressbook
-        $address= $ldap->gen_xls($dn,"(objectClass=*)",array("cn","displayName","facsimileTelephoneNumber","givenName","homePhone","homePostalAddress","initials","l","mail","mobile","o","ou","pager","telephoneNumber","postalAddress","postalCode","sn","st","title"));
-
-      $intitul=array(_("Common name").":",_("Display name").":",_("Fax").":",_("Name")."/"._("Given name").":",_("Home phone").":",_("Home postal address").":",_("Initials").":",_("Location").":",_("Mail address").":",_("Mobile phone").":",_("City").":",_("Postal address").":",_("Pager").":",_("Phone number").":",_("Address").":",_("Postal code").":",_("Surname").":",_("State").":",_("Function").":");
-      
-      //name of the xls file
-      $name_section=_("Adressbook");
-
-      $worksheet =& $workbook->addworksheet(_("Servers"));
-      $worksheet->set_column('A:B', 51);
-
-      //count number of entries
-      $address_nbr=count($address);
-      $worksheet->write('A1',sprintf(_("Adressbook of %s on %s"),$n, $date),$title_title);
-      $r=3;
-      for($i=1;$i<$address_nbr;$i++)
-      {
-        if($i>1)
-          $worksheet->write('A'.$r++,"");
-        $worksheet->write('A'.$r++,_("Common Name").": ".$address[$i][0],$title_bold);
-        for($j=1;$j<19;$j++)
-        {
-          $r++;
-          $worksheet->write('A'.$r,$intitul[$j]);
-          $address[$i][$j]=utf8_decode ($address[$i][$j]);
-          $worksheet->write('B'.$r,$address[$i][$j],$f_phone);
-        }
-        $worksheet->write('A'.$r++,"");
-      }
-
-      break;
-
-      default: echo "error!!";
-    }
-
-    $workbook->close();
+     break;
 
 
-    // We'll be outputting a xls
-    header('Content-type: application/x-msexcel');
+     /* SYSTEMS 
+        Get all systems from th $dn
+        and put them into the xls work sheet */
+     case "ou=systems,": 
 
-    // It will be called demo.xls
-    header('Content-Disposition: attachment; filename='.$name_section.".xls");
+       $name_section=_("Servers");
+       $computers= $ldap->gen_xls($dn,"(&(objectClass=*)(cn=*))",array("cn","description","uid"));
 
-    // The source is in original.xls
-    readfile($fname);
-    unlink ($fname);
+       $intitul=array(_("Description").":",_("User ID").":");
+       $worksheet = $workbook->addworksheet(_("Computers"));
+       $worksheet->set_column('A:B', 32);
+
+       //count number of computers
+       $computers_nbr=count($computers);
+       $r=1;
+       for($i=1;$i<$computers_nbr;$i++)
+       {
+         if($i>1)
+           $worksheet->write('A'.$r++,"");
+         $worksheet->write('A'.$r++,_("Common name").": ".$computers[$i][0],$title_bold);
+         for($j=1;$j<3;$j++)
+         {
+           $r++;
+           $worksheet->write('A'.$r,$intitul[$j-1]);
+           $computers[$i][$j]=utf8_decode ($computers[$i][$j]);
+           $worksheet->write('B'.$r,$computers[$i][$j]);
+         }
+         $worksheet->write('A'.$r++,"");
+       }
+    break;
+
+     /* SYSTEMS 
+       Get all systems from th $dn
+       and put them into the xls work sheet */
+     case "ou=servers,ou=systems,": $servers= $ldap->gen_xls($dn,"(objectClass=*)",array("cn"));
+       $intitul=array(_("Server name").":");
+
+       //name of the xls file
+       $name_section=_("Servers");
+
+       $worksheet = $workbook->addworksheet(_("Servers"));
+       $worksheet->set_column('A:B', 51);
+
+       //count number of servers
+       $servers_nbr=count($servers);
+       $worksheet->write('A1',sprintf(_("Servers of %s on %s"), $n, $date),$title_title);
+       $r=3;
+       $worksheet->write('A'.$r++,_("Servers").": ",$title_bold);
+       for($i=1;$i<$servers_nbr;$i++)
+       {
+         for($j=0;$j<1;$j++)
+         {
+           $r++;
+           $worksheet->write('A'.$r,$intitul[$j]);
+           $servers[$i][$j]=utf8_decode ($servers[$i][$j]);
+           $worksheet->write('B'.$r,$servers[$i][$j]);
+         }
+       }
+     break;
+
+     case "dc=addressbook,": //data about addressbook
+
+       /* ADDRESSBOOK 
+        Get all addressbook entries from  $dn
+         and put them into the xls work sheet */
+
+       $address= $ldap->gen_xls($dn,"(objectClass=*)",
+                    array("cn","displayName","facsimileTelephoneNumber","givenName",
+                          "homePhone","homePostalAddress","initials","l","mail","mobile",
+                          "o","ou","pager","telephoneNumber","postalAddress",
+                          "postalCode","sn","st","title"));
+
+       $intitul=  array(_("Common name").":",_("Display name").":",_("Fax").":",
+                        _("Name")."/"._("Given name").":",_("Home phone").":",
+                        _("Home postal address").":",_("Initials").":",_("Location").":",
+                        _("Mail address").":",_("Mobile phone").":",_("City").":",
+                        _("Postal address").":",_("Pager").":",_("Phone number").":",
+                        _("Address").":",_("Postal code").":",_("Surname").":",
+                        _("State").":",_("Function").":");
+
+       //name of the xls file
+       $name_section=_("Adressbook");
+
+       $worksheet = $workbook->addworksheet(_("Servers"));
+       $worksheet->set_column('A:B', 51);
+
+       //count number of entries
+       $address_nbr=count($address);
+       $worksheet->write('A1',sprintf(_("Adressbook of %s on %s"),$n, $date),$title_title);
+       $r=3;
+       for($i=1;$i<$address_nbr;$i++)
+       {
+         if($i>1)
+           $worksheet->write('A'.$r++,"");
+         $worksheet->write('A'.$r++,_("Common Name").": ".$address[$i][0],$title_bold);
+         for($j=1;$j<19;$j++)
+         {
+           $r++;
+           $worksheet->write('A'.$r,$intitul[$j]);
+           $address[$i][$j]=utf8_decode ($address[$i][$j]);
+           $worksheet->write('B'.$r,$address[$i][$j],$f_phone);
+         }
+         $worksheet->write('A'.$r++,"");
+       }
+
+     break;
+     default:
+
+        $save = false; 
+        echo "Specified parameter '".$d."' was not found in switch-case.";
+   }
+
+   if($save){
+     $workbook->close();
+   }
+
+   // We'll be outputting a xls
+   header('Content-type: application/x-msexcel');
+
+   // It will be called demo.xls
+   header('Content-Disposition: attachment; filename=xls_export_'.$name_section.".xls");
+
+   // The source is in original.xls
+   readfile($fname);
+   unlink ($fname);
   }
   elseif($mode == 3){ // Full Export !
     $dn =  base64_decode($_GET['dn']);
@@ -231,8 +289,16 @@ function dump_ldap ($mode= 0)
     $servers= $ldap->gen_xls("ou=servers,ou=systems,".$dn,"(objectClass=*)",array("cn"));
     $servers_intitul=array(_("Name").":");
     //data about addressbook
-    $address= $ldap->gen_xls("dc=addressbook,".$dn,"(objectClass=*)",array("cn","displayName","facsimileTelephoneNumber","givenName","homePhone","homePostalAddress","initials","l","mail","mobile","o","ou","pager","telephoneNumber","postalAddress","postalCode","sn","st","title"));
-    $address_intitul=array("cn",_("Display name").":",_("Fax").":",_("Surname")."/"._("Given name").":",_("Phone number").":",_("Postal address").":",_("Initials").":",_("City").":",_("Email address").":",_("Mobile").":",_("Organization").":",_("Organizational unit").":",_("Pager").":",_("Phone number").":",_("Postal address").":",_("Postal Code").":",_("Surename").":",_("State").":",_("Title").":");
+    $address= $ldap->gen_xls("dc=addressbook,".$dn,"(objectClass=*)",
+          array("cn","displayName","facsimileTelephoneNumber","givenName","homePhone","homePostalAddress",
+                "initials","l","mail","mobile","o","ou","pager","telephoneNumber","postalAddress",
+                "postalCode","sn","st","title"));
+    $address_intitul=
+          array("cn",_("Display name").":",_("Fax").":",_("Surname")."/"._("Given name").":",
+                _("Phone number").":",_("Postal address").":",_("Initials").":",_("City").":",
+                _("Email address").":",_("Mobile").":",_("Organization").":",_("Organizational unit").":",
+                _("Pager").":",_("Phone number").":",_("Postal address").":",_("Postal Code").":",
+                _("Surename").":",_("State").":",_("Title").":");
 
     //name of the xls file
     $name_section=_("Full");
@@ -251,24 +317,24 @@ function dump_ldap ($mode= 0)
     $worksheet4->set_column('A:B', 51);
     $worksheet5->set_column('A:B', 51);
 
-    $title_title=& $workbook->addformat(array(
+    $title_title= $workbook->addformat(array(
           bold    => 1,
           color   => 'green',
           size    => 11,
           font    => 'Helvetica'
           ));
 
-    $title_bold =& $workbook->addformat(array(
+    $title_bold = $workbook->addformat(array(
           bold    => 1,
           color   => 'black',
           size    => 10,
           font    => 'Helvetica'
           ));
 
-   # Create a format for the phone numbers
-   $f_phone =& $workbook->addformat();
-   $f_phone->set_align('left');
-   $f_phone->set_num_format('\0#');
+# Create a format for the phone numbers
+    $f_phone = $workbook->addformat();
+    $f_phone->set_align('left');
+    $f_phone->set_num_format('\0#');
 
     //count number of users
     $user_nbr=count($user);
