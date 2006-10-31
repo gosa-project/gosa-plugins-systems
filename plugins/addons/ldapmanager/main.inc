@@ -22,18 +22,12 @@ if (!$remove_lock){
 	/* Create phonelist object on demand */
 	if (!isset($_SESSION['ldif']) || (isset($_GET['reset']) && $_GET['reset'] == 1)){
 		$_SESSION['ldif']= new ldif ($config);
+		$_SESSION['ldif']->set_acl_category("logview");
 	}
 	$ldif= $_SESSION['ldif'];
 
-	#print_red(_("Warning: Please check the SIZELIMIT option set on your LDAP server. You may not get all entries, if this value is to low!"));
-
-    /* set permissions */
-    $acl= get_permissions ($ui->dn, $ui->subtreeACL);
-    $ldif->acl= get_module_permission($acl, "ldapmanager", $ui->dn);
-	
 	/* Execute formular */
 	$display= $ldif->execute ();
-
 	$display.= "<input type=\"hidden\" name=\"ignore\">\n";
 
 	/* Page header*/

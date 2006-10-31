@@ -114,6 +114,22 @@ class ldifimport extends plugin
 
   }
 
+  /* Return plugin informations for acl handling
+     #FIXME You can only read attributes within this report plugin */
+  function plInfo()
+  {
+    return (array(
+        "plShortName"   => _("Import"),
+        "plDescription" => _("Import"),
+        "plSelfModify"  => FALSE,
+        "plDepends"     => array(),
+        "plPriority"    => 3,
+        "plSection"     => array("addon"),
+        "plCategory"    => array("ldapmanager"),
+
+        "plProvidedAcls" => array()
+        ));
+  }
 }
 
 

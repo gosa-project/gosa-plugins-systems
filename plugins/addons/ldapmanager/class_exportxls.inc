@@ -108,6 +108,23 @@ class xlsexport extends plugin
     /* Show main page */
     return ($smarty->fetch (get_template_path('contentexportxls.tpl', TRUE)));
   }
+
+  /* Return plugin informations for acl handling
+     #FIXME You can only read attributes within this report plugin */
+  function plInfo()
+  {
+    return (array(
+        "plShortName"   => _("Export XLS"),
+        "plDescription" => _("Export XLS"),
+        "plSelfModify"  => FALSE,
+        "plDepends"     => array(),
+        "plPriority"    => 2,
+        "plSection"     => array("addon"),
+        "plCategory"    => array("ldapmanager"),
+
+        "plProvidedAcls" => array()
+        ));
+  }
 }
 
 
