@@ -28,7 +28,6 @@ function dump_ldap ($mode= 0)
 {
   global $config;
   $ldap= $config->get_ldap_link();
-  error_reporting (E_ALL & ~E_NOTICE);
 
   $display = "";
   if($mode == 2){	// Single Entry Export !
@@ -401,7 +400,6 @@ function dump_ldap ($mode= 0)
 /* Basic setup, remove eventually registered sessions */
 @require_once ("../include/php_setup.inc");
 @require_once ("functions.inc");
-error_reporting (E_ALL);
 session_start ();
 
 /* Logged in? Simple security check */
@@ -410,8 +408,17 @@ if (!isset($_SESSION['ui'])){
   header ("Location: index.php");
   exit;
 }
-$ui= $_SESSION["ui"];
-$config= $_SESSION['config'];
+$ui     = $_SESSION["ui"];
+$config = $_SESSION['config'];
+
+
+/* Check ACL's */
+$dn =  base64_decode($_GET['n']);
+$acl = $ui->get_permissions($dn,"ldapmanager/xlsexport");
+if(!preg_match("/r/",$acl)){
+  echo "insufficient permissions";
+  exit();
+}
 
 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 header("Last-Modified: ".gmdate("D, d M Y H:i:s")." GMT");
@@ -420,14 +427,6 @@ header("Pragma: no-cache");
 header("Cache-Control: post-check=0, pre-check=0");
 
 header("Content-type: text/plain");
-
-/* Check ACL's */
-$acl= get_permissions ($config->current['BASE'], $ui->subtreeACL);
-$acl= get_module_permission($acl, "all", $config->current['BASE']);
-if (chkacl($acl, "all") != ""){
-  header ("Location: index.php");
-  exit;
-}
 
 switch ($_GET['ivbb']){
   case 2: dump_ldap (2);
