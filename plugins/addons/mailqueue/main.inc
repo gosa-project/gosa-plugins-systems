@@ -23,9 +23,13 @@ if (!$remove_lock){
 	if (!isset($_SESSION['mailqueue']) || (isset($_GET['reset']) && $_GET['reset'] == 1)){
 		$ui = get_userinfo();
 		$_SESSION['mailqueue']= new mailqueue ($config);
-		#$_SESSION['mailqueue']->set_acl_base($ui->dn);
-		$_SESSION['mailqueue']->set_acl_base($config->current['BASE']);
 		$_SESSION['mailqueue']->set_acl_category("mailqueue");
+		
+		/* Check root dn and user dn for acl informations */
+		$_SESSION['mailqueue']->set_acl_base($config->current['BASE']);
+		if($_SESSION['mailqueue']->getacl("") == ""){
+			$_SESSION['mailqueue']->set_acl_base($ui->dn);
+		}
 	}
 	$mailqueue= $_SESSION['mailqueue'];
 
