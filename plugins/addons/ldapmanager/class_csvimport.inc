@@ -18,6 +18,8 @@ class csvimport extends plugin
   {
     /* Include config object */
     $this->config= $config;
+
+    $this->ui = get_userinfo();
   }
 
   function execute()
@@ -90,8 +92,11 @@ class csvimport extends plugin
     $smarty->assign("attrs",$this->csvinfo['attr']);
 
     /* Check permissions for import */
-    if (chkacl($this->acl,"csvimport")!=""){
-      print_red(_("You've no permission to do CSV imports."));
+    $acl = $this->ui->get_permissions($this->config->current['BASE'],"all/all");
+    if(!preg_match("/w/",$acl)){
+      if(isset($_POST['userfile']) || isset($_POST['sorted']) || isset($_POST['fileup'])){
+        print_red(_("You've no permission to do CSV imports."));
+      }
       return ($smarty->fetch (get_template_path('contentcsv.tpl', TRUE)));
     }
 
