@@ -51,7 +51,7 @@ class ldifexport extends plugin
 
     // Set values for optionlist in form
     $bases      = array();
-    $acl_bases  = $this->ui->get_module_departments("ldapmanager");
+    $acl_bases  = $this->ui->get_module_departments("all");
     foreach($this->config->idepartments as $base_dn => $name){
       if(in_array_ics($base_dn,$acl_bases)){
         $bases[$base_dn] = $name;
@@ -81,7 +81,7 @@ class ldifexport extends plugin
     /* check alcs for given dn */
     $acls ="";
     if(isset($dn)){
-      $acls = $this->ui->get_permissions($dn,"ldapmanager/ldifexport");
+      $acls = $this->ui->get_permissions($dn,"all/all");
     }
     if((!preg_match("/r/",$acls)) && (isset($dn))){
 
@@ -111,24 +111,6 @@ class ldifexport extends plugin
     /* Show main page */
     return ($smarty->fetch (get_template_path('contentexport.tpl', TRUE)));
   }
-
-  /* Return plugin informations for acl handling
-     #FIXME You can only read attributes within this report plugin */
-  function plInfo()
-  {
-    return (array(
-        "plShortName"   => _("Export"),
-        "plDescription" => _("Export"),
-        "plSelfModify"  => FALSE,
-        "plDepends"     => array(),
-        "plPriority"    => 1,
-        "plSection"     => array("addon"),
-        "plCategory"    => array("ldapmanager" => array("objectClass" => "none", "description" => _("Ldap manager addon"))),
-
-        "plProvidedAcls" => array()
-        ));
-  }
-
 }
 
 

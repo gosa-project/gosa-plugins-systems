@@ -58,7 +58,7 @@ class xlsexport extends plugin
 
     // Set values for optionlist in form
     $bases      = array();
-    $acl_bases  = $this->ui->get_module_departments("ldapmanager");
+    $acl_bases  = $this->ui->get_module_departments("all");
     foreach($this->config->idepartments as $base_dn => $name){
       if(in_array_ics($base_dn,$acl_bases)){
         $bases[$base_dn] = $name;
@@ -93,7 +93,7 @@ class xlsexport extends plugin
     /* check alcs for given dn */
     $acls ="";
     if(isset($dn)){
-      $acls = $this->ui->get_permissions($dn,"ldapmanager/xlsexport");
+      $acls = $this->ui->get_permissions($dn,"all/all");
     }
  
     if((!preg_match("/r/",$acls)) && isset($dn)){
@@ -125,22 +125,6 @@ class xlsexport extends plugin
     return ($smarty->fetch (get_template_path('contentexportxls.tpl', TRUE)));
   }
 
-  /* Return plugin informations for acl handling
-     #FIXME You can only read attributes within this report plugin */
-  function plInfo()
-  {
-    return (array(
-        "plShortName"   => _("Export XLS"),
-        "plDescription" => _("Export XLS"),
-        "plSelfModify"  => FALSE,
-        "plDepends"     => array(),
-        "plPriority"    => 2,
-        "plSection"     => array("addon"),
-        "plCategory"    => array("ldapmanager"),
-
-        "plProvidedAcls" => array()
-        ));
-  }
 }
 
 
