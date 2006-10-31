@@ -826,7 +826,7 @@ class LDAP{
 
   function gen_xls ($dn, $filter= "(objectClass=*)", $attributes= array('*'), $recursive= TRUE,$r_array=0)
   {
-    $display= "";
+    $display= array();
 
       $this->cd($dn);
       $this->search("$filter");

@@ -83,7 +83,7 @@ function writeexcel_workbook($filename) {
     $this->_palette           = array();
 
     # Add the default format for hyperlinks
-    $this->_url_format =& $this->addformat(array('color' => 'blue', 'underline' => 1));
+    $this->_url_format = $this->addformat(array('color' => 'blue', 'underline' => 1));
 
     # Check for a filename
     if ($this->_filename == '') {
@@ -128,7 +128,7 @@ function close() {
 #
 # Returns: a list of the worksheet objects in a workbook
 #
-function &sheets() {
+function sheets() {
     return $this->_worksheets;
 }
 
@@ -144,7 +144,7 @@ function &sheets() {
 #
 # Returns: reference to a worksheet object
 #
-function &addworksheet($name="") {
+function addworksheet($name="") {
 
     # Check that sheetname is <= 31 chars (Excel limit).
     if (strlen($name) > 31) {
@@ -170,7 +170,7 @@ function &addworksheet($name="") {
                                           $this->_url_format, $this->_parser,
                                           $this->_tempdir);
 
-    $this->_worksheets[$index] = &$worksheet;    # Store ref for iterator
+    $this->_worksheets[$index] = $worksheet;    # Store ref for iterator
     $this->_sheetnames[$index] = $name;         # Store EXTERNSHEET names
     $this->_parser->set_ext_sheet($name, $index); # Store names in Formula.pm
     return $worksheet;
@@ -183,7 +183,7 @@ function &addworksheet($name="") {
 # Add a new format to the Excel workbook. This adds an XF record and
 # a FONT record. Also, pass any properties to the Format::new().
 #
-function &addformat($para=false) {
+function addformat($para=false) {
     if($para===false) {
         $format = new writeexcel_format($this->_xf_index);
     } else {
@@ -192,7 +192,7 @@ function &addformat($para=false) {
 
     $this->_xf_index += 1;
     # Store format reference
-    $this->_formats[]=&$format;
+    $this->_formats[]=$format;
 
     return $format;
 }
@@ -232,7 +232,7 @@ function set_custom_color($index, $red, $green, $blue) {
     }
 */
 
-    $aref    = &$this->_palette;
+    $aref    = $this->_palette;
 
     # Check that the colour index is the right range
     if ($index < 8 or $index > 64) {
@@ -428,10 +428,11 @@ function _store_workbook() {
     # Calculate the number of selected worksheet tabs and call the finalization
     # methods for each worksheet
     for ($c=0;$c<sizeof($this->_worksheets);$c++) {
-        $sheet=&$this->_worksheets[$c];
+        $sheet=$this->_worksheets[$c];
         if ($sheet->_selected) {
             $this->_selected++;
-        }
+        
+	}
         $sheet->_close($this->_sheetnames);
     }
 
@@ -460,7 +461,7 @@ function _store_workbook() {
 
     # Add BOUNDSHEET records
     for ($c=0;$c<sizeof($this->_worksheets);$c++) {
-       $sheet=&$this->_worksheets[$c];
+       $sheet=$this->_worksheets[$c];
         $this->_store_boundsheet($sheet->_name, $sheet->_offset);
     }
 
@@ -495,7 +496,7 @@ function _store_OLE_file() {
         $OLE->write($this->_data);
 
         for ($c=0;$c<sizeof($this->_worksheets);$c++) {
-            $sheet=&$this->_worksheets[$c];
+            $sheet=$this->_worksheets[$c];
             while ($tmp = $sheet->get_data()) {
                 $OLE->write($tmp);
             }
@@ -524,7 +525,7 @@ function _calc_sheet_offsets() {
     $offset += $EOF;
 
     for ($c=0;$c<sizeof($this->_worksheets);$c++) {
-        $sheet=&$this->_worksheets[$c];
+        $sheet=$this->_worksheets[$c];
         $sheet->_offset = $offset;
         $offset += $sheet->_datasize;
     }
@@ -559,7 +560,7 @@ function _store_all_fonts() {
     $fonts[$key] = 0;               # Index of the default font
 
     for ($c=0;$c<sizeof($this->_formats);$c++) {
-        $format=&$this->_formats[$c];
+        $format=$this->_formats[$c];
 
         $key = $format->get_font_key();
 
@@ -594,7 +595,7 @@ function _store_all_num_formats() {
     #
 
     for ($c=0;$c<sizeof($this->_formats);$c++) {
-        $format=&$this->_formats[$c];
+        $format=$this->_formats[$c];
 
         $num_format = $format->_num_format;
 
@@ -1086,7 +1087,7 @@ function _store_name_long($par0, $par1, $par2, $par3, $par4, $par5) {
 # Stores the PALETTE biff record.
 #
 function _store_palette() {
-    $aref            = &$this->_palette;
+    $aref            = $this->_palette;
 
     $record          = 0x0092;                  # Record identifier
     $length          = 2 + 4 * sizeof($aref);   # Number of bytes to follow

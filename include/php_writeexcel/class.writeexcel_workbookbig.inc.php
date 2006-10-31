@@ -39,7 +39,7 @@ class writeexcel_workbookbig extends writeexcel_workbook {
         $file->append($this->_data);
 
         for ($c=0;$c<sizeof($this->_worksheets);$c++) {
-            $worksheet=&$this->_worksheets[$c];
+            $worksheet=$this->_worksheets[$c];
             while ($data=$worksheet->get_data()) {
                 $file->append($data);
             }

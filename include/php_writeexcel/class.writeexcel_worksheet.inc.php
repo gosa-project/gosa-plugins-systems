@@ -103,8 +103,8 @@ class writeexcel_worksheet extends writeexcel_biffwriter {
     /*
      * Constructor. Creates a new Worksheet object from a BIFFwriter object
      */
-    function writeexcel_worksheet($name, $index, &$activesheet, &$firstsheet,
-                                  &$url_format, &$parser, $tempdir) {
+    function writeexcel_worksheet($name, $index, $activesheet, $firstsheet,
+                                  $url_format, $parser, $tempdir) {
 
         $this->writeexcel_biffwriter();
 
@@ -114,10 +114,10 @@ class writeexcel_worksheet extends writeexcel_biffwriter {
 
         $this->_name              = $name;
         $this->_index             = $index;
-        $this->_activesheet       = &$activesheet;
-        $this->_firstsheet        = &$firstsheet;
-        $this->_url_format        = &$url_format;
-        $this->_parser            = &$parser;
+        $this->_activesheet       = $activesheet;
+        $this->_firstsheet        = $firstsheet;
+        $this->_url_format        = $url_format;
+        $this->_parser            = $parser;
         $this->_tempdir           = $tempdir;
 
         $this->_ext_sheets        = array();
@@ -1071,7 +1071,7 @@ function _cell_to_rowcol($cell) {
         $count=sizeof($chars);
 
         for ($c=0;$c<sizeof($chars);$c++) {
-            $char=&$chars[$c];
+            $char=$chars[$c];
             $char    = ord($char) << ++$i;
             $low_15  = $char & 0x7fff;
             $high_15 = $char & 0x7fff << 15;
@@ -1329,7 +1329,7 @@ function write_formula() {
     $formula = preg_replace('/^=/', "", $formula);
 
     # Parse the formula using the parser in Formula.pm
-    $parser =& $this->_parser;
+    $parser = $this->_parser;
     $formula   = $parser->parse_formula($formula);
 
     $formlen = strlen($formula); # Length of the binary string
