@@ -20,6 +20,8 @@ function smarty_block_render($params, $text, &$smarty)
 		return ($text);
 	}
 
+	$text = preg_replace ("/\n/","GOSA_LINE_BREAK",$text);
+
 	/* Disable objects, but keep those active that have mode=read_active */
 	if(!(isset($params['mode']) && $params['mode']=='read_active')){
 
@@ -48,7 +50,7 @@ function smarty_block_render($params, $text, &$smarty)
 
 	/* Read only */
 	if(preg_match("/r/i",$acl)){
-		return($text);	
+		return(preg_replace("/GOSA_LINE_BREAK/","\n",$text));	
 	}
 
 	/* No acls */	
@@ -67,7 +69,7 @@ function smarty_block_render($params, $text, &$smarty)
 			"\\1\\2",
 			"\\1 \\2");
 	$text 	= preg_replace($from,$to,$text);
-
+	$text = preg_replace("/GOSA_LINE_BREAK/","\n",$text);
 	return $text;
 }
 
