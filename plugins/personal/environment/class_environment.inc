@@ -1251,7 +1251,7 @@ class environment extends plugin
           "plDescription"   => _("Environment settings"),         // Description
           "plSelfModify"    => TRUE,                              
           "plDepends"       => array("user", "posixAccount"),     // This plugin depends on 
-          "plPriority"      => 2,                                 // Position in tabs 
+          "plPriority"      => 3,                                 // Position in tabs 
           "plSection"       => "personal",                        // This belongs to personal
           "plCategory"      => array("users", "groups"),          // Add to following categories 
           "plOptions"       => array("resolution_hook" => array("type" => "string",
