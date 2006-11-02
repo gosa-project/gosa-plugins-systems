@@ -18,8 +18,7 @@
     <tr>
      <td style="vertical-align:top">
 {render acl=$gotoProfileACL}
-      <input class="center" type="checkbox" value="1" {$useProfileCHK} name="useProfile" id="useProfile"
-     	onclick="changeState('gotoProfileServer');changeState('gotoProfileFlagC');changeState('gotoProfileQuota');">
+      <input class="center" type="checkbox" value="1" {$useProfileCHK} name="useProfile" id="useProfile" onclick="changeState('gotoProfileServer');changeState('gotoProfileFlagC');changeState('gotoProfileQuota');">
 {/render}
      </td>
      <td style="vertical-align:middle;">

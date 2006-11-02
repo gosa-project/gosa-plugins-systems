@@ -629,8 +629,14 @@ class environment extends plugin
     }
     $divlistShares = new divSelectBox("gotoShares");
     $divlistShares->SetHeight(100);
-    $tmp = $this->printOutAssignedShares();
 
+
+    $tmp = array();
+    if($this->acl_is_readable("gotoShares")){
+      $tmp = $this->printOutAssignedShares();
+    }
+
+    
     foreach($tmp as $key => $value){
       $img = "";
 
@@ -1204,15 +1210,19 @@ class environment extends plugin
   function printOutPrinterDevices()
   {
     $a_return = array();
-    if(is_array($this->gotoPrinter)){
-      foreach($this->gotoPrinter as $printer){
-        if($printer['mode'] == "admin"){
-          $a_return[$printer['cn'][0]]= $printer['cn'][0]." - "._("Administrator");
-        }else{
-          $a_return[$printer['cn'][0]]= $printer['cn'][0]; 
-        }
-        if ($printer['cn'][0] == $this->gosaDefaultPrinter){
-          $a_return[$printer['cn'][0]].=" - "._("Default printer");
+    
+    if($this->acl_is_readable("gotoPrinter")){
+
+      if(is_array($this->gotoPrinter)){
+        foreach($this->gotoPrinter as $printer){
+          if($printer['mode'] == "admin"){
+            $a_return[$printer['cn'][0]]= $printer['cn'][0]." - "._("Administrator");
+          }else{
+            $a_return[$printer['cn'][0]]= $printer['cn'][0]; 
+          }
+          if ($printer['cn'][0] == $this->gosaDefaultPrinter){
+            $a_return[$printer['cn'][0]].=" - "._("Default printer");
+          }
         }
       }
     }
