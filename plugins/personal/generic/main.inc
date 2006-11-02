@@ -46,7 +46,7 @@ if (!$remove_lock){
   }
 
   /* Enter edit mode? */
-  if ((isset($_POST['edit'])) && (!isset( $_SESSION['edit']))){
+  if ((isset($_POST['edit'])) && (!isset( $_SESSION['edit'])) &&preg_match("/w/",$ui->get_permissions($ui->dn,"users/user"))){
 
     /* Check locking */
     if (($username= get_lock($ui->dn)) != ""){
@@ -135,7 +135,7 @@ if (!$remove_lock){
 
   /* Execute formular */
   if($lock_msg){
-    $display = $lock_msg;
+    $display.= $lock_msg;
   }else{
     $display.= $user->execute ();
   }
