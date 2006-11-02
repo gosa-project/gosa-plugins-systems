@@ -18,10 +18,11 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+$display = "";
 if (!$remove_lock){
 
   /* Assign headline image */
-  $smarty->assign ('headimage', get_template_path('images/password.png'));
+  $smarty->assign ('headimage',"");
   $display= "";
 
   $password_ACLS = $ui->get_permissions($ui->dn,"users/password");
@@ -74,8 +75,10 @@ if (!$remove_lock){
       }
 
       if (count ($message) != 0){
+
         /* Show error message and continue editing */
         show_errors($message);
+
       } else {
 
         /* Passed quality check, just try to change the password now */
@@ -116,6 +119,9 @@ if (!$remove_lock){
     }
   }
 }
+
+$display = print_header(get_template_path('images/password.png'),_("Change password"), "").$display;
+
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
