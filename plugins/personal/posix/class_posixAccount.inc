@@ -1280,7 +1280,7 @@ class posixAccount extends plugin
           "plDescription"     => _("POSIX account"),
           "plSelfModify"      => TRUE,
           "plDepends"         => array("user"),
-          "plPriority"        => 1,
+          "plPriority"        => 2,
           "plSection"         => "personal", 
           "plCategory"        => array("users"),
           "plOptions"         => array(),
