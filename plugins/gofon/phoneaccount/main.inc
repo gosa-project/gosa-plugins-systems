@@ -18,6 +18,8 @@
   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+$display 	= "";
+$lock_msg 	= "";
 if (!$remove_lock){
 	/* Reset requested? */
 	if (isset($_POST['edit_cancel']) ||
@@ -47,14 +49,17 @@ if (!$remove_lock){
 		/* Check locking */
 		if (($username= get_lock($ui->dn)) != ""){
 			$_SESSION['back_plugin']= $plug;
-			gen_locked_message ($username, $ui->dn);
-			exit ();
+			$_SESSION['LOCK_VARS_TO_USE'] = array("/^edit$/","/^plug$/");
+			$lock_msg =  gen_locked_message ($username, $ui->dn);
+
+		}else{
+
+			/* Lock the current entry */
+			add_lock ($ui->dn, $ui->dn);
+			$_SESSION['dn']= $ui->dn;
+			$_SESSION['edit']= TRUE;
 		}
 
-		/* Lock the current entry */
-		add_lock ($ui->dn, $ui->dn);
-		$_SESSION['dn']= $ui->dn;
-		$_SESSION['edit']= TRUE;
 	}
 
 	/* save changes to LDAP and disable edit mode */
@@ -80,7 +85,11 @@ if (!$remove_lock){
 	}
 
 	/* Execute formular */
-	$display= $phoneAccount->execute ();
+	if($lock_msg){
+		$display.= $lock_msg;
+	}else{
+		$display.= $phoneAccount->execute ();
+	}
 
 	/* Store changes  in session */
 	if (isset ($_SESSION['edit'])){
@@ -88,7 +97,7 @@ if (!$remove_lock){
 	}
 
 	$info= "";
-	if ($phoneAccount->is_account){
+	if ($phoneAccount->is_account && empty($lock_msg)){
 		$display.= "<p class=\"plugbottom\">";
 
 		/* Are we in edit mode? */
