@@ -20,7 +20,8 @@
 
 
 /* Preset display */
-$display= "";
+$display  = "";
+$lock_msg = "";
 
 if (!$remove_lock){
   /* Reset requested? */
@@ -50,14 +51,16 @@ if (!$remove_lock){
     /* Check locking */
     if (($username= get_lock($ui->dn)) != ""){
       $_SESSION['back_plugin']= $plug;
-      gen_locked_message ($username, $ui->dn);
-      exit ();
-    }
+      $_SESSION['LOCK_VARS_TO_USE'] = array("/^edit$/","/^plug$/");
+      $lock_msg =  gen_locked_message ($username, $ui->dn);
+  
+    }else{
 
-    /* Lock the current entry */
-    add_lock ($ui->dn, $ui->dn);
-    $_SESSION['dn']= $ui->dn;
-    $_SESSION['edit']= TRUE;
+      /* Lock the current entry */
+      add_lock ($ui->dn, $ui->dn);
+      $_SESSION['dn']= $ui->dn;
+      $_SESSION['edit']= TRUE;
+    }
   }
 
   /* Perform password change */
@@ -131,7 +134,11 @@ if (!$remove_lock){
   }
 
   /* Execute formular */
-  $display.= $user->execute ();
+  if($lock_msg){
+    $display = $lock_msg;
+  }else{
+    $display.= $user->execute ();
+  }
 
   /* Store changes  in session */
   if (isset ($_SESSION['edit'])){
@@ -141,7 +148,7 @@ if (!$remove_lock){
   $info = "";
 
   /* Show page footer depending on the mode */
-  if (!$user->cert_dialog && !$user->picture_dialog && !$user->dialog && $user->is_account){
+  if (!$user->cert_dialog && !$user->picture_dialog && !$user->dialog && $user->is_account && empty($lock_msg)){
     $display.= "<p class=\"plugbottom\">";
 
     /* Are we in edit mode? */
