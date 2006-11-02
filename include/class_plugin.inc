@@ -1122,10 +1122,8 @@ class plugin
   function remove_snapshot($dn)
   {
     $ui   = get_userinfo();
-    $acl  = get_permissions ($dn, $ui->subtreeACL);
-    $acl  = get_module_permission($acl, "snapshot", $dn);
 
-    if($this->acl_is_removeable())
+    if($this->acl_is_removeable()){
       $ldap = $this->config->get_ldap_link();
       $ldap->cd($this->config->current['BASE']);
       $ldap->rmdir_recursive($dn);

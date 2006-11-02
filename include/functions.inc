@@ -735,94 +735,17 @@ function getMenuCache()
 }
 
 
-function get_permissions ($dn, $subtreeACL)
+function get_permissions ()
 {
-  global $config;
-echo "get_permissions() - is deprecated <br>";
-  return array("none");
-
-  $base= $config->current['BASE'];
-  $tmp= "d,".$dn;
-  $sacl= array();
-
-  /* Sort subacl's for lenght to simplify matching
-     for subtrees */
-  foreach ($subtreeACL as $key => $value){
-    $sacl[$key]= strlen($key);
-  }
-  arsort ($sacl);
-  reset ($sacl);
-
-  /* Successively remove leading parts of the dn's until
-     it doesn't contain commas anymore */
-  $tmp_dn= preg_replace('/\\\\,/', '<GOSA#REPLACED#KOMMA>', $tmp);
-  while (preg_match('/,/', $tmp_dn)){
-    $tmp_dn= ltrim(strstr($tmp_dn, ","), ",");
-    $tmp= preg_replace('/\<GOSA#REPLACED#KOMMA\>/', '\\,', $tmp);
-
-    /* Check for acl that may apply */
-    foreach ($sacl as $key => $value){
-      if (preg_match("/$key$/", $tmp)){
-        return ($subtreeACL[$key]);
-      }
-    }
-  }
-
+  /* Look for attribute in ACL */
+  trigger_error("Don't use get_permissions() its obsolete. Use userinfo::get_permissions() instead.");
   return array("");
 }
 
 
-function get_module_permission($acl_array, $module, $dn)
+function get_module_permission()
 {
-  global $ui;
-echo "get_module_permissions() - to be removed<br>";
-
-  $final= "";
-  foreach($acl_array as $acl){
-
-    /* Check for selfflag (!) in ACL to determine if
-       the user is allowed to change parts of his/her
-       own account */
-    if (preg_match("/^!/", $acl)){
-      if ($dn != "" && $dn != $ui->dn){
-
-        /* No match for own DN, give up on this ACL */
-        continue;
-
-      } else {
-
-        /* Matches own DN, remove the selfflag */
-        $acl= preg_replace("/^!/", "", $acl);
-
-      }
-    }
-
-    /* Remove leading garbage */
-    $acl= preg_replace("/^:/", "", $acl);
-
-    /* Discover if we've access to the submodule by comparing
-       all allowed submodules specified in the ACL */
-    $tmp= split(",", $acl);
-    foreach ($tmp as $mod){
-      if (preg_match("/^$module#/", $mod)){
-        $final= strstr($mod, "#")."#";
-        continue;
-      }
-      if (preg_match("/[^#]$module$/", $mod)){
-        return ("#all#");
-      }
-      if (preg_match("/^all$/", $mod)){
-        return ("#all#");
-      }
-    }
-  }
-
-  /* Return assembled ACL, or none */
-  if ($final != ""){
-    return (preg_replace('/##/', '#', $final));
-  }
-
-  /* Nothing matches - disable access for this object */
+  trigger_error("Don't use get_module_permission() its obsolete.");
   return ("#none#");
 }
 
@@ -932,10 +855,11 @@ function get_base_from_people($dn)
 }
 
 
-function chkacl($acl, $name)
+function chkacl()
 {
   /* Look for attribute in ACL */
-  return ("'\"> CHKACL is deprecated use this::getacl() instead <\"'");
+  trigger_error("Don't use chkacl() its obsolete. Use userinfo::getacl() instead.");
+  return("-deprecated-");
 }
 
 
