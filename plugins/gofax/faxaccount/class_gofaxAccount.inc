@@ -113,6 +113,9 @@ class gofaxAccount extends plugin
       }
     }
 
+    /* Edit mode specifies if we are editing from my accout */
+    $edit_mode = (!is_object($this->parent) && !isset($_SESSION['edit']));
+
     /* Load smarty stuff */
     $smarty= get_smarty();
 
@@ -157,7 +160,7 @@ class gofaxAccount extends plugin
 
     /* Trigger Add local fax alternatives dialog */
     if (isset($_POST['add_local_alternate'])){
-      if($this->acl_is_writeable("facsimileAlternateTelephoneNumber")){
+      if($this->acl_is_writeable("facsimileAlternateTelephoneNumber",$edit_mode)){
         $this->locals_dialog= TRUE;	
         $this->dialog= TRUE;	
       }
@@ -165,7 +168,7 @@ class gofaxAccount extends plugin
 
     /* Add alternatives from dialog */
     if (isset($_POST['add_locals_finish']) && isset($_POST['local_list'])){
-      if($this->acl_is_writeable("facsimileAlternateTelephoneNumber")){
+      if($this->acl_is_writeable("facsimileAlternateTelephoneNumber",$edit_mode)){
         foreach ($_POST['local_list'] as $val){
           $this->addAlternate($val);
           $this->is_modified= TRUE;
@@ -175,14 +178,14 @@ class gofaxAccount extends plugin
 
     /* Add alternatives */
     if (isset($_POST['add_alternate']) && !empty($_POST['forward_address']) && is_phone_nr($_POST['forward_address'])){ 
-      if($this->acl_is_writeable("facsimileAlternateTelephoneNumber")){
+      if($this->acl_is_writeable("facsimileAlternateTelephoneNumber",$edit_mode)){
         $this->addAlternate($_POST['forward_address']);
       }
     }
 
     /* Delete alternate fax number */
     if (isset($_POST['delete_alternate']) && isset($_POST['alternate_list']) && count($_POST['alternate_list'])){ 
-      if($this->acl_is_writeable("facsimileAlternateTelephoneNumber")){
+      if($this->acl_is_writeable("facsimileAlternateTelephoneNumber",$edit_mode)){
         $this->delAlternate ($_POST['alternate_list']);
       }
     }
@@ -190,7 +193,7 @@ class gofaxAccount extends plugin
 
     /* Edit incoming blocklists */
     if (isset($_POST['edit_incoming'])){
-      if($this->acl_is_writeable("goFaxRBlocklist"))  {
+      if($this->acl_is_writeable("goFaxRBlocklist",$edit_mode))  {
         $this->current_blocklist= array_merge($this->goFaxRBlocklist,$this->goFaxRBlockgroups);
         sort($this->current_blocklist);
         reset($this->current_blocklist);
@@ -563,7 +566,7 @@ class gofaxAccount extends plugin
 
     $tmp = $this->plInfo();
     foreach($tmp['plProvidedAcls'] as $acl => $desc){
-      $smarty->assign($acl."ACL",$this->getacl($acl));
+      $smarty->assign($acl."ACL",$this->getacl($acl,$edit_mode));
     }
 
     /* Load checkboxes */
@@ -659,20 +662,21 @@ class gofaxAccount extends plugin
   /* Save data to object */
   function save_object()
   {
+    $edit_mode = (!is_object($this->parent) && !isset($_SESSION['edit']));
     if (isset($_POST['faxTab'])){
       plugin::save_object();
 
 
       $tmp = 0+$this->goFaxDeliveryMode;
 
-      if($this->acl_is_writeable("faxtomail")){
+      if($this->acl_is_writeable("faxtomail",$edit_mode)){
         if (isset($_POST["faxtomail"]) && $_POST["faxtomail"] == 1){  
           $tmp |= 32;
         }elseif($tmp & 32){
           $tmp &= (!32);
         }
       }
-      if($this->acl_is_writeable("faxtoprinter")){
+      if($this->acl_is_writeable("faxtoprinter",$edit_mode)){
         if (isset($_POST["faxtoprinter"]) && $_POST["faxtoprinter"] == 1){  
           $tmp |= 64;
         }elseif($tmp & 64){
@@ -681,7 +685,7 @@ class gofaxAccount extends plugin
       }
       $this->goFaxDeliveryMode = $tmp;
 
-      if($this->acl_is_writeable("goFaxIsEnabled")){
+      if($this->acl_is_writeable("goFaxIsEnabled",$edit_mode)){
         if (isset($_POST["goFaxIsEnabled"]) && $_POST["goFaxIsEnabled"] == "1"){
           $this->goFaxIsEnabled= "0";
         } else {
@@ -690,14 +694,16 @@ class gofaxAccount extends plugin
       }
 
     
-      if (isset($_POST['mail']) && $this->acl_is_writeable("faxtomail")){
+      if (isset($_POST['mail']) && $this->acl_is_writeable("faxtomail",$edit_mode)){
         $this->mail= $_POST['mail'];
       }
 
       /* Check if mail account is active and correct the internal
          reference to represent the current status. */
-      if (isset($this->parent->by_object['mailAccount']->is_account)&&($this->parent->by_object['mailAccount']->is_account)){
-        $this->has_mailAccount= TRUE;
+      if(isset($this->parent)){
+        if (isset($this->parent->by_object['mailAccount']->is_account)&&($this->parent->by_object['mailAccount']->is_account)){
+          $this->has_mailAccount= TRUE;
+        }
       }
     }
 
