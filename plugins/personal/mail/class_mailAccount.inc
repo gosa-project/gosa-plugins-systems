@@ -448,7 +448,6 @@ class mailAccount extends plugin
         $filter.= "(!(|$exclude))";
       }
 
-      $acl= array($this->config->current['BASE'] => ":all");
       $res= get_list("(&(objectClass=gosaMailAccount)$filter)", "users", $mailfilter['depselect'], 
                      array("sn", "mail", "givenName"), GL_SIZELIMIT | GL_SUBSEARCH);
       $ldap->cd($mailfilter['depselect']);

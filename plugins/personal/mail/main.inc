@@ -18,6 +18,8 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+$lock_msg ="";
+$display  =""; 
 if (!$remove_lock){
   /* Reset requested? */
   if (isset($_POST['edit_cancel']) || 
@@ -41,19 +43,21 @@ if (!$remove_lock){
   }
 
   /* Enter edit mode? */
-  if (isset($_POST['edit'])){
+  if (isset($_POST['edit']) && preg_match("/w/",$ui->get_permissions($ui->dn,"users/mailAccount"))){
 
     /* Check locking */
     if (($username= get_lock($ui->dn)) != ""){
       $_SESSION['back_plugin']= $plug;
-      gen_locked_message ($username, $ui->dn);
-      exit ();
-    }
+      $_SESSION['LOCK_VARS_TO_USE'] = array("/^edit$/","/^plug$/");
+      $lock_msg =  gen_locked_message ($username, $ui->dn);
 
-    /* Lock the current entry */
-    add_lock ($ui->dn, $ui->dn);
-    $_SESSION['dn']= $ui->dn;
-    $_SESSION['edit']= TRUE;
+    }else{
+
+      /* Lock the current entry */
+      add_lock ($ui->dn, $ui->dn);
+      $_SESSION['dn']= $ui->dn;
+      $_SESSION['edit']= TRUE;
+    }
   }
 
   /* save changes to LDAP and disable edit mode */
@@ -78,7 +82,11 @@ if (!$remove_lock){
   }
 
   /* Execute formular */
-  $display= $mailAccount->execute ();
+  if($lock_msg){
+    $display.= $lock_msg;
+  }else{
+    $display.= $mailAccount->execute ();
+  }
 
   /* Store changes  in session */
   if (isset ($_SESSION['edit'])){
@@ -87,7 +95,7 @@ if (!$remove_lock){
 
   $info= "";
   /* Show page footer depending on the mode */
-  if (!$mailAccount->forward_dialog && $mailAccount->is_account){
+  if (!$mailAccount->forward_dialog && $mailAccount->is_account && empty($lock_msg)){
     $display.= "<p class=\"plugbottom\">";
 
     /* Are we in edit mode? */
@@ -103,7 +111,10 @@ if (!$remove_lock){
       
         $info.= "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lamp.png').
             "\"> "._("Click the 'Edit' button below to change informations in this dialog");
-        $display.= "<input type=submit name=\"edit\" value=\""._("Edit")."\">\n";
+
+        if(preg_match("/w/",$ui->get_permissions($ui->dn,"users/mailAccount"))){
+          $display.= "<input type=submit name=\"edit\" value=\""._("Edit")."\">\n";
+        }
 
       $display.= "<input type=\"hidden\" name=\"ignore\">\n";
     }
