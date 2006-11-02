@@ -140,10 +140,10 @@ class phpgwAccount extends plugin
   {
     return (array(
           "plShortName"     => _("PHP GW"),
-          "plDescription"   => _("PHP GW account settings"),
+          "plDescription"   => _("PHP GW account settings")."&nbsp;:&nbsp;<u>"._("Connectivity addon")."</u>",
           "plSelfModify"    => TRUE,
           "plDepends"       => array("user"),
-          "plPriority"      => 5,                                 // Position in tabs
+          "plPriority"      => 24,                                 // Position in tabs
           "plSection"       => "personal",                        // This belongs to personal
           "plCategory"      => array("users"),
           "plOptions"       => array(),

@@ -444,10 +444,10 @@ class kolabAccount extends plugin
   {
     return (array(	
           "plShortName"     => _("Kolab"),
-          "plDescription"   => _("Kolab account settings"),
+          "plDescription"   => _("Kolab account settings")."&nbsp;:&nbsp;<u>"._("Connectivity addon")."</u>",
           "plSelfModify"    => TRUE,
           "plDepends"       => array("user"),
-          "plPriority"      => 2,                                 // Position in tabs
+          "plPriority"      => 20,                                 // Position in tabs
           "plSection"       => "personal",                        // This belongs to personal
           "plCategory"      => array("users"),
           "plOptions"       => array(),

@@ -141,10 +141,10 @@ class phpscheduleitAccount extends plugin
   {
     return (array(
           "plShortName"     => _("PHP Schedule it"),
-          "plDescription"   => _("PHP Schedule it settings"),
+          "plDescription"   => _("PHP Schedule it settings")."&nbsp;:&nbsp;<u>"._("Connectivity addon")."</u>",
           "plSelfModify"    => TRUE,
           "plDepends"       => array("user"),
-          "plPriority"      => 6,                                 // Position in tabs
+          "plPriority"      => 29,                                 // Position in tabs
           "plSection"       => "personal",                        // This belongs to personal
           "plCategory"      => array("users"),
           "plOptions"       => array(),

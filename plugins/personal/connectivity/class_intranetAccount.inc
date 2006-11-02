@@ -176,12 +176,12 @@ class intranetAccount extends plugin
     return (array(	
           "plShortName"     => _("Intranet"),
           "plDepends"       => array("user"),
-          "plPriority"      => 1,                                 // Position in tabs
+          "plPriority"      => 25,                                 // Position in tabs
           "plSection"       => "personal",                        // This belongs to personal
           "plCategory"      => array("users"),
           "plOptions"       => array(),
 
-          "plDescription"       => _("Intranet account settings"),
+          "plDescription"       => _("Intranet account settings")."&nbsp;:&nbsp;<u>"._("Connectivity addon")."</u>",
           "plSelfModify"        => TRUE,
 
           "plProvidedAcls"  => array()

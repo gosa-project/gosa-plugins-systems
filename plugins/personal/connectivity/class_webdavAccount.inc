@@ -139,10 +139,10 @@ class webdavAccount extends plugin
   {
     return (array(  
           "plShortName"     => _("WebDAV"),
-          "plDescription"   => _("WebDAV account"),
+          "plDescription"   => _("WebDAV account")."&nbsp;:&nbsp;<u>"._("Connectivity addon")."</u>",
           "plSelfModify"    => TRUE,
           "plDepends"       => array("user"),
-          "plPriority"      => 9,                                 // Position in tabs
+          "plPriority"      => 23,                                 // Position in tabs
           "plSection"       => "personal",                        // This belongs to personal
           "plCategory"      => array("users"),
           "plOptions"       => array(),

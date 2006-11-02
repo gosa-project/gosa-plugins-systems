@@ -156,10 +156,10 @@ class pptpAccount extends plugin
   {
     return (array(
           "plShortName"     => _("PPTP"),
-          "plDescription"   => _("PPTP account"),
+          "plDescription"   => _("PPTP account")."&nbsp;:&nbsp;<u>"._("Connectivity addon")."</u>",
           "plSelfModify"    => TRUE,
           "plDepends"       => array("user"),
-          "plPriority"      => 1,                                 // Position in tabs
+          "plPriority"      => 28,                                 // Position in tabs
           "plSection"       => "personal",                        // This belongs to personal
           "plCategory"      => array("users"),
           "plOptions"       => array(),

@@ -216,10 +216,10 @@ class pureftpdAccount extends plugin
   {
     return (array(
           "plShortName"     => _("Ftp"),
-          "plDescription"   => _("Pure ftp account"),
+          "plDescription"   => _("Pure ftp account")."&nbsp;:&nbsp;<u>"._("Connectivity addon")."</u>",
           "plSelfModify"    => TRUE,
           "plDepends"       => array("user"),
-          "plPriority"      => 8,                                 // Position in tabs
+          "plPriority"      => 22,                                 // Position in tabs
           "plSection"       => "personal",                        // This belongs to personal
           "plCategory"      => array("users"),
           "plOptions"       => array(),

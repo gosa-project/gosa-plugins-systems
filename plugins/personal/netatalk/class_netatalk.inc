@@ -342,7 +342,7 @@ class netatalk extends plugin {
           "plDescription"     => _("Netatalk"),
           "plSelfModify"      => TRUE,
           "plDepends"         => array("user"),
-          "plPriority"        => 1,
+          "plPriority"        => 6,
           "plSection"         => "personal",
           "plCategory"        => array("users"),
           "plOptions"         => array(),

@@ -948,10 +948,10 @@ class oxchangeAccount extends plugin
   {
     return (array(
           "plShortName"     => _("Open xchange"),
-          "plDescription"   => _("Open xchange account settings"),
+          "plDescription"   => _("Open xchange account settings")."&nbsp;:&nbsp;<u>"._("Connectivity addon")."</u>",
           "plSelfModify"    => TRUE,
           "plDepends"       => array("user"),
-          "plPriority"      => 4,                                 // Position in tabs
+          "plPriority"      => 27,                                 // Position in tabs
           "plSection"       => "personal",                        // This belongs to personal
           "plCategory"      => array("users"),
           "plOptions"       => array(),
