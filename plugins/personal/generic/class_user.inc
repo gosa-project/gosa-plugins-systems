@@ -501,15 +501,13 @@ class user extends plugin
 
     /* Create base acls */
     $baseACL = $this->getacl("base",(!is_object($this->parent) && !isset($_SESSION['edit'])));
-    if(!$this->acl_is_moveable()) {
+    if($this->dn == "new" && !$this->acl_is_createable()) {
+      $baseACL = preg_replace("/w/","",$baseACL);
+    }elseif($this->dn != "new" && !$this->acl_is_moveable()) {
       $baseACL = preg_replace("/w/","",$baseACL);
     }
     $smarty->assign("baseACL",          $baseACL);
-
-    /* Show us the edit screen */
     @$smarty->assign("bases", $this->allowedBasesToMoveTo());
-   #  $smarty->assign("bases", $this->config->idepartments);
-
 
     /* Save government mode attributes */
     if (isset($this->config->current['GOVERNMENTMODE']) &&
@@ -993,7 +991,7 @@ class user extends plugin
       $message[]= _("You have no permissions to create a user on this 'Base'.");
     } elseif ($this->dn != $new_dn && $this->dn != "new"){
       if (!$this->acl_is_writeable($this->dn, "user","create",(!is_object($this->parent) && !isset($_SESSION['edit'])))){
-        $message[]= _("You have no permissions to move a user from the original 'Base'.");
+        $message[]= _("You have no permissions to move this user to the spicified 'Base'.");
       }
     }
 
