@@ -175,15 +175,8 @@ class tabs
 
   function set_acl($acl)
   {
-	/* Set local acl */
-	$this->acl= $acl;
-
-	/* Setup for all plugins */
-	foreach ($this->by_object as $key => $obj){
-		$sacl= get_module_permission($acl, "$key", $this->dn);
-		$obj->acl= $sacl;
-		$this->by_object[$key]= $obj;
-	}
+  	/* Look for attribute in ACL */
+	  trigger_error("Don't use tabs::set_acl() its obsolete.");
   }
 
   function delete()

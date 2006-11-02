@@ -1464,7 +1464,7 @@ class plugin
 
   /* Get all allowed bases to move an object to or to create a new object.
      Idepartments also contains all base departments which lead to the allowed bases */
-  function get_allowed_bases($category = "")
+  function get_allowed_bases($category = "",$Move = false)
   {
     $ui = get_userinfo();
     $deps = array();
