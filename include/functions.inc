@@ -738,7 +738,8 @@ function getMenuCache()
 function get_permissions ($dn, $subtreeACL)
 {
   global $config;
-echo "get_permissions() - to be removed<br>";
+echo "get_permissions() - is deprecated <br>";
+  return array("none");
 
   $base= $config->current['BASE'];
   $tmp= "d,".$dn;

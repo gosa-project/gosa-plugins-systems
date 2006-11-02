@@ -62,9 +62,10 @@ $ui= $_SESSION["ui"];
 $config= $_SESSION['config'];
 
 /* Check ACL's */
-$acl= get_permissions ($config->current['BASE'], $ui->subtreeACL);
-$acl= get_module_permission($acl, "all", $config->current['BASE']);
-if (chkacl($acl, "all") != ""){
+#FIXME Use more specific acl categories instead of all/all
+$ui = get_userinfo();
+$acl = $ui->get_permissions(base64_decode($_GET['id']),"all/all");
+if(!preg_match("/r/",$acl)){
   header ("Location: index.php");
   exit;
 }
