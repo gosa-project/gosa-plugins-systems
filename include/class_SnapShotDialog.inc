@@ -39,30 +39,25 @@ class SnapShotDialog extends plugin
 				$entry = base64_decode(preg_replace("/_[xy]$/","",$entry));
 
 				$acl			= get_permissions ($entry, $this->ui->subtreeACL);
-				$this->acl		= get_module_permission($acl, "snapshot", $entry );
+        $this->acl		= get_module_permission($acl, "snapshot", $entry );
 
-				if (chkacl($this->acl, "delete") == ""){
-					$this->del_dn 	= $entry;
-					$smarty= get_smarty();
-					$smarty->assign("intro", sprintf(_("You're about to delete the snapshot '%s'."), @LDAP::fix($this->del_dn)));
-					return($smarty->fetch (get_template_path('remove.tpl')));
-				} else {
 
-					/* Obviously the user isn't allowed to delete. Show message and
-					   clean session. */
-					print_red (_("You are not allowed to delete this snapshot!"));
-				}
-			}
-		}
+        $this->del_dn 	= $entry;
+        $smarty= get_smarty();
+        $smarty->assign("intro", sprintf(_("You're about to delete the snapshot '%s'."), @LDAP::fix($this->del_dn)));
+        return($smarty->fetch (get_template_path('remove.tpl')));
 
-		/* Remove snapshot */
-		if(isset($_POST['delete_confirm']) && !empty($this->del_dn)){
-			$acl			= get_permissions ($this->del_dn, $this->ui->subtreeACL);
-			$this->acl		= get_module_permission($acl, "snapshot", $this->del_dn);
-			if (chkacl($this->acl, "delete") == ""){
-				$this->remove_snapshot($this->del_dn);
-				$this->del_dn = "";
-			}	
+        /* Obviously the user isn't allowed to delete. Show message and
+           clean session. 
+           print_red (_("You are not allowed to delete this snapshot!"));
+         */
+      }
+    }
+
+    /* Remove snapshot */
+    if(isset($_POST['delete_confirm']) && !empty($this->del_dn)){
+      $this->remove_snapshot($this->del_dn);
+      $this->del_dn = "";
 		}
 
 		/* We must restore a snapshot */

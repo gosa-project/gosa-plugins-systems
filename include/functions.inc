@@ -933,14 +933,8 @@ function get_base_from_people($dn)
 
 function chkacl($acl, $name)
 {
-  echo "chkacl - to be removed<br>";
   /* Look for attribute in ACL */
-  if (preg_match("/#$name#/", $acl) || $acl == "#all#"){
-    return ("");
-  }
-
-  /* Optically disable html object for no match */
-  return (" disabled ");
+  return ("'\"> CHKACL is deprecated use this::getacl() instead <\"'");
 }
 
 

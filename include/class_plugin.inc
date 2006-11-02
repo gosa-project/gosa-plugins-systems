@@ -1121,12 +1121,11 @@ class plugin
 
   function remove_snapshot($dn)
   {
-echo "FIXME: remove_snapshot uses old acl's<br>";
     $ui   = get_userinfo();
     $acl  = get_permissions ($dn, $ui->subtreeACL);
     $acl  = get_module_permission($acl, "snapshot", $dn);
 
-    if (chkacl($this->acl, "delete") == ""){
+    if($this->acl_is_removeable())
       $ldap = $this->config->get_ldap_link();
       $ldap->cd($this->config->current['BASE']);
       $ldap->rmdir_recursive($dn);

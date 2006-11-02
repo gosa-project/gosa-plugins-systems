@@ -226,9 +226,8 @@ class groupManagement extends plugin
 
       /* Load permissions for selected 'dn' and check if
          we're allowed to remove this 'dn' */
-      $acl= get_permissions ($this->dn, $this->ui->subtreeACL);
-      $this->acl= get_module_permission($acl, "group", $this->dn);
-      if (chkacl($this->acl, "delete") == ""){
+      $acl = $this->ui->get_permission($this->dn,"groups/group");
+      if(preg_match("/d/",$acl)){
 
         /* Check locking, save current plugin in 'back_plugin', so
            the dialog knows where to return. */
@@ -258,7 +257,8 @@ class groupManagement extends plugin
 
       /* Some nice guy may send this as POST, so we've to check
          for the permissions again. */
-      if (chkacl($this->acl, "delete") == ""){
+      $acl = $this->ui->get_permission($this->dn,"groups/group");
+      if(preg_match("/d/",$acl)){
 
         /* Delete request is permitted, perform LDAP action */
         $this->grouptab= new grouptabs($this->config,$this->config->data['TABS']['GROUPTABS'], $this->dn);
