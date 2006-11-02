@@ -59,8 +59,13 @@ function smarty_block_render($params, $text, &$smarty)
 	}
 
 	/* Remove select options */
-	$from 	= array("#<option.*<\/option>#i","/(<textarea.*>).*(<\/textarea>)/i","/^(.*<input.*)checked(.*>.*)$/");
-	$to 	= array(" ","\\1\\2","\\1 \\2");
+	$from 	= array("#<option.*<\/option>#i",
+			"/(<textarea.*>).*(<\/textarea>)/i",
+			"/^(.*<input.*)checked(.*>.*)$/i");
+
+	$to 	= array(" ",
+			"\\1\\2",
+			"\\1 \\2");
 	$text 	= preg_replace($from,$to,$text);
 
 	return $text;
