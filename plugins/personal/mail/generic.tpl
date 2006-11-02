@@ -82,13 +82,11 @@
  <tr style="padding-bottom:0px;">
   <td style="width:50%">
 {render acl=$gosaMailDeliveryModeIACL}
-   <input type=checkbox name="drop_own_mails" value="1" {$drop_own_mails}
-	title="{t}Select if you want to forward mails without getting own copies of them{/t}"> {t}No delivery to own mailbox{/t}
+   <input type=checkbox name="drop_own_mails" value="1" {$drop_own_mails} title="{t}Select if you want to forward mails without getting own copies of them{/t}"> {t}No delivery to own mailbox{/t}
 {/render}
    <br>
 {render acl=$gosaMailDeliveryModeVACL}
-   <input type=checkbox name="use_vacation" value="1" {$use_vacation}
-	title="{t}Select to automatically response with the vacation message defined below{/t}"> {t}Activate vacation message{/t}
+   <input type=checkbox name="use_vacation" value="1" {$use_vacation} title="{t}Select to automatically response with the vacation message defined below{/t}"> {t}Activate vacation message{/t}
 {/render}
   </td>
    <td rowspan=2 style="border-left:1px solid #A0A0A0">
@@ -114,12 +112,11 @@
 {/render}
    <br>
 {render acl=$gosaMailDeliveryModeRACL}
-   <input type=checkbox name="use_mailsize_limit" value="1" {$use_mailsize_limit}>
-	<label for="gosaMailMaxSize">{t}Reject mails bigger than{/t}</label> 
+   <input type=checkbox name="use_mailsize_limit" value="1" {$use_mailsize_limit} >
 {/render}
+	<label for="gosaMailMaxSize">{t}Reject mails bigger than{/t}</label> 
 {render acl=$gosaMailMaxSizeACL}
-   <input id="gosaMailMaxSize" name="gosaMailMaxSize" size="6" align="middle" maxlength="30"
-	value="{$gosaMailMaxSize}"> {t}MB{/t}
+   <input id="gosaMailMaxSize" name="gosaMailMaxSize" size="6" align="middle" maxlength="30" value="{$gosaMailMaxSize}"> {t}MB{/t}
 {/render}
   </td>
  </tr>
@@ -129,8 +126,7 @@
     <b><label for="gosaVacationMessage">{t}Vacation message{/t}</label></b>
    </p>
 {render acl=$gosaVacationMessageACL}
-   <textarea id="gosaVacationMessage" style="width:99%; height:100px;" name="gosaVacationMessage" rows="4" cols="512"
-	>{$gosaVacationMessage}</textarea>
+   <textarea id="gosaVacationMessage" style="width:99%; height:100px;" name="gosaVacationMessage" rows="4" cols="512">{$gosaVacationMessage}</textarea>
 {/render}
    <br>
 
@@ -191,8 +187,7 @@
   <td>
 
 {render acl=$gosaMailDeliveryModeCACL}
-   <input type=checkbox name="own_script" value="1" {$own_script}>
-   {t}Use custom sieve script{/t} <b>({t}disables all Mail options!{/t})</b>
+   <input type=checkbox name="own_script" value="1" {$own_script}> {t}Use custom sieve script{/t} <b>({t}disables all Mail options!{/t})</b>
 {/render}
   </td>
  </tr>
