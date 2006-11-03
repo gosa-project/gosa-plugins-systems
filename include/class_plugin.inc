@@ -222,9 +222,7 @@ class plugin
    */
   function execute()
   {
-    $_SESSION['errors'] .= "<div><b>".get_class($this)."</b> - ";
-    $_SESSION['errors'] .= "<font face='courier' color='red' >ACL BASE: ".$this->acl_base."</font>";
-    $_SESSION['errors'] .= "<font face='courier' color='blue'>ACL CAT: ".$this->acl_category."</font></div>";
+    gosa_log("ACL ".get_class($this)." - ".$this->acl_category." - ".$this->acl_base);
 
     /* This one is empty currently. Fabian - please fill in the docu code */
     $_SESSION['current_class_for_help'] = get_class($this);

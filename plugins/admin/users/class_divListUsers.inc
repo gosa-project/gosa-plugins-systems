@@ -104,7 +104,8 @@ class divListUsers extends MultiSelectWindow
     }
 
     /* Get copy & paste icon */ 
-    if(preg_match("/w/",$ui->get_permissions($this->selectedBase,"users/user")) &&  $this->parent->CopyPasteHandler){
+    $acl = $ui->get_permissions($this->selectedBase,"users/user");
+    if(preg_match("/(c.*w|w.*c)/",$acl) &&  $this->parent->CopyPasteHandler){
       $Copy_Paste = $this->parent->CopyPasteHandler->generatePasteIcon();
     }else{
       $Copy_Paste ="";
@@ -121,19 +122,22 @@ class divListUsers extends MultiSelectWindow
       " <input class='center' type='image' src='images/list_reload.png' align='middle' 
       title='"._("Reload list")."' name='submit_department' alt='"._("Submit")."'>&nbsp;".
       " <img   class='center' src='images/list_seperator.png' align='middle' alt='-' height='16' width='1'>&nbsp;";
-    $listhead .= $this->get_snapshot_header($this->selectedBase);
 
-    $acls  = $ui->get_permissions($this->selectedBase,"users/user");
-    if(preg_match("/c/",$acls)) {
+    
+    if(preg_match("/(c.*w|w.*c)/",$acl)){ 
+      $listhead .= $this->get_snapshot_header($this->selectedBase);
+    }
+
+    if(preg_match("/c/",$acl)) {
       $listhead .= " <input class='center' type='image' align='middle' src='images/list_new_user.png' 
         title='"._("Create new user")."' alt='"._("New user")."' name='user_new'>&nbsp;";
       $listhead .= " <input class='center' type='image' align='middle' src='images/list_new.png' 
         title='"._("Create new template")."' alt='"._("New template")."'        name='user_tplnew'>&nbsp;";
-#      $listhead .=  " <img   class='center' src='images/list_seperator.png' align='middle' alt='-' height='16' width='1'>&nbsp;";
     }
-  
+
+    $listhead .= $Copy_Paste;
+    
     $listhead .=
-      $Copy_Paste.
       _("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
       " <input class='center' type='image' src='images/list_submit.png' align='middle' 
       title='"._("Submit department")."' name='submit_department' alt='".  _("Submit")."'>&nbsp;".
@@ -237,8 +241,10 @@ class divListUsers extends MultiSelectWindow
       /* Create action icons */
       $action= "";
 
-      /* Add copy & cut icons */      
-      if($this->parent->CopyPasteHandler && preg_match("/w/",$ui->get_category_permissions($val['dn'],"users"))) {
+      /* Add copy & cut icons */     
+
+      $acl = $ui->get_permissions($val['dn'],"users/user");
+      if(preg_match("/(c.*w|w.*c)/",$acl) && $this->parent->CopyPasteHandler){
         $action .= "<input class='center' type='image'
           src='images/editcut.png' alt='"._("cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
         $action.= "<input class='center' type='image'
@@ -259,7 +265,9 @@ class divListUsers extends MultiSelectWindow
       }
 
       /* Add snapshot icon */
-      $action.= $this->GetSnapShotActions($val['dn']);
+      if(preg_match("/(c.*w|w.*c)/",$acl)){
+        $action.= $this->GetSnapShotActions($val['dn']);
+      }
 
       /* Add remove icon, if we are allowed to remove the current user */
       if(preg_match("/d/",$ui->get_permissions($val['dn'],"users/user"))) {
