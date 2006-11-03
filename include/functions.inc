@@ -2136,6 +2136,11 @@ function gosa_ldap_explode_dn($dn,$config = NULL,$verify_in_ldap=false)
     }
   }
 
+  /* No dn was posted */
+  if($cnt == 0 && !empty($dn)){
+    $ret[] = $dn;
+  }
+
   /* Append the rest */
   $test = $keep.$dn;
   if($called && !empty($test)){
