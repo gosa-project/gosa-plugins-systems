@@ -31,7 +31,6 @@ class userManagement extends plugin
   /* Dialog attributes */
   var $usertab              = NULL;
   var $ui                   = NULL;
-  var $acl                  = "";
   var $templates            = array();
   var $got_uid              = false;
   var $CopyPasteHandler     = NULL;
@@ -139,7 +138,7 @@ class userManagement extends plugin
       $this->usertab->current = $s_tab;
 
       /* Set ACL and move DN to the headline */
-      $this->usertab->set_acl_base();
+      $this->usertab->set_acl_base($this->dn);
       $_SESSION['objectinfo']= $this->dn;
     }
 
@@ -180,8 +179,7 @@ class userManagement extends plugin
 
       /* Load permissions for selected 'dn' and check if
          we're allowed to remove this 'dn' */
-      $ui = get_userinfo();
-      if (preg_match("/w/",$ui->get_permissions($this->dn,"users/password"))){
+      if (preg_match("/w/",$this->ui->get_permissions($this->dn,"users/password"))){
 
         /* User is allowed to change passwords, save 'dn' and 'acl' for next
            dialog. */
@@ -203,10 +201,9 @@ class userManagement extends plugin
     if (isset($_POST['password_finish'])){
 
       /* For security reasons, check if user is allowed to set password again */
-      $ui  = get_userinfo();
       $dn  = $this->usertab->dn;
-      $acl = $ui->get_permissions($dn, "users/password");
-      $cacl= $ui->get_permissions($dn, "users/user");
+      $acl = $this->ui->get_permissions($dn, "users/password");
+      $cacl= $this->ui->get_permissions($dn, "users/user");
 
 
       if (preg_match('/w/', $acl) || preg_match('/c/', $cacl)){
@@ -322,8 +319,7 @@ class userManagement extends plugin
       /* Some nice guy may send this as POST, so we've to check
          for the permissions again. */
 
-      $ui  = get_userinfo();
-      $acl = $ui->get_permissions($this->dn, "users/user"); 
+      $acl = $this->ui->get_permissions($this->dn, "users/user"); 
  
       if (preg_match('/d/', $acl)){
 
@@ -430,11 +426,10 @@ class userManagement extends plugin
       foreach ($this->config->departments as $key => $value){
     
         /* Get acls from different ou's */
-        $ui  = get_userinfo();
-        $acl = $ui->get_permissions("cn=dummy,".$this->DivListUsers->selectedBase,"users/user")       ; 
+        $acl = $this->ui->get_permissions("cn=dummy,".get_people_ou().$value,"users/user")       ; 
  
         /* If creation of a new user is allowed, append this template */
-        if (preg_match("/r/",$acl)){
+        if (preg_match("/c/",$acl)){
           
           /* Search all templates from the current dn */
           $ldap->cd (get_people_ou().$value);

@@ -761,7 +761,12 @@ class user extends plugin
 
     /* Special handling for attribute jpegPhote needed, scale image via
        image magick to 147x200 pixels and inject resulting data. */
-    if ($this->jpegPhoto != "*removed*"){
+    if ($this->jpegPhoto == "*removed*"){
+    
+      /* Reset attribute to avoid writing *removed* as value */    
+      $this->attrs["jpegPhoto"] = array();
+
+    } else {
 
       /* Fallback if there's no image magick inside PHP */
       if (!function_exists("imagick_blob2image")){
@@ -823,10 +828,6 @@ class user extends plugin
         $this->attrs["jpegPhoto"] = $output;
       }
 
-    } elseif(!$this->is_new) {
-      // # FIXME User picture saveing ...  seams to work.
-      // This should be set to array in all cases ... else we write *removed* into this attribute ...
-      $this->attrs["jpegPhoto"] = array();
     }
 
     /* Build new dn */
@@ -1077,42 +1078,23 @@ class user extends plugin
   /* Load a jpegPhoto from LDAP, this is going to be simplified later on */
   function load_picture()
   {
-    /* make connection and read jpegPhoto */
-    $ds= ldap_connect($this->config->current['SERVER']);
-    ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3);
-    if (function_exists("ldap_set_rebind_proc") && isset($this->config->current['RECURSIVE']) && $this->config->current['RECURSIVE'] == "true") {
-      ldap_set_option($this->cid, LDAP_OPT_REFERRALS, 1);
-      ldap_set_rebind_proc($ds, array(&$this, "rebind"));
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd ($this->dn);
+    $data = $ldap->get_attribute($this->dn,"jpegPhoto");
+      
+    if((!$data) || ($data == "*removed*")){ 
+
+      /* In case we don't get an entry, load a default picture */
+      $this->set_picture ();//"./images/default.jpg");
+      $this->jpegPhoto= "*removed*";
+    }else{
+
+      /* Set picture */
+      $this->photoData= $data;
+      $_SESSION['binary']= $this->photoData;
+      $_SESSION['binarytype']= "image/jpeg";
+      $this->jpegPhoto= "";
     }
-
-    if(isset($this->config->current['TLS']) &&
-        $this->config->current['TLS'] == "true"){
-
-      ldap_start_tls($ds);
-    }
-
-    $r= ldap_bind($ds);
-    $sr= @ldap_read($ds, $this->dn, "jpegPhoto=*", array("jpegPhoto"));
-
-    /* in case we don't get an entry, load a default picture */
-    $this->set_picture ("./images/default.jpg");
-    $this->jpegPhoto= "*removed*";
-
-    /* fill data from LDAP */
-    if ($sr) {
-      $ei=ldap_first_entry($ds, $sr);
-      if ($ei) {
-        if ($info = ldap_get_values_len($ds, $ei, "jpegPhoto")){
-          $this->photoData= $info[0];
-          $_SESSION['binary']= $this->photoData;
-          $_SESSION['binarytype']= "image/jpeg";
-          $this->jpegPhoto= "";
-        }
-      }
-    }
-
-    /* close conncetion */
-    ldap_unbind($ds);
   }
 
 

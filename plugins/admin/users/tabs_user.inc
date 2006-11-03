@@ -11,7 +11,6 @@ class usertabs extends tabs
 
     /* Add references/acls/snapshots */
     $this->addSpecialTabs();
-    $this->set_acl_base();
   }
 
   function save_object($save_current= FALSE)
