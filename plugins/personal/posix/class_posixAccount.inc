@@ -520,9 +520,7 @@ class posixAccount extends plugin
       }
     } else {
       if ($_SESSION['js']){
-#FIXME: whats up here. remove acl?
-        if($this->acl != "#none#")
-          $smarty->assign("forceMode", "disabled");
+        $smarty->assign("forceMode", "disabled");
       }
       $smarty->assign("force_ids", "");
     }
@@ -1115,9 +1113,10 @@ class posixAccount extends plugin
     $ids[]=  65534;
 
     /* get the ranges */
-    if (preg_match('/posixAccount/', $oc)) {
+    $tmp = array('0'=> 1000) 
+    if (preg_match('/posixAccount/', $oc) && isset($this->config->current['UIDBASE'])) {
       $tmp= split('-',$this->config->current['UIDBASE']);
-    } else {
+    } elseif(isset($this->config->current['UIDBASE'])) {
       $tmp= split('-',$this->config->current['GIDBASE']);
     }
 
