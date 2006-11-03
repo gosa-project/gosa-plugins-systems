@@ -203,9 +203,11 @@ class userManagement extends plugin
     if (isset($_POST['password_finish'])){
 
       /* For security reasons, check if user is allowed to set password again */
-      $ui= get_userinfo();
-      $acl= $ui->get_permissions($this->dn, "users/user", 'userPassword');
-      $cacl= $ui->get_permissions($this->dn, "users/all");
+      $ui  = get_userinfo();
+      $dn  = $this->usertab->dn;
+      $acl = $ui->get_permissions($dn, "users/password");
+      $cacl= $ui->get_permissions($dn, "users/user");
+
 
       if (preg_match('/w/', $acl) || preg_match('/c/', $cacl)){
 
@@ -272,7 +274,6 @@ class userManagement extends plugin
         /* Missing permissions, show message */
         print_red (_("You are not allowed to set this users password!"));
       }
-
       /* Clean session, delete lock */
       del_lock ($this->dn);
       unset ($this->usertab);
@@ -322,7 +323,7 @@ class userManagement extends plugin
          for the permissions again. */
 
       $ui  = get_userinfo();
-      $acl = $ui->get_permissions($this->dn, "users/all"); 
+      $acl = $ui->get_permissions($this->dn, "users/user"); 
  
       if (preg_match('/d/', $acl)){
 
