@@ -818,7 +818,12 @@ class userManagement extends plugin
         $this->CopyPasteHandler->Clear();
         $dn= $this->list[trim($s_entry)]['dn'];
         $obj    = new usertabs($this->config, $this->config->data['TABS']['USERTABS'], $dn);
+        $obj->set_acl_base($dn);
+        $obj->set_acl_category("users");
         $objNew = new usertabs($this->config, $this->config->data['TABS']['USERTABS'], "new");
+        $objNew->set_acl_base($dn);
+        $objNew->set_acl_category("users");
+
         $this->CopyPasteHandler->Copy($obj,$objNew);
       }
 
@@ -828,6 +833,8 @@ class userManagement extends plugin
         $this->CopyPasteHandler->Clear();
         $dn= $this->list[trim($s_entry)]['dn'];
         $obj= new usertabs($this->config, $this->config->data['TABS']['USERTABS'], $dn);
+        $obj->set_acl_base($dn);
+        $obj->set_acl_category("users");
         $this->CopyPasteHandler->Cut($obj);
       }
     }
