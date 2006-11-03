@@ -15,13 +15,23 @@ class SnapShotDialog extends plugin
 	var $del_dn= "";
 	var $ui;
 	var $acl;
+  var $dns = array();
+  var $snap_shot_bases = array();
+
 	
 	function SnapShotDialog($config,$dn,$parent)
 	{
-		plugin::plugin($config,$dn);
-		$this->parent 	= $parent;
-		$this->ui 		= get_userinfo();
+    plugin::plugin($config,$dn);
+    $this->parent 	= $parent;
+		$this->ui 		  = get_userinfo();
 	}
+
+  
+  /* Show deleted snapshots from these bases */
+  function set_snapshot_bases($bases)
+  {
+    $this->snap_shot_bases = $bases;
+  }
 	
 	
 	/* Display snapshot dialog */
@@ -29,7 +39,7 @@ class SnapShotDialog extends plugin
 	{
 		plugin::execute();
 		$smarty = get_smarty();
-	
+
 		$once = true;
 		foreach($_POST as $name => $value){
 			if((preg_match("/^RemoveSnapShot_/",$name)) && ($once)){
@@ -37,10 +47,6 @@ class SnapShotDialog extends plugin
 	
 				$entry = preg_replace("/^RemoveSnapShot_/","",$name);
 				$entry = base64_decode(preg_replace("/_[xy]$/","",$entry));
-
-				$acl			= get_permissions ($entry, $this->ui->subtreeACL);
-        $this->acl		= get_module_permission($acl, "snapshot", $entry );
-
 
         $this->del_dn 	= $entry;
         $smarty= get_smarty();
@@ -66,14 +72,14 @@ class SnapShotDialog extends plugin
 			/* Should we only display all snapshots of already deleted objects 
                 or the snapshots for the given object dn */
 			$res = array();
+			$tmp = array();
 			if($this->display_all_removed_objects){
-				if(is_array($this->dn)){
-					$tmp = array();
-					foreach($this->dn as $dn){
+				if(count($this->snap_shot_bases)){
+					foreach($this->snap_shot_bases as $dn){
 						$tmp = array_merge($tmp,$this->getAllDeletedSnapshots($dn,true));
 					}
 				}else{
-					$tmp = $this->getAllDeletedSnapshots($this->dn,true);
+					$tmp = $this->getAllDeletedSnapshots($this->snap_shot_bases,true);
 				}
 			}else{
 				$tmp = $this->Available_SnapsShots($this->dn,true);

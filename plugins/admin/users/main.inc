@@ -30,6 +30,7 @@ if ($remove_lock){
   if (!isset($_SESSION['userManagement']) ||
      (isset($_GET['reset']) && $_GET['reset'] == 1)){
     $_SESSION['userManagement']= new userManagement ($config, $_SESSION['ui']);
+    $_SESSION['userManagement']->set_acl_category("users");
   }
   $userManagement= $_SESSION['userManagement'];
   $userManagement->save_object();

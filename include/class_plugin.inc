@@ -1123,15 +1123,18 @@ class plugin
 
   function remove_snapshot($dn)
   {
-    $ui   = get_userinfo();
-
-    if($this->acl_is_removeable()){
+    $ui       = get_userinfo();
+    $old_dn   = $this->dn; 
+    $this->dn = $dn;
+    
+    if($this->acl_is_removeable() && $this->acl_is_createable()){
       $ldap = $this->config->get_ldap_link();
       $ldap->cd($this->config->current['BASE']);
       $ldap->rmdir_recursive($dn);
     }else{
       print_red (_("You are not allowed to delete this snapshot!"));
     }
+    $this->dn = $old_dn;
   }
 
 
@@ -1352,7 +1355,8 @@ class plugin
       /* Restore one of the already deleted objects */
       if(preg_match("/^RestoreDeletedSnapShot_/",$name) && $once){
         $once = false;
-        $this->snapDialog = new SnapShotDialog($this->config,$baseSuffixe,$this);
+        $this->snapDialog = new SnapShotDialog($this->config,"",$this);
+        $this->snapDialog->set_snapshot_bases($baseSuffixe);
         $this->snapDialog->display_restore_dialog      = true;
         $this->snapDialog->display_all_removed_objects  = true;
       }
