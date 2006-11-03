@@ -1113,7 +1113,7 @@ class posixAccount extends plugin
     $ids[]=  65534;
 
     /* get the ranges */
-    $tmp = array('0'=> 1000) 
+    $tmp = array('0'=> 1000); 
     if (preg_match('/posixAccount/', $oc) && isset($this->config->current['UIDBASE'])) {
       $tmp= split('-',$this->config->current['UIDBASE']);
     } elseif(isset($this->config->current['UIDBASE'])) {
