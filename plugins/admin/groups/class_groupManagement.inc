@@ -145,7 +145,7 @@ class groupManagement extends plugin
       $this->dn= "new";
 
       /* Create new usertab object */
-      $this->grouptab= new grouptabs($this->config, $this->config->data['TABS']['GROUPTABS'], $this->dn,"groups");
+      $this->grouptab= new grouptabs($this->config, $this->config->data['TABS']['GROUPTABS'], $this->dn);
 
       /* Set up the users ACL's for this 'dn' */
       $this->grouptab->set_acl_base($this->DivListGroup->selectedBase);
@@ -208,7 +208,7 @@ class groupManagement extends plugin
       add_lock ($this->dn, $this->ui->dn);
 
       /* Register grouptab to trigger edit dialog */
-      $this->grouptab= new grouptabs($this->config,$this->config->data['TABS']['GROUPTABS'], $this->dn,"groups");
+      $this->grouptab= new grouptabs($this->config,$this->config->data['TABS']['GROUPTABS'], $this->dn);
       $this->grouptab->set_acl_base($this->dn);
       $_SESSION['objectinfo']= $this->dn;
     }
