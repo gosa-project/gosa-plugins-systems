@@ -34,10 +34,9 @@
 </table>
 
 <p class="seperator">&nbsp;</p>
-<p>
 <div style="width:100%; text-align:right;">
     <input type='submit' name='CancelSnapshot' value='{t}Cancel{/t}'>
-</div></p>
+</div>
 
 {else}
 
@@ -75,12 +74,11 @@
 </table>
 
 <p class="seperator">&nbsp;</p>
-<p>
 <div style="width:100%; text-align:right;">
     <input type='submit' name='CreateSnapshot' value='{t}Continue{/t}'>
     &nbsp;
     <input type='submit' name='CancelSnapshot' value='{t}Cancel{/t}'>
-</div></p>
+</div>
 
 <script language="JavaScript" type="text/javascript">
   <!-- // First input field on page
