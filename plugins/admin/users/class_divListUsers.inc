@@ -256,7 +256,7 @@ class divListUsers extends MultiSelectWindow
         name='user_edit_%KEY%' title='"._("Edit user")."'>";
 
       /* Add Password change icon, if we are able to write users/password */
-      if(preg_match("/w/",$ui->get_permissions($val['dn'],"users/password"))) {
+      if(!in_array_ics("gosaUserTemplate",$val['objectClass']) && preg_match("/w/",$ui->get_permissions($val['dn'],"users/password"))) {
         $action.= "<input class='center' type='image' src='images/list_password.png' alt='"._("password")."'
           name='user_chgpw_%KEY%' title='"._("Change password")."'>";
       }else{

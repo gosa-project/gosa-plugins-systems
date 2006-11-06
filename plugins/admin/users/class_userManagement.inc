@@ -832,7 +832,6 @@ class userManagement extends plugin
         $dn= $this->list[trim($s_entry)]['dn'];
         $obj= new usertabs($this->config, $this->config->data['TABS']['USERTABS'], $dn);
         $obj->set_acl_base($dn);
-        $obj->set_acl_category("users");
         $this->CopyPasteHandler->Cut($obj);
       }
     }
