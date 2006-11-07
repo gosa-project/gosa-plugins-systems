@@ -36,10 +36,18 @@
         </td>
         <td>
 {render acl=$gotoProfileServerACL}
+
+{if $gotoProfileServerWriteable}
          <select id="gotoProfileServer" name="gotoProfileServer">
           {html_options values=$gotoProfileServerKeys output=$gotoProfileServers selected=$gotoProfileServer}
           <option disabled>&nbsp;</option>
          </select>
+{else}
+         <select id="gotoProfileServer" name="gotoProfileServer">
+          {html_options values=$gotoProfileServer output=$gotoProfileServer selected=$gotoProfileServer}
+          <option disabled>&nbsp;</option>
+         </select>
+{/if}
 {/render}
         </td>
        </tr>

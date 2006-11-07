@@ -256,6 +256,30 @@ class environment extends plugin
     /* Call parent execute */
     plugin::execute();
 
+    /* Are we editing from MyAccount and not editing a user */
+    $WriteOnly = (!isset($this->parent)|| !$this->parent) && !isset($_SESSION['edit']);
+
+    /* Check profile server */
+    if($this->acl_is_writeable("gotoProfileServer",$WriteOnly)){
+      if(!empty($this->gotoProfileServer) && !isset($this->gotoProfileServers[$this->gotoProfileServer])){
+        if(count($this->gotoProfileServers)){
+
+          /* Get First Profile */
+          $new = key($this->gotoProfileServers);
+
+          /* Another profile server found */
+          print_red(sprintf(_("Your selected profile server '%s' is no longer available. Setting profile server to '%s'."),
+                $this->gotoProfileServer,$new));
+        }else{
+
+          /* No other profile servers found */
+          print_red(sprintf(_("Your selected profile server '%s' is no longer available. Profile server configuration is resetted."),
+                $this->gotoProfileServer));
+          $this->gotoProfileServer = "";
+        }
+      }
+    }    
+
     $this->detect_grouptype();
 
     /* Fill templating stuff */
@@ -263,9 +287,6 @@ class environment extends plugin
     $display= "";
 
     $smarty->assign("is_group",$this->is_group);
-
-    /* Are we editing from MyAccount and not editing a user */
-    $WriteOnly = (!isset($this->parent)|| !$this->parent) && !isset($_SESSION['edit']);
 
     /* Prepare all variables for smarty */
     foreach($this->attributes as $s_attr){
@@ -415,8 +436,8 @@ class environment extends plugin
     }else{
       $smarty->assign("useProfileCHK"," checked ");
     }
-
-
+    
+    $smarty->assign("gotoProfileServerWriteable", $this->acl_is_writeable("gotoProfileServer",$WriteOnly));
     $smarty->assign("gotoProfileACL", $this->getacl("gotoProfileServer",$WriteOnly).$this->getacl("gotoProfileQuota",$WriteOnly));
 
     /* HANDLE Profile Settings here 
