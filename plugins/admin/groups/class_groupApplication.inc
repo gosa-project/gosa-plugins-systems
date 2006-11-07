@@ -598,6 +598,16 @@ class appgroup extends plugin
       }
     }
 
+    /* Add multiple */
+    if(isset($_POST['AddApps'])){
+      foreach($_POST as $name => $value){
+        if(preg_match("/AddApp_/",$name)){
+          $app = preg_replace("/AddApp_/","",$name);
+          $this->addApp($app);
+        }
+      }
+    }
+
     /* Add application with post */
     if((isset($_GET['act']))&&($_GET['act']=="add")){
       $this->used_apps[$_GET['id']]= $_GET['id'];
