@@ -886,7 +886,6 @@ class environment extends plugin
     $smarty->assign("gotoPrinterKeys",array_flip($this->printOutPrinterDevices()));
 
     /* General behavior */
-    if($this->acl_is_writeable("gotoKioskProfile")){
     if((isset($this->dialog))&&($this->dialog!=NULL)&&(!empty($this->dialog))){
       $this->dialog->save_object();
       $disp =$this->dialog->execute();
@@ -900,7 +899,6 @@ class environment extends plugin
         $this->gotoKioskProfile = 'none';
       }
       return($disp);
-      }
     }
 
     /* Als smarty vars are set. Get smarty template and generate output */
