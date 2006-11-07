@@ -138,15 +138,20 @@ class groupManagement extends plugin
     /* New group? */
     if ($s_action=="new"){
 
-      /* By default we set 'dn' to 'new', all relevant plugins will
-         react on this. */
-      $this->dn= "new";
+      /* Check create permissions */
+      $acl = $this->ui->get_permissions($this->DivListGroup->selectedBase,"groups/group");
+      if(preg_match("/c/",$acl)){
 
-      /* Create new usertab object */
-      $this->grouptab= new grouptabs($this->config, $this->config->data['TABS']['GROUPTABS'], $this->dn);
+        /* By default we set 'dn' to 'new', all relevant plugins will
+           react on this. */
+        $this->dn= "new";
 
-      /* Set up the users ACL's for this 'dn' */
-      $this->grouptab->set_acl_base($this->DivListGroup->selectedBase);
+        /* Create new usertab object */
+        $this->grouptab= new grouptabs($this->config, $this->config->data['TABS']['GROUPTABS'], $this->dn);
+
+        /* Set up the users ACL's for this 'dn' */
+        $this->grouptab->set_acl_base($this->DivListGroup->selectedBase);
+      }
     }
 
 
