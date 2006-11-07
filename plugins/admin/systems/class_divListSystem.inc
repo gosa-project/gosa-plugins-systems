@@ -52,7 +52,7 @@ class divListSystem extends MultiSelectWindow
     $this->EnableSaveButton (false);
 
     /* Dynamic action col, depending on snapshot icons */
-    $action_col_size = 50;
+    $action_col_size = 60;
     if($this->parent->snapshotEnabled()){
       $action_col_size += 38;
     }
@@ -223,6 +223,11 @@ class divListSystem extends MultiSelectWindow
         $action2 = "<input class='center' type='image' src='images/certs.png' alt='"._("Password")."'   name='user_setpwd_%KEY%' title='"._("Set root       password")."'>";
       }else{
         $action2 = "";
+      }
+
+      if(in_array("gotoWorkstation",$val['objectClass'])){
+        $action2= "<input class='center' type='image' src='images/cdrom.png' alt='"._("Create CD")."'   
+                      name='gen_cd_%KEY%' title='"._("Create FAI CD")."'>".$action2;
       }
 
       if(isset($val['message'])){
