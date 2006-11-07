@@ -43,7 +43,7 @@ class appgroup extends plugin
   function appgroup ($config, $dn= NULL, $parent= NULL)
   {
    
-    /* prepare group app for release management */ 
+    /* Check if we have relase mangement enabled and prepare group application for release management */ 
     $tmp = search_config($config->data,"faiManagement","CLASS");
     if(!empty($tmp)){
       $this->enableReleaseManagement = true;
@@ -52,11 +52,14 @@ class appgroup extends plugin
     }
 
     plugin::plugin ($config, $dn, $parent);
+
+    /* set userinfo object */
     $this->ui = get_userinfo();
 
-    /* In some case of old applikations with old release tag saving, we 
-        must reassign is_account state.
-       (Or if release management wasn't activated before creating this app) */
+    /* Compatibility check 
+        In some case of old applikations with old release tag saving, 
+          we must reassign is_account state.
+          (Or if release management wasn't activated before creating this app) */
     if($this->enableReleaseManagement){
   
       /* Release management is activated && this is a valid group app account,
@@ -67,7 +70,6 @@ class appgroup extends plugin
       }
     }
     
-
     /* Load member applications */
     if (isset ($this->attrs["gosaMemberApplication"][0])){
       $this->gosaMemberApplication = array();
@@ -113,9 +115,11 @@ class appgroup extends plugin
       }
     }
 
+    /* Assign collected category and application settings */
     $this->Categories = $cats;
-
     $this->gosaMemberApplication = $tmp2;
+
+    /* Sort application by category */
     $cats[""]="";
     foreach($cats as $cat ){
       if((isset($prios[$cat]))&&(count($prios[$cat]))){
@@ -134,8 +138,9 @@ class appgroup extends plugin
           }
         }
       }
-    }
+    } 
 
+    /* Sort application by priority */
     $tmp = array();
     foreach($this->gosaMemberApplication as $key =>  $entries){
       ksort ($entries);
@@ -151,7 +156,6 @@ class appgroup extends plugin
       $this->InitialFAIrelease  = $this->FAIrelease;
       $this->Releases           = $this->getReleases();
     }
-
   }
 
 
@@ -174,6 +178,7 @@ class appgroup extends plugin
     return($ret);
   }
 
+  /* Returns element position within given array */
   function getpos($atr,$attrs)
   {
     $i = 0;
@@ -186,10 +191,12 @@ class appgroup extends plugin
     return(-1);
   }
 
+
+  /* Check current combination of application && release 
+      Are all application available?, application parameter changed? ... */
   function diffAppsInReleases()
   {
-    /* Only diff if it is required 
-     */
+    /* Only diff if it is required  */
     $ret =array();
 
     /* If current release has changed */
@@ -220,8 +227,7 @@ class appgroup extends plugin
             if((!isset($old['gosaApplicationParameter'])) && (!isset($new['gosaApplicationParameter']))){
               $ret[$entry['App']] = false; 
 
-              /* Both got gosaApplicationParameter
-               */
+              /* Both got gosaApplicationParameter */
             }elseif((isset($old['gosaApplicationParameter'])) && (isset($new['gosaApplicationParameter']))){
               if(array_differs($old['gosaApplicationParameter'],$new['gosaApplicationParameter'])){
                 $ret[$entry['App']]  = true;
@@ -229,13 +235,11 @@ class appgroup extends plugin
                 $ret[$entry['App']]  = false;
               }
             }
-            /* Initialy had gosaApplicationParameter bot in new release not 
-             */
+            /* Initially had gosaApplicationParameter bot in new release not */
           }elseif((isset($old['gosaApplicationParameter'])) && (!isset($new['gosaApplicationParameter']))){
             $ret[$entry['App']]  = true;
 
-            /* Old release had no gosaApplicationParameter but new got some
-             */
+            /* Old release had no gosaApplicationParameter but new got some */
           }elseif((!isset($old['gosaApplicationParameter'])) && (isset($new['gosaApplicationParameter']))){
             $ret[$entry['App']]  = true;
           }
@@ -278,13 +282,13 @@ class appgroup extends plugin
     return($ret);
   }
 
-
+    
+  /* Sort category on position up  */
   function catUp($id)
   {
     /* Get all cats depinding on current dir */
     $cats = $this->GetSubdirs($this->curCatDir);
     $newcats =$this->ArrayUp($id,$cats);
-
     foreach($newcats as $cat => $name){
       unset($this->Categories[$cat]);
     }
@@ -294,13 +298,12 @@ class appgroup extends plugin
   }
 
 
+  /* Sort category on position down */
   function catDown($id)
   {
     /* Get all cats depinding on current dir */
     $cats = $this->GetSubdirs($this->curCatDir);
-
     $newcats =$this->ArrayDown($id,$cats);
-
     foreach($newcats as $cat => $name){
       unset($this->Categories[$cat]);
     }
@@ -310,18 +313,16 @@ class appgroup extends plugin
   }
 
 
+  /* Increase application priority */
   function getOneUp($appl)
   { 
     $cat  = $this->curCatDir;
     $apps = $this->gosaMemberApplication[$cat];
-
     $appsA = array();
     foreach ($apps as $appkey => $name){
       $appsA[$name['App']] =$name['App'];
     }
-
     $result = $this->ArrayUp($appl,$appsA);
-
     $ret = array();
     foreach($result as $app){
       $ret[]=array("App"=>$app);
@@ -330,18 +331,16 @@ class appgroup extends plugin
   }
 
 
+  /* Decrease application priority */
   function getOneDown($appl)
   {
     $cat  = $this->curCatDir;
     $apps = $this->gosaMemberApplication[$cat];
-
     $appsA = array();
     foreach ($apps as $appkey => $name){
       $appsA[$name['App']] =$name['App'];
     }
-
     $result = $this->ArrayDown($appl,$appsA);
-
     $ret = array();
     foreach($result as $app){
       $ret[]=array("App"=>$app);
@@ -350,7 +349,7 @@ class appgroup extends plugin
   } 
 
 
-
+  /* Add seperator to application list */
   function AddSeperator($id)
   {
     $found  = false;
@@ -370,7 +369,7 @@ class appgroup extends plugin
   }
 
 
-  /* check application acls */
+  /* Check if application acls are readable */
   function check_acls()
   {
     return(count($this->ui->get_module_departments("application")));
@@ -381,14 +380,15 @@ class appgroup extends plugin
   {
     /* Call parent execute */
     plugin::execute();
- 
- 
+
+    /* Check if department was selected */ 
     if((isset($_GET['act']))&&($_GET['act']=="depopen")){
       $dep = base64_decode($_GET['depid']); 
       $this->curbase =$dep;
     }
 
-    if((isset($_GET['act']))&&($_GET['act']=="open")){
+    /* Check if category was selected */
+    if((isset($_GET['act']))&&($_GET['act']=="open") && isset($this->Categories[base64_decode($_GET['id'])])){
       $this->curCatDir = base64_decode($_GET['id']);
     }
 
@@ -421,14 +421,13 @@ class appgroup extends plugin
       }
     }
 
-    /* If releasemanagement is activated you will "need" al least read 
-        access to application releases to configure application settings */
+    /* Check acl, applications must be readable */
     if(!$this->check_acls()){
-      $display = "<img src='images/button_cancel.png' alt='"._("ACL")."' class='center'>
+      $display .= "<img src='images/button_cancel.png' alt='"._("ACL")."' class='center'>
                   <b>"._("Insufficient permissions")."</b>
                   <p>".
                   _("You do not have permission to query application entries. All your changes will not be saved.").
-                  "</p>";
+                  "</p><p class='seperator'>&nbsp;</p>";
       $this->no_release_acls = true;
     }
     
@@ -455,14 +454,17 @@ class appgroup extends plugin
 
 
     $this->reload();
-
     $this->diffAppsInReleases();
-    $only_once = false;
 
-    /* Check POST variables for commands to add/remove some applications */
+    /* Check POST variables for commands 
+        to add/remove some applications */
+    $only_once = false;
     if($this->acl_is_writeable("gosaMemberApplication",$this->no_release_acls)){
+
+      /* Walk through posts */
       foreach($_POST as $name => $value){
 
+        /* Add a seperator to current category */
         if((preg_match("/AddSep_/",$name))&&(!$only_once)){
           $only_once = true;
           $n = preg_replace("/AddSep_/","",$name);
@@ -470,6 +472,7 @@ class appgroup extends plugin
           $this->AddSeperator($val);
         }
 
+        /* Delete application | seperator entry */
         if((preg_match("/DelApp_/",$name))&&(!$only_once)){
           $only_once = true;
 
@@ -483,7 +486,6 @@ class appgroup extends plugin
 
           foreach($this->gosaMemberApplication as $key =>  $cat){
             foreach($cat as $key2 => $app){
-
               if($app['App'] == $val){
                 unset($this->gosaMemberApplication[$key][$key2]);
                 if(isset($this->used_apps[$val])){
@@ -499,6 +501,7 @@ class appgroup extends plugin
           }
         }
 
+        /* Remove category entry */
         if(preg_match("/DelCat_/",$name)){
           $n = preg_replace("/DelCat_/","",$name);
           $app = base64_decode( preg_replace("/_.*$/","",$n));
@@ -514,6 +517,7 @@ class appgroup extends plugin
           }
         }
 
+        /* Edit application parameter */
         if((preg_match("/EdiApp_/",$name))&&(!$only_once)){
 
           $only_once = true;
@@ -521,16 +525,17 @@ class appgroup extends plugin
           $appname = preg_replace("/EdiApp_/","",$name);  
           $appname = preg_replace("/_.*$/","",$appname);
 
-          /* We've got the appname, get parameters from ldap 
-           */
+          /* We've got the appname, get parameters from ldap */
           $ldap= $this->config->get_ldap_link();
 
+          /* Check if we have release management enabled */
           $tmp = search_config($this->config->data,"faiManagement","CLASS");
           if(!empty($tmp)){
+    
+            /* Get application parameter from ldap */
             $tmp = array_flip($this->Releases);
             $base = $tmp[$this->FAIrelease];
-
-            $ldap->cd($this->config->current['BASE']);
+            $ldap->cd($base);
             $ldap->search("(&(objectClass=gosaApplication)(cn=$appname))",array("gosaApplicationParameter"));
             $found = "";
             while($attrs = $ldap->fetch()) {
@@ -540,14 +545,18 @@ class appgroup extends plugin
             }
             $ldap->cat($found, array("gosaApplicationParameter"));
           }else{
+
+            /* Get application parameter from ldap */
             $ldap->cd($this->config->current['BASE']);
             $ldap->search("(&(objectClass=gosaApplication)(cn=$appname))",array("gosaApplicationParameter"));
           }
 
-
+          /* Check if this application is unique */
           if ($ldap->count() != 1){
             print_red (_("The selected application name is not uniq. Please check your LDAP."));
           } else {
+
+            /* Get parameter */
             $attrs= $ldap->fetch();
             if(isset($attrs['gosaApplicationParameter'])){
               $this->dialog= TRUE;
@@ -589,23 +598,12 @@ class appgroup extends plugin
       }
     }
 
-    /* Add group with post */
+    /* Add application with post */
     if((isset($_GET['act']))&&($_GET['act']=="add")){
       $this->used_apps[$_GET['id']]= $_GET['id'];
       asort($this->used_apps);
       $this->addApp($_GET['id']);
     }
-
-    /* Add multiple */
-    if(isset($_POST['AddApps'])){
-      foreach($_POST as $name => $value){
-        if(preg_match("/AddApp_/",$name)){
-          $app = preg_replace("/AddApp_/","",$name);
-          $this->addApp($app);
-        }
-      }
-    }
-
 
     /* Cancel edit options? */
     if (isset($_POST['edit_options_cancel'])){
@@ -634,12 +632,10 @@ class appgroup extends plugin
       }
     }
 
+
+    /* Create application list */
     $div = new DivSelectBox("appgroup");    
-
     $div->SetHeight(300);
-
-    /* get departments */  
-    $ui = get_userinfo();
     $departments = array();
     $res = get_list("(objectClass=gosaDepartment)", "application", $this->curbase,array("description","cn","ou"),GL_SIZELIMIT);
     foreach($res as $value){
@@ -651,14 +647,15 @@ class appgroup extends plugin
       }
     }
 
+    /* Create 'open' and 'add' links */
     if($this->acl_is_writeable("gosaMemberApplication",$this->no_release_acls)){
       $linkadd  = "<a href='?plug=".$_GET['plug']."&amp;act=add&amp;id=%s'>%s</a>";
     }else{
       $linkadd = "%s";
     }
-
     $linkopen = "<a href='?plug=".$_GET['plug']."&amp;act=depopen&amp;depid=%s'>%s</a>";
 
+    /* Create base back entry */
     $base_back = preg_replace("/^[^,]+,/","",$this->curbase);
     if((strlen($base_back)>= strlen($this->config->current['BASE']))&&($this->curbase!=$this->config->current['BASE'])){
       $div->AddEntry(array(
@@ -666,6 +663,8 @@ class appgroup extends plugin
               "attach"=>"style='border:0px;'")
             ));
     }
+
+    /* Append departments for current base */
     foreach($departments as $key => $app){
       $div->AddEntry(array(
             array("string"=>"<img class='center' src='images/folder.png' alt='"._("department")."'>&nbsp;".sprintf($linkopen,base64_encode($key),$app),
@@ -673,6 +672,7 @@ class appgroup extends plugin
             ));
     }
 
+    /* Add applications found on this base */
     foreach($apps as $key => $app){
       $div->AddEntry(array(
             array("string"=>sprintf("<input class='center' type='checkbox' value='1' name='AddApp_%s'>",$key).
@@ -681,31 +681,11 @@ class appgroup extends plugin
             ));
     }
 
-    if((isset($_GET['act']))&&(($_GET['act'] == "cat_up")||($_GET['act']=="cat_down"))){
-      if($_GET['act']=="cat_up"){
-        $this->catUp(base64_decode($_GET['id']));
-      }
-      if($_GET['act']=="cat_down"){
-        $this->catDown(base64_decode($_GET['id']));
-      }
-    }
-
-    if((isset($_GET['act']))&&(($_GET['act'] == "one_up")||($_GET['act']=="one_down"))){
-      if(isset($_GET['id'])){
-        $id   = $_GET['id'];
-        $act  = $_GET['act']; 
-
-        if($act == "one_up"){
-          $this->getOneUp($id);
-        }elseif($act == "one_down")   { 
-          $this->getOneDown($id);
-        }
-      }
-    }
-
+    /* Create list of used/assigned applications */
     $div2 = new DivSelectBox("appgroup");
     $div2->SetHeight(300);
 
+    /* Check acls to create "edit/remove" category links */
     if(!$this->acl_is_writeable("gosaMemberApplication",$this->no_release_acls)){
       $linkopen       = "<img class='center' src='images/folder.png' alt=\"\">&nbsp;<a href='?plug=".$_GET['plug']."&amp;act=open&amp;id=%s'>%s</a>";
       $catremove      = "&nbsp;<img src='images/empty.png' alt='&nbsp;'>";
@@ -721,6 +701,7 @@ class appgroup extends plugin
         "</a>";
     }
 
+    /* Add back category for current category */
     if(empty($this->curCatDir)){
       $cnt =0;
     }else{
@@ -733,8 +714,8 @@ class appgroup extends plugin
       $div2 ->AddEntry(array(array("string"=>sprintf($linkopen,base64_encode($bbk),"..")),array("string"=>"&nbsp;","attach"=>"style='border-right:0px;'")));
     }
 
+    /* Add sub categories */ 
     $this->GetSubdirs($this->curCatDir);
-
     foreach($this->GetSubdirs($this->curCatDir) as $path => $name){
       $div2 ->AddEntry(array( 
             array("string"=>sprintf($linkopen,base64_encode($path),$name)),
@@ -742,10 +723,8 @@ class appgroup extends plugin
               "attach"=>"align='right' style='width:80px;border-right:0px;'"))); 
     }
 
-    /* Append entries */
-
+    /* Create priority & seperator links */
     $separator ="<hr size=1>"; 
-
     if($this->acl_is_writeable("gosaMemberApplication",$this->no_release_acls)){
       $sep      = "<input type='image' src='images/back.png' title='"._("Insert seperator")."' value='%s' name='AddSep_%s'>";
       $upudown  = "<a href='?plug=".$_GET['plug']."&amp;act=one_up&amp;id=%s'>".
@@ -759,23 +738,28 @@ class appgroup extends plugin
       $sep      = "";
       $upudown  = "";
     }
-      
+     
+    /* Create edit link */ 
     if($this->acl_is_writeable("gosaApplicationParameter",$this->no_release_acls)){
       $edit=      "&nbsp;<input type='image' src='images/edit.png' title='"._("Edit entry")."' name='EdiApp_%s' value='%s' alt='{t}edit{/t}' >";
     }else{
       $edit=      "";
     }
 
+    /* Get differences to mark those entries that have changed from last edit. */
     $Differences = $this->diffAppsInReleases();
 
+    /* Walk through entries an append them to list */
     if(isset($this->gosaMemberApplication[$this->curCatDir])){
       foreach($this->gosaMemberApplication[$this->curCatDir] as $cat => $entry){
 
-        
+        /* Add seperator */ 
         if(preg_match("/__SEPARATOR__/",$entry['App'])){
           $div2 ->AddEntry(array(array("string"=>$separator),
                 array("string"=>preg_replace("/\%s/",htmlentities($entry['App']),$upudown),"attach"=>"align='right' style='border-right:0px;'")));
         }else{
+
+          /* Add application */
 
           $image = "";
           /* Check if application was available within selected release
@@ -808,6 +792,7 @@ class appgroup extends plugin
       }
     }
 
+    /* Assign created div lists to template */
     $smarty->assign("UsedApps", $div2->DrawList());
     $smarty->assign("List", $div->DrawList());
     $smarty->assign("apps", $apps);
@@ -876,6 +861,32 @@ class appgroup extends plugin
 
   function save_object()
   {
+
+    /* Move category one position up or down */
+    if((isset($_GET['act']))&&(($_GET['act'] == "cat_up")||($_GET['act']=="cat_down"))){
+      if($_GET['act']=="cat_up"){
+        $this->catUp(base64_decode($_GET['id']));
+      }
+      if($_GET['act']=="cat_down"){
+        $this->catDown(base64_decode($_GET['id']));
+      }
+    }
+
+    /* Move application one position up or down */
+    if((isset($_GET['act']))&&(($_GET['act'] == "one_up")||($_GET['act']=="one_down"))){
+      if(isset($_GET['id'])){
+        $id   = $_GET['id'];
+        $act  = $_GET['act']; 
+
+        if($act == "one_up"){
+          $this->getOneUp($id);
+        }elseif($act == "one_down")   { 
+          $this->getOneDown($id);
+        }
+      }
+    }
+
+
     plugin::save_object();
   }
  
@@ -970,39 +981,50 @@ class appgroup extends plugin
     /* Generate applist */
     $this->apps= array();
 
-    /* Special handling for release managed apps 
-     */
+    /* Special handling for release managed apps */
     $tmp = search_config($this->config->data,"faiManagement","CLASS");
     if(!empty($tmp)){
       $this->enableReleaseManagement = true;
 
+      /* Check if release is available */
       $tmp = array_flip($this->Releases);
       if(isset($tmp[$this->FAIrelease])){
         $base =  $tmp[$this->FAIrelease];
       }else{
+
+        /* Release is not available, check if there is an alternative */
         $old_r =  $this->FAIrelease;
         $k = key($tmp);
 
         if(isset($tmp[$k])){
+      
+          /* We have found an alternative release name */
           $r = $tmp[$k];
           $this->FAIrelease = $k;
           $base = $r; 
 
+          /* Display msg */
           if(!(!$this->initially_was_account && $old_r =="/")){
             print_red(sprintf(_("Can't resolve the release name '%s', setting release name to '%s'. Possibly the objects base has changed."),$old_r,$k));   
           }
         }else{
+          
+          /* There are no releases available ... */
           print_red(_("There are no releases available. You will not be able to select another release."));
           return;
         }
       }
 
+      /* Get applications for this release */
       $base = preg_replace("/ou=apps,.*$/","ou=apps,".$this->curbase,$base);
       $res = get_list("(objectClass=gosaApplication)","application",$base,array("*"));
     }else{
+    
+      /* Get applications for this base */
       $res = get_list("(objectClass=gosaApplication)","application","ou=apps,".$this->curbase,array("*"));
     }
     
+    /* Append applications */
     foreach($res as $attrs){
       if (isset($attrs["description"][0])){    
         $this->apps[$attrs["cn"][0]]=
@@ -1014,8 +1036,8 @@ class appgroup extends plugin
       }
     }
 
+    /* Get all apps ... */
     $res = get_list("objectClass=gosaApplication","application",$this->config->current['BASE'],array("gosaApplicationParameter","cn")); 
-
     $tmp = search_config($this->config->data,"faiManagement","CLASS");
     $this->AllAppsForRelease = array();
     if(!empty($tmp)){
