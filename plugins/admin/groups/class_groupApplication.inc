@@ -1047,7 +1047,7 @@ class appgroup extends plugin
     }
 
     /* Get all apps ... */
-    $res = get_list("objectClass=gosaApplication","application",$this->config->current['BASE'],array("gosaApplicationParameter","cn")); 
+    $res = get_list("objectClass=gosaApplication","application",$this->config->current['BASE'],array("gosaApplicationParameter","cn"),GL_SUBSEARCH); 
     $tmp = search_config($this->config->data,"faiManagement","CLASS");
     $this->AllAppsForRelease = array();
     if(!empty($tmp)){

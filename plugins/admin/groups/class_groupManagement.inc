@@ -26,21 +26,18 @@ class groupManagement extends plugin
   var $plDescription= "This does something";
 
   /* Dialog attributes */
-  var $grouptab= NULL;
-  var $grouplist= array();
-  var $ui= NULL;
-  var $acl= "";
-
-  var $CopyPasteHandler  = NULL;
-  var $DivListGroup      = NULL;
-
-  var $ShowPrimaryCheckBox = false; 
+  var $grouptab           = NULL;
+  var $grouplist          = array();
+  var $ui                 = NULL;
+  var $CopyPasteHandler   = NULL;
+  var $DivListGroup       = NULL;
+  var $ShowPrimaryCheckBox= false; 
 
   function groupManagement ($config, $ui)
   {
     /* Save configuration for internal use */
-    $this->config= $config;
-    $this->ui= $ui;
+    $this->config = $config;
+    $this->ui     = $ui;
 
     /* Copy & Paste enabled ?*/
     if((isset($this->config->data['MAIN']['ENABLECOPYPASTE']))&&(preg_match("/true/i",$this->config->data['MAIN']['ENABLECOPYPASTE']))){
@@ -62,6 +59,7 @@ class groupManagement extends plugin
     $this->DivListGroup = new divListGroup($this->config,$this);
     $this->DivListGroup->DisableCheckBox("ShowPrimaryGroups",$this->ShowPrimaryCheckBox);
   }
+
 
   function execute()
   {
@@ -226,7 +224,7 @@ class groupManagement extends plugin
 
       /* Load permissions for selected 'dn' and check if
          we're allowed to remove this 'dn' */
-      $acl = $this->ui->get_permission($this->dn,"groups/group");
+      $acl = $this->ui->get_permissions($this->dn,"groups/group");
       if(preg_match("/d/",$acl)){
 
         /* Check locking, save current plugin in 'back_plugin', so
@@ -257,12 +255,12 @@ class groupManagement extends plugin
 
       /* Some nice guy may send this as POST, so we've to check
          for the permissions again. */
-      $acl = $this->ui->get_permission($this->dn,"groups/group");
+      $acl = $this->ui->get_permissions($this->dn,"groups/group");
       if(preg_match("/d/",$acl)){
 
         /* Delete request is permitted, perform LDAP action */
         $this->grouptab= new grouptabs($this->config,$this->config->data['TABS']['GROUPTABS'], $this->dn);
-        $this->grouptab->set_acl(array($this->acl));
+        $this->grouptab->set_acl_base($this->dn);
         $this->grouptab->delete ();
         gosa_log ("Group object'".$this->dn."' has been removed");
         unset ($this->grouptab);
@@ -509,9 +507,10 @@ class groupManagement extends plugin
       $acl    = get_permissions ($dn, $this->ui->subtreeACL);
 
       $obj    = new grouptabs($this->config,$this->config->data['TABS']['GROUPTABS'], $dn);
+      $obj->set_acl_base($dn);
       $objNew = new grouptabs($this->config,$this->config->data['TABS']['GROUPTABS'], "new");
-      $obj->set_acl($acl);
-      $objNew->set_acl($acl);
+      $obj->set_acl_base($dn);
+
       $this->CopyPasteHandler->Copy($obj,$objNew);
     }
 
@@ -524,7 +523,7 @@ class groupManagement extends plugin
       $acl= get_permissions ($dn, $this->ui->subtreeACL);
 
       $obj= new grouptabs($this->config,$this->config->data['TABS']['GROUPTABS'], $dn);
-      $obj->set_acl($acl);
+      $obj->set_acl_base($dn);
 
       $this->CopyPasteHandler->Cut($obj);
     }

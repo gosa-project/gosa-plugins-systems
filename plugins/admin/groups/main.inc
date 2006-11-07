@@ -52,7 +52,6 @@ if ($remove_lock){
     sess_del ('groupManagement');
   }
 
-
   /* Show and save dialog */
   $_SESSION['groupManagement']= $groupManagement;
 }
