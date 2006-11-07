@@ -37,7 +37,8 @@ class appgroup extends plugin
 
   var $CopyPasteVars            = array("Categories");
   var $gosaApplicationParameter ;
-
+  var $ui                       = NULL;
+  var $no_release_acls          = false;
 
   function appgroup ($config, $dn= NULL, $parent= NULL)
   {
@@ -46,11 +47,12 @@ class appgroup extends plugin
     $tmp = search_config($config->data,"faiManagement","CLASS");
     if(!empty($tmp)){
       $this->enableReleaseManagement = true;
-      $this->objectclasses [] = "FAIreleaseTag";
-      $this->attributes[] =  "FAIrelease";
+      $this->objectclasses  [] = "FAIreleaseTag";
+      $this->attributes     [] = "FAIrelease";
     }
 
     plugin::plugin ($config, $dn, $parent);
+    $this->ui = get_userinfo();
 
     /* In some case of old applikations with old release tag saving, we 
         must reassign is_account state.
@@ -146,9 +148,10 @@ class appgroup extends plugin
     
     /* Get required release informations */
     if($this->enableReleaseManagement){
-      $this->InitialFAIrelease = $this->FAIrelease;
-      $this->Releases       = $this->getReleases();
+      $this->InitialFAIrelease  = $this->FAIrelease;
+      $this->Releases           = $this->getReleases();
     }
+
   }
 
 
@@ -366,11 +369,20 @@ class appgroup extends plugin
     }
   }
 
+
+  /* check application acls */
+  function check_acls()
+  {
+    return(count($this->ui->get_module_departments("application")));
+  }
+
+
   function execute()
   {
     /* Call parent execute */
     plugin::execute();
-
+ 
+ 
     if((isset($_GET['act']))&&($_GET['act']=="depopen")){
       $dep = base64_decode($_GET['depid']); 
       $this->curbase =$dep;
@@ -409,12 +421,23 @@ class appgroup extends plugin
       }
     }
 
+    /* If releasemanagement is activated you will "need" al least read 
+        access to application releases to configure application settings */
+    if(!$this->check_acls()){
+      $display = "<img src='images/button_cancel.png' alt='"._("ACL")."' class='center'>
+                  <b>"._("Insufficient permissions")."</b>
+                  <p>".
+                  _("You do not have permission to query application entries. All your changes will not be saved.").
+                  "</p>";
+      $this->no_release_acls = true;
+    }
+    
 
     /* Add Categorie */ 
     if((isset($_POST['AddCat']))&&(isset($_POST['CatName']))&&(!empty($_POST['CatName']))){
 
       /* Only allow adding a category, if it is allowed */  
-      if($this->acl_is_writeable("gosaMemberApplication")){
+      if($this->acl_is_writeable("gosaMemberApplication",$this->no_release_acls)){
 
         if(preg_match("/[\\\\\/]/i",$_POST['CatName'])){
           print_red(_("Invalid character in category name."));
@@ -437,7 +460,7 @@ class appgroup extends plugin
     $only_once = false;
 
     /* Check POST variables for commands to add/remove some applications */
-    if($this->acl_is_writeable("gosaMemberApplication")){
+    if($this->acl_is_writeable("gosaMemberApplication",$this->no_release_acls)){
       foreach($_POST as $name => $value){
 
         if((preg_match("/AddSep_/",$name))&&(!$only_once)){
@@ -565,8 +588,6 @@ class appgroup extends plugin
         }
       }
     }
-  
-    $this->reload();
 
     /* Add group with post */
     if((isset($_GET['act']))&&($_GET['act']=="add")){
@@ -620,7 +641,7 @@ class appgroup extends plugin
     /* get departments */  
     $ui = get_userinfo();
     $departments = array();
-    $res = get_list("(objectClass=gosaDepartment)", "department", $this->curbase,array("description","cn","ou"),GL_SIZELIMIT);
+    $res = get_list("(objectClass=gosaDepartment)", "application", $this->curbase,array("description","cn","ou"),GL_SIZELIMIT);
     foreach($res as $value){
       $fdn= @LDAP::fix(str_replace($this->curbase,"",$value['dn']));
       if($value["description"][0]!=".."){
@@ -630,7 +651,7 @@ class appgroup extends plugin
       }
     }
 
-    if($this->acl_is_writeable("gosaMemberApplication")){
+    if($this->acl_is_writeable("gosaMemberApplication",$this->no_release_acls)){
       $linkadd  = "<a href='?plug=".$_GET['plug']."&amp;act=add&amp;id=%s'>%s</a>";
     }else{
       $linkadd = "%s";
@@ -685,7 +706,7 @@ class appgroup extends plugin
     $div2 = new DivSelectBox("appgroup");
     $div2->SetHeight(300);
 
-    if(!$this->acl_is_writeable("gosaMemberApplication")){
+    if(!$this->acl_is_writeable("gosaMemberApplication",$this->no_release_acls)){
       $linkopen       = "<img class='center' src='images/folder.png' alt=\"\">&nbsp;<a href='?plug=".$_GET['plug']."&amp;act=open&amp;id=%s'>%s</a>";
       $catremove      = "&nbsp;<img src='images/empty.png' alt='&nbsp;'>";
       $catupdown      = "";
@@ -725,7 +746,7 @@ class appgroup extends plugin
 
     $separator ="<hr size=1>"; 
 
-    if($this->acl_is_writeable("gosaMemberApplication")){
+    if($this->acl_is_writeable("gosaMemberApplication",$this->no_release_acls)){
       $sep      = "<input type='image' src='images/back.png' title='"._("Insert seperator")."' value='%s' name='AddSep_%s'>";
       $upudown  = "<a href='?plug=".$_GET['plug']."&amp;act=one_up&amp;id=%s'>".
                   " <img alt='{t}sort{/t}' align='top' src='images/sort_up.png' title='"._("Move up")."' border=0>".
@@ -739,7 +760,7 @@ class appgroup extends plugin
       $upudown  = "";
     }
       
-    if($this->acl_is_writeable("gosaApplicationParameter")){
+    if($this->acl_is_writeable("gosaApplicationParameter",$this->no_release_acls)){
       $edit=      "&nbsp;<input type='image' src='images/edit.png' title='"._("Edit entry")."' name='EdiApp_%s' value='%s' alt='{t}edit{/t}' >";
     }else{
       $edit=      "";
@@ -792,23 +813,23 @@ class appgroup extends plugin
     $smarty->assign("apps", $apps);
    
     $smarty->assign("enableReleaseManagement",$this->enableReleaseManagement);
+
+    $smarty->assign("ReleaseSelectAble", false);
+    $smarty->assign("Release", $this->FAIrelease);
  
     if($this->enableReleaseManagement){
       $smarty->assign("FAIrelease",  $this->FAIrelease);
       $smarty->assign("Releases", $this->Releases);
 
-      if(count($this->used_apps)){
-        $smarty->assign("ReleaseSelectAble", false);
-      }else{
+      if(!$this->no_release_acls && count($this->Releases)){
         $smarty->assign("ReleaseSelectAble", true);
       }
     }
-    $smarty->assign("ReleaseSelectAble", true);
-
+  
     /* Set acls to  template */
     $tmp = $this->plInfo();
     foreach($tmp['plProvidedAcls'] as $acl => $translation){
-      $smarty->assign($acl."ACL",$this->getacl($acl));
+      $smarty->assign($acl."ACL",$this->getacl($acl,$this->no_release_acls));
     }
 
     /* Show main page */
@@ -825,15 +846,16 @@ class appgroup extends plugin
 
   function getReleases()
   {
+    /* Only display those releases that we are able to read */
     $dn     = $this->config->current['BASE'];
     $filter = "(&(objectClass=organizationalUnit)(objectClass=FAIbranch))";
-    $res    = get_list($filter,"groups", $dn, array("ou"), GL_SUBSEARCH);
+    $res    = get_list($filter,"application", $dn, array("ou"), GL_SUBSEARCH);
 
     $ret =array();
     foreach($res as $attrs){
       if(preg_match("/ou=apps,/",$attrs['dn'])){
-        $bb = preg_replace("/ou=apps,.*/","",$attrs['dn']);
-        $parts = array_reverse(split("ou=",$bb));
+        $bb     = preg_replace("/ou=apps,.*/","",$attrs['dn']);
+        $parts  = array_reverse(split("ou=",$bb));
 
         $str ="";
         foreach($parts as $part){
@@ -878,7 +900,15 @@ class appgroup extends plugin
   /* Save to LDAP */
   function save()
   {
+    /* Skip saving application settings, if we do not have release acls */
+    if($this->no_release_acls){
+      gosa_log("Skip saving group application extension. Caused by insufficient acls");
+      return;
+    }
+
     plugin::save();
+
+
 
     /* Copy members */
     $this->Categories[""]=""; 
@@ -952,27 +982,28 @@ class appgroup extends plugin
       }else{
         $old_r =  $this->FAIrelease;
         $k = key($tmp);
-        $r = $tmp[$k];
-        $this->FAIrelease = $k;
-        $base = $r; 
 
-        if(!(!$this->initially_was_account && $old_r =="/")){
-          print_red(sprintf(_("Can't resolve the release name '%s', setting release name to '%s'. Possibly the objects base has changed."),$this->FAIrelease,$k));    
+        if(isset($tmp[$k])){
+          $r = $tmp[$k];
+          $this->FAIrelease = $k;
+          $base = $r; 
+
+          if(!(!$this->initially_was_account && $old_r =="/")){
+            print_red(sprintf(_("Can't resolve the release name '%s', setting release name to '%s'. Possibly the objects base has changed."),$old_r,$k));   
+          }
+        }else{
+          print_red(_("There are no releases available. You will not be able to select another release."));
+          return;
         }
       }
 
       $base = preg_replace("/ou=apps,.*$/","ou=apps,".$this->curbase,$base);
-    
-      $ldap   = $this->config->get_ldap_link();
-      $ldap->cd ($base);
-      $ldap->ls ("(objectClass=gosaApplication)",$base);
+      $res = get_list("(objectClass=gosaApplication)","application",$base,array("*"));
     }else{
-      $ldap   = $this->config->get_ldap_link();
-      $ldap->cd ("ou=apps,".$this->curbase);
-      $ldap->ls ("(objectClass=gosaApplication)","ou=apps,".$this->curbase);
+      $res = get_list("(objectClass=gosaApplication)","application","ou=apps,".$this->curbase,array("*"));
     }
     
-    while ($attrs= $ldap->fetch()){
+    foreach($res as $attrs){
       if (isset($attrs["description"][0])){    
         $this->apps[$attrs["cn"][0]]=
           $attrs["cn"][0]." (".
@@ -983,15 +1014,13 @@ class appgroup extends plugin
       }
     }
 
-    $ldap->cd($this->config->current['BASE']);
-    $ldap->search("objectClass=gosaApplication",array("gosaApplicationParameter","cn"));
+    $res = get_list("objectClass=gosaApplication","application",$this->config->current['BASE'],array("gosaApplicationParameter","cn")); 
+
     $tmp = search_config($this->config->data,"faiManagement","CLASS");
     $this->AllAppsForRelease = array();
     if(!empty($tmp)){
-
       $tmp = array_flip($this->Releases);
-
-      while($attrs = $ldap->fetch()){
+      foreach($res as $attrs){
         
         $testdn = preg_replace("/ou=apps,.*$/","ou=apps",$attrs['dn']);
         $testdn = preg_replace("/^[^,]+/","",$testdn);
@@ -1003,7 +1032,7 @@ class appgroup extends plugin
         }
       }
     }else{
-      while($attrs = $ldap->fetch()){
+      foreach($res as $attrs){
         $this->AllAppsForRelease[$attrs['dn']] = $attrs['cn'][0];
       }
     }
