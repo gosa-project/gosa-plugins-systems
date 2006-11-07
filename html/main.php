@@ -340,6 +340,8 @@ if (isset ($_SESSION['post_cnt'])){
   echo "<input type=\"hidden\" name=\"session_cnt\" value=\"".$_SESSION['post_cnt']."\">\n";
 }
 
+$start = microtime();
+
 /* Load plugin */
 if (is_file("$plugin_dir/main.inc")){
   require_once ("$plugin_dir/main.inc");
@@ -366,7 +368,7 @@ if (is_file("$plugin_dir/main.inc")){
 /* Print_out last ErrorMessage repeated string. */
 print_red(NULL);
 
-$smarty->assign("contents", $display);
+$smarty->assign("contents", $display.get_MicroTimeDiff($start,microtime()));
 
 if (isset($_SESSION['errors'])){
   $smarty->assign("errors", $_SESSION['errors']);
