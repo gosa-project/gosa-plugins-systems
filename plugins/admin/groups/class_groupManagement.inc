@@ -171,7 +171,7 @@ class groupManagement extends plugin
 
         /* Save user data to ldap */
         $this->grouptab->save();
-        gosa_log ("Group object'".$this->dn."' has been saved");
+        gosa_log ("Group object '".$this->dn."' has been saved");
 
         if (!isset($_POST['edit_apply'])){
           /* Group has been saved successfully, remove lock from LDAP. */
@@ -507,7 +507,7 @@ class groupManagement extends plugin
      */
     if($s_action == "copy"){
 
-      $dn     = $this->grouplist[trim($s_entry)]['dn'];
+      $dn  = $this->grouplist[trim($s_entry)]['dn'];
       $acl = $this->ui->get_permissions($dn,"groups/group");
       if(preg_match("/(c.*w|w.*c)/",$acl)){
 
@@ -515,7 +515,7 @@ class groupManagement extends plugin
         $obj    = new grouptabs($this->config,$this->config->data['TABS']['GROUPTABS'], $dn);
         $obj->set_acl_base($dn);
         $objNew = new grouptabs($this->config,$this->config->data['TABS']['GROUPTABS'], "new");
-        $obj->set_acl_base($dn);
+        $objNew->set_acl_base($dn);
 
         $this->CopyPasteHandler->Copy($obj,$objNew);
       }else{
@@ -527,16 +527,14 @@ class groupManagement extends plugin
     /* Copy current object to CopyHandler
      */
     if($s_action == "cut"){
+      
+      $dn = $this->grouplist[trim($s_entry)]['dn'];
       $acl = $this->ui->get_permissions($dn,"groups/group");
       if(preg_match("/(c.*w|w.*c)/",$acl)){
 
         $this->CopyPasteHandler->Clear();
-        $dn = $this->grouplist[trim($s_entry)]['dn'];
-        $acl= get_permissions ($dn, $this->ui->subtreeACL);
-
         $obj= new grouptabs($this->config,$this->config->data['TABS']['GROUPTABS'], $dn);
         $obj->set_acl_base($dn);
-
         $this->CopyPasteHandler->Cut($obj);
       }else{
         print_red("You are not allowed to cut this entry.");
