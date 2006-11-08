@@ -817,12 +817,19 @@ class userManagement extends plugin
       if($s_action == "copy"){
         $this->CopyPasteHandler->Clear();
         $dn= $this->list[trim($s_entry)]['dn'];
-        $obj    = new usertabs($this->config, $this->config->data['TABS']['USERTABS'], $dn);
-        $obj->set_acl_base($dn);
-        $objNew = new usertabs($this->config, $this->config->data['TABS']['USERTABS'], "new");
-        $objNew->set_acl_base($dn);
 
-        $this->CopyPasteHandler->Copy($obj,$objNew);
+        /* Check acl */
+        $acl = $this->ui->get_permissions($dn,"users/user");
+        if(preg_match("/(c.*w|w.*c)/",$acl)){
+          $obj    = new usertabs($this->config, $this->config->data['TABS']['USERTABS'], $dn);
+          $obj->set_acl_base($dn);
+          $objNew = new usertabs($this->config, $this->config->data['TABS']['USERTABS'], "new");
+          $objNew->set_acl_base($dn);
+
+          $this->CopyPasteHandler->Copy($obj,$objNew);
+        }else{
+          print_red("You are not allowed to copy this entry.");
+        }
       }
 
       /* Cut selected object. 
@@ -830,9 +837,16 @@ class userManagement extends plugin
       if($s_action == "cut"){
         $this->CopyPasteHandler->Clear();
         $dn= $this->list[trim($s_entry)]['dn'];
-        $obj= new usertabs($this->config, $this->config->data['TABS']['USERTABS'], $dn);
-        $obj->set_acl_base($dn);
-        $this->CopyPasteHandler->Cut($obj);
+
+        /* Check acl */
+        $acl = $this->ui->get_permissions($dn,"users/user");
+        if(preg_match("/(c.*w|w.*c)/",$acl)){
+          $obj= new usertabs($this->config, $this->config->data['TABS']['USERTABS'], $dn);
+          $obj->set_acl_base($dn);
+          $this->CopyPasteHandler->Cut($obj);
+        }else{
+          print_red("You are not allowed to cut this entry.");
+        }
       }
     }
   }

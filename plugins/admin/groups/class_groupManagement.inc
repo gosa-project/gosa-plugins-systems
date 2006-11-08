@@ -506,31 +506,41 @@ class groupManagement extends plugin
     /* Copy current object to CopyHandler
      */
     if($s_action == "copy"){
-      $this->CopyPasteHandler->Clear();
 
       $dn     = $this->grouplist[trim($s_entry)]['dn'];
-      $acl    = get_permissions ($dn, $this->ui->subtreeACL);
+      $acl = $this->ui->get_permissions($dn,"groups/group");
+      if(preg_match("/(c.*w|w.*c)/",$acl)){
 
-      $obj    = new grouptabs($this->config,$this->config->data['TABS']['GROUPTABS'], $dn);
-      $obj->set_acl_base($dn);
-      $objNew = new grouptabs($this->config,$this->config->data['TABS']['GROUPTABS'], "new");
-      $obj->set_acl_base($dn);
+        $this->CopyPasteHandler->Clear();
+        $obj    = new grouptabs($this->config,$this->config->data['TABS']['GROUPTABS'], $dn);
+        $obj->set_acl_base($dn);
+        $objNew = new grouptabs($this->config,$this->config->data['TABS']['GROUPTABS'], "new");
+        $obj->set_acl_base($dn);
 
-      $this->CopyPasteHandler->Copy($obj,$objNew);
+        $this->CopyPasteHandler->Copy($obj,$objNew);
+      }else{
+        print_red("You are not allowed to copy this entry.");
+      }
     }
 
 
     /* Copy current object to CopyHandler
      */
     if($s_action == "cut"){
-      $this->CopyPasteHandler->Clear();
-      $dn = $this->grouplist[trim($s_entry)]['dn'];
-      $acl= get_permissions ($dn, $this->ui->subtreeACL);
+      $acl = $this->ui->get_permissions($dn,"groups/group");
+      if(preg_match("/(c.*w|w.*c)/",$acl)){
 
-      $obj= new grouptabs($this->config,$this->config->data['TABS']['GROUPTABS'], $dn);
-      $obj->set_acl_base($dn);
+        $this->CopyPasteHandler->Clear();
+        $dn = $this->grouplist[trim($s_entry)]['dn'];
+        $acl= get_permissions ($dn, $this->ui->subtreeACL);
 
-      $this->CopyPasteHandler->Cut($obj);
+        $obj= new grouptabs($this->config,$this->config->data['TABS']['GROUPTABS'], $dn);
+        $obj->set_acl_base($dn);
+
+        $this->CopyPasteHandler->Cut($obj);
+      }else{
+        print_red("You are not allowed to cut this entry.");
+      }
     }
   }
 

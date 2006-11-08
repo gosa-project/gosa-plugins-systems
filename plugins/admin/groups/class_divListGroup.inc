@@ -108,7 +108,7 @@ class divListGroup extends MultiSelectWindow
     $acls  = $ui->get_permissions($this->selectedBase,"groups/group");
 
     /* Get copy & paste icon */
-    if(preg_match("/w/",$acls) &&  $this->parent->CopyPasteHandler){
+    if(preg_match("/(c.*w|w.*c)/",$acls) &&  $this->parent->CopyPasteHandler){
       $Copy_Paste = $this->parent->CopyPasteHandler->generatePasteIcon();
     }else{
       $Copy_Paste ="";
@@ -191,22 +191,26 @@ class divListGroup extends MultiSelectWindow
     foreach($groups as $key => $val){
     
       /* Create action icons - copy & paste icons */
+      $acl = $ui->get_permissions($val['dn'],"groups/group");
+
       $actions= "";
-      if(($this->parent->CopyPasteHandler) && preg_match("/w/",$ui->get_category_permissions($val['dn'],"group"))){
+      if(($this->parent->CopyPasteHandler) && preg_match("/(c.*w|w.*c)/",$acl)){
         $actions.= "<input class='center' type='image'
           src='images/editcut.png' alt='"._("cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
         $actions.= "<input class='center' type='image'
           src='images/editcopy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
       }
 
+      /* Add edit icon */
       $actions.= "<input class='center' type='image'
         src='images/edit.png' alt='"._("edit")."' name='group_edit_%KEY%' title='"._("Edit this entry")."'>";
 
-      if(preg_match("/w/",$ui->get_permissions($val['dn'],"groups/group"))){
+      /* Add snapshot functionality */
+      if(preg_match("/(c.*w|w.*c)/", $acl)){
         $actions.= $this->GetSnapShotActions($val['dn']);
       }
 
-      if(preg_match("/d/",$ui->get_permissions($val['dn'],"groups/group"))){
+      if(preg_match("/d/",$acl)){
         $actions.= "<input class='center' type='image'
           src='images/edittrash.png' alt='"._("delete")."' name='group_del_%KEY%' title='"._("Delete this entry")."'>";
       }
