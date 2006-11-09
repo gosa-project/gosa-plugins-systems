@@ -1,4 +1,4 @@
-<h2>{t}Copy &amp; paste wizard{/t}</h2>
+{t}Copy & paste wizard{/t}</h2>
 
 {if $Complete == false}
 	{t}Some values need to be unique in the complete directory while some combinations make no sense. GOsa shows the relevant attributes. Please maintain the values below to fullfill the policies.{/t}
@@ -6,7 +6,6 @@
 	<p class='seperator'>&nbsp;</p>
 	<br>
 	{$AttributesToFix}
-	<p class='seperator'>&nbsp;</p>
 	{if $SubDialog == false}
 	<br>
 
