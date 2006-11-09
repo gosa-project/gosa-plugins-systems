@@ -795,7 +795,7 @@ class addressbook extends plugin
             "homePhone"                 => _("Home phone number"), 
             "uid"                       => _("User identification"), 
             "mail"                      => _("Mail address"), 
-            "pager"                     => _("Pgaer"),
+            "pager"                     => _("Pager"),
             "o"                         => _("Organization"),
             "ou"                        => _("Department"),
             "l"                         => _("Location"),
