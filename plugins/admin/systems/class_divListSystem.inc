@@ -52,7 +52,7 @@ class divListSystem extends MultiSelectWindow
     $this->EnableSaveButton (false);
 
     /* Dynamic action col, depending on snapshot icons */
-    $action_col_size = 60;
+    $action_col_size = 70;
     if($this->parent->snapshotEnabled()){
       $action_col_size += 38;
     }
