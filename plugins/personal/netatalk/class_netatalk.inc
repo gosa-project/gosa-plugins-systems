@@ -18,7 +18,7 @@
    along with this program; if not, write to the Free Software
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
- 
+
 /*! \brief   netatalk plugin
   \author  Gina Haeussge <osd@foosel.net>
   \author  Bernd Zeimetz <bernd@zeimetz.de>
@@ -52,19 +52,15 @@ class netatalk extends plugin {
   var $shares_settings        = array();
   var $selectedshare        = "";
   var $mountDirectory         = "/Network/Servers";
-  var $shares_loaded= false;
-  
+
   /* Attributes to save to LDAP */
   var $attributes = array ("apple-user-homeurl", "apple-user-homeDirectory");
   var $CopyPasteVars= array("apple_user_homeurl", "apple_user_homeDirectory","apple_user_share","shares_settings","apple_user_homepath_raw",
-                             "apple_user_homeurl_raw","apple_user_homeurl_xml","apple_user_homeurl","selectedshare","mountDirectory");
-
-  /* Slip setting those attributes, we can't define class variables with - */
-  var $use_save_attributes = array ("apple-user-homeurl", "apple-user-homeDirectory");
+      "apple_user_homeurl_raw","apple_user_homeurl_xml","apple_user_homeurl","selectedshare","mountDirectory");
 
   /* Attributes to use in smarty template */
   var $smarty_attributes = array ("apple_user_homepath_raw", "shares", "selectedshare");
-  
+
   /* Attributes to save from $_POST */
   var $post_attributes = array ("apple_user_share", "apple_user_homepath_raw");
 
@@ -73,18 +69,18 @@ class netatalk extends plugin {
 
   /* Checkboxes */
   var $is_chk_box = array ();
-  
-  var $uid = "";
+
+  var $uid ="";  
 
   /* The constructor just saves a copy of the config. You may add what ever you need. */
-  function netatalk($config, $dn = NULL,$parent = NULL) {
+  function netatalk($config, $dn = NULL) {
 
     /* Include config object */
     $this->config = $config;
-    plugin :: plugin($config, $dn,$parent);
+    plugin::plugin($config, $dn);
 
-    /* Setting uid to default */
-    if(isset($this->attrs['uid'][0])){
+    /* set user id */    
+    if(isset($this->attrs['uid'])){
       $this->uid = $this->attrs['uid'][0];
     }
 
@@ -95,40 +91,41 @@ class netatalk extends plugin {
         $this->$name = $this->attrs["$val"][0];
       }
     }
-      
+
     if (strlen($this->apple_user_homeDirectory) >0) {
       $this->apple_user_homepath_raw = substr($this->apple_user_homeDirectory, strrpos($this->apple_user_homeDirectory, '/') + 1 );
     }
 
     /* get share list an set default values */
-    $this->get_netatalk_shares();
+    $this->get_netatalk_shares(); 
     $this->apple_user_share = $this->selectedshare;
- 
+
     /* Save initial account state */
     $this->initially_was_account = $this->is_account;
   }
 
 
-  function get_shares()
-  {
-    $this->shares_loaded= TRUE;
 
+  /* Get netatalk shares */
+  function get_netatalk_shares()
+  {
     /* Get netatalk shares */
     $this->shares = array();
     $ldap = $this->config->get_ldap_link();
 
-    if(($this->dn != "new" && $this->dn != NULL)) {
-      $ldap->cd($this->parent->by_object['user']->base);
+    if($this->dn === "new" || $this->dn == NULL) {
+      $base = $_SESSION['CurrentMainBase'];
     } else {
-      $ldap->cd ($this->dn);
-      $ldap->cd ('..'); $ldap->cd ('..');
+      $base = preg_replace("/^[^,]+,".normalizePreg(get_people_ou())."/","",$this->dn);
     }
+
+    $ldap->cd($base);
     $ldap->search ("(&(objectClass=mount)(|(mountType=url)(mountType=nfs))(cn=*))");
-    
+
     while ($attrs = $ldap->fetch()){
-      $tmp = split(":", $attrs["cn"][0]);
+      $tmp  = split(":", $attrs["cn"][0]);
       $host = trim($tmp[0]);
-      $dir = trim($tmp[1]);
+      $dir  = trim($tmp[1]);
       $mountType = trim($attrs["mountType"][0]);
       if ($mountType == "url") {
         $mountTypeReal = "netatalk";
@@ -141,23 +138,20 @@ class netatalk extends plugin {
       $this->shares_settings[$share]["dir"]=$dir;
       $this->shares_settings[$share]["host"]=$host;
 
-      $test = $host.$dir;
-      if(preg_match("#".$test."#",$this->apple_user_homeDirectory)){
-        $this->apple_user_share = $this->selectedshare = $share;
+      $oldShare=substr($this->apple_user_homeDirectory, 0, strrpos($this->apple_user_homeDirectory, '/'));
+      $newShare=($this->mountDirectory . "/". $host . $dir );
+      if (strcmp($oldShare, $newShare)==0) {
+        $this->selectedshare = $share;
       }
     }
     asort($this->shares);
   }
 
 
-
   /* Execute the plugin, produce the output. */
-  function execute() {
-    if (!$this->shares_loaded){
-      $this->get_shares();
-    }
-
-    plugin::execute();
+  function execute() 
+  {
+    plugin :: execute();
 
     /* Use the smarty templating engine here... */
     $smarty = get_smarty();
@@ -175,7 +169,7 @@ class netatalk extends plugin {
       $display .= back_to_main();
       return ($display);
     }
-    
+
     /* Show tab dialog headers */
     if ($this->parent != NULL) {
       if ($this->is_account) {
@@ -192,16 +186,17 @@ class netatalk extends plugin {
         if($errmsg==""){
           $display = $this->show_enable_header(_("Create netatalk account"), _("This account has netatalk features disabled. You can enable them by clicking below."));
         } else {
-          $display = $this->show_enable_header(_("Create netatalk account"), _($errmsg), TRUE);  
+          $display = $this->show_enable_header(_("Create netatalk account"), _($errmsg), TRUE);
         }
         return ($display);
       }
     }
-   
+
     /* Assign attributes and ACL to smarty */
-    $SkipWrite = (!isset($this->parent) || !$this->parent) && !isset($_SESSION['edit']); 
+    $SkipWrite = (!isset($this->parent) || !$this->parent) && !isset($_SESSION['edit']);
     $smarty->assign("netatalkShareACL", $this->getacl("netatalkShare",$SkipWrite));
     $smarty->assign("netatalkUserHomepathACL", $this->getacl("netatalkUserHomepath",$SkipWrite));
+
     foreach ($this->smarty_attributes as $val) {
       $smarty->assign("$val", $this-> $val);
       if (in_array($val, $this->is_chk_box)) {
@@ -217,12 +212,12 @@ class netatalk extends plugin {
     $display .= ($smarty->fetch(get_template_path('netatalk.tpl', TRUE, dirname(__FILE__))));
     return ($display);
   }
-  
-  
+
+
   /* Check if we have correct data */
   function check() {
     $message = array ();
-  
+
     if (strlen($this->apple_user_share) == 0) {
       $message[] = _("You must select a share to use.");
     }
@@ -233,8 +228,8 @@ class netatalk extends plugin {
   /* Save to LDAP */
   function save() {
     /* remove a / at the end of the homepath, we neither need it there nor
-      * do we want to check for it later.
-      */
+     * do we want to check for it later.
+     */
     if(substr($this->apple_user_homepath_raw, -1, 1) === '/') {
       $this->apple_user_homepath_raw=substr($this->apple_user_homepath_raw, 0, -1);
     }
@@ -242,7 +237,7 @@ class netatalk extends plugin {
     $mountType=$this->shares_settings[$this->apple_user_share]["mountType"];
     $dir=$this->shares_settings[$this->apple_user_share]["dir"];
     $host=$this->shares_settings[$this->apple_user_share]["host"];
-    
+
     /* Convert raw data to wished format */
     if ($this->is_account) {
       if($mountType=="url") {
@@ -260,15 +255,15 @@ class netatalk extends plugin {
     $ldap = $this->config->get_ldap_link();
 
     /* Reset array of used attributes, because plugin::save() 
-        will not work with '-' in attributes names 
-        after calling save restore attributes array */
+       will not work with '-' in attributes names 
+       after calling save restore attributes array */
     $attributes = $this->attributes;
     $this->attributes = array();
     plugin :: save();
     $this->attributes = $attributes;
 
     /* Do attribute conversion */
-    foreach ($this->use_save_attributes as $val) {
+    foreach ($this->attributes as $val) {
       $name = str_replace('-', '_', $val);
       if ($this->$name != "") {
         $this->attrs[$val] = $this->$name;
@@ -277,6 +272,7 @@ class netatalk extends plugin {
       }
       unset ($this->attrs[$name]);
     }
+
     /* Write back to ldap */
     $ldap->cd($this->dn);
     $this->cleanup();
@@ -287,10 +283,10 @@ class netatalk extends plugin {
     /* Optionally execute a command after we're done */
     if ($this->initially_was_account == $this->is_account) {
       if ($this->is_modified) {
-        $this->handle_post_events("modify", array("uid" => $this->uid));
+        $this->handle_post_events("modify",array("uid" => $this->uid));
       }
     } else {
-      $this->handle_post_events("add", array("uid" => $this->uid));
+      $this->handle_post_events("add",array("uid" => $this->uid));
     }
   }
 
@@ -298,8 +294,8 @@ class netatalk extends plugin {
   function save_object() {
     if (isset ($_POST['netatalkTab'])) {
       /* Save ldap attributes */
-//      plugin :: save_object();
-      
+      plugin :: save_object();
+
       foreach($this->post_attributes as $val) {
         if (isset ($_POST[$val])) {
           $this->$val = $_POST[$val];
@@ -316,7 +312,7 @@ class netatalk extends plugin {
           $this-> $val = "unchecked";
         }
       }
-      
+
       $this->apple_user_homeurl_raw = 'afp://' . $this->apple_user_share;
     }
   }
@@ -348,10 +344,10 @@ class netatalk extends plugin {
     unset ($this->attrs['uid']);
 
     /* Optionally execute a command after we're done */
-    $this->handle_post_events('remove',array("uid" => $this->uid));
+    $this->handle_post_events('remove', array("uid" => $this->uid));
   }
 
-  
+
   /* Return plugin informations for acl handling*/
   function plInfo()
   {
@@ -369,6 +365,7 @@ class netatalk extends plugin {
             "netatalkShare"          =>  _("Share"))
           ));
   }
+
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
