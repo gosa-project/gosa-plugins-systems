@@ -39,11 +39,10 @@ class gofaxAccount extends plugin
   var $current_blocklist= array();
 
   /* Copy & paste variables */
-  var $CopyPasteVars=array("facsimileTelephoneNumber","goFaxRBlocklist","goFaxRBlockgroups","goFaxSBlocklist","goFaxSBlockgroups");
+  var $CopyPasteVars=array("facsimileTelephoneNumber");//,"goFaxRBlocklist","goFaxRBlockgroups","goFaxSBlocklist","goFaxSBlockgroups");
 
   /* attribute list for save action */
-  var $attributes= array("goFaxDeliveryMode", "goFaxIsEnabled","facsimileAlternateTelephoneNumber",
-      "goFaxPrinter", "goFaxDivertNumber", "goFaxLanguage", "goFaxFormat", "mail","facsimileTelephoneNumber");
+  var $attributes= array("goFaxDeliveryMode", "goFaxIsEnabled","facsimileAlternateTelephoneNumber","goFaxRBlocklist","goFaxRBlockgroups","goFaxSBlocklist","goFaxSBlockgroups","goFaxPrinter", "goFaxDivertNumber", "goFaxLanguage", "goFaxFormat", "mail","facsimileTelephoneNumber");
 
   var $uid ="";
 
@@ -605,13 +604,6 @@ class gofaxAccount extends plugin
 
     plugin::remove_from_parent();
 
-    /* Zero out arrays */
-    foreach (array("goFaxRBlocklist", "goFaxRBlockgroups", "goFaxSBlocklist",
-          "goFaxSBlockgroups", "facsimileAlternateTelephoneNumber") as $val){
-
-      $this->attrs[$val]= array();
-    }
-
     /* Adapt mail settings if needed */
     if ((isset($this->parent->by_object['mailAccount']->is_account)) && ($this->parent->by_object['mailAccount']->is_account)){
       unset($this->attrs['mail']);
@@ -730,8 +722,11 @@ class gofaxAccount extends plugin
       $this->attrs['goFaxDeliveryMode'] = 0;
     }
   
-    /* Do not save mail address ... it was possibly changed by mail plugin*/
-    unset($this->attrs['mail']);
+    /* Do not save mail address ... it was possibly changed by mail plugin */
+    /* Adapt mail settings if needed */
+    if ((isset($this->parent->by_object['mailAccount']->is_account)) && ($this->parent->by_object['mailAccount']->is_account)){
+      unset($this->attrs['mail']);
+    }
 
     /* Write back to ldap */
     $ldap= $this->config->get_ldap_link();
