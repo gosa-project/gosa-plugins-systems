@@ -14,8 +14,9 @@ class proxyAccount extends plugin
   var $gosaProxyQuotaPeriod= "m";
 
   /* attribute list for save action */
-  var $attributes= array("gosaProxyID", "gosaProxyAcctFlags", "gosaProxyWorkingStart",
-      "gosaProxyWorkingStop", "gosaProxyQuota", "gosaProxyQuotaPeriod");
+  var $attributes= array(   "gosaProxyID", "gosaProxyAcctFlags", "gosaProxyWorkingStart",
+                            "gosaProxyWorkingStop", "gosaProxyQuota", "gosaProxyQuotaPeriod");
+
   var $objectclasses= array("gosaProxyAccount");
   var $ReadOnly = false;
 
@@ -34,8 +35,8 @@ class proxyAccount extends plugin
 
   function execute()
   {
-	/* Call parent execute */
-//	plugin::execute();
+    /* Call parent execute */
+    plugin::execute();
 
     $display= "";
 
