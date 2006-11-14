@@ -990,6 +990,15 @@ class mailAccount extends plugin
     }
   }
 
+   
+  function PrepareForCopyPaste($source)
+  {
+    plugin::PrepareForCopyPaste($source);
+
+    /* Reset alternate mail addresses */
+    $this->gosaMailAlternateAddress = array();    
+   }
+
 
   function plInfo()
   {

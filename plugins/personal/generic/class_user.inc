@@ -463,8 +463,27 @@ class user extends plugin
           /* Read out data*/
           $timeto   = $certificate->getvalidto_date();
           $timefrom = $certificate->getvalidfrom_date();
-          $str = "<table summary=\"\" border=0><tr><td style='vertical-align:top'>CN</td><td>".preg_replace("/ /", "&nbsp;", $certificate->getname())."</td></tr></table><br>".
-                  sprintf(_("Certificate is valid from %s to %s and is currently %s."), "<b>".date('d M Y',$timefrom)."</b>","<b>".date('d M Y',$timeto)."</b>", $certificate->isvalid()?"<b><font style='color:green'>"._("valid")."</font></b>":"<b><font style='color:red'>"._("invalid")."</font></b>");
+         
+          
+          /* Additional info if start end time is '0' */
+          $add_str_info = "";
+          if($timeto == 0 && $timefrom == 0){
+            $add_str_info = "<br><i>"._("(Some types of certificates are currently not supported and may be displayed as 'invalid'.)")."</i>";
+          }
+
+          $str = "<table summary=\"\" border=0>
+                    <tr>
+                      <td style='vertical-align:top'>CN</td>
+                      <td>".preg_replace("/ /", "&nbsp;", $certificate->getname())."</td>
+                    </tr>
+                  </table><br>".
+
+                  sprintf(_("Certificate is valid from %s to %s and is currently %s."),
+                        "<b>".date('d M Y',$timefrom)."</b>",
+                        "<b>".date('d M Y',$timeto)."</b>",
+                        $certificate->isvalid()?"<b><font style='color:green'>"._("valid")."</font></b>":
+                                                "<b><font style='color:red'>"._("invalid")."</font></b>").$add_str_info;
+
           $smarty->assign($cert."info",$str);
           $smarty->assign($cert."_state","true");
         } else {
@@ -1269,6 +1288,23 @@ class user extends plugin
         $this->$attr = $_POST[$attr];
       }
     } 
+  }
+
+
+  function PrepareForCopyPaste($source)
+  {
+    plugin::PrepareForCopyPaste($source);
+
+    /* Reset certificate information addepted from source user
+       to avoid setting the same user certificate for the destination user. */
+    $this->userPKCS12= "";
+    $this->userSMIMECertificate= "";
+    $this->userCertificate= "";
+    $this->certificateSerialNumber= "";
+    $this->old_certificateSerialNumber= "";
+    $this->old_userPKCS12= "";
+    $this->old_userSMIMECertificate= "";
+    $this->old_userCertificate= "";
   }
 
 

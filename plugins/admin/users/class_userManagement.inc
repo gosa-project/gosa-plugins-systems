@@ -51,8 +51,6 @@ class userManagement extends plugin
     /* Creat dialog object */
     $this->DivListUsers = new divListUsers($this->config,$this);
 
-    /* LOCK MESSAGE Vars */
-    $_SESSION['LOCK_VARS_TO_USE'] = array("/^act$/","/^id$/","/^user_edit_/","/^user_del_/");
   }
 
 
@@ -60,6 +58,9 @@ class userManagement extends plugin
   {
     /* Call parent execute */
     plugin::execute();
+
+    /* LOCK MESSAGE Vars */
+    $_SESSION['LOCK_VARS_TO_USE'] = array("/^act$/","/^id$/","/^user_edit_/","/^user_del_/");
 
     $smarty       = get_smarty();                 // Smarty instance
     $s_action     = "";                           // Contains the action to be taken
@@ -201,7 +202,7 @@ class userManagement extends plugin
     if (isset($_POST['password_finish'])){
 
       /* For security reasons, check if user is allowed to set password again */
-      $dn  = $this->usertab->dn;
+      $dn  = $this->dn;
       $acl = $this->ui->get_permissions($dn, "users/password");
       $cacl= $this->ui->get_permissions($dn, "users/user");
 
@@ -798,6 +799,9 @@ class userManagement extends plugin
 
         /* Use the last dn to search for it's ID in the newly generated list. */
         $dn= $this->CopyPasteHandler->lastdn;
+
+        /* Get new user list */
+        $this->reload();
         foreach($this->list as $id => $entry){
           if($entry['dn'] == $dn){
             $s_entry= $id;

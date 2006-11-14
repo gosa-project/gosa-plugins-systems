@@ -67,9 +67,10 @@ class posixAccount extends plugin
   var $SubSearch        = false;
 
   /* attribute list for save action */
-  var $CopyPasteVars  = array("grouplist","groupMembership","use_shadowMin","use_shadowMax",
-      "use_shadowWarning","use_shadowInactive","use_shadowExpire","mustchangepassword",
-      "force_ids","printerList","grouplist","savedGidNumber","savedUidNumber","savedGroupMembership");
+  var $CopyPasteVars  = 
+      array("grouplist","groupMembership","use_shadowMin",
+      "use_shadowMax","use_shadowWarning","use_shadowInactive","use_shadowExpire",
+      "must_change_password","printerList","grouplist","savedGidNumber","savedUidNumber");
 
   var $attributes     = array("homeDirectory", "loginShell", "uidNumber", "gidNumber", "gecos",
       "shadowMin", "shadowMax", "shadowWarning", "shadowInactive", "shadowLastChange",
@@ -472,8 +473,15 @@ class posixAccount extends plugin
     }
 
     /* Fill calendar */
-    $date= getdate($this->shadowExpire);
-
+    /* If this $this->shadowExpire is empty 
+        use current date as base for calculating selectbox values.
+       (This attribute is empty if this is a new user )*/ 
+    if(empty($this->shadowExpire)){
+      $date= getdate(time());
+    }else{
+      $date= getdate($this->shadowExpire);
+    }
+ 
     $days= array();
     for($d= 1; $d<32; $d++){
       $days[$d]= $d;
@@ -853,9 +861,9 @@ class posixAccount extends plugin
     /* Remove lock needed for unique id generation */
     del_lock ("uidnumber");
 
-
-    /* Posix accounts have group interrelationship, take care about these here. */
-    if ($this->force_ids == 0 && $this->primaryGroup == 0){
+    /* Posix accounts have group interrelationship, 
+       take care about these here if this is a new user without forced gidNumber. */
+    if ($this->force_ids == 0 && $this->primaryGroup == 0 && !$this->initially_was_account){
       $ldap->cd($this->config->current['BASE']);
       $ldap->search("(&(objectClass=posixGroup)(gidNumber=".$this->gidNumber."))", array("cn"));
 
@@ -1199,6 +1207,26 @@ class posixAccount extends plugin
   }
 
 
+  /* Get posts from copy & paste dialog */ 
+  function saveCopyDialog()
+  {
+    if(isset($_POST['homeDirectory'])){
+      $this->homeDirectory = $_POST['homeDirectory'];
+      if (isset ($_POST['force_ids'])){
+        $data= 1;
+        $this->gidNumber = $_POST['gidNumber'];
+        $this->uidNumber = $_POST['uidNumber'];
+      } else {
+        $data= 0;
+      }
+      if ($this->force_ids != $data){
+        $this->is_modified= TRUE;
+      }
+      $this->force_ids= $data;
+    }
+  }
+ 
+
   /* Create the posix dialog part for copy & paste */
   function getCopyDialog()
   {
@@ -1270,6 +1298,16 @@ class posixAccount extends plugin
     $ret['string'] = $str;
     $ret['status'] = $sta;
     return($ret);
+  }
+
+
+  function PrepareForCopyPaste($source)
+  {
+    plugin::PrepareForCopyPaste($source);
+
+    /* Avoid using the same gid/uid number as source user */
+    $this->savedUidNumber = $this->get_next_id("gidNumber");
+    $this->savedGidNumber = $this->get_next_id("uidNumber");
   }
 
 

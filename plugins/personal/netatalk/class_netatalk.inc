@@ -55,6 +55,10 @@ class netatalk extends plugin {
   var $shares_loaded= false;
   
   /* Attributes to save to LDAP */
+  var $attributes = array ("apple-user-homeurl", "apple-user-homeDirectory");
+  var $CopyPasteVars= array("apple_user_homeurl", "apple_user_homeDirectory","apple_user_share","shares_settings","apple_user_homepath_raw",
+                             "apple_user_homeurl_raw","apple_user_homeurl_xml","apple_user_homeurl","selectedshare","mountDirectory");
+
   /* Slip setting those attributes, we can't define class variables with - */
   var $use_save_attributes = array ("apple-user-homeurl", "apple-user-homeDirectory");
 
@@ -71,6 +75,40 @@ class netatalk extends plugin {
   var $is_chk_box = array ();
   
   var $uid = "";
+
+  /* The constructor just saves a copy of the config. You may add what ever you need. */
+  function netatalk($config, $dn = NULL,$parent = NULL) {
+
+    /* Include config object */
+    $this->config = $config;
+    plugin :: plugin($config, $dn,$parent);
+
+    /* Setting uid to default */
+    if(isset($this->attrs['uid'][0])){
+      $this->uid = $this->attrs['uid'][0];
+    }
+
+    /* Copy needed attributes */
+    foreach($this->attributes as $val) {
+      if (isset($this->attrs["$val"][0])) {
+        $name = str_replace('-', '_', $val);
+        $this->$name = $this->attrs["$val"][0];
+      }
+    }
+      
+    if (strlen($this->apple_user_homeDirectory) >0) {
+      $this->apple_user_homepath_raw = substr($this->apple_user_homeDirectory, strrpos($this->apple_user_homeDirectory, '/') + 1 );
+    }
+
+    /* get share list an set default values */
+    $this->get_netatalk_shares();
+    $this->apple_user_share = $this->selectedshare;
+ 
+    /* Save initial account state */
+    $this->initially_was_account = $this->is_account;
+  }
+
+
   function get_shares()
   {
     $this->shares_loaded= TRUE;
@@ -111,33 +149,7 @@ class netatalk extends plugin {
     asort($this->shares);
   }
 
-  /* The constructor just saves a copy of the config. You may add what ever you need. */
-  function netatalk($config, $dn = NULL) {
 
-    /* Include config object */
-    $this->config = $config;
-    plugin :: plugin($config, $dn);
-
-    /* Setting uid to default */
-    if(isset($this->attrs['uid'][0])){
-      $this->uid = $this->attrs['uid'][0];
-    }
-
-    /* Copy needed attributes */
-    foreach($this->use_save_attributes as $val) {
-      if (isset($this->attrs["$val"][0])) {
-        $name = str_replace('-', '_', $val);
-        $this->$name = $this->attrs["$val"][0];
-      }
-    }
-      
-    if (strlen($this->apple_user_homeDirectory) >0) {
-      $this->apple_user_homepath_raw = substr($this->apple_user_homeDirectory, strrpos($this->apple_user_homeDirectory, '/') + 1 );
-    }
- 
-    /* Save initial account state */
-    $this->initially_was_account = $this->is_account;
-  }
 
   /* Execute the plugin, produce the output. */
   function execute() {
@@ -210,7 +222,7 @@ class netatalk extends plugin {
   /* Check if we have correct data */
   function check() {
     $message = array ();
-
+  
     if (strlen($this->apple_user_share) == 0) {
       $message[] = _("You must select a share to use.");
     }
@@ -247,8 +259,13 @@ class netatalk extends plugin {
 
     $ldap = $this->config->get_ldap_link();
 
-    /* Call parents save to prepare $this->attrs */
+    /* Reset array of used attributes, because plugin::save() 
+        will not work with '-' in attributes names 
+        after calling save restore attributes array */
+    $attributes = $this->attributes;
+    $this->attributes = array();
     plugin :: save();
+    $this->attributes = $attributes;
 
     /* Do attribute conversion */
     foreach ($this->use_save_attributes as $val) {
