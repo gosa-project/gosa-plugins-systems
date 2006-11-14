@@ -337,7 +337,7 @@ class termDNS extends plugin
       $checkArray = array();
       $onlyOnce   = array();
 
-      $onlyOnce['cNAMERecord'] = 0;
+    //  $onlyOnce['cNAMERecord'] = 0;
 
       /* Walk through all entries and detect duplicates or mismatches
        */  
