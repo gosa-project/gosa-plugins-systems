@@ -104,6 +104,10 @@ class userManagement extends plugin
       $s_tab= "user";
     }
 
+    if(!search_config($this->config->data['TABS'], $s_tab , "CLASS")){
+      $s_tab = "user";
+    }
+
     /* Display the copy & paste dialog, if it is currently open */
     $ret = $this->copyPasteHandling($s_action,$s_entry);
     if($ret){
