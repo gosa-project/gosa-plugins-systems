@@ -124,6 +124,21 @@ class connectivity extends plugin
     return ($message);
   }
 
+  function set_acl_category($cat)
+  {
+    plugin::set_acl_category($cat);
+    foreach ($this->plugin_name as $name){
+      $this->plugin[$name]->set_acl_category( $cat);
+    }
+  }
+
+  function set_acl_base($base)
+  {
+    plugin::set_acl_base($base);
+    foreach ($this->plugin_name as $name){
+      $this->plugin[$name]->set_acl_base( $base);
+    }
+  }
 
   /* Save to LDAP */
   function save()
@@ -131,6 +146,7 @@ class connectivity extends plugin
     /* Save objects */
     foreach ($this->plugin_name as $name){
       $this->plugin[$name]->dn= $this->dn;
+      
       if ($this->plugin[$name]->is_account){
         $this->plugin[$name]->save();
       } else {
