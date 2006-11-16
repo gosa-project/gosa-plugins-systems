@@ -93,7 +93,7 @@
    &nbsp;
   </td>
   <td style="vertical-align:top;">
-{render acl=$gosaMailDeliveryModesACL}
+{render acl=$gosaMailDeliveryModeSACL}
    <input type=checkbox name="use_spam_filter" value="1" {$use_spam_filter} title="{t}Select if you want to filter this mails through spamassassin{/t}">
 {/render}
  <label for="gosaSpamSortLevel">{t}Move mails tagged with spam level greater than{/t}</label>

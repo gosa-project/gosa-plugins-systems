@@ -210,7 +210,6 @@ class userManagement extends plugin
       $acl = $this->ui->get_permissions($dn, "users/password");
       $cacl= $this->ui->get_permissions($dn, "users/user");
 
-
       if (preg_match('/w/', $acl) || preg_match('/c/', $cacl)){
 
         /* Check input and feed errors into 'message' */
@@ -402,6 +401,7 @@ class userManagement extends plugin
 
           /* In case of new users, ask for a password, skip this for templates */
           if (($set_pass || $this->usertab->password_change_needed()) && !$this->is_template){
+            $this->dn = $this->usertab->dn;
             return($smarty->fetch(get_template_path('password.tpl', TRUE)));
           }
 

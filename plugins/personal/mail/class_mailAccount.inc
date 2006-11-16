@@ -520,16 +520,16 @@ class mailAccount extends plugin
 
 
     if (!preg_match("/L/", $this->gosaMailDeliveryMode)) {
-      $smarty->assign("drop_own_mails", "checked");
+      $smarty->assign("only_local", "checked");
     } else {
-      $smarty->assign("drop_own_mails", "");
+      $smarty->assign("only_local", "");
     }
 
     $types = array(
           "V"=>"use_vacation",
           "S"=>"use_spam_filter",
           "R"=>"use_mailsize_limit",
-          "I"=>"only_local",
+          "I"=>"drop_own_mails",
           "C"=>"own_script");
 
     /* Fill checkboxes */
@@ -652,11 +652,11 @@ class mailAccount extends plugin
       $tmp= preg_replace("/[^a-z]/i","",$this->gosaMailDeliveryMode);
 
 
-      /* Handle delivery flags */ 
+      /* Handle delivery flags */
       if($this->acl_is_writeable("gosaMailDeliveryModeL")){
-        if(!preg_match("/L/",$tmp) && !isset($_POST['drop_own_mails'])){
+        if(!preg_match("/L/",$tmp) && !isset($_POST['only_local'])){
           $tmp.="L";
-        }elseif(preg_match("/L/",$tmp) && isset($_POST['drop_own_mails'])){
+        }elseif(preg_match("/L/",$tmp) && isset($_POST['only_local'])){
           $tmp = preg_replace("/L/","",$tmp);
         }
       }
@@ -666,7 +666,7 @@ class mailAccount extends plugin
           "S"   => "use_spam_filter",
           "V"   => "use_vacation",
           "C"   => "own_script",
-          "I"   => "only_local");
+          "I"   => "drop_own_mails");
 
       foreach($opts as $flag => $post){
         if($this->acl_is_writeable("gosaMailDeliveryMode".$flag)){
@@ -1020,7 +1020,7 @@ class mailAccount extends plugin
             "gosaMailDeliveryModeV"     =>  _("Add vacation information"),  // This is flag of gosaMailDeliveryMode
             "gosaVacationMessage"       =>  _("Vacation message"),
 
-            "gosaMailDeliveryModes"     =>  _("Use spam filter"),           // This is flag of gosaMailDeliveryMode
+            "gosaMailDeliveryModeS"     =>  _("Use spam filter"),           // This is flag of gosaMailDeliveryMode
             "gosaSpamSortLevel"         =>  _("Spam level"),
             "gosaSpamMailbox"           =>  _("Spam mail box"),
 
@@ -1029,7 +1029,7 @@ class mailAccount extends plugin
 
             "gosaMailForwardingAddress" =>  _("Forwarding address"),
             "gosaMailDeliveryModeL"     =>  _("Local delivery"),            // This is flag of gosaMailDeliveryMode
-            "gosaMailDeliveryModeI"     =>  _("Only insider delivery"),     // This is flag of gosaMailDeliveryMode
+            "gosaMailDeliveryModeI"     =>  _("No delivery to own mailbox "),     // This is flag of gosaMailDeliveryMode
             "gosaMailAlternateAddress"  =>  _("Mail alternative addresses"),
 
             "gosaMailForwardingAddress" =>  _("Forwarding address"),
