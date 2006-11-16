@@ -44,6 +44,8 @@ class group extends plugin
   var $attributes= array("cn", "description", "gidNumber","memberUid","sambaGroupType","sambaSID");
   var $objectclasses= array("top", "posixGroup");
 
+  var $CopyPasteVars  = array("force_gid","fon_group","smbgroup","groupType","sambaSID","sambaDomainName","SID","nagios_group","sambaGroupType");
+
   function group ($config, $dn= NULL)
   {
     plugin::plugin ($config, $dn);

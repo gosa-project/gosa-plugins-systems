@@ -9,6 +9,7 @@ class mailgroup extends plugin
 
   var $uid                        = "";       // User id 
   var $cn                         = "";       // cn
+  var $orig_cn                    = "";       // cn
 
   var $method                     = "mailMethod"; // Used Mail method 
   var $mmethod                    = "";           // Contains the gosa.conf MAILMETHOD
@@ -54,13 +55,15 @@ class mailgroup extends plugin
       "acl","gosaSharedFolderTarget", "gosaVacationMessage");
 
   var $objectclasses= array("gosaMailAccount");
-
+  var $CopyPasteVars          = array("quotaUsage","imapacl");
 
   function mailgroup ($config, $dn= NULL, $ui= NULL)
   {
     /* Initialise all available attributes ... if possible
      */
     plugin::plugin($config, $dn);
+
+    $this->orig_cn = $this->cn;
 
     /* Set mailMethod to the one defined in gosa.conf 
      */
@@ -881,7 +884,7 @@ I: Only insider delivery */
     }
     $ldap->cd($this->config->current['BASE']);
     $ldap->search ("(&(!(objectClass=gosaUserTemplate))(objectClass=gosaMailAccount)(|(mail=".$this->mail.")(gosaMailAlternateAddress=".
-        $this->mail."))(!(uid=".$this->cn."))(!(cn=".$this->cn.")))");
+        $this->mail."))(!(uid=".$this->orig_cn."))(!(cn=".$this->orig_cn.")))");
     if ($ldap->count() != 0){
       $message[]= _("The primary address you've entered is already in use.");
     }
@@ -1044,6 +1047,15 @@ I: Only insider delivery */
     if(isset($_POST['mail'])){
       $this->mail = $_POST['mail'];
     }
+  }
+
+
+  function PrepareForCopyPaste($source)
+  {
+    plugin::PrepareForCopyPaste($source);
+ 
+    /* Reset alternate mail addresses */
+    $this->gosaMailAlternateAddress = array();
   }
 
 
