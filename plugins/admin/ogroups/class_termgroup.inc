@@ -25,6 +25,8 @@ class termgroup extends plugin
                             "memcheck"        => "memcheck",
                             "sysinfo"         => "sysinfo");
 
+  var $CopyPasteVars = array("gotoNtpServers","modes","inheritTimeServer");
+
   function termgroup ($config, $dn= NULL, $parent= NULL)
   {
     /***************

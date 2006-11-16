@@ -649,7 +649,9 @@ class appgroup extends plugin
     $departments = array();
     $res = get_list("(objectClass=gosaDepartment)", "application", $this->curbase,array("description","cn","ou"),GL_SIZELIMIT);
     foreach($res as $value){
-      $fdn= @LDAP::fix(str_replace($this->curbase,"",$value['dn']));
+      $fdn = $value['dn'];
+      $fdn = preg_replace("/".normalizePreg($this->curbase)."/","",$fdn);
+      $fdn= @LDAP::fix($fdn);
       if($value["description"][0]!=".."){
         $departments[$value['dn']]= convert_department_dn($fdn)." - [".$value["description"][0]."]";
       }else{

@@ -81,7 +81,7 @@ class mailogroup extends plugin
 
       /* Check if mail address is already in use */
       $ldap->cd($this->config->current['BASE']);
-      $ldap->search ("(&(!(objectClass=gosaUserTemplate))(|(mail=".$this->mail.         ")(gosaMailAlternateAddress=".$this->mail."))(!(cn=".$this->cn.")))", array("uid"));
+      $ldap->search ("(&(!(objectClass=gosaUserTemplate))(|(mail=".$this->mail.")(gosaMailAlternateAddress=".$this->mail."))(!(cn=".$this->cn.")))", array("uid"));
       if ($ldap->count() != 0){
         $message[]= _("The primary address you've entered is already in use.");
       }
@@ -142,10 +142,14 @@ class mailogroup extends plugin
 
   function getCopyDialog()
   {
-    $str  = "";
-    $str .= _("Phone number");
-    $str .= "&nbsp;<input type='text' name='mail' value='".$this->mail."'>";
-    return($str);
+    $str = "";
+    $smarty = get_smarty();
+    $smarty->assign("mail",     $this->mail);
+    $str = $smarty->fetch(get_template_path("paste_mail.tpl",TRUE,dirname(__FILE__)));
+    $ret = array();
+    $ret['string'] = $str;
+    $ret['status'] = "";
+    return($ret);
   }
 
 
