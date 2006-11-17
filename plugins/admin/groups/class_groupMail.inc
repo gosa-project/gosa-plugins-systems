@@ -565,6 +565,13 @@ class mailgroup extends plugin
           $Dis = " disabled ";
         }
   
+        /* Reset given Acls to ensure that nobody can read username and acls if not allwoed */
+        if(!preg_match("/r/",$perm)){
+          $user = "";
+          $nr   = "none";
+          $key  = "none";  
+        }
+
         $tmp.= "<tr>  
                  <td>
                   <input name=\"user_$nr\" size=20 maxlength=60 value=\"$user\" ".$Dis.">
