@@ -103,9 +103,10 @@ class divListUsers extends MultiSelectWindow
       }
     }
 
-    /* Get copy & paste icon */ 
-    $acl = $ui->get_permissions($this->selectedBase,"users/user");
-    if(preg_match("/(c.*w|w.*c)/",$acl) &&  $this->parent->CopyPasteHandler){
+    /* Get copy & paste icon */
+    $acl_all  = $ui->has_complete_category_acls($this->selectedBase,"users/user") ;
+    $acl      = $ui->get_permissions($this->selectedBase,"users/user");
+    if(preg_match("/(c.*w|w.*c)/",$acl_all) &&  $this->parent->CopyPasteHandler){
       $Copy_Paste = $this->parent->CopyPasteHandler->generatePasteIcon();
     }else{
       $Copy_Paste ="";
@@ -124,7 +125,7 @@ class divListUsers extends MultiSelectWindow
       " <img   class='center' src='images/list_seperator.png' align='middle' alt='-' height='16' width='1'>&nbsp;";
 
     
-    if(preg_match("/(c.*w|w.*c)/",$acl)){ 
+    if(preg_match("/(c.*w|w.*c)/",$acl_all)){ 
       $listhead .= $this->get_snapshot_header($this->selectedBase);
     }
 
@@ -242,9 +243,9 @@ class divListUsers extends MultiSelectWindow
       $action= "";
 
       /* Add copy & cut icons */     
-
-      $acl = $ui->get_permissions($val['dn'],"users/user");
-      if(preg_match("/(c.*w|w.*c)/",$acl) && $this->parent->CopyPasteHandler){
+      $acl_all  = $ui->has_complete_category_acls($this->selectedBase,"users/user") ;
+      $acl      = $ui->get_permissions($val['dn'],"users/user");
+      if(preg_match("/(c.*w|w.*c)/",$acl_all) && $this->parent->CopyPasteHandler){
         $action .= "<input class='center' type='image'
           src='images/editcut.png' alt='"._("cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
         $action.= "<input class='center' type='image'
@@ -265,7 +266,7 @@ class divListUsers extends MultiSelectWindow
       }
 
       /* Add snapshot icon */
-      if(preg_match("/(c.*w|w.*c)/",$acl)){
+      if(preg_match("/(c.*w|w.*c)/",$acl_all)){
         $action.= $this->GetSnapShotActions($val['dn']);
       }
 

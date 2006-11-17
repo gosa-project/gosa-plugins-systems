@@ -105,10 +105,11 @@ class divListGroup extends MultiSelectWindow
       }
     }
 
-    $acls  = $ui->get_permissions($this->selectedBase,"groups/group");
+    $acls   = $ui->get_permissions($this->selectedBase,"groups/group");
+    $acl_all= $ui->has_complete_category_acls($this->selectedBase,"groups");
 
     /* Get copy & paste icon */
-    if(preg_match("/(c.*w|w.*c)/",$acls) &&  $this->parent->CopyPasteHandler){
+    if(preg_match("/(c.*w|w.*c)/",$acl_all) &&  $this->parent->CopyPasteHandler){
       $Copy_Paste = $this->parent->CopyPasteHandler->generatePasteIcon();
     }else{
       $Copy_Paste ="";
@@ -123,7 +124,7 @@ class divListGroup extends MultiSelectWindow
       " <input class='center' type='image' src='images/list_reload.png' align='middle' title='"._("Reload list")."' name='submit_department' alt='".        _("Submit")."'>&nbsp;".
       " <img class='center' src='images/list_seperator.png' alt='' height='16' width='1'>&nbsp;";
 
-    if(preg_match("/c/",$acls) && preg_match("/w/",$acls)){
+    if(preg_match("/(c.*w|w.*c)/",$acl_all)){
       $listhead .= $this->get_snapshot_header($this->selectedBase);
     }else{
       $listhead .= "<img class='center' src='images/restore_grey.png' alt=''>&nbsp;";
@@ -192,9 +193,10 @@ class divListGroup extends MultiSelectWindow
     
       /* Create action icons - copy & paste icons */
       $acl = $ui->get_permissions($val['dn'],"groups/group");
+      $acl_all= $ui->has_complete_category_acls($val['dn'],"groups");
 
       $actions= "";
-      if(($this->parent->CopyPasteHandler) && preg_match("/(c.*w|w.*c)/",$acl)){
+      if(($this->parent->CopyPasteHandler) && preg_match("/(c.*w|w.*c)/",$acl_all)){
         $actions.= "<input class='center' type='image'
           src='images/editcut.png' alt='"._("cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
         $actions.= "<input class='center' type='image'
@@ -206,7 +208,7 @@ class divListGroup extends MultiSelectWindow
         src='images/edit.png' alt='"._("edit")."' name='group_edit_%KEY%' title='"._("Edit this entry")."'>";
 
       /* Add snapshot functionality */
-      if(preg_match("/(c.*w|w.*c)/", $acl)){
+      if(preg_match("/(c.*w|w.*c)/", $acl_all)){
         $actions.= $this->GetSnapShotActions($val['dn']);
       }
 

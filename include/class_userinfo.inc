@@ -410,6 +410,11 @@ class userinfo
     return ($acl);
   }
 
+  function has_complete_category_acls($base,$category)
+  {
+    return($this->get_permissions($base,"all/all"));
+  }
+  
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
