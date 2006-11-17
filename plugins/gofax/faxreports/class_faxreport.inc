@@ -104,7 +104,7 @@ class faxreport extends plugin
 
     /* Some checks */
     if(!isset($this->config->data['SERVERS']['FAX'])){
-      print_red(_("No fax extension defined in your sever configuration, no reports can be shown!"));
+      print_red(_("No fax extension defined in your server configuration, no reports can be shown!"));
       return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
     }elseif(!is_callable("mysql_connect")){
       print_red(_("There is no mysql extension available, please check your php setup."));

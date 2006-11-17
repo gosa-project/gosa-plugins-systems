@@ -1049,7 +1049,7 @@ class user extends plugin
       $message[]= _("You have no permissions to create a user on this 'Base'.");
     } elseif ($this->dn != $new_dn && $this->dn != "new"){
       if (!$this->acl_is_writeable($this->dn, "user","create",(!is_object($this->parent) && !isset($_SESSION['edit'])))){
-        $message[]= _("You have no permissions to move this user to the spicified 'Base'.");
+        $message[]= _("You have no permissions to move this user to the specified 'Base'.");
       }
     }
 
