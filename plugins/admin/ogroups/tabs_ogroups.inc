@@ -111,6 +111,13 @@ class ogrouptabs extends tabs
         $this->by_object['faiSummary']->parent= &$this;
       }
     }
+
+    /* Move reference tab to second position from right */
+    if(isset($this->by_name['acl'])){
+      $tmp = $this->by_name['acl'];
+      unset($this->by_name['acl']);
+      $this->by_name['acl'] = $tmp;
+    }
   
     /* Move reference tab to last position*/
     if(isset($this->by_name['reference'])){
