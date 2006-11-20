@@ -46,6 +46,11 @@ var $uattrib= "uid";
     if(!isset($cfg['admin']))     $cfg['admin']="";
     if(!isset($cfg['password']))  $cfg['password']="";
 
+    /* Setting connect timeout to 10 seconds,
+        else the GOsa UI may freeze for 60 seconds.
+       (PHP default is 'default_socket_timeout = 60') */
+    imap_timeout(1, 10 );
+
     $this->mbox = @imap_open($cfg['connect'], $cfg['admin'], $cfg['password'], OP_HALFOPEN);
 
     /* Mailbox reachable? */
