@@ -31,10 +31,13 @@ class faiSummaryTab extends plugin{
   var $usedClasses    = array();
   var $base           = ""; 
   var $parent         = NULL; 
+  var $ui             = NULL;
 
-  function faiSummaryTab($config,$dn,$parent)
+  function faiSummaryTab($config,$dn)//,$parent)
   {
-    plugin::plugin($config,$dn,$parent);
+    plugin::plugin($config,$dn);//,$parent);
+
+    $this->ui = get_userinfo();
 
     /* Base object configuration */
     $this->objs = array(	
@@ -56,7 +59,7 @@ class faiSummaryTab extends plugin{
     $this->InitCalled = true;
     $this->Result = array();
     $_SESSION['faiSummaryTab']['UniqueID'] = 0; 
-   
+  
     /* Get classes & release name 
        There are 2 different tabs which use the summary tab
        faiProfile / Workstations */
@@ -73,8 +76,16 @@ class faiSummaryTab extends plugin{
     }elseif(isset($this->parent->by_name['workstartup'])){
       $this->Classes = $this->parent->by_object['workstartup']->FAIclass;
       $this->Release = $this->parent->by_object['workstartup']->FAIrelease;
-      $this->base    = $this->parent->by_object['workgeneric']->base;
 
+      /* Check if this is a workstation or an object group */
+      if(isset($this->parent->by_object['workgeneric'])){
+        $this->base    = $this->parent->by_object['workgeneric']->base;
+      }elseif(isset($this->parent->by_object['ogroup'])){
+        $this->base    = $this->parent->by_object['ogroup']->base;
+      }else{
+        print_red(_("Unknown type of FAI source information. This is not a profile, workstation nor a ogroup."));
+      }
+      
       /* Append workstation class && LAST */
       if(isset($this->parent->by_object['workgeneric']->cn)){
         $this->Classes[] = $this->parent->by_object['workgeneric']->cn;
@@ -84,6 +95,12 @@ class faiSummaryTab extends plugin{
     $tmp = array_flip($this->getBranches());
 
     $this->Classes[] = "LAST";
+
+    /* You need full access to complete collection of fai acls to view this summary */
+    $acl = $this->ui->has_complete_category_acls($this->base,"fai");
+    if(!preg_match("/r/",$acl)){
+      $this->Classes = array();
+    }
 
     /* Set all available releases */
     $this->Releases = $tmp;
@@ -173,7 +190,8 @@ class faiSummaryTab extends plugin{
 
     /* Get smarty class & assign created summary results */
     $smarty = get_smarty();
-    $smarty->assign("readable",$this->acl_is_readable("readable"));
+    $acl = $this->ui->has_complete_category_acls($this->base,"fai");
+    $smarty->assign("readable", preg_match("/r/",$acl));
 
     $this->ObjectList = $this->createSummary($this->Result);
     $smarty->assign("objectList",$this->ObjectList);
@@ -199,13 +217,13 @@ class faiSummaryTab extends plugin{
       $image = "<img src='".$this->objs[$key]['Image']."' class='center' alt='".$this->objs[$key]['Name']."' border=0>";
       if(!isset($entry['Open'])){
         $str .= "<tr><td colspan=2>
-                    <a href='?plug=".$_GET['plug']."&expand&id=".$key."'>
+                    <a href='?plug=".$_GET['plug']."&amp;expand&amp;id=".$key."'>
                   <img border=0 class='center' src='images/expand.png' alt='"._("Open")."'>&nbsp;";
         $str .= $image."&nbsp;";
         $str .= "<b>".$this->objs[$key]['Name']."</b></b></td></tr>";
       }else{
         $str .= "<tr><td colspan=2>
-                    <a href='?plug=".$_GET['plug']."&compress&id=".$key."'>
+                    <a href='?plug=".$_GET['plug']."&amp;compress&amp;id=".$key."'>
                    <img border=0 class='center' src='images/sort_down.png' alt='"._("Close")."'>&nbsp;";
         $str .= $image."&nbsp;";
         $str .= "<b>".$this->objs[$key]['Name']."</b></a></td></tr>";
@@ -253,7 +271,7 @@ class faiSummaryTab extends plugin{
               $str .="<tr><td style='padding-left:20px;'>";
             }
 
-            $str .= "<a target='_blank' href='?plug=".$_GET['plug']."&show&type=".$key."&id=".base64_encode($data['dn'])."'>";
+            $str .= "<a target='_blank' href='?plug=".$_GET['plug']."&amp;show&amp;type=".$key."&amp;id=".base64_encode($data['dn'])."'>";
             $str .= $image."&nbsp;";
             if(isset($data['FAIpriority'][0])){
               $str .= "(".$data['FAIpriority'][0].")";
@@ -357,7 +375,7 @@ class faiSummaryTab extends plugin{
     $dn 	            = $this->Releases [$this->Release];
     $resolvedClasses  = get_all_objects_for_given_base($dn,"(&(objectClass=FAIclass)(cn=".$class."))");
 
-    /* Check acls -> are we allowed to view the sonfig summary ? */
+    /* Check acls -> are we allowed to view the config summary ? */
     if(!$this->acl_is_readable("readable")) {
       return;
     }
@@ -538,7 +556,7 @@ class faiSummaryTab extends plugin{
     }
   }
 
-  /* Return plugin informations for acl handling */
+  /* Return plugin informations for acl handling * /
   function plInfo()
   {
     return (array(
@@ -548,12 +566,12 @@ class faiSummaryTab extends plugin{
           "plDepends"     => array(),
           "plPriority"    => 15,
           "plSection"     => array("administration"),
-          "plCategory"    => array("workstation","server","fai") ,
+          "plCategory"    => array("workstation","server","fai","ogroups") ,
           "plProvidedAcls"=> array(
             "readable" => _("Viewable")),
           ));
   }
-
+  */
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
