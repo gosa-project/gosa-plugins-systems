@@ -283,8 +283,14 @@ class application extends plugin
         $this->gosaApplicationFlags= "[$flag]";
       }
 
+      /* Remove current picture */
+      if(isset($_POST['remove_picture'])){
+        $this->set_picture("");
+      }
+
       /* Check for picture upload */
       if (isset($_FILES['picture_file']['name']) && $_FILES['picture_file']['name'] != ""){
+
         if (!is_uploaded_file($_FILES['picture_file']['tmp_name'])) {
           print_red (_("The specified picture has not been uploaded correctly."));
         }
@@ -370,6 +376,12 @@ class application extends plugin
       $new_dn= $this->dn;
     }
 
+
+    if($this->dn == "new"){
+      $this->set_acl_base($this->base);
+    }
+
+    /* Check acls to create a new application here  */
     $ui= get_userinfo();
     if (!$this->acl_is_createable() && $this->dn == "new"){
       $message[]= _("You have no permissions to create a application on this 'Base'.");

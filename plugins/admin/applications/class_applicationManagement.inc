@@ -452,8 +452,15 @@ class applicationManagement extends plugin
     if($s_action == "copy"){
       $this->CopyPasteHandler->Clear();
       $dn = $this->applications[$s_entry]['dn'];
-      $obj    = new apptabs($this->config, $this->config->data['TABS']['APPSTABS'], $dn);
-      $objNew = new apptabs($this->config, $this->config->data['TABS']['APPSTABS'], "new");
+      
+      /* Check Acls */
+      $acl_all= $this->ui->has_complete_category_acls($dn,"application");  
+      if(!preg_match("/(c.*w|w.*c)/",$acl_all)){
+        return("");
+      }
+
+      $obj    = new apptabs($this->config, $this->config->data['TABS']['APPSTABS'], $dn,  "application");
+      $objNew = new apptabs($this->config, $this->config->data['TABS']['APPSTABS'], "new","application");
       $this->CopyPasteHandler->Copy($obj,$objNew);
     }
 
@@ -462,7 +469,14 @@ class applicationManagement extends plugin
     if($s_action == "cut"){
       $this->CopyPasteHandler->Clear();
       $dn = $this->applications[$s_entry]['dn'];
-      $obj = new apptabs($this->config, $this->config->data['TABS']['APPSTABS'], $dn);
+
+      /* Check Acls */
+      $acl_all= $this->ui->has_complete_category_acls($dn,"application");  
+      if(!preg_match("/(c.*w|w.*c)/",$acl_all)){
+        return("");
+      }
+
+      $obj = new apptabs($this->config, $this->config->data['TABS']['APPSTABS'], $dn, "application");
       $this->CopyPasteHandler->Cut($obj);
     }
   }

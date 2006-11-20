@@ -101,7 +101,11 @@ class divListApplication extends MultiSelectWindow
     }
 
     /* Get copy & paste icon */
-    if($this->parent->CopyPasteHandler){
+    $ui  = get_userinfo();
+    $acl = $ui->get_permissions("cn=dummy,".$this->selectedBase,"application/application");
+    $acl_all= $ui->has_complete_category_acls($this->selectedBase,"application");
+
+    if((preg_match("/(c.*w|w.*c)/",$acl_all)) && ($this->parent->CopyPasteHandler)){
       $Copy_Paste = $this->parent->CopyPasteHandler->generatePasteIcon();
     }else{
       $Copy_Paste ="";
@@ -110,8 +114,6 @@ class divListApplication extends MultiSelectWindow
     /* Create listhead, it will be shown on top of the divlist.
      * It provides general navigation and object creation
      */
-    $ui  = get_userinfo();
-    $acl = $ui->get_permissions("cn=dummy,".$this->selectedBase,"application/application");
     $listhead = "<div style='background:#F0F0F9;padding:5px;'>".
       " <input class='center' type='image' src='images/list_root.png' align='middle' ".
       "title='"._("Go to root department")."' name='dep_root' alt='"._("Root")."'>&nbsp;".
@@ -122,7 +124,12 @@ class divListApplication extends MultiSelectWindow
       " <input class='center' type='image' src='images/list_reload.png' align='middle' ".
       "title='"._("Reload list")."' name='submit_department' alt='"._("Submit")."'>&nbsp;".
       " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
-    $listhead .= $this->get_snapshot_header($this->selectedBase);
+
+    if(preg_match("/(c.*w|w.*c)/",$acl_all)){
+      $listhead .= $this->get_snapshot_header($this->selectedBase);
+    }else{
+      $listhead .= "<img class='center' src='images/restore_grey.png' alt=''>&nbsp;";
+    }
 
     if(preg_match("/c/",$acl)){
     $listhead .= " <input class='center' type='image' align='middle' src='images/list_new_app.png' alt='"._("new")."'
@@ -174,31 +181,31 @@ class divListApplication extends MultiSelectWindow
     foreach($list as $key => $val){
 
       $acl = $ui->get_permissions($val['dn'],"application/application");
+      $acl_all= $ui->has_complete_category_acls($val['dn'],"application");
 
       /* Create action icons */
       $actions= "";
 
-
       /* Add Copy & Paste icon */
-      if($this->parent->CopyPasteHandler){
-
+      if(($this->parent->CopyPasteHandler) && preg_match("/(c.*w|w.*c)/",$acl_all)){
         /* Only add cut icon, if we are allowed to move this user */
         if(preg_match("/m/",$acl)){
           $actions.= "<input class='center' type='image'
             src='images/editcut.png' alt='"._("cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
-        }else{
-          $actions.= "<img src='images/empty.png' alt='&nbsp;'>";
-        }
 
-        /* Copy is allowed everytime */
-        $actions.= "<input class='center' type='image'
-          src='images/editcopy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
+          $actions.= "<input class='center' type='image'
+            src='images/editcopy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
+        }
       }
 
       /* Add edit icon */
       $actions.= "<input class='center' type='image'
         src='images/edit.png' alt='"._("edit")."' name='appl_edit_%KEY%' title='"._("Edit this entry")."'>";
-      $actions.= $this->GetSnapShotActions($val['dn']);
+
+
+      if(preg_match("/(c.*w|w.*c)/",$acl_all)){
+        $actions.= $this->GetSnapShotActions($val['dn']);
+      }
 
       /* If we are allowed to remove the application account, display remove icon */
       if(preg_match("/d/",$acl)){

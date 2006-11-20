@@ -75,7 +75,10 @@
     <input name="picture_file" type="file" size="20" maxlength="255" accept="image/*.png" id="picture_file">
 {/render}
 {render acl=$gosaApplicationIconACL}
-    <input type="submit" name="update" value="{t}Update{/t}" title="{t}Reload picture from LDAP{/t}">
+<input type="submit" name="update" value="{t}Update{/t}" title="{t}Reload picture from LDAP{/t}">
+{/render}
+{render acl=$gosaApplicationIconACL}
+<input type="submit" name="remove_picture" value="{t}Remove picture{/t}" title="{t}Remove picture from LDAP{/t}">
 {/render}
     </td>
     </tr>
