@@ -110,7 +110,9 @@ class divListOGroup extends MultiSelectWindow
     }
 
     /* Get copy & paste icon */
-    if(preg_match("/w/",$ui->get_permissions($this->selectedBase,"ogroups/ogroup")) &&  $this->parent->CopyPasteHandler){
+    $acls  = $ui->get_permissions($this->selectedBase,"ogroups/ogroup");
+    $acl_all= $ui->has_complete_category_acls($this->selectedBase,"groups");
+    if(preg_match("/(c.*w|w.*c)/",$acl_all) &&  $this->parent->CopyPasteHandler){
       $Copy_Paste = $this->parent->CopyPasteHandler->generatePasteIcon();
     }else{
       $Copy_Paste ="";
@@ -128,8 +130,8 @@ class divListOGroup extends MultiSelectWindow
       title='"._("Reload list")."' name='submit_department' alt='"._("Submit")."'>&nbsp;".
       " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
 
-    $acls  = $ui->get_permissions($this->selectedBase,"ogroups/ogroup");
-    if(preg_match("/c/",$acls) && preg_match("/w/",$acls)){
+
+    if(preg_match("/(c.*w|w.*c)/",$acl_all)){
       $listhead .= $this->get_snapshot_header($this->selectedBase);
     }else{
       $listhead .= "<img class='center' src='images/restore_grey.png' alt=''>&nbsp;";
@@ -180,18 +182,18 @@ class divListOGroup extends MultiSelectWindow
 
       /* Create action icons */
       $actions= "";
-      if($this->parent->CopyPasteHandler && preg_match("/w/",$ui->get_category_permissions($val['dn'],"ogroups"))){
+      $acl_all= $ui->has_complete_category_acls($val['dn'],"groups");
+      if(($this->parent->CopyPasteHandler) && preg_match("/(c.*w|w.*c)/",$acl_all)){
         $actions.= "<input class='center' type='image'
           src='images/editcut.png' alt='"._("cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
         $actions.= "<input class='center' type='image'
           src='images/editcopy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
       }
 
-
       $actions.= "<input class='center' type='image'
         src='images/edit.png' alt='"._("edit")."' name='group_edit_%KEY%' title='"._("Edit this entry")."'>";
     
-      if(preg_match("/w/",$ui->get_permissions($val['dn'],"groups/group"))){
+      if(preg_match("/(c.*w|w.*c)/", $acl_all)){
         $actions.= $this->GetSnapShotActions($val['dn']);
       }
 
@@ -199,7 +201,7 @@ class divListOGroup extends MultiSelectWindow
         $actions.= "<input class='center' type='image'
           src='images/edittrash.png' alt='"._("delete")."' name='group_del_%KEY%' title='"._("Delete this entry")."'>";
       }else{
-        $action.= "<img class='center' src='images/empty.png' alt='&nbsp;'
+        $actions.= "<img class='center' src='images/empty.png' alt='&nbsp;'
           title='"._("You are not allowed to remove this entry.")."'>";
       }
 

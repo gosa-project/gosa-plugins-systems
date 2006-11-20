@@ -366,11 +366,13 @@ class ogroupManagement extends plugin
       $p1['tit']= $conv[$type[0]][1];
       $p1['alt']= $type[0];
       $p1['lnk']= $conv[$type[0]][2];
+      $html_object_1 = "<input type='image' name='".$p1['lnk']."_group_edit_%KEY' ";
     } else {
       $p1['pic']= "empty.png";
       $p1['tit']= "";
       $p1['alt']= "";
       $p1['lnk']= "";//$conv[$type[0]][2];
+      $html_object_1 = "<img ";
     }
 
     if (isset($type[1])){
@@ -378,15 +380,20 @@ class ogroupManagement extends plugin
       $p2['alt']= $type[1];
       $p2['tit']= $conv[$type[1]][1];
       $p2['lnk']= $conv[$type[1]][2];
+      $html_object_2 = "<input type='image' name='".$p2['lnk']."_group_edit_%KEY' ";
     } else {
       $p2['pic']= "empty.png";
       $p2['alt']= "";
       $p2['tit']= "";
       $p2['lnk']= ""; //$conv[$type[0]][2];
+      $html_object_2 = "<img ";
     }
-    $temp = "<input type='image' name='".$p1['lnk']."_group_edit_%KEY' class='center' 
+    
+    $html_object_1 = "<input type='image' ";
+      
+    $temp = $html_object_1." class='center' id='iconA".preg_replace("/_/","",$p1['lnk']."_group_edit_%KEY")."' 
       src='images/".$p1['pic']."' alt='".$p1['alt']."' title='".$p1['tit']."'>";
-    $temp.= "<input type='image' name='".$p2['lnk']."_group_edit_%KEY'class='center' 
+    $temp.= $html_object_2." class='center' id='iconB".preg_replace("/_/","",$p2['lnk']."_group_edit_%KEY")."' 
       src='images/".$p2['pic']."' alt='".$p2['alt']."' title='".$p2['tit']."'>";
     return ($temp);
   }
