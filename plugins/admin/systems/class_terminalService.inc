@@ -194,8 +194,10 @@ class termservice extends plugin
     $this->hardware_list["automatic"]= _("automatic");
     ksort($this->hardware_list);
 
+    /* Convert gotoLpdEnable */
+    $this->gotoLpdEnable= preg_match("/yes/i",$this->gotoLpdEnable);
 
-      /* Load hardware list */
+    /* Load hardware list */
     $ldap= $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
     $ldap->search("(&(objectClass=gotoWorkstationTemplate)(member=".$this->dn."))");
@@ -399,6 +401,9 @@ class termservice extends plugin
   /* Save to LDAP */
   function save()
   {
+    /* Convert to string */
+    $this->gotoLpdEnable= $this->gotoLpdEnable?"Yes":"No";
+
     plugin::save();
 
     /* Strip out 'default' values */
