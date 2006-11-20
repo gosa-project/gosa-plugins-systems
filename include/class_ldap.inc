@@ -1217,6 +1217,19 @@ class LDAP{
       }
     }
   }
+
+  /* added by Guido Serra aka Zeph <zeph@purotesto.it> */
+  function getCn($dn){
+    $simple= split(",", $dn);
+
+    foreach($simple as $piece) {
+      $partial= split("=", $piece);
+
+      if($partial[0] == "cn"){
+        return $partial[1];
+      }
+    }
+  }
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
