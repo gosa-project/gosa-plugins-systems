@@ -105,7 +105,7 @@ class termgroup extends plugin
      /* Call common method to give check the hook */
     $message= plugin::check();
 
-    if ($this->acl_is_createable() && $this->dn == "new"){
+    if (!$this->acl_is_createable() && $this->dn == "new"){
       $message[]= _("You have no permissions to create a workstation on this 'Base'.");
     }
 

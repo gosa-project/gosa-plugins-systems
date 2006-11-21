@@ -61,7 +61,6 @@ class ogrouptabs extends tabs
             require_once("class_phonequeue.inc");
             $this->by_name['phonequeue']= _("Phone queue");
             $this->by_object['phonequeue']= new phonequeue($this->config, $this->dn);
-            $this->by_object['phonequeue']->acl = "#all#";
             $this->by_object['phonequeue']->parent= &$this;
           }
         }
@@ -75,7 +74,6 @@ class ogrouptabs extends tabs
           require_once("class_mailogroup.inc");
           $this->by_name['mailogroup']= _("Mail");
           $this->by_object['mailogroup']= new mailogroup($this->config, $this->dn);
-          $this->by_object['mailogroup']->acl = "#all#";
           $this->by_object['mailogroup']->parent= &$this;
         }
       }
@@ -87,7 +85,6 @@ class ogrouptabs extends tabs
       if(!isset($this->by_object['termgroup'])){
         $this->by_name['termgroup']= _("System");
         $this->by_object['termgroup']= new termgroup($this->config, $this->dn);
-        $this->by_object['termgroup']->acl = "#all#";
         $this->by_object['termgroup']->inheritTimeServer = false;
         $this->by_object['termgroup']->parent= &$this;
       }
@@ -98,16 +95,13 @@ class ogrouptabs extends tabs
       if(!isset($this->by_object['workstartup'])){
         $this->by_name['workstartup']= _("Startup");
         $this->by_object['workstartup']= new workstartup($this->config, $this->dn);
-        $this->by_object['workstartup']->acl = "#all#";
         $this->by_object['workstartup']->parent= &$this;
         $this->by_name['workservice']= _("Devices");
         $this->by_object['workservice']= new workservice($this->config, $this->dn);
-        $this->by_object['workservice']->acl = "#all#";
         $this->by_object['workservice']->inheritTimeServer = false;
         $this->by_object['workservice']->parent= &$this;
         $this->by_name['faiSummary']= _("Summary");
         $this->by_object['faiSummary']= new faiSummaryTab($this->config, $this->dn);
-        $this->by_object['faiSummary']->acl = "#all#";
         $this->by_object['faiSummary']->parent= &$this;
       }
     }
@@ -142,7 +136,7 @@ class ogrouptabs extends tabs
     return ( $str);
   }  
 
-  function ogrouptabs($config, $data, $dn,$category ="")
+  function ogrouptabs($config, $data, $dn,$category ="ogroups")
   {
 
     tabs::tabs($config, $data, $dn, $category);
@@ -265,6 +259,11 @@ class ogrouptabs extends tabs
     $baseobject->handle_object_tagging();
   }
 
+  function getCopyDialog()
+  {
+    $this->reload($this->by_object['ogroup']->gosaGroupObjects); 
+    return(tabs::getCopyDialog());
+  }
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
