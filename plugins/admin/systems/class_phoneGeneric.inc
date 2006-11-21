@@ -318,6 +318,11 @@ class phoneGeneric extends plugin
       $message[]= _("The 'Phone name' '0' is reserved and cannot be used.");
     }
 
+    /* Set new acl base */
+    if($this->dn == "new") {
+      $this->set_acl_base($this->base);
+    }
+
     $ui= get_userinfo();
     if ($this->dn == "new" && $this->acl_is_createable()){
       $message[]= _("You have no permissions to create a phone on this 'Base'.");

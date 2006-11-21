@@ -244,6 +244,11 @@ class servgeneric extends plugin
     if ($this->cn == ""){
       $message[]= _("The required field 'Server name' is not set.");
     }
+    
+    /* Set new acl base */
+    if($this->dn == "new") {
+      $this->set_acl_base($this->base);
+    }
 
     $ui= get_userinfo();
     if (!$this->acl_is_createable() && $this->dn == "new"){

@@ -1045,6 +1045,11 @@ class user extends plugin
       $new_dn= 'cn='.$this->cn.','.get_people_ou().$this->base;
     }
 
+    /* Set the new acl base */
+    if($this->dn == "new") {
+      $this->set_acl_base($this->base);
+    }
+
     if ($this->dn == "new" &&  !$this->acl_is_createable()){
       $message[]= _("You have no permissions to create a user on this 'Base'.");
     } elseif ($this->dn != $new_dn && $this->dn != "new"){

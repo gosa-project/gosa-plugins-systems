@@ -604,6 +604,11 @@ class ogroup extends plugin
       $message[]= _("There is already an object with this cn.");
     } 
 
+    /* Set new acl base */
+    if($this->dn == "new") {
+      $this->set_acl_base($this->base);
+    }
+
     if ($this->orig_dn == "new" && !$this->acl_is_createable()){
       $message[]= _("You have no permissions to create a group on this 'Base'.");
     }

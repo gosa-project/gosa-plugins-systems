@@ -506,6 +506,12 @@ class mimetype extends plugin
     } else {
       $new_dn= $this->dn;
     }
+
+    /* Set new acl base */
+    if($this->dn == "new") {
+      $this->set_acl_base($new_dn);
+    }
+
     if (!$this->acl_is_createable() && $this->dn == "new"){
       $message[]= _("You have no permissions to create a mime type on this 'Base'.");
     }

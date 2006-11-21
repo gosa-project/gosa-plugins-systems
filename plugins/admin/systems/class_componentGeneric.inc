@@ -174,6 +174,11 @@ class componentGeneric extends plugin
       }
     }
 
+    /* Set new acl base */
+    if($this->dn == "new") {
+      $this->set_acl_base($this->base);
+    }
+
     $ui= get_userinfo();
     if ($this->dn == "new" && !$this->acl_is_createable()){
       $message[]= _("You have no permissions to create a component on this 'Base'.");
