@@ -129,7 +129,6 @@ class ogrouptabs extends tabs
 
   function execute(){
     $str = "";
-
     $this->by_object['ogroup']->AddDelMembership();
     $this->reload($this->by_object['ogroup']->gosaGroupObjects);
     $str .= tabs::execute();
@@ -193,6 +192,7 @@ class ogrouptabs extends tabs
     }
 
     /* Add references/acls/snapshots */
+    $this->reload($this->by_object['ogroup']->gosaGroupObjects);
     $this->addSpecialTabs();
   }
 

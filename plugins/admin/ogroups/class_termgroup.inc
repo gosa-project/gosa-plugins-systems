@@ -3,9 +3,6 @@
 class termgroup extends plugin
 {
   /* attribute list for save action */
-  var $attributes= array("gotoMode","gotoSyslogServer", "gotoNtpServer");
-  var $objectclasses= array("gotoWorkstationTemplate");
-
   var $members= array();
 
   var $gotoMode           = "locked";
@@ -25,7 +22,9 @@ class termgroup extends plugin
                             "memcheck"        => "memcheck",
                             "sysinfo"         => "sysinfo");
 
-  var $CopyPasteVars = array("gotoNtpServers","modes","inheritTimeServer");
+  var $attributes     = array("gotoMode","gotoSyslogServer", "gotoNtpServer");
+  var $objectclasses  = array("gotoWorkstationTemplate");
+  var $CopyPasteVars  = array("gotoNtpServers","modes","inheritTimeServer","members");
 
   function termgroup ($config, $dn= NULL, $parent= NULL)
   {
