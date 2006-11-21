@@ -719,7 +719,7 @@ class phonequeue extends plugin
           "plDescription" => _("Phone group"),
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
-          "plPriority"    => 0,
+          "plPriority"    => 3,
           "plSection"     => array("administration"),
           "plCategory"    => array("ogroups"), 
           "plProvidedAcls"=> array(

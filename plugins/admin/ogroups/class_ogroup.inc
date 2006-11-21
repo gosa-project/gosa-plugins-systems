@@ -357,7 +357,6 @@ class ogroup extends plugin
     $ogfilter               = get_global("ogfilter");
     $regex                  = $ogfilter['regex'];
 
-    /* Get ldap connection */
     $ldap= $this->config->get_ldap_link();
     $ldap->cd ($ogfilter['dselect']);
 
@@ -366,75 +365,47 @@ class ogroup extends plugin
       Generate Filter 
       ###########*/
 
-    /* Assemble filter */
-    if ($ogfilter['accounts'] == "checked"){
-      $filter.= "(objectClass=gosaAccount)";
-      $objectClasses["gosaAccount"]     = get_people_ou();
-    }
-    if ($ogfilter['groups'] == "checked"){
-      $filter.= "(objectClass=posixGroup)";
-      $objectClasses["posixGroup"]      = get_groups_ou();
-    }
-    if ($ogfilter['applications'] == "checked"){
-      $filter.= "(objectClass=gosaApplication)";
-      $objectClasses["gosaApplication"] = "ou=apps,";
-    }
-    if ($ogfilter['departments'] == "checked"){
-      $filter.= "(objectClass=gosaDepartment)";
-      $objectClasses["gosaDepartment"]  = "";
-    }
-    if ($ogfilter['servers'] == "checked"){
-      $filter.= "(objectClass=goServer)";
-      $objectClasses["goServer"]        = "ou=servers,ou=systems,";
-    }
-    if ($ogfilter['workstations'] == "checked"){
-      $filter.= "(objectClass=gotoWorkstation)";
-      $objectClasses["gotoWorkstation"] = "ou=workstations,ou=systems,";
-    }
-    if ($ogfilter['terminals'] == "checked"){
-      $filter.= "(objectClass=gotoTerminal)";
-      $objectClasses["gotoTerminal"]    = "ou=terminals,ou=systems,";
-    }
-    if ($ogfilter['printers'] == "checked"){
-      $filter.= "(objectClass=gotoPrinter)";
-
-      $objectClasses["gotoPrinter"]     = "ou=printers,ou=systems,";
-    }
-    if ($ogfilter['phones'] == "checked"){
-      $filter.= "(objectClass=goFonHardware)";
-      $objectClasses["goFonHardware"]   = "ou=phones,ou=systems,";
-    }
+    $p_f= array("accounts"        => array("CLASS"=>"gosaAccount"    ,"DN"=> get_people_ou()                  ,"ACL" => "users"), 
+                "groups"          => array("CLASS"=>"posixGroup"     ,"DN"=> get_groups_ou()                  ,"ACL" => "groups"), 
+                "applications"    => array("CLASS"=>"gosaApplication","DN"=> "ou=apps,"                       ,"ACL" => "application"), 
+                "departments"     => array("CLASS"=>"gosaDepartment" ,"DN"=> ""                               ,"ACL" => "department"), 
+                "servers"         => array("CLASS"=>"goServer"       ,"DN"=> "ou=servers,ou=systems,"         ,"ACL" => "server"),
+                "workstations"    => array("CLASS"=>"gotoWorkstation","DN"=> "ou=workstations,ou=systems,"    ,"ACL" => "workstation"),
+                "terminals"       => array("CLASS"=>"gotoTerminal"   ,"DN"=> "ou=terminals,ou=systems,"       ,"ACL" => "terminal"),
+                "printers"        => array("CLASS"=>"gotoPrinter"    ,"DN"=> "ou=printers,ou=systems,"        ,"ACL" => "printer"),
+                "phones"          => array("CLASS"=>"goFonHardware"  ,"DN"=> "ou=phones,ou=systems,"          ,"ACL" => "phone"));
 
 
     /*###########
       Perform search for selected objectClasses & regex to fill list with objects   
       ###########*/
 
-    /* Perform search for selected objectClasses */
-    foreach($objectClasses as $class=> $basedn){
+    $Get_list_flags = 0;
+    if($ogfilter['subtrees'] == "checked"){
+      $Get_list_flags |= GL_SUBSEARCH;
+    }    
 
-      if($ogfilter['subtrees'] == "checked"){
-        $ldap->cd($ogfilter['dselect']);
-        $ldap->search("(&(objectClass=".$class.")(|(uid=$regex)(cn=$regex)(ou=$regex)))",
-            array("dn", "cn", "description", "objectClass", "sn", "givenName", "uid","ou"));
-      }else{
-        $ldap->ls("(&(objectClass=".$class.")(|(uid=$regex)(cn=$regex)(ou=$regex)))",$basedn.$ogfilter['dselect'] ,
-            array("dn", "cn", "description", "objectClass", "sn", "givenName", "uid","ou"));
-      }
-      
-      /* fetch results and append them to the list */
-      while($attrs = $ldap->fetch()){
+    foreach($p_f as $post_name => $data){
 
-        $type= $this->getObjectType($attrs);
-        $name= $this->getObjectName($attrs);
+      if($ogfilter[$post_name] == "checked"){
+        $filter = "(&(objectClass=".$data['CLASS'].")(|(uid=$regex)(cn=$regex)(ou=$regex)))";
+        $res    = get_list($filter, $data['ACL']  , $data['DN'].$ogfilter['dselect'], 
+                    array("description", "objectClass", "sn", "givenName", "uid","ou","cn"));
 
-        /* Fill array */
-        if (isset($attrs["description"][0])){
-          $this->objects[$attrs["dn"]]= array("text" => "$name [".$attrs["description"][0]."]", "type" => "$type");
-        } elseif (isset($attrs["uid"][0])) {
-          $this->objects[$attrs["dn"]]= array("text" => "$name [".$attrs["uid"][0]."]", "type" => "$type");
-        } else {
-          $this->objects[$attrs["dn"]]= array("text" => "$name", "type" => "$type");
+        /* fetch results and append them to the list */
+        foreach($res as $attrs){
+
+          $type= $this->getObjectType($attrs);
+          $name= $this->getObjectName($attrs);
+
+          /* Fill array */
+          if (isset($attrs["description"][0])){
+            $this->objects[$attrs["dn"]]= array("text" => "$name [".$attrs["description"][0]."]", "type" => "$type");
+          } elseif (isset($attrs["uid"][0])) {
+            $this->objects[$attrs["dn"]]= array("text" => "$name [".$attrs["uid"][0]."]", "type" => "$type");
+          } else {
+            $this->objects[$attrs["dn"]]= array("text" => "$name", "type" => "$type");
+          }
         }
       }
     }
@@ -715,7 +686,7 @@ class ogroup extends plugin
           "plDescription" => _("Object group generic"),
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
-          "plPriority"    => 0,
+          "plPriority"    => 1,
           "plSection"     => array("administration"),
           "plCategory"    => array("ogroups" => array("description"  => _("Object groups"),
                                                       "objectClass"  => "gosaGroupOfNames")),

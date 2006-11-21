@@ -168,7 +168,7 @@ class mailogroup extends plugin
           "plDescription" => _("Mail group"),
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
-          "plPriority"    => 0,
+          "plPriority"    => 4,
           "plSection"     => array("administration"),
           "plCategory"    => array("ogroups"),
           "plProvidedAcls"=> array(
