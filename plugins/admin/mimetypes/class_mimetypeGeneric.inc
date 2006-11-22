@@ -44,7 +44,8 @@ class mimetype extends plugin
   var $dialog								            = NULL;
 
   /* These vars will be copied too, if you use copy&paste mode */
-  var $CopyPasteVars        = array("use_gotoMimeFilePattern","use_gotoMimeApplication","use_gotoMimeEmbeddedApplication","iconData");
+  var $CopyPasteVars        = array("use_gotoMimeFilePattern","use_gotoMimeApplication","use_gotoMimeEmbeddedApplication","iconData",
+                                    "gotoMimeLeftClickAction_I","gotoMimeLeftClickAction_E","gotoMimeLeftClickAction_Q","use_gotoMimeIcon");
 
   /* Select options */
   var $MimeGroups			      = array("application","audio","chemical","image","inode","message","model",
@@ -52,7 +53,6 @@ class mimetype extends plugin
 
   /* Orig_Dn is used to verify if this object is new or only edited */		
   var $orig_dn			= "";
-
 
   function mimetype($config,$dn= NULL)
   {
@@ -686,6 +686,13 @@ class mimetype extends plugin
             "gotoMimeEmbeddedApplication" => _("Embedded applications"))
           ));
 
+  }
+
+  function PrepareForCopyPaste($source)
+  {
+    plugin::PrepareForCopyPaste($source);
+    $this->gotoMimeIcon       = $this->iconData;
+    $this->use_gotoMimeIcon   = $source->use_gotoMimeIcon;
   }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
