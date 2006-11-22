@@ -126,9 +126,16 @@ class CopyPasteHandler {
     if($this->cutCurrent){
 
       if(isset($_POST['PerformCopyPaste'])){
-        $this->current->save();
-        $this->dialogOpen =false;
-        $this->Clear();
+        $msgs = $this->check();	
+        if(count ($msgs) ){
+          foreach( $msgs as $msg){
+            print_red($msg);
+          }
+        }else{
+          $this->current->save();
+          $this->dialogOpen =false;
+          $this->Clear();
+        }
       }
       if($this->current){
         $smarty = get_smarty();
