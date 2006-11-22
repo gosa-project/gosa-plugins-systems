@@ -92,8 +92,8 @@ class divListMimeTypes extends MultiSelectWindow
         array("ou", "description"), GL_SIZELIMIT | GL_SUBSEARCH);
 
     /* Load possible departments */
-    $ui= get_userinfo();
-    $tdeps= $ui->get_module_departments("fai");
+    $ui   = get_userinfo();
+    $tdeps= $ui->get_module_departments($this->module);
 
     $ids = $this->config->idepartments;
 
@@ -109,8 +109,12 @@ class divListMimeTypes extends MultiSelectWindow
       }
     }
 
+    $ui = get_userinfo();
+    $acl = $ui->get_permissions("cn=dummy,ou=mimetypes,".$this->selectedBase,"mimetypes/mimetype");
+    $acl_all  = $ui->has_complete_category_acls($this->selectedBase,"mimetypes") ;
+
     /* Get copy & paste icon */
-    if($this->parent->CopyPasteHandler){
+    if(preg_match("/(c.*w|w.*c)/",$acl_all) &&  $this->parent->CopyPasteHandler){
       $Copy_Paste = $this->parent->CopyPasteHandler->generatePasteIcon();
     }else{
       $Copy_Paste ="";
@@ -119,8 +123,6 @@ class divListMimeTypes extends MultiSelectWindow
     /* Create listhead, it will be shown on top of the divlist.
      * It provides general navigation and object creation
      */
-    $ui = get_userinfo();
-    $acl = $ui->get_permissions("cn=dummy,ou=mimetypes,".$this->selectedBase,"mimetypes/mimetype");
 
     $listhead = "<div style='background:#F0F0F9;padding:5px;'>".
       " <input class='center' type='image' src='images/list_root.png' align='middle' ".
@@ -132,7 +134,10 @@ class divListMimeTypes extends MultiSelectWindow
       " <input class='center' type='image' src='images/list_reload.png' align='middle' ".
       "title='"._("Reload list")."' name='submit_department' alt='"._("Submit")."'>&nbsp;".
       " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
-    $listhead .= $this->get_snapshot_header($this->selectedBase);
+    
+    if(preg_match("/(c.*w|w.*c)/",$acl_all)){
+      $listhead .= $this->get_snapshot_header($this->selectedBase);
+    }
     
     if(preg_match("/c/",$acl)){
       $listhead .= " <input class='center' type='image' align='middle' src='images/list_new_mime.png' alt='"._("new").
@@ -182,14 +187,17 @@ class divListMimeTypes extends MultiSelectWindow
       Attach objects
      ********************/
 
-    $ui = get_userinfo();
-    $acl = $ui->get_permissions("cn=dummy,ou=mimetypes,".$this->selectedBase,"mimetypes/mimetype");
-
     foreach($list as $key => $val){
 
-      /* Create action icons */
-      $actions = $this->GetSnapShotActions($val['dn']);
+      $ui       = get_userinfo();
+      $acl      = $ui->get_permissions($val['dn'],"mimetypes/mimetype");
+      $acl_all  = $ui->has_complete_category_acls($val['dn'],"mimetypes") ;
 
+      /* Create action icons */
+      $actions = "";
+      if(preg_match("/(c.*w|w.*c)/",$acl_all)){
+        $actions .= $this->GetSnapShotActions($val['dn']);
+      }
 
       /* Get copy Paste icons */
       if($this->parent->CopyPasteHandler){
