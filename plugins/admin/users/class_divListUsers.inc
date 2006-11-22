@@ -104,7 +104,7 @@ class divListUsers extends MultiSelectWindow
     }
 
     /* Get copy & paste icon */
-    $acl_all  = $ui->has_complete_category_acls($this->selectedBase,"users/user") ;
+    $acl_all  = $ui->has_complete_category_acls($this->selectedBase,"users") ;
     $acl      = $ui->get_permissions($this->selectedBase,"users/user");
     if(preg_match("/(c.*w|w.*c)/",$acl_all) &&  $this->parent->CopyPasteHandler){
       $Copy_Paste = $this->parent->CopyPasteHandler->generatePasteIcon();
@@ -243,7 +243,7 @@ class divListUsers extends MultiSelectWindow
       $action= "";
 
       /* Add copy & cut icons */     
-      $acl_all  = $ui->has_complete_category_acls($this->selectedBase,"users/user") ;
+      $acl_all  = $ui->has_complete_category_acls($this->selectedBase,"users") ;
       $acl      = $ui->get_permissions($val['dn'],"users/user");
       if(preg_match("/(c.*w|w.*c)/",$acl_all) && $this->parent->CopyPasteHandler){
         $action .= "<input class='center' type='image'

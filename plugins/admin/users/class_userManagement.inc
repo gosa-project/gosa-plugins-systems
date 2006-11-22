@@ -827,8 +827,8 @@ class userManagement extends plugin
         $dn= $this->list[trim($s_entry)]['dn'];
 
         /* Check acl */
-        $acl = $this->ui->get_permissions($dn,"users/user");
-        if(preg_match("/(c.*w|w.*c)/",$acl)){
+        $acl_all  = $ui->has_complete_category_acls($this->selectedBase,"users") ;
+        if(preg_match("/(c.*w|w.*c)/",$acl_all)){
           $obj    = new usertabs($this->config, $this->config->data['TABS']['USERTABS'], $dn);
           $obj->set_acl_base($dn);
           $objNew = new usertabs($this->config, $this->config->data['TABS']['USERTABS'], "new");
@@ -847,8 +847,8 @@ class userManagement extends plugin
         $dn= $this->list[trim($s_entry)]['dn'];
 
         /* Check acl */
-        $acl = $this->ui->get_permissions($dn,"users/user");
-        if(preg_match("/(c.*w|w.*c)/",$acl)){
+        $acl_all  = $ui->has_complete_category_acls($this->selectedBase,"users") ;
+        if(preg_match("/(c.*w|w.*c)/",$acl_all)){
           $obj= new usertabs($this->config, $this->config->data['TABS']['USERTABS'], $dn);
           $obj->set_acl_base($dn);
           $this->CopyPasteHandler->Cut($obj);

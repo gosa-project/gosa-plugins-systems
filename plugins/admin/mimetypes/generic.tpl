@@ -6,7 +6,6 @@
 	</tr>
 	<tr>
 		<td style='width:50%; vertical-align:top;' >
-				
 			<table>
 				<tr>
 					<td>
@@ -40,23 +39,24 @@
 {/render}
 					</td>
 				</tr>
+{if !$isReleaseMimeType} 
 				<tr>
 				  	<td><LABEL for="base">{t}Base{/t}{$must}</LABEL></td>
 				  	<td>
-{render acl=$baseACL}
-	<select size="1" id="base" name="base" title="{t}Choose subtree to place application in{/t}"
-		{if $isReleaseMimeType} disabled {/if}>
-		{html_options options=$bases selected=$base_select}
-	</select>
-{/render}
-{if !$isReleaseMimeType}
-{render acl=$baseACL disable_picture='images/folder_gray.png'}
-        <input type="image" name="chooseBase" src="images/folder.png" class="center" title="{t}Select a base{/t}">
-{/render}
-{/if}
+	{render acl=$baseACL}
+		<select size="1" id="base" name="base" title="{t}Choose subtree to place application in{/t}"
+			{html_options options=$bases selected=$base_select}
+		</select>
+	{/render}
+	{if !$isReleaseMimeType}
+		{render acl=$baseACL disable_picture='images/folder_gray.png'}
+			<input type="image" name="chooseBase" src="images/folder.png" class="center" title="{t}Select a base{/t}">
+		{/render}
+	{/if}
 				  	</td>
 				 </tr>
 
+{/if}
 			</table>
 			
 		</td>

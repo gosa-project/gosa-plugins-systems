@@ -508,8 +508,8 @@ class groupManagement extends plugin
     if($s_action == "copy"){
 
       $dn  = $this->grouplist[trim($s_entry)]['dn'];
-      $acl = $this->ui->get_permissions($dn,"groups/group");
-      if(preg_match("/(c.*w|w.*c)/",$acl)){
+      $acl_all  = $ui->has_complete_category_acls($this->selectedBase,"groups") ;
+      if(preg_match("/(c.*w|w.*c)/",$acl_all)){
 
         $this->CopyPasteHandler->Clear();
         $obj    = new grouptabs($this->config,$this->config->data['TABS']['GROUPTABS'], $dn);
@@ -529,8 +529,8 @@ class groupManagement extends plugin
     if($s_action == "cut"){
       
       $dn = $this->grouplist[trim($s_entry)]['dn'];
-      $acl = $this->ui->get_permissions($dn,"groups/group");
-      if(preg_match("/(c.*w|w.*c)/",$acl)){
+      $acl_all  = $ui->has_complete_category_acls($this->selectedBase,"groups") ;
+      if(preg_match("/(c.*w|w.*c)/",$acl_all)){
 
         $this->CopyPasteHandler->Clear();
         $obj= new grouptabs($this->config,$this->config->data['TABS']['GROUPTABS'], $dn);

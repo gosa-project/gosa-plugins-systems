@@ -446,11 +446,16 @@ class mimetypeManagement extends plugin
     if($s_action == "copy"){
       $this->CopyPasteHandler->Clear();
       $dn = $this->mimetypes[$s_entry]['dn'];
-      $obj    = new mimetabs($this->config, $this->config->data['TABS']['MIMETABS'], $dn,"mimetypes");
-      $obj->set_acl_base($this->dn);
-      $objNew = new mimetabs($this->config, $this->config->data['TABS']['MIMETABS'], "new","mimetypes");
-      $objNew->set_acl_base($this->dn);
-      $this->CopyPasteHandler->Copy($obj,$objNew);
+
+      /* Check acls */
+      $acl_all= $this->ui->has_complete_category_acls($dn,"ogroups");
+      if(preg_match("/(c.*w|w.*c)/",$acl_all)){
+        $obj    = new mimetabs($this->config, $this->config->data['TABS']['MIMETABS'], $dn,"mimetypes");
+        $obj->set_acl_base($this->dn);
+        $objNew = new mimetabs($this->config, $this->config->data['TABS']['MIMETABS'], "new","mimetypes");
+        $objNew->set_acl_base($this->dn);
+        $this->CopyPasteHandler->Copy($obj,$objNew);
+      }
     }
 
     /* Copy current object to CopyHandler
@@ -458,8 +463,13 @@ class mimetypeManagement extends plugin
     if($s_action == "cut"){
       $this->CopyPasteHandler->Clear();
       $dn = $this->mimetypes[$s_entry]['dn'];
-      $obj = new mimetabs($this->config, $this->config->data['TABS']['MIMETABS'], $dn);
-      $this->CopyPasteHandler->Cut($obj);
+
+      /* Check acls */
+      $acl_all= $this->ui->has_complete_category_acls($dn,"ogroups");
+      if(preg_match("/(c.*w|w.*c)/",$acl_all)){
+        $obj = new mimetabs($this->config, $this->config->data['TABS']['MIMETABS'], $dn);
+        $this->CopyPasteHandler->Cut($obj);
+      }
     }
   }
 
