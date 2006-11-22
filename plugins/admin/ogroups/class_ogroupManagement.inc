@@ -145,7 +145,7 @@ class ogroupManagement extends plugin
 
       /* Load permissions for selected 'dn' and check if
          we're allowed to remove this 'dn' */
-      $acl = $this->ui->get_permissions($this->dn,"ogroup");
+      $acl = $this->ui->get_permissions($this->dn,"ogroups");
       if(preg_match("/d/",$acl)){
 
         /* Check locking, save current plugin in 'back_plugin', so
@@ -176,7 +176,7 @@ class ogroupManagement extends plugin
 
       /* Some nice guy may send this as POST, so we've to check
          for the permissions again. */
-      $acl = $this->ui->get_permissions($this->dn,"groups");
+      $acl = $this->ui->get_permissions($this->dn,"ogroups");
       if(preg_match("/d/",$acl)){
 
         /* Delete request is permitted, perform LDAP action */
@@ -462,16 +462,23 @@ class ogroupManagement extends plugin
       /* Copy current object to CopyHandler
        */
       if($s_action == "copy"){
+    
+
         $this->CopyPasteHandler->Clear();
         $dn       =   $this->ogrouplist[$s_entry]['dn'];
-        $obj      =   new ogrouptabs($this->config, $this->config->data['TABS']['OGROUPTABS'], $dn);
-        $objNew   =   new ogrouptabs($this->config, $this->config->data['TABS']['OGROUPTABS'], "new");
 
-        $types_of_tabs = $obj->by_object['ogroup']->gosaGroupObjects;
-        $objNew->by_object['ogroup']->gosaGroupObjects = $types_of_tabs;    
-        $objNew->reload($types_of_tabs);
+        /* Check acls */
+        $acl_all= $this->ui->has_complete_category_acls($dn,"ogroups");
+        if(preg_match("/(c.*w|w.*c)/",$acl_all)){
+          $obj      =   new ogrouptabs($this->config, $this->config->data['TABS']['OGROUPTABS'], $dn);
+          $objNew   =   new ogrouptabs($this->config, $this->config->data['TABS']['OGROUPTABS'], "new");
 
-        $this->CopyPasteHandler->Copy($obj,$objNew);
+          $types_of_tabs = $obj->by_object['ogroup']->gosaGroupObjects;
+          $objNew->by_object['ogroup']->gosaGroupObjects = $types_of_tabs;    
+          $objNew->reload($types_of_tabs);
+
+          $this->CopyPasteHandler->Copy($obj,$objNew);
+        }
       }
 
       /* Copy current object to CopyHandler
@@ -479,8 +486,13 @@ class ogroupManagement extends plugin
       if($s_action == "cut"){
         $this->CopyPasteHandler->Clear();
         $dn       =   $this->ogrouplist[$s_entry]['dn'];
-        $obj      =   new ogrouptabs($this->config, $this->config->data['TABS']['OGROUPTABS'], $dn);
-        $this->CopyPasteHandler->Cut($obj);
+
+        /* Check acls */
+        $acl_all= $this->ui->has_complete_category_acls($dn,"ogroups");
+        if(preg_match("/(c.*w|w.*c)/",$acl_all)){
+          $obj      =   new ogrouptabs($this->config, $this->config->data['TABS']['OGROUPTABS'], $dn);
+          $this->CopyPasteHandler->Cut($obj);
+        }
       }
     }
   }

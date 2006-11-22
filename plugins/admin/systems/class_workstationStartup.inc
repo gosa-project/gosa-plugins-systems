@@ -52,6 +52,8 @@ class workstartup extends plugin
   /* Contains all possible server/release/class settings */
   var $FAIServRepConfig   = array();
 
+  var $CopyPasteVars = array("gotoModules","gotoShares");
+
   function workstartup ($config, $dn= NULL, $parent= NULL)
   {
     plugin::plugin ($config, $dn, $parent);
