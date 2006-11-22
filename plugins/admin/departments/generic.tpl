@@ -101,6 +101,14 @@
  </tr>
 </table>
 
+
+{if !$UnitTagDiabled}
+
+<!--
+This is not used anymore cause of the new acl implementation
+Its functionality is disabled in class_departmentGeneric.inc
+-->
+
 <p class='seperator'>&nbsp;</p>
 
 <table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding=4>
@@ -114,6 +122,7 @@
   </tr>
 </table>
 
+{/if}
 <!-- Place cursor -->
 <input type='hidden' name='dep_generic_posted' value='1'>
 <script language="JavaScript" type="text/javascript">
