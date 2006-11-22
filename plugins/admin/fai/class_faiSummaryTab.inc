@@ -216,11 +216,12 @@ class faiSummaryTab extends plugin{
       
       $image = "<img src='".$this->objs[$key]['Image']."' class='center' alt='".$this->objs[$key]['Name']."' border=0>";
       if(!isset($entry['Open'])){
-        $str .= "<tr><td colspan=2>
-                    <a href='?plug=".$_GET['plug']."&amp;expand&amp;id=".$key."'>
-                  <img border=0 class='center' src='images/expand.png' alt='"._("Open")."'>&nbsp;";
-        $str .= $image."&nbsp;";
-        $str .= "<b>".$this->objs[$key]['Name']."</b></b></td></tr>";
+        $str .= "<tr>
+                  <td colspan=2>
+                   <a href='?plug=".$_GET['plug']."&amp;expand&amp;id=".$key."'>
+                    <img border=0 class='center' src='images/expand.png' alt='"._("Open")."'>&nbsp;";
+        $str .=     $image."&nbsp;";
+        $str .= "   <b>".$this->objs[$key]['Name']."</b></a></td></tr>";
       }else{
         $str .= "<tr><td colspan=2>
                     <a href='?plug=".$_GET['plug']."&amp;compress&amp;id=".$key."'>
