@@ -200,22 +200,13 @@ class divListMimeTypes extends MultiSelectWindow
       }
 
       /* Get copy Paste icons */
-      if($this->parent->CopyPasteHandler){
-
-        /* Only add cut icon, if we are allowed to move this user */
-        if(preg_match("/m/",$acl)){
-          $actions.= "<input class='center' type='image'
-            src='images/editcut.png' alt='"._("cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
-        }else{
-          $actions.= "<img src='images/empty.png' alt='&nbsp;'>";
-        }
-
-        /* Copy is allowed everytime */
+      if(($this->parent->CopyPasteHandler) && preg_match("/(c.*w|w.*c)/",$acl_all)){
+        $actions.= "<input class='center' type='image'
+          src='images/editcut.png' alt='"._("cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
         $actions.= "<input class='center' type='image'
           src='images/editcopy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
       }
 
-      /* Add edit button */
       $actions.= "<input class='center' type='image'
         src='images/edit.png' alt='"._("edit")."' name='mime_edit_%KEY%' title='"._("Edit this entry")."'>";
 

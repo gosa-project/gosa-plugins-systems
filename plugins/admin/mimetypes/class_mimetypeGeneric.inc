@@ -295,24 +295,32 @@ class mimetype extends plugin
       $EApps_Actions= "";	
     }
 
-    foreach($this->use_gotoMimeFilePattern as $key => $pattern){
-      $field1 = array("string" => $pattern);
-      $field2 = array("string" => preg_replace("/%s/",$key,$Pattern_Actions),"attach"=>"style='border-right:0px;width:50px;'");
-      $fields = array($field1,$field2);
-      $DivPatterns -> AddEntry($fields);
-    }			
-    foreach($this->use_gotoMimeApplication as $key => $pattern){
-      $field1 = array("string" => $pattern);
-      $field2 = array("string" => preg_replace("/%s/",$key,$Apps_Actions),"attach"=>"style='border-right:0px;width:50px;'");
-      $fields = array($field1,$field2);
-      $DivApps -> AddEntry($fields);
-    }			
-    foreach($this->use_gotoMimeEmbeddedApplication as $key => $pattern){
-      $field1 = array("string" => $pattern);
-      $field2 = array("string" => preg_replace("/%s/",$key,$EApps_Actions),"attach"=>"style='border-right:0px;width:50px;'");
-      $fields = array($field1,$field2);
-      $DivEApps -> AddEntry($fields);
+    /* Before adding some entries check acls */
+    if($this->acl_is_readable("gotoMimeFilePattern")){
+      foreach($this->use_gotoMimeFilePattern as $key => $pattern){
+        $field1 = array("string" => $pattern);
+        $field2 = array("string" => preg_replace("/%s/",$key,$Pattern_Actions),"attach"=>"style='border-right:0px;width:50px;'");
+        $fields = array($field1,$field2);
+        $DivPatterns -> AddEntry($fields);
+      }			
     }
+
+    if($this->acl_is_readable("gotoMimeApplication")){
+      foreach($this->use_gotoMimeApplication as $key => $pattern){
+        $field1 = array("string" => $pattern);
+        $field2 = array("string" => preg_replace("/%s/",$key,$Apps_Actions),"attach"=>"style='border-right:0px;width:50px;'");
+        $fields = array($field1,$field2);
+        $DivApps -> AddEntry($fields);
+      }			
+    }			
+    if($this->acl_is_readable("gotoMimeEmbeddedApplication")){
+      foreach($this->use_gotoMimeEmbeddedApplication as $key => $pattern){
+        $field1 = array("string" => $pattern);
+        $field2 = array("string" => preg_replace("/%s/",$key,$EApps_Actions),"attach"=>"style='border-right:0px;width:50px;'");
+        $fields = array($field1,$field2);
+        $DivEApps -> AddEntry($fields);
+      }
+    }			
     $smarty->assign("bases", 						$this->get_allowed_bases());		
     $smarty->assign("base_select", 					$this->base);		
     $smarty->assign("isReleaseMimeType",			$this->isReleaseMimeType);
