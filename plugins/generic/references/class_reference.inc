@@ -137,12 +137,17 @@ class reference extends plugin
 	if (!isset($this->objectCache[$dn])){
 		$ldap= $this->config->get_ldap_link();
 		if (preg_match('/,/', $dn)){
-			$ldap->cat($dn, array("cn", "objectClass", "description"));
+			$ldap->cat($dn, array("cn", "objectClass", "description","ou"));
 		} else {
-			$ldap->search("(uid=$dn)", array("cn", "objectClass", "description"));
+			$ldap->search("(uid=$dn)", array("cn", "objectClass", "description","ou"));
 		}
 		if ($ldap->count()){
 			$attrs= $ldap->fetch();
+
+			if(isset($attrs['ou']) && !isset($attrs['cn'])){
+				$attrs['cn'] = $attrs['ou'];
+			}
+				
 			if (isset($attrs['description'])){
 				$description= $attrs['description'][0];
 			} else {
