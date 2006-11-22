@@ -125,6 +125,11 @@ class CopyPasteHandler {
      */
     if($this->cutCurrent){
 
+      if(isset($_POST['PerformCopyPaste'])){
+        $this->current->save();
+        $this->dialogOpen =false;
+        $this->Clear();
+      }
       if($this->current){
         $smarty = get_smarty();
         $smarty->assign("type","cut");
@@ -136,11 +141,6 @@ class CopyPasteHandler {
         return($smarty->fetch(get_template_path("copyPasteDialog.tpl",FALSE)));
       }
 
-      if(isset($_POST['PerformCopyPaste'])){
-        $this->current->save();
-        $this->dialogOpen =false;
-        $this->Clear();
-      }
       /* Copy & paste
        */
     }else{
