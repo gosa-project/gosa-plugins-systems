@@ -448,7 +448,7 @@ class mimetypeManagement extends plugin
       $dn = $this->mimetypes[$s_entry]['dn'];
 
       /* Check acls */
-      $acl_all= $this->ui->has_complete_category_acls($dn,"ogroups");
+      $acl_all= $this->ui->has_complete_category_acls($dn,"mimitypes");
       if(preg_match("/(c.*w|w.*c)/",$acl_all)){
         $obj    = new mimetabs($this->config, $this->config->data['TABS']['MIMETABS'], $dn,"mimetypes");
         $obj->set_acl_base($this->dn);
@@ -465,7 +465,7 @@ class mimetypeManagement extends plugin
       $dn = $this->mimetypes[$s_entry]['dn'];
 
       /* Check acls */
-      $acl_all= $this->ui->has_complete_category_acls($dn,"ogroups");
+      $acl_all= $this->ui->has_complete_category_acls($dn,"mimetypes");
       if(preg_match("/(c.*w|w.*c)/",$acl_all)){
         $obj = new mimetabs($this->config, $this->config->data['TABS']['MIMETABS'], $dn);
         $this->CopyPasteHandler->Cut($obj);

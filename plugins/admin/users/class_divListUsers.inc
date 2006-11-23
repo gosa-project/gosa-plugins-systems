@@ -88,12 +88,9 @@ class divListUsers extends MultiSelectWindow
     /* Load possible departments */
     $ui= get_userinfo();
     $tdeps= $ui->get_module_departments("users");
-
     $ids = $this->config->idepartments;
- 
     foreach($deps as $dep){
       if(isset($ids[$dep['dn']]) && in_array_ics($dep['dn'], $tdeps)){
-
         $value = $ids[$dep['dn']]; 
         if ($this->selectedBase == $dep['dn']){
           $options.= "<option selected='selected' value='".$dep['dn']."'>$value</option>";

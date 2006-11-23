@@ -111,7 +111,7 @@ class divListOGroup extends MultiSelectWindow
 
     /* Get copy & paste icon */
     $acls  = $ui->get_permissions($this->selectedBase,"ogroups/ogroup");
-    $acl_all= $ui->has_complete_category_acls($this->selectedBase,"groups");
+    $acl_all= $ui->has_complete_category_acls($this->selectedBase,"ogroups");
     if(preg_match("/(c.*w|w.*c)/",$acl_all) &&  $this->parent->CopyPasteHandler){
       $Copy_Paste = $this->parent->CopyPasteHandler->generatePasteIcon();
     }else{
@@ -182,7 +182,7 @@ class divListOGroup extends MultiSelectWindow
 
       /* Create action icons */
       $actions= "";
-      $acl_all= $ui->has_complete_category_acls($val['dn'],"groups");
+      $acl_all= $ui->has_complete_category_acls($val['dn'],"ogroups");
       if(($this->parent->CopyPasteHandler) && preg_match("/(c.*w|w.*c)/",$acl_all)){
         $actions.= "<input class='center' type='image'
           src='images/editcut.png' alt='"._("cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
