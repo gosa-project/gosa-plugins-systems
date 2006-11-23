@@ -127,8 +127,6 @@ class divListApplication extends MultiSelectWindow
 
     if(preg_match("/(c.*w|w.*c)/",$acl_all)){
       $listhead .= $this->get_snapshot_header($this->selectedBase);
-    }else{
-      $listhead .= "<img class='center' src='images/restore_grey.png' alt=''>&nbsp;";
     }
 
     if(preg_match("/c/",$acl)){

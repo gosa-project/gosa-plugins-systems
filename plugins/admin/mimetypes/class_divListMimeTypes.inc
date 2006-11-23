@@ -215,7 +215,7 @@ class divListMimeTypes extends MultiSelectWindow
         $actions.= "<input class='center' type='image'
           src='images/edittrash.png' alt='"._("delete")."' name='mime_del_%KEY%' title='"._("Delete this entry")."'>";
       }else{
-        $actions.= "<img src='images/empty.png' alt='&nbsp;'>";
+        $actions.= "<img src='images/empty.png' alt='&nbsp;' class='center'>";
       }
 
       $title = "title='".preg_replace('/ /', '&nbsp;', @LDAP::fix($val['dn']))."'";
