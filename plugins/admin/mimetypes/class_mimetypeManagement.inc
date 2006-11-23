@@ -158,7 +158,9 @@ class mimetypeManagement extends plugin
      ****************/
 
     /* New mime type? */
-    if ($s_action=="new"){
+    $ui = get_userinfo();
+    $acl = $ui->get_permissions($this->DivListMimeTypes->selectedBase,"mimetypes/mimetype");
+    if (($s_action=="new") && preg_match("/c/",$acl)){
 
       /* By default we set 'dn' to 'new', all relevant plugins will
          react on this. */
@@ -175,7 +177,7 @@ class mimetypeManagement extends plugin
      ****************/
 
     /* Cancel dialogs */
-    if (isset($_POST['edit_cancel']) || isset($_POST['password_cancel'])){
+    if (isset($_POST['edit_cancel'])){
       del_lock ($this->mimetabs->dn);
       unset ($this->mimetabs);
       $this->mimetabs= NULL;
