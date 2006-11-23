@@ -380,7 +380,7 @@ class termgeneric extends plugin
     }
 
     /* Permissions for that base? */
-    $this->dn= "cn=".$this->cn."ou=terminals,ou=systems,".$this->base;
+    $this->dn= "cn=".$this->cn.",ou=terminals,ou=systems,".$this->base;
 
     /* Set new acl base */
     if($this->dn == "new") {
