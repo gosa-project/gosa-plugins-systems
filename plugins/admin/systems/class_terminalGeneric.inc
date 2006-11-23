@@ -373,7 +373,11 @@ class termgeneric extends plugin
   {
     /* Call common method to give check the hook */
     $message= plugin::check();
-    $message= array_merge($message, $this->netConfigDNS->check());
+
+    /* Skip IP & Mac checks if this is a template */
+    if($this->cn != "default"){
+      $message= array_merge($message, $this->netConfigDNS->check());
+    }
 
     /* Permissions for that base? */
     $this->dn= "cn=".$this->cn."ou=terminals,ou=systems,".$this->base;
@@ -395,7 +399,13 @@ class termgeneric extends plugin
     if ($this->orig_dn == 'new'){
       $ldap= $this->config->get_ldap_link();
       $ldap->cd ($this->base);
-      $ldap->search ("(&(objectClass=gotoTerminal)(cn=".$this->cn."))", array("cn"));
+
+      /* It is possible to have a 'default' terminal on every base */
+      if($this->cn == "default"){
+        $ldap->cat($this->dn);
+      }else{
+        $ldap->search ("(&(objectClass=gotoTerminal)(cn=".$this->cn."))", array("cn"));
+      }
       if ($ldap->count() != 0){
         while ($attrs= $ldap->fetch()){
           if (preg_match ("/,ou=incoming,/", $ldap->getDN())){
@@ -488,6 +498,12 @@ class termgeneric extends plugin
 
       $this->handle_post_events("modify");
     }
+    
+    /* cn=default and macAddress=- indicates that this is a template */
+    if($this->cn == "default"){
+      $this->netConfigDNS->macAddress = "-";
+    }
+
     $this->netConfigDNS->cn = $this->cn;
     $this->netConfigDNS->save($this->dn);
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of object system terminal/generic with dn '%s' failed."),$this->dn));

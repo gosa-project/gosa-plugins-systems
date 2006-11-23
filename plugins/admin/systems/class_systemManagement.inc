@@ -646,6 +646,12 @@ class systems extends plugin
         }
       }
 
+      /* Create a string containing the last part of the department. */
+      $dn_name = preg_replace("#^([^/]+/)*#","",convert_department_dn(@LDAP::fix($tmp)));
+      if(empty($dn_name)){
+        $dn_name = "/";
+      }
+
       /* check if current object is a new one */
       if (preg_match ("/,ou=incoming,/i", $tmp)){
         if (in_array_ics('gotoTerminal', $value['objectClass'])){
@@ -672,7 +678,7 @@ class systems extends plugin
           } else {
             $terminal             = $value;
             $terminal['type']     = "D";
-            $terminal['message']  = _("Terminal template for");
+            $terminal['message']  = _("Terminal template for")."&nbsp;'".$dn_name."'&nbsp;";
             $terminal['location'] = array_search($tmp, $this->config->departments); 
           }
         }
@@ -688,7 +694,7 @@ class systems extends plugin
             $terminal             = $value;
             $terminal['type']     = "D";
             $terminal['location'] = array_search($tmp, $this->config->departments);
-            $terminal['message']  = _("Workstation template for");
+            $terminal['message']  = _("Workstation template for")."&nbsp;'".$dn_name."'&nbsp;";
           }
           if (isset($value["FAIstate"][0])){
             $terminal['type']= $this->getState($terminal['type'], $value["FAIstate"][0]);

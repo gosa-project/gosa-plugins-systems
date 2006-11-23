@@ -231,7 +231,7 @@ class divListSystem extends MultiSelectWindow
       }
 
       if(isset($val['message'])){
-        $display.= "  (".$val['message']." '".$this->config->idepartments[$_SESSION['CurrentMainBase']]."'  )";
+        $display.= "  (".$val['message'].")";
       }
 
       $img    = $this->parent->convert_list($val);

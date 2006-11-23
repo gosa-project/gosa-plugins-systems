@@ -375,7 +375,11 @@ class workgeneric extends plugin
   {
     /* Call common method to give check the hook */
     $message= plugin::check();
-    $message= array_merge($message, $this->netConfigDNS->check());
+  
+    /* Skip IP & Mac checks if this is a template */
+    if($this->cn != "wdefault"){
+      $message= array_merge($message, $this->netConfigDNS->check());
+    }
 
     $this->dn= "cn=".$this->cn.",ou=workstations,ou=systems,".$this->base;
 
@@ -396,7 +400,12 @@ class workgeneric extends plugin
     if ($this->orig_dn != $this->dn){
       $ldap= $this->config->get_ldap_link();
       $ldap->cd ($this->base);
-      $ldap->search ("(&(cn=".$this->cn.")(objectClass=gotoWorkstation))", array("cn"));
+
+      if($this->cn == "wdefault"){
+        $ldap->cat($this->dn);
+      }else{
+        $ldap->search ("(&(cn=".$this->cn.")(objectClass=gotoWorkstation))", array("cn"));
+      }
       if ($ldap->count() != 0){
         while ($attrs= $ldap->fetch()){
           if (preg_match ("/,ou=incoming,/", $ldap->getDN())){
@@ -410,7 +419,7 @@ class workgeneric extends plugin
         }
       }
     }
-    
+
     /* Check for valid ntpServer selection */
     if((!$this->inheritTimeServer) && (!count($this->gotoNtpServer))){
       $message[]= _("There must be at least one NTP server selected, or the inherit mode activated.");
@@ -496,6 +505,12 @@ class workgeneric extends plugin
         $this->handle_post_events("modify");
       }
     }
+
+    /* cn=default and macAddress=- indicates that this is a template */
+    if($this->cn == "wdefault"){
+      $this->netConfigDNS->macAddress = "-";
+    }
+
     $this->netConfigDNS->cn = $this->cn;
     $this->netConfigDNS->save($this->dn);
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of system workstation/generic with dn '%s' failed."),$this->dn));
