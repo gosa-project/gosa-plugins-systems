@@ -360,40 +360,6 @@ class termservice extends plugin
   {
     /* Call common method to give check the hook */
     $message= plugin::check();
-
-    /* Default entries can use blank hsync/vsync entries */
-    if ($this->dn != "" && $this->cn != "default" && $this->cn != "wdefault"){
-
-      /* Check vsync for correct usage */
-      $val= preg_replace ("/\s/", "", $this->gotoXVsync);
-      if (!preg_match ("/^\d+(\.\d+)?(\-\d+(\.\d+)?)?$/", $val)
-          && $this->acl_is_writeable("gotoXVsync")){
-
-        $message[]= _("Please specify a valid VSync range.");
-      } elseif ($this->acl_is_writeable("gotoXVsync")){
-        list($v1,$v2)= split ("-", $val);
-        if ($v2 != ""){
-          if ($v1 > $v2){
-            $message[]= _("Please specify a valid VSync range.");
-          }
-        }
-      }
-
-      /* Check hsync for correct usage */
-      $val= preg_replace ("/\s/", "", $this->gotoXHsync);
-      if (!preg_match ("/^\d+(\.\d+)?(\-\d+(\.\d+)?)?$/", $val)
-          && $this->acl_is_writeable("gotoXHsync")){
-
-        $message[]= _("Please specify a valid HSync range.");
-      } elseif ($this->acl_is_writeable("gotoXHsync")){
-        list($v1,$v2)= split ("-", $val);
-        if ($v2 != ""){
-          if ($v1 > $v2){
-            $message[]= _("Please specify a valid HSync range.");
-          }
-        }
-      }
-    }
     return ($message);
   }
 
