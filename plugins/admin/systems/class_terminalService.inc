@@ -30,6 +30,8 @@ class termservice extends plugin
   var $gotoScannerBackend= "";
   var $goFonHardware= "automatic";
 
+  var $AutoSync = false;
+
   /* Needed values and lists */
   var $ignore_account= TRUE;
   var $base= "";
@@ -236,6 +238,11 @@ class termservice extends plugin
         }
       }
     }
+    if(preg_match("/\+/",$this->gotoXHsync)){
+      $this->AutoSync = true;
+      $this->gotoXHsync = preg_replace("/\+/","-",$this->gotoXHsync);
+      $this->gotoXVsync = preg_replace("/\+/","-",$this->gotoXVsync);
+    }
   }
 
   function execute()
@@ -324,6 +331,15 @@ class termservice extends plugin
     $smarty->assign ("hardware_list", $hl);
     $smarty->assign ("gotoXMonitor", $this->gotoXMonitor);
 
+    $smarty->assign("AutoSyncACL",$this->getacl("AutoSync"));
+
+    $smarty->assign("AutoSyncCHK"," ");
+    if($this->AutoSync){
+      $smarty->assign("AutoSyncCHK"," checked ");
+      $smarty->assign("gotoXVsyncACL", preg_replace("/w/","",$this->getacl("gotoXVsync")));
+      $smarty->assign("gotoXHsyncACL", preg_replace("/w/","",$this->getacl("gotoXHsync")));
+    }
+
     /* Show main page */
     return($smarty->fetch (get_template_path('terminalService.tpl', TRUE)));
   }
@@ -348,6 +364,50 @@ class termservice extends plugin
             $this->$val= FALSE;
           } else {
             $this->$val= TRUE;
+          }
+        }
+      }
+    } 
+
+    if(isset($_POST['gotoXDriver'])){
+      if(isset($_POST['AutoSync'])){
+        $this->AutoSync = true;
+      }else{
+        $this->AutoSync = false;
+      }
+    }
+
+    /* Default entries can use blank hsync/vsync entries */
+    if ($this->dn != "" && $this->cn != "default" && $this->cn != "default"){
+
+      /* But only if no auto sync is enabled... */
+      if (!$this->AutoSync){
+
+        /* Check vsync for correct usage */
+        $val= preg_replace ("/\s/", "", $this->gotoXVsync);
+        if (!preg_match ("/^\d+(\.\d+)?([-]\d+(\.\d+)?)?$/", $val) && $this->acl_is_writeable("gotoXVsync")){
+
+          $message[]= _("Please specify a valid VSync range.");
+        } elseif ($this->acl_is_writeable("gotoXVsync")){
+          list($v1,$v2)= preg_split ("/[-+]/", $val);
+          if ($v2 != ""){
+            if ($v1 > $v2){
+              $message[]= _("Please specify a valid VSync range.");
+            }
+          }
+        }
+
+        /* Check hsync for correct usage */
+        $val= preg_replace ("/\s/", "", $this->gotoXHsync);
+        if (!preg_match ("/^\d+(\.\d+)?([-]\d+(\.\d+)?)?$/", $val) && $this->acl_is_writeable("gotoXHsync")){
+
+          $message[]= _("Please specify a valid HSync range.");
+        } elseif ($this->acl_is_writeable("gotoXHsync")){
+          list($v1,$v2)= preg_split ("/[-+]/", $val);
+          if ($v2 != ""){
+            if ($v1 > $v2){
+              $message[]= _("Please specify a valid HSync range.");
+            }
           }
         }
       }
@@ -383,6 +443,11 @@ class termservice extends plugin
       }
     }
 
+    if($this->AutoSync){
+      $this->attrs['gotoXHsync'] = "30+55";
+      $this->attrs['gotoXVsync'] = "50+70";
+    }
+
     /* Write back to ldap */
     $ldap= $this->config->get_ldap_link();
     $ldap->cd($this->dn);
@@ -416,12 +481,13 @@ class termservice extends plugin
             "gotoXColordepth"         => _("Gfx color depth"),
             "gotoXHsync"              => _("Hsync"),
             "gotoXVsync"              => _("Vsync"),
+            "AutoSync"                => _("Auto-Sync"),
             "gotoLpdEnable"           => _("Printer service enabled"),
             "gotoLpdServer"           => _("Spool server"),
             "gotoScannerEnable"       => _("Scanner enabled"),
             "gotoScannerModel"        => _("Scanner model"),
-            "gotoScannerClients"      => _(""),
-            "gotoScannerBackend"      => _(""),
+            "gotoScannerClients"      => _("Heäh ? "),
+            "gotoScannerBackend"      => _("..."),
             "gotoXKbModel"            => _("Keyboard model"),
             "gotoXKbLayout"           => _("Keyboard layout"),
             "gotoXKbVariant"          => _("Keyboard variant"),

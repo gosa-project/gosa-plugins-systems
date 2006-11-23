@@ -139,6 +139,14 @@
      <td>{$gotoXMonitor}</td>
     </tr>
     <tr>
+     <td>
+{render acl=$AutoSyncACL}
+      <input type="checkbox" name="AutoSync" value="1" {$AutoSyncCHK} onChange="changeState('gotoXHsync');changeState('gotoXVsync');">
+{/render}
+     </td>
+     <td>{t}Use DDC for automatic detection{/t}</td>
+    </tr>
+    <tr>
      <td><LABEL for="gotoXHsync">{t}HSync{/t}</LABEL></td>
      <td>
 {render acl=$gotoXHsyncACL}
