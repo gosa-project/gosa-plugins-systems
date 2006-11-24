@@ -102,7 +102,6 @@ class divListSystem extends MultiSelectWindow
     $ui= get_userinfo();
     $department = array();
     foreach($this->module as $module){
-  
       $d = $ui->get_module_departments($module);      
       foreach($d as $department){
         $departments[$department] = $department;
@@ -123,6 +122,13 @@ class divListSystem extends MultiSelectWindow
       }
     }
 
+    /* If there is at least one c (Create) and one w (Write) acl in this combination
+        display the snapshot paste icon. BUT check the correct acls in the management plugin */
+    $all_module_acls = "";
+    foreach($this->module as $module){
+      $all_module_acls .= $ui->has_complete_category_acls($this->selectedBase,$module)." | ".$module."<br>";
+    }
+
     $listhead = "<div style='background:#F0F0F9;padding:5px;'>".
       " <input class='center' type='image' src='images/list_root.png' align='middle'
       title='"._("Go to root department")."' name='dep_root' alt='"._("Root")."'>&nbsp;".
@@ -132,7 +138,10 @@ class divListSystem extends MultiSelectWindow
       title='"._("Go to users department")."' alt='"._("Home")."'                     name='dep_home'>&nbsp;".
       " <input class='center' type='image' src='images/list_reload.png' align='middle' title='"._("Reload list")."' name='submit_department' alt='".          _("Submit")."'>&nbsp;".
       " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
-    $listhead .= $this->get_snapshot_header($this->selectedBase);
+
+    if(preg_match("/(c.*w|w.*c)/",$all_module_acls)){
+      $listhead .= $this->get_snapshot_header($this->selectedBase);
+    }
     $listhead .= " <input class='center' type='image' align='middle' src='images/select_new_terminal.png'
       name='newsystem_terminal'    alt='"._("New Terminal template")."' title='"._("New Terminal")."'>".
       " <input class='center' type='image' align='middle' src='images/select_new_workstation.png'
@@ -184,12 +193,23 @@ class divListSystem extends MultiSelectWindow
     // User and Template  Images
     $editlink = "<a href='?plug=".$_GET['plug']."&amp;id=%s&amp;act=edit_entry'>%s</a>";
 
+    /* ACL mapping */
+    $acl_type = array("server"  => "ser");
+    $ui = get_userinfo();
+
     // Test Every Entry and generate divlist Array
     foreach($terminals as $key => $val){
 
-      $action= "<input class='center' type='image' src='images/edit.png' alt='"._("edit")."'     name='user_edit_%KEY%' title='"._("Edit system")."'>";
-      $action.= $this->GetSnapShotActions($val['dn']);
-      $action.= "<input class='center' type='image' src='images/edittrash.png' alt='"._("delete")."'   name='user_del_%KEY%' title='"._("Delete system")."'>";
+      $type     = $this->parent->get_system_type($val['objectClass']);
+      $acl_all  = $ui->has_complete_category_acls($val['dn'],$type) ;
+
+      $action= "<input class='center' type='image' src='images/edit.png' 
+                    alt='"._("edit")."'     name='user_edit_%KEY%' title='"._("Edit system")."'>";
+      if(preg_match("/(c.*w|w.*c)/",$acl_all)){
+        $action.= $this->GetSnapShotActions($val['dn']);
+      }
+      $action.= "<input class='center' type='image' src='images/edittrash.png' 
+                    alt='"._("delete")."'   name='user_del_%KEY%' title='"._("Delete system")."'>";
 
       /* Generate picture list, which is currently disabled */
       if(in_array("goCupsServer"    ,$val['objectClass'])) $cups    = $img1;   else $cups  =$empty;

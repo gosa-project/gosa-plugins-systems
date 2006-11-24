@@ -299,13 +299,34 @@ class systems extends plugin
     if ($s_action=="del"){
 
       /* Get 'dn' from posted termlinst */
-      $this->dn= $this->terminals[$s_entry]['dn'];
+      $this->dn = $this->terminals[$s_entry]['dn'];
+      $attrs    = $this->terminals[$s_entry];
+
+      $type= $this->get_system_type($attrs['objectClass']);
+      $ui = get_userinfo();
+      $tabs = array(
+          "terminal"    => array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "terminal/termgeneric"),
+          "workstation" => array("CLASS"=>"WORKTABS",     "TABCLASS" =>"worktabs",      "ACL"=> "workstation/workgeneric"),
+          "server"      => array("CLASS"=>"SERVTABS",     "TABCLASS" =>"servtabs",      "ACL"=> "server/servgeneric"),
+          "printer"     => array("CLASS"=>"PRINTTABS",    "TABCLASS" =>"printtabs",     "ACL"=> "printer/printgenric"),
+          "phone"       => array("CLASS"=>"PHONETABS",    "TABCLASS" =>"phonetabs",     "ACL"=> "phone/phoneGeneric"),
+          "winstation"  => array("CLASS"=>"WINTABS",      "TABCLASS" =>"wintabs",       "ACL"=> "winworkstation/wingeneric"),
+          "component"   => array("CLASS"=>"COMPONENTTABS","TABCLASS" =>"componenttabs", "ACL"=> "component/componentGeneric"));
+
+
+      /* get object type */
+      $tabtype  = "termtabs";
+      $tabobj   = "TERMTABS";
+      $tabacl   = "";
+      if(isset($tabs[$type])){
+        $tabtype = $tabs[$type]['TABCLASS'];
+        $tabobj  = $tabs[$type]['CLASS'];
+        $tabacl  = $ui->get_permissions($this->dn,$tabs[$type]['ACL']);
+      }
 
       /* Load permissions for selected 'dn' and check if
          we're allowed to remove this 'dn' */
-      $ui  = get_userinfo();
-      $acl = $ui -> get_category_permissions($this->dn,"terminal");
-      if(preg_match("/w/",$acl)){ 
+      if(preg_match("/d/",$tabacl)){ 
 
         /* Check locking, save current plugin in 'back_plugin', so
            the dialog knows where to return. */
@@ -341,35 +362,34 @@ class systems extends plugin
       $ui = get_userinfo();
 
       $tabs = array(
-          "terminal"    => array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "terminal"),
-          "workstation" => array("CLASS"=>"WORKTABS",     "TABCLASS" =>"worktabs",      "ACL"=> "workstation"),
-          "server"      => array("CLASS"=>"SERVTABS",     "TABCLASS" =>"servtabs",      "ACL"=> "server"),
-          "printer"     => array("CLASS"=>"PRINTTABS",    "TABCLASS" =>"printtabs",     "ACL"=> "printer"),
-          "phone"       => array("CLASS"=>"PHONETABS",    "TABCLASS" =>"phonetabs",     "ACL"=> "phone"),
-          "winstation"  => array("CLASS"=>"WINTABS",      "TABCLASS" =>"wintabs",       "ACL"=> "winworkstation"),
-          "component"   => array("CLASS"=>"COMPONENTTABS","TABCLASS" =>"componenttabs", "ACL"=> "component"));
+          "terminal"    => array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "terminal/termgeneric"),
+          "workstation" => array("CLASS"=>"WORKTABS",     "TABCLASS" =>"worktabs",      "ACL"=> "workstation/workgeneric"),
+          "server"      => array("CLASS"=>"SERVTABS",     "TABCLASS" =>"servtabs",      "ACL"=> "server/servgeneric"),
+          "printer"     => array("CLASS"=>"PRINTTABS",    "TABCLASS" =>"printtabs",     "ACL"=> "printer/printgenric"),
+          "phone"       => array("CLASS"=>"PHONETABS",    "TABCLASS" =>"phonetabs",     "ACL"=> "phone/phoneGeneric"),
+          "winstation"  => array("CLASS"=>"WINTABS",      "TABCLASS" =>"wintabs",       "ACL"=> "winworkstation/wingeneric"),
+          "component"   => array("CLASS"=>"COMPONENTTABS","TABCLASS" =>"componenttabs", "ACL"=> "component/componentGeneric"));
 
-        
-        /* get object type */
-        $tabtype  = "termtabs";
-        $tabobj   = "TERMTABS";
-        $tabacl   = "";
-        if(isset($tabs[$type])){
-          $tabtype = $tabs[$type]['TABCLASS'];
-          $tabobj  = $tabs[$type]['CLASS'];
-          $tabacl  = $ui->get_permissions($this->dn,$tabs[$type]['ACL']);
-        }
+      /* get object type */
+      $tabtype  = "termtabs";
+      $tabobj   = "TERMTABS";
+      $tabacl   = "";
+      if(isset($tabs[$type])){
+        $tabtype = $tabs[$type]['TABCLASS'];
+        $tabobj  = $tabs[$type]['CLASS'];
+        $tabacl  = $ui->get_permissions($this->dn,$tabs[$type]['ACL']);
+      }
 
       /* Check if we are allowed to remove this object */
       if(preg_match("/d/",$tabacl)){
 
         /* Delete request is permitted, perform LDAP action */
         if($tabtype=="phonetabs"){
-          $this->systab= new $tabtype($this->config, $this->config->data['TABS'][$tabobj], $this->dn,$tabs[$type]['ACL']);
+          $this->systab= new $tabtype($this->config, $this->config->data['TABS'][$tabobj], $this->dn,$type);
           $this->systab->set_acl_base($this->dn);
           $this->systab->by_object['phonegeneric']->remove_from_parent ();
         }else{  
-          $this->systab= new $tabtype($this->config,$this->config->data['TABS'][$tabobj], $this->dn,$tabs[$type]['ACL']);
+          $this->systab= new $tabtype($this->config,$this->config->data['TABS'][$tabobj], $this->dn,$type);
           $this->systab->set_acl_base($this->dn);
           $this->systab->delete();
         }

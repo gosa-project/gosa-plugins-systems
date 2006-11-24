@@ -33,6 +33,7 @@ class userinfo
   var $ACL= array();
   var $ocMapping= array();
   var $groups= array();
+  var $result_cache =array();
 
   /* get acl's an put them into the userinfo object
      attr subtreeACL (userdn:components, userdn:component1#sub1#sub2,component2,...) */
@@ -95,6 +96,7 @@ class userinfo
 
     $this->ACL= array();    
     $this->groups= array();    
+    $this->result_cache =array();
     $ldap= $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
 
@@ -410,11 +412,49 @@ class userinfo
     return ($acl);
   }
 
-  function has_complete_category_acls($base,$category)
+
+  /* #FIXME This could be logical wrong or could be optimized in the future
+     Return combined acls for a given category. 
+     All acls will be combined like boolean AND 
+      As example ('rwcdm' + 'rcd' + 'wrm'= 'r') 
+    
+     Results will be cached in $this->result_cache.
+      $this->result_cache will be resetted if load_acls is called.
+  */
+  function has_complete_category_acls($dn,$category)
   {
-    return($this->get_permissions($base,"all/all"));
+    $acl    = "rwcdm";
+    $types  = "rwcdm";
+
+
+    if(!is_string($category)){
+      trigger_error("category must be string");   
+      $acl = "";
+    }else{
+      if(!isset($this->result_cache['has_complete_category_acls'][$dn][$category]))   {
+        if (isset($this->ocMapping[$category])){
+          foreach($this->ocMapping[$category] as $oc){
+
+            /* Skip objectClass '0' (e.g. users/0) get_permissions will ever return '' ??  */
+            if($oc == "0") continue;
+            $tmp =  $this->get_permissions($dn, $category."/".$oc);
+            for($i = 0 ; $i < strlen($types); $i++) {
+              if(!preg_match("/".$types[$i]."/",$tmp)){ 
+                $acl = preg_replace("/".$types[$i]."/","",$acl);
+              }
+            }
+          }
+        }else{
+          trigger_error("Invalid type of category ".$category);
+          $acl = "";
+        }
+        $this->result_cache['has_complete_category_acls'][$dn][$category] = $acl;
+      }else{
+        $acl = $this->result_cache['has_complete_category_acls'][$dn][$category];
+      }
+    }
+    return($acl);
   }
-  
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
