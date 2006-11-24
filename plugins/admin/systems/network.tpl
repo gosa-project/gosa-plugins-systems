@@ -37,7 +37,7 @@
 		<td	style="width:50%;vertical-align:top;border-left:1px solid #b0b0b0;" valign="top">
       <input type="checkbox" name="enableDNS" value="1" 
 
-        {if !$accountACL}  <!-- render as disabled if we have no permissions -->
+        {if !$accountACL}  
           disabled
         {/if}
 
@@ -47,7 +47,7 @@
           changeState('dNSTTL');
           changeState('AddNewRecord');
           {$changeStateForRecords}
-      "/>
+      ">
         {else}
         onclick="toggle('test2');
           changeState('zoneName');

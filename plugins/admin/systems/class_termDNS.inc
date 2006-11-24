@@ -489,7 +489,7 @@ class termDNS extends plugin
 
     $str.= "  <tr>".
            "    <td colspan=2 width='50%'></td><td>".
-           "      <input type='submit' value='"._("Add")."' name='AddNewRecord'>".
+           "      <input type='submit' value='"._("Add")."' name='AddNewRecord' id='AddNewRecord'>".
            "    </td>".
            "  </tr>".
            "</table>";
