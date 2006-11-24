@@ -273,9 +273,9 @@ class MultiSelectWindow{
 
 			/* Check if box is checked */
 			if($box['default'] == true){
-				$boxes .="<input type='checkbox' name='".$box['name']."' value='1' title='".$box['value']."' checked ".$boxClick.">&nbsp;".$box['string']."<br>";
+				$boxes .="<input type='checkbox' name=\"".$box['name']."\" value='1' title=\"".htmlentities($box['value'])."\" checked ".$boxClick.">&nbsp;".$box['string']."<br>";
 			}else{
-				$boxes .="<input type='checkbox' name='".$box['name']."' value='1' title='".$box['value']."'".$boxClick.">&nbsp;".$box['string']."<br>";
+				$boxes .="<input type='checkbox' name=\"".$box['name']."\" value='1' title=\"".htmlentities($box['value'])."\" ".$boxClick.">&nbsp;".$box['string']."<br>";
 			}
 		}
 		$smarty->assign("CheckBoxes", $boxes);
@@ -292,8 +292,8 @@ class MultiSelectWindow{
 				</label>
 				</td>
 				<td width=\"99%\">
-				<input type='text' style='width:99%' name='".$regex['name']."' maxlength='20'
-				value='".$regex['value']."' title=\"".$regex['string']."\"> 
+				<input type=\"text\" style='width:99%' name=\"".$regex['name']."\" maxlength='20'
+				value=\"".htmlentities($regex['value'])."\" title=\"".htmlentities($regex['string'])."\"> 
 				</td>
 				</tr>
 				</table>";
