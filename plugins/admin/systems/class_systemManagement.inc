@@ -245,20 +245,16 @@ class systems extends plugin
           "workstation" => array("CLASS"=>"WORKTABS",     "TABNAME"=>"workgeneric",     "TABCLASS" =>"worktabs",      "ACL"=> "workstation"));
 
       $type = $this->get_system_type($this->terminals[$s_entry]['objectClass']);
-
       $class    = $tabs[$type]["CLASS"];
       $tabname  = $tabs[$type]["TABNAME"];
       $acl_cat  = $tabs[$type]["ACL"];
       $tabclass = $tabs[$type]["TABCLASS"];
-
       $ui       = get_userinfo();
       $tabacl   = $ui->get_permissions($this->DivListSystem->selectedBase,$acl_cat."/".$tabname,"gotoRootPasswd");
       if(preg_match("/w/",$tabacl)){
-
-
-      $this->dn= $this->terminals[$s_entry]['dn'];
-      $_SESSION['objectinfo']= $this->dn;
-      return ($smarty->fetch(get_template_path('password.tpl', TRUE)));
+        $this->dn= $this->terminals[$s_entry]['dn'];
+        $_SESSION['objectinfo']= $this->dn;
+        return ($smarty->fetch(get_template_path('password.tpl', TRUE)));
       }else{
         print_red(_("You are not allowed to change the password for this object."));
       }
@@ -266,7 +262,7 @@ class systems extends plugin
 
 
     /********************
-      Password cahnge finish, but check if entered data is ok 
+      Password change finish, but check if entered data is ok 
      ********************/
 
     /* Correctly specified? */
@@ -286,23 +282,50 @@ class systems extends plugin
         $_POST['new_password'] == $_POST['repeated_password']){
 
       /* Check if user is allowed to set password */
-      $ui  = get_userinfo();
-      $acl = $ui -> get_category_permissions($this->dn,"terminal");
-      if(preg_match("/w/",$acl)){ 
-        print_red (_("You are not allowed to set this systems password!"));
-      } else {
-        $ldap= $this->config->get_ldap_link();
-        $ldap->cd($this->dn);
+      $tabs = array(
+          "terminal"    => array("CLASS"=>"TERMTABS",     "TABNAME"=>"termgeneric",     "TABCLASS" =>"termtabs",      "ACL"=> "terminal"),
+          "workstation" => array("CLASS"=>"WORKTABS",     "TABNAME"=>"workgeneric",     "TABCLASS" =>"worktabs",      "ACL"=> "workstation"));
 
-        $attrs= array();
-        if ($_POST['new_password'] == ""){
-          $attrs['gotoRootPasswd']= array();
-        } else {
-          $attrs['gotoRootPasswd']= crypt($_POST['new_password'],
-              substr(session_id(),0,2));
+      /* Detect object type */
+      $type = "";
+      foreach($this->terminals as $terminal){
+        if($terminal['dn'] == $this->dn){
+          $type = $this->get_system_type($terminal['objectClass']);
+          break;
+        } 
+      }
+
+      /* Type detected */
+      if(!empty($type)){
+
+        /* Get infos */
+        $class    = $tabs[$type]["CLASS"];
+        $tabname  = $tabs[$type]["TABNAME"];
+        $acl_cat  = $tabs[$type]["ACL"];
+        $tabclass = $tabs[$type]["TABCLASS"];
+    
+        /* Get acls */
+        $ui       = get_userinfo();
+        $tabacl   = $ui->get_permissions($this->DivListSystem->selectedBase,$acl_cat."/".$tabname,"gotoRootPasswd");
+
+        /* Check acls */
+        if(preg_match("/w/",$tabacl)){
+          $ldap = $this->config->get_ldap_link();
+          $ldap->cd($this->dn);
+
+          $attrs= array();
+          if ($_POST['new_password'] == ""){
+            $attrs['gotoRootPasswd']= array();
+          } else {
+            $attrs['gotoRootPasswd']= crypt($_POST['new_password'],substr(session_id(),0,2));
+          }
+          $ldap->modify($attrs);
+          gosa_log ("Password for '".$this->dn."' has been changed");
+        }else{
+          print_red(_("You are not allowed to change the password for this object."));
         }
-        $ldap->modify($attrs);
-        gosa_log ("Password for '".$this->dn."' has been changed");
+      }else{
+        print_red(_("Can't detect object to change password."));
       }
       unset($_SESSION['objectinfo']);
     }
