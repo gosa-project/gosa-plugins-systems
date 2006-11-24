@@ -142,19 +142,39 @@ class divListSystem extends MultiSelectWindow
     if(preg_match("/(c.*w|w.*c)/",$all_module_acls)){
       $listhead .= $this->get_snapshot_header($this->selectedBase);
     }
-    $listhead .= " <input class='center' type='image' align='middle' src='images/select_new_terminal.png'
-      name='newsystem_terminal'    alt='"._("New Terminal template")."' title='"._("New Terminal")."'>".
-      " <input class='center' type='image' align='middle' src='images/select_new_workstation.png'
-      name='newsystem_workstation' alt='"._("New Workstation template")."' title='"._("New Workstation")."'>".
-      " <input class='center' type='image' align='middle' src='images/select_new_server.png'     name='newsystem_server'      alt='"._("New Server")."'
-      title='"._("New Server")."'>".
-      " <input class='center' type='image' align='middle' src='images/select_new_printer.png'    name='newsystem_printer'     alt='"._("New Printer")."'
-      title='"._("New Printer")."'>".
-      " <input class='center' type='image' align='middle' src='images/select_new_phone.png'      name='newsystem_phone'       alt='"._("New Phone")."'
-      title='"._("New Phone")."'>".
-      " <input class='center' type='image' align='middle' src='images/select_new_component.png'  name='newsystem_component'   alt='"._("New Component")."'
-      title='"._("New Component")."'>".
-      " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;"._("Base")."&nbsp;".
+
+    
+    if(preg_match("/c/",$ui->get_permissions($this->selectedBase,"terminal/termgeneric"))){
+      $listhead .= "<input class='center' type='image' align='middle' src='images/select_new_terminal.png'
+        name='newsystem_terminal'    alt='"._("New Terminal template")."' title='"._("New Terminal")."'>&nbsp;";
+    }
+
+    if(preg_match("/c/",$ui->get_permissions($this->selectedBase,"workstation/workgeneric"))){
+      $listhead .= "<input class='center' type='image' align='middle' src='images/select_new_workstation.png'
+        name='newsystem_workstation' alt='"._("New Workstation template")."' title='"._("New Workstation")."'>&nbsp;";
+    }
+
+    if(preg_match("/c/",$ui->get_permissions($this->selectedBase,"server/servgeneric"))){
+      $listhead .= "<input class='center' type='image' align='middle' src='images/select_new_server.png'     
+        name='newsystem_server' alt='"._("New Server")."' title='"._("New Server")."'>&nbsp;";
+    }
+
+    if(preg_match("/c/",$ui->get_permissions($this->selectedBase,"printer/printgenric"))){
+      $listhead .= "<input class='center' type='image' align='middle' src='images/select_new_printer.png'    
+        name='newsystem_printer'     alt='"._("New Printer")."' title='"._("New Printer")."'>&nbsp;";
+    }
+
+    if(preg_match("/c/",$ui->get_permissions($this->selectedBase,"phone/phoneGeneric"))){
+      $listhead .= "<input class='center' type='image' align='middle' src='images/select_new_phone.png'      
+        name='newsystem_phone' alt='"._("New Phone")."' title='"._("New Phone")."'>&nbsp;";
+    }
+
+    if(preg_match("/c/",$ui->get_permissions($this->selectedBase,"component/componentGeneric"))){
+      $listhead .= "<input class='center' type='image' align='middle' src='images/select_new_component.png'  
+        name='newsystem_component' alt='"._("New Component")."' title='"._("New Component")."'>&nbsp;";
+    }
+
+    $listhead .= "<img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;"._("Base")."&nbsp;".
       " <select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
       " <input class='center' type='image' src='images/list_submit.png' align='middle'
       title='"._("Submit department")."' name='submit_department' alt='".           _("Submit")."'>&nbsp;".
@@ -239,11 +259,21 @@ class divListSystem extends MultiSelectWindow
         $display= $val["cn"][0].$dsc;
       }
 
-      if((in_array("gotoTerminal",$val['objectClass']))||(in_array("gotoWorkstation",$val['objectClass']))){
+     
+      /* Check if this is a terminal/workstation && if we are allowed to change the gotoRootPasswd */
+      $pwd_acl =""; 
+      if(in_array("gotoWorkstation",$val['objectClass'])){
+        $pwd_acl = $ui->get_permissions($val['dn'],"workstation/workgeneric","gotoRootPasswd");
+      }    
+      if(in_array("gotoTerminal",$val['objectClass'])){
+        $pwd_acl = $ui->get_permissions($val['dn'],"terminal/termgeneric","gotoRootPasswd");
+      }    
+      if(preg_match("/w/",$pwd_acl)){
         $action2 = "<input class='center' type='image' src='images/certs.png' alt='"._("Password")."'   name='user_setpwd_%KEY%' title='"._("Set root       password")."'>";
       }else{
         $action2 = "";
       }
+
 
       if(in_array("gotoWorkstation",$val['objectClass'])){
         $action2= "<input class='center' type='image' src='images/cdrom.png' alt='"._("Create CD")."'   

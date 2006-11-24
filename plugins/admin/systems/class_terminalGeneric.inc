@@ -533,6 +533,7 @@ class termgeneric extends plugin
             "gotoNtpServer"       => _("Ntp server settings"),
             "base"                => _("Base"),
             "cn"                  => _("Name"),
+            "gotoRootPasswd"      => _("Root password"),
             "FAIstate"            => _("Action flag"))
           ));
   }

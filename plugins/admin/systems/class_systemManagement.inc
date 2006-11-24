@@ -166,10 +166,19 @@ class systems extends plugin
         $tabname  = $tabs[$sw]["TABNAME"];
         $tabclass = $tabs[$sw]["TABCLASS"];
         $acl_cat  = $tabs[$sw]["ACL"];
-        $this->systab= new $tabclass($this->config, $this->config->data['TABS'][$class], $this->dn,$acl_cat);
-        $this->systab->set_acl_base($this->DivListSystem->selectedBase);
-        $this->systab->by_object[$tabname]->base = $this->DivListSystem->selectedBase;
-        $this->systab->base = $this->DivListSystem->selectedBase;
+
+        /* Load permissions for selected 'dn' and check if
+           we're allowed to remove this 'dn' */
+        $ui       = get_userinfo();
+        $tabacl   = $ui->get_permissions($this->DivListSystem->selectedBase,$acl_cat."/".$tabname);
+        if(preg_match("/c/",$tabacl)){
+          $this->systab= new $tabclass($this->config, $this->config->data['TABS'][$class], $this->dn,$sw);
+          $this->systab->set_acl_base($this->DivListSystem->selectedBase);
+          $this->systab->by_object[$tabname]->base = $this->DivListSystem->selectedBase;
+          $this->systab->base = $this->DivListSystem->selectedBase;
+        }else{
+          print_red(_("You are not allowed to create a new object of this type."));
+        }
       }
     }
 
@@ -231,9 +240,28 @@ class systems extends plugin
 
     /* Set terminals root password */
     if ($s_action=="change_pw"){
+      $tabs = array(
+          "terminal"    => array("CLASS"=>"TERMTABS",     "TABNAME"=>"termgeneric",     "TABCLASS" =>"termtabs",      "ACL"=> "terminal"),
+          "workstation" => array("CLASS"=>"WORKTABS",     "TABNAME"=>"workgeneric",     "TABCLASS" =>"worktabs",      "ACL"=> "workstation"));
+
+      $type = $this->get_system_type($this->terminals[$s_entry]['objectClass']);
+
+      $class    = $tabs[$type]["CLASS"];
+      $tabname  = $tabs[$type]["TABNAME"];
+      $acl_cat  = $tabs[$type]["ACL"];
+      $tabclass = $tabs[$type]["TABCLASS"];
+
+      $ui       = get_userinfo();
+      $tabacl   = $ui->get_permissions($this->DivListSystem->selectedBase,$acl_cat."/".$tabname,"gotoRootPasswd");
+      if(preg_match("/w/",$tabacl)){
+
+
       $this->dn= $this->terminals[$s_entry]['dn'];
       $_SESSION['objectinfo']= $this->dn;
       return ($smarty->fetch(get_template_path('password.tpl', TRUE)));
+      }else{
+        print_red(_("You are not allowed to change the password for this object."));
+      }
     }
 
 
