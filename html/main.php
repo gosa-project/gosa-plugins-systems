@@ -76,7 +76,6 @@ if ($_SERVER['REMOTE_ADDR'] != $ui->ip){
 }
 $config= $_SESSION['config'];
 
-
 /* Check for invalid sessions */
 if(empty($_SESSION['_LAST_PAGE_REQUEST'])){
   $_SESSION['_LAST_PAGE_REQUEST']= time();
@@ -342,6 +341,30 @@ if (isset ($_SESSION['post_cnt'])){
 
 $start = microtime();
 
+
+/* Check if the user has used the browsers back button,
+    and display a warning, because using the back button could cause strange things
+    like tagging twice, moving an object twice ... */
+if(!isset($_SESSION['back_button_test'])){
+  $_SESSION['back_button_test'] = 0;
+}
+if(isset($_POST['back_button_test']) && $_POST['back_button_test'] != $_SESSION['back_button_test']){
+    print_red(_("Please don't use the browsers 'back' button. This causes GOsa to perform your last request again and this could lead into some strange situations."));
+}
+
+
+/* check if we are using account expiration */
+if((isset($config->data['MAIN']['ACCOUNT_EXPIRATION'])) &&
+    preg_match('/true/i', $config->data['MAIN']['ACCOUNT_EXPIRATION'])){
+
+  $expired= ldap_expired_account($config, $ui->dn, $ui->username);
+
+  if ($expired == 2){
+    gosa_log ("password for user \"$ui->username\" is about to expire");
+    print_red(_("Your password is about to expire, please change your password"));
+  }
+}
+
 /* Load plugin */
 if (is_file("$plugin_dir/main.inc")){
   require_once ("$plugin_dir/main.inc");
@@ -350,26 +373,16 @@ if (is_file("$plugin_dir/main.inc")){
   exit();
 }
 
-/* Close div/tables */
 
-  /* check if we are using account expiration */
-
-  if((isset($config->data['MAIN']['ACCOUNT_EXPIRATION'])) &&
-      preg_match('/true/i', $config->data['MAIN']['ACCOUNT_EXPIRATION'])){
-    
-      $expired= ldap_expired_account($config, $ui->dn, $ui->username);
-
-      if ($expired == 2){
-        gosa_log ("password for user \"$ui->username\" is about to expire");
-        print_red(_("Your password is about to expire, please change your password"));
-      }
-  }
-  
 /* Print_out last ErrorMessage repeated string. */
 print_red(NULL);
 
-$smarty->assign("contents", $display.get_MicroTimeDiff($start,microtime()));
+/* Second part of browser 'back button used' check */
+$_SESSION['back_button_test'] ++;
+$bb = "<input type='hidden' name='back_button_test' value='".$_SESSION['back_button_test']."'>";
+$smarty->assign("contents", $bb.$display.get_MicroTimeDiff($start,microtime()));
 
+/* Assign erros to smarty */
 if (isset($_SESSION['errors'])){
   $smarty->assign("errors", $_SESSION['errors']);
 }
