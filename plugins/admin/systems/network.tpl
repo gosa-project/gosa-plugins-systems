@@ -33,15 +33,15 @@
         {/if}
       </table> 
     </td>
-    {if $DNS_is_account==true}
+    {if $DNS_enabled==true}
 		<td	style="width:50%;vertical-align:top;border-left:1px solid #b0b0b0;" valign="top">
-      <input type="checkbox" name="enableDNS" value="1" 
+      <input type="checkbox" name="DNS_is_account" value="1" 
 
         {if !$accountACL}  
           disabled
         {/if}
 
-        {if $DNSAccount == true}checked="checked"
+        {if $DNS_is_account == true}checked="checked"
         onclick="toggle('test2');
           changeState('zoneName');
           changeState('dNSTTL');
@@ -57,7 +57,7 @@
         {/if}
       {t}Enable DNS for this device{/t}
       <input type="submit" name="reloadThisDNSStuff" value="{t}Refresh{/t}"/>
-      {if $DNSAccount == true}
+      {if $DNS_is_account == true}
       <div style="padding-left:20px;visibility:visible;" id="test2">
       {else}
       <div style="padding-left:20px;visibility:hidden;" id="test2">
@@ -67,7 +67,7 @@
 					<td><LABEL	for="zoneName">{t}Zone{/t}</LABEL></td>
 					<td>
 {render acl=$zoneNameACL}
-              <select name="zoneName" id="zoneName" {if $DNSAccount == false} disabled='disabled' {/if}>
+              <select name="zoneName" id="zoneName" {if $DNS_is_account == false} disabled='disabled' {/if}>
                 {html_options values=$ZoneKeys output=$Zones selected=$zoneName}
               </select>
 {/render}
@@ -77,14 +77,14 @@
           <td>{t}TTL{/t}</td>
           <td>
 {render acl=$dNSTTLACL}
-            <input type="text" name="dNSTTL" value="{$dNSTTL}" id="dNSTTL" {if $DNSAccount == false} disabled {/if}>
+            <input type="text" name="dNSTTL" value="{$dNSTTL}" id="dNSTTL" {if $DNS_is_account == false} disabled {/if}>
 {/render}
           </td> 
 				</tr>
 				<tr>
           <td valign="top">{t}Dns records{/t}</td>
           <td>
-            {if $DNSAccount == true}
+            {if $DNS_is_account == true}
 {render acl=$RecordsACL}
               {$records}
 {/render}

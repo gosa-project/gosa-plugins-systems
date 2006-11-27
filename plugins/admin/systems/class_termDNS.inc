@@ -26,7 +26,7 @@ class termDNS extends plugin
   /* DNS attributes  
    */
   var $DNSattributes            = array("dNSClass","zoneName","dNSTTL");
-  var $DNS_is_Account           = false;
+  var $DNS_is_account           = false;
   var $initially_was_account = false;
   var $dnsEntry                 = array();
   var $DNSenabled               = false;
@@ -95,7 +95,6 @@ class termDNS extends plugin
       }else{
         $this->DNS_is_account = false;
       }
-   
     }
  
     /* Store initally account settings 
@@ -153,7 +152,7 @@ class termDNS extends plugin
     if($this->DNSenabled == false){
        
       /* Is IP address must ? */ 
-      $smarty->assign("DNS_is_account",false);  
+      $smarty->assign("DNS_enabled",false);  
       $smarty->assign("IPisMust",(($this->IPisMust)||($this->DNS_is_account)));
     
       /* Assign smarty all non DNs attributes */
@@ -170,13 +169,13 @@ class termDNS extends plugin
       $display.= $smarty->fetch(get_template_path('network.tpl', TRUE));
       return($display);
     }else{
-      $smarty->assign("DNS_is_account",true); 
+      $smarty->assign("DNS_enabled",true); 
     }
 
     $accountACL = false; 
-    if($this->DNSenabled && $this->acl_is_removeable()){
+    if($this->DNS_is_account && $this->acl_is_removeable()){
       $accountACL = true;
-    }elseif(!$this->DNSenabled && $this->acl_is_createable()){
+    }elseif(!$this->DNS_is_account && $this->acl_is_createable()){
       $accountACL = true;
     }
     $smarty->assign("accountACL",$accountACL);
@@ -218,7 +217,7 @@ class termDNS extends plugin
     }
     
     /* Assign all needed vars */
-    $smarty->assign("DNSAccount",$this->DNS_is_account);
+    $smarty->assign("DNS_is_account",$this->DNS_is_account);
     $smarty->assign("Zones",$this->Zones);
     $smarty->assign("ZoneKeys",($this->Zones));
     $smarty->assign("IPisMust",(($this->IPisMust)||($this->DNS_is_account)));
@@ -242,11 +241,11 @@ class termDNS extends plugin
     $ldap->cd($this->orig_dn);
     $ldap->search("(&(objectClass=dNSZone)(zoneName=*)(!(relativeDomainName=@)))",array("relativeDomainName","zoneName"));
     while($attr = $ldap->fetch()){  
-      $ldap->cd($attr['dn']);
-      $ldap->rmDir($attr['dn']);
-      show_ldap_error($ldap->get_error(), sprintf(_("Removing of terminal/dns acoount with dn '%s' failed."),$this->dn));
+    $ldap->cd($attr['dn']);
+    $ldap->rmDir($attr['dn']);
+    show_ldap_error($ldap->get_error(), sprintf(_("Removing of terminal/dns acoount with dn '%s' failed."),$this->dn));
     }
-    */
+     */
   }
 
   /* Save data to object */
@@ -254,42 +253,48 @@ class termDNS extends plugin
   {
     /* Save all posted vars */
     plugin::save_object();
-    
-    /* Ge all non dns attributes (IP/MAC)*/
-    foreach($this->attributes as $attr){
-      if(isset($_POST[$attr]) && $this->acl_is_writeable($attr)){
-        $this->$attr = $_POST[$attr];
-      }
-    }
 
-    /* Get dns attributes */
-    if(($this->DNSenabled) && (isset($_POST['network_tpl_posted']))){
+    if(isset($_POST['network_tpl_posted'])){
 
-      /* Check for posted record changes */
-      if(is_array($this->dnsEntry['RECORDS']) && $this->acl_is_writeable("Records")){
-        foreach($this->dnsEntry['RECORDS'] as $key => $value){
-
-          /* Check if type has changed */
-          if(isset($_POST['RecordTypeSelectedFor_'.$key])){
-            $this->dnsEntry['RECORDS'][$key]['type'] = $_POST['RecordTypeSelectedFor_'.$key];
-          }
-          /* Check if value has changed */
-          if(isset($_POST['RecordValue_'.$key])){
-            $this->dnsEntry['RECORDS'][$key]['value'] = $_POST['RecordValue_'.$key];
-          }
-        }
-      }
-      /* Get all basic DNS attributes (TTL, Clas ..)*/
-      foreach($this->DNSattributes as $attr){
+      /* Ge all non dns attributes (IP/MAC)*/
+      foreach($this->attributes as $attr){
         if(isset($_POST[$attr]) && $this->acl_is_writeable($attr)){
-          $this->dnsEntry[$attr] = $_POST[$attr];
+          $this->$attr = $_POST[$attr];
         }
       }
 
-      if($this->DNSenabled && $this->acl_is_removeable() && !isset($_POST['enableDNS'])){
+      /* Check if DNS should be enabled / disabled */
+      if($this->DNS_is_account && $this->acl_is_removeable() && !isset($_POST['DNS_is_account'])){
         $this->DNS_is_account = false;
-      }elseif(!$this->DNSenabled && $this->acl_is_createable() && isset($_POST['enableDNS'])){
+      }elseif(!$this->DNS_is_account && $this->acl_is_createable() && isset($_POST['DNS_is_account'])){
         $this->DNS_is_account = true;
+      }
+
+      /* Get dns attributes */
+      if(($this->DNSenabled) && (isset($_POST['network_tpl_posted']))){
+
+        /* Check for posted record changes */
+        if(is_array($this->dnsEntry['RECORDS']) && $this->acl_is_writeable("Records")){
+          foreach($this->dnsEntry['RECORDS'] as $key => $value){
+
+            /* Check if type has changed */
+            if(isset($_POST['RecordTypeSelectedFor_'.$key])){
+              $this->dnsEntry['RECORDS'][$key]['type'] = $_POST['RecordTypeSelectedFor_'.$key];
+            }
+            /* Check if value has changed */
+            if(isset($_POST['RecordValue_'.$key])){
+              $this->dnsEntry['RECORDS'][$key]['value'] = $_POST['RecordValue_'.$key];
+            }
+          }
+        }
+        /* Get all basic DNS attributes (TTL, Clas ..)*/
+        foreach($this->DNSattributes as $attr){
+          if(isset($_POST[$attr]) && $this->acl_is_writeable($attr)){
+            $this->dnsEntry[$attr] = $_POST[$attr];
+          }
+        }
+
+
       }
     }
   }
