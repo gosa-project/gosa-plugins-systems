@@ -414,7 +414,7 @@ class termDNS extends plugin
     /* If isn't DNS account but initially was DNS account 
        remove all DNS entries 
      */ 
-    if(!$this->DNSenabled){
+    if((!$this->DNSenabled) || ((!$this->DNS_is_account)&&(!$this->initially_was_account))){
       return;
     }else{
 
