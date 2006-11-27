@@ -117,11 +117,15 @@
 		{$FAIScriptlist}	
 {/render}
 
+{render acl=$FAIclassACL}
 		<select name="FAIclassesSel">
 			{html_options values=$FAIclassesKeys output=$FAIclasses}
 			<option disabled>&nbsp;</option>
 		</select>	
+{/render}
+{render acl=$FAIclassACL}
 		<input name="AddClass" value="{t}Add{/t}" type="submit"> 
+{/render}
 <!--		<input name="DelClass" value="{t}Delete{/t}" type="submit"> -->
 	{/if}
   		</td>
