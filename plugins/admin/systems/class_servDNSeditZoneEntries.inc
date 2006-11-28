@@ -76,7 +76,7 @@ class servDNSeditZoneEntries extends plugin
         $once = false;
         $entry = getDNSHostEntries($this->config,"",true);     
         $entry['exists']    = true;
-        $entry['zoneName']  = $this->zoneName; 
+        $entry['zoneName']  = strtoupper($this->attrs['cn'][0])."/".$this->zoneName; 
         $entry['RECORDS'][] = array("type" => "aRecord" , "value"=>"");
         $this->Devices[_("New entry")] = $entry;
       }
