@@ -420,6 +420,7 @@ class termDNS extends plugin
 
       /* Add ipHostNumber to aRecords
        */
+      $backup_dnsEntry = $this->dnsEntry;
       $this->dnsEntry['RECORDS'][] = array("type"=>"aRecord","value"=>$this->ipHostNumber);
 
       /* Create diff and follow instructions 
@@ -464,6 +465,8 @@ class termDNS extends plugin
       if($ldap->get_error() != "Success"){
         show_ldap_error($ldap->get_error(), sprintf(_("Saving of terminal/dns account with dn '%s' failed."),$this->dn));
       }
+
+      $this->dnsEntry =  $backup_dnsEntry;
     }
   }
 
