@@ -216,7 +216,7 @@ class termgeneric extends plugin
     foreach($_POST as $name => $value){
       if(preg_match("/^chooseBase/",$name) && $once && $this->acl_is_moveable()){
         $once = false;
-        $this->dialog = new baseSelectDialog($this->config,$this);
+        $this->dialog = new baseSelectDialog($this->config,$this,$this->get_allowed_bases());
         $this->dialog->setCurrentBase($this->base);
       }
     }
@@ -266,7 +266,7 @@ class termgeneric extends plugin
     $smarty->assign("cn", $this->cn);
     $smarty->assign("staticAddress", "");
 
-    $smarty->assign("bases", $this->config->idepartments);
+    $smarty->assign("bases", $this->get_allowed_bases());
 
     /* tell smarty the inherit checkbox state */
     $smarty->assign("inheritTimeServer",$this->inheritTimeServer);
