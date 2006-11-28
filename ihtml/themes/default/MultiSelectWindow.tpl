@@ -96,8 +96,8 @@
 			{$regexes}
 			{$apply}
 			{$UserBox3}
-            {/if}
    			</div>
+            		{/if}
   		</td>
 		{/if}
 	</tr>

@@ -17,11 +17,9 @@
  </tr>
 </table>
 <p class='seperator'>&nbsp;</p>
-<p>
-<div style="width:100%; text-align:right;">
+<div style="width:100%; text-align:right;padding-top:10px;padding-bottom:3px;">
     <input type='submit' name='SaveRule' value='{t}Save{/t}'>
     &nbsp;
     <input type='submit' name='CancelRule' value='{t}Cancel{/t}'>
 </div>
-</p>
 

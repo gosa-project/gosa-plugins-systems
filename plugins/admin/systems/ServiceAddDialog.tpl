@@ -24,11 +24,9 @@
 <br>
 <br>
 <p class="seperator">
-<p>
-<div style="width:100%; text-align:right;">
+<div style="width:100%; text-align:right;padding-top:8px;padding-bottom:3px;">
     <input type='submit' name='SaveServiceAdd' value='{t}Continue{/t}' {if !$Services} disabled {/if}>
     &nbsp;
     <input type='submit' name='CancelServiceAdd' value='{t}Cancel{/t}'>
 </div>
-</p>
 

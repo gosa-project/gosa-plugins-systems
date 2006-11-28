@@ -112,11 +112,9 @@
 >
 
 <p class="seperator">&nbsp;</p>
-<p>
-<div style="width:100%; text-align:right;">
+<div style="width:100%; text-align:right;padding-top:10px;padding-bottom:3px;">
     <input type='submit' name='SaveService' value='{t}Save{/t}'>
     &nbsp;
     <input type='submit' name='CancelService' value='{t}Cancel{/t}'>
 </div>
-</p>
 <input type="hidden" name="goImapServerPosted" value="1">
