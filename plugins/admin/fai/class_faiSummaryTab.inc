@@ -376,11 +376,6 @@ class faiSummaryTab extends plugin{
     $dn 	            = $this->Releases [$this->Release];
     $resolvedClasses  = get_all_objects_for_given_base($dn,"(&(objectClass=FAIclass)(cn=".$class."))");
 
-    /* Check acls -> are we allowed to view the config summary ? */
-    if(!$this->acl_is_readable("readable")) {
-      return;
-    }
-
     /* Try to fetch all types of fai objects with the given cn  */
     foreach($resolvedClasses as $obj){
 
