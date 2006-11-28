@@ -84,9 +84,9 @@ for($i=0; $i<$count; $i++) {
 	$mungedDial->load($entry['sambamungeddial'][0]);
 	$modify['sambaMungedDial'][0]= $mungedDial->getMunged();
 	if(ldap_modify($connection,$entry['dn'],$modify)) {
-		print('done.');
+		print("done.\n");
 	} else {
-		print('failed.');
+		print("failed.\n");
 	}
 }
 
