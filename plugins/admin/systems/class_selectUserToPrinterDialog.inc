@@ -80,10 +80,43 @@ class selectUserToPrinterDialog extends plugin
       $this->regex=preg_replace("/\*\*/","*",$this->regex);
     }
 
+
+    /* Get all departments within this subtree */
+    $base = $this->config->current['BASE'];
+    $deps_res= get_list("(&(|(ou=*)(description=*))(objectClass=gosaDepartment))", array("users","groups"), $this->config->current['BASE'],
+                    array("ou", "description"), GL_SIZELIMIT | GL_SUBSEARCH);
+
+    /* Load possible departments */
+    $ui     = get_userinfo();
+  
+    /* Allowed user departments */
+    $udeps  = $ui->get_module_departments("users");
+
+    /* Allowed groups department */
+    $gdeps  = $ui->get_module_departments("groups");
+
+    /* Combine both arrays */
+    $tdeps  = array_unique(array_merge($udeps,$gdeps));
+
+    /* Create usable departments array */
+    $ids = $this->config->idepartments;
+    $deps = array();
+    foreach($deps_res as $dep){
+      if(isset($ids[$dep['dn']]) && in_array_ics($dep['dn'], $tdeps)){
+        $value = $ids[$dep['dn']];
+        $deps[$dep['dn']] = $value;
+      }
+    }
+    if(!isset($deps[$this->depselect])){
+      $this->depselect = key($deps);
+    }
+
+
+
     $tmp_printers= $this->getPrinter();
     natcasesort($tmp_printers);
     $smarty->assign("regexPrinter"        , $this->regex);
-    $smarty->assign("deplistPrinter"      , $this->config->idepartments);//deplist);
+    $smarty->assign("deplistPrinter"      , $deps);;//deplist);
     $smarty->assign("depselectPrinter"    , $this->depselect);
     $smarty->assign("gotoPrinters"        , $tmp_printers);
     $smarty->assign("gotoPrinterKeys"     , array_flip($tmp_printers));
@@ -93,7 +126,7 @@ class selectUserToPrinterDialog extends plugin
     $smarty->assign("tree_image"          , get_template_path('images/tree.png'));
     $smarty->assign("infoimage"           , get_template_path('images/info.png'));
     $smarty->assign("launchimage"         , get_template_path('images/small_filter.png'));
-    $smarty->assign("deplist"             , $this->config->idepartments);
+    $smarty->assign("deplist"             , $deps);
 
     $display.= $smarty->fetch(get_template_path('selectUserToPrinterDialog.tpl', TRUE,dirname(__FILE__)));
     return($display);

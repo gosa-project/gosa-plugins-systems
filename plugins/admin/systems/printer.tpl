@@ -142,7 +142,9 @@
 
 <!-- Place cursor -->
 <script language="JavaScript" type="text/javascript">
+
   <!-- // First input field on page
-  document.mainform.cn.focus();
+  if(document.mainform.cn)
+	  document.mainform.cn.focus();		
   -->
 </script>
