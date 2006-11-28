@@ -479,7 +479,7 @@ function getDNSHostEntriesDiff($config,$oldName,$newEntry,$newName)
     /* Check if zoneName has changed 
      */   
     if(count($newEntry['RECORDS'])){
-      if($oldEntry['zoneName'] != $zoneName){
+      if($oldEntry['zoneName'] != $newEntry['zoneName']){
         $oldzoneDn = getDNSZoneDN($config,$oldEntry['zoneName']);
         $dn = "relativeDomainName=".$oldName.",".$oldzoneDn;
         $dn2= "relativeDomainName=".$oldName.",".$zoneDn;
