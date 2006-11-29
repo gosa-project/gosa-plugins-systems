@@ -27,7 +27,7 @@ class servgeneric extends plugin
 
   var $netConfigDNS;
   var $modes = array();
-
+  var $ui   ;
   var $mapActions   = array("reboot"          => "",
                             "instant_update"  => "softupdate",
                             "update"          => "sceduledupdate",
@@ -40,6 +40,7 @@ class servgeneric extends plugin
   {
     plugin::plugin ($config, $dn, $parent);
 
+    $this->ui = get_userinfo();
     $this->modes["active"]= _("Activated");
     $this->modes["locked"]= _("Locked");
 
@@ -119,7 +120,7 @@ class servgeneric extends plugin
     /* Base select dialog */
     $once = true;
     foreach($_POST as $name => $value){
-      if(preg_match("/^chooseBase/",$name) && $once && $this->acl_is_moveable()){
+      if(preg_match("/^chooseBase/",$name) && $once ){
         $once = false;
         $this->dialog = new baseSelectDialog($this->config,$this,$this->get_allowed_bases());
         $this->dialog->setCurrentBase($this->base);
@@ -134,7 +135,12 @@ class servgeneric extends plugin
       if($this->dialog->isClosed()){
         $this->dialog = false;
       }elseif($this->dialog->isSelected()){
-        $this->base = $this->dialog->isSelected();
+  
+        /* Only accept allowed bases */
+        $tmp = $this->get_allowed_bases();
+        if($tmp[$this->dialog->isSelected()]){
+          $this->base = $this->dialog->isSelected();
+        }
         $this->dialog= false;
       }else{
         return($this->dialog->execute());
@@ -150,13 +156,8 @@ class servgeneric extends plugin
     }
 
     /* Assign base ACL */
-    $baseACL = $this->getacl("base");
-    if(!$this->acl_is_moveable()) {
-      $baseACL = preg_replace("/w/","",$baseACL);
-    }
-    $smarty->assign("baseACL",          $baseACL);
-
-    $smarty->assign("bases", $this->get_allowed_bases());
+    $smarty->assign("baseACL" , $this->getacl("base"));
+    $smarty->assign("bases"   , $this->get_allowed_bases());
 
     /* Assign attributes */
     foreach ($this->attributes as $attr){
@@ -221,14 +222,19 @@ class servgeneric extends plugin
   /* Save data to object */
   function save_object()
   {
+    /* Save current base, to be able to revert to last base, 
+        if new base is invalid or not allowed to be selected */
+    $base_tmp = $this->base;
     plugin::save_object();
     $this->netConfigDNS->save_object();
 
     /* Get base selection */
-    if($this->acl_is_moveable() && isset($_POST['base'])){
+    $tmp = $this->get_allowed_bases();
+    if($tmp[$_POST['base']]){
       $this->base = $_POST['base'];
+    }else{
+      $this->base = $base_tmp;
     }
-
   }
 
 
