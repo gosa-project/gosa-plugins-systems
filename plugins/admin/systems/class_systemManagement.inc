@@ -685,8 +685,15 @@ class systems extends plugin
         if($this->DivListSystem->SubSearch){
           if($oc['CLASS'] != ""){
             $filter = "(|(&".$userregex."(objectClass=".$oc['CLASS'].")(cn=".$this->DivListSystem->Regex.")))";
-            $res = array_merge($res,get_list($filter, array("terminal", "workstation", "server", "phone" ,"printer"), $base,
-                  array("cn", "description", "macAddress", "objectClass", "sambaDomainName", "FAIstate"), GL_NONE | GL_SUBSEARCH | GL_SIZELIMIT));
+            $new_res = get_list($filter, array("terminal", "workstation", "server", "phone" ,"printer"), $base,
+                  array("cn", "description", "macAddress", "objectClass", "sambaDomainName", "FAIstate"), GL_NONE | GL_SUBSEARCH | GL_SIZELIMIT);
+      
+            /* Remove all objects that are not in the expected sub department */
+            foreach($new_res as $key => $obj){
+              if(preg_match("/^[^,]+,".normalizePreg($oc['TREE'])."/",$obj['dn'])){
+                $res[$obj['dn']] = $obj;
+              }
+            }
           }
         }else{
           /* User filter? */

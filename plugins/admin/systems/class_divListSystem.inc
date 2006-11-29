@@ -220,8 +220,15 @@ class divListSystem extends MultiSelectWindow
     // Test Every Entry and generate divlist Array
     foreach($terminals as $key => $val){
 
+      /* Get system type, it is used to fetch the acls for the current object.
+          "winstation" acls are stored as 2winworkstation", so we have to map this here */
       $type     = $this->parent->get_system_type($val['objectClass']);
-      $acl_all  = $ui->has_complete_category_acls($val['dn'],$type) ;
+      if($type == "winstation") {
+        $acl_type = "winworkstation";
+      }else{
+        $acl_type = $type;
+      }
+      $acl_all  = $ui->has_complete_category_acls($val['dn'],$acl_type) ;
 
       $action= "<input class='center' type='image' src='images/edit.png' 
                     alt='"._("edit")."'     name='user_edit_%KEY%' title='"._("Edit system")."'>";
