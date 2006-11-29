@@ -309,29 +309,20 @@ class termDNS extends plugin
     /* Check if ip must be given
      */  
     if(($this->IPisMust)||($this->DNS_is_account)){
-  
-      /* Check if ip is empty 
-       */
-      if ($this->ipHostNumber == "" && $this->acl_is_writeable("ipHostNumber")){
+      if (empty($this->ipHostNumber)){
         $message[]= _("The required field 'IP-address' is not set.");
       }
-    }
 
-     
-    /* check if given ip is valid ip */
-    if ($this->ipHostNumber != "" && !is_ip($this->ipHostNumber)){
-      $message[]= _("Wrong IP format in field IP-address.");
+      if (!is_ip($this->ipHostNumber)){
+        $message[]= _("Wrong IP format in field IP-address.");
+      }
     }
 
     /* Check if mac is empty 
      */
-    if ($this->macAddress == "" && $this->acl_is_writeable("macAddress")){
+    if ($this->macAddress == "" ){
       $message[]= _("The required field 'MAC-address' is not set.");
     }
-
-    /* Check if given mac is valid mac 
-     */
-    $tr = count(split(":",$this->macAddress));
     if(!is_mac($this->macAddress)){
       $message[]=(_("The given macaddress is invalid. There must be 6 2byte segments seperated by ':'."));
     }
@@ -342,7 +333,7 @@ class termDNS extends plugin
       $checkArray = array();
       $onlyOnce   = array();
 
-    //  $onlyOnce['cNAMERecord'] = 0;
+      //  $onlyOnce['cNAMERecord'] = 0;
 
       /* Walk through all entries and detect duplicates or mismatches
        */  
