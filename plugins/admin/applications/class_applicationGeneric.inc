@@ -120,11 +120,7 @@ class application extends plugin
       $smarty->assign($name."ACL",$this->getacl($name));
     }
  
-    $baseACL = $this->getacl("base");
-    if(!$this->acl_is_moveable()) {
-      $baseACL = preg_replace("/w/","",$baseACL);
-    }
-    $smarty->assign("baseACL",          $baseACL);
+    $smarty->assign("baseACL", $this->getacl("base"));
 
     /* Do we represent a valid group? */
     if (!$this->is_account && $this->parent == NULL){
@@ -186,7 +182,11 @@ class application extends plugin
       if($this->dialog->isClosed()){
         $this->dialog = false;
       }elseif($this->dialog->isSelected()){
-        $this->base = $this->dialog->isSelected();
+  
+        $tmp = $this->get_allowed_bases();
+        if(isset($tmp[$this->dialog->isSelected()])){
+          $this->base = $this->dialog->isSelected();
+        }
         $this->dialog= false;
       }else{
         return($this->dialog->execute());
@@ -253,11 +253,14 @@ class application extends plugin
   /* Save data to object */
   function save_object()
   {
-    if($this->isReleaseApplikation){
-      $tmpBase = $this->base;
-    } 
- 
     if (isset($_POST['cn'])){
+
+      /* Create a base backup and reset the
+         base directly after calling plugin::save_object();
+         Base will be set seperatly a few lines below */
+      $base_tmp = $this->base;
+      plugin::save_object();
+      $this->base = $base_tmp;
 
       /* Save attributes */
       parent::save_object();
@@ -348,13 +351,14 @@ class application extends plugin
         $this->set_picture($_FILES['picture_file']['tmp_name']);
       }	
 
-      if(isset($_POST['base'])){
-        $this->base= $_POST['base'];
+      if(!$this->isReleaseApplikation){
+        $tmp = $this->get_allowed_bases();
+        if(isset($_POST['base'])){
+          if(isset($tmp[$_POST['base']])){
+            $this->base= $_POST['base'];
+          }
+        }
       }
-    }
-
-    if($this->isReleaseApplikation){
-      $this->base = $tmpBase;
     }
   }
 

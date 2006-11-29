@@ -98,12 +98,8 @@ class department extends plugin
 		$smarty= get_smarty();
 
     /* Assign base ACL */
-    $baseACL = $this->getacl("base");
-    if(!$this->acl_is_moveable()) {
-      $baseACL = preg_replace("/w/","",$baseACL);
-    }
-    $smarty->assign("baseACL",          $baseACL);
-
+    $smarty->assign("baseACL", $this->getacl("base"));
+    
     $tmp = $this->plInfo();
     foreach($tmp['plProvidedAcls'] as $name => $translation){
       $smarty->assign($name."ACL",$this->getacl($name));
@@ -127,7 +123,13 @@ class department extends plugin
 			if($this->dialog->isClosed()){
 				$this->dialog = false;
 			}elseif($this->dialog->isSelected()){
-				$this->base = $this->dialog->isSelected();
+
+        /* A new base was selected, check if it is a valid one */
+        $tmp = $this->get_allowed_bases();
+        if(isset($tmp[$this->dialog->isSelected()])){
+          $this->base = $this->dialog->isSelected();
+        }
+  
 				$this->dialog= false;
 			}else{
 				return($this->dialog->execute());
@@ -204,11 +206,20 @@ class department extends plugin
 	function save_object()
 	{
 		if (isset($_POST['dep_generic_posted'])){
-			plugin::save_object();
 
-			/* Save base, since this is no LDAP attribute */
-      if($this->acl_is_moveable() && isset($_POST['base'])){
-				$this->base= $_POST['base'];
+      /* Create a base backup and reset the
+         base directly after calling plugin::save_object();
+         Base will be set seperatly a few lines below */
+      $base_tmp = $this->base;
+      plugin::save_object();
+      $this->base = $base_tmp;
+
+      /* Set new base if allowed */
+      $tmp = $this->get_allowed_bases();
+      if(isset($_POST['base'])){
+        if(isset($tmp[$_POST['base']])){
+          $this->base= $_POST['base'];
+        }
       }
 
       /* Save tagging flag */

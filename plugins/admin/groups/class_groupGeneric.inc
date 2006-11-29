@@ -228,7 +228,10 @@ class group extends plugin
       if($this->dialog->isClosed()){
         $this->dialog = false;
       }elseif($this->dialog->isSelected()){
-        if($this->acl_is_moveable()){
+
+        /* Check if selected base is valid */
+        $tmp = $this->get_allowed_bases();
+        if(isset($tmp[$_POST['base']])){
           $this->base = $this->dialog->isSelected();
         }
         $this->dialog= false;
@@ -258,11 +261,7 @@ class group extends plugin
     }
 
     /* Assign base ACL */
-    $baseACL = $this->getacl("base");
-    if(!$this->acl_is_moveable()) {
-      $baseACL = preg_replace("/w/","",$baseACL);
-    }
-    $smarty->assign("baseACL",          $baseACL);
+    $smarty->assign("baseACL", $this->getacl("base"));
 
     /* Manage object add dialog */
     if ($this->group_dialog){
@@ -307,11 +306,6 @@ class group extends plugin
       $smarty->assign("apply", apply_filter());
       $display= $smarty->fetch (get_template_path('group_objects.tpl', TRUE, dirname(__FILE__)));
       return ($display);
-    }
-
-    /* Bases / Departments */
-    if (isset($_POST['base'])){
-      $this->base= $_POST['base'];
     }
 
     $smarty->assign("bases", $this->get_allowed_bases());
@@ -531,10 +525,14 @@ class group extends plugin
     /* Save additional values for possible next step */
     if (isset($_POST['groupedit'])){
 
+      /* Create a base backup and reset the 
+          base directly after calling plugin::save_object();  
+         Base will be set seperatly a few lines below */
+      $base_tmp = $this->base;
       plugin::save_object();
+      $this->base = $base_tmp;
 
       $this->force_gid= 0;
-
 
       /* Only reset sambagroup flag if we are able to write this flag */
       if($this->acl_is_writeable("sambaGroupType")){
@@ -542,8 +540,11 @@ class group extends plugin
       }
 
       /* Get base selection */
-      if($this->acl_is_moveable() && isset($_POST['base'])){
-        $this->base = $_POST['base'];
+      if(isset($_POST['base'])){
+        $tmp = $this->get_allowed_bases();
+        if(isset($tmp[$_POST['base']])){
+          $this->base = $_POST['base'];
+        }
       }
 
       foreach (array(

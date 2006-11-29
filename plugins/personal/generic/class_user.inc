@@ -292,7 +292,12 @@ class user extends plugin
       if($this->dialog->isClosed()){
         $this->dialog = false;
       }elseif($this->dialog->isSelected()){
-        $this->base = $this->dialog->isSelected();
+
+        /* check if selected base is allowed to move to / create a new object */
+        $tmp = $this->get_allowed_bases();
+        if(isset($tmp[$this->dialog->isSelected()])){
+          $this->base = $this->dialog->isSelected();
+        }
         $this->dialog= false;
       }else{
         return($this->dialog->execute());
@@ -519,13 +524,7 @@ class user extends plugin
     $smarty->assign("userPicture_is_readable",   $this->acl_is_readable("userPicture",(!is_object($this->parent) && !isset($_SESSION['edit']))));
 
     /* Create base acls */
-    $baseACL = $this->getacl("base",(!is_object($this->parent) && !isset($_SESSION['edit'])));
-    if($this->dn == "new" && !$this->acl_is_createable()) {
-      $baseACL = preg_replace("/w/","",$baseACL);
-    }elseif($this->dn != "new" && !$this->acl_is_moveable()) {
-      $baseACL = preg_replace("/w/","",$baseACL);
-    }
-    $smarty->assign("baseACL",          $baseACL);
+    $smarty->assign("baseACL",$this->getacl("base",(!is_object($this->parent) && !isset($_SESSION['edit']))));
     @$smarty->assign("bases", $this->allowedBasesToMoveTo());
 
     /* Save government mode attributes */
@@ -641,6 +640,9 @@ class user extends plugin
   {
     if (isset($_POST['generic'])){
 
+      /* Make a backup of the current selected base */
+      $base_tmp = $this->base;
+
       /* Parents save function */
       plugin::save_object ();
 
@@ -666,19 +668,15 @@ class user extends plugin
       /* Save base and pw_storage, since these are no LDAP attributes */
       if (isset($_POST['base'])){
 
-        $this->set_acl_base('dummy,'.$_POST['base']);
-        if($this->acl_is_moveable("base")){
-
-          foreach(array("base") as $val){
-            if(isset($_POST[$val])){
-              $data= validate($_POST[$val]);
-              if ($data != $this->$val){
-                $this->is_modified= TRUE;
-              }
-              $this->$val= $data;
-            }
+        $tmp = $this->get_allowed_bases();
+        if(isset($tmp[$_POST['base']])){
+          $base= validate($_POST['base']);
+          if ($base != $this->base){
+            $this->is_modified= TRUE;
           }
+          $this->base= $base;
         }else{
+          $this->base = $base_tmp;
           print_red(sprintf(_("You are not allowed to move this object to '%s'."),LDAP::fix($_POST['base'])));
           $this->set_acl_base('dummy,'.$this->base);
         }

@@ -106,7 +106,13 @@ class wingeneric extends plugin
       if($this->dialog->isClosed()){
         $this->dialog = false;
       }elseif($this->dialog->isSelected()){
-        $this->base = $this->dialog->isSelected();
+
+        /* A new base was selected, check if it is a valid one */
+        $tmp = $this->get_allowed_bases();
+        if(isset($tmp[$this->dialog->isSelected()])){
+          $this->base = $this->dialog->isSelected();
+        }
+
         $this->dialog= false;
       }else{
         return($this->dialog->execute());
@@ -153,11 +159,21 @@ class wingeneric extends plugin
   /* Save data to object */
   function save_object()
   {
+    /* Create a base backup and reset the
+       base directly after calling plugin::save_object();
+       Base will be set seperatly a few lines below */
+    $base_tmp = $this->base;
     plugin::save_object();
+    $this->base = $base_tmp;
+
     $this->netConfigDNS->save_object();
-    /* Save base, since this is no LDAP attribute */
-    if (isset($_POST['base']) && $this->acl_is_moveable()){
-      $this->base= $_POST['base'];
+
+    /* Set new base if allowed */
+    $tmp = $this->get_allowed_bases();
+    if(isset($_POST['base'])){
+      if(isset($tmp[$_POST['base']])){
+        $this->base= $_POST['base'];
+      }
     }
   }
 

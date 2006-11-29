@@ -221,6 +221,13 @@ class workgeneric extends plugin
         $this->dialog = false;
       }elseif($this->dialog->isSelected()){
         $this->base = $this->dialog->isSelected();
+
+        /* A new base was selected, check if it is a valid one */
+        $tmp = $this->get_allowed_bases();
+        if(isset($tmp[$this->dialog->isSelected()])){
+          $this->base = $this->dialog->isSelected();
+        }
+
         $this->dialog= false;
       }else{
         return($this->dialog->execute());
@@ -243,11 +250,7 @@ class workgeneric extends plugin
     $smarty= get_smarty();
 
     /* Create base acls */
-    $baseACL = $this->getacl("base");
-    if(!$this->acl_is_moveable()) {
-      $baseACL = preg_replace("/w/","",$baseACL);
-    }
-    $smarty->assign("baseACL",          $baseACL);
+    $smarty->assign("baseACL",   $this->getacl("base"));
 
     /* Set acls */
     $tmp = $this->plInfo();
@@ -341,21 +344,22 @@ class workgeneric extends plugin
   /* Save data to object */
   function save_object()
   {
+
+    /* Create a base backup and reset the
+       base directly after calling plugin::save_object();
+       Base will be set seperatly a few lines below */
+    $base_tmp = $this->base;
     plugin::save_object();
+    $this->base = $base_tmp;
 
     /* Save base, since this is no LDAP attribute */
-    if((isset($_POST['base'])) && ($this->acl_is_moveable())){
-      $this->set_acl_base('dummy,'.$_POST['base']);
-      if($this->acl_is_moveable()){
-
-        if(isset($this->config->idepartments[$_POST['base']])){
-          $this->base = $_POST['base'];
-          if ($_POST['base'] != $this->base){
-            $this->is_modified= TRUE;
-          }
-        }
+    $tmp = $this->get_allowed_bases();
+    if(isset($_POST['base'])){
+      if(isset($tmp[$_POST['base']])){
+        $this->base= $_POST['base'];
       }
     }
+
     $this->netConfigDNS->save_object();
 
     /* Set inherit mode */
