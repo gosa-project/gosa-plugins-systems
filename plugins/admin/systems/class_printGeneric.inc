@@ -66,11 +66,11 @@ class printgeneric extends plugin
     }
 
     /* Update dn, to ensure storing as printer instead of WS / terminal */
-    if($this->BelongsTo == "Terminal" || $this->BelongsTo == "TerminalTemplate"){
+    if(preg_match("/Terminal/i",$this->BelongsTo) || preg_match("/TerminalTemplate/i",$this->BelongsTo)){
       $this->dn= preg_replace("/ou=terminals,/","ou=printers,",$this->dn);
     }
 
-    if($this->BelongsTo == "Workstation"){
+    if(preg_match("/Workstation/i",$this->BelongsTo) || preg_match("/WorkstationTemplate/i",$this->BelongsTo)){
       $this->dn= preg_replace("/ou=workstations,/","ou=printers,",$this->dn);
     }
 
@@ -214,17 +214,17 @@ class printgeneric extends plugin
 
       /* If is printer it must be a true account.
        */
-      if($this->BelongsTo == "Printer"){
+      if(preg_match("/printer/i",$this->BelongsTo)){
         $this->is_account = true;
       }
 
       /* Update dn, to ensure storing as printer instead of WS / terminal
        */
-      if($this->BelongsTo == "Terminal"){
+      if(preg_match("/terminal/i",$this->BelongsTo)){
         $this->dn= preg_replace("/ou=terminals,/","ou=printers,",$this->dn);
       }
 
-      if($this->BelongsTo == "Workstation"){
+      if(preg_match("/workstation/i",$this->BelongsTo)){
         $this->dn= preg_replace("/ou=workstations,/","ou=printers,",$this->dn);
       }
 
@@ -253,7 +253,7 @@ class printgeneric extends plugin
     /* If type of printer couldn't be detected (because of missing parent object in construction) 
      * hide this tab.
      */
-    if($this->BelongsTo == "unknown"){
+    if(preg_match("/unknown/i",$this->BelongsTo)){
       $display= $this->show_enable_header(_("Add printer extension"),
           _("Could not intialize printer tab, parameter parent was missing while construction."),TRUE,TRUE);
       return($display);
@@ -261,22 +261,22 @@ class printgeneric extends plugin
 
     /* Templates can't have printer extensions 
      */
-    if($this->BelongsTo == "WorkstationTemplate"){
+    if(preg_match("/WorkstationTemplate/i",$this->BelongsTo)){
       $display= $this->show_enable_header(_("Add printer extension"),
           _("This is a workstation template, printer tab is disabled."),TRUE,TRUE);
       return($display);
     }
-    if($this->BelongsTo == "TerminalTemplate"){
+    if(preg_match("/TerminalTemplate/i",$this->BelongsTo)){
       $display= $this->show_enable_header(_("Add printer extension"),
           _("This is a terminal template, printer tab is disabled."),TRUE,TRUE);
       return($display);
     }
 
     /* Get cn from base object */
-    if($this->BelongsTo == "Workstation"){
+    if(preg_match("/^Workstation$/i",$this->BelongsTo)){
       $this->cn = $this->parent->by_object['workgeneric']->cn;
     }
-    if($this->BelongsTo == "Terminal"){
+    if(preg_match("/^Terminal$/i",$this->BelongsTo)){
       $this->cn = $this->parent->by_object['termgeneric']->cn;
     }
 
@@ -299,7 +299,7 @@ class printgeneric extends plugin
     $display="";
 
     /* Tell smarty if this is a standalone object or a terminal / WS depending printer */
-    if($this->BelongsTo == "Printer"){    
+    if(preg_match("/^Printer$/i",$this->BelongsTo)){    
       $smarty->assign("StandAlone",true);
     }else{
       $smarty->assign("StandAlone",false);
@@ -322,7 +322,7 @@ class printgeneric extends plugin
     }
 
     /* If this is a WS / Terminal depending printer, display account state button */
-    if($this->BelongsTo != "Printer"){
+    if(!preg_match("/^Printer$/i",$this->BelongsTo)){
       if((empty($this->cn)) && ($this->dn != "new")){
         $display= $this->show_enable_header(_("Add printer extension"),
             _("This object has printer extension disabled. You can't enable it while 'cn' is not present in entry. Possibly you are currently creating a new terminal template"),TRUE,TRUE);
@@ -331,18 +331,18 @@ class printgeneric extends plugin
       }
 
       if (($this->is_account)){
-        if($this->BelongsTo=="Workstation"){
+        if(preg_match("/^Workstation$/i",$this->BelongsTo)){
           $display= $this->show_disable_header(_("Remove printer extension"),
               _("This workstation has printer extension enabled.You can disable it by clicking below."));
-        }elseif($this->BelongsTo=="Terminal"){
+        }elseif(preg_match("/^Terminal$/i",$this->BelongsTo)){
           $display= $this->show_disable_header(_("Remove printer extension"),
               _("This terminal has printer extension enabled. You can disable it by clicking below."));
         }
       }else{
-        if($this->BelongsTo=="Workstation"){
+        if(preg_match("/^Workstation$/i",$this->BelongsTo)){
           $display= $this->show_disable_header(_("Add printer extension"),
               _("This workstation has printer extension disabled. You can enable it by clicking below."));
-        }elseif($this->BelongsTo=="Terminal"){
+        }elseif(preg_match("/^Terminal$/i",$this->BelongsTo)){
           $display= $this->show_enable_header(_("Add printer extension"),
               _("This terminal has printer extension disabled. You can enable it by clicking below."));
         }  
@@ -526,8 +526,8 @@ class printgeneric extends plugin
     asort($userlist);
     asort($adminlist);
 
-    if($this->BelongsTo != "Printer"){
-      if($this->BelongsTo == "Terminal"){
+    if(!preg_match("/Printer/i",$this->BelongsTo)){
+      if(preg_match("/Terminal/i",$this->BelongsTo)){
         $smarty->assign("desc"    ,sprintf(_("This printer belongs to terminal %s. You can't rename this printer."),"<b>".$this->cn."</b>"));
       }else{
         $smarty->assign("desc"    ,sprintf(_("This printer belongs to workstation %s. You can't rename this printer."),"<b>".$this->cn."</b>"));
@@ -543,7 +543,7 @@ class printgeneric extends plugin
     $smarty->assign("AdminMember"    ,$this->AdminMember);
     $smarty->assign("AdminMembers"   ,$adminlist);
     $smarty->assign("AdminMemberKeys",array_flip($adminlist));
-    if($this->BelongsTo == "Printer"){
+    if(preg_match("/Printer/i",$this->BelongsTo)){
       $smarty->assign("netconfig", $this->netConfigDNS->execute());
     } else {
       $smarty->assign("netconfig", "");
@@ -559,11 +559,11 @@ class printgeneric extends plugin
 
       /* Update dn, to ensure storing as printer instead of WS / terminal
        */
-      if($this->BelongsTo == "Terminal"){
+      if(preg_match("/terminal/i",$this->BelongsTo)){
         $this->dn= preg_replace("/ou=terminals,/","ou=printers,",$this->dn);
       }
 
-      if($this->BelongsTo == "Workstation"){
+      if(preg_match("/workstation/i",$this->BelongsTo)){
         $this->dn= preg_replace("/ou=workstations,/","ou=printers,",$this->dn);
       }
 
@@ -633,7 +633,7 @@ class printgeneric extends plugin
   {
     /* Call common method to give check the hook */
     $message= plugin::check();
-    if ($this->BelongsTo == 'printer'){
+    if (preg_match("/printer/i",$this->BelongsTo)){
       $message= array_merge($message, $this->netConfigDNS->check());
     }
 
@@ -651,7 +651,7 @@ class printgeneric extends plugin
     $dn= "cn=".$this->cn.",ou=printers,ou=systems,".$this->base;
 
     /* must: cn */
-    if(($this->BelongsTo == "Printer") && (empty($this->cn))){
+    if(preg_match("/printer/i",$this->BelongsTo) && (empty($this->cn))){
       $message[]= "The required field 'Printer name' is not set.";
     }
 
@@ -660,7 +660,7 @@ class printgeneric extends plugin
       $this->set_acl_base($this->base);
     }
 
-    if($this->BelongsTo == "Printer"){
+    if(preg_match("/printer/i",$this->BelongsTo)){
       if ($this->orig_dn == "new" && !$this->acl_is_createable()){
         $message[]= _("You have no permissions to create a group on this 'Base'.");
       }
@@ -672,7 +672,7 @@ class printgeneric extends plugin
     }
     
     /* Check if there is already an entry with this cn*/
-    if (($this->orig_dn != $dn)&&($this->BelongsTo == "Printer")){
+    if (($this->orig_dn != $dn)&&( preg_match("/printer/i",$this->BelongsTo))){
       $ldap= $this->config->get_ldap_link();
       $ldap->cd ($this->base);
       $ldap->ls("(cn=".$this->cn.")","ou=printers,ou=systems,".$this->base, array("cn"));
@@ -695,11 +695,11 @@ class printgeneric extends plugin
   {
     /* Update dn, to ensure storing as printer instead of WS / terminal
      */
-    if($this->BelongsTo == "Terminal"){
+    if(preg_match("/terminal/i",$this->BelongsTo)){
       $this->dn= preg_replace("/ou=terminals,/","ou=printers,",$this->dn);
     }
 
-    if($this->BelongsTo == "Workstation"){
+    if(preg_match("/workstation/i",$this->BelongsTo)){
       $this->dn= preg_replace("/ou=workstations,/","ou=printers,",$this->dn);
     }
     
@@ -715,7 +715,7 @@ class printgeneric extends plugin
     }
 
     /* If type is still unknown, the initialisation of this printer failed, abort. */
-    if($this->BelongsTo == "unknown"){
+    if(preg_match("/unknown/i",$this->BelongsTo)){
       return;
     }
 
@@ -818,7 +818,7 @@ class printgeneric extends plugin
     }
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of system print/generic with dn '%s' failed."),$this->dn));
 
-    if($this->BelongsTo == "Printer"){
+    if(preg_match("/printer/i",$this->BelongsTo)){
       $this->netConfigDNS->cn = $this->cn;
       $this->netConfigDNS->dn = $this->dn;
       $this->netConfigDNS->save($this->dn);
