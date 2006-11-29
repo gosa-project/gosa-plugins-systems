@@ -34,7 +34,7 @@ class phoneGeneric extends plugin
   var $netConfigDNS;
 
   /* attribute list for save action */
-  var $attributes= array("cn", "description", 
+  var $attributes= array("cn", "description", "base",
                           "goFonType","goFonDmtfMode","goFonHost","goFonDefaultIP",
                           "goFonQualify","goFonAuth","goFonSecret","goFonInkeys","goFonOutkey",
                           "goFonTrunk","goFonAccountCode","goFonMSN","selected_categorie","goFonPermit","goFonDeny" 
@@ -447,6 +447,7 @@ class phoneGeneric extends plugin
                                                     "objectClass"  => "goFonHardware")),
           "plProvidedAcls"=> array(
             "cn"                  => _("Name"),
+            "base"                => _("Base"),
             "description"         => _("Description"),
             "goFonType"           => _("SIP Mode"),
             "goFonDmtfMode"       => _("SIP DTMF mode"),

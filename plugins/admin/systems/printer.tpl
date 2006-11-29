@@ -27,7 +27,7 @@
      <td><LABEL for="base">{t}Base{/t}</LABEL>{$must}</td>
      <td>
 {render acl=$baseACL}
-      <select id="base" size="1" name="base" title="{t}Choose subtree to place user in{/t}" onchange="document.mainform.submit()">
+      <select id="base" size="1" name="base" title="{t}Choose subtree to place user in{/t}">
        {html_options options=$bases selected=$base_select}
       </select>
 {/render}

@@ -230,10 +230,12 @@ class servgeneric extends plugin
 
     /* Get base selection */
     $tmp = $this->get_allowed_bases();
-    if($tmp[$_POST['base']]){
-      $this->base = $_POST['base'];
-    }else{
-      $this->base = $base_tmp;
+    if(isset($_POST['base'])){
+      if($tmp[$_POST['base']]){
+        $this->base = $_POST['base'];
+      }else{
+        $this->base = $base_tmp;
+      }
     }
   }
 
