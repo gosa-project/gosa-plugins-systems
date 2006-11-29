@@ -52,18 +52,18 @@ print("This script will try to convert all ldap entries that have the sambaMunge
 			"before running.\n".
 			"Do you want to continue (y/n)?\n");
 
-$handle= fopen("/dev/stdin","r");
+$handle= fopen("php://stdin","r");
 $input=(fgets($handle,16));
 fclose($handle);
 if(substr(strtolower($input),0,1)!="y") {
 	exit(1);
 }
 /* Connect to server */
-ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, $ldap_protocol);
 $connection= ldap_connect($ldap_host,$ldap_port) 
-	or die ('Could not connect to server '.$ldap_host.'!');
+	or die ('Could not connect to server '.$ldap_host."\n!");
+ldap_set_option($connection, LDAP_OPT_PROTOCOL_VERSION, $ldap_protocol);
 ldap_bind($connection,$ldap_admin,$ldap_password)
-	or die ('Could not bind to server '.$ldap_host.'!');
+	or die ('Could not bind to server '.$ldap_host."!\n");
 
 $results= ldap_get_entries($connection, ldap_search($connection, $ldap_base, $filter, $attributes));
 
@@ -83,11 +83,11 @@ for($i=0; $i<$count; $i++) {
 	$mungedDial = new sambaMungedDial();
 	$mungedDial->load($entry['sambamungeddial'][0]);
 	$modify['sambaMungedDial'][0]= $mungedDial->getMunged();
-	if(ldap_modify($connection,$entry['dn'],$modify)) {
-		print("done.\n");
-	} else {
-		print("failed.\n");
-	}
+	#if(ldap_modify($connection,$entry['dn'],$modify)) {
+	#	print("done.\n");
+	#} else {
+	#	print("failed.\n");
+	#}
 }
 
 ldap_close($connection);
