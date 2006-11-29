@@ -156,7 +156,6 @@ class servgeneric extends plugin
     }
 
     /* Assign base ACL */
-    $smarty->assign("baseACL" , $this->getacl("base"));
     $smarty->assign("bases"   , $this->get_allowed_bases());
 
     /* Assign attributes */

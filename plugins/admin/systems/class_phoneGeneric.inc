@@ -34,7 +34,7 @@ class phoneGeneric extends plugin
   var $netConfigDNS;
 
   /* attribute list for save action */
-  var $attributes= array("cn", "description", "base",
+  var $attributes= array("cn", "description",
                           "goFonType","goFonDmtfMode","goFonHost","goFonDefaultIP",
                           "goFonQualify","goFonAuth","goFonSecret","goFonInkeys","goFonOutkey",
                           "goFonTrunk","goFonAccountCode","goFonMSN","selected_categorie","goFonPermit","goFonDeny" 

@@ -249,9 +249,6 @@ class workgeneric extends plugin
     /* Fill templating stuff */
     $smarty= get_smarty();
 
-    /* Create base acls */
-    $smarty->assign("baseACL",   $this->getacl("base"));
-
     /* Set acls */
     $tmp = $this->plInfo();
     foreach($tmp['plProvidedAcls'] as $name => $translation){
