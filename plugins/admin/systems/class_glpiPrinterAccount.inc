@@ -772,7 +772,7 @@ class glpiPrinterAccount extends plugin
           "plDescription" => _("Printer inventory extension"),
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
-          "plPriority"    => 0,
+          "plPriority"    => 10,
           "plSection"     => array("administration"),
           "plCategory"    => array("printer"),
 
