@@ -159,7 +159,7 @@ class divListSystem extends MultiSelectWindow
         name='newsystem_server' alt='"._("New Server")."' title='"._("New Server")."'>&nbsp;";
     }
 
-    if(preg_match("/c/",$ui->get_permissions($this->selectedBase,"printer/printgenric"))){
+    if(preg_match("/c/",$ui->get_permissions($this->selectedBase,"printer/printgeneric"))){
       $listhead .= "<input class='center' type='image' align='middle' src='images/select_new_printer.png'    
         name='newsystem_printer'     alt='"._("New Printer")."' title='"._("New Printer")."'>&nbsp;";
     }

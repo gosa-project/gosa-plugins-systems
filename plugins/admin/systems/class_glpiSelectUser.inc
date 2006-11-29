@@ -146,13 +146,27 @@ class glpiSelectUser extends plugin
      /* Prepare departments,
        which are shown in the listbox on top of the listbox
      */
-    $options= "";
+
+    
+    /* Get all departments within this subtree */
     $this->base = $_SESSION['glpi_user_filter']['base'];
-    foreach ($this->get_allowed_bases("users/user") as $key => $value){
-      if ($_SESSION['glpi_user_filter']['base'] == $key){
-        $options.= "<option selected='selected' value='$key'>$value</option>";
-      } else {
-        $options.= "<option value='$key'>$value</option>";
+    $options  ="";
+    $base = $this->config->current['BASE'];
+    $deps= get_list("(&(|(ou=*)(description=*))(objectClass=gosaDepartment))", "users", $base,
+                    array("ou", "description"), GL_SIZELIMIT | GL_SUBSEARCH);
+
+    /* Load possible departments */
+    $ui= get_userinfo();
+    $tdeps= $ui->get_module_departments("users");
+    $ids = $this->config->idepartments;
+    foreach($deps as $dep){
+      if(isset($ids[$dep['dn']]) && in_array_ics($dep['dn'], $tdeps)){
+        $value = $ids[$dep['dn']];
+        if ($this->base == $dep['dn']){
+          $options.= "<option selected='selected' value='".$dep['dn']."'>$value</option>";
+        } else {
+          $options.= "<option value='".$dep['dn']."'>$value</option>";
+        }
       }
     }
 
@@ -209,7 +223,7 @@ class glpiSelectUser extends plugin
      * So we are able to navigate like in konquerer
      */
 
-    $res3= get_list("(&(|(ou=*)(description=*))(objectClass=gosaDepartment))",preg_replace("/\//","",$this->acl_category),
+    $res3= get_list("(&(|(ou=*)(description=*))(objectClass=gosaDepartment))","users",
        $base, array("ou", "description"), GL_SIZELIMIT | GL_CONVERT);
 
     $this->departments= array();
@@ -230,7 +244,7 @@ class glpiSelectUser extends plugin
      */
     $ou = get_people_ou();
 
-    $res2= get_list("(&(|(cn=$regex)(sn=$regex))(objectClass=person))", preg_replace("/\//","",$this->acl_category),
+    $res2= get_list("(&(|(cn=$regex)(sn=$regex))(objectClass=person))", "users",
                     $ou.$base, array("cn", "sn", "uid", "givenName", "description"),
                     GL_SUBSEARCH | GL_SIZELIMIT);
 
