@@ -43,7 +43,7 @@ $ldap_password= "tester";
 
 /* Internal Settings */
 $ldap_protocol= "3";
-$filter= "(objectClass=sambaSamAccount)";
+$filter= "(&(objectClass=sambaSamAccount)(sambaMungedDial=*))";
 $attributes= array("dn","sambaMungedDial");
 
 print("This script will try to convert all ldap entries that have the sambaMungedDial-Attribute set, into the new \n".
@@ -83,11 +83,11 @@ for($i=0; $i<$count; $i++) {
 	$mungedDial = new sambaMungedDial();
 	$mungedDial->load($entry['sambamungeddial'][0]);
 	$modify['sambaMungedDial'][0]= $mungedDial->getMunged();
-	#if(ldap_modify($connection,$entry['dn'],$modify)) {
-	#	print("done.\n");
-	#} else {
-	#	print("failed.\n");
-	#}
+	if(ldap_modify($connection,$entry['dn'],$modify)) {
+		print("done.\n");
+	} else {
+		print("failed.\n");
+	}
 }
 
 ldap_close($connection);
