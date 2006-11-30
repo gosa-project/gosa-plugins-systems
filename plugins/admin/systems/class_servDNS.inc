@@ -212,14 +212,16 @@ class servdns extends goService
 
     /* There are still entries using this configuration
      *  Abort deletion
-     */ 
+     */
     if(count($used)){
       $i = 2;
       $str ="";
       foreach($used as $dn){
-        if($i > 0 ){
+        if($i > 0 && !preg_match("/,relativeDomainName=/",$dn)){
           $i --;
-          $str.=$dn." ";
+          $name = preg_replace("/^[^=]+=([^,]*),.*$/","\\1",$dn);
+          $zone = preg_replace("/^.*zoneName=([^,]*),.*$/","\\1",$dn);
+          $str.= $name.".".$zone." ";
         }
       }
 
