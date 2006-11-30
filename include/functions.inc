@@ -1155,41 +1155,15 @@ function to_string ($value)
 function get_printer_list($cups_server)
 {
   global $config;
-
-  $res= array();
-
-  /* Use CUPS, if we've access to it */
-  if (function_exists('cups_get_dest_list')){
-    $dest_list= cups_get_dest_list ($cups_server);
-
-    foreach ($dest_list as $prt){
-      $attr= cups_get_printer_attributes ($cups_server, $prt->name);
-
-      foreach ($attr as $prt_info){
-        if ($prt_info->name == "printer-info"){
-          $info= $prt_info->value;
-          break;
-        }
-      }
-      $res[$prt->name]= "$info [$prt->name]";
-    }
-
-    /* CUPS is not available, try lpstat as a replacement */
-  } else {
-    $ar = false;
-    exec("lpstat -p", $ar);
-    foreach($ar as $val){
-      @list($dummy, $printer, $rest)= split(' ', $val, 3);
-      if (preg_match('/^[^@]+$/', $printer)){
-        $res[$printer]= "$printer";
-      }
-    }
-  }
+  $res = array();
 
   /* Merge in printers from LDAP */
   $ldap= $config->get_ldap_link();
   $ldap->cd ($config->current['BASE']);
   $ldap->search('(objectClass=gotoPrinter)', array('cn'));
+  while($attrs = $ldap->fetch()){
+    $res[$attrs['cn'][0]] = $attrs['cn'][0];
+  }
 
   return $res;
 }
