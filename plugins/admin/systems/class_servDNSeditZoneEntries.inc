@@ -197,6 +197,9 @@ class servDNSeditZoneEntries extends plugin
     $names = array();
     foreach($this->Devices as $DevName => $device){
 
+      /* Don't need to check empty values ... */
+      if(!count($device['RECORDS'])) continue;
+
       /* Checking entry name
        */
       if((!is_uid($DevName)) | (empty($DevName))){
