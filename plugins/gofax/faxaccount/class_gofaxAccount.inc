@@ -89,6 +89,13 @@ class gofaxAccount extends plugin
       asort ($this->printerList);
     }
 
+    /* Check if the currently selected printer is still available. 
+       If not, append current printer to list of available.
+       It could be possible, that we are not allowed to view printers and so the list is empty ...  */
+    if(!empty($this->goFaxPrinter) && !isset($this->printerList[$this->goFaxPrinter])) {
+      $this->printerList[$this->goFaxPrinter] = "[".$this->goFaxPrinter."]";
+    }
+
     /* Get global filter config */
     if (!is_global("faxfilter")){
       $ui= get_userinfo();
@@ -639,7 +646,7 @@ class gofaxAccount extends plugin
     /* IF mail is specified (which is only the case if there's no mail account
        present), check if it's valid..  */
     if (@isset($this->parent->by_object['mailAccount']) &&
-        $this->goFaxDeliveryMode && 32){
+        $this->goFaxDeliveryMode & 32){
       if ($this->mail == ""){
         $message[]= _("Mail delivery is checked, but no address has been specified.");
       } elseif (!is_email($this->mail)){
