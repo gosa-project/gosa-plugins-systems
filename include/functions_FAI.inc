@@ -575,7 +575,6 @@ function get_previous_releases_of_this_release($dn,$flat)
   $ret = array();
 
   /* Explode dns into pieces, to be able to build parent dns */
-#  $dns_to_check = gosa_ldap_explode_dn(str_ireplace(",".$config->current['BASE'],"",$dn),0);
   $dns_to_check = gosa_ldap_explode_dn(preg_replace("/".normalizePreg(",".$config->current['BASE'])."/i","",$dn));
 
   if(!is_array($dns_to_check)){
@@ -681,7 +680,6 @@ function get_release_dn($Current_DN)
   $ldap->cd($config->current['BASE']);
 
   /* Split dn into pices */ 
-#  $dns_to_check = gosa_ldap_explode_dn(str_ireplace(",".$config->current['BASE'],"",$Current_DN),0);
   $dns_to_check = gosa_ldap_explode_dn(preg_replace("/".normalizePreg(",".$config->current['BASE'])."/i","",$Current_DN));
 
   if(!is_array($dns_to_check)){

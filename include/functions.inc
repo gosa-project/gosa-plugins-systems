@@ -2081,8 +2081,6 @@ function gosa_ldap_explode_dn($dn,$config = NULL,$verify_in_ldap=false)
     $ldap = $config->get_ldap_link();
   }
 
-  $Diff = ldap_explode_dn($dn,0);
-
   /* Lets start */
   $called = false;
   while(preg_match("/,/",$dn) && $next &&  $cnt < $max){
@@ -2124,10 +2122,6 @@ function gosa_ldap_explode_dn($dn,$config = NULL,$verify_in_ldap=false)
   }
   $ret['count'] = count($ret) - 1;
 
-  $diff = array_diff($ret,$Diff);
-  if($diff){
-    print_a(array("Diff" => $diff,"OLD" => $Diff,"NEW"=> $ret,"DEBUG"=> debug_backtrace()));
-  }
   return($ret);
 }
 
