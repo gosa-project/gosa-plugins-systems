@@ -202,10 +202,10 @@ class divListSystem extends MultiSelectWindow
     $img9  = "<img class='center' src='images/fax_small.png'          alt='F' title='"._("Fax Server") ."'>";
     $img10 = "<img class='center' src='images/save.png'               alt='L' title='"._("Ldap Server") ."'>";
 
-    $empty    ="&nbsp;";
+    $empty    ="<img src='images/empty.png' style='width:16px ; height: 16px;' class='center'>";
 
     /* Dynamic action col, depending on snapshot icons */
-    $action_col_size = 50;
+    $action_col_size = 70;
     if($this->parent->snapshotEnabled()){
       $action_col_size += 38;
     }
@@ -214,8 +214,16 @@ class divListSystem extends MultiSelectWindow
     $editlink = "<a href='?plug=".$_GET['plug']."&amp;id=%s&amp;act=edit_entry'>%s</a>";
 
     /* ACL mapping */
-    $acl_type = array("server"  => "ser");
     $ui = get_userinfo();
+    $tabs = array(
+          "terminal"    => array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "terminal/termgeneric"),
+          "workstation" => array("CLASS"=>"WORKTABS",     "TABCLASS" =>"worktabs",      "ACL"=> "workstation/workgeneric"),
+          "server"      => array("CLASS"=>"SERVTABS",     "TABCLASS" =>"servtabs",      "ACL"=> "server/servgeneric"),
+          "printer"     => array("CLASS"=>"PRINTTABS",    "TABCLASS" =>"printtabs",     "ACL"=> "printer/printgenric"),
+          "phone"       => array("CLASS"=>"PHONETABS",    "TABCLASS" =>"phonetabs",     "ACL"=> "phone/phoneGeneric"),
+          "winstation"  => array("CLASS"=>"WINTABS",      "TABCLASS" =>"wintabs",       "ACL"=> "winworkstation/wingeneric"),
+          "component"   => array("CLASS"=>"COMPONENTTABS","TABCLASS" =>"componenttabs", "ACL"=> "component/componentGeneric"));
+
 
     // Test Every Entry and generate divlist Array
     foreach($terminals as $key => $val){
@@ -228,15 +236,27 @@ class divListSystem extends MultiSelectWindow
       }else{
         $acl_type = $type;
       }
+
+      /* Get complete category acls */
       $acl_all  = $ui->has_complete_category_acls($val['dn'],$acl_type) ;
+  
+      /* Get specific generic acls */
+      $acl      = $ui->get_permissions($val['dn'],$tabs[$type]['ACL']);
 
       $action= "<input class='center' type='image' src='images/edit.png' 
                     alt='"._("edit")."'     name='user_edit_%KEY%' title='"._("Edit system")."'>";
       if(preg_match("/(c.*w|w.*c)/",$acl_all)){
         $action.= $this->GetSnapShotActions($val['dn']);
+      }else{
+        $action.= $empty."&nbsp;".$empty."&nbsp;";
       }
-      $action.= "<input class='center' type='image' src='images/edittrash.png' 
-                    alt='"._("delete")."'   name='user_del_%KEY%' title='"._("Delete system")."'>";
+
+      if(preg_match("/d/",$acl)){
+        $action.= "<input class='center' type='image' src='images/edittrash.png' 
+          alt='"._("delete")."'   name='user_del_%KEY%' title='"._("Delete system")."'>";
+      }else{
+        $action.= $empty;    
+      }
 
       /* Generate picture list, which is currently disabled */
       if(in_array("goCupsServer"    ,$val['objectClass'])) $cups    = $img1;   else $cups  =$empty;
@@ -278,13 +298,15 @@ class divListSystem extends MultiSelectWindow
       if(preg_match("/w/",$pwd_acl)){
         $action2 = "<input class='center' type='image' src='images/certs.png' alt='"._("Password")."'   name='user_setpwd_%KEY%' title='"._("Set root       password")."'>";
       }else{
-        $action2 = "";
+        $action2 = $empty;
       }
 
 
       if(in_array("gotoWorkstation",$val['objectClass'])){
         $action2= "<input class='center' type='image' src='images/cdrom.png' alt='"._("Create CD")."'   
-                      name='gen_cd_%KEY%' title='"._("Create FAI CD")."'>".$action2;
+                      name='gen_cd_%KEY%' title='"._("Create FAI CD")."'>&nbsp;".$action2;
+      }else{
+        $action2= $empty.$action2;
       }
 
       if(isset($val['message'])){
