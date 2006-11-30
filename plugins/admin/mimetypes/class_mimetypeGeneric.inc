@@ -162,7 +162,6 @@ class mimetype extends plugin
       if(preg_match("/^chooseBase/",$name) && $once){
         $once = false;
         $this->dialog = new baseSelectDialog($this->config,$this,$this->get_allowed_bases());
-        echo $this->base;
         $this->dialog->setCurrentBase($this->base);
       }
     }
