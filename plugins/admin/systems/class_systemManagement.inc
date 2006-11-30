@@ -359,7 +359,7 @@ class systems extends plugin
           "terminal"    => array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "terminal/termgeneric"),
           "workstation" => array("CLASS"=>"WORKTABS",     "TABCLASS" =>"worktabs",      "ACL"=> "workstation/workgeneric"),
           "server"      => array("CLASS"=>"SERVTABS",     "TABCLASS" =>"servtabs",      "ACL"=> "server/servgeneric"),
-          "printer"     => array("CLASS"=>"PRINTTABS",    "TABCLASS" =>"printtabs",     "ACL"=> "printer/printgenric"),
+          "printer"     => array("CLASS"=>"PRINTTABS",    "TABCLASS" =>"printtabs",     "ACL"=> "printer/printgeneric"),
           "phone"       => array("CLASS"=>"PHONETABS",    "TABCLASS" =>"phonetabs",     "ACL"=> "phone/phoneGeneric"),
           "winstation"  => array("CLASS"=>"WINTABS",      "TABCLASS" =>"wintabs",       "ACL"=> "winworkstation/wingeneric"),
           "component"   => array("CLASS"=>"COMPONENTTABS","TABCLASS" =>"componenttabs", "ACL"=> "component/componentGeneric"));
@@ -416,7 +416,7 @@ class systems extends plugin
           "terminal"    => array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "terminal/termgeneric"),
           "workstation" => array("CLASS"=>"WORKTABS",     "TABCLASS" =>"worktabs",      "ACL"=> "workstation/workgeneric"),
           "server"      => array("CLASS"=>"SERVTABS",     "TABCLASS" =>"servtabs",      "ACL"=> "server/servgeneric"),
-          "printer"     => array("CLASS"=>"PRINTTABS",    "TABCLASS" =>"printtabs",     "ACL"=> "printer/printgenric"),
+          "printer"     => array("CLASS"=>"PRINTTABS",    "TABCLASS" =>"printtabs",     "ACL"=> "printer/printgeneric"),
           "phone"       => array("CLASS"=>"PHONETABS",    "TABCLASS" =>"phonetabs",     "ACL"=> "phone/phoneGeneric"),
           "winstation"  => array("CLASS"=>"WINTABS",      "TABCLASS" =>"wintabs",       "ACL"=> "winworkstation/wingeneric"),
           "component"   => array("CLASS"=>"COMPONENTTABS","TABCLASS" =>"componenttabs", "ACL"=> "component/componentGeneric"));
