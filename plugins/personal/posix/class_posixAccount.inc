@@ -52,7 +52,6 @@ class posixAccount extends plugin
   var $use_shadowExpire= "0";
   var $mustchangepassword= "0";
   var $force_ids= 0;
-  var $printerList= array();
   var $group_dialog= FALSE;
   var $show_ws_dialog= FALSE;
   var $secondaryGroups= array();
@@ -195,12 +194,6 @@ class posixAccount extends plugin
     /* Insert possibly missing loginShell */
     if ($this->loginShell != "" && !in_array($this->loginShell, $this->loginShellList)){
       $this->loginShellList[]= $this->loginShell;
-    }
-
-    /* Generate printer list */
-    if (isset($this->config->data['SERVERS']['CUPS'])){
-      $this->printerList= get_printer_list ($this->config->data['SERVERS']['CUPS']);
-      asort($this->printerList);
     }
 
     /* Generate group list */
@@ -514,7 +507,6 @@ class posixAccount extends plugin
     } else {
       $smarty->assign("groups", "");
     }
-    $smarty->assign("printerList", $this->printerList);
     $smarty->assign("languages", $this->config->data['MAIN']['LANGUAGES']);
 
     /* Avoid "Undefined index: forceMode" */
