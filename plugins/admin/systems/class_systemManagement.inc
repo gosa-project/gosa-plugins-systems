@@ -604,8 +604,25 @@ class systems extends plugin
   function get_used_snapshot_bases()
   {
     $tmp = array();
-    foreach(array("phones","servers","printers","terminals","netdevices","workstations") as $ent){
-      $tmp[] = "ou=".$ent.",ou=systems,".$this->DivListSystem->selectedBase;
+
+    /* Check acls, if we are not allowed to create and write each plugin tab, skip this object */
+
+    $tabs = array(
+        "terminal"        => "ou=terminals,ou=systems,",
+        "workstation"     => "ou=workstations,ou=systems,",
+        "server"          => "ou=servers,ou=systems,",
+        "printer"         => "ou=printers,ou=systems,",
+        "phone"           => "ou=phones,ou=systems,",
+        "winworkstation"  => get_winstations_ou(),
+        "component"       => "ou=netdevices,ou=systems,"
+        ); 
+
+    foreach($tabs as $acl_cat => $dn){
+
+      $acl_all = $this->ui->has_complete_category_acls($dn.$this->DivListSystem->selectedBase,$acl_cat);
+      if(preg_match("/(c.*w|w.*c)/",$acl_all)){
+        $tmp[] = $dn.$this->DivListSystem->selectedBase;
+      }
     }
     return($tmp); 
   }
