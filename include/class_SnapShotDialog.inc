@@ -17,6 +17,7 @@ class SnapShotDialog extends plugin
 	var $acl;
   var $dns = array();
   var $snap_shot_bases = array();
+  var $last_list = array();
 
 	
 	function SnapShotDialog($config,$dn,$parent)
@@ -48,15 +49,20 @@ class SnapShotDialog extends plugin
 				$entry = preg_replace("/^RemoveSnapShot_/","",$name);
 				$entry = base64_decode(preg_replace("/_[xy]$/","",$entry));
 
-        $this->del_dn 	= $entry;
-        $smarty= get_smarty();
-        $smarty->assign("intro", sprintf(_("You're about to delete the snapshot '%s'."), @LDAP::fix($this->del_dn)));
-        return($smarty->fetch (get_template_path('remove.tpl')));
+        $found = false;
+        foreach($this->last_list as $t_stamp => $obj){
+          if($obj['dn'] == $entry){
+            $found = true;
+            break;
+          }
+        }
 
-        /* Obviously the user isn't allowed to delete. Show message and
-           clean session. 
-           print_red (_("You are not allowed to delete this snapshot!"));
-         */
+        if($found){
+          $this->del_dn 	= $entry;
+          $smarty= get_smarty();
+          $smarty->assign("intro", sprintf(_("You're about to delete the snapshot '%s'."), @LDAP::fix($this->del_dn)));
+          return($smarty->fetch (get_template_path('remove.tpl')));
+        }
       }
     }
 
@@ -100,6 +106,7 @@ class SnapShotDialog extends plugin
 			krsort($list_of_elements);
 	
 			/* Add Elements to divlist */	
+      $this->last_list = $list_of_elements;
 			foreach($list_of_elements as $entry){
 
 				$actions= "<input type='image' src='images/restore.png' name='RestoreSnapShot_%KEY' 
