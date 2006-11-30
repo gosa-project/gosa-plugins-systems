@@ -37,14 +37,12 @@ function get_all_objects_for_given_base($Current_DN,$filter,$detailed = false)
     foreach($deps_to_search as $fai_base){
 
       /* Ldap search for fai classes specified in this release */
-      $ldap->cd($fai_base);
-      $ldap->search($filter,array("dn","objectClass","FAIstate"));
-
+      $res_tmp = get_list($filter,"fai",$fai_base,array("dn","objectClass","FAIstate"),GL_SUBSEARCH | GL_SIZELIMIT);
+  
       /* check the returned objects, and add/replace them in our return variable */
-      while($attr = $ldap->fetch()){
+      foreach($res_tmp as $attr){
         
         $buffer = array();
-#        $name = str_ireplace($release,"",$attr['dn']);
         $name = preg_replace("/".normalizePreg($release)."/i","",$attr['dn']);
 
         if(isset($attr['FAIstate'][0])){
