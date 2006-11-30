@@ -232,9 +232,9 @@ class servDNSeditZoneEntries extends plugin
 
       /* Names should be written in lowercase
        */
-      if(strtolower($DevName) != $DevName){
-        $message[] = sprintf(_("The host name '%s' should be written in lowercase."), $DevName);
-      }
+#      if(strtolower($DevName) != $DevName){
+#        $message[] = sprintf(_("The host name '%s' should be written in lowercase."), $DevName);
+#      }
 
       /* Check records
        */                 

@@ -65,7 +65,7 @@ class environment extends plugin
 
   var $CopyPasteVars      = array("gotoHotplugDevices","newKioskProfiles","gotoAvailableShares","gotoShareSelections","gotoPrinterSel","gotoProfileFlagL","gotoXResolutions","gotoProfileFlagC","gotoProfileServers","useProfile","is_group","in_dialog","OrigCn");
 
-  var $attributes         = array("uid","gotoProfileServer","gotoProfileFlags",
+  var $attributes         = array("uid","gotoProfileServer","gotoProfileFlags","gotoHotplugDevice",
       "gotoXResolution","gotoProfileQuota",
       "gotoLogonScripts","gotoLogonScript",
       "gotoPrinter", "gosaDefaultPrinter",
