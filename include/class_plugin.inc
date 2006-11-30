@@ -1128,14 +1128,9 @@ class plugin
     $ui       = get_userinfo();
     $old_dn   = $this->dn; 
     $this->dn = $dn;
-    
-    if($this->acl_is_removeable() && $this->acl_is_createable()){
-      $ldap = $this->config->get_ldap_link();
-      $ldap->cd($this->config->current['BASE']);
-      $ldap->rmdir_recursive($dn);
-    }else{
-      print_red (_("You are not allowed to delete this snapshot!"));
-    }
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd($this->config->current['BASE']);
+    $ldap->rmdir_recursive($dn);
     $this->dn = $old_dn;
   }
 
