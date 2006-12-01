@@ -45,6 +45,9 @@
 <br>
 {t}This procedure will create a snapshot of the selected object. It will be stored inside a special branch of your directory system and can be restored later on.{/t}
 <br>
+<br>
+{t}Remember that the DNS configurations for this entry and possibly created zones in server extensions will not be stored in the snapshot.{/t}
+<br>
 <p class="seperator">&nbsp;</p>
 <br>
 <table summary="" style="width:100%">
