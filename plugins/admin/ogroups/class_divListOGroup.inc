@@ -109,13 +109,16 @@ class divListOGroup extends MultiSelectWindow
       }
     }
 
+    /* Add a seperator after displaying c&p and snapshot icons ? */
+    $add_sep = false;
+  
     /* Get copy & paste icon */
     $acls  = $ui->get_permissions($this->selectedBase,"ogroups/ogroup");
     $acl_all= $ui->has_complete_category_acls($this->selectedBase,"ogroups");
+    $Copy_Paste ="";
     if(preg_match("/(c.*w|w.*c)/",$acl_all) &&  $this->parent->CopyPasteHandler){
       $Copy_Paste = $this->parent->CopyPasteHandler->generatePasteIcon();
-    }else{
-      $Copy_Paste ="";
+      $add_sep = true;
     }
 
     // Managment
@@ -130,21 +133,29 @@ class divListOGroup extends MultiSelectWindow
       title='"._("Reload list")."' name='submit_department' alt='"._("Submit")."'>&nbsp;".
       " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
 
-
+    /* Add snapshot restore icons */ 
     if(preg_match("/(c.*w|w.*c)/",$acl_all)){
       $listhead .= $this->get_snapshot_header($this->selectedBase);
-    }else{
-      $listhead .= "<img class='center' src='images/restore_grey.png' alt=''>&nbsp;";
+      $add_sep = true;
     }
 
+    /* Create new ogroup icon */
     if(preg_match("/c/",$acls)) {
       $listhead .=" <input class='center' type='image' align='middle' src='images/list_new_ogroup.png' 
         title='"._("Create new object group")."' alt='"._("new")."' name='group_new'>";
+      $add_sep = true;
     }
 
-    $listhead .=  $Copy_Paste.
-      " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;".
-      _("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
+    /* Add copy & paste icon */
+    $listhead .=  $Copy_Paste;
+    
+    /* Should we add a seperator here ? */
+    if($add_sep){
+      $listhead .=" <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
+    }
+  
+    /* Add department selector */
+    $listhead .= _("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
       " <input class='center' type='image' src='images/list_submit.png' align='middle' 
       title='"._("Submit department")."' name='submit_department' alt='"._("Submit")."'>&nbsp;".
       "</div>";

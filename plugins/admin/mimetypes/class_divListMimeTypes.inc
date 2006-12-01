@@ -109,15 +109,20 @@ class divListMimeTypes extends MultiSelectWindow
       }
     }
 
-    $ui = get_userinfo();
-    $acl = $ui->get_permissions("cn=dummy,ou=mimetypes,".$this->selectedBase,"mimetypes/mimetype");
+    /* Get acls */
+    $ui       = get_userinfo();
+    $acl      = $ui->get_permissions("cn=dummy,ou=mimetypes,".$this->selectedBase,"mimetypes/mimetype");
     $acl_all  = $ui->has_complete_category_acls($this->selectedBase,"mimetypes") ;
 
+
+    /* If this is true we add an additional seperator. Just look a few lines below */  
+    $add_sep = false;
+ 
     /* Get copy & paste icon */
+    $Copy_Paste ="";
     if(preg_match("/(c.*w|w.*c)/",$acl_all) &&  $this->parent->CopyPasteHandler){
       $Copy_Paste = $this->parent->CopyPasteHandler->generatePasteIcon();
-    }else{
-      $Copy_Paste ="";
+      $add_sep = true;
     }
 
     /* Create listhead, it will be shown on top of the divlist.
@@ -135,19 +140,29 @@ class divListMimeTypes extends MultiSelectWindow
       "title='"._("Reload list")."' name='submit_department' alt='"._("Submit")."'>&nbsp;".
       " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
     
+    /* Create snapshot icons */
     if(preg_match("/(c.*w|w.*c)/",$acl_all)){
       $listhead .= $this->get_snapshot_header($this->selectedBase);
+      $add_sep = true;
     }
     
+    /* Add create icon */
     if(preg_match("/c/",$acl)){
       $listhead .= " <input class='center' type='image' align='middle' src='images/list_new_mime.png' alt='"._("new").
         "' title='"._("Create new mime type")."' name='mime_new'>&nbsp;";
+      $add_sep = true;
     }
   
-    $listhead .= 
-      $Copy_Paste.
-      " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;".
-      _("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
+    /* Add copy & paste icons */
+    $listhead .= $Copy_Paste;
+
+    /* Add a seperator ? */
+    if($add_sep) {
+      $listhead .= " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
+    }
+    
+    /* And at least add a department selection box */
+    $listhead .=  _("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
       " <input class='center' type='image' src='images/list_submit.png' align='middle' 
         title='"._("Submit department")."' name='submit_department' alt='"._("Submit")."'>&nbsp;".
       "</div>";

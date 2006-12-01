@@ -100,15 +100,20 @@ class divListApplication extends MultiSelectWindow
       }
     }
 
-    /* Get copy & paste icon */
-    $ui  = get_userinfo();
-    $acl = $ui->get_permissions("cn=dummy,".$this->selectedBase,"application/application");
-    $acl_all= $ui->has_complete_category_acls($this->selectedBase,"application");
+    /* Get acls */
+    $ui       = get_userinfo();
+    $acl      = $ui->get_permissions("cn=dummy,".$this->selectedBase,"application/application");
+    $acl_all  = $ui->has_complete_category_acls($this->selectedBase,"application");
 
+    /* If this is true we have to add a seperator after 
+      adding the special icons, just have a look at the lines below */
+    $add_sep = false;
+
+    /* Get copy & paste icon */
+    $Copy_Paste ="";
     if((preg_match("/(c.*w|w.*c)/",$acl_all)) && ($this->parent->CopyPasteHandler)){
-      $Copy_Paste = $this->parent->CopyPasteHandler->generatePasteIcon();
-    }else{
-      $Copy_Paste ="";
+      $Copy_Paste = $this->parent->CopyPasteHandler->generatePasteIcon(); 
+      $add_sep = true;
     }
 
     /* Create listhead, it will be shown on top of the divlist.
@@ -125,18 +130,29 @@ class divListApplication extends MultiSelectWindow
       "title='"._("Reload list")."' name='submit_department' alt='"._("Submit")."'>&nbsp;".
       " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
 
+    /* Add snapshot header icons */
     if(preg_match("/(c.*w|w.*c)/",$acl_all)){
       $listhead .= $this->get_snapshot_header($this->selectedBase);
+      $add_sep = true;
     }
 
+    /* Add create icon */
     if(preg_match("/c/",$acl)){
-    $listhead .= " <input class='center' type='image' align='middle' src='images/list_new_app.png' alt='"._("new")."'
+      $listhead .= " <input class='center' type='image' align='middle' src='images/list_new_app.png' alt='"._("new")."'
        title='"._("Create new application")."' name='appl_new'>&nbsp;";
+      $add_sep = true;
     }
 
-    $listhead.=  $Copy_Paste.
-      " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;".
-      _("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
+    /* Add copy & paste icon */
+    $listhead.=  $Copy_Paste;
+
+    /* Add a seperator if required and the list will look perfectly */
+    if($add_sep){
+      $listhead .= " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
+    }
+
+    /* And the rest, a base selection box */
+    $listhead .= _("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
       " <input class='center' type='image' src='images/list_submit.png' align='middle' 
         title='"._("Submit department")."' name='submit_department' alt='"._("Submit")."'>&nbsp;".
       "</div>";
