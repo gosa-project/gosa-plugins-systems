@@ -349,7 +349,7 @@ if(!isset($_SESSION['back_button_test'])){
   $_SESSION['back_button_test'] = 0;
 }
 if(isset($_POST['back_button_test']) && $_POST['back_button_test'] != $_SESSION['back_button_test']){
-    print_red(_("Please do not use the browsers 'back' or 'reload' button, use the GOsa interface to reload the user interface instead. Using the browser actions causes GOsa to perform your last request again and this could lead into some strange situations."));
+    print_red(_("Please do not use the browsers 'back' or 'reload' buttons, this could cause GOsa to perform actions twice. If you have not used those actions, check the php log files possibly the memory limit was exhausted."));
 }
 
 

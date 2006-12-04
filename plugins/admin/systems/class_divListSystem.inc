@@ -126,7 +126,7 @@ class divListSystem extends MultiSelectWindow
         display the snapshot paste icon. BUT check the correct acls in the management plugin */
     $all_module_acls = "";
     foreach($this->module as $module){
-      $all_module_acls .= $ui->has_complete_category_acls($this->selectedBase,$module)." | ".$module."<br>";
+      $all_module_acls .= $ui->has_complete_category_acls($this->selectedBase,$module);
     }
 
     /* Must we add an additional seperator */
