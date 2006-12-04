@@ -119,11 +119,13 @@ class faiScript extends plugin
     return($object);
   }
 
+  
+  /* Return a valid dn to fetch acls. Because 'new' will not work. */
   function acl_base_for_current_object($dn)
   {
     if($dn == "new"){
       if($this->dn == "new"){
-        $dn= $_SESSION['CurrentMainBase'];
+        $dn= "cn=dummy,".$_SESSION['CurrentMainBase'];
       }else{
         $dn = $this->dn;
       }
@@ -153,34 +155,44 @@ class faiScript extends plugin
       $_SESSION['objectinfo']= $this->dn;
     }
 
-    /* New Listhandling 
-     */
+    /* Handle posts */
     $once = true;
     foreach($_POST as $name => $value){
+
+      /* Edit script posted */
       if(preg_match("/^editscript_/",$name)&&($once)){
 
+        /* Get posted entry id */
         $once = false;
         $entry = preg_replace("/^editscript_/","",$name);
         $entry = base64_decode(preg_replace("/_.*/","",$entry));
 
+        /* Get object, and load missing entry values */
         $obj  = $this->SubObjects[$entry];
         if($obj['status'] == "FreshLoaded"){
           $obj  = $this->get_object_attributes($obj,$this->sub_Load_Later);
         }
+
+        /* Create new dialog and set acl attributes  */
         $this->dialog= new $this->subClassName($this->config,$this->dn,$obj);
         $this->dialog->set_acl_base($this->acl_base_for_current_object($obj['dn']));
         $this->dialog->set_acl_category("fai");
 
-
+        /* Assign some additional dialog informations like headline and parent  */
         $_SESSION['objectinfo'] = $obj['dn'];
         $this->dialog->parent = &$this;
         $this->is_dialog=true;
       }
+
+      /* Delete script requested */
       if(preg_match("/^deletescript_/",$name)&&($once)){
+
+        /* Parse out posted entry id */
         $once = false;
         $entry = preg_replace("/^deletescript_/","",$name);
         $entry = base64_decode(preg_replace("/_.*/","",$entry));
 
+        /* Check acls, are we allowed to delete an entry */
         $acl = $this->ui->get_permissions($this->acl_base_for_current_object($this->SubObjects[$entry]['dn']),"fai/faiScriptEntry")  ;
         if(preg_match("/d/",$acl)){
           if(($this->SubObjects[$entry]['status'] == "edited")||($this->SubObjects[$entry]['status'] == "FreshLoaded")){
@@ -191,22 +203,12 @@ class faiScript extends plugin
         }
       }
     }
-    ///// Ende new list handling
 
 
-    /* Edit selected Sub Object */
-    if((isset($_POST['EditSubObject']))&&(isset($_POST['SubObject']))){
-      $script = $_POST['SubObject'][0];
-      $this->dialog= new $this->subClassName($this->config,$this->dn,$this->SubObjects[$script]);
-      $this->dialog->set_acl_base($this->acl_base_for_current_object($this->SubObjects[$script]['dn']));
-      $this->dialog->set_acl_category("fai");
-      $_SESSION['objectinfo'] = $this->SubObjects[$script]['dn'];
-      $this->is_dialog=true;
-    }
-
-
-    /* Save Dialog */
+    /* Save the edited entry */
     if(isset($_POST['SaveSubObject'])){
+
+      /* Check if there are still errors remaining that must be fixed before saving */
       $this->dialog->save_object();
       $msgs = $this->dialog->check();
       if(count($msgs)>0){
@@ -214,10 +216,14 @@ class faiScript extends plugin
           print_red($msg);
         }
       }else{
-           /* Get return object */
+
+        /* Get return object */
         $obj = $this->dialog->save();
+
+        /* If we have renamed the script entry, we must remove the old entry */
         if(isset($obj['remove'])){
 
+          /* Get old entry values */
           $old_stat = $this->SubObjects[$obj['remove']['from']]['status'];
 
           /* Depending on status, set new status */
@@ -226,10 +232,14 @@ class faiScript extends plugin
           }elseif($this->SubObjects[$obj['remove']['from']]['status']=="new"){
             unset($this->SubObjects[$obj['remove']['from']]);
           }
+
+          /* Append the new entry */
           $obj['status'] = "new";
           $this->SubObjects[$obj['remove']['to']] = $obj;
           unset($this->SubObjects[$obj['remove']['to']]['remove']);
         }else{
+  
+          /* Set new status and append the entry */
           if($obj['status'] == "FreshLoaded"){
             $obj['status'] = "edited";
           }
@@ -308,6 +318,7 @@ class faiScript extends plugin
       }
     }
     $smarty->assign("Entry_divlist",$divlist->DrawList());
+
 
     /* Magic quotes GPC, escapes every ' " \, to solve some security risks
      * If we post the escaped strings they will be escaped again
