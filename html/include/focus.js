@@ -16,18 +16,29 @@ netscape= (ver.charAt(iln+1).toUpperCase() != "C");
 
 
 /* Toggle checkbox that matches regex */
+function acl_set_all(regex,value)
+{
+				for (var i = 0; i < document.mainform.elements.length; i++) {
+								var _id=document.mainform.elements[i].id;
+								if(_id.match(regex)) {
+												document.getElementById(_id).checked= value;
+								}
+				}
+}
+
+/* Toggle checkbox that matches regex */
 function acl_toggle_all(regex)
 {
-	for (var i = 0; i < document.mainform.elements.length; i++) {
-					var _id=document.mainform.elements[i].id;
-					if(_id.match(regex)) {
-									if (document.getElementById(_id).checked == true){
-													document.getElementById(_id).checked= false;
-									} else {
-													document.getElementById(_id).checked= true;
-									}
-					}
-	}
+				for (var i = 0; i < document.mainform.elements.length; i++) {
+								var _id=document.mainform.elements[i].id;
+								if(_id.match(regex)) {
+												if (document.getElementById(_id).checked == true){
+																document.getElementById(_id).checked= false;
+												} else {
+																document.getElementById(_id).checked= true;
+												}
+								}
+				}
 }
 
 function keyPress(DnEvents) {
