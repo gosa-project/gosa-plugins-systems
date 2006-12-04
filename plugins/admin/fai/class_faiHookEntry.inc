@@ -18,7 +18,7 @@ class faiHookEntry extends plugin
                                     "savelog", "softupdate", "sysinfo","updatebase");
   var $dn            = "";
   var $cn            = "";
-  var $FAItask       = "";
+  var $FAItask       = "chboot";
   var $FAIscript     = "";
   var $description   = "";
   var $status        = "new";

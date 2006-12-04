@@ -286,7 +286,7 @@ class faiHook extends plugin
     foreach($this->getList(true) as $key => $name){
 
       $dn= $this->acl_base_for_current_object($name['dn']);
-      $acl = $this->ui->get_permissions($dn,"fai/faiScriptEntry")  ;
+      $acl = $this->ui->get_permissions($dn,"fai/faiHookEntry")  ;
       $act = "";
 
       /* Check if this object is freezed, in this case hide the delete icon */
@@ -300,7 +300,7 @@ class faiHook extends plugin
       }
 
       /* Check if we are allowed to use the export button for this object */
-      $s_acl = $this->ui->get_permissions($dn,"fai/faiScriptEntry","FAIscript")  ;
+      $s_acl = $this->ui->get_permissions($dn,"fai/faiHookEntry","FAIscript")  ;
       if(($this->SubObjects[$key]['status'] == "new") || ($this->SubObjects[$key]['dn'] == "new") || !preg_match("/r/",$s_acl)){
         $down = "";
       }else{
@@ -310,7 +310,7 @@ class faiHook extends plugin
       }
 
       /* Check if we are allowed to view the object */
-      $s_acl = $this->ui->get_permissions($dn,"fai/faiScriptEntry","cn")  ;
+      $s_acl = $this->ui->get_permissions($dn,"fai/faiHookEntry","cn")  ;
       if(preg_match("/r/",$s_acl)){
         $divlist->AddEntry(array( array("string"=>$name['name']),
               array("string"=>$down , "attach" => "style='width:20px;'"),
@@ -338,7 +338,7 @@ class faiHook extends plugin
     $tmp = $this->plInfo();
       
     $c_dn = $this->acl_base_for_current_object($this->dn);
-    $smarty->assign("sub_object_is_addable", preg_match("/c/",$this->ui->get_permissions($c_dn,"fai/faiScriptEntry")) && $this->FAIstate!="freeze");
+    $smarty->assign("sub_object_is_addable", preg_match("/c/",$this->ui->get_permissions($c_dn,"fai/faiHookEntry")) && $this->FAIstate!="freeze");
     foreach($tmp['plProvidedAcls'] as $name => $translation){
       $smarty->assign($name."ACL",$this->getacl($name));
     }
