@@ -503,6 +503,15 @@ class acl extends plugin
     $plist= $tmp->info;
     asort($plist);
 
+    /* Add select all/none buttons */
+    $display .= "<input type='button' name='all_create' onClick=\"acl_toggle_all('_0_c$');\" value='C'>&nbsp;";
+    $display .= "<input type='button' name='all_move'   onClick=\"acl_toggle_all('_0_m$');\" value='M'>&nbsp;";
+    $display .= "<input type='button' name='all_remove' onClick=\"acl_toggle_all('_0_d$');\" value='D'>&nbsp;";
+    $display .= "<input type='button' name='all_read'   onClick=\"acl_toggle_all('_0_r$');\" value='R'>&nbsp;";
+    $display .= "<input type='button' name='all_write'  onClick=\"acl_toggle_all('_0_w$');\" value='W'>&nbsp;";
+
+    $display .= "<input type='button' name='all_write'  onClick=\"acl_toggle_all('[^0]_r$');\" value='R+'>&nbsp;";
+    $display .= "<input type='button' name='all_write'  onClick=\"acl_toggle_all('[^0]_w$');\" value='W+'>&nbsp;";
     /* Build general objects */
 
     $list =$this->sort_by_priority($list);
