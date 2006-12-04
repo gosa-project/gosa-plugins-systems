@@ -529,17 +529,17 @@ class faiPackage extends plugin
           "plDescription" => _("FAI Package list"),
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
-          "plPriority"    => 30,
+          "plPriority"    => 28,
           "plSection"     => array("administration"),
           "plCategory"    => array("fai"),
           "plProvidedAcls" => array(
             "cn"                => _("Name"),
             "description"       => _("Description"),
             "FAIpackage"        => _("Packages"),
-            "FAIdebianSection"  => _("Section"),
+            "FAIdebianSection"  => _("Section")."&nbsp;("._("Readonly").")",
             "FAIinstallMethod"  => _("Install Method"),
             "FAIdebconfInfo"    => _("Package configuration"),
-            "FAIdebianRelease"  => _("Release"))
+            "FAIdebianRelease"  => _("Release")."&nbsp;("._("Readonly").")")
           ));
   }
 }

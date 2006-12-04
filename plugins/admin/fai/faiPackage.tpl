@@ -74,10 +74,18 @@
        			{html_options options=$usedPackages}
       		</select>
 			<br>
-			<input type="submit" name="Addpkg" value="{t}Add{/t}" {$FAIpackageACL}>
-			<input type="submit" name="Delpkg" value="{t}Remove{/t}"  {$FAIpackageACL}>
-			<input type="submit" name="Conpkg" value="{t}Configure{/t}"  {$FAIdebconfInfoACL} >
-			<input type="submit" name="Markpkg" value="{t}Toggle remove flag{/t}"  {$FAIpackageACL}>
+{render acl=$FAIpackageACL}
+			<input type="submit" name="Addpkg" value="{t}Add{/t}">
+{/render}
+{render acl=$FAIpackageACL}
+			<input type="submit" name="Delpkg" value="{t}Remove{/t}">
+{/render}
+{render acl=$FAIdebconfInfoACL}
+			<input type="submit" name="Conpkg" value="{t}Configure{/t}">
+{/render}
+{render acl=$FAIpackageACL}
+			<input type="submit" name="Markpkg" value="{t}Toggle remove flag{/t}">
+{/render}
 		</td>
 	</tr>
 </table>

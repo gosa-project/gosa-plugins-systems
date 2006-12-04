@@ -444,7 +444,7 @@ class faiProfile extends plugin
           "plDescription" => _("FAI profile"),
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
-          "plPriority"    => 28,
+          "plPriority"    => 30,
           "plSection"     => array("administration"),
           "plCategory"    => array("fai"),
           "plProvidedAcls" => array(

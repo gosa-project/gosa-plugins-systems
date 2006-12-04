@@ -514,7 +514,7 @@ class faiManagement extends plugin
       $acl = $this->ui->get_permissions($this->DivListFai->selectedBase,"fai/faiProfile");
       if(preg_match("/c/",$acl)){
         $a_setup= $this->get_type(array("objectClass"=>array("FAIprofile")));
-        $this->dialog = new $a_setup[0]($this->config,$this->config->data['TABS'][$a_setup[2]],$this->dn,"faiProfile");
+        $this->dialog = new $a_setup[0]($this->config,$this->config->data['TABS'][$a_setup[2]],$this->dn,"fai");
         $this->dialog->set_acl_base($_SESSION['CurrentMainBase']);
 
         $this->is_dialog = false;
