@@ -2,18 +2,18 @@
 <h2><img class="center" alt="" src="images/fai_partitionTable.png" align="middle" title="{t}Generic{/t}">&nbsp;{t}Device{/t}</h2>
 <table style='width:100%' summary="">
 	<tr>
-		<td style='width:50%;border-right:1px solid #909090;'><LABEL for="DISK_cn">
+		<td style='width:50%;border-right:1px solid #909090;'><LABEL for="DISKcn">
 			{t}Name{/t}
 			</LABEL>{$must}&nbsp;
-{render acl=$cnACL}
-			<input value="{$DISK_cn}" size="45" maxlength="80" name="DISK_cn" id="DISK_cn">
+{render acl=$DISKcnACL}
+			<input value="{$DISKcn}" size="45" maxlength="80" name="DISKcn" id="DISKcn">
 {/render}
 		</td>
-		<td><LABEL for="DISK_description">
+		<td><LABEL for="DISKdescription">
 			&nbsp;{t}Description{/t}
 			</LABEL>&nbsp;
-{render acl=$descriptionACL}
-			<input value="{$DISK_description}" size="45" maxlength="80" name="DISK_description" id="DISK_description">
+{render acl=$DISKdescriptionACL}
+			<input value="{$DISKdescription}" size="45" maxlength="80" name="DISKdescription" id="DISKdescription">
 {/render}
 		</td>
 	</tr>
@@ -42,7 +42,7 @@
 <!-- Place cursor -->
 <script language="JavaScript" type="text/javascript">
   <!-- // First input field on page
-  document.mainform.DISK_cn.focus();
+  document.mainform.DISKcn.focus();
   -->
 </script>
 

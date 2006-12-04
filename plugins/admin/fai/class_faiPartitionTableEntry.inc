@@ -9,11 +9,11 @@ class faiPartitionTableEntry extends plugin
 
   /* attribute list for save action */
   var $ignore_account= TRUE;
-  var $attributes   = array("DISK_cn","DISK_description");
+  var $attributes   = array("DISKcn","DISKdescription");
   var $objectclasses= array();
 
-  var $DISK_cn              = "";
-  var $DISK_description     = "";
+  var $DISKcn              = "";
+  var $DISKdescription     = "";
   
   var $partitions           = array();
   var $UsedAttrs            = array();
@@ -73,18 +73,19 @@ class faiPartitionTableEntry extends plugin
       }
 
       /* Set default attributes */
-      $this->DISK_cn          = $disk['cn'];
-      $this->DISK_description = $disk['description'];
+      $this->DISKcn          = $disk['cn'];
+      $this->DISKdescription = $disk['description'];
       $this->partitions       = $disk['partitions'];
       $this->is_edit          = true;
       $this->old_cn           = $disk['cn'];
     }
   }
 
+
   function execute()
   {
-	/* Call parent execute */
-	plugin::execute();
+    /* Call parent execute */
+    plugin::execute();
 
     /* Fill templating stuff */
     $smarty     = get_smarty();
@@ -304,7 +305,7 @@ class faiPartitionTableEntry extends plugin
   function save()
   {
     $tmp = array();
-    $tmp['cn']          = $this->DISK_cn;
+    $tmp['cn']          = $this->DISKcn;
 
     /* Attach partitions */
     foreach($this->partitions as $key=>$val) {
@@ -317,14 +318,14 @@ class faiPartitionTableEntry extends plugin
       $this->partitions[$key."-delete"]['status']="delete";
     }
 
-    $tmp['description'] = $this->DISK_description;
+    $tmp['description'] = $this->DISKdescription;
     $tmp['partitions']  = $this->partitions;
     $tmp['status']      = $this->status;
 
     /* If hdd name has changed, tell partitionTable to rename it */
-    if(($this->is_edit)&&($this->old_cn != $this->DISK_cn)){
+    if(($this->is_edit)&&($this->old_cn != $this->DISKcn)){
       $tmp['rename']['from']  = $this->old_cn;
-      $tmp['rename']['to']    = $this->DISK_cn;
+      $tmp['rename']['to']    = $this->DISKcn;
     }
     return($tmp);
   }
@@ -333,7 +334,10 @@ class faiPartitionTableEntry extends plugin
   /* Save data to object */
   function save_object()
   {
+
+
     if((isset($_POST['TableEntryFrameSubmitted'])) && ($this->FAIstate != "freeze") ){
+    print_a($_POST);
       plugin::save_object();
 
       foreach($this->partitions as $key => $part){
@@ -358,7 +362,12 @@ class faiPartitionTableEntry extends plugin
   {
     /* Call common method to give check the hook */
     $message= plugin::check();
-   
+  
+    /* Check for an empty disk name */
+    if(empty($this->DISKcn)){
+      $message[] = _("Please specify a valid disc name.");
+    }
+       
     /* check every partition.
      * if there is an invalid value defined, append an errorstr to message
      */
@@ -451,8 +460,8 @@ class faiPartitionTableEntry extends plugin
           "plSection"     => array("administration"),
           "plCategory"    => array("fai"),
           "plProvidedAcls" => array(
-            "cn"                => _("Name"),
-            "description"       => _("Description"),
+            "DISKcn"           => _("Name"),
+            "DISKdescription"  => _("Description"),
             "FAIpartitionType"  => _("Partition type"),
             "FAIpartitionNr"    => _("Partition no."),
             "FAIfsType"         => _("File system type"),
