@@ -108,12 +108,9 @@ class divListFai extends MultiSelectWindow
     /* Load possible departments */
     $ui= get_userinfo();
     $tdeps= $ui->get_module_departments("fai");
-
     $ids = $this->config->idepartments;
-
     foreach($deps as $dep){
       if(isset($ids[$dep['dn']]) && in_array_ics($dep['dn'], $tdeps)){
-
         $value = $ids[$dep['dn']];
         if ($this->selectedBase == $dep['dn']){
           $options.= "<option selected='selected' value='".$dep['dn']."'>$value</option>";
@@ -123,36 +120,45 @@ class divListFai extends MultiSelectWindow
       }
     }
 
+    /* Add seperator */
+    $add_sep = false;
+
+    /* Get complete fai acls, to be able to check if we must show or hide the snapshot abilities */ 
+    $acl_all = $ui->has_complete_category_acls($this->selectedBase,$this->module);
+
      /* Create listhead, it will be shown on top of the divlist.
      * It provides general navigation and object creation
      */
     $listhead =
       "<div style='background:#F0F0F9;padding:5px;'>&nbsp;".
-
       "<input class='center' type='image' src='images/list_root.png' align='middle'
       title='"._("Go to root department")."' name='dep_root' alt='".      _("Root")."'>&nbsp;".
-
       "<input class='center' type='image' src='images/list_up.png' align='middle'
       title='"._("Go up one department")."' name='dep_back' alt='"._("Up"). "'>&nbsp;".
-
       "<input class='center' type='image' src='images/list_home.png' align='middle'
       title='"._("Go to users home department")."' name='dep_home' alt='"._("Home")."'>&nbsp;".
-
       " <input class='center' type='image' src='images/list_reload.png' align='middle' title='"._("Reload list")."' name='submit_department' alt='".
 _("Submit")."'>&nbsp;".
-
       "<img class='center' src=\"images/list_seperator.png\" alt=\"\" align=\"middle\" height=\"16\" width=\"1\">&nbsp;";
 
     $acl = $ui->get_permissions($this->selectedBase,"fai/faiProfile");
     if(preg_match("/c/",$acl)){
       $listhead .=" <input class='center' type='image' src='images/fai_new_profile.png' align='middle'
         title='"._("New profile")."' name='Create_profile' alt='"._("P")."'>&nbsp;";
+      $listhead .=" <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
     }
 
-    $listhead .= "<img class='center' src=\"images/list_seperator.png\" alt=\"\" align=\"middle\" height=\"16\" width=\"1\">&nbsp;";
-    $listhead .= $this->get_snapshot_header($this->selectedBase);
+    /* Add snapshot icons, if we are allowed to write and create the complete fai module ($ui->has_complete_category_acls) */ 
+    if(preg_match("/(c.*w|w.*c)/",$acl_all)){ 
+      $listhead .= $this->get_snapshot_header($this->selectedBase);
+    }
 
+    /* Add copy & paste icons, currently disabled, this ability is not implemeneted yet */
+    if(preg_match("/(c.*w|w.*c)/",$acl_all) &&  isset($this->parent->CopyPasteHandler) && $this->parent->CopyPasteHandler){
+      $Copy_Paste = $this->parent->CopyPasteHandler->generatePasteIcon();
+    }
 
+    /* Append create icons for each fai component */
     $arr = array(
         array("images/fai_new_partitionTable.png" , _("New partition table")  ,"Create_partition" , _("PT") , "faiPartitionTable"),
         array("images/fai_new_script.png"         , _("New scripts")          ,"Create_script"    , _("S")  , "faiScript"),
@@ -162,18 +168,22 @@ _("Submit")."'>&nbsp;".
         array("images/fai_new_packages.png"       , _("New package list")     ,"Create_package"   , _("PK") , "faiPackage"));
 
     foreach($arr as $ar){
-
       $acl = $ui->get_permissions($this->selectedBase,"fai/".$ar[4]);
       if(preg_match("/c/",$acl)){
+        $add_sep = true;
         $listhead .=" <input class='center' type='image' src='".$ar[0]."' align='middle' title='".$ar[1]."' name='".$ar[2]."' alt='".$ar[3]."'>&nbsp;";
       }
     }
-    $listhead .=" <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;".
 
-      _("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
-      " <input class='center' type='image' src='images/list_submit.png' align='middle' title='"._("Submit department")."' name='submit_department' alt='".  _("Submit")."'>&nbsp;".
-
-      "</div>";
+    /* Add additional seperator */
+    if($add_sep){
+      $listhead .=" <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
+    }
+  
+    $listhead .=  _("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
+                  " <input class='center' type='image' src='images/list_submit.png' align='middle' 
+                  title='"._("Submit department")."' name='submit_department' alt='".  _("Submit")."'>&nbsp;".
+                "</div>";
 
     $this->SetListHeader($listhead);
   }
