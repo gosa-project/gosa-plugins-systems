@@ -210,21 +210,17 @@ class faiVariable extends plugin
     $ret = $this->getList();
     $tmp = array();
     foreach($this->SubObjects as $key => $obj){
-      
       $acl = $ui->get_permissions($obj['dn'],"fai/faiVariableEntry");
-     
       if(preg_match("/r/",$acl)){
         $tmp[$key] = $ret[$key];
       } 
-      
-      $smarty->assign("SubObjects",$tmp);
     }
+    $smarty->assign("SubObjects",$tmp);
 
 
-      /* Magic quotes GPC, escapes every ' " \, to solve some security risks
+    /* Magic quotes GPC, escapes every ' " \, to solve some security risks
      * If we post the escaped strings they will be escaped again
      */
-
     foreach($this->attributes as $attrs){
       if(get_magic_quotes_gpc()){
         $smarty->assign($attrs,htmlentities (stripslashes(utf8_decode($this->$attrs))));

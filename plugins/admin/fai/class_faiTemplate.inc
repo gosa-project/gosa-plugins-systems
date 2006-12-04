@@ -67,6 +67,14 @@ class faiTemplate extends plugin
       $ldap->search("(&(objectClass=FAIclass)(objectClass=".$this->subClass."))",$attrs_to_search);
 
       while($object = $ldap->fetch()){
+
+        /* Skip objects, that are tagged as removed */
+        if(isset($object['FAIstate'][0])){
+          if(preg_match("/removed$/",$object['FAIstate'][0])){
+            continue;
+          }
+        }
+
         /* Set status for save management */
         $objects = array();
         $objects['status']      = "FreshLoaded";
@@ -246,8 +254,13 @@ class faiTemplate extends plugin
 
     $tmp = $this->getList(true);
   
+    /* Create div list with all sub entries listed */
     foreach($this->SubObjects as $key => $name){
 
+      /* Skip removed entries */ 
+      if($name['status'] == "delete") continue;
+
+      /* Get permissions */
       $dn  = $this->acl_base_for_current_object($name['dn']);
       $acl = $this->ui->get_permissions($dn,"fai/faiTemplateEntry")  ;
       $act = "";

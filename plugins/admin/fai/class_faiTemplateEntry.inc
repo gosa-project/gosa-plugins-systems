@@ -144,39 +144,39 @@ class faiTemplateEntry extends plugin
   /* Save data to object */
   function save_object()
   {
-    if (!isset($_POST['FAItemplatePath'])){
-      return;
-    }
+    /* Check if form is posted and we are not freezed */
     if((isset($_POST['SubObjectFormSubmitted'])) && ($this->FAIstate != "freeze")){
-      foreach($this->attributes as $attrs){
-        if($attrs == "FAItemplateFile") 
-          continue;
-        if($attrs == "FAIowner") {
-          $this->$attrs = $_POST["user"] . '.' . $_POST["group"];
-          continue;
-        }
-        if(isset($_POST[$attrs])){
-          $this->$attrs = $_POST[$attrs];
-        }else{
-          $this->$attrs = "";
-        }
+
+      plugin::save_object();
+
+      /* Set user.group (FAIowner) attribute */  
+      if(isset($_POST['group']) && isset($_POST["user"]) && $this->acl_is_writeable("FAIowner")){
+        $this->FAIowner = $_POST["user"].'.'.$_POST["group"];
+        $this->user = $_POST['user'];
+        $this->group= $_POST['group'];
       }
-      /* Save mode */
-      $tmode= "";
-      foreach (array("s", "u", "g", "o") as $type){
-        $nr= 1;
-        $dest= 0;
-        while ($nr < 5){
-          if (isset($_POST["$type$nr"])){
-            $dest+= $nr;
+
+      /* Check if permissions have changed */
+      if($this->acl_is_writeable("FAImode")){
+
+        /* Save mode */
+        $tmode= "";
+        foreach (array("s", "u", "g", "o") as $type){
+          $nr= 1;
+          $dest= 0;
+          while ($nr < 5){
+            if (isset($_POST["$type$nr"])){
+              $dest+= $nr;
+            }
+            $nr+= $nr;
           }
-          $nr+= $nr;
+          $tmode= $tmode.$dest;
         }
-        $tmode= $tmode.$dest;
+        $this->FAImode= $tmode;
       }
-      $this->FAImode= $tmode;
     }
   }
+
 
   /* Check supplied data */
   function check()

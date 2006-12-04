@@ -75,7 +75,7 @@
 			</LABEL>
 			</td>
 		<td>
-{render acl=$userACL}
+{render acl=$FAIownerACL}
 			<input type="text" name="user" value="{$user}" id="user" size="15">
 {/render}
 		</td>
@@ -86,7 +86,7 @@
 			</LABEL>
 			</td>
 		<td>
-{render acl=$groupACL}
+{render acl=$FAIownerACL}
 			<input type="text" name="group" value="{$group}" id="group" size="15">
 {/render}
 			<br>
@@ -108,51 +108,51 @@
 			<th>&nbsp;</th>
 		</tr>
 		<tr><td>{t}User{/t}</td>
-{render acl=$userACL}
+{render acl=$FAImodeACL}
 			<td align="center"><input type="checkbox" name="u4" value="4" {$u4}></td>
 {/render}
-{render acl=$userACL}
+{render acl=$FAImodeACL}
 			<td align="center"><input type="checkbox" name="u2" value="2" {$u2}></td>
 {/render}
-{render acl=$userACL}
+{render acl=$FAImodeACL}
 			<td align="center"><input type="checkbox" name="u1" value="1" {$u1}></td>
 {/render}
 			<td>&nbsp;</td>
-{render acl=$userACL}
+{render acl=$FAImodeACL}
 			<td align="center"><input type="checkbox" name="s4" value="4" {$s4}></td>
 {/render}
 			<td>({t}SUID{/t})</td>
 			</tr>
 
 		<tr><td>{t}Group{/t}</td>
-{render acl=$userACL}
+{render acl=$FAImodeACL}
 			<td align="center"><input type="checkbox" name="g4" value="4" {$g4}></td>
 {/render}
-{render acl=$userACL}
+{render acl=$FAImodeACL}
 			<td align="center"><input type="checkbox" name="g2" value="2" {$g2}></td>
 {/render}
-{render acl=$userACL}
+{render acl=$FAImodeACL}
 			<td align="center"><input type="checkbox" name="g1" value="1" {$g1}></td>
 {/render}
 			<td>&nbsp;</td>
-{render acl=$userACL}
+{render acl=$FAImodeACL}
 			<td align="center"><input type="checkbox" name="s2" value="2" {$s2}></td>
 {/render}
 			<td>({t}SGID{/t})</td>
 			</tr>
 
 		<tr><td>{t}Others{/t}</td>
-{render acl=$userACL}
+{render acl=$FAImodeACL}
 			<td align="center"><input type="checkbox" name="o4" value="4" {$o4}></td>
 {/render}
-{render acl=$userACL}
+{render acl=$FAImodeACL}
 			<td align="center"><input type="checkbox" name="o2" value="2" {$o2}></td>
 {/render}
-{render acl=$userACL}
+{render acl=$FAImodeACL}
 			<td align="center"><input type="checkbox" name="o1" value="1" {$o1}></td>
 {/render}
 			<td>&nbsp;</td>
-{render acl=$userACL}
+{render acl=$FAImodeACL}
 			<td align="center"><input type="checkbox" name="s1" value="1" {$s1}></td>
 {/render}
 			<td>({t}sticky{/t})</td>
@@ -173,6 +173,9 @@
 </td>
 </tr>
 </table>
+
+<input type='hidden' name='FAItemplateEntryPosted' value='1'>
+
 <!-- Place cursor -->
 <script language="JavaScript" type="text/javascript">
   <!-- // First input field on page
