@@ -24,6 +24,7 @@ if (!$remove_lock){
 		$_SESSION['addressbook']= new addressbook ($config);
 		$_SESSION['addressbook']->set_acl_base($ui->dn);
 		$_SESSION['addressbook']->set_acl_category("addressbook");
+		unset($_SESSION['show_info']);
 	}
 	$addressbook= $_SESSION['addressbook'];
 
