@@ -580,7 +580,7 @@ class blocklist extends plugin
     return (array(  
           "plShortName"       => _("Fax"),
           "plDescription"     => _("Fax Blocklists"),
-          "plSelfModify"      => TRUE,
+          "plSelfModify"      => FALSE,
           "plDepends"         => array(),
 
           "plPriority"    => 0,

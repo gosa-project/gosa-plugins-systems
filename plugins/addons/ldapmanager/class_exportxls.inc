@@ -32,6 +32,8 @@ class xlsexport extends plugin
     $smarty->assign("type",FALSE);
     $smarty->assign("depselectivbb","");
     
+    if(!isset($_POST['selfull'])) $_POST['selfull'] = "Somehow not posted";
+
     /* Check permissions for export */
     // fill in old vars in the Export form
     if((isset($_POST['single']))&&(isset($_POST['sfrmgetsingle']))){
@@ -96,7 +98,7 @@ class xlsexport extends plugin
       $acls = $this->ui->get_permissions($dn,"all/all");
     }
  
-    if((!preg_match("/r/",$acls)) && isset($dn)){
+    if(!preg_match("/r/",$acls)){
 
       /* Show error msg */      
       print_red(sprintf(_("You are not allowed to export the given ldap entry (%s)"),@LDAP::fix($dn)));

@@ -30,6 +30,7 @@ class faxreport extends plugin
   var $objectclasses= array();
   var $fax_users    = array();
 
+
   /* Create class */
   function faxreport ($config, $ui)
   {

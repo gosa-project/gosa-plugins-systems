@@ -203,8 +203,10 @@ class fonreport extends plugin
     $no_acl = "<img class='center' src='images/closedlock.png'
       title='"._("Insufficient permissions to view this attribute")."' alt='"._("Insufficient permissions")."'>";
 
+    $no_acl = "&nbsp;";
+
     while ($line = mysql_fetch_array($result, MYSQL_ASSOC)) {
-   
+
       foreach($line as $attr => $value){
 
         if($attr == "duration") continue;
@@ -318,12 +320,11 @@ class fonreport extends plugin
     $s          = preg_replace("/\%/","",$s);  
     $s2         = preg_replace("/\*/","%",$s);  
 
-    $filter = "(&(objectClass=gosaAccount)(!(objectClass=gosaUserTemplate))(objectClass=gofonAccount)".
+    $filter = "(&(objectClass=gosaAccount)(!(objectClass=gosaUserTemplate))".
         "(|(uid=$s)(l=$s)(homePhone=$s)(telephoneNumber=$s)(facsimileTelephoneNumber=$s)(mobile=$s)".
         "(pager=$s)(cn=$s)(givenName=$s)(sn=$s)(personalTitle=$s)(title=$s)))";
 
     $attrs  = array("uid");
-
     $res    = get_list($filter,"users",$this->search_base,$attrs);
     
     $str = " AND (";
@@ -387,7 +388,7 @@ class fonreport extends plugin
   {
     return (array(
         "plShortName"   => _("Phone reports"),
-        "plDescription" => _("Phone reports"),
+        "plDescription" => _("Phone reports")."&nbsp;<i>"._("All entries are readonly")."</i>",
         "plSelfModify"  => TRUE,
         "plDepends"     => array(),
         "plPriority"    => 0,

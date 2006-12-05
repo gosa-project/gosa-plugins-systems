@@ -352,6 +352,9 @@ class userinfo
 
   function mergeACL($acl, $type, $newACL)
   {
+    if(preg_match("/w/",$newACL) && !preg_match("/r/",$newACL)){
+      $newACL .= "r";
+    }
     foreach(str_split($newACL) as $char){
 
       /* Ignore invalid characters */
