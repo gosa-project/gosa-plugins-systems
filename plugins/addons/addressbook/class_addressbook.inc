@@ -328,6 +328,7 @@ class addressbook extends plugin
       if (!isset($_SESSION['saved_start'])){
         $_SESSION['saved_start']= $_GET['start'];
       }
+      $this->dn = base64_decode($_GET['show']);
       $_SESSION['show_info']= base64_decode($_GET['show']);
     }
 

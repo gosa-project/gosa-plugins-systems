@@ -508,10 +508,10 @@ class acl extends plugin
 
     $display .= "<input ".$style." type='button' name='toggle_all_create' onClick=\"acl_toggle_all('_0_c$');\" value='Toggle C'>";
     $display .= "<input ".$style." type='button' name='toggle_all_move'   onClick=\"acl_toggle_all('_0_m$');\" value='Toggle M'>";
-    $display .= "<input ".$style." type='button' name='toggle_all_remove' onClick=\"acl_toggle_all('_0_d$');\" value='Toggle D'>";
+    $display .= "<input ".$style." type='button' name='toggle_all_remove' onClick=\"acl_toggle_all('_0_d$');\" value='Toggle D'> - ";
     $display .= "<input ".$style." type='button' name='toggle_all_read'   onClick=\"acl_toggle_all('_0_r$');\" value='Toggle R'>";
-    $display .= "<input ".$style." type='button' name='toggle_all_write'  onClick=\"acl_toggle_all('_0_w$');\" value='Toggle W'>";
-
+    $display .= "<input ".$style." type='button' name='toggle_all_write'  onClick=\"acl_toggle_all('_0_w$');\" value='Toggle W'> - ";
+    
     $display .= "<input ".$style." type='button' name='toggle_all_sub_read'  onClick=\"acl_toggle_all('[^0]_r$');\" value='R+'>";
     $display .= "<input ".$style." type='button' name='toggle_all_sub_write'  onClick=\"acl_toggle_all('[^0]_w$');\" value='W+'>";
   
@@ -523,8 +523,16 @@ class acl extends plugin
     $display .= "<input ".$style." type='button' name='set_true_all_move' onClick=\"acl_set_all('_0_m$',true);\" value='M+'>";
     $display .= "<input ".$style." type='button' name='set_false_all_move' onClick=\"acl_set_all('_0_m$',false);\" value='M-'>";
     $display .= "<input ".$style." type='button' name='set_true_all_remove' onClick=\"acl_set_all('_0_d$',true);\" value='D+'>";
-    $display .= "<input ".$style." type='button' name='set_false_all_remove' onClick=\"acl_set_all('_0_d$',false);\" value='D-'>";
+    $display .= "<input ".$style." type='button' name='set_false_all_remove' onClick=\"acl_set_all('_0_d$',false);\" value='D-'> - ";
+    $display .= "<input ".$style." type='button' name='set_true_all_read' onClick=\"acl_set_all('_0_r$',true);\" value='R+'>";
+    $display .= "<input ".$style." type='button' name='set_false_all_read' onClick=\"acl_set_all('_0_r$',false);\" value='R-'>";
+    $display .= "<input ".$style." type='button' name='set_true_all_write' onClick=\"acl_set_all('_0_w$',true);\" value='W+'>";
+    $display .= "<input ".$style." type='button' name='set_false_all_write' onClick=\"acl_set_all('_0_w$',false);\" value='W-'> - ";
 
+    $display .= "<input ".$style." type='button' name='set_true_all_read' onClick=\"acl_set_all('[^0]_r$',true);\" value='R+'>";
+    $display .= "<input ".$style." type='button' name='set_false_all_read' onClick=\"acl_set_all('[^0]_r$',false);\" value='R-'>";
+    $display .= "<input ".$style." type='button' name='set_true_all_write' onClick=\"acl_set_all('[^0]_w$',true);\" value='W+'>";
+    $display .= "<input ".$style." type='button' name='set_false_all_write' onClick=\"acl_set_all('[^0]_w$',false);\" value='W-'>";
     /* Build general objects */
 
     $list =$this->sort_by_priority($list);
