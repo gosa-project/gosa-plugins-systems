@@ -255,7 +255,7 @@ class blocklist extends plugin
         $dn = "cn=dummy,ou=gofax,ou=systems,".$this->base; 
       }
 
-      $this->set_acl_category("gofax");
+      $this->set_acl_category("gofaxlist");
       $this->set_acl_base($dn);
 
 
@@ -397,11 +397,11 @@ class blocklist extends plugin
     /* Create filter */
     if ($ShowSendBocklists){
       $filter = "(&(objectClass=goFaxSBlock)(|(cn=".$Regex.")(goFaxSBlocklist=".$Regex.")))";
-      $res= get_list($filter, "gofax", $base,array("*"), $Flags);
+      $res= get_list($filter, "gofaxlist", $base,array("*"), $Flags);
     }
     if ($ShowReceiveBlocklists){
       $filter2= "(&(objectClass=goFaxRBlock)(|(cn=".$Regex.")(goFaxRBlocklist=".$Regex.")))";
-      $res2= get_list($filter2, "gofax", $base,array("*"), $Flags);
+      $res2= get_list($filter2, "gofaxlist", $base,array("*"), $Flags);
     }
    
     $this->blocklists = array_merge($res,$res2);
@@ -410,7 +410,7 @@ class blocklist extends plugin
     $tmp=array();
     foreach($this->blocklists as $tkey => $val ){
 
-      $acl = $this->ui ->get_permissions($base,"gofax/blocklist");
+      $acl = $this->ui ->get_permissions($base,"gofaxlist/blocklist");
       if(preg_match("/r/",$acl)){
         $tmp[strtolower($val['cn'][0]).$val['cn'][0]]=$val;
       }
@@ -579,13 +579,13 @@ class blocklist extends plugin
   {
     return (array(  
           "plShortName"       => _("Fax"),
-          "plDescription"     => _("Fax Blocklists"),
+          "plDescription"     => _("Fax blocklists"),
           "plSelfModify"      => FALSE,
           "plDepends"         => array(),
 
           "plPriority"    => 0,
           "plSection"     => array("administration" => _("FAX Blocklists")),
-          "plCategory"    => array("gofax"          => array("description" => _("Fax"),
+          "plCategory"    => array("gofaxlist"      => array("description" => _("Fax blocklists"),
                                                              "objectClass" => array("goFaxRBlock","goFaxSBlock"))),
           "plProvidedAcls" => array(
             "cn"              => _("Name"),

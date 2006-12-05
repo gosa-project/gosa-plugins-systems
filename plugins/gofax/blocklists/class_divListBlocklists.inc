@@ -22,7 +22,7 @@ class divListBlocklist extends MultiSelectWindow
 
   function divListBlocklist ($config,$parent)
   {
-    MultiSelectWindow::MultiSelectWindow($config, "Blocklists", "gofax");
+    MultiSelectWindow::MultiSelectWindow($config, "Blocklists", "gofaxlist");
     
     $this->parent       = $parent;
     $this->ui           = get_userinfo();
@@ -63,6 +63,7 @@ class divListBlocklist extends MultiSelectWindow
     $this->AddRegex   ("Regex",     _("Regular expression for matching list names"),"*" , true);
   }
 
+
   function GenHeader()
   {
     /* Prepare departments,
@@ -72,19 +73,15 @@ class divListBlocklist extends MultiSelectWindow
 
     /* Get all departments within this subtree */
     $base = $this->config->current['BASE'];
-
     $deps= get_list("(&(|(ou=*)(description=*))(objectClass=gosaDepartment))", $this->module, $base,
                     array("ou", "description"), GL_SIZELIMIT | GL_SUBSEARCH);
 
     /* Load possible departments */
     $ui= get_userinfo();
-    $tdeps= $ui->get_module_departments("gofax");
-
+    $tdeps= $ui->get_module_departments("gofaxlist");
     $ids = $this->config->idepartments;
-
     foreach($deps as $dep){
       if(isset($ids[$dep['dn']]) && in_array_ics($dep['dn'], $tdeps)){
-
         $value = $ids[$dep['dn']];
         if ($this->selectedBase == $dep['dn']){
           $options.= "<option selected='selected' value='".$dep['dn']."'>$value</option>";
@@ -94,8 +91,10 @@ class divListBlocklist extends MultiSelectWindow
       }
     }
 
-    $ui = get_userinfo();
-    $acl = $ui->get_permissions($this->selectedBase,"gofax/blocklist");
+    /* Get acls */
+    $ui       = get_userinfo();
+    $acl      = $ui->get_permissions($this->selectedBase,"gofaxlist/blocklist");
+    $acl_all  = $ui->has_complete_category_acls($this->selectedBase,"gofaxlist");
 
     /* NEW LIST MANAGMENT */
     $listhead = "<div style='background:#F0F0F9;padding:5px;'>".
@@ -108,14 +107,20 @@ class divListBlocklist extends MultiSelectWindow
       " <input class='center' type='image' src='images/list_reload.png' align='middle' 
           title='"._("Reload list")."' name='submit_department' alt='".      _("Submit")."'>&nbsp;".
           " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
-    $listhead .= $this->get_snapshot_header($this->selectedBase);
 
+    /* Add snaphot icons, if allowed */
+    if(preg_match("/(c.*w|w.*c)/",$acl_all)){
+      $listhead .= $this->get_snapshot_header($this->selectedBase);
+    }
+
+    /* Add create icon if allowed */
     if(preg_match("/c/",$acl)){
       $listhead .= " <input class='center' type='image' align='middle' src='images/list_new_blocklist.png' ".
         "  title='"._("Create new blocklist")."' alt='"._("New Blocklist")."' name='user_new'>&nbsp;".
         " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>";
     }
   
+    /* Append department selector */
     $listhead .= "&nbsp;"._("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
       " <input class='center' type='image' src='images/list_submit.png' align='middle' 
           title='"._("Submit department")."' name='submit_department' alt='"._("Submit")."'>&nbsp;".
@@ -146,7 +151,7 @@ class divListBlocklist extends MultiSelectWindow
     $ui = get_userinfo();
     foreach($list as $key => $val){
 
-      $acl = $ui->get_permissions($val['dn'],"gofax/blocklist");
+      $acl = $ui->get_permissions($val['dn'],"gofaxlist/blocklist");
       if(!preg_match("/r/",$acl)){
         continue;
       }  

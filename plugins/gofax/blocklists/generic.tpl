@@ -74,13 +74,13 @@
 {/render}
      <br>
 {render acl=$goFaxBlocklistACL}
-     <input id="number" name="number" size=25 maxlength=60 {$goFaxBlocklistACL}>&nbsp;
+     <input id="number" name="number" size=25 maxlength=60 >&nbsp;
 {/render}
 {render acl=$goFaxBlocklistACL}
-     <input type=submit value="{t}Add{/t}" {$goFaxBlocklistACL} name="add_number">&nbsp;
+     <input type=submit value="{t}Add{/t}" name="add_number">&nbsp;
 {/render}
 {render acl=$goFaxBlocklistACL}
-     <input type=submit value="{t}Delete{/t}" {$goFaxBlocklistACL} name="delete_number">
+     <input type=submit value="{t}Delete{/t}" name="delete_number">
 {/render}
    </td>
   <td style="border-left:1px solid #A0A0A0">

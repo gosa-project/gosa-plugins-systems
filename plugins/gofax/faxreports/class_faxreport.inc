@@ -164,7 +164,7 @@ class faxreport extends plugin
       $fax_uids = array_flip($this->fax_users);
       $uid = $line['uid'];
       $dn = $fax_uids[$uid];
-      $acls = $this->ui->get_permissions($dn,"gofax/faxreport");
+      $acls = $this->ui->get_permissions($dn,"faxreport/faxreport");
       if(!preg_match("/r/",$acls)){
         print_red (_("You have no permission to retrieve informations about this fax id!"));
         return($smarty->fetch(get_template_path('contents.tpl', TRUE)));
@@ -177,7 +177,7 @@ class faxreport extends plugin
 
         $final="fax_$vname";
         if($vname != "uid"){
-          $v_acl = $this->ui->get_permissions($dn,"gofax/faxreport",preg_replace("/_/","",$vname));
+          $v_acl = $this->ui->get_permissions($dn,"faxreport/faxreport",preg_replace("/_/","",$vname));
         }else{
           $v_acl = "r";
         }
@@ -298,7 +298,7 @@ class faxreport extends plugin
         /* Hide restricted attributes */ 
         foreach(array("pages","receiverid","senderid","status","queuingtime","detailedView") as $attr){
           $var = $attr."ACL";
-          $$var = $this->ui->get_permissions($dn,"gofax/faxreport",$attr);
+          $$var = $this->ui->get_permissions($dn,"faxreport/faxreport",$attr);
         }
 
         /* Restricted attributes will not be displayed, this will be displayed instead */
@@ -473,7 +473,8 @@ class faxreport extends plugin
           "plDepends"       => array(),
           "plPriority"      => 1,                                 // Position in tabs
           "plSection"       => array("administration"),                     // This belongs to personal
-          "plCategory"      => array("gofax"),
+          "plCategory"      => array("faxreport" => array("description" => _("Fax reports"),
+                                                         "objectClass" => array())),
           "plOptions"       => array(),
 
           "plProvidedAcls" => array(
