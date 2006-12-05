@@ -131,6 +131,7 @@ class addressbook extends plugin
     $acl = $this->get_entry_acls($this->abobjectclass.",".$phonefilter['search_base']);
     $smarty->assign("internal_createable", preg_match("/c/",$acl));
     $smarty->assign("internal_removeable", preg_match("/d/",$acl));
+    $smarty->assign("internal_editable",   preg_match("/w/",$acl));
 
     /* Perform actions with CTI hook */
     if (isset($_GET['target'])
@@ -537,7 +538,7 @@ class addressbook extends plugin
       foreach ($this->attributes as $name){
 
         /* Skip entries we are not allowed to read */
-        if(!preg_match("/r/",$this->get_entry_acls($_SESSION['show_info'],$name))){
+        if(!preg_match("/r/",$this->get_entry_acls($this->dn,$name))){
           $smarty->assign("info_$name", "");
         }else
 
