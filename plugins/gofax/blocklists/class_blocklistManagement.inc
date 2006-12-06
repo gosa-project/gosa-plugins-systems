@@ -264,7 +264,7 @@ class blocklist extends plugin
       foreach($_POST as $name => $value){
         if(preg_match("/^chooseBase/",$name) && $once){
           $once = false;
-          $this->dialog = new baseSelectDialog($this->config,$this);
+          $this->dialog = new baseSelectDialog($this->config,$this,$this->get_allowed_bases());
           $this->dialog->setCurrentBase($this->base);
         }
       }
@@ -277,8 +277,14 @@ class blocklist extends plugin
         if($this->dialog->isClosed()){
           $this->dialog = false;
         }elseif($this->dialog->isSelected()){
-          $this->base = $this->dialog->isSelected();
+
+          /* A new base was selected, check if it is a valid one */
+          $tmp = $this->get_allowed_bases();
+          if(isset($tmp[$this->dialog->isSelected()])){
+            $this->base = $this->dialog->isSelected();
+          }
           $this->dialog= false;
+
         }else{
           return($this->dialog->execute());
         }
@@ -316,12 +322,6 @@ class blocklist extends plugin
       foreach(array("cn", "description", "type", "goFaxBlocklist") as $val){
         $smarty->assign("$val", $this->$val);
       }
-
-      $baseACL = $this->getacl("base");
-      if(!$this->acl_is_moveable()) {
-        $baseACL = preg_replace("/w/","",$baseACL);
-      }
-      $smarty->assign("baseACL",          $baseACL);
 
       /* Lock blocklist type for non new entries */
       $smarty->assign('typeACL',$this->getacl("type", ($this->dn != "new")));
@@ -438,17 +438,22 @@ class blocklist extends plugin
   function save_object()
   {
     $this->DivListBlocklist->save_object();
+
+    /* Create a base backup and reset the
+       base directly after calling plugin::save_object();
+       Base will be set seperatly a few lines below */
+    $base_tmp = $this->base;
     plugin::save_object();
+    $this->base = $base_tmp;
 
-    $baseACL = $this->getacl("base");
-    if(!$this->acl_is_moveable()) {
-      $baseACL = preg_replace("/w/","",$baseACL);
+    /* Save base, since this is no LDAP attribute */
+    $tmp = $this->get_allowed_bases();
+    if(isset($_POST['base'])){
+      if(isset($tmp[$_POST['base']])){
+        $this->base= $_POST['base'];
+      }
     }
 
-    if(isset($_POST['base']) && preg_match("/w/",$baseACL)){
-      $this->base = $_POST['base'];
-    }
-    
     foreach($this->attributes as $attr){
       if(isset($_POST[$attr]) && $this->acl_is_writeable($attr)){
         $this->$attr = $_POST[$attr];
