@@ -1052,14 +1052,6 @@ class user extends plugin
       $this->set_acl_base($this->base);
     }
 
-    if ($this->dn == "new" &&  !$this->acl_is_createable()){
-      $message[]= _("You have no permissions to create a user on this 'Base'.");
-    } elseif ($this->dn != $new_dn && $this->dn != "new"){
-      if (!$this->acl_is_writeable($this->dn, "user","create",(!is_object($this->parent) && !isset($_SESSION['edit'])))){
-        $message[]= _("You have no permissions to move this user to the specified 'Base'.");
-      }
-    }
-
     /* must: sn, givenName, uid */
     if ($this->sn == "" && ($this->acl_is_writeable("sn",(!is_object($this->parent) && !isset($_SESSION['edit'])) || ($this->is_new)))){
       $message[]= _("The required field 'Name' is not set.");
