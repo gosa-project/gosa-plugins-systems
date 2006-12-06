@@ -1484,13 +1484,6 @@ class plugin
       $new = false;
     }
 
-    /* Add current base */      
-    if(isset($this->base) && isset($this->config->idepartments[$this->base])){
-      $deps[$this->base] = $this->config->idepartments[$this->base];
-    }else{
-      echo "No default base found. ".$this->base."<br> ";
-    }
-
     $cat_bases = $ui->get_module_departments(preg_replace("/\/.*$/","",$category));
     foreach($this->config->idepartments as $dn => $name){
       
@@ -1505,6 +1498,14 @@ class plugin
         $deps[$dn] = $name;
       }
     }
+
+    /* Add current base */      
+    if(isset($this->base) && isset($this->config->idepartments[$this->base])){
+      $deps[$this->base] = $this->config->idepartments[$this->base];
+    }else{
+      echo "No default base found. ".$this->base."<br> ";
+    }
+
     return($deps);
   }
 
