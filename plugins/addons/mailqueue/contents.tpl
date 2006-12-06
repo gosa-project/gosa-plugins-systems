@@ -49,19 +49,17 @@
 <table style="border: 1px solid rgb(176, 176, 176); width: 100%; vertical-align: top; text-align: left;" summary=""
  border="0" cellpadding="2" cellspacing="1" rules="cols">
 	<tr style="background-color: rgb(232, 232, 232); height: 26px; font-weight: bold;">
-		<td><a href="{$plug}&sort=MailID"		>{t}ID{/t}			{if $OrderBy == "MailID"}	{$SortType}{/if}</a></td>
-		<td><a href="{$plug}&sort=Server"		>{t}Server{/t}		{if $OrderBy == "Server"}	{$SortType}{/if}</a></td>
-		<td><a href="{$plug}&sort=Size"			>{t}Size{/t}		{if $OrderBy == "Size"}		{$SortType}{/if}</a></td>
-		<td><a href="{$plug}&sort=Arrival"		>{t}Arrival{/t}		{if $OrderBy == "Arrival"}	{$SortType}{/if}</a></td>
-		<td><a href="{$plug}&sort=Sender"		>{t}Sender{/t}		{if $OrderBy == "Sender"}	{$SortType}{/if}</a></td>
-		<td><a href="{$plug}&sort=Recipient"	>{t}Recipient{/t}	{if $OrderBy == "Recipient"}{$SortType}{/if}</a></td>
-		<td><a href="{$plug}&sort=Error"		>{t}Error{/t}		{if $OrderBy == "Error"}	{$SortType}{/if}</a></td>
+		<td><a href="{$plug}&amp;sort=MailID"		>{t}ID{/t}			{if $OrderBy == "MailID"}	{$SortType}{/if}</a></td>
+		<td><a href="{$plug}&amp;sort=Server"		>{t}Server{/t}		{if $OrderBy == "Server"}	{$SortType}{/if}</a></td>
+		<td><a href="{$plug}&amp;sort=Size"			>{t}Size{/t}		{if $OrderBy == "Size"}		{$SortType}{/if}</a></td>
+		<td><a href="{$plug}&amp;sort=Arrival"		>{t}Arrival{/t}		{if $OrderBy == "Arrival"}	{$SortType}{/if}</a></td>
+		<td><a href="{$plug}&amp;sort=Sender"		>{t}Sender{/t}		{if $OrderBy == "Sender"}	{$SortType}{/if}</a></td>
+		<td><a href="{$plug}&amp;sort=Recipient"	>{t}Recipient{/t}	{if $OrderBy == "Recipient"}{$SortType}{/if}</a></td>
+		<td><a href="{$plug}&amp;sort=Error"		>{t}Error{/t}		{if $OrderBy == "Error"}	{$SortType}{/if}</a></td>
 		<td>&nbsp;</td>
 	</tr>
 
 {counter start=0 assign=i start=1}
-	<input type="hidden" name="header_server" value="">
-	<input type="hidden" name="header_id" value="">
 {foreach from=$entries item=val key=key}
 			
 	{if ($i%2)== 0 }
@@ -69,15 +67,18 @@
 	{else}
 		<tr style="height: 22px; background-color: rgb(245, 245, 245);">
 	{/if}
-		<td onlick="javascript:	document.mainform.header_server.value='{$entries[$key].Server}';
+		<td >
+<!-- onlick="javascript:	document.mainform.header_server.value='{$entries[$key].Server}';
 								document.mainform.header_id.value='{$entries[$key].MailID}';
-								document.mainform.submit();">	
+								document.mainform.submit();"
+-->
 			{if $entries[$key].Active == true}
 				<img class="center" src="images/mailq_active.png" border=0 alt="{t}Active{/t}">
 			{/if}
 			
 			{$entries[$key].MailID}</td>
-		<td onclick="javascript: document.location.href='{$plug}&act=header&id={$entries[$key].MailID}&server={$entries[$key].Server}'">
+		<td> 
+<!-- onclick="javascript: document.location.href='{$plug}&amp;act=header&amp;id={$entries[$key].MailID}&amp;server={$entries[$key].Server}'"-->
 			{$entries[$key].Server}</td>
 		<td>
 			{$entries[$key].Size}</td>
@@ -87,24 +88,24 @@
 			{$entries[$key].Sender}</td>
 		<td>
 			{$entries[$key].Recipient}</td>
-		<td titel="{$entries[$key].Error}">{$entries[$key].Error}</td>
+		<td >{$entries[$key].Error}</td>
 		<td style="text-align:right">
-			<a href="{$plug}&act=del&id={$entries[$key].MailID}&server={$entries[$key].Server}">
+			<a href="{$plug}&amp;act=del&amp;id={$entries[$key].MailID}&amp;server={$entries[$key].Server}">
 				<img class="center" src="images/edittrash.png" border=0 alt="{t}delete{/t}" title="{t}Delete this message{/t}">
 			</a>
 		{if $entries[$key].Hold == true}
-			<a href="{$plug}&act=unhold&id={$entries[$key].MailID}&server={$entries[$key].Server}">
+			<a href="{$plug}&amp;act=unhold&amp;id={$entries[$key].MailID}&amp;server={$entries[$key].Server}">
 				<img class="center" src="images/mailq_unhold.png" border=0 alt="{t}unhold{/t}" title="{t}Release message{/t}">
 			</a>
 		{else}
-			<a href="{$plug}&act=hold&id={$entries[$key].MailID}&server={$entries[$key].Server}">
+			<a href="{$plug}&amp;act=hold&amp;id={$entries[$key].MailID}&amp;server={$entries[$key].Server}">
 				<img class="center" src="images/mailq_hold.png" border=0 alt="{t}hold{/t}" title="{t}Hold message{/t}">
 			</a>
 		{/if}
-			<a href="{$plug}&act=requeue&id={$entries[$key].MailID}&server={$entries[$key].Server}">
+			<a href="{$plug}&amp;act=requeue&amp;id={$entries[$key].MailID}&amp;server={$entries[$key].Server}">
 				<img class="center" src="images/mailq_requeue.png" border=0 alt="{t}requeue{/t}" title="{t}Requeue this message{/t}">
 			</a>
-			<a href="{$plug}&act=header&id={$entries[$key].MailID}&server={$entries[$key].Server}">
+			<a href="{$plug}&amp;act=header&amp;id={$entries[$key].MailID}&amp;server={$entries[$key].Server}">
 				<img class="center" src="images/mailq_header.png" border=0 alt="{t}header{/t}" title="{t}Display header from this message{/t}">
 			</a>
 		</td>
