@@ -39,6 +39,8 @@ class blocklist extends plugin
     /* Call parent execute */
     plugin::execute();
 
+    $_SESSION['LOCK_VARS_TO_USE'] = array("/^user_/");
+
     /***************
       Init vars 
      ***************/
@@ -67,11 +69,6 @@ class blocklist extends plugin
         // Post for new
       }elseif(preg_match("/user_new.*/",$key)){
         $s_action="new";
-      }elseif(preg_match("/user_tplnew.*/i",$key)){
-        $s_action="new_tpl";
-      }elseif(preg_match("/user_chgpw.*/i",$key)){
-        $s_action="change_pw";
-        $s_entry  = preg_replace("/user_chgpw_/i","",$key);
       }
     }
 
