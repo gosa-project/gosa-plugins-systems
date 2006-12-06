@@ -153,9 +153,6 @@ class mimetype extends plugin
       $smarty->assign($name."ACL",$this->getacl($name));
     }
 
-    /* Assign base ACL */
-    $smarty->assign("baseACL", $this->getacl("base"));
-
     /* Base select dialog */
     $once = true;
     foreach($_POST as $name => $value){
@@ -519,22 +516,6 @@ class mimetype extends plugin
           $message[]= _("There's already an mime with this 'Name'.");
         }
       }
-    }
-
-    /* Check permissions for that base? */
-    if ($this->base != ""){
-      $new_dn= "cn=".$this->cn.",ou=mime,".$this->base;
-    } else {
-      $new_dn= $this->dn;
-    }
-
-    /* Set new acl base */
-    if($this->dn == "new") {
-      $this->set_acl_base($new_dn);
-    }
-
-    if (!$this->acl_is_createable() && $this->dn == "new"){
-      $message[]= _("You have no permissions to create a mime type on this 'Base'.");
     }
 
     return($message);
