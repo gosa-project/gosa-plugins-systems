@@ -183,13 +183,6 @@ class ogroup extends plugin
       $smarty->assign($name."ACL",$this->getacl($name));
     }
 
-    /* Create base acls */
-    $baseACL = $this->getacl("base",(!is_object($this->parent) && !isset($_SESSION['edit'])));
-    if(!$this->acl_is_moveable()) {
-      $baseACL = preg_replace("/w/","",$baseACL);
-    }
-    $smarty->assign("baseACL",          $baseACL);
-
     /* Base select dialog */
     $once = true;
     foreach($_POST as $name => $value){
@@ -208,7 +201,12 @@ class ogroup extends plugin
       if($this->dialog->isClosed()){
         $this->dialog = false;
       }elseif($this->dialog->isSelected()){
-        $this->base = $this->dialog->isSelected();
+
+        /* A new base was selected, check if it is a valid one */
+        $tmp = $this->get_allowed_bases();
+        if(isset($tmp[$this->dialog->isSelected()])){
+          $this->base = $this->dialog->isSelected();
+        }
         $this->dialog= false;
       }else{
         return($this->dialog->execute());
@@ -336,8 +334,21 @@ class ogroup extends plugin
   {
     /* Save additional values for possible next step */
     if (isset($_POST['ogroupedit'])){
+
+      /* Create a base backup and reset the
+         base directly after calling plugin::save_object();
+         Base will be set seperatly a few lines below */
+      $base_tmp = $this->base;
       plugin::save_object();
-  
+      $this->base = $base_tmp;
+
+      /* Save base, since this is no LDAP attribute */
+      $tmp = $this->get_allowed_bases();
+      if(isset($_POST['base'])){
+        if(isset($tmp[$_POST['base']])){
+          $this->base= $_POST['base'];
+        }
+      }
     }
   }
 
@@ -580,12 +591,8 @@ class ogroup extends plugin
       $this->set_acl_base($this->base);
     }
 
-    if ($this->orig_dn == "new" && !$this->acl_is_createable()){
-      $message[]= _("You have no permissions to create a group on this 'Base'.");
-    }
-
     /* must: cn */
-    if ($this->cn == "" && $this->acl_is_writeable("cn")){
+    if ($this->cn == ""){
       $message[]= "The required field 'Name' is not set.";
     }
 
