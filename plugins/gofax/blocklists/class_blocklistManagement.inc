@@ -482,10 +482,6 @@ class blocklist extends plugin
       $new_dn= $this->dn;
     }
 
-    if (!$this->acl_is_createable() && $this->dn == "new"){
-      $message[]= _("You have no permissions to create a blocklist on this 'Base'.");
-    }
-
     /* check syntax: must cn */
     if ($this->cn == ""){
       $message[]= _("Required field 'Name' is not set.");
