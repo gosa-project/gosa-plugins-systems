@@ -28,8 +28,10 @@ class blocklist extends plugin
     $this->ui     = $ui;
     $this->dn     = "";
     $this->config = $config;
-
+    $this->base = $_SESSION['CurrentMainBase']; 
     $this->DivListBlocklist = new divListBlocklist($this->config,$this);
+    $this->set_acl_category("gofaxlist");
+    $this->set_acl_base($this->base);
   }
 
   function execute()
@@ -91,10 +93,10 @@ class blocklist extends plugin
         isset($_POST['delete_blocklist_confirm']) || 
         isset($_POST['delete_lock'])){
 
+      del_lock ($this->dn);
       if(!isset($_POST['delete_blocklist_confirm'])){
         $this->clear_fields();
       }
-      del_lock ($this->dn);
       unset($_SESSION['objectinfo']);
     }
 
@@ -251,13 +253,17 @@ class blocklist extends plugin
     if($this->dn){
 
       $dn = $this->dn;
+  
+      /* set Account states, this is nescessary for get_allowed_bases */
+      $this->initially_was_account= true;
+      $this->is_account = true;
       if($dn == "new"){
         $dn = "cn=dummy,ou=gofax,ou=systems,".$this->base; 
+        $this->initially_was_account= false;
       }
 
       $this->set_acl_category("gofaxlist");
       $this->set_acl_base($dn);
-
 
       /* Base select dialog */
       $once = true;
@@ -302,6 +308,7 @@ class blocklist extends plugin
 
       /* Fill templating stuff */
       $smarty->assign("bases", $this->get_allowed_bases());
+
       $smarty->assign("base_select", $this->base);
       $smarty->assign("types", array(0 => _("send"), 1 => _("receive")));
       if ($this->dn == "new" || preg_match ("/,ou=incoming,/", $this->dn)){
