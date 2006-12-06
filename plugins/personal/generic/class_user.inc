@@ -512,6 +512,11 @@ class user extends plugin
     $ui =get_userinfo();
     foreach($this->attributes as $val){
       $smarty->assign("$val", $this->$val);
+    }
+
+    /* Set acls */
+    $tmp = $this->plinfo();
+    foreach($tmp['plProvidedAcls'] as $val => $translation){
       $smarty->assign("$val"."ACL", $this->getacl($val,(!is_object($this->parent) && !isset($_SESSION['edit']))));
     }
 
@@ -524,7 +529,6 @@ class user extends plugin
     $smarty->assign("userPicture_is_readable",   $this->acl_is_readable("userPicture",(!is_object($this->parent) && !isset($_SESSION['edit']))));
 
     /* Create base acls */
-    $smarty->assign("baseACL",$this->getacl("base",(!is_object($this->parent) && !isset($_SESSION['edit']))));
     @$smarty->assign("bases", $this->allowedBasesToMoveTo());
 
     /* Save government mode attributes */
