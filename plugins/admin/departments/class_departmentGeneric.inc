@@ -97,9 +97,6 @@ class department extends plugin
 		$this->config->make_idepartments();
 		$smarty= get_smarty();
 
-    /* Assign base ACL */
-    $smarty->assign("baseACL", $this->getacl("base"));
-    
     $tmp = $this->plInfo();
     foreach($tmp['plProvidedAcls'] as $name => $translation){
       $smarty->assign($name."ACL",$this->getacl($name));
@@ -241,18 +238,6 @@ class department extends plugin
 	{
 		/* Call common method to give check the hook */
 		$message= plugin::check();
-
-    
-    /* Set new acl base */
-    if($this->dn == "new") {
-      $this->set_acl_base($this->base);
-    }
-
-		/* Permissions for that base? */
-		//	$this->dn= "ou=$this->ou,".$this->base;
-		if (!$this->acl_is_createable() && $this->dn == "new"){
-			$message[]= _("You have no permissions to create a department on this 'Base'.");
-		}
 
 		/* Check for presence of this department */
 		$ldap= $this->config->get_ldap_link();
