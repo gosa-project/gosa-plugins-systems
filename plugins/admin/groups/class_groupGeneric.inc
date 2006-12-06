@@ -260,9 +260,6 @@ class group extends plugin
       $smarty->assign("pickupGroup",false);
     }
 
-    /* Assign base ACL */
-    $smarty->assign("baseACL", $this->getacl("base"));
-
     /* Manage object add dialog */
     if ($this->group_dialog){
 
@@ -741,15 +738,6 @@ class group extends plugin
       $new_dn= 'cn='.$this->cn.','.get_groups_ou().$this->base;
     } else {
       $new_dn= $this->dn;
-    }
-
-    /* Set new acl base */
-    if($this->dn == "new") {
-      $this->set_acl_base($this->base);
-    }
-
-    if ($this->orig_dn == "new" && !$this->acl_is_createable()){
-      $message[]= _("You have no permissions to create a group on this 'Base'.");
     }
 
     /* must: cn */
