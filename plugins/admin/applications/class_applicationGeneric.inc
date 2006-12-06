@@ -120,8 +120,6 @@ class application extends plugin
       $smarty->assign($name."ACL",$this->getacl($name));
     }
  
-    $smarty->assign("baseACL", $this->getacl("base"));
-
     /* Do we represent a valid group? */
     if (!$this->is_account && $this->parent == NULL){
       $display= "<img alt=\"\" src=\"images/stop.png\" align=\"middle\">&nbsp;<b>".
@@ -182,7 +180,8 @@ class application extends plugin
       if($this->dialog->isClosed()){
         $this->dialog = false;
       }elseif($this->dialog->isSelected()){
-  
+ 
+        /* Just allow selection valid bases */ 
         $tmp = $this->get_allowed_bases();
         if(isset($tmp[$this->dialog->isSelected()])){
           $this->base = $this->dialog->isSelected();
@@ -383,12 +382,6 @@ class application extends plugin
 
     if($this->dn == "new"){
       $this->set_acl_base($this->base);
-    }
-
-    /* Check acls to create a new application here  */
-    $ui= get_userinfo();
-    if (!$this->acl_is_createable() && $this->dn == "new"){
-      $message[]= _("You have no permissions to create a application on this 'Base'.");
     }
 
     /* All required fields are set? */
