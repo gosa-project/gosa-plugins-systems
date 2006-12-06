@@ -220,7 +220,6 @@ class workgeneric extends plugin
       if($this->dialog->isClosed()){
         $this->dialog = false;
       }elseif($this->dialog->isSelected()){
-        $this->base = $this->dialog->isSelected();
 
         /* A new base was selected, check if it is a valid one */
         $tmp = $this->get_allowed_bases();
@@ -383,16 +382,6 @@ class workgeneric extends plugin
     }
 
     $this->dn= "cn=".$this->cn.",ou=workstations,ou=systems,".$this->base;
-
-    /* Set new acl base */
-    if($this->dn == "new") {
-      $this->set_acl_base($this->base);
-    }
-
-    if ($this->orig_dn == "new" && !$this->acl_is_createable()){
-      $message[]= _("You have no permissions to create a workstation on this 'Base'.");
-    }
-
 
     if ($this->cn == ""){
       $message[]= _("The required field 'Workstation name' is not set.");

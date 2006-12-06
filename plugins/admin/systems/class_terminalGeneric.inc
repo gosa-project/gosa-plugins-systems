@@ -401,16 +401,6 @@ class termgeneric extends plugin
     /* Permissions for that base? */
     $this->dn= "cn=".$this->cn.",ou=terminals,ou=systems,".$this->base;
 
-    /* Set new acl base */
-    if($this->dn == "new") {
-      $this->set_acl_base($this->base);
-    }
-
-    $ui= get_userinfo();
-    if ($this->dn == "new" && !$this->acl_is_createable()){
-      $message[]= _("You have no permissions to create a terminal on this 'Base'.");
-    }
-
     if ($this->cn == ""){
       $message[]= _("The required field 'Terminal name' is not set.");
     }

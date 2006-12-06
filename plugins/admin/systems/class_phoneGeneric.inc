@@ -124,7 +124,7 @@ class phoneGeneric extends plugin
     foreach($_POST as $name => $value){
       if(preg_match("/^chooseBase/",$name) && $once){
         $once = false;
-        $this->dialog = new baseSelectDialog($this->config,$this);
+        $this->dialog = new baseSelectDialog($this->config,$this,$this->get_allowed_bases());
         $this->dialog->setCurrentBase($this->base);
       }
     }
@@ -326,16 +326,6 @@ class phoneGeneric extends plugin
     }
     if ($this->cn == "0"){ 
       $message[]= _("The 'Phone name' '0' is reserved and cannot be used.");
-    }
-
-    /* Set new acl base */
-    if($this->dn == "new") {
-      $this->set_acl_base($this->base);
-    }
-
-    $ui= get_userinfo();
-    if ($this->dn == "new" && $this->acl_is_createable()){
-      $message[]= _("You have no permissions to create a phone on this 'Base'.");
     }
 
     if ($this->orig_dn != $this->dn){

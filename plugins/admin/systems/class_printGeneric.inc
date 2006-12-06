@@ -657,17 +657,6 @@ class printgeneric extends plugin
       $message[]= "The required field 'Printer name' is not set.";
     }
 
-    /* Set new acl base */
-    if($this->dn == "new") {
-      $this->set_acl_base($this->base);
-    }
-
-    if(preg_match("/printer/i",$this->BelongsTo)){
-      if ($this->orig_dn == "new" && !$this->acl_is_createable()){
-        $message[]= _("You have no permissions to create a group on this 'Base'.");
-      }
-    }
-    
     /* must: labeledURI */
     if(empty($this->labeledURI)){
       $message[]= "The required field 'Printer URL' is not set.";

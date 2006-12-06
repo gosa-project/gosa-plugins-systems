@@ -56,7 +56,7 @@ class componentGeneric extends plugin
     foreach($_POST as $name => $value){
       if(preg_match("/^chooseBase/",$name) && $once){
         $once = false;
-        $this->dialog = new baseSelectDialog($this->config,$this);
+        $this->dialog = new baseSelectDialog($this->config,$this,$this->get_allowed_bases());
         $this->dialog->setCurrentBase($this->base);
       }
     }
@@ -179,16 +179,6 @@ class componentGeneric extends plugin
       if (!is_ip($this->netConfigDNS->ipHostNumber)){
         $message[]= _("The field IP address contains an invalid address.");
       }
-    }
-
-    /* Set new acl base */
-    if($this->dn == "new") {
-      $this->set_acl_base($this->base);
-    }
-
-    $ui= get_userinfo();
-    if ($this->dn == "new" && !$this->acl_is_createable()){
-      $message[]= _("You have no permissions to create a component on this 'Base'.");
     }
 
     if ($this->orig_dn != $this->dn){

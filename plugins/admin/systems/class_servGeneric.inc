@@ -252,16 +252,6 @@ class servgeneric extends plugin
       $message[]= _("The required field 'Server name' is not set.");
     }
     
-    /* Set new acl base */
-    if($this->dn == "new") {
-      $this->set_acl_base($this->base);
-    }
-
-    $ui= get_userinfo();
-    if (!$this->acl_is_createable() && $this->dn == "new"){
-      $message[]= _("You have no permissions to create a server on this 'Base'.");
-    }
-
     if ($this->orig_dn != $this->dn){
       $ldap= $this->config->get_ldap_link();
       $ldap->cd ($this->base);
@@ -270,8 +260,8 @@ class servgeneric extends plugin
         while ($attrs= $ldap->fetch()){
           if ($attrs['dn'] != $this->orig_dn){
             if(!preg_match("/,ou=incoming,/",$attrs['dn'])){
-            $message[]= sprintf (_("There is already an entry '%s' in the base choosen by you"), $this->cn);
-            break;
+              $message[]= sprintf (_("There is already an entry '%s' in the base choosen by you"), $this->cn);
+              break;
             }
           }
         }
