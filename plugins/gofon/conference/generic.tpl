@@ -218,6 +218,8 @@
   </tr>
 </table>
 
+<input type='hidden' name='phoneConferenceGeneric' value='1'>
+
 <!-- Place cursor -->
 <script language="JavaScript" type="text/javascript">
   <!-- // First input field on page

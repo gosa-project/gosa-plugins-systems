@@ -73,6 +73,8 @@
 <textarea name="goFonMacroContent" style="width:99%;height:300px;font-size:14px;font-family:Arial;">{$goFonMacroContent}</textarea>
 {/render}
 
+<input type='hidden' name='gofonMacroGenericPosted' value='1'>
+
 <!-- Place cursor -->
 <script language="JavaScript" type="text/javascript">
   <!-- // First input field on page

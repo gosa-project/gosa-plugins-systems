@@ -357,7 +357,7 @@ class macro extends plugin
   */
   function save_object()
   {
-    if (isset($_POST['displayName'])){
+    if (isset($_POST['gofonMacroGenericPosted'])){
       $old_cn= $this->cn;
       $old_visible = $this->goFonMacroVisible;
 
@@ -473,18 +473,19 @@ class macro extends plugin
     return (array(
         "plShortName"   => _("Generic"),
         "plDescription" => _("Asterisk macro management"),
-        "plSelfModify"  => TRUE,
+        "plSelfModify"  => FALSE,
         "plDepends"     => array(),
         "plPriority"    => 0,
         "plSection"     => array("administration"),
-        "plCategory"    => array("gofon"),
+        "plCategory"    => array("gofonmacro" => array("description" => _("GOfon macro"),
+                                                  "objectClass" => "gofonMacro")),
 
         "plProvidedAcls" => array(
           "cn"                            => _("Macro name"),
           "base"                          => _("Base"), 
           "description"                   => _("Description"), 
           "displayName"                   => _("Display name"),
-          "goFonMacroContent"             => _("Macro content"),
+          "goFonMacroContent"             => _("Macro content and parameter"),
           "goFonMacroVisible"             => _("Visibility flag"))
         ));
   }

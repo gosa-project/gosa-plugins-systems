@@ -5,6 +5,12 @@
 <br>
 {t}This procedure will restore a snapshot of the selected object. It will replace the existing object after pressing the restore button.{/t}
 <br>
+<br>
+{t}Remember that DNS configuration and database entries could not be restored. For some objects it is only nescessary to open and save them again (goFon), but some entries must be recreated manually (glpi).{/t}
+<br>
+<br>
+{t}Don't forget to check references to other objects, for example does the selected printer still exists ?{/t}
+<br>
 <p class="seperator">&nbsp;</p>
 <br>
 <table summary="" style="width:100%">
@@ -46,7 +52,7 @@
 {t}This procedure will create a snapshot of the selected object. It will be stored inside a special branch of your directory system and can be restored later on.{/t}
 <br>
 <br>
-{t}Remember that the DNS configurations for this entry and possibly created zones in server extensions will not be stored in the snapshot.{/t}
+{t}Remember that database entries, DNS configurations and possibly created zones in server extensions will not be stored in the snapshot.{/t}
 <br>
 <p class="seperator">&nbsp;</p>
 <br>

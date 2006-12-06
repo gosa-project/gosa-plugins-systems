@@ -1234,7 +1234,9 @@ class phoneAccount extends plugin
           "plDepends"       => array("user"),
           "plPriority"      => 7,                                 // Position in tabs
           "plSection"       => "personal",                        // This belongs to personal
-          "plCategory"      => array("users"),
+          "plCategory"      => array("gofonreport" => array("description" => _("GOfon reports"),
+                                                  "objectClass" => "")),
+
           "plOptions"       => array(),
 
           "plProvidedAcls"  => array(

@@ -202,7 +202,7 @@ class conference extends plugin
   /* Save data to object */
   function save_object()
   {
-    if(isset($_POST['cn'])){
+    if(isset($_POST['phoneConferenceGeneric'])){
 
       plugin::save_object();
 
@@ -541,7 +541,7 @@ class conference extends plugin
           "plDepends"     => array(),
           "plPriority"    => 0,
           "plSection"     => array("addons" => _("Addons")),
-          "plCategory"    => array("gofon" => array("description" => _("GOfon"),
+          "plCategory"    => array("gofonconference" => array("description" => _("GOfon conference"),
                                                   "objectClass" => "gofonConference")),
 
           "plProvidedAcls" => array(

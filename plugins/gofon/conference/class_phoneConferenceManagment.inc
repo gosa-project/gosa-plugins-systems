@@ -119,7 +119,7 @@ class phoneConferenceManagment extends plugin
      */
     if ($s_action =="del"){
 
-      $acl = $this->ui->get_permissions($this->conferences[$s_entry]['dn'],"gofon/conference"); 
+      $acl = $this->ui->get_permissions($this->conferences[$s_entry]['dn'],"gofonconference/conference"); 
       if(preg_match("/d/",$acl)){
         $this->dn= $this->conferences[$s_entry]['dn'];
 
@@ -145,7 +145,7 @@ class phoneConferenceManagment extends plugin
      * Finally delete department
      */
     if (isset($_POST['delete_department_confirm'])){
-      $acl = $this->ui->get_permissions($this->dn,"gofon/conference"); 
+      $acl = $this->ui->get_permissions($this->dn,"gofonconference/conference"); 
       if(preg_match("/d/",$acl)){
         $this->remove_from_parent();
         gosa_log ("Department object'".$this->dn."' has been removed");
@@ -174,7 +174,7 @@ class phoneConferenceManagment extends plugin
       add_lock ($this->dn, $this->ui->dn);
 
       /* Register conftab to trigger edit dialog */
-      $this->conftab= new conferencetabs($this->config,$this->config->data['TABS']['CONFERENCETABS'], $this->dn,"gofon");
+      $this->conftab= new conferencetabs($this->config,$this->config->data['TABS']['CONFERENCETABS'], $this->dn,"gofonconference");
       $this->conftab->set_acl_base($this->dn);
       $_SESSION['objectinfo']= $this->dn;
     }
@@ -188,11 +188,11 @@ class phoneConferenceManagment extends plugin
     if($s_action == "new" ){
 
       $dummy_dn = "cn=dummy,ou=conferences,ou=asterisk,ou=configs,ou=systems,".$this->DivListConference->selectedBase;      
-      $acl = $this->ui->get_permissions($dummy_dn,"gofon/conference"); 
+      $acl = $this->ui->get_permissions($dummy_dn,"gofonconference/conference"); 
       if(preg_match("/c/",$acl)){
         /* Set up the users ACL's for this 'dn' */
         $this->dn= "new";
-        $this->conftab= new conferencetabs($this->config,$this->config->data['TABS']['CONFERENCETABS'], $this->dn,"gofon");
+        $this->conftab= new conferencetabs($this->config,$this->config->data['TABS']['CONFERENCETABS'], $this->dn,"gofonconference");
         $this->conftab->set_acl_base($dummy_dn);
         unset($_SESSION['objectinfo']);
       }
@@ -306,7 +306,7 @@ class phoneConferenceManagment extends plugin
       $Flags |= GL_SUBSEARCH;
     }
 
-    $this->conferences= get_list($Filter, "gofon", $Base, $Attrs, $Flags);
+    $this->conferences= get_list($Filter, "gofonconference", $Base, $Attrs, $Flags);
   }
 
   function remove_from_parent()
@@ -314,7 +314,7 @@ class phoneConferenceManagment extends plugin
     /* Ehm what are we doinf here ? */
   
     $cfg = new conference($this->config, $this->dn);
-    $cfg->set_acl_category("gofon");
+    $cfg->set_acl_category("gofonconference");
     $cfg->set_acl_base($this->dn);
 
     $cfg->remove_from_parent();

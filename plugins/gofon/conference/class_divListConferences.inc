@@ -22,7 +22,7 @@ class divListConference extends MultiSelectWindow
 
   function divListConference ($config,$parent)
   {
-    MultiSelectWindow::MultiSelectWindow($config,"Conferences", "gofon");
+    MultiSelectWindow::MultiSelectWindow($config,"Conferences", "gofonconference");
     
     $this->parent       = $parent;
     $this->ui           = get_userinfo();
@@ -61,6 +61,7 @@ class divListConference extends MultiSelectWindow
     $this->AddRegex   ("Regex",      _("Regular expression for matching conference names"),"*" , true);
   }
 
+
   function GenHeader()
   {
     /* Prepare departments,
@@ -74,9 +75,9 @@ class divListConference extends MultiSelectWindow
                     array("ou", "description"), GL_SIZELIMIT | GL_SUBSEARCH);
 
     /* Load possible departments */
-    $ui= get_userinfo();
-    $tdeps= $ui->get_module_departments("gofon");
-    $ids = $this->config->idepartments;
+    $ui     = get_userinfo();
+    $tdeps  = $ui->get_module_departments("gofonconference");
+    $ids    = $this->config->idepartments;
 
     foreach($deps as $dep){
       if(isset($ids[$dep['dn']]) && in_array_ics($dep['dn'], $tdeps)){
@@ -89,7 +90,9 @@ class divListConference extends MultiSelectWindow
       }
     }
 
-    $acls = $ui->get_permissions($this->selectedBase,"gofon/conference");
+    /* Get acls */
+    $acls     = $ui->get_permissions($this->selectedBase,"gofonconference/conference");
+    $acl_all  = $ui->has_complete_category_acls($this->selectedBase,"gofonconference") ;
 
     /* NEW LIST MANAGMENT */
     $listhead = "<div style='background:#F0F0F9;padding:5px;'>".
@@ -111,7 +114,7 @@ class divListConference extends MultiSelectWindow
     }
 
     /* Only display snapshot settings if we are able to write && create new entries */
-    if(preg_match("/[cw]/",$acls)){
+    if(preg_match("/(c.*w|w.*c)/",$acl_all)){
       $listhead .= $this->get_snapshot_header($this->selectedBase);
     }
   
@@ -146,7 +149,8 @@ class divListConference extends MultiSelectWindow
     /* Insert conferneces*/
     foreach($list as $conferencekey => $conference ){
 
-      $acl = $this->ui -> get_permissions($conference['dn'],"gofon/conference");
+      $acl      = $this->ui->get_permissions($conference['dn'],"gofonconference/conference");
+      $acl_all  = $this->ui->has_complete_category_acls($conference['dn'],"gofonconference");
 
       /* You will need at least read access for the 
           current conference informations to display it */  
@@ -159,7 +163,7 @@ class divListConference extends MultiSelectWindow
                     alt='"._("edit")."'    name='conf_edit_%KEY%' title='"._("Edit this entry")."'>";
 
       /* Add snapshot icon - This is allowed when we have create and write access for the current entry */
-      if(preg_match("/[cw]/",$acl)){
+      if(preg_match("/(c.*w|w.*c)/",$acl_all)){
         $actions.= $this->GetSnapShotActions($conference['dn']);
       }
 
@@ -171,7 +175,7 @@ class divListConference extends MultiSelectWindow
 
       /* Display PIN icon, only if we are the owner of the given conference */
       $owner = $this->parent->ui->dn==$conference['goFonConferenceOwner'][0];
-      $p_acl = $this->ui->get_permissions($conference['dn'],"gofon/conference","goFonPIN");
+      $p_acl = $this->ui->get_permissions($conference['dn'],"gofonconference/conference","goFonPIN");
       if((isset($conference['goFonPIN'][0])) && $owner && preg_match("/r/",$p_acl)){
         $pin = "<img class='center' src='images/list_password.png' title='PIN : ".$conference['goFonPIN'][0]."' alt='PIN'>";
       }else{
@@ -179,7 +183,7 @@ class divListConference extends MultiSelectWindow
       }
 
       /* Display numer of the conference if we are allowed to view it */
-      $n_acl = $this->ui->get_permissions($conference['dn'],"gofon/conference","telephoneNumber");
+      $n_acl = $this->ui->get_permissions($conference['dn'],"gofonconference/conference","telephoneNumber");
       if(isset($conference['telephoneNumber'][0]) && preg_match("/r/",$n_acl)){
         $number = " - ".$conference['telephoneNumber'][0];
       }else{

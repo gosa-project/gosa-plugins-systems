@@ -22,7 +22,7 @@ class divListMacro extends MultiSelectWindow
 
   function divListMacro ($config,$parent)
   {
-    MultiSelectWindow::MultiSelectWindow($config,"Macros", "gofon");
+    MultiSelectWindow::MultiSelectWindow($config,"Macros", "gofonmacro");
     
     $this->parent       = $parent;
     $this->ui           = get_userinfo();
@@ -74,7 +74,7 @@ class divListMacro extends MultiSelectWindow
 
     /* Load possible departments */
     $ui= get_userinfo();
-    $tdeps= $ui->get_module_departments("groups");
+    $tdeps= $ui->get_module_departments("gofonmacro");
 
     $ids = $this->config->idepartments;
 
@@ -90,7 +90,7 @@ class divListMacro extends MultiSelectWindow
       }
     }
 
-    $acls  = $ui->get_permissions($this->selectedBase,"gofon/macro");
+    $acls  = $ui->get_permissions($this->selectedBase,"gofonmacro/macro");
 
     /* NEW LIST MANAGMENT */
     $listhead = "<div style='background:#F0F0F9;padding:5px;'>".
@@ -149,7 +149,7 @@ class divListMacro extends MultiSelectWindow
 
     foreach($list as $key => $val){
        
-      $sacl  = $ui->get_permissions($val['dn'],"gofon/macro");
+      $sacl  = $ui->get_permissions($val['dn'],"gofonmacro/macro");
 
       $action = "";
       if(!preg_match("/r/",$sacl)){
@@ -168,7 +168,7 @@ class divListMacro extends MultiSelectWindow
           name='user_del_%KEY%' title='"._("Delete macro")."'>";
       }
 
-      $display= $val["displayName"][0];
+      $display= $val["displayName"][0]."&nbsp;(".$val["cn"][0].")";
       if(isset($val['goFonMacroVisible']['0'])&&($val['goFonMacroVisible']['0'] == "1")){
         $pic1 = $visible;
       }else{
