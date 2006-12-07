@@ -99,13 +99,12 @@ class gofonMacro extends plugin
       $this->macrotabs->set_acl_base($this->DivListMacro->selectedBase);
     }
 
-
     /*****************
       Edit || Password canceled  
      *****************/
 
     /* Cancel dialogs */
-    if (isset($_POST['edit_cancel']) || isset($_POST['delete_cancel'])){
+    if (isset($_POST['edit_cancel'])){
       del_lock ($this->macrotabs->dn);
       unset ($this->macrotabs);
       $this->macrotabs= NULL;
