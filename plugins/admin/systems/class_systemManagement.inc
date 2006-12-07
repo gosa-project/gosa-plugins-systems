@@ -54,7 +54,7 @@ class systems extends plugin
     /* Call parent execute */
     plugin::execute();
 
-    $_SESSION['LOCK_VARS_TO_USE'] = array("/^user_edit_/i","/^user_del_/","/^act/","/^id/");
+    $_SESSION['LOCK_VARS_TO_USE'] = array("/^system_edit_/i","/^system_del_/","/^act/","/^id/");
 
     /********************
       Check for functional posts, edit|delete|add|... system devices 
@@ -67,21 +67,21 @@ class systems extends plugin
     /* Test Posts */
     foreach($_POST as $key => $val){
       // Post for delete
-      if(preg_match("/user_del.*/",$key)){
+      if(preg_match("/system_del.*/",$key)){
         $s_action = "del";
-        $s_entry  = preg_replace("/user_".$s_action."_/i","",$key);
+        $s_entry  = preg_replace("/system_del_/i","",$key);
         // Post for edit
-      }elseif(preg_match("/user_edit_.*/",$key)){
+      }elseif(preg_match("/system_edit_.*/",$key)){
         $s_action="edit";
-        $s_entry  = preg_replace("/user_".$s_action."_/i","",$key);
+        $s_entry  = preg_replace("/system_edit_/i","",$key);
         // Post for new
-      }elseif(preg_match("/user_new.*/",$key)){
+      }elseif(preg_match("/system_new.*/",$key)){
         $s_action="new";
-      }elseif(preg_match("/user_tplnew.*/i",$key)){
+      }elseif(preg_match("/system_tplnew.*/i",$key)){
         $s_action="new_tpl";
-      }elseif(preg_match("/user_setpwd_.*/i",$key)){
+      }elseif(preg_match("/system_setpwd_.*/i",$key)){
         $s_action="change_pw";
-        $s_entry  = preg_replace("/user_setpwd_/i","",$key);
+        $s_entry  = preg_replace("/system_setpwd_/i","",$key);
       }elseif(preg_match("/gen_cd_.*/i",$key)){
         $s_action="gen_cd";
         $s_entry  = preg_replace("/gen_cd_/i","",$key);

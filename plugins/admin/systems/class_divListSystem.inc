@@ -261,7 +261,7 @@ class divListSystem extends MultiSelectWindow
       $acl      = $ui->get_permissions($val['dn'],$tabs[$type]['ACL']);
 
       $action= "<input class='center' type='image' src='images/edit.png' 
-                    alt='"._("edit")."'     name='user_edit_%KEY%' title='"._("Edit system")."'>";
+                    alt='"._("edit")."'     name='system_edit_%KEY%' title='"._("Edit system")."'>";
       if(preg_match("/(c.*w|w.*c)/",$acl_all)){
         $action.= $this->GetSnapShotActions($val['dn']);
       }else{
@@ -270,7 +270,7 @@ class divListSystem extends MultiSelectWindow
 
       if(preg_match("/d/",$acl)){
         $action.= "<input class='center' type='image' src='images/edittrash.png' 
-          alt='"._("delete")."'   name='user_del_%KEY%' title='"._("Delete system")."'>";
+          alt='"._("delete")."'   name='system_del_%KEY%' title='"._("Delete system")."'>";
       }else{
         $action.= $empty;    
       }
@@ -313,7 +313,7 @@ class divListSystem extends MultiSelectWindow
         $pwd_acl = $ui->get_permissions($val['dn'],"terminal/termgeneric","gotoRootPasswd");
       }    
       if(preg_match("/w/",$pwd_acl)){
-        $action2 = "<input class='center' type='image' src='images/certs.png' alt='"._("Password")."'   name='user_setpwd_%KEY%' title='"._("Set root       password")."'>";
+        $action2 = "<input class='center' type='image' src='images/certs.png' alt='"._("Password")."'   name='system_setpwd_%KEY%' title='"._("Set root       password")."'>";
       }else{
         $action2 = $empty;
       }
