@@ -45,6 +45,8 @@ class gofonMacro extends plugin
     /* Call parent execute */
     plugin::execute();
 
+    $_SESSION['LOCK_VARS_TO_USE'] = array("/^goFonMacro_/","/^act$/","/^id$/");
+
     /*****************
       Variable initialisation
      *****************/
@@ -62,19 +64,16 @@ class gofonMacro extends plugin
     /* Test Posts */
     foreach($_POST as $key => $val){
       // Post for delete
-      if(preg_match("/user_del.*/",$key)){
+      if(preg_match("/^goFonMacro_del/",$key)){
         $s_action = "del";
-        $s_entry  = preg_replace("/user_".$s_action."_/i","",$key);
+        $s_entry  = preg_replace("/^goFonMacro_del_/i","",$key);
         // Post for edit
-      }elseif(preg_match("/user_edit_.*/",$key)){
+      }elseif(preg_match("/^goFonMacro_edit_/",$key)){
         $s_action="edit";
-        $s_entry  = preg_replace("/user_".$s_action."_/i","",$key);
+        $s_entry  = preg_replace("/^goFonMacro_edit_/i","",$key);
         // Post for new
-      }elseif(preg_match("/user_new.*/",$key)){
+      }elseif(preg_match("/^goFonMacro_new/",$key)){
         $s_action="new";
-      }elseif(preg_match("/user_chgpw.*/i",$key)){
-        $s_action="change_pw";
-        $s_entry  = preg_replace("/user_chgpw_/i","",$key);
       }
     }
     if((isset($_GET['act']))&&($_GET['act']=="edit_entry")){

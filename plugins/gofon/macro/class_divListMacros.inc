@@ -108,7 +108,7 @@ class divListMacro extends MultiSelectWindow
     }
     if(preg_match("/c/",$acls)){
       $listhead .=  " <input class='center' type='image' align='middle' src='images/list_new_macro.png' 
-        title='"._("Create new phone macro")."' alt='"._("New")."' name='user_new'>&nbsp;";
+        title='"._("Create new phone macro")."' alt='"._("New")."' name='goFonMacro_new'>&nbsp;";
       $listhead .= " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
     }
     $listhead .= _("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
@@ -127,11 +127,6 @@ class divListMacro extends MultiSelectWindow
 
   function setEntries($list)
   {
-  
-    $action     = "<input class='center' type='image' src='images/edit.png' alt='"._("edit")."'     
-                    name='user_edit_%KEY%' title='"._("Edit macro")."'>";
-    $action    .= "<input class='center' type='image' src='images/edittrash.png' alt='"._("delete")."'   
-                    name='user_del_%KEY%' title='"._("Delete macro")."'>";
   
     $empty      = "<img class='center' src='images/nothing.png' style='width:16px;height:16px;' alt=''>";
     $macroimg   = "<img class='center' src='images/list_macro.png' alt='"._("Macro")."' title='%s'>";
@@ -157,7 +152,7 @@ class divListMacro extends MultiSelectWindow
       }
 
       $action.= "<input class='center' type='image' src='images/edit.png' alt='"._("edit")."'     
-        name='user_edit_%KEY%' title='"._("Edit macro")."'>";
+        name='goFonMacro_edit_%KEY%' title='"._("Edit macro")."'>";
 
       if(preg_match("/c/",$sacl) && preg_match("/w/",$sacl)){
         $action.= $this->GetSnapShotActions($val['dn']); 
@@ -165,7 +160,7 @@ class divListMacro extends MultiSelectWindow
 
       if(preg_match("/d/",$sacl)){
         $action.= "<input class='center' type='image' src='images/edittrash.png' alt='"._("delete")."'   
-          name='user_del_%KEY%' title='"._("Delete macro")."'>";
+          name='goFonMacro_del_%KEY%' title='"._("Delete macro")."'>";
       }
 
       $display= $val["displayName"][0]."&nbsp;(".$val["cn"][0].")";
