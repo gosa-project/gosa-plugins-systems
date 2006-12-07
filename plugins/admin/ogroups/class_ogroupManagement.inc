@@ -78,11 +78,6 @@ class ogroupManagement extends plugin
         // Post for new
       }elseif(preg_match("/^group_new.*/",$key)){
         $s_action="new";
-      }elseif(preg_match("/^group_tplnew.*/i",$key)){
-        $s_action="new_tpl";
-      }elseif(preg_match("/^group_chgpw.*/i",$key)){
-        $s_action="change_pw";
-        $s_entry  = preg_replace("/group_chgpw_/i","",$key);
       }elseif(preg_match("/^editPaste.*/i",$key)){
         $s_action="editPaste";
       }elseif(preg_match("/^copy_.*/",$key)){
