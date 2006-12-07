@@ -27,10 +27,19 @@ class servrepository extends goService
   var $DisplayName           = "";
   var $StatusFlag            = "";
 
+  var $fai_activated          = FALSE;
 
   function servrepository ($config, $dn= NULL, $parent= NULL)
   {
     plugin::plugin ($config, $dn, $parent);
+
+    /* Skip this if fai is deactivated */
+    $tmp = search_config($this->config->data,"faiManagement","CLASS");
+    if(!empty($tmp)){
+      $this->fai_activated = TRUE;    
+    }else{
+      return;
+    }
 
     $this->DisplayName = _("Repository service");
 
@@ -80,6 +89,11 @@ class servrepository extends goService
   {
     /* Call parent execute */
     plugin::execute();
+
+    if(!$this->fai_activated){
+      $str = "<h2>"._("You can't use this plugin until FAI is activated.")."</h2>";
+      return $str;
+    }
 
     /* Fill templating stuff */
     $smarty= get_smarty();
@@ -294,6 +308,8 @@ class servrepository extends goService
   /* Save to LDAP */
   function save()
   {
+    if(!$this->fai_activated) return;
+
     plugin::save();
 
     $arr = array();

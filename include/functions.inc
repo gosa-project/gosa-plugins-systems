@@ -462,6 +462,7 @@ function ldap_expired_account($config, $userdn, $username)
 function add_lock ($object, $user)
 {
   global $config;
+  echo "ADDING.. -> ".$object."<br>";
 
   /* Just a sanity check... */
   if ($object == "" || $user == ""){
@@ -501,6 +502,13 @@ function add_lock ($object, $user)
 function del_lock ($object)
 {
   global $config;
+
+  if(isset($_POST['delete_lock'])){
+    echo "REMOVING -> ".$object."<br>";
+  }else{
+    echo "SKIP REMOVING -> ".$object."<br>";
+    return;
+  }
 
   /* Sanity check */
   if ($object == ""){

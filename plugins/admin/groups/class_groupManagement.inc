@@ -453,8 +453,14 @@ class groupManagement extends plugin
       Search for the prepared filter 
      ********************/
    
+    /* Attributes to search for */    
+    $attrs = array("cn", "description", "gidNumber", "objectClass");
+ 
     /* If subsearch is activated search for subobjects too */
-    $attrs = array("cn", "description", "gidNumber", "objectClass","FAIrelease");
+    $tmp = search_config($this->config->data,"faiManagement","CLASS");
+    if(!empty($tmp)){
+      $attrs [] = "FAIrelease";
+    }
 
     if ($SubSearch){
       $res= get_list($filter, "groups", $base, $attrs, GL_SIZELIMIT| GL_SUBSEARCH);
