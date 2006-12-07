@@ -36,8 +36,16 @@ class servgeneric extends plugin
                             "memcheck"        => "memcheck",
                             "sysinfo"         => "sysinfo");
 
+  var $fai_activated  =FALSE;
+
   function servgeneric ($config, $dn= NULL, $parent= NULL)
   {
+    /* Check if FAI is activated */
+    $tmp = search_config($config->data,"faiManagement","CLASS");
+    if(!empty($tmp)){
+      $this->fai_activated = TRUE;
+    }
+
     plugin::plugin ($config, $dn, $parent);
 
     $this->ui = get_userinfo();
@@ -73,7 +81,7 @@ class servgeneric extends plugin
     }
 
     /* Check for action */
-    if (isset($_POST['action']) && $this->acvl_is_writeable("FAIstate")){
+    if (isset($_POST['action']) && $this->acl_is_writeable("FAIstate")){
       $cmd= search_config($this->config->data['TABS'], "workgeneric", "ACTIONCMD");
       if ($cmd == ""){
         print_red(_("No ACTIONCMD definition found in your gosa.conf"));
@@ -86,32 +94,34 @@ class servgeneric extends plugin
           $this->didAction= TRUE;
 
           /* Set FAIstate */
-          $ldap = $this->config->get_ldap_link();
-          $ldap->cd($this->config->current['BASE']);
-          $ldap->cat($this->dn,array("objectClass"));
-          $res = $ldap->fetch();
-          
-          $attrs = array();
-          $attrs['FAIstate'] = "";
-          if(isset($this->mapActions[$_POST['saction']])){
-            $attrs['FAIstate'] = $this->mapActions[$_POST ['saction']];
-          }
+          if($this->fai_activated){
+            $ldap = $this->config->get_ldap_link();
+            $ldap->cd($this->config->current['BASE']);
+            $ldap->cat($this->dn,array("objectClass"));
+            $res = $ldap->fetch();
 
-          for($i = 0; $i < $res['objectClass']['count'] ; $i ++){
-            $attrs['objectClass'][] = $res['objectClass'][$i];
-          }
+            $attrs = array();
+            $attrs['FAIstate'] = "";
+            if(isset($this->mapActions[$_POST['saction']])){
+              $attrs['FAIstate'] = $this->mapActions[$_POST ['saction']];
+            }
 
-          if(($attrs['FAIstate'] != "") && (!in_array("FAIobject",$attrs['objectClass']))){
-            $attrs['objectClass'][] = "FAIobject";
-          }
+            for($i = 0; $i < $res['objectClass']['count'] ; $i ++){
+              $attrs['objectClass'][] = $res['objectClass'][$i];
+            }
 
-          if($attrs['FAIstate'] == ""){
-            #FIXME we should check if FAIobject is used anymore
-            $attrs['FAIstate'] = array();
+            if(($attrs['FAIstate'] != "") && (!in_array("FAIobject",$attrs['objectClass']))){
+              $attrs['objectClass'][] = "FAIobject";
+            }
+
+            if($attrs['FAIstate'] == ""){
+#FIXME we should check if FAIobject is used anymore
+              $attrs['FAIstate'] = array();
+            }
+
+            $ldap->cd($this->dn);
+            $ldap->modify($attrs);
           }
- 
-          $ldap->cd($this->dn);
-          $ldap->modify($attrs);
           show_ldap_error($ldap->get_error(), sprintf(_("Saving of system server/generic (FAIstate) with dn '%s' failed."),$this->dn)); 
         }
       }
@@ -188,6 +198,7 @@ class servgeneric extends plugin
     }
 
     /* Show main page */
+    $smarty->assign("fai_activated",$this->fai_activated);
     $smarty->assign("netconfig", $this->netConfigDNS->execute());
     $smarty->assign("modes", $this->modes);
 

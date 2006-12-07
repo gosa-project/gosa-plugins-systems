@@ -134,6 +134,8 @@
 
 {$netconfig}
 {/if}
+
+{if $fai_activated}
 <p class="plugbottom" style="margin-bottom:0px; padding:0px;">&nbsp;</p>
 <h2><img class="center" alt="" align="middle" src="images/rocket.png"> {t}Action{/t}</h2>
 <table summary="">
@@ -153,6 +155,7 @@
   </td>
  </tr>
 </table>
+{/if}
 
 <input type="hidden" name="termgeneric_posted" value="1">
 <!-- Place cursor -->
