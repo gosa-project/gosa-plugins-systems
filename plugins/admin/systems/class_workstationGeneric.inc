@@ -48,7 +48,7 @@ class workgeneric extends plugin
       "gotoFloppyEnable", "gotoCdromEnable", "cn", "gotoSndModule",
       "ghCpuType", "ghMemSize", "ghUsbSupport",
       "ghGfxAdapter", "ghSoundAdapter", "gotoLastUser", "l","FAIscript");
-  var $objectclasses= array("top", "gotoWorkstation", "GOhard","FAIobject");
+  var $objectclasses= array("top", "gotoWorkstation", "GOhard");
 
   var $mapActions   = array("reboot"          => "localboot",
                             "instant_update"  => "softupdate",
@@ -58,10 +58,16 @@ class workgeneric extends plugin
                             "memcheck"        => "memcheck",
                             "sysinfo"         => "sysinfo");
 
-
+  
+  var $fai_activated = FALSE;
 
   function workgeneric ($config, $dn= NULL, $parent= NULL)
   {
+    $tmp = search_config($config->data,"faiManagement","CLASS");
+    if(!empty($tmp)){
+      $this->fai_activated = TRUE;
+    }
+
     plugin::plugin ($config, $dn, $parent);
     $this->netConfigDNS = new termDNS($this->config,$this->dn,$this->objectclasses);
 
@@ -162,34 +168,36 @@ class workgeneric extends plugin
         } elseif ($_POST['saction'] != "wake") {
 
           /* Set FAIstate */
-          $ldap = $this->config->get_ldap_link();
-          $ldap->cd($this->config->current['BASE']);
-          $ldap->cat($this->dn,array("objectClass"));
-          $res = $ldap->fetch();
+          if($this->fai_activated){
+            $ldap = $this->config->get_ldap_link();
+            $ldap->cd($this->config->current['BASE']);
+            $ldap->cat($this->dn,array("objectClass"));
+            $res = $ldap->fetch();
 
-          $attrs = array();
-          $attrs['FAIstate'] = "";
-          if(isset($this->mapActions[$_POST['saction']])){
-            $attrs['FAIstate'] = $this->mapActions[$_POST ['saction']];
+            $attrs = array();
+            $attrs['FAIstate'] = "";
+            if(isset($this->mapActions[$_POST['saction']])){
+              $attrs['FAIstate'] = $this->mapActions[$_POST ['saction']];
+            }
+
+            for($i = 0; $i < $res['objectClass']['count'] ; $i ++){
+              $attrs['objectClass'][] = $res['objectClass'][$i];
+            }
+
+            if(($attrs['FAIstate'] != "") && (!in_array("FAIobject",$attrs['objectClass']))){
+              $attrs['objectClass'][] = "FAIobject";
+            }
+
+            if($attrs['FAIstate'] == ""){
+#FIXME we should check if FAIobject is not used anymore
+              $attrs['FAIstate'] = array();
+            }
+
+            $ldap->cd($this->dn);
+            $ldap->modify($attrs);
+            show_ldap_error($ldap->get_error(), sprintf(_("Saving of system workstation/generic (FAIstate) with dn '%s' failed."),$this->dn));
+
           }
-
-          for($i = 0; $i < $res['objectClass']['count'] ; $i ++){
-            $attrs['objectClass'][] = $res['objectClass'][$i];
-          }
-
-          if(($attrs['FAIstate'] != "") && (!in_array("FAIobject",$attrs['objectClass']))){
-            $attrs['objectClass'][] = "FAIobject";
-          }
-
-          if($attrs['FAIstate'] == ""){
-            #FIXME we should check if FAIobject is used anymore
-            $attrs['FAIstate'] = array();
-          }
-
-          $ldap->cd($this->dn);
-          $ldap->modify($attrs);
-          show_ldap_error($ldap->get_error(), sprintf(_("Saving of system workstation/generic (FAIstate) with dn '%s' failed."),$this->dn));
- 
           $this->didAction= TRUE;
         }
       }
@@ -291,6 +299,7 @@ class workgeneric extends plugin
     $smarty->assign("modes", $this->modes);
     $smarty->assign("nfsservers", $this->config->data['SERVERS']['NFS']);
     $smarty->assign("syslogservers", $this->gotoSyslogServers);
+    $smarty->assign("fai_activated",$this->fai_activated);
 
     $ntpser = array();
     foreach($this->gotoNtpServers as $server){
@@ -495,6 +504,8 @@ class workgeneric extends plugin
         $this->handle_post_events("modify");
       }
     }
+
+    print_a($this->attrs);
 
     /* cn=default and macAddress=- indicates that this is a template */
     if($this->cn == "wdefault"){

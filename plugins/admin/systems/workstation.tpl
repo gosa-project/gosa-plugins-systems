@@ -110,6 +110,8 @@
 {$netconfig}
 {/if}
 <p class="plugbottom" style="margin-bottom:0px; padding:0px;">&nbsp;</p>
+
+{if $fai_activated}
 <h2><img class="center" alt="" align="middle" src="images/rocket.png"> {t}Action{/t}</h2>
 <table summary="">
  <tr>
@@ -126,6 +128,7 @@
   </td>
  </tr>
 </table>
+{/if}
 <input type="hidden" name="workgeneric_posted" value="1">
  {if $cn eq 'wdefault'}
 <!-- Place cursor -->
