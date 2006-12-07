@@ -151,7 +151,7 @@ class termgeneric extends plugin
     if (isset($_POST['action']) && $this->acl_is_writeable("FAIstate")){
 
       /* Set FAIstate */
-      if($this->fai_activated){
+      if($this->fai_activated && $this->dn != "new"){
         $ldap = $this->config->get_ldap_link();
         $ldap->cd($this->config->current['BASE']);
         $ldap->cat($this->dn,array("objectClass"));
