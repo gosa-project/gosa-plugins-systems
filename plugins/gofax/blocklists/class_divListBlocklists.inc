@@ -116,7 +116,7 @@ class divListBlocklist extends MultiSelectWindow
     /* Add create icon if allowed */
     if(preg_match("/c/",$acl)){
       $listhead .= " <input class='center' type='image' align='middle' src='images/list_new_blocklist.png' ".
-        "  title='"._("Create new blocklist")."' alt='"._("New Blocklist")."' name='user_new'>&nbsp;".
+        "  title='"._("Create new blocklist")."' alt='"._("New Blocklist")."' name='goFaxBlocklist_new'>&nbsp;".
         " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>";
     }
   
@@ -157,7 +157,7 @@ class divListBlocklist extends MultiSelectWindow
       }  
 
       /* Edit link ; requires read access */
-      $action= "<input class='center' type='image' src='images/edit.png' alt='"._("edit")."'     name='user_edit_%KEY%' title='"._("Edit user")."'>";
+      $action= "<input class='center' type='image' src='images/edit.png' alt='"._("edit")."'     name='goFaxBlocklist_edit_%KEY%' title='"._("Edit user")."'>";
 
       
       /* Create snapshot ; requires write access && create access */
@@ -167,7 +167,7 @@ class divListBlocklist extends MultiSelectWindow
       
       /* Delete entry ; requires remove access */
       if(preg_match("/d/",$acl)){
-        $action.= "<input class='center' type='image' src='images/edittrash.png' alt='"._("delete")."' name='user_del_%KEY%' title='"._("Delete user")."'>";
+        $action.= "<input class='center' type='image' src='images/edittrash.png' alt='"._("delete")."' name='goFaxBlocklist_del_%KEY%' title='"._("Delete user")."'>";
       }
       
       // Generate Array to Add

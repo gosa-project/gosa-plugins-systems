@@ -39,7 +39,7 @@ class blocklist extends plugin
     /* Call parent execute */
     plugin::execute();
 
-    $_SESSION['LOCK_VARS_TO_USE'] = array("/^user_/");
+    $_SESSION['LOCK_VARS_TO_USE'] = array("/^goFaxBlocklist_/","/^act$/","/^id$/");
 
     /***************
       Init vars 
@@ -59,15 +59,15 @@ class blocklist extends plugin
     /* Test Posts */
     foreach($_POST as $key => $val){
       // Post for delete
-      if(preg_match("/user_del.*/",$key)){
+      if(preg_match("/^goFaxBlocklist_del.*/",$key)){
         $s_action = "del";
-        $s_entry  = preg_replace("/user_".$s_action."_/i","",$key);
+        $s_entry  = preg_replace("/^goFaxBlocklist_del_/i","",$key);
         // Post for edit
-      }elseif(preg_match("/user_edit_.*/",$key)){
+      }elseif(preg_match("/^goFaxBlocklist_edit_.*/",$key)){
         $s_action="edit";
-        $s_entry  = preg_replace("/user_".$s_action."_/i","",$key);
+        $s_entry  = preg_replace("/^goFaxBlocklist_edit_/i","",$key);
         // Post for new
-      }elseif(preg_match("/user_new.*/",$key)){
+      }elseif(preg_match("/^goFaxBlocklist_new.*/",$key)){
         $s_action="new";
       }
     }
