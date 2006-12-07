@@ -55,6 +55,8 @@ class phoneConferenceManagment extends plugin
     /* Call parent execute */
     plugin::execute();
 
+    $_SESSION['LOCK_VARS_TO_USE'] = array("/^id$/","/^act$/","/^conference_/");
+
     /***************
       Variable initialisation
      ***************/
@@ -71,17 +73,17 @@ class phoneConferenceManagment extends plugin
      ***************/
   
     foreach($_POST as $key => $post){
-      if(preg_match("/.*new.*/i",$key)){
+      if(preg_match("/^conference_new.*/i",$key)){
         $s_action = "new";
         // Post for delete
-      }elseif(preg_match("/conf_del.*/",$key)){
+      }elseif(preg_match("/^conference_del.*/",$key)){
         $s_action = "del";
-        $s_entry  = preg_replace("/conf_".$s_action."_/i","",$key);
+        $s_entry  = preg_replace("/^conference_del_/i","",$key);
         $s_entry  = preg_replace("/_.*$/","",$s_entry);
         // Post for edit
-      }elseif(preg_match("/conf_edit_.*/",$key)){
+      }elseif(preg_match("/conference_edit_.*/",$key)){
         $s_action="edit";
-        $s_entry  = preg_replace("/conf_".$s_action."_/i","",$key);
+        $s_entry  = preg_replace("/conference_edit_/i","",$key);
         $s_entry  = preg_replace("/_.*$/","",$s_entry);
       } 
     }

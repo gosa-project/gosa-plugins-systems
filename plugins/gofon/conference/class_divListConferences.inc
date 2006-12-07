@@ -109,7 +109,7 @@ class divListConference extends MultiSelectWindow
     if(preg_match("/c/",$acls)){
       $listhead .=" <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;".
         " <input class='center' type='image' align='middle' src='images/list_new_conference.png' 
-        title='"._("Create new conference")."' alt='"._("New conference")."' name='user_new'>&nbsp;".
+        title='"._("Create new conference")."' alt='"._("New conference")."' name='conference_new'>&nbsp;".
         " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
     }
 
@@ -160,7 +160,7 @@ class divListConference extends MultiSelectWindow
 
       /* Add edit icon - This is allowed when we have at least read access. */
       $actions= "<input class='center' type='image' src='images/edit.png'     
-                    alt='"._("edit")."'    name='conf_edit_%KEY%' title='"._("Edit this entry")."'>";
+                    alt='"._("edit")."'    name='conference_edit_%KEY%' title='"._("Edit this entry")."'>";
 
       /* Add snapshot icon - This is allowed when we have create and write access for the current entry */
       if(preg_match("/(c.*w|w.*c)/",$acl_all)){
@@ -170,7 +170,7 @@ class divListConference extends MultiSelectWindow
       /* Create delete link - Only if we are allowed to delete this entry */
       if(preg_match("/d/",$acl)){
         $actions.= "<input class='center' type='image' src='images/edittrash.png' 
-          alt='"._("delete")."'   name='conf_del_%KEY%'  title='"._("Delete this entry")."'>";
+          alt='"._("delete")."'   name='conference_del_%KEY%'  title='"._("Delete this entry")."'>";
       }
 
       /* Display PIN icon, only if we are the owner of the given conference */
