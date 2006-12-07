@@ -696,14 +696,23 @@ class systems extends plugin
       $userregex = "(gotoLastUser=".$this->DivListSystem->UserRegex.")";
     }
 
+    /* Attributes to fetch */
+    $sys_attrs        = array("cn", "description", "macAddress", "objectClass", "sambaDomainName");
+    $sys_categories   = array("terminal", "workstation", "server", "phone" ,"printer");
+
+    /* Add FAIstate to attributes if FAI is activated */
+    $tmp = search_config($this->config->data,"faiManagement","CLASS");
+    if(!empty($tmp)){
+      $sys_attrs[] = "FAIstate";
+    }    
+
     /* Walk through all possible search combinations, and search for some objects if the checkbox is enabled  */
     foreach($objs as $checkBox => $oc){
       if($this->DivListSystem->$checkBox){
         if($this->DivListSystem->SubSearch){
           if($oc['CLASS'] != ""){
             $filter = "(|(&".$userregex."(objectClass=".$oc['CLASS'].")(cn=".$this->DivListSystem->Regex.")))";
-            $new_res = get_list($filter, array("terminal", "workstation", "server", "phone" ,"printer"), $base,
-                  array("cn", "description", "macAddress", "objectClass", "sambaDomainName", "FAIstate"), GL_NONE | GL_SUBSEARCH | GL_SIZELIMIT);
+            $new_res = get_list($filter, $sys_categories , $base,$sys_attrs, GL_NONE | GL_SUBSEARCH | GL_SIZELIMIT);
       
             /* Remove all objects that are not in the expected sub department */
             foreach($new_res as $key => $obj){
@@ -716,8 +725,7 @@ class systems extends plugin
           /* User filter? */
           if($oc['CLASS'] != ""){
             $filter = "(|(&".$userregex."(objectClass=".$oc['CLASS'].")(cn=".$this->DivListSystem->Regex.")))";
-            $res = array_merge($res,get_list($filter,array("terminal", "workstation", "server", "phone" ,"printer"),$oc['TREE'].$base,
-                  array("cn", "description", "macAddress", "objectClass", "sambaDomainName", "FAIstate"), GL_NONE | GL_SIZELIMIT));
+            $res = array_merge($res,get_list($filter,$sys_categories,$oc['TREE'].$base, $sys_attrs, GL_NONE | GL_SIZELIMIT));
           }
         }
       } 
@@ -725,8 +733,7 @@ class systems extends plugin
 
     /* Search for incoming objects */ 
     $filter = "(|(&".$userregex."(objectClass=goHard)(cn=".$this->DivListSystem->Regex.")))";
-    $res = array_merge($res,get_list($filter,array("terminal", "workstation", "server", "phone" ,"printer"),"ou=incoming,".$base,
-          array("cn", "description", "macAddress", "objectClass", "sambaDomainName"), GL_NONE | GL_SIZELIMIT));
+    $res = array_merge($res,get_list($filter,$sys_categories,"ou=incoming,".$base,$sys_attrs, GL_NONE | GL_SIZELIMIT));
 
     /* Get all gotoTerminal's */
     foreach ($res as $value){
