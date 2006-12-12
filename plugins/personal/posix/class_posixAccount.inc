@@ -1125,7 +1125,7 @@ class posixAccount extends plugin
     if (isset($tmp[1])){
       $hwm= $tmp[1];
     } else {
-      $hwm= 65535;
+      $hwm= pow(2,32);
     }
 
     /* Find out next free id near to UID_BASE */
