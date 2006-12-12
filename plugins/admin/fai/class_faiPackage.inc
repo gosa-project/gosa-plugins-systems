@@ -262,7 +262,7 @@ class faiPackage extends plugin
 
     /* Configuration dialog open*/
     if((isset($_POST['Conpkg']))&&(isset($_POST['usedPackages']))&&(!empty($_POST['usedPackages'])) && $this->acl_is_writeable("FAIdebconfInfo")){
-      $path = "/etc/gosa/fai/".$this->FAIdebianRelease."/debconf.d";
+      $path = CONFIG_DIR."/fai/".$this->FAIdebianRelease."/debconf.d";
       $pkg_config = array();
       $pkg = $_POST['usedPackages'][0];
 
@@ -432,7 +432,7 @@ class faiPackage extends plugin
       $this->buffer=array();
       $a_ret = array();
       foreach($this->FAIdebianSection as $sec){
-        $strID= "/etc/gosa/fai/".$this->FAIdebianRelease."/".$sec;
+        $strID= CONFIG_DIR."/fai/".$this->FAIdebianRelease."/".$sec;
 
         if(!is_file($strID)){
           print_red(sprintf(_("Package file '%s' does not exist."),$strID));
