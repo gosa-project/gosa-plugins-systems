@@ -121,7 +121,7 @@ class systems extends plugin
       return ($smarty->fetch(get_template_path('chooser.tpl', TRUE)));
     }
 
-     
+
     /********************
       Create FAI CD ...   
      ********************/
@@ -129,6 +129,84 @@ class systems extends plugin
       $this->dn= $this->terminals[$s_entry]['dn'];
       $_SESSION['objectinfo']= $this->dn;
       return ($smarty->fetch(get_template_path('gencd.tpl', TRUE)));
+    }
+
+
+    /* Start CD-Creation */
+    if ((isset($_POST["cd_create"])) && !empty($this->dn)){
+      $smarty->assign("src", "?plug=".$_GET['plug']."&amp;PerformIsoCreation");
+      return ($smarty->fetch(get_template_path('gencd_frame.tpl', TRUE)));
+    }
+
+
+    if ($this->dn != "" && isset($_GET['PerformIsoCreation'])){
+
+      $return_button   = "<form type='get' action='main.php' target='_parent'>
+        <input type='submit' value='"._("Back")."'>
+        <input type='hidden' name='plug' value='".$_GET['plug']."'/>
+        </form>";
+
+      $dsc             = array(0 => array("pipe", "r"), 1 => array("pipe", "w"), 2 => array("pipe", "w"));
+
+      /* Get and check command */
+      $command= search_config($this->config->data['TABS'], "workgeneric", "ISOCMD");
+      //      $command = "/bin/sh /home/hickert/gen_stuff.sh";
+      if (check_command($command)){
+        @DEBUG (DEBUG_SHELL, __LINE__, __FUNCTION__, __FILE__, $command, "Execute");
+
+        /* Print out html introduction */
+        echo '<!-- headers.tpl--><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+          "http://www.w3.org/TR/html4/transitional.dtd">
+          <html><head><title></title><style type="text/css">@import url("themes/default/style.css");</style>';
+        echo "<script language=\"javascript\" src=\"include/focus.js\" type=\"text/javascript\"></script>";
+        echo "</head>";
+        echo "<body style='background: none;'>
+          <script language=\"javascript\" type=\"text/javascript\">
+          document.body.scrollTop = document.body.scrollHeight - document.body.clientHeight;
+        </script>
+          <pre>";
+
+        /* Open process handle and check if it is a valid process */
+        $process= proc_open($command, $dsc, $pipes, '/tmp');
+        if (is_resource($process)) {
+          fclose($pipes[0]);
+
+          /* Print out returned lines && write JS to scroll down each line */
+          while (!feof($pipes[1])){
+            $cur_dat = fgets($pipes[1], 1024);
+            echo $cur_dat;
+            echo "<script language=\"javascript\" type=\"text/javascript\">scrollDown2();</script>" ;
+            flush();
+          }
+        }
+
+        /* Get error string && close streams */
+        $buffer= stream_get_contents($pipes[2]);
+        fclose($pipes[1]);
+        fclose($pipes[2]);
+        echo "</pre>";
+
+
+        /* Check return code */
+        $ret= proc_close($process);
+        if ($ret != 0){
+          echo "<h1 style='color:red'>"._("Creating the image failed. Please see the report below.")."</h1>";
+          echo "<pre style='color:red'>$buffer</pre>";
+        }
+  
+        $this->dn = "";
+        echo $return_button."<br>";
+
+      } else {
+        $tmp= "<h1 style='color:red'>".sprintf(_("Command '%s', specified for ISO creation doesn't seem to exist."), $command)."</h1>";
+        echo $tmp;
+      }
+
+      /* Scroll down completly */
+      echo "<script language=\"javascript\" type=\"text/javascript\">scrollDown2();</script>" ;
+      echo "</body></html>";
+      flush();
+      exit;
     }
 
 
