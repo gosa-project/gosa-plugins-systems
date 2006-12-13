@@ -53,12 +53,11 @@ class divListACL extends MultiSelectWindow
     $this->set_filter_objectclasses();   
  
     /* Add SubSearch checkbox */
-    $this->AddCheckBox(SEPERATOR);
     $this->AddCheckBox("SubSearch",  _("Select to search within subtrees"), _("Ignore subtrees"), false);
 
 
     /*                  Name                 ,Text                              ,Default  , Connect with alphabet  */
-    $this->AddRegex   ("Regex",     _("Display acls matching"),"Not implemented yet" , true);
+    $this->AddRegex   ("Regex",     _("Display acls matching"),"*" , true);
   }
 
 
@@ -163,13 +162,7 @@ class divListACL extends MultiSelectWindow
   /* Add some additional checkboxes to the filter part, this should be generated dynamically. */
   function set_filter_objectclasses()
   { 
-    #FIXME This should be created dynamically 
-    $this->gosaAccount = true;
-    $this->AddCheckBox("gosaAccount",     _("Select to display users"),       _("Display user")       , true);
-    $this->gosaDepartment = true;
-    $this->AddCheckBox("gosaDepartment",  _("Select to display departments"), _("Display departments"), true);
   }
-
   
   /* Return objectClass names used in filter part */  
   function get_filter_objectclasses()

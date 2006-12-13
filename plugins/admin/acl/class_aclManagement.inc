@@ -324,7 +324,7 @@ class aclManagement extends plugin
     $Attrs      = array("ou","gosaAclEntry","objectClass");
     $res = $tmp = array();                                    // Will contain temporary results 
     $ldap       = $this->config->get_ldap_link();
-    $Filter     = "(&(objectClass=gosaACL)(gosaAclEntry=*))";
+    $Filter     = "(&(objectClass=gosaACL)(gosaAclEntry=*)(|(cn=".$Regex.")(ou=".$Regex.")))";
 
     /* Fetch following structures, this will be used if !$SubSearch */
     $fetch_this = array(
@@ -355,7 +355,15 @@ class aclManagement extends plugin
           $tmp = get_list($Filter, "acl", $fetch_base, $Attrs, $Flags);
         }else{
           $ldap->cat($fetch_base,$Attrs);
-          $tmp = array($ldap->fetch());
+          if($ldap->count())          {
+            $attrs = $ldap->fetch();
+            $re2 = preg_replace("/\*/",".*",$Regex);
+            if( (isset($attrs['cn'][0]) && preg_match("/".$re2."/i",$attrs['cn'][0]))
+               |(isset($attrs['ou'][0]) && preg_match("/".$re2."/i",$attrs['ou'][0]))){
+
+              $tmp = array($attrs);
+            }
+          }
         }
         $res = array_merge($res,$tmp);
       }
