@@ -394,6 +394,13 @@ class aclManagement extends plugin
   function password_change_needed() { } 
 
 
+  /* Return departments, that will be included within snapshot detection */
+  function get_used_snapshot_bases()
+  {
+    return(array());
+  }  
+
+
   /* Return plugin informations for acl handling */
   function plInfo()
   {
