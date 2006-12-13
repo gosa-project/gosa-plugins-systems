@@ -400,8 +400,16 @@ class faiManagement extends plugin
         $mimedst = preg_replace("/ou=fai,ou=configs,ou=systems,/","ou=mime,","ou=".$name.",".$baseToUse) ; 
 
         /* Print header to have styles included */
-        echo "<!-- headers.tpl-->".$smarty->fetch(get_template_path('headers.tpl'));
-        echo "<body style='background-image:none;margin:3px;color:black'>";
+        echo '  <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+          <html>
+          <head>
+          <title></title>
+          <style type="text/css">@import url("themes/default/style.css");</style>
+          <script language="javascript" src="include/focus.js" type="text/javascript"></script>
+          </head>
+          <body style="background: none;margin:3px;color:black">
+          ';
+
 
         /* Duplicate applications 
          */
@@ -446,6 +454,8 @@ class faiManagement extends plugin
         echo "<div style='width:100%;text-align:right;'><form name='form' method='post' action='?plug=".$_GET['plug']."' target='_parent'>
           <br><input type='submit' name='CloseIFrame' value='"._("Continue")."'>
           </form></div>";
+
+        echo "<script language=\"javascript\" type=\"text/javascript\">scrollDown2();</script>" ;
 
         /* Print footer to have valid html */
         echo "</body></html>";
