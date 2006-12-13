@@ -107,29 +107,20 @@ class divListACL extends MultiSelectWindow
   function setEntries($list)
   {
     $list_left_icon = "<img src='images/select_acl.png' alt='"._("Acl")."'>";
-    $editlink = "<a href='?plug=".$_GET['plug']."&amp;id=%s&amp;act=edit_entry'>%s</a>";
+    $editlink       = "<a href='?plug=".$_GET['plug']."&amp;id=%s&amp;act=edit_entry'>%s</a>";
 
     foreach($list as $key => $acl_entry){
 
-      $skip = true;
-      foreach($this->get_filter_objectclasses() as $oc){
-        if(in_array($oc,$acl_entry['objectClass']) && $this->$oc){
-          $skip = false;
-        }
-      }
-    
-      if(!$skip){
-        $action = "<input class='center' type='image' src='images/edit.png' alt='"._("edit")."'     
-                    name='acl_edit_%KEY%' title='"._("Edit system")."'>";
-        $action.= $this->GetSnapShotActions($acl_entry['dn']);
-        $action.= "<input class='center' type='image' src='images/edittrash.png' alt='"._("delete")."' 
-                    name='acl_del_%KEY%' title='"._("Delete system")."'>";
+      $action = "<input class='center' type='image' src='images/edit.png' alt='"._("edit")."'     
+        name='acl_edit_%KEY%' title='"._("Edit system")."'>";
+      $action.= $this->GetSnapShotActions($acl_entry['dn']);
+      $action.= "<input class='center' type='image' src='images/edittrash.png' alt='"._("delete")."' 
+        name='acl_del_%KEY%' title='"._("Delete system")."'>";
 
-        $field1 = array("string" => $list_left_icon, "attach"=> "style='text-align:center;width:20px;'");
-        $field2 = array("string" => sprintf($editlink,$key,htmlentities(utf8_decode($acl_entry['dn'])))."&nbsp;","attach" => "");
-        $field3 = array("string" => preg_replace("/%KEY%/",$key,$action), "attach"=> "style='text-align:center;width:80px;border-right:0px;'");
-        $this->AddElement(array($field1,$field2,$field3));
-      }
+      $field1 = array("string" => $list_left_icon, "attach"=> "style='text-align:center;width:20px;'");
+      $field2 = array("string" => sprintf($editlink,$key,htmlentities(utf8_decode($acl_entry['dn'])))."&nbsp;","attach" => "");
+      $field3 = array("string" => preg_replace("/%KEY%/",$key,$action), "attach"=> "style='text-align:center;width:80px;border-right:0px;'");
+      $this->AddElement(array($field1,$field2,$field3));
     }
   }
 

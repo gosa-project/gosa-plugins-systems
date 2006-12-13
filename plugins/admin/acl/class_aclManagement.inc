@@ -314,23 +314,44 @@ class aclManagement extends plugin
     $SubSearch  = $this->DivListACL -> SubSearch;
     $base       = $_SESSION['CurrentMainBase']; 
     $Attrs      = array("ou","gosaAclEntry","objectClass");
+    $res = $tmp = array();                                    // Will contain temporary results 
+    $ldap       = $this->config->get_ldap_link();
+    $Filter     = "(&(objectClass=gosaACL)(gosaAclEntry=*))";
 
-    /* Get ldap connection */
-    $ldap = $this->config->get_ldap_link();
-    $ldap->cd($base);
+    /* Fetch following structures, this will be used if !$SubSearch */
+    $fetch_this = array(
+      "ME"      => array("TYPE" => "cat"    , "FLAGS" => GL_SIZELIMIT                ,"BASE"=>""),
+      "SYSTEMS" => array("TYPE" => "search" , "FLAGS" => GL_SIZELIMIT | GL_SUBSEARCH ,"BASE"=>"ou=systems,"),
+      "APPS"    => array("TYPE" => "search" , "FLAGS" => GL_SIZELIMIT | GL_SUBSEARCH ,"BASE"=>"ou=apps,"),
+      "PEOPLE"  => array("TYPE" => "search" , "FLAGS" => GL_SIZELIMIT | GL_SUBSEARCH ,"BASE"=>get_people_ou()),
+      "GROUPS"  => array("TYPE" => "search" , "FLAGS" => GL_SIZELIMIT | GL_SUBSEARCH ,"BASE"=>get_groups_ou()));
 
-    /* Create filter */
-    $Filter = "objectClass=gosaACL";
-    $Flags  = GL_SIZELIMIT;
-
-    /* Subserach ? */
+    /* Subsearch ? */
     if($SubSearch){
-      $Flags |= GL_SUBSEARCH;
+
+      /* Get all object in this base */
+      $Flags        = GL_SIZELIMIT | GL_SUBSEARCH;
+      $fetch_base   = $base;
+      $res = get_list($Filter, "acl", $fetch_base, $Attrs, $Flags);
+
+    }else{
+      foreach($fetch_this as $type => $data){
+
+        /* Get requried attributes */
+        $Flags        = $data['FLAGS'];
+        $fetch_base   = $data['BASE'].$base;
+        $Type         = $data['TYPE'];
+
+        /* Check if method is cat or search */
+        if($Type == "search"){
+          $tmp = get_list($Filter, "acl", $fetch_base, $Attrs, $Flags);
+        }else{
+          $ldap->cat($fetch_base,$Attrs);
+          $tmp = array($ldap->fetch());
+        }
+        $res = array_merge($res,$tmp);
+      }
     }
-
-    /* Get objects */
-    $res= get_list($Filter, "acl", $base, $Attrs, $Flags);
-
     $this->list = $res;
   }
 
@@ -363,6 +384,25 @@ class aclManagement extends plugin
 
   function adapt_from_template($dn) { } 
   function password_change_needed() { } 
+
+
+  /* Return plugin informations for acl handling */
+  function plInfo()
+  {
+    return (array(
+          "plShortName"   => _("ACL"),
+          "plDescription" => _("ACL")."&nbsp;-&nbsp;("._("Access control list").")",
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("acl" => array("description"  => _("ACL")."&nbsp;"._("Access control list"),
+                                                          "objectClass"  => "gosaACL")),
+          "plProvidedAcls"=> array(
+            "Dummy" => _("I don't know Jack"))
+
+          ));
+  }
 
 } 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
