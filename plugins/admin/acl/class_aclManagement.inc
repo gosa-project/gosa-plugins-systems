@@ -322,7 +322,8 @@ class aclManagement extends plugin
     $SubSearch  = $this->DivListACL -> SubSearch;
     $base       = $_SESSION['CurrentMainBase']; 
     $Attrs      = array("ou","gosaAclEntry","objectClass");
-    $res = $tmp = array();                                    // Will contain temporary results 
+    $res        = array();
+    $tmp        = array();                                    // Will contain temporary results 
     $ldap       = $this->config->get_ldap_link();
     $Filter     = "(&(objectClass=gosaACL)(gosaAclEntry=*)(|(cn=".$Regex.")(ou=".$Regex.")))";
 
@@ -343,6 +344,8 @@ class aclManagement extends plugin
       $res = get_list($Filter, "acl", $fetch_base, $Attrs, $Flags);
 
     }else{
+
+      /* Walk through all possible bases */
       foreach($fetch_this as $type => $data){
 
         /* Get requried attributes */
