@@ -17,7 +17,7 @@ class divListACL extends MultiSelectWindow
 
   var $parent             ;
   var $ui                 ;
-
+  var $action_col_size;
   
 
   function divListACL ($config,$parent)
@@ -41,13 +41,13 @@ class divListACL extends MultiSelectWindow
     $this->EnableCloseButton(false);
     $this->EnableSaveButton (false);
 
-    /* Dynamic action col, depending on snapshot icons */
-    $action_col_size = 80;
+    /* Dynamic action col */
+    $this->action_col_size = 45;
 
     /* set Page header */
     $this->AddHeader(array("string"=>"&nbsp;",          "attach"=>"style='width:20px;'"));
     $this->AddHeader(array("string"=>_("Summary")));
-    $this->AddHeader(array("string"=>_("Actions"),      "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'"));
+    $this->AddHeader(array("string"=>_("Actions"),      "attach" => "style='width:".$this->action_col_size."px;border-right:0px;text-align:right;'"));
 
     /* Set dynamically filter checkboxes */
     $this->set_filter_objectclasses();   
@@ -87,7 +87,6 @@ class divListACL extends MultiSelectWindow
       " <input class='center' type='image' src='images/list_reload.png' align='middle' 
       title='"._("Reload list")."' name='submit_department' alt='".        _("Submit")."'>&nbsp;".
       " <img   class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
-    $listhead .= $this->get_snapshot_header($this->selectedBase);
     $listhead .=  
       _("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
       " <input class='center' type='image' src='images/list_submit.png' align='middle' 
@@ -107,19 +106,18 @@ class divListACL extends MultiSelectWindow
   function setEntries($list)
   {
     $list_left_icon = "<img src='images/select_acl.png' alt='"._("Acl")."'>";
-    $editlink       = "<a href='?plug=".$_GET['plug']."&amp;id=%s&amp;act=edit_entry'>%s</a>";
+    $editlink       = "<a href='?plug=".$_GET['plug']."&amp;id=%s&amp;act=list_edit_entry'>%s</a>";
 
     foreach($list as $key => $acl_entry){
 
       $action = "<input class='center' type='image' src='images/edit.png' alt='"._("edit")."'     
-        name='acl_edit_%KEY%' title='"._("Edit system")."'>";
-      $action.= $this->GetSnapShotActions($acl_entry['dn']);
+        name='list_acl_edit_%KEY%' title='"._("Edit system")."'>";
       $action.= "<input class='center' type='image' src='images/edittrash.png' alt='"._("delete")."' 
-        name='acl_del_%KEY%' title='"._("Delete system")."'>";
+        name='list_acl_del_%KEY%' title='"._("Delete system")."'>";
 
       $field1 = array("string" => $list_left_icon, "attach"=> "style='text-align:center;width:20px;'");
       $field2 = array("string" => sprintf($editlink,$key,htmlentities(utf8_decode($acl_entry['dn'])))."&nbsp;","attach" => "");
-      $field3 = array("string" => preg_replace("/%KEY%/",$key,$action), "attach"=> "style='text-align:center;width:80px;border-right:0px;'");
+      $field3 = array("string" => preg_replace("/%KEY%/",$key,$action), "attach"=> "style='text-align:center;width:".$this->action_col_size."px;border-right:0px;'");
       $this->AddElement(array($field1,$field2,$field3));
     }
   }

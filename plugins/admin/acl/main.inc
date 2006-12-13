@@ -54,5 +54,4 @@ if (!isset($_SESSION['macl']) || (isset($_GET['reset']) && $_GET['reset'] == 1))
 	$display.= $output;
 	$_SESSION['macl']= $macl;
 }
-
 ?>

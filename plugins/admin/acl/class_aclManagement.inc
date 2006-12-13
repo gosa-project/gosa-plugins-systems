@@ -31,6 +31,7 @@ class aclManagement extends plugin
   var $acl                  = "";
   var $DivListACL           = NULL;
 
+
   function aclManagement($config, $ui)
   {
     /* Save configuration for internal use */
@@ -47,17 +48,19 @@ class aclManagement extends plugin
     /* Call parent execute */
     plugin::execute();
 
+    $_SESSION['LOCK_VARS_TO_USE'] = array("/^list_acl_edit/","/^list_acl_del/","/list_edit_entry/","/^id_/");
+
     $smarty       = get_smarty();                 // Smarty instance
     $s_action     = "";                           // Contains the action to be taken
     $s_entry      = "";                           // The value for s_action
 
     /* Edit entry button pressed? */
-    if( isset($_GET['act']) && $_GET['act'] == "edit_entry" ){
+    if( isset($_GET['act']) && $_GET['act'] == "list_edit_entry" ){
       $s_action= "edit";
       $s_entry= validate($_GET['id']);
     }
 
-    $types = array("del"=>"acl_del","edit"=>"acl_edit");
+    $types = array("del"=>"^list_acl_del","edit"=>"^list_acl_edit");
 
     /* Test relevant POST values */  
     foreach($_POST as $key => $val){
@@ -83,6 +86,7 @@ class aclManagement extends plugin
       $s_tab= "generic";
     }
 
+
     /********************
       Edit existing entry 
      ********************/
@@ -95,18 +99,16 @@ class aclManagement extends plugin
       /* Check locking, save current plugin in 'back_plugin', so
          the dialog knows where to return. */
       if (($acl= get_lock($this->dn)) != ""){
-        $_SESSION['LOCK_VARS_TO_USE'] = array("/^acl_edit/","/^acl_del/","/^id_/");
         return(gen_locked_message ($acl, $this->dn));
       }
 
       /* Lock the current entry, so everyone will get the above dialog */
       add_lock ($this->dn, $this->ui->dn);
 
-      /* Set up the ACL's for this 'dn' */
-      $acl= get_permissions ($this->dn, $this->ui->subtreeACL);
-
       /* Register acltabs to trigger edit dialog */ 
-      $this->acltabs= new acl($this->config, $this->dn);
+      $this->acltabs= new acl($this->config, NULL,$this->dn);
+      $this->acltabs-> set_acl_base($this->dn);
+      $this->acltabs-> set_acl_category("acl");
 
       /* Switch tab, if it was requested by user */
       $this->acltabs->current = $s_tab;
@@ -119,9 +121,13 @@ class aclManagement extends plugin
     /********************
       Edit canceled 
      ********************/
+    if(isset($_POST['delete_lock'])){
+      del_lock ($this->dn);
+      unset($_SESSION['objectinfo']);
+    }
 
     /* Reset all relevant data, if we get a _cancel request */
-    if (isset($_POST['edit_cancel']) || isset($_POST['cancel_new_acl'])){
+    if (isset($_POST['edit_cancel'])){
       if (isset($this->acltabs)){
         del_lock ($this->dn);
         unset ($this->acltabs);
@@ -141,16 +147,13 @@ class aclManagement extends plugin
       /* Get 'dn' from posted acl */
       $this->dn= $this->list[trim($s_entry)]['dn'];
 
-      /* Load permissions for selected 'dn' and check if
-         we're allowed to remove this 'dn' */
-      $acl      = get_permissions ($this->dn, $this->ui->subtreeACL);
-      $this->acl= get_module_permission($acl, "acl", $this->dn);
-      if (chkacl($this->acl, "delete") == ""){
 
+      # FIXME CHECK ACLs here 
+      if(1 == 1 ){ 
         /* Check locking, save current plugin in 'back_plugin', so
            the dialog knows where to return. */
         if (($acl= get_lock($this->dn)) != ""){
-          $_SESSION['LOCK_VARS_TO_USE'] = array("/^acl_edit/","/^acl_del/","/^id_/");
+          $_SESSION['LOCK_VARS_TO_USE'] = array("/^list_acl_edit/","/^list_acl_del/","/^id_/");
           return(gen_locked_message ($acl, $this->dn));
         }
 
@@ -179,7 +182,7 @@ class aclManagement extends plugin
       if (chkacl($this->acl, "delete") == ""){
 
         /* Delete request is permitted, perform LDAP action */
-        $this->acltabs= new acl($this->config, $this->dn);
+        $this->acltabs= new acl($this->config, NULL,$this->dn);
         $this->acltabs->delete ();
         gosa_log ("ACL object '".$this->dn."' has been removed");
         unset ($this->acltabs);
@@ -217,7 +220,7 @@ class aclManagement extends plugin
     /* Finish acl edit is triggered by the tabulator dialog, so
        the acl wants to save edited data. Check and save at this
        point. */
-    if ((isset($_POST['submit_new_acl']) || isset($_POST['edit_finish']) || isset($_POST['edit_apply'])) && (isset($this->acltabs->config))){
+    if ((isset($_POST['edit_finish']) || isset($_POST['edit_apply'])) && (isset($this->acltabs->config))){
 
       /* Check tabs, will feed message array */
       $this->acltabs->last= $this->acltabs->current;
@@ -259,22 +262,30 @@ class aclManagement extends plugin
 
     /* Show tab dialog if object is present */
     if(isset($this->acltabs->config)){
+      
+      /* Save object */
+      $this->acltabs->save_object();
       $display= $this->acltabs->execute();
 
       /* Don't show buttons if tab dialog requests this */
-#      if(isset($this->acltabs->by_object)){
-#        if (!$this->acltabs->dialog){
-#          $display.= "<p style=\"text-align:right\">\n";
-#          $display.= "<input type=submit name=\"edit_finish\" style=\"width:80px\" value=\""._("Ok")."\">\n";
-#          $display.= "&nbsp;\n";
-#          if ($this->dn != "new"){
-#            $display.= "<input type=submit name=\"edit_apply\" value=\""._("Apply")."\">\n";
-#            $display.= "&nbsp;\n";
-#          }
-#          $display.= "<input type=submit name=\"edit_cancel\" value=\""._("Cancel")."\">\n";
-#          $display.= "</p>";
-#        }
-#      }
+      if(isset($this->acltabs)){
+
+        /* Skip displaying save/cancel if there is a sub dialog open */
+        if (!$this->acltabs->dialog){
+          $display.= "<p style=\"text-align:right\">\n";
+          $display.= "<input type=submit name=\"edit_finish\" style=\"width:80px\" value=\""._("Ok")."\">\n";
+          $display.= "&nbsp;\n";
+
+          /* Skip Apply if it is a new entry */
+          #if ($this->dn != "new"){
+          #  $display.= "<input type=submit name=\"edit_apply\" value=\""._("Apply")."\">\n";
+          #  $display.= "&nbsp;\n";
+          #}
+
+          $display.= "<input type=submit name=\"edit_cancel\" value=\""._("Cancel")."\">\n";
+          $display.= "</p>";
+        }
+      }
       return ($display);
     }
     

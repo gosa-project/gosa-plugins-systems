@@ -11,7 +11,7 @@
 </p>
 
 <p class="plugbottom">
-<!--  <input type=submit name="delete_terminal_confirm" value="{t}Delete{/t}">-->
+  <input type=submit name="delete_acl_confirm" value="{t}Delete{/t}">
   &nbsp;
-  <input type=submit name="delete_cancel" value="{t}Cancel{/t}">
+  <input type=submit name="delete_acl_cancel" value="{t}Cancel{/t}">
 </p>
