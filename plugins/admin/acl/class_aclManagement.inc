@@ -96,25 +96,31 @@ class aclManagement extends plugin
       /* Get 'dn' from posted acl, must be unique */
       $this->dn= $this->list[trim($s_entry)]['dn'];
 
-      /* Check locking, save current plugin in 'back_plugin', so
-         the dialog knows where to return. */
-      if (($acl= get_lock($this->dn)) != ""){
-        return(gen_locked_message ($acl, $this->dn));
+      /* Check permissions */
+      if(preg_match("/r/",$this->ui->get_permissions($this->dn,"acl/aclManagement"))){
+      
+        /* Check locking, save current plugin in 'back_plugin', so
+           the dialog knows where to return. */
+        if (($acl= get_lock($this->dn)) != ""){
+          return(gen_locked_message ($acl, $this->dn));
+        }
+
+        /* Lock the current entry, so everyone will get the above dialog */
+        add_lock ($this->dn, $this->ui->dn);
+
+        /* Register acltabs to trigger edit dialog */ 
+        $this->acltabs= new acl($this->config, NULL,$this->dn);
+        $this->acltabs-> set_acl_base($this->dn);
+        $this->acltabs-> set_acl_category("acl");
+
+        /* Switch tab, if it was requested by user */
+        $this->acltabs->current = $s_tab;
+
+        /* Set ACL and move DN to the headline */
+        $_SESSION['objectinfo']= $this->dn;
+      }else{
+        print_red(_("You are not allowed to edit this acl."));
       }
-
-      /* Lock the current entry, so everyone will get the above dialog */
-      add_lock ($this->dn, $this->ui->dn);
-
-      /* Register acltabs to trigger edit dialog */ 
-      $this->acltabs= new acl($this->config, NULL,$this->dn);
-      $this->acltabs-> set_acl_base($this->dn);
-      $this->acltabs-> set_acl_category("acl");
-
-      /* Switch tab, if it was requested by user */
-      $this->acltabs->current = $s_tab;
-
-      /* Set ACL and move DN to the headline */
-      $_SESSION['objectinfo']= $this->dn;
     }
 
 
@@ -147,9 +153,8 @@ class aclManagement extends plugin
       /* Get 'dn' from posted acl */
       $this->dn= $this->list[trim($s_entry)]['dn'];
 
-
-      # FIXME CHECK ACLs here 
-      if(1 == 1 ){ 
+      /* Check permissions */
+      if(preg_match("/d/",$this->ui->get_permissions($this->dn,"acl/aclManagement"))){
         /* Check locking, save current plugin in 'back_plugin', so
            the dialog knows where to return. */
         if (($acl= get_lock($this->dn)) != ""){
@@ -177,9 +182,8 @@ class aclManagement extends plugin
     /* Confirmation for deletion has been passed. Acl should be deleted. */
     if (isset($_POST['delete_acl_confirmed'])){
 
-      /* Some nice guy may send this as POST, so we've to check
-         for the permissions again. */
-      if (chkacl($this->acl, "delete") == ""){
+      /* Check permissions */
+      if(preg_match("/d/",$this->ui->get_permissions($this->dn,"acl/aclManagement"))){
 
         /* Delete request is permitted, perform LDAP action */
         $this->acltabs= new acl($this->config, NULL,$this->dn);
@@ -308,13 +312,6 @@ class aclManagement extends plugin
     $this->DivListACL->setEntries($this->list);
     return($this->DivListACL->Draw());
   }
-
-
-  /* Return departments, that will be included within snapshot detection */
-  function get_used_snapshot_bases()
-  {
-    return(array(get_people_ou().$this->DivListACL->selectedBase));
-  }  
 
 
   function reload()

@@ -64,17 +64,33 @@ class divListACL extends MultiSelectWindow
 
   function GenHeader()
   {
-    /* Prepare departments,
+     /* Prepare departments,
        which are shown in the listbox on top of the listbox
      */
     $options= "";
-    foreach ($this->config->idepartments as $key => $value){
-      if ($this->selectedBase == $key){
-        $options.= "<option selected='selected' value='$key'>$value</option>";
-      } else {
-        $options.= "<option value='$key'>$value</option>";
+
+    /* Get all departments within this subtree */
+    $base = $this->config->current['BASE'];
+    $deps= get_list("(&(|(ou=*)(description=*))(objectClass=gosaDepartment))", "acl", $base,
+                    array("ou", "description"), GL_SIZELIMIT | GL_SUBSEARCH);
+
+    /* Load possible departments */
+    $ui     = get_userinfo();
+    $tdeps  = $ui->get_module_departments("acl");
+    $ids    = $this->config->idepartments;
+    foreach($deps as $dep){
+      if(isset($ids[$dep['dn']]) && in_array_ics($dep['dn'], $tdeps)){
+        $value = $ids[$dep['dn']];
+        if ($this->selectedBase == $dep['dn']){
+          $options.= "<option selected='selected' value='".$dep['dn']."'>$value</option>";
+        } else {
+          $options.= "<option value='".$dep['dn']."'>$value</option>";
+        }
       }
     }
+
+    /* Get copy & paste icon */
+    $acl      = $ui->get_permissions($this->selectedBase,"acl/aclManagement");
 
     /* Create header with selected base */
     $listhead = "<div style='background:#F0F0F9;padding:5px;'>".
@@ -110,10 +126,20 @@ class divListACL extends MultiSelectWindow
 
     foreach($list as $key => $acl_entry){
 
-      $action = "<input class='center' type='image' src='images/edit.png' alt='"._("edit")."'     
-        name='list_acl_edit_%KEY%' title='"._("Edit system")."'>";
-      $action.= "<input class='center' type='image' src='images/edittrash.png' alt='"._("delete")."' 
-        name='list_acl_del_%KEY%' title='"._("Delete system")."'>";
+      /* Get copy & paste icon */
+      $acl      = $this->ui->get_permissions($acl_entry['dn'],"acl/aclManagement");
+
+      $action = "";
+
+      /* Add actions depending on acls */
+      if(preg_match("/r/", $acl)){
+        $action.= "<input class='center' type='image' src='images/edit.png' alt='"._("edit")."'     
+          name='list_acl_edit_%KEY%' title='"._("Edit system")."'>";
+      }
+      if(preg_match("/d/", $acl)){
+        $action.= "<input class='center' type='image' src='images/edittrash.png' alt='"._("delete")."' 
+          name='list_acl_del_%KEY%' title='"._("Delete system")."'>";
+      }
 
       $field1 = array("string" => $list_left_icon, "attach"=> "style='text-align:center;width:20px;'");
       $field2 = array("string" => sprintf($editlink,$key,htmlentities(utf8_decode($acl_entry['dn'])))."&nbsp;","attach" => "");
