@@ -220,8 +220,9 @@ class pureftpdAccount extends plugin
           "plSelfModify"    => TRUE,
           "plDepends"       => array("user"),
           "plPriority"      => 22,                                 // Position in tabs
-          "plSection"       => "personal",                        // This belongs to personal
-          "plCategory"      => array("users"),
+          "plSection"     => array("personal" => _("My account")),
+          "plCategory"    => array("users" => array("description" => _("FTP account"),
+                                                  "objectClass" => "PureFTPdUser")),
           "plOptions"       => array(),
 
           "plProvidedAcls"  => array(

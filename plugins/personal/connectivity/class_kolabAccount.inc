@@ -448,8 +448,9 @@ class kolabAccount extends plugin
           "plSelfModify"    => TRUE,
           "plDepends"       => array("user"),
           "plPriority"      => 20,                                 // Position in tabs
-          "plSection"       => "personal",                        // This belongs to personal
-          "plCategory"      => array("users"),
+          "plSection"     => array("personal" => _("My account")),
+          "plCategory"    => array("users" => array("description" => _("Kolab account"),
+                                                  "objectClass" => "kolabAccount")),
           "plOptions"       => array(),
 
           "plProvidedAcls"  => array(

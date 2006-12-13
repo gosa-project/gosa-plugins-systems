@@ -1008,8 +1008,9 @@ class mailAccount extends plugin
           "plSelfModify"    => TRUE,
           "plDepends"       => array("user"),                     // This plugin depends on
           "plPriority"      => 4,                                 // Position in tabs
-          "plSection"       => "personal",                        // This belongs to personal
-          "plCategory"      => array("users"),                    // Add to following categories
+          "plSection"     => array("personal" => _("My account")),
+          "plCategory"    => array("users" => array("description" => _("Mail account"),
+                                                    "objectClass" => "gosaMailAccount")),
           "plOptions"       => array(),
   
           "plProvidedAcls"  => array(

@@ -1042,9 +1042,10 @@ class sambaAccount extends plugin
           "plDescription"   => _("Samba settings"),
           "plSelfModify"    => TRUE,
           "plDepends"       => array("user"),
-          "plPriority"      => 5,                                 // Position in tabs
-          "plSection"       => "personal",                        // This belongs to personal
-          "plCategory"      => array("users"),                    // Add to following categories
+          "plPriority"      => 5,
+          "plSection"     => array("personal" => _("My account")),
+          "plCategory"    => array("users" => array("description" => _("Samba account"),
+                                                    "objectClass" => array("sambaSamAccount"))),
           "plOptions"       => array(),
 
           "plProvidedAcls"  => array(

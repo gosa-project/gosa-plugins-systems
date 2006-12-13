@@ -177,8 +177,9 @@ class intranetAccount extends plugin
           "plShortName"     => _("Intranet"),
           "plDepends"       => array("user"),
           "plPriority"      => 25,                                 // Position in tabs
-          "plSection"       => "personal",                        // This belongs to personal
-          "plCategory"      => array("users"),
+          "plSection"     => array("personal" => _("My account")),
+          "plCategory"    => array("users" => array("description" => _("Intranet account"),
+                                                  "objectClass" => "gosaIntranetAccount")),
           "plOptions"       => array(),
 
           "plDescription"       => _("Intranet account settings")."&nbsp;:&nbsp;<u>"._("Connectivity addon")."</u>",

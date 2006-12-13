@@ -356,8 +356,9 @@ class netatalk extends plugin {
           "plSelfModify"      => TRUE,
           "plDepends"         => array("user"),
           "plPriority"        => 6,
-          "plSection"         => "personal",
-          "plCategory"        => array("users"),
+          "plSection"     => array("personal" => _("My account")),
+          "plCategory"    => array("users" => array("description" => _("Netatalk account"),
+                                                    "objectClass" => "apple-user")),
           "plOptions"         => array(),
 
           "plProvidedAcls"  => array(

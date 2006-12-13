@@ -951,8 +951,9 @@ class oxchangeAccount extends plugin
           "plSelfModify"    => TRUE,
           "plDepends"       => array("user"),
           "plPriority"      => 27,                                 // Position in tabs
-          "plSection"       => "personal",                        // This belongs to personal
-          "plCategory"      => array("users"),
+          "plSection"     => array("personal" => _("My account")),
+          "plCategory"    => array("users" => array("description" => _("OpenExchange account"),
+                                                    "objectClass" => "OXUserObject")),
           "plOptions"       => array(),
 
           "plProvidedAcls"  => array(

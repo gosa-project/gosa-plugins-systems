@@ -145,8 +145,10 @@ class phpscheduleitAccount extends plugin
           "plSelfModify"    => TRUE,
           "plDepends"       => array("user"),
           "plPriority"      => 29,                                 // Position in tabs
-          "plSection"       => "personal",                        // This belongs to personal
-          "plCategory"      => array("users"),
+          "plSection"     => array("personal" => _("My account")),
+          "plCategory"    => array("users" => array("description" => _("PHP schedule it"),
+                                                  "objectClass" => "phpscheduleitAccount")),
+
           "plOptions"       => array(),
 
           "plProvidedAcls"  => array()

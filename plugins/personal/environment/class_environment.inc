@@ -1271,8 +1271,11 @@ class environment extends plugin
           "plSelfModify"    => TRUE,                              
           "plDepends"       => array("user", "posixAccount"),     // This plugin depends on 
           "plPriority"      => 3,                                 // Position in tabs 
-          "plSection"       => "personal",                        // This belongs to personal
-          "plCategory"      => array("users", "groups"),          // Add to following categories 
+          "plSection"     => array("personal" => _("My account")),
+          "plCategory"    => array("users" => array("description" => _("Environment settings"),
+                                                    "objectClass" => "gotoEnvironment"),
+                                   "groups" => array("description" => _("Environment settings"),
+                                                    "objectClass" => "gotoEnvironment")),
           "plOptions"       => array("resolution_hook" => array("type" => "string",
               "description" => _("Command to extend the list of possible screen resolutions"))),
 

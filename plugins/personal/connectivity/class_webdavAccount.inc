@@ -143,8 +143,9 @@ class webdavAccount extends plugin
           "plSelfModify"    => TRUE,
           "plDepends"       => array("user"),
           "plPriority"      => 23,                                 // Position in tabs
-          "plSection"       => "personal",                        // This belongs to personal
-          "plCategory"      => array("users"),
+          "plSection"     => array("personal" => _("My account")),
+          "plCategory"    => array("users" => array("description" => _("WebDAV account"),
+                                                  "objectClass" => "gosaWebdavAccount")),
           "plOptions"       => array(),
 
           "plProvidedAcls"  => array()

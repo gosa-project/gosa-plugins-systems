@@ -187,11 +187,13 @@ class acl extends plugin
 
     $new_acl= array();
     $aclDialog= FALSE;
+    $firstedit= FALSE;
     foreach($_POST as $name => $post){
 
       /* Actions... */
       if (preg_match('/^acl_edit_.*_x/', $name)){
         $this->dialogState= 'create';
+        $firstedit= TRUE;
         $this->dialog= TRUE;
         $this->currentIndex= preg_replace('/^acl_edit_([0-9]+).*$/', '\1', $name);
         $this->loadAclEntry();
@@ -263,7 +265,7 @@ class acl extends plugin
     }
     
     /* Only be interested in new acl's, if we're in the right _POST place */
-    if ($aclDialog && is_array($this->ocMapping[$this->aclObject])){
+    if ($aclDialog && $this->aclObject != "" && is_array($this->ocMapping[$this->aclObject])){
 
       foreach ($this->ocMapping[$this->aclObject] as $oc){
         unset($this->aclContents[$oc]);
@@ -278,7 +280,7 @@ class acl extends plugin
     }
 
     /* Save new acl in case of base edit mode */
-    if ($this->aclType == 'base'){
+    if ($this->aclType == 'base' && !$firstedit){
       $this->aclContents= $new_acl;
     }
 
@@ -533,8 +535,8 @@ class acl extends plugin
     $display .= "<input ".$style." type='button' name='set_false_all_read' onClick=\"acl_set_all('[^0]_r$',false);\" value='R-'>";
     $display .= "<input ".$style." type='button' name='set_true_all_write' onClick=\"acl_set_all('[^0]_w$',true);\" value='W+'>";
     $display .= "<input ".$style." type='button' name='set_false_all_write' onClick=\"acl_set_all('[^0]_w$',false);\" value='W-'>";
-    /* Build general objects */
 
+    /* Build general objects */
     $list =$this->sort_by_priority($list);
     foreach ($list as $key => $name){
 
@@ -597,7 +599,7 @@ class acl extends plugin
 
       $display.= "\n  <tr>".
                  "\n    <td style='background-color:#E0E0E0' colspan=".($cols-1).">$options</td>".
-                 "\n    <td style='background-color:#D4D4D4'>&nbsp;".("Complete object:")." $more_options</td>".
+                 "\n    <td style='background-color:#D4D4D4'>&nbsp;"._("Complete object").": $more_options</td>".
                  "\n  </tr>";
 
       /* Walk through the list of attributes */

@@ -160,8 +160,9 @@ class pptpAccount extends plugin
           "plSelfModify"    => TRUE,
           "plDepends"       => array("user"),
           "plPriority"      => 28,                                 // Position in tabs
-          "plSection"       => "personal",                        // This belongs to personal
-          "plCategory"      => array("users"),
+          "plSection"     => array("personal" => _("My account")),
+          "plCategory"    => array("users" => array("description" => _("PPTP account"),
+                                                  "objectClass" => "pptpServerAccount")),
           "plOptions"       => array(),
 
           "plProvidedAcls"  => array()

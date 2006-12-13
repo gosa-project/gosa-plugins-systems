@@ -380,7 +380,7 @@ print_red(NULL);
 /* Second part of browser 'back button used' check */
 $_SESSION['back_button_test'] ++;
 $bb = "<input type='hidden' name='back_button_test' value='".$_SESSION['back_button_test']."'>";
-$smarty->assign("contents", $bb.$display.get_MicroTimeDiff($start,microtime()));
+$smarty->assign("contents", $bb.$display);
 
 /* Assign erros to smarty */
 if (isset($_SESSION['errors'])){
@@ -412,22 +412,8 @@ echo $display;
 $_SESSION['plist']= $plist;
 $_SESSION['config']= $config;
 
-/* Echo compilation time * /
-$r = split(" ",$start);
-$ms = $r[0];
-$s= $r[1];
+/* Echo compilation time */
+//echo "<p align='right'>".get_MicroTimeDiff($start,microtime())."</p>";
 
-$re = split(" ",microtime());
-$mse = $re[0];
-$se= $re[1];
-
-$add = 0;
-if(($mse -$ms)<0){
-  $se --;
-  $add = 1;
-}
-echo ($se -$s).",";
-echo (int)(($add+($mse -$ms))*1000)." s";
-*/
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
