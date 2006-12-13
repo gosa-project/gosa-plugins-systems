@@ -15,6 +15,18 @@ for (iln = 0; iln < len; iln++){
 netscape= (ver.charAt(iln+1).toUpperCase() != "C");
 
 
+function scrollDown() {
+  document.body.scrollTop = document.body.scrollHeight - document.body.clientHeight;
+  timeout= setTimeout("scrollDown()", 500);
+}
+
+/* Scroll down the body frame */
+function scrollDown2()
+{
+    document.body.scrollTop = document.body.scrollHeight - document.body.clientHeight;
+}
+
+
 /* Toggle checkbox that matches regex */
 function acl_set_all(regex,value)
 {
