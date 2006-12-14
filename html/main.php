@@ -18,12 +18,15 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/* Basic setup, remove eventually registered sessions */
+/* Save start time */
 $start = microtime();
-$timing= array();
+
+/* Basic setup, remove eventually registered sessions */
 require_once ("../include/php_setup.inc");
 require_once ("functions.inc");
 require_once ("functions_FAI.inc");
+
+/* Set header */
 header("Content-type: text/html; charset=UTF-8");
 
 /* Find all class files and include them */
@@ -339,20 +342,6 @@ if (isset ($_SESSION['post_cnt'])){
   echo "<input type=\"hidden\" name=\"session_cnt\" value=\"".$_SESSION['post_cnt']."\">\n";
 }
 
-$start = microtime();
-
-
-/* Check if the user has used the browsers back button,
-    and display a warning, because using the back button could cause strange things
-    like tagging twice, moving an object twice ... */
-if(!isset($_SESSION['back_button_test'])){
-  $_SESSION['back_button_test'] = 0;
-}
-if(isset($_POST['back_button_test']) && $_POST['back_button_test'] != $_SESSION['back_button_test']){
-    print_red(_("Please do not use the browsers 'back' or 'reload' buttons, this could cause GOsa to perform actions twice. If you have not used those actions, check the php log files possibly the memory limit was exhausted."));
-}
-
-
 /* check if we are using account expiration */
 if((isset($config->data['MAIN']['ACCOUNT_EXPIRATION'])) &&
     preg_match('/true/i', $config->data['MAIN']['ACCOUNT_EXPIRATION'])){
@@ -377,10 +366,7 @@ if (is_file("$plugin_dir/main.inc")){
 /* Print_out last ErrorMessage repeated string. */
 print_red(NULL);
 
-/* Second part of browser 'back button used' check */
-$_SESSION['back_button_test'] ++;
-$bb = "<input type='hidden' name='back_button_test' value='".$_SESSION['back_button_test']."'>";
-$smarty->assign("contents", $bb.$display);
+$smarty->assign("contents", $display);
 
 /* Assign erros to smarty */
 if (isset($_SESSION['errors'])){
@@ -392,18 +378,6 @@ if ($error_collector != ""){
   $smarty->assign("php_errors", "");
 }
 $display= $header.$smarty->fetch(get_template_path('framework.tpl'));
-
-if ((isset($config->data['MAIN']['W3CTEST']) && preg_match('/true/i', $config->data['MAIN']['W3CTEST']))&&(!empty($display))&&(is_callable("tidy_parse_string"))) {
-  tidy_parse_string(utf8_decode($display));
-  $err = nl2br(htmlentities(tidy_get_error_buffer()));
-  
-  if($err){
-    echo "<table summary=\"\" width=\"100%\" style='background-color:#E0E0E0;border-bottom:1px solid black'><tr><td><img alt=\"W3C\"            align=\"middle\" src='images/warning.png'>&nbsp;<font style='font-size:14px;font-weight:bold'>"._("Generating this page caused the W3C          conformance checker to raise some errors!")."</font></td><td align=right><button onClick='toggle(\"w3cbox\")'>"._("Toggle information")."</     button></td></tr></table><div id='w3cbox' style='width:100%; position:absolute; z-index:0; visibility: hidden; background-color:white; border-  bottom:1px solid black;'>";
-    echo $err."</div>";
-  }
-
-  tidy_clean_repair($display);
-}
 
 /* Show page... */
 echo $display;
