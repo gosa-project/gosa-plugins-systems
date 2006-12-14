@@ -221,18 +221,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])){
     require_once("functions_setup.inc");
     if(!is_schema_readable($config->current['SERVER'],$config->current['ADMIN'],$config->current['PASSWORD'])){
       print_red(_("GOsa cannot retrieve information about the installed schema files. Please make sure, that this is possible."));
-      $smarty->display(get_template_path('headers.tpl'));
-      echo "<body>".$_SESSION['errors']."</body></html>";
-      exit();
+      displayLogin();
+      exit()  ;
     }else{
       $str = (schema_check($config->current['SERVER'],$config->current['ADMIN'],$config->current['PASSWORD'],0,TRUE));
       $checkarr = array();
       foreach($str as $tr){
         if(isset($tr['needonstartup'])){
           print_red($tr['msg']."<br>"._("Your ldap setup contains old schema definitions. Please re-run the setup."));
-          $smarty->display(get_template_path('headers.tpl'));
-          echo "<body>".$_SESSION['errors']."</body></html>";
-          exit();
+          displayLogin();
+          exit()  ;
         }
       }
     }
