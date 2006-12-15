@@ -119,15 +119,9 @@ class divListGroup extends MultiSelectWindow
       $addsep = true;
     }
 
-    // Managment
-    $listhead = "
-      <div style='background:#F0F0F9;padding:5px;'>".
-      " <input type='image' class='center' src='images/list_root.png' title='"._("Go to root department")."' name='dep_root' alt='"._("Root")."'>&nbsp;".
-      " <input type='image' class='center' src='images/list_back.png' title='"._("Go up one department")."' alt='"._("Up")."' name='dep_back'>&nbsp;".
-      " <input type='image' class='center' src='images/list_home.png' title='"._("Go to users department")."' alt='"._("Home")."' name='dep_home'>&nbsp;".
-      " <input class='center' type='image' src='images/list_reload.png' align='middle' title='"._("Reload list")."' name='submit_department' alt='".        _("Submit")."'>&nbsp;".
-      " <img class='center' src='images/list_seperator.png' alt='' height='16' width='1'>&nbsp;";
-
+    /* Add default header */
+    $listhead = MultiSelectWindow::get_default_header();
+    
     /* Add snapshot restore icon and force a following seperator */
     if(preg_match("/(c.*w|w.*c)/",$acl_all)){
       $listhead .= $this->get_snapshot_header($this->selectedBase);

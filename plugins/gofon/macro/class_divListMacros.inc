@@ -92,17 +92,9 @@ class divListMacro extends MultiSelectWindow
 
     $acls  = $ui->get_permissions($this->selectedBase,"gofonmacro/macro");
 
-    /* NEW LIST MANAGMENT */
-    $listhead = "<div style='background:#F0F0F9;padding:5px;'>".
-      " <input class='center' type='image' src='images/list_root.png' align='middle' 
-        title='"._("Go to root department")."' name='dep_root' alt='"._("Root")."'>&nbsp;".
-      " <input class='center' type='image' align='middle' src='images/list_back.png' 
-        title='"._("Go up one department")."' alt='"._("Up")."' name='dep_back'>&nbsp;".
-      " <input class='center' type='image' align='middle' src='images/list_home.png' 
-        title='"._("Go to users department")."' alt='"._("Home")."' name='dep_home'>&nbsp;".
-      " <input class='center' type='image' src='images/list_reload.png' align='middle' 
-        title='"._("Reload list")."' name='submit_department' alt='"._("Submit")."'>&nbsp;".
-        " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
+    /* Add default header */
+    $listhead = MultiSelectWindow::get_default_header();
+
     if(preg_match("/w/",$acls) && preg_match("/c/",$acls)){
       $listhead .= $this->get_snapshot_header($this->selectedBase);
     }

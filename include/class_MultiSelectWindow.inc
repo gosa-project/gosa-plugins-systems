@@ -166,13 +166,14 @@ class MultiSelectWindow{
 
     /* Check if selectedBase = first available base */
     $deps = $ui->get_module_departments($this->module);
-    if($deps[0] == $this->selectedBase){
+
+    if(!count($deps) || $deps[0] == $this->selectedBase){
       $enable_back = FALSE;
       $enable_root = FALSE;
     }
    
     /* Check if we are in users home  department */ 
-    if($this->selectedBase == get_base_from_people($ui->dn)){
+    if(!count($deps) ||$this->selectedBase == get_base_from_people($ui->dn)){
       $enable_home = FALSE;
     }
 

@@ -84,17 +84,10 @@ class divListDepartment extends MultiSelectWindow
     /* Generate list head */
     $ui = get_userinfo();
     $acl = $ui->get_permissions("ou=dummy,".$this->selectedBase  ,"department/department");
-
-    $listhead = "<div style='background:#F0F0F9;padding:5px;'>".
-      " <input type='image' class='center' src='images/list_root.png' align='middle' ".
-      "   title='"._("Go to root department")."' name='dep_root' alt='".       _("Root")."'>&nbsp;".
-      " <input type='image' class='center' src='images/list_up.png' align='middle' ".
-      "   title='"._("Go up one department")."' name='dep_back' alt='"._("Up").  "'>&nbsp;".
-      " <input type='image' class='center' src='images/list_home.png' align='middle' ".
-      "   title='"._("Go to users home department")."' name='dep_home' alt='". _("Home")."'>&nbsp;".
-      " <input class='center' type='image' src='images/list_reload.png' align='middle' ".
-      "   title='"._("Reload list")."' name='submit_department' alt='".      _("Submit")."'>&nbsp;";
       
+    /* Add default header */
+    $listhead = MultiSelectWindow::get_default_header();
+
     if(preg_match("/c/",$acl)){
       $listhead .=  " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;".
         " <input class='center' type='image' src='images/list_new_department.png' ".
