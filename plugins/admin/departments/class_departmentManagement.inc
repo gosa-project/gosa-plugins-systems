@@ -201,6 +201,7 @@ class departmentManagement extends plugin
       if (count($message) == 0){
 
         $this->deptabs->save(true);
+        $this->config->get_departments();
 
         /* This object must be tagged, so set ObjectTaggingRequested to true */
         if($this->deptabs->by_object['department']->must_be_tagged()){
@@ -269,6 +270,7 @@ class departmentManagement extends plugin
        remove locks & save object tab & unset current object */
     if($this->ObjectInSaveMode && (!$this->RecursiveRemoveRequested) && (!$this->ObjectTaggingRequested)){
       $this->deptabs->save();
+      $this->config->get_departments();
       $this->ObjectInSaveMode = false;
       if ($this->dn != "new"){
         del_lock ($this->dn);
