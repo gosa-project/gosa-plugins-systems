@@ -341,7 +341,10 @@ class aclManagement extends plugin
       /* Get all object in this base */
       $Flags        = GL_SIZELIMIT | GL_SUBSEARCH;
       $fetch_base   = $base;
-      $res = get_list($Filter, "acl", $fetch_base, $Attrs, $Flags);
+      $tmp = get_list($Filter, "acl", $fetch_base, $Attrs, $Flags);
+      foreach($tmp as $entry){
+        $res[$entry['dn']] = $entry;
+      }
 
     }else{
 
@@ -356,6 +359,9 @@ class aclManagement extends plugin
         /* Check if method is cat or search */
         if($Type == "search"){
           $tmp = get_list($Filter, "acl", $fetch_base, $Attrs, $Flags);
+          foreach($tmp as $entry){
+            $res[$entry['dn']] = $entry;
+          }
         }else{
           $ldap->cat($fetch_base,$Attrs);
           if($ldap->count())          {
@@ -364,11 +370,10 @@ class aclManagement extends plugin
             if( (isset($attrs['cn'][0]) && preg_match("/".$re2."/i",$attrs['cn'][0]))
                |(isset($attrs['ou'][0]) && preg_match("/".$re2."/i",$attrs['ou'][0]))){
 
-              $tmp = array($attrs);
+              $res[$attrs['dn']] = $attrs;
             }
           }
         }
-        $res = array_merge($res,$tmp);
       }
     }
     $this->list = $res;
