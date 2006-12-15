@@ -388,7 +388,7 @@ class appgroup extends plugin
     }
 
     /* Check if category was selected */
-    if((isset($_GET['act']))&&($_GET['act']=="open") && isset($this->Categories[base64_decode($_GET['id'])])){
+    if((isset($_GET['act']))&&($_GET['act']=="open") && (empty($_GET['id']) || isset($this->Categories[base64_decode($_GET['id'])]))){
       $this->curCatDir = base64_decode($_GET['id']);
     }
 
