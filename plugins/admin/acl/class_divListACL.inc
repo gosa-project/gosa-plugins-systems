@@ -22,7 +22,7 @@ class divListACL extends MultiSelectWindow
 
   function divListACL ($config,$parent)
   {
-    MultiSelectWindow::MultiSelectWindow($config, "ACLs", "acls");
+    MultiSelectWindow::MultiSelectWindow($config, "ACLs", "acl");
     
     $this->parent       = $parent;
     $this->ui           = get_userinfo();
