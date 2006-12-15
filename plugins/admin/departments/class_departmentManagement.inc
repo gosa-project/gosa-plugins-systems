@@ -181,7 +181,18 @@ class departmentManagement extends plugin
       Edit department finished 
      ***************/
 
-    if ((isset($_POST['edit_finish'])) && (isset($this->deptabs->config))){
+    if ((isset($_POST['edit_finish'])) && (isset($this->deptabs->config)) && !isset($_POST['dep_move_confirm'])){
+      $this->deptabs->save_object();
+      $obj = $this->deptabs->by_object['department'];
+      if($obj->orig_dn != "new"){
+        if($obj->orig_ou != $obj->ou || $obj->base != $obj->orig_base){
+          return($smarty->fetch(get_template_path("dep_move_confirm.tpl",TRUE)));
+        }
+      }
+    }
+
+    /* Save changes */
+    if ((isset($_POST['edit_finish'])|| isset($_POST['dep_move_confirm'])) && (isset($this->deptabs->config))){
 
       /* Check tabs, will feed message array */
       $message= $this->deptabs->check();

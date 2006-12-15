@@ -57,6 +57,8 @@ class department extends plugin
       all POST / GET activity, "Department tagging" and the checkbox within the generic template.
    */
   var $UnitTagDiabled     = TRUE;
+  var $orig_base = "";
+  var $orig_ou = "";
 
 	function department ($config, $dn)
 	{
@@ -66,6 +68,7 @@ class department extends plugin
 		$this->ui= get_userinfo();
 		$this->dn= $dn;
 		$this->orig_dn= $dn;
+		$this->orig_ou= $this->ou;
 		$this->config= $config;
 
 		/* Set base */
@@ -79,6 +82,8 @@ class department extends plugin
 		} else {
 			$this->base= preg_replace ("/^[^,]+,/", "", $this->dn);
 		}
+
+    $this->orig_base = $this->base;
 
 		/* Is administrational Unit? */
 		if ($dn != "new" && in_array_ics('gosaAdministrativeUnit', $this->attrs['objectClass'])){
