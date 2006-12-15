@@ -147,15 +147,22 @@ class departmentManagement extends plugin
     if ($s_action =="del"){
       $this->dn= $this->config->departments[trim($s_entry)];
 
-      /* Check locking */
-      if (($user= get_lock($this->dn)) != ""){
-        $_SESSION['dn']= $this->dn;
-        return(gen_locked_message($user, $this->dn));
-      } else {
-        add_lock ($this->dn, $this->ui->dn);
-        $smarty->assign("info", sprintf(_("You're about to delete the whole LDAP subtree placed under '%s'."), @LDAP::fix($this->dn)));
-        $display.= $smarty->fetch (get_template_path('remove.tpl', TRUE));
-        return ($display);
+      /* check acls */
+      $acl = $this->ui->get_permissions($this->dn,"department/department");
+      if(preg_match("/d/",$acl)){
+
+        /* Check locking */
+        if (($user= get_lock($this->dn)) != ""){
+          $_SESSION['dn']= $this->dn;
+          return(gen_locked_message($user, $this->dn));
+        } else {
+          add_lock ($this->dn, $this->ui->dn);
+          $smarty->assign("info", sprintf(_("You're about to delete the whole LDAP subtree placed under '%s'."), @LDAP::fix($this->dn)));
+          $display.= $smarty->fetch (get_template_path('remove.tpl', TRUE));
+          return ($display);
+        }
+      }else{
+        print_red (_("You have no permission to remove this department."));
       }
     }
 
@@ -168,7 +175,10 @@ class departmentManagement extends plugin
      * Finally delete department 
      */
     if (isset($_POST['delete_department_confirm'])){
-      if($this->acl_is_removeable()){
+
+      /* check acls */
+      $acl = $this->ui->get_permissions($this->dn,"department/department");
+      if(preg_match("/d/",$acl)){
         $this->remove_from_parent();
         gosa_log ("Department object'".$this->dn."' has been removed");
       } else {
