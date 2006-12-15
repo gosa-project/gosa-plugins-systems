@@ -406,7 +406,9 @@ class MultiSelectWindow{
 			/* back to the roots ^^ */
 			if($s_action=="root"){
 				$this->selectedBase=($this->config->current['BASE']);
-			}
+			  $dep_id = $this->ui->get_module_departments($this->module);
+        $this->selectedBase = $dep_id[key($dep_id)];
+      }
 
 
 			/* If Back-button is pressed, move back one step in DN */
