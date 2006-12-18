@@ -1,9 +1,114 @@
 GOsa2 changelog
 ===============
 
-* gosa 2.6
-  - New "OK", "Apply", "Cancel" schema for tabbed dialogs
-  - New ACL implementation
+* gosa 2.5.7
+  - Fixed login.tpl to display error msgs in the middle of the screen
+  - Fixed some error outputs in login.php to not break the screen
+  - Added auto scroll function to FAI-Create-Branch and Department tagging
+  - Fixed problems with workstations when fai.schema was not included
+  - Made gid-/uidNumbers 32 bit aware
+  - Replaced hardcoded config path /etc/gosa with CONFIG_DIR constant
+  - Included personal title in DN
+  - Added function to remove PPD's from disc
+  - Removed old cups dependencies
+  - Fixed saving of terminals printer service attribute
+  - Fixed a ACL naming bug, that avoids that an admin with non "all" ACLs
+    can edit specified objects.
+  - Fixed simultaneous move + rename for deparments
+  - Internally updated to smarty 2.6.16
+
+* gosa 2.5.6
+  - Copy & paste implemented into FAI
+  - Added setup fix to support GraphicsMagick
+  - Added several fixes for all user plugins to support Copy & Paste.
+  - Fixed malformed usage of $this>var in samba class. 
+  - Fixed checkbox selection in samba class.
+  - Connectivity netatalk: Moved plugin intialization from execute() to contructor().
+  - Fixes various issues with setup.php
+  - Avoid tab lables to have line feeds
+  - Activated missing checks for IP and MAC
+  - Fixed copy'n paste errors for netatalk
+  - Various W3C fixes
+  - Fixed "My Account" mode, where buttons disappear after saving
+  - Avoid removal of shares while they are used by users
+  - Added finer grained ACL settings for mail accounts
+  - Fixed day of birth problem in M$ IE
+  - Fixed setting of Kerberos passwords
+
+* gosa 2.5.5
+  - Added remove method for shared folder in kolab mode
+  - Added checkbox to decide if the shared folder should be deleted from IMAP
+    if the mail extension is removed from group mail account
+  - Updated request method for mail folders
+  - Resolved problem with infinite loop while storing sieve scripts
+  - Added subsearch checkbox to object group "add items" filter
+  - Fixed "missing PPD" configuration error, for newly created printer
+  - Corrected problem where the object base was sometimes broken when
+    saving object groups
+  - Fixed saving of terminal attribute gotoLpdEnable to contain "yes"
+    instead of "1"
+  - Avoid reset of several attributes from workstations when not
+    inherited from object groups
+  - Show error messages from password dialog
+  - Fixed a set of W3C problems
+  - Fixed multiple savings in addressbook (Closes: #23)
+  - Fixed shadow expire when using templates (Closes: #20)
+  - Made %uid, %sn, etc. available in templates using gosaMailAlternateAddress
+
+* gosa 2.5.4
+  - Included patch to choose the addressbook base
+  - Applied fixes for logviewer done by Mario Minati
+  - Updated locales, fixed a set of missing strings
+  - Fixed problems in FAI list handling
+  - Added "uid" to personal plugins for replacement in post events
+  - Fixed saving of user logon scripts
+  - Fixed non-FAI application mode
+  - More speed fixes applied, especially for users, objectgroups and
+    generic plugin loading
+  - Bug while saving FAI partitions fixed
+  - Don't save PPD if none is not selected bug fixed
+  - Saving of non revisioned applications fixed
+
+* gosa 2.5.3
+  - Fixed problem in reloading departments when we've PHP4
+  - Fixed gotoPrinter membership problem.
+  - Fixed environment shares, only available shares will be displayed (gosaUnitTag was ignored)
+  - Fixed saving of inherited workstation settings
+  - Removed error when no FAI repositories were present
+  - Fixed posix group add dialog, filter wasn't working.
+  - Fixed get_printer_list undefined index warnings while editing a user.
+  - Fixed ogroup non-static method error
+  - Fixed user membership for gotoPrinter, if membership was edited 
+    via user environemnt, some numeric values were stored too
+  - Fixed mail account, mail server string possibly was an array
+  - Fixed typos
+  - Fixed upper/lowcase ou's for groups/people when using an
+    unclean LDAP database
+  - Fixed ACL handling to *not* show the admin user dialog
+    when configured for self modify only
+  - Fixed problem when changing passwords via "My account"
+  - Added more information to hotplug devices.
+
+* gosa 2.5.2
+  - Fixed current main base not beeing set when editing non tabbed
+    plugins
+  - Fixed filtering for divlists
+  - Fixed deletion of shares in environment tabs
+  - Updated french online help
+  - Updated german online help
+  - Fixed display of FAI partitions
+  - Removed Quota warnings for existing accounts without quota limits
+  - Worked around PHP4 session problems when creating new departments
+  - Fixed problems when moving around departments including a comma
+  - Unified bool values in gosa.conf. true/yes and false/no are valid
+    now in upper and lower case.
+  - Avoid the try of creating already existing ou's
+  - Fixed non working printer removal
+
+* gosa 2.5.1
+  - Fixed problems with NFS shares and terminals
+  - Finalized polish translations
+  - Fixed problem with compressed gosa.conf in the debian package
 
 * gosa 2.5
   - Improved FAI support
@@ -24,7 +129,6 @@ GOsa2 changelog
   - Moved from "guru mediation style" to div-popups
   - Several css fixes
   - Fixed series of bugs that lead to not shown groups
-	- Work in progress on CA Management (by Zeph)
 
 * gosa 2.4
   - Updated layout to work cleanly with IE6+, Firefox 1.0.4+, khtml 3.4+
