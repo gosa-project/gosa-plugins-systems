@@ -196,7 +196,7 @@ class divlist {
     							
     				$s_value = $this->a_entries[$i];
     				
-    				
+    		    // Alternation of background color		
     				if($i_alternate) $i_alternate=0; else $i_alternate=1;
     				
     				$s_return .= "\n<tr>";
@@ -295,7 +295,7 @@ class divlist {
   
       // if fewer than 22 Entries (list not full), print row to fill empty space
       //FIXME: Why 22? Isn't the size dynamic
-#      if($this->_numEntries()<=22){
+      if($this->_numEntries()<=22){
         $fill= "";
         for ($i= 1; $i <= $this->cols; $i++){
           if ($i == $this->cols){
@@ -303,9 +303,9 @@ class divlist {
           } else {
            $fill.= "<td class='list1nohighlight' style='height:100%;'>&nbsp;</td>";
           }
-       }
+        }
         $s_return.="\n<tr>$fill";
-#      }
+      }
       if($this->i_entriesPerPage == 0) {
         $s_return .= "\n</table></div></td>";
       }
