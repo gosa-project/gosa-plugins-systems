@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-12-18 11:18+0100\n"
+"POT-Creation-Date: 2006-12-29 10:02+0100\n"
 "PO-Revision-Date: 2006-08-10 11:00+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: Français <fr@li.org>\n"
@@ -1329,7 +1329,7 @@ msgstr ""
 "Le programme externe pour changer votre mot de passe à renvoyé une erreur: "
 
 #: plugins/personal/password/main.inc:123
-#: plugins/admin/users/class_divListUsers.inc:249
+#: plugins/admin/users/class_divListUsers.inc:226
 msgid "Change password"
 msgstr "Modifier le mot de passe"
 
@@ -1503,9 +1503,9 @@ msgid "unconfigured"
 msgstr "non configuré"
 
 #: plugins/personal/posix/class_posixAccount.inc:201
+#: plugins/admin/systems/class_terminalService.inc:196
 #: plugins/admin/systems/class_workstationStartup.inc:825
 #: plugins/admin/systems/class_workstationService.inc:182
-#: plugins/admin/systems/class_terminalService.inc:196
 #: plugins/gofon/phoneaccount/class_phoneAccount.inc:222
 msgid "automatic"
 msgstr "automatique"
@@ -3743,8 +3743,8 @@ msgid "auto"
 msgstr "automatique"
 
 #: plugins/personal/environment/class_environment.inc:230
-#: plugins/admin/systems/class_workstationService.inc:88
 #: plugins/admin/systems/class_terminalService.inc:97
+#: plugins/admin/systems/class_workstationService.inc:88
 #, php-format
 msgid ""
 "You have specified an external resolution hook which can't be read, please "
@@ -4733,7 +4733,7 @@ msgstr "Soumettre"
 
 #: plugins/gofax/blocklists/class_divListBlocklists.inc:151
 #: plugins/admin/groups/class_divListGroup.inc:215
-#: plugins/admin/users/class_divListUsers.inc:243
+#: plugins/admin/users/class_divListUsers.inc:220
 #: plugins/admin/applications/class_divListApplication.inc:206
 #: plugins/admin/departments/class_divListDepartment.inc:126
 #: plugins/admin/systems/glpiPrinter.tpl:18
@@ -4760,14 +4760,14 @@ msgid "edit"
 msgstr "éditer"
 
 #: plugins/gofax/blocklists/class_divListBlocklists.inc:151
-#: plugins/admin/users/class_divListUsers.inc:244
+#: plugins/admin/users/class_divListUsers.inc:221
 msgid "Edit user"
 msgstr "Editer un utilisateur"
 
 #: plugins/gofax/blocklists/class_divListBlocklists.inc:161
 #: plugins/addons/mailqueue/contents.tpl:94
 #: plugins/admin/groups/class_divListGroup.inc:224
-#: plugins/admin/users/class_divListUsers.inc:262
+#: plugins/admin/users/class_divListUsers.inc:239
 #: plugins/admin/applications/class_divListApplication.inc:216
 #: plugins/admin/departments/class_divListDepartment.inc:131
 #: plugins/admin/systems/class_printerPPDSelectionDialog.inc:137
@@ -4786,7 +4786,7 @@ msgid "delete"
 msgstr "supprimer"
 
 #: plugins/gofax/blocklists/class_divListBlocklists.inc:161
-#: plugins/admin/users/class_divListUsers.inc:263
+#: plugins/admin/users/class_divListUsers.inc:240
 msgid "Delete user"
 msgstr "Supprimer un utilisateur"
 
@@ -6902,7 +6902,7 @@ msgid "Posix"
 msgstr "Posix"
 
 #: plugins/admin/groups/class_divListGroup.inc:208
-#: plugins/admin/users/class_divListUsers.inc:237
+#: plugins/admin/users/class_divListUsers.inc:214
 #: plugins/admin/applications/class_divListApplication.inc:197
 #: plugins/admin/ogroups/class_divListOGroup.inc:190
 #: plugins/admin/mimetypes/class_divListMimeTypes.inc:208
@@ -6910,7 +6910,7 @@ msgid "cut"
 msgstr "couper"
 
 #: plugins/admin/groups/class_divListGroup.inc:208
-#: plugins/admin/users/class_divListUsers.inc:237
+#: plugins/admin/users/class_divListUsers.inc:214
 #: plugins/admin/applications/class_divListApplication.inc:197
 #: plugins/admin/ogroups/class_divListOGroup.inc:190
 #: plugins/admin/mimetypes/class_divListMimeTypes.inc:208
@@ -6918,7 +6918,7 @@ msgid "Cut this entry"
 msgstr "Couper cette entrée"
 
 #: plugins/admin/groups/class_divListGroup.inc:210
-#: plugins/admin/users/class_divListUsers.inc:239
+#: plugins/admin/users/class_divListUsers.inc:216
 #: plugins/admin/applications/class_divListApplication.inc:200
 #: plugins/admin/ogroups/class_divListOGroup.inc:192
 #: plugins/admin/mimetypes/class_divListMimeTypes.inc:210
@@ -6926,7 +6926,7 @@ msgid "copy"
 msgstr "copier"
 
 #: plugins/admin/groups/class_divListGroup.inc:210
-#: plugins/admin/users/class_divListUsers.inc:239
+#: plugins/admin/users/class_divListUsers.inc:216
 #: plugins/admin/applications/class_divListApplication.inc:200
 #: plugins/admin/ogroups/class_divListOGroup.inc:192
 #: plugins/admin/mimetypes/class_divListMimeTypes.inc:210
@@ -7168,27 +7168,19 @@ msgstr "Créer un nouvel utilisateur depuis un modèle"
 msgid "Create user with this template"
 msgstr "Créer un nouvel utilisateur avec ce modèle"
 
-#: plugins/admin/users/class_divListUsers.inc:248
+#: plugins/admin/users/class_divListUsers.inc:225
 msgid "password"
 msgstr "mot de passe"
 
-#: plugins/admin/users/class_divListUsers.inc:252
+#: plugins/admin/users/class_divListUsers.inc:229
 #, fuzzy
 msgid "You are not allowed to change the password for this user."
 msgstr "Vous n'êtes pas autorisé à modifier votre mot de passe en ce moment"
 
-#: plugins/admin/users/class_divListUsers.inc:266
+#: plugins/admin/users/class_divListUsers.inc:243
 #, fuzzy
 msgid "You are not allowed to remove this user."
 msgstr "Vous n'êtes pas autorisé à supprimer cette utilisateur!"
-
-#: plugins/admin/users/class_divListUsers.inc:285
-msgid "Online"
-msgstr "En ligne"
-
-#: plugins/admin/users/class_divListUsers.inc:292
-msgid "Offline"
-msgstr "Hors-ligne"
 
 #: plugins/admin/applications/generic.tpl:7
 #: plugins/admin/applications/generic.tpl:10
@@ -7791,10 +7783,10 @@ msgid "present"
 msgstr "présent"
 
 #: plugins/admin/systems/class_terminalInfo.inc:67
+#: plugins/admin/systems/class_terminalService.inc:261
 #: plugins/admin/systems/class_terminalStartup.inc:161
 #: plugins/admin/systems/class_terminalGeneric.inc:256
 #: plugins/admin/systems/class_workstationStartup.inc:498
-#: plugins/admin/systems/class_terminalService.inc:261
 msgid "This 'dn' has no terminal features."
 msgstr "Ce 'dn' n'a pas d'extension de terminaux."
 
@@ -8074,6 +8066,26 @@ msgstr "Administration du système"
 msgid "Time server"
 msgstr "Services de temps"
 
+#: plugins/admin/systems/class_terminalService.inc:71
+#: plugins/admin/systems/class_workstationService.inc:92
+#: plugins/admin/systems/workstationService.tpl:157
+msgid "unknown"
+msgstr "inconnu"
+
+#: plugins/admin/systems/class_terminalService.inc:74
+#: plugins/admin/systems/class_terminalService.inc:102
+#: plugins/admin/systems/class_terminalService.inc:108
+#: plugins/admin/systems/class_terminalService.inc:118
+#: plugins/admin/systems/class_terminalService.inc:119
+#: plugins/admin/systems/class_terminalService.inc:121
+#: plugins/admin/systems/class_terminalService.inc:125
+#: plugins/admin/systems/class_terminalService.inc:218
+#: plugins/admin/systems/class_terminalService.inc:221
+#: plugins/admin/systems/class_terminalService.inc:224
+#: plugins/admin/systems/class_terminalService.inc:227
+#: plugins/admin/systems/class_terminalService.inc:230
+#: plugins/admin/systems/class_terminalService.inc:233
+#: plugins/admin/systems/class_terminalService.inc:236
 #: plugins/admin/systems/class_terminalStartup.inc:39
 #: plugins/admin/systems/class_terminalStartup.inc:121
 #: plugins/admin/systems/class_terminalStartup.inc:141
@@ -8098,22 +8110,222 @@ msgstr "Services de temps"
 #: plugins/admin/systems/class_workstationService.inc:233
 #: plugins/admin/systems/class_workstationService.inc:234
 #: plugins/admin/systems/class_workstationService.inc:235
-#: plugins/admin/systems/class_terminalService.inc:74
-#: plugins/admin/systems/class_terminalService.inc:102
-#: plugins/admin/systems/class_terminalService.inc:108
-#: plugins/admin/systems/class_terminalService.inc:118
-#: plugins/admin/systems/class_terminalService.inc:119
-#: plugins/admin/systems/class_terminalService.inc:121
-#: plugins/admin/systems/class_terminalService.inc:125
-#: plugins/admin/systems/class_terminalService.inc:218
-#: plugins/admin/systems/class_terminalService.inc:221
-#: plugins/admin/systems/class_terminalService.inc:224
-#: plugins/admin/systems/class_terminalService.inc:227
-#: plugins/admin/systems/class_terminalService.inc:230
-#: plugins/admin/systems/class_terminalService.inc:233
-#: plugins/admin/systems/class_terminalService.inc:236
 msgid "inherited"
 msgstr "hérité"
+
+#: plugins/admin/systems/class_terminalService.inc:103
+#: plugins/admin/systems/class_terminalService.inc:104
+#: plugins/admin/systems/class_terminalService.inc:105
+#: plugins/admin/systems/class_terminalService.inc:106
+#: plugins/admin/systems/class_workstationService.inc:95
+#: plugins/admin/systems/class_workstationService.inc:96
+#: plugins/admin/systems/class_workstationService.inc:97
+#: plugins/admin/systems/class_workstationService.inc:98
+msgid "bit"
+msgstr "bit"
+
+#: plugins/admin/systems/class_terminalService.inc:157
+msgid "default"
+msgstr "défaut"
+
+#: plugins/admin/systems/class_terminalService.inc:158
+#: plugins/admin/systems/class_workstationService.inc:138
+msgid "show chooser"
+msgstr "Afficher le sélecteur"
+
+#: plugins/admin/systems/class_terminalService.inc:159
+#: plugins/admin/systems/class_workstationService.inc:139
+msgid "direct"
+msgstr "direct"
+
+#: plugins/admin/systems/class_terminalService.inc:162
+#: plugins/admin/systems/class_workstationService.inc:142
+msgid "load balanced"
+msgstr "répartition de charge"
+
+#: plugins/admin/systems/class_terminalService.inc:165
+#: plugins/admin/systems/class_workstationService.inc:145
+msgid "Windows RDP"
+msgstr "Windows RDP"
+
+#: plugins/admin/systems/class_terminalService.inc:166
+#: plugins/admin/systems/class_workstationService.inc:146
+msgid "ICA client"
+msgstr "Client ICA"
+
+#: plugins/admin/systems/class_terminalService.inc:221
+#: plugins/admin/systems/class_workstationService.inc:204
+msgid "Bit"
+msgstr "Bit"
+
+#: plugins/admin/systems/class_terminalService.inc:316
+#: plugins/admin/systems/class_workstationService.inc:314
+msgid "Choose the phone located at the current terminal"
+msgstr "Choisissez le téléphone situé à coté du terminal"
+
+#: plugins/admin/systems/class_terminalService.inc:390
+#: plugins/admin/systems/class_terminalService.inc:395
+#: plugins/admin/systems/class_workstationService.inc:380
+#: plugins/admin/systems/class_workstationService.inc:385
+msgid "Please specify a valid VSync range."
+msgstr ""
+"Veuillez spécifier une plage valide pour la fréquence de synchronisation "
+"verticale."
+
+#: plugins/admin/systems/class_terminalService.inc:404
+#: plugins/admin/systems/class_terminalService.inc:409
+#: plugins/admin/systems/class_workstationService.inc:395
+#: plugins/admin/systems/class_workstationService.inc:400
+msgid "Please specify a valid HSync range."
+msgstr ""
+"Veuillez spécifier une plage valide pour la fréquence de synchronisation "
+"Horizontale."
+
+#: plugins/admin/systems/class_terminalService.inc:457
+#, fuzzy, php-format
+msgid "Saving of object system terminal/service with dn '%s' failed."
+msgstr "La sauvegarde des Informations sur les services du terminal à échoué"
+
+#: plugins/admin/systems/class_terminalService.inc:466
+#: plugins/admin/systems/class_workstationService.inc:451
+#, fuzzy
+msgid "Service"
+msgstr "Services"
+
+#: plugins/admin/systems/class_terminalService.inc:467
+#: plugins/admin/systems/class_goTerminalServer.inc:31
+#: plugins/admin/systems/class_goTerminalServer.inc:54
+#: plugins/admin/systems/class_goTerminalServer.inc:117
+#: plugins/admin/systems/class_goTerminalServer.inc:118
+#: plugins/admin/systems/goTerminalServer.tpl:1
+msgid "Terminal service"
+msgstr "Services de terminaux"
+
+#: plugins/admin/systems/class_terminalService.inc:475
+#: plugins/admin/systems/class_workstationService.inc:460
+#, fuzzy
+msgid "Monitor"
+msgstr "Taille écran"
+
+#: plugins/admin/systems/class_terminalService.inc:476
+#: plugins/admin/ogroups/class_phonequeue.inc:748
+#, fuzzy
+msgid "Method"
+msgstr "méthode"
+
+#: plugins/admin/systems/class_terminalService.inc:477
+#: plugins/admin/systems/terminalService.tpl:173
+msgid "Remote desktop"
+msgstr "Bureau distant"
+
+#: plugins/admin/systems/class_terminalService.inc:478
+#: plugins/admin/systems/class_goTerminalServer.inc:127
+#: plugins/admin/systems/goTerminalServer.tpl:12
+msgid "Font path"
+msgstr "Répertoire des polices de caractères"
+
+#: plugins/admin/systems/class_terminalService.inc:479
+#: plugins/admin/systems/class_workstationService.inc:461
+#, fuzzy
+msgid "Gfx driver"
+msgstr "Nouveau pilote"
+
+#: plugins/admin/systems/class_terminalService.inc:480
+#: plugins/admin/systems/class_workstationService.inc:462
+#, fuzzy
+msgid "Gfx resolution"
+msgstr "Résolution"
+
+#: plugins/admin/systems/class_terminalService.inc:481
+#: plugins/admin/systems/class_workstationService.inc:463
+#, fuzzy
+msgid "Gfx color depth"
+msgstr "Profondeur des couleurs"
+
+#: plugins/admin/systems/class_terminalService.inc:482
+#: plugins/admin/systems/class_workstationService.inc:464
+#, fuzzy
+msgid "Hsync"
+msgstr "Fréquence de synchronisation Horizontale"
+
+#: plugins/admin/systems/class_terminalService.inc:483
+#: plugins/admin/systems/class_workstationService.inc:465
+#, fuzzy
+msgid "Vsync"
+msgstr "Fréquence de synchronisation verticale"
+
+#: plugins/admin/systems/class_terminalService.inc:484
+msgid "Auto-Sync"
+msgstr ""
+
+#: plugins/admin/systems/class_terminalService.inc:485
+#, fuzzy
+msgid "Printer service enabled"
+msgstr "Service d'impression"
+
+#: plugins/admin/systems/class_terminalService.inc:486
+#: plugins/admin/systems/terminalService.tpl:229
+msgid "Spool server"
+msgstr "Serveur de file d'attente"
+
+#: plugins/admin/systems/class_terminalService.inc:487
+#: plugins/admin/systems/class_workstationService.inc:467
+#, fuzzy
+msgid "Scanner enabled"
+msgstr "activé"
+
+#: plugins/admin/systems/class_terminalService.inc:488
+#, fuzzy
+msgid "Scanner model"
+msgstr "activé"
+
+#: plugins/admin/systems/class_terminalService.inc:489
+msgid "Haeh ? "
+msgstr ""
+
+#: plugins/admin/systems/class_terminalService.inc:490
+#, fuzzy
+msgid "..."
+msgstr ".."
+
+#: plugins/admin/systems/class_terminalService.inc:491
+#: plugins/admin/systems/class_workstationService.inc:468
+#, fuzzy
+msgid "Keyboard model"
+msgstr "Sélectionnez le modèle du clavier"
+
+#: plugins/admin/systems/class_terminalService.inc:492
+#: plugins/admin/systems/class_workstationService.inc:469
+#, fuzzy
+msgid "Keyboard layout"
+msgstr "Sélectionnez la disposition du clavier"
+
+#: plugins/admin/systems/class_terminalService.inc:493
+#: plugins/admin/systems/class_workstationService.inc:470
+#, fuzzy
+msgid "Keyboard variant"
+msgstr "Sélectionnez la variante du clavier"
+
+#: plugins/admin/systems/class_terminalService.inc:494
+#: plugins/admin/systems/class_workstationService.inc:471
+#, fuzzy
+msgid "Mouse type"
+msgstr "type mime"
+
+#: plugins/admin/systems/class_terminalService.inc:495
+#: plugins/admin/systems/class_workstationService.inc:472
+#, fuzzy
+msgid "Mouse port"
+msgstr "Point de montage"
+
+#: plugins/admin/systems/class_terminalService.inc:496
+#: plugins/admin/systems/class_workstationService.inc:473
+#: plugins/admin/systems/workstationService.tpl:86
+#: plugins/admin/systems/terminalService.tpl:76
+#: plugins/gofon/phoneaccount/generic.tpl:30
+#: plugins/gofon/phoneaccount/paste_generic.tpl:27
+msgid "Telephone hardware"
+msgstr "Matériel téléphonique"
 
 #: plugins/admin/systems/class_terminalStartup.inc:93
 #: plugins/admin/systems/class_workstationStartup.inc:337
@@ -9963,177 +10175,20 @@ msgstr "Le vendeur sélectionné '%s' n'existe pas dans notre liste de ppds."
 msgid "Printer ppd selection."
 msgstr "Sélection du ppd de votre imprimante."
 
-#: plugins/admin/systems/class_workstationService.inc:92
-#: plugins/admin/systems/workstationService.tpl:157
-#: plugins/admin/systems/class_terminalService.inc:71
-msgid "unknown"
-msgstr "inconnu"
-
-#: plugins/admin/systems/class_workstationService.inc:95
-#: plugins/admin/systems/class_workstationService.inc:96
-#: plugins/admin/systems/class_workstationService.inc:97
-#: plugins/admin/systems/class_workstationService.inc:98
-#: plugins/admin/systems/class_terminalService.inc:103
-#: plugins/admin/systems/class_terminalService.inc:104
-#: plugins/admin/systems/class_terminalService.inc:105
-#: plugins/admin/systems/class_terminalService.inc:106
-msgid "bit"
-msgstr "bit"
-
-#: plugins/admin/systems/class_workstationService.inc:138
-#: plugins/admin/systems/class_terminalService.inc:158
-msgid "show chooser"
-msgstr "Afficher le sélecteur"
-
-#: plugins/admin/systems/class_workstationService.inc:139
-#: plugins/admin/systems/class_terminalService.inc:159
-msgid "direct"
-msgstr "direct"
-
-#: plugins/admin/systems/class_workstationService.inc:142
-#: plugins/admin/systems/class_terminalService.inc:162
-msgid "load balanced"
-msgstr "répartition de charge"
-
-#: plugins/admin/systems/class_workstationService.inc:145
-#: plugins/admin/systems/class_terminalService.inc:165
-msgid "Windows RDP"
-msgstr "Windows RDP"
-
-#: plugins/admin/systems/class_workstationService.inc:146
-#: plugins/admin/systems/class_terminalService.inc:166
-msgid "ICA client"
-msgstr "Client ICA"
-
-#: plugins/admin/systems/class_workstationService.inc:204
-#: plugins/admin/systems/class_terminalService.inc:221
-msgid "Bit"
-msgstr "Bit"
-
-#: plugins/admin/systems/class_workstationService.inc:314
-#: plugins/admin/systems/class_terminalService.inc:316
-msgid "Choose the phone located at the current terminal"
-msgstr "Choisissez le téléphone situé à coté du terminal"
-
-#: plugins/admin/systems/class_workstationService.inc:380
-#: plugins/admin/systems/class_workstationService.inc:385
-#: plugins/admin/systems/class_terminalService.inc:390
-#: plugins/admin/systems/class_terminalService.inc:395
-msgid "Please specify a valid VSync range."
-msgstr ""
-"Veuillez spécifier une plage valide pour la fréquence de synchronisation "
-"verticale."
-
-#: plugins/admin/systems/class_workstationService.inc:395
-#: plugins/admin/systems/class_workstationService.inc:400
-#: plugins/admin/systems/class_terminalService.inc:404
-#: plugins/admin/systems/class_terminalService.inc:409
-msgid "Please specify a valid HSync range."
-msgstr ""
-"Veuillez spécifier une plage valide pour la fréquence de synchronisation "
-"Horizontale."
-
 #: plugins/admin/systems/class_workstationService.inc:443
 #, fuzzy, php-format
 msgid "Saving of system workstation/service with dn '%s' failed."
 msgstr "La sauvegarde des services de la station de travail à échoué"
-
-#: plugins/admin/systems/class_workstationService.inc:451
-#: plugins/admin/systems/class_terminalService.inc:466
-#, fuzzy
-msgid "Service"
-msgstr "Services"
 
 #: plugins/admin/systems/class_workstationService.inc:452
 #, fuzzy
 msgid "Workstation service"
 msgstr "Nom de la station de travail"
 
-#: plugins/admin/systems/class_workstationService.inc:460
-#: plugins/admin/systems/class_terminalService.inc:475
-#, fuzzy
-msgid "Monitor"
-msgstr "Taille écran"
-
-#: plugins/admin/systems/class_workstationService.inc:461
-#: plugins/admin/systems/class_terminalService.inc:479
-#, fuzzy
-msgid "Gfx driver"
-msgstr "Nouveau pilote"
-
-#: plugins/admin/systems/class_workstationService.inc:462
-#: plugins/admin/systems/class_terminalService.inc:480
-#, fuzzy
-msgid "Gfx resolution"
-msgstr "Résolution"
-
-#: plugins/admin/systems/class_workstationService.inc:463
-#: plugins/admin/systems/class_terminalService.inc:481
-#, fuzzy
-msgid "Gfx color depth"
-msgstr "Profondeur des couleurs"
-
-#: plugins/admin/systems/class_workstationService.inc:464
-#: plugins/admin/systems/class_terminalService.inc:482
-#, fuzzy
-msgid "Hsync"
-msgstr "Fréquence de synchronisation Horizontale"
-
-#: plugins/admin/systems/class_workstationService.inc:465
-#: plugins/admin/systems/class_terminalService.inc:483
-#, fuzzy
-msgid "Vsync"
-msgstr "Fréquence de synchronisation verticale"
-
 #: plugins/admin/systems/class_workstationService.inc:466
 #, fuzzy
 msgid "Use DDC"
 msgstr "ID de l'utilisateur"
-
-#: plugins/admin/systems/class_workstationService.inc:467
-#: plugins/admin/systems/class_terminalService.inc:487
-#, fuzzy
-msgid "Scanner enabled"
-msgstr "activé"
-
-#: plugins/admin/systems/class_workstationService.inc:468
-#: plugins/admin/systems/class_terminalService.inc:491
-#, fuzzy
-msgid "Keyboard model"
-msgstr "Sélectionnez le modèle du clavier"
-
-#: plugins/admin/systems/class_workstationService.inc:469
-#: plugins/admin/systems/class_terminalService.inc:492
-#, fuzzy
-msgid "Keyboard layout"
-msgstr "Sélectionnez la disposition du clavier"
-
-#: plugins/admin/systems/class_workstationService.inc:470
-#: plugins/admin/systems/class_terminalService.inc:493
-#, fuzzy
-msgid "Keyboard variant"
-msgstr "Sélectionnez la variante du clavier"
-
-#: plugins/admin/systems/class_workstationService.inc:471
-#: plugins/admin/systems/class_terminalService.inc:494
-#, fuzzy
-msgid "Mouse type"
-msgstr "type mime"
-
-#: plugins/admin/systems/class_workstationService.inc:472
-#: plugins/admin/systems/class_terminalService.inc:495
-#, fuzzy
-msgid "Mouse port"
-msgstr "Point de montage"
-
-#: plugins/admin/systems/class_workstationService.inc:473
-#: plugins/admin/systems/workstationService.tpl:86
-#: plugins/admin/systems/terminalService.tpl:76
-#: plugins/admin/systems/class_terminalService.inc:496
-#: plugins/gofon/phoneaccount/generic.tpl:30
-#: plugins/gofon/phoneaccount/paste_generic.tpl:27
-msgid "Telephone hardware"
-msgstr "Matériel téléphonique"
 
 #: plugins/admin/systems/workstationService.tpl:4
 #: plugins/admin/systems/terminalService.tpl:4
@@ -10329,11 +10384,6 @@ msgstr "Sélectionnez afin d'avoir d'obtenir un démarrage plus verbeux"
 msgid "use debug mode for startup"
 msgstr "utilisez le mode de débogage pour le démarrage"
 
-#: plugins/admin/systems/terminalService.tpl:173
-#: plugins/admin/systems/class_terminalService.inc:477
-msgid "Remote desktop"
-msgstr "Bureau distant"
-
 #: plugins/admin/systems/terminalService.tpl:177
 msgid "Connect method"
 msgstr "Méthode de connexion"
@@ -10369,11 +10419,6 @@ msgstr "Sélectionnez pour démarrer le service d'impression IPP sur le terminal
 #: plugins/admin/systems/terminalService.tpl:223
 msgid "Provide print services"
 msgstr "Fournir des services d'impression"
-
-#: plugins/admin/systems/terminalService.tpl:229
-#: plugins/admin/systems/class_terminalService.inc:486
-msgid "Spool server"
-msgstr "Serveur de file d'attente"
 
 #: plugins/admin/systems/terminalService.tpl:232
 msgid "Select NFS filesystem to place spool files on"
@@ -11913,15 +11958,6 @@ msgstr "Editer le service"
 msgid "Remove service"
 msgstr "Supprimer le service"
 
-#: plugins/admin/systems/class_goTerminalServer.inc:31
-#: plugins/admin/systems/class_goTerminalServer.inc:54
-#: plugins/admin/systems/class_goTerminalServer.inc:117
-#: plugins/admin/systems/class_goTerminalServer.inc:118
-#: plugins/admin/systems/goTerminalServer.tpl:1
-#: plugins/admin/systems/class_terminalService.inc:467
-msgid "Terminal service"
-msgstr "Services de terminaux"
-
 #: plugins/admin/systems/class_goTerminalServer.inc:78
 #, fuzzy, php-format
 msgid "Saving server services/terminalServer with dn '%s' failed."
@@ -11937,12 +11973,6 @@ msgstr ""
 #: plugins/admin/systems/goTerminalServer.tpl:8
 msgid "Temporary disable login"
 msgstr "Désactiver temporairement le login"
-
-#: plugins/admin/systems/class_goTerminalServer.inc:127
-#: plugins/admin/systems/goTerminalServer.tpl:12
-#: plugins/admin/systems/class_terminalService.inc:478
-msgid "Font path"
-msgstr "Répertoire des polices de caractères"
 
 #: plugins/admin/systems/class_serverService.inc:288
 msgid "Can't set status while this server is not saved."
@@ -12662,44 +12692,6 @@ msgid ""
 msgstr ""
 "La commande '%s', spécifiée dans le ACTION_HOOK de l'extension '%s' n'existe "
 "pas."
-
-#: plugins/admin/systems/class_terminalService.inc:157
-msgid "default"
-msgstr "défaut"
-
-#: plugins/admin/systems/class_terminalService.inc:457
-#, fuzzy, php-format
-msgid "Saving of object system terminal/service with dn '%s' failed."
-msgstr "La sauvegarde des Informations sur les services du terminal à échoué"
-
-#: plugins/admin/systems/class_terminalService.inc:476
-#: plugins/admin/ogroups/class_phonequeue.inc:748
-#, fuzzy
-msgid "Method"
-msgstr "méthode"
-
-#: plugins/admin/systems/class_terminalService.inc:484
-msgid "Auto-Sync"
-msgstr ""
-
-#: plugins/admin/systems/class_terminalService.inc:485
-#, fuzzy
-msgid "Printer service enabled"
-msgstr "Service d'impression"
-
-#: plugins/admin/systems/class_terminalService.inc:488
-#, fuzzy
-msgid "Scanner model"
-msgstr "activé"
-
-#: plugins/admin/systems/class_terminalService.inc:489
-msgid "Haeh ? "
-msgstr ""
-
-#: plugins/admin/systems/class_terminalService.inc:490
-#, fuzzy
-msgid "..."
-msgstr ".."
 
 #: plugins/admin/ogroups/termgroup.tpl:2
 msgid ""
@@ -16048,7 +16040,7 @@ msgstr ""
 "Impossible de se connecter à l'annuaire LDAP. Veuillez contacter "
 "l'administrateur du système."
 
-#: include/class_config.inc:477
+#: include/class_config.inc:479
 msgid "SID and/or RIDBASE missing in your configuration!"
 msgstr "SID et/ou RIDBASE absents du fichier de configuration!"
 
@@ -17672,6 +17664,12 @@ msgstr "Date et Heure"
 #: ihtml/themes/default/snapshotdialog.tpl:79
 msgid "Reason for generating this snapshot"
 msgstr "Raison pour la génération de cette copie instantanée"
+
+#~ msgid "Online"
+#~ msgstr "En ligne"
+
+#~ msgid "Offline"
+#~ msgstr "Hors-ligne"
 
 #~ msgid "You have no permissions to create a user on this 'Base'."
 #~ msgstr ""
