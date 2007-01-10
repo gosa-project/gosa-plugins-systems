@@ -34,6 +34,17 @@
         <td>{t}Telephone{/t}</td>
         <td>{$hardware_list}</td>
        </tr>
+       <tr>
+        <td>{t}Home server{/t}{$must}
+        </td>
+        <td>
+{render acl=$goFonHomeServerACL}
+         <select name='goFonHomeServer' title='{t}Select the accounts home server{/t}'>
+          {html_options options=$goFonHomeServers selected=$goFonHomeServer}
+         </select>
+{/render}
+        </td>
+      </tr>
       <tr>
        <td>
         <label for="goFonVoicemailPIN">{t}Voicemail PIN{/t}{$must}</label>
