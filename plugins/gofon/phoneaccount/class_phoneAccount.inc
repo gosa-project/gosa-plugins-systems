@@ -1341,7 +1341,7 @@ class phoneAccount extends plugin
 
     $ldap= $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
-    $ldap->search("(objectClass=goFonQueue)", array("member"));
+    $ldap->search("(&(objectClass=goFonQueue)(member=*))", array("member"));
     while($attr = $ldap->fetch()){
       if(in_array($this->dn,$attr['member'])){
         $new =new ogrouptabs($this->config, $this->config->data['TABS']['OGROUPTABS'],$attr['dn']);
