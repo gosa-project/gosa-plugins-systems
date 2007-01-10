@@ -177,7 +177,6 @@ class ogroupManagement extends plugin
         /* Delete request is permitted, perform LDAP action */
         $this->ogroup= new ogrouptabs($this->config,
             $this->config->data['TABS']['OGROUPTABS'], $this->dn);
-        $this->ogroup->set_acl(array($this->acl));
         $this->ogroup->delete ();
         gosa_log ("Object group'".$this->dn."' has been removed");
         unset ($this->ogroup);
