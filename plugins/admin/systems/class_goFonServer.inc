@@ -85,7 +85,39 @@ class goFonServer extends goService{
       plugin::save_object();
     }
   } 
-  
+
+
+  function allow_remove()
+  {
+    /* Check if we are able to remove the asterisk database. If the database is still in use skip */
+    if($this->is_account){
+      $ldap = $this->config->get_ldap_link();
+      $ldap->cd($this->config->current['BASE']);
+      $ldap->search("(&(goFonHomeServer=".$this->dn.")(|(uid=*)(cn=*)))",array("dn","uid","cn","goFonHomeServer"));
+      if($ldap->count()){
+
+        /* Number of entries shown in warning */
+        $i    = 3;
+        $str  = "";
+        while(($attrs = $ldap->fetch()) && $i >= 0){
+          $i --;
+          if(isset($attrs['uid'][0])){
+            $str .= $attrs['uid'][0]." ";
+          }else{
+            $str .= $attrs['cn'][0]." ";
+          }
+        }
+
+        /* Some entries found */
+        if($i != 3){
+          return(sprintf(_("You can't remove the asterisk database extension, it is still in use by these objects '%s'."),trim($str)));
+        }
+      }
+    }
+    return("fa");
+  }
+
+ 
   /* Return plugin informations for acl handling */
   function plInfo()
   {

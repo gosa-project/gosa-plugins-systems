@@ -126,8 +126,17 @@ class ServerService extends plugin
       $tmp     = $new_obj->getListEntry();
 
       if($tmp['AllowRemove']){
-        $this->plugins[$s_entry] = $new_obj;
-        $this->plugins[$s_entry]->is_account = false;
+
+        /* Check if we are allowed to remove this service
+         */
+        $str = $this->plugins[$s_entry]->allow_remove();
+
+        if(empty($str)){
+          $this->plugins[$s_entry] = $new_obj;
+          $this->plugins[$s_entry]->is_account = false;
+        }else{
+          print_red($str);
+        }
       }
     }
 
@@ -388,6 +397,18 @@ class ServerService extends plugin
         if($this->plugins[$name]->initially_was_account){
           $this->plugins[$name]->remove_from_parent();
         }
+      }
+    }
+  }
+
+
+  /* Check if all plugins allow a remove ..  */
+  function allow_remove()
+  {
+    foreach($this->plugins as $name => $obj){
+      $str = $obj->allow_remove();
+      if(!empty($str)){
+        return($str);
       }
     }
   }
