@@ -996,9 +996,14 @@ class phoneAccount extends plugin
       }
     }
 
+    /* Assign acls */
+    $tmp = $this->plInfo();
+    foreach($tmp['plProvidedAcls'] as $name => $translation){
+      $smarty->assign($name."ACL",$this->getacl($name));
+    }
+
     /* Transfer ACL's */
     foreach($this->attributes as $val){
-      $smarty->assign($val."ACL",$this->getacl($val,$SkipWrite));
       if(isset($this->$val)){
         $smarty->assign($val,$this->$val);
       }else{
@@ -1453,6 +1458,7 @@ class phoneAccount extends plugin
 
           "plProvidedAcls"  => array(
             "telephoneNumber"     => _("Telephone number"),
+            "goFonHomeServer"     => _("Home server"),
             "goFonMacro"          => _("Macro settings"),
             "goFonHardware"       => _("Phone hardware"),
             "goFonPIN"            => _("Telephone pin"),

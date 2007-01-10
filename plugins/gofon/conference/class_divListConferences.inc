@@ -200,7 +200,7 @@ class divListConference extends MultiSelectWindow
       $a_field3 = array("string"=> $cn , "attach" =>  $title." style='width:200px;'");
       $a_field4 = array("string"=> $pin, "attach" =>  $title." style='width:50px;'");
       $a_field5 = array("string"=> preg_replace("/%KEY%/",$conferencekey,$actions), 
-                        "attach"=> $title."style='width:52px;border-right:0px;text-align:right;'");
+                        "attach"=> $title."style='width:".$action_col_size."px;border-right:0px;text-align:right;'");
 
       $this->AddElement(array($a_field1,$a_field2,$a_field3,$a_field4,$a_field5));
     }

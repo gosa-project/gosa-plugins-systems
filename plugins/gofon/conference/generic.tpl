@@ -64,8 +64,17 @@
 
           </td>
         </tr>
+        <tr>
+          <td><LABEL for="goFonHomeServer">{t}Home server{/t}</LABEL>{$must}</td>
+          <td>
+{render acl=$goFonHomeServerACL}
+                <select name='goFonHomeServer'>
+                 {html_options options=$goFonHomeServers selected=$goFonHomeServer}
+                </select>
+{/render}
+          </td>
+        </tr>
       </table>
-
     </td>
     <td style="border-left:1px solid #A0A0A0">
       &nbsp;
