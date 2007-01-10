@@ -123,21 +123,23 @@ class hotplugDialog extends plugin
         $message[]=_("Invalid character in description. Please specify a valid description.");
       }
 
-      if(empty($this->HOT_id) || preg_match("/[\|]/i",$this->HOT_id)){
-        $message[]=_("Please specify a valid id.");
+      if((empty($this->HOT_vendor)) || (empty($this->HOT_produkt))){
+        if(empty($this->HOT_id) || preg_match("/[\|\*]/i",$this->HOT_id)){
+          $message[]=_("Please specify a valid iSerial.");
+        }
       }
       if(empty($this->HOT_vendor) || !$this->is_2byteHex($this->HOT_vendor)){
-        $message[]=_("Please specify a valid vendor id. (2 byte hex like '0xFFFF')");
+        $message[]=_("Please specify a valid vendor ID. (2 byte hex like '0xFFFF')");
       }
       if(empty($this->HOT_produkt) || !$this->is_2byteHex($this->HOT_produkt)){
-        $message[]=_("Please specify a valid product id. (2 byte hex like '0xFFFF')");
+        $message[]=_("Please specify a valid product ID. (2 byte hex like '0xFFFF')");
       }
 
-    $ldap = $this->config->get_ldap_link();
-    $ldap->search("(&(objectClass=gotoEnvironment)(gotoHotplugDevice=".$this->HOT_name."*))",array("gotoHotplugDevice"));
-    if($ldap->count()){
-      $message[]=_("An Entry with this name already exists.");
-    }
+      $ldap = $this->config->get_ldap_link();
+      $ldap->search("(&(objectClass=gotoEnvironment)(gotoHotplugDevice=".$this->HOT_name."*))",array("gotoHotplugDevice"));
+      if($ldap->count()){
+        $message[]=_("An Entry with this name already exists.");
+      }
 
     }else{
       if((!isset($_POST['hotplugName']))||(empty($_POST['hotplugName']))){
