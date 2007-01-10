@@ -114,6 +114,7 @@ class askClassName extends plugin
       $smarty->assign("grey", "");
     }
     $smarty->assign("ClassNames", $used);
+    $smarty->assign("ClassName",  $this->ClassName);
     $display.= $smarty->fetch(get_template_path('askClassName.tpl', TRUE));
     return($display);
   }
@@ -142,6 +143,10 @@ class askClassName extends plugin
     /* Call common method to give check the hook */
     $message= plugin::check();
   
+    if($this->ClassName != preg_replace("/ /","",trim($this->ClassName))){
+      $message[] = _("Spaces are not allowed within class names.");
+    }
+
     if(empty($this->ClassName)){
       $message[]=_("The given class name is empty.");
     }

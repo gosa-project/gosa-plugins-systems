@@ -409,7 +409,8 @@ class faiPackage extends plugin
         $dsc= "";
         if (preg_match('/^-/', $usedName)){
           $dsc= " - "._("Package marked for removal");
-          $usedName2= preg_replace('/^-/', '! ', $usedName);
+          // Generally a bad idea here, because the toggel triggers on -, not on !
+          //$usedName= preg_replace('/^-/', '! ', $usedName);
         }else{
           $usedName2= $usedName;
         }
