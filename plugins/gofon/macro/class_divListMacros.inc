@@ -155,12 +155,23 @@ class divListMacro extends MultiSelectWindow
           name='goFonMacro_del_%KEY%' title='"._("Delete macro")."'>";
       }
 
-      $display= $val["displayName"][0]."&nbsp;(".$val["cn"][0].")";
       if(isset($val['goFonMacroVisible']['0'])&&($val['goFonMacroVisible']['0'] == "1")){
         $pic1 = $visible;
       }else{
         $pic1 = $invisible;
       }
+
+      $display= $val["displayName"][0]."&nbsp;(".$val["cn"][0].")";
+      if(isset($val['description'][0])){
+
+        $desc = $val['description'][0];
+        if(strlen($desc) > 55){
+          $desc = substr($desc,0,52)."...";
+        }
+
+        $display .= "&nbsp;[".$desc."]";
+      }
+
 
       $field1 = array("string" => sprintf($macroimg,$val['dn']), "attach" => "style='text-align:center;width:20px;'");
       $field2 = array("string" => sprintf($editlink,$key,$display), "attach" => "style='' title='".preg_replace('/ /', '&nbsp;', @LDAP::fix($val['dn']))."'");

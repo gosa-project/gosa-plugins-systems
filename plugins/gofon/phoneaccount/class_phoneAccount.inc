@@ -1178,7 +1178,7 @@ class phoneAccount extends plugin
      *  - the macro saved is up to date on the destination server.
      */
     if(!empty($this->macro) && $this->macro != "none")  {
-      $macro_tab = new macrotabs($this->config,$this->config->data['TABS']['MACROTABS'], $this->macro);
+      $macro_tab= new macrotabs($this->config,$this->config->data['TABS']['MACROTABS'], $this->macro,"gofonmacro");
       $macro_tab -> save();
     }
 
