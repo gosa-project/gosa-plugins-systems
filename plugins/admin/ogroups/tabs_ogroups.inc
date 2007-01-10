@@ -13,8 +13,10 @@ class ogrouptabs extends tabs
      */
     $usePhoneTab = false;
     foreach($this->by_object['ogroup']->memberList as $dn => $val){
-      if(isset($val['objectClass'])){
-        if(in_array("goFonAccount",$val['objectClass'])){
+
+      $obj = $this->by_object['ogroup']->objcache[$dn];
+      if(isset($obj['objectClass'])){
+        if(in_array("goFonAccount",$obj['objectClass'])){
           $usePhoneTab = true;
         }
       }
@@ -56,12 +58,16 @@ class ogrouptabs extends tabs
      */
     if(!isset($this->by_object['phonequeue'])){
       foreach($this->by_object['ogroup']->memberList as $dn => $val){
-        if(isset($val['objectClass'])){
-          if(in_array("goFonAccount",$val['objectClass'])){
+
+        $obj = $this->by_object['ogroup']->objcache[$dn];
+  
+        if(isset($obj['objectClass'])){
+          if(in_array("goFonAccount",$obj['objectClass'])){
             require_once("class_phonequeue.inc");
             $this->by_name['phonequeue']= _("Phone queue");
             $this->by_object['phonequeue']= new phonequeue($this->config, $this->dn);
             $this->by_object['phonequeue']->parent= &$this;
+            break;
           }
         }
       }
@@ -145,7 +151,7 @@ class ogrouptabs extends tabs
     /* Insert extra tabs for several object types - if present */
 
     $objects= preg_replace('/[\[\]]/', '', $this->by_object['ogroup']->gosaGroupObjects);
-    
+   
     for ($n= 0; $n<strlen($objects); $n++){
       switch ($objects[$n]){
         case "T":
@@ -161,8 +167,11 @@ class ogrouptabs extends tabs
             /* Append a PhoneQueue, if objectClass = goFonAccount */
             $use = false;
           foreach($this->by_object['ogroup']->memberList as $dn => $val){
-            if(isset($val['objectClass'])){
-              if(in_array("goFonAccount",$val['objectClass'])){
+
+            $obj = $this->by_object['ogroup']->objcache[$dn];
+            
+            if(isset($obj['objectClass'])){
+              if(in_array("goFonAccount",$obj['objectClass'])){
                 $use = true; 
               }
             }
@@ -174,7 +183,6 @@ class ogrouptabs extends tabs
             $this->by_name['phonequeue']= _("Phone queue");
             $this->by_object['phonequeue']= new phonequeue($this->config, $this->dn);
             $this->by_object['phonequeue']->parent= &$this;
-
           } 
  
           /* Add a user tab used for mail distribution lists */
