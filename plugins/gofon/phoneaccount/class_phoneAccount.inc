@@ -30,7 +30,6 @@ class phoneAccount extends plugin
   var $goFonHomeServer        = "0";            // Contains the dn of the server that manage this account 
   var $init_HomeServer        = "0";            // Contains the dn of the server that manage this account 
   var $goFonHomeServers       = array();        // Contains all available server configurations 
-    
 
   /* CLI vars */
   var $cli_summary            = "Manage users phone account";
@@ -41,7 +40,7 @@ class phoneAccount extends plugin
   var $CopyPasteVars          = array("phoneNumbers","macroarray","macrostillavailable"/*"phoneNumbers" -Reset- */,
                                       "hardware_list","used_hardware");
 
-  var $attributes             = array("goFonDeliveryMode", "goFonFormat","uid","cn","goFonHomeServer",
+  var $attributes             = array("goFonDeliveryMode", "goFonFormat","cn","goFonHomeServer",
       "goFonHardware","goFonPIN","goFonVoicemailPIN","telephoneNumber", "goFonMacro","macro");
   var $objectclasses= array("goFonAccount");
 
@@ -66,6 +65,13 @@ class phoneAccount extends plugin
       }
     }
 
+    /* Set uid */
+    if((isset($this->parent->by_object['user']->uid))&&(!empty($this->parent->by_object['user']->uid))){
+      $this->uid = $this->parent->by_object['user']->uid;
+    }
+    if((isset($this->parent->by_object['user']->cn))&&(!empty($this->parent->by_object['user']->cn))){
+      $this->cn  = $this->parent->by_object['user']->cn;
+    }
 
     /* Check server configurations 
      * Load all server configuration in $this->goFonHomeServers if available
@@ -1342,7 +1348,7 @@ class phoneAccount extends plugin
         unset($new->by_object['ogroup']->memberList[$this->dn]);
         unset($new->by_object['ogroup']->member[$this->dn]);
         $new->save();
-        print_red(sprintf(_("Removed user '%s' from phone queue '%s'."),$this->uid,$new->by_object['ogroup']->attrs['cn']));
+        print_red(sprintf(_("Removed user '%s' from phone queue '%s'."),$this->uid,$new->by_object['ogroup']->cn));
       }
     }
     $ldap->cd($this->dn);
