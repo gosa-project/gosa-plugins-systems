@@ -514,8 +514,10 @@ class faiPackage extends plugin
           $pkgattrs['objectClass'][] = "gosaAdministrativeUnitTag";
         }
 
-        prepare_to_save_FAI_object($pkgdn,$pkgattrs);
-
+        if(in_array($pkgattrs['FAIvariableType'],array("boolean","multiselect","password","select","string","text"))){
+          prepare_to_save_FAI_object($pkgdn,$pkgattrs);
+        }
+  
         /* Handle tagging */
         $this->handle_object_tagging($pkgdn, $this->gosaUnitTag);
       }
