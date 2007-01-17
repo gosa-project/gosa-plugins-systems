@@ -280,7 +280,12 @@ class servdns extends goService
   
     /* Get differences 
      */
-    $tmp = getDNSZoneEntriesDiff($this->config,$this->Zones,$this->orig_dn);
+    $old_dn = $this->orig_dn;
+    if($old_dn == "new"){
+      $old_dn = $this->dn;
+    }
+
+    $tmp = getDNSZoneEntriesDiff($this->config,$this->Zones,$old_dn);
 
     /* Updated zone entries if reverser or forward name has changed  
      * Must be done before moving entries, else the given dn is invalid
