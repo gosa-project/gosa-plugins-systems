@@ -354,3 +354,12 @@ Q: Is there a way to let GOsa automatically fill missing fields in the network
 A: Sure. You can specify the "autoconf" option and provide the contributed
    script "net-resolver.sh" in your gosa.conf. If this is configured, you're
    getting an additional button in each network dialog.
+
+
+Q: Is there a way to add the personalTitle attribute the the users dn?
+
+A: Just add this line into the location section of your gosa.conf.
+   <location name=...
+	include_personal_title="true"
+   ...>
+

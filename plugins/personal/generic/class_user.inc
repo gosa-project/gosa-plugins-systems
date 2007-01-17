@@ -1042,8 +1042,13 @@ class user extends plugin
     /* Call common method to give check the hook */
     $message= plugin::check();
 
-    /* Assemble cn */
-    $this->cn= $this->givenName." ".$this->sn;
+    $pt= "";
+    if(isset($this->config->current['INCLUDE_PERSONAL_TITLE']) && preg_match("/true/i",$this->config->current['INCLUDE_PERSONAL_TITLE'])){
+      if(!empty($this->personalTitle)){
+        $pt = $this->personalTitle." ";
+      }
+     }
+    $this->cn= $pt.$this->givenName." ".$this->sn;
 
     /* Permissions for that base? */
     if (isset($this->config->current['DNMODE']) && $this->config->current['DNMODE'] == "uid"){
