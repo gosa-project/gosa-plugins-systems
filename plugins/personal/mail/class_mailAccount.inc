@@ -889,6 +889,7 @@ class mailAccount extends plugin
       /* Is this address already assigned in LDAP? */
       $ldap->cd ($this->config->current['BASE']);
       $ldap->search ("(&(objectClass=gosaMailAccount)(|(mail=$address)"."(gosaMailAlternateAddress=$address)))", array("uid"));
+      $ldap->search ("(&(!(objectClass=gosaUserTemplate))(objectClass=gosaMailAccount)(|(mail=$address)"."(gosaMailAlternateAddress=$address)))", array("uid"));
 
       if ($ldap->count() > 0){
         $attrs= $ldap->fetch ();

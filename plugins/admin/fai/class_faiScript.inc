@@ -195,7 +195,8 @@ class faiScript extends plugin
         /* Check acls, are we allowed to delete an entry */
         $acl = $this->ui->get_permissions($this->acl_base_for_current_object($this->SubObjects[$entry]['dn']),"fai/faiScriptEntry")  ;
         if(preg_match("/d/",$acl)){
-          if(($this->SubObjects[$entry]['status'] == "edited")||($this->SubObjects[$entry]['status'] == "FreshLoaded")){
+          $status = $this->SubObjects[$entry]['status'];
+          if($status == "edited" || $status == "FreshLoaded"){
             $this->SubObjects[$entry]['status']= "delete";
           }else{
              unset($this->SubObjects[$entry]);

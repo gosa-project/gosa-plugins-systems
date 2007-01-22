@@ -369,7 +369,9 @@ class termstartup extends plugin
     
         $this->attrs["$val"]= array_unique($this->$val);
       }
-      if(!isset($this->attrs["$val"])) $this->attrs["$val"]=array();
+      if(!isset($this->attrs["$val"])){
+       $this->attrs["$val"]=array();
+      }
     }
 
     /* Strip out 'default' values */

@@ -995,7 +995,7 @@ class appgroup extends plugin
 
     /* Special handling for release managed apps */
     $tmp = search_config($this->config->data,"faiManagement","CLASS");
-    if(!empty($tmp)){
+    if(!empty($tmp) && count($this->Releases)){
       $this->enableReleaseManagement = true;
 
       /* Check if release is available */

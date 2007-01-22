@@ -49,7 +49,7 @@ class divListMacro extends MultiSelectWindow
 
     /* set Page header */
     $this->AddHeader(array("string" => "&nbsp;", "attach" => "style='text-align:center;width:20px;'"));
-    $this->AddHeader(array("string" => _("macro name")." / "._("Department"), "attach" => "style=''"));
+    $this->AddHeader(array("string" => _("Macro name")." / "._("Department"), "attach" => "style=''"));
     $this->AddHeader(array("string" => _("Visible"), "attach" => "style='width:50px;'"));
     $this->AddHeader(array("string" => _("Actions"), "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'" ));
 

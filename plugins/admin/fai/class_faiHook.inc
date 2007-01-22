@@ -184,7 +184,8 @@ class faiHook extends plugin
         if(preg_match("/d/",$acl)){
           $once = false;
 
-          if(($this->SubObjects[$entry]['status'] == "edited")||($this->SubObjects[$entry]['status'] == "FreshLoaded")){
+          $status = $this->SubObjects[$entry]['status'];
+          if($status == "edited" || $status == "FreshLoaded"){
             $this->SubObjects[$entry]['status']= "delete";
           }else{
             unset($this->SubObjects[$entry]);

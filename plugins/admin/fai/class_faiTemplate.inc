@@ -161,7 +161,8 @@ class faiTemplate extends plugin
         $acl_dn = $this->acl_base_for_current_object($obj['dn']);
         $acl = $this->ui->get_permissions($acl_dn,"fai/faiTemplateEntry");
         if(preg_match("/d/",$acl)){
-          if(($this->SubObjects[$entry]['status'] == "edited")||($this->SubObjects[$entry]['status'] == "FreshLoaded")){
+          $status = $this->SubObjects[$entry]['status'];
+          if($status == "edited" || $status == "FreshLoaded"){
             $this->SubObjects[$entry]['status']= "delete";
           }else{
             unset($this->SubObjects[$entry]);

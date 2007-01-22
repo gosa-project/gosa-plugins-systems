@@ -123,7 +123,8 @@ class faiPartitionTableEntry extends plugin
      */
     if($s_action == "remove" && $this->acl_is_removeable()){
       if($this->partitions[$s_entry]['status'] == "edited"){
-        $this->deletePartitions[]= $this->partitions[$s_entry];
+        $this->deletePartitions[$s_entry]= $this->partitions[$s_entry];
+        $this->deletePartitions[$s_entry]['FAIpartitionNr']=$s_entry;
         unset($this->partitions[$s_entry]);
       }else{
         unset($this->partitions[$s_entry]);
