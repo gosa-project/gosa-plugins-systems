@@ -136,7 +136,7 @@ class termgroup extends plugin
   {
     /* Get required informations */
     $og     = $this->parent->by_object['ogroup'];
-    $allobs = $og->allobjects;
+    $allobs = $og->objcache;
 
     /* Get correct value for FAIstate */
     $action = $this->mapActions[$act];
@@ -146,7 +146,7 @@ class termgroup extends plugin
     $ldap->cd ($this->config->current['BASE']);
 
     /* Foreach member of mthis ogroup  ... */
-    foreach($og->mem  as $key ){
+    foreach($og->member  as $key ){
   
       /* check objectClasses and create attributes array */
       $attrs = array("FAIstate"=>$action);  
