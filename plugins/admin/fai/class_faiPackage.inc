@@ -177,35 +177,25 @@ class faiPackage extends plugin
 
     $smarty->assign( "FAIinstallMethods", $this->FAIinstallMethods );
 
-    if((!$this->is_account)&&(!$this->newDialogShown)){
+    if(!$this->is_account){
 
-      if($this->dialog==NULL){
-        $this->dialog = new faiPackageNew($this->config, $this->dn,$this->mirrors,$this->servers,$this->sections,$this->releases);
-        $this->is_dialog =true;
+      /* Assemble release name */
+      $tmp= preg_replace('/,ou=fai,ou=configs,ou=systems,.*$/', '', $_SESSION['faifilter']['branch']);
+      $tmp= preg_replace('/ou=/', '', $tmp);
+      $rev= array_reverse(split(',', $tmp));
+      $this->FAIdebianRelease= "";
+      foreach ($rev as $part){
+        $this->FAIdebianRelease.= "/$part";
       }
+      $this->FAIdebianRelease= preg_replace('#^/#', '', $this->FAIdebianRelease);
 
-      /* Assign posible changes, for mirror combinations */
-      $this->dialog->save_object();
+      /* Assemble sections */
+      $repos= $this->getServerInfos();
+      $this->FAIdebianSection= $repos[$this->FAIdebianRelease];
+      $this->FAIdebianSection= array_unique($this->FAIdebianSection);
 
       /* Assign Repository settings*/ 
-      if(isset($_POST['SaveObjectNew'])){
-        $obj = $this->dialog->save();
-
-        $this->FAIdebianSection = $obj['FAIdebianSection'];
-        $this->FAIdebianRelease = $obj['FAIdebianRelease'];
-
-        unset($this->dialog);
-        $this->dialog         = false;
-        $this->is_dialog      = false;
-        $this->newDialogShown = true;
-        $this->is_account     = true;
-      }
-
-      /* Draw dialog */
-      if($this->dialog){
-        $display=$this->dialog->execute();
-        return($display); 
-      }
+      $this->is_account     = true;
     }
 
     /* Assign variables */
@@ -214,7 +204,7 @@ class faiPackage extends plugin
     }
 
     /* Generate package list */
-    $this->list=$this->genPkgs();
+    $this->list= $this->genPkgs();
 
     /* + was pressed to open the package dialog */
     if(isset($_POST['Addpkg']) && $this->acl_is_writeable("FAIpackage")){
@@ -545,6 +535,32 @@ class faiPackage extends plugin
             "FAIdebianRelease"  => _("Release")."&nbsp;("._("Readonly").")")
           ));
   }
+
+  function getServerInfos()
+  {
+    $ret = array();
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd($this->config->current['BASE']);
+    $ldap->search("(objectClass=FAIrepositoryServer)",array("*"));
+    while($attrs = $ldap->fetch()){
+      if(isset($attrs['FAIrepository'])){
+        for($i =0 ; $i < $attrs['FAIrepository']['count']; $i++){
+          $obj = $attrs['FAIrepository'][$i];
+          $tmp = split("\|",$obj);
+          if(count($tmp)==4){
+            foreach(split(",",$tmp[3]) as $sec){
+              if(!empty($sec)){
+                $ret[$tmp[2]][] =  $sec;
+              }
+            }
+          }
+        }
+      }
+    }
+    return($ret);
+  }
+
+
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
