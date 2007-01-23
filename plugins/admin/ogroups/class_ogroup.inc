@@ -100,12 +100,15 @@ class ogroup extends plugin
   function AddDelMembership($NewMember = false){
 
     if($NewMember){
-      $this->memberList[$NewMember]= $this->objcache[$NewMember];
+
+      /* Add member and force reload */
       $this->member[$NewMember]= $NewMember;
+      $this->reload(); 
+
+      $this->memberList[$NewMember]= $this->objcache[$NewMember];
       unset ($this->objects[$NewMember]);
       uasort ($this->memberList, 'sort_list');
       reset ($this->memberList);
-      $this->reload();
     }else{
       /* Delete objects from group */
       if (isset($_POST['delete_membership']) && isset($_POST['members'])){

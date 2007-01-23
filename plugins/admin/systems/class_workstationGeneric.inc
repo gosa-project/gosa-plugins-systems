@@ -436,7 +436,7 @@ class workgeneric extends plugin
     /* Strip out 'default' values */
     foreach (array("gotoSyslogServer") as $val){
 
-      if ($this->attrs[$val] == "default"){
+      if (isset($this->attrs[$val]) && $this->attrs[$val] == "default"){
         $this->attrs[$val]= array();
       }
     }
@@ -504,8 +504,6 @@ class workgeneric extends plugin
         $this->handle_post_events("modify");
       }
     }
-
-    print_a($this->attrs);
 
     /* cn=default and macAddress=- indicates that this is a template */
     if($this->cn == "wdefault"){

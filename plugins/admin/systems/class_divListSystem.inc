@@ -32,6 +32,7 @@ class divListSystem extends MultiSelectWindow
                                                                   "workstation",
                                                                   "terminal",
                                                                   "phone",
+                                                                  "incoming",
                                                                   "printer"));
 
     $this->parent       = $parent;
@@ -231,6 +232,7 @@ class divListSystem extends MultiSelectWindow
           "printer"     => array("CLASS"=>"PRINTTABS",    "TABCLASS" =>"printtabs",     "ACL"=> "printer/printgeneric"),
           "phone"       => array("CLASS"=>"PHONETABS",    "TABCLASS" =>"phonetabs",     "ACL"=> "phone/phoneGeneric"),
           "winstation"  => array("CLASS"=>"WINTABS",      "TABCLASS" =>"wintabs",       "ACL"=> "winworkstation/wingeneric"),
+          "incoming"    => array("CLASS"=>"",             "TABCLASS" =>"",              "ACL"=> "incoming/systems"),
           "component"   => array("CLASS"=>"COMPONENTTABS","TABCLASS" =>"componenttabs", "ACL"=> "component/componentGeneric"));
 
 
@@ -244,6 +246,12 @@ class divListSystem extends MultiSelectWindow
         $acl_type = "winworkstation";
       }else{
         $acl_type = $type;
+      }
+
+      /* Map NewDevice acls to workstation acls */
+      if($type == "NewDevice"){
+        $type     = "incoming";
+        $acl_type = "incoming";
       }
 
       /* Get complete category acls */

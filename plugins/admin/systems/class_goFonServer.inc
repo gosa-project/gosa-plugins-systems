@@ -114,7 +114,6 @@ class goFonServer extends goService{
         }
       }
     }
-    return("fa");
   }
 
  

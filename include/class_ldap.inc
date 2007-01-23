@@ -549,6 +549,7 @@ class LDAP{
           unset($attr['dn']);
 
           if((!in_array("gosaApplication" , $attr['objectClass'])) && (!in_array("gotoMimeType", $attr['objectClass']))){
+            $attr['FAIdebianRelease'] = $destinationName;
             if($type=="branch"){
               $attr['FAIstate'] ="branch";
             }elseif($type=="freeze"){

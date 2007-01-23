@@ -68,6 +68,21 @@ class servgeneric extends plugin
     $this->orig_dn= $this->dn;
   }
 
+
+  function set_acl_base($base)
+  {
+    plugin::set_acl_base($base);
+    $this->netConfigDNS->set_acl_base($base);
+  }
+
+
+  function set_acl_category($cat)
+  {
+    plugin::set_acl_category($cat);
+    $this->netConfigDNS->set_acl_category($cat);
+  }
+
+
   function execute()
   {
     /* Call parent execute */

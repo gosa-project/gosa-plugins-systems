@@ -215,6 +215,12 @@ class systems extends plugin
     /* Create new default terminal 
      * Or create specified object of selected system type, from given incoming object  
      */
+
+    $save_object_directly = false;
+    if(($s_action == "SelectedSystemType") && (isset($_POST['ObjectGroup']) && ($_POST['ObjectGroup'] != "none"))){
+      $save_object_directly = true;
+    }
+
     if (isset($_POST['create_system'])||$s_action=="newsystem"||$s_action == "SelectedSystemType") {
 
       /* If the current entry is an incoming object 
@@ -540,22 +546,45 @@ class systems extends plugin
     }
 
 
-    /********************
-      Edit system type finished, check if everything went ok 
+
+
+
+
+
+
+
+   /********************
+      Edit system type finished, check if everything went ok
      ********************/
     /* Finish user edit is triggered by the tabulator dialog, so
        the user wants to save edited data. Check and save at this
        point. */
-    if ((isset($_POST['edit_finish']) || isset($_POST['edit_apply'])) && (isset($this->systab->config))){
+    if ((isset($_POST['edit_finish'])) && (isset($this->systab->config)) || $save_object_directly){
 
       /* Check tabs, will feed message array */
-      $message= $this->systab->check();
+      $message = array();
+      if(!$save_object_directly){
+        $message = $this->systab->check();
+      }else{
+        $found = false;
 
+        /* Set gotoMode to active if we there was an ogroup selected . (save_object_directly) */
+        foreach(array("workgeneric"=>"active","servgeneric"=>"active","termgeneric"=>"graphic") as $tab => $value){
+          if(isset($this->systab->by_object[$tab]->gotoMode)) {
+            $found = true;
+            $this->systab->by_object[$tab]->gotoMode = $value;
+          }
+        }
+        if(!$found){
+          print_red(sprintf(_("Can't set gotoMode to status 'avtice', the current object couldn't be identified.")));
+        }
+
+      }
       /* Save, or display error message? */
       if (count($message) == 0){
 
         /* Save terminal data to ldap */
-        if(isset($_SESSION['SelectedSystemType']['ogroup'])){
+        if(isset($_SESSION['SelectedSystemType']['ogroup']) && $_SESSION['SelectedSystemType']['ogroup'] != 'none'){
           foreach (array("workservice", "termservice") as $cls){
             if (isset($this->systab->by_object[$cls])){
               $this->systab->by_object[$cls]->gotoXMouseport= "";
@@ -565,15 +594,17 @@ class systems extends plugin
             }
           }
         }
+
         $this->systab->save();
         gosa_log ("System object'".$this->dn."' has been saved");
 
-        /* Incoming behavior; you can select a system type and an ogroup membership. 
+        /* Incoming behavior; you can select a system type and an ogroup membership.
          * If this object is an Incoming object, $_SESSION['SelectedSystemType'] isset.
          * Check if we must add the new object to an object group.
-         * 
-         * If this is done, delete the old incoming entry... it is still there, because this is a new 
+         *
+         * If this is done, delete the old incoming entry... it is still there, because this is a new
          * entry and not an edited one, so we will delete it.
+         *
          */
 
         if(isset($_SESSION['SelectedSystemType'])){
@@ -590,7 +621,7 @@ class systems extends plugin
             $ldap = $this->config->get_ldap_link();
           }
           $ldap->cd ($this->dn);
-          $ldap->cat($this->dn, array('dn'));  
+          $ldap->cat($this->dn, array('dn'));
           if(count($ldap->fetch())){
             $ldap->cd($this->dn);
             $ldap->rmDir($this->dn);
@@ -598,23 +629,22 @@ class systems extends plugin
           $ldap->cd($this->config->current['BASE']);
         }
 
-        if (!isset($_POST['edit_apply'])){
-          /* Terminal has been saved successfully, remove lock from
-             LDAP. */
-          if ($this->dn != "new"){
-            del_lock ($this->dn);
-          }
-
-          unset ($this->systab);
-          $this->systab= NULL;
-          unset($_SESSION['objectinfo']);
+        /* Terminal has been saved successfully, remove lock from
+           LDAP. */
+        if ($this->dn != "new"){
+          del_lock ($this->dn);
         }
+
+        unset ($this->systab);
+        $this->systab= NULL;
+        unset($_SESSION['objectinfo']);
       } else {
         /* Ok. There seem to be errors regarding to the tab data,
            show message and continue as usual. */
         show_errors($message);
       }
     }
+
 
     /********************
       Edit system was canceled 
@@ -687,6 +717,7 @@ class systems extends plugin
     $tabs = array(
         "terminal"        => "ou=terminals,ou=systems,",
         "workstation"     => "ou=workstations,ou=systems,",
+        "incoming"        => "ou=incoming,",
         "server"          => "ou=servers,ou=systems,",
         "printer"         => "ou=printers,ou=systems,",
         "phone"           => "ou=phones,ou=systems,",
@@ -1047,6 +1078,28 @@ class systems extends plugin
 
     return ($type);
   }
+
+
+  /* !! Incoming dummy acls, required to defined acls for incoming objects
+   */
+  function plInfo()
+  {
+    return (array(
+          "plShortName"   => _("Incoming objects"),
+          "plDescription" => _("Incoming objects"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 99,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("incoming"   => array( "description"  => _("Incoming"),
+                                                          "objectClass"  => "")),
+          "plProvidedAcls"=> array()
+            
+          ));
+  }
+
+
+  
 
 }
 
