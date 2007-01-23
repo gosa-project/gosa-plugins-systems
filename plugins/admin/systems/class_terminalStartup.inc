@@ -24,7 +24,7 @@ class termstartup extends plugin
 
 
   /* attribute list for save action */
-  var $attributes= array("gotoLdapServer", "gotoBootKernel", "gotoKernelParameters");
+  var $attributes= array("gotoLdapServer", "gotoBootKernel", "gotoKernelParameters","gotoModules");
   var $objectclasses= array("GOhard");
 
   /* Helper */
@@ -40,6 +40,7 @@ class termstartup extends plugin
 
     /* Get arrays */
     foreach (array("gotoModules") as $val){
+      $this->$val = array();
       if (isset($this->attrs["$val"]["count"])){
         for ($i= 0; $i<$this->attrs["count"]; $i++){
           if (isset($this->attrs["$val"][$i])){
@@ -393,6 +394,7 @@ class termstartup extends plugin
     /* Write back to ldap */
     $ldap= $this->config->get_ldap_link();
     $ldap->cd($this->dn);
+    
     $this->cleanup();
     $ldap->modify ($this->attrs); 
 
