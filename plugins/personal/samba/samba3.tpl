@@ -390,6 +390,11 @@
    <input type="hidden" name="sambaLogonTime" value="{$sambaLogonTime}">
    <input type="hidden" name="sambaLogoffTime" value="{$sambaLogoffTime}">
    <input type="hidden" name="sambaKickoffTime" value="{$sambaKickoffTime}">
+<br>
+{render acl=$sambaLogonHoursACL mode=read_active}
+   {t}Samba logon times{/t}&nbsp;<input type='submit' name='SetSambaLogonHours' value='{t}Edit settings...{/t}'>
+{/render}
+
   </td>	
   <td style="border-left:1px solid #A0A0A0">
    &nbsp;

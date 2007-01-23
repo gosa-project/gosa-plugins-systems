@@ -88,7 +88,7 @@ class sambaAccount extends plugin
   var $objectclasses= array();
   
   var $uid= "";
-
+  var $dialog = NULL;
   var $CopyPasteVars = array("kickoff_time_set","logoff_time_set","logon_time_set","mungedObject","orig_sambaDomainName");
 
   function sambaAccount ($config, $dn= NULL)
@@ -233,6 +233,32 @@ class sambaAccount extends plugin
     }
 
     $SkipWrite = (!isset($this->parent) || !$this->parent) && !isset($_SESSION['edit']);
+
+    /* Open Samaba Logong hours dialog */
+    if(isset($_POST['SetSambaLogonHours']) && $this->samba3 && $this->acl_is_writeable("sambaLogonHours")){
+      $this->dialog = new sambaLogonHours($this->config,$this->dn,$this->sambaLogonHours);
+    }
+
+    /* Cancel dialog */
+    if(isset($_POST['cancel_logonHours'])){
+      $this->dialog = NULL;
+    }
+
+    /* Save selected logon hours */
+    if(isset($_POST['save_logonHours'])){
+      $this->dialog->save_object();
+      if($this->acl_is_writeable("sambaLogonHours")){
+        $this->sambaLogonHours = $this->dialog->save();
+      }
+      $this->dialog = NULL;
+    }
+
+    /* Display dialog */
+    if((isset($this->dialog)) && (is_object($this->dialog))){
+      $this->dialog->save_object();
+      return($this->dialog->execute());
+    }
+
 
     /* Prepare templating */
     $smarty= get_smarty();
@@ -1062,6 +1088,7 @@ class sambaAccount extends plugin
 
             "sambaLogonTime"        => _("Limit Logon Time") ,
             "sambaLogoffTime"       => _("Limit Logoff Time") ,
+            "sambaLogonHours"       => _("Logon hours") ,
 
             "sambaHomePath"         => _("Generic home directory") ,
             "sambaHomeDrive"        => _("Generic samba home drive") ,
