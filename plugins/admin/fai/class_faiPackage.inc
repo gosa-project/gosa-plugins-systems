@@ -191,8 +191,10 @@ class faiPackage extends plugin
 
       /* Assemble sections */
       $repos= $this->getServerInfos();
-      $this->FAIdebianSection= $repos[$this->FAIdebianRelease];
-      $this->FAIdebianSection= array_unique($this->FAIdebianSection);
+      if(isset($repos[$this->FAIdebianRelease])){
+        $this->FAIdebianSection= $repos[$this->FAIdebianRelease];
+        $this->FAIdebianSection= array_unique($this->FAIdebianSection);
+      }
 
       /* Assign Repository settings*/ 
       $this->is_account     = true;
