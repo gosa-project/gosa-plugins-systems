@@ -22,7 +22,7 @@ class msgplug extends plugin
   var $templates= array();
   var $template= "";
   var $finalized= false;
-
+  var $module = "msgplug";
 
   function msgplug ($config, $dn= NULL)
   {
@@ -35,34 +35,23 @@ class msgplug extends plugin
     $this->targets= array("user" => _("Users"), "group" => _("Groups"));
     asort($this->targets);
 
-    /* Users */
-    $ldap= $config->get_ldap_link();
-    $ldap->cd($config->current['BASE']);
-    if ($tag == ""){
-      $ldap->search('(objectClass=gosaAccount)', array('uid', 'cn'));
-    } else {
-      $ldap->search('(&(objectClass=gosaAccount)(gosaUnitTag='.$tag.'))', array('uid', 'cn'));
-    }
-    while ($attrs= $ldap->fetch()){
+    $res = get_list("(objectClass=gosaAccount)", "users", $this->config->current['BASE'],array('uid', 'cn'),GL_SUBSEARCH);
+    foreach($res as $key => $attrs){
       $this->users['U:'.$attrs['uid'][0]]= $attrs['cn'][0].' ['.$attrs['uid'][0].']';
     }
     ksort($this->users);
+    print_a($this->users);
 
-    /* Groups */
-    $ldap->cd($config->current['BASE']);
-    if ($tag == ""){
-      $ldap->search('(objectClass=posixGroup)', array('cn', 'description'));
-    } else {
-      $ldap->search('(&(objectClass=posixGroup)(gosaUnitTag='.$tag.'))', array('cn', 'description'));
-    }
-    while ($attrs= $ldap->fetch()){
+    $res = get_list("(objectClass=posixGroup)", "groups", $this->config->current['BASE'],array('cn','description'));
+    foreach($res as $key => $attrs){
       $dsc= "";
       if (isset($attrs['description'][0])){
         $dsc= $attrs['description'][0];
       }
       $this->groups['G:'.$attrs['cn'][0]]= $attrs['cn'][0].' ['.$dsc.']';
     }
-    ksort($this->groups);
+    ksort($this->users);
+
 
     /* Load templates */
     if (isset($this->config->current['NOTIFYDIR'])){
@@ -94,13 +83,13 @@ class msgplug extends plugin
     plugin::execute();
 
     /* Send message? */
-    if (isset($_POST['send'])){
+    if (isset($_POST['send']) && $this->acl_is_writeable("notify")){
 
       /* Do we have recipients? */
       if (count($this->recipients)){
 
         /*Permissions ok? */
-        if (chkacl($this->acl, 'notify') != ""){
+        if (!$this->acl_is_writeable('notify')){
           print_red(_("You have no permissions to send a message!"));
         } else {
           $cmd= search_config($this->config->data['MENU'], "msgplug", "NOTIFY_COMMAND");
@@ -129,7 +118,7 @@ class msgplug extends plugin
     }
 
     /* Add to list? */
-    if (isset($_POST['add']) && isset($_POST['source'])){
+    if (isset($_POST['add']) && isset($_POST['source']) && $this->acl_is_writeable("notify")){
       foreach ($_POST['source'] as $key){
         if ($this->target == 'user'){
           $this->recipients[$key]= $this->users[$key];
@@ -189,7 +178,7 @@ class msgplug extends plugin
     $smarty->assign('recipients', $this->recipients);
 
     /* Assign ACL */
-    $smarty->assign('nmessageACL', chkacl($this->acl, "notify"));
+    $smarty->assign('nmessageACL', $this->getacl("notify"));
 
     /* Handle templates */
     $smarty->assign('show_templates', $this->show_templates?"true":"false");
@@ -220,6 +209,36 @@ class msgplug extends plugin
     }
 
     return $desc;
+  }
+
+  
+  function save_object()
+  {
+    plugin::save_object();
+    foreach($this->attributes as $attr){
+      if(isset($_POST[$attr])){
+        $this->$attr = $_POST[$attr];
+      }
+    }
+  }
+
+  
+  /* Return plugin informations for acl handling */
+  function plInfo()
+  {
+    return (array(
+        "plShortName"   => _("Notification"),
+        "plDescription" => _("Notification plugin"),
+        "plSelfModify"  => FALSE,
+        "plDepends"     => array(),
+        "plPriority"    => 89,
+        "plSection"     => array("addon"),
+        "plCategory"    => array("msgplug" => array("objectClass" => "none", "description" => _("Notification plugin"))),
+
+        "plProvidedAcls" => array(
+            "notify"          => _("Allow sending notifications")
+          )
+        ));
   }
 
 

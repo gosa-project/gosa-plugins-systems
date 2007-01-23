@@ -42,8 +42,10 @@
 
 <p class="seperator">&nbsp;</p>
 <h2>{t}Message{/t}</h2>
+{render acl=$nmessageACL}
+  <textarea id="nmessage" style="width:99%; height:180px;" name="nmessage" rows="4" cols="512" >{$nmessage}</textarea>
+{/render}
 
-<textarea id="nmessage" style="width:99%; height:180px;" name="nmessage" rows="4" cols="512" {$nmessageACL}>{$nmessage}</textarea>
 {if $show_templates eq "true"}
 <select name="nmessage_template">
 	{html_options options=$message_templates selected=$template}
@@ -54,7 +56,9 @@
 
 <p class="seperator">&nbsp;</p>
 <div style='text-align:right;margin-top:5px'>
+{render acl=$nmessageACL}
         <input type="submit" name="send" value="{t}Send message{/t}">
+{/render}
 </div>
 
 

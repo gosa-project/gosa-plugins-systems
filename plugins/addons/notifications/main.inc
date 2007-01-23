@@ -19,15 +19,19 @@
 */
 
 if (!$remove_lock){
-	/* Create message object on demand */
-	if (!isset($_SESSION['msgplug']) || (isset($_GET['reset']) && $_GET['reset'] == 1)){
-		$_SESSION['msgplug']= new msgplug ($config);
-	}
-	$msgplug= $_SESSION['msgplug'];
+        /* Create msgplug object on demand */
+        if (!isset($_SESSION['msgplug']) || (isset($_GET['reset']) && $_GET['reset'] == 1)){
+                $ui = get_userinfo();
+                $_SESSION['msgplug']= new msgplug ($config);
+                $_SESSION['msgplug']->set_acl_category("msgplug");
 
-	/* Set permissions */
-	$acl= get_permissions ($ui->dn, $ui->subtreeACL);
-	$msgplug->acl= get_module_permission($acl, "msgplug", $ui->dn);
+                /* Check root dn and user dn for acl informations */
+                $_SESSION['msgplug']->set_acl_base($config->current['BASE']);
+                if($_SESSION['msgplug']->getacl("") == ""){
+                        $_SESSION['msgplug']->set_acl_base($ui->dn);
+                }
+        }
+	$msgplug= $_SESSION['msgplug'];
 
 	/* save changes back to object */
 	if (isset ($_POST['target'])){
