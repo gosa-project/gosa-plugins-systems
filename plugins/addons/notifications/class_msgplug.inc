@@ -121,10 +121,14 @@ class msgplug extends plugin
     if (isset($_POST['add']) && isset($_POST['source']) && $this->acl_is_writeable("notify")){
       foreach ($_POST['source'] as $key){
         if ($this->target == 'user'){
-          $this->recipients[$key]= $this->users[$key];
+          if(isset($this->users[$key])){
+            $this->recipients[$key]= $this->users[$key];
+          }
         }
         if ($this->target == 'group'){
-          $this->recipients[$key]= $this->groups[$key];
+          if(isset($this->groups[$key])){
+            $this->recipients[$key]= $this->groups[$key];
+          }
         }
       }
       ksort($this->recipients);
