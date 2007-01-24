@@ -316,7 +316,6 @@ class aclManagement extends plugin
 
   function reload()
   {
-    #FIXME  Implement regex objectClass and so on ... 
     /* Get divlist informations from filter part */
     $Regex      = $this->DivListACL -> Regex;
     $SubSearch  = $this->DivListACL -> SubSearch;
@@ -343,7 +342,7 @@ class aclManagement extends plugin
       $fetch_base   = $base;
       $tmp = get_list($Filter, "acl", $fetch_base, $Attrs, $Flags);
       foreach($tmp as $entry){
-        $res[$entry['dn']] = $entry;
+        $res[] = $entry;
       }
 
     }else{
@@ -360,7 +359,7 @@ class aclManagement extends plugin
         if($Type == "search"){
           $tmp = get_list($Filter, "acl", $fetch_base, $Attrs, $Flags);
           foreach($tmp as $entry){
-            $res[$entry['dn']] = $entry;
+            $res[] = $entry;
           }
         }else{
           $ldap->cat($fetch_base,$Attrs);
@@ -370,7 +369,7 @@ class aclManagement extends plugin
             if( (isset($attrs['cn'][0]) && preg_match("/".$re2."/i",$attrs['cn'][0]))
                |(isset($attrs['ou'][0]) && preg_match("/".$re2."/i",$attrs['ou'][0]))){
 
-              $res[$attrs['dn']] = $attrs;
+              $res[] = $attrs;
             }
           }
         }
