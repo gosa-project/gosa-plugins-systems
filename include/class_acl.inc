@@ -28,7 +28,7 @@ class acl extends plugin
   var $wasNewEntry= FALSE;
   var $ocMapping= array();
   var $savedAclContents= array();
-
+  var $myAclObjects = array();
 
   function acl ($config, $parent, $dn= NULL)
   {
@@ -480,6 +480,7 @@ class acl extends plugin
     $tmp= get_global('plist');
     $plist= $tmp->info;
     asort($plist);
+    $newSort = array();
 
     foreach($list as $name => $translation){
       $na  =  preg_replace("/^.*\//","",$name);
