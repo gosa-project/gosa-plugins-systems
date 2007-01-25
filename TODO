@@ -1,6 +1,11 @@
 Target for 2.6:
 ===============
 
+* Redo the setup
+
+* Make plugin loader react on predefined info values from plugins itself instead of
+  gosa.conf
+
 * Can't use a dn longer than 100 characters as Glpi contact/technical responsible person.
 
 * Verify DNS plugin
