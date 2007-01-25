@@ -55,6 +55,12 @@ class CopyPasteHandler {
     $this->copyCurrent = true;
     $this->objectdn    = $obj->dn;
     $this->current = $emptyObj;
+
+    if(!isset($obj->by_object)){
+      trigger_error("No valid tab object specified for copy & paste.");
+      return;
+    }
+    
     foreach($obj->by_object as $name => $obj){
     
       /* Prepare every single class, to be copied  */
