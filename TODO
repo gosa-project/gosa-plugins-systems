@@ -30,8 +30,6 @@ Target for 2.6:
 
 * Add possibility to add referrals in department dialog
 
-* Add sambaWorkingHours
-
 * Fine tuning in Kerberos support
   Special kerberos attributes like ticket expiery and policies can't
   be handeled with GOsa right now this has to be added in later releases.
@@ -49,8 +47,6 @@ Target for 2.6:
   - End user documentation: online help
   - Administrators documentation: how to install / contributed scripts, etc.
   - Developer documentation: how to extend, own plugins, themes, etc.
-
-* amavis-new support
 
 * Automatic passwords?
   Generate a password for a newly created user and display it.
