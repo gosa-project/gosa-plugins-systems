@@ -1,6 +1,16 @@
 Target for 2.6:
 ===============
 
+* ACL
+  - Acl roles should be selectable in acl dialog.
+  - Role checks are missing
+  - Copy & Paste tmplates for acl roles.
+  - Check Title strings 
+  - Check role and acl remove
+  - Check Base select dialog within roles.
+  
+* Create a Bugtracker 
+
 * Redo the setup
 
 * Make plugin loader react on predefined info values from plugins itself instead of
