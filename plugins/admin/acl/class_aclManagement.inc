@@ -18,6 +18,8 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+require_once("tabs_acl_role.inc");
+require_once("tabs_acl.inc");
 
 class aclManagement extends plugin
 {
@@ -31,12 +33,18 @@ class aclManagement extends plugin
   var $acl                  = "";
   var $DivListACL           = NULL;
 
+  var $CopyPasteHandler;
 
   function aclManagement($config, $ui)
   {
     /* Save configuration for internal use */
     $this->config = $config;
     $this->ui     = $ui;
+
+    /* Copy & Paste enabled ?*/
+    if((isset($this->config->data['MAIN']['ENABLECOPYPASTE']))&&(preg_match("/true/i",$this->config->data['MAIN']['ENABLECOPYPASTE']))){
+      $this->CopyPasteHandler = new CopyPasteHandler($this->config);
+    }
 
     /* Creat dialog object */
     $this->DivListACL = new divListACL($this->config,$this);
@@ -48,7 +56,7 @@ class aclManagement extends plugin
     /* Call parent execute */
     plugin::execute();
 
-    $_SESSION['LOCK_VARS_TO_USE'] = array("/^list_acl_edit/","/^list_acl_del/","/list_edit_entry/","/^id_/");
+    $_SESSION['LOCK_VARS_TO_USE'] = array("/^list/","/^id_/");
 
     $smarty       = get_smarty();                 // Smarty instance
     $s_action     = "";                           // Contains the action to be taken
@@ -60,7 +68,21 @@ class aclManagement extends plugin
       $s_entry= validate($_GET['id']);
     }
 
-    $types = array("del"=>"^list_acl_del","edit"=>"^list_acl_edit");
+    /* Edit entry button pressed? */
+    if( isset($_GET['act']) && $_GET['act'] == "list_edit_role" ){
+      $s_action= "edit_role";
+      $s_entry= validate($_GET['id']);
+    }
+
+    $types = array( 
+                    "del"       =>"^list_acl_del",
+                    "edit"      =>"^list_acl_edit",
+                    "del_role"  =>"^list_acl_role_del",
+                    "edit_role" =>"^list_acl_role_edit",
+                    "copy"      =>"^copy",
+                    "cut"       =>"^cut",
+                    "editPaste" =>"^editPaste",
+                    "addrole"   =>"^new_acl_role");
 
     /* Test relevant POST values */  
     foreach($_POST as $key => $val){
@@ -85,19 +107,52 @@ class aclManagement extends plugin
     }else{
       $s_tab= "generic";
     }
+   
+ 
+    /********************
+      Copy & Paste Handling  ...
+     ********************/
 
+    /* Only perform copy&paste requests if it is enabled
+     */
+    if($this->CopyPasteHandler){
+      if($str = $this->copyPasteHandling($s_action,$s_entry)){
+        return $str;
+      }
+    }
+
+
+    /********************
+     * Add new Role entry 
+     ********************/
+
+    if(($s_action == "addrole") && (!isset($this->acltabs->config))){
+
+      /* Get 'dn' from posted acl, must be unique */
+      $this->dn= "new";
+
+      /* Check permissions */
+      if(preg_match("/c/",$this->ui->get_permissions($this->DivListACL->selectedBase,"acl/acl"))){
+
+        /* Register acltabs to trigger edit dialog */
+        $this->acltabs= new aclroletab($this->config, NULL,$this->dn);
+        $this->acltabs->set_acl_base($this->DivListACL->selectedBase);
+      }else{
+        print_red(_("You are not allowed to create a new role."));
+      }
+    }
 
     /********************
       Edit existing entry 
      ********************/
 
-    if (($s_action=="edit") && (!isset($this->acltabs->config))){
+    if (($s_action=="edit" || $s_action=="edit_role") && (!isset($this->acltabs->config))){
 
       /* Get 'dn' from posted acl, must be unique */
       $this->dn= $this->list[trim($s_entry)]['dn'];
 
       /* Check permissions */
-      if(preg_match("/r/",$this->ui->get_permissions($this->dn,"acl/aclManagement"))){
+      if(preg_match("/r/",$this->ui->get_permissions($this->dn,"acl/acl"))){
       
         /* Check locking, save current plugin in 'back_plugin', so
            the dialog knows where to return. */
@@ -109,12 +164,13 @@ class aclManagement extends plugin
         add_lock ($this->dn, $this->ui->dn);
 
         /* Register acltabs to trigger edit dialog */ 
-        $this->acltabs= new acl($this->config, NULL,$this->dn);
-        $this->acltabs-> set_acl_base($this->dn);
-        $this->acltabs-> set_acl_category("acl");
-
-        /* Switch tab, if it was requested by user */
-        $this->acltabs->current = $s_tab;
+        if($s_action=="edit_role"){
+          $this->acltabs= new aclroletab($this->config, NULL,$this->dn);
+          $this->acltabs-> set_acl_base($this->dn);
+        }else{
+          $this->acltabs= new acltab($this->config, NULL,$this->dn);
+          $this->acltabs-> set_acl_base($this->dn);
+        }
 
         /* Set ACL and move DN to the headline */
         $_SESSION['objectinfo']= $this->dn;
@@ -154,7 +210,7 @@ class aclManagement extends plugin
       $this->dn= $this->list[trim($s_entry)]['dn'];
 
       /* Check permissions */
-      if(preg_match("/d/",$this->ui->get_permissions($this->dn,"acl/aclManagement"))){
+      if(preg_match("/d/",$this->ui->get_permissions($this->dn,"acl/acl"))){
         /* Check locking, save current plugin in 'back_plugin', so
            the dialog knows where to return. */
         if (($acl= get_lock($this->dn)) != ""){
@@ -183,7 +239,7 @@ class aclManagement extends plugin
     if (isset($_POST['delete_acl_confirmed'])){
 
       /* Check permissions */
-      if(preg_match("/d/",$this->ui->get_permissions($this->dn,"acl/aclManagement"))){
+      if(preg_match("/d/",$this->ui->get_permissions($this->dn,"acl/acl"))){
 
         /* Delete request is permitted, perform LDAP action */
         $this->acltabs= new acl($this->config, NULL,$this->dn);
@@ -227,7 +283,6 @@ class aclManagement extends plugin
     if ((isset($_POST['edit_finish']) || isset($_POST['edit_apply'])) && (isset($this->acltabs->config))){
 
       /* Check tabs, will feed message array */
-      $this->acltabs->last= $this->acltabs->current;
       $this->acltabs->save_object();
       $message= $this->acltabs->check();
 
@@ -264,6 +319,7 @@ class aclManagement extends plugin
       Display subdialog 
      ********************/
 
+
     /* Show tab dialog if object is present */
     if(isset($this->acltabs->config)){
       
@@ -275,9 +331,9 @@ class aclManagement extends plugin
       if(isset($this->acltabs)){
 
         /* Skip displaying save/cancel if there is a sub dialog open */
-        if (!$this->acltabs->dialog){
+        if (!isset($this->acltabs->dialog) || !$this->acltabs->dialog){
           $display.= "<p style=\"text-align:right\">\n";
-          $display.= "<input type=submit name=\"edit_finish\" style=\"width:80px\" value=\""._("Ok")."\">\n";
+//          $display.= "<input type=submit name=\"edit_finish\" style=\"width:80px\" value=\""._("Ok")."\">\n";
           $display.= "&nbsp;\n";
 
           /* Skip Apply if it is a new entry */
@@ -286,7 +342,7 @@ class aclManagement extends plugin
           #  $display.= "&nbsp;\n";
           #}
 
-          $display.= "<input type=submit name=\"edit_cancel\" value=\""._("Cancel")."\">\n";
+  //        $display.= "<input type=submit name=\"edit_cancel\" value=\""._("Cancel")."\">\n";
           $display.= "</p>";
         }
       }
@@ -320,11 +376,12 @@ class aclManagement extends plugin
     $Regex      = $this->DivListACL -> Regex;
     $SubSearch  = $this->DivListACL -> SubSearch;
     $base       = $_SESSION['CurrentMainBase']; 
-    $Attrs      = array("ou","gosaAclEntry","objectClass");
+    $Attrs      = array("ou","cn","description","gosaAclEntry","objectClass");
     $res        = array();
     $tmp        = array();                                    // Will contain temporary results 
     $ldap       = $this->config->get_ldap_link();
     $Filter     = "(&(objectClass=gosaACL)(gosaAclEntry=*)(|(cn=".$Regex.")(ou=".$Regex.")))";
+    $FilterRoles= "(&(objectClass=gosaRole)(|(cn=".$Regex.")(ou=".$Regex.")))";
 
     /* Fetch following structures, this will be used if !$SubSearch */
     $fetch_this = array(
@@ -340,12 +397,22 @@ class aclManagement extends plugin
       /* Get all object in this base */
       $Flags        = GL_SIZELIMIT | GL_SUBSEARCH;
       $fetch_base   = $base;
-      $tmp = get_list($Filter, "acl", $fetch_base, $Attrs, $Flags);
+      $tmp  = get_list($Filter,   "acl", $fetch_base, $Attrs, $Flags);
+      $tmp2 = get_list($FilterRoles,  "acl", $fetch_base, $Attrs, $Flags);
       foreach($tmp as $entry){
+        $res[] = $entry;
+      }
+      foreach($tmp2 as $entry){
         $res[] = $entry;
       }
 
     }else{
+
+      $tmp_roles = get_list($FilterRoles,  "acl", "ou=aclroles,".$base, $Attrs,GL_SIZELIMIT);
+
+      foreach($tmp_roles as $entry){
+        $res[] = $entry;
+      }
 
       /* Walk through all possible bases */
       foreach($fetch_this as $type => $data){
@@ -376,6 +443,64 @@ class aclManagement extends plugin
       }
     }
     $this->list = $res;
+  }
+
+
+  /* Perform copy & paste requests
+     If copy&paste is in progress this returns a dialog to fix required attributes
+   */
+  function copyPasteHandling($s_action,$s_entry)
+  {
+    /* Paste copied/cutted object in here
+     */
+    $ui = get_userinfo();
+    if(($s_action == "editPaste") || ($this->CopyPasteHandler->stillOpen())){
+      $this->CopyPasteHandler->save_object();
+      $this->CopyPasteHandler->SetVar("base",$this->DivListGroup->selectedBase);
+      if($str = $this->CopyPasteHandler->execute()){
+        return( $str);
+      };
+      /* Ensure that the new object is shown in the list now */
+      $this->reload();
+    }
+
+
+    /* Copy current object to CopyHandler
+     */
+    if($s_action == "copy"){
+
+      $dn  = $this->list[trim($s_entry)]['dn'];
+      $acl_all  = $ui->has_complete_category_acls($this->DivListACL->selectedBase,"acl") ;
+      if(preg_match("/(c.*w|w.*c)/",$acl_all)){
+
+        $this->CopyPasteHandler->Clear();
+        $obj    = new acl($this->config, NULL, $dn, TRUE);
+        $obj->set_acl_base($dn);
+        $objNew = new acl($this->config, NULL,"new", TRUE);
+        $objNew->set_acl_base($dn);
+
+        $this->CopyPasteHandler->Copy($obj,$objNew);
+      }else{
+        print_red("You are not allowed to copy this entry.");
+      }
+    }
+
+    /* Copy current object to CopyHandler
+     */
+    if($s_action == "cut"){
+
+      $dn = $this->list[trim($s_entry)]['dn'];
+      $acl_all  = $ui->has_complete_category_acls($this->DivListACL->selectedBase,"acl") ;
+      if(preg_match("/(c.*w|w.*c)/",$acl_all)){
+
+        $this->CopyPasteHandler->Clear();
+        $obj= new acl($this->config,NULL, $dn, TRUE);
+        $obj->set_acl_base($dn);
+        $this->CopyPasteHandler->Cut($obj);
+      }else{
+        print_red("You are not allowed to cut this entry.");
+      }
+    }
   }
 
 
@@ -414,25 +539,6 @@ class aclManagement extends plugin
   {
     return(array());
   }  
-
-
-  /* Return plugin informations for acl handling */
-  function plInfo()
-  {
-    return (array(
-          "plShortName"   => _("ACL"),
-          "plDescription" => _("ACL")."&nbsp;-&nbsp;("._("Access control list").")",
-          "plSelfModify"  => FALSE,
-          "plDepends"     => array(),
-          "plPriority"    => 0,
-          "plSection"     => array("administration"),
-          "plCategory"    => array("acl" => array("description"  => _("ACL")."&nbsp;"._("Access control list"),
-                                                          "objectClass"  => "gosaACL")),
-          "plProvidedAcls"=> array(
-            "Dummy" => _("I don't know Jack"))
-
-          ));
-  }
 
 } 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

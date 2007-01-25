@@ -231,7 +231,7 @@ class group extends plugin
 
         /* Check if selected base is valid */
         $tmp = $this->get_allowed_bases();
-        if(isset($tmp[$_POST['base']])){
+        if(isset($tmp[$this->dialog->isSelected()])){
           $this->base = $this->dialog->isSelected();
         }
         $this->dialog= false;

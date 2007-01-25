@@ -290,6 +290,7 @@ class mailgroup extends plugin
     $this->perms["p"]= _("external post");
     $this->perms["lrsip"]= _("append");
     $this->perms["lrswipcd"]= _("write");
+    $this->perms[""]= _("none");
   }
 
   function execute()
