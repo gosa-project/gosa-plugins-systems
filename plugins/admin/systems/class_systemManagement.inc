@@ -819,7 +819,7 @@ class systems extends plugin
       if($this->DivListSystem->$checkBox){
         if($this->DivListSystem->SubSearch){
           if($oc['CLASS'] != ""){
-            $filter = "(|(&".$userregex."(objectClass=".$oc['CLASS'].")(cn=".$this->DivListSystem->Regex.")))";
+            $filter = "(&".$userregex."(objectClass=".$oc['CLASS'].")(cn=".$this->DivListSystem->Regex."))";
             $new_res = get_list($filter, $sys_categories , $base,$sys_attrs, GL_NONE | GL_SUBSEARCH | GL_SIZELIMIT);
       
             /* Remove all objects that are not in the expected sub department */
@@ -832,7 +832,7 @@ class systems extends plugin
         }else{
           /* User filter? */
           if($oc['CLASS'] != ""){
-            $filter = "(|(&".$userregex."(objectClass=".$oc['CLASS'].")(cn=".$this->DivListSystem->Regex.")))";
+            $filter = "(&".$userregex."(objectClass=".$oc['CLASS'].")(cn=".$this->DivListSystem->Regex."))";
             $res = array_merge($res,get_list($filter,$sys_categories,$oc['TREE'].$base, $sys_attrs, GL_NONE | GL_SIZELIMIT));
           }
         }
