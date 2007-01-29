@@ -101,7 +101,7 @@ $_SESSION['errorsAlreadyPosted']= array();
 $_SESSION['LastError']          = "";
 
 /* Check if we need to run setup */
-if (!file_exists(CONFIG_DIR."/gosa.conf")){
+if (!file_exists(CONFIG_DIR."/gosa.conf-trunk")){
   header("location:setup.php");
   exit();
 }

@@ -1,6 +1,8 @@
 Target for 2.6:
 ===============
 
+* Move from gosa.conf-trunk to gosa.conf when we're ready
+
 * ACL
   - Acl roles should be selectable in acl dialog.
   - Role checks are missing
