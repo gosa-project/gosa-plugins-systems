@@ -85,8 +85,7 @@ class setup extends plugin
   /* Create navigation menu */
   function get_navigation_html()
   {
-    $str = "<table>";
-  
+    $str = "";
     foreach($this->o_steps as $key => $step){
 
       $s_title    = $step -> get_title();
@@ -94,23 +93,22 @@ class setup extends plugin
       $b_active   = $step -> is_active();
       $b_enabled  = $step -> is_enabled();
 
-      $str .= "<tr><td>";  
       if($b_enabled){
-        $str .= "<a href='?step=".$key."'>";
-        $str .= "<font color='darkblue' style='font-size:14pt;'>".$s_title."</font>";
         if($b_active){
-          $str .= "<div style='padding-left:16px;'>";
-          $str .= "  <font style='font-size:10pt;'>".$s_info."</font>";
-          $str .= "</div>";
+          $str .= "<a href='?step=".$key."' class='navigation_element_active'>";
+          $str .= "<div class='navigation_title_active'>".$s_title."</div>";
+          $str .= "<div class='navigation_info'>".$s_info."</div>";
+        }else{
+          $str .= "<a href='?step=".$key."' class='navigation_element'>";
+          $str .= "<div class='navigation_title_inactive'>".$s_title."</div>";
         }
-        $str .= "</a>";
+        $str .= "</a><br>\n";
       }else{
-        $str .= "<font color='darkgrey' style='font-size:14pt;'>".$s_title."</font>";
+        $str .= "<div class='navigation_element'>";
+        $str .= "<div class='navigation_title_disabled'>".$s_title."</div>";
+        $str .= "</div>";
       }
-      $str .= "<p class='seperator'>&nbsp;</p>";
-      $str .= "</td></tr>";
     }
-    $str .="</table>";
     return($str);
   }
 
