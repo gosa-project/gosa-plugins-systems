@@ -10,6 +10,7 @@ Target for 2.6:
   - Check Title strings 
   - Check role and acl remove
   - Check Base select dialog within roles.
+  - Implement a kind of "umask"
   
 * Create a Bugtracker 
 
