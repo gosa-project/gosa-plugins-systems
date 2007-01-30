@@ -16,7 +16,7 @@
 	</div>
 
 	<!-- Setup step div -->
-	<div  style='clear: right'>i
+	<div  style='clear: right'>
 
 		<!-- Div to skip horizontal scrolling -->	
 		<div style='float: top; clear: top ;padding:0px;width:100%' >
