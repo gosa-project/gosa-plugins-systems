@@ -409,6 +409,7 @@ class printgeneric extends plugin
         $this->dialog = $this->PPDdialogToSave;
       }else{
         $this->dialog = new printerPPDDialog($this->config, $this->dn,$this->gotoPrinterPPD);
+        $this->dialog->cn= $this->cn;
       }
     }
 
