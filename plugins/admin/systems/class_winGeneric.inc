@@ -60,6 +60,8 @@ class wingeneric extends plugin
 
     /* Save dn for later references */
     $this->orig_dn= $this->dn;
+
+    $this->cn= preg_replace("/\\\$\$/","",$this->cn);
   }
 
 
@@ -254,9 +256,8 @@ class wingeneric extends plugin
       $this->handle_post_events("modify");
     }
 
-    # FIXME can't save mac address
-    #$this->netConfigDNS->cn = $this->cn;
-    #$this->netConfigDNS->save($this->dn);
+    $this->netConfigDNS->cn =  preg_replace("/\\\$\$/","",$this->cn);
+    $this->netConfigDNS->save($this->dn);
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of system wingeneric/generic with dn '%s' failed."),$this->dn));
 
     /* Optionally execute a command after we're done */
