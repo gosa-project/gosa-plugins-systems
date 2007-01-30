@@ -312,8 +312,7 @@ class opengwAccount extends plugin
           "plDepends"       => array("user"),
           "plPriority"      => 26,                                 // Position in tabs
           "plSection"     => array("personal" => _("My account")),
-          "plCategory"    => array("users" => array("description" => _("Opengroupware"),
-                                                  "objectClass" => "openGroupwareAccount")),
+          "plCategory"    => array("users"),
           "plOptions"       => array(),
 
           "plProvidedAcls"  => array(

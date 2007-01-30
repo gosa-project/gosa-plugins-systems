@@ -1010,8 +1010,7 @@ class mailAccount extends plugin
           "plDepends"       => array("user"),                     // This plugin depends on
           "plPriority"      => 4,                                 // Position in tabs
           "plSection"     => array("personal" => _("My account")),
-          "plCategory"    => array("users" => array("description" => _("Mail account"),
-                                                    "objectClass" => "gosaMailAccount")),
+          "plCategory"    => array("users"),
           "plOptions"       => array(),
   
           "plProvidedAcls"  => array(

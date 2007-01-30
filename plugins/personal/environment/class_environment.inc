@@ -1272,10 +1272,8 @@ class environment extends plugin
           "plDepends"       => array("user", "posixAccount"),     // This plugin depends on 
           "plPriority"      => 3,                                 // Position in tabs 
           "plSection"     => array("personal" => _("My account")),
-          "plCategory"    => array("users" => array("description" => _("Environment settings"),
-                                                    "objectClass" => "gotoEnvironment"),
-                                   "groups" => array("description" => _("Environment settings"),
-                                                    "objectClass" => "gotoEnvironment")),
+          "plCategory"    => array("users",
+                                   "groups"),
           "plOptions"       => array("resolution_hook" => array("type" => "string",
               "description" => _("Command to extend the list of possible screen resolutions"))),
 

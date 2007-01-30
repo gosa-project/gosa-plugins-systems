@@ -221,8 +221,7 @@ class pureftpdAccount extends plugin
           "plDepends"       => array("user"),
           "plPriority"      => 22,                                 // Position in tabs
           "plSection"     => array("personal" => _("My account")),
-          "plCategory"    => array("users" => array("description" => _("FTP account"),
-                                                  "objectClass" => "PureFTPdUser")),
+          "plCategory"    => array("users"),
           "plOptions"       => array(),
 
           "plProvidedAcls"  => array(

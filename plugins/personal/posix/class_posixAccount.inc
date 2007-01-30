@@ -1324,8 +1324,7 @@ class posixAccount extends plugin
           "plDepends"         => array("user"),
           "plPriority"        => 2,
           "plSection"         => array("personal" => _("My account")),
-          "plCategory"        => array("users" => array("description" => _("Posix Account"),
-                                                        "objectClass" => "posixAccount")),
+          "plCategory"        => array("users"),
           "plOptions"         => array(),
 
           "plProvidedAcls"  => array(

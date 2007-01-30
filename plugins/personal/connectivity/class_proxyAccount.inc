@@ -294,8 +294,7 @@ class proxyAccount extends plugin
           "plDepends"       => array("user"),
           "plPriority"      => 21,                                 // Position in tabs
           "plSection"     => array("personal" => _("My account")),
-          "plCategory"    => array("users" => array("description" => _("Proxy account"),
-                                                  "objectClass" => "gosaProxyAccount")),
+          "plCategory"    => array("users"),
           "plOptions"       => array(),
 
           "plProvidedAcls"  => array(

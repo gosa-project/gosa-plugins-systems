@@ -145,8 +145,7 @@ class phpgwAccount extends plugin
           "plDepends"       => array("user"),
           "plPriority"      => 24,                                 // Position in tabs
           "plSection"     => array("personal" => _("My account")),
-          "plCategory"    => array("users" => array("description" => _("PHPgroupware"),
-                                                    "objectClass" => "phpgwAccount")),
+          "plCategory"    => array("users"),
           "plOptions"       => array(),
 
           "plProvidedAcls"  => array()

@@ -69,31 +69,6 @@ class userinfo
 
   function loadACL()
   {
-
-#--------------------------------------------------------------------------OLD-BUT-ACTIVE-----------------------------
-    $ldap= $this->config->get_ldap_link();
-
-    /* Load ACL's from all groups we're in */
-    $this->subtreeACL= array();
-    $ldap->cd($this->config->current['BASE']);
-    if ($this->gidNumber == -1){
-      $ldap->search("(&(objectClass=posixGroup)(objectClass=gosaObject)".
-          "(memberUid=$this->username))");
-    } else {
-      $ldap->search("(&(objectClass=posixGroup)(objectClass=gosaObject)".
-          "(|(memberUid=$this->username)(gidNumber=$this->gidNumber)))");
-    }
-
-    while($attrs = $ldap->fetch()){
-      $base= preg_replace('/^[^,]+,ou=[^,]+,/i', "",$ldap->getDN());
-      $base= preg_replace("/[ ]*,[ ]*/", ",", $base);
-
-      for ($i= 0; $i<$attrs["gosaSubtreeACL"]["count"]; $i++){
-        $this->subtreeACL[$base][]= $attrs["gosaSubtreeACL"][$i];
-      }
-    }
-#echo "NEW ACL LOADING --------------------------------------------------------------------------------------------<br>";
-
     $this->ACL= array();    
     $this->groups= array();    
     $this->result_cache =array();
@@ -159,7 +134,6 @@ class userinfo
       }
 
     }
-
   }
 
 

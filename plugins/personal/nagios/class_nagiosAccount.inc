@@ -262,8 +262,7 @@ class nagiosAccount extends plugin
           "plDepends"       => array("user"),
           "plPriority"      => 8,                                 // Position in tabs
           "plSection"     => array("personal" => _("My account")),
-          "plCategory"    => array("users" => array("description" => _("Nagios account"),
-                                                    "objectClass" => array("nagiosContact", "nagiosAuth"))),
+          "plCategory"    => array("users"),
           "plOptions"       => array(),
 
           "plProvidedAcls"  => array(

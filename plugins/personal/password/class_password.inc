@@ -14,8 +14,7 @@ class password
           "plDepends"         => array("user"),
           "plPriority"        => 10,
           "plSection"     => array("personal" => _("My account")),
-          "plCategory"    => array("users" => array("description" => _("Password"),
-                                                    "objectClass" => "gosaAccount")),
+          "plCategory"    => array("users"),
           "plOptions"         => array(),
 
           "plProvidedAcls"  => array())

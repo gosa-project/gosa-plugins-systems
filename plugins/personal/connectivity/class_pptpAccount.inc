@@ -161,8 +161,7 @@ class pptpAccount extends plugin
           "plDepends"       => array("user"),
           "plPriority"      => 28,                                 // Position in tabs
           "plSection"     => array("personal" => _("My account")),
-          "plCategory"    => array("users" => array("description" => _("PPTP account"),
-                                                  "objectClass" => "pptpServerAccount")),
+          "plCategory"    => array("users"),
           "plOptions"       => array(),
 
           "plProvidedAcls"  => array()
