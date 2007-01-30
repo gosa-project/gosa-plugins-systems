@@ -2,11 +2,6 @@
 
 class termDNS extends plugin
 {
-  /* CLI vars */
-  var $cli_summary      = "Manage server basic objects";
-  var $cli_description  = "Some longer text\nfor help";
-  var $cli_parameters   = array("eins" => "Eins ist toll", "zwei" => "Zwei ist noch besser");
-
   /* attribute list for save action */
   var $ignore_account = true;
   var $autonet        = false;
@@ -100,6 +95,17 @@ class termDNS extends plugin
     /* Store initally account settings 
      */
     $this->initially_was_account = $this->DNS_is_account;
+  }
+
+
+  function netmaskIsCoherent($idZone) 
+  {
+    $netmask = FlipIp(str_replace(".in-addr.arpa","",getNameFromMix($idZone)));
+    if(!strstr($this->ipHostNumber, $netmask)){
+      return false;
+    }else{
+      return true;
+    }
   }
 
 
@@ -221,7 +227,19 @@ class termDNS extends plugin
     $smarty->assign("Zones",$this->Zones);
     $smarty->assign("ZoneKeys",($this->Zones));
     $smarty->assign("IPisMust",(($this->IPisMust)||($this->DNS_is_account)));
-  
+ 
+    /* Create zone array */
+    $idZones = array();
+    foreach($this->Zones as $id => $zone){
+      if($this->netmaskIsCoherent($id)) {
+        $idZones[$id] = $zone;
+      }else{
+        $idZones[$id] = $zone."&nbsp;("._("Not matching").")";
+      }
+    }    
+    $smarty->assign("Zones",$idZones);
+    $smarty->assign("ZoneKeys", $this->Zones);
+
     $tmp = $this->generateRecordsList();
     
     $changeStateForRecords = $tmp['changeStateForRecords'];
@@ -340,6 +358,12 @@ class termDNS extends plugin
       $onlyOnce   = array();
 
       //  $onlyOnce['cNAMERecord'] = 0;
+       $tmp = array_flip($this->Zones);
+       $tmp2 = $tmp[$this->dnsEntry['zoneName']];
+       if(!$this->netmaskIsCoherent($tmp2)){ //this->dnsEntry['zoneName'])){
+         $tmp2 = preg_replace("/^.*\//","",$tmp2);
+         $message[] =sprintf(_("The specified IP address '%s' is not matching the selected reverse zone entry '%s'."),$this->ipHostNumber,$tmp2);
+       }
 
       /* Walk through all entries and detect duplicates or mismatches
        */  
