@@ -821,17 +821,6 @@ I: Only insider delivery */
     }  
 
 
-    if ((!$this->is_template)&&(!empty($this->gosaMailServer))){
-      $method= new $this->method($this->config);
-      $method->fixAttributesOnStore($this);
-      if (($method->connect($this->gosaMailServer))){
-        $method->updateMailbox($this->uid);
-        $method->setQuota($this->uid, $this->gosaMailQuota);
-        $method->setSharedFolderPermissions($this->uid, $this->imapacl);
-        $method->disconnect();
-      }
-    }
-
     /* Exchange '%member%' pseudo entry */
     $memberacl= $this->imapacl['%members%'];
 
@@ -849,10 +838,35 @@ I: Only insider delivery */
       }
     }
     $this->attrs['acl'] = array();
+    
+    
     foreach($this->imapacl as $user => $acl){
-      if(preg_match("/%members%/",$user) || empty($user)) continue;
-      
+
+      /* Remove empty user entry, to avoid entry like this im imap 
+       *   "" lrs
+       */
+      if(empty($user)){
+        unset($this->imapacl[$user]);
+      }
+   
+      /* Skip invalid values */
+      if(preg_match("/%members%/",$user) || empty($user)){
+        continue;
+      }
+
+      /* Append ldap acl entries */
       $this->attrs['acl'][] = $user." ".$acl;
+    }
+
+    if ((!$this->is_template)&&(!empty($this->gosaMailServer))){
+      $method= new $this->method($this->config);
+      $method->fixAttributesOnStore($this);
+      if (($method->connect($this->gosaMailServer))){
+        $method->updateMailbox($this->uid);
+        $method->setQuota($this->uid, $this->gosaMailQuota);
+        $method->setSharedFolderPermissions($this->uid, $this->imapacl);
+        $method->disconnect();
+      }
     }
 
     /* Save data to LDAP */
