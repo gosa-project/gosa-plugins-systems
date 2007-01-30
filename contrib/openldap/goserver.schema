@@ -543,6 +543,6 @@ objectclass (1.3.6.1.4.1.10098.1.2.1.39 NAME 'goVirusServer' SUP top AUXILIARY
 	DESC 'Virus server definition (v2.5)'
 	MUST ( cn )
 	MAY  ( avMaxThreads $ avMaxDirectoryRecursions $ avUser $ avFlags $
-               avArchiveMaxFileSize $ avArchiveMaxRecursion $ avArchiveMaxCompressionRation $
+               avArchiveMaxFileSize $ avArchiveMaxRecursion $ avArchiveMaxCompressionRatio $
                avDatabaseMirror $ avChecksPerDay $ avHttpProxyURL ) )
 
