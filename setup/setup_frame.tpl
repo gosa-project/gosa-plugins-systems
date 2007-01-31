@@ -5,12 +5,12 @@
 <!-- All over div -->
 <div class='setup_dialog'>
 
-	<!-- Basic header  -->
+	<!-- Basic header -->
 	<div class='setup_header'>
 		{t}GOsa - GOnicus System Administrator Setup{/t}
 	</div>
 
-	<!-- Navigation div   -->
+	<!-- Navigation div -->
 	<div class='setup_navigation'>
 		<div class='setup_navigation_border' >
 			<div class='setup_navigation_title'>

@@ -93,15 +93,17 @@ class setup extends plugin
       $b_active   = $step -> is_active();
       $b_enabled  = $step -> is_enabled();
 
+      $str .="<div >";
       if($b_enabled){
         if($b_active){
           $str .= "<a href='?step=".$key."' class='navigation_element_active'>";
-          $str .= "<div class='navigation_title_active'>".$s_title."</div>";
-          $str .= "<div class='navigation_info'>".$s_info."</div>";
+          $str .= "<span class='navigation_title_active'>".$s_title."</span>";
+          $str .= "<br>";
+          $str .= "<span class='navigation_info'>".$s_info."</span>";
           $str .= "</a><br>\n";
         }else{
           $str .= "<a href='?step=".$key."' class='navigation_element'>";
-          $str .= "<div class='navigation_title_inactive'>".$s_title."</div>";
+          $str .= "<span class='navigation_title_inactive'>".$s_title."</span>";
           $str .= "</a><br>\n";
         }
       }else{
@@ -109,6 +111,7 @@ class setup extends plugin
         $str .= "<div class='navigation_title_disabled'>".$s_title."</div>";
         $str .= "</div>";
       }
+      $str .= "</div>" ;
     }
     return($str);
   }
@@ -117,7 +120,7 @@ class setup extends plugin
   /* Create header entry */
   function get_header_html()
   {
-    $str ="<font style='font-size:20px;' color='darkblue'>";
+    $str ="<font style='font-size:20px;'>";
     $str.=   $this->o_steps[$this->i_current]->get_long_title();
     $str.="</font>";
     return ($str);
