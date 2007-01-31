@@ -98,11 +98,12 @@ class setup extends plugin
           $str .= "<a href='?step=".$key."' class='navigation_element_active'>";
           $str .= "<div class='navigation_title_active'>".$s_title."</div>";
           $str .= "<div class='navigation_info'>".$s_info."</div>";
+          $str .= "</a><br>\n";
         }else{
           $str .= "<a href='?step=".$key."' class='navigation_element'>";
           $str .= "<div class='navigation_title_inactive'>".$s_title."</div>";
+          $str .= "</a><br>\n";
         }
-        $str .= "</a><br>\n";
       }else{
         $str .= "<div class='navigation_element'>";
         $str .= "<div class='navigation_title_disabled'>".$s_title."</div>";

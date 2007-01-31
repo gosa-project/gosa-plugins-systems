@@ -7,19 +7,24 @@
 
 	<!-- Basic header  -->
 	<div class='setup_header'>
-		GOsa Setup blabla
+		{t}GOsa - GOnicus System Administrator Setup{/t}
 	</div>
 
 	<!-- Navigation div   -->
-	<div class='setup_navigation'> 
-		{$navigation}			
+	<div class='setup_navigation'>
+		<div class='setup_navigation_border' >
+			<div class='setup_navigation_title'>
+				{t}Setup Steps{/t}
+			</div>
+			{$navigation}			
+		</div>
 	</div>
 
 	<!-- Setup step div -->
-	<div  style='clear: right'>
+	<div  class='setup_header_and_content_container_1'>
 
 		<!-- Div to skip horizontal scrolling -->	
-		<div style='float: top; clear: top ;padding:0px;width:100%' >
+		<div class='setup_header_and_content_container_2'> 
 
 			<!-- Step header -->	
 			<div class='setup_plug_header' >

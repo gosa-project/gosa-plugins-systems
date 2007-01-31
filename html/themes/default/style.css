@@ -787,51 +787,111 @@ td.tbrhead {
 body.setup_body {
 	background-image: none;
 	background-color: #979797;
-	margin: 4px;
+	margin: 6px;
 }
 
 /* The setup complete setup dialog */
 div.setup_dialog {
-        background-color: #F0F0F0;
-	width:100%;
-	float: left;
-}
-
-/* Navigation col */
-div.setup_navigation {
 	background-color: #F0F0F0;
-	width: 200px;
+	width:100%;
+	border-right: solid 2px #444444;
+	border-bottom: solid 2px #666666;
 	float: left;
-	clear: left;
 }
 
 /* Header col */
 div.setup_header {
-	width:100%;
-	background-color: #559955;
-	border: solid 5px #77BB77;
-	height: 50px;
+        background-color: #D2F6C2;
+	font-size: 2.0em;
+	font-weight: bold;
+	padding:7px;
 }
 
-/* Step header col */
+/*******
+<div.setup_header_and_content_container_1>
+ <div.setup_header_and_content_container_2>
+  <div.setup_plug_header>
+  </div>
+  <div.setup_content>	
+  </div>
+ </div>
+</div>
+********/
+
+/* Container 1 for content and header content */
+div.setup_header_and_content_container_1 {
+	clear: right
+}
+
+/* Container 2 for content and header content */
+div.setup_header_and_content_container_2 {
+	float: top; 
+	clear: top ;
+	padding:0px;
+	border-top: solid 1px #AAAAAA;
+}
+
+/* Header col */
 div.setup_plug_header {
-	background-color: #F0F0F0;
+        background-color: #EEF6EE;
+	border-top: solid 1px #DDDDDD;
+	border-bottom: solid 1px #DDDDDD;
 	height: 40px;
 }
 
-/* content col */
+/* Content col */
 div.setup_content {
 	background-color: #F0F0F0;
+	border-top: solid 1px #AAAAAA;
+}
+
+
+
+/* Navigation col */
+div.setup_navigation {
+        background-color: #D2F6C2;
+	width: 200px;
+	float: left;
+	clear: left;
+	padding:0px 5px 5px 5px;
+	border-right: solid 1px #DDDDDD;
+}
+
+/* The navigation container */
+div.setup_navigation_border {
+        background-color: #EEFFEE;
+	padding: 5px;
+	float: left;
+	clear: left;
+	border-right: solid 1px #BBBBBB;
+	border-bottom: solid 1px #BBBBBB;
+	border-left: solid 1px #DDDDDD;
+	border-top: solid 1px #DDDDDD;
+}
+
+/* Navigation title */
+div.setup_navigation_title {
+	font-size: 1.7em;
+        background: #CCF6CC ;
+        text-decoration:none;
+        width:100%;
+        margin-bottom: 7px;
+        border-right: solid 1px #BBBBBB;
+        border-bottom: solid 1px #CCCCCC;
+
 }
 
 /* The box used for each setup step */
 a.navigation_element, div.navigation_element {
 	float: left;
 	clear: left;
-	background: #F7F7F7 ;
+	background: #EEF6EE ;
 	text-decoration:none;
 	width:100%;
-	margin-bottom: 1px;
+	margin-bottom: 4px;
+	border-right: solid 1px #DDDDDD;
+	border-bottom: solid 1px #DDDDDD;
+	
 }
 
 /* The box used for each setup step */
@@ -839,27 +899,36 @@ a.navigation_element_active, div.navigation_element_active {
 	float: left;
 	clear: left;
 	position: relative;
-	background: #F7F7F7 ;
+	background: #EEF6EE ;
 	text-decoration:none;
 	width:100%;
+	margin-bottom: 4px;
+	border-right: solid 1px #BBBBBB;
+	border-bottom: solid 1px #CCCCCC;
 }
 
 /* An enabled setup step will use this style in navigation*/
 div.navigation_title_active {
-	font-size: 2em;
+	font-size: 1.2em;
+	font-weight: bold;
 	cursor: pointer;
+	padding: 3px;
 }
 
 /* Disabled setup steps */
 div.navigation_title_disabled {
-	font-size: 2em;
+	font-size: 1.2em;
+	font-weight: bold;
+	padding: 3px;
 	color: #DDDDDD;
 }
 
 /* Disabled setup steps */
 div.navigation_title_inactive {
-	font-family: Arial;
-	font-size: 2em;
+	font-size: 1.2em;
+	font-weight: bold;
+	cursor: pointer;
+	padding: 3px;
 }
 
 /* The style for the info of an active setup */
