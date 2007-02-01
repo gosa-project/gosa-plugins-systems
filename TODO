@@ -11,6 +11,7 @@ Target for 2.6:
   - Check role and acl remove
   - Check Base select dialog within roles.
   - Implement a kind of "umask"
+  - Ensure that acls will be the same after renaming and moving objects.
   
 * Create a Bugtracker 
 
