@@ -906,6 +906,7 @@ class user extends plugin
     if ($this->dn != $new_dn){
 
       /* Write entry on new 'dn' */
+      $this->update_acls($this->dn,$new_dn);
       $this->move($this->dn, $new_dn);
 
       /* Happen to use the new one */

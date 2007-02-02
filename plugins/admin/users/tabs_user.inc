@@ -134,6 +134,9 @@ class usertabs extends tabs
 
         /* Write entry on new 'dn' */
         $baseobject->cn= $pt.$baseobject->givenName." ".$baseobject->sn;
+
+        /* Udpate acls */
+        $baseobject->update_acls($this->dn,$new_dn);
         $baseobject->move($this->dn, $new_dn);
         $this->by_object['user']= $baseobject;
 

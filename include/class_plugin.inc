@@ -1510,6 +1510,94 @@ class plugin
     return($deps);
   }
 
+  /* This function modifies object acls too, if an object is moved.
+   *  $old_dn   specifies the actually used dn
+   *  $new_dn   specifies the destiantion dn
+   */
+  function update_acls($old_dn,$new_dn)
+  {
+    global $config;
+
+    /* Check if old_dn is empty. This should never happen */
+    if(empty($old_dn) || empty($new_dn)){
+      trigger_error("Failed to check acl dependencies, wrong dn given.");
+      return;
+    }
+
+    /* Object was moved, ensure that all acls will be moved too */
+    if($new_dn != $old_dn && $old_dn != "new"){
+
+      /* get_ldap configuration */
+      $update = array();
+      $ldap = $config->get_ldap_link();
+      $ldap->cd ($config->current['BASE']);
+      $ldap->search("(&(objectClass=gosaAcl)(gosaAclEntry=*))",array("cn","gosaAclEntry"));
+      while($attrs = $ldap->fetch()){
+
+        $acls = array();
+
+        /* Walk through acls */
+        for($i = 0 ; $i <  $attrs['gosaAclEntry']['count'] ; $i ++ ){
+
+          /* Reset vars */
+          $found = false;
+
+          /* Get Acl parts */
+          $acl_parts = split(":",$attrs['gosaAclEntry'][$i]);
+
+          /* Get every single member for this acl */  
+          $members = array();  
+          if(preg_match("/,/",$acl_parts[2])){
+            $members = split(",",$acl_parts[2]);
+          }else{
+            $members = array($acl_parts[2]);
+          } 
+      
+          /* Check if member match current dn */
+          foreach($members as $key => $member){
+            
+            $member = base64_decode($member);
+            if($member == $old_dn){
+              $found = true;
+              $members[$key] = base64_encode($new_dn);
+            }
+          } 
+          
+          $new_members = "";
+          foreach($members as $member){
+            $new_members .= $member.",";
+          }
+          $new_members = preg_replace("/,$/","",$new_members);
+          $acl_parts[2] = $new_members;
+        
+          $acl_str  ="";
+          foreach($acl_parts as $t){
+            $acl_str .= $t.":";
+          }
+          $acl_str = preg_replace("/:$/","",$acl_str);
+       
+          $acls[] = $acl_str; 
+ 
+       }
+       /* Acls for this object must be adjusted */
+        if($found){
+
+          echo "Changing ACL dn from : <br>&nbsp;-&nbsp;<b>&nbsp;to".$old_dn."</b><br>&nbsp;-&nbsp;<b>".$new_dn."</b><br>";
+
+          $update[$attrs['dn']] =array();
+          foreach($acls as $acl){
+            $update[$attrs['dn']]['gosaAclEntry'][] = $acl;
+          }
+        }
+      }
+
+      /* Write updated acls */
+      foreach($update as $dn => $attrs){
+        $ldap->cd($dn);
+        $ldap->modify($attrs);
+      }
+    }
+  }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

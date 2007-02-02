@@ -62,6 +62,7 @@ class grouptabs extends tabs
 
 			/* Write entry on new 'dn' */
 			if ($this->dn != "new"){
+				$baseobject->update_acls($this->dn,$new_dn);
 				$baseobject->move($this->dn, $new_dn);
 				$this->by_object['group']= $baseobject;
 			}

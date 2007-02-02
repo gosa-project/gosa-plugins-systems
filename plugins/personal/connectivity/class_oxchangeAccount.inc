@@ -714,15 +714,15 @@ class oxchangeAccount extends plugin
          isset($this->oxconf["PGPASSWD"])){
         $pgcon = @pg_connect("host=".$this->oxconf["PGHOST"]." user=".$this->oxconf["PGUSER"]." password=".$this->oxconf["PGPASSWD"]." dbname=".$this->oxconf["PGDBNAME"]);
         if (! $pgcon){
-          print_red(_("Couldn't connect to postgresql database!"));
+          print_red(_("Connectivity")."&nbsp;"._("Openexchange")."&nbsp;:"._("Couldn't connect to postgresql database!"));
           return;
         }
       }else{
-        print_red(_("Needed parameters for openexchange connectivity plugin are missing!"));
+        print_red(_("Connectivity")."&nbsp;"._("Openexchange")."&nbsp;:"._("Needed parameters for openexchange connectivity plugin are missing!"));
         return;
       }
     }else{
-      print_red(_("PHP4 module for postgresql database is missing!"));
+      print_red(_("Connectivity")."&nbsp;"._("Openexchange")."&nbsp;:"._("PHP4 module for postgresql database is missing!"));
       return;
     }
 
