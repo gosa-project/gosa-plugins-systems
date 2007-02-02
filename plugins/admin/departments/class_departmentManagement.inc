@@ -252,6 +252,7 @@ class departmentManagement extends plugin
     /* initiate recursive remove  (Is called from iframe, generates output)*/
     if(isset($_GET['PerformRecMove'])){
       $this->deptabs->by_object['department']->recursive_move("","",true);
+      $this->DivListDepartment->selectedBase = $this->deptabs->by_object['department']->dn;  
       exit();
     }
 

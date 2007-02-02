@@ -554,6 +554,7 @@ class department extends plugin
 			/* Remove src_dn */
 			$ldap->cd($src_dn);
 			$ldap->recursive_remove();
+      $this->dn = $this->rec_dst;
 			$this->rec_src = $this->rec_dst = "";
 			$this->rec_cpy =false;
 
