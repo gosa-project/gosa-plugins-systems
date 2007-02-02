@@ -18,8 +18,6 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-restore_error_handler();
-
 /* Create a new setup class if necessary  */
 if (!isset($_SESSION['setup']) || (isset($_GET['reset']) && $_GET['reset'] == 1)){
   $_SESSION['setup']= new setup ();
