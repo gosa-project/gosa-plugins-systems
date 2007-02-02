@@ -1524,6 +1524,12 @@ class plugin
       return;
     }
 
+    /* Update userinfo if necessary */
+    if($_SESSION['ui']->dn == $old_dn){
+      $_SESSION['ui']->dn = $new_dn;
+      gosa_log(_("Updated current user dn from '".$old_dn."' to '".$new_dn."'"));
+    }
+
     /* Object was moved, ensure that all acls will be moved too */
     if($new_dn != $old_dn && $old_dn != "new"){
 
@@ -1579,8 +1585,9 @@ class plugin
           $acls[] = $acl_str; 
  
        }
+
        /* Acls for this object must be adjusted */
-        if($found){
+       if($found){
 
           if($output_changes){
             echo "<font color='green'>Changing ACL dn from : <br>&nbsp;-&nbsp;<b>&nbsp;to".$old_dn."</b><br>&nbsp;-&nbsp;<b>".$new_dn."</b></font><br>";
