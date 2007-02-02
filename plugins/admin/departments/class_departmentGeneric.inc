@@ -541,6 +541,8 @@ class department extends plugin
 
 				echo "<b>"._("Object").":</b> ".@LDAP::fix($src)."<br>";
 
+        $this->update_acls($object, $dst,TRUE);
+
 				if (!$this->copy($src, $dst)){
 					echo "<font color='#FF0000'><br>".sprintf(_("FAILED to copy %s, aborting operation"),@LDAP::fix($src))."</font>";
 					return (FALSE);

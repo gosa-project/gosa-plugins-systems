@@ -1514,7 +1514,7 @@ class plugin
    *  $old_dn   specifies the actually used dn
    *  $new_dn   specifies the destiantion dn
    */
-  function update_acls($old_dn,$new_dn)
+  function update_acls($old_dn,$new_dn,$output_changes = FALSE)
   {
     global $config;
 
@@ -1582,8 +1582,9 @@ class plugin
        /* Acls for this object must be adjusted */
         if($found){
 
-          echo "Changing ACL dn from : <br>&nbsp;-&nbsp;<b>&nbsp;to".$old_dn."</b><br>&nbsp;-&nbsp;<b>".$new_dn."</b><br>";
-
+          if($output_changes){
+            echo "<font color='green'>Changing ACL dn from : <br>&nbsp;-&nbsp;<b>&nbsp;to".$old_dn."</b><br>&nbsp;-&nbsp;<b>".$new_dn."</b></font><br>";
+          }
           $update[$attrs['dn']] =array();
           foreach($acls as $acl){
             $update[$attrs['dn']]['gosaAclEntry'][] = $acl;
