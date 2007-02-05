@@ -1561,14 +1561,14 @@ class plugin
       
           /* Check if member match current dn */
           foreach($members as $key => $member){
-            
             $member = base64_decode($member);
             if($member == $old_dn){
               $found = true;
               $members[$key] = base64_encode($new_dn);
             }
           } 
-          
+         
+          /* Create new member string */ 
           $new_members = "";
           foreach($members as $member){
             $new_members .= $member.",";
@@ -1576,21 +1576,24 @@ class plugin
           $new_members = preg_replace("/,$/","",$new_members);
           $acl_parts[2] = $new_members;
         
+          /* Reconstruckt acl entry */
           $acl_str  ="";
           foreach($acl_parts as $t){
-            $acl_str .= $t.":";
+           $acl_str .= $t.":";
           }
           $acl_str = preg_replace("/:$/","",$acl_str);
-       
-          $acls[] = $acl_str; 
- 
        }
 
        /* Acls for this object must be adjusted */
        if($found){
 
           if($output_changes){
-            echo "<font color='green'>Changing ACL dn from : <br>&nbsp;-&nbsp;<b>&nbsp;to".$old_dn."</b><br>&nbsp;-&nbsp;<b>".$new_dn."</b></font><br>";
+            echo "<font color='green'>".
+                  _("Changing ACL dn")."&nbsp;:&nbsp;<br>&nbsp;-"._("from")."&nbsp;<b>&nbsp;".
+                  $old_dn.
+                  "</b><br>&nbsp;-"._("to")."&nbsp;<b>".
+                  $new_dn.
+                  "</b></font><br>";
           }
           $update[$attrs['dn']] =array();
           foreach($acls as $acl){
