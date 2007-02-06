@@ -796,12 +796,11 @@ div.setup_dialog {
 	width:100%;
 	border-right: solid 2px #444444;
 	border-bottom: solid 2px #666666;
-	float: left;
 }
 
 /* Header col */
 div.setup_header {
-        background-color: #D2F6C2;
+    background-color: #D2F6C2;
 	font-size: 2.0em;
 	font-weight: bold;
 	padding:7px;
@@ -820,49 +819,45 @@ div.setup_header {
 
 /* Container 1 for content and header content */
 div.setup_header_and_content_container_1 {
-	clear: right
+	border-left: solid 1px #AAAAAA;
 }
 
 /* Container 2 for content and header content */
 div.setup_header_and_content_container_2 {
-	float: top; 
-	clear: top ;
 	padding:0px;
 	border-top: solid 1px #AAAAAA;
 }
 
 /* Header col */
 div.setup_plug_header {
-        background-color: #EEF6EE;
 	border-top: solid 1px #DDDDDD;
 	border-bottom: solid 1px #DDDDDD;
-	height: 40px;
+	margin: 1px;
+	padding: 5px;
 }
 
 /* Content col */
 div.setup_content {
-	background-color: #F0F0F0;
 	border-top: solid 1px #AAAAAA;
+	padding: 5px;
 }
 
-
+/* default.*/
+div.default {
+	padding: 2px;
+	vertical-align: middle;
+}
 
 /* Navigation col */
 div.setup_navigation {
-        background-color: #D2F6C2;
-	width: 200px;
-	float: left;
-	clear: left;
-	padding:0px 5px 5px 5px;
 	border-right: solid 1px #DDDDDD;
+	width:180px;
 }
 
 /* The navigation container */
 div.setup_navigation_border {
-        background-color: #EEFFEE;
-	padding: 5px;
-	float: left;
-	clear: left;
+    background-color: #FFF;
+	padding: 1px;
 	border-right: solid 1px #BBBBBB;
 	border-bottom: solid 1px #BBBBBB;
 	border-left: solid 1px #DDDDDD;
@@ -872,7 +867,7 @@ div.setup_navigation_border {
 /* Navigation title */
 div.setup_navigation_title {
 	font-size: 1.7em;
-	background: #CCF6CC ;
+	background: #D2F6C2 ;
 	text-decoration:none;
 	width:100%;
 	margin-bottom: 7px;
@@ -882,11 +877,10 @@ div.setup_navigation_title {
 
 /* The box used for each setup step */
 a.navigation_element, div.navigation_element {
-	float: left;
-	clear: left;
-	background: #E4E4E4 ;
+	background: #E8E8E8;
 	text-decoration:none;
 	width:100%;
+	float: left;
 	margin-bottom: 4px;
 	border-right: solid 1px #AAAAAA;
 	border-bottom: solid 1px #BBBBBB;
@@ -894,12 +888,10 @@ a.navigation_element, div.navigation_element {
 
 /* The box used for each setup step */
 a.navigation_element_active, div.navigation_element_active {
-	float: left;
-	clear: left;
-	position: relative;
-	background: #E4E4E4 ;
+	background: #E8E8E8;
 	text-decoration:none;
 	width:100%;
+	float: left;
 	margin-bottom: 4px;
 	border-right: solid 1px #AAAAAA;
 	border-bottom: solid 1px #BBBBBB;
@@ -918,6 +910,8 @@ div.navigation_title_disabled {
 	font-size: 1.2em;
 	font-weight: bold;
 	padding: 3px;
+	cursor: default;	
+	text-decoration:none;
 	color: #AAAAAA;
 }
 
@@ -925,6 +919,7 @@ div.navigation_title_disabled {
 div.navigation_title_inactive {
 	font-size: 1.2em;
 	font-weight: bold;
+	text-decoration:none;
 	cursor: pointer;
 	padding: 3px;
 }

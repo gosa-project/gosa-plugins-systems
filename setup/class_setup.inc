@@ -71,12 +71,17 @@ class setup extends plugin
     }
 
     /* Check if step was selected */
-    if(isset($_GET['step'])){
-      $step = $_GET['step'];
+    if(isset($_GET['step']) || isset($_POST['next'])){
+
+      if(isset($_GET['step'])){
+        $step = $_GET['step'];
+      }else{
+        $step = $this->i_current + 1;
+      }
 
       if($this->selectable_step($step)){
         $this->i_last    = $this->i_current;
-        $this->i_current = $_GET['step'];
+        $this->i_current = $step;
       }
     }
   }

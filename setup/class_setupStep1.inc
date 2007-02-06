@@ -28,6 +28,8 @@ class setup_step_1 extends setup_step
 
   function setup_step_1()
   {
+    $this->lang = get_browser_language();
+
     $this->is_enabled = TRUE;
     $this->is_active  = TRUE;
     
