@@ -124,7 +124,6 @@ class tabs
 		$obj->save_object ();
 		$this->by_object[$this->current]= $obj;
 	}
-
   }
 
   function gen_tabs()
