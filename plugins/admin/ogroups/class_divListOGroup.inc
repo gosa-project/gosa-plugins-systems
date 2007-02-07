@@ -48,7 +48,7 @@ class divListOGroup extends MultiSelectWindow
     $this->EnableSaveButton (false);
 
     /* Dynamic action col, depending on snapshot icons */
-    $action_col_size = 70;
+    $action_col_size = 80;
     if($this->parent->snapshotEnabled()){
       $action_col_size += 38; 
     }
@@ -172,7 +172,7 @@ class divListOGroup extends MultiSelectWindow
     $empty    = "<img class='center' src='images/empty.png' style='width:16px;height:16px;' alt=''>";
 
     /* Dynamic action col, depending on snapshot icons */
-    $action_col_size = 70;
+    $action_col_size = 80;
     if($this->parent->snapshotEnabled()){
       $action_col_size += 38; 
     }
