@@ -788,7 +788,7 @@ body.setup_body {
 	background-image: none;
 	background-color: #979797;
 	margin: 10px;
-	min-width:1020px;
+	min-width:920px;
 }
 
 /* The setup complete setup dialog */
@@ -846,6 +846,8 @@ div.setup_plug_header {
 /* Content col */
 div.setup_contents {
 	padding: 5px;
+	max-height: 400px;
+	width:100%;
 }
 
 /* default.*/
@@ -857,13 +859,13 @@ div.default {
 /* Navigation col */
 div.setup_navigation {
 	width:200px;
+	min-height:300px;
 	clear:bottom;
 	background-color:#E8E8E8;
 	border-right: solid 1px #D0D0D0; 
 	float:left ; 
 	padding-left: 2px;;
 	padding-right: 2px;;
-	height:90%;
 }
 
 
@@ -935,3 +937,19 @@ div.navigation_info {
 	cursor: pointer;
 }
 
+
+
+/*****TEST*****/
+
+div.solution_hidden {
+	display: none;
+}
+
+div.solution_visible {
+	display: block;
+	background-color: orange;
+	background-image: url('images/personal.png');
+	border: dotted 2px red;
+	width: 296px;
+	text-align:left;
+}

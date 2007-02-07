@@ -56,80 +56,87 @@ class setup_step_2 extends setup_step
     $this->basic_checks[$i]['NAME'] =  _("Checking PHP version");
     $this->basic_checks[$i]['DESC'] =  sprintf(_("PHP must be of version %s or %s or above for some functions."),"4.3.10","5.2.0");
     $this->basic_checks[$i]['RESULT']= $this->check_php_version();
+    $this->basic_checks[$i]['SOLUTION'] = _("GOsa requires functions that may not be available in older PHP versions, just update to a supported PHP version.");
 
     /* Checking imap extension */
     $i ++;
     $this->basic_checks[$i]['NAME'] =  _("Checking for ldap module");
     $this->basic_checks[$i]['DESC'] =  _("This is the main module used by GOsa and therefore really required.");
     $this->basic_checks[$i]['RESULT']= is_callable("ldap_bind");
-
-    /* Checking for XML functions */
-    $i ++;
-    $this->basic_checks[$i]['NAME'] =  _("Checking for XML functions");
-    $this->basic_checks[$i]['DESC'] =  _("XML functions are required to parse the configuration file.");
-    $this->basic_checks[$i]['RESULT']= is_callable("xml_parser_create");
+    $this->basic_checks[$i]['SOLUTION'] = _("The ldap module (PHP4-ldap/PHP5-ldap) is required to communicate with your ldap server.");
 
     /* Check for gettext support */
     $i ++;
     $this->basic_checks[$i]['NAME'] =  _("Checking for gettext support");
     $this->basic_checks[$i]['DESC'] =  _("Gettext support is required for internationalized GOsa.");
     $this->basic_checks[$i]['RESULT']= is_callable("bindtextdomain");
+    $this->basic_checks[$i]['SOLUTION'] = _("This should be activated while compiling your PHP. (--with-gettext)");
 
     /* iconv */
     $i ++;
     $this->basic_checks[$i]['NAME'] =  _("Checking for iconv support");
     $this->basic_checks[$i]['DESC'] =  _("This module is used by GOsa to convert samba munged dial informations and is therefore required.");
     $this->basic_checks[$i]['RESULT']= is_callable("iconv");
+    $this->basic_checks[$i]['SOLUTION'] = _("his should be activated while compiling your PHP. (--with-iconv)");
 
     /**/
     $i ++;
     $this->basic_checks[$i]['NAME'] =  _("Checking for mhash module");
     $this->basic_checks[$i]['DESC'] =  _("To use SSHA encryption, you'll need this module. If you are just using crypt or md5 encryption, ignore this message. GOsa   will run without it.");
     $this->basic_checks[$i]['RESULT']= is_callable("mhash");
+    $this->basic_checks[$i]['SOLUTION'] = _("The mhash module for PHP 4/5 is not available, please install it. (php4-mhash/php5-mhash)");
 
     /**/
     $i ++;
     $this->basic_checks[$i]['NAME'] =  _("Checking for imap module");
     $this->basic_checks[$i]['DESC'] =  _("The IMAP module is needed to communicate with the IMAP server. It gets status informations, creates and deletes mail users. ");
     $this->basic_checks[$i]['RESULT']= is_callable("imap_open");
-
+    $this->basic_checks[$i]['SOLUTION'] = _("This module is used to communicate with your mail server. Please install (PHP4-imap PHP5-     imap)");
+  
     /**/
     $i ++;
     $this->basic_checks[$i]['NAME'] =  _("Checking for getacl in imap");
     $this->basic_checks[$i]['DESC'] =  _("The getacl support is needed for shared folder permissions. The standard IMAP module is not capable of reading acl's. You   need a recend PHP version for this feature.");
     $this->basic_checks[$i]['RESULT']= is_callable("imap_getacl");
+    $this->basic_checks[$i]['SOLUTION'] = _("This module is used to communicate with your mail server. Please install (PHP4-imap PHP5-     imap)");
 
     /**/
     $i ++;
     $this->basic_checks[$i]['NAME'] =  _("Checking for mysql module");
     $this->basic_checks[$i]['DESC'] =  _("MySQL support is needed for reading GOfax reports from databases.");
     $this->basic_checks[$i]['RESULT']= is_callable("mysql_query");
+    $this->basic_checks[$i]['SOLUTION'] = _("This module is required to communicate with database servers, for example phone and fax addons. Please install (PHP4-mysql PHP5-mysql)");
 
     /**/
     $i ++;
     $this->basic_checks[$i]['NAME'] =  _("Checking for kadm5 module");
     $this->basic_checks[$i]['DESC'] =  _("Managing users in kerberos requires the kadm5 module which is downloadable via PEAR network.");
     $this->basic_checks[$i]['RESULT']= is_callable("kadm5_init_with_password");
+    $this->basic_checks[$i]['SOLUTION'] = _("This module is required to manage user in kerberos, it is downloadable via PEAR network");
 
     /**/
     $i ++;
     $this->basic_checks[$i]['NAME'] =  _("Checking for snmp Module");
     $this->basic_checks[$i]['DESC'] =  _("Simple Network Management Protocol (SNMP) is required for client monitoring.");
     $this->basic_checks[$i]['RESULT']= is_callable("snmpget");
+    $this->basic_checks[$i]['SOLUTION'] = _("This module is required for client monitoring. (PHP4-snmp/PHP5-snmp)");
 
     /* Checking for Cups module */
     $i ++;
     $this->basic_checks[$i]['NAME'] =  _("Checking for cups module");
     $this->basic_checks[$i]['DESC'] =  _("In order to read available printers from IPP protocol instead of printcap files, you've to install the CUPS module.");
     $this->basic_checks[$i]['RESULT']= is_callable("cups_get_dest_list");
+    $this->basic_checks[$i]['SOLUTION'] = _("In order to read available printers from IPP protocol instead of printcap files, you've to       install the CUPS module.");
 
     /* Checking for F ping utility */
     $i ++;
     $query= "LC_ALL=C LANG=C fping -v 2>&1";
     $output= shell_exec ($query);
+
     $this->basic_checks[$i]['NAME'] =  _("Checking for fping utility");
     $this->basic_checks[$i]['DESC'] =  _("The fping utility is only used if you've got a thin client based terminal environment running.");
-    $this->basic_checks[$i]['RESULT']= preg_match("/^fping:/", $output);;
+    $this->basic_checks[$i]['RESULT']= preg_match("/^fping:/", $output);
+    $this->basic_checks[$i]['SOLUTION'] = _("The fping utility is only used in thin client based terminal environment.");
 
     /* Checking generate LM/NT password hashes */
     $i ++;
@@ -145,6 +152,8 @@ class setup_step_2 extends setup_step
     $this->basic_checks[$i]['NAME'] =  _("Password hashes");
     $this->basic_checks[$i]['DESC'] =  _("In order to use SAMBA 2/3, you've to install some additional packages to generate password hashes.");
     $this->basic_checks[$i]['RESULT']= $have_mkntpwd; 
+    $this->basic_checks[$i]['SOLUTION'] = _("In order to use samba 2/3 you've to install some additional packages to generate password
+hashes. (e.g. libmhash2)");
 
 
 
@@ -194,6 +203,15 @@ class setup_step_2 extends setup_step
     $this->config_checks[$i]['NAME'] =  _("magic_quotes_gpc")."&nbsp;<b>"._("On")."</b>";
     $this->config_checks[$i]['DESC'] =  _("Increase your server security by setting magic_quotes_gpc to 'on'. PHP will escape all quotes in strings in this case.");
     $this->config_checks[$i]['RESULT']=  ini_get('magic_quotes_gpc');
+
+
+
+
+    foreach($this->basic_checks as $key => $entry){
+      if(!isset($entry['SOLUTION'])){
+        $this->basic_checks[$key]['SOLUTION'] = "";
+      }
+    }
   }
   
 
