@@ -42,7 +42,7 @@ class divListBlocklist extends MultiSelectWindow
     $this->EnableSaveButton (false);
 
     /* Dynamic action col, depending on snapshot icons */
-    $action_col_size = 50;
+    $action_col_size = 60;
     if($this->parent->snapshotEnabled()){
       $action_col_size += 20;
     }
@@ -133,7 +133,7 @@ class divListBlocklist extends MultiSelectWindow
     $editlink = "<a href='?plug=".$_GET['plug']."&amp;id=%s&amp;act=edit_entry'>%s</a>";
 
     /* Dynamic action col, depending on snapshot icons */
-    $action_col_size = 50;
+    $action_col_size = 60;
     if($this->parent->snapshotEnabled()){
       $action_col_size += 20;
     }

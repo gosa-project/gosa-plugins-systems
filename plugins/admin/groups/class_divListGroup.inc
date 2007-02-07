@@ -45,7 +45,7 @@ class divListGroup extends MultiSelectWindow
     $this->EnableSaveButton (false);
 
     /* Dynamic action col, depending on snapshot icons */
-    $action_col_size = 70;
+    $action_col_size = 80;
     if($this->parent->snapshotEnabled()){
       $action_col_size += 38;
     }
@@ -168,7 +168,7 @@ class divListGroup extends MultiSelectWindow
     $userimg  = "<img class='center' src='images/select_groups.png' alt='User'    title='%s'>";
 
     /* Dynamic action col, depending on snapshot icons */
-    $action_col_size = 70;
+    $action_col_size = 80;
     if($this->parent->snapshotEnabled()){
       $action_col_size += 38;
     }

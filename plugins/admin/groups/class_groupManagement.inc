@@ -514,7 +514,8 @@ class groupManagement extends plugin
     if($s_action == "copy"){
 
       $dn  = $this->grouplist[trim($s_entry)]['dn'];
-      $acl_all  = $ui->has_complete_category_acls($this->selectedBase,"groups") ;
+      $ui = get_userinfo();
+      $acl_all  = $ui->has_complete_category_acls($this->DivListGroup->selectedBase,"groups") ;
       if(preg_match("/(c.*w|w.*c)/",$acl_all)){
 
         $this->CopyPasteHandler->Clear();

@@ -42,7 +42,7 @@ class divListApplication extends MultiSelectWindow
     $this->EnableSaveButton (false);
 
     /* set Page header */
-    $action_col_size = 70;
+    $action_col_size = 80;
     if($this->parent->snapshotEnabled()){
       $action_col_size += 38;
     }
@@ -171,7 +171,7 @@ class divListApplication extends MultiSelectWindow
     $empty    = "<img class='center' src='images/empty.png' style='width:16px;height:16px;' alt=''>";
 
     /* set Page header */
-    $action_col_size = 70;
+    $action_col_size = 80;
     if($this->parent->snapshotEnabled()){
       $action_col_size += 38;
     }
