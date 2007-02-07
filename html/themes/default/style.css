@@ -787,13 +787,13 @@ td.tbrhead {
 body.setup_body {
 	background-image: none;
 	background-color: #979797;
-	margin: 6px;
+	margin: 10px;
+	min-width:1020px;
 }
 
 /* The setup complete setup dialog */
 div.setup_dialog {
 	background-color: #F0F0F0;
-	width:100%;
 	border-right: solid 2px #444444;
 	border-bottom: solid 2px #666666;
 }
@@ -804,6 +804,22 @@ div.setup_header {
 	font-size: 2.0em;
 	font-weight: bold;
 	padding:7px;
+}
+
+/* Setup content header container */
+div.setup_plug_header_container {
+}
+
+/* Setup content container */
+div.setup_contents_container { 
+	float:left; 
+}
+
+/* Setup footer */
+div.setup_bottom {
+	clear: left;
+	background-color:#DDDDDD;	
+	border-top: solid 1px #D0D0D0; 
 }
 
 /*******
@@ -817,28 +833,18 @@ div.setup_header {
 </div>
 ********/
 
-/* Container 1 for content and header content */
-div.setup_header_and_content_container_1 {
-	border-left: solid 1px #AAAAAA;
-}
-
-/* Container 2 for content and header content */
-div.setup_header_and_content_container_2 {
-	padding:0px;
-	border-top: solid 1px #AAAAAA;
-}
-
 /* Header col */
 div.setup_plug_header {
-	border-top: solid 1px #DDDDDD;
-	border-bottom: solid 1px #DDDDDD;
 	margin: 1px;
 	padding: 5px;
+	border-top: solid 2px #D0D0D0;
+	border-bottom: solid 2px #D0D0D0;
+	margin-left:202px;
+	background-color:#E3E3E3
 }
 
 /* Content col */
-div.setup_content {
-	border-top: solid 1px #AAAAAA;
+div.setup_contents {
 	padding: 5px;
 }
 
@@ -850,27 +856,25 @@ div.default {
 
 /* Navigation col */
 div.setup_navigation {
-	border-right: solid 1px #DDDDDD;
-	width:180px;
+	width:200px;
+	clear:bottom;
+	background-color:#E8E8E8;
+	border-right: solid 1px #D0D0D0; 
+	float:left ; 
+	padding-left: 2px;;
+	padding-right: 2px;;
+	height:90%;
 }
 
-/* The navigation container */
-div.setup_navigation_border {
-    background-color: #FFF;
-	padding: 1px;
-	border-right: solid 1px #BBBBBB;
-	border-bottom: solid 1px #BBBBBB;
-	border-left: solid 1px #DDDDDD;
-	border-top: solid 1px #DDDDDD;
-}
 
 /* Navigation title */
 div.setup_navigation_title {
 	font-size: 1.7em;
-	background: #D2F6C2 ;
+	background: #D8D8D8 ;
 	text-decoration:none;
 	width:100%;
-	margin-bottom: 7px;
+	padding-top:8px;
+	padding-bottom:8px;
 	border-right: solid 1px #AAAAAA;
 	border-bottom: solid 1px #BBBBBB;
 }
@@ -879,20 +883,18 @@ div.setup_navigation_title {
 a.navigation_element, div.navigation_element {
 	background: #E8E8E8;
 	text-decoration:none;
-	width:100%;
-	float: left;
-	margin-bottom: 4px;
 	border-right: solid 1px #AAAAAA;
 	border-bottom: solid 1px #BBBBBB;
+	float:left;
+	width:100%;
 }
 
 /* The box used for each setup step */
 a.navigation_element_active, div.navigation_element_active {
 	background: #E8E8E8;
 	text-decoration:none;
+	float:left;
 	width:100%;
-	float: left;
-	margin-bottom: 4px;
 	border-right: solid 1px #AAAAAA;
 	border-bottom: solid 1px #BBBBBB;
 }

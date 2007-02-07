@@ -836,7 +836,8 @@ class userManagement extends plugin
         $dn= $this->list[trim($s_entry)]['dn'];
 
         /* Check acl */
-        $acl_all  = $ui->has_complete_category_acls($this->selectedBase,"users") ;
+        $ui = get_userinfo();
+        $acl_all  = $ui->has_complete_category_acls($this->DivListUsers->selectedBase,"users") ;
         if(preg_match("/(c.*w|w.*c)/",$acl_all)){
           $obj    = new usertabs($this->config, $this->config->data['TABS']['USERTABS'], $dn);
           $obj->set_acl_base($dn);
@@ -856,7 +857,7 @@ class userManagement extends plugin
         $dn= $this->list[trim($s_entry)]['dn'];
 
         /* Check acl */
-        $acl_all  = $ui->has_complete_category_acls($this->selectedBase,"users") ;
+        $acl_all  = $ui->has_complete_category_acls($this->DivListUsers->selectedBase,"users") ;
         if(preg_match("/(c.*w|w.*c)/",$acl_all)){
           $obj= new usertabs($this->config, $this->config->data['TABS']['USERTABS'], $dn);
           $obj->set_acl_base($dn);

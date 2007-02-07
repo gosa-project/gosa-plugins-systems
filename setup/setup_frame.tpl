@@ -1,29 +1,34 @@
-<body class='setup_body'>
+<body class='setup_body' >
 {$php_errors}
 <form action='setup.php' name='mainform' method='post' enctype='multipart/form-data'>
-
-<!-- All over div -->
-<div class='setup_dialog' style='float:left' >
-
-	<!-- Basic header -->
-	<div class='setup_header' style='float:bottom'>
+<div class='setup_dialog'>
+	<div class='setup_header'>
 		{t}GOsa - GOnicus System Administrator Setup{/t}
 	</div>
+	<div style="width:100%; ">
 
-	<!-- Navigation div -->
-	<div class='setup_navigation' style='float:left;'>
-		<div class='setup_navigation_title'>
-			{t}Setup Steps{/t}
+		<div class='setup_navigation'>
+			<div class='setup_navigation_title'>	
+				{t}Setup steps{/t}
+			</div>
+			{$navigation}		
 		</div>
-	{$navigation}			
-	</div>
-	<div  class='setup_plug_header'>
-		{$header}
-	</div>
 
-	<!-- Step content -->
-	<div class='setup_content' >
-		{$contents}
+		<div class="setup_plug_header_container">
+			<div class='setup_plug_header'>
+				{$header}
+			</div>
+
+		</div>
+		<div class="setup_contents_container">
+			<div class='setup_contents'>
+				{$contents}
+			</div>
+		</div>
+
+		<div class='setup_bottom'>
+			Bottom	
+		</div>
 	</div>
 </div>
 </form>
