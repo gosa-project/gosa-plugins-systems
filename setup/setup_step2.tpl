@@ -50,24 +50,22 @@
 
 	</div>
 </div>
-<div>
-	<div class='default' style='margin:10px; float:left;'>
-		&nbsp;
-		<h2>{t}PHP setup configuration{/t}</h2>
-		{foreach from=$config item=val key=key}
-			<div class='default' style='float:left'>
-				{$config[$key].NAME}
-			</div>
-			<div style='width:60px; float:left;'>&nbsp;</div>
-			<div class='default' style='text-align:right; '>
-			{if $config[$key].RESULT}
-				<font color='green'>{t}Success{/t}</font>
-			{else}
-				<font color='red'>{t}Failed{/t}</font>
-			{/if}
-			</div>
-		{/foreach}
-	</div>
+<div class='default' style='margin:10px; float:left;'>
+	&nbsp;
+	<h2>{t}PHP setup configuration{/t}</h2>
+	{foreach from=$config item=val key=key}
+		<div class='default' style='float:left'>
+			{$config[$key].NAME}
+		</div>
+		<div style='width:60px; float:left;'>&nbsp;</div>
+		<div class='default' style='text-align:right; '>
+		{if $config[$key].RESULT}
+			<font color='green'>{t}Success{/t}</font>
+		{else}
+			<font color='red'>{t}Failed{/t}</font>
+		{/if}
+		</div>
+	{/foreach}
 </div>
 <script language='javascript'>
 {literal}
