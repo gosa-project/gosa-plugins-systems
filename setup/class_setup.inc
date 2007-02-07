@@ -70,13 +70,25 @@ class setup extends plugin
       }
     }
 
+    /* Check if image button requests next page */
+    foreach($_POST as $name => $value){
+      if(preg_match("/^next_(x|y)/",$name)){
+        $_POST['next'] = TRUE;
+      }
+      if(preg_match("/^last_(x|y)/",$name)){
+        $_POST['last'] = TRUE;
+      }
+    }
+
     /* Check if step was selected */
-    if(isset($_GET['step']) || isset($_POST['next'])){
+    if(isset($_GET['step']) || isset($_POST['next']) || isset($_POST['last'])){
 
       if(isset($_GET['step'])){
         $step = $_GET['step'];
-      }else{
+      }elseif(isset($_POST['next'])){
         $step = $this->i_current + 1;
+      }elseif(isset($_POST['last'])){
+        $step = $this->i_current - 1;
       }
 
       if($this->selectable_step($step)){
@@ -124,9 +136,26 @@ class setup extends plugin
   /* Create header entry */
   function get_header_html()
   {
-    $str ="<font style='font-size:20px;'>";
+    $str ="";
+    $str.=" <div >";
+    $str.="   <div>";
+    $str.="     <font style='font-size:20px;float:top'>";
     $str.=   $this->o_steps[$this->i_current]->get_long_title();
-    $str.="</font>";
+    $str.="     </font>";
+    $str.="   </div>";
+    $str.="   <div style='text-align:right;float:top;'>";
+    if(isset($this->o_steps[$this->i_current -1]) && $this->o_steps[$this->i_current -1]->is_enabled()){
+      $str.="   <input class='center' type='image' name='last' src='images/setup_step_back.png'  title='"._("Last step")."'>";
+    }else{
+      $str.="   <img class='center' src='images/setup_step_back_gray.png' title='"._("Last step")."'>";
+    }
+    if(isset($this->o_steps[$this->i_current +1]) && $this->o_steps[$this->i_current +1]->is_enabled()){
+      $str.="   <input class='center' type='image' name='next' src='images/setup_step_forward.png'  title='"._("Next step")."'>";
+    }else{
+      $str.="   <img class='center' src='images/setup_step_forward_gray.png'  title='"._("Next step")."'>";
+    }
+    $str.= "  </div>";
+    $str.= "</div>";
     return ($str);
   }
 
