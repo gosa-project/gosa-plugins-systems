@@ -1,4 +1,5 @@
 <body class='setup_body' >
+<center>
 {$php_errors}
 <form action='setup.php' name='mainform' method='post' enctype='multipart/form-data'>
 <div class='setup_dialog'>
@@ -31,6 +32,6 @@
 		</div>
 	</div>
 </div>
-</form>
 </body>
+</center>
 </html>

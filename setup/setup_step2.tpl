@@ -1,7 +1,7 @@
 <!-- 
 	Div container with PHP module checks 
 -->
-<div style='float:left;'> 
+<div style='float:left'> 
 
 	<!-- Set content styles -->	
 	<div class='default' style='margin:10px;'>

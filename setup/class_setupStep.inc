@@ -31,6 +31,11 @@ class setup_step extends plugin
 
   var $attributes   = array();
 
+  function save_object()
+  {
+    /* Do not call plugin::save_object. This causes acl trouble  */
+  }
+
   function get_title()
   { 
     return($this->s_title);

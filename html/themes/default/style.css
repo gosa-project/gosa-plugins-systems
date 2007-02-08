@@ -788,7 +788,6 @@ body.setup_body {
 	background-image: none;
 	background-color: #979797;
 	margin: 10px;
-	min-width:920px;
 }
 
 /* The setup complete setup dialog */
@@ -796,6 +795,10 @@ div.setup_dialog {
 	background-color: #F0F0F0;
 	border-right: solid 2px #444444;
 	border-bottom: solid 2px #666666;
+	border-top: solid 1px #666;
+	border-left: solid 1px #666;
+	text-align: left;
+	width:980px;
 }
 
 /* Header col */
@@ -966,13 +969,13 @@ h2.step2_container_title {
 
 /* Container for name and status */
 div.step2_entry_container { 
-	width:300px; 
+	width:350px; 
 	cursor:default;
 }
 
 /* Container for name and status, when status is failed */
 div.step2_entry_container_info { 
-	width:300px;
+	width:350px;
 	background: #DDDDFF;
 	cursor:default;
 }
@@ -1019,4 +1022,39 @@ div.step2_warning_text{
 	background-image: url('images/warning.png'); 
 	background-repeat: no-repeat;     
 	padding-left: 35px;
+}
+
+
+/*
+	Setup step 4 styles 
+*/
+
+div.step4_name {
+    vertical-align: middle;
+	float:left;
+	overflow: hidden;
+	width:200px;
+	height:2.0em;
+}
+
+div.step4_value {
+	float:left;
+	width:200px;
+	overflow: hidden;
+    vertical-align: middle;
+	height:2.0em;
+}
+
+div.step4_status {
+	text-align:right;
+    vertical-align: middle;
+	overflow: hidden;
+	height:2.0em;
+}
+
+
+div.step4_container {
+	border: solid 1px #CCC;
+	width:500px;
+	height:2.0em;
 }

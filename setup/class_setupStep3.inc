@@ -46,8 +46,9 @@ class setup_step_3 extends setup_step
   function execute()
   {
     $smarty = get_smarty();
-    $smarty -> assign("License",$this->License);
+    $smarty -> assign("License",nl2br($this->License));
     $smarty -> assign("license_found",$this->license_found);
+    $this->is_completed = true;
     return($smarty -> fetch (get_template_path("../setup/setup_step3.tpl")));
   }
 
