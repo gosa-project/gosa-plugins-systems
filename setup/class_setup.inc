@@ -60,16 +60,6 @@ class setup extends plugin
       $this->captured_values[$name] = $value;
     }
 
-    /* check if current setup step is completed now 
-        and activate the next step if possible */
-    for($i = 1 ; $i <= $this->i_steps ; $i ++ ){
-      if($this->o_steps[$i]->is_completed()){
-        if(isset($this->o_steps[($i+1)])){
-          $this->o_steps[($i+1)]->set_enabled();
-        }
-      }
-    }
-
     /* Check if image button requests next page */
     foreach($_POST as $name => $value){
       if(preg_match("/^next_(x|y)/",$name)){
@@ -82,6 +72,16 @@ class setup extends plugin
 
     /* Check if step was selected */
     if(isset($_GET['step']) || isset($_POST['next']) || isset($_POST['last'])){
+
+      /* check if current setup step is completed now 
+          and activate the next step if possible */
+      for($i = 1 ; $i <= $this->i_steps ; $i ++ ){
+        if($this->o_steps[$i]->is_completed()){
+          if(isset($this->o_steps[($i+1)])){
+            $this->o_steps[($i+1)]->set_enabled();
+          }
+        }
+      }
 
       if(isset($_GET['step'])){
         $step = $_GET['step'];
@@ -149,11 +149,11 @@ class setup extends plugin
     }else{
       $str.="   <img class='center' src='images/setup_step_back_gray.png' title='"._("Last step")."'>";
     }
-    if(isset($this->o_steps[$this->i_current +1]) && $this->o_steps[$this->i_current +1]->is_enabled()){
+#   if(isset($this->o_steps[$this->i_current +1]) && $this->o_steps[$this->i_current +1]->is_enabled()){
       $str.="   <input class='center' type='image' name='next' src='images/setup_step_forward.png'  title='"._("Next step")."'>";
-    }else{
-      $str.="   <img class='center' src='images/setup_step_forward_gray.png'  title='"._("Next step")."'>";
-    }
+#   }else{
+#     $str.="   <img class='center' src='images/setup_step_forward_gray.png'  title='"._("Next step")."'>";
+#   }
     $str.= "  </div>";
     $str.= "</div>";
     return ($str);

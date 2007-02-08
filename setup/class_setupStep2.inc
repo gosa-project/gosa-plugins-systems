@@ -26,7 +26,6 @@ class setup_step_2 extends setup_step
   var $config_checks= array();
   var $is_writeable = array();
 
-
   function setup_step_2()
   {
     $this->s_title      = _("Installation check");
@@ -241,16 +240,50 @@ class setup_step_2 extends setup_step
     $this->config_checks[] = array("NAME" => $N , "DESC" => $D , "RESULT" => $R , "SOLUTION" => $S , "MUST" => $M );
 
 
-    /* Automatic quoting must be turned on */
+    /* Configuration file  
+     */
+
+    /* Check if we can create a config file.*/
     $N = _("Configuration file writeable.");
     $D = _("The Configuration file can't be written");
-    $S = _("Grant write access on '/etc/gosa/gosa.conf' for the webserver or copy the generated gosa.conf on your own."); 
-    $R = file_exists("/etc/gosa/gosa.conf") && is_writeable("/etc/gosa/gosa.conf");
-    $M = TRUE;
+    $S = _("The GOsa reads its configuration from a file located in (/etc/gosa/gosa.conf). The setup can write the configuration directly in this file, if it is writeable."); 
+    $R =    ( file_exists("/etc/gosa/gosa.conf") && is_writeable("/etc/gosa/gosa.conf")) // is there a config file ? 
+        ||  (!file_exists("/etc/gosa/gosa.conf") && is_writeable("/etc/gosa"));  // There is non, but can we create a file there ?
+    $M = FALSE;
     $this->is_writeable[] = array("NAME" => $N , "DESC" => $D , "RESULT" => $R , "SOLUTION" => $S , "MUST" => $M );
 
+    /* If we have writeaccess to the config dir, check if there is already a config file */
+    if($R){
+
+      /* check if there is already a config file. */
+      $N = _("No old configuration file.");
+      $D = "";//_("");
+      $S = _("If there is already a configuration file, this file will be overwritten when GOsa setup finishes. Please move your old config file away.");
+      $R =  !file_exists("/etc/gosa/gosa.conf");
+      $M = FALSE;
+      $this->is_writeable[] = array("NAME" => $N , "DESC" => $D , "RESULT" => $R , "SOLUTION" => $S , "MUST" => $M );
+    }
   }
-  
+ 
+
+  function save_object()
+  {
+     /* If everything is fine, set this step to completed
+     *  and allow switching to next setup step
+     */
+    $failed = false;
+    foreach(array("basic_checks","config_checks","is_writeable") as $type){
+      foreach($this->$type as $obj){
+
+        if($obj['MUST'] && !$obj['RESULT']){
+          $failed = true;
+          break;
+        }
+      }
+    }
+    $this->is_completed = !$failed;
+  }
+ 
 
   /* Check if current PHP version is compatible 
       with the current version of GOsa */

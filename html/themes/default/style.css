@@ -939,12 +939,16 @@ div.navigation_info {
 
 
 
-/*****TEST*****/
+/*
+	Setup step 2 styles 
+*/
 
+/* used to hide display info div */
 div.solution_hidden {
 	display: none;
 }
 
+/* used to hide display info div */
 div.solution_visible {
 	display: block;
 	background-color: orange;
@@ -952,4 +956,67 @@ div.solution_visible {
 	border: dotted 2px red;
 	width: 296px;
 	text-align:left;
+}
+
+/* Container headline */
+h2.step2_container_title {
+	background-color:#DDDDDD;
+	border: solid 1px #CCCCCC;
+}
+
+/* Container for name and status */
+div.step2_entry_container { 
+	width:300px; 
+	cursor:default;
+}
+
+/* Container for name and status, when status is failed */
+div.step2_entry_container_info { 
+	width:300px;
+	background: #DDDDFF;
+	cursor:default;
+}
+
+/* Text shown for each entry */
+div.step2_entry_name {
+	float:left;
+    padding: 2px;
+    vertical-align: middle;
+}
+
+/* Status container */
+div.step2_entry_status {
+	float:none;
+	text-align:right;
+    padding: 2px;
+    vertical-align: middle;
+}
+
+/* Status failed */
+div.step2_failed {
+	color:red;
+}
+
+/* Status failed but not necessary for setup */
+div.step2_warning {
+	color:blue;
+}
+
+/* Status successful */
+div.step2_successful {
+	color:green;
+}
+
+/* Text used in info div. */
+div.step2_failed_text {
+	background-image: url('images/error.png'); 
+	background-repeat: no-repeat;     
+	padding-left: 35px;
+}
+
+/* Text used in info div. On warnings */
+div.step2_warning_text{
+	background-image: url('images/warning.png'); 
+	background-repeat: no-repeat;     
+	padding-left: 35px;
 }

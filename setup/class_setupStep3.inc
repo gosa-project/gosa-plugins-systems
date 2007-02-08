@@ -22,15 +22,33 @@
 
 class setup_step_3 extends setup_step
 {
+  var $license_found  = false;
+  var $License        = "";
 
   function setup_step_3()
   {
-
+    $this->s_title      = _("License");
+    $this->s_title_long = _("GNU / GPL-License");
+    $this->s_info       = _("GNU / GPL-License");
+      
+    if(!file_exists("../setup/license.txt")){
+      $this->License = "<font color='red'>License not found. Setup stops here.</font>";
+    }else{
+      $fp = fopen("../setup/license.txt","r");
+      $this->License = "";
+      while (!feof($fp)){
+        $this->License .= fread($fp, 255);
+      }
+      $this->license_found = true;
+    }
   }
-  
+ 
   function execute()
   {
-    return("plug1");
+    $smarty = get_smarty();
+    $smarty -> assign("License",$this->License);
+    $smarty -> assign("license_found",$this->license_found);
+    return($smarty -> fetch (get_template_path("../setup/setup_step3.tpl")));
   }
 
 }

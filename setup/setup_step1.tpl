@@ -12,6 +12,6 @@
 		</select>
 	</div>
 	<div class='default' style='float:left;'>
-		<input type='submit' name='next' value='{t}Next{/t}'>
+<!--		<input type='submit' name='next' value='{t}Next{/t}'>-->
 	</div>
 </div>
