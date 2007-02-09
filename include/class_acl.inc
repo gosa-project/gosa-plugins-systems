@@ -154,8 +154,8 @@ class acl extends plugin
                              "one" => _("One level"),
                              "base" => _("Current object"),
                              "sub" => _("Complete subtree"),
-                             "psub" => _("Complete subtree (permanent)"));
-                             //"role" => _("Use ACL defined in role"));
+                             "psub" => _("Complete subtree (permanent)"),
+                             "role" => _("Use ACL defined in role"));
     } else {
       $this->aclTypes= array("base" => _("Current object"),
           "role" => _("Use ACL defined in role"));
@@ -451,6 +451,11 @@ class acl extends plugin
       if ($this->aclType == 'base'){
         $smarty->assign('aclSelector', $this->buildAclSelector($this->myAclObjects));
       }
+
+      /* Role selector if scope is base */
+      if ($this->aclType == 'role'){
+        $smarty->assign('roleSelector', "Role selector");#, $this->buildRoleSelector($this->myAclObjects));
+      }
     }
 
     if ($this->dialogState == 'edit'){
@@ -466,7 +471,13 @@ class acl extends plugin
       if ($this->aclObject == 'all'){
         $aclObjects['all']= _("All objects in current subtree");
       }
-      $smarty->assign('aclSelector', $this->buildAclSelector($aclObjects));
+
+      /* Role selector if scope is base */
+      if ($this->aclType == 'role'){
+        $smarty->assign('roleSelector', "Role selector");#, $this->buildRoleSelector($this->myAclObjects));
+      } else {
+        $smarty->assign('aclSelector', $this->buildAclSelector($aclObjects));
+      }
     }
 
     /* Show main page */
@@ -712,7 +723,7 @@ class acl extends plugin
         break;
       
       case 'role':
-        echo "Role";
+        echo "Role: $acl";
         break;
 
       case 'reset':

@@ -64,6 +64,12 @@
 {$aclSelector}
 {/if}
 
+{if $aclType eq 'role'}
+<p class="seperator">&nbsp;</p>
+<h1>{t}Available roles{/t}</h1>
+{$roleSelector}
+{/if}
+
 <p class="seperator">&nbsp;</p>
 <div style='text-align:right;margin-top:5px'>
 	<input type="submit" name="submit_new_acl" value="{t}Apply{/t}">

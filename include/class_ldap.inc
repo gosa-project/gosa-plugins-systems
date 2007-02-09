@@ -1233,6 +1233,25 @@ class LDAP{
       }
     }
   }
+
+  function get_naming_contexts($server, $admin= "", $password= "")
+  {
+    /* Build LDAP connection */
+    $ds= ldap_connect ($server);
+    if (!$ds) {
+      die ("Can't bind to LDAP. No check possible!");
+    }
+    ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3);
+    $r= ldap_bind ($ds, $admin, $password);
+
+    /* Get base to look for naming contexts */
+    $sr  = @ldap_read ($ds, "", "objectClass=*", array("namingContexts"));
+    $attr= @ldap_get_entries($ds,$sr);
+    
+    return ($attr[0]['namingcontexts']);
+  }
+
+
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

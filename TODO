@@ -4,18 +4,18 @@ Target for 2.6:
 * Move from gosa.conf-trunk to gosa.conf when we're ready
 
 * ACL
-  - Acl roles should be selectable in acl dialog.
+  - Acl roles should be selectable in acl dialog
   - Role checks are missing
-  - Copy & Paste tmplates for acl roles.
+  - Copy & Paste tmplates for acl roles
   - Check Title strings 
   - Check role and acl remove
-  - Check Base select dialog within roles.
+  - Check Base select dialog within roles
   - Implement a kind of "umask"
-  - Ensure that acls will be the same after renaming and moving objects.
+  - Ensure that acls will be the same after renaming and moving objects
   
-* Create a Bugtracker 
-
 * Redo the setup
+
+* Create a bug submitter
 
 * Make plugin loader react on predefined info values from plugins itself instead of
   gosa.conf
@@ -39,13 +39,17 @@ Target for 2.6:
 
 * Evaluate patches for certificate generation
 
-* Bug submitter
+
+Target for 3.0:
+===============
 
 * Complete PHP5 compliance and optimization
 
 * Simplify plugins by providing a schema parser
 
 * Replace PHP IMAP module by self made module
+
+* Make IMAP namespace configurable
 
 * Add possibility to add referrals in department dialog
 
@@ -70,5 +74,4 @@ Target for 2.6:
 * Automatic passwords?
   Generate a password for a newly created user and display it.
 
-* Make IMAP namespace configurable
 
