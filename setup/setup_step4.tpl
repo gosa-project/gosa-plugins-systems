@@ -1,6 +1,16 @@
 <h2>{t}ldap connection{/t}</h2>
 	<div class='step4_container'>
 		<div class='step4_name'>
+			{t}Location description{/t}
+		</div>
+		<div class='step4_value'>
+			<input type='text' name='location' maxlength='80' size='25' value='{$location}'>
+		</div>
+		<div class='step4_status'>
+		</div>
+	</div>
+	<div class='step4_container'>
+		<div class='step4_name'>
 			<div style='vertical-align:middle;height:100%;'>{t}Connection url{/t}</div>
 		</div>
 		<div class='step4_value'>
@@ -13,19 +23,6 @@
 			<input type='submit' name='next' value='{t}Next{/t}'>
 		</div>
 		<div>
-		</div>
-	</div>
-
-{if $connection_established}
-
-	<div class='step4_container'>
-		<div class='step4_name'>
-			{t}Location description{/t}
-		</div>
-		<div class='step4_value'>
-			<input type='text' name='location' maxlength='80' size='25' value='{$location}'>
-		</div>
-		<div class='step4_status'>
 		</div>
 	</div>
 
@@ -52,7 +49,6 @@
 			asd
 		</div>
 	</div>
-		
 	<div class='step4_container'>
 		<div class='step4_name'> 
 			{t}Base{/t}
@@ -61,9 +57,13 @@
 			<input type='text' name='base' maxlength='80' size='40' value='{$base}'>
 		</div>
 		<div class='step4_status'>
-			asd
+			<input type='submit' name='get_base' value="{t}Get base{/t}">
 		</div>
 	</div>
+		
+
+{if $connection_established}
+
 		
 	<div class='step4_container'>
 		<div class='step4_name'> 

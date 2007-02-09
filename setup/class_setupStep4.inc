@@ -38,7 +38,8 @@ class setup_step_4 extends setup_step
   var $crypt_methods  = array();
   var $mail_methods   = array();
 
-  var $connect_id =FALSE;
+  var $connect_id = FALSE;
+  var $bind_id    = FALSE;
 
   var $attributes = array("connection","location","admin","password","base","peopleou","peopledn","groupou",
                           "uidbase","encryption","mail","errors");
@@ -62,7 +63,6 @@ class setup_step_4 extends setup_step
     }
 
     $smarty->assign("connection_established",$this->is_connection_established());
-
 
     $smarty->assign("peopledns",array("uid","cn"));
     $smarty->assign("crypt_methods",$this->crypt_methods);
@@ -99,14 +99,30 @@ class setup_step_4 extends setup_step
   /* Check if specified server is reachable */
   function is_connection_established()
   {
-   if(!$this->connect_id= @ldap_connect(validate($this->connection))){
-      echo "false";
-      return FALSE;
-    }else{
-      echo "true";
-      return TRUE;
-    }
+
+    @ldap_set_option(NULL, LDAP_OPT_DEBUG_LEVEL, 7);
+    $cid = @ldap_connect($this->connection);
+      
+    $ds = @ldap_bind($cid, $this->admin, $this->password);
+    @ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3);
   }
+
+  
+  function try_to_get_base_automatically()
+  {
+
+    @ldap_set_option(NULL, LDAP_OPT_DEBUG_LEVEL, 7);
+    $cid = @ldap_connect($this->connection);
+
+    $ds = @ldap_bind($cid);
+    @ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3);
+
+    $sr=   ldap_search ($ds, NULL, "objectClass=*", array("namingContexts"));
+    $attr= ldap_get_entries($cid,$sr); 
+    echo ldap_error($cid);
+    print_a($attr);
+  }
+
 
   function save_object()
   {
@@ -114,6 +130,11 @@ class setup_step_4 extends setup_step
       if(isset($_POST[$attr])){
         $this->$attr = $_POST[$attr];
       }
+    }
+
+    /* Get base automatically */
+    if(isset($_POST['get_base'])){
+      $this->try_to_get_base_automatically();
     }
   }
 }
