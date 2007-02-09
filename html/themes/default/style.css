@@ -1029,7 +1029,7 @@ div.step2_warning_text{
 	Setup step 4 styles 
 */
 
-div.step4_name {
+li.step4_name, div.step4_name {
     vertical-align: middle;
 	float:left;
 	overflow: hidden;
@@ -1037,7 +1037,7 @@ div.step4_name {
 	height:2.0em;
 }
 
-div.step4_value {
+li.step4_value, div.step4_value {
 	float:left;
 	width:200px;
 	overflow: hidden;
@@ -1045,16 +1045,18 @@ div.step4_value {
 	height:2.0em;
 }
 
-div.step4_status {
+li.step4_status, div.step4_status {
 	text-align:right;
     vertical-align: middle;
 	overflow: hidden;
 	height:2.0em;
+	text-decoration: none;
 }
 
 
-div.step4_container {
+ul.step4_container, div.step4_container {
 	border: solid 1px #CCC;
 	width:500px;
 	height:2.0em;
+	float:left;
 }

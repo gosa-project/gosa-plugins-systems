@@ -30,13 +30,15 @@ class setup_step_4 extends setup_step
   var $peopleou   = "ou=people,";
   var $peopledn   = "cn";
   var $groupou    = "ou=groups,";
-  var $uidbase    =  1000;
+  var $uidbase    = 1000;
   var $encryption = "crypt";
   var $mail       = "kolab";
   var $errors     = TRUE;
 
   var $crypt_methods  = array();
   var $mail_methods   = array();
+
+  var $connect_id =FALSE;
 
   var $attributes = array("connection","location","admin","password","base","peopleou","peopledn","groupou",
                           "uidbase","encryption","mail","errors");
@@ -46,9 +48,8 @@ class setup_step_4 extends setup_step
     $this->s_title      = _("Ldap settings");
     $this->s_title_long = _("Ldap connection setup");
     $this->s_info       = _("This dialog allows the basic configuration of GOsa's behaviour and properties in your main configuration.");
-    $tmp   = @passwordMethod::get_available_methods_if_not_loaded();
+    $tmp = @passwordMethod::get_available_methods_if_not_loaded();
     $this->crypt_methods   = $tmp['name'];
-
     $tmp = $this->get_available_mail_classes();
     $this->mail_methods = $tmp['name'];
   }
@@ -56,10 +57,12 @@ class setup_step_4 extends setup_step
   function execute()
   {
     $smarty = get_smarty();
-  
     foreach($this->attributes as $attr){
       $smarty->assign($attr,$this->$attr);
     }
+
+    $smarty->assign("connection_established",$this->is_connection_established());
+
 
     $smarty->assign("peopledns",array("uid","cn"));
     $smarty->assign("crypt_methods",$this->crypt_methods);
@@ -91,6 +94,27 @@ class setup_step_4 extends setup_step
       }
     }
     return($methods); 
+  }
+
+  /* Check if specified server is reachable */
+  function is_connection_established()
+  {
+   if(!$this->connect_id= @ldap_connect(validate($this->connection))){
+      echo "false";
+      return FALSE;
+    }else{
+      echo "true";
+      return TRUE;
+    }
+  }
+
+  function save_object()
+  {
+    foreach($this->attributes as $attr){
+      if(isset($_POST[$attr])){
+        $this->$attr = $_POST[$attr];
+      }
+    }
   }
 }
 

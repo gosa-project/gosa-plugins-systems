@@ -7,9 +7,16 @@
 			<input type='text' name='connection' maxlength='80' size='25' value='{$connection}'>
 		</div>
 		<div class='step4_status'>
-			sad
+			{if !$connection_established}
+				{t}Connection failed{/t}	
+			{/if}
+			<input type='submit' name='next' value='{t}Next{/t}'>
+		</div>
+		<div>
 		</div>
 	</div>
+
+{if $connection_established}
 
 	<div class='step4_container'>
 		<div class='step4_name'>
@@ -19,7 +26,6 @@
 			<input type='text' name='location' maxlength='80' size='25' value='{$location}'>
 		</div>
 		<div class='step4_status'>
-			asd
 		</div>
 	</div>
 
@@ -152,6 +158,7 @@
 			asd
 		</div>
 	</div>
+{/if}
 <!--
 		 {t}GOsa supports several encryption types for your passwords. Normally this is adjustable via user templates, but you can specify a default method to be used here, too.{/t}
 		 {t}GOsa always acts as admin and manages access rights internally. This is a workaround till OpenLDAP's in directory ACI's are fully implemented. For this to work, we need the admin DN and the corresponding password.{/t}
