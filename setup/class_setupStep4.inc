@@ -41,6 +41,9 @@ class setup_step_4 extends setup_step
   var $connect_id = FALSE;
   var $bind_id    = FALSE;
 
+  var $resolve_filter = "*";
+  var $resolve_user   = FALSE;
+
   var $attributes = array("connection","location","admin","password","base","peopleou","peopledn","groupou",
                           "uidbase","encryption","mail","errors");
 
@@ -75,8 +78,15 @@ class setup_step_4 extends setup_step
     /* Assign connection status */
     $smarty->assign("connection_status",$this->get_connection_status());
 
+    /* Addign resolved users */
+    $smarty->assign("resolve_user",$this->resolve_user);
+    if($this->resolve_user){
+      $tmp = $this->resolve_user();
+      $smarty->assign("resolved_users",$tmp);
+      $smarty->assign("resolved_users_count",count($tmp));
+      $smarty->assign("resolve_filter",$this->resolve_filter);
+    }
     return($smarty -> fetch (get_template_path("../setup/setup_step4.tpl")));
-
   }
 
   /* Returns the classnames auf the mail classes */
@@ -105,16 +115,16 @@ class setup_step_4 extends setup_step
 
   function get_connection_status()
   {
-
-    
+    $this->connect_id = FALSE;
+    $this->bind_id    = FALSE;
 
     @ldap_set_option(NULL, LDAP_OPT_DEBUG_LEVEL, 7);
-    $cid = @ldap_connect($this->connection);
+    $this->connect_id = @ldap_connect($this->connection);
       
-    @ldap_set_option($cid, LDAP_OPT_PROTOCOL_VERSION, 3);
-    $ds = @ldap_bind($cid, $this->admin, $this->password);
+    @ldap_set_option($this->connect_id, LDAP_OPT_PROTOCOL_VERSION, 3);
+    $this->bind_id = @ldap_bind($this->connect_id, $this->admin, $this->password);
     
-    if(!$ds){
+    if(!$this->bind_id){
       $str = sprintf(_("Anonymous bind failed on server '%s'."),$this->connection); 
       if(!empty($this->admin)){
         $str = sprintf(_("Bind as user '%s' failed on server '%s'."),$this->admin,$this->connection);
@@ -129,14 +139,45 @@ class setup_step_4 extends setup_step
         return("<font color='green'>".$str."</font>");
       }      
     }
-
   }
+
+  
+  function resolve_user()
+  {
+    $filter  = $this->resolve_filter;
+    $ldap = new LDAP("","",$this->connection);
+    $ldap->cd($this->base);
+    $ldap->search("(&(objectClass=person)(|(uid=".$filter.")(cn=".$filter.")))");
+    $tmp = array();
+    while($attrs = $ldap->fetch()){
+      $tmp[$attrs['dn']]=$attrs['dn'];
+      natcasesort($tmp);
+    }
+    return($tmp);
+  }   
+
 
   function save_object()
   {
     foreach($this->attributes as $attr){
       if(isset($_POST[$attr])){
         $this->$attr = $_POST[$attr];
+      }
+    }
+
+    if(isset($_POST['resolve_user'])){
+      $this->resolve_user = !$this->resolve_user;
+    }
+    
+    if(isset($_POST['resolve_filter'])){
+      $this->resolve_filter = $_POST['resolve_filter'];
+    }
+
+    if(isset($_POST['use_selected_user'])){
+
+      if(isset($_POST['admin_to_use'])){
+        $this->admin = $_POST['admin_to_use'];
+        $this->resolve_user = false;
       }
     }
   }

@@ -1046,7 +1046,7 @@ li.step4_value, div.step4_value {
 }
 
 li.step4_status, div.step4_status {
-	text-align:right;
+	text-align:center;
     vertical-align: middle;
 	overflow: hidden;
 	height:2.0em;

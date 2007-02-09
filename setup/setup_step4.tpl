@@ -18,7 +18,7 @@
 			<input type='text' name='connection' maxlength='80' size='25' value='{$connection}' style='width:100%;'>
 		</div>
 		<div class='step4_status'>
-			<input type='submit' value='{t}Try connect{/t}'>
+			<input type='submit' value='{t}Try connect{/t}' style='width:90%;'>
 		</div>
 	</div>
 	<div style='float:left; width:680px;padding-bottom:10px;'>
@@ -51,11 +51,30 @@
 			{t}Admin DN{/t}
 		</div>
 		<div class='step4_value'>
-			<input type='text' name='admin' maxlength='80' size='40' value='{$admin}' style='width:100%;'>
+			
+			<input type='text' name='admin' maxlength='160' size='40' value='{$admin}' style='width:100%;'>
 		</div>
 		<div class='step4_status'>
+			<input type='submit' name='resolve_user' value='{t}Select user{/t}' style='width:90%;' >
 		</div>
 	</div>
+
+	{if $resolve_user}
+	<div style='float:left; width:680px;padding-bottom:10px;border: solid 1px #CCC;'>
+        <div class='step4_name' style='background-color:#DDD'>
+			<input type='text' value='{$resolve_filter}' name='resolve_filter'>
+        </div>
+		<div class='step4_value' style='background-color:#CCC'>
+			<input type='submit' value='{t}Search{/t}' name='resolve_search'>
+        </div>
+		<div class='step4_status'>
+			<input type='submit' value='{t}Use selected user{/t}' name='use_selected_user' style='width:90%;'>
+		</div>
+		<select name='admin_to_use' size=6 style="width:680px;background-color:#DDD;">				
+			{html_options options=$resolved_users selected=$admin}
+		</select>
+	</div>		
+	{/if}
 
 	<div class='step4_container'>
 		<div class='step4_name'>
