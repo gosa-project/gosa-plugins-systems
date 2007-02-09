@@ -18,31 +18,23 @@
 			<input type='text' name='connection' maxlength='80' size='25' value='{$connection}' style='width:100%;'>
 		</div>
 		<div class='step4_status'>
-			<input type='submit' value='{t}Try connect{/t}' style='width:90%;'>
+			<input type='submit' value='{t}Test{/t}' style='width:90%;'>
 		</div>
 	</div>
-	<div style='float:left; width:680px;padding-bottom:10px;'>
-		{t}Status{/t}: {$connection_status}
-	</div>
-	<br>
 	<div class='step4_container'>
 		<div class='step4_name'> 
 			{t}Base{/t}
 		</div>
 		<div class='step4_value'>
-
 			{if $namingContextsCount >= 1}
-
 				<select name='base' style='width:100%;'>		
 					{html_options values=$namingContexts output=$namingContexts selected=$base}
 				</select>
 			{else}
 				<input type='text' name='base' maxlength='80' size='40' value='{$base}' style='width:100%;'>
 			{/if}
-
 		</div>
 		<div class='step4_status'>
-		
 		</div>
 	</div>
 
@@ -51,11 +43,14 @@
 			{t}Admin DN{/t}
 		</div>
 		<div class='step4_value'>
-			
 			<input type='text' name='admin' maxlength='160' size='40' value='{$admin}' style='width:100%;'>
 		</div>
 		<div class='step4_status'>
-			<input type='submit' name='resolve_user' value='{t}Select user{/t}' style='width:90%;' >
+			{if $resolve_user}
+				<input type='submit' name='resolve_user' value='{t}Cancel{/t}' style='width:90%;' >
+			{else}
+				<input type='submit' name='resolve_user' value='{t}Select user{/t}' style='width:90%;' >
+			{/if}
 		</div>
 	</div>
 
@@ -86,7 +81,19 @@
 		<div class='step4_status'>
 		</div>
 	</div>
-		
+	<div class='step4_container'>
+		<div class='step4_name'>
+		</div>
+		<div class='step4_value'>
+		</div>
+		<div class='step4_status'>
+			<input type='submit' value='{t}Try connect{/t}' style='width:90%;'>
+		</div>
+	</div>
+	<div style='float:left; width:680px;padding-bottom:10px;'>
+		{t}Status{/t}: {$connection_status}
+	</div>
+	<br>
 
 {if 1== 0}
 
