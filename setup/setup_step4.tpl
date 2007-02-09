@@ -34,7 +34,7 @@
 			{if $namingContextsCount >= 1}
 
 				<select name='base' style='width:100%;'>		
-					{html_options values=$namingContexts output=$namingContexts}
+					{html_options values=$namingContexts output=$namingContexts selected=$base}
 				</select>
 			{else}
 				<input type='text' name='base' maxlength='80' size='40' value='{$base}' style='width:100%;'>

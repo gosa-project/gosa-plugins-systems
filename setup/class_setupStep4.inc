@@ -111,8 +111,8 @@ class setup_step_4 extends setup_step
     @ldap_set_option(NULL, LDAP_OPT_DEBUG_LEVEL, 7);
     $cid = @ldap_connect($this->connection);
       
+    @ldap_set_option($cid, LDAP_OPT_PROTOCOL_VERSION, 3);
     $ds = @ldap_bind($cid, $this->admin, $this->password);
-    @ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3);
     
     if(!$ds){
       $str = sprintf(_("Anonymous bind failed on server '%s'."),$this->connection); 
