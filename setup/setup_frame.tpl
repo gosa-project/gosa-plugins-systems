@@ -2,6 +2,7 @@
 <center>
 {$php_errors}
 <form action='setup.php' name='mainform' method='post' enctype='multipart/form-data'>
+<input id='focus' name='focus' type='image' src='images/empty.png' style='width:1px; height:1px;' >
 <div class='setup_dialog'>
 	<div class='setup_header'>
 		{t}GOsa - GOnicus System Administrator Setup{/t}
@@ -32,6 +33,11 @@
 		</div>
 	</div>
 </div>
-</body>
+</form>
 </center>
+
+<script type='javascript'>
+	document.getElementById('focus').focus();
+</script>
+</body>
 </html>
