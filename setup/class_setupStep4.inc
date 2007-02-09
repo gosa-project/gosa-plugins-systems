@@ -62,11 +62,18 @@ class setup_step_4 extends setup_step
       $smarty->assign($attr,$this->$attr);
     }
 
-    $smarty->assign("connection_established",$this->is_connection_established());
-
     $smarty->assign("peopledns",array("uid","cn"));
     $smarty->assign("crypt_methods",$this->crypt_methods);
     $smarty->assign("mail_methods",$this->mail_methods);
+
+     
+    $attr = @LDAP::get_naming_contexts($this->connection);
+    unset($attr['count']);
+    $smarty->assign("namingContexts",$attr);
+    $smarty->assign("namingContextsCount",count($attr));
+
+    /* Assign connection status */
+    $smarty->assign("connection_status",$this->get_connection_status());
 
     return($smarty -> fetch (get_template_path("../setup/setup_step4.tpl")));
 
@@ -96,33 +103,34 @@ class setup_step_4 extends setup_step
     return($methods); 
   }
 
-  /* Check if specified server is reachable */
-  function is_connection_established()
+  function get_connection_status()
   {
+
+    
 
     @ldap_set_option(NULL, LDAP_OPT_DEBUG_LEVEL, 7);
     $cid = @ldap_connect($this->connection);
       
     $ds = @ldap_bind($cid, $this->admin, $this->password);
     @ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3);
+    
+    if(!$ds){
+      $str = sprintf(_("Anonymous bind failed on server '%s'."),$this->connection); 
+      if(!empty($this->admin)){
+        $str = sprintf(_("Bind as user '%s' failed on server '%s'."),$this->admin,$this->connection);
+      }      
+      return("<font color='red'>".$str."</font>");
+    }else{
+      if(empty($this->admin)){
+        $str = sprintf(_("Anonymous bind successful on server '%s'. Please specify user and password."),$this->connection); 
+        return("<font color='blue'>".$str."</font>");
+      }else{
+        $str = sprintf(_("Bind as user '%s' successful on server '%s'."),$this->admin,$this->connection);
+        return("<font color='green'>".$str."</font>");
+      }      
+    }
+
   }
-
-  
-  function try_to_get_base_automatically()
-  {
-
-    @ldap_set_option(NULL, LDAP_OPT_DEBUG_LEVEL, 7);
-    $cid = @ldap_connect($this->connection);
-
-    $ds = @ldap_bind($cid);
-    @ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3);
-
-    $sr=   ldap_search ($ds, NULL, "objectClass=*", array("namingContexts"));
-    $attr= ldap_get_entries($cid,$sr); 
-    echo ldap_error($cid);
-    print_a($attr);
-  }
-
 
   function save_object()
   {
@@ -130,11 +138,6 @@ class setup_step_4 extends setup_step
       if(isset($_POST[$attr])){
         $this->$attr = $_POST[$attr];
       }
-    }
-
-    /* Get base automatically */
-    if(isset($_POST['get_base'])){
-      $this->try_to_get_base_automatically();
     }
   }
 }

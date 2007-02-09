@@ -4,9 +4,10 @@
 			{t}Location description{/t}
 		</div>
 		<div class='step4_value'>
-			<input type='text' name='location' maxlength='80' size='25' value='{$location}'>
+			<input type='text' name='location' maxlength='80' size='25' value='{$location}' style='width:100%;'>
 		</div>
 		<div class='step4_status'>
+			
 		</div>
 	</div>
 	<div class='step4_container'>
@@ -14,15 +15,34 @@
 			<div style='vertical-align:middle;height:100%;'>{t}Connection url{/t}</div>
 		</div>
 		<div class='step4_value'>
-			<input type='text' name='connection' maxlength='80' size='25' value='{$connection}'>
+			<input type='text' name='connection' maxlength='80' size='25' value='{$connection}' style='width:100%;'>
 		</div>
 		<div class='step4_status'>
-			{if !$connection_established}
-				{t}Connection failed{/t}	
-			{/if}
-			<input type='submit' name='next' value='{t}Next{/t}'>
+			<input type='submit' value='{t}Try connect{/t}'>
 		</div>
-		<div>
+	</div>
+	<div style='float:left; width:680px;padding-bottom:10px;'>
+		{t}Status{/t}: {$connection_status}
+	</div>
+	<br>
+	<div class='step4_container'>
+		<div class='step4_name'> 
+			{t}Base{/t}
+		</div>
+		<div class='step4_value'>
+
+			{if $namingContextsCount >= 1}
+
+				<select name='base' style='width:100%;'>		
+					{html_options values=$namingContexts output=$namingContexts}
+				</select>
+			{else}
+				<input type='text' name='base' maxlength='80' size='40' value='{$base}' style='width:100%;'>
+			{/if}
+
+		</div>
+		<div class='step4_status'>
+		
 		</div>
 	</div>
 
@@ -31,10 +51,9 @@
 			{t}Admin DN{/t}
 		</div>
 		<div class='step4_value'>
-			<input type='text' name='admin' maxlength='80' size='40' value='{$admin}'>
+			<input type='text' name='admin' maxlength='80' size='40' value='{$admin}' style='width:100%;'>
 		</div>
 		<div class='step4_status'>
-			asd
 		</div>
 	</div>
 
@@ -43,26 +62,14 @@
 			{t}Admin password{/t}
 		</div>
 		<div class='step4_value'>
-			<input type='password' name='password' maxlength='20' size='20' value='{$password}'>
+			<input type='password' name='password' maxlength='20' size='20' value='{$password}' style='width:100%;'>
 		</div>
 		<div class='step4_status'>
-			asd
-		</div>
-	</div>
-	<div class='step4_container'>
-		<div class='step4_name'> 
-			{t}Base{/t}
-		</div>
-		<div class='step4_value'>
-			<input type='text' name='base' maxlength='80' size='40' value='{$base}'>
-		</div>
-		<div class='step4_status'>
-			<input type='submit' name='get_base' value="{t}Get base{/t}">
 		</div>
 	</div>
 		
 
-{if $connection_established}
+{if 1== 0}
 
 		
 	<div class='step4_container'>
