@@ -35,10 +35,10 @@ class setup_step_6 extends setup_step
                                   "wws_ou"        => "ou=winstations",
                                   "wws_ou_active" => FALSE,
                                   "snapshot_active"=> FALSE,
-                                  "snapshot_base" => "ou=snapshots,dc=server,dc=de",
-                                  "snapshot_user" => "cn=ldapadmin,dc=server,dc=de",
+                                  "snapshot_base" => "ou=snapshots,%base%",
+                                  "snapshot_user" => "cn=ldapadmin,%base%",
                                   "snapshot_password" => "",
-                                  "snapshot_server"   => "ldap://localhost:386");
+                                  "snapshot_server"   => "%connection%");
 
   var $samba_settings    = array( "samba_sid"        => "0-815-4711",
                                   "samba_sid_active" => FALSE,
@@ -56,6 +56,17 @@ class setup_step_6 extends setup_step
   
   function execute()
   {
+    /* Update snapshot values, with already collected values */
+    foreach($this->generic_settings as $key => $value){
+      foreach(array("snapshot_base","snapshot_user","snapshot_server") as $attr){
+        foreach($this->parent->captured_values as $replace_name => $replace_value){
+          if(is_string($replace_value))  {
+            $this->generic_settings[$attr] = preg_replace("/%".$replace_name."%/",$replace_value,$this->generic_settings[$attr]);
+          }
+        }
+      }
+    }
+
     $smarty = get_smarty();
     $smarty->assign("generic_settings",$this->generic_settings);
     $smarty->assign("samba_settings",$this->samba_settings);
@@ -124,6 +135,17 @@ class setup_step_6 extends setup_step
 
     }
   }
+
+   /* Attributes that are interesting for configuration generation */
+  function get_attributes()
+  {
+    $tmp = setup_step::get_attributes();
+    foreach(array("samba_settings","generic_settings") as $attr){
+      $tmp[$attr]= $this->$attr;
+    }
+    return($tmp);
+  }
+
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

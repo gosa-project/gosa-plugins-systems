@@ -22,9 +22,9 @@
 
 class setup_step_1 extends setup_step
 {
-  var $attributes = array("lang");
   var $lang       = "en_EN";
   var $languages  = array();
+  var $attributes = array("lang");
 
   function setup_step_1()
   {

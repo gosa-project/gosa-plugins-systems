@@ -20,7 +20,7 @@
 
 require_once("class_setupStep.inc");
 
-class setup extends plugin
+class setup 
 {
 
   var $i_steps  = 7;  // Number of setup steps 
@@ -41,6 +41,7 @@ class setup extends plugin
         $this->o_steps[$i] = new setup_step();
         trigger_error("Try to create class '".$class."' but it is not available, possibly you have forgotten to add the include in setup.php");
       }
+      $this->o_steps[$i]->parent = $this;
     }
   }
 
@@ -64,6 +65,11 @@ class setup extends plugin
     $tmp = $this->o_steps[$this->i_current]->get_attributes();
     foreach($tmp as $name => $value){
       $this->captured_values[$name] = $value;
+    }
+
+    /* Set parent */
+    foreach($this->o_steps as $key => $value){
+      $this->o_steps[$key]->parent = $this;
     }
 
     /* Check if image button requests next page */

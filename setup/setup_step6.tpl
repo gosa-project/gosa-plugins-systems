@@ -60,7 +60,7 @@
     </div>
     <div style='float:left; width:600px;'>
 		<br>
-		<b>{t}Additional GOsa setttings{/t}</b>
+		<b>{t}Additional GOsa settings{/t}</b>
 	</div>
 	
     <div class='step4_container'>

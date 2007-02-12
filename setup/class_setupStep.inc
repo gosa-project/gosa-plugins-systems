@@ -30,10 +30,11 @@ class setup_step
   var $is_completed = false;
 
   var $attributes   = array();
+  var $parent       = NULL;
 
   function setup_step()
   {
-   }
+  }
 
   function save_object()
   {

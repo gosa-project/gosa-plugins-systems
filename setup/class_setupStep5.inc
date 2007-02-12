@@ -185,6 +185,17 @@ class setup_step_5 extends setup_step
       $this->is_completed = FALSE;
     }
   }// if tempalte posted 
+
+
+  /* Attributes that are interesting for configuration generation */
+  function get_attributes()
+  {
+    $tmp = setup_step::get_attributes();
+    foreach(array("pwd_rules","mail_settings") as $attr){
+      $tmp[$attr]= $this->$attr;
+    }
+    return($tmp);
+  }
 }// CLass
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
