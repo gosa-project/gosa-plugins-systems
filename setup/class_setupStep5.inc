@@ -23,17 +23,169 @@
 class setup_step_5 extends setup_step
 {
 
+  var $peopleou   = "ou=people";
+  var $groupou    =  "ou=groups";
+  var $peopledn   = "cn";
+  var $uidbase    = 1000;
+  var $encryption = "crypt";
+  var $mail       = "none";
+  var $theme      = "default"; 
+  var $errorlvl   = TRUE;
+  var $cyrusunixstyle = FALSE;
+
+  var $pwd_rules  = array("pwminlen" => 6, 
+                          "pwminlen_active" => FALSE,
+                          "pwdiffer" => 5,
+                          "pwdiffer_active" => FALSE,
+                          "externalpwdhook" => "/usr/bin/sudo myscript",
+                          "externalpwdhook_active" => FALSE);
+
+  var $mail_settings = array("vacationdir"        => "/etc/gosa/vacation",
+                             "vacationdir_active" => FALSE);
+ 
+  var $crypt_methods  = array();
+  var $mail_methods   = array();
+
+
+  var $attributes = array("peopleou","groupou","peopledn","uidbase","encryption","mail","theme","errorlvl","cyrusunixstyle");
+
   function setup_step_5()
   {
+    $this->s_title      = _("GOsa settings 1/2");
+    $this->s_title_long = _("GOsa generic settings, page 1/2");
+    $this->s_info       = _("This dialog allows you to setup GOsa behaviour");
 
+    $tmp = @passwordMethod::get_available_methods_if_not_loaded();
+    foreach($tmp['name'] as $name){
+      $this->crypt_methods[$name] = $name;
+    }
+    $tmp = $this->get_available_mail_classes();
+    foreach($tmp['name'] as $name){
+      $this->mail_methods[$name] = $name;
+    }
   }
+
   
   function execute()
   {
-    return("plug1");
+    $smarty = get_smarty();
+    $smarty->assign("peopledns",array("uid","cn"));
+    $smarty->assign("crypt_methods",$this->crypt_methods);
+    $smarty->assign("mail_methods",$this->mail_methods);
+    $smarty->assign("themes",$this->get_themes());
+    $smarty->assign("pwd_rules",$this->pwd_rules);
+    $smarty->assign("mail_settings",$this->mail_settings);
+    $smarty->assign("bool",array(FALSE => _("No"), TRUE => _("Yes")));
+    $smarty->assign("warnings" ,$this->check());
+    $smarty->assign("warnings_cnt" ,count($this->check()));
+    foreach($this->attributes as $attr){
+      $smarty->assign($attr,$this->$attr);
+    }
+    return($smarty -> fetch (get_template_path("../setup/setup_step5.tpl")));
   }
 
-}
+
+  /* Returns the classnames auf the mail classes */
+  function get_available_mail_classes()
+  {
+    $dir = opendir( "../include");
+    $methods = array();
+    $suffix = "class_mail-methods-";
+    $lensuf = strlen($suffix);
+    $prefix = ".inc";
+    $lenpre = strlen($prefix);
+    $i = 0;
+    while (($file = readdir($dir)) !== false){
+
+      if(stristr($file,$suffix)) {
+        $lenfile = strlen($file);
+        $methods['name'][$i] = substr($file,$lensuf,($lenfile-$lensuf)-$lenpre);
+        $methods['file'][$i] = $file;
+        $methods[$i]['file'] = $file;
+        $methods[$i]['name'] = substr($file,$lensuf,($lenfile-$lensuf)-$lenpre);
+        $i++;
+      }
+    }
+    return($methods); 
+  }
+
+  function get_themes()
+  {
+    $dir = opendir( "../ihtml/themes/");
+    $themes = array();
+    while (($file = readdir($dir)) !== false){
+      if(is_dir("../ihtml/themes/".$file) && !preg_match("/^\./",$file)){
+        $themes[$file] = $file;
+      }      
+    }
+    return($themes);
+  }
+
+  function check()
+  {
+    $message = array();
+    if(!is_numeric($this->uidbase)){
+      $message[] = _("Uid base must be numeric");
+    }
+
+    if(($this->pwd_rules['pwminlen_active']) && !is_numeric($this->pwd_rules['pwminlen'])){
+      $message[] = _("The given password minimum length is not numeric.");
+    }
+    if(($this->pwd_rules['pwdiffer_active']) && !is_numeric($this->pwd_rules['pwdiffer'])){
+      $message[] = _("The given password differ value is not numeric.");
+    }
+    return($message);
+
+  }
+
+  function save_object()
+  {
+    if(isset($_POST['step5_posted'])){
+
+      /* Get attributes */
+      foreach($this->attributes as $attr){
+        if(isset($_POST[$attr])){
+          $this->$attr = validate($_POST[$attr]);
+        }
+      }
+
+      /* Get password settings */ 
+      if(isset($_POST['pwdiffer_active'])){
+        $this->pwd_rules['pwdiffer_active'] = TRUE;
+        if(isset($_POST['pwdiffer'])){
+          $this->pwd_rules['pwdiffer'] = $_POST['pwdiffer'];
+        }
+      }else{
+        $this->pwd_rules['pwdiffer_active'] = FALSE;
+      }
+      if(isset($_POST['pwminlen_active'])){
+        $this->pwd_rules['pwminlen_active'] = TRUE;
+        if(isset($_POST['pwminlen'])){
+          $this->pwd_rules['pwminlen'] = $_POST['pwminlen'];
+        }
+      }else{
+        $this->pwd_rules['pwminlen_active'] = FALSE;
+      }
+
+      /* Mail settings */
+      if(isset($_POST['vacationdir_active'])){
+        $this->mail_settings['vacationdir_active'] = TRUE;
+        if(isset($_POST['vacationdir'])){
+          $this->mail_settings['vacationdir'] = $_POST['vacationdir'];
+        }
+      }else{
+        $this->mail_settings['vacationdir_active'] = FALSE;
+      }
+    }
+
+    $tmp = $this->check(); 
+    if(count($tmp) == 0){
+      $this->is_completed = TRUE;
+    }else{
+      $this->is_completed = FALSE;
+    }
+  }// if tempalte posted 
+}// CLass
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

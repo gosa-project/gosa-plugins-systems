@@ -1033,7 +1033,7 @@ li.step4_name, div.step4_name {
     vertical-align: middle;
 	float:left;
 	overflow: hidden;
-	width:160px;
+	width:200px;
 	height:2.0em;
 }
 
@@ -1051,13 +1051,17 @@ li.step4_status, div.step4_status {
 	overflow: hidden;
 	height:2.0em;
 	text-decoration: none;
-	background-color: #BBBBBB;
+	background-color: #DDDDDD;
 }
 
 
 ul.step4_container, div.step4_container {
-	border: solid 1px #CCC;
+	background-color: #E7E7E7;
+	border: solid 2px #D7D7D7;
 	width:680px;
 	height:2.0em;
+	margin-top:2px;
+	margin-left:2px;
+	margin-right:2px;
 	float:left;
 }

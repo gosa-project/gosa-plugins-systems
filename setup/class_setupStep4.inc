@@ -27,35 +27,21 @@ class setup_step_4 extends setup_step
   var $admin      = "";
   var $password   = "";
   var $base       = "";
-  var $peopleou   = "ou=people,";
-  var $peopledn   = "cn";
-  var $groupou    = "ou=groups,";
-  var $uidbase    = 1000;
-  var $encryption = "crypt";
-  var $mail       = "kolab";
-  var $errors     = TRUE;
-
-  var $crypt_methods  = array();
-  var $mail_methods   = array();
 
   var $connect_id = FALSE;
   var $bind_id    = FALSE;
 
   var $resolve_filter = "*";
   var $resolve_user   = FALSE;
+  var $tls            = FALSE;
 
-  var $attributes = array("connection","location","admin","password","base","peopleou","peopledn","groupou",
-                          "uidbase","encryption","mail","errors");
+  var $attributes = array("connection","location","admin","password","base","tls");
 
   function setup_step_4()
   {
     $this->s_title      = _("Ldap settings");
     $this->s_title_long = _("Ldap connection setup");
     $this->s_info       = _("This dialog allows the basic configuration of GOsa's behaviour and properties in your main configuration.");
-    $tmp = @passwordMethod::get_available_methods_if_not_loaded();
-    $this->crypt_methods   = $tmp['name'];
-    $tmp = $this->get_available_mail_classes();
-    $this->mail_methods = $tmp['name'];
   }
   
   function execute()
@@ -65,18 +51,15 @@ class setup_step_4 extends setup_step
       $smarty->assign($attr,$this->$attr);
     }
 
-    $smarty->assign("peopledns",array("uid","cn"));
-    $smarty->assign("crypt_methods",$this->crypt_methods);
-    $smarty->assign("mail_methods",$this->mail_methods);
+    /* Assign connection status */
+    $smarty->assign("connection_status",$this->get_connection_status());
 
-     
+    /* Handle namingContext detection */
     $attr = @LDAP::get_naming_contexts($this->connection);
     unset($attr['count']);
     $smarty->assign("namingContexts",$attr);
     $smarty->assign("namingContextsCount",count($attr));
-
-    /* Assign connection status */
-    $smarty->assign("connection_status",$this->get_connection_status());
+    $smarty->assign("bool",array(FALSE => _("No"), TRUE => _("Yes")));
 
     /* Addign resolved users */
     $smarty->assign("resolve_user",$this->resolve_user);
@@ -87,30 +70,6 @@ class setup_step_4 extends setup_step
       $smarty->assign("resolve_filter",$this->resolve_filter);
     }
     return($smarty -> fetch (get_template_path("../setup/setup_step4.tpl")));
-  }
-
-  /* Returns the classnames auf the mail classes */
-  function get_available_mail_classes()
-  {
-    $dir = opendir( "../include");
-    $methods = array();
-    $suffix = "class_mail-methods-";
-    $lensuf = strlen($suffix);
-    $prefix = ".inc";
-    $lenpre = strlen($prefix);
-    $i = 0;
-    while (($file = readdir($dir)) !== false){
-
-      if(stristr($file,$suffix)) {
-        $lenfile = strlen($file);
-        $methods['name'][$i] = substr($file,$lensuf,($lenfile-$lensuf)-$lenpre);
-        $methods['file'][$i] = $file;
-        $methods[$i]['file'] = $file;
-        $methods[$i]['name'] = substr($file,$lensuf,($lenfile-$lensuf)-$lenpre);
-        $i++;
-      }
-    }
-    return($methods); 
   }
 
   function get_connection_status()
@@ -179,6 +138,12 @@ class setup_step_4 extends setup_step
         $this->admin = $_POST['admin_to_use'];
         $this->resolve_user = false;
       }
+    }
+
+    if($this->bind_id){
+      $this->is_completed =TRUE;
+    }else{
+      $this->is_completed =FALSE;
     }
   }
 }

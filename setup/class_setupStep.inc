@@ -20,7 +20,7 @@
 */
 
 
-class setup_step extends plugin
+class setup_step 
 {
   var $s_title      = "Still undefined";
   var $s_title_long = "This is a still undefined long title";
@@ -30,6 +30,10 @@ class setup_step extends plugin
   var $is_completed = false;
 
   var $attributes   = array();
+
+  function setup_step()
+  {
+   }
 
   function save_object()
   {

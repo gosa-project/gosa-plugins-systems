@@ -23,7 +23,7 @@ require_once("class_setupStep.inc");
 class setup extends plugin
 {
 
-  var $i_steps  = 5;  // Number of setup steps 
+  var $i_steps  = 7;  // Number of setup steps 
   var $i_current= 1;  // Current step
   var $i_last   = 1;  // Last setup step;
   var $o_steps  = array(); 
@@ -34,7 +34,13 @@ class setup extends plugin
   {
     for($i = 1 ; $i <= $this->i_steps; $i ++ ){
       $class= "setup_step_".$i;
-      $this->o_steps[$i] = new $class();
+    
+      if(class_exists($class)){
+        $this->o_steps[$i] = new $class();
+      }else{
+        $this->o_steps[$i] = new setup_step();
+        trigger_error("Try to create class '".$class."' but it is not available, possibly you have forgotten to add the include in setup.php");
+      }
     }
   }
 
