@@ -70,6 +70,8 @@ class setup_step_6 extends setup_step
     $smarty = get_smarty();
     $smarty->assign("generic_settings",$this->generic_settings);
     $smarty->assign("samba_settings",$this->samba_settings);
+    $smarty->assign("warnings" ,$this->check());
+    $smarty->assign("warnings_cnt" ,count($this->check()));
     $smarty->assign("bool",array(FALSE => _("No"), TRUE => _("Yes")));
         foreach($this->attributes as $attr){
       $smarty->assign($attr,$this->$attr);
@@ -134,9 +136,24 @@ class setup_step_6 extends setup_step
       }
 
     }
+
+    $tmp = $this->check();
+    if(count($tmp) == 0){
+      $this->is_completed = TRUE;
+    }else{
+      $this->is_completed = FALSE;
+    }
   }
 
-   /* Attributes that are interesting for configuration generation */
+
+  function check()
+  {
+    $message = array();
+    return($message);
+  }
+  
+
+  /* Attributes that are interesting for configuration generation */
   function get_attributes()
   {
     $tmp = setup_step::get_attributes();

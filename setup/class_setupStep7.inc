@@ -22,19 +22,23 @@
 
 class setup_step_7 extends setup_step
 {
-  var $attributes = array();
+  var $checks = array();
+  var $schema_readable  = FALSE;
+  var $attributes       = array();
 
   function setup_step_7()
   {
-    $this->s_title      = _("GOsa settings 1/2");
-    $this->s_title_long = _("GOsa generic settings, page 1/2");
-    $this->s_info       = _("This dialog allows you to setup GOsa behaviour");
+    $this->s_title      = _("Ldap schema check");
+    $this->s_title_long = _("Ldap schema check");
+    $this->s_info       = _("This dialog checks your ldap schema setup");
   }
 
   
   function execute()
   {
     $smarty = get_smarty();
+    $smarty->assign("schema_readable",$this->schema_readable);
+    $smarty->assign("checks",$this->checks);
     return($smarty -> fetch (get_template_path("../setup/setup_step7.tpl")));
   }
 
@@ -50,6 +54,80 @@ class setup_step_7 extends setup_step
       }
     }
   }
+
+  
+  function check_schema()
+  {
+    $messages= array();
+
+    $checks["gosaObject"]["VERSION"]  = "2.4";
+    $checks["gosaObject"]["FILE"]     = "gosa+samba3.schema/gosa.schema";
+    $checks["gosaObject"]["CLASS"]    = array("gosaObject");
+    $checks["gosaObject"]["STATUS"]   = FALSE;
+    $checks["gosaObject"]["MUST"]     = FALSE;
+    $checks["gosaObject"]["MSG"]      = ""; // The error message to display
+    $checks["gosaObject"]["INFO"]     = _("GOsa object is used to store acls.");
+
+    $checks["gosaAccount"]["VERSION"]  = "2.4";
+    $checks["gosaAccount"]["FILE"]     = "gosa+samba3.schema/gosa.schema";
+    $checks["gosaAccount"]["CLASS"]    = array("gosaAccount");
+    $checks["gosaAccount"]["STATUS"]   = FALSE;
+    $checks["gosaAccount"]["MUST"]     = TRUE;
+    $checks["gosaAccount"]["MSG"]      = ""; // The error message to display
+    $checks["gosaAccount"]["INFO"]     = _("Used to store account specific informations.");
+
+    $checks["gosaLockEntry"]["VERSION"]  = "2.4";
+    $checks["gosaLockEntry"]["FILE"]     = "gosa+samba3.schema/gosa.schema";
+    $checks["gosaLockEntry"]["CLASS"]    = array("gosaLockEntry");
+    $checks["gosaLockEntry"]["STATUS"]   = FALSE;
+    $checks["gosaLockEntry"]["MUST"]     = TRUE;
+    $checks["gosaLockEntry"]["MSG"]      = ""; // The error message to display
+    $checks["gosaLockEntry"]["INFO"]     = _("Used to lock currently edited entries to avoid multiple changes at the same time.");
+
+    $checks["gosaLockEntry"]["VERSION"]  = "2.4";
+    $checks["gosaLockEntry"]["FILE"]     = "gosa+samba3.schema/gosa.schema";
+    $checks["gosaLockEntry"]["CLASS"]    = array("gosaLockEntry");
+    $checks["gosaLockEntry"]["STATUS"]   = FALSE;
+    $checks["gosaLockEntry"]["MUST"]     = TRUE;
+    $checks["gosaLockEntry"]["MSG"]      = ""; // The error message to display
+    $checks["gosaLockEntry"]["INFO"]     = _("Used to lock currently edited entries to avoid multiple changes at the same time.");
+
+    /* asdfasdf */
+
+
+    $checks= array(
+        "gosaObject"            => array("version" => "2.4"),
+        "gosaAccount"           => array("version" => "2.4"),
+        "gosaLockEntry"         => array("version" => "2.4"),
+        "gosaCacheEntry"        => array("version" => "2.4"),
+        "gosaDepartment"        => array("version" => "2.4"),
+
+        "goFaxAccount"          => array("version" => "1.0.4", "class" => "gofaxAccount","file" => "gofax.schema"),
+        "goFaxSBlock"           => array("version" => "1.0.4", "class" => "gofaxAccount","file" => "gofax.schema"),
+        "goFaxRBlock"           => array("version" => "1.0.4", "class" => "gofaxAccount","file" => "gofax.schema"),
+
+        "gosaUserTemplate"      => array("version" => "2.4", "class" => "posixAccount","file" => "nis.schema"),
+        "gosaMailAccount"       => array("version" => "2.4", "class" => "mailAccount","file" => "gosa+samba3.schema"),
+        "gosaProxyAccount"      => array("version" => "2.4", "class" => "proxyAccount","file" => "gosa+samba3.schema"),
+        "gosaApplication"       => array("version" => "2.4", "class" => "appgroup","file" => "gosa.schema"),
+        "gosaApplicationGroup"  => array("version" => "2.4", "class" => "appgroup","file" => "gosa.schema"),
+
+        "GOhard"                => array("version" => "2.5", "class" => "terminals","file" => "goto.schema"),
+        "gotoTerminal"          => array("version" => "2.5", "class" => "terminals","file" => "goto.schema"),
+        "goServer"              => array("version" => "2.4","class" => "server","file" => "goserver.schema"),
+        "goTerminalServer"      => array("version" => "2.4", "class" => "terminals","file" => "goto.schema"),
+        "goShareServer"           => array("version" => "2.4", "class" => "terminals","file" => "goto.schema"),
+        "goNtpServer"           => array("version" => "2.4", "class" => "terminals","file" => "goto.schema"),
+        "goSyslogServer"        => array("version" => "2.4", "class" => "terminals","file" => "goto.schema"),
+        "goLdapServer"          => array("version" => "2.4"),
+        "goCupsServer"          => array("version" => "2.4", "class" => array("posixAccount", "terminals"),),
+        "goImapServer"          => array("version" => "2.4", "class" => array("mailAccount", "mailgroup"),"file" => "gosa+samba3.schema"),
+        "goKrbServer"           => array("version" => "2.4"),
+        "goFaxServer"           => array("version" => "2.4", "class" => "gofaxAccount","file" => "gofax.schema"),
+        );
+
+  }
+
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

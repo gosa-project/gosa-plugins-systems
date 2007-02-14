@@ -1035,6 +1035,7 @@ li.step4_name, div.step4_name {
 	overflow: hidden;
 	width:200px;
 	height:2.0em;
+	background-color: #DDDDDD;
 }
 
 li.step4_value, div.step4_value {
@@ -1061,6 +1062,7 @@ ul.step4_container, div.step4_container {
 	width:680px;
 	height:2.0em;
 	margin-top:2px;
+	overflow: hidden;
 	margin-left:2px;
 	margin-right:2px;
 	float:left;
