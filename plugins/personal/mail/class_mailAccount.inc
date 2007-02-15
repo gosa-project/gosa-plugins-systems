@@ -10,7 +10,7 @@
  */
 
 /* Load sieve support */
-require_once ("sieve/libsieve.php");
+require_once ("sieve/libsieve.inc");
 
 /* Load mail methods */
 global $BASE_DIR;
