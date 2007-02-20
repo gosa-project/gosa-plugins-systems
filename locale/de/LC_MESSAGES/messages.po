@@ -8,25 +8,25 @@
 # This file is distributed under the same license as the GOsa2 package.
 # 
 # 
-#: plugins/personal/generic/class_user.inc:1370 include/class_plugin.inc:115
+#: plugins/personal/generic/class_user.inc:1368 include/class_plugin.inc:115
 #: include/class_plugin.inc:116
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-24 13:21+0100\n"
-"PO-Revision-Date: 2007-01-24 13:59+0100\n"
+"POT-Creation-Date: 2007-02-20 12:33+0100\n"
+"PO-Revision-Date: 2007-02-20 13:01+0100\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit"
 
-#: contrib/gosa.conf:4 plugins/personal/mail/class_mailAccount.inc:1012
+#: contrib/gosa.conf:4 plugins/personal/mail/class_mailAccount.inc:1019
 #: plugins/personal/password/class_password.inc:16
 #: plugins/personal/posix/class_posixAccount.inc:1326
 #: plugins/personal/samba/class_sambaAccount.inc:1072
-#: plugins/personal/generic/class_user.inc:1382
+#: plugins/personal/generic/class_user.inc:1380
 #: plugins/personal/connectivity/class_phpgwAccount.inc:147
 #: plugins/personal/connectivity/class_kolabAccount.inc:451
 #: plugins/personal/connectivity/class_webdavAccount.inc:146
@@ -60,19 +60,19 @@ msgstr "Zusätzliches"
 #: plugins/personal/mail/generic.tpl:4 plugins/personal/posix/generic.tpl:4
 #: plugins/personal/samba/samba2.tpl:6 plugins/personal/samba/samba3.tpl:6
 #: plugins/personal/generic/class_user.inc:16
-#: plugins/personal/generic/class_user.inc:1377
+#: plugins/personal/generic/class_user.inc:1375
 #: plugins/gofax/blocklists/generic.tpl:1
 #: plugins/gofax/faxaccount/generic.tpl:6
 #: plugins/gofax/faxaccount/paste_generic.tpl:4
 #: plugins/admin/groups/mail.tpl:7
 #: plugins/admin/groups/class_groupGeneric.inc:878
 #: plugins/admin/applications/class_applicationGeneric.inc:523
-#: plugins/admin/departments/class_departmentGeneric.inc:575
+#: plugins/admin/departments/class_departmentGeneric.inc:578
 #: plugins/admin/systems/glpiPrinter.tpl:6
 #: plugins/admin/systems/class_servGeneric.inc:362
 #: plugins/admin/systems/class_workstationGeneric.inc:524
 #: plugins/admin/systems/servkolab.tpl:6 plugins/admin/systems/glpi.tpl:6
-#: plugins/admin/systems/class_printGeneric.inc:871
+#: plugins/admin/systems/class_printGeneric.inc:872
 #: plugins/admin/systems/class_componentGeneric.inc:259
 #: plugins/admin/systems/class_phoneGeneric.inc:430
 #: plugins/admin/systems/glpiPrinterCartridgesEdit.tpl:4
@@ -113,8 +113,8 @@ msgstr "Umgebung"
 
 #: contrib/gosa.conf:83 contrib/gosa.conf:100
 #: plugins/personal/mail/class_mailAccount.inc:22
-#: plugins/personal/mail/class_mailAccount.inc:1007
-#: plugins/admin/groups/class_groupMail.inc:1073
+#: plugins/personal/mail/class_mailAccount.inc:1014
+#: plugins/admin/groups/class_groupMail.inc:1088
 #: plugins/admin/groups/class_divListGroup.inc:180
 #: plugins/admin/users/class_divListUsers.inc:179
 #: plugins/admin/ogroups/tabs_ogroups.inc:81
@@ -141,7 +141,11 @@ msgstr "Samba"
 msgid "Netatalk"
 msgstr "Netatalk"
 
-#: contrib/gosa.conf:86 plugins/personal/connectivity/main.inc:119
+#: contrib/gosa.conf:86
+#: plugins/personal/connectivity/class_oxchangeAccount.inc:717
+#: plugins/personal/connectivity/class_oxchangeAccount.inc:721
+#: plugins/personal/connectivity/class_oxchangeAccount.inc:725
+#: plugins/personal/connectivity/main.inc:119
 #: plugins/personal/connectivity/class_connectivity.inc:15
 msgid "Connectivity"
 msgstr "Konnektivität"
@@ -155,7 +159,7 @@ msgstr "Konnektivität"
 #: plugins/addons/addressbook/contents.tpl:14
 #: plugins/admin/users/class_divListUsers.inc:183
 #: plugins/admin/departments/generic.tpl:91
-#: plugins/admin/departments/class_departmentGeneric.inc:594
+#: plugins/admin/departments/class_departmentGeneric.inc:597
 #: plugins/admin/systems/glpiManufacturerAdd.tpl:39 html/getxls.php:222
 #: html/getxls.php:297
 msgid "Fax"
@@ -222,7 +226,7 @@ msgstr "Geräte"
 #: contrib/gosa.conf:121 contrib/gosa.conf:137
 #: plugins/personal/environment/environment.tpl:235
 #: plugins/admin/systems/class_systemManagement.inc:1043
-#: plugins/admin/systems/class_printGeneric.inc:877
+#: plugins/admin/systems/class_printGeneric.inc:878
 #: plugins/admin/ogroups/class_ogroupManagement.inc:353
 #: plugins/generic/references/class_reference.inc:52
 msgid "Printer"
@@ -347,10 +351,11 @@ msgid "{LOCATIONNAME}"
 msgstr "{LOCATIONNAME}"
 
 #: contrib/gosa.conf:278 plugins/admin/ogroups/class_phonequeue.inc:263
+#: setup/class_setupStep1.inc:40
 msgid "German"
 msgstr "Deutsch"
 
-#: contrib/gosa.conf:279
+#: contrib/gosa.conf:279 setup/class_setupStep1.inc:43
 msgid "Russian"
 msgstr "Russisch"
 
@@ -358,7 +363,7 @@ msgstr "Russisch"
 msgid "Spanish"
 msgstr "Spanisch"
 
-#: contrib/gosa.conf:281
+#: contrib/gosa.conf:281 setup/class_setupStep1.inc:41
 msgid "French"
 msgstr "Französisch"
 
@@ -366,7 +371,7 @@ msgstr "Französisch"
 msgid "Dutch"
 msgstr "Niederländisch"
 
-#: contrib/gosa.conf:283
+#: contrib/gosa.conf:283 setup/class_setupStep1.inc:42
 msgid "English"
 msgstr "Englisch"
 
@@ -471,7 +476,7 @@ msgstr "Benutzername, dessen Adressen angezeigt werden"
 #: plugins/admin/groups/mail.tpl:135 plugins/admin/groups/mail_locals.tpl:66
 #: plugins/admin/groups/generic.tpl:137
 #: plugins/admin/groups/application.tpl:39
-#: plugins/admin/groups/class_groupMail.inc:598
+#: plugins/admin/groups/class_groupMail.inc:599
 #: plugins/admin/groups/group_objects.tpl:55
 #: plugins/admin/groups/paste_mail.tpl:30
 #: plugins/admin/groups/paste_mail.tpl:41
@@ -494,8 +499,8 @@ msgstr "Benutzername, dessen Adressen angezeigt werden"
 #: plugins/admin/systems/glpiManufacturer.tpl:6
 #: plugins/admin/systems/glpi_edit_os.tpl:8
 #: plugins/admin/systems/glpi_edit_printer_type.tpl:7
-#: plugins/admin/systems/class_termDNS.inc:477
-#: plugins/admin/systems/class_termDNS.inc:497
+#: plugins/admin/systems/class_termDNS.inc:501
+#: plugins/admin/systems/class_termDNS.inc:521
 #: plugins/admin/systems/glpi_edit_cartridge_type.tpl:6
 #: plugins/admin/systems/servdnseditzone.tpl:106
 #: plugins/admin/systems/class_servDNSeditZone.inc:486
@@ -562,7 +567,7 @@ msgstr "Hinzufügen"
 #: plugins/admin/applications/remove.tpl:15
 #: plugins/admin/applications/class_applicationManagement.inc:352
 #: plugins/admin/departments/remove.tpl:16
-#: plugins/admin/departments/class_departmentManagement.inc:318
+#: plugins/admin/departments/class_departmentManagement.inc:319
 #: plugins/admin/departments/dep_move_confirm.tpl:17
 #: plugins/admin/systems/goNtpServer.tpl:31
 #: plugins/admin/systems/class_systemManagement.inc:684
@@ -609,8 +614,9 @@ msgstr "Hinzufügen"
 #: plugins/admin/systems/class_goService.inc:34
 #: plugins/admin/ogroups/ogroup_objects.tpl:56
 #: plugins/admin/ogroups/class_ogroupManagement.inc:301
-#: plugins/admin/ogroups/remove.tpl:16 plugins/admin/acl/remove.tpl:16
-#: plugins/admin/acl/class_aclManagement.inc:289
+#: plugins/admin/ogroups/remove.tpl:16 plugins/admin/acl/tabs_acl.inc:63
+#: plugins/admin/acl/remove.tpl:16 plugins/admin/acl/tabs_acl_role.inc:53
+#: plugins/admin/acl/acl_role.tpl:61 plugins/admin/acl/acl_role.tpl:75
 #: plugins/admin/fai/class_faiManagement.inc:629
 #: plugins/admin/fai/class_faiManagement.inc:634
 #: plugins/admin/fai/class_faiManagement.inc:640
@@ -631,10 +637,10 @@ msgstr "Hinzufügen"
 #: plugins/gofon/macro/remove.tpl:15
 #: plugins/gofon/conference/class_phoneConferenceManagment.inc:256
 #: plugins/gofon/conference/remove.tpl:16 ihtml/themes/default/islocked.tpl:15
-#: ihtml/themes/default/remove.tpl:15 ihtml/themes/default/acl.tpl:71
-#: ihtml/themes/default/acl.tpl:85 ihtml/themes/default/copyPasteDialog.tpl:20
+#: ihtml/themes/default/remove.tpl:15 ihtml/themes/default/acl.tpl:77
+#: ihtml/themes/default/acl.tpl:91 ihtml/themes/default/copyPasteDialog.tpl:20
 #: ihtml/themes/default/snapshotdialog.tpl:44
-#: ihtml/themes/default/snapshotdialog.tpl:89
+#: ihtml/themes/default/snapshotdialog.tpl:89 setup/setup_step4.tpl:59
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -651,7 +657,8 @@ msgstr "Primäre Adresse"
 #: plugins/admin/systems/servnfs.tpl:39
 #: plugins/admin/systems/class_SelectDeviceType.inc:34
 #: plugins/admin/ogroups/class_ogroupManagement.inc:349
-#: plugins/generic/references/class_reference.inc:44
+#: plugins/generic/references/class_reference.inc:44 setup/setup_step6.tpl:193
+#: setup/setup_step6.tpl:215
 msgid "Server"
 msgstr "Server"
 
@@ -665,14 +672,14 @@ msgstr "Kontingent-Nutzung"
 
 #: plugins/personal/mail/generic.tpl:35 plugins/admin/groups/mail.tpl:38
 #: plugins/admin/systems/class_terminalInfo.inc:169
-#: plugins/admin/systems/class_printGeneric.inc:516
+#: plugins/admin/systems/class_printGeneric.inc:517
 msgid "not defined"
 msgstr "nicht definiert"
 
 #: plugins/personal/mail/generic.tpl:40
-#: plugins/personal/mail/class_mailAccount.inc:1020
+#: plugins/personal/mail/class_mailAccount.inc:1026
 #: plugins/admin/groups/mail.tpl:43
-#: plugins/admin/groups/class_groupMail.inc:1084
+#: plugins/admin/groups/class_groupMail.inc:1099
 msgid "Quota size"
 msgstr "Kontingent-Größe"
 
@@ -727,7 +734,7 @@ msgstr "Liste alternativer Mail-Adressen"
 #: plugins/admin/systems/class_glpiDeviceManagement.inc:192
 #: plugins/admin/systems/glpi_edit_printer_type.tpl:9
 #: plugins/admin/systems/class_glpiPrinterCartridges.inc:168
-#: plugins/admin/systems/class_termDNS.inc:491
+#: plugins/admin/systems/class_termDNS.inc:515
 #: plugins/admin/systems/glpi_edit_cartridge_type.tpl:8
 #: plugins/admin/systems/class_servDNSeditZone.inc:292
 #: plugins/admin/systems/class_servDNSeditZone.inc:480
@@ -802,7 +809,7 @@ msgid "MB"
 msgstr "MB"
 
 #: plugins/personal/mail/generic.tpl:126
-#: plugins/personal/mail/class_mailAccount.inc:1023
+#: plugins/personal/mail/class_mailAccount.inc:1029
 msgid "Vacation message"
 msgstr "Urlaubsbenachrichtigung"
 
@@ -833,7 +840,7 @@ msgid "User is only allowed to send and receive local mails"
 msgstr "Der Benutzer darf nur lokale Mails senden und empfangen"
 
 #: plugins/personal/mail/generic.tpl:190
-#: plugins/personal/mail/class_mailAccount.inc:1038
+#: plugins/personal/mail/class_mailAccount.inc:1044
 msgid "Use custom sieve script"
 msgstr "Eigenes Sieve-Skript verwenden"
 
@@ -853,7 +860,7 @@ msgstr "schaltet alle übrigen Mail-Einstellungen aus!"
 #: plugins/admin/applications/class_applicationManagement.inc:346
 #: plugins/admin/systems/class_systemManagement.inc:678
 #: plugins/admin/ogroups/class_ogroupManagement.inc:295
-#: plugins/admin/acl/class_aclManagement.inc:280
+#: plugins/admin/acl/tabs_acl.inc:61 plugins/admin/acl/tabs_acl_role.inc:51
 #: plugins/admin/fai/class_faiManagement.inc:623
 #: plugins/admin/mimetypes/class_mimetypeManagement.inc:339
 #: plugins/gofon/phoneaccount/main.inc:105
@@ -904,8 +911,8 @@ msgid "User mail settings"
 msgstr "Benutzer Mail-Einstellungen"
 
 #: plugins/personal/mail/copypaste.tpl:1
-#: plugins/personal/mail/class_mailAccount.inc:1008
-#: plugins/admin/groups/paste_mail.tpl:1
+#: plugins/personal/mail/class_mailAccount.inc:1015
+#: plugins/admin/groups/paste_mail.tpl:1 setup/setup_step5.tpl:162
 msgid "Mail settings"
 msgstr "Mail-Einstellungen"
 
@@ -946,7 +953,8 @@ msgstr "Mail-Einstellungen"
 #: plugins/admin/departments/class_departmentManagement.inc:26
 #: plugins/admin/systems/class_systemManagement.inc:33
 #: plugins/admin/ogroups/class_ogroupManagement.inc:26
-#: plugins/admin/acl/class_aclManagement.inc:26
+#: plugins/admin/acl/class_aclManagement.inc:28
+#: plugins/admin/acl/class_aclRole.inc:7
 #: plugins/gofon/phoneaccount/class_phoneAccount.inc:7
 #: plugins/gofon/macro/class_gofonMacroManagement.inc:26
 #: plugins/gofon/fonreports/class_fonreport.inc:7 include/class_acl.inc:7
@@ -971,7 +979,7 @@ msgstr "Dieses Konto hat keine Mail-Erweiterungen."
 
 #: plugins/personal/mail/class_mailAccount.inc:262
 #: plugins/personal/mail/class_mailAccount.inc:265
-#: plugins/admin/groups/class_groupMail.inc:338
+#: plugins/admin/groups/class_groupMail.inc:339
 #: plugins/admin/ogroups/class_mailogroup.inc:44
 msgid "Remove mail account"
 msgstr "Mail-Konto entfernen"
@@ -985,7 +993,7 @@ msgstr ""
 "Entfernen Sie diese zunächst und wiederholen Sie den Vorgang."
 
 #: plugins/personal/mail/class_mailAccount.inc:266
-#: plugins/admin/groups/class_groupMail.inc:339
+#: plugins/admin/groups/class_groupMail.inc:340
 msgid ""
 "This account has mail features enabled. You can disable them by clicking "
 "below."
@@ -994,13 +1002,13 @@ msgstr ""
 "deaktivieren, indem Sie auf die Schaltfläche unten klicken."
 
 #: plugins/personal/mail/class_mailAccount.inc:269
-#: plugins/admin/groups/class_groupMail.inc:341
+#: plugins/admin/groups/class_groupMail.inc:342
 #: plugins/admin/ogroups/class_mailogroup.inc:47
 msgid "Create mail account"
 msgstr "Neues Mail-Konto erzeugen"
 
 #: plugins/personal/mail/class_mailAccount.inc:269
-#: plugins/admin/groups/class_groupMail.inc:342
+#: plugins/admin/groups/class_groupMail.inc:343
 msgid ""
 "This account has mail features disabled. You can enable them by clicking "
 "below."
@@ -1016,7 +1024,7 @@ msgstr ""
 "aufzunehmen."
 
 #: plugins/personal/mail/class_mailAccount.inc:327
-#: plugins/admin/groups/class_groupMail.inc:418
+#: plugins/admin/groups/class_groupMail.inc:419
 msgid "Adding your one of your own addresses to the forwarders makes no sense."
 msgstr ""
 "Das Hinzufügen Ihrer eigenen Adresse zu den Weiterleitungen macht keinen "
@@ -1024,43 +1032,43 @@ msgstr ""
 
 #: plugins/personal/mail/class_mailAccount.inc:357
 #: plugins/personal/mail/class_mailAccount.inc:362
-#: plugins/admin/groups/class_groupMail.inc:444
+#: plugins/admin/groups/class_groupMail.inc:445
 msgid ""
 "You're trying to add an invalid email address to the list of alternate "
 "addresses."
 msgstr "Sie versuchen eine ungültige Mail-Adresse in die Liste aufzunehmen."
 
 #: plugins/personal/mail/class_mailAccount.inc:372
-#: plugins/admin/groups/class_groupMail.inc:449
+#: plugins/admin/groups/class_groupMail.inc:450
 msgid "The address you're trying to add is already used by user"
 msgstr ""
 "Die Adresse, die Sie gerade hinzufügen möchten, wird bereits von einem "
 "anderen Benutzer verwendet"
 
-#: plugins/personal/mail/class_mailAccount.inc:596
+#: plugins/personal/mail/class_mailAccount.inc:603
 #, php-format
 msgid "Removing of user/mail account with dn '%s' failed."
 msgstr "Entfernen des Benutzer/Mail-Kontos mit dn '%s' fehlgeschlagen."
 
-#: plugins/personal/mail/class_mailAccount.inc:724
+#: plugins/personal/mail/class_mailAccount.inc:731
 #, php-format
 msgid "Saving of user/mail account with dn '%s' failed."
 msgstr "Speichern von Benutzer/Mail-Konto mit dn '%s' fehlgeschlagen."
 
-#: plugins/personal/mail/class_mailAccount.inc:776
+#: plugins/personal/mail/class_mailAccount.inc:783
 msgid ""
 "There is no valid mailserver specified, please add one in the system setup."
 msgstr ""
 "Es wurde kein gültiger Mail-Server angegeben, bitte fügen Sie ein passendes "
 "System hinzu."
 
-#: plugins/personal/mail/class_mailAccount.inc:781
-#: plugins/admin/groups/class_groupMail.inc:887
+#: plugins/personal/mail/class_mailAccount.inc:788
+#: plugins/admin/groups/class_groupMail.inc:902
 msgid "The required field 'Primary address' is not set."
 msgstr "Das benötigte Feld 'Primäre Adresse' ist nicht gesetzt."
 
-#: plugins/personal/mail/class_mailAccount.inc:785
-#: plugins/personal/mail/class_mailAccount.inc:789
+#: plugins/personal/mail/class_mailAccount.inc:792
+#: plugins/personal/mail/class_mailAccount.inc:796
 #: plugins/addons/addressbook/class_addressbook.inc:696
 #: plugins/admin/ogroups/class_mailogroup.inc:79
 msgid "Please enter a valid email address in 'Primary address' field."
@@ -1068,49 +1076,49 @@ msgstr ""
 "Bitte geben Sie eine gültige E-Mail-Adresse in das Feld 'Primäre Adresse' "
 "ein."
 
-#: plugins/personal/mail/class_mailAccount.inc:795
-#: plugins/admin/groups/class_groupMail.inc:896
+#: plugins/personal/mail/class_mailAccount.inc:802
+#: plugins/admin/groups/class_groupMail.inc:911
 #: plugins/admin/ogroups/class_mailogroup.inc:86
 msgid "The primary address you've entered is already in use."
 msgstr ""
 "Die primäre Adresse, welche Sie eingegeben haben, wird bereits benutzt."
 
-#: plugins/personal/mail/class_mailAccount.inc:801
-#: plugins/admin/groups/class_groupMail.inc:902
+#: plugins/personal/mail/class_mailAccount.inc:808
+#: plugins/admin/groups/class_groupMail.inc:917
 msgid "Value in 'Quota size' is not valid."
 msgstr "Das Feld 'Kontingent-Größe' enthält einen ungültigen Wert."
 
-#: plugins/personal/mail/class_mailAccount.inc:810
-#: plugins/admin/groups/class_groupMail.inc:911
+#: plugins/personal/mail/class_mailAccount.inc:817
+#: plugins/admin/groups/class_groupMail.inc:926
 msgid "Please specify a vaild mail size for mails to be rejected."
 msgstr ""
 "Bitte geben Sie eine gültige Größenbeschränkung für Mails an, die abgewiesen "
 "werden sollen."
 
-#: plugins/personal/mail/class_mailAccount.inc:820
-#: plugins/admin/groups/class_groupMail.inc:919
+#: plugins/personal/mail/class_mailAccount.inc:827
+#: plugins/admin/groups/class_groupMail.inc:934
 msgid "You need to set the maximum mail size in order to reject anything."
 msgstr "Sie müssen die maximale Mail-Größe angeben, um Mails abzuweisen."
 
-#: plugins/personal/mail/class_mailAccount.inc:824
+#: plugins/personal/mail/class_mailAccount.inc:831
 msgid "You specified Spam settings, but there is no Folder specified."
 msgstr "Es wurde kein Ordner für die gewählten Spam-Einstellungen angegeben."
 
-#: plugins/personal/mail/class_mailAccount.inc:864
-#: plugins/personal/mail/class_mailAccount.inc:876
+#: plugins/personal/mail/class_mailAccount.inc:871
+#: plugins/personal/mail/class_mailAccount.inc:883
 msgid "You are not allowed to write mail forwarding."
 msgstr "Sie haben keine Berechtigung, ihr Passwort zu ändern!"
 
-#: plugins/personal/mail/class_mailAccount.inc:909
-#: plugins/personal/mail/class_mailAccount.inc:920
+#: plugins/personal/mail/class_mailAccount.inc:916
+#: plugins/personal/mail/class_mailAccount.inc:927
 msgid "You are not allowed to write mail alternate address."
 msgstr "Sie haben keine Berechtigung, alternative Mail-Adressen hinzuzufügen."
 
-#: plugins/personal/mail/class_mailAccount.inc:985
+#: plugins/personal/mail/class_mailAccount.inc:992
 msgid "Waiting for kolab to remove mail properties."
 msgstr "Warte auf Entfernung der Mail-Einstellungen durch Kolab."
 
-#: plugins/personal/mail/class_mailAccount.inc:987
+#: plugins/personal/mail/class_mailAccount.inc:994
 msgid ""
 "Please remove the mail account first, to allow kolab to call its remove "
 "methods."
@@ -1118,64 +1126,60 @@ msgstr ""
 "Bitte entfernen Sie zunächst das Mail-Konto, damit Kolab Gelegenheit hat "
 "seine Einstellungen zu entfernen."
 
-#: plugins/personal/mail/class_mailAccount.inc:1013
-msgid "Mail account"
-msgstr "Mail-Konto"
-
-#: plugins/personal/mail/class_mailAccount.inc:1018
+#: plugins/personal/mail/class_mailAccount.inc:1024
 #: plugins/personal/nagios/nagios.tpl:17
-#: plugins/personal/nagios/class_nagiosAccount.inc:273
+#: plugins/personal/nagios/class_nagiosAccount.inc:272
 #: plugins/addons/addressbook/class_addressbook.inc:799
-#: plugins/admin/groups/class_groupMail.inc:1081
+#: plugins/admin/groups/class_groupMail.inc:1096
 #: plugins/admin/systems/class_servDNS.inc:401
 #: plugins/admin/systems/servdnseditzone.tpl:51
 #: plugins/admin/ogroups/class_mailogroup.inc:175 html/getxls.php:225
 msgid "Mail address"
 msgstr "Mail-Adresse"
 
-#: plugins/personal/mail/class_mailAccount.inc:1019
-#: plugins/admin/groups/class_groupMail.inc:1085
+#: plugins/personal/mail/class_mailAccount.inc:1025
+#: plugins/admin/groups/class_groupMail.inc:1100
 msgid "Mail server"
 msgstr "Mail-Server"
 
-#: plugins/personal/mail/class_mailAccount.inc:1022
+#: plugins/personal/mail/class_mailAccount.inc:1028
 msgid "Add vacation information"
 msgstr "Urlaubsinformationen hinzufügen"
 
-#: plugins/personal/mail/class_mailAccount.inc:1025
+#: plugins/personal/mail/class_mailAccount.inc:1031
 msgid "Use spam filter"
 msgstr "Verwende Spam-Filter"
 
-#: plugins/personal/mail/class_mailAccount.inc:1026
+#: plugins/personal/mail/class_mailAccount.inc:1032
 msgid "Spam level"
 msgstr "Spam-Level"
 
-#: plugins/personal/mail/class_mailAccount.inc:1027
+#: plugins/personal/mail/class_mailAccount.inc:1033
 msgid "Spam mail box"
 msgstr "Spam-Postfach"
 
-#: plugins/personal/mail/class_mailAccount.inc:1029
+#: plugins/personal/mail/class_mailAccount.inc:1035
 msgid "Reject due to mailsize"
 msgstr "Aufgrund der Mail-Größe abweisen"
 
-#: plugins/personal/mail/class_mailAccount.inc:1030
+#: plugins/personal/mail/class_mailAccount.inc:1036
 msgid "Mail max size"
 msgstr "Maximale Mailgröße"
 
-#: plugins/personal/mail/class_mailAccount.inc:1032
-#: plugins/personal/mail/class_mailAccount.inc:1037
+#: plugins/personal/mail/class_mailAccount.inc:1038
+#: plugins/personal/mail/class_mailAccount.inc:1043
 msgid "Forwarding address"
 msgstr "Weiterleitungs-Adresse"
 
-#: plugins/personal/mail/class_mailAccount.inc:1033
+#: plugins/personal/mail/class_mailAccount.inc:1039
 msgid "Local delivery"
 msgstr "Lokale Zustellung"
 
-#: plugins/personal/mail/class_mailAccount.inc:1034
+#: plugins/personal/mail/class_mailAccount.inc:1040
 msgid "No delivery to own mailbox "
 msgstr "Keine Zustellung in eigenes Postfach"
 
-#: plugins/personal/mail/class_mailAccount.inc:1035
+#: plugins/personal/mail/class_mailAccount.inc:1041
 msgid "Mail alternative addresses"
 msgstr "Weitere Adressen"
 
@@ -1257,7 +1261,6 @@ msgid "Back"
 msgstr "Zurück"
 
 #: plugins/personal/password/class_password.inc:5
-#: plugins/personal/password/class_password.inc:17
 #: plugins/personal/generic/paste_generic.tpl:20
 #: plugins/admin/systems/class_goFaxServer.inc:94
 #: plugins/admin/systems/goKrbServer.tpl:20
@@ -1272,12 +1275,13 @@ msgstr "Zurück"
 #: plugins/admin/systems/goGlpiServer.tpl:12
 #: plugins/admin/systems/goLogDBServer.tpl:12
 #: ihtml/themes/default/login.tpl:37 ihtml/themes/default/login.tpl:41
-#: ihtml/themes/default/setup_useradmin.tpl:30
+#: ihtml/themes/default/setup_useradmin.tpl:30 setup/setup_step6.tpl:203
+#: setup/setup_step6.tpl:225
 msgid "Password"
 msgstr "Passwort"
 
 #: plugins/personal/password/class_password.inc:12
-#: plugins/personal/generic/class_user.inc:1388
+#: plugins/personal/generic/class_user.inc:1386
 msgid "User password"
 msgstr "Benutzerpasswort"
 
@@ -1335,7 +1339,7 @@ msgid "Change password"
 msgstr "Passwort ändern"
 
 #: plugins/personal/posix/generic.tpl:7
-#: plugins/personal/posix/class_posixAccount.inc:1333
+#: plugins/personal/posix/class_posixAccount.inc:1332
 #: plugins/personal/posix/paste_generic.tpl:8
 #: plugins/personal/samba/samba3.tpl:13 plugins/personal/samba/samba3.tpl:97
 #: plugins/personal/samba/class_sambaAccount.inc:671
@@ -1343,7 +1347,7 @@ msgid "Home directory"
 msgstr "Basisverzeichnis"
 
 #: plugins/personal/posix/generic.tpl:15
-#: plugins/personal/posix/class_posixAccount.inc:1334
+#: plugins/personal/posix/class_posixAccount.inc:1333
 msgid "Shell"
 msgstr "Shell"
 
@@ -1352,12 +1356,12 @@ msgid "Primary group"
 msgstr "Primäre Gruppe"
 
 #: plugins/personal/posix/generic.tpl:35
-#: plugins/personal/connectivity/class_pureftpdAccount.inc:235
+#: plugins/personal/connectivity/class_pureftpdAccount.inc:234
 #: plugins/gofax/faxreports/contents.tpl:32
 #: plugins/gofax/faxreports/detail.tpl:45
 #: plugins/gofax/faxreports/class_faxreport.inc:487
 #: plugins/admin/systems/glpiAttachmentEdit.tpl:38
-#: plugins/gofon/fonreports/contents.tpl:35
+#: plugins/gofon/fonreports/contents.tpl:35 setup/setup_step4.tpl:118
 msgid "Status"
 msgstr "Status"
 
@@ -1573,7 +1577,7 @@ msgstr "Benutzer %s Tage vor dem Ablauf des Passwortes warnen"
 #: plugins/personal/samba/class_sambaAccount.inc:415
 #: plugins/personal/samba/class_sambaAccount.inc:433
 #: plugins/personal/samba/class_sambaAccount.inc:451
-#: plugins/personal/generic/class_user.inc:250
+#: plugins/personal/generic/class_user.inc:251
 msgid "January"
 msgstr "Januar"
 
@@ -1582,7 +1586,7 @@ msgstr "Januar"
 #: plugins/personal/samba/class_sambaAccount.inc:415
 #: plugins/personal/samba/class_sambaAccount.inc:433
 #: plugins/personal/samba/class_sambaAccount.inc:451
-#: plugins/personal/generic/class_user.inc:250
+#: plugins/personal/generic/class_user.inc:251
 msgid "February"
 msgstr "Februar"
 
@@ -1591,7 +1595,7 @@ msgstr "Februar"
 #: plugins/personal/samba/class_sambaAccount.inc:415
 #: plugins/personal/samba/class_sambaAccount.inc:433
 #: plugins/personal/samba/class_sambaAccount.inc:451
-#: plugins/personal/generic/class_user.inc:250
+#: plugins/personal/generic/class_user.inc:251
 msgid "March"
 msgstr "März"
 
@@ -1600,7 +1604,7 @@ msgstr "März"
 #: plugins/personal/samba/class_sambaAccount.inc:415
 #: plugins/personal/samba/class_sambaAccount.inc:433
 #: plugins/personal/samba/class_sambaAccount.inc:451
-#: plugins/personal/generic/class_user.inc:250
+#: plugins/personal/generic/class_user.inc:251
 msgid "April"
 msgstr "April"
 
@@ -1609,7 +1613,7 @@ msgstr "April"
 #: plugins/personal/samba/class_sambaAccount.inc:416
 #: plugins/personal/samba/class_sambaAccount.inc:434
 #: plugins/personal/samba/class_sambaAccount.inc:452
-#: plugins/personal/generic/class_user.inc:251
+#: plugins/personal/generic/class_user.inc:252
 msgid "May"
 msgstr "Mai"
 
@@ -1618,7 +1622,7 @@ msgstr "Mai"
 #: plugins/personal/samba/class_sambaAccount.inc:416
 #: plugins/personal/samba/class_sambaAccount.inc:434
 #: plugins/personal/samba/class_sambaAccount.inc:452
-#: plugins/personal/generic/class_user.inc:251
+#: plugins/personal/generic/class_user.inc:252
 msgid "June"
 msgstr "Juni"
 
@@ -1627,7 +1631,7 @@ msgstr "Juni"
 #: plugins/personal/samba/class_sambaAccount.inc:416
 #: plugins/personal/samba/class_sambaAccount.inc:434
 #: plugins/personal/samba/class_sambaAccount.inc:452
-#: plugins/personal/generic/class_user.inc:251
+#: plugins/personal/generic/class_user.inc:252
 msgid "July"
 msgstr "Juli"
 
@@ -1636,7 +1640,7 @@ msgstr "Juli"
 #: plugins/personal/samba/class_sambaAccount.inc:416
 #: plugins/personal/samba/class_sambaAccount.inc:434
 #: plugins/personal/samba/class_sambaAccount.inc:452
-#: plugins/personal/generic/class_user.inc:251
+#: plugins/personal/generic/class_user.inc:252
 msgid "August"
 msgstr "August"
 
@@ -1645,7 +1649,7 @@ msgstr "August"
 #: plugins/personal/samba/class_sambaAccount.inc:416
 #: plugins/personal/samba/class_sambaAccount.inc:434
 #: plugins/personal/samba/class_sambaAccount.inc:452
-#: plugins/personal/generic/class_user.inc:251
+#: plugins/personal/generic/class_user.inc:252
 msgid "September"
 msgstr "September"
 
@@ -1654,7 +1658,7 @@ msgstr "September"
 #: plugins/personal/samba/class_sambaAccount.inc:417
 #: plugins/personal/samba/class_sambaAccount.inc:435
 #: plugins/personal/samba/class_sambaAccount.inc:453
-#: plugins/personal/generic/class_user.inc:252
+#: plugins/personal/generic/class_user.inc:253
 msgid "October"
 msgstr "Oktober"
 
@@ -1663,7 +1667,7 @@ msgstr "Oktober"
 #: plugins/personal/samba/class_sambaAccount.inc:417
 #: plugins/personal/samba/class_sambaAccount.inc:435
 #: plugins/personal/samba/class_sambaAccount.inc:453
-#: plugins/personal/generic/class_user.inc:252
+#: plugins/personal/generic/class_user.inc:253
 msgid "November"
 msgstr "November"
 
@@ -1672,14 +1676,14 @@ msgstr "November"
 #: plugins/personal/samba/class_sambaAccount.inc:417
 #: plugins/personal/samba/class_sambaAccount.inc:435
 #: plugins/personal/samba/class_sambaAccount.inc:453
-#: plugins/personal/generic/class_user.inc:252
+#: plugins/personal/generic/class_user.inc:253
 msgid "December"
 msgstr "Dezember"
 
 #: plugins/personal/posix/class_posixAccount.inc:567
 #: plugins/personal/samba/class_sambaAccount.inc:494
 #: plugins/admin/systems/class_terminalGeneric.inc:104
-#: ihtml/themes/default/setup_step4.tpl:91
+#: ihtml/themes/default/setup_step4.tpl:91 setup/setup_step5.tpl:171
 msgid "disabled"
 msgstr "deaktiviert"
 
@@ -1782,46 +1786,42 @@ msgstr ""
 msgid "POSIX account"
 msgstr "POSIX-Konto"
 
-#: plugins/personal/posix/class_posixAccount.inc:1327
-msgid "Posix Account"
-msgstr "Posix-Konto"
-
-#: plugins/personal/posix/class_posixAccount.inc:1335
+#: plugins/personal/posix/class_posixAccount.inc:1334
 #: plugins/addons/addressbook/class_addressbook.inc:615 html/getxls.php:100
 #: html/getxls.php:135 html/getxls.php:158 html/getxls.php:347
 #: html/getxls.php:364
 msgid "User ID"
 msgstr "Benutzer-ID"
 
-#: plugins/personal/posix/class_posixAccount.inc:1336
+#: plugins/personal/posix/class_posixAccount.inc:1335
 msgid "Group ID"
 msgstr "Gruppen-ID"
 
-#: plugins/personal/posix/class_posixAccount.inc:1338
+#: plugins/personal/posix/class_posixAccount.inc:1337
 msgid "Force password change on login"
 msgstr "Erzwinge Änderung des Passwort bei Anmeldung"
 
-#: plugins/personal/posix/class_posixAccount.inc:1339
+#: plugins/personal/posix/class_posixAccount.inc:1338
 msgid "Shadow min"
 msgstr "Shadow min"
 
-#: plugins/personal/posix/class_posixAccount.inc:1340
+#: plugins/personal/posix/class_posixAccount.inc:1339
 msgid "Shadow max"
 msgstr "Shadow max"
 
-#: plugins/personal/posix/class_posixAccount.inc:1341
+#: plugins/personal/posix/class_posixAccount.inc:1340
 msgid "Shadow warning"
 msgstr "Shadow warning"
 
-#: plugins/personal/posix/class_posixAccount.inc:1342
+#: plugins/personal/posix/class_posixAccount.inc:1341
 msgid "Shadow inactive"
 msgstr "Shadow inactive"
 
-#: plugins/personal/posix/class_posixAccount.inc:1343
+#: plugins/personal/posix/class_posixAccount.inc:1342
 msgid "Shadow expire"
 msgstr "Shadow expire"
 
-#: plugins/personal/posix/class_posixAccount.inc:1344
+#: plugins/personal/posix/class_posixAccount.inc:1343
 msgid "System trust model"
 msgstr "Modell des System-Vertrauens"
 
@@ -1852,7 +1852,7 @@ msgid "Allow user to change password from client"
 msgstr "Der Benutzer darf das Passwort vom Client aus ändern"
 
 #: plugins/personal/samba/samba2.tpl:72 plugins/personal/samba/samba3.tpl:301
-#: plugins/personal/samba/class_sambaAccount.inc:1082
+#: plugins/personal/samba/class_sambaAccount.inc:1081
 msgid "Login from windows client requires no password"
 msgstr "Die Anmeldung vom Windows-Client erfordert kein Passwort"
 
@@ -1861,7 +1861,7 @@ msgid "Temporary disable samba account"
 msgstr "Vorübergehende Deaktivierung des Samba-Zugriffs"
 
 #: plugins/personal/samba/samba3.tpl:27
-#: plugins/personal/samba/class_sambaAccount.inc:1097
+#: plugins/personal/samba/class_sambaAccount.inc:1096
 msgid "Domain"
 msgstr "Domäne"
 
@@ -1870,12 +1870,12 @@ msgid "Terminal Server"
 msgstr "Terminal-Server"
 
 #: plugins/personal/samba/samba3.tpl:94
-#: plugins/personal/samba/class_sambaAccount.inc:1078
+#: plugins/personal/samba/class_sambaAccount.inc:1077
 msgid "Allow login on terminal server"
 msgstr "Anmeldung am Terminalserver zulassen"
 
 #: plugins/personal/samba/samba3.tpl:131
-#: plugins/personal/samba/class_sambaAccount.inc:1079
+#: plugins/personal/samba/class_sambaAccount.inc:1078
 msgid "Inherit client config"
 msgstr "Client-Konfiguration übernehmen"
 
@@ -1940,17 +1940,17 @@ msgid "Reconnect if disconnected"
 msgstr "Wiederherstellen falls unterbrochen"
 
 #: plugins/personal/samba/samba3.tpl:306
-#: plugins/personal/samba/class_sambaAccount.inc:1083
+#: plugins/personal/samba/class_sambaAccount.inc:1082
 msgid "Lock samba account"
 msgstr "Samba-Konto sperren"
 
 #: plugins/personal/samba/samba3.tpl:331
-#: plugins/personal/samba/class_sambaAccount.inc:1089
+#: plugins/personal/samba/class_sambaAccount.inc:1088
 msgid "Limit Logon Time"
 msgstr "Limitiere Logon Zeit"
 
 #: plugins/personal/samba/samba3.tpl:351
-#: plugins/personal/samba/class_sambaAccount.inc:1090
+#: plugins/personal/samba/class_sambaAccount.inc:1089
 msgid "Limit Logoff Time"
 msgstr "Limitiere Logoff Zeit"
 
@@ -1971,7 +1971,7 @@ msgid "Allow connection from these workstations only"
 msgstr "Erlaube Verbindungen nur von diesen Arbeitsstationen"
 
 #: plugins/personal/samba/main.inc:124
-#: plugins/personal/samba/class_sambaAccount.inc:1068
+#: plugins/personal/samba/class_sambaAccount.inc:1068 setup/setup_step6.tpl:12
 msgid "Samba settings"
 msgstr "Samba-Einstellungen"
 
@@ -2100,43 +2100,39 @@ msgstr ""
 msgid "Saving of user/samba account with dn '%s' failed."
 msgstr "Speichern von Benutzer/Samba-Konto mit dn '%s' fehlgeschlagen."
 
-#: plugins/personal/samba/class_sambaAccount.inc:1073
-msgid "Samba account"
-msgstr "Samba-Konto"
-
-#: plugins/personal/samba/class_sambaAccount.inc:1081
+#: plugins/personal/samba/class_sambaAccount.inc:1080
 msgid "Allow user to change password"
 msgstr "Benutzer darf sein Passwort ändern"
 
-#: plugins/personal/samba/class_sambaAccount.inc:1086
+#: plugins/personal/samba/class_sambaAccount.inc:1085
 msgid "Account expires"
 msgstr "Konto läuft ab"
 
-#: plugins/personal/samba/class_sambaAccount.inc:1087
+#: plugins/personal/samba/class_sambaAccount.inc:1086
 msgid "Password expires"
 msgstr "Passwort läuft ab"
 
-#: plugins/personal/samba/class_sambaAccount.inc:1091
+#: plugins/personal/samba/class_sambaAccount.inc:1090
 msgid "Logon hours"
 msgstr "Anmeldezeiten"
 
-#: plugins/personal/samba/class_sambaAccount.inc:1093
+#: plugins/personal/samba/class_sambaAccount.inc:1092
 msgid "Generic home directory"
 msgstr "Allgemeines Basisverzeichnis"
 
-#: plugins/personal/samba/class_sambaAccount.inc:1094
+#: plugins/personal/samba/class_sambaAccount.inc:1093
 msgid "Generic samba home drive"
 msgstr "Allgemeines Samba Basis-Laufwerk"
 
-#: plugins/personal/samba/class_sambaAccount.inc:1095
+#: plugins/personal/samba/class_sambaAccount.inc:1094
 msgid "Generic script path"
 msgstr "Allgemeiner Skript-Pfad"
 
-#: plugins/personal/samba/class_sambaAccount.inc:1096
+#: plugins/personal/samba/class_sambaAccount.inc:1095
 msgid "Generic profile path"
 msgstr "Allgemeiner Profil-Pfad"
 
-#: plugins/personal/samba/class_sambaAccount.inc:1098
+#: plugins/personal/samba/class_sambaAccount.inc:1097
 msgid "Allow connection from"
 msgstr "Erlaube Verbindung von"
 
@@ -2190,6 +2186,8 @@ msgstr "Stunde"
 #: plugins/admin/systems/printerPPDDialog.tpl:22
 #: plugins/admin/systems/servRepositorySetup.tpl:54
 #: plugins/admin/ogroups/class_ogroupManagement.inc:298
+#: plugins/admin/acl/acl_role.tpl:49 plugins/admin/acl/acl_role.tpl:59
+#: plugins/admin/acl/acl_role.tpl:73
 #: plugins/admin/fai/class_faiManagement.inc:626
 #: plugins/admin/fai/faiProfileEntry.tpl:70
 #: plugins/admin/fai/faiScriptEntry.tpl:82
@@ -2203,33 +2201,33 @@ msgstr "Stunde"
 #: plugins/gofon/macro/class_gofonMacroManagement.inc:260
 #: plugins/gofon/conference/class_phoneConferenceManagment.inc:253
 #: ihtml/themes/default/acl.tpl:8 ihtml/themes/default/acl.tpl:20
-#: ihtml/themes/default/acl.tpl:69 ihtml/themes/default/acl.tpl:83
+#: ihtml/themes/default/acl.tpl:75 ihtml/themes/default/acl.tpl:89
 msgid "Apply"
 msgstr "Anwenden"
 
-#: plugins/personal/generic/class_user.inc:261
+#: plugins/personal/generic/class_user.inc:262
 msgid "female"
 msgstr "weiblich"
 
-#: plugins/personal/generic/class_user.inc:261
+#: plugins/personal/generic/class_user.inc:262
 msgid "male"
 msgstr "männlich"
 
-#: plugins/personal/generic/class_user.inc:278
+#: plugins/personal/generic/class_user.inc:279
 msgid "This account has no valid GOsa extensions."
 msgstr "Dieses Konto besitzt keine gültigen GOsa-Erweiterungen."
 
-#: plugins/personal/generic/class_user.inc:340
+#: plugins/personal/generic/class_user.inc:341
 msgid "The specified file has not been uploaded via HTTP POST! Aborted."
 msgstr ""
 "Die angegebene Datei wurde nicht über HTTP POST übertragen! Aktion "
 "abgebrochen."
 
-#: plugins/personal/generic/class_user.inc:437
+#: plugins/personal/generic/class_user.inc:438
 msgid "Please enter a valid serial number"
 msgstr "Bitte geben Sie eine gültige Seriennummer ein"
 
-#: plugins/personal/generic/class_user.inc:481
+#: plugins/personal/generic/class_user.inc:482
 msgid ""
 "(Some types of certificates are currently not supported and may be displayed "
 "as 'invalid'.)"
@@ -2237,49 +2235,49 @@ msgstr ""
 "(Manche Zertifikate werden momentan nicht unterstützt und werden daher als "
 "'ungültig' angezeigt)."
 
-#: plugins/personal/generic/class_user.inc:491
+#: plugins/personal/generic/class_user.inc:492
 #, php-format
 msgid "Certificate is valid from %s to %s and is currently %s."
 msgstr "Zertifkat ist gültig im Zeitraum von %s bis %s (momentan: %s)."
 
-#: plugins/personal/generic/class_user.inc:494
+#: plugins/personal/generic/class_user.inc:495
 msgid "valid"
 msgstr "gültig"
 
-#: plugins/personal/generic/class_user.inc:495
+#: plugins/personal/generic/class_user.inc:496
 msgid "invalid"
 msgstr "ungültig"
 
-#: plugins/personal/generic/class_user.inc:500
+#: plugins/personal/generic/class_user.inc:501
 msgid "No certificate installed"
 msgstr "Kein Zertifikat eingerichtet"
 
-#: plugins/personal/generic/class_user.inc:587
+#: plugins/personal/generic/class_user.inc:588
 #, php-format
 msgid "Removing of user/generic account with dn '%s' failed."
 msgstr "Entfernen von Benutzer/Allgemeines Konto mit dn '%s' fehlgeschlagen."
 
-#: plugins/personal/generic/class_user.inc:619
-#: plugins/personal/generic/class_user.inc:987
+#: plugins/personal/generic/class_user.inc:620
+#: plugins/personal/generic/class_user.inc:982
 msgid "Kerberos database communication failed"
 msgstr "Die Kommunikation mit der Kerberos-Datenbank ist fehlgeschlagen"
 
-#: plugins/personal/generic/class_user.inc:633
-#: plugins/personal/generic/class_user.inc:1004
+#: plugins/personal/generic/class_user.inc:634
+#: plugins/personal/generic/class_user.inc:999
 msgid "Can't remove user from kerberos database."
 msgstr "Benutzer kann nicht aus der Kerberos-Datenbank entfernt werden."
 
-#: plugins/personal/generic/class_user.inc:689
+#: plugins/personal/generic/class_user.inc:690
 #, php-format
 msgid "You are not allowed to move this object to '%s'."
 msgstr "Es ist Ihnen nicht erlaubt, dieses Objekt nach '%s' zu verschieben."
 
-#: plugins/personal/generic/class_user.inc:940
+#: plugins/personal/generic/class_user.inc:935
 #, php-format
 msgid "Saving of user/generic account with dn '%s' failed."
 msgstr "Speichern von Benutzer/Allgemeines Konto mit dn '%s' fehlgeschlagen."
 
-#: plugins/personal/generic/class_user.inc:1015
+#: plugins/personal/generic/class_user.inc:1010
 msgid "Can't add user to kerberos database."
 msgstr "Benutzer kann nicht zur Kerberos-Datenbank hinzugefügt werden."
 
@@ -2305,7 +2303,7 @@ msgstr "Das benötigte Feld 'Vorname' ist nicht gesetzt."
 msgid "The required field 'Login' is not set."
 msgstr "Das benötigte Feld 'Kennung' ist nicht gesetzt."
 
-#: plugins/personal/generic/class_user.inc:1092
+#: plugins/personal/generic/class_user.inc:1090
 msgid ""
 "There's already a person with this 'Name'/'Given name' combination in the "
 "database."
@@ -2313,7 +2311,7 @@ msgstr ""
 "Die von Ihnen angegebene Kombination aus 'Name'/'Vorname' ist bereits in der "
 "Datenbank vorhanden."
 
-#: plugins/personal/generic/class_user.inc:1099
+#: plugins/personal/generic/class_user.inc:1097
 msgid ""
 "The field 'Login' contains invalid characters. Lowercase, numbers and dashes "
 "are allowed."
@@ -2321,119 +2319,121 @@ msgstr ""
 "Das Feld 'Kennung' enthält ungültige Zeichen. Kleinbuchstaben, Zahlen und "
 "Bindestriche sind erlaubt."
 
-#: plugins/personal/generic/class_user.inc:1102
+#: plugins/personal/generic/class_user.inc:1100
 msgid "The field 'Homepage' contains an invalid URL definition."
 msgstr "Das Feld 'Homepage' enthält eine ungültige Internetadresse."
 
-#: plugins/personal/generic/class_user.inc:1105
-#: plugins/personal/generic/class_user.inc:1130
+#: plugins/personal/generic/class_user.inc:1103
+#: plugins/personal/generic/class_user.inc:1128
 #: plugins/addons/addressbook/class_addressbook.inc:663
 #: plugins/addons/addressbook/class_addressbook.inc:691
 #: plugins/admin/departments/class_departmentGeneric.inc:269
 msgid "The field 'Name' contains invalid characters."
 msgstr "Das Feld 'Name' enthält ungültige Zeichen."
 
-#: plugins/personal/generic/class_user.inc:1108
-#: plugins/personal/generic/class_user.inc:1127
+#: plugins/personal/generic/class_user.inc:1106
+#: plugins/personal/generic/class_user.inc:1125
 #: plugins/addons/addressbook/class_addressbook.inc:666
 #: plugins/addons/addressbook/class_addressbook.inc:688
 msgid "The field 'Given name' contains invalid characters."
 msgstr "Das Feld 'Vorname' enthält ungültige Zeichen."
 
-#: plugins/personal/generic/class_user.inc:1113
+#: plugins/personal/generic/class_user.inc:1111
 #: plugins/addons/addressbook/class_addressbook.inc:671
 #: plugins/addons/addressbook/class_addressbook.inc:674
 #: plugins/admin/departments/class_departmentGeneric.inc:272
 msgid "The field 'Phone' contains an invalid phone number."
 msgstr "Das Feld 'Telefon' enthält eine ungültige Telefonnummer."
 
-#: plugins/personal/generic/class_user.inc:1116
+#: plugins/personal/generic/class_user.inc:1114
 #: plugins/addons/addressbook/class_addressbook.inc:677
 #: plugins/admin/departments/class_departmentGeneric.inc:275
 msgid "The field 'Fax' contains an invalid phone number."
 msgstr "Das Feld 'Fax' enthält eine ungültige Telefonnummer."
 
-#: plugins/personal/generic/class_user.inc:1119
+#: plugins/personal/generic/class_user.inc:1117
 #: plugins/addons/addressbook/class_addressbook.inc:680
 msgid "The field 'Mobile' contains an invalid phone number."
 msgstr "Das Feld 'Mobil' enthält eine ungültige Telefonnummer"
 
-#: plugins/personal/generic/class_user.inc:1122
+#: plugins/personal/generic/class_user.inc:1120
 #: plugins/addons/addressbook/class_addressbook.inc:683
 msgid "The field 'Pager' contains an invalid phone number."
 msgstr "Das Feld 'Pager' enthält eine ungültige Telefonnummer."
 
-#: plugins/personal/generic/class_user.inc:1231
+#: plugins/personal/generic/class_user.inc:1229
 msgid "Could not open specified certificate!"
 msgstr "Die angegebene Datei konnte nicht geöffnet werden!"
 
-#: plugins/personal/generic/class_user.inc:1362
+#: plugins/personal/generic/class_user.inc:1360
 #: plugins/personal/generic/generic.tpl:442
 msgid "Unit"
 msgstr "Referat"
 
-#: plugins/personal/generic/class_user.inc:1363
+#: plugins/personal/generic/class_user.inc:1361
 #: plugins/personal/generic/generic.tpl:467
 msgid "House identifier"
 msgstr "Hausbezeichnung"
 
-#: plugins/personal/generic/class_user.inc:1364
+#: plugins/personal/generic/class_user.inc:1362
 #: plugins/personal/generic/generic.tpl:384
 msgid "Vocation"
 msgstr "Anrede"
 
-#: plugins/personal/generic/class_user.inc:1365
+#: plugins/personal/generic/class_user.inc:1363
 #: plugins/personal/generic/generic.tpl:511
 msgid "Last delivery"
 msgstr "letzte Übermittlung"
 
-#: plugins/personal/generic/class_user.inc:1366
+#: plugins/personal/generic/class_user.inc:1364
 #: plugins/personal/generic/generic.tpl:433
 msgid "Person locality"
 msgstr "Dienstort"
 
-#: plugins/personal/generic/class_user.inc:1367
+#: plugins/personal/generic/class_user.inc:1365
 #: plugins/personal/generic/generic.tpl:392
 msgid "Unit description"
 msgstr "Aufgabengebiet"
 
-#: plugins/personal/generic/class_user.inc:1368
+#: plugins/personal/generic/class_user.inc:1366
 #: plugins/personal/generic/generic.tpl:401
 msgid "Subject area"
 msgstr "Sachgebiet"
 
-#: plugins/personal/generic/class_user.inc:1369
+#: plugins/personal/generic/class_user.inc:1367
 #: plugins/personal/generic/generic.tpl:410
 msgid "Functional title"
 msgstr "Amts-/Dienstbezeichnung"
 
-#: plugins/personal/generic/class_user.inc:1371
+#: plugins/personal/generic/class_user.inc:1369
 #: plugins/personal/generic/generic.tpl:520
 msgid "Public visible"
 msgstr "Öffentlich sichtbar"
 
-#: plugins/personal/generic/class_user.inc:1372
+#: plugins/personal/generic/class_user.inc:1370
 #: plugins/personal/generic/generic.tpl:451
 msgid "Street"
 msgstr "Straße"
 
-#: plugins/personal/generic/class_user.inc:1373
+#: plugins/personal/generic/class_user.inc:1371
 #: plugins/personal/generic/generic.tpl:419
+#: plugins/admin/acl/class_divListACL.inc:148
+#: plugins/admin/acl/class_aclRole.inc:929
 msgid "Role"
 msgstr "Funktion"
 
-#: plugins/personal/generic/class_user.inc:1374
+#: plugins/personal/generic/class_user.inc:1372
 #: plugins/personal/generic/generic.tpl:459
 #: plugins/addons/addressbook/address_edit.tpl:179
 #: plugins/addons/addressbook/address_info.tpl:133 html/getxls.php:227
 msgid "Postal code"
 msgstr "Postleitzahl"
 
-#: plugins/personal/generic/class_user.inc:1378
+#: plugins/personal/generic/class_user.inc:1376
 msgid "Generic user settings"
 msgstr "Allgemeine Benutzereinstellungen"
 
-#: plugins/personal/generic/class_user.inc:1383
+#: plugins/personal/generic/class_user.inc:1381
 #: plugins/addons/notifications/class_msgplug.inc:35
 #: plugins/admin/users/class_userManagement.inc:28
 #: plugins/admin/systems/printer.tpl:91
@@ -2443,7 +2443,7 @@ msgstr "Allgemeine Benutzereinstellungen"
 msgid "Users"
 msgstr "Benutzer"
 
-#: plugins/personal/generic/class_user.inc:1387
+#: plugins/personal/generic/class_user.inc:1385
 #: plugins/personal/generic/generic.tpl:143
 #: plugins/gofax/blocklists/generic.tpl:17
 #: plugins/gofax/blocklists/class_blocklistManagement.inc:598
@@ -2457,7 +2457,7 @@ msgstr "Benutzer"
 #: plugins/admin/applications/class_applicationGeneric.inc:533
 #: plugins/admin/applications/class_divListApplication.inc:144
 #: plugins/admin/departments/generic.tpl:35
-#: plugins/admin/departments/class_departmentGeneric.inc:586
+#: plugins/admin/departments/class_departmentGeneric.inc:589
 #: plugins/admin/departments/class_divListDepartment.inc:100
 #: plugins/admin/systems/terminal.tpl:19 plugins/admin/systems/server.tpl:22
 #: plugins/admin/systems/phone.tpl:17 plugins/admin/systems/printer.tpl:27
@@ -2467,7 +2467,7 @@ msgstr "Benutzer"
 #: plugins/admin/systems/class_workstationGeneric.inc:535
 #: plugins/admin/systems/wingeneric.tpl:13
 #: plugins/admin/systems/component.tpl:17
-#: plugins/admin/systems/class_printGeneric.inc:881
+#: plugins/admin/systems/class_printGeneric.inc:882
 #: plugins/admin/systems/class_componentGeneric.inc:269
 #: plugins/admin/systems/class_phoneGeneric.inc:440
 #: plugins/admin/systems/class_glpiSelectUser.inc:181
@@ -2477,7 +2477,8 @@ msgstr "Benutzer"
 #: plugins/admin/ogroups/generic.tpl:26
 #: plugins/admin/ogroups/class_ogroup.inc:705
 #: plugins/admin/ogroups/class_divListOGroup.inc:149
-#: plugins/admin/acl/class_divListACL.inc:98
+#: plugins/admin/acl/class_divListACL.inc:119
+#: plugins/admin/acl/acl_role.tpl:27 plugins/admin/acl/class_aclRole.inc:939
 #: plugins/admin/fai/class_divListFai.inc:171
 #: plugins/admin/mimetypes/generic.tpl:44
 #: plugins/admin/mimetypes/class_mimetypeGeneric.inc:683
@@ -2488,60 +2489,62 @@ msgstr "Benutzer"
 #: plugins/gofon/conference/generic.tpl:49
 #: plugins/gofon/conference/class_phoneConferenceGeneric.inc:684
 #: plugins/gofon/conference/class_divListConferences.inc:114
+#: setup/setup_step6.tpl:188 setup/setup_step6.tpl:210
+#: setup/setup_step4.tpl:35
 msgid "Base"
 msgstr "Basis"
 
-#: plugins/personal/generic/class_user.inc:1389
+#: plugins/personal/generic/class_user.inc:1387
 #: plugins/addons/addressbook/class_addressbook.inc:792 html/getxls.php:301
 msgid "Surename"
 msgstr "Nachname"
 
-#: plugins/personal/generic/class_user.inc:1390
+#: plugins/personal/generic/class_user.inc:1388
 #: plugins/addons/addressbook/class_addressbook.inc:613
 #: plugins/addons/addressbook/class_addressbook.inc:793 html/getxls.php:86
 #: html/getxls.php:223 html/getxls.php:281 html/getxls.php:297
 msgid "Given name"
 msgstr "Vorname"
 
-#: plugins/personal/generic/class_user.inc:1391
+#: plugins/personal/generic/class_user.inc:1389
 #: plugins/addons/addressbook/class_addressbook.inc:798
 msgid "User identification"
 msgstr "Benutzerkennung"
 
-#: plugins/personal/generic/class_user.inc:1392
+#: plugins/personal/generic/class_user.inc:1390
 #: plugins/personal/generic/generic.tpl:73
 #: plugins/addons/addressbook/address_edit.tpl:60
 #: plugins/addons/addressbook/address_info.tpl:40
 msgid "Personal title"
 msgstr "Titel"
 
-#: plugins/personal/generic/class_user.inc:1393
+#: plugins/personal/generic/class_user.inc:1391
 #: plugins/personal/generic/generic.tpl:83
 msgid "Academic title"
 msgstr "Akademischer Titel"
 
-#: plugins/personal/generic/class_user.inc:1394
+#: plugins/personal/generic/class_user.inc:1392
 #: plugins/addons/addressbook/class_addressbook.inc:809 html/getxls.php:224
 msgid "Home postal address"
 msgstr "Private Adresse"
 
-#: plugins/personal/generic/class_user.inc:1395
+#: plugins/personal/generic/class_user.inc:1393
 #: plugins/addons/addressbook/class_addressbook.inc:797
 msgid "Home phone number"
 msgstr "Telefonnummer (privat)"
 
-#: plugins/personal/generic/class_user.inc:1396
+#: plugins/personal/generic/class_user.inc:1394
 #: plugins/personal/generic/generic.tpl:183
 msgid "Homepage"
 msgstr "Homepage"
 
-#: plugins/personal/generic/class_user.inc:1397
+#: plugins/personal/generic/class_user.inc:1395
 #: plugins/personal/generic/generic.tpl:250
 #: plugins/addons/addressbook/class_addressbook.inc:801 html/getxls.php:299
 msgid "Organization"
 msgstr "Organisation"
 
-#: plugins/personal/generic/class_user.inc:1398
+#: plugins/personal/generic/class_user.inc:1396
 #: plugins/personal/generic/generic.tpl:258
 #: plugins/gofax/blocklists/class_divListBlocklists.inc:52
 #: plugins/addons/addressbook/address_edit.tpl:155
@@ -2556,92 +2559,92 @@ msgstr "Organisation"
 msgid "Department"
 msgstr "Abteilung"
 
-#: plugins/personal/generic/class_user.inc:1399
+#: plugins/personal/generic/class_user.inc:1397
 #: plugins/personal/generic/generic.tpl:93
 msgid "Date of birth"
 msgstr "Geburtsdatum"
 
-#: plugins/personal/generic/class_user.inc:1400
+#: plugins/personal/generic/class_user.inc:1398
 msgid "Gender"
 msgstr "Geschlecht"
 
-#: plugins/personal/generic/class_user.inc:1401
+#: plugins/personal/generic/class_user.inc:1399
 msgid "Preferred language"
 msgstr "Bevorzugte Sprache"
 
-#: plugins/personal/generic/class_user.inc:1402
+#: plugins/personal/generic/class_user.inc:1400
 msgid "Department number"
 msgstr "Abteilungsnummer"
 
-#: plugins/personal/generic/class_user.inc:1403
+#: plugins/personal/generic/class_user.inc:1401
 msgid "Employee number"
 msgstr "Personalnummer"
 
-#: plugins/personal/generic/class_user.inc:1404
+#: plugins/personal/generic/class_user.inc:1402
 #: plugins/personal/generic/generic.tpl:282
 msgid "Employee type"
 msgstr "Anstellungsart"
 
-#: plugins/personal/generic/class_user.inc:1405
+#: plugins/personal/generic/class_user.inc:1403
 #: plugins/personal/generic/generic.tpl:352
 #: plugins/addons/addressbook/class_addressbook.inc:803
 #: plugins/addons/godfs/generic.tpl:34
 #: plugins/admin/departments/generic.tpl:56
 #: plugins/admin/departments/generic.tpl:68
-#: plugins/admin/departments/class_departmentGeneric.inc:587
+#: plugins/admin/departments/class_departmentGeneric.inc:590
 #: plugins/admin/systems/workstation.tpl:19
 #: plugins/admin/systems/class_workstationGeneric.inc:534
-#: plugins/admin/systems/class_printGeneric.inc:883
+#: plugins/admin/systems/class_printGeneric.inc:884
 #: plugins/admin/systems/class_glpiAccount.inc:782
 #: plugins/admin/systems/class_glpiPrinterAccount.inc:785 html/getxls.php:224
 msgid "Location"
 msgstr "Ort"
 
-#: plugins/personal/generic/class_user.inc:1406
+#: plugins/personal/generic/class_user.inc:1404
 #: plugins/personal/generic/generic.tpl:360
 #: plugins/addons/addressbook/class_addressbook.inc:806
 #: plugins/admin/departments/generic.tpl:60
-#: plugins/admin/departments/class_departmentGeneric.inc:591
+#: plugins/admin/departments/class_departmentGeneric.inc:594
 #: html/getxls.php:228 html/getxls.php:301
 msgid "State"
 msgstr "Land"
 
-#: plugins/personal/generic/class_user.inc:1407
+#: plugins/personal/generic/class_user.inc:1405
 #: plugins/personal/generic/paste_generic.tpl:47
 msgid "User picture"
 msgstr "Benutzerbild"
 
-#: plugins/personal/generic/class_user.inc:1408
+#: plugins/personal/generic/class_user.inc:1406
 msgid "Room number"
 msgstr "Raumnummer"
 
-#: plugins/personal/generic/class_user.inc:1409
+#: plugins/personal/generic/class_user.inc:1407
 #: plugins/addons/addressbook/class_addressbook.inc:794
 msgid "Telefon number"
 msgstr "Telefonnummer"
 
-#: plugins/personal/generic/class_user.inc:1410
+#: plugins/personal/generic/class_user.inc:1408
 #: plugins/addons/addressbook/class_addressbook.inc:796
 msgid "Mobile number"
 msgstr "Mobiltelefon"
 
-#: plugins/personal/generic/class_user.inc:1411
-#: plugins/personal/nagios/class_nagiosAccount.inc:272
+#: plugins/personal/generic/class_user.inc:1409
+#: plugins/personal/nagios/class_nagiosAccount.inc:271
 msgid "Pager number"
 msgstr "Pagernummer"
 
-#: plugins/personal/generic/class_user.inc:1412
+#: plugins/personal/generic/class_user.inc:1410
 msgid "User certificates"
 msgstr "Benutzer-Zertifikate"
 
-#: plugins/personal/generic/class_user.inc:1414
+#: plugins/personal/generic/class_user.inc:1412
 #: plugins/addons/addressbook/class_addressbook.inc:804
 #: plugins/addons/addressbook/class_addressbook.inc:805 html/getxls.php:226
 #: html/getxls.php:298 html/getxls.php:300
 msgid "Postal address"
 msgstr "Adresse"
 
-#: plugins/personal/generic/class_user.inc:1415
+#: plugins/personal/generic/class_user.inc:1413
 #: plugins/gofax/faxaccount/class_gofaxAccount.inc:827
 #: plugins/addons/addressbook/class_addressbook.inc:795
 msgid "Fax number"
@@ -2717,8 +2720,8 @@ msgstr "Wählen Sie den Teilbaum, in den der Benutzer eingepflegt werden soll"
 #: plugins/admin/systems/workstation.tpl:35
 #: plugins/admin/systems/wingeneric.tpl:18
 #: plugins/admin/systems/component.tpl:25 plugins/admin/ogroups/generic.tpl:34
-#: plugins/admin/mimetypes/generic.tpl:53 plugins/gofon/macro/generic.tpl:36
-#: plugins/gofon/conference/generic.tpl:56
+#: plugins/admin/acl/acl_role.tpl:37 plugins/admin/mimetypes/generic.tpl:53
+#: plugins/gofon/macro/generic.tpl:36 plugins/gofon/conference/generic.tpl:56
 #: plugins/gofon/conference/generic.tpl:62
 msgid "Select a base"
 msgstr "Wählen Sie eine Basis"
@@ -2730,7 +2733,7 @@ msgstr "Wählen Sie eine Basis"
 #: plugins/addons/addressbook/address_info.tpl:59
 #: plugins/addons/addressbook/address_info.tpl:155
 #: plugins/admin/departments/generic.tpl:76
-#: plugins/admin/departments/class_departmentGeneric.inc:592
+#: plugins/admin/departments/class_departmentGeneric.inc:595
 #: plugins/admin/systems/glpiManufacturerAdd.tpl:21 html/getxls.php:227
 msgid "Address"
 msgstr "Adresse"
@@ -2819,7 +2822,7 @@ msgstr "Bild entfernen"
 #: plugins/personal/generic/generic_certs.tpl:91
 #: plugins/personal/environment/hotplugDialogNew.tpl:53
 #: plugins/addons/addressbook/address_edit.tpl:264
-#: plugins/admin/departments/class_departmentManagement.inc:316
+#: plugins/admin/departments/class_departmentManagement.inc:317
 #: plugins/admin/departments/dep_move_confirm.tpl:15
 #: plugins/admin/systems/goNtpServer.tpl:29
 #: plugins/admin/systems/servdns.tpl:21
@@ -2872,7 +2875,7 @@ msgstr "Standard-Zertifikat"
 #: plugins/personal/connectivity/class_kolabAccount.inc:258
 #: plugins/personal/environment/environment.tpl:159
 #: plugins/personal/environment/kioskManagement.tpl:15
-#: plugins/admin/groups/class_groupMail.inc:604
+#: plugins/admin/groups/class_groupMail.inc:605
 #: plugins/admin/applications/class_applicationParameters.inc:124
 #: plugins/admin/systems/printer.tpl:71
 #: plugins/admin/systems/glpiPrinter.tpl:152
@@ -2915,7 +2918,6 @@ msgid "Set new password"
 msgstr "Neues Passwort setzen"
 
 #: plugins/personal/connectivity/pureftpd.tpl:4
-#: plugins/personal/connectivity/class_pureftpdAccount.inc:224
 msgid "FTP account"
 msgstr "FTP Konto"
 
@@ -2971,7 +2973,6 @@ msgstr "Temporäres Abschalten des FTP-Zugriffs"
 
 #: plugins/personal/connectivity/proxy.tpl:23
 #: plugins/personal/connectivity/class_proxyAccount.inc:292
-#: plugins/personal/connectivity/class_proxyAccount.inc:297
 msgid "Proxy account"
 msgstr "Proxy Konto"
 
@@ -2986,7 +2987,7 @@ msgid "Limit proxy access to working time"
 msgstr "Inhaltsfilterung nur während der Arbeitszeit"
 
 #: plugins/personal/connectivity/proxy.tpl:84
-#: plugins/personal/connectivity/class_proxyAccount.inc:304
+#: plugins/personal/connectivity/class_proxyAccount.inc:303
 msgid "Restrict proxy usage by quota"
 msgstr "Proxynutzung durch Kontingent einschränken"
 
@@ -3022,16 +3023,12 @@ msgstr "PHP GW Konto-Einstellungen"
 #: plugins/personal/connectivity/class_pureftpdAccount.inc:219
 #: plugins/personal/connectivity/class_oxchangeAccount.inc:950
 #: plugins/personal/connectivity/class_proxyAccount.inc:292
-#: plugins/personal/connectivity/class_intranetAccount.inc:185
+#: plugins/personal/connectivity/class_intranetAccount.inc:184
 #: plugins/personal/connectivity/class_pptpAccount.inc:159
 #: plugins/personal/connectivity/class_phpscheduleitAccount.inc:144
 #: plugins/personal/connectivity/class_opengwAccount.inc:310
 msgid "Connectivity addon"
 msgstr "Konnektivitäts-Erweiterung"
-
-#: plugins/personal/connectivity/class_phpgwAccount.inc:148
-msgid "PHPgroupware"
-msgstr "PHPgroupware"
 
 #: plugins/personal/connectivity/phpgw.tpl:3
 msgid "PHPGroupware account"
@@ -3039,7 +3036,6 @@ msgstr "phpGroupware-Konto"
 
 #: plugins/personal/connectivity/kolab.tpl:3
 #: plugins/personal/connectivity/kolab.tpl:35
-#: plugins/personal/connectivity/class_kolabAccount.inc:452
 msgid "Kolab account"
 msgstr "Kolab-Konto"
 
@@ -3052,7 +3048,7 @@ msgstr ""
 "werden, wenn Sie ein Postfach hinzufügen."
 
 #: plugins/personal/connectivity/kolab.tpl:41
-#: plugins/personal/connectivity/class_kolabAccount.inc:460
+#: plugins/personal/connectivity/class_kolabAccount.inc:459
 msgid "Delegations"
 msgstr "Stellvertreter"
 
@@ -3084,7 +3080,7 @@ msgid "days"
 msgstr "Tage"
 
 #: plugins/personal/connectivity/kolab.tpl:93
-#: plugins/personal/connectivity/class_kolabAccount.inc:461
+#: plugins/personal/connectivity/class_kolabAccount.inc:460
 msgid "Invitation policy"
 msgstr "Einladungs-Richtlinie"
 
@@ -3167,15 +3163,15 @@ msgstr "Speichern von Benutzer/Kolab-Konto mit dn '%s' fehlgeschlagen."
 msgid "Kolab account settings"
 msgstr "Kolab Konto-Einstellungen"
 
-#: plugins/personal/connectivity/class_kolabAccount.inc:457
+#: plugins/personal/connectivity/class_kolabAccount.inc:456
 msgid "Free busy future"
 msgstr "Frei/Belegt Ausblick"
 
-#: plugins/personal/connectivity/class_kolabAccount.inc:458
+#: plugins/personal/connectivity/class_kolabAccount.inc:457
 msgid "Mail size restriction"
 msgstr "Beschränkung der Nachrichtengröße"
 
-#: plugins/personal/connectivity/class_kolabAccount.inc:459
+#: plugins/personal/connectivity/class_kolabAccount.inc:458
 msgid "Free busy information"
 msgstr "Frei/Belegt-Information"
 
@@ -3195,7 +3191,6 @@ msgid "Saving of user/webDAV account with dn '%s' failed."
 msgstr "Speichern von Benutzer/webDAV-Konto mit dn '%s' fehlgeschlagen."
 
 #: plugins/personal/connectivity/class_webdavAccount.inc:142
-#: plugins/personal/connectivity/class_webdavAccount.inc:147
 #: plugins/personal/connectivity/webdav.tpl:3
 msgid "WebDAV account"
 msgstr "WebDAV-Konto"
@@ -3247,27 +3242,27 @@ msgstr "FTP"
 msgid "Pure ftp account"
 msgstr "PureFTP-Konto"
 
-#: plugins/personal/connectivity/class_pureftpdAccount.inc:229
+#: plugins/personal/connectivity/class_pureftpdAccount.inc:228
 msgid "Quota files"
 msgstr "Kontingent-Dateien"
 
-#: plugins/personal/connectivity/class_pureftpdAccount.inc:230
+#: plugins/personal/connectivity/class_pureftpdAccount.inc:229
 msgid "Upload ratio"
 msgstr "Upload-Verhältnis"
 
-#: plugins/personal/connectivity/class_pureftpdAccount.inc:231
+#: plugins/personal/connectivity/class_pureftpdAccount.inc:230
 msgid "Quota MBytes"
 msgstr "Kontingent-Größe"
 
-#: plugins/personal/connectivity/class_pureftpdAccount.inc:232
+#: plugins/personal/connectivity/class_pureftpdAccount.inc:231
 msgid "Download ratio"
 msgstr "Download-Verhältnis"
 
-#: plugins/personal/connectivity/class_pureftpdAccount.inc:233
+#: plugins/personal/connectivity/class_pureftpdAccount.inc:232
 msgid "Upload bandwith"
 msgstr "Upload-Bandbreite"
 
-#: plugins/personal/connectivity/class_pureftpdAccount.inc:234
+#: plugins/personal/connectivity/class_pureftpdAccount.inc:233
 msgid "Download bandwith"
 msgstr "Download-Bandbreite"
 
@@ -3309,6 +3304,13 @@ msgstr "Zeitzone des Benutzers"
 
 #: plugins/personal/connectivity/class_oxchangeAccount.inc:24
 msgid "Open-Xchange"
+msgstr "Open-Xchange"
+
+#: plugins/personal/connectivity/class_oxchangeAccount.inc:717
+#: plugins/personal/connectivity/class_oxchangeAccount.inc:721
+#: plugins/personal/connectivity/class_oxchangeAccount.inc:725
+#, fuzzy
+msgid "Openexchange"
 msgstr "Open-Xchange"
 
 #: plugins/personal/connectivity/class_oxchangeAccount.inc:717
@@ -3369,24 +3371,19 @@ msgstr "Open-Xchange"
 msgid "Open xchange account settings"
 msgstr "Open-Xchange Konto-Einstellungen"
 
-#: plugins/personal/connectivity/class_oxchangeAccount.inc:955
-msgid "OpenExchange account"
-msgstr "OpenExchange-Konto"
-
-#: plugins/personal/connectivity/class_oxchangeAccount.inc:960
+#: plugins/personal/connectivity/class_oxchangeAccount.inc:959
 msgid "OXAppointmentDays"
 msgstr "OX-Tage für Termin"
 
-#: plugins/personal/connectivity/class_oxchangeAccount.inc:961
+#: plugins/personal/connectivity/class_oxchangeAccount.inc:960
 msgid "OXTaskDays"
 msgstr "OX-Tage für Aufgabe"
 
-#: plugins/personal/connectivity/class_oxchangeAccount.inc:962
+#: plugins/personal/connectivity/class_oxchangeAccount.inc:961
 msgid "OXTimeZone"
 msgstr "OX-Zeitzone"
 
 #: plugins/personal/connectivity/intranet.tpl:3
-#: plugins/personal/connectivity/class_intranetAccount.inc:181
 msgid "Intranet account"
 msgstr "Intranet-Konto"
 
@@ -3447,17 +3444,16 @@ msgstr ""
 msgid "Saving of user/proxy account with dn '%s' failed."
 msgstr "Speichern von Benutzert/Proxy-Konto mit dn '%s' fehlgeschlagen."
 
-#: plugins/personal/connectivity/class_proxyAccount.inc:302
+#: plugins/personal/connectivity/class_proxyAccount.inc:301
 msgid "Filter unwanted content"
 msgstr "Filtere ungewünschten Inhalt"
 
-#: plugins/personal/connectivity/class_proxyAccount.inc:303
+#: plugins/personal/connectivity/class_proxyAccount.inc:302
 msgid "Limit proxy access"
 msgstr "Beschränke Proxy-Zugriff"
 
 #: plugins/personal/connectivity/pptp.tpl:3
 #: plugins/personal/connectivity/class_pptpAccount.inc:159
-#: plugins/personal/connectivity/class_pptpAccount.inc:164
 msgid "PPTP account"
 msgstr "PPTP-Konto"
 
@@ -3476,7 +3472,7 @@ msgstr "Entfernen von Benutzer/Intranet-Konto mit dn '%s' fehlgeschlagen."
 msgid "Saving of user/intranet account with dn '%s' failed."
 msgstr "Speichern von Benutzer/Intranet-Konto mit dn '%s' fehlgeschlagen."
 
-#: plugins/personal/connectivity/class_intranetAccount.inc:185
+#: plugins/personal/connectivity/class_intranetAccount.inc:184
 msgid "Intranet account settings"
 msgstr "Einstellungen für Intranet-Konto"
 
@@ -3501,22 +3497,21 @@ msgstr "Speichern von Benutzer/PPTP-Konto mit dn '%s' fehlgeschlagen."
 
 #: plugins/personal/connectivity/opengw.tpl:1
 #: plugins/personal/connectivity/class_opengwAccount.inc:309
-#: plugins/personal/connectivity/class_opengwAccount.inc:315
 msgid "Opengroupware"
 msgstr "Opengroupware"
 
 #: plugins/personal/connectivity/opengw.tpl:8
-#: plugins/personal/connectivity/class_opengwAccount.inc:320
+#: plugins/personal/connectivity/class_opengwAccount.inc:319
 msgid "Location team"
 msgstr "Örtliches Team"
 
 #: plugins/personal/connectivity/opengw.tpl:21
-#: plugins/personal/connectivity/class_opengwAccount.inc:321
+#: plugins/personal/connectivity/class_opengwAccount.inc:320
 msgid "Template user"
 msgstr "Benutzer-Vorlage"
 
 #: plugins/personal/connectivity/opengw.tpl:33
-#: plugins/personal/connectivity/class_opengwAccount.inc:322
+#: plugins/personal/connectivity/class_opengwAccount.inc:321
 #: plugins/admin/systems/class_servGeneric.inc:53
 #: plugins/admin/systems/class_workstationGeneric.inc:109
 #: plugins/admin/ogroups/class_termgroup.inc:41
@@ -3524,7 +3519,7 @@ msgid "Locked"
 msgstr "Gesperrt"
 
 #: plugins/personal/connectivity/opengw.tpl:48
-#: plugins/personal/connectivity/class_opengwAccount.inc:323
+#: plugins/personal/connectivity/class_opengwAccount.inc:322
 msgid "Teams"
 msgstr "Teams"
 
@@ -3553,10 +3548,6 @@ msgstr "PHP Schedule It"
 #: plugins/personal/connectivity/class_phpscheduleitAccount.inc:144
 msgid "PHP Schedule it settings"
 msgstr "PHP Schedule It Einstellungen"
-
-#: plugins/personal/connectivity/class_phpscheduleitAccount.inc:149
-msgid "PHP schedule it"
-msgstr "PHP schedule it"
 
 #: plugins/personal/connectivity/class_opengwAccount.inc:6
 msgid "Opengroupware account"
@@ -3617,7 +3608,7 @@ msgid "Profil quota"
 msgstr "Profil-Kontingent"
 
 #: plugins/personal/environment/environment.tpl:73
-#: plugins/personal/environment/class_environment.inc:1285
+#: plugins/personal/environment/class_environment.inc:1283
 msgid "Cache profile localy"
 msgstr "Profil lokal zwischenspeichern"
 
@@ -3626,7 +3617,7 @@ msgid "Kiosk profile settings"
 msgstr "Kiosk-Profil-Einstellungen"
 
 #: plugins/personal/environment/environment.tpl:85
-#: plugins/personal/environment/class_environment.inc:1291
+#: plugins/personal/environment/class_environment.inc:1289
 msgid "Kiosk profile"
 msgstr "Kiosk-Profil"
 
@@ -3635,19 +3626,19 @@ msgid "Manage"
 msgstr "Verwalten"
 
 #: plugins/personal/environment/environment.tpl:105
-#: plugins/personal/environment/class_environment.inc:1284
+#: plugins/personal/environment/class_environment.inc:1282
 msgid "Resolution changeable during session"
 msgstr "Auflösung änderbar während des Betriebs"
 
 #: plugins/personal/environment/environment.tpl:110
-#: plugins/personal/environment/class_environment.inc:1290
+#: plugins/personal/environment/class_environment.inc:1288
 #: plugins/admin/systems/workstationService.tpl:122
 #: plugins/admin/systems/terminalService.tpl:108
 msgid "Resolution"
 msgstr "Auflösung"
 
 #: plugins/personal/environment/environment.tpl:133
-#: plugins/personal/environment/class_environment.inc:1296
+#: plugins/personal/environment/class_environment.inc:1294
 #: plugins/admin/systems/class_terminalStartup.inc:456
 #: plugins/admin/systems/class_workstationStartup.inc:1173
 #: plugins/admin/systems/workstationStartup.tpl:162
@@ -3679,7 +3670,7 @@ msgid "Logon script management"
 msgstr "Verwaltung der Anmelde-Skripte"
 
 #: plugins/personal/environment/environment.tpl:203
-#: plugins/personal/environment/class_environment.inc:1295
+#: plugins/personal/environment/class_environment.inc:1293
 msgid "Hotplug devices"
 msgstr "Hotplug-Geräte"
 
@@ -3932,29 +3923,27 @@ msgid "Administrator"
 msgstr "Administrator"
 
 #: plugins/personal/environment/class_environment.inc:1243
-#: plugins/personal/environment/class_environment.inc:1293
+#: plugins/personal/environment/class_environment.inc:1291
 msgid "Default printer"
 msgstr "Standard Drucker"
 
 #: plugins/personal/environment/class_environment.inc:1270
-#: plugins/personal/environment/class_environment.inc:1275
-#: plugins/personal/environment/class_environment.inc:1277
 msgid "Environment settings"
 msgstr "Umgebungs-Einstellungen"
 
-#: plugins/personal/environment/class_environment.inc:1280
+#: plugins/personal/environment/class_environment.inc:1278
 msgid "Command to extend the list of possible screen resolutions"
 msgstr "Befehl um die Liste der möglichen Auflösungen zu erweitern"
 
-#: plugins/personal/environment/class_environment.inc:1287
+#: plugins/personal/environment/class_environment.inc:1285
 msgid "Profile quota"
 msgstr "Profil-Kontingent"
 
-#: plugins/personal/environment/class_environment.inc:1288
+#: plugins/personal/environment/class_environment.inc:1286
 msgid "Profile server"
 msgstr "Profilserver"
 
-#: plugins/personal/environment/class_environment.inc:1294
+#: plugins/personal/environment/class_environment.inc:1292
 #: plugins/personal/environment/logonManagement.tpl:56
 msgid "Logon script"
 msgstr "Anmelde-Skript"
@@ -4009,14 +3998,14 @@ msgstr "Skriptname"
 #: plugins/admin/applications/generic.tpl:33
 #: plugins/admin/applications/class_applicationGeneric.inc:534
 #: plugins/admin/departments/generic.tpl:16
-#: plugins/admin/departments/class_departmentGeneric.inc:584
-#: plugins/admin/systems/class_winGeneric.inc:281
+#: plugins/admin/departments/class_departmentGeneric.inc:587
+#: plugins/admin/systems/class_winGeneric.inc:282
 #: plugins/admin/systems/server.tpl:14 plugins/admin/systems/phone.tpl:34
 #: plugins/admin/systems/printer.tpl:16
 #: plugins/admin/systems/class_servGeneric.inc:372
 #: plugins/admin/systems/wingeneric.tpl:25
 #: plugins/admin/systems/component.tpl:35
-#: plugins/admin/systems/class_printGeneric.inc:882
+#: plugins/admin/systems/class_printGeneric.inc:883
 #: plugins/admin/systems/class_componentGeneric.inc:270
 #: plugins/admin/systems/servnfs.tpl:19
 #: plugins/admin/systems/class_phoneGeneric.inc:441
@@ -4024,6 +4013,7 @@ msgstr "Skriptname"
 #: plugins/admin/systems/class_goShareServer.inc:372
 #: plugins/admin/ogroups/generic.tpl:15
 #: plugins/admin/ogroups/class_ogroup.inc:706
+#: plugins/admin/acl/acl_role.tpl:17 plugins/admin/acl/class_aclRole.inc:940
 #: plugins/admin/fai/faiVariable.tpl:21
 #: plugins/admin/fai/class_faiScript.inc:539
 #: plugins/admin/fai/class_faiTemplate.inc:509
@@ -4171,37 +4161,37 @@ msgid "Nagios Account"
 msgstr "Nagios-Konto"
 
 #: plugins/personal/nagios/nagios.tpl:8
-#: plugins/personal/nagios/class_nagiosAccount.inc:271
+#: plugins/personal/nagios/class_nagiosAccount.inc:270
 msgid "Alias"
 msgstr "Alias"
 
 #: plugins/personal/nagios/nagios.tpl:27
-#: plugins/personal/nagios/class_nagiosAccount.inc:277
+#: plugins/personal/nagios/class_nagiosAccount.inc:276
 msgid "Host notification period"
 msgstr "Frequenz der Host-Meldungen"
 
 #: plugins/personal/nagios/nagios.tpl:40
-#: plugins/personal/nagios/class_nagiosAccount.inc:281
+#: plugins/personal/nagios/class_nagiosAccount.inc:280
 msgid "Service notification period"
 msgstr "Frequenz der Dienst-Meldungen"
 
 #: plugins/personal/nagios/nagios.tpl:53
-#: plugins/personal/nagios/class_nagiosAccount.inc:280
+#: plugins/personal/nagios/class_nagiosAccount.inc:279
 msgid "Service notification options"
 msgstr "Optionen der Dienst-Meldungen"
 
 #: plugins/personal/nagios/nagios.tpl:66
-#: plugins/personal/nagios/class_nagiosAccount.inc:276
+#: plugins/personal/nagios/class_nagiosAccount.inc:275
 msgid "Host notification options"
 msgstr "Optionen der Host-Meldungen"
 
 #: plugins/personal/nagios/nagios.tpl:90
-#: plugins/personal/nagios/class_nagiosAccount.inc:279
+#: plugins/personal/nagios/class_nagiosAccount.inc:278
 msgid "Service notification commands"
 msgstr "Befehle für Dienst-Meldungen"
 
 #: plugins/personal/nagios/nagios.tpl:100
-#: plugins/personal/nagios/class_nagiosAccount.inc:275
+#: plugins/personal/nagios/class_nagiosAccount.inc:274
 msgid "Host notification commands"
 msgstr "Befehle für Host-Meldungen"
 
@@ -4293,35 +4283,31 @@ msgstr "Entfernen von Benutzer/Nagios-Konto mit dn '%s' fehlgeschlagen."
 msgid "Nagios account settings"
 msgstr "Nagios-Konto-Einstellungen"
 
-#: plugins/personal/nagios/class_nagiosAccount.inc:265
-msgid "Nagios account"
-msgstr "Nagios-Konto"
-
-#: plugins/personal/nagios/class_nagiosAccount.inc:283
+#: plugins/personal/nagios/class_nagiosAccount.inc:282
 msgid "View all hosts"
 msgstr "Alle Systeme anzeigen"
 
-#: plugins/personal/nagios/class_nagiosAccount.inc:284
+#: plugins/personal/nagios/class_nagiosAccount.inc:283
 msgid "View all services"
 msgstr "Alle Dienste anzeigen"
 
-#: plugins/personal/nagios/class_nagiosAccount.inc:286
+#: plugins/personal/nagios/class_nagiosAccount.inc:285
 msgid "Trigger system commands"
 msgstr "Auslösen aller System-Befehle"
 
-#: plugins/personal/nagios/class_nagiosAccount.inc:287
+#: plugins/personal/nagios/class_nagiosAccount.inc:286
 msgid "Trigger all host commands"
 msgstr "Auslösen aller Host-Befehle"
 
-#: plugins/personal/nagios/class_nagiosAccount.inc:288
+#: plugins/personal/nagios/class_nagiosAccount.inc:287
 msgid "Trigger all service commands"
 msgstr "Auslösen aller Dienst-Befehle"
 
-#: plugins/personal/nagios/class_nagiosAccount.inc:290
+#: plugins/personal/nagios/class_nagiosAccount.inc:289
 msgid "View configuration information"
 msgstr "Konfiguration anzeigen"
 
-#: plugins/personal/nagios/class_nagiosAccount.inc:291
+#: plugins/personal/nagios/class_nagiosAccount.inc:290
 msgid "View system informations"
 msgstr "System-Informationen anzeigen"
 
@@ -4330,7 +4316,7 @@ msgid "Nagios settings"
 msgstr "Nagios-Einstellungen"
 
 #: plugins/personal/netatalk/netatalk.tpl:4
-#: plugins/personal/netatalk/class_netatalk.inc:366
+#: plugins/personal/netatalk/class_netatalk.inc:365
 msgid "Share"
 msgstr "Freigabe"
 
@@ -4391,11 +4377,7 @@ msgstr "Speichern von Benutzer/Netatalk-Konto mit dn '%s' fehlgeschlagen."
 msgid "Removing of user/netatalk account with dn '%s' failed."
 msgstr "Entfernen von Benutzer/Netatalk-Konto mit dn '%s' fehlgeschlagen."
 
-#: plugins/personal/netatalk/class_netatalk.inc:360
-msgid "Netatalk account"
-msgstr "Netatalk-Konto"
-
-#: plugins/personal/netatalk/class_netatalk.inc:365
+#: plugins/personal/netatalk/class_netatalk.inc:364
 msgid "User home path"
 msgstr "Benutzer Basisverzeichnis"
 
@@ -4411,7 +4393,7 @@ msgstr "Name der Sperrliste"
 #: plugins/admin/systems/terminal.tpl:23 plugins/admin/systems/server.tpl:26
 #: plugins/admin/systems/phone.tpl:20 plugins/admin/systems/workstation.tpl:30
 #: plugins/admin/systems/component.tpl:20 plugins/admin/ogroups/generic.tpl:29
-#: plugins/gofon/macro/generic.tpl:30
+#: plugins/admin/acl/acl_role.tpl:31 plugins/gofon/macro/generic.tpl:30
 msgid "Choose subtree to place group in"
 msgstr "Wählen Sie den Teilbaum, in den die Gruppe eingepflegt werden soll"
 
@@ -4554,7 +4536,7 @@ msgstr "Fax-Sperrlisten"
 #: plugins/admin/applications/class_applicationGeneric.inc:536
 #: plugins/admin/systems/class_terminalGeneric.inc:555
 #: plugins/admin/systems/class_servGeneric.inc:371
-#: plugins/admin/systems/class_printGeneric.inc:880
+#: plugins/admin/systems/class_printGeneric.inc:881
 #: plugins/admin/systems/class_componentGeneric.inc:268
 #: plugins/admin/systems/servnfs.tpl:9
 #: plugins/admin/systems/class_phoneGeneric.inc:439
@@ -4578,8 +4560,8 @@ msgstr "Fax-Sperrlisten"
 #: plugins/admin/systems/glpiPrinterCartridgesEdit.tpl:7
 #: plugins/admin/systems/class_goShareServer.inc:370
 #: plugins/admin/systems/goSpamServerRule.tpl:6
-#: plugins/admin/ogroups/class_ogroup.inc:704
-#: plugins/admin/fai/faiVariable.tpl:9
+#: plugins/admin/ogroups/class_ogroup.inc:704 plugins/admin/acl/acl_role.tpl:7
+#: plugins/admin/acl/class_aclRole.inc:938 plugins/admin/fai/faiVariable.tpl:9
 #: plugins/admin/fai/class_faiScript.inc:538
 #: plugins/admin/fai/class_faiTemplate.inc:508
 #: plugins/admin/fai/faiPackage.tpl:9
@@ -4707,7 +4689,7 @@ msgstr "Neue Sperrliste"
 #: plugins/admin/systems/class_glpiSelectUser.inc:184
 #: plugins/admin/systems/class_divListSystem.inc:190
 #: plugins/admin/ogroups/class_divListOGroup.inc:151
-#: plugins/admin/acl/class_divListACL.inc:100
+#: plugins/admin/acl/class_divListACL.inc:121
 #: plugins/admin/fai/class_divListFai.inc:173
 #: plugins/admin/mimetypes/class_divListMimeTypes.inc:155
 #: plugins/gofon/macro/class_divListMacros.inc:108
@@ -4726,7 +4708,7 @@ msgstr "Aktualisieren"
 #: plugins/admin/systems/class_baseSelectDialog.inc:33
 #: plugins/admin/systems/class_divListSystem.inc:190
 #: plugins/admin/ogroups/class_divListOGroup.inc:151
-#: plugins/admin/acl/class_divListACL.inc:100
+#: plugins/admin/acl/class_divListACL.inc:121
 #: plugins/admin/fai/class_divListFai.inc:173
 #: plugins/admin/mimetypes/class_divListMimeTypes.inc:155
 #: plugins/gofon/macro/class_divListMacros.inc:108
@@ -4747,7 +4729,10 @@ msgstr "Übertragen"
 #: plugins/admin/systems/glpiPrinterCartridgesEdit.tpl:53
 #: plugins/admin/systems/class_divListSystem.inc:264
 #: plugins/admin/ogroups/class_divListOGroup.inc:196
-#: plugins/admin/acl/class_divListACL.inc:127
+#: plugins/admin/acl/class_divListACL.inc:165
+#: plugins/admin/acl/class_divListACL.inc:187
+#: plugins/admin/acl/class_aclRole.inc:339
+#: plugins/admin/acl/class_aclRole.inc:384
 #: plugins/admin/fai/class_faiScript.inc:294
 #: plugins/admin/fai/class_faiScript.inc:296
 #: plugins/admin/fai/class_faiTemplate.inc:271
@@ -4777,7 +4762,10 @@ msgstr "Benutzer bearbeiten"
 #: plugins/admin/systems/class_printerPPDSelectionDialog.inc:137
 #: plugins/admin/systems/class_divListSystem.inc:273
 #: plugins/admin/ogroups/class_divListOGroup.inc:204
-#: plugins/admin/acl/class_divListACL.inc:131
+#: plugins/admin/acl/class_divListACL.inc:175
+#: plugins/admin/acl/class_divListACL.inc:191
+#: plugins/admin/acl/class_aclRole.inc:340
+#: plugins/admin/acl/class_aclRole.inc:385
 #: plugins/admin/fai/class_faiScript.inc:298
 #: plugins/admin/fai/class_faiTemplate.inc:275
 #: plugins/admin/fai/class_faiHook.inc:299
@@ -4803,7 +4791,7 @@ msgstr "Fax-Nummer, auf die GOfax ansprechen soll"
 #: plugins/gofax/faxaccount/class_gofaxAccount.inc:832
 #: plugins/admin/ogroups/phonequeue.tpl:62
 #: plugins/admin/ogroups/class_phonequeue.inc:936 html/getxls.php:86
-#: html/getxls.php:281
+#: html/getxls.php:281 setup/setup_step1.tpl:7
 msgid "Language"
 msgstr "Sprache"
 
@@ -5044,14 +5032,16 @@ msgstr "während"
 #: plugins/addons/mailqueue/contents.tpl:10
 #: plugins/addons/mailqueue/contents.tpl:26
 #: plugins/gofon/fonreports/contents.tpl:21 ihtml/themes/default/help.tpl:21
+#: setup/setup_step4.tpl:72
 msgid "Search"
 msgstr "Suchen"
 
 #: plugins/gofax/faxreports/contents.tpl:30
 #: plugins/gofax/faxreports/detail.tpl:21
-#: plugins/admin/systems/class_printGeneric.inc:859
+#: plugins/admin/systems/class_printGeneric.inc:860
 #: plugins/admin/ogroups/class_ogroupManagement.inc:345
-#: plugins/admin/fai/faiTemplateEntry.tpl:110
+#: plugins/admin/fai/faiTemplateEntry.tpl:110 setup/setup_step6.tpl:198
+#: setup/setup_step6.tpl:220
 msgid "User"
 msgstr "Benutzer"
 
@@ -5354,7 +5344,7 @@ msgstr "Stadt"
 
 #: plugins/addons/addressbook/address_edit.tpl:191
 #: plugins/addons/addressbook/address_info.tpl:141
-#: plugins/admin/departments/class_departmentGeneric.inc:585
+#: plugins/admin/departments/class_departmentGeneric.inc:588
 msgid "Country"
 msgstr "Land"
 
@@ -6099,6 +6089,7 @@ msgstr "Eine DFS-Freigabe nach oben"
 #: plugins/admin/systems/class_servDNSeditZone.inc:289
 #: plugins/admin/systems/class_baseSelectDialog.inc:30
 #: plugins/admin/ogroups/phonequeue.tpl:24
+#: plugins/admin/acl/class_aclRole.inc:337
 #: plugins/admin/fai/class_faiProfile.inc:304 include/class_acl.inc:370
 #: include/class_MultiSelectWindow.inc:194
 #: include/class_MultiSelectWindow.inc:196
@@ -6210,7 +6201,7 @@ msgstr ""
 #: plugins/addons/notifications/contents.tpl:78
 #: plugins/admin/users/template.tpl:48
 #: plugins/admin/departments/class_departmentGeneric.inc:469
-#: plugins/admin/departments/class_departmentGeneric.inc:561
+#: plugins/admin/departments/class_departmentGeneric.inc:564
 #: plugins/admin/systems/SelectDeviceType.tpl:44
 #: plugins/admin/systems/ServiceAddDialog.tpl:28
 #: plugins/admin/fai/class_faiManagement.inc:455
@@ -6478,7 +6469,7 @@ msgstr "Samba-Gruppentyp"
 msgid "Samba domain name"
 msgstr "Samba Domänen-Name"
 
-#: plugins/admin/groups/class_groupGeneric.inc:898
+#: plugins/admin/groups/class_groupGeneric.inc:898 setup/setup_step6.tpl:18
 msgid "Samba SID"
 msgstr "Samba SID"
 
@@ -6502,8 +6493,10 @@ msgstr "Kategorie hinzufügen"
 msgid "Available applications"
 msgstr "Verfügbare Anwendungen"
 
-#: plugins/admin/groups/class_groupMail.inc:288 include/class_acl.inc:598
-#: include/class_acl.inc:689
+#: plugins/admin/groups/class_groupMail.inc:288
+#: plugins/admin/acl/class_aclRole.inc:546
+#: plugins/admin/acl/class_aclRole.inc:637 include/class_acl.inc:612
+#: include/class_acl.inc:703
 msgid "read"
 msgstr "lesen"
 
@@ -6519,75 +6512,88 @@ msgstr "extern posten"
 msgid "append"
 msgstr "anhängen"
 
-#: plugins/admin/groups/class_groupMail.inc:292 include/class_acl.inc:599
-#: include/class_acl.inc:691
+#: plugins/admin/groups/class_groupMail.inc:292
+#: plugins/admin/acl/class_aclRole.inc:547
+#: plugins/admin/acl/class_aclRole.inc:639 include/class_acl.inc:613
+#: include/class_acl.inc:705
 msgid "write"
 msgstr "schreiben"
 
-#: plugins/admin/groups/class_groupMail.inc:330
+#: plugins/admin/groups/class_groupMail.inc:293
+#: plugins/admin/users/class_userManagement.inc:449
+#: plugins/admin/systems/class_glpiDeviceManagement.inc:393
+#: plugins/admin/systems/class_SelectDeviceType.inc:29
+#: plugins/admin/ogroups/class_ogroup.inc:291
+msgid "none"
+msgstr "keine"
+
+#: plugins/admin/groups/class_groupMail.inc:331
 msgid "This 'dn' has no valid mail extensions."
 msgstr "Dieser 'DN' hat keine Mail-Erweiterungen."
 
-#: plugins/admin/groups/class_groupMail.inc:352
+#: plugins/admin/groups/class_groupMail.inc:353
 msgid ""
 "Remove shared folder from mail server database when entry gets removed in "
 "LDAP"
-msgstr "Entferne Shared Folder aus der Datenbank des Mail-Servers, wenn der Eintrag aus dem LDAP entfernt wird."
+msgstr ""
+"Entferne Shared Folder aus der Datenbank des Mail-Servers, wenn der Eintrag "
+"aus dem LDAP entfernt wird."
 
-#: plugins/admin/groups/class_groupMail.inc:353
+#: plugins/admin/groups/class_groupMail.inc:354
 msgid "Remove the shared folder and all its contents after saving this account"
-msgstr "Entferne nach dem Speichern dieses Kontos den Shared Folder mitsamt Inhalt."
+msgstr ""
+"Entferne nach dem Speichern dieses Kontos den Shared Folder mitsamt Inhalt."
 
-#: plugins/admin/groups/class_groupMail.inc:412
+#: plugins/admin/groups/class_groupMail.inc:413
 msgid "You're trying to add an invalid email address "
 msgstr "Sie versuchen, eine ungültige Mail-Adresse hinzuzufügen"
 
-#: plugins/admin/groups/class_groupMail.inc:413
+#: plugins/admin/groups/class_groupMail.inc:414
 msgid "to the list of forwarders."
 msgstr "zur Liste der Weiterleitungen hinzuzufügen."
 
-#: plugins/admin/groups/class_groupMail.inc:679
+#: plugins/admin/groups/class_groupMail.inc:680
 #, php-format
 msgid "Removing of groups/mail with dn '%s' failed."
 msgstr "Entfernen von Gruppe/Mail mit dn '%s' fehlgeschlagen."
 
-#: plugins/admin/groups/class_groupMail.inc:861
+#: plugins/admin/groups/class_groupMail.inc:876
 #, php-format
 msgid "Saving of groups/mail with dn '%s' failed."
 msgstr "Speichern von Gruppe/Mail mit dn '%s' fehlgeschlagen."
 
-#: plugins/admin/groups/class_groupMail.inc:890
+#: plugins/admin/groups/class_groupMail.inc:905
 msgid "Please enter a valid email addres in 'Primary address' field."
 msgstr ""
 "Bitte geben Sie eine gültige E-Mail-Adresse in das Feld 'Primäre Adresse' "
 "ein."
 
-#: plugins/admin/groups/class_groupMail.inc:923
+#: plugins/admin/groups/class_groupMail.inc:938
 msgid ""
 "Please choose valid permission settings. Default permission can't be emtpy."
 msgstr ""
 "Bitte wählen sie gültige Zugriffsrechte. Standard-Zugriffsrechte dürfen "
 "nicht leer sein."
 
-#: plugins/admin/groups/class_groupMail.inc:927
+#: plugins/admin/groups/class_groupMail.inc:942
 msgid "Please select a valid mail server."
 msgstr "Bitte wählen Sie einen gültigen Mail-Server."
 
-#: plugins/admin/groups/class_groupMail.inc:1074
+#: plugins/admin/groups/class_groupMail.inc:1089
 msgid "Group mail"
 msgstr "Gruppenmail"
 
-#: plugins/admin/groups/class_groupMail.inc:1082
+#: plugins/admin/groups/class_groupMail.inc:1097
 msgid "Alternate addresses"
 msgstr "Weitere Adressen"
 
-#: plugins/admin/groups/class_groupMail.inc:1083
+#: plugins/admin/groups/class_groupMail.inc:1098
 msgid "Forwarding addresses"
 msgstr "Weiterleitungs-Adressen"
 
-#: plugins/admin/groups/class_groupMail.inc:1086
+#: plugins/admin/groups/class_groupMail.inc:1101
 #: plugins/admin/systems/printer.tpl:82
-#: plugins/admin/systems/class_printGeneric.inc:886
+#: plugins/admin/systems/class_printGeneric.inc:887
 msgid "Permissions"
 msgstr "Berechtigungen"
 
@@ -6656,9 +6662,9 @@ msgstr ""
 "durch einen Klick auf die untere Schaltfläche aktivieren."
 
 #: plugins/admin/groups/class_groupApplication.inc:426
-#: plugins/admin/acl/class_aclManagement.inc:423
-#: plugins/admin/acl/class_aclManagement.inc:424
-#: plugins/admin/acl/class_aclManagement.inc:429 include/class_tabs.inc:303
+#: plugins/admin/acl/class_divListACL.inc:231
+#: plugins/admin/acl/class_divListACL.inc:232
+#: plugins/admin/acl/class_divListACL.inc:237 include/class_tabs.inc:302
 msgid "ACL"
 msgstr "Zugriffsregeln"
 
@@ -6876,6 +6882,7 @@ msgstr "Posix"
 #: plugins/admin/users/class_divListUsers.inc:214
 #: plugins/admin/applications/class_divListApplication.inc:197
 #: plugins/admin/ogroups/class_divListOGroup.inc:190
+#: plugins/admin/acl/class_divListACL.inc:158
 #: plugins/admin/mimetypes/class_divListMimeTypes.inc:208
 msgid "cut"
 msgstr "Ausschneiden"
@@ -6884,6 +6891,7 @@ msgstr "Ausschneiden"
 #: plugins/admin/users/class_divListUsers.inc:214
 #: plugins/admin/applications/class_divListApplication.inc:197
 #: plugins/admin/ogroups/class_divListOGroup.inc:190
+#: plugins/admin/acl/class_divListACL.inc:158
 #: plugins/admin/mimetypes/class_divListMimeTypes.inc:208
 msgid "Cut this entry"
 msgstr "Diesen Eintrag ausschneiden"
@@ -6892,6 +6900,7 @@ msgstr "Diesen Eintrag ausschneiden"
 #: plugins/admin/users/class_divListUsers.inc:216
 #: plugins/admin/applications/class_divListApplication.inc:200
 #: plugins/admin/ogroups/class_divListOGroup.inc:192
+#: plugins/admin/acl/class_divListACL.inc:160
 #: plugins/admin/mimetypes/class_divListMimeTypes.inc:210
 msgid "copy"
 msgstr "Kopieren"
@@ -6900,6 +6909,7 @@ msgstr "Kopieren"
 #: plugins/admin/users/class_divListUsers.inc:216
 #: plugins/admin/applications/class_divListApplication.inc:200
 #: plugins/admin/ogroups/class_divListOGroup.inc:192
+#: plugins/admin/acl/class_divListACL.inc:160
 #: plugins/admin/mimetypes/class_divListMimeTypes.inc:210
 msgid "Copy this entry"
 msgstr "Diesen Eintrag kopieren"
@@ -6963,13 +6973,6 @@ msgstr "Sie löschen gerade den Benutzer %s."
 #: plugins/admin/users/class_userManagement.inc:341
 msgid "You are not allowed to delete this user!"
 msgstr "Sie haben keine Berechtigung, diesen Benutzer zu löschen!"
-
-#: plugins/admin/users/class_userManagement.inc:449
-#: plugins/admin/systems/class_glpiDeviceManagement.inc:393
-#: plugins/admin/systems/class_SelectDeviceType.inc:29
-#: plugins/admin/ogroups/class_ogroup.inc:291
-msgid "none"
-msgstr "keine"
 
 #: plugins/admin/users/class_userManagement.inc:468
 msgid "Please select a valid template."
@@ -7470,7 +7473,7 @@ msgid "Descriptive text for department"
 msgstr "Beschreibender Text zu dieser Abteilung"
 
 #: plugins/admin/departments/generic.tpl:24
-#: plugins/admin/departments/class_departmentGeneric.inc:590
+#: plugins/admin/departments/class_departmentGeneric.inc:593
 msgid "Category"
 msgstr "Kategorie"
 
@@ -7504,7 +7507,7 @@ msgid "Base facsimile telephone number of this subtree"
 msgstr "Einleitende Fax-Nummer dieses Teilbaums"
 
 #: plugins/admin/departments/generic.tpl:117
-#: plugins/admin/departments/class_departmentGeneric.inc:593
+#: plugins/admin/departments/class_departmentGeneric.inc:596
 msgid "Administrative settings"
 msgstr "Administrative Einstellungen"
 
@@ -7593,27 +7596,31 @@ msgid "Moving '%s' to '%s'"
 msgstr "Verschiebe '%s' nach '%s'"
 
 #: plugins/admin/departments/class_departmentGeneric.inc:542
-#: include/class_ldap.inc:458 include/class_acl.inc:556
-#: include/class_acl.inc:563 include/class_acl.inc:570
-#: include/class_acl.inc:576 ihtml/themes/default/snapshotdialog.tpl:20
+#: plugins/admin/acl/class_aclRole.inc:504
+#: plugins/admin/acl/class_aclRole.inc:511
+#: plugins/admin/acl/class_aclRole.inc:518
+#: plugins/admin/acl/class_aclRole.inc:524 include/class_ldap.inc:458
+#: include/class_acl.inc:570 include/class_acl.inc:577
+#: include/class_acl.inc:584 include/class_acl.inc:590
+#: ihtml/themes/default/snapshotdialog.tpl:20
 #: ihtml/themes/default/snapshotdialog.tpl:62
 msgid "Object"
 msgstr "Objekt"
 
-#: plugins/admin/departments/class_departmentGeneric.inc:545
+#: plugins/admin/departments/class_departmentGeneric.inc:547
 #, php-format
 msgid "FAILED to copy %s, aborting operation"
 msgstr "Fehler beim kopieren von %s, breche ab"
 
-#: plugins/admin/departments/class_departmentGeneric.inc:576
-#: plugins/admin/departments/class_departmentGeneric.inc:581
+#: plugins/admin/departments/class_departmentGeneric.inc:579
+#: plugins/admin/departments/class_departmentGeneric.inc:584
 #: plugins/admin/departments/class_departmentManagement.inc:25
 #: plugins/admin/systems/class_glpiSelectUser.inc:112
 #: plugins/admin/ogroups/class_divListOGroup.inc:58
 msgid "Departments"
 msgstr "Abteilungen"
 
-#: plugins/admin/departments/class_departmentGeneric.inc:588
+#: plugins/admin/departments/class_departmentGeneric.inc:591
 #: plugins/admin/systems/workstationService.tpl:89
 #: plugins/admin/systems/terminalService.tpl:79
 #: plugins/gofon/phoneaccount/generic.tpl:32
@@ -7622,7 +7629,7 @@ msgstr "Abteilungen"
 msgid "Telephone"
 msgstr "Telefon"
 
-#: plugins/admin/departments/class_departmentGeneric.inc:589
+#: plugins/admin/departments/class_departmentGeneric.inc:592
 #: plugins/admin/departments/class_divListDepartment.inc:41
 msgid "Department name"
 msgstr "Name der Abteilung"
@@ -7640,7 +7647,7 @@ msgstr ""
 msgid "You have no permission to remove this department."
 msgstr "Sie haben keine Berechtigung, diese Abteilung zu entfernen."
 
-#: plugins/admin/departments/class_departmentManagement.inc:352
+#: plugins/admin/departments/class_departmentManagement.inc:353
 msgid ".."
 msgstr ".."
 
@@ -7728,7 +7735,7 @@ msgstr "Zone"
 #: plugins/admin/systems/network.tpl:77
 #: plugins/admin/systems/class_servDNS.inc:168
 #: plugins/admin/systems/class_servDNS.inc:406
-#: plugins/admin/systems/class_termDNS.inc:547
+#: plugins/admin/systems/class_termDNS.inc:571
 #: plugins/admin/systems/servdnseditzone.tpl:85
 msgid "TTL"
 msgstr "TTL"
@@ -7973,27 +7980,27 @@ msgstr "Audio-Dienst"
 msgid "GUI"
 msgstr "GUI"
 
-#: plugins/admin/systems/class_winGeneric.inc:87
+#: plugins/admin/systems/class_winGeneric.inc:89
 #: plugins/admin/systems/class_componentGeneric.inc:50
 msgid "This 'dn' has no network features."
 msgstr "Diese 'dn' hat keine Netzwerk-Erweiterungen."
 
-#: plugins/admin/systems/class_winGeneric.inc:145
+#: plugins/admin/systems/class_winGeneric.inc:147
 #, php-format
 msgid "Removing of system wingeneric/generic with dn '%s' failed."
 msgstr "Entfernen von System WinGeneric/Allgemein mit dn '%s' fehlgeschlagen."
 
-#: plugins/admin/systems/class_winGeneric.inc:195
+#: plugins/admin/systems/class_winGeneric.inc:197
 msgid "You have no permissions to create a component on this 'Base'."
 msgstr ""
 "Sie haben keine Berechtigung, eine Komponente unterhalb dieser 'Basis' "
 "anzulegen."
 
-#: plugins/admin/systems/class_winGeneric.inc:205
+#: plugins/admin/systems/class_winGeneric.inc:207
 #: plugins/admin/systems/class_terminalGeneric.inc:435
 #: plugins/admin/systems/class_servGeneric.inc:289
 #: plugins/admin/systems/class_workstationGeneric.inc:414
-#: plugins/admin/systems/class_printGeneric.inc:673
+#: plugins/admin/systems/class_printGeneric.inc:674
 #: plugins/admin/systems/class_componentGeneric.inc:191
 #: plugins/admin/systems/class_phoneGeneric.inc:338
 #, php-format
@@ -8001,24 +8008,24 @@ msgid "There is already an entry '%s' in the base choosen by you"
 msgstr ""
 "Der Eintrag '%s' ist in der von Ihnen ausgewählten Basis bereits vorhanden"
 
-#: plugins/admin/systems/class_winGeneric.inc:260
+#: plugins/admin/systems/class_winGeneric.inc:261
 #, php-format
 msgid "Saving of system wingeneric/generic with dn '%s' failed."
 msgstr "Speichern von System Windows/Allgemein mit dn '%s' fehlgeschlagen."
 
-#: plugins/admin/systems/class_winGeneric.inc:271
+#: plugins/admin/systems/class_winGeneric.inc:272
 msgid "Win generic"
 msgstr "Windows (Allgemein)"
 
-#: plugins/admin/systems/class_winGeneric.inc:272
+#: plugins/admin/systems/class_winGeneric.inc:273
 msgid "Windows workstation generic"
 msgstr "Windows-Arbeitsstation (Allgemein)"
 
-#: plugins/admin/systems/class_winGeneric.inc:277
+#: plugins/admin/systems/class_winGeneric.inc:278
 msgid "Win workstation"
 msgstr "Windows Arbeitsstation"
 
-#: plugins/admin/systems/class_winGeneric.inc:280
+#: plugins/admin/systems/class_winGeneric.inc:281
 #: plugins/admin/systems/workstation.tpl:10
 #: plugins/admin/systems/class_workstationGeneric.inc:533
 msgid "Workstation name"
@@ -9023,7 +9030,7 @@ msgstr ""
 "Setzen von Status-Flag für System Server/DNS mit dn '%s' fehlgeschlagen."
 
 #: plugins/admin/systems/class_servDNS.inc:398
-#: plugins/admin/systems/class_termDNS.inc:546
+#: plugins/admin/systems/class_termDNS.inc:570
 #: plugins/admin/systems/servdnseditzone.tpl:7
 msgid "Zone name"
 msgstr "Zonenname"
@@ -9323,39 +9330,39 @@ msgstr ""
 "Aktuell besitzt dieses Terminal keine aktivierten Drucker-Erweiterung. Sie "
 "können diese durch einen Klick auf die Schaltfläche unten aktivieren."
 
-#: plugins/admin/systems/class_printGeneric.inc:511
+#: plugins/admin/systems/class_printGeneric.inc:512
 #, php-format
 msgid "Your currently selected PPD file '%s' doesn't exist."
 msgstr "Die momentan gewählte PPD-Datei '%s' wurde nicht gefunden."
 
-#: plugins/admin/systems/class_printGeneric.inc:519
+#: plugins/admin/systems/class_printGeneric.inc:520
 msgid "can't get ppd informations."
 msgstr "keine PPD-Informationen verfügbar"
 
-#: plugins/admin/systems/class_printGeneric.inc:532
+#: plugins/admin/systems/class_printGeneric.inc:533
 #, php-format
 msgid "This printer belongs to terminal %s. You can't rename this printer."
 msgstr "Dieser Drucker gehört zu Terminal %s. Sie können ihn nicht umbenennen."
 
-#: plugins/admin/systems/class_printGeneric.inc:534
+#: plugins/admin/systems/class_printGeneric.inc:535
 #, php-format
 msgid "This printer belongs to workstation %s. You can't rename this printer."
 msgstr ""
 "Dieser Drucker gehört zur Arbeitsstation %s. Ein Umbenennen ist daher nicht "
 "möglich."
 
-#: plugins/admin/systems/class_printGeneric.inc:589
+#: plugins/admin/systems/class_printGeneric.inc:590
 #, php-format
 msgid "Removing of system print/generic with dn '%s' failed."
 msgstr "Entfernen von System Drucker/Allgemein mit dn '%s' fehlgeschlagen."
 
-#: plugins/admin/systems/class_printGeneric.inc:831
+#: plugins/admin/systems/class_printGeneric.inc:832
 #, php-format
 msgid "Saving of system print/generic with dn '%s' failed."
 msgstr "Speichern von System Drucker/Allgemein mit dn '%s' fehlgeschlagen."
 
-#: plugins/admin/systems/class_printGeneric.inc:854
-#: plugins/admin/systems/class_printGeneric.inc:856
+#: plugins/admin/systems/class_printGeneric.inc:855
+#: plugins/admin/systems/class_printGeneric.inc:857
 #: plugins/admin/ogroups/class_ogroupManagement.inc:346
 #: plugins/admin/fai/faiTemplateEntry.tpl:85
 #: plugins/admin/fai/faiTemplateEntry.tpl:127
@@ -9363,19 +9370,19 @@ msgstr "Speichern von System Drucker/Allgemein mit dn '%s' fehlgeschlagen."
 msgid "Group"
 msgstr "Gruppe"
 
-#: plugins/admin/systems/class_printGeneric.inc:872
+#: plugins/admin/systems/class_printGeneric.inc:873
 msgid "Print generic"
 msgstr "Drucken (Alllgemein)"
 
-#: plugins/admin/systems/class_printGeneric.inc:884
+#: plugins/admin/systems/class_printGeneric.inc:885
 msgid "LabeledURL"
 msgstr "Benannte URL"
 
-#: plugins/admin/systems/class_printGeneric.inc:885
+#: plugins/admin/systems/class_printGeneric.inc:886
 msgid "Printer PPD"
 msgstr "Drucker-PPD"
 
-#: plugins/admin/systems/class_printGeneric.inc:902
+#: plugins/admin/systems/class_printGeneric.inc:903
 #, php-format
 msgid ""
 "You are not allowed to remove the given object '%s' from the list of members "
@@ -9384,14 +9391,14 @@ msgstr ""
 "Sie haben keine Berechtigung, das gewählte Objekt '%s' von der "
 "Mitgliedsliste des Druckers '%s' zu entfernen."
 
-#: plugins/admin/systems/class_printGeneric.inc:919
+#: plugins/admin/systems/class_printGeneric.inc:920
 #, php-format
 msgid "Illegal printer type while adding '%s' to the list of '%s' printers,"
 msgstr ""
 "Ungültiger Drucker während des Hinzufügens von '%s' zu der Liste von '%s' "
 "Druckern."
 
-#: plugins/admin/systems/class_printGeneric.inc:924
+#: plugins/admin/systems/class_printGeneric.inc:925
 #, php-format
 msgid ""
 "You are not allowed to add the given object '%s' to the list of members of '%"
@@ -9400,14 +9407,14 @@ msgstr ""
 "Ihnen ist es nicht erlaubt das gewählte Objekt '%s' zu der Mitgliedsliste "
 "von '%s' hinzuzufügen."
 
-#: plugins/admin/systems/class_printGeneric.inc:959
+#: plugins/admin/systems/class_printGeneric.inc:960
 #, php-format
 msgid "Can't add '%s' to the list of members, it is already used."
 msgstr ""
 "Kann '%s' nicht zur Liste der Mitglieder hinzufügen, er wird bereits "
 "verwendet."
 
-#: plugins/admin/systems/class_printGeneric.inc:970
+#: plugins/admin/systems/class_printGeneric.inc:971
 #, php-format
 msgid "Can't add '%s' to list of members, it is not reachable."
 msgstr ""
@@ -10785,7 +10792,8 @@ msgstr "Integriertes Mikrofon"
 #: plugins/admin/systems/glpi_devices.tpl:71
 #: plugins/admin/systems/glpi_devices.tpl:176
 #: plugins/admin/systems/glpi_devices.tpl:296
-#: plugins/admin/systems/glpi_devices.tpl:361
+#: plugins/admin/systems/glpi_devices.tpl:361 setup/class_setupStep6.inc:75
+#: setup/class_setupStep4.inc:62 setup/class_setupStep5.inc:78
 msgid "Yes"
 msgstr "ja"
 
@@ -10795,7 +10803,8 @@ msgstr "ja"
 #: plugins/admin/systems/glpi_devices.tpl:72
 #: plugins/admin/systems/glpi_devices.tpl:177
 #: plugins/admin/systems/glpi_devices.tpl:297
-#: plugins/admin/systems/glpi_devices.tpl:362
+#: plugins/admin/systems/glpi_devices.tpl:362 setup/class_setupStep6.inc:75
+#: setup/class_setupStep4.inc:62 setup/class_setupStep5.inc:78
 msgid "No"
 msgstr "nein"
 
@@ -10890,7 +10899,7 @@ msgid "Add/Edit network interface"
 msgstr "Netzwerk-Interface hinzufügen/bearbeiten"
 
 #: plugins/admin/systems/glpi_devices.tpl:589
-#: plugins/admin/systems/class_termDNS.inc:537
+#: plugins/admin/systems/class_termDNS.inc:561
 msgid "MAC address"
 msgstr "MAC-Adresse"
 
@@ -11272,26 +11281,31 @@ msgstr ""
 msgid "Cartridges"
 msgstr "Patronen"
 
-#: plugins/admin/systems/class_termDNS.inc:137
+#: plugins/admin/systems/class_termDNS.inc:143
 #, php-format
 msgid ""
 "Can't execute specified AUTO_NETWORK_HOOK '%s'. Please check your gosa.conf."
 msgstr ""
 "Kann das als AUTO_NETWORK_HOOK angegebene Kommando '%s' nicht ausführen."
 
-#: plugins/admin/systems/class_termDNS.inc:319
+#: plugins/admin/systems/class_termDNS.inc:237
+#, fuzzy
+msgid "Not matching"
+msgstr "inaktiv"
+
+#: plugins/admin/systems/class_termDNS.inc:337
 msgid "The required field 'IP-address' is not set."
 msgstr "Das benÃ¶tigte Feld 'IP-Adresse' ist nicht gesetzt."
 
-#: plugins/admin/systems/class_termDNS.inc:323
+#: plugins/admin/systems/class_termDNS.inc:341
 msgid "Wrong IP format in field IP-address."
 msgstr "UngÃ¼ltige IP-Adresse in Feld IP-Adresse"
 
-#: plugins/admin/systems/class_termDNS.inc:330
+#: plugins/admin/systems/class_termDNS.inc:348
 msgid "The required field 'MAC-address' is not set."
 msgstr "Das benÃ¶tigte Feld 'MAC-Adresse' ist nicht gesetzt."
 
-#: plugins/admin/systems/class_termDNS.inc:333
+#: plugins/admin/systems/class_termDNS.inc:351
 msgid ""
 "The given macaddress is invalid. There must be 6 2byte segments seperated by "
 "':'."
@@ -11299,18 +11313,25 @@ msgstr ""
 "Die angebene MAC-Adresse ist nicht korrekt. Es müssen sechs 2-Byte Segmente "
 "angegeben werden (getrennt durch ':')."
 
-#: plugins/admin/systems/class_termDNS.inc:353
+#: plugins/admin/systems/class_termDNS.inc:365
+#, php-format
+msgid ""
+"The specified IP address '%s' is not matching the selected reverse zone "
+"entry '%s'."
+msgstr "Die angegebene IP-Adresse '%s' entspricht nicht dem gewählten Reverse-Zonen-Eintrag '%s'."
+
+#: plugins/admin/systems/class_termDNS.inc:377
 #, php-format
 msgid "Found duplicate value for record type '%s'."
 msgstr "Es wurde ein doppelter Wert für Eintrag-Typ '%s' gefunden."
 
-#: plugins/admin/systems/class_termDNS.inc:361
+#: plugins/admin/systems/class_termDNS.inc:385
 #, php-format
 msgid "Found more than one entry for the uniqe record type '%s'."
 msgstr ""
 "Es wurde mehr als ein Eintrag für den eindeutigen Eintrags-Typ '%s' gefunden."
 
-#: plugins/admin/systems/class_termDNS.inc:372
+#: plugins/admin/systems/class_termDNS.inc:396
 #, php-format
 msgid ""
 "The device IP '%s' is added as 'A Record', this will be done automatically, "
@@ -11319,30 +11340,30 @@ msgstr ""
 "Das Gerät mit der-IP-Adresse '%s' erhält automatisch einen 'A'-Eintrag. "
 "Bitte entfernen Sie den Eintrag."
 
-#: plugins/admin/systems/class_termDNS.inc:379
+#: plugins/admin/systems/class_termDNS.inc:403
 #: plugins/admin/systems/class_servDNSeditZone.inc:409
 #, php-format
 msgid "Only lowercase is allowed, please check your '%ss'."
 msgstr "Es sind nur Kleinbuchstaben erlaubt, bitte prüfen Sie '%ss'."
 
-#: plugins/admin/systems/class_termDNS.inc:463
+#: plugins/admin/systems/class_termDNS.inc:487
 #, php-format
 msgid "Saving of terminal/dns account with dn '%s' failed."
 msgstr "Speichern von Terminal/DNS-Konto mit dn '%s' fehlgeschlagen."
 
-#: plugins/admin/systems/class_termDNS.inc:527
+#: plugins/admin/systems/class_termDNS.inc:551
 msgid "DNS"
 msgstr "DNS"
 
-#: plugins/admin/systems/class_termDNS.inc:528
+#: plugins/admin/systems/class_termDNS.inc:552
 msgid "DNS settings"
 msgstr "DNS-Einstellungen"
 
-#: plugins/admin/systems/class_termDNS.inc:536
+#: plugins/admin/systems/class_termDNS.inc:560
 msgid "IP address"
 msgstr "IP-Adresse"
 
-#: plugins/admin/systems/class_termDNS.inc:545
+#: plugins/admin/systems/class_termDNS.inc:569
 msgid "DNS records"
 msgstr "DNS-Einträge"
 
@@ -11447,6 +11468,7 @@ msgstr "Objektgruppe wählen"
 
 #: plugins/admin/systems/class_servDNSeditZone.inc:290
 #: plugins/admin/ogroups/phonequeue.tpl:27
+#: plugins/admin/acl/class_aclRole.inc:338
 #: plugins/admin/fai/class_faiProfile.inc:305 include/class_acl.inc:371
 msgid "Down"
 msgstr "Ab"
@@ -11753,12 +11775,10 @@ msgid "Ldap Server"
 msgstr "LDAP-Server"
 
 #: plugins/admin/systems/class_divListSystem.inc:264
-#: plugins/admin/acl/class_divListACL.inc:128
 msgid "Edit system"
 msgstr "System bearbeiten"
 
 #: plugins/admin/systems/class_divListSystem.inc:273
-#: plugins/admin/acl/class_divListACL.inc:132
 msgid "Delete system"
 msgstr "Entferne System"
 
@@ -12302,7 +12322,7 @@ msgid "IMAP/POP3"
 msgstr "IMAP/POP3"
 
 #: plugins/admin/systems/class_goImapServer.inc:172
-#: ihtml/themes/default/setup_step4.tpl:27
+#: ihtml/themes/default/setup_step4.tpl:27 setup/setup_step4.tpl:85
 msgid "Admin password"
 msgstr "Administrator-Passwort:"
 
@@ -13368,32 +13388,32 @@ msgstr "Objektgruppe"
 msgid "Please enter the new object group name"
 msgstr "Bitte geben Sie einen Namen für die neue Objektgruppe ein"
 
-#: plugins/admin/acl/class_aclManagement.inc:25
+#: plugins/admin/acl/tabs_acl.inc:8 plugins/admin/acl/class_divListACL.inc:182
+msgid "Acl"
+msgstr "ACL"
+
+#: plugins/admin/acl/class_aclManagement.inc:27
 msgid "ACLs"
 msgstr "ACLs"
 
-#: plugins/admin/acl/class_aclManagement.inc:122
+#: plugins/admin/acl/class_aclManagement.inc:141
+#, fuzzy
+msgid "You are not allowed to create a new role."
+msgstr "Es ist Ihnen nicht erlaubt, einen neuen Branch zu erstellen."
+
+#: plugins/admin/acl/class_aclManagement.inc:178
 msgid "You are not allowed to edit this acl."
 msgstr "Sie sind nicht berechtigt, diese ACL zu bearbeiten."
 
-#: plugins/admin/acl/class_aclManagement.inc:167
+#: plugins/admin/acl/class_aclManagement.inc:223
 #, php-format
 msgid "You're about to delete the acl %s."
 msgstr "Sie sind dabei die ACL %s zu löschen."
 
-#: plugins/admin/acl/class_aclManagement.inc:173
-#: plugins/admin/acl/class_aclManagement.inc:198
+#: plugins/admin/acl/class_aclManagement.inc:229
+#: plugins/admin/acl/class_aclManagement.inc:254
 msgid "You are not allowed to delete this acl!"
 msgstr "Sie sind nicht berechtigt, diese ACL zu löschen!"
-
-#: plugins/admin/acl/class_aclManagement.inc:424
-#: plugins/admin/acl/class_aclManagement.inc:429
-msgid "Access control list"
-msgstr "Zugriffskontrollliste"
-
-#: plugins/admin/acl/class_aclManagement.inc:432
-msgid "I don't know Jack"
-msgstr ""
 
 #: plugins/admin/acl/class_divListACL.inc:31
 msgid "List of acl"
@@ -13414,12 +13434,213 @@ msgid "Display acls matching"
 msgstr "Zeige ACLs, auf die zutrifft"
 
 #: plugins/admin/acl/class_divListACL.inc:115
-msgid "Acl"
-msgstr "ACL"
+#, fuzzy
+msgid "New acl role"
+msgstr "Neues Profil"
+
+#: plugins/admin/acl/class_divListACL.inc:166
+#, fuzzy
+msgid "Edit acl role"
+msgstr "Makro bearbeiten"
+
+#: plugins/admin/acl/class_divListACL.inc:176
+#, fuzzy
+msgid "Delete acl role"
+msgstr "Makro entfernen"
+
+#: plugins/admin/acl/class_divListACL.inc:188
+#, fuzzy
+msgid "Edit acl"
+msgstr "Klasse bearbeiten"
+
+#: plugins/admin/acl/class_divListACL.inc:192
+#, fuzzy
+msgid "Delete acl"
+msgstr "Klasse entfernen"
+
+#: plugins/admin/acl/class_divListACL.inc:231
+#: plugins/admin/acl/class_divListACL.inc:232
+#: plugins/admin/acl/class_divListACL.inc:237
+#: plugins/admin/acl/class_aclRole.inc:930
+#, fuzzy
+msgid "ACL roles"
+msgstr "ACLs"
+
+#: plugins/admin/acl/class_divListACL.inc:232
+msgid "Access control list"
+msgstr "Zugriffskontrollliste"
+
+#: plugins/admin/acl/class_divListACL.inc:240
+#, fuzzy
+msgid "Role name"
+msgstr "Umbenennen"
+
+#: plugins/admin/acl/class_divListACL.inc:241
+#, fuzzy
+msgid "Role description"
+msgstr "Aufgabengebiet"
 
 #: plugins/admin/acl/main.inc:43 plugins/admin/acl/main.inc:45
 msgid "ACL management"
 msgstr "ACL-Verwaltung"
+
+#: plugins/admin/acl/tabs_acl_role.inc:8
+#, fuzzy
+msgid "ACL Templates"
+msgstr "Vorlagen"
+
+#: plugins/admin/acl/acl_role.tpl:3 ihtml/themes/default/acl.tpl:2
+msgid "Assigned ACLs for current entry"
+msgstr "Zugewiesene ACLs für aktuellen Eintrag"
+
+#: plugins/admin/acl/acl_role.tpl:44 ihtml/themes/default/acl.tpl:4
+msgid "New ACL"
+msgstr "Neue ACL"
+
+#: plugins/admin/acl/acl_role.tpl:49 ihtml/themes/default/acl.tpl:8
+msgid "ACL type"
+msgstr "ACL-Typ"
+
+#: plugins/admin/acl/acl_role.tpl:49 ihtml/themes/default/acl.tpl:8
+msgid "Select an acl type"
+msgstr "Wählen Sie einen ACL-Typ"
+
+#: plugins/admin/acl/acl_role.tpl:54 ihtml/themes/default/acl.tpl:55
+msgid "List of available ACL categories"
+msgstr "Liste verfügbarer ACL-Kategorien"
+
+#: plugins/admin/acl/class_aclRole.inc:6
+#, fuzzy
+msgid "Access control list templates"
+msgstr "Zugriffskontrollliste"
+
+#: plugins/admin/acl/class_aclRole.inc:102 include/class_acl.inc:145
+msgid "All categories"
+msgstr "Alle Kategorien"
+
+#: plugins/admin/acl/class_aclRole.inc:109 include/class_acl.inc:153
+msgid "Reset ACLs"
+msgstr "ACLs zurücksetzen"
+
+#: plugins/admin/acl/class_aclRole.inc:110 include/class_acl.inc:154
+msgid "One level"
+msgstr "Diese Ebene"
+
+#: plugins/admin/acl/class_aclRole.inc:111 include/class_acl.inc:155
+#: include/class_acl.inc:160
+msgid "Current object"
+msgstr "Aktuelles Objekt"
+
+#: plugins/admin/acl/class_aclRole.inc:112 include/class_acl.inc:156
+msgid "Complete subtree"
+msgstr "Vollständiger Teilbaum"
+
+#: plugins/admin/acl/class_aclRole.inc:113 include/class_acl.inc:157
+msgid "Complete subtree (permanent)"
+msgstr "Vollständiger Teilbaum (permanent)"
+
+#: plugins/admin/acl/class_aclRole.inc:339 include/class_acl.inc:372
+msgid "Edit ACL"
+msgstr "ACL Bearbeiten"
+
+#: plugins/admin/acl/class_aclRole.inc:340 include/class_acl.inc:373
+msgid "Delete ACL"
+msgstr "ACL Entfernen"
+
+#: plugins/admin/acl/class_aclRole.inc:377 include/class_acl.inc:410
+msgid "No ACL settings for this category"
+msgstr "Keine ACL-Einstellungen für diese Kategorie"
+
+#: plugins/admin/acl/class_aclRole.inc:379 include/class_acl.inc:412
+#, php-format
+msgid "Contains ACLs for these objects: %s"
+msgstr "Enthält ACLs für diese Objekte: %s"
+
+#: plugins/admin/acl/class_aclRole.inc:384 include/class_acl.inc:417
+msgid "Edit categories ACLs"
+msgstr "ACLs dieser Kategorie bearbeiten"
+
+#: plugins/admin/acl/class_aclRole.inc:385 include/class_acl.inc:418
+msgid "Clear categories ACLs"
+msgstr "ACLs dieser Kategorie leeren"
+
+#: plugins/admin/acl/class_aclRole.inc:401 include/class_acl.inc:462
+#, php-format
+msgid "Edit ACL for '%s', scope is '%s'"
+msgstr "ACL für '%s' bearbeiten, Bereich ist '%s'"
+
+#: plugins/admin/acl/class_aclRole.inc:411 include/class_acl.inc:472
+msgid "All objects in current subtree"
+msgstr "Alle Objekte im aktuellen Teilbaum"
+
+#: plugins/admin/acl/class_aclRole.inc:506
+#: plugins/admin/acl/class_aclRole.inc:513 include/class_acl.inc:572
+#: include/class_acl.inc:579
+msgid "Show/Hide Advanced Settings"
+msgstr "Zeige/Verstecke Erweiterte Einstellungen"
+
+#: plugins/admin/acl/class_aclRole.inc:531 include/class_acl.inc:597
+msgid "Create objects"
+msgstr "Erstelle Objekte"
+
+#: plugins/admin/acl/class_aclRole.inc:532 include/class_acl.inc:598
+msgid "Move objects"
+msgstr "Objekte verschieben"
+
+#: plugins/admin/acl/class_aclRole.inc:533 include/class_acl.inc:599
+msgid "Remove objects"
+msgstr "Objekte entfernen"
+
+#: plugins/admin/acl/class_aclRole.inc:535
+#: plugins/admin/acl/class_aclRole.inc:541 include/class_acl.inc:601
+#: include/class_acl.inc:607
+msgid "Modifyable by owner"
+msgstr "Änderbar vom Eigentümer"
+
+#: plugins/admin/acl/class_aclRole.inc:538 include/class_acl.inc:604
+msgid "Move object"
+msgstr "Objekt verschieben"
+
+#: plugins/admin/acl/class_aclRole.inc:539 include/class_acl.inc:605
+msgid "Remove object"
+msgstr "Objekt entfernen"
+
+#: plugins/admin/acl/class_aclRole.inc:551 include/class_acl.inc:617
+msgid "Complete object"
+msgstr "Vollständiges Objekt"
+
+#: plugins/admin/acl/class_aclRole.inc:667 include/class_acl.inc:733
+#, php-format
+msgid "Unkown ACL type '%s'. Don't know how to handle it."
+msgstr "Unbekannter ACL-Typ '%s'. Verarbeitung nicht möglich."
+
+#: plugins/admin/acl/class_aclRole.inc:707 include/class_acl.inc:773
+#, php-format
+msgid "Unknown entry '%s'!"
+msgstr "Unbekannter Eintrag '%s'!"
+
+#: plugins/admin/acl/class_aclRole.inc:768 include/class_acl.inc:834
+#, php-format
+msgid "Contains settings for these objects: %s"
+msgstr "Enthält Einstellungen für diese Objekte: %s"
+
+#: plugins/admin/acl/class_aclRole.inc:776 include/class_acl.inc:842
+msgid "Members:"
+msgstr "Mitglieder:"
+
+#: plugins/admin/acl/class_aclRole.inc:782 include/class_acl.inc:848
+msgid "ACL is valid for all users"
+msgstr "ACL ist gültig für alle Benutzer"
+
+#: plugins/admin/acl/class_aclRole.inc:897 include/class_acl.inc:956
+#, php-format
+msgid "Saving ACLs with dn '%s' failed."
+msgstr "Speichern der ACLs von dn '%s' fehlgeschlagen."
+
+#: plugins/admin/acl/class_aclRole.inc:935
+#, fuzzy
+msgid "Acl roles"
+msgstr "FAI-Profil"
 
 #: plugins/admin/fai/faiVariable.tpl:36
 #: plugins/admin/fai/faiPartitionTable.tpl:36
@@ -14277,8 +14498,10 @@ msgid ""
 "Branches are created as subreleases of the currently selected branch. "
 "Creating a new branch named 1.0.2 in SARGE for example, will result in a new "
 "release called SARGE/1.0.2."
-msgstr "Branches werden als Subrelease des momentan gewählten Branches erstellt. Wenn Sie bspw. einen neuen"
-" Branch namens 1.0.2 in SARGE erstelle, wird dieses Release SARGE/1.0.2 heissen."
+msgstr ""
+"Branches werden als Subrelease des momentan gewählten Branches erstellt. "
+"Wenn Sie bspw. einen neuen Branch namens 1.0.2 in SARGE erstelle, wird "
+"dieses Release SARGE/1.0.2 heissen."
 
 #: plugins/admin/fai/faiNewBranch.tpl:13
 msgid "Please enter a name for the branch"
@@ -15822,12 +16045,12 @@ msgstr ""
 msgid "Ldap import with dn '%s' failed."
 msgstr "LDAP-Import von dn '%s' fehlgeschlagen."
 
-#: include/class_tabs.inc:188
+#: include/class_tabs.inc:187
 #, php-format
 msgid "Delete process has been canceled by plugin '%s': %s"
 msgstr "Der Lösch-Vorgang wurde durch das plugin '%s' beendet: %s"
 
-#: include/class_tabs.inc:306
+#: include/class_tabs.inc:305
 msgid "References"
 msgstr "Referenzen"
 
@@ -15921,6 +16144,30 @@ msgstr "Konnte die entfernten Abbilder für dn '%s' nicht ermitteln."
 #, php-format
 msgid "Restore snapshot with dn '%s' failed."
 msgstr "Wiederherstellen des Abbilds mit dn '%s' fehlgeschlagen."
+
+#: include/class_plugin.inc:1530
+msgid "Updated current user dn from '"
+msgstr ""
+
+#: include/class_plugin.inc:1530
+msgid "' to '"
+msgstr ""
+
+#: include/class_plugin.inc:1530
+msgid "'"
+msgstr ""
+
+#: include/class_plugin.inc:1592
+msgid "Changing ACL dn"
+msgstr ""
+
+#: include/class_plugin.inc:1592
+msgid "from"
+msgstr "von"
+
+#: include/class_plugin.inc:1594
+msgid "to"
+msgstr "an"
 
 #: include/class_password-methods-ssha.inc:51
 msgid "Can't use ssha for encryption. (Missing function mhash / sha1)"
@@ -16221,7 +16468,9 @@ msgstr "Unterstützung für Kolab aktiviert"
 msgid "Ignored"
 msgstr "Ignoriert"
 
-#: include/functions_setup.inc:259
+#: include/functions_setup.inc:259 setup/setup_step2.tpl:33
+#: setup/setup_step2.tpl:35 setup/setup_step2.tpl:95 setup/setup_step2.tpl:97
+#: setup/setup_step2.tpl:150 setup/setup_step2.tpl:152
 msgid "Failed"
 msgstr "Fehlgeschlagen"
 
@@ -16246,7 +16495,7 @@ msgstr ""
 msgid "Checking if register_globals is set to 'off'"
 msgstr "Prüfe ob register_globals ausgeschaltet ist"
 
-#: include/functions_setup.inc:283
+#: include/functions_setup.inc:283 setup/class_setupStep2.inc:177
 msgid ""
 "register_globals is a PHP mechanism to register all global varibales to be "
 "accessible from scripts without changing the scope. This may be a security "
@@ -16271,11 +16520,11 @@ msgstr ""
 "dass Sie die Sitzung und den zugehörigen Cookie verlieren, bevor diese "
 "tatsächlich ihre Gültigkeit verlieren."
 
-#: include/functions_setup.inc:290
+#: include/functions_setup.inc:290 setup/class_setupStep2.inc:65
 msgid "Checking for ldap module"
 msgstr "Suche LDAP-Modul"
 
-#: include/functions_setup.inc:291
+#: include/functions_setup.inc:291 setup/class_setupStep2.inc:66
 msgid "This is the main module used by GOsa and therefore really required."
 msgstr ""
 "GOsa benötigt dieses Modul für LDAP-Zugriffe, daher ist es unabkömmlich."
@@ -16289,18 +16538,18 @@ msgid "XML functions are required to parse the configuration file."
 msgstr ""
 "Die XML-Funktionen werden benötigt, um die Konfigurationsdatei zu lesen."
 
-#: include/functions_setup.inc:298
+#: include/functions_setup.inc:298 setup/class_setupStep2.inc:73
 msgid "Checking for gettext support"
 msgstr "Prüfe auf gettext-Erweiterung"
 
-#: include/functions_setup.inc:299
+#: include/functions_setup.inc:299 setup/class_setupStep2.inc:74
 msgid "Gettext support is required for internationalized GOsa."
 msgstr ""
 "Gettext-Unterstützung wird für Übersetzungen benötigt (Anmerkung des "
 "Übersetzers: Da Sie diese Meldung in deutsch lesen können, ist davon "
 "auszugehen, daß ihr PHP gettext-fähig ist)."
 
-#: include/functions_setup.inc:302
+#: include/functions_setup.inc:302 setup/class_setupStep2.inc:81
 msgid "Checking for iconv support"
 msgstr "Prüfe auf iconv-Erweiterung"
 
@@ -16312,7 +16561,7 @@ msgstr ""
 "Dieses Modul wird von GOsa benutzt, um Informationen der samba-Erweiterung "
 "zu verarbeiten und wird daher benötigt."
 
-#: include/functions_setup.inc:306
+#: include/functions_setup.inc:306 setup/class_setupStep2.inc:89
 msgid "Checking for mhash module"
 msgstr "Suche mhash-Modul"
 
@@ -16324,11 +16573,11 @@ msgstr ""
 "Bei der Verwendung von speziellen Passwort-Verschlüsselungen (wie z.B. SSHA) "
 "wird dieses Modul benötigt. GOsa funktioniert auch ohne dieses Modul."
 
-#: include/functions_setup.inc:310
+#: include/functions_setup.inc:310 setup/class_setupStep2.inc:97
 msgid "Checking for imap module"
 msgstr "Suche IMAP-Modul"
 
-#: include/functions_setup.inc:311
+#: include/functions_setup.inc:311 setup/class_setupStep2.inc:98
 msgid ""
 "The IMAP module is needed to communicate with the IMAP server. It gets "
 "status informations, creates and deletes mail users."
@@ -16336,11 +16585,11 @@ msgstr ""
 "Das IMAP-Modul wird für die Kommunikation mit ihrem IMAP-Server benötigt. "
 "Dort können Benutzer verwaltet und Statusinformationen bezogen werden."
 
-#: include/functions_setup.inc:314
+#: include/functions_setup.inc:314 setup/class_setupStep2.inc:105
 msgid "Checking for getacl in imap"
 msgstr "Prüfe auf getacl im IMAP-Modul"
 
-#: include/functions_setup.inc:315
+#: include/functions_setup.inc:315 setup/class_setupStep2.inc:106
 msgid ""
 "The getacl support is needed for shared folder permissions. The standard "
 "IMAP module is not capable of reading acl's. You need a recend PHP version "
@@ -16351,20 +16600,20 @@ msgstr ""
 "Zugriffsregeln nicht. Sie benötigen entweder ein angepasstes oder ein recht "
 "aktuelles PHP um diese Funktion nutzen zu können."
 
-#: include/functions_setup.inc:318
+#: include/functions_setup.inc:318 setup/class_setupStep2.inc:113
 msgid "Checking for mysql module"
 msgstr "Suche MySQL-Modul"
 
-#: include/functions_setup.inc:319
+#: include/functions_setup.inc:319 setup/class_setupStep2.inc:114
 msgid "MySQL support is needed for reading GOfax reports from databases."
 msgstr ""
 "Das MySQL-Modul wird benötigt, um Fax-Berichte anzuzeigen und auszuwerten."
 
-#: include/functions_setup.inc:322
+#: include/functions_setup.inc:322 setup/class_setupStep2.inc:137
 msgid "Checking for cups module"
 msgstr "Suche CUPS-Modul"
 
-#: include/functions_setup.inc:323
+#: include/functions_setup.inc:323 setup/class_setupStep2.inc:138
 msgid ""
 "In order to read available printers from IPP protocol instead of printcap "
 "files, you've to install the CUPS module."
@@ -16372,11 +16621,11 @@ msgstr ""
 "Falls Sie eine Liste der verfügbaren Drucker über IPP auslesen möchten, "
 "benötigen Sie dieses Modul. Anderenfalls wird die printcap-Datei ausgewertet."
 
-#: include/functions_setup.inc:326
+#: include/functions_setup.inc:326 setup/class_setupStep2.inc:121
 msgid "Checking for kadm5 module"
 msgstr "Suche kadm5-Modul"
 
-#: include/functions_setup.inc:327
+#: include/functions_setup.inc:327 setup/class_setupStep2.inc:122
 msgid ""
 "Managing users in kerberos requires the kadm5 module which is downloadable "
 "via PEAR network."
@@ -16384,11 +16633,11 @@ msgstr ""
 "Um Benutzer auch im Kerberos verwalten zu können, muß das kadm5-Modul "
 "installiert sein. Sie können es über das PEAR-Netzwerk beziehen."
 
-#: include/functions_setup.inc:330
+#: include/functions_setup.inc:330 setup/class_setupStep2.inc:129
 msgid "Checking for snmp Module"
 msgstr "Suche SNMP-Modul"
 
-#: include/functions_setup.inc:331
+#: include/functions_setup.inc:331 setup/class_setupStep2.inc:130
 msgid ""
 "Simple Network Management Protocol (SNMP) is required for client monitoring."
 msgstr ""
@@ -16452,11 +16701,11 @@ msgid ""
 msgstr ""
 "ImageMagick wird für die Konvertierung von hochgeladenen Bildern verwendet."
 
-#: include/functions_setup.inc:412
+#: include/functions_setup.inc:412 setup/class_setupStep2.inc:147
 msgid "Checking for fping utility"
 msgstr "Suche fping-Programm"
 
-#: include/functions_setup.inc:413
+#: include/functions_setup.inc:413 setup/class_setupStep2.inc:148
 msgid ""
 "The fping utility is only used if you've got a thin client based terminal "
 "environment running."
@@ -16468,7 +16717,7 @@ msgstr ""
 msgid "Checking for a way to generate LM/NT password hashes"
 msgstr "Suche einen Weg, um LM/NT Passwort-Hashes zu generieren"
 
-#: include/functions_setup.inc:429
+#: include/functions_setup.inc:429 setup/class_setupStep2.inc:165
 msgid ""
 "In order to use SAMBA 2/3, you've to install some additional packages to "
 "generate password hashes."
@@ -16480,7 +16729,7 @@ msgstr ""
 msgid "php.ini check -> session.auto_register"
 msgstr "php.ini Überprüfung -> session.auto_register"
 
-#: include/functions_setup.inc:443
+#: include/functions_setup.inc:443 setup/class_setupStep2.inc:196
 msgid ""
 "In Order to use GOsa without any trouble, the session.auto_register option "
 "in your php.ini must be set to 'Off'."
@@ -16492,7 +16741,7 @@ msgstr ""
 msgid "php.ini check -> implicit_flush"
 msgstr "php.ini Überprüfung -> implicit_flush"
 
-#: include/functions_setup.inc:447
+#: include/functions_setup.inc:447 setup/class_setupStep2.inc:212
 msgid ""
 "This option influences the Output handling. Turn this Option off, to "
 "increase performance."
@@ -16504,7 +16753,7 @@ msgstr ""
 msgid "php.ini check -> max_execution_time"
 msgstr "php.ini Überprüfung -> max_execution_time"
 
-#: include/functions_setup.inc:455
+#: include/functions_setup.inc:455 setup/class_setupStep2.inc:220
 msgid ""
 "The Execution time should be at least 30 seconds, because some actions may "
 "consume more time."
@@ -16529,7 +16778,7 @@ msgstr ""
 msgid "php.ini check -> expose_php"
 msgstr "php.ini Überprüfung -> expose_php"
 
-#: include/functions_setup.inc:468
+#: include/functions_setup.inc:468 setup/class_setupStep2.inc:228
 msgid ""
 "Increase the server security by setting expose_php to 'off'. PHP won't send "
 "any Information about the server you are running in this case."
@@ -16640,127 +16889,9 @@ msgstr "%s%% Trefferquote in Datei %s"
 msgid "Access control"
 msgstr "Zugriffskontrolle"
 
-#: include/class_acl.inc:145
-msgid "All categories"
-msgstr "Alle Kategorien"
-
-#: include/class_acl.inc:153
-msgid "Reset ACLs"
-msgstr "ACLs zurücksetzen"
-
-#: include/class_acl.inc:154
-msgid "One level"
-msgstr "Diese Ebene"
-
-#: include/class_acl.inc:155 include/class_acl.inc:160
-msgid "Current object"
-msgstr "Aktuelles Objekt"
-
-#: include/class_acl.inc:156
-msgid "Complete subtree"
-msgstr "Vollständiger Teilbaum"
-
-#: include/class_acl.inc:157
-msgid "Complete subtree (permanent)"
-msgstr "Vollständiger Teilbaum (permanent)"
-
-#: include/class_acl.inc:161
+#: include/class_acl.inc:158 include/class_acl.inc:161
 msgid "Use ACL defined in role"
 msgstr "Verwende ACL aus Rollendefinition"
-
-#: include/class_acl.inc:372
-msgid "Edit ACL"
-msgstr "ACL Bearbeiten"
-
-#: include/class_acl.inc:373
-msgid "Delete ACL"
-msgstr "ACL Entfernen"
-
-#: include/class_acl.inc:410
-msgid "No ACL settings for this category"
-msgstr "Keine ACL-Einstellungen für diese Kategorie"
-
-#: include/class_acl.inc:412
-#, php-format
-msgid "Contains ACLs for these objects: %s"
-msgstr "Enthält ACLs für diese Objekte: %s"
-
-#: include/class_acl.inc:417
-msgid "Edit categories ACLs"
-msgstr "ACLs dieser Kategorie bearbeiten"
-
-#: include/class_acl.inc:418
-msgid "Clear categories ACLs"
-msgstr "ACLs dieser Kategorie leeren"
-
-#: include/class_acl.inc:457
-#, php-format
-msgid "Edit ACL for '%s', scope is '%s'"
-msgstr "ACL für '%s' bearbeiten, Bereich ist '%s'"
-
-#: include/class_acl.inc:467
-msgid "All objects in current subtree"
-msgstr "Alle Objekte im aktuellen Teilbaum"
-
-#: include/class_acl.inc:558 include/class_acl.inc:565
-msgid "Show/Hide Advanced Settings"
-msgstr "Zeige/Verstecke Erweiterte Einstellungen"
-
-#: include/class_acl.inc:583
-msgid "Create objects"
-msgstr "Erstelle Objekte"
-
-#: include/class_acl.inc:584
-msgid "Move objects"
-msgstr "Objekte verschieben"
-
-#: include/class_acl.inc:585
-msgid "Remove objects"
-msgstr "Objekte entfernen"
-
-#: include/class_acl.inc:587 include/class_acl.inc:593
-msgid "Modifyable by owner"
-msgstr "Änderbar vom Eigentümer"
-
-#: include/class_acl.inc:590
-msgid "Move object"
-msgstr "Objekt verschieben"
-
-#: include/class_acl.inc:591
-msgid "Remove object"
-msgstr "Objekt entfernen"
-
-#: include/class_acl.inc:603
-msgid "Complete object"
-msgstr "Vollständiges Objekt"
-
-#: include/class_acl.inc:719
-#, php-format
-msgid "Unkown ACL type '%s'. Don't know how to handle it."
-msgstr "Unbekannter ACL-Typ '%s'. Verarbeitung nicht möglich."
-
-#: include/class_acl.inc:759
-#, php-format
-msgid "Unknown entry '%s'!"
-msgstr "Unbekannter Eintrag '%s'!"
-
-#: include/class_acl.inc:820
-#, php-format
-msgid "Contains settings for these objects: %s"
-msgstr "Enthält Einstellungen für diese Objekte: %s"
-
-#: include/class_acl.inc:828
-msgid "Members:"
-msgstr "Mitglieder:"
-
-#: include/class_acl.inc:834
-msgid "ACL is valid for all users"
-msgstr "ACL ist gültig für alle Benutzer"
-
-#: include/class_acl.inc:942
-#, php-format
-msgid "Saving ACLs with dn '%s' failed."
-msgstr "Speichern der ACLs von dn '%s' fehlgeschlagen."
 
 #: include/class_debconfTemplate.inc:260
 msgid "This package has no debconf options."
@@ -16819,21 +16950,21 @@ msgstr ""
 "Unbekannter Zonenname '%s'. Zonennamen müssen ungefähr so aussehen: 'server/"
 "zone.com'."
 
-#: include/class_CopyPasteHandler.inc:147
+#: include/class_CopyPasteHandler.inc:153
 #, php-format
 msgid "You are going to paste the cutted entry '%s'."
 msgstr "Sie sind dabei, den ausgeschnitten Eintrag '%s' einzufügen."
 
-#: include/class_CopyPasteHandler.inc:174
+#: include/class_CopyPasteHandler.inc:180
 #, php-format
 msgid "You are going to paste the copied entry '%s'."
 msgstr "Sie sind dabei, den kopierten Eintrag '%s' einzufügen."
 
-#: include/class_CopyPasteHandler.inc:238
+#: include/class_CopyPasteHandler.inc:244
 msgid "Paste"
 msgstr "Einfügen"
 
-#: include/class_CopyPasteHandler.inc:240
+#: include/class_CopyPasteHandler.inc:246
 msgid "Can't paste"
 msgstr "Kann nicht einfügen"
 
@@ -16895,15 +17026,6 @@ msgstr "Die angegebene Datenbank kann nicht ausgewählt werden."
 #: html/getfax.php:60 html/getfax.php:68
 msgid "Database query failed!"
 msgstr "Die Datenbankabfrage ist fehlgeschlagen!"
-
-#: html/setup.php:89
-#, php-format
-msgid ""
-"Directory '%s' specified as smarty compile directory is not accessible, "
-"please check existence and rights of this directory!"
-msgstr ""
-"Auf das als Compile-Verzeichnis angegegebene Verzeichnis '%s' kann nicht "
-"zugegriffen werden, überprüfen Sie die Existenz und die Rechte!"
 
 #: html/main.php:172
 msgid ""
@@ -17316,11 +17438,11 @@ msgstr ""
 "wird an dieser Stelle der DN des LDAP-Administrators und das dazugehörige "
 "Passwort benötigt."
 
-#: ihtml/themes/default/setup_step4.tpl:23
+#: ihtml/themes/default/setup_step4.tpl:23 setup/setup_step4.tpl:52
 msgid "Admin DN"
 msgstr "Administrator-DN:"
 
-#: ihtml/themes/default/setup_step4.tpl:34
+#: ihtml/themes/default/setup_step4.tpl:34 setup/setup_step5.tpl:218
 msgid ""
 "Some basic LDAP parameters are tunable and affect the locations where GOsa "
 "saves people and groups, including the way accounts get created. Check the "
@@ -17334,23 +17456,23 @@ msgstr ""
 msgid "Base "
 msgstr "Basis:"
 
-#: ihtml/themes/default/setup_step4.tpl:43
+#: ihtml/themes/default/setup_step4.tpl:43 setup/setup_step5.tpl:43
 msgid "People storage ou"
 msgstr "Ablage-OU für Benutzer:"
 
-#: ihtml/themes/default/setup_step4.tpl:47
+#: ihtml/themes/default/setup_step4.tpl:47 setup/setup_step5.tpl:30
 msgid "People dn attribute"
 msgstr "DN-Attribut für Benutzer:"
 
-#: ihtml/themes/default/setup_step4.tpl:55
+#: ihtml/themes/default/setup_step4.tpl:55 setup/setup_step5.tpl:55
 msgid "Group storage ou"
 msgstr "Ablage-OU für Gruppen:"
 
-#: ihtml/themes/default/setup_step4.tpl:59
+#: ihtml/themes/default/setup_step4.tpl:59 setup/setup_step5.tpl:66
 msgid "ID base for users/groups"
 msgstr "ID-Basis für Benutzer/Gruppen:"
 
-#: ihtml/themes/default/setup_step4.tpl:67
+#: ihtml/themes/default/setup_step4.tpl:67 setup/setup_step5.tpl:216
 msgid ""
 "GOsa supports several encryption types for your passwords. Normally this is "
 "adjustable via user templates, but you can specify a default method to be "
@@ -17375,7 +17497,7 @@ msgstr ""
 "bereit. Wählen sie 'deaktiviert', um all Ihre Mail-Einstellungen unberührt "
 "zu lassen."
 
-#: ihtml/themes/default/setup_step4.tpl:88
+#: ihtml/themes/default/setup_step4.tpl:88 setup/setup_step5.tpl:167
 msgid "Mail method"
 msgstr "Zustellungs-Methode"
 
@@ -17388,7 +17510,7 @@ msgstr ""
 "hilfreich, das 'error_reporting' zu aktivieren (dies kann jedoch ein "
 "Sicherheitsrisiko darstellen)."
 
-#: ihtml/themes/default/setup_step4.tpl:104
+#: ihtml/themes/default/setup_step4.tpl:104 setup/setup_step5.tpl:77
 msgid "Display PHP errors"
 msgstr "Zeige PHP-Fehler an"
 
@@ -17508,22 +17630,6 @@ msgstr ""
 "während normale Nutzer dies nicht dürfen. Führen Sie diese Kommandos aus, um "
 "die obigen Voraussetzungen zu erfüllen:"
 
-#: ihtml/themes/default/acl.tpl:2
-msgid "Assigned ACLs for current entry"
-msgstr "Zugewiesene ACLs für aktuellen Eintrag"
-
-#: ihtml/themes/default/acl.tpl:4
-msgid "New ACL"
-msgstr "Neue ACL"
-
-#: ihtml/themes/default/acl.tpl:8
-msgid "ACL type"
-msgstr "ACL-Typ"
-
-#: ihtml/themes/default/acl.tpl:8
-msgid "Select an acl type"
-msgstr "Wählen Sie einen ACL-Typ"
-
 #: ihtml/themes/default/acl.tpl:15
 msgid "Use members from"
 msgstr "Verwende Mitglieder von"
@@ -17532,13 +17638,14 @@ msgstr "Verwende Mitglieder von"
 msgid "Available members"
 msgstr "Verfügbare Mitglieder"
 
-#: ihtml/themes/default/acl.tpl:55
-msgid "List of available ACL categories"
-msgstr "Liste verfügbarer ACL-Kategorien"
-
 #: ihtml/themes/default/acl.tpl:63
 msgid "ACLs for this object"
 msgstr "ACLs für dieses Objekt"
+
+#: ihtml/themes/default/acl.tpl:69
+#, fuzzy
+msgid "Available roles"
+msgstr "Verfügbare Mitglieder"
 
 #: ihtml/themes/default/copyPasteDialog.tpl:1
 msgid "Copy & paste wizard"
@@ -17674,6 +17781,669 @@ msgstr "Zeitstempel"
 msgid "Reason for generating this snapshot"
 msgstr "Grund für das Erzeugen dieses Abbilds"
 
+#: setup/class_setup.inc:160 setup/class_setup.inc:162
+#, fuzzy
+msgid "Last step"
+msgstr "Letztes Skript"
+
+#: setup/class_setup.inc:165
+msgid "Next step"
+msgstr ""
+
+#: setup/class_setupStep6.inc:51
+msgid "GOsa settings 2/2"
+msgstr "GOsa-Einstellungen 2/2"
+
+#: setup/class_setupStep6.inc:52
+msgid "GOsa generic settings, page 2/2"
+msgstr "Allgemeine GOsa-Einstellungen, Seite 2/2"
+
+#: setup/class_setupStep6.inc:53 setup/class_setupStep5.inc:56
+#, fuzzy
+msgid "This dialog allows you to setup GOsa behaviour"
+msgstr ""
+"Dieser Dialog erlaubt es Ihnen, einen Benutzer als technische Kontaktperson "
+"zu wählen."
+
+#: setup/setup_step6.tpl:31 setup/setup_step6.tpl:51 setup/setup_step6.tpl:65
+#: setup/setup_step6.tpl:89 setup/setup_step6.tpl:109
+#: setup/setup_step6.tpl:124 setup/setup_step6.tpl:158
+#: setup/setup_step6.tpl:172 setup/setup_step6.tpl:232
+#: setup/setup_step4.tpl:112 setup/setup_step5.tpl:135
+#: setup/setup_step5.tpl:155 setup/setup_step5.tpl:194
+#: setup/setup_step5.tpl:209
+msgid "Infos in FAQ"
+msgstr ""
+
+#: setup/setup_step6.tpl:32 setup/setup_step6.tpl:52 setup/setup_step6.tpl:66
+#: setup/setup_step6.tpl:90 setup/setup_step6.tpl:110
+#: setup/setup_step6.tpl:125 setup/setup_step6.tpl:159
+#: setup/setup_step6.tpl:173 setup/setup_step6.tpl:233
+#: setup/setup_step4.tpl:113 setup/setup_step5.tpl:136
+#: setup/setup_step5.tpl:156 setup/setup_step5.tpl:195
+#: setup/setup_step5.tpl:210
+#, fuzzy
+msgid "Please read the FAQ for more informations"
+msgstr "Hole Kopfzeilen"
+
+#: setup/setup_step6.tpl:38
+#, fuzzy
+msgid "RID base"
+msgstr "Datenbank"
+
+#: setup/setup_step6.tpl:57
+#, fuzzy
+msgid "Samba SID mapping"
+msgstr "Samba SID"
+
+#: setup/setup_step6.tpl:71
+#, fuzzy
+msgid "Additional GOsa settings"
+msgstr "Anwendungs-Einstellungen"
+
+#: setup/setup_step6.tpl:76
+#, fuzzy
+msgid "Windows workstation ou"
+msgstr "Windows Arbeitsstation"
+
+#: setup/setup_step6.tpl:96
+msgid "GID / UID min id"
+msgstr "GID / UID min id"
+
+#: setup/setup_step6.tpl:116
+msgid "Strict units"
+msgstr ""
+
+#: setup/setup_step6.tpl:131
+#, fuzzy
+msgid "Government mode"
+msgstr "GOto-Modus"
+
+#: setup/setup_step6.tpl:145
+#, fuzzy
+msgid "Automatic uids"
+msgstr "Automatische Modelines"
+
+#: setup/setup_step6.tpl:164
+#, fuzzy
+msgid "Use account expiration"
+msgstr "Konto läuft ab am"
+
+#: setup/setup_step6.tpl:178
+msgid "Enable snapshot functionality"
+msgstr ""
+
+#: setup/setup_step6.tpl:186 setup/setup_step6.tpl:208
+msgid "Enable"
+msgstr "Aktivieren"
+
+#: setup/class_setupStep7.inc:31 setup/class_setupStep7.inc:32
+#, fuzzy
+msgid "Ldap schema check"
+msgstr "LDAP-Dienst"
+
+#: setup/class_setupStep7.inc:33
+msgid "This dialog checks your ldap schema setup"
+msgstr ""
+
+#: setup/class_setupStep7.inc:69
+msgid "GOsa object is used to store acls."
+msgstr ""
+
+#: setup/class_setupStep7.inc:77
+msgid "Used to store account specific informations."
+msgstr ""
+
+#: setup/class_setupStep7.inc:85 setup/class_setupStep7.inc:93
+msgid ""
+"Used to lock currently edited entries to avoid multiple changes at the same "
+"time."
+msgstr ""
+
+#: setup/setup_step7.tpl:4
+msgid "Schema check"
+msgstr "Schema-Prüfung"
+
+#: setup/setup_frame.tpl:8
+msgid "GOsa - GOnicus System Administrator Setup"
+msgstr "GOSA - GOnicus System Administrator Setup"
+
+#: setup/setup_frame.tpl:14
+#, fuzzy
+msgid "Setup steps"
+msgstr "Status setzen"
+
+#: setup/setup_step1.tpl:3
+msgid "Please select the language that should be used in GOsa setup."
+msgstr ""
+
+#: setup/setup_step1.tpl:10
+#, fuzzy
+msgid "Please your prefered language here"
+msgstr "Bevorzugte Sprache"
+
+#: setup/setup_step1.tpl:15
+msgid "Next"
+msgstr "Vor"
+
+#: setup/class_setupStep1.inc:36
+msgid "Language selection"
+msgstr "Sprachauswahl"
+
+#: setup/class_setupStep1.inc:37
+msgid "Please choose a language"
+msgstr "Bitte wählen Sie eine Sprache"
+
+#: setup/class_setupStep1.inc:38
+#, fuzzy
+msgid "This step is allows you to define your prefered language."
+msgstr ""
+"Dieser Dialog erlaubt es Ihnen, ein Gerät zum momentan ausgewählten Computer "
+"hinzuzufügen."
+
+#: setup/setup_step2.tpl:10
+msgid "PHP module and extension checks"
+msgstr ""
+
+#: setup/setup_step2.tpl:30 setup/setup_step2.tpl:91 setup/setup_step2.tpl:146
+msgid "Successful"
+msgstr "Erfolgreich"
+
+#: setup/setup_step2.tpl:43 setup/setup_step2.tpl:106
+#: setup/setup_step2.tpl:161
+msgid "GOsa will NOT run without fixing this."
+msgstr ""
+
+#: setup/setup_step2.tpl:46 setup/setup_step2.tpl:109
+#: setup/setup_step2.tpl:164
+msgid "GOsa will run without fixing this."
+msgstr "GOsa wird verwendbar sein, ohne dies zu beheben."
+
+#: setup/setup_step2.tpl:70
+#, fuzzy
+msgid "PHP setup configuration"
+msgstr "Konfiguration der Parameter"
+
+#: setup/setup_step2.tpl:125
+msgid "Configuration file writeable"
+msgstr "Konfigurationsdatei schreibbar"
+
+#: setup/class_setupStep2.inc:31
+msgid "Installation check"
+msgstr "Installationsprüfung"
+
+#: setup/class_setupStep2.inc:32
+#, fuzzy
+msgid "Basic installation checks"
+msgstr "Installation der Arbeitsstation ist fehlgeschlagen"
+
+#: setup/class_setupStep2.inc:33
+msgid "Some basic checks for PHP version, ldap extension..."
+msgstr "Einige grundsätzliche Überprüfungen der PHP-Version, LDAP-Erweiterung..."
+
+#: setup/class_setupStep2.inc:57
+msgid "Checking PHP version"
+msgstr "Prüfe PHP-Version"
+
+#: setup/class_setupStep2.inc:58
+#, fuzzy, php-format
+msgid "PHP must be of version %s or %s or above for some functions."
+msgstr ""
+"PHP muß mindestens in der Version 4.1.0 vorliegen. GOsa verwendet einige "
+"Funktionen, die in früheren Versionen fehlerhaft oder gar nicht "
+"implementiert waren."
+
+#: setup/class_setupStep2.inc:59
+msgid ""
+"GOsa requires functions that may not be available in older PHP versions, "
+"just update to a supported PHP version."
+msgstr "GOsa benötigt Funktionen, die in älteren PHP-Versionen nicht unbedingt verfügbar sind,"
+"aktualisieren Sie einfach auf eine unterstützte PHP-Version."
+
+#: setup/class_setupStep2.inc:67
+msgid ""
+"The ldap module (PHP4-ldap/PHP5-ldap) is required to communicate with your "
+"ldap server."
+msgstr ""
+
+#: setup/class_setupStep2.inc:75
+msgid "This should be activated while compiling your PHP. (--with-gettext)"
+msgstr "Dies sollte aktiviert sein, während Sie PHP kompilieren (--with-gettext)."
+
+#: setup/class_setupStep2.inc:82
+#, fuzzy
+msgid ""
+"This module is used by GOsa to convert samba munged dial informations and is "
+"therefore required. "
+msgstr ""
+"Dieses Modul wird von GOsa benutzt, um Informationen der samba-Erweiterung "
+"zu verarbeiten und wird daher benötigt."
+
+#: setup/class_setupStep2.inc:83
+msgid "his should be activated while compiling your PHP. (--with-iconv)"
+msgstr ""
+
+#: setup/class_setupStep2.inc:90
+#, fuzzy
+msgid ""
+"To use SSHA encryption, you'll need this module. GOsa will run without it."
+msgstr ""
+"Bei der Verwendung von speziellen Passwort-Verschlüsselungen (wie z.B. SSHA) "
+"wird dieses Modul benötigt. GOsa funktioniert auch ohne dieses Modul."
+
+#: setup/class_setupStep2.inc:91
+msgid ""
+"The mhash module for PHP 4/5 is not available, please install it. (php4-"
+"mhash/php5-mhash)"
+msgstr ""
+
+#: setup/class_setupStep2.inc:99
+msgid ""
+"This module is used to communicate with your mail server. Please install "
+"(PHP4-imap PHP5-imap)"
+msgstr ""
+
+#: setup/class_setupStep2.inc:115
+msgid ""
+"This module is required to communicate with database servers, for example "
+"used in phone and fax addons. Please install (PHP4-mysql PHP5-mysql)"
+msgstr ""
+
+#: setup/class_setupStep2.inc:123
+#, fuzzy
+msgid ""
+"This module is required to manage user in kerberos, it is downloadable via "
+"PEAR network"
+msgstr ""
+"Um Benutzer auch im Kerberos verwalten zu können, muß das kadm5-Modul "
+"installiert sein. Sie können es über das PEAR-Netzwerk beziehen."
+
+#: setup/class_setupStep2.inc:131
+msgid "This module is required for client monitoring. (PHP4-snmp/PHP5-snmp)"
+msgstr "Dieses Modul wird für die Client-Überwachung benötigt (PHP4-snmp/PHP5-snmp)"
+
+#: setup/class_setupStep2.inc:149
+#, fuzzy
+msgid ""
+"The fping utility is only used in thin client based terminal environment."
+msgstr ""
+"Fping wird benötigt, um den Status von Thin-Client basierenden Terminal zu "
+"überwachen."
+
+#: setup/class_setupStep2.inc:164
+#, fuzzy
+msgid "Password hashes"
+msgstr "Passwort läuft ab"
+
+#: setup/class_setupStep2.inc:166
+#, fuzzy
+msgid ""
+"In order to use samba 2/3 you've to install some additional packages to "
+"generate password hashes. (e.g. libmhash2)"
+msgstr ""
+"Um Samba 2.x/3.x in Verbindung mit LDAP nutzen zu können, wird ein externes "
+"Programm benötigt, welches die Passwort-Hashes generieren kann."
+
+#: setup/class_setupStep2.inc:176
+msgid "register_globals"
+msgstr "register_globals"
+
+#: setup/class_setupStep2.inc:176 setup/class_setupStep2.inc:195
+msgid "&nbsp;"
+msgstr "&nbsp;"
+
+#: setup/class_setupStep2.inc:176 setup/class_setupStep2.inc:195
+msgid "<b>"
+msgstr "<b>"
+
+#: setup/class_setupStep2.inc:176 setup/class_setupStep2.inc:195
+#: setup/class_setupStep2.inc:211 setup/class_setupStep2.inc:227
+msgid "Off"
+msgstr "Aus"
+
+#: setup/class_setupStep2.inc:176 setup/class_setupStep2.inc:195
+msgid "</b>"
+msgstr "</b>"
+
+#: setup/class_setupStep2.inc:178
+#, fuzzy
+msgid "Search for 'register_globals' in your php.ini and switch it to 'Off'."
+msgstr "Prüfe ob register_globals ausgeschaltet ist"
+
+#: setup/class_setupStep2.inc:186
+msgid "PHP uses this value for the garbage collector to delete old sessions."
+msgstr "PHP verwendet diese Einstellungen für den Garbage Collector, um alte Sessions zu entfernen."
+
+#: setup/class_setupStep2.inc:187
+#, fuzzy
+msgid ""
+"Setting this value to one day will prevent loosing session and cookie before "
+"they really timeout."
+msgstr ""
+"PHP verwendet diesen Wert für den Garbage Collector um alte Sitzungen zu "
+"entfernen. Wenn Sie diesen Wert auf einen Tag setzen, wird dies vermeiden, "
+"dass Sie die Sitzung und den zugehörigen Cookie verlieren, bevor diese "
+"tatsächlich ihre Gültigkeit verlieren."
+
+#: setup/class_setupStep2.inc:188
+msgid ""
+"Serach for 'session.gc_maxlifetime' in your php.ini and set it to 86400 or "
+"higher."
+msgstr ""
+
+#: setup/class_setupStep2.inc:195
+msgid "session.auto_start"
+msgstr "session.auto_start"
+
+#: setup/class_setupStep2.inc:197
+#, fuzzy
+msgid "Serach for 'session.auto_start' in your php.ini and set it to 'Off'."
+msgstr ""
+"Um GOsa fehlerfrei benutzen zu können, muß die Option session.auto_register "
+"in Ihrer php.ini auf 'off' stehen."
+
+#: setup/class_setupStep2.inc:203
+msgid "memory_limit"
+msgstr "memory_limit"
+
+#: setup/class_setupStep2.inc:204
+#, fuzzy
+msgid ""
+"GOsa needs at least 32MB of memory, less will cause unpredictable errors! "
+"Increase it for larger setups."
+msgstr ""
+"GOsa benötigt mindestens 16MB Speicher, weniger Speicher würde "
+"unvorhersehbare Probleme verursachen! Bei größeren Installationen sollte "
+"dieser Wert noch erweitert werden."
+
+#: setup/class_setupStep2.inc:205
+msgid ""
+"Search for 'memory_limit' in your php.ini and set it to '32M' or higher."
+msgstr ""
+
+#: setup/class_setupStep2.inc:211
+msgid "implicit_flush"
+msgstr "implicit_flush"
+
+#: setup/class_setupStep2.inc:213
+msgid "Search for 'implicit_flush' in your php.ini and set it to 'Off'."
+msgstr ""
+
+#: setup/class_setupStep2.inc:219
+msgid "max_execution_time"
+msgstr "max_execution_time"
+
+#: setup/class_setupStep2.inc:221
+msgid ""
+"Search for 'max_execution_time' in your php.ini and set it to '30' or higher."
+msgstr ""
+
+#: setup/class_setupStep2.inc:227
+msgid "expose_php"
+msgstr ""
+
+#: setup/class_setupStep2.inc:229
+msgid "Search for 'expose_php' in your php.ini and set if to 'Off'."
+msgstr ""
+
+#: setup/class_setupStep2.inc:235
+msgid "magic_quotes_gpc"
+msgstr "magic_quotes_gpc"
+
+#: setup/class_setupStep2.inc:235
+msgid "On"
+msgstr "An"
+
+#: setup/class_setupStep2.inc:236
+#, fuzzy
+msgid ""
+"Increase your server security by setting magic_quotes_gpc to 'on'. PHP will "
+"escape all quotes   in strings in this case."
+msgstr ""
+"Erhöhen Sie die Sicherheit des Server, indem sie magic_quotes_gpc auf 'on' "
+"stellen. PHP wird in dieser Einstellung alle 'quotes' in 'strings' umwandeln."
+
+#: setup/class_setupStep2.inc:237
+msgid "Search for 'magic_quotes_gpc' in yout php.ini and set it to 'On'."
+msgstr ""
+
+#: setup/class_setupStep2.inc:247
+msgid "Configuration file writeable."
+msgstr "Konfigurationsdatei schreibbar"
+
+#: setup/class_setupStep2.inc:248
+msgid "The Configuration file can't be written"
+msgstr "Die Konfigurationsdatei kann nicht geschrieben werden"
+
+#: setup/class_setupStep2.inc:249
+msgid ""
+"The GOsa reads its configuration from a file located in (/etc/gosa/gosa."
+"conf). The setup can write the configuration directly in this file, if it is "
+"writeable."
+msgstr ""
+
+#: setup/class_setupStep2.inc:259
+msgid "No old configuration file."
+msgstr "Keine alte Konfigurationsdatei"
+
+#: setup/class_setupStep2.inc:261
+msgid ""
+"If there is already a configuration file, this file will be overwritten when "
+"GOsa setup finishes. Please move your old config file away."
+msgstr ""
+
+#: setup/class_setupStep3.inc:30
+msgid "License"
+msgstr "Lizenz"
+
+#: setup/class_setupStep3.inc:31 setup/class_setupStep3.inc:32
+msgid "GNU / GPL-License"
+msgstr "GNU / GPL-Lizenz"
+
+#: setup/class_setupStep4.inc:42
+msgid "Ldap settings"
+msgstr "LDAP-Einstellungen"
+
+#: setup/class_setupStep4.inc:43
+#, fuzzy
+msgid "Ldap connection setup"
+msgstr "Wähle Verbindung..."
+
+#: setup/class_setupStep4.inc:44
+#, fuzzy
+msgid ""
+"This dialog allows the basic configuration of GOsa's behaviour and "
+"properties in your main configuration."
+msgstr ""
+"Die folgenden Eingabefelder ermöglichen die Grundkonfiguration von GOsa und "
+"beeinflussen verschiedene Eigenschaften der Hauptkonfiguration."
+
+#: setup/class_setupStep4.inc:87
+#, php-format
+msgid "Anonymous bind failed on server '%s'."
+msgstr "Verbindung als anonymer Benutzer zu Server '%s' schlug fehl."
+
+#: setup/class_setupStep4.inc:89
+#, php-format
+msgid "Bind as user '%s' failed on server '%s'."
+msgstr "Verbindung als Benutzer '%s' zu Server '%s' schlug fehl."
+
+#: setup/class_setupStep4.inc:94
+#, php-format
+msgid ""
+"Anonymous bind successful on server '%s'. Please specify user and password."
+msgstr ""
+
+#: setup/class_setupStep4.inc:97
+#, php-format
+msgid "Bind as user '%s' successful on server '%s'."
+msgstr ""
+
+#: setup/setup_step4.tpl:1
+msgid "ldap connection"
+msgstr "LDAP-Verbindung"
+
+#: setup/setup_step4.tpl:4
+msgid ""
+"Please enter the server URI to allow the GOsa setup to connect your LDAP "
+"server (Example: ldap://your.server:389)."
+msgstr ""
+"Bitte geben Sie die Server-URI an, damit das GOsa-Setup sich zu Ihrem LDAP-"
+"Server verbinden kann (Beispiel: ldap://ihr-server:389)."
+
+#: setup/setup_step4.tpl:6
+msgid ""
+"Use the 'Test' button to try a connect. The status will be shown on the "
+"bottom of the page."
+msgstr ""
+
+#: setup/setup_step4.tpl:13
+#, fuzzy
+msgid "Location description"
+msgstr "Aufgabengebiet"
+
+#: setup/setup_step4.tpl:24
+#, fuzzy
+msgid "Connection url"
+msgstr "Verbinden"
+
+#: setup/setup_step4.tpl:30
+msgid "Test"
+msgstr "Test"
+
+#: setup/setup_step4.tpl:61
+msgid "Select user"
+msgstr "Benutzer wählen"
+
+#: setup/setup_step4.tpl:75
+msgid "Use selected user"
+msgstr "Verwende gewählten Benutzer"
+
+#: setup/setup_step4.tpl:99
+msgid "Try connect"
+msgstr "Verbindung testen"
+
+#: setup/setup_step4.tpl:104
+msgid "Use tls connection"
+msgstr "Verwende TLS-Verbindung"
+
+#: setup/class_setupStep5.inc:54
+msgid "GOsa settings 1/2"
+msgstr "GOsa-Einstellungen 1/2"
+
+#: setup/class_setupStep5.inc:55
+msgid "GOsa generic settings, page 1/2"
+msgstr "Allgemeine GOsa-Einstellungen, Seite 1/2"
+
+#: setup/class_setupStep5.inc:128
+#, fuzzy
+msgid "Uid base must be numeric"
+msgstr "Der Wert für 'Wartezeit' muss numerisch sein"
+
+#: setup/class_setupStep5.inc:132
+#, fuzzy
+msgid "The given password minimum length is not numeric."
+msgstr "Der Sieve-Port muss numerisch sein."
+
+#: setup/class_setupStep5.inc:135
+#, fuzzy
+msgid "The given password differ value is not numeric."
+msgstr "Der Sieve-Port muss numerisch sein."
+
+#: setup/setup_step5.tpl:12
+msgid "GOsa settings"
+msgstr "GOsa-Einstellungen"
+
+#: setup/setup_step5.tpl:17
+msgid "GOsa theme"
+msgstr "GOsa-Thema"
+
+#: setup/setup_step5.tpl:89
+msgid "Password settings"
+msgstr "Passwort-Einstellungen"
+
+#: setup/setup_step5.tpl:94
+msgid "Password encryption algorithm"
+msgstr "Passwort-Verschlüsselungsalgorithmus"
+
+#: setup/setup_step5.tpl:107
+msgid "Password restrictions"
+msgstr "Passwort-Einschränkungen"
+
+#: setup/setup_step5.tpl:114 setup/setup_step5.tpl:118
+msgid "Password minimum length"
+msgstr "Minimale Passwortlänge"
+
+#: setup/setup_step5.tpl:125 setup/setup_step5.tpl:129
+msgid "Different characters from old password"
+msgstr ""
+
+#: setup/setup_step5.tpl:142
+msgid "External script"
+msgstr "Externes Skript"
+
+#: setup/setup_step5.tpl:181
+#, fuzzy
+msgid "Vacation templates"
+msgstr "Vorlage für Arbeitsstation"
+
+#: setup/setup_step5.tpl:201
+msgid "Use cyrus account style"
+msgstr ""
+
+#: setup/setup_step5.tpl:217
+msgid ""
+"GOsa always acts as admin and manages access rights internally. This is a "
+"workaround till OpenLDAP's in directory ACI's are    fully implemented. For "
+"this to work, we need the admin DN and the corresponding password."
+msgstr ""
+"GOsa arbeitet immer als Administrator und verwaltet die Rechte intern "
+"(solange die in OpenLDAP implementierten ACIs nicht vollständig unterstützt "
+"werden, wird dieser Workaround bestehen bleiben). Damit dies möglich ist, "
+"wird an dieser Stelle der DN des LDAP-Administrators und das dazugehörige "
+"Passwort benötigt."
+
+#: setup/setup_step5.tpl:219
+msgid ""
+"GOsa has modular support for several mail methods. These methods provide "
+"interfaces to users mailboxes and general handling    for quotas. You can "
+"choose the dummy plugin to leave all your mail settings untouched."
+msgstr ""
+"GOsa unterstützt verschiedene Zustellungs-Methoden. Diese Methoden stellen "
+"Schnittstellen für Benutzer-Postfächer und die allgemeine Verwaltung von Kontingenten "
+"bereit. Wählen sie 'dummy', um all Ihre Mail-Einstellungen unberührt zu lassen."
+
+#~ msgid "Mail account"
+#~ msgstr "Mail-Konto"
+
+#~ msgid "Posix Account"
+#~ msgstr "Posix-Konto"
+
+#~ msgid "Samba account"
+#~ msgstr "Samba-Konto"
+
+#~ msgid "PHPgroupware"
+#~ msgstr "PHPgroupware"
+
+#~ msgid "OpenExchange account"
+#~ msgstr "OpenExchange-Konto"
+
+#~ msgid "PHP schedule it"
+#~ msgstr "PHP schedule it"
+
+#~ msgid "Nagios account"
+#~ msgstr "Nagios-Konto"
+
+#~ msgid "Netatalk account"
+#~ msgstr "Netatalk-Konto"
+
+#~ msgid ""
+#~ "Directory '%s' specified as smarty compile directory is not accessible, "
+#~ "please check existence and rights of this directory!"
+#~ msgstr ""
+#~ "Auf das als Compile-Verzeichnis angegegebene Verzeichnis '%s' kann nicht "
+#~ "zugegriffen werden, überprüfen Sie die Existenz und die Rechte!"
+
 #~ msgid "Repository settings"
 #~ msgstr "Repository-Einstellungen"
 
@@ -17756,9 +18526,6 @@ msgstr "Grund für das Erzeugen dieses Abbilds"
 #~ msgid "Can't perform INSERT query in DB '%s'"
 #~ msgstr "Kann INSERT-Abfrage in Datenbank '%s' nicht ausführen"
 
-#~ msgid "Please choose a valid  base."
-#~ msgstr "Bitte wählen Sie eine gültige Basis."
-
 #~ msgid "Removing of goFonConference/generic with dn '%s' failed."
 #~ msgstr "Entfernen von GOfonKonferenz/Allgemein mit dn '%s' fehlgeschlagen."
 
@@ -17771,9 +18538,6 @@ msgstr "Grund für das Erzeugen dieses Abbilds"
 
 #~ msgid "Online"
 #~ msgstr "aktiv"
-
-#~ msgid "Offline"
-#~ msgstr "inaktiv"
 
 #~ msgid ""
 #~ "As soon as the move operation has finished, you can scroll down to end of "
@@ -18064,9 +18828,6 @@ msgstr "Grund für das Erzeugen dieses Abbilds"
 #~ msgid "Set status flag for server services/ldap with dn '%s' failed."
 #~ msgstr ""
 #~ "Setzen von Status-Flag für Server Dienste/LDAP mit dn '%s' fehlgeschlagen."
-
-#~ msgid "Ldap service"
-#~ msgstr "LDAP-Dienst"
 
 #~ msgid "Syslog service"
 #~ msgstr "Protokoll-Dienst"
@@ -18504,9 +19265,6 @@ msgstr "Grund für das Erzeugen dieses Abbilds"
 
 #~ msgid "Saving DNS entries failed"
 #~ msgstr "Speichern von DNS-Einträgen ist fehlgeschlagen"
-
-#~ msgid "Automatic modelines"
-#~ msgstr "Automatische Modelines"
 
 #~ msgid "Removing workstation failed"
 #~ msgstr "Entfernen der Arbeitsstation ist fehlgeschlagen"
