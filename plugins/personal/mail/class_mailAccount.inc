@@ -236,6 +236,27 @@ class mailAccount extends plugin
       $mailserver[]= $key;
     }
 
+
+    /* 
+     * Sieve Management 
+     */
+    if(isset($_POST['sieveManagement'])) {
+      $this->dialog = new sieveManagement($this->config,$this->dn,$this);
+    }
+    
+    if(is_object($this->dialog)){
+      $this->dialog->save_object();
+      return($this->dialog->execute());
+    } 
+
+
+
+
+
+
+
+
+
     /* Handle account state */
     /* Do we need to flip is_account state? */
     if(isset($_POST['modify_state'])){

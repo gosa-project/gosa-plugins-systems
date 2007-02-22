@@ -45,6 +45,11 @@
 {/render}
      </td>
     </tr>
+	<tr>
+	 <td>	
+		<input type='submit' name='sieveManagement' value='{t}Sieve Management{/t}'>
+	 </td>
+	</tr>
    </table>
   </td>
 
