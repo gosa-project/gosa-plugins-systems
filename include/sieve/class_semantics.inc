@@ -16,6 +16,7 @@ class Semantics
 	function Semantics($command)
 	{
 		$this->command_ = $command;
+
 		$this->unknown = false;
 		switch ($command)
 		{
@@ -329,6 +330,11 @@ class Semantics
 	function setRequire_($text)
 	{
 		global $requires_;
+
+		if(!is_array($requires_)){
+			$requires_ = array();
+		}
+
 		array_push($requires_, $text);
 		return true;
 	}
