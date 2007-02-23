@@ -1,95 +1,13 @@
 <?php
 
 
-class sieve_element
+class sieve_elsif extends sieve_if 
 {
-
-  function execute()
-  {
-    return("NIY<br>");
-  }
+  var $TYPE = "elsif";
 }
 
-class sieve_elsif extends sieve_if {}
-class sieve_if extends sieve_element
-{
 
-  /* Contains all tests with an uniqe id */
-  var $test_list = array();
-      
-  /* Available test types */
-  var $TESTS = array("address","allof","anyof","exists","false","header","not","size","true","envelope");
-  
-  var $elements = array();
-
-
-  function sieve_if($elements)
-  {
-    $this->elements = $elements;
-    $this->_parse($elements);
-  }
-
-  function execute()
-  {
-    return("-> "._("Condition"));
-  }
-
-
-  function _parse($data,$id = 0)
-  {
-    /* Objects that could be tested */
-    $av_methods   = array("address","allof","anyof","exists","false","header","not","size","true","envelope");
-
-    /* Tests that could be used */
-    $av_match_type= array(":is",":contains",":matches",":over",":count",":value");
-
-    /* Variable initialization */
-    $test_method    = ""; // The object that we want to test, like 'header'
-    $match_type     = ""; // The operator like :contains
-    $obj_attribute  = ""; // The attribute we want to check, like 'from'
-    $obj_match_value= ""; // The value that we want to match for.
-    $comparator     = ""; // The comperator specifies the type of values that should be matched.
-
-    $node = $data['ELEMENTS'][$id];
-
-    /* Skip the if / else identifier */
-    if($node ['class'] == "identifier" && in_array($node['text'],array("if","elsif"))){
-      $id ++;
-      $node = $data['ELEMENTS'][$id];
-    }
-
-    /* Get current command like "allof" or "header" */
-    if($node ['class'] == "identifier" && in_array($node['text'],$av_methods)){
-      $test_method = $node['text'];
-    }
-
-    echo $id;
-
-    /* switch different types */
-    switch($test_method)
-    {
-      case "allof"  : $this->_parse($elements,$id);
-      case "anyof"  : $this->_parse($elements,$id);
-
-      case "address" : 
-      {
-        /* header :comparator <string> :optional-operator :operator attribute match-value */
-        $tmp = array();
-        $tmp['OPTIONAL_OP']     ="";
-        $tmp['COMPARATOR']      ="";
-        $tmp['OPERATOR']        ="";
-        $tmp['ATTRIBUTE']       ="";
-        $tmp['MATCH-VALUE']     ="";
-        
-
-      }
-      default : echo $test_method."<br>" ;
-    }
-  }
-};
-
-
-class sieve_comment extends sieve_element
+class sieve_comment 
 {
   var $data = "";
  
@@ -103,12 +21,16 @@ class sieve_comment extends sieve_element
 
   function execute()
   {
-    return(_("Comment")."&nbsp;<input type='text' name='comment_' value='".$this->data."'>");
+    $str  ="<table cellspacing=0 width='100%'><tr><td style='width:100%;background-color:#DDFFDD;'>"._("Comment");
+    $str .="<input type='text' name='comment_' value='".$this->data."'>";
+    $str .="</td></tr></table>";
+    return($str);
   }
 }
 
 
-class sieve_require extends sieve_element
+class sieve_require 
+
 {
   var $data = array();
 
@@ -123,15 +45,16 @@ class sieve_require extends sieve_element
 
   function execute()
   {
-    $str = _("Sieve includes");
+    $str = "<table cellspacing=0 width='100%'><tr><td style='width:100%;background-color:#DDDDFF;'>"._("Script includes");
     foreach($this->data as $req){
       $str .= "&nbsp;<i>".$req."</i>";
     }
+    $str .="</td></tr></table>";
     return($str);
   }
 }
 
-class sieve_discard extends sieve_element
+class sieve_discard 
 {
   var $data = array();
 
@@ -141,14 +64,15 @@ class sieve_discard extends sieve_element
 
   function execute()
   {
-    $str = _("Discard mail");
+    $str = "<table cellspacing=0 width='100%'><tr><td style='width:100%;background-color:red;'>"._("Discard message");
+    $str .="</td></tr></table>";
     return($str);
   }
 }
 
 
 
-class sieve_reject extends sieve_element
+class sieve_reject 
 {
   var $data = array();
 
@@ -165,13 +89,14 @@ class sieve_reject extends sieve_element
 
   function execute()
   {
-    $str = _("Reject mail");
+    $str = "<table cellspacing=0 width='100%'><tr><td style='width:100%;background-color:gray;'>"._("Reject mail");
     $str .= "&nbsp;<textarea name='test' style='width:90%'>".$this->data."</textarea>";
+    $str .="</td></tr></table>";
     return($str);
   }
 }
 
-class sieve_redirect extends sieve_element
+class sieve_redirect 
 {
   var $data = array();
 
@@ -186,15 +111,16 @@ class sieve_redirect extends sieve_element
 
   function execute()
   {
-    $str = _("Redirect to");
+    $str = "<table cellspacing=0 width='100%'><tr><td style='width:100%;background-color:brown;'>"._("Redirect to");
     foreach($this->data as $dest){
       $str .= "<input type='text' name='bal' value='".$dest."'><br> ";
     }
+    $str .="</td></tr></table>";
     return($str);
   }
 }
 
-class sieve_fileinto extends sieve_element
+class sieve_fileinto 
 {
   var $data = array();
 
@@ -209,19 +135,19 @@ class sieve_fileinto extends sieve_element
 
   function execute()
   {
-    $str = _("File into");
-
+    $str = "<table cellspacing=0 width='100%'><tr><td style='width:100%;background-color:green;'>"._("File into");
     $str .= "<select name='test'>";
     foreach($this->data as $folder){
       $str .= "<option>".$folder."</option>";
     }
     $str .= "</select>";
+    $str .="</td></tr></table>";
 
     return($str);
   }
 }
 
-class sieve_vacation extends sieve_element 
+class sieve_vacation 
 {
   var $days     = FALSE;
   var $subject  = FALSE;
@@ -293,28 +219,58 @@ class sieve_vacation extends sieve_element
   }
 }
 
-class sieve_block_start extends sieve_element 
+class sieve_block_start 
 {
   function execute()
   {
-    return("<table width='100%'> <tr><td style='background-color:#BBBBBB;border: solid 2px #FFFFFF;padding-left:20px;'>");
+    return("<table cellspacing=0 width='100%'>
+              <tr>
+                <td style='width:20px;'>
+                  <img src='images/forward.png' class='center'>
+                </td>
+                <td style='background-color:#BBBBBB;border: solid 2px #FFFFFF;'>");
   }
 }
 
-class sieve_block_end extends sieve_element 
+class sieve_block_end 
 {
   function execute()
   {
-    return("</td></tr></table>");
+    return("    </td>
+              </tr>
+            </table>");
   }
 }
 
 /* This class handles the keep statement */
-class sieve_keep extends sieve_element 
+class sieve_keep 
 {
   function execute()
   {
-    return("->  "._("Keep message"));
+    $str = "<table cellspacing=0 width='100%'>
+              <tr>
+                <td style='width:100%;background-color:green;'>".
+                  _("Keep message");
+    $str .="    </td>
+              </tr>
+            </table>";
+    return($str);
+  }
+}
+
+/* This class handles the stop statement */
+class sieve_stop 
+{
+  function execute()
+  {
+    $str = "<table cellspacing=0 width='100%'>
+              <tr>
+                <td style='width:100%;background-color:orange;'>".
+                  _("Stop here");
+    $str .="    </td>
+              </tr>
+            </table>";
+    return($str);
   }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

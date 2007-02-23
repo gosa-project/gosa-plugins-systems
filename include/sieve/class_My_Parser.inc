@@ -6,7 +6,7 @@ class My_Parser extends Parser
 	{
         $this->status_text = "incomplete";
         $this->script_ = $script;
-        $this->tree_ = new My_Tree(Scanner::scriptStart());
+        $this->tree_ = new My_Tree(@Scanner::scriptStart());
         $this->tree_->setDumpFunc(array(&$this, 'dumpToken_'));
         $this->scanner_ = new Scanner($this->script_);
         $this->scanner_->setCommentFunc(array($this, 'comment_'));

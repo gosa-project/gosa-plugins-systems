@@ -17,10 +17,10 @@ class My_Tree extends Tree
     $this->pap = array();
     $this->doDump_(0, '', true);
 
-    $this->dump_ ="<table width='100%'><tr><td style='background-color:#BBBBBB;border: solid 2px #FFFFFF;padding-left:20px;'>";
+    $this->dump_ ="<table width='100%'><tr><td style='background-color:#BBBBBB;border: 0px;padding-left:20px;'>";
     foreach($this->pap as $object){
       if(is_object($object)){
-        $this->dump_ .= $object->execute()."<br>"; 
+        $this->dump_ .= preg_replace("/>/",">\n",$object->execute()); 
       }
     }
     $this->dump_ .= "</td></tr></table>";
@@ -69,7 +69,7 @@ class My_Tree extends Tree
     }
 
     /* Handle identifiers */
-    $identifiers = array("if","elsif","end","reject","redirect","vacation","keep","discard","comment","fileinto","require");
+    $identifiers = array("if","elsif","end","reject","redirect","vacation","keep","discard","comment","fileinto","require","stop");
     if($node['class'] == "identifier" && in_array($node['text'],$identifiers)){
       $this->mode_stack[] = array("TYPE" => $node['text']); 
     }
@@ -116,5 +116,26 @@ class My_Tree extends Tree
     }
   }
 }
+
+
+function sieve_get_strings($data,$id)
+{
+  $ret = array();
+  if($data[$id]['class'] == "left-bracket"){
+    while($data[$id]['class']  != "right-bracket" && $id < count($data)){
+      
+      if($data[$id]['class'] == "quoted-string"){
+        $ret[] = $data[$id]['text'];
+      }
+      $id ++;
+    }
+  }elseif($data[$id]['class'] == "quoted-string"){
+    $ret[] = $data[$id]['text'];
+  }elseif($data[$id]['class'] == "number"){
+    $ret[] = $data[$id]['text'];
+  }
+  return(array("OFFSET" => $id, "STRINGS" => $ret));
+}
+
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

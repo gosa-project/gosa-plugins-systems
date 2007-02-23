@@ -15,7 +15,7 @@ class sieveElement
 
   function resolve_to_object($data)
   {
-    $this->data = @nl2br($data->dumpParseTree());
+    $this->data = @$data->dumpParseTree();
   }
 
   function execute()
