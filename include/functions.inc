@@ -2126,5 +2126,11 @@ function gosa_ldap_explode_dn($dn,$config = NULL,$verify_in_ldap=false)
   return($ret);
 }
 
+function is_php4()
+{
+  return (strpos(phpversion(), 4) === 0);
+}
+
+
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
