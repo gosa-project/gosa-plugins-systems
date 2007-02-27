@@ -584,9 +584,9 @@ class mailgroup extends plugin
         if(preg_match("/r/",$perm)){
           foreach ($this->perms as $key => $value){
             if ($acl == $key){
-              $tmp.= "<option value=$key selected>$value</option>";
+              $tmp.= "<option value=\"$key\" selected>$value</option>";
             } else {
-              $tmp.= "<option value=$key>$value</option>";
+              $tmp.= "<option value=\"$key\">$value</option>";
             }
           }
         }
