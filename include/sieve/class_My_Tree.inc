@@ -21,12 +21,17 @@ class My_Tree extends Tree
    */
   function dump()
   {
-    error_reporting(E_ALL);    
-    $this->dump_ = "";
-    $this->mode_stack = array();
-    $this->pap = array();
-    $this->doDump_(0, '', true);
+    error_reporting(E_ALL);
 
+    /* Only parse the tokens once */
+    if(!count($this->pap)){
+      $this->dump_ = "";
+      $this->mode_stack = array();
+      $this->pap = array();
+      $this->doDump_(0, '', true);
+    }
+
+    /* Create html results */
     $this->dump_ ="<table width='100%'><tr><td style='background-color:#BBBBBB;border: 0px;padding-left:20px;'>";
     foreach($this->pap as $object){
       if(is_object($object)){
@@ -126,6 +131,16 @@ class My_Tree extends Tree
       $this->pap[] = new $class_name($data,$id);
     }else{
       echo "<font color='red'>Missing : ".$class_name."</font>"."<br>";
+    }
+  }
+
+  function save_object()
+  {
+    foreach($this->pap as $key => $obj){
+
+      if(in_array(get_class($obj),array("sieve_if"))){
+        $this->pap[$key]->save_object();
+      }
     }
   }
 }

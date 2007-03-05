@@ -7,6 +7,7 @@ class sieve_if
   var $TYPE 	= "if";
   var $id     = -1;
 
+
   function sieve_if($elements,$object_id)
   {
     $this->id = $object_id;
@@ -14,12 +15,82 @@ class sieve_if
     $this->_parsed = $this->_parse($elements['ELEMENTS'],1);
   }
 
+  
+  function save_object()
+  {
+    $tmp = $this->save_object_recursive($parsed = NULL,$id = 1,$obj_id=1);
+    $this->_parsed = $tmp;
+  }
+
+  function save_object_recursive($parsed = NULL,$id = 1,$obj_id=1)
+  {
+
+    $ret ="";
+    if($parsed == NULL){
+      $parsed = $this->_parsed;
+    }
+
+    /* Walk through all elements */
+    foreach($parsed as $key => $data){
+
+      /* Id used to have unique html names */
+      $element_id = $this->id."_".$id."_".$obj_id;
+
+      /* Create elements */
+      switch($key)
+      {
+  
+        /*******************
+         * TRUE FALSE 
+         *******************/
+
+        case "true" :
+        case "false" : 
+        {
+          $name = 'boolean_'.$element_id;
+          if(isset($_POST[$name])){
+            $key2 = $_POST[$name];
+            
+            if($key != $key2) {
+              $parsed = array($key2 => $key2); 
+            }
+          }
+          break;
+        }
+     
+        case "allof" : 
+        {
+          foreach($data as $key2 => $dat){
+            if(($key2 === "Inverse") && ($key2 == "Inverse")){
+              continue;
+            }
+            $parsed[$key][$key2] = $this->save_object_recursive($dat, ($id +1),$key2);
+          }
+          break ;
+        } 
+
+
+        case "anyof" : 
+        {
+          foreach($data as $key2 => $dat){
+            if(($key2 === "Inverse") && ($key2 == "Inverse")){
+              continue;
+            }
+            $parsed[$key][$key2] =  $this->save_object_recursive($dat, ($id + 1),$key2);
+          }
+          break ;
+        } 
+      }
+    }
+    return($parsed);
+  }  
+
 
   /* Return html element for IF */ 
   function execute()
   {
     /* Create title */
-    $name  = "<img src='images/small_filter.png' class='center'>";
+    $name  = "<img alt='' src='images/small_filter.png' class='center'>";
     $name .= "<b>"._("Condition")."</b>";
     if($this->TYPE == "if"){
       $name .= "&nbsp;-&nbsp;"._("If");
@@ -43,8 +114,6 @@ class sieve_if
   /* Returns all elements as html */
   function get_as_html($parsed = NULL,$id = 1,$obj_id=1)
   {
-    $header_parts = array(":all",":localpart",":domain",":user",":detail");
-
     $ret ="";
     if($parsed == NULL){
       $parsed = $this->_parsed;
@@ -54,7 +123,7 @@ class sieve_if
     foreach($parsed as $key => $data){
 
       /* Create Inverse Tag */
-      if(isset($data['Inverse']) && $data['Inverse']){
+      if(is_array($data) && isset($data['Inverse']) && $data['Inverse']){
         $str_inverse = "<font color='red'><b>"._("Not")."</b></font>&nbsp;";
         $Inverse = TRUE;
       }else{
@@ -96,29 +165,157 @@ class sieve_if
 
 
         /*******************
-         * Header  
+         * Header 
          *******************/
+
+        case "header": 
+        {
+          /* comparator type */
+          $comparators   = array( "i;octet"         => _("Normal"),
+                                  "i;ascii-casemap" =>_("Case sensitive"),
+                                  "i;ascii-numeric" =>_("Numeric"));
+
+          /* Match types */
+          $match_types  = array(  ":is"         => _("is"),
+                                  ":contains"   => _("contains"),
+                                  ":matches"    => _("matches"),
+                                  ":over"       => _("is over"),
+                                  ":count"      => _("count"),
+                                  ":value"      => _("value is"),
+                                  ":under"      => _("is under"));
+  
+          /* Operators */
+          $operators = array(     ""    => "-",
+                                  "lt"  => _("less than"),
+                                  "le"  => _("less or equal"),
+                                  "eq"  => _("equals"),
+                                  "ge"  => _("greater or equal"),
+                                  "gt"  => _("greater than"),
+                                  "ne"  => _("not equal"));
+
+          $smarty = get_smarty();
+          $smarty->assign("comparators",$comparators);
+          $smarty->assign("match_types",$match_types);
+          $smarty->assign("operators",$operators);
+
+          $smarty->assign("match_type", $data['Match_type']);
+          $smarty->assign("operator"  , preg_replace("/\"/","",$data['Match_type_value']));
+          $smarty->assign("comparator", $data['Comparator']);
+        
+
+          $keys = "";
+          foreach($data['Key_List'] as $key){
+            $keys .= $key."\n";
+          }
+   
+          $values = "";
+          foreach($data['Value_List'] as $key){
+            $values .= $key."\n";
+          }
+          $smarty->assign("keys",$keys);
+          $smarty->assign("values",$values);
+
+ 
+          $smarty->assign("ID"  , $element_id); 
+          $ret .= $smarty->fetch(get_template_path("templates/element_header.tpl",TRUE,dirname(__FILE__)));
+          break;
+        }
+
+        case "envelope":
+        {
+          /* comparator type */
+          $comparators   = array( "i;octet"         => _("Normal"),
+                                  "i;ascii-casemap" =>_("Case sensitive"),
+                                  "i;ascii-numeric" =>_("Numeric"));
+
+          /* Match types */
+          $match_types  = array(  ":is"         => _("is"),
+                                  ":contains"   => _("contains"),
+                                  ":matches"    => _("matches"),
+                                  ":over"       => _("is over"),
+                                  ":count"      => _("count"),
+                                  ":value"      => _("value is"),
+                                  ":under"      => _("is under"));
+  
+          /* Operators */
+          $operators = array(     ""    => "-",
+                                  "lt"  => _("less than"),
+                                  "le"  => _("less or equal"),
+                                  "eq"  => _("equals"),
+                                  "ge"  => _("greater or equal"),
+                                  "gt"  => _("greater than"),
+                                  "ne"  => _("not equal"));
+
+          $smarty = get_smarty();
+          $smarty->assign("comparators",$comparators);
+          $smarty->assign("match_types",$match_types);
+          $smarty->assign("operators",$operators);
+
+          $smarty->assign("match_type", $data['Match_type']);
+          $smarty->assign("operator"  , preg_replace("/\"/","",$data['Match_type_value']));
+          $smarty->assign("comparator", $data['Comparator']);
+        
+
+          $keys = "";
+          foreach($data['Key_List'] as $key){
+            $keys .= $key."\n";
+          }
+   
+          $values = "";
+          foreach($data['Value_List'] as $key){
+            $values .= $key."\n";
+          }
+          $smarty->assign("keys",$keys);
+          $smarty->assign("values",$values);
+
+ 
+          $smarty->assign("ID"  , $element_id); 
+          $ret .= $smarty->fetch(get_template_path("templates/element_envelope.tpl",TRUE,dirname(__FILE__)));
+          break;
+        }
 
         case "address" : 
         {
-          $ret ="";    
+          /* address [address-part: tag] [comparator: tag] [match-type: tag] <header-list: string-list> <key-list: string-list> */
+          $address_parts = array( ":all"       => _("Complete adress"), 
+                                  ":domain"    => _("Domian part") , 
+                                  ":localpart" => _("Local part"));
 
-          print_a($data);
+          /* comparator type */
+          $comparators   = array( "i;octet"         => _("Normal"),
+                                  "i;ascii-casemap" =>_("Case sensitive"),
+                                  "i;ascii-numeric" =>_("Numeric"));
 
-          $comparators = array("i;octet" => _("Normal"),"i;ascii-casemap"=>_("Case sensitive"),"i;ascii-numeric"=>_("Numeric"));
-          $av_match_type= array(":is",":contains",":matches",":over",":count",":value",":under");
-          $mtv = array("lt","le","eq","ge","gt","ne");
+          /* Match types */
+          $match_types  = array(  ":is"         => _("is"),
+                                  ":contains"   => _("contains"),
+                                  ":matches"    => _("matches"),
+                                  ":over"       => _("is over"),
+                                  ":count"      => _("count"),
+                                  ":value"      => _("value is"),
+                                  ":under"      => _("is under"));
+  
+          /* Operators */
+          $operators = array(     ""    => "-",
+                                  "lt"  => _("less than"),
+                                  "le"  => _("less or equal"),
+                                  "eq"  => _("equals"),
+                                  "ge"  => _("greater or equal"),
+                                  "gt"  => _("greater than"),
+                                  "ne"  => _("not equal"));
 
           $smarty = get_smarty();
-          $smarty->assign("c_values"    , $comparators);
-          $smarty->assign("c_selected"  , $data['Comparator']);
+          $smarty->assign("address_parts",$address_parts);
+          $smarty->assign("comparators",$comparators);
+          $smarty->assign("match_types",$match_types);
+          $smarty->assign("operators",$operators);
 
-          $smarty->assign("match_types",$av_match_type);
-          $smarty->assign("match_type",$data['Match_type']);
+          $smarty->assign("match_type", $data['Match_type']);
+          $smarty->assign("operator"  , preg_replace("/\"/","",$data['Match_type_value']));
+          $smarty->assign("comparator", $data['Comparator']);
+          $smarty->assign("address_part", $data['Address_Part']);
+        
 
-          $smarty->assign("match_type_value",$data['Match_type_value']);
-          $smarty->assign("match_type_values",$mtv);
- 
           $keys = "";
           foreach($data['Key_List'] as $key){
             $keys .= $key."\n";
@@ -149,11 +346,12 @@ class sieve_if
                       <td style='text-align:center; vertical-align: middle; width:45px; 
                                  background-color: #BDBDBD; border: solid 1px #EEEEEE'>".
                         "<b>".$str_inverse._("All of")."</b>".
-                        "<img class='center' src='images/select_ogroup.png'>".
+                        "<img alt='' class='center' src='images/select_ogroup.png'>".
                      "</td>";
           $ret.= "    <td style='background-color:#BDBDBD ; border: solid 1px #EEEEEE'>";
+
           foreach($data as $key => $dat){
-            if($key == "Inverse" ){
+            if(($key === "Inverse") && ($key == "Inverse")){
               continue;
             }
             $ret.=        $this->get_as_html($dat, ($id +1),$key);
@@ -176,11 +374,11 @@ class sieve_if
                       <td style='text-align:center; vertical-align: middle; width:45px; 
                                  background-color: #AAAAAA; border: solid 1px #EEEEEE'>".
                         "<b>".$str_inverse._("Any of")."</b>".
-                        "<img class='center' src='images/select_department.png'>".
+                        "<img alt='' class='center' src='images/select_department.png'>".
                      "</td>";
           $ret.= "    <td style='background-color: #AAAAAA ; border: solid 1px #EEEEEE'>";
           foreach($data as $key => $dat){
-            if($key == "Inverse" ){
+            if(($key === "Inverse") && ($key == "Inverse")){
               continue;
             }
             $ret.=        $this->get_as_html($dat, ($id + 1),$key);
@@ -270,16 +468,14 @@ class sieve_if
             $Match_type = $node['text'];
 
             /* Get value operator */
-            if($Match_type == ":value"){
-              $i ++;        
-              $node = $data[$i];
-              
-              if($node['class'] == "quoted-string" && preg_match("/".$value_op."/",$node['text'])){
-                $Match_type_value = $node['text'];
-              }
+            $i ++;        
+            $node = $data[$i];
+
+            if($node['class'] == "quoted-string" && preg_match("/".$value_op."/",$node['text'])){
+              $Match_type_value = $node['text'];
             }
           } 
-  
+
           /* Check for a comparator */
           elseif($node['class'] == "tag" && preg_match("/comparator/",$node['text'])){
             $i ++;

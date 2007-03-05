@@ -226,7 +226,7 @@ class sieve_block_start
     return("<table cellspacing=0 width='100%'>
               <tr>
                 <td style='width:20px;'>
-                  <img src='images/forward.png' class='center'>
+                  <img alt='' src='images/forward.png' class='center'>
                 </td>
                 <td style='background-color:#BBBBBB;border: solid 2px #FFFFFF;'>");
   }

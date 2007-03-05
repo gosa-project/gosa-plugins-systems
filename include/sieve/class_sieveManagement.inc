@@ -32,6 +32,7 @@ class sieveManagement extends plugin
   var $parent = NULL;
   var $scripts= array();  
 
+  var $current_handler = NULL;
  
   /* Initialize the class and load all sieve scripts 
    *  try to parse them and display errors 
@@ -95,18 +96,22 @@ class sieveManagement extends plugin
   {
     $once = TRUE;
     foreach($_POST as $name => $value){
-      if(preg_match("/^editscript_/",$name) && $once){
+      if(preg_match("/^editscript_/",$name) && $once && !$this->current_handler){
         $script = preg_replace("/^editscript_/","",$name);
         $script = preg_replace("/_(x|y)/","",$script);
         $once = FALSE;
 
-        $obj_handler = new sieveElement;
-        $data = $this->scripts[$script]['PARSER'];
-        $obj_handler->resolve_to_object($data);
-        return($obj_handler->execute());
+        $this->current_handler = $this->scripts[$script]['PARSER'];
       }
     }
 
+    if(isset($_GET['xx'])){
+      $this->current_handler = NULL; 
+    }
+
+    if($this->current_handler){
+        return($this->current_handler->execute());
+    }
 
     /* Create list of available sieve scripts 
      */
@@ -128,7 +133,9 @@ class sieveManagement extends plugin
 
   function save_object()
   {
-    
+    if($this->current_handler){
+      $this->current_handler->save_object();
+    }
   }
 }
 

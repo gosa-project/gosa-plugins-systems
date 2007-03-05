@@ -8,6 +8,12 @@
 class My_Parser extends Parser 
 {
 
+	function execute()
+	{
+		return($this->dumpParseTree());
+	}
+	
+
 	/* Initiate parser, but use some other 
      *  classes, that are rewritten.
      */
@@ -27,6 +33,12 @@ class My_Parser extends Parser
         }
 
         return $this->status_;
+	}
+
+		
+	function save_object()
+	{
+		$this->tree_->save_object();
 	}
 
 

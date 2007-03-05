@@ -2,18 +2,10 @@
 <table>
 	<tr>
 		<td colspan=3>
-			<b>{t}Address{/t}</b>
+			<b>{t}Envelope{/t}</b>
 		</td>
 	</tr>
 	<tr>
-		<td>
-			{t}Address part{/t}
-		</td>
-		<td>
-			<select name='address_part_{$ID}' title='{t}Boolean value{/t}'> 
-				{html_options options=$address_parts selected=$address_part}
-			</select>
-		</td>
 		<td>
 			{t}Comparator{/t}
 		</td>
