@@ -18,12 +18,24 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+
+/* The sieve management class displays a list of sieve 
+ *  scripts for the given mail account. 
+ * The account is identified by the parents uid attribute. 
+ *
+ *  $config       The config object
+ *  $dn           The object edited 
+ *  $parent       The parent object that provides the uid attribute 
+ */
 class sieveManagement extends plugin
 {
   var $parent = NULL;
   var $scripts= array();  
 
-  
+ 
+  /* Initialize the class and load all sieve scripts 
+   *  try to parse them and display errors 
+   */ 
   function sieveManagement($config,$dn,$parent)
   {
     $this->parent = $parent;
@@ -76,6 +88,9 @@ class sieveManagement extends plugin
     }
   }
 
+
+  /* Handle sieve list 
+   */
   function execute()
   {
     $once = TRUE;
@@ -93,21 +108,18 @@ class sieveManagement extends plugin
     }
 
 
+    /* Create list of available sieve scripts 
+     */
     $List = new divSelectBox("sieveManagement");
-
     foreach($this->scripts as $key => $script){
-  
       $field1 = array("string" => $script['NAME']);  
-
       if($script['STATUS']){
         $field2 = array("string" => _("Parse successful"));
       }else{
         $field2 = array("string" => _("Parse failed") .$script['MSG']);
       }
-
       $field3 = array("string" => _("Script length")."&nbsp;:&nbsp;".strlen($script['SCRIPT']));
       $field4 = array("string" => "<input type='image' name='editscript_".$key."' src='images/edit.png'>");
-
       $List ->AddEntry(array($field1,$field2,$field3,$field4)); 
     }
 

@@ -5,9 +5,11 @@ class sieve_if
 {
   var $_parsed 	= array();
   var $TYPE 	= "if";
+  var $id     = -1;
 
-  function sieve_if($elements)
+  function sieve_if($elements,$object_id)
   {
+    $this->id = $object_id;
     $this->elements = $elements;
     $this->_parsed = $this->_parse($elements['ELEMENTS'],1);
   }
@@ -31,7 +33,6 @@ class sieve_if
                 <td style='width:100%;background-color:#DDDDDD; padding:5px; border: solid 2px #AAAAAA;'>".
                   $name;
     $str .= $this->get_as_html();  
-  
     $str .= "   </td>
               </tr>
             </table>";
@@ -40,10 +41,9 @@ class sieve_if
 
   
   /* Returns all elements as html */
-  function get_as_html($parsed = NULL)
+  function get_as_html($parsed = NULL,$id = 1,$obj_id=1)
   {
     $header_parts = array(":all",":localpart",":domain",":user",":detail");
-
 
     $ret ="";
     if($parsed == NULL){
@@ -62,6 +62,9 @@ class sieve_if
         $Inverse = FALSE;
       }
 
+      /* Id used to have unique html names */
+      $element_id = $this->id."_".$id."_".$obj_id;
+
       /* Create elements */
       switch($key)
       {
@@ -73,27 +76,23 @@ class sieve_if
         case "true" :
         case "false" : 
         { 
-          /* Set default */
-          $type = TRUE;
-
-          /* Use false as default if element is false */
-          if($key == "false"){
-            $type = FALSE;
-          }
-  
           /* Inverse element if required */
           if($Inverse){        
-              $type = !$type;
+            if($key == "true"){
+              $key = "false";
+            }else{
+              $key = "true";
+            }           
           }
 
-          /* Return value */
-          if($type){
-              $ret = "<div><img src='images/true.png' class='center'>"._("Boolean true")."</div>";
-          }else{
-              $ret = "<div><img src='images/false.png' class='center'>"._("Boolean false")."</div>";
-          }
+          /* Get template */
+          $smarty = get_smarty();
+          $smarty->assign("values"    , array("false" => _("False"), "true" => _("True")));
+          $smarty->assign("selected"  , $key); 
+          $smarty->assign("ID"  , $element_id); 
+          $ret .= $smarty->fetch(get_template_path("templates/element_boolean.tpl",TRUE,dirname(__FILE__)));
+          break;
         }
-        break;
 
 
         /*******************
@@ -103,18 +102,38 @@ class sieve_if
         case "address" : 
         {
           $ret ="";    
+
+          print_a($data);
+
+          $comparators = array("i;octet" => _("Normal"),"i;ascii-casemap"=>_("Case sensitive"),"i;ascii-numeric"=>_("Numeric"));
+          $av_match_type= array(":is",":contains",":matches",":over",":count",":value",":under");
+          $mtv = array("lt","le","eq","ge","gt","ne");
+
+          $smarty = get_smarty();
+          $smarty->assign("c_values"    , $comparators);
+          $smarty->assign("c_selected"  , $data['Comparator']);
+
+          $smarty->assign("match_types",$av_match_type);
+          $smarty->assign("match_type",$data['Match_type']);
+
+          $smarty->assign("match_type_value",$data['Match_type_value']);
+          $smarty->assign("match_type_values",$mtv);
  
-          /* Create comparator */ 
-          $ret .= _("Match type")."&nbsp;";
-          $arr =array("i;octet" => _("Normal"),"i;ascii-casemap"=>_("Case sensitive"),"i;ascii-numeric"=>_("Numeric"));
-          $ret .= "<select>";
-          foreach($arr as $ar ){
-            $ret .= "<option value='".$ar."'>".$ar."</option>";
+          $keys = "";
+          foreach($data['Key_List'] as $key){
+            $keys .= $key."\n";
           }
-          $ret .= "</select>";
-         
-          /* Create address part */ 
-          $ret.= _("Checking Header");
+   
+          $values = "";
+          foreach($data['Value_List'] as $key){
+            $values .= $key."\n";
+          }
+          $smarty->assign("keys",$keys);
+          $smarty->assign("values",$values);
+
+ 
+          $smarty->assign("ID"  , $element_id); 
+          $ret .= $smarty->fetch(get_template_path("templates/element_address.tpl",TRUE,dirname(__FILE__)));
           break;
         }
       
@@ -137,7 +156,7 @@ class sieve_if
             if($key == "Inverse" ){
               continue;
             }
-            $ret.=        $this->get_as_html($dat);
+            $ret.=        $this->get_as_html($dat, ($id +1),$key);
           }
           $ret.= "    </td>
                     </tr>
@@ -164,7 +183,7 @@ class sieve_if
             if($key == "Inverse" ){
               continue;
             }
-            $ret.=        $this->get_as_html($dat);
+            $ret.=        $this->get_as_html($dat, ($id + 1),$key);
           }
           $ret.= "    </td>
                     </tr>
@@ -364,7 +383,7 @@ class sieve_if
       }
       default : $tmp[$id] = $type; 
     }
-  
+    
     return($tmp); 
   }
 

@@ -1,5 +1,13 @@
 <?php
 
+
+
+/* This class is inherited from the original 'Tree'
+ *  class written by Heiko Hund.
+ * It is partly rewritten to create a useable html interface 
+ *  for each single sieve token. 
+ * This gives us the ability to edit existing sieve filters. 
+ */
 class My_Tree extends Tree
 {
   var $dumpFn_;
@@ -9,6 +17,8 @@ class My_Tree extends Tree
   var $pap		= array();
 
 
+  /* Create a html interface for the current sieve filter 
+   */
   function dump()
   {
     error_reporting(E_ALL);    
@@ -45,21 +55,21 @@ class My_Tree extends Tree
     /* This closes the last mode */
     if($node['class'] == "block-start"){
       $tmp = array_pop($this->mode_stack);
-      $this->handle_elements($tmp);
-      $this->handle_elements(array("TYPE" => "block_start"));
+      $this->handle_elements($tmp,$node_id);
+      $this->handle_elements(array("TYPE" => "block_start"),$node_id);
     }
 
     /* This closes the last mode */
     if($node['class'] == "block-end"){
       $tmp = array_pop($this->mode_stack);
-      $this->handle_elements($tmp);
-      $this->handle_elements(array("TYPE" => "block_end"));
+      $this->handle_elements($tmp,$node_id);
+      $this->handle_elements(array("TYPE" => "block_end"),$node_id);
     }
 
     /* Semicolon indicates a new command */
     if($node['class'] == "semicolon"){
       $tmp =array_pop($this->mode_stack);
-      $this->handle_elements($tmp);
+      $this->handle_elements($tmp,$node_id);
     }
 
     /* Handle comments */
@@ -82,7 +92,7 @@ class My_Tree extends Tree
     /* Remove last mode from mode stack, cause it was only valid for a single line */
     if($rewoke_last){
       $tmp =array_pop($this->mode_stack);
-      $this->handle_elements($tmp);
+      $this->handle_elements($tmp,$node_id);
     }
 
     /* If this is a sub element, just call this for all childs */	
@@ -101,7 +111,10 @@ class My_Tree extends Tree
   }
 
 
-  function handle_elements($data)
+  /* Create a class for each resolved object.
+   * And append this class to a list of objects.
+   */
+  function handle_elements($data,$id)
   {
     if(!isset($data['TYPE'])){
       return;
@@ -110,7 +123,7 @@ class My_Tree extends Tree
     
     $class_name= "sieve_".$type ;
     if(class_exists($class_name)){
-      $this->pap[] = new $class_name($data);
+      $this->pap[] = new $class_name($data,$id);
     }else{
       echo "<font color='red'>Missing : ".$class_name."</font>"."<br>";
     }
@@ -118,6 +131,13 @@ class My_Tree extends Tree
 }
 
 
+/* This checks if there is a string at the current position 
+ *  in the token array. 
+ * If there is a string list at the current position,
+ *  this function will return a complete list of all
+ *  strings used in this list.
+ * It also returns an offset of the last token position 
+ */
 function sieve_get_strings($data,$id)
 {
   $ret = array();

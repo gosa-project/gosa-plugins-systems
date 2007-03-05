@@ -1,7 +1,16 @@
 <?php
 
+
+
+/* This class is inherited from the original 'Parser'
+ *  class written by Heiko Hund
+ */
 class My_Parser extends Parser 
 {
+
+	/* Initiate parser, but use some other 
+     *  classes, that are rewritten.
+     */
 	function parse($script) 
 	{
         $this->status_text = "incomplete";
@@ -20,6 +29,8 @@ class My_Parser extends Parser
         return $this->status_;
 	}
 
+
+	/* Should be obsolete in the end. */
 	function dumpToken_(&$token)
 	{
 		if (is_array($token))
