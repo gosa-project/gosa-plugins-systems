@@ -57,6 +57,79 @@ class sieve_if
           }
           break;
         }
+
+        case "exists" :
+        {
+          /* get list of match values */
+          if(isset($_POST['Values_'.$element_id])){
+            $vls = $_POST['Values_'.$element_id];
+            $tmp = array();          
+  
+            $tmp2 = split(",",$vls);
+            foreach($tmp2 as $val){
+              $tmp[] = "\"".trim(preg_replace("/\"/","",$val))."\"";
+            }
+            $parsed['exists']['Values'] = $tmp;
+          }
+        }
+
+        /*******************
+         * Size 
+         *******************/
+
+        case "size" :
+        {
+          $Match_types = array( ":over" => _("greater than") ,
+                                ":under" => _("lower than"));
+
+          $Units       = array( "M" => _("Megabyte") ,
+                                "K" => _("Kilobyte"));
+
+          /* Reset error */
+          $parsed['size']['LastError'] ="";
+
+          /* Get match type */
+          if(isset($_POST['Match_type_'.$element_id])){
+            $mt = $_POST['Match_type_'.$element_id];
+            if(isset($Match_types[$mt])){
+              $parsed['size']['Match_type'] = $mt;
+            }else{
+              $parsed['size']['LastError'] = _("Please select a valid match type in the list box below.");
+            }
+          }
+
+          /* Get old values */
+          $value = preg_replace("/[^0-9]*$/","",$parsed['size']['Value_List'][0]);
+          $unit  = preg_replace("/^[0-9]*/","",$parsed['size']['Value_List'][0]);
+
+          /* Get value */
+          if(isset($_POST['Value_'.$element_id])){
+            $vl = $_POST['Value_'.$element_id];
+         
+            if(is_numeric($vl) && preg_match("/^[0-9]*$/",$vl)){
+              $value = $vl;
+            }else{
+              $parsed['size']['LastError'] = _("Only numeric values are allowed here.");
+            }
+          }        
+
+          /* Get unit */
+          if(isset($_POST['Value_Unit_'.$element_id])){
+            $ut = $_POST['Value_Unit_'.$element_id];
+       
+            if(isset($Units[$ut])){
+              $unit = $ut;
+            }else{
+              $parsed['size']['LastError'] = _("No valid unit selected");
+            }
+          }        
+
+          $parsed['size']['Value_List'][0] = $value.$unit;
+          break;
+        }
+
+
+
      
         case "allof" : 
         {
@@ -336,6 +409,68 @@ class sieve_if
       
 
         /*******************
+         * Size 
+         *******************/
+        
+        case "size" : 
+        {
+          $Match_types = array( ":over" => _("greater than") , 
+                                ":under" => _("lower than"));
+
+          $Units       = array( "M" => _("Megabyte") , 
+                                "K" => _("Kilobyte")); 
+
+          $Match_type   = $data['Match_type'];
+          $Value        = preg_replace("/[^0-9]/","",$data['Value_List'][0]);
+          $Value_Unit   = preg_replace("/[0-9]/","",$data['Value_List'][0]);
+       
+          $LastError = "";
+          if(isset($data['LastError'])){
+            $LastError = $data['LastError'];
+          }
+ 
+          $smarty = get_smarty();
+          $smarty->assign("Inverse",$Inverse);
+          $smarty->assign("LastError",$LastError);
+          $smarty->assign("Match_types",$Match_types);
+          $smarty->assign("Units",$Units);
+          $smarty->assign("Match_type",$Match_type);
+          $smarty->assign("Value",$Value);
+          $smarty->assign("Value_Unit",$Value_Unit);
+          $smarty->assign("ID"  , $element_id); 
+          $ret .= $smarty->fetch(get_template_path("templates/element_size.tpl",TRUE,dirname(__FILE__)));
+          break;
+        }
+        
+        /*******************
+         * Exists 
+         *******************/
+       
+        
+        case "exists" : 
+        {
+          $LastError = "";
+          if(isset($data['LastError'])){
+            $LastError = $data['LastError'];
+          }
+ 
+          $Values = "";
+          foreach($data['Values'] as $val){
+            $Values .= stripslashes($val).", ";
+          }
+          $Values = preg_replace("/,$/","",trim($Values));
+
+          $smarty = get_smarty();
+          $smarty->assign("LastError",$LastError);
+          $smarty->assign("Values",$Values);
+          $smarty->assign("Inverse",$Inverse);
+          $smarty->assign("ID"  , $element_id); 
+          $ret .= $smarty->fetch(get_template_path("templates/element_exists.tpl",TRUE,dirname(__FILE__)));
+          break;
+        }
+  
+
+        /*******************
          * All of   
          *******************/
 
@@ -552,6 +687,24 @@ class sieve_if
       case "false":
       {
         $tmp['false'] = "false";
+        break;
+      }
+      case "exists":
+      {
+        
+        /* Skip first values, [if,not,exists] */
+        $node = $data[$id];
+        while(in_array($node['text'],array("if","not","exists"))){
+          $id ++;
+          $node = $data[$id];
+        }
+
+        /* Get values */
+        $tmp2 = sieve_get_strings($data,$id);
+  
+        
+        $tmp['exists'] = array('Inverse' => $Inverse,
+                               'Values'  => $tmp2['STRINGS']);
         break;
       }
       case "allof" :
