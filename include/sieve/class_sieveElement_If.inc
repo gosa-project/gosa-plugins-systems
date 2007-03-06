@@ -10,9 +10,9 @@ class sieve_if
 
   function sieve_if($elements,$object_id)
   {
-    $this->id = $object_id;
+    $this->id       = $object_id;
     $this->elements = $elements;
-    $this->_parsed = $this->_parse($elements['ELEMENTS'],1);
+    $this->_parsed  = $this->_parse($elements['ELEMENTS'],1);
   }
 
   
@@ -39,7 +39,95 @@ class sieve_if
       /* Create elements */
       switch($key)
       {
-  
+ 
+ 
+        /*******************
+         * TRUE FALSE 
+         *******************/
+
+        case "address" : 
+        {
+          /* address [address-part: tag] [comparator: tag] [match-type: tag] <header-list: string-list> <key-list: string-list> */
+          $address_parts = array( ":all"       => _("Complete adress"),
+                                  ":domain"    => _("Domian part") ,
+                                  ":localpart" => _("Local part"));
+
+          /* comparator type */
+          $comparators   = array( "i;octet"         => _("Normal"),
+                                  "i;ascii-casemap" =>_("Case sensitive"),
+                                  "i;ascii-numeric" =>_("Numeric"));
+
+          /* Match types */
+          $match_types  = array(  ":is"         => _("is"),
+                                  ":contains"   => _("contains"),
+                                  ":matches"    => _("matches"),
+                                  ":count"      => _("count"),
+                                  ":value"      => _("value is"));
+
+          /* Operators */
+          $operators = array(     "lt"  => _("less than"),
+                                  "le"  => _("less or equal"),
+                                  "eq"  => _("equals"),
+                                  "ge"  => _("greater or equal"),
+                                  "gt"  => _("greater than"),
+                                  "ne"  => _("not equal"));
+
+
+          /* Check if we want to toggle the expert mode */
+          if(isset($_POST['Toggle_Expert_'.$element_id])){
+            $parsed['address']['Expert'] = !$parsed['address']['Expert'];
+          }
+
+          /* Check if match type has changed */
+          if(isset($_POST['matchtype_'.$element_id])){
+            $mt = $_POST['matchtype_'.$element_id];
+
+            if(isset($match_types[$mt])){
+              $parsed['address']['Match_type'] = $mt;
+            }
+          }
+
+          /* In case of :count and :value match types 
+           *  we have a special match operator we should save.
+           */
+          if(in_array($parsed['address']['Match_type'],array(":value",":count"))){
+            if(isset($_POST['operator_'.$element_id])){
+              $op = $_POST['operator_'.$element_id];
+
+              if(isset($operators[$op])){
+                $parsed['address']['Match_type_value'] = $op;
+              }
+            }
+          }
+
+          /* Get the address fields we should check, they are seperated by , */
+          if(isset($_POST['keys_'.$element_id])){
+            $vls = $_POST['keys_'.$element_id];
+            $tmp = array();
+
+            $tmp2 = split(",",$vls);
+            foreach($tmp2 as $val){
+              $tmp[] = "\"".trim(preg_replace("/\"/","",$val))."\"";
+            }
+            $parsed['address']['Key_List'] = $tmp;
+          }
+
+          /* Get the values should check for, they are seperated by , */
+          if(isset($_POST['values_'.$element_id])){
+            $vls = $_POST['values_'.$element_id];
+            $tmp = array();
+
+            $tmp2 = split(",",$vls);
+            foreach($tmp2 as $val){
+              $tmp[] = "\"".trim(preg_replace("/\"/","",$val))."\"";
+            }
+            $parsed['address']['Value_List'] = $tmp;
+          }
+
+
+          break;
+        }
+ 
         /*******************
          * TRUE FALSE 
          *******************/
@@ -58,6 +146,10 @@ class sieve_if
           break;
         }
 
+        /*******************
+         * Exists 
+         *******************/
+
         case "exists" :
         {
           /* get list of match values */
@@ -71,6 +163,7 @@ class sieve_if
             }
             $parsed['exists']['Values'] = $tmp;
           }
+          break;
         }
 
         /*******************
@@ -128,8 +221,9 @@ class sieve_if
           break;
         }
 
-
-
+        /*******************
+         * Allof 
+         *******************/
      
         case "allof" : 
         {
@@ -142,7 +236,10 @@ class sieve_if
           break ;
         } 
 
-
+        /*******************
+         * Anyof 
+         *******************/
+     
         case "anyof" : 
         {
           foreach($data as $key2 => $dat){
@@ -278,13 +375,16 @@ class sieve_if
 
           $keys = "";
           foreach($data['Key_List'] as $key){
-            $keys .= $key."\n";
+            $keys .= $key.", ";
           }
+          $keys = preg_replace("/,$/","",trim($keys));
    
           $values = "";
           foreach($data['Value_List'] as $key){
-            $values .= $key."\n";
+            $values .= $key.", ";
           }
+          $values = preg_replace("/,$/","",trim($values));
+
           $smarty->assign("keys",$keys);
           $smarty->assign("values",$values);
 
@@ -363,14 +463,11 @@ class sieve_if
           $match_types  = array(  ":is"         => _("is"),
                                   ":contains"   => _("contains"),
                                   ":matches"    => _("matches"),
-                                  ":over"       => _("is over"),
                                   ":count"      => _("count"),
-                                  ":value"      => _("value is"),
-                                  ":under"      => _("is under"));
+                                  ":value"      => _("value is"));
   
           /* Operators */
-          $operators = array(     ""    => "-",
-                                  "lt"  => _("less than"),
+          $operators = array(     "lt"  => _("less than"),
                                   "le"  => _("less or equal"),
                                   "eq"  => _("equals"),
                                   "ge"  => _("greater or equal"),
@@ -387,17 +484,20 @@ class sieve_if
           $smarty->assign("operator"  , preg_replace("/\"/","",$data['Match_type_value']));
           $smarty->assign("comparator", $data['Comparator']);
           $smarty->assign("address_part", $data['Address_Part']);
-        
 
+          $smarty->assign("Expert", $data['Expert']);
+        
           $keys = "";
           foreach($data['Key_List'] as $key){
-            $keys .= $key."\n";
+            $keys .= stripslashes($key).", ";
           }
+          $keys = preg_replace("/,$/","",trim($keys));
    
           $values = "";
           foreach($data['Value_List'] as $key){
-            $values .= $key."\n";
+            $values .= stripslashes($key).", ";
           }
+          $values = preg_replace("/,$/","",trim($values));
           $smarty->assign("keys",$keys);
           $smarty->assign("values",$values);
 
@@ -540,15 +640,15 @@ class sieve_if
   }
 
 
+  /* Parse given token identified by $data[$id] 
+   *  and return the parsed tokens. 
+   */
   function _parse($data,$id = 0)
   {
     $av_methods   = array("address","allof","anyof","exists","false","header","not","size","true","envelope");
     $av_match_type= array(":is",":contains",":matches",":over",":count",":value",":under");
-    
     $type = $data[$id]['text'];
-
     $tmp = array();
-
 
     /* Is there an identifier named 'not' to inverse this filter ? */
     $Inverse = FALSE;
@@ -560,7 +660,11 @@ class sieve_if
 
     switch($type)
     {
-  
+
+      /****************
+       * Parse - Envelope / Header / Address
+       ****************/ 
+
       case "envelope" : 
       case "header":
       case "address" : 
@@ -603,11 +707,13 @@ class sieve_if
             $Match_type = $node['text'];
 
             /* Get value operator */
-            $i ++;        
-            $node = $data[$i];
+            if(in_array($Match_type,array(":value",":count"))){
+              $i ++;        
+              $node = $data[$i];
 
-            if($node['class'] == "quoted-string" && preg_match("/".$value_op."/",$node['text'])){
-              $Match_type_value = $node['text'];
+              if($node['class'] == "quoted-string" && preg_match("/".$value_op."/",$node['text'])){
+                $Match_type_value = $node['text'];
+              }
             }
           } 
 
@@ -636,6 +742,7 @@ class sieve_if
         /* Add to Tree */ 
         $values = array( "Inverse"         => $Inverse,
                                 "Comparator"      => $Comparator,
+                                "Expert"          => FALSE,
                                 "Match_type"      => $Match_type,
                                 "Match_type_value"=> $Match_type_value,
                                 "Key_List"        => $Key_List,
@@ -647,6 +754,10 @@ class sieve_if
         break;
       }
 
+
+      /****************
+       * Parse - Size
+       ****************/ 
 
       case "size":
       {
@@ -679,6 +790,12 @@ class sieve_if
                             "Value_List" => $Value_List);
         break;
       }
+
+
+      /****************
+       * Parse - True / False
+       ****************/ 
+
       case "true": 
       {
         $tmp['true'] = "true";
@@ -689,6 +806,12 @@ class sieve_if
         $tmp['false'] = "false";
         break;
       }
+
+
+      /****************
+       * Parse - Exists
+       ****************/ 
+
       case "exists":
       {
         
@@ -707,8 +830,17 @@ class sieve_if
                                'Values'  => $tmp2['STRINGS']);
         break;
       }
+
+
+      /****************
+       * Parse - Allof
+       ****************/ 
+
       case "allof" :
       {
+        /* Get parameter and recursivly call this method 
+         *  for each parameter 
+         */
         $id ++;
         $tmp2 = $this->get_parameter($data,$id);
         
@@ -719,8 +851,16 @@ class sieve_if
         break;
       }
 
+
+      /****************
+       * Parse - Anyof
+       ****************/ 
+
       case "anyof" :
       {
+        /* Get parameter and recursivly call this method 
+         *  for each parameter 
+         */
         $id ++;
         $tmp2 = $this->get_parameter($data,$id);
 
