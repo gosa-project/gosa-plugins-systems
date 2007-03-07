@@ -32,6 +32,7 @@ class sieveManagement extends plugin
   var $parent = NULL;
   var $scripts= array();  
 
+  var $current_script  = -1;
   var $current_handler = NULL;
  
   /* Initialize the class and load all sieve scripts 
@@ -101,16 +102,31 @@ class sieveManagement extends plugin
         $script = preg_replace("/_(x|y)/","",$script);
         $once = FALSE;
 
+        $this->current_script = $script;
         $this->current_handler = $this->scripts[$script]['PARSER'];
       }
     }
 
-    if(isset($_GET['xx'])){
+    /* Abort saving */
+    if(isset($_POST['cancel_sieve_changes'])){
+      $this->current_handler = NULL;
+    }
+
+    /* Save currently edited sieve script. */
+    if(isset($_POST['save_sieve_changes'])){
+      $this->scripts[$this->current_script]['PARSER'] = $this->current_handler;
       $this->current_handler = NULL; 
     }
 
+    /* Create output for currently opened sieve script */
     if($this->current_handler){
-        return($this->current_handler->execute());
+      $ret = $this->current_handler->execute();
+      $ret .= "<div class='seperator' style='text-align:right; width:100%;'>
+        <input type='submit' name='save_sieve_changes' value='"._("Save")."'>
+        &nbsp;
+      <input type='submit' name='cancel_sieve_changes' value='"._("Cancel")."'>
+        </div>";
+      return($ret);
     }
 
     /* Create list of available sieve scripts 
@@ -127,8 +143,17 @@ class sieveManagement extends plugin
       $field4 = array("string" => "<input type='image' name='editscript_".$key."' src='images/edit.png'>");
       $List ->AddEntry(array($field1,$field2,$field3,$field4)); 
     }
-
-    return($List->DrawList());
+  
+    $display ="<h2>Sieve script management</h2>";
+    $display .= _("Be careful. All your changes will be saved directly to sieve, if you use the save button below.");
+    $display .=  $List->DrawList();
+    
+    $display .= "<p style=\"text-align:right\">\n";
+    $display .= "<input type=submit name=\"sieve_finish\" style=\"width:80px\" value=\""._("Ok")."\">\n";
+    $display .= "&nbsp;\n";
+    $display .= "<input type=submit name=\"sieve_cancel\" value=\""._("Cancel")."\">\n";
+    $display .= "</p>";
+    return($display);;
   }
 
   function save_object()
@@ -137,7 +162,17 @@ class sieveManagement extends plugin
       $this->current_handler->save_object();
     }
   }
-}
 
+
+  function save()
+  {
+    $ret = "<textarea style='width:100%;height:400px;'>";
+    foreach($this->scripts as $script){
+      $ret .= ($script['PARSER']->get_sieve_script());
+    }
+    $ret .= "</textarea>";
+    echo $ret;
+  }
+}
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

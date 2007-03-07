@@ -1,6 +1,6 @@
 <?php
 
-
+define("SIEVE_INDENT_TAB","  ");
 
 /* This class is inherited from the original 'Parser'
  *  class written by Heiko Hund
@@ -10,7 +10,8 @@ class My_Parser extends Parser
 
 	function execute()
 	{
-		return($this->dumpParseTree());
+		$ret = $this->dumpParseTree();
+		return($ret);
 	}
 	
 
@@ -35,7 +36,13 @@ class My_Parser extends Parser
         return $this->status_;
 	}
 
-		
+	
+	function get_sieve_script()
+	{
+		return($this->tree_->get_sieve_script());
+	}		
+
+	
 	function save_object()
 	{
 		$this->tree_->save_object();

@@ -243,7 +243,18 @@ class mailAccount extends plugin
     if(isset($_POST['sieveManagement'])) {
       $this->dialog = new sieveManagement($this->config,$this->dn,$this);
     }
-    
+   
+    /* Cancel sieve edit */
+    if(isset($_POST['sieve_cancel'])){
+      $this->dialog = NULL;
+    }
+ 
+    /* Save sieve changes */
+    if(isset($_POST['sieve_finish'])){
+      $this->dialog->save();
+      $this->dialog = NULL;
+    }
+ 
     if(is_object($this->dialog)){
       $this->dialog->save_object();
       return($this->dialog->execute());

@@ -7,24 +7,349 @@ class sieve_if
   var $TYPE 	= "if";
   var $id     = -1;
 
+  var $address_parts    = array();
+  var $comparators      = array();
+  var $match_types      = array();
+  var $operators        = array();
 
+  
+  /* Initialize class 
+   *  $elements   contains all tokens that belongs to this if/else tag
+   *  $object_id  cotains an unique tag id, to be able to create uniqe html post names
+   */
   function sieve_if($elements,$object_id)
   {
+    /* Possible address parts we can select */
+    $this->address_parts = array( 
+        ":all"       => _("Complete adress")."&nbsp;("._("Default").")",
+        ":domain"    => _("Domian part") ,
+        ":localpart" => _("Local part"));
+
+    /* comparator type */
+    $this->comparators   = array( 
+        "i;ascii-casemap" => _("Case insensitive")."&nbsp;("._("Default").")",
+        "i;octet"         => _("Case sensitive"),
+        "i;ascii-numeric" => _("Numeric"));
+
+    /* Match types */
+    $this->match_types  = array(  
+        ":is"         => _("is"),
+        ":contains"   => _("contains"),
+        ":matches"    => _("matches"),
+        ":count"      => _("count"),
+        ":value"      => _("value is"));
+
+    /* Operators */
+    $this->operators = array(     
+        "lt"  => _("less than"),
+        "le"  => _("less or equal"),
+        "eq"  => _("equals"),
+        "ge"  => _("greater or equal"),
+        "gt"  => _("greater than"),
+        "ne"  => _("not equal"));
+
     $this->id       = $object_id;
     $this->elements = $elements;
     $this->_parsed  = $this->_parse($elements['ELEMENTS'],1);
   }
 
+
+  /* Returns the sieve script for this 
+   *  if/else tag.
+   */
+  function get_sieve_script_part()
+  {
+    $tmp = "if ".$this->get_sieve_script_part_recursive($parsed = NULL,$id = 1,$obj_id=1);
+    return($tmp);
+  } 
+
+
+  /* Recursivly create a sieve script out of the given 
+   *  tags and tokens provided by $parsed.
+   *  $id       specifies the depth of the current element.
+   *  $obj_id   is the current tag-id handled by this function
+   */
+  function get_sieve_script_part_recursive($parsed = NULL,$id = 1,$obj_id=1)
+  {
+    $script ="";
+    if($parsed == NULL){
+      $parsed = $this->_parsed;
+    }
+
+    /* Walk through all elements */
+    foreach($parsed as $key => $data){
+
+      /* Create Inverse Tag */
+      if(is_array($data) && isset($data['Inverse']) && $data['Inverse']){
+        $Inverse = TRUE;
+      }else{
+        $Inverse = FALSE;
+      }
+
+      /* Create elements */
+      switch($key)
+      {
+
+        /*******************
+         * True / False
+         *******************/
+
+        case "true" :
+        case "false" :
+        {
+          /* Invert this test if required */
+          if($Inverse){
+            $script .= "not ";
+          }
+ 
+          $script .= $key;
+   
+          break;
+        }
+
+
+        /*******************
+         * Address
+         *******************/
+
+        case "address" :   
+        {
+          /* [not] address 
+                        [address-part: tag] 
+                        [comparator: tag] 
+                        [match-type: tag] 
+                        <header-list: string-list> 
+                        <key-list: string-list> 
+          */
+
+          /* Invert this test if required */
+          if($Inverse){
+            $script .= "not ";
+          }
   
+          $script .="address ";
+ 
+          /* Add address part tag */ 
+          if(!empty($data['Address_Part']) && $data['Address_Part'] != ":all"){
+            $script .= $data['Address_Part']." ";
+          }
+
+          /* Add comparator */
+          if(!empty($data['Comparator']) && $data['Comparator'] != ""){
+            $script .= ":comparator ".$data['Comparator']." ";
+          }
+    
+          /* Add match type */
+          $script .= $data['Match_type']." ";
+
+          /* Add special match type for count and value */
+          if(in_array($data['Match_type'], array(":value",":count")) && !empty($data['Match_type_value'])) {
+            $script .= $data['Match_type_value']." ";
+          }
+
+          $script .= sieve_create_strings($data['Key_List']);
+          $script .= " ";
+          $script .= sieve_create_strings($data['Value_List']);
+          break;
+        }
+
+
+        /*******************
+         * Header
+         *******************/
+
+        case "header" :   
+        {
+          /* [not] header   
+                [comparator: tag] 
+                [match-type: tag] 
+                <header-names: string-list> 
+                <key-list: string-list>
+          */
+
+          /* Invert ? */
+          if($Inverse){
+            $script .= "not ";
+          }
+  
+          $script .="header ";
+ 
+          /* Add address part tag */ 
+          if(!empty($data['Address_Part']) && $data['Address_Part'] != ":all"){
+            $script .= $data['Address_Part']." ";
+          }
+
+          /* Add comparator */
+          if(!empty($data['Comparator']) && $data['Comparator'] != ""){
+            $script .= ":comparator ".$data['Comparator']." ";
+          }
+    
+          /* Add match type */
+          $script .= $data['Match_type']." ";
+
+          /* Add special match type for count and value */
+          if(in_array($data['Match_type'], array(":value",":count")) && !empty($data['Match_type_value'])) {
+            $script .= $data['Match_type_value']." ";
+          }
+
+          $script .= sieve_create_strings($data['Key_List']);
+          $script .= " ";
+          $script .= sieve_create_strings($data['Value_List']);
+          break;
+        }
+
+
+        /*******************
+         * Envelope
+         *******************/
+
+        case "envelope" :   
+        {
+          /* [not]  envelope 
+                    [address-part: tag] 
+                    [comparator: tag] 
+                    [match-type: tag] 
+                    <envelope-part: string-list> 
+                    <key-list: string-list> 
+          */
+
+          /* Invert */
+          if($Inverse){
+            $script .= "not ";
+          }
+  
+          $script .="envelope ";
+ 
+          /* Add address part tag */ 
+          if(!empty($data['Address_Part']) && $data['Address_Part'] != ":all"){
+            $script .= $data['Address_Part']." ";
+          }
+
+          /* Add comparator */
+          if(!empty($data['Comparator']) && $data['Comparator'] != ""){
+            $script .= ":comparator ".$data['Comparator']." ";
+          }
+    
+          /* Add match type */
+          $script .= $data['Match_type']." ";
+
+          /* Add special match type for count and value */
+          if(in_array($data['Match_type'], array(":value",":count")) && !empty($data['Match_type_value'])) {
+            $script .= $data['Match_type_value']." ";
+          }
+
+          $script .= sieve_create_strings($data['Key_List']);
+          $script .= " ";
+          $script .= sieve_create_strings($data['Value_List']);
+          break;
+        }
+
+
+        /*******************
+         * Exists
+         *******************/
+        case "exists" : 
+        {
+          /* [not] exists 
+              <header-names: string-list> 
+          */
+
+          /* Invert ? */
+          if($Inverse){
+            $script .= "not ";
+          }
+
+          $script .= "exists ".sieve_create_strings($data['Values']);
+          break;
+        }
+
+
+        /*******************
+         * Size
+         *******************/
+        case "size" : 
+        {
+          /* [not] size 
+                <":over" / ":under"> 
+                <limit: number> 
+          */
+
+          /* Invert ? */
+          if($Inverse){
+            $script .= "not ";
+          }
+ 
+          /* Add size test */ 
+          $script .="size ";
+          $script .=$data['Match_type']." ";
+          foreach($data['Value_List'] as $val){
+            $script .= $val." ";
+          }
+          break;
+        }
+
+
+        /*******************
+         * Allof
+         *******************/
+        case "anyof" :
+        case "allof" :
+        {
+          /* allof <tests: test-list>
+             anyof <tests: test-list> */
+
+ 
+          /* Add spaces, to indent the code.*/ 
+          $block = "\n";
+          for($i = 0 ; $i < $id ; $i ++){
+            $block .= SIEVE_INDENT_TAB;
+          }          
+
+          /* Add allof/anyof tag */
+          $script.= " ".$key." ( ";
+
+          /* Add each test parameter */
+          foreach($data as $key2 => $dat){
+            if(($key2 === "Inverse") && ($key2 == "Inverse")){
+              continue;
+            }
+            $script.= $block.$this->get_sieve_script_part_recursive($dat, ($id +1),$key2).", ";
+          }
+    
+          /* Remove last _,_ and close the tag */
+          $script = preg_replace("/,$/","",trim($script));
+          $script.= $block.")";
+          break ;
+        }
+
+        default :
+        {
+          $script .= "THERE IS SOME IMPLEMENTATION MISSING FOR SIEVE SCRIPT CREATION :".$key;
+        }
+      }
+    }
+    return($script);
+  }
+
+
+  /* Ensure that all changes made on the ui 
+   *  will be saved. 
+   */
   function save_object()
   {
     $tmp = $this->save_object_recursive($parsed = NULL,$id = 1,$obj_id=1);
     $this->_parsed = $tmp;
   }
 
+
+  /* Recursivly save all ui changes for the 
+   *  tags and tokens provided by $parsed.
+   *  $id       specifies the depth of the current element.
+   *  $obj_id   is the current tag-id handled by this function
+   */
   function save_object_recursive($parsed = NULL,$id = 1,$obj_id=1)
   {
-
+    /* Variable initialization */ 
     $ret ="";
     if($parsed == NULL){
       $parsed = $this->_parsed;
@@ -40,42 +365,45 @@ class sieve_if
       switch($key)
       {
  
- 
         /*******************
-         * TRUE FALSE 
+         * Address 
          *******************/
 
+        case "envelope" :
+        case "header" : 
         case "address" : 
         {
-          /* address [address-part: tag] [comparator: tag] [match-type: tag] <header-list: string-list> <key-list: string-list> */
-          $address_parts = array( ":all"       => _("Complete adress"),
-                                  ":domain"    => _("Domian part") ,
-                                  ":localpart" => _("Local part"));
+          /* [not] address 
+                        [address-part: tag] 
+                        [comparator: tag] 
+                        [match-type: tag] 
+                        <header-list: string-list> 
+                        <key-list: string-list> 
+          */
 
-          /* comparator type */
-          $comparators   = array( "i;octet"         => _("Normal"),
-                                  "i;ascii-casemap" =>_("Case sensitive"),
-                                  "i;ascii-numeric" =>_("Numeric"));
+          /* Possible address parts we can select */
+          $address_parts = $this->address_parts;
+          $comparators   = $this->comparators;
+          $match_types   = $this->match_types; 
+          $operators     = $this->operators;
 
-          /* Match types */
-          $match_types  = array(  ":is"         => _("is"),
-                                  ":contains"   => _("contains"),
-                                  ":matches"    => _("matches"),
-                                  ":count"      => _("count"),
-                                  ":value"      => _("value is"));
-
-          /* Operators */
-          $operators = array(     "lt"  => _("less than"),
-                                  "le"  => _("less or equal"),
-                                  "eq"  => _("equals"),
-                                  "ge"  => _("greater or equal"),
-                                  "gt"  => _("greater than"),
-                                  "ne"  => _("not equal"));
-
+          /* Toggle Inverse ? */
+          if(isset($_POST['toggle_inverse_'.$element_id])){
+            $parsed[$key]['Inverse'] = !$parsed[$key]['Inverse'];
+          }
 
           /* Check if we want to toggle the expert mode */
           if(isset($_POST['Toggle_Expert_'.$element_id])){
-            $parsed['address']['Expert'] = !$parsed['address']['Expert'];
+            $parsed[$key]['Expert'] = !$parsed[$key]['Expert'];
+          }
+
+          /* Get address part */
+          if(isset($_POST['address_part_'.$element_id])){
+            $ap = $_POST['address_part_'.$element_id];
+
+            if(isset($address_parts[$ap])){
+              $parsed[$key]['Address_Part'] = $ap;
+            }
           }
 
           /* Check if match type has changed */
@@ -83,48 +411,55 @@ class sieve_if
             $mt = $_POST['matchtype_'.$element_id];
 
             if(isset($match_types[$mt])){
-              $parsed['address']['Match_type'] = $mt;
+              $parsed[$key]['Match_type'] = $mt;
+            }
+          }
+
+          /* Get the comparator tag, if posted */
+          if(isset($_POST['comparator_'.$element_id])){
+            $cp = $_POST['comparator_'.$element_id];
+
+            if(isset($comparators[$cp])){
+              $parsed[$key]['Comparator'] = $cp;
             }
           }
 
           /* In case of :count and :value match types 
            *  we have a special match operator we should save.
            */
-          if(in_array($parsed['address']['Match_type'],array(":value",":count"))){
+          if(in_array($parsed[$key]['Match_type'],array(":value",":count"))){
             if(isset($_POST['operator_'.$element_id])){
               $op = $_POST['operator_'.$element_id];
 
               if(isset($operators[$op])){
-                $parsed['address']['Match_type_value'] = $op;
+                $parsed[$key]['Match_type_value'] = $op;
               }
             }
           }
 
           /* Get the address fields we should check, they are seperated by , */
           if(isset($_POST['keys_'.$element_id])){
-            $vls = $_POST['keys_'.$element_id];
+            $vls = stripslashes($_POST['keys_'.$element_id]);
             $tmp = array();
 
             $tmp2 = split(",",$vls);
             foreach($tmp2 as $val){
               $tmp[] = "\"".trim(preg_replace("/\"/","",$val))."\"";
             }
-            $parsed['address']['Key_List'] = $tmp;
+            $parsed[$key]['Key_List'] = $tmp;
           }
 
           /* Get the values should check for, they are seperated by , */
           if(isset($_POST['values_'.$element_id])){
-            $vls = $_POST['values_'.$element_id];
+            $vls = stripslashes($_POST['values_'.$element_id]);
             $tmp = array();
 
             $tmp2 = split(",",$vls);
             foreach($tmp2 as $val){
               $tmp[] = "\"".trim(preg_replace("/\"/","",$val))."\"";
             }
-            $parsed['address']['Value_List'] = $tmp;
+            $parsed[$key]['Value_List'] = $tmp;
           }
-
-
           break;
         }
  
@@ -154,7 +489,7 @@ class sieve_if
         {
           /* get list of match values */
           if(isset($_POST['Values_'.$element_id])){
-            $vls = $_POST['Values_'.$element_id];
+            $vls = stripslashes($_POST['Values_'.$element_id]);
             $tmp = array();          
   
             $tmp2 = split(",",$vls);
@@ -340,28 +675,10 @@ class sieve_if
 
         case "header": 
         {
-          /* comparator type */
-          $comparators   = array( "i;octet"         => _("Normal"),
-                                  "i;ascii-casemap" =>_("Case sensitive"),
-                                  "i;ascii-numeric" =>_("Numeric"));
-
-          /* Match types */
-          $match_types  = array(  ":is"         => _("is"),
-                                  ":contains"   => _("contains"),
-                                  ":matches"    => _("matches"),
-                                  ":over"       => _("is over"),
-                                  ":count"      => _("count"),
-                                  ":value"      => _("value is"),
-                                  ":under"      => _("is under"));
-  
-          /* Operators */
-          $operators = array(     ""    => "-",
-                                  "lt"  => _("less than"),
-                                  "le"  => _("less or equal"),
-                                  "eq"  => _("equals"),
-                                  "ge"  => _("greater or equal"),
-                                  "gt"  => _("greater than"),
-                                  "ne"  => _("not equal"));
+          $address_parts = $this->address_parts;
+          $comparators   = $this->comparators;
+          $match_types   = $this->match_types; 
+          $operators     = $this->operators;
 
           $smarty = get_smarty();
           $smarty->assign("comparators",$comparators);
@@ -386,7 +703,9 @@ class sieve_if
           $values = preg_replace("/,$/","",trim($values));
 
           $smarty->assign("keys",$keys);
+          $smarty->assign("Inverse",$Inverse);
           $smarty->assign("values",$values);
+          $smarty->assign("Expert", $data['Expert']);
 
  
           $smarty->assign("ID"  , $element_id); 
@@ -396,31 +715,15 @@ class sieve_if
 
         case "envelope":
         {
-          /* comparator type */
-          $comparators   = array( "i;octet"         => _("Normal"),
-                                  "i;ascii-casemap" =>_("Case sensitive"),
-                                  "i;ascii-numeric" =>_("Numeric"));
-
-          /* Match types */
-          $match_types  = array(  ":is"         => _("is"),
-                                  ":contains"   => _("contains"),
-                                  ":matches"    => _("matches"),
-                                  ":over"       => _("is over"),
-                                  ":count"      => _("count"),
-                                  ":value"      => _("value is"),
-                                  ":under"      => _("is under"));
-  
-          /* Operators */
-          $operators = array(     ""    => "-",
-                                  "lt"  => _("less than"),
-                                  "le"  => _("less or equal"),
-                                  "eq"  => _("equals"),
-                                  "ge"  => _("greater or equal"),
-                                  "gt"  => _("greater than"),
-                                  "ne"  => _("not equal"));
+          $address_parts = $this->address_parts;
+          $comparators   = $this->comparators;
+          $match_types   = $this->match_types; 
+          $operators     = $this->operators;
 
           $smarty = get_smarty();
+          $smarty->assign("Inverse",$Inverse);
           $smarty->assign("comparators",$comparators);
+          $smarty->assign("Expert", $data['Expert']);
           $smarty->assign("match_types",$match_types);
           $smarty->assign("operators",$operators);
 
@@ -449,32 +752,13 @@ class sieve_if
 
         case "address" : 
         {
-          /* address [address-part: tag] [comparator: tag] [match-type: tag] <header-list: string-list> <key-list: string-list> */
-          $address_parts = array( ":all"       => _("Complete adress"), 
-                                  ":domain"    => _("Domian part") , 
-                                  ":localpart" => _("Local part"));
-
-          /* comparator type */
-          $comparators   = array( "i;octet"         => _("Normal"),
-                                  "i;ascii-casemap" =>_("Case sensitive"),
-                                  "i;ascii-numeric" =>_("Numeric"));
-
-          /* Match types */
-          $match_types  = array(  ":is"         => _("is"),
-                                  ":contains"   => _("contains"),
-                                  ":matches"    => _("matches"),
-                                  ":count"      => _("count"),
-                                  ":value"      => _("value is"));
-  
-          /* Operators */
-          $operators = array(     "lt"  => _("less than"),
-                                  "le"  => _("less or equal"),
-                                  "eq"  => _("equals"),
-                                  "ge"  => _("greater or equal"),
-                                  "gt"  => _("greater than"),
-                                  "ne"  => _("not equal"));
+          $address_parts = $this->address_parts;
+          $comparators   = $this->comparators;
+          $match_types   = $this->match_types; 
+          $operators     = $this->operators;
 
           $smarty = get_smarty();
+          $smarty->assign("Inverse",$Inverse);
           $smarty->assign("address_parts",$address_parts);
           $smarty->assign("comparators",$comparators);
           $smarty->assign("match_types",$match_types);
@@ -489,13 +773,13 @@ class sieve_if
         
           $keys = "";
           foreach($data['Key_List'] as $key){
-            $keys .= stripslashes($key).", ";
+            $keys .= $key.", ";
           }
           $keys = preg_replace("/,$/","",trim($keys));
    
           $values = "";
           foreach($data['Value_List'] as $key){
-            $values .= stripslashes($key).", ";
+            $values .= $key.", ";
           }
           $values = preg_replace("/,$/","",trim($values));
           $smarty->assign("keys",$keys);
@@ -556,7 +840,7 @@ class sieve_if
  
           $Values = "";
           foreach($data['Values'] as $val){
-            $Values .= stripslashes($val).", ";
+            $Values .= $val.", ";
           }
           $Values = preg_replace("/,$/","",trim($Values));
 

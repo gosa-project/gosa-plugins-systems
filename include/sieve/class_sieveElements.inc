@@ -10,7 +10,11 @@ class sieve_elsif extends sieve_if
 class sieve_comment 
 {
   var $data = "";
- 
+
+  function get_sieve_script_part()
+  {
+    return($this->data."\n");
+  } 
     
   function sieve_comment($data)
   {
@@ -43,6 +47,12 @@ class sieve_require
     }
   }
 
+  function get_sieve_script_part()
+  {
+    $tmp = sieve_create_strings($this->data);
+    return("require ".$tmp.";\n");
+  } 
+    
   function execute()
   {
     $str = "<table cellspacing=0 width='100%'><tr><td style='width:100%;background-color:#DDDDFF;'>"._("Script includes");
@@ -62,6 +72,11 @@ class sieve_discard
   {
   }
 
+  function get_sieve_script_part()
+  {
+    return("discard;\n");
+  } 
+    
   function execute()
   {
     $str = "<table cellspacing=0 width='100%'><tr><td style='width:100%;background-color:red;'>"._("Discard message");
@@ -87,6 +102,11 @@ class sieve_reject
     $this->data = preg_replace("/\"/","",$str);
   }
 
+  function get_sieve_script_part()
+  {
+    return("reject ".sieve_create_strings($this->data)."\n");
+  } 
+    
   function execute()
   {
     $str = "<table cellspacing=0 width='100%'><tr><td style='width:100%;background-color:gray;'>"._("Reject mail");
@@ -109,6 +129,17 @@ class sieve_redirect
     }
   }
 
+  function get_sieve_script_part()
+  {
+    $tmp = "";
+    foreach($this->data as $dat){
+      $tmp.= "\"".$dat."\", ";
+    }
+    $tmp = "[".preg_replace("/,$/","",trim($tmp))."]";
+    $tmp = preg_replace ("/\"\"/","\"",$tmp);
+    return("redirect ".$tmp."\n");
+  } 
+    
   function execute()
   {
     $str = "<table cellspacing=0 width='100%'><tr><td style='width:100%;background-color:brown;'>"._("Redirect to");
@@ -133,6 +164,17 @@ class sieve_fileinto
     }
   }
 
+  function get_sieve_script_part()
+  {
+    $tmp = "";
+    foreach($this->data as $dat){
+      $tmp.= "\"".$dat."\", ";
+    }
+    $tmp = "[".preg_replace("/,$/","",trim($tmp))."]";
+    $tmp = preg_replace ("/\"\"/","\"",$tmp);
+    return("fileinto ".$tmp."\n");
+  } 
+    
   function execute()
   {
     $str = "<table cellspacing=0 width='100%'><tr><td style='width:100%;background-color:green;'>"._("File into");
@@ -205,6 +247,23 @@ class sieve_vacation
     }
   }
 
+  function get_sieve_script_part()
+  {
+    $str = "vacation ";
+    if($this->days){
+      $str.= ":days ".$this->days;
+    }
+    $str .= ":addresses ".sieve_create_strings($this->addresses);
+    if($this->subject){
+      $str.= ":subject ".sieve_create_strings($this->subject);
+    }
+    if($this->mime){
+      $str.= ":mime ".sieve_create_strings($this->mime);
+    }
+    $str .= " ".sieve_create_strings($this->reason);
+    return($str."\n");
+  } 
+    
 
   function execute()
   {
@@ -230,6 +289,11 @@ class sieve_block_start
                 </td>
                 <td style='background-color:#BBBBBB;border: solid 2px #FFFFFF;'>");
   }
+  function get_sieve_script_part()
+  {
+    return("{\n");
+  } 
+    
 }
 
 class sieve_block_end 
@@ -240,6 +304,11 @@ class sieve_block_end
               </tr>
             </table>");
   }
+  function get_sieve_script_part()
+  {
+    return("}\n");
+  } 
+    
 }
 
 /* This class handles the keep statement */
@@ -256,6 +325,11 @@ class sieve_keep
             </table>";
     return($str);
   }
+  function get_sieve_script_part()
+  {
+    return("keep;\n");
+  } 
+    
 }
 
 /* This class handles the stop statement */
@@ -272,6 +346,12 @@ class sieve_stop
             </table>";
     return($str);
   }
+
+  function get_sieve_script_part()
+  {
+    return("stop; \n");
+  } 
+    
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
