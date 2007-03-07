@@ -1,49 +1,87 @@
 <?php
 
-
+/* Sieve else tag */
 class sieve_elsif extends sieve_if 
 {
   var $TYPE = "elsif";
 }
 
 
+/* Sieve comment tag */
 class sieve_comment 
 {
   var $data = "";
+  var $object_id= -1;
 
   function get_sieve_script_part()
   {
     return($this->data."\n");
   } 
     
-  function sieve_comment($data)
+  function sieve_comment($data,$object_id)
   {
+    $this->object_id = $object_id;
     foreach($data['ELEMENTS'] as $node){
        $this->data .= $node['text'];
     }
   }
 
+  function save_object()
+  {
+    if(isset($_POST['comment_'.$this->object_id])){
+      $cm = $_POST['comment_'.$this->object_id];
+      $this->data = "/*".$cm."*/";
+    }
+  }
+
   function execute()
   {
-    $str  ="<table cellspacing=0 width='100%'><tr><td style='width:100%;background-color:#DDFFDD;'>"._("Comment");
-    $str .="<input type='text' name='comment_' value='".$this->data."'>";
-    $str .="</td></tr></table>";
-    return($str);
+    $Comment = $this->data;
+
+    /* Remove comment tags */
+    if(preg_match("/^#/",$Comment)){
+      $Comment = preg_replace("/^#/","",$Comment);
+    }elseif(preg_match("#\/\*#",$Comment)){
+      $Comment = preg_replace("#^\/\*#","",$Comment);
+      $Comment = preg_replace("#\*\/$#","",$Comment);
+    }
+ 
+    /* Create html object */ 
+    $smarty = get_smarty();
+    $smarty->assign("Comment",$Comment);
+    $smarty->assign("ID",$this->object_id);
+    return($smarty->fetch(get_template_path("templates/element_comment.tpl",TRUE,dirname(__FILE__))));    
   }
 }
 
 
 class sieve_require 
-
 {
   var $data = array();
-
-  function sieve_require($data)
+  var $object_id = -1;
+  
+  function sieve_require($data,$object_id)
   {
+    $this->object_id = $object_id;
     foreach($data['ELEMENTS'] as $node ){
       if(in_array($node['class'],array("quoted-string","text"))){
         $this->data[] = preg_replace("/\"/","",$node['text']);
       }
+    }
+  }
+
+  function save_object()
+  {
+    /* Get the values should check for, they are seperated by , */
+    if(isset($_POST['require_'.$this->object_id])){
+      $vls = stripslashes($_POST['require_'.$this->object_id]);
+      $tmp = array();
+
+      $tmp2 = split(",",$vls);
+      foreach($tmp2 as $val){
+        $tmp[] = "\"".trim(preg_replace("/\"/","",$val))."\"";
+      }
+      $this->data = $tmp;
     }
   }
 
@@ -55,12 +93,16 @@ class sieve_require
     
   function execute()
   {
-    $str = "<table cellspacing=0 width='100%'><tr><td style='width:100%;background-color:#DDDDFF;'>"._("Script includes");
-    foreach($this->data as $req){
-      $str .= "&nbsp;<i>".$req."</i>";
+    $Require = "";
+    foreach($this->data as $key){
+      $Require .= $key.", ";
     }
-    $str .="</td></tr></table>";
-    return($str);
+    $Require = preg_replace("/,$/","",trim($Require));
+  
+    $smarty = get_smarty();
+    $smarty->assign("Require",$Require);
+    $smarty->assign("ID",$this->object_id);
+    return($smarty->fetch(get_template_path("templates/element_require.tpl",TRUE,dirname(__FILE__))));
   }
 }
 
@@ -79,9 +121,8 @@ class sieve_discard
     
   function execute()
   {
-    $str = "<table cellspacing=0 width='100%'><tr><td style='width:100%;background-color:red;'>"._("Discard message");
-    $str .="</td></tr></table>";
-    return($str);
+    $smarty = get_smarty();
+    return($smarty->fetch(get_template_path("templates/element_discard.tpl",TRUE,dirname(__FILE__))));
   }
 }
 
@@ -90,9 +131,20 @@ class sieve_discard
 class sieve_reject 
 {
   var $data = array();
+  var $object_id = -1;
 
-  function sieve_reject($data)
+  function save_object()
   {
+    if(isset($_POST['reject_message_'.$this->object_id])){
+      $msg = stripslashes($_POST['reject_message_'.$this->object_id]);
+
+      $this->data = $msg;
+    }
+  }
+
+  function sieve_reject($data,$object_id)
+  {
+    $this->object_id = $object_id;
     $str = "";
     foreach($data['ELEMENTS'] as $node ){
       if(in_array($node['class'],array("quoted-string","text"))){
@@ -109,18 +161,33 @@ class sieve_reject
     
   function execute()
   {
-    $str = "<table cellspacing=0 width='100%'><tr><td style='width:100%;background-color:gray;'>"._("Reject mail");
-    $str .= "&nbsp;<textarea name='test' style='width:90%'>".$this->data."</textarea>";
-    $str .="</td></tr></table>";
-    return($str);
+    $smarty = get_smarty();
+    $smarty->assign("ID",$this->object_id);
+    $smarty->assign("Message",$this->data);
+    return($smarty->fetch(get_template_path("templates/element_reject.tpl",TRUE,dirname(__FILE__))));    
   }
 }
 
 class sieve_redirect 
 {
   var $data = array();
+  var $object_id = -1;
 
-  function sieve_redirect($data)
+  function save_object()
+  {
+    if(isset($_POST['redirect_to_'.$this->object_id])){
+      $rt = stripslashes($_POST['redirect_to_'.$this->object_id]);
+
+      $tmp = array();
+      $tmp2 = split(",",$rt);
+      foreach($tmp2 as $val){
+        $tmp[] = "\"".trim(preg_replace("/\"/","",$val))."\"";
+      }
+      $this->data = $tmp;
+    }
+  }
+
+  function sieve_redirect($data,$object_id)
   {
     foreach($data['ELEMENTS'] as $node ){
       if(in_array($node['class'],array("quoted-string","text"))){
@@ -142,21 +209,41 @@ class sieve_redirect
     
   function execute()
   {
-    $str = "<table cellspacing=0 width='100%'><tr><td style='width:100%;background-color:brown;'>"._("Redirect to");
-    foreach($this->data as $dest){
-      $str .= "<input type='text' name='bal' value='".$dest."'><br> ";
+    $values = "";
+    foreach($this->data as $key){
+      $values .= $key.", ";
     }
-    $str .="</td></tr></table>";
-    return($str);
+    $values = preg_replace("/,$/","",trim($values));
+
+    $smarty = get_smarty();
+    $smarty->assign("Destinations" , $values);
+    $smarty->assign("ID" , $this->object_id);
+    return($smarty->fetch(get_template_path("templates/element_redirect.tpl",TRUE,dirname(__FILE__))));
   }
 }
 
 class sieve_fileinto 
 {
-  var $data = array();
+  var $data     = array();
+  var $object_id= -1;
+  var $options  = array();
 
-  function sieve_fileinto($data)
+  function save_object()
   {
+    $mbs = $this->get_mail_boxes();
+    
+    if(isset($_POST['fileinto_'.$this->object_id])){
+      $mb = $_POST['fileinto_'.$this->object_id];
+
+      if(isset($mbs[$mb])) {
+        $this->data[0] = $mb; 
+      }
+    }
+  }
+
+  function sieve_fileinto($data,$object_id)
+  {
+    $this->object_id = $object_id;
     foreach($data['ELEMENTS'] as $node ){
       if(in_array($node['class'],array("quoted-string","text"))){
         $this->data[] = preg_replace("/\"/","",$node['text']);
@@ -177,15 +264,16 @@ class sieve_fileinto
     
   function execute()
   {
-    $str = "<table cellspacing=0 width='100%'><tr><td style='width:100%;background-color:green;'>"._("File into");
-    $str .= "<select name='test'>";
-    foreach($this->data as $folder){
-      $str .= "<option>".$folder."</option>";
-    }
-    $str .= "</select>";
-    $str .="</td></tr></table>";
+    $smarty = get_smarty();
+    $smarty->assign("Selected",$this->data[0]);
+    $smarty->assign("Boxes", $this->get_mail_boxes());
+    $smarty->assign("ID", $this->object_id);
+    return($smarty->fetch(get_template_path("templates/element_fileinto.tpl",TRUE,dirname(__FILE__))));
+  }
 
-    return($str);
+  function get_mail_boxes()
+  {
+    return(array("not","impplemented/yet"));
   }
 }
 
@@ -297,7 +385,6 @@ class sieve_vacation
     }
   }
 
-
   function execute()
   {
     $Addresses = "";
@@ -305,7 +392,6 @@ class sieve_vacation
       $Addresses .= $key.", ";
     }
     $Addresses = preg_replace("/,$/","",trim($Addresses));
-
     $smarty = get_smarty();
     $smarty->assign("Reason",$this->reason);
     $smarty->assign("Addresses",$Addresses);
@@ -321,33 +407,27 @@ class sieve_block_start
 {
   function execute()
   {
-    return("<table cellspacing=0 width='100%'>
-              <tr>
-                <td style='width:20px;'>
-                  <img alt='' src='images/forward.png' class='center'>
-                </td>
-                <td style='background-color:#BBBBBB;border: solid 2px #FFFFFF;'>");
+    $smarty = get_smarty();
+    return($smarty->fetch(get_template_path("templates/element_block_start.tpl",TRUE,dirname(__FILE__))));
   }
+
   function get_sieve_script_part()
   {
     return("{\n");
   } 
-    
 }
 
 class sieve_block_end 
 {
   function execute()
   {
-    return("    </td>
-              </tr>
-            </table>");
+    $smarty = get_smarty();
+    return($smarty->fetch(get_template_path("templates/element_block_end.tpl",TRUE,dirname(__FILE__))));
   }
   function get_sieve_script_part()
   {
     return("}\n");
   } 
-    
 }
 
 /* This class handles the keep statement */
@@ -355,14 +435,8 @@ class sieve_keep
 {
   function execute()
   {
-    $str = "<table cellspacing=0 width='100%'>
-              <tr>
-                <td style='width:100%;background-color:green;'>".
-                  _("Keep message");
-    $str .="    </td>
-              </tr>
-            </table>";
-    return($str);
+    $smarty = get_smarty();
+    return($smarty->fetch(get_template_path("templates/element_keep.tpl",TRUE,dirname(__FILE__))));
   }
   function get_sieve_script_part()
   {
@@ -376,14 +450,8 @@ class sieve_stop
 {
   function execute()
   {
-    $str = "<table cellspacing=0 width='100%'>
-              <tr>
-                <td style='width:100%;background-color:orange;'>".
-                  _("Stop here");
-    $str .="    </td>
-              </tr>
-            </table>";
-    return($str);
+    $smarty = get_smarty();
+    return($smarty->fetch(get_template_path("templates/element_stop.tpl",TRUE,dirname(__FILE__))));
   }
 
   function get_sieve_script_part()

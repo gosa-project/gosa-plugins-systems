@@ -487,6 +487,11 @@ class sieve_if
 
         case "exists" :
         {
+          /* Toggle Inverse ? */
+          if(isset($_POST['toggle_inverse_'.$element_id])){
+            $parsed[$key]['Inverse'] = !$parsed[$key]['Inverse'];
+          }
+
           /* get list of match values */
           if(isset($_POST['Values_'.$element_id])){
             $vls = stripslashes($_POST['Values_'.$element_id]);
@@ -609,16 +614,10 @@ class sieve_if
       $name .= "&nbsp;-&nbsp;"._("Else");
     }
 
-    /* Create new html block */
-    $str  ="<table cellspacing=0 width='100%'>
-              <tr>
-                <td style='width:100%;background-color:#DDDDDD; padding:5px; border: solid 2px #AAAAAA;'>".
-                  $name;
-    $str .= $this->get_as_html();  
-    $str .= "   </td>
-              </tr>
-            </table>";
-    return($str);
+    $smarty = get_smarty();
+    $smarty->assign("Name", $name);
+    $smarty->assign("Contents", $this->get_as_html());
+    return($smarty->fetch(get_template_path("templates/element_if_else.tpl",TRUE,dirname(__FILE__))));
   }
 
   
