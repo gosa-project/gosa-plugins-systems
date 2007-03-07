@@ -562,6 +562,9 @@ class sieve_if
      
         case "allof" : 
         {
+          if(isset($_POST['toggle_inverse_'.$element_id])){
+            $parsed[$key]['Inverse'] = !$parsed[$key]['Inverse'];
+          }
           foreach($data as $key2 => $dat){
             if(($key2 === "Inverse") && ($key2 == "Inverse")){
               continue;
@@ -577,6 +580,9 @@ class sieve_if
      
         case "anyof" : 
         {
+          if(isset($_POST['toggle_inverse_'.$element_id])){
+            $parsed[$key]['Inverse'] = !$parsed[$key]['Inverse'];
+          }
           foreach($data as $key2 => $dat){
             if(($key2 === "Inverse") && ($key2 == "Inverse")){
               continue;
@@ -713,6 +719,11 @@ class sieve_if
           break;
         }
 
+
+        /*******************
+         * Envelope 
+         *******************/
+
         case "envelope":
         {
           $address_parts = $this->address_parts;
@@ -730,25 +741,30 @@ class sieve_if
           $smarty->assign("match_type", $data['Match_type']);
           $smarty->assign("operator"  , preg_replace("/\"/","",$data['Match_type_value']));
           $smarty->assign("comparator", $data['Comparator']);
-        
 
           $keys = "";
           foreach($data['Key_List'] as $key){
-            $keys .= $key."\n";
+            $keys .= $key.", ";
           }
-   
+          $keys = preg_replace("/,$/","",trim($keys));
+
           $values = "";
           foreach($data['Value_List'] as $key){
-            $values .= $key."\n";
+            $values .= $key.", ";
           }
+          $values = preg_replace("/,$/","",trim($values));
           $smarty->assign("keys",$keys);
           $smarty->assign("values",$values);
 
- 
           $smarty->assign("ID"  , $element_id); 
           $ret .= $smarty->fetch(get_template_path("templates/element_envelope.tpl",TRUE,dirname(__FILE__)));
           break;
         }
+
+
+        /*******************
+         * Address 
+         *******************/
 
         case "address" : 
         {
@@ -860,24 +876,18 @@ class sieve_if
 
         case "allof" : 
         {
-          $ret = "<table width='100%'  cellspacing=0 cellpadding=0>
-                    <tr>
-                      <td style='text-align:center; vertical-align: middle; width:45px; 
-                                 background-color: #BDBDBD; border: solid 1px #EEEEEE'>".
-                        "<b>".$str_inverse._("All of")."</b>".
-                        "<img alt='' class='center' src='images/select_ogroup.png'>".
-                     "</td>";
-          $ret.= "    <td style='background-color:#BDBDBD ; border: solid 1px #EEEEEE'>";
-
+          $Contents = ""; 
           foreach($data as $key => $dat){
             if(($key === "Inverse") && ($key == "Inverse")){
               continue;
             }
-            $ret.=        $this->get_as_html($dat, ($id +1),$key);
+            $Contents .=        $this->get_as_html($dat, ($id +1),$key);
           }
-          $ret.= "    </td>
-                    </tr>
-                  </table>";
+          $smarty = get_smarty();
+          $smarty->assign("Inverse",$Inverse);
+          $smarty->assign("Contents",$Contents);
+          $smarty->assign("ID"  , $element_id); 
+          $ret .= $smarty->fetch(get_template_path("templates/element_allof.tpl",TRUE,dirname(__FILE__)));
           break ;
         } 
 
@@ -888,36 +898,30 @@ class sieve_if
 
         case "anyof" : 
         {
-          $ret = "<table width='100%' cellspacing=0 cellpadding=0>
-                    <tr>
-                      <td style='text-align:center; vertical-align: middle; width:45px; 
-                                 background-color: #AAAAAA; border: solid 1px #EEEEEE'>".
-                        "<b>".$str_inverse._("Any of")."</b>".
-                        "<img alt='' class='center' src='images/select_department.png'>".
-                     "</td>";
-          $ret.= "    <td style='background-color: #AAAAAA ; border: solid 1px #EEEEEE'>";
+          $Contents = ""; 
           foreach($data as $key => $dat){
             if(($key === "Inverse") && ($key == "Inverse")){
               continue;
             }
-            $ret.=        $this->get_as_html($dat, ($id + 1),$key);
+            $Contents .=        $this->get_as_html($dat, ($id +1),$key);
           }
+          $smarty = get_smarty();
+          $smarty->assign("Inverse",$Inverse);
+          $smarty->assign("Contents",$Contents);
+          $smarty->assign("ID"  , $element_id); 
+          $ret .= $smarty->fetch(get_template_path("templates/element_anyof.tpl",TRUE,dirname(__FILE__)));
+          break ;
+        } 
+        default : 
+        {
+          $ret = "<table width='100%'  cellspacing=0 cellpadding=0>
+                    <tr>
+                      <td style='background-color: #FEDCA9 ; border: solid 1px        #EEEEEE'>";
+          $ret.= $key."<br>"; 
           $ret.= "    </td>
                     </tr>
                   </table>";
-          break ;
         }
-        default : 
-          {
-            $ret = "<table width='100%'  cellspacing=0 cellpadding=0>
-                      <tr>
-                        <td style='background-color: #FEDCA9 ; border: solid 1px        #EEEEEE'>";
-            $ret.= $key."<br>"; 
-            $ret.= "    </td>
-                      </tr>
-                    </table>";
-
-          }
       }
     }
     return($ret);

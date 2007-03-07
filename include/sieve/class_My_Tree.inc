@@ -138,7 +138,7 @@ class My_Tree extends Tree
   {
     foreach($this->pap as $key => $obj){
 
-      if(in_array(get_class($obj),array("sieve_if"))){
+      if(in_array(get_class($obj),array("sieve_if","sieve_vacation"))){
         $this->pap[$key]->save_object();
       }
     }

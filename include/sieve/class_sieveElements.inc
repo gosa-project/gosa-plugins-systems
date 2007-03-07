@@ -195,11 +195,13 @@ class sieve_vacation
   var $subject  = FALSE;
   var $from     = "";
   var $mime     = "";
-  var $hanlde   = "";
+  var $handle   = "";
   var $reason   = "";
   var $addresses= array();
+  var $object_id= -1;
+  var $Expert   = FALSE;
 
-  function sieve_vacation($data)
+  function sieve_vacation($data,$object_id)
   {
     /* Usage:   vacation [":days" number] [":subject" string]
        [":from" string] [":addresses" string-list]
@@ -264,17 +266,54 @@ class sieve_vacation
     return($str."\n");
   } 
     
+  
+  function save_object()
+  {
+    /* Get release date */
+    if(isset($_POST['vacation_release_'.$this->object_id])){
+      $this->days = $_POST['vacation_release_'.$this->object_id];
+    }
+
+    /* Check if we want to toggle the expert mode */
+    if(isset($_POST['Toggle_Expert_'.$this->object_id])){
+      $this->Expert = !$this->Expert;
+    }
+
+    /* Get release date */
+    if(isset($_POST['vacation_receiver_'.$this->object_id])){
+      $vr = stripslashes ($_POST['vacation_receiver_'.$this->object_id]);
+      $tmp = array();
+      $tmp2 = split(",",$vr);
+      foreach($tmp2 as $val){
+        $tmp[] = "\"".trim(preg_replace("/\"/","",$val))."\"";
+      }
+      $this->addresses = $tmp;      
+    }
+
+    /* Get reason */
+    if(isset($_POST['vacation_reason_'.$this->object_id])){
+      $vr = stripslashes ($_POST['vacation_reason_'.$this->object_id]);
+      $this->reason = "\"".trim(preg_replace("/\"/","",$vr))."\"";
+    }
+  }
+
 
   function execute()
   {
-    $str ="";
-    $str .="<b>"._("Vacation message")."</b>";
-    foreach($this->addresses as $addr){ 
-      $str .="<br><input type='text' value='".$addr."' style='width:50%;'>";
+    $Addresses = "";
+    foreach($this->addresses as $key){
+      $Addresses .= $key.", ";
     }
-    $str .="<br><textarea style='width:100%;height:60px;'>".$this->reason."</textarea>";
-    
-    return($str);
+    $Addresses = preg_replace("/,$/","",trim($Addresses));
+
+    $smarty = get_smarty();
+    $smarty->assign("Reason",$this->reason);
+    $smarty->assign("Addresses",$Addresses);
+    $smarty->assign("Subject",$this->subject);
+    $smarty->assign("Days",$this->days);
+    $smarty->assign("ID",$this->object_id);
+    $smarty->assign("Expert",$this->Expert);
+    return($smarty->fetch(get_template_path("templates/element_vacation.tpl",TRUE,dirname(__FILE__))));
   }
 }
 

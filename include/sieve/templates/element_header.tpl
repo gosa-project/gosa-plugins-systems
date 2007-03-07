@@ -1,5 +1,4 @@
-
-<table>
+<table cellspacing=0 cellpadding=2 style='background-color:#EEEEDD;width:100%; border: solid 1px #CCCCCC'>
 	{if $Expert}
 
 	 <tr>
@@ -78,7 +77,7 @@
         <td style='vertical-align:top;'>
             {t}If{/t}
             &nbsp;
-            <b>{t}Envelope{/t}</b>
+            <b>{t}Header{/t}</b>
 
             {if $Inverse}
                 <input type='submit' name='toggle_inverse_{$ID}' value='{t}Not{/t}'>

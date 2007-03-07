@@ -1,7 +1,7 @@
-<b>{t}Size{/t}</b>
-<table>
+<table cellspacing=0 cellpadding=2 style='background-color:#EEEEDD;width:100%; border: solid 1px #CCCCCC'>
 	<tr>
 		<td>
+<b>{t}Size{/t}</b>
 			{if $LastError != ""}
 				<font color='red'>{$LastError}</font>
 				<br>
