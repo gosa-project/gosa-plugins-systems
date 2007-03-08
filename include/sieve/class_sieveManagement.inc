@@ -34,7 +34,7 @@ class sieveManagement extends plugin
 
   var $current_script  = -1;
   var $current_handler = NULL;
-
+  var $script_to_delete =-1;
   var $sieve_handle = NULL; 
 
 
@@ -65,7 +65,16 @@ class sieveManagement extends plugin
     if($sieve->sieve_listscripts()){
       if (is_array($sieve->response)){
         foreach($sieve->response as $key => $name){
-          $this->scripts[$key]['NAME'] = $name;
+
+          $data = array();
+          $data['NAME'] = $name;
+
+          if($key == "ACTIVE" && $key === "ACTIVE"){
+            $data['ACTIVE'] = TRUE;
+          }else{
+            $data['ACTIVE'] = FALSE;
+          }
+          $this->scripts[] = $data;          
         }
       } 
     }
@@ -110,6 +119,82 @@ class sieveManagement extends plugin
         $this->current_script = $script;
         $this->current_handler = $this->scripts[$script]['PARSER'];
       }
+      if(preg_match("/^delscript_/",$name) && $once && !$this->current_handler){
+        $script = preg_replace("/^delscript_/","",$name);
+        $script = preg_replace("/_(x|y)/","",$script);
+        $once = FALSE;
+ 
+        $this->script_to_delete = $script;  
+      }
+      if(preg_match("/^active_script_/",$name) && $once && !$this->current_handler){
+        $script = preg_replace("/^active_script_/","",$name);
+        $script = preg_replace("/_(x|y)/","",$script);
+        $once = FALSE;
+ 
+        /* Connect to sieve class and try to get all available sieve scripts */
+        $cfg=  $this->config->data['SERVERS']['IMAP'][$this->parent->gosaMailServer];
+        $this->sieve_handle=
+          new sieve(  $cfg["sieve_server"],
+              $cfg["sieve_port"],
+              $this->parent->mail,
+              $cfg["password"],
+              $cfg["admin"]);
+
+        if (!$this->sieve_handle->sieve_login()){
+          print_red(sprintf(_("Can't log into SIEVE server. Server says '%s'."),to_string($this->sieve_handle->error_raw)));
+          return;
+        }
+
+        if(!$this->sieve_handle->sieve_setactivescript($this->scripts[$script]['NAME'])){
+          print_red(sprintf(_("Can't activate sieve script on server. Server says '%s'."),to_string($this->sieve_handle->error_raw)));
+        }else{
+
+          foreach($this->scripts as $key => $data){
+
+            if($key == $script){
+              $this->scripts[$key]['ACTIVE'] = TRUE;
+            }else{
+              $this->scripts[$key]['ACTIVE'] = FALSE;
+            }
+          }
+        }
+      }
+    }
+
+    if(isset($_POST['delete_cancel'])){
+      $this->script_to_delete = -1;
+    }
+
+    if(isset($_POST['delete_script_confirm'])){
+
+      /* Connect to sieve class and try to get all available sieve scripts */
+      $cfg=  $this->config->data['SERVERS']['IMAP'][$this->parent->gosaMailServer];
+      $this->sieve_handle=
+        new sieve(  $cfg["sieve_server"],
+            $cfg["sieve_port"],
+            $this->parent->mail,
+            $cfg["password"],
+            $cfg["admin"]);
+      if (!$this->sieve_handle->sieve_login()){
+        print_red(sprintf(_("Can't log into SIEVE server. Server says '%s'."),to_string($this->sieve_handle->error_raw)));
+        return;
+      }
+
+      if(!$this->sieve_handle->sieve_deletescript($this->scripts[$this->script_to_delete]['NAME'])){
+        print_red(sprintf(_("Can't remove sieve script from server. Server says '%s'."),to_string($this->sieve_handle->error_raw)));
+      }else{
+        unset($this->scripts[$this->script_to_delete]);
+      }
+      $this->script_to_delete = -1;
+    }
+
+    if($this->script_to_delete != -1){
+      $smarty = get_smarty();
+      $smarty->assign("Warning",
+          sprintf(_("You are going to remove the sieve script '%s' from your mail server."),
+            $this->scripts[$this->script_to_delete]['NAME']));
+
+      return($smarty->fetch(get_template_path("templates/remove_script.tpl",TRUE,dirname(__FILE__))));
     }
 
     /* Abort saving */
@@ -141,21 +226,36 @@ class sieveManagement extends plugin
     foreach($this->scripts as $key => $script){
   
       $edited =  $script['EDITED'];
-
-      $field1 = array("string" => $script['NAME']);  
-      $field2 = array("string" => $script['STATUS']);
-      $field3 = array("string" => _("Script length")."&nbsp;:&nbsp;".strlen($script['SCRIPT']));
+      $active =  $script['ACTIVE'];
+      
+      $field1 = array("string" => "&nbsp;",
+                      "attach" => "style='width:20px;'");  
+      if($active){
+        $field1 = array("string" => "<img src='images/true.png' alt='"._("Active")."'>",
+                        "attach" => "style='width:20px;'");  
+      }
+      $field2 = array("string" => $script['NAME']);  
+      $field3 = array("string" => $script['STATUS']);
+      $field4 = array("string" => _("Script length")."&nbsp;:&nbsp;".strlen($script['SCRIPT']));
 
       if($edited){
-        $field4 = array("string" => "<img src='images/fai_new_hook.png' alt='"._("Edited")."'>",
+        $field5 = array("string" => "<img src='images/fai_new_hook.png' alt='"._("Edited")."'>",
                         "attach" => "style='width:30px;'");
       }else{
-        $field4 = array("string" => "",
+        $field5 = array("string" => "",
                         "attach" => "style='width:30px;'");
       }
 
-      $field5 = array("string" => "<input type='image' name='editscript_".$key."' src='images/edit.png'>");
-      $List ->AddEntry(array($field1,$field2,$field3,$field4,$field5)); 
+      if($active){
+        $field6 = array("string" => "<img src='images/empty.png' alt=' '>".
+                                    "<input type='image' name='editscript_".$key."' src='images/edit.png'>".
+                                    "<input type='image' name='delscript_".$key."' src='images/edittrash.png'>");
+      }else{
+        $field6 = array("string" => "<input type='image' name='active_script_".$key."' src='images/true.png'>".
+                                    "<input type='image' name='editscript_".$key."' src='images/edit.png'>".
+                                    "<input type='image' name='delscript_".$key."' src='images/edittrash.png'>");
+      }
+      $List ->AddEntry(array($field1,$field2,$field3,$field4,$field5,$field6)); 
     }
   
     $display ="<h2>Sieve script management</h2>";
