@@ -10,6 +10,36 @@ class My_Parser extends Parser
 
 	function execute()
 	{
+
+
+		/* Add Element requested */
+		if(isset($_POST['Add_Element'])){
+			$this->tree_->Add_Element();
+			echo "Move this into Management";
+		}
+
+		/* Create dump of current sieve script */
+		if(isset($_POST['Save_Copy'])){
+			echo "Move this into Management";
+		
+			/* force download dialog */
+			header("Content-type: application/tiff\n");
+			if (preg_match('/MSIE 5.5/', $HTTP_USER_AGENT) ||
+					preg_match('/MSIE 6.0/', $HTTP_USER_AGENT)) {
+				header('Content-Disposition: filename="dump.txt"');
+			} else {
+				header('Content-Disposition: attachment; filename="dump.txt"');
+			}
+			header("Content-transfer-encoding: binary\n");
+			header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+			header("Last-Modified: ".gmdate("D, d M Y H:i:s")." GMT");
+			header("Cache-Control: no-cache");
+			header("Pragma: no-cache");
+			header("Cache-Control: post-check=0, pre-check=0");
+			echo $this->get_sieve_script();	
+			exit();	
+		}
+	
 		$ret = $this->dumpParseTree();
 		return($ret);
 	}
