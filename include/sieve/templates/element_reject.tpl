@@ -3,11 +3,16 @@
 		<td style='width:100%;'>
 			<b>{t}Reject mail{/t}</b>
 			&nbsp;
+			{if $Multiline}
+				{t}This will be a multiline text element{/t}
+			{else}
+				{t}this will be stored as single string{/t}
+			{/if}
 		</td>
 	</tr>
 	<tr>
 		<td style='padding-left:20px;'>
-			<textarea name='reject_message_{$ID}' style='width:100%'>{$Message}</textarea>
+			<textarea name='reject_message_{$ID}' style='width:100%;height:100px;' >{$Message}</textarea>
 		</td>
 	</tr>
 </table>

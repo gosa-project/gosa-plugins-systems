@@ -126,7 +126,7 @@ class Semantics
 				'valid_after' => array('require', 'if', 'elsif', 'else', 'reject', 'fileinto', 'redirect', 'stop', 'keep', 'discard'),
 				'arguments' => array(
 					array('class' => 'string', 'occurrences' => '1', 'values' => array(
-						array('occurrences' => '1', 'regex' => '".*"', 'name' => 'reason')
+						array('occurrences' => '1', 'regex' => '.*', 'name' => 'reason')
 					))
 				)
 			);

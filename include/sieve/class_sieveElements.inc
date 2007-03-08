@@ -147,6 +147,7 @@ class sieve_reject
   var $data = array();
   var $object_id = -1;
 
+
   function save_object()
   {
     if(isset($_POST['reject_message_'.$this->object_id])){
@@ -161,8 +162,14 @@ class sieve_reject
     $this->object_id = $object_id;
     $str = "";
     foreach($data['ELEMENTS'] as $node ){
-      if(in_array($node['class'],array("quoted-string","text"))){
-        $str .= $node['text'];
+      if(in_array($node['class'],array("quoted-string","text","multi-line"))){
+
+        if($node['class'] == "multi-line"){
+          $str .= preg_replace("/^text:[ \n\r]*/","",$node['text']);
+          $str =  preg_replace("/[  \n\r]*\.[  \n\r]*$/","",$str);
+        }else{
+          $str .= $node['text'];
+        }
       }
     }
     $this->data = preg_replace("/\"/","",$str);
@@ -170,13 +177,20 @@ class sieve_reject
 
   function get_sieve_script_part()
   {
-    return("reject ".sieve_create_strings($this->data)."\n");
+    return("reject ".sieve_create_strings($this->data).";\n");
   } 
     
   function execute()
   {
+    /* check if this will be a 
+     *   - single string ""
+     *   - or a multi line text: ... ; 
+     */
+    $Multiline = preg_match("/\n/",$this->data);
+
     $smarty = get_smarty();
     $smarty->assign("ID",$this->object_id);
+    $smarty->assign("Multiline",$Multiline);
     $smarty->assign("Message",$this->data);
     return($smarty->fetch(get_template_path("templates/element_reject.tpl",TRUE,dirname(__FILE__))));    
   }
@@ -201,6 +215,7 @@ class sieve_redirect
     }
   }
 
+
   function sieve_redirect($data,$object_id)
   {
     foreach($data['ELEMENTS'] as $node ){
@@ -210,17 +225,19 @@ class sieve_redirect
     }
   }
 
+
   function get_sieve_script_part()
   {
     $tmp = "";
     foreach($this->data as $dat){
       $tmp.= "\"".$dat."\", ";
     }
-    $tmp = "[".preg_replace("/,$/","",trim($tmp))."]";
+    $tmp = preg_replace("/,$/","",trim($tmp));
     $tmp = preg_replace ("/\"\"/","\"",$tmp);
-    return("redirect ".$tmp."\n");
+    return("redirect ".$tmp.";\n");
   } 
-    
+   
+ 
   function execute()
   {
     $values = "";
@@ -271,9 +288,9 @@ class sieve_fileinto
     foreach($this->data as $dat){
       $tmp.= "\"".$dat."\", ";
     }
-    $tmp = "[".preg_replace("/,$/","",trim($tmp))."]";
+    $tmp = preg_replace("/,$/","",trim($tmp));
     $tmp = preg_replace ("/\"\"/","\"",$tmp);
-    return("fileinto ".$tmp."\n");
+    return("fileinto ".$tmp.";\n");
   } 
     
   function execute()
@@ -364,8 +381,8 @@ class sieve_vacation
     if($this->mime){
       $str.= ":mime ".sieve_create_strings($this->mime);
     }
-    $str .= " ".sieve_create_strings($this->reason);
-    return($str."\n");
+    $str .= "\n ".sieve_create_strings($this->reason);
+    return($str." ; \n");
   } 
     
   

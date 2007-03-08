@@ -94,7 +94,7 @@ class sieveManagement extends plugin
       $ret = $p->parse($script);
       if(!$ret){
         $this->scripts[$key]['MSG']   = "<font color='red'>".$p->status_text."</font>";
-        $this->scripts[$key]['STATUS'] = _("Parse failed");
+        $this->scripts[$key]['STATUS'] = _("Parse failed")."<font color='red'>".$p->status_text."</font>";
       }else{
         $this->scripts[$key]['STATUS'] = _("Parse successful");
       }
@@ -300,7 +300,7 @@ class sieveManagement extends plugin
     foreach($this->scripts as $key => $script){
       if($script['EDITED']){
         $data = $script['PARSER']->get_sieve_script();
-        if(!$this->sieve_handle->sieve_sendscript($script['NAME']."1", $data)){
+        if(!$this->sieve_handle->sieve_sendscript($script['NAME'], $data)){
           gosa_log("Failed to save sieve script named '".$script['NAME']."': ".to_string($this->sieve_handle->error_raw));
           $everything_went_fine = FALSE;
           print_red(to_string($this->sieve_handle->error_raw));

@@ -58,7 +58,6 @@ class Scanner
 				}
 			}
 		}
-
 		array_push($this->tokens_, array(
 			'class' => 'script-end',
 			'text'  => 'script-end',
@@ -131,7 +130,8 @@ class Scanner
 		'quoted-string'  =>  '"(?:\\[\\"]|[^\x00"])*"',
 		'number'         =>  '[[:digit:]]+(?:[KMG])?(?=\b)',
 		'comment'        =>  '(?:\/\*(?:[^\*]|\*(?=[^\/]))*\*\/|#[^\r\n]*\r?\n)',
-		'multi-line'     =>  'text:[ \t]*(?:#[^\r\n]*)?\r?\n(\.[^\r\n]+\r?\n|[^\.]*\r?\n)*\.\r?\n',
+#		'multi-line'     =>  'text:[ \t]*(?:#[^\r\n]*)?\r?\n(\.[^\r\n]+\r?\n|[^\.]*\r?\n)*\.\r?\n',
+		'multi-line'     =>  'text:[^;]*',
 		'identifier'     =>  '[[:alpha:]_][[:alnum:]_]*(?=\b)',
 		'unknown token'  =>  '[^ \r\n\t]+'
 	);
