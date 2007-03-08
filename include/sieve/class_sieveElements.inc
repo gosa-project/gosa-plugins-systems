@@ -6,6 +6,20 @@ class sieve_elsif extends sieve_if
   var $TYPE = "elsif";
 }
 
+class sieve_else 
+{
+  function execute()
+  {
+    $smarty = get_smarty();
+    return($smarty->fetch(get_template_path("templates/element_else.tpl",TRUE,dirname(__FILE__))));
+  }
+
+  function get_sieve_script_part()
+  {
+    return(" else ");
+  } 
+}
+
 
 /* Sieve comment tag */
 class sieve_comment 

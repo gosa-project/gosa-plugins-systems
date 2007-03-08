@@ -34,7 +34,10 @@ class sieveManagement extends plugin
 
   var $current_script  = -1;
   var $current_handler = NULL;
- 
+
+  var $sieve_handle = NULL; 
+
+
   /* Initialize the class and load all sieve scripts 
    *  try to parse them and display errors 
    */ 
@@ -82,12 +85,14 @@ class sieveManagement extends plugin
       $ret = $p->parse($script);
       if(!$ret){
         $this->scripts[$key]['MSG']   = "<font color='red'>".$p->status_text."</font>";
-        $this->scripts[$key]['STATUS'] = FALSE;
+        $this->scripts[$key]['STATUS'] = _("Parse failed");
       }else{
-        $this->scripts[$key]['STATUS'] = TRUE;
+        $this->scripts[$key]['STATUS'] = _("Parse successful");
       }
       $this->scripts[$key]['PARSER'] = $p;
+      $this->scripts[$key]['EDITED'] = FALSE;
     }
+    $this->sieve_handle = $sieve;
   }
 
 
@@ -115,6 +120,7 @@ class sieveManagement extends plugin
     /* Save currently edited sieve script. */
     if(isset($_POST['save_sieve_changes'])){
       $this->scripts[$this->current_script]['PARSER'] = $this->current_handler;
+      $this->scripts[$this->current_script]['EDITED'] = TRUE;
       $this->current_handler = NULL; 
     }
 
@@ -133,15 +139,23 @@ class sieveManagement extends plugin
      */
     $List = new divSelectBox("sieveManagement");
     foreach($this->scripts as $key => $script){
+  
+      $edited =  $script['EDITED'];
+
       $field1 = array("string" => $script['NAME']);  
-      if($script['STATUS']){
-        $field2 = array("string" => _("Parse successful"));
-      }else{
-        $field2 = array("string" => _("Parse failed") .$script['MSG']);
-      }
+      $field2 = array("string" => $script['STATUS']);
       $field3 = array("string" => _("Script length")."&nbsp;:&nbsp;".strlen($script['SCRIPT']));
-      $field4 = array("string" => "<input type='image' name='editscript_".$key."' src='images/edit.png'>");
-      $List ->AddEntry(array($field1,$field2,$field3,$field4)); 
+
+      if($edited){
+        $field4 = array("string" => "<img src='images/fai_new_hook.png' alt='"._("Edited")."'>",
+                        "attach" => "style='width:30px;'");
+      }else{
+        $field4 = array("string" => "",
+                        "attach" => "style='width:30px;'");
+      }
+
+      $field5 = array("string" => "<input type='image' name='editscript_".$key."' src='images/edit.png'>");
+      $List ->AddEntry(array($field1,$field2,$field3,$field4,$field5)); 
     }
   
     $display ="<h2>Sieve script management</h2>";
@@ -166,12 +180,38 @@ class sieveManagement extends plugin
 
   function save()
   {
-    $ret = "<textarea style='width:100%;height:400px;'>";
-    foreach($this->scripts as $script){
-      $ret .= ($script['PARSER']->get_sieve_script());
+    /* Connect to sieve class and try to get all available sieve scripts */
+    $cfg=  $this->config->data['SERVERS']['IMAP'][$this->parent->gosaMailServer];
+
+    $this->sieve_handle= 
+        new sieve(  $cfg["sieve_server"], 
+                    $cfg["sieve_port"], 
+                    $this->parent->mail,
+                    $cfg["password"], 
+                    $cfg["admin"]);
+
+    if (!$this->sieve_handle->sieve_login()){
+      print_red(sprintf(_("Can't log into SIEVE server. Server says '%s'."),to_string($this->sieve_handle->error_raw)));
+      return;
     }
-    $ret .= "</textarea>";
-    echo $ret;
+
+    $everything_went_fine = TRUE;
+
+    foreach($this->scripts as $key => $script){
+      if($script['EDITED']){
+        $data = $script['PARSER']->get_sieve_script();
+        if(!$this->sieve_handle->sieve_sendscript($script['NAME']."1", $data)){
+          gosa_log("Failed to save sieve script named '".$script['NAME']."': ".to_string($this->sieve_handle->error_raw));
+          $everything_went_fine = FALSE;
+          print_red(to_string($this->sieve_handle->error_raw));
+          $this->scripts[$key]['STATUS'] = "<font color='red'>".
+                                           _("Failed to save sieve script").": ".
+                                           to_string($this->sieve_handle->error_raw).
+                                           "</font>";
+        }
+      }
+    }
+    return($everything_went_fine);
   }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

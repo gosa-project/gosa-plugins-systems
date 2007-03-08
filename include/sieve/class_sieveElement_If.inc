@@ -144,7 +144,7 @@ class sieve_if
 
           /* Add special match type for count and value */
           if(in_array($data['Match_type'], array(":value",":count")) && !empty($data['Match_type_value'])) {
-            $script .= $data['Match_type_value']." ";
+            $script .= sieve_create_strings($data['Match_type_value'])." ";
           }
 
           $script .= sieve_create_strings($data['Key_List']);
@@ -189,7 +189,7 @@ class sieve_if
 
           /* Add special match type for count and value */
           if(in_array($data['Match_type'], array(":value",":count")) && !empty($data['Match_type_value'])) {
-            $script .= $data['Match_type_value']." ";
+            $script .= sieve_create_strings($data['Match_type_value'])." ";
           }
 
           $script .= sieve_create_strings($data['Key_List']);
@@ -235,7 +235,7 @@ class sieve_if
 
           /* Add special match type for count and value */
           if(in_array($data['Match_type'], array(":value",":count")) && !empty($data['Match_type_value'])) {
-            $script .= $data['Match_type_value']." ";
+            $script .= sieve_create_strings($data['Match_type_value'])." ";
           }
 
           $script .= sieve_create_strings($data['Key_List']);

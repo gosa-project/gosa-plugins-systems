@@ -251,8 +251,9 @@ class mailAccount extends plugin
  
     /* Save sieve changes */
     if(isset($_POST['sieve_finish'])){
-      $this->dialog->save();
-      $this->dialog = NULL;
+      if($this->dialog->save()){
+        $this->dialog = NULL;
+      }
     }
  
     if(is_object($this->dialog)){

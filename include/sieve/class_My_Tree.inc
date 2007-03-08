@@ -84,7 +84,7 @@ class My_Tree extends Tree
     }
 
     /* Handle identifiers */
-    $identifiers = array("if","elsif","end","reject","redirect","vacation","keep","discard","comment","fileinto","require","stop");
+    $identifiers = array("else","if","elsif","end","reject","redirect","vacation","keep","discard","comment","fileinto","require","stop");
     if($node['class'] == "identifier" && in_array($node['text'],$identifiers)){
       $this->mode_stack[] = array("TYPE" => $node['text']); 
     }
