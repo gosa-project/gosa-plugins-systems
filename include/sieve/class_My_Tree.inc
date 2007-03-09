@@ -193,14 +193,23 @@ class My_Tree extends Tree
       echo "move block";
     }
 
-    if(in_array($e_class,array("sieve_stop","sieve_keep","sieve_require", "sieve_stop", "sieve_reject", "sieve_fileinto", "sieve_redirect", "sieve_discard"))){
-      echo "move single ".$key_id." to ".$this->_get_next_free_move_slot($key_id,$direction)."<br>";
-      $this->move_single_element_to($key_id,$this->_get_next_free_move_slot($key_id,$direction));
+    if(in_array($e_class,array( "sieve_stop",
+                                "sieve_keep",
+                                "sieve_require", 
+                                "sieve_stop",   
+                                "sieve_reject", 
+                                "sieve_fileinto",
+                                "sieve_redirect", 
+                                "sieve_discard"))){
+      $this->move_single_element($key_id,$this->_get_next_free_move_slot($key_id,$direction));
     }
   }
 
 
-  function move_single_element_to($from,$to)
+  /* This function moves the single element at 
+   *  position $from to position $to.
+   */
+  function move_single_element($from,$to)
   {
     if($from == $to) {
       return;
@@ -267,12 +276,20 @@ class My_Tree extends Tree
   }
 
 
+  /* Returns the next free position where we 
+   *  can add a new sinle element 
+   *    $key_id     = Current position
+   *    $direction  = Forward or backward.
+   */
   function _get_next_free_move_slot($key_id,$direction)
   {
     $last_class = "";
     $current_class ="";
     $next_class = "";
 
+    /* After this elements we can add new elements 
+     *  without having any trouble.
+     */
     $allowed_to_add_after = array("sieve_keep",
                                   "sieve_require", 
                                   "sieve_stop", 
@@ -283,6 +300,9 @@ class My_Tree extends Tree
                                   "sieve_block_start"
                                  );
 
+    /* Before this elements we can add new elements 
+     *  without having any trouble.
+     */
     $allowed_to_add_before = array("sieve_keep",
                                   "sieve_require", 
                                   "sieve_stop", 
@@ -295,29 +315,28 @@ class My_Tree extends Tree
                                  );
 
     if($direction == "down"){
+    
+      /* Get free position before $key_id */
       $test = $this->pap;
-
-
       while($key_id < count($test)){
-       
-        if(($key_id+1) == count($test)) return($key_id);
-
+        if(($key_id+1) == count($test)) {
+          return($key_id);
+        }
         $key_id ++;
-
         $current_class  = get_class($test[$key_id]);
         if(in_array($current_class, $allowed_to_add_after)){
           return($key_id);
         } 
       }
     }else{
-
+  
+      /* Get next free position */
       $test = $this->pap;
-
-      if($key_id == 0) return($key_id);
-    
+      if($key_id == 0) {
+        return($key_id);
+      }
       $key_id --;
       while($key_id >=0 ){
-
         $current_class  = get_class($test[$key_id]);
         if(in_array($current_class, $allowed_to_add_before)){
           return($key_id);
@@ -325,97 +344,6 @@ class My_Tree extends Tree
         $key_id --;
       }
     }
-  }
-
-  function move_object_up($key_id)
-  {
-    $new = array();
-    $add_now = NULL;
-    $key_id --;
-
-    if(!$key_id < 0) return;
-  
-    foreach($this->pap as $key => $data){
-      if($key == $key_id){
-        $add_now = $data;
-        continue;
-      }else{
-        $new[] = $data;
-      }
-
-      if($add_now != NULL){
-          
-        $new[] = $add_now;
-        $add_now = NULL;
-      }
-    }
-    if($add_now != NULL){
-      $new[] = $add_now;
-    }
-    $this->pap = $new;
-  }
-
-
-  /* This function moves the given element one position down 
-   *  if the next position is between 
-   *   '}' 'else[if]' or 'if' '{' use next available
-   */
-  function move_object_down($key_id)
-  {
-    $new = array();
-    $add_now = NULL;
-
-    /* Walk through all elements, till we found the given id.
-     *  If we found it, skip adding the current element,
-     *  first add the next element followed by the current.
-     */
-    foreach($this->pap as $key => $data){
-
-      /* Have we found the given id */
-      if($key == $key_id){
-        $add_now = $data;
-        $last_class = get_class($data);
-        continue;
-      }else{
-      
-        /* Add entry */
-        $new[] = $data;
-      }
-
-      /* We have skipped adding an element before,
-       *  try to add it now, if the position allows this.
-       */
-      if($add_now != NULL){
-
-        /* Don't allow adding an element directly after 
-         *  if/else/elsif 
-         */
-        if(in_array(get_class($data),array("sieve_if","sieve_elsif","sieve_else"))){
-          continue;
-        }
-
-        /* If this is an block end, check if there 
-         *  follows an if/else/elsif and skip adding the element in this case.
-         */
-        $next ="";
-        if(isset($this->pap[$key+1])){
-          $next = get_class($this->pap[$key+1]);
-        }
-        if(in_array(get_class($data),array("sieve_block_end")) && in_array($next,array("sieve_elsif","sieve_else"))){
-          continue;
-        }
-  
-        /* Add element, position seems to be ok */
-        $new[] = $add_now;
-        $add_now = NULL;
-      }
-    }
-
-    /* Element wasn't added, add it as last element */
-    if($add_now != NULL){
-      $new[] = $add_now;
-    }
-    $this->pap = $new;
   }
 
 
