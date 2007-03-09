@@ -202,25 +202,19 @@ class My_Tree extends Tree
 
   function move_single_element_to($from,$to)
   {
-    if($from == $to) return;
+    if($from == $to) {
+      return;
+    }
 
     $ret = array();
-
-
     $tmp = $this->pap;
 
-#    $tmp = array();
- #  foreach($this->pap as $class){
-  #    $tmp[] = get_class($class);
-   # }
+    $begin = array();
+    $middle = array();
+    $end = array();
+    $element = $this->pap[$from];
 
     if($from > $to ){
-
-      $element = $this->pap[$from];
-
-      $begin = array();
-      $middle = array();
-      $end = array();
 
       /* Get all element in fron to element to move */    
       if($from  != 0){
@@ -243,18 +237,9 @@ class My_Tree extends Tree
       foreach($end as $data){
         $ret[] = $data;
       }
-
-#      print_a(array("Anfang" => $begin ,$element, "middle" => $middle, "end" => $end));
-
       $this->pap = $ret;
     }
     if($from < $to ){
-
-      $element = $this->pap[$from];
-
-      $begin = array();
-      $middle = array();
-      $end = array();
 
       /* Get all element in fron to element to move */    
       if($from  != 0){
@@ -295,7 +280,19 @@ class My_Tree extends Tree
                                   "sieve_fileinto", 
                                   "sieve_redirect", 
                                   "sieve_discard",
-                                  "sieve_block_end");
+                                  "sieve_block_start"
+                                 );
+
+    $allowed_to_add_before = array("sieve_keep",
+                                  "sieve_require", 
+                                  "sieve_stop", 
+                                  "sieve_reject", 
+                                  "sieve_fileinto", 
+                                  "sieve_redirect", 
+                                  "sieve_discard",
+                                  "sieve_if", 
+                                  "sieve_block_end"
+                                 );
 
     if($direction == "down"){
       $test = $this->pap;
@@ -322,7 +319,7 @@ class My_Tree extends Tree
       while($key_id >=0 ){
 
         $current_class  = get_class($test[$key_id]);
-        if(in_array($current_class, $allowed_to_add_after)){
+        if(in_array($current_class, $allowed_to_add_before)){
           return($key_id);
         } 
         $key_id --;
