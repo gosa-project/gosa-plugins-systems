@@ -158,11 +158,11 @@ class My_Tree extends Tree
           $this->remove_object($key);
         }
         if(isset($obj->object_id) && preg_match("/^Move_Up_Object_".$obj->object_id."_/",$name) && $once){
-          $this->move_object_up($key);
+          $this->move_up_down($key,"up");
           $once = FALSE;
         }
         if(isset($obj->object_id) && preg_match("/^Move_Down_Object_".$obj->object_id."_/",$name) && $once){
-          $this->move_object_down($key);
+          $this->move_up_down($key,"down");
           $once = FALSE;
         }
       }
@@ -174,6 +174,161 @@ class My_Tree extends Tree
     unset($this->pap[$key_id]);
   }
 
+
+  /* This function moves a given element to another position.
+   * Single elements like "keep;" will simply be moved one posisition down/up.
+   * Multiple elements like if-elsif-else will be moved as block. 
+   * 
+   *  $key_id     specified the element that should be moved.
+   *  $direction  specifies to move elements "up" or "down"
+   */
+  function move_up_down($key_id,$direction = "down")
+  {
+     
+    /* Get the current element to decide what to move. */ 
+    $e_class = get_class($this->pap[$key_id]);
+      
+    
+    if(in_array($e_class,array("sieve_if"))){
+      echo "move block";
+    }
+
+    if(in_array($e_class,array("sieve_stop","sieve_keep","sieve_require", "sieve_stop", "sieve_reject", "sieve_fileinto", "sieve_redirect", "sieve_discard"))){
+      echo "move single ".$key_id." to ".$this->_get_next_free_move_slot($key_id,$direction)."<br>";
+      $this->move_single_element_to($key_id,$this->_get_next_free_move_slot($key_id,$direction));
+    }
+  }
+
+
+  function move_single_element_to($from,$to)
+  {
+    if($from == $to) return;
+
+    $ret = array();
+
+
+    $tmp = $this->pap;
+
+#    $tmp = array();
+ #  foreach($this->pap as $class){
+  #    $tmp[] = get_class($class);
+   # }
+
+    if($from > $to ){
+
+      $element = $this->pap[$from];
+
+      $begin = array();
+      $middle = array();
+      $end = array();
+
+      /* Get all element in fron to element to move */    
+      if($from  != 0){
+        $begin = array_slice($tmp,0,$to);
+      }
+
+      /* Get all elements between */
+      $middle = array_slice($tmp,$to , ($from - ($to) ));  
+    
+      /* Get the rest */ 
+      $end  = array_slice($tmp,$from+1);
+ 
+      foreach($begin as $data){
+        $ret[] = $data;
+      }
+      $ret[] = $element;
+      foreach($middle as $data){
+        $ret[] = $data;
+      }
+      foreach($end as $data){
+        $ret[] = $data;
+      }
+
+#      print_a(array("Anfang" => $begin ,$element, "middle" => $middle, "end" => $end));
+
+      $this->pap = $ret;
+    }
+    if($from < $to ){
+
+      $element = $this->pap[$from];
+
+      $begin = array();
+      $middle = array();
+      $end = array();
+
+      /* Get all element in fron to element to move */    
+      if($from  != 0){
+        $begin = array_slice($tmp,0,$from);
+      }
+
+      /* Get all elements between */
+      $middle = array_slice($tmp,$from+1 , ($to - ($from)));  
+    
+      /* Get the rest */ 
+      $end  = array_slice($tmp,$to+1);
+ 
+      foreach($begin as $data){
+        $ret[] = $data;
+      }
+      foreach($middle as $data){
+        $ret[] = $data;
+      }
+      $ret[] = $element;
+      foreach($end as $data){
+        $ret[] = $data;
+      }
+      $this->pap = $ret;
+    }
+  }
+
+
+  function _get_next_free_move_slot($key_id,$direction)
+  {
+    $last_class = "";
+    $current_class ="";
+    $next_class = "";
+
+    $allowed_to_add_after = array("sieve_keep",
+                                  "sieve_require", 
+                                  "sieve_stop", 
+                                  "sieve_reject", 
+                                  "sieve_fileinto", 
+                                  "sieve_redirect", 
+                                  "sieve_discard",
+                                  "sieve_block_end");
+
+    if($direction == "down"){
+      $test = $this->pap;
+
+
+      while($key_id < count($test)){
+       
+        if(($key_id+1) == count($test)) return($key_id);
+
+        $key_id ++;
+
+        $current_class  = get_class($test[$key_id]);
+        if(in_array($current_class, $allowed_to_add_after)){
+          return($key_id);
+        } 
+      }
+    }else{
+
+      $test = $this->pap;
+
+      if($key_id == 0) return($key_id);
+    
+      $key_id --;
+      while($key_id >=0 ){
+
+        $current_class  = get_class($test[$key_id]);
+        if(in_array($current_class, $allowed_to_add_after)){
+          return($key_id);
+        } 
+        $key_id --;
+      }
+    }
+  }
 
   function move_object_up($key_id)
   {

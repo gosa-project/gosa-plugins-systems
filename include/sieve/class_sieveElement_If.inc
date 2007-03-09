@@ -616,14 +616,22 @@ class sieve_if
 
     $smarty = get_smarty();
     $smarty->assign("ID", $this->id);
-    $object_container = $smarty->fetch(get_template_path("templates/object_container.tpl",TRUE,dirname(__FILE__)));
+
+    /* Only display navigation elements if necessary */
+    if($this->TYPE == "if"){
+      $object_container = $smarty->fetch(get_template_path("templates/object_container.tpl",TRUE,dirname(__FILE__)));
+    }else{
+      $object_container = $smarty->fetch(get_template_path("templates/object_container_clear.tpl",TRUE,dirname(__FILE__)));
+    }
 
     $smarty->assign("Name", $name);
     $smarty->assign("Contents", $this->get_as_html());
     $object = $smarty->fetch(get_template_path("templates/element_if_else.tpl",TRUE,dirname(__FILE__)));
 
-    $str = preg_replace("/%%OBJECT_CONTENT%%/",$object,$object_container);
 
+
+    $str = preg_replace("/%%OBJECT_CONTENT%%/",$object,$object_container);
+   
 
     return($str);
   }
