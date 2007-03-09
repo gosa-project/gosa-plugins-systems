@@ -149,8 +149,123 @@ class My_Tree extends Tree
       if(in_array(get_class($obj),array("sieve_if","sieve_elsif","sieve_vacation","sieve_comment","sieve_reject","sieve_fileinto","sieve_require","sieve_redirect"))){
         $this->pap[$key]->save_object();
       }
+
+      $once = TRUE;
+      foreach($_POST as $name => $value){
+
+        if(isset($obj->object_id) && preg_match("/^Remove_Object_".$obj->object_id."_/",$name) && $once){
+          $once = FALSE;
+          $this->remove_object($key);
+        }
+        if(isset($obj->object_id) && preg_match("/^Move_Up_Object_".$obj->object_id."_/",$name) && $once){
+          $this->move_object_up($key);
+          $once = FALSE;
+        }
+        if(isset($obj->object_id) && preg_match("/^Move_Down_Object_".$obj->object_id."_/",$name) && $once){
+          $this->move_object_down($key);
+          $once = FALSE;
+        }
+      }
     }
   }
+
+
+  function remove_object($key_id){
+    unset($this->pap[$key_id]);
+  }
+
+
+  function move_object_up($key_id)
+  {
+    $new = array();
+    $add_now = NULL;
+    $key_id --;
+
+    if(!$key_id < 0) return;
+  
+    foreach($this->pap as $key => $data){
+      if($key == $key_id){
+        $add_now = $data;
+        continue;
+      }else{
+        $new[] = $data;
+      }
+
+      if($add_now != NULL){
+          
+        $new[] = $add_now;
+        $add_now = NULL;
+      }
+    }
+    if($add_now != NULL){
+      $new[] = $add_now;
+    }
+    $this->pap = $new;
+  }
+
+
+  /* This function moves the given element one position down 
+   *  if the next position is between 
+   *   '}' 'else[if]' or 'if' '{' use next available
+   */
+  function move_object_down($key_id)
+  {
+    $new = array();
+    $add_now = NULL;
+
+    /* Walk through all elements, till we found the given id.
+     *  If we found it, skip adding the current element,
+     *  first add the next element followed by the current.
+     */
+    foreach($this->pap as $key => $data){
+
+      /* Have we found the given id */
+      if($key == $key_id){
+        $add_now = $data;
+        $last_class = get_class($data);
+        continue;
+      }else{
+      
+        /* Add entry */
+        $new[] = $data;
+      }
+
+      /* We have skipped adding an element before,
+       *  try to add it now, if the position allows this.
+       */
+      if($add_now != NULL){
+
+        /* Don't allow adding an element directly after 
+         *  if/else/elsif 
+         */
+        if(in_array(get_class($data),array("sieve_if","sieve_elsif","sieve_else"))){
+          continue;
+        }
+
+        /* If this is an block end, check if there 
+         *  follows an if/else/elsif and skip adding the element in this case.
+         */
+        $next ="";
+        if(isset($this->pap[$key+1])){
+          $next = get_class($this->pap[$key+1]);
+        }
+        if(in_array(get_class($data),array("sieve_block_end")) && in_array($next,array("sieve_elsif","sieve_else"))){
+          continue;
+        }
+  
+        /* Add element, position seems to be ok */
+        $new[] = $add_now;
+        $add_now = NULL;
+      }
+    }
+
+    /* Element wasn't added, add it as last element */
+    if($add_now != NULL){
+      $new[] = $add_now;
+    }
+    $this->pap = $new;
+  }
+
 
   /* Need to be reviewed */
   function get_sieve_script()

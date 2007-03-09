@@ -8,10 +8,25 @@ class sieve_elsif extends sieve_if
 
 class sieve_else 
 {
+  var $object_id = -1;
+
+  function sieve_else($data,$object_id)
+  {
+    $this->object_id = $object_id;
+  }
+
+  function save_object()
+  {
+  }
+
   function execute()
   {
     $smarty = get_smarty();
-    return($smarty->fetch(get_template_path("templates/element_else.tpl",TRUE,dirname(__FILE__))));
+    $smarty->assign("ID", $this->object_id);
+    $object_container = $smarty->fetch(get_template_path("templates/object_container_clear.tpl",TRUE,dirname(__FILE__)));
+    $object= $smarty->fetch(get_template_path("templates/element_else.tpl",TRUE,dirname(__FILE__)));
+    $str = preg_replace("/%%OBJECT_CONTENT%%/",$object,$object_container);
+    return($str);
   }
 
   function get_sieve_script_part()
@@ -50,6 +65,9 @@ class sieve_comment
 
   function execute()
   {
+    $smarty = get_smarty();
+    $smarty->assign("ID", $this->object_id);
+    $object_container = $smarty->fetch(get_template_path("templates/object_container.tpl",TRUE,dirname(__FILE__)));
     $Comment = $this->data;
 
     /* Remove comment tags */
@@ -64,7 +82,9 @@ class sieve_comment
     $smarty = get_smarty();
     $smarty->assign("Comment",$Comment);
     $smarty->assign("ID",$this->object_id);
-    return($smarty->fetch(get_template_path("templates/element_comment.tpl",TRUE,dirname(__FILE__))));    
+    $object = $smarty->fetch(get_template_path("templates/element_comment.tpl",TRUE,dirname(__FILE__)));    
+    $str = preg_replace("/%%OBJECT_CONTENT%%/",$object,$object_container);
+    return($str);
   }
 }
 
@@ -123,9 +143,11 @@ class sieve_require
 class sieve_discard 
 {
   var $data = array();
+  var $object_id = -1;
 
-  function sieve_discard($data)
+  function sieve_discard($data,$object_id)
   {
+    $this->object_id = $object_id;
   }
 
   function get_sieve_script_part()
@@ -133,10 +155,19 @@ class sieve_discard
     return("discard;\n");
   } 
     
+  function save_object()
+  {
+  
+  }
+
   function execute()
   {
     $smarty = get_smarty();
-    return($smarty->fetch(get_template_path("templates/element_discard.tpl",TRUE,dirname(__FILE__))));
+    $smarty->assign("ID", $this->object_id);
+    $object_container = $smarty->fetch(get_template_path("templates/object_container.tpl",TRUE,dirname(__FILE__)));
+    $object = $smarty->fetch(get_template_path("templates/element_discard.tpl",TRUE,dirname(__FILE__)));
+    $str = preg_replace("/%%OBJECT_CONTENT%%/",$object,$object_container);
+    return($str);
   }
 }
 
@@ -442,6 +473,10 @@ class sieve_block_start
     return($smarty->fetch(get_template_path("templates/element_block_start.tpl",TRUE,dirname(__FILE__))));
   }
 
+  function save_object()
+  {
+  }
+
   function get_sieve_script_part()
   {
     return("{\n");
@@ -459,15 +494,34 @@ class sieve_block_end
   {
     return("}\n");
   } 
+  function save_object()
+  {
+  }
+
 }
 
 /* This class handles the keep statement */
 class sieve_keep 
 {
+  var $object_id = -1;
+
+  function sieve_keep($data,$object_id)
+  {
+    $this->object_id = $object_id;
+  }
+
+  function save_object()
+  {
+  }
+
   function execute()
   {
     $smarty = get_smarty();
-    return($smarty->fetch(get_template_path("templates/element_keep.tpl",TRUE,dirname(__FILE__))));
+    $smarty->assign("ID", $this->object_id);
+    $object_container = $smarty->fetch(get_template_path("templates/object_container.tpl",TRUE,dirname(__FILE__)));
+    $object = $smarty->fetch(get_template_path("templates/element_keep.tpl",TRUE,dirname(__FILE__)));
+    $str = preg_replace("/%%OBJECT_CONTENT%%/",$object,$object_container);
+    return($str);
   }
   function get_sieve_script_part()
   {
