@@ -136,7 +136,7 @@ class sieve_if
 
           /* Add comparator */
           if(!empty($data['Comparator']) && $data['Comparator'] != ""){
-            $script .= ":comparator ".$data['Comparator']." ";
+            $script .= preg_replace('/\"\"/',"\"", ":comparator \"".$data['Comparator']."\" ");
           }
     
           /* Add match type */
@@ -181,7 +181,7 @@ class sieve_if
 
           /* Add comparator */
           if(!empty($data['Comparator']) && $data['Comparator'] != ""){
-            $script .= ":comparator ".$data['Comparator']." ";
+            $script .= preg_replace('/\"\"/',"\"", ":comparator \"".$data['Comparator']."\" ");
           }
     
           /* Add match type */
@@ -227,7 +227,7 @@ class sieve_if
 
           /* Add comparator */
           if(!empty($data['Comparator']) && $data['Comparator'] != ""){
-            $script .= ":comparator ".$data['Comparator']." ";
+            $script .= preg_replace('/\"\"/',"\"", ":comparator \"".$data['Comparator']."\" ");
           }
     
           /* Add match type */
@@ -708,7 +708,7 @@ class sieve_if
 
           $smarty->assign("match_type", $data['Match_type']);
           $smarty->assign("operator"  , preg_replace("/\"/","",$data['Match_type_value']));
-          $smarty->assign("comparator", $data['Comparator']);
+          $smarty->assign("comparator", preg_replace("/\"/","",$data['Comparator']));
         
 
           $keys = "";
@@ -755,7 +755,7 @@ class sieve_if
 
           $smarty->assign("match_type", $data['Match_type']);
           $smarty->assign("operator"  , preg_replace("/\"/","",$data['Match_type_value']));
-          $smarty->assign("comparator", $data['Comparator']);
+          $smarty->assign("comparator", preg_replace("/\"/","",$data['Comparator']));
 
           $keys = "";
           foreach($data['Key_List'] as $key){
@@ -797,7 +797,7 @@ class sieve_if
 
           $smarty->assign("match_type", $data['Match_type']);
           $smarty->assign("operator"  , preg_replace("/\"/","",$data['Match_type_value']));
-          $smarty->assign("comparator", $data['Comparator']);
+          $smarty->assign("comparator", preg_replace("/\"/","",$data['Comparator']));
           $smarty->assign("address_part", $data['Address_Part']);
 
           $smarty->assign("Expert", $data['Expert']);

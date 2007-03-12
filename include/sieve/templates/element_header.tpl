@@ -27,11 +27,6 @@
     </tr>
     <tr>
         <td>
-            <select name='address_part_{$ID}' title='{t}Boolean value{/t}'>
-                {html_options options=$address_parts selected=$address_part}
-            </select>
-        </td>
-        <td>
             {t}Comparator{/t}
         </td>
         <td>
