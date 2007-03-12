@@ -132,11 +132,14 @@ class sieve_require
       $Require .= $key.", ";
     }
     $Require = preg_replace("/,$/","",trim($Require));
-  
+
     $smarty = get_smarty();
     $smarty->assign("Require",$Require);
-    $smarty->assign("ID",$this->object_id);
-    return($smarty->fetch(get_template_path("templates/element_require.tpl",TRUE,dirname(__FILE__))));
+    $smarty->assign("ID", $this->object_id);
+    $object_container = $smarty->fetch(get_template_path("templates/object_container_clear.tpl",TRUE,dirname(__FILE__)));
+    $object= $smarty->fetch(get_template_path("templates/element_require.tpl",TRUE,dirname(__FILE__)));
+    $str = preg_replace("/%%OBJECT_CONTENT%%/",$object,$object_container);
+    return($str);
   }
 }
 
@@ -220,10 +223,13 @@ class sieve_reject
     $Multiline = preg_match("/\n/",$this->data);
 
     $smarty = get_smarty();
-    $smarty->assign("ID",$this->object_id);
-    $smarty->assign("Multiline",$Multiline);
+    $smarty->assign("ID", $this->object_id);
     $smarty->assign("Message",$this->data);
-    return($smarty->fetch(get_template_path("templates/element_reject.tpl",TRUE,dirname(__FILE__))));    
+    $smarty->assign("Multiline",$Multiline);
+    $object_container = $smarty->fetch(get_template_path("templates/object_container.tpl",TRUE,dirname(__FILE__)));
+    $object= $smarty->fetch(get_template_path("templates/element_reject.tpl",TRUE,dirname(__FILE__)));
+    $str = preg_replace("/%%OBJECT_CONTENT%%/",$object,$object_container);
+    return($str);
   }
 }
 
@@ -278,9 +284,12 @@ class sieve_redirect
     $values = preg_replace("/,$/","",trim($values));
 
     $smarty = get_smarty();
+    $smarty->assign("ID", $this->object_id);
     $smarty->assign("Destinations" , $values);
-    $smarty->assign("ID" , $this->object_id);
-    return($smarty->fetch(get_template_path("templates/element_redirect.tpl",TRUE,dirname(__FILE__))));
+    $object_container = $smarty->fetch(get_template_path("templates/object_container.tpl",TRUE,dirname(__FILE__)));
+    $object= $smarty->fetch(get_template_path("templates/element_redirect.tpl",TRUE,dirname(__FILE__)));
+    $str = preg_replace("/%%OBJECT_CONTENT%%/",$object,$object_container);
+    return($str);
   }
 }
 
@@ -330,7 +339,10 @@ class sieve_fileinto
     $smarty->assign("Selected",$this->data[0]);
     $smarty->assign("Boxes", $this->get_mail_boxes());
     $smarty->assign("ID", $this->object_id);
-    return($smarty->fetch(get_template_path("templates/element_fileinto.tpl",TRUE,dirname(__FILE__))));
+    $object_container = $smarty->fetch(get_template_path("templates/object_container.tpl",TRUE,dirname(__FILE__)));
+    $object= $smarty->fetch(get_template_path("templates/element_fileinto.tpl",TRUE,dirname(__FILE__)));
+    $str = preg_replace("/%%OBJECT_CONTENT%%/",$object,$object_container);
+    return($str);
   }
 
   function get_mail_boxes()

@@ -1,4 +1,4 @@
-<table cellspacing=0 style='width:100%;background-color:#EEEEEE;'>
+<table cellspacing=0 style='width:100%;background-color:d8d8ff;'>
 	<tr>
 		<td>
 			<b>{t}Comment{/t}</b>

@@ -143,10 +143,15 @@ class My_Tree extends Tree
 
   function save_object()
   {
+    reset($this->pap);
     foreach($this->pap as $key => $obj){
 
       if(in_array(get_class($obj),array("sieve_if","sieve_elsif","sieve_vacation","sieve_comment","sieve_reject","sieve_fileinto","sieve_require","sieve_redirect"))){
-        $this->pap[$key]->save_object();
+
+
+        if(isset($this->pap[$key]) && method_exists($this->pap[$key],"save_object")){
+          $this->pap[$key]->save_object();
+        }
       }
 
       $once = TRUE;
@@ -169,8 +174,29 @@ class My_Tree extends Tree
   }
 
 
-  function remove_object($key_id){
-    unset($this->pap[$key_id]);
+  function remove_object($key_id)
+  {
+    
+    $class = get_class($this->pap[$key_id]);
+
+    if(in_array($class,array("sieve_if"))){
+   
+      $block_start= $key_id;
+      $block_end  = $this->get_block_end($key_id);
+ 
+      for($i = $block_start ; $i <= $block_end ; $i ++ ){
+        unset($this->pap[$i]);
+      }
+
+    }else{
+      unset($this->pap[$key_id]);
+    }
+
+    $tmp = array();
+    foreach($this->pap as $element){
+      $tmp[] = $element;
+    }
+    $this->pap = $tmp;
   }
 
 

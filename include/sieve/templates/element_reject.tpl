@@ -12,7 +12,7 @@
 	</tr>
 	<tr>
 		<td style='padding-left:20px;'>
-			<textarea name='reject_message_{$ID}' style='width:100%;height:100px;' >{$Message}</textarea>
+			<textarea name='reject_message_{$ID}' style='width:100%;height:40px;' >{$Message}</textarea>
 		</td>
 	</tr>
 </table>

@@ -1,8 +1,8 @@
-<table cellspacing=0 width='100%' style='background-color: #8cff80'>
+<table cellspacing=0 width='100%' style='background-color: #d1ffcc'>
 	<tr>
 		<td>
 			<b>{t}Redirect{/t}</b>
-			{t}Redirect mail to following recipients{/t}<b>
+			{t}Redirect mail to following recipients{/t}
 		</td>
 	</tr>
 	<tr>
