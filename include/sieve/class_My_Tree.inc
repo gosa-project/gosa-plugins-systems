@@ -42,7 +42,6 @@ class My_Tree extends Tree
       }
     }
     
-
     /* Create html results */
     $smarty = get_smarty();
     $smarty->assign("Contents",$this->dump_);
@@ -147,7 +146,7 @@ class My_Tree extends Tree
     foreach($this->pap as $key => $obj){
 
       if(in_array(get_class($obj),array("sieve_if","sieve_elsif","sieve_vacation","sieve_comment","sieve_reject","sieve_fileinto","sieve_require","sieve_redirect"))){
-        $this->pap[$key]->save_object();
+        #$this->pap[$key]->save_object();
       }
 
       $once = TRUE;
@@ -188,9 +187,19 @@ class My_Tree extends Tree
     /* Get the current element to decide what to move. */ 
     $e_class = get_class($this->pap[$key_id]);
       
-    
     if(in_array($e_class,array("sieve_if"))){
-      echo "move block";
+      $block_start= $key_id;
+      $block_end  = $this->get_block_end($key_id);
+
+      /* Depending on the direction move up down */
+      if($direction == "down"){
+        $next_free  = $this->_get_next_free_move_slot($block_end,$direction); 
+      }else{
+        $next_free  = $this->_get_next_free_move_slot($block_start,$direction); 
+      }
+
+      /* Move the given block */ 
+      $this->move_multiple_elements($block_start,$block_end,$next_free);
     }
 
     if(in_array($e_class,array( "sieve_stop",
@@ -203,6 +212,119 @@ class My_Tree extends Tree
                                 "sieve_discard"))){
       $this->move_single_element($key_id,$this->_get_next_free_move_slot($key_id,$direction));
     }
+  }
+
+  
+  /* Move the given block to position */
+  function move_multiple_elements($start,$end,$to)
+  {
+    /* Use class names for testing */
+    $data = $this->pap;
+
+    /* Get block to move */
+    $block_to_move = array_slice($data,$start, ($end - $start +1));
+
+    /* We want do move this block up */
+    if($end > $to){
+      
+      /* Get start block */
+      $start_block = array_slice($data,0,$to);
+
+      /* Get Get all elements between the block to move 
+       *  and next free position 
+       */
+      $block_to_free = array_slice($data,$to ,$start - $to );  
+      $block_to_end = array_slice($data,$end+1);
+      $new = array();
+      foreach($start_block as $block){
+        $new[] = $block;
+      }
+      foreach($block_to_move as $block){
+        $new[] = $block;
+      }
+      foreach($block_to_free as $block){
+        $new[] = $block;
+      }
+      foreach($block_to_end as $block){
+        $new[] = $block;
+      }
+      $old = $this->pap;
+      $this->pap = $new;
+    }
+    
+
+    /* We want to move this block down. */
+    if($to > $end){
+
+      /* Get start block */
+      $start_block = array_slice($data,0,$start);
+
+      /* Get Get all elements between the block to move 
+       *  and next free position 
+       */
+      $block_to_free = array_slice($data,$end +1,($to - $end  ));  
+
+      /* Get the rest 
+       */
+      $block_to_end = array_slice($data,$to+1);
+
+      $new = array();
+      foreach($start_block as $block){
+        $new[] = $block;
+      }
+      foreach($block_to_free as $block){
+        $new[] = $block;
+      }
+      foreach($block_to_move as $block){
+        $new[] = $block;
+      }
+      foreach($block_to_end as $block){
+        $new[] = $block;
+      }
+      $old = $this->pap;
+      $this->pap = $new;
+    }
+  }  
+
+  
+  /* This function returns the id of the element 
+   *  where the current block ends  
+   */
+  function get_block_end($start)
+  {
+    /* Only execute if this is a really a block element. 
+     * Block elements is only sieve_if
+     */
+    if(in_array(get_class($this->pap[$start]),array("sieve_if"))){
+
+      $class      = get_class($this->pap[$start]);
+      $next_class = get_class($this->pap[$start+1]);
+      $block_depth = 0;
+
+      $end = FALSE;
+
+      while(!$end && $start < count($this->pap)){
+ 
+        if($class == "sieve_block_start"){
+          $block_depth ++;
+        }
+
+        if($class == "sieve_block_end"){
+          $block_depth --;
+        }
+
+        if( $block_depth == 0 && 
+            $class == "sieve_block_end" && 
+            !in_array($next_class,array("sieve_else","sieve_elsif"))){
+          $end = TRUE;
+          $start --;
+        }
+        $start ++;       
+        $class      = get_class($this->pap[$start]);
+        $next_class = get_class($this->pap[$start+1]);
+      }
+    }
+    return($start);
   }
 
 
@@ -297,6 +419,7 @@ class My_Tree extends Tree
                                   "sieve_fileinto", 
                                   "sieve_redirect", 
                                   "sieve_discard",
+                                  "sieve_comment",
                                   "sieve_block_start"
                                  );
 
@@ -308,6 +431,7 @@ class My_Tree extends Tree
                                   "sieve_stop", 
                                   "sieve_reject", 
                                   "sieve_fileinto", 
+                                  "sieve_comment",
                                   "sieve_redirect", 
                                   "sieve_discard",
                                   "sieve_if", 
@@ -316,7 +440,6 @@ class My_Tree extends Tree
 
     if($direction == "down"){
     
-      /* Get free position before $key_id */
       $test = $this->pap;
       while($key_id < count($test)){
         if(($key_id+1) == count($test)) {
@@ -327,10 +450,9 @@ class My_Tree extends Tree
         if(in_array($current_class, $allowed_to_add_after)){
           return($key_id);
         } 
-      }
+      } 
     }else{
   
-      /* Get next free position */
       $test = $this->pap;
       if($key_id == 0) {
         return($key_id);
@@ -343,6 +465,7 @@ class My_Tree extends Tree
         } 
         $key_id --;
       }
+      return(0);
     }
   }
 

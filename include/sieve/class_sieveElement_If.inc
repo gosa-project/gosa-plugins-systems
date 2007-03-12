@@ -5,7 +5,7 @@ class sieve_if
 {
   var $_parsed 	= array();
   var $TYPE 	= "if";
-  var $id     = -1;
+  var $object_id     = -1;
 
   var $address_parts    = array();
   var $comparators      = array();
@@ -48,7 +48,7 @@ class sieve_if
         "gt"  => _("greater than"),
         "ne"  => _("not equal"));
 
-    $this->id       = $object_id;
+    $this->object_id       = $object_id;
     $this->elements = $elements;
     $this->_parsed  = $this->_parse($elements['ELEMENTS'],1);
   }
@@ -359,7 +359,7 @@ class sieve_if
     foreach($parsed as $key => $data){
 
       /* Id used to have unique html names */
-      $element_id = $this->id."_".$id."_".$obj_id;
+      $element_id = $this->object_id."_".$id."_".$obj_id;
 
       /* Create elements */
       switch($key)
@@ -615,7 +615,7 @@ class sieve_if
     }
 
     $smarty = get_smarty();
-    $smarty->assign("ID", $this->id);
+    $smarty->assign("ID", $this->object_id);
 
     /* Only display navigation elements if necessary */
     if($this->TYPE == "if"){
@@ -658,7 +658,7 @@ class sieve_if
       }
 
       /* Id used to have unique html names */
-      $element_id = $this->id."_".$id."_".$obj_id;
+      $element_id = $this->object_id."_".$id."_".$obj_id;
 
       /* Create elements */
       switch($key)

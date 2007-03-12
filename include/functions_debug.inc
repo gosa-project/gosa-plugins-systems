@@ -192,7 +192,7 @@ class Print_a_class {
 				if( $this->show_object_vars ) {
 					$this->print_a( get_object_vars( $value ), TRUE, $key_bg_color );
 				} else {
-					$this->output .= '<div style="'.$value_style.'">OBJECT</div>';
+					$this->output .= '<div style="'.$value_style.'">OBJECT - '.get_class($value).'</div>';
 				}
 			} else {
 				$this->output .= '<div style="'.$value_style.'" title="'.$type.'">'.$value.'</div>';
