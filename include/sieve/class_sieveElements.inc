@@ -335,7 +335,7 @@ class sieve_fileinto
 
   function get_mail_boxes()
   {
-    return(array("not","impplemented/yet"));
+    return(array("not"=>"not","impplemented/yet"=>"impplemented/yet"));
   }
 }
 

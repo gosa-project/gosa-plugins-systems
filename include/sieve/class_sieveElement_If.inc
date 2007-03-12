@@ -574,7 +574,7 @@ class sieve_if
             if(($key2 === "Inverse") && ($key2 == "Inverse")){
               continue;
             }
-            $parsed[$key][$key2] = $this->save_object_recursive($dat, ($id +1),$key2);
+            $parsed[$key][$key2] = $this->save_object_recursive($dat, ($id +1),$key2."-".$obj_id);
           }
           break ;
         } 
@@ -592,7 +592,7 @@ class sieve_if
             if(($key2 === "Inverse") && ($key2 == "Inverse")){
               continue;
             }
-            $parsed[$key][$key2] =  $this->save_object_recursive($dat, ($id + 1),$key2);
+            $parsed[$key][$key2] =  $this->save_object_recursive($dat, ($id + 1),$key2."-".$obj_id);
           }
           break ;
         } 
@@ -896,7 +896,7 @@ class sieve_if
             if(($key === "Inverse") && ($key == "Inverse")){
               continue;
             }
-            $Contents .=        $this->get_as_html($dat, ($id +1),$key);
+            $Contents .=        $this->get_as_html($dat, ($id +1),$key."-".$obj_id);
           }
           $smarty = get_smarty();
           $smarty->assign("Inverse",$Inverse);
@@ -918,7 +918,7 @@ class sieve_if
             if(($key === "Inverse") && ($key == "Inverse")){
               continue;
             }
-            $Contents .=        $this->get_as_html($dat, ($id +1),$key);
+            $Contents .=        $this->get_as_html($dat, ($id +1),$key."-".$obj_id);
           }
           $smarty = get_smarty();
           $smarty->assign("Inverse",$Inverse);

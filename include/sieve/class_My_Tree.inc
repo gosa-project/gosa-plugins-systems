@@ -146,7 +146,7 @@ class My_Tree extends Tree
     foreach($this->pap as $key => $obj){
 
       if(in_array(get_class($obj),array("sieve_if","sieve_elsif","sieve_vacation","sieve_comment","sieve_reject","sieve_fileinto","sieve_require","sieve_redirect"))){
-        #$this->pap[$key]->save_object();
+        $this->pap[$key]->save_object();
       }
 
       $once = TRUE;
