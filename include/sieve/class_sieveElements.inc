@@ -243,12 +243,8 @@ class sieve_redirect
     if(isset($_POST['redirect_to_'.$this->object_id])){
       $rt = stripslashes($_POST['redirect_to_'.$this->object_id]);
 
-      $tmp = array();
-      $tmp2 = split(",",$rt);
-      foreach($tmp2 as $val){
-        $tmp[] = "\"".trim(preg_replace("/\"/","",$val))."\"";
-      }
-      $this->data = $tmp;
+      $rt = "\"".trim(preg_replace("/\"/","",$rt))."\"";
+      $this->data = $rt;
     }
   }
 
@@ -257,7 +253,7 @@ class sieve_redirect
   {
     foreach($data['ELEMENTS'] as $node ){
       if(in_array($node['class'],array("quoted-string","text"))){
-        $this->data[] = $node['text'];
+        $this->data = $node['text'];
       }
     }
   }
@@ -265,23 +261,13 @@ class sieve_redirect
 
   function get_sieve_script_part()
   {
-    $tmp = "";
-    foreach($this->data as $dat){
-      $tmp.= "\"".$dat."\", ";
-    }
-    $tmp = preg_replace("/,$/","",trim($tmp));
-    $tmp = preg_replace ("/\"\"/","\"",$tmp);
-    return("redirect ".$tmp.";\n");
+    return("redirect ".sieve_create_strings($this->data).";\n");
   } 
    
  
   function execute()
   {
-    $values = "";
-    foreach($this->data as $key){
-      $values .= $key.", ";
-    }
-    $values = preg_replace("/,$/","",trim($values));
+    $values = $this->data;
 
     $smarty = get_smarty();
     $smarty->assign("ID", $this->object_id);
