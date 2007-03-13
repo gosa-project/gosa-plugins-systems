@@ -218,11 +218,6 @@ class sieveManagement extends plugin
     /* Create output for currently opened sieve script */
     if($this->current_handler){
       $ret = $this->current_handler->execute();
-      $ret .= "<div class='seperator' style='text-align:right; width:100%;'>
-        <input type='submit' name='save_sieve_changes' value='"._("Save")."'>
-        &nbsp;
-      <input type='submit' name='cancel_sieve_changes' value='"._("Cancel")."'>
-        </div>";
       return($ret);
     }
 

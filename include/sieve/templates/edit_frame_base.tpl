@@ -19,3 +19,8 @@
 		</td>
 	</tr>
 </table>
+<div class='seperator' style='text-align:right; width:100%;'>
+	<input type='submit' name='save_sieve_changes' value='{t}Save{/t}'>
+        &nbsp;
+    <input type='submit' name='cancel_sieve_changes' value='{t}Cancel{/t}'>
+</div>

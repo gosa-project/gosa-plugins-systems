@@ -16,12 +16,51 @@ class My_Tree extends Tree
   var $mode_stack = array();
   var $pap		= array();
 
+  var $add_new          = FALSE;
+  var $add_new_id       = 0;
+  var $add_type         = "up";
+  var $add_element_type = "";
 
   /* Create a html interface for the current sieve filter 
    */
   function dump()
   {
     error_reporting(E_ALL);
+      $element_types= array(
+          "sieve_keep"      => _("Keep"),
+          "sieve_comment"   => _("Comment"),
+          "sieve_fileinto"  => _("File into"),
+          "sieve_keep"      => _("Keep"),
+          "sieve_redirect"  => _("Redirect"),
+          "sieve_reject"    => _("Reject"),
+          "sieve_require"   => _("Require"),
+          "sieve_stop"      => _("Stop"),
+          "sieve_vacation"  => _("Vacation message"),
+          "sieve_if"        => _("If"));
+
+
+    if($this->add_new && isset($_POST['element_type']) && isset($element_types[$_POST['element_type']])){
+      $this->add_element_type = $_POST['element_type'];
+    }
+
+
+    if($this->add_new && isset($_POST['select_new_element_type'])){
+     
+      $ele = new $this->add_element_type(array(),microtime());
+      
+      $this->pap[] = $ele; 
+      $this->add_new = FALSE;
+    }
+
+    if($this->add_new){
+
+      $smarty = get_smarty();
+      $smarty->assign("element_types",$element_types );
+      $smarty->assign("element_type",$this->add_element_type);
+
+      $str = $smarty->fetch(get_template_path("templates/add_element.tpl",TRUE,dirname(__FILE__)));
+      return($str);
+    }
 
     /* Only parse the tokens once */
     if(!count($this->pap)){
@@ -33,7 +72,6 @@ class My_Tree extends Tree
 
     /* Create html results */
     $smarty = get_smarty();
-    $smarty->fetch(get_template_path("templates/element_stop.tpl",TRUE,dirname(__FILE__)));
 
     $this -> dump_ = "";
     foreach($this->pap as $key => $object){
@@ -146,7 +184,14 @@ class My_Tree extends Tree
     reset($this->pap);
     foreach($this->pap as $key => $obj){
 
-      if(in_array(get_class($obj),array("sieve_if","sieve_elsif","sieve_vacation","sieve_comment","sieve_reject","sieve_fileinto","sieve_require","sieve_redirect"))){
+      if(in_array(get_class($obj),array("sieve_if",
+                                        "sieve_elsif",
+                                        "sieve_vacation",
+                                        "sieve_comment",
+                                        "sieve_reject",
+                                        "sieve_fileinto",
+                                        "sieve_require",
+                                        "sieve_redirect"))){
 
 
         if(isset($this->pap[$key]) && method_exists($this->pap[$key],"save_object")){
@@ -169,29 +214,41 @@ class My_Tree extends Tree
           $this->move_up_down($key,"down");
           $once = FALSE;
         }
+        if(isset($obj->object_id) && preg_match("/^Add_Object_Top_".$obj->object_id."_/",$name) && $once){
+          $this->add_new_object($obj->object_id,"top");
+          $once = FALSE;
+        }
+        if(isset($obj->object_id) && preg_match("/^Add_Object_Bottom_".$obj->object_id."_/",$name) && $once){
+          $this->add_new_object($obj->object_id,"bottom");
+          $once = FALSE;
+        }
       }
     }
   }
 
 
+  /* Add a new object at the given position */
+  function add_new_object($id,$top_bottom = "bottom")
+  {
+    $this->add_new    = TRUE;
+    $this->add_new_id = $id;
+    $this->add_type   = $top_bottom;
+  }
+
+
+  /* Remove the object at the given position */
   function remove_object($key_id)
   {
-    
     $class = get_class($this->pap[$key_id]);
-
     if(in_array($class,array("sieve_if"))){
-   
       $block_start= $key_id;
       $block_end  = $this->get_block_end($key_id);
- 
       for($i = $block_start ; $i <= $block_end ; $i ++ ){
         unset($this->pap[$i]);
       }
-
     }else{
       unset($this->pap[$key_id]);
     }
-
     $tmp = array();
     foreach($this->pap as $element){
       $tmp[] = $element;
