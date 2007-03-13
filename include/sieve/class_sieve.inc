@@ -114,31 +114,22 @@ class sieve
 				$this->err_len = substr($this->mtoken, 1, $this->x);
 				$this->x++;    
 			}
-			//print "<br>Trying to receive $this->err_len bytes for result<br>";
+			#print "<br>Trying to receive $this->err_len bytes for result<br>";
 			$this->line = fgets($this->fp,$this->err_len);
 			$this->error_raw[]=substr($this->line, 0, strlen($this->line) -2);    //we want to be nice and strip crlf's
 			$this->err_recv = strlen($this->line);
 
-			$last_cnt_to_fetch = -1;
-			while($this->err_recv < ($this->err_len)){
+			/* Ensure max loop of 1000, to keep the ui from freezing */
+			$max = 1000;
+			$cur = 0;
 
-				/* We are trying to read the same count of chars 
-                 *  as we tried last while loop. 
-				 * There must be something wrong-
-                 */
-				if($last_cnt_to_fetch   == ($this->err_len-$this->err_recv)){
-					$cur = $max;
-					echo "Sieve : failed to read error msgs, .. skipped endless loop! ~class_sieve.inc 525";
-				}
-				$last_cnt_to_fetch = $this->err_len-$this->err_recv;
-				$this->line = fgets($this->fp);//, ($this->err_len-$this->err_recv));
-				$this->error_raw[]=substr($this->line, 0, strlen($this->line) -2);    //we want to be nice and strip crlf's
+			while($this->err_recv < ($this->err_len) && ($cur < $max)){
+
+				$cur ++;
+				$this->line 	 = fgets($this->fp,4096);
 				$this->err_recv += strlen($this->line);
-			} /* end while */
-
-			$this->line = fgets($this->fp, 1024);	//we need to grab the last crlf, i think.  this may be a bug...
-			$this->error=EC_UNKNOWN;
-
+				$this->error_raw[]=preg_replace("/\r\n/","",$this->line);    //we want to be nice and strip crlf'
+			} 
 		} /* end if */
 		elseif($this->mtoken[0] == "("){
 			switch($this->mtoken){

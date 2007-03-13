@@ -308,6 +308,7 @@ class sieveManagement extends plugin
                                            _("Failed to save sieve script").": ".
                                            to_string($this->sieve_handle->error_raw).
                                            "</font>";
+#          echo nl2br($data);
         }
       }
     }
