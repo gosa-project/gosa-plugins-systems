@@ -11,7 +11,6 @@
 
 <table cellspacing=0 cellpadding=2 style='background-color:#EEEEDD;width:100%; border: solid 1px #CCCCCC'>
 	{if $Expert}
-	{if $Expert}
     	{if $LastError != ""}
         	<tr>
 				<td colspan=4>
