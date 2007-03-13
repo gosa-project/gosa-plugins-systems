@@ -254,7 +254,7 @@ class ServerService extends plugin
     $pool_of_ocs =array();
     foreach($tmp as $name => $value){
       if(isset($this->plugins[$name]->conflicts)){
-        $pool_of_ocs = array_merge($pool_of_ocs,$this->plugins[$name]->conflicts);
+        $pool_of_ocs[]= get_class($this->plugins[$name]);
       }
     }
    
