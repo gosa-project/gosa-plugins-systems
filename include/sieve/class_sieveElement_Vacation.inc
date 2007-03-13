@@ -106,6 +106,12 @@ class sieve_vacation
       $this->reason = "\"".trim(preg_replace("/\"/","",$vr))."\"";
     }
   }
+
+  function check()
+  {
+    return(array())  ;
+  }
+
   function execute()
   {
     $Addresses = "";

@@ -18,7 +18,7 @@ class My_Tree extends Tree
 
   var $add_new          = FALSE;
   var $add_new_id       = 0;
-  var $add_type         = "up";
+  var $add_type         = "top";
   var $add_element_type = "";
 
   /* Create a html interface for the current sieve filter 
@@ -46,10 +46,48 @@ class My_Tree extends Tree
 
     if($this->add_new && isset($_POST['select_new_element_type'])){
      
-      $ele = new $this->add_element_type(array(),microtime());
-      
-      $this->pap[] = $ele; 
-      $this->add_new = FALSE;
+      $ele = new $this->add_element_type(NULL, preg_replace("/[^0-9]/","",microtime()));
+      $start = $end = array();
+      $found = false;  
+ 
+      if($this->add_type == "top"){
+        foreach($this->pap as $key => $obj){
+          if($obj->object_id == $this->add_new_id){
+            $found = true;
+          }
+          if(!$found){
+            $start[] = $obj;
+          }else{
+            $end[] = $obj;
+          }
+        }    
+      }else{
+        foreach($this->pap as $key => $obj){
+          if(!$found){
+            $start[] = $obj;
+          }else{
+            $end[] = $obj;
+          }
+          if($obj->object_id == $this->add_new_id){
+            $found = true;
+          }
+        }    
+      }
+
+      if($found){
+        $new = array();
+        foreach($start as $obj){
+          $new[] = $obj;
+        }      
+        $new[] = $ele;
+        foreach($end as $obj){
+          $new[] = $obj;
+        }
+        $this->pap = $new;
+        $this->add_new = FALSE;
+      }else{
+        print_red(_("Something went wrong while adding a new entry."));
+      }
     }
 
     if($this->add_new){

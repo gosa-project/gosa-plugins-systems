@@ -53,6 +53,11 @@ class sieve_fileinto
     return($str);
   }
 
+  function check()
+  {
+    return(array());
+  }
+
   function get_mail_boxes()
   {
     return(array("not"=>"not","impplemented/yet"=>"impplemented/yet"));

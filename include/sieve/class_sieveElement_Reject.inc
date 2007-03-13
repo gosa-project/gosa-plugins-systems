@@ -15,6 +15,11 @@ class sieve_reject
     }
   }
 
+  function check()
+  {
+    return(array());
+  }
+
   function sieve_reject($data,$object_id)
   {
     $this->object_id = $object_id;

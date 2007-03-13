@@ -14,9 +14,19 @@ class sieve_comment
   function sieve_comment($data,$object_id)
   {
     $this->object_id = $object_id;
+
+    if($data == NULL){
+      $data = array('ELEMENTS' => array(array('class' => "quoted-string" ,"text" => _("Your comment here"))));
+    }
+
     foreach($data['ELEMENTS'] as $node){
        $this->data .= $node['text'];
     }
+  }
+
+  function check()
+  {
+    return(array())  ;
   }
 
   function save_object()

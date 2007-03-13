@@ -2,6 +2,13 @@
 
 class sieve_block_start 
 {
+  var $object_id= -1;
+  
+  function sieve_block_start($data = NULL,$object_id)
+  {
+    $this->object_id = $object_id;
+  }
+
   function execute()
   {
     $smarty = get_smarty();

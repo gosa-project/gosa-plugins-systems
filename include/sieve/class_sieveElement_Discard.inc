@@ -14,6 +14,11 @@ class sieve_discard
   {
     return("discard;\n");
   } 
+  function check()
+  {
+    return(array())  ;
+  }
+
     
   function save_object()
   {
