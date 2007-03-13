@@ -64,6 +64,63 @@ class sieve_if
   } 
 
 
+  /* Return error msgs */
+  function check()
+  {
+    $check = $this->check_recursive();
+    return($check);
+  }
+ 
+
+  /* Recursivly fetch all error msgs */
+  function check_recursive($parsed = NULL,$id = 1,$obj_id=1)
+  {
+    $ret = array();
+    if($parsed == NULL){
+      $parsed = $this->_parsed;
+    }
+
+    /* Walk through all elements */
+    foreach($parsed as $key => $data){
+
+      /* Create elements */
+      switch($key)
+      {
+        /*******************
+         * Allof / Anyof
+         *******************/
+        case "anyof" :
+        case "allof" :
+        { 
+          foreach($data as $key2 => $dat){
+            if(($key2 === "Inverse") && ($key2 == "Inverse")){
+              continue;
+            }
+            $msgs = $this->check_recursive($dat, ($id +1),$key2);
+
+            foreach($msgs as $msg){
+              $ret[] = $msg;
+            }
+          }
+          break;
+        }
+    
+        /*******************
+         * Default
+         *******************/
+
+        default: 
+        {
+          if(isset($data['LastError']) && !empty($data['LastError'])){
+            $ret[] = $data['LastError']; 
+          }
+        }
+      }
+    }
+    return($ret);
+  }
+ 
+
   /* Recursivly create a sieve script out of the given 
    *  tags and tokens provided by $parsed.
    *  $id       specifies the depth of the current element.
@@ -101,9 +158,7 @@ class sieve_if
           if($Inverse){
             $script .= "not ";
           }
- 
           $script .= $key;
-   
           break;
         }
 
@@ -387,6 +442,8 @@ class sieve_if
           $match_types   = $this->match_types; 
           $operators     = $this->operators;
 
+          $parsed[$key]['LastError'] = "";
+
           /* Toggle Inverse ? */
           if(isset($_POST['toggle_inverse_'.$element_id])){
             $parsed[$key]['Inverse'] = !$parsed[$key]['Inverse'];
@@ -401,27 +458,30 @@ class sieve_if
           if(isset($_POST['address_part_'.$element_id])){
             $ap = $_POST['address_part_'.$element_id];
 
-            if(isset($address_parts[$ap])){
-              $parsed[$key]['Address_Part'] = $ap;
+            if(!isset($address_parts[$ap])){
+              $parsed[$key]['LastError'] = _("Invalid type of address part.") ;
             }
+            $parsed[$key]['Address_Part'] = $ap;
           }
 
           /* Check if match type has changed */
           if(isset($_POST['matchtype_'.$element_id])){
             $mt = $_POST['matchtype_'.$element_id];
 
-            if(isset($match_types[$mt])){
-              $parsed[$key]['Match_type'] = $mt;
+            if(!isset($match_types[$mt])){
+              $parsed[$key]['LastError'] = _("Invalid match type given.");
             }
+            $parsed[$key]['Match_type'] = $mt;
           }
 
           /* Get the comparator tag, if posted */
           if(isset($_POST['comparator_'.$element_id])){
             $cp = $_POST['comparator_'.$element_id];
 
-            if(isset($comparators[$cp])){
-              $parsed[$key]['Comparator'] = $cp;
+            if(!isset($comparators[$cp])){
+              $parsed[$key]['LastError'] = _("Invalid operator given.");
             }
+            $parsed[$key]['Comparator'] = $cp;
           }
 
           /* In case of :count and :value match types 
@@ -431,9 +491,10 @@ class sieve_if
             if(isset($_POST['operator_'.$element_id])){
               $op = $_POST['operator_'.$element_id];
 
-              if(isset($operators[$op])){
-                $parsed[$key]['Match_type_value'] = $op;
+              if(!isset($operators[$op])){
+                $parsed[$key]['LastError'] = _("Please specify a valid operator.");
               }
+              $parsed[$key]['Match_type_value'] = $op;
             }
           }
 
@@ -524,9 +585,7 @@ class sieve_if
           /* Get match type */
           if(isset($_POST['Match_type_'.$element_id])){
             $mt = $_POST['Match_type_'.$element_id];
-            if(isset($Match_types[$mt])){
-              $parsed['size']['Match_type'] = $mt;
-            }else{
+            if(!isset($Match_types[$mt])){
               $parsed['size']['LastError'] = _("Please select a valid match type in the list box below.");
             }
           }
@@ -539,22 +598,20 @@ class sieve_if
           if(isset($_POST['Value_'.$element_id])){
             $vl = $_POST['Value_'.$element_id];
          
-            if(is_numeric($vl) && preg_match("/^[0-9]*$/",$vl)){
-              $value = $vl;
-            }else{
+            if(!(is_numeric($vl) && preg_match("/^[0-9]*$/",$vl))){
               $parsed['size']['LastError'] = _("Only numeric values are allowed here.");
             }
+            $value = $vl;
           }        
 
           /* Get unit */
           if(isset($_POST['Value_Unit_'.$element_id])){
             $ut = $_POST['Value_Unit_'.$element_id];
        
-            if(isset($Units[$ut])){
-              $unit = $ut;
-            }else{
+            if(!isset($Units[$ut])){
               $parsed['size']['LastError'] = _("No valid unit selected");
             }
+            $unit = $ut;
           }        
 
           $parsed['size']['Value_List'][0] = $value.$unit;
@@ -627,12 +684,7 @@ class sieve_if
     $smarty->assign("Name", $name);
     $smarty->assign("Contents", $this->get_as_html());
     $object = $smarty->fetch(get_template_path("templates/element_if_else.tpl",TRUE,dirname(__FILE__)));
-
-
-
     $str = preg_replace("/%%OBJECT_CONTENT%%/",$object,$object_container);
-   
-
     return($str);
   }
 
@@ -650,10 +702,8 @@ class sieve_if
 
       /* Create Inverse Tag */
       if(is_array($data) && isset($data['Inverse']) && $data['Inverse']){
-        $str_inverse = "<font color='red'><b>"._("Not")."</b></font>&nbsp;";
         $Inverse = TRUE;
       }else{
-        $str_inverse = "";
         $Inverse = FALSE;
       }
 
@@ -705,11 +755,10 @@ class sieve_if
           $smarty->assign("comparators",$comparators);
           $smarty->assign("match_types",$match_types);
           $smarty->assign("operators",$operators);
-
+          $smarty->assign("LastError",$data['LastError']);
           $smarty->assign("match_type", $data['Match_type']);
           $smarty->assign("operator"  , preg_replace("/\"/","",$data['Match_type_value']));
           $smarty->assign("comparator", preg_replace("/\"/","",$data['Comparator']));
-        
 
           $keys = "";
           foreach($data['Key_List'] as $key){
@@ -727,7 +776,6 @@ class sieve_if
           $smarty->assign("Inverse",$Inverse);
           $smarty->assign("values",$values);
           $smarty->assign("Expert", $data['Expert']);
-
  
           $smarty->assign("ID"  , $element_id); 
           $ret .= $smarty->fetch(get_template_path("templates/element_header.tpl",TRUE,dirname(__FILE__)));
@@ -752,7 +800,7 @@ class sieve_if
           $smarty->assign("Expert", $data['Expert']);
           $smarty->assign("match_types",$match_types);
           $smarty->assign("operators",$operators);
-
+          $smarty->assign("LastError",$data['LastError']);
           $smarty->assign("match_type", $data['Match_type']);
           $smarty->assign("operator"  , preg_replace("/\"/","",$data['Match_type_value']));
           $smarty->assign("comparator", preg_replace("/\"/","",$data['Comparator']));
@@ -793,13 +841,12 @@ class sieve_if
           $smarty->assign("address_parts",$address_parts);
           $smarty->assign("comparators",$comparators);
           $smarty->assign("match_types",$match_types);
+          $smarty->assign("LastError",$data['LastError']);
           $smarty->assign("operators",$operators);
-
           $smarty->assign("match_type", $data['Match_type']);
           $smarty->assign("operator"  , preg_replace("/\"/","",$data['Match_type_value']));
           $smarty->assign("comparator", preg_replace("/\"/","",$data['Comparator']));
           $smarty->assign("address_part", $data['Address_Part']);
-
           $smarty->assign("Expert", $data['Expert']);
         
           $keys = "";
@@ -815,8 +862,6 @@ class sieve_if
           $values = preg_replace("/,$/","",trim($values));
           $smarty->assign("keys",$keys);
           $smarty->assign("values",$values);
-
- 
           $smarty->assign("ID"  , $element_id); 
           $ret .= $smarty->fetch(get_template_path("templates/element_address.tpl",TRUE,dirname(__FILE__)));
           break;
@@ -860,7 +905,6 @@ class sieve_if
         /*******************
          * Exists 
          *******************/
-       
         
         case "exists" : 
         {
@@ -1054,6 +1098,7 @@ class sieve_if
           $values["Address_Part"]    = $Address_Part;
         }
         $tmp[$type] = $values;
+        $tmp[$type]['LastError'] = "";
         break;
       }
 
@@ -1091,6 +1136,7 @@ class sieve_if
         $tmp[$type]= array( "Inverse"    => $Inverse,
                             "Match_type" => $Match_type,
                             "Value_List" => $Value_List);
+        $tmp[$type]['LastError'] = "";
         break;
       }
 
@@ -1102,11 +1148,13 @@ class sieve_if
       case "true": 
       {
         $tmp['true'] = "true";
+        $tmp[$type]['LastError'] = "";
         break;
       }
       case "false":
       {
         $tmp['false'] = "false";
+        $tmp[$type]['LastError'] = "";
         break;
       }
 
@@ -1131,6 +1179,7 @@ class sieve_if
         
         $tmp['exists'] = array('Inverse' => $Inverse,
                                'Values'  => $tmp2['STRINGS']);
+        $tmp[$type]['LastError'] = "";
         break;
       }
 

@@ -535,6 +535,19 @@ class My_Tree extends Tree
     $tmp = array("ELEMENTS" => array(array("class" => "qouted-string","text"=> "Bla bla, later more")));
     $this->pap[] = new sieve_comment($tmp,rand(1000,100000));
   }
+
+  function check()
+  {
+		$msgs = array();
+		foreach($this->pap as $obj){
+
+			$o_msgs = $obj->check();
+			foreach($o_msgs as $o_msg){
+				$msgs[] = $o_msg;
+			}
+		}
+		return($msgs);
+  }
 }
 
 

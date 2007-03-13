@@ -45,6 +45,15 @@ class My_Parser extends Parser
 	}
 	
 
+	/* Check if there are errors, collect them and return them */
+	function check()
+	{
+		return($this->tree_->check());
+	}
+	
+
+	
+
 	/* Initiate parser, but use some other 
      *  classes, that are rewritten.
      */

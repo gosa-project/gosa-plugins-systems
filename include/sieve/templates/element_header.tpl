@@ -1,5 +1,24 @@
+
+{if $LastError != ""}
+	<table style='width:100%;'> 
+		<tr>
+			<td style='width:40px; background-color: #FF0000; text-align:center; border: dotted 3px #ff7c1c'>
+				<img src='images/warning.png' alt='{t}Error{/t}'>
+			</td>
+			<td>
+{/if}
+
 <table cellspacing=0 cellpadding=2 style='background-color:#EEEEDD;width:100%; border: solid 1px #CCCCCC'>
 	{if $Expert}
+    	{if $LastError != ""}
+        	<tr>
+				<td colspan=4>
+		            <font color='red'><b>{$LastError}</b></font>
+				</td>
+			</tr>
+
+        {/if}
+
 
 	 <tr>
         <td>
@@ -68,6 +87,14 @@
     </tr>
 
 	{else}
+    	{if $LastError != ""}
+        	<tr>
+				<td colspan=4>
+		            <font color='red'><b>{$LastError}</b></font>
+				</td>
+			</tr>
+
+        {/if}
 		 <tr>
         <td style='vertical-align:top;'>
             {t}If{/t}
@@ -101,3 +128,9 @@
 
 	{/if}
 </table>
+{if $LastError != ""}
+
+			</td>
+		</tr>
+	</table>
+{/if}

@@ -204,9 +204,15 @@ class sieveManagement extends plugin
 
     /* Save currently edited sieve script. */
     if(isset($_POST['save_sieve_changes'])){
-      $this->scripts[$this->current_script]['PARSER'] = $this->current_handler;
-      $this->scripts[$this->current_script]['EDITED'] = TRUE;
-      $this->current_handler = NULL; 
+      $chk = $this->current_handler->check();
+      if(!count($chk)){
+        $this->scripts[$this->current_script]['PARSER'] = $this->current_handler;
+        $this->scripts[$this->current_script]['EDITED'] = TRUE;
+        $this->current_handler = NULL; 
+      }else{
+        print_a($chk);
+        print_red(_("Please fix all errors before saving."));
+      }
     }
 
     /* Create output for currently opened sieve script */
