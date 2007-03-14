@@ -49,8 +49,10 @@ class sieve_if
         "ne"  => _("not equal"));
 
     $this->object_id       = $object_id;
-    $this->elements = $elements;
-    $this->_parsed  = $this->_parse($elements['ELEMENTS'],1);
+    if($elements!=NULL){
+      $this->elements = $elements;
+      $this->_parsed  = $this->_parse($elements['ELEMENTS'],1);
+    }
   }
 
 
@@ -388,12 +390,44 @@ class sieve_if
     return($script);
   }
 
+  
+  function add_test($data,$type)
+  {
+    switch($type)
+    {
+      case "header" : 
+      case "address" : 
+      case "envelope" : 
+      {
+        /* Add to Tree */
+        $values = array(        "Inverse"         => FALSE,
+                                "Comparator"      => "",
+                                "Expert"          => FALSE,
+                                "Match_type"      => ":contains",
+                                "Match_type_value"=> "",
+                                "Key_List"        => array("emtpy"),
+                                "Value_List"      => array("empty")) ;
+        if($type == "address"){
+          $values["Address_Part"]    = ":all";
+        }
+        $data['address']=$values;
+      }
+    }
+
+    return($data);
+  }
+
 
   /* Ensure that all changes made on the ui 
    *  will be saved. 
    */
   function save_object()
   {
+  
+    if(isset($_POST['add_type']) && isset($_POST["test_type_to_add_".$this->object_id])){
+      $this->_parsed = $this->add_test($this->_parsed,$_POST["test_type_to_add_".$this->object_id]);
+    }
+
     $tmp = $this->save_object_recursive($parsed = NULL,$id = 1,$obj_id=1);
     $this->_parsed = $tmp;
   }
@@ -412,16 +446,22 @@ class sieve_if
       $parsed = $this->_parsed;
     }
 
+    if(!is_array($parsed)) return;
+
     /* Walk through all elements */
     foreach($parsed as $key => $data){
 
       /* Id used to have unique html names */
       $element_id = $this->object_id."_".$id."_".$obj_id;
-
+      
+      foreach($_POST as $name => $value){
+        if(preg_match("/Remove_Test_Object_".$element_id."_(x|y)/",$name)) {
+          return(false); 
+        }
+      }
       /* Create elements */
       switch($key)
       {
- 
         /*******************
          * Address 
          *******************/
@@ -633,7 +673,12 @@ class sieve_if
             if(($key2 === "Inverse") && ($key2 == "Inverse")){
               continue;
             }
-            $parsed[$key][$key2] = $this->save_object_recursive($dat, ($id +1),$key2."-".$obj_id);
+            $tmp_data = $this->save_object_recursive($dat, ($id +1),$key2."-".$obj_id);
+            if($tmp_data != false){
+              $parsed[$key][$key2] = $tmp_data;
+            }else{
+              unset( $parsed[$key][$key2]);
+            }
           }
           break ;
         } 
@@ -651,12 +696,17 @@ class sieve_if
             if(($key2 === "Inverse") && ($key2 == "Inverse")){
               continue;
             }
-            $parsed[$key][$key2] =  $this->save_object_recursive($dat, ($id + 1),$key2."-".$obj_id);
+            $tmp_data = $this->save_object_recursive($dat, ($id +1),$key2."-".$obj_id);
+            if($tmp_data != false){
+              $parsed[$key][$key2] = $tmp_data;
+            }else{
+              unset( $parsed[$key][$key2]);
+            }
           }
           break ;
         } 
       }
-    }
+    } 
     return($parsed);
   }  
 
@@ -697,6 +747,16 @@ class sieve_if
     $ret ="";
     if($parsed == NULL){
       $parsed = $this->_parsed;
+    }
+
+    if((!is_array($parsed)) || !count($parsed)) {
+      $smarty = get_smarty();
+      $smarty->assign("ID",$this->object_id);
+      $smarty->assign("DisplayAdd",TRUE);
+      $smarty->assign("DisplayDel",FALSE);
+      $str = $smarty->fetch(get_template_path("templates/object_test_container.tpl",TRUE,dirname(__FILE__)));
+      $ret .= preg_replace("/%%OBJECT_CONTENT%%/",_("Empty"),$str);
+      return($ret);
     }
 
     /* Walk through all elements */
@@ -985,6 +1045,14 @@ class sieve_if
         }
       }
     }
+    
+    if(!isset($smarty)){
+      $smarty =get_smarty();
+    }
+    $smarty->assign("DisplayAdd",TRUE);
+    $smarty->assign("DisplayDel",TRUE);
+    $str = $smarty->fetch(get_template_path("templates/object_test_container.tpl",TRUE,dirname(__FILE__)));
+    $ret = preg_replace("/%%OBJECT_CONTENT%%/",$ret,$str);
     return($ret);
   }
 

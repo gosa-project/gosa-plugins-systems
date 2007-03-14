@@ -10,14 +10,6 @@ class My_Parser extends Parser
 
 	function execute()
 	{
-
-
-		/* Add Element requested */
-		if(isset($_POST['Add_Element'])){
-			$this->tree_->Add_Element();
-			echo "Move this into Management";
-		}
-
 		/* Create dump of current sieve script */
 		if(isset($_POST['Save_Copy'])){
 			echo "Move this into Management";
@@ -50,8 +42,6 @@ class My_Parser extends Parser
 	{
 		return($this->tree_->check());
 	}
-	
-
 	
 
 	/* Initiate parser, but use some other 
@@ -101,6 +91,12 @@ class My_Parser extends Parser
 			return $str;
 		}
 		return strval($token);
+	}
+
+
+	function dumpParseTree()
+	{
+		return $this->tree_->execute();
 	}
 }
 ?>

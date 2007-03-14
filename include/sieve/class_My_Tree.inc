@@ -21,6 +21,36 @@ class My_Tree extends Tree
   var $add_type         = "top";
   var $add_element_type = "";
 
+  function execute()
+  {
+    foreach($_POST as $name => $value){
+      if(preg_match("/Add_Test_Object_/",$name)) {
+        $name = preg_replace("/Add_Test_Object_/","",$name);
+        $name = preg_replace("/_(x|y)$/","",$name);
+    
+        $test_types_to_add = array(
+          "address" =>_("Address"),
+          "header"  =>_("Header"),
+          "envelope"=>_("Envelope"),
+          "size"    =>_("Size"),
+          "exists"  =>_("Exists"),
+          "allof"   =>_("All of"),
+          "anyof"   =>_("Any of"),
+          "true"    =>_("True"),
+          "false"   =>_("False"));
+ 
+        $smarty = get_smarty();
+        $smarty->assign("ID",$name); 
+        $smarty->assign("test_types_to_add",$test_types_to_add); 
+        $ret = $smarty->fetch(get_template_path("templates/select_test_type.tpl",TRUE,dirname(__FILE__)));
+        return($ret);
+      }
+    }
+
+
+    return($this->dump());
+  }
+
   /* Create a html interface for the current sieve filter 
    */
   function dump()
@@ -59,7 +89,11 @@ class My_Tree extends Tree
       /* Create new element and add it at the selected position */
       if(isset($_POST['select_new_element_type'])){
 
-        $ele = new $this->add_element_type(NULL, preg_replace("/[^0-9]/","",microtime()));
+        $ele[] = new $this->add_element_type(NULL, preg_replace("/[^0-9]/","",microtime()));
+        if($this->add_element_type == "sieve_if"){
+          $ele[] = new sieve_block_start(NULL,preg_replace("/[^0-9]/","",microtime()));
+          $ele[] = new sieve_block_end(NULL,preg_replace("/[^0-9]/","",microtime()));
+        }
         $start = $end = array();
         $found = false;  
 
@@ -95,7 +129,9 @@ class My_Tree extends Tree
           foreach($start as $obj){
             $new[] = $obj;
           }      
-          $new[] = $ele;
+          foreach($ele as $el){
+            $new[] = $el;
+          }
           foreach($end as $obj){
             $new[] = $obj;
           }
