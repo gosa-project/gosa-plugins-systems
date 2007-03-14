@@ -403,6 +403,7 @@ class sieve_if
         $values = array(        "Inverse"         => FALSE,
                                 "Comparator"      => "",
                                 "Expert"          => FALSE,
+                                "LastError"       => "",
                                 "Match_type"      => ":contains",
                                 "Match_type_value"=> "",
                                 "Key_List"        => array("emtpy"),
@@ -410,8 +411,16 @@ class sieve_if
         if($type == "address"){
           $values["Address_Part"]    = ":all";
         }
-        $data['address']=$values;
+        $data[$type]=$values;
+        break;
       }
+      case "allof" :
+      case "anyof" :
+      {
+        $data[$type] = array("Inverse" => FALSE);
+        break;
+      }
+  
     }
 
     return($data);
@@ -459,6 +468,12 @@ class sieve_if
           return(false); 
         }
       }
+
+      
+      if(isset($_POST['add_type']) && isset($_POST["test_type_to_add_".$element_id])){
+        $parsed[$key][] = $this->add_test(array(),$_POST["test_type_to_add_".$element_id]);
+      }
+
       /* Create elements */
       switch($key)
       {
@@ -1008,7 +1023,13 @@ class sieve_if
           $smarty->assign("Inverse",$Inverse);
           $smarty->assign("Contents",$Contents);
           $smarty->assign("ID"  , $element_id); 
-          $ret .= $smarty->fetch(get_template_path("templates/element_allof.tpl",TRUE,dirname(__FILE__)));
+          $tmp = $smarty->fetch(get_template_path("templates/element_allof.tpl",TRUE,dirname(__FILE__)));
+
+          $smarty->assign("DisplayAdd",TRUE);
+          $smarty->assign("DisplayDel",FALSE);
+          $str = $smarty->fetch(get_template_path("templates/object_test_container.tpl",TRUE,dirname(__FILE__)));
+          $ret .= preg_replace("/%%OBJECT_CONTENT%%/",$tmp,$str);
+
           break ;
         } 
 
@@ -1030,7 +1051,13 @@ class sieve_if
           $smarty->assign("Inverse",$Inverse);
           $smarty->assign("Contents",$Contents);
           $smarty->assign("ID"  , $element_id); 
-          $ret .= $smarty->fetch(get_template_path("templates/element_anyof.tpl",TRUE,dirname(__FILE__)));
+          $tmp = $smarty->fetch(get_template_path("templates/element_anyof.tpl",TRUE,dirname(__FILE__)));
+
+          $smarty->assign("DisplayAdd",TRUE);
+          $smarty->assign("DisplayDel",FALSE);
+          $str = $smarty->fetch(get_template_path("templates/object_test_container.tpl",TRUE,dirname(__FILE__)));
+          $ret .= preg_replace("/%%OBJECT_CONTENT%%/",$tmp,$str);
+
           break ;
         } 
         default : 
@@ -1049,6 +1076,8 @@ class sieve_if
     if(!isset($smarty)){
       $smarty =get_smarty();
     }
+
+    $smarty->assign("ID",$element_id);
     $smarty->assign("DisplayAdd",TRUE);
     $smarty->assign("DisplayDel",TRUE);
     $str = $smarty->fetch(get_template_path("templates/object_test_container.tpl",TRUE,dirname(__FILE__)));
