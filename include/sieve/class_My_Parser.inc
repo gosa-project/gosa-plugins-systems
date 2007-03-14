@@ -12,15 +12,14 @@ class My_Parser extends Parser
 	{
 		/* Create dump of current sieve script */
 		if(isset($_POST['Save_Copy'])){
-			echo "Move this into Management";
-		
+
 			/* force download dialog */
 			header("Content-type: application/tiff\n");
 			if (preg_match('/MSIE 5.5/', $HTTP_USER_AGENT) ||
 					preg_match('/MSIE 6.0/', $HTTP_USER_AGENT)) {
-				header('Content-Disposition: filename="dump.txt"');
+				header('Content-Disposition: filename="dump.script"');
 			} else {
-				header('Content-Disposition: attachment; filename="dump.txt"');
+				header('Content-Disposition: attachment; filename="dump.script"');
 			}
 			header("Content-transfer-encoding: binary\n");
 			header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
@@ -31,7 +30,7 @@ class My_Parser extends Parser
 			echo $this->get_sieve_script();	
 			exit();	
 		}
-	
+
 		$ret = $this->dumpParseTree();
 		return($ret);
 	}

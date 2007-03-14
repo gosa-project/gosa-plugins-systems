@@ -14,7 +14,12 @@
 	</tr>
 	<tr>
 		<td style='background-color: #FFFFFF; border: solid 2px #CCCCCC; '>
-			{$Contents}
+
+			{if $Mode == "Structured"}
+				{$Contents}
+			{else}
+				<textarea name='script_contents' style='width:100%;height:350px;'>{$Contents}</textarea>
+			{/if}
 
 		</td>
 	</tr>

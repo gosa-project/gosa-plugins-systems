@@ -20,6 +20,8 @@ class My_Tree extends Tree
   var $add_new_id       = 0;
   var $add_type         = "top";
   var $add_element_type = "";
+  
+  var $Mode = "Structured";
 
   function execute()
   {
@@ -46,7 +48,6 @@ class My_Tree extends Tree
         return($ret);
       }
     }
-
 
     return($this->dump());
   }
@@ -173,7 +174,16 @@ class My_Tree extends Tree
     
     /* Create html results */
     $smarty = get_smarty();
-    $smarty->assign("Contents",$this->dump_);
+    $smarty->assign("Mode",$this->Mode);
+    if($this->Mode == "Structured"){
+      $smarty->assign("Contents",$this->dump_);
+    }else{
+      if(isset($_POST['script_contents'])){
+        $smarty->assign("Contents",stripslashes($_POST['script_contents']));
+      }else{
+        $smarty->assign("Contents",$this->get_sieve_script());
+      }
+    }
     $ret = $smarty->fetch(get_template_path("templates/edit_frame_base.tpl",TRUE,dirname(__FILE__)));
     return ($ret);
   }

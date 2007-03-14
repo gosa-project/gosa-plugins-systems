@@ -6,12 +6,12 @@
 					background-color: #AAAAAA; 
 					border: solid 1px #EEEEEE
 					'>
+			<b>{t}Any of{/t}</b>
             {if $Inverse}
                 <input type='submit' name='toggle_inverse_{$ID}' value='{t}Not{/t}'>
             {else}
                 <input type='submit' name='toggle_inverse_{$ID}' value='{t}-{/t}'>
             {/if}
-			<img alt='' class='center' src='images/select_department.png'>
 		</td>
         <td style='background-color:#BDBDBD ; border: solid 1px #EEEEEE'>
 			{$Contents}

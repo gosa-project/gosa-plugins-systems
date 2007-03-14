@@ -273,6 +273,28 @@ class sieveManagement extends plugin
 
     /* Create output for currently opened sieve script */
     if($this->current_handler){
+
+      if(isset($_POST['script_contents']) && $this->current_handler->tree_->Mode == "Source"){
+        $script = stripslashes($_POST['script_contents']);
+
+        $new_p = new My_Parser;
+        if($new_p->parse($script)){
+          $this->current_handler->parse($script);
+          $this->current_handler->tree_->Mode = "Source";
+        }else{
+          print_red($new_p->status_text);
+          $this->current_handler->tree_->Mode = "Source";
+        }
+      }
+
+      if(isset($_POST['View_Source'])){
+        $this->current_handler->tree_->Mode = "Source";
+      }
+
+      if(isset($_POST['View_Structured'])){
+        $this->current_handler->tree_->Mode = "Structured";
+      }
+
       $ret = $this->current_handler->execute();
       return($ret);
     }
