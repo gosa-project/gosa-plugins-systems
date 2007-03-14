@@ -112,7 +112,9 @@ class sieve_if
         default: 
         {
           if(isset($data['LastError']) && !empty($data['LastError'])){
-            $ret[] = $data['LastError']; 
+            $ret[] = $data['LastError'];
+      
+            echo "'".$data['LastError']."' ".$key."<br>" ;
           }
         }
       }
@@ -1148,13 +1150,13 @@ class sieve_if
       case "true": 
       {
         $tmp['true'] = "true";
-        $tmp[$type]['LastError'] = "";
+        $tmp['true']['LastError'] = "";
         break;
       }
       case "false":
       {
         $tmp['false'] = "false";
-        $tmp[$type]['LastError'] = "";
+        $tmp['false']['LastError'] = "";
         break;
       }
 

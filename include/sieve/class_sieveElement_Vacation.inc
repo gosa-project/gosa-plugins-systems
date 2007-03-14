@@ -21,6 +21,9 @@ class sieve_vacation
     /* Not all attribute types are supported by the sieve class right now */
     $known_attrs = array(":days",":subject",":from",":mime",":handle");
 
+    /* skip if empty */
+    if($data == NULL) return;
+
     /* Walk through elements */
     for($i = 0 ; $i < count($data['ELEMENTS']) ; $i ++){
 

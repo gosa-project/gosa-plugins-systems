@@ -10,6 +10,11 @@ class sieve_else
 {
   var $object_id = -1;
 
+  function check()
+  {
+    return(array());
+  }
+
   function sieve_else($data,$object_id)
   {
     $this->object_id = $object_id;

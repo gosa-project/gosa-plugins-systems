@@ -22,6 +22,11 @@ class sieve_fileinto
   function sieve_fileinto($data,$object_id)
   {
     $this->object_id = $object_id;
+
+    if($data == NULL){
+      $data = array('ELEMENTS' => array(array('class' => "quoted-string" ,"text" => _(""))));
+    }
+
     foreach($data['ELEMENTS'] as $node ){
       if(in_array($node['class'],array("quoted-string","text"))){
         $this->data[] = preg_replace("/\"/","",$node['text']);

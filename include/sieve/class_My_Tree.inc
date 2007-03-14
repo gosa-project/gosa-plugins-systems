@@ -31,6 +31,7 @@ class My_Tree extends Tree
           "sieve_comment"   => _("Comment"),
           "sieve_fileinto"  => _("File into"),
           "sieve_keep"      => _("Keep"),
+          "sieve_discard"   => _("Discard"),
           "sieve_redirect"  => _("Redirect"),
           "sieve_reject"    => _("Reject"),
           "sieve_require"   => _("Require"),

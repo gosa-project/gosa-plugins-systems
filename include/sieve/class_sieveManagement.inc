@@ -210,6 +210,7 @@ class sieveManagement extends plugin
         $this->scripts[$this->current_script]['EDITED'] = TRUE;
         $this->current_handler = NULL; 
       }else{
+        print_a($chk);
         print_red(_("Please fix all errors before saving."));
       }
     }
