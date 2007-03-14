@@ -26,6 +26,13 @@ class My_Tree extends Tree
   function dump()
   {
     error_reporting(E_ALL);
+
+    /**************
+     * Handle new elements 
+     **************/
+
+    if($this->add_new){
+  
       $element_types= array(
           "sieve_keep"      => _("Keep"),
           "sieve_comment"   => _("Comment"),
@@ -40,63 +47,68 @@ class My_Tree extends Tree
           "sieve_if"        => _("If"));
 
 
-    if($this->add_new && isset($_POST['element_type']) && isset($element_types[$_POST['element_type']])){
-      $this->add_element_type = $_POST['element_type'];
-    }
-
-
-    if($this->add_new && isset($_POST['select_new_element_type'])){
-     
-      $ele = new $this->add_element_type(NULL, preg_replace("/[^0-9]/","",microtime()));
-      $start = $end = array();
-      $found = false;  
- 
-      if($this->add_type == "top"){
-        foreach($this->pap as $key => $obj){
-          if($obj->object_id == $this->add_new_id){
-            $found = true;
-          }
-          if(!$found){
-            $start[] = $obj;
-          }else{
-            $end[] = $obj;
-          }
-        }    
-      }else{
-        foreach($this->pap as $key => $obj){
-          if(!$found){
-            $start[] = $obj;
-          }else{
-            $end[] = $obj;
-          }
-          if($obj->object_id == $this->add_new_id){
-            $found = true;
-          }
-        }    
+      /* Element selected */
+      if(isset($_POST['element_type']) && isset($element_types[$_POST['element_type']])){
+        $this->add_element_type = $_POST['element_type'];
       }
 
-      if($found){
-        $new = array();
-        foreach($start as $obj){
-          $new[] = $obj;
-        }      
-        $new[] = $ele;
-        foreach($end as $obj){
-          $new[] = $obj;
+      /* Create new element and add it at the selected position */
+      if(isset($_POST['select_new_element_type'])){
+
+        $ele = new $this->add_element_type(NULL, preg_replace("/[^0-9]/","",microtime()));
+        $start = $end = array();
+        $found = false;  
+
+        /* Add above current element*/
+        if($this->add_type == "top"){
+          foreach($this->pap as $key => $obj){
+            if($obj->object_id == $this->add_new_id){
+              $found = true;
+            }
+            if(!$found){
+              $start[] = $obj;
+            }else{
+              $end[] = $obj;
+            }
+          }    
+        }else{
+        /* Add below current element */
+          foreach($this->pap as $key => $obj){
+            if(!$found){
+              $start[] = $obj;
+            }else{
+              $end[] = $obj;
+            }
+            if($obj->object_id == $this->add_new_id){
+              $found = true;
+            }
+          }    
         }
-        $this->pap = $new;
-        $this->add_new = FALSE;
-      }else{
-        print_red(_("Something went wrong while adding a new entry."));
+
+        /* Only add, if current element could be located */
+        if($found){
+          $new = array();
+          foreach($start as $obj){
+            $new[] = $obj;
+          }      
+          $new[] = $ele;
+          foreach($end as $obj){
+            $new[] = $obj;
+          }
+          $this->pap = $new;
+          $this->add_new = FALSE;
+        }else{
+          print_red(_("Something went wrong while adding a new entry."));
+        }
       }
+
     }
 
-    if($this->add_new){
-
+    /* Only display select dialog if it is necessary */
+    if($this->add_new){  
       $smarty = get_smarty();
       $smarty->assign("element_types",$element_types );
       $smarty->assign("element_type",$this->add_element_type);
-
       $str = $smarty->fetch(get_template_path("templates/add_element.tpl",TRUE,dirname(__FILE__)));
       return($str);
     }
@@ -326,7 +338,8 @@ class My_Tree extends Tree
 
     if(in_array($e_class,array( "sieve_stop",
                                 "sieve_keep",
-                                "sieve_require", 
+                                "sieve_require",
+                                "sieve_comment",
                                 "sieve_stop",   
                                 "sieve_reject", 
                                 "sieve_fileinto",
