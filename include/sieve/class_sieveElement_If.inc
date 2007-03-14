@@ -406,8 +406,8 @@ class sieve_if
                                 "LastError"       => "",
                                 "Match_type"      => ":contains",
                                 "Match_type_value"=> "",
-                                "Key_List"        => array("emtpy"),
-                                "Value_List"      => array("empty")) ;
+                                "Key_List"        => array(_("emtpy")),
+                                "Value_List"      => array(_("empty"))) ;
         if($type == "address"){
           $values["Address_Part"]    = ":all";
         }
@@ -420,7 +420,37 @@ class sieve_if
         $data[$type] = array("Inverse" => FALSE);
         break;
       }
-  
+      case "size" :
+      {
+        $tmp= array( 
+            "Inverse"    => FALSE,
+            "Match_type" => ":contains",
+            "Value_List" => array(1,"M"));
+
+        $tmp['LastError'] = "";
+        $data[$type] = $tmp;
+        break;
+      }
+      case "true":
+      {
+        $data['true'] = "true";
+        $data['true']['LastError'] = "";
+        break;
+      }
+      case "false":
+      {
+        $data['false'] = "false";
+        $data['false']['LastError'] = "";
+        break;
+      }
+      case "exists" :
+      {
+        $data['exists'] = array('Inverse' => FALSE,
+                                'Values'  => array(_("Nothing specified right now")),
+                                'LastError' => "");
+        break;
+      }
+      default : echo "Still buggy ";exit;
     }
 
     return($data);
@@ -637,28 +667,29 @@ class sieve_if
                                 "K" => _("Kilobyte"));
 
           /* Reset error */
-          $parsed['size']['LastError'] ="";
+          $parsed[$key]['LastError'] ="";
 
           /* Get match type */
           if(isset($_POST['Match_type_'.$element_id])){
             $mt = $_POST['Match_type_'.$element_id];
             if(!isset($Match_types[$mt])){
-              $parsed['size']['LastError'] = _("Please select a valid match type in the list box below.");
+              $parsed[$key]['LastError'] = _("Please select a valid match type in the list box below.");
             }
+            $parsed[$key]['Match_type'] = $mt;
           }
 
           /* Get old values */
-          $value = preg_replace("/[^0-9]*$/","",$parsed['size']['Value_List'][0]);
-          $unit  = preg_replace("/^[0-9]*/","",$parsed['size']['Value_List'][0]);
+          $value = preg_replace("/[^0-9]*$/","",$parsed[$key]['Value_List'][0]);
+          $unit  = preg_replace("/^[0-9]*/","",$parsed[$key]['Value_List'][0]);
 
           /* Get value */
           if(isset($_POST['Value_'.$element_id])){
             $vl = $_POST['Value_'.$element_id];
          
             if(!(is_numeric($vl) && preg_match("/^[0-9]*$/",$vl))){
-              $parsed['size']['LastError'] = _("Only numeric values are allowed here.");
+              $parsed[$key]['LastError'] = _("Only numeric values are allowed here.");
             }
-            $value = $vl;
+            $value = preg_replace("/[^0-9]/","",$vl);
           }        
 
           /* Get unit */
@@ -666,12 +697,12 @@ class sieve_if
             $ut = $_POST['Value_Unit_'.$element_id];
        
             if(!isset($Units[$ut])){
-              $parsed['size']['LastError'] = _("No valid unit selected");
+              $parsed[$key]['LastError'] = _("No valid unit selected");
             }
             $unit = $ut;
-          }        
-
-          $parsed['size']['Value_List'][0] = $value.$unit;
+          }       
+          $parsed[$key]['Value_List'] = array(); 
+          $parsed[$key]['Value_List'][0] = $value.$unit;
           break;
         }
 
@@ -1019,17 +1050,20 @@ class sieve_if
             }
             $Contents .=        $this->get_as_html($dat, ($id +1),$key."-".$obj_id);
           }
-          $smarty = get_smarty();
-          $smarty->assign("Inverse",$Inverse);
-          $smarty->assign("Contents",$Contents);
-          $smarty->assign("ID"  , $element_id); 
-          $tmp = $smarty->fetch(get_template_path("templates/element_allof.tpl",TRUE,dirname(__FILE__)));
 
+          $smarty = get_smarty();
+          $smarty->assign("ID"  , $element_id); 
           $smarty->assign("DisplayAdd",TRUE);
           $smarty->assign("DisplayDel",FALSE);
-          $str = $smarty->fetch(get_template_path("templates/object_test_container.tpl",TRUE,dirname(__FILE__)));
-          $ret .= preg_replace("/%%OBJECT_CONTENT%%/",$tmp,$str);
+          $cont_tmp = $smarty->fetch(get_template_path("templates/object_test_container.tpl",TRUE,dirname(__FILE__)));
+          $cont_tmp = preg_replace("/%%OBJECT_CONTENT%%/",_("Klick here to add a new test"),$cont_tmp);
 
+          $smarty->assign("Inverse",$Inverse);
+          $smarty->assign("Contents",$cont_tmp.$Contents);
+          $smarty->assign("ID"  , $element_id); 
+          $allof_tmp = $smarty->fetch(get_template_path("templates/element_allof.tpl",TRUE,dirname(__FILE__)));
+
+          $ret = $allof_tmp;
           break ;
         } 
 
@@ -1048,15 +1082,17 @@ class sieve_if
             $Contents .=        $this->get_as_html($dat, ($id +1),$key."-".$obj_id);
           }
           $smarty = get_smarty();
-          $smarty->assign("Inverse",$Inverse);
-          $smarty->assign("Contents",$Contents);
           $smarty->assign("ID"  , $element_id); 
-          $tmp = $smarty->fetch(get_template_path("templates/element_anyof.tpl",TRUE,dirname(__FILE__)));
-
           $smarty->assign("DisplayAdd",TRUE);
           $smarty->assign("DisplayDel",FALSE);
-          $str = $smarty->fetch(get_template_path("templates/object_test_container.tpl",TRUE,dirname(__FILE__)));
-          $ret .= preg_replace("/%%OBJECT_CONTENT%%/",$tmp,$str);
+          $cont_tmp = $smarty->fetch(get_template_path("templates/object_test_container.tpl",TRUE,dirname(__FILE__)));
+          $cont_tmp = preg_replace("/%%OBJECT_CONTENT%%/",_("Klick here to add a new test"),$cont_tmp);
+
+          $smarty->assign("Inverse",$Inverse);
+          $smarty->assign("Contents",$cont_tmp.$Contents);
+          $allof_tmp = $smarty->fetch(get_template_path("templates/element_anyof.tpl",TRUE,dirname(__FILE__)));
+
+          $ret = $allof_tmp;
 
           break ;
         } 
@@ -1078,7 +1114,7 @@ class sieve_if
     }
 
     $smarty->assign("ID",$element_id);
-    $smarty->assign("DisplayAdd",TRUE);
+    $smarty->assign("DisplayAdd",FALSE);
     $smarty->assign("DisplayDel",TRUE);
     $str = $smarty->fetch(get_template_path("templates/object_test_container.tpl",TRUE,dirname(__FILE__)));
     $ret = preg_replace("/%%OBJECT_CONTENT%%/",$ret,$str);
