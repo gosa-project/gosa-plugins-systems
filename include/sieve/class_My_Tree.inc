@@ -31,6 +31,10 @@ class My_Tree extends Tree
      * Handle new elements 
      **************/
 
+    if(isset($_POST['select_new_element_type_cancel'])){
+      $this->add_new = FALSE;
+    }
+
     if($this->add_new){
   
       $element_types= array(
@@ -648,8 +652,36 @@ class My_Tree extends Tree
   function check()
   {
 		$msgs = array();
-		foreach($this->pap as $obj){
 
+    /* Some logical checks. 
+     *  like :  only sieve_comment can appear before require.
+     */
+    
+    /* Ensure that there are no command before require 
+     *  - Get id of last require tag
+     *  - Collect object types in from of this tag. 
+     *  - Check if there are tags collected that are not allowed 
+     */
+    $last_found_at = -1; 
+    $objs = array();
+    foreach($this->pap as $key => $obj){
+      if(get_class($obj) == "sieve_require"){
+        $last_found_at = $key;
+      }
+    }
+    foreach($this->pap as $key => $obj){
+      if($key == $last_found_at) break;  
+      if(!in_array(get_class($obj),array("sieve_comment","sieve_require"))){
+        $objs[] = get_class($obj);
+      }
+    }
+    if(count($objs) && $last_found_at != -1){
+      $str = _("Require must be the first command in the script.");  
+      $msgs[] = $str;
+      print_red($str);;
+    }
+    
+		foreach($this->pap as $obj){
 			$o_msgs = $obj->check();
 			foreach($o_msgs as $o_msg){
 				$msgs[] = $o_msg;

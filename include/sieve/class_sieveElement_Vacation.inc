@@ -122,6 +122,7 @@ class sieve_vacation
       $Addresses .= $key.", ";
     }
     $Addresses = preg_replace("/,$/","",trim($Addresses));
+
     $smarty = get_smarty();
     $smarty->assign("Reason",$this->reason);
     $smarty->assign("Addresses",$Addresses);
@@ -129,7 +130,11 @@ class sieve_vacation
     $smarty->assign("Days",$this->days);
     $smarty->assign("ID",$this->object_id);
     $smarty->assign("Expert",$this->Expert);
-    return($smarty->fetch(get_template_path("templates/element_vacation.tpl",TRUE,dirname(__FILE__))));
+
+    $object_container = $smarty->fetch(get_template_path("templates/object_container.tpl",TRUE,dirname(__FILE__)));
+    $object= $smarty->fetch(get_template_path("templates/element_vacation.tpl",TRUE,dirname(__FILE__)));
+    $str = preg_replace("/%%OBJECT_CONTENT%%/",$object,$object_container);
+    return($str);
   }
 }
 

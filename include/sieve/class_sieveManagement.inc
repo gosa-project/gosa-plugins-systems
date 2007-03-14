@@ -37,6 +37,7 @@ class sieveManagement extends plugin
   var $script_to_delete =-1;
   var $sieve_handle = NULL; 
 
+  var $create_script = FALSE;
 
   /* Initialize the class and load all sieve scripts 
    *  try to parse them and display errors 
@@ -109,6 +110,60 @@ class sieveManagement extends plugin
    */
   function execute()
   {
+    if(isset($_POST['create_new_script'])){
+      $this->create_script = TRUE;
+    }
+
+    if(isset($_POST['create_script_cancel'])){
+      $this->create_script = FALSE;
+    }
+
+    if($this->create_script){
+      $smarty = get_smarty();
+    
+      $name = "";
+      if(isset($_POST['NewScriptName'])){
+        $name = $_POST['NewScriptName'];
+      }
+  
+      $err = "";
+      if($name != strtolower($name)){
+        $err = _("Only lower case names are allowed here.");
+      }
+  
+      if(preg_match("/[^a-z]/i",$name)){
+        $err = _("Only a-z are allowed in script names.");
+      }
+
+      if($this->create_script && isset($_POST['create_script_save']) && $err == "" ){
+        $this->create_script = FALSE;
+
+        $script = "/*New script */".
+                  "stop;";
+        $p = new My_Parser;
+
+        $sc['SCRIPT'] = $script;
+        $sc['MSG']   = "";
+  
+        $ret = $p->parse($script);
+        if(!$ret){
+          $sc['MSG']   = "<font color='red'>".$p->status_text."</font>";
+          $sc['STATUS'] = _("Parse failed")."<font color='red'>".$p->status_text."</font>";
+        }else{
+          $sc['STATUS'] = _("Parse successful");
+        }
+        $sc['PARSER'] = $p;
+        $sc['EDITED'] = TRUE;
+        $sc['ACTIVE'] = FALSE;
+        $sc['NAME']   = $name;
+        $this->scripts[$name] = $sc;
+      }else{
+        $smarty->assign("NewScriptName",$name);
+        $smarty->assign("Error",$err);
+        return($smarty->fetch(get_template_path("templates/create_script.tpl",TRUE,dirname(__FILE__))));
+      }
+    }
+
     $once = TRUE;
     foreach($_POST as $name => $value){
       if(preg_match("/^editscript_/",$name) && $once && !$this->current_handler){
@@ -261,6 +316,7 @@ class sieveManagement extends plugin
   
     $display ="<h2>Sieve script management</h2>";
     $display .= _("Be careful. All your changes will be saved directly to sieve, if you use the save button below.");
+    $display .= "<br><input type='submit' name='create_new_script' value='"._("Create new script")."'>";
     $display .=  $List->DrawList();
     
     $display .= "<p style=\"text-align:right\">\n";
@@ -309,7 +365,7 @@ class sieveManagement extends plugin
                                            _("Failed to save sieve script").": ".
                                            to_string($this->sieve_handle->error_raw).
                                            "</font>";
-#          echo nl2br($data);
+          echo nl2br($data);
         }
       }
     }

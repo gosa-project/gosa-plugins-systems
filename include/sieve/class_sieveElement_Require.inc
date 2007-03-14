@@ -7,10 +7,13 @@ class sieve_require
   
   function sieve_require($data,$object_id)
   {
-    $this->object_id = $object_id;
-    foreach($data['ELEMENTS'] as $node ){
-      if(in_array($node['class'],array("quoted-string","text"))){
-        $this->data[] = preg_replace("/\"/","",$node['text']);
+    if($data != NULL){
+
+      $this->object_id = $object_id;
+      foreach($data['ELEMENTS'] as $node ){
+        if(in_array($node['class'],array("quoted-string","text"))){
+          $this->data[] = preg_replace("/\"/","",$node['text']);
+        }
       }
     }
   }
@@ -65,7 +68,7 @@ class sieve_require
     $smarty->assign("LastError",$tmp);
     $smarty->assign("LastErrorCnt",count($tmp));
     $smarty->assign("ID", $this->object_id);
-    $object_container = $smarty->fetch(get_template_path("templates/object_container_clear.tpl",TRUE,dirname(__FILE__)));
+    $object_container = $smarty->fetch(get_template_path("templates/object_container.tpl",TRUE,dirname(__FILE__)));
     $object= $smarty->fetch(get_template_path("templates/element_require.tpl",TRUE,dirname(__FILE__)));
     $str = preg_replace("/%%OBJECT_CONTENT%%/",$object,$object_container);
     return($str);
