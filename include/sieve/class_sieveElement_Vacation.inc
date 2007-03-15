@@ -69,9 +69,12 @@ class sieve_vacation
     if($this->days){
       $str.= ":days ".$this->days;
     }
-    $str .= ":addresses ".sieve_create_strings($this->addresses);
-    if($this->subject){
-      $str.= ":subject ".sieve_create_strings($this->subject);
+
+    if(count($this->addresses)){
+      $str .= ":addresses ".sieve_create_strings($this->addresses);
+      if($this->subject){
+        $str.= ":subject ".sieve_create_strings($this->subject);
+      }
     }
     if($this->mime){
       $str.= ":mime ".sieve_create_strings($this->mime);
@@ -98,7 +101,10 @@ class sieve_vacation
       $tmp = array();
       $tmp2 = split(",",$vr);
       foreach($tmp2 as $val){
-        $tmp[] = "\"".trim(preg_replace("/\"/","",$val))."\"";
+        $ad = trim(preg_replace("/\"/","",$val));
+        if(!empty($ad)){
+          $tmp[] = "\"".$ad."\"";
+        }
       }
       $this->addresses = $tmp;
     }
@@ -112,7 +118,17 @@ class sieve_vacation
 
   function check()
   {
-    return(array())  ;
+    $msgs = array();
+    $err = FALSE;
+    foreach($this->addresses as $addr){
+      if(!is_email(preg_replace("/\"/","",$addr))){
+        $err = true;
+      }
+    }
+    if($err){
+      $msgs[] = _("Alternative sender addresse must be valid email addresses.");
+    }
+    return($msgs);
   }
 
   function execute()
@@ -124,6 +140,8 @@ class sieve_vacation
     $Addresses = preg_replace("/,$/","",trim($Addresses));
 
     $smarty = get_smarty();
+    $smarty->assign("LastError",$this->check());
+    $smarty->assign("LastErrorCnt",count($this->check()));
     $smarty->assign("Reason",$this->reason);
     $smarty->assign("Addresses",$Addresses);
     $smarty->assign("Subject",$this->subject);

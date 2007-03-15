@@ -2,7 +2,7 @@
 
 class sieve_reject 
 {
-  var $data = array();
+  var $data = "";
   var $object_id = -1;
 
 
@@ -23,26 +23,37 @@ class sieve_reject
   function sieve_reject($data,$object_id)
   {
     $this->object_id = $object_id;
-    $str = "";
-    foreach($data['ELEMENTS'] as $node ){
-      if(in_array($node['class'],array("quoted-string","text","multi-line"))){
 
-        if($node['class'] == "multi-line"){
-          $str .= preg_replace("/^text:[ \n\r]*/","",$node['text']);
-          $str =  preg_replace("/[  \n\r]*\.[  \n\r]*$/","",$str);
-        }else{
-          $str .= $node['text'];
+    /* If the given data is emtpy 
+     *  (This is the case when we add new elements in the ui) 
+     * Set a default text. 
+     */
+    if($data == NULL){
+      $this->data = _("Your reject text here");
+    }else{
+
+      /* Get reject text */
+      $str = "";
+      foreach($data['ELEMENTS'] as $node ){
+        if(in_array($node['class'],array("quoted-string","text","multi-line"))){
+
+          if($node['class'] == "multi-line"){
+            $str .= preg_replace("/^text:[ \n\r]*/","",$node['text']);
+            $str =  preg_replace("/[  \n\r]*\.[  \n\r]*$/","",$str);
+          }else{
+            $str .= $node['text'];
+          }
         }
       }
+      $this->data = preg_replace("/\"/","",$str);
     }
-    $this->data = preg_replace("/\"/","",$str);
   }
 
   function get_sieve_script_part()
   {
     return("reject ".sieve_create_strings($this->data).";\n");
   } 
-    
+
   function execute()
   {
     /* check if this will be a 
@@ -61,5 +72,5 @@ class sieve_reject
     return($str);
   }
 }
-
-
+// vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
+?>

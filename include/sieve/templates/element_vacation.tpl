@@ -1,7 +1,22 @@
 
+{if $LastErrorCnt != 0}
+    <table style='width:100%;'>
+        <tr>
+            <td style='width:40px; background-color: #FF0000; text-align:center; border: dotted 3px #ff7c1c'>
+                <img src='images/warning.png' alt='{t}Error{/t}'>
+            </td>
+            <td>
+{/if}
 <table cellspacing=0 cellpadding=2 style='background-color:#EEEEDD;width:100%; border: solid 1px #CCCCCC'>
 
+	{foreach from=$LastError item=val key=key}
+		<tr>
+			<td colspan=4>
+				<font color='red'><b>{$LastError[$key]}</b></font>
+			</td>
+		</tr>
 
+	{/foreach}
 	{if $Expert}
 	<tr>
 		<td style='width:20%'>	
@@ -22,7 +37,7 @@
 	</tr>
 	<tr>
 		<td>
-			{t}Receiver{/t}
+			{t}Alternative sender addresses{/t}
 		</td>
 		<td>
     		<textarea name='vacation_receiver_{$ID}' style='width:100%;height:20px;'>{$Addresses}</textarea>
@@ -49,4 +64,12 @@
 	</tr>
 	{/if}
 </table>
+
+{if $LastErrorCnt != 0}
+
+            </td>
+        </tr>
+    </table>
+{/if}
+
 

@@ -106,6 +106,17 @@ class sieve_if
           }
           break;
         }
+
+        /*******************
+         * True / False
+         *******************/
+
+        case "true" :
+        case "fasle" : 
+        {
+          /* Can't fail anyway */
+          break;
+        }
     
         /*******************
          * Default
@@ -115,8 +126,6 @@ class sieve_if
         {
           if(isset($data['LastError']) && !empty($data['LastError'])){
             $ret[] = $data['LastError'];
-      
-            echo "'".$data['LastError']."' ".$key."<br>" ;
           }
         }
       }
