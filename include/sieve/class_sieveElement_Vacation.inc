@@ -22,7 +22,7 @@ class sieve_vacation
     $known_attrs = array(":days",":subject",":from",":mime",":handle");
 
     /* skip if empty */
-    if($data == NULL) return;
+    if(($data == NULL) || !is_array($data)) return;
 
     /* Walk through elements */
     for($i = 0 ; $i < count($data['ELEMENTS']) ; $i ++){
@@ -57,8 +57,16 @@ class sieve_vacation
       }
 
       /* Add the vacation message */
-      if($node['class'] == "quoted-string"){
-        $this->reason = $node['text'];
+      if(in_array($node['class'],array("quoted-string","multi-line"))){
+
+        $tmp = sieve_get_strings($data['ELEMENTS'],$i);
+        $strs= $tmp['STRINGS'];
+ 
+        $data = ""; 
+        foreach($strs as $str){
+          $data .= $str;
+        }
+        $this->reason = $data;//preg_replace("/\"/","",$data);
       }
     }
   }

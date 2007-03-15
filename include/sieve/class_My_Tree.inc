@@ -728,7 +728,7 @@ class My_Tree extends Tree
 /* Create valid sieve string/string-list 
  *  out of a given array
  */
-function sieve_create_strings($data)
+function sieve_create_strings($data,$force_string = FALSE)
 {
   $ret = "";
   if(is_array($data)){
@@ -752,7 +752,7 @@ function sieve_create_strings($data)
     $Multiline = preg_match("/\n/",$data);
     $data = preg_replace("/\r/","",$data);;
 
-    if($Multiline){
+    if($Multiline && !$force_string){
       $ret = "text: \r\n".$data."\r\n.\r\n";
     }else{
       $ret = "\"".$data."\"";
@@ -786,7 +786,12 @@ function sieve_get_strings($data,$id)
     $ret[] = $data[$id]['text'];
   }elseif($data[$id]['class'] == "number"){
     $ret[] = $data[$id]['text'];
+  }elseif($data[$id]['class'] == "multi-line"){
+    $str = trim(preg_replace("/^text:/","",$data[$id]['text']));
+    $str = trim(preg_replace("/\.$/","",$str));
+    $ret[] = $str;
   }
+  
   return(array("OFFSET" => $id, "STRINGS" => $ret));
 }
 
