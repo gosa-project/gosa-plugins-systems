@@ -386,6 +386,18 @@ class sieveManagement extends plugin
           }
         }
       }
+      if(in_array($Mode,array("Structured"))){
+        $this->current_handler->save_object();
+        $sc = $this->current_handler->get_sieve_script();
+        $this->scripts[$this->current_script]['SCRIPT'] = $sc;
+        $p = new My_Parser;
+        if($p -> parse($sc)){
+          $this->current_handler = $p;
+        } else {
+          print_red($p->status_text);
+          $skip_mode_change = TRUE;
+        }
+      }
       if(!$skip_mode_change){
         if($this->scripts[$this->current_script]['MODE'] != "Source-Only"){
           if(isset($_POST['View_Source'])){
