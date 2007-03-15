@@ -377,6 +377,7 @@ class My_Tree extends Tree
                                 "sieve_keep",
                                 "sieve_require",
                                 "sieve_comment",
+                                "sieve_vacation",
                                 "sieve_stop",   
                                 "sieve_reject", 
                                 "sieve_fileinto",
