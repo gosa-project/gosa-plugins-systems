@@ -109,7 +109,7 @@ class Parser
 		$last = $this->tree_->getLastNode($parent_id);
 		if (!$semantics->validAfter($last['text']))
 		{
-			return $this->error_('"'. $token['text'] .'" may not appear after "'. $last['text'] .'"');
+			#return $this->error_('"'. $token['text'] .'" may not appear after "'. $last['text'] .'"');
 		}
 
 		// Process eventual arguments

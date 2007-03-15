@@ -163,7 +163,7 @@ class Semantics
 						array('occurrences' => '?', 'regex' => ':mime', 'name' => 'mime')
 					)),
 					array('class' => 'string', 'occurrences' => '1', 'values' => array(
-						array('occurrences' => '1', 'regex' => '".*"', 'name' => 'reason')
+						array('occurrences' => '1', 'regex' => '.*', 'name' => 'reason')
 					))
 				)
 			);
@@ -479,6 +479,7 @@ class Semantics
 		$arg = &$this->s_['arguments'][0];
 		foreach ($arg['values'] as $val)
 		{
+
 			if (preg_match('/^'. $val['regex'] .'$/m', $text))
 			{
 				// Check if the argument value needs a 'require'
