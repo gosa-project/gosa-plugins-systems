@@ -7,9 +7,10 @@
 			<input type='submit' name='Save_Copy' value="{t}Save copy{/t}">
 			<input type='submit' name='Import_Copy' value="{t}Import copy{/t}">
 
-			
-			<input type='submit' name='View_Source' value="{t}View source{/t}">
-			<input type='submit' name='View_Structured' value="{t}View structured{/t}">
+			{if $Mode != "Source-Only"}			
+				<input type='submit' name='View_Source' value="{t}View source{/t}">
+				<input type='submit' name='View_Structured' value="{t}View structured{/t}">
+			{/if}
 		</td>
 	</tr>
 	<tr>

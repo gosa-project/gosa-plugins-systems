@@ -91,13 +91,17 @@ class sieveManagement extends plugin
       }
 
       $this->scripts[$key]['SCRIPT'] = $script;
+      $this->scripts[$key]['ORIG_SCRIPT'] = $script;
       $this->scripts[$key]['MSG']   = "";
       $ret = $p->parse($script);
       if(!$ret){
-        $this->scripts[$key]['MSG']   = "<font color='red'>".$p->status_text."</font>";
-        $this->scripts[$key]['STATUS'] = _("Parse failed")."<font color='red'>".$p->status_text."</font>";
+        $this->scripts[$key]['STATUS']   = FALSE;
+        $this->scripts[$key]['MODE']    = "Source-Only";
+        $this->scripts[$key]['MSG'] = _("Parse failed")."<font color='red'>".$p->status_text."</font>";
       }else{
-        $this->scripts[$key]['STATUS'] = _("Parse successful");
+        $this->scripts[$key]['STATUS']   = TRUE;
+        $this->scripts[$key]['MODE']    = "Structured";
+        $this->scripts[$key]['MSG'] = _("Parse successful");
       }
       $this->scripts[$key]['PARSER'] = $p;
       $this->scripts[$key]['EDITED'] = FALSE;
@@ -143,14 +147,18 @@ class sieveManagement extends plugin
         $p = new My_Parser;
 
         $sc['SCRIPT'] = $script;
+        $sc['ORIG_SCRIPT'] = $script;
         $sc['MSG']   = "";
   
         $ret = $p->parse($script);
         if(!$ret){
-          $sc['MSG']   = "<font color='red'>".$p->status_text."</font>";
-          $sc['STATUS'] = _("Parse failed")."<font color='red'>".$p->status_text."</font>";
+          $sc['STATUS']   = FALSE;
+          $sc['MODE']    = "Source-Only";
+          $sc['MSG'] = _("Parse failed")."<font color='red'>".$p->status_text."</font>";
         }else{
-          $sc['STATUS'] = _("Parse successful");
+          $sc['STATUS']   = TRUE;
+          $sc['MODE']    = "Strucktured";
+          $sc['MSG'] = _("Parse successful");
         }
         $sc['PARSER'] = $p;
         $sc['EDITED'] = TRUE;
@@ -262,42 +270,51 @@ class sieveManagement extends plugin
       $chk = $this->current_handler->check();
       $chk =array();
       if(!count($chk)){
-        $this->scripts[$this->current_script]['PARSER'] = $this->current_handler;
-        $this->scripts[$this->current_script]['EDITED'] = TRUE;
-        $this->current_handler = NULL; 
+
+        $sc = $this->scripts[$this->current_script]['SCRIPT'];
+        $p = new My_Parser;
+        if($p -> parse($sc)){
+
+          if($this->scripts[$this->current_script]['MODE'] == "Source-Only"){
+            $this->scripts[$this->current_script]['MODE'] = "Source";
+          }
+  
+          $this->scripts[$this->current_script]['PARSER'] = $p;
+          $this->scripts[$this->current_script]['EDITED'] = TRUE;
+          $this->scripts[$this->current_script]['STATUS'] = TRUE;
+          $this->scripts[$this->current_script]['MSG'] = _("Edited");
+          $this->current_handler = NULL;
+        }else{
+          print_red($p->status_text);;
+        }
       }else{
-        print_a($chk);
         print_red(_("Please fix all errors before saving."));
       }
     }
 
-    /* Create output for currently opened sieve script */
+
+    /*************
+     * Display edit dialog 
+     *************/
+
+    /* Display edit dialog, depending on Mode display different uis
+     */
     if($this->current_handler){
 
-      if(isset($_POST['script_contents']) && $this->current_handler->tree_->Mode == "Source"){
-        $script = stripslashes($_POST['script_contents']);
+      $current = $this->scripts[$this->current_script];
 
-        $new_p = new My_Parser;
-        if($new_p->parse($script)){
-          $this->current_handler->parse($script);
-          $this->current_handler->tree_->Mode = "Source";
-        }else{
-          print_red($new_p->status_text);
-          $this->current_handler->tree_->Mode = "Source";
-        }
+      /* Create html results */
+      $smarty = get_smarty();
+      $smarty->assign("Mode",$current['MODE']);
+      if($current['MODE'] == "Structured"){
+        $smarty->assign("Contents",$this->current_handler->tree_->execute());
+      }else{
+        $smarty->assign("Contents",$current['SCRIPT']);
       }
-
-      if(isset($_POST['View_Source'])){
-        $this->current_handler->tree_->Mode = "Source";
-      }
-
-      if(isset($_POST['View_Structured'])){
-        $this->current_handler->tree_->Mode = "Structured";
-      }
-
-      $ret = $this->current_handler->execute();
+      $ret = $smarty->fetch(get_template_path("templates/edit_frame_base.tpl",TRUE,dirname(__FILE__)));
       return($ret);
     }
+
 
     /* Create list of available sieve scripts 
      */
@@ -314,7 +331,7 @@ class sieveManagement extends plugin
                         "attach" => "style='width:20px;'");  
       }
       $field2 = array("string" => $script['NAME']);  
-      $field3 = array("string" => $script['STATUS']);
+      $field3 = array("string" => $script['MSG']);
       $field4 = array("string" => _("Script length")."&nbsp;:&nbsp;".strlen($script['SCRIPT']));
 
       if($edited){
@@ -353,6 +370,32 @@ class sieveManagement extends plugin
   function save_object()
   {
     if($this->current_handler){
+
+      $Mode = $this->scripts[$this->current_script]['MODE'];
+      $skip_mode_change = false;
+      if(in_array($Mode,array("Source-Only","Source"))){
+        if(isset($_POST['script_contents'])){
+          $sc = stripslashes($_POST['script_contents']);
+          $this->scripts[$this->current_script]['SCRIPT'] = $sc;
+          $p = new My_Parser;
+          if($p -> parse($sc)){
+            $this->current_handler = $p;
+          } else {
+            print_red($p->status_text);
+            $skip_mode_change = TRUE;
+          }
+        }
+      }
+      if(!$skip_mode_change){
+        if($this->scripts[$this->current_script]['MODE'] != "Source-Only"){
+          if(isset($_POST['View_Source'])){
+            $this->scripts[$this->current_script]['MODE'] = "Source";
+          }
+          if(isset($_POST['View_Structured'])){
+            $this->scripts[$this->current_script]['MODE'] = "Structured";
+          }
+        }
+      }
       $this->current_handler->save_object();
     }
   }
@@ -379,16 +422,15 @@ class sieveManagement extends plugin
 
     foreach($this->scripts as $key => $script){
       if($script['EDITED']){
-        $data = $script['PARSER']->get_sieve_script();
+        $data = $this->scripts[$key]['SCRIPT'];
         if(!$this->sieve_handle->sieve_sendscript($script['NAME'], $data)){
           gosa_log("Failed to save sieve script named '".$script['NAME']."': ".to_string($this->sieve_handle->error_raw));
           $everything_went_fine = FALSE;
           print_red(to_string($this->sieve_handle->error_raw));
-          $this->scripts[$key]['STATUS'] = "<font color='red'>".
+          $this->scripts[$key]['MSG'] = "<font color='red'>".
                                            _("Failed to save sieve script").": ".
                                            to_string($this->sieve_handle->error_raw).
                                            "</font>";
-          echo nl2br($data);
         }
       }
     }
