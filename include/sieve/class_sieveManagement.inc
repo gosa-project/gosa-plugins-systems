@@ -37,6 +37,7 @@ class sieveManagement extends plugin
   var $script_to_delete =-1;
   var $sieve_handle = NULL; 
   var $Script_Error = "";
+  var $Sieve_Error = "";
   var $create_script = FALSE;
 
   /* To add new elements we need to know 
@@ -50,6 +51,28 @@ class sieveManagement extends plugin
   var $add_element_type   = "sieve_comment";
 
 
+  function get_sieve()
+  {
+    /* Connect to sieve class and try to get all available sieve scripts */
+    $cfg=  $this->config->data['SERVERS']['IMAP'][$this->parent->gosaMailServer];
+    $this->Sieve_Error = "";
+  
+    /* Log into the mail server */
+    $sieve= new sieve(
+        $cfg["sieve_server"], 
+        $cfg["sieve_port"], 
+        $this->parent->uid, 
+        $cfg["password"], 
+        $cfg["admin"]);
+
+    /* Try to login */
+    if (!$sieve->sieve_login()){
+      $this->Sieve_Error = $sieve->error_raw;
+      return(FALSE);
+    }
+    return($sieve);
+  }
+
   /* Initialize the class and load all sieve scripts 
    *  try to parse them and display errors 
    */ 
@@ -58,20 +81,15 @@ class sieveManagement extends plugin
     $this->parent = $parent;
     plugin::plugin($config,$dn);
 
-
-    /* Connect to sieve class and try to get all available sieve scripts */
-    $cfg=  $this->config->data['SERVERS']['IMAP'][$this->parent->gosaMailServer];
-    
-    /* Log into the mail server */
-    $sieve= new sieve($cfg["sieve_server"], $cfg["sieve_port"], $this->parent->uid,
-        $cfg["password"], $cfg["admin"]);
-
-    /* Try to login */
-    if (!$sieve->sieve_login()){
-      print_red(sprintf(_("Can't log into SIEVE server. Server says '%s'."),
-            to_string($sieve->error_raw)));
+    /* Get sieve */
+    if(!$sieve = $this->get_sieve()){
+      print_red(
+        sprintf(
+          _("Can't log into SIEVE server. Server says '%s'."),
+          to_string($this->Sieve_Error)));
       return;
     }
+
 
     /* Get all sieve scripts names */
     if($sieve->sieve_listscripts()){
@@ -247,19 +265,13 @@ class sieveManagement extends plugin
         $script = preg_replace("/^active_script_/","",$name);
         $script = preg_replace("/_(x|y)/","",$script);
         $once = FALSE;
- 
-        /* Connect to sieve class and try to get all available sieve scripts */
-        $cfg=  $this->config->data['SERVERS']['IMAP'][$this->parent->gosaMailServer];
-        $this->sieve_handle=
-          new sieve(  $cfg["sieve_server"],
-              $cfg["sieve_port"],
-              $this->parent->mail,
-              $cfg["password"],
-              $cfg["admin"]);
 
-        if (!$this->sieve_handle->sieve_login()){
-          print_red(sprintf(_("Can't log into SIEVE server. Server says '%s'."),to_string($this->sieve_handle->error_raw)));
-          return;
+        /* Get sieve */
+        if(!$sieve = $this->get_sieve()){
+          print_red(
+              sprintf(
+                _("Can't log into SIEVE server. Server says '%s'."),
+                to_string($this->Sieve_Error)));
         }
 
         /* Try to activate the given script and update 
@@ -299,17 +311,12 @@ class sieveManagement extends plugin
         unset($this->scripts[$this->script_to_delete]);
       }else{
 
-        /* Connect to sieve class and try to get all available sieve scripts */
-        $cfg=  $this->config->data['SERVERS']['IMAP'][$this->parent->gosaMailServer];
-        $this->sieve_handle=
-          new sieve(  $cfg["sieve_server"],
-              $cfg["sieve_port"],
-              $this->parent->mail,
-              $cfg["password"],
-              $cfg["admin"]);
-        if (!$this->sieve_handle->sieve_login()){
-          print_red(sprintf(_("Can't log into SIEVE server. Server says '%s'."),to_string($this->sieve_handle->error_raw)));
-          return;
+        /* Get sieve */
+        if(!$sieve = $this->get_sieve()){
+          print_red(
+              sprintf(
+                _("Can't log into SIEVE server. Server says '%s'."),
+                to_string($this->Sieve_Error)));
         }
 
         if(!$this->sieve_handle->sieve_deletescript($this->scripts[$this->script_to_delete]['NAME'])){
