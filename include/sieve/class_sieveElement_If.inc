@@ -146,6 +146,11 @@ class sieve_if
       $parsed = $this->_parsed;
     }
 
+
+    if(!is_array($parsed)){
+      return;
+    }
+
     /* Walk through all elements */
     foreach($parsed as $key => $data){
 

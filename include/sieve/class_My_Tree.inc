@@ -21,34 +21,8 @@ class My_Tree extends Tree
   var $add_type         = "top";
   var $add_element_type = "";
   
-  var $Mode = "Structured";
-
   function execute()
   {
-    foreach($_POST as $name => $value){
-      if(preg_match("/Add_Test_Object_/",$name)) {
-        $name = preg_replace("/Add_Test_Object_/","",$name);
-        $name = preg_replace("/_(x|y)$/","",$name);
-    
-        $test_types_to_add = array(
-          "address" =>_("Address"),
-          "header"  =>_("Header"),
-          "envelope"=>_("Envelope"),
-          "size"    =>_("Size"),
-          "exists"  =>_("Exists"),
-          "allof"   =>_("All of"),
-          "anyof"   =>_("Any of"),
-          "true"    =>_("True"),
-          "false"   =>_("False"));
- 
-        $smarty = get_smarty();
-        $smarty->assign("ID",$name); 
-        $smarty->assign("test_types_to_add",$test_types_to_add); 
-        $ret = $smarty->fetch(get_template_path("templates/select_test_type.tpl",TRUE,dirname(__FILE__)));
-        return($ret);
-      }
-    }
-
     return($this->dump());
   }
 
@@ -61,98 +35,6 @@ class My_Tree extends Tree
     /**************
      * Handle new elements 
      **************/
-
-    if(isset($_POST['select_new_element_type_cancel'])){
-      $this->add_new = FALSE;
-    }
-
-    if($this->add_new){
-  
-      $element_types= array(
-          "sieve_keep"      => _("Keep"),
-          "sieve_comment"   => _("Comment"),
-          "sieve_fileinto"  => _("File into"),
-          "sieve_keep"      => _("Keep"),
-          "sieve_discard"   => _("Discard"),
-          "sieve_redirect"  => _("Redirect"),
-          "sieve_reject"    => _("Reject"),
-          "sieve_require"   => _("Require"),
-          "sieve_stop"      => _("Stop"),
-          "sieve_vacation"  => _("Vacation message"),
-          "sieve_if"        => _("If"));
-
-
-      /* Element selected */
-      if(isset($_POST['element_type']) && isset($element_types[$_POST['element_type']])){
-        $this->add_element_type = $_POST['element_type'];
-      }
-
-      /* Create new element and add it at the selected position */
-      if(isset($_POST['select_new_element_type'])){
-
-        $ele[] = new $this->add_element_type(NULL, preg_replace("/[^0-9]/","",microtime()));
-        if($this->add_element_type == "sieve_if"){
-          $ele[] = new sieve_block_start(NULL,preg_replace("/[^0-9]/","",microtime()));
-          $ele[] = new sieve_block_end(NULL,preg_replace("/[^0-9]/","",microtime()));
-        }
-        $start = $end = array();
-        $found = false;  
-
-        /* Add above current element*/
-        if($this->add_type == "top"){
-          foreach($this->pap as $key => $obj){
-            if($obj->object_id == $this->add_new_id){
-              $found = true;
-            }
-            if(!$found){
-              $start[] = $obj;
-            }else{
-              $end[] = $obj;
-            }
-          }    
-        }else{
-        /* Add below current element */
-          foreach($this->pap as $key => $obj){
-            if(!$found){
-              $start[] = $obj;
-            }else{
-              $end[] = $obj;
-            }
-            if($obj->object_id == $this->add_new_id){
-              $found = true;
-            }
-          }    
-        }
-
-        /* Only add, if current element could be located */
-        if($found){
-          $new = array();
-          foreach($start as $obj){
-            $new[] = $obj;
-          }      
-          foreach($ele as $el){
-            $new[] = $el;
-          }
-          foreach($end as $obj){
-            $new[] = $obj;
-          }
-          $this->pap = $new;
-          $this->add_new = FALSE;
-        }else{
-          print_red(_("Something went wrong while adding a new entry."));
-        }
-      }
-
-    }
-
-    /* Only display select dialog if it is necessary */
-    if($this->add_new){  
-      $smarty = get_smarty();
-      $smarty->assign("element_types",$element_types );
-      $smarty->assign("element_type",$this->add_element_type);
-      $str = $smarty->fetch(get_template_path("templates/add_element.tpl",TRUE,dirname(__FILE__)));
-      return($str);
-    }
 
     /* Only parse the tokens once */
     if(!count($this->pap)){
@@ -286,41 +168,7 @@ class My_Tree extends Tree
           $this->pap[$key]->save_object();
         }
       }
-
-      $once = TRUE;
-      foreach($_POST as $name => $value){
-
-        if(isset($obj->object_id) && preg_match("/^Remove_Object_".$obj->object_id."_/",$name) && $once){
-          $once = FALSE;
-          $this->remove_object($key);
-        }
-        if(isset($obj->object_id) && preg_match("/^Move_Up_Object_".$obj->object_id."_/",$name) && $once){
-          $this->move_up_down($key,"up");
-          $once = FALSE;
-        }
-        if(isset($obj->object_id) && preg_match("/^Move_Down_Object_".$obj->object_id."_/",$name) && $once){
-          $this->move_up_down($key,"down");
-          $once = FALSE;
-        }
-        if(isset($obj->object_id) && preg_match("/^Add_Object_Top_".$obj->object_id."_/",$name) && $once){
-          $this->add_new_object($obj->object_id,"top");
-          $once = FALSE;
-        }
-        if(isset($obj->object_id) && preg_match("/^Add_Object_Bottom_".$obj->object_id."_/",$name) && $once){
-          $this->add_new_object($obj->object_id,"bottom");
-          $once = FALSE;
-        }
-      }
     }
-  }
-
-
-  /* Add a new object at the given position */
-  function add_new_object($id,$top_bottom = "bottom")
-  {
-    $this->add_new    = TRUE;
-    $this->add_new_id = $id;
-    $this->add_type   = $top_bottom;
   }
 
 

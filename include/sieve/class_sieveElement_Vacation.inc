@@ -14,6 +14,8 @@ class sieve_vacation
 
   function sieve_vacation($data,$object_id)
   {
+
+    $this->object_id = $object_id;
     /* Usage:   vacation [":days" number] [":subject" string]
        [":from" string] [":addresses" string-list]
        [":mime"] [":handle" string] <reason: string> */

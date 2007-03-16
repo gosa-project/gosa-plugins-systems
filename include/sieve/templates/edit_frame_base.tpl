@@ -1,5 +1,5 @@
-<table style='width:100%;' cellspacing=0 cellpadding=0>
 
+<table style='width:100%;' cellspacing=0 cellpadding=0>
 	<tr>
 		<td style='background-color: #CCCCCC; padding:5px;'>
 			
@@ -15,6 +15,17 @@
 	</tr>
 	<tr>
 		<td style='background-color: #FFFFFF; border: solid 2px #CCCCCC; '>
+
+			{if $Script_Error != ""}
+			<table style='width:100%;' cellspacing=0 cellpadding=0>	
+				<tr>	
+					<td style='background-color: orange;padding:5px;'>
+						<b>{$Script_Error}</b>
+					</td>
+				</tr>
+			</table>
+			{/if}
+
 
 			{if $Mode == "Structured"}
 				{$Contents}

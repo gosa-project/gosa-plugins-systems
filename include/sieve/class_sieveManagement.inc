@@ -36,8 +36,19 @@ class sieveManagement extends plugin
   var $current_handler = NULL;
   var $script_to_delete =-1;
   var $sieve_handle = NULL; 
-
+  var $Script_Error = "";
   var $create_script = FALSE;
+
+  /* To add new elements we need to know 
+   *  Where to the element                  -> add_new_id
+   *  Whould we add above or below this id  -> add_above_below
+   *  What kind of element should we add    -> add_element_type
+   */
+  var $add_new_element    = FALSE;
+  var $add_new_id         = -1;
+  var $add_above_below    = "below";
+  var $add_element_type   = "sieve_comment";
+
 
   /* Initialize the class and load all sieve scripts 
    *  try to parse them and display errors 
@@ -90,6 +101,7 @@ class sieveManagement extends plugin
         $script.=$line;
       }
 
+      $this->scripts[$key]['IS_NEW'] = FALSE;;
       $this->scripts[$key]['SCRIPT'] = $script;
       $this->scripts[$key]['ORIG_SCRIPT'] = $script;
       $this->scripts[$key]['MSG']   = "";
@@ -114,43 +126,69 @@ class sieveManagement extends plugin
    */
   function execute()
   {
+    /***************
+     * Create a new Script 
+     ***************/
+
+    /* Force opening the add script dialog */
     if(isset($_POST['create_new_script'])){
       $this->create_script = TRUE;
     }
 
+    /* Close add script dialog, without adding a new one */
     if(isset($_POST['create_script_cancel'])){
       $this->create_script = FALSE;
     }
 
+    /* Display create script dialog 
+     *  handle posts, display warnings if specified 
+     *  name is not useable. 
+     * Create a new script with given name
+     */
     if($this->create_script){
-      $smarty = get_smarty();
     
+      /* Set initial name or used posted name if available */
       $name = "";
       if(isset($_POST['NewScriptName'])){
-        $name = $_POST['NewScriptName'];
+        $name = trim($_POST['NewScriptName']);
       }
-  
+ 
+      /* Check given name */ 
       $err = "";
-      if($name != strtolower($name)){
-        $err = _("Only lower case names are allowed here.");
-      }
-  
-      if(preg_match("/[^a-z]/i",$name)){
-        $err = _("Only a-z are allowed in script names.");
+
+      /* Is given name in lower case characters ? */
+      if(isset($_POST['create_script_save'])){
+        if(!strlen($name)){
+          $err = _("You should specify a name for your new script.");
+        }
+        /* Is given name in lower case characters ? */
+        if($name != strtolower($name)){
+          $err = _("Only lower case names are allowed here.");
+        }
+
+        /* Only chars are allowed here */
+        if(preg_match("/[^a-z]/i",$name)){
+          $err = _("Only a-z are allowed in script names.");
+        }
       }
 
+      /* Create script if everything is ok */
       if($this->create_script && isset($_POST['create_script_save']) && $err == "" ){
+
+        /* Close dialog */
         $this->create_script = FALSE;
 
+        /* Script contents to use */
         $script = "/*New script */".
                   "stop;";
-        $p = new My_Parser;
 
+        /* Create a new parser and initialize default values */
+        $p = new My_Parser;
+        $ret = $p->parse($script);
         $sc['SCRIPT'] = $script;
         $sc['ORIG_SCRIPT'] = $script;
+        $sc['IS_NEW'] = TRUE;
         $sc['MSG']   = "";
-  
-        $ret = $p->parse($script);
         if(!$ret){
           $sc['STATUS']   = FALSE;
           $sc['MODE']    = "Source-Only";
@@ -164,16 +202,28 @@ class sieveManagement extends plugin
         $sc['EDITED'] = TRUE;
         $sc['ACTIVE'] = FALSE;
         $sc['NAME']   = $name;
+      
+        /* Add script */
         $this->scripts[$name] = $sc;
       }else{
+      
+        /* Display dialog to enter new script name */
+        $smarty = get_smarty();
         $smarty->assign("NewScriptName",$name);
         $smarty->assign("Error",$err);
         return($smarty->fetch(get_template_path("templates/create_script.tpl",TRUE,dirname(__FILE__))));
       }
     }
 
+
+    /*************
+     * Handle several posts 
+     *************/
+
     $once = TRUE;
     foreach($_POST as $name => $value){
+
+      /* Edit script requested */
       if(preg_match("/^editscript_/",$name) && $once && !$this->current_handler){
         $script = preg_replace("/^editscript_/","",$name);
         $script = preg_replace("/_(x|y)/","",$script);
@@ -182,6 +232,8 @@ class sieveManagement extends plugin
         $this->current_script = $script;
         $this->current_handler = $this->scripts[$script]['PARSER'];
       }
+
+      /* remove script requested */
       if(preg_match("/^delscript_/",$name) && $once && !$this->current_handler){
         $script = preg_replace("/^delscript_/","",$name);
         $script = preg_replace("/_(x|y)/","",$script);
@@ -189,6 +241,8 @@ class sieveManagement extends plugin
  
         $this->script_to_delete = $script;  
       }
+
+      /* Activate script */
       if(preg_match("/^active_script_/",$name) && $once && !$this->current_handler){
         $script = preg_replace("/^active_script_/","",$name);
         $script = preg_replace("/_(x|y)/","",$script);
@@ -208,12 +262,13 @@ class sieveManagement extends plugin
           return;
         }
 
+        /* Try to activate the given script and update 
+         *  class script array. 
+         */
         if(!$this->sieve_handle->sieve_setactivescript($this->scripts[$script]['NAME'])){
           print_red(sprintf(_("Can't activate sieve script on server. Server says '%s'."),to_string($this->sieve_handle->error_raw)));
         }else{
-
           foreach($this->scripts as $key => $data){
-
             if($key == $script){
               $this->scripts[$key]['ACTIVE'] = TRUE;
             }else{
@@ -224,41 +279,61 @@ class sieveManagement extends plugin
       }
     }
 
+    
+    /*************
+     * Remove script handling 
+     *************/
+
+    /* Remove aborted */
     if(isset($_POST['delete_cancel'])){
       $this->script_to_delete = -1;
     }
 
+    /* Remove confirmed */
     if(isset($_POST['delete_script_confirm'])){
 
-      /* Connect to sieve class and try to get all available sieve scripts */
-      $cfg=  $this->config->data['SERVERS']['IMAP'][$this->parent->gosaMailServer];
-      $this->sieve_handle=
-        new sieve(  $cfg["sieve_server"],
-            $cfg["sieve_port"],
-            $this->parent->mail,
-            $cfg["password"],
-            $cfg["admin"]);
-      if (!$this->sieve_handle->sieve_login()){
-        print_red(sprintf(_("Can't log into SIEVE server. Server says '%s'."),to_string($this->sieve_handle->error_raw)));
-        return;
-      }
+      $script = $this->scripts[$this->script_to_delete];
 
-      if(!$this->sieve_handle->sieve_deletescript($this->scripts[$this->script_to_delete]['NAME'])){
-        print_red(sprintf(_("Can't remove sieve script from server. Server says '%s'."),to_string($this->sieve_handle->error_raw)));
-      }else{
+      /* Just remove from array if it is a new script */
+      if($script['IS_NEW']){
         unset($this->scripts[$this->script_to_delete]);
+      }else{
+
+        /* Connect to sieve class and try to get all available sieve scripts */
+        $cfg=  $this->config->data['SERVERS']['IMAP'][$this->parent->gosaMailServer];
+        $this->sieve_handle=
+          new sieve(  $cfg["sieve_server"],
+              $cfg["sieve_port"],
+              $this->parent->mail,
+              $cfg["password"],
+              $cfg["admin"]);
+        if (!$this->sieve_handle->sieve_login()){
+          print_red(sprintf(_("Can't log into SIEVE server. Server says '%s'."),to_string($this->sieve_handle->error_raw)));
+          return;
+        }
+
+        if(!$this->sieve_handle->sieve_deletescript($this->scripts[$this->script_to_delete]['NAME'])){
+          print_red(sprintf(_("Can't remove sieve script from server. Server says '%s'."),to_string($this->sieve_handle->error_raw)));
+        }else{
+          unset($this->scripts[$this->script_to_delete]);
+        }
       }
       $this->script_to_delete = -1;
     }
 
+    /* Display confirm dialog */
     if($this->script_to_delete != -1){
       $smarty = get_smarty();
       $smarty->assign("Warning",
           sprintf(_("You are going to remove the sieve script '%s' from your mail server."),
             $this->scripts[$this->script_to_delete]['NAME']));
-
       return($smarty->fetch(get_template_path("templates/remove_script.tpl",TRUE,dirname(__FILE__))));
     }
+
+
+    /**************
+     * Save script changes 
+     **************/
 
     /* Abort saving */
     if(isset($_POST['cancel_sieve_changes'])){
@@ -300,6 +375,140 @@ class sieveManagement extends plugin
      */
     if($this->current_handler){
 
+      /****
+       * Add new element to ui
+       ****/
+
+      /* Abort add dialog */ 
+      if(isset($_POST['select_new_element_type_cancel'])){
+        $this->add_new_element = FALSE;
+      }
+
+      /* Add a new element */
+      if($this->add_new_element){
+
+        $element_types= array(
+            "sieve_keep"      => _("Keep"),
+            "sieve_comment"   => _("Comment"),
+            "sieve_fileinto"  => _("File into"),
+            "sieve_keep"      => _("Keep"),
+            "sieve_discard"   => _("Discard"),
+            "sieve_redirect"  => _("Redirect"),
+            "sieve_reject"    => _("Reject"),
+            "sieve_require"   => _("Require"),
+            "sieve_stop"      => _("Stop"),
+            "sieve_vacation"  => _("Vacation message"),
+            "sieve_if"        => _("If"));
+
+
+        /* Element selected */
+        if(isset($_POST['element_type']) && isset($element_types[$_POST['element_type']])){
+          $this->add_element_type = $_POST['element_type'];
+        }
+
+        /* Create new element and add it to
+         *  the selected position 
+         */
+        if(isset($_POST['select_new_element_type'])){
+
+          /* Create elements we should add */
+          $ele[] = new $this->add_element_type(NULL, preg_replace("/[^0-9]/","",microtime()));
+          if($this->add_element_type == "sieve_if"){
+            $ele[] = new sieve_block_start(NULL,preg_replace("/[^0-9]/","",microtime()));
+            $ele[] = new sieve_block_end(NULL,preg_replace("/[^0-9]/","",microtime()));
+          }
+          $start = $end = array();
+          $found = false;
+          $data = $this->current_handler->tree_->pap;
+
+          /* Add above current element*/
+          if($this->add_above_below == "above"){
+            foreach($data as $key => $obj){
+              if($obj->object_id == $this->add_new_id){
+                $found = true;
+              }
+              if(!$found){
+                $start[] = $obj;
+              }else{
+                $end[] = $obj;
+              }
+            }
+          }else{
+            /* Add below current element */
+            foreach($data as $key => $obj){
+              if(!$found){
+                $start[] = $obj;
+              }else{
+                $end[] = $obj;
+              }
+              if($obj->object_id == $this->add_new_id){
+                $found = true;
+              }
+            }
+          }
+
+          /* Only add, if current element could be located */
+          if($found){
+            $new = array();
+            foreach($start as $obj){
+              $new[] = $obj;
+            }
+            foreach($ele as $el){
+              $new[] = $el;
+            }
+            foreach($end as $obj){
+              $new[] = $obj;
+            }
+            $data= $new;
+            $this->current_handler->tree_->pap = $data;
+            $this->add_new_element = FALSE;
+          }else{
+            print_red(_("Something went wrong while adding a new entry."));
+          }
+        }
+      }
+
+      /* Only display select dialog if it is necessary */
+      if($this->add_new_element){
+        $smarty = get_smarty();
+        $smarty->assign("element_types",$element_types );
+        $smarty->assign("element_type",$this->add_element_type);
+        $str = $smarty->fetch(get_template_path("templates/add_element.tpl",TRUE,dirname(__FILE__)));
+        return($str);
+      }
+
+
+
+      /****************
+       * Handle test posts 
+       ****************/
+
+      /* handle some special posts from test elements 
+       */
+      foreach($_POST as $name => $value){
+        if(preg_match("/^Add_Test_Object_/",$name)) {
+          $name = preg_replace("/^Add_Test_Object_/","",$name);
+          $name = preg_replace("/_(x|y)$/","",$name);
+
+          $test_types_to_add = array(
+              "address" =>_("Address"),
+              "header"  =>_("Header"),
+              "envelope"=>_("Envelope"),
+              "size"    =>_("Size"),
+              "exists"  =>_("Exists"),
+              "allof"   =>_("All of"),
+              "anyof"   =>_("Any of"),
+              "true"    =>_("True"),
+              "false"   =>_("False"));
+
+          $smarty = get_smarty();
+          $smarty->assign("ID",$name);
+          $smarty->assign("test_types_to_add",$test_types_to_add);
+          $ret = $smarty->fetch(get_template_path("templates/select_test_type.tpl",TRUE,dirname(__FILE__)));
+          return($ret);
+        }
+      }
+
       $current = $this->scripts[$this->current_script];
 
       /* Create html results */
@@ -310,6 +519,7 @@ class sieveManagement extends plugin
       }else{
         $smarty->assign("Contents",$current['SCRIPT']);
       }
+      $smarty->assign("Script_Error",$this->Script_Error);
       $ret = $smarty->fetch(get_template_path("templates/edit_frame_base.tpl",TRUE,dirname(__FILE__)));
       return($ret);
     }
@@ -370,40 +580,82 @@ class sieveManagement extends plugin
   {
     if($this->current_handler){
 
-      $Mode = $this->scripts[$this->current_script]['MODE'];
-      $skip_mode_change = false;
-      if(in_array($Mode,array("Source-Only","Source"))){
-        if(isset($_POST['script_contents'])){
-          $sc = stripslashes($_POST['script_contents']);
+      /* Check if there is an add object requested 
+       */
+      $data = $this->current_handler->tree_->pap;
+      $once = TRUE;
+      foreach($_POST as $name => $value){
+        foreach($data as $key => $obj){
+          if(isset($obj->object_id) && preg_match("/^Add_Object_Top_".$obj->object_id."_/",$name) && $once){
+            $once = FALSE;
+            $this->add_new_element    = TRUE;
+            $this->add_new_id         = $obj->object_id;
+            $this->add_above_below    = "above";
+          }
+          if(isset($obj->object_id) && preg_match("/^Add_Object_Bottom_".$obj->object_id."_/",$name) && $once){
+            $once = FALSE;
+            $this->add_new_element    = TRUE;
+            $this->add_new_id         = $obj->object_id;
+            $this->add_above_below    = "below";
+          }
+        
+          if(isset($obj->object_id) && preg_match("/^Remove_Object_".$obj->object_id."_/",$name) && $once){
+            $once = FALSE;
+            $this->current_handler->tree_->remove_object($key);
+          }
+          if(isset($obj->object_id) && preg_match("/^Move_Up_Object_".$obj->object_id."_/",$name) && $once){
+            $this->current_handler->tree_->move_up_down($key,"up");
+            $once = FALSE;
+          }
+          if(isset($obj->object_id) && preg_match("/^Move_Down_Object_".$obj->object_id."_/",$name) && $once){
+            $this->current_handler->tree_->move_up_down($key,"down");
+            $once = FALSE;
+          }
+        }
+      }
+      
+      /* Skip Mode changes and Parse tests 
+       *  if we are currently in a subdialog 
+       */
+      if(!$this->add_new_element) {
+
+        $Mode = $this->scripts[$this->current_script]['MODE'];
+        $skip_mode_change = false;
+        if(in_array($Mode,array("Source-Only","Source"))){
+          if(isset($_POST['script_contents'])){
+            $sc = stripslashes($_POST['script_contents']);
+            $this->scripts[$this->current_script]['SCRIPT'] = $sc;
+            $p = new My_Parser;
+            if($p -> parse($sc)){
+              $this->current_handler = $p;
+              $this->Script_Error = "";
+            } else {
+              $this->Script_Error = $p->status_text;
+              $skip_mode_change = TRUE;
+            }
+          }
+        }
+        if(in_array($Mode,array("Structured"))){
+          $this->current_handler->save_object();
+          $sc = $this->current_handler->get_sieve_script();
           $this->scripts[$this->current_script]['SCRIPT'] = $sc;
           $p = new My_Parser;
           if($p -> parse($sc)){
             $this->current_handler = $p;
+            $this->Script_Error = "";
           } else {
-            print_red($p->status_text);
+            $this->Script_Error = $p->status_text;
             $skip_mode_change = TRUE;
           }
         }
-      }
-      if(in_array($Mode,array("Structured"))){
-        $this->current_handler->save_object();
-        $sc = $this->current_handler->get_sieve_script();
-        $this->scripts[$this->current_script]['SCRIPT'] = $sc;
-        $p = new My_Parser;
-        if($p -> parse($sc)){
-          $this->current_handler = $p;
-        } else {
-          print_red($p->status_text);
-          $skip_mode_change = TRUE;
-        }
-      }
-      if(!$skip_mode_change){
-        if($this->scripts[$this->current_script]['MODE'] != "Source-Only"){
-          if(isset($_POST['View_Source'])){
-            $this->scripts[$this->current_script]['MODE'] = "Source";
-          }
-          if(isset($_POST['View_Structured'])){
-            $this->scripts[$this->current_script]['MODE'] = "Structured";
+        if(!$skip_mode_change){
+          if($this->scripts[$this->current_script]['MODE'] != "Source-Only"){
+            if(isset($_POST['View_Source'])){
+              $this->scripts[$this->current_script]['MODE'] = "Source";
+            }
+            if(isset($_POST['View_Structured'])){
+              $this->scripts[$this->current_script]['MODE'] = "Structured";
+            }
           }
         }
       }
