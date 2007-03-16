@@ -50,6 +50,10 @@ class sieveManagement extends plugin
   var $add_above_below    = "below";
   var $add_element_type   = "sieve_comment";
 
+  /* If this variable is TRUE, this indicates that we have the 
+   *  import dialog opened. 
+   */
+  var $Import_Script = FALSE;
 
   /* Initialize the class and load all sieve scripts 
    *  try to parse them and display errors 
@@ -323,7 +327,7 @@ class sieveManagement extends plugin
                 to_string($this->Sieve_Error)));
         }
 
-        if(!$this->sieve_handle->sieve_deletescript($this->scripts[$this->script_to_delete]['NAME'])){
+        if(!$sieve->sieve_deletescript($this->scripts[$this->script_to_delete]['NAME'])){
           print_red(sprintf(_("Can't remove sieve script from server. Server says '%s'."),to_string($this->sieve_handle->error_raw)));
         }else{
           unset($this->scripts[$this->script_to_delete]);
@@ -385,6 +389,47 @@ class sieveManagement extends plugin
     /* Display edit dialog, depending on Mode display different uis
      */
     if($this->current_handler){
+
+        if(isset($_POST['Import_Script'])){
+          $this->Import_Script = TRUE;
+        }
+
+        if(isset($_POST['Import_Script_Cancel'])){
+          $this->Import_Script = FALSE;
+        }
+
+        if(isset($_POST['Import_Script_Save']) && isset($_FILES['Script_To_Import'])){
+
+          $file     = $_FILES['Script_To_Import'];
+
+          if($file['size'] == 0){
+            print_red(_("Specified file seams to empty."));
+          }elseif(!file_exists($file['tmp_name'])){
+            print_red(_("Upload failed, somehow nothing was uploaded or the temporary file can't be accessed."));
+          }elseif(!is_readable ($file['tmp_name'])){
+            print_red(sprintf(_("Can't open file '%s' to read uploaded file contents."),$file['tmp_name']));
+          }else{
+            
+            
+ 
+            $contents = file_get_contents($file['tmp_name']);
+           
+            $this->scripts[$this->current_script]['SCRIPT'] = $contents;
+            if(!$this->current_handler->parse($contents)){
+              $this->scripts[$this->current_script]['MODE'] = "Source";
+            }else{
+              $this->scripts[$this->current_script]['MODE'] = "Structured";
+            }
+            $this->Import_Script = FALSE;
+          }
+        }
+
+        if($this->Import_Script){
+          $smarty = get_smarty();
+          $str = $smarty->fetch(get_template_path("templates/import_script.tpl",TRUE,dirname(__FILE__)));
+          return($str);
+        }
+  
 
         /* Create dump of current sieve script */
         if(isset($_POST['Save_Copy'])){
@@ -522,7 +567,6 @@ class sieveManagement extends plugin
             $data= $new;
             $this->current_handler->tree_->pap = $data;
             $this->add_new_element = FALSE;
-          }else{
             print_red(_("Something went wrong while adding a new entry."));
           }
         }
@@ -677,7 +721,9 @@ class sieveManagement extends plugin
       /* Skip Mode changes and Parse tests 
        *  if we are currently in a subdialog 
        */
-      if(!$this->add_new_element) {
+      if(1==1 || !$this->add_new_element && !isset($_POST['Save_Copy']) && !$this->Import_Script &&!isset($_POST['add_type'])) {
+
+
 
         $Mode = $this->scripts[$this->current_script]['MODE'];
         $skip_mode_change = false;
@@ -687,7 +733,7 @@ class sieveManagement extends plugin
             $this->scripts[$this->current_script]['SCRIPT'] = $sc;
             $p = new My_Parser;
             if($p -> parse($sc)){
-              $this->current_handler = $p;
+#              $this->current_handler = $p;
               $this->Script_Error = "";
             } else {
               $this->Script_Error = $p->status_text;
@@ -701,7 +747,7 @@ class sieveManagement extends plugin
           $this->scripts[$this->current_script]['SCRIPT'] = $sc;
           $p = new My_Parser;
           if($p -> parse($sc)){
-            $this->current_handler = $p;
+ #           $this->current_handler = $p;
             $this->Script_Error = "";
           } else {
             $this->Script_Error = $p->status_text;
