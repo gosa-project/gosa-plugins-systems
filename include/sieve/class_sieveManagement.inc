@@ -285,8 +285,8 @@ class sieveManagement extends plugin
         /* Try to activate the given script and update 
          *  class script array. 
          */
-        if(!$this->sieve_handle->sieve_setactivescript($this->scripts[$script]['NAME'])){
-          print_red(sprintf(_("Can't activate sieve script on server. Server says '%s'."),to_string($this->sieve_handle->error_raw)));
+        if(!$sieve->sieve_setactivescript($this->scripts[$script]['NAME'])){
+          print_red(sprintf(_("Can't activate sieve script on server. Server says '%s'."),to_string($sieve->error_raw)));
         }else{
           foreach($this->scripts as $key => $data){
             if($key == $script){
@@ -328,7 +328,7 @@ class sieveManagement extends plugin
         }
 
         if(!$sieve->sieve_deletescript($this->scripts[$this->script_to_delete]['NAME'])){
-          print_red(sprintf(_("Can't remove sieve script from server. Server says '%s'."),to_string($this->sieve_handle->error_raw)));
+          print_red(sprintf(_("Can't remove sieve script from server. Server says '%s'."),to_string($sieve->error_raw)));
         }else{
           unset($this->scripts[$this->script_to_delete]);
         }
@@ -596,7 +596,7 @@ class sieveManagement extends plugin
           }
         }
 
-        if($add_else_elsif){
+        if($add_else_elsif && $this->add_above_below == "below"){
           $element_types['sieve_else'] = _("Else");
           $element_types['sieve_elsif'] = _("Else if");
         }
@@ -806,19 +806,12 @@ class sieveManagement extends plugin
 
   function save()
   {
-    /* Connect to sieve class and try to get all available sieve scripts */
-    $cfg=  $this->config->data['SERVERS']['IMAP'][$this->parent->gosaMailServer];
-
-    $this->sieve_handle= 
-        new sieve(  $cfg["sieve_server"], 
-                    $cfg["sieve_port"], 
-                    $this->parent->mail,
-                    $cfg["password"], 
-                    $cfg["admin"]);
-
-    if (!$this->sieve_handle->sieve_login()){
-      print_red(sprintf(_("Can't log into SIEVE server. Server says '%s'."),to_string($this->sieve_handle->error_raw)));
-      return;
+    /* Get sieve */
+    if(!$sieve = $this->get_sieve()){
+      print_red(
+          sprintf(
+            _("Can't log into SIEVE server. Server says '%s'."),
+            to_string($this->Sieve_Error)));
     }
 
     $everything_went_fine = TRUE;
@@ -826,13 +819,13 @@ class sieveManagement extends plugin
     foreach($this->scripts as $key => $script){
       if($script['EDITED']){
         $data = $this->scripts[$key]['SCRIPT'];
-        if(!$this->sieve_handle->sieve_sendscript($script['NAME'], $data)){
-          gosa_log("Failed to save sieve script named '".$script['NAME']."': ".to_string($this->sieve_handle->error_raw));
+        if(!$sieve->sieve_sendscript($script['NAME'], $data)){
+          gosa_log("Failed to save sieve script named '".$script['NAME']."': ".to_string($sieve->error_raw));
           $everything_went_fine = FALSE;
-          print_red(to_string($this->sieve_handle->error_raw));
+          print_red(to_string($sieve->error_raw));
           $this->scripts[$key]['MSG'] = "<font color='red'>".
                                            _("Failed to save sieve script").": ".
-                                           to_string($this->sieve_handle->error_raw).
+                                           to_string($sieve->error_raw).
                                            "</font>";
         }
       }
