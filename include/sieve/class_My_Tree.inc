@@ -16,11 +16,6 @@ class My_Tree extends Tree
   var $mode_stack = array();
   var $pap		= array();
 
-  var $add_new          = FALSE;
-  var $add_new_id       = 0;
-  var $add_type         = "top";
-  var $add_element_type = "";
-  
   function execute()
   {
     return($this->dump());
@@ -30,8 +25,6 @@ class My_Tree extends Tree
    */
   function dump()
   {
-    error_reporting(E_ALL);
-
     /**************
      * Handle new elements 
      **************/

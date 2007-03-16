@@ -457,11 +457,16 @@ class Semantics
 
 	function validToken($class, &$text, &$line)
 	{
+		global $requires_;
+
+		if(!is_array($requires_)){
+			$requires_ = array();
+		}
+
 		$name = $class . ($class != $text ? " $text" : '');
 
 		// Check if the command needs to be required
 		// TODO: move this to somewhere more appropriate
-		global $requires_;
 		if (isset($this->s_['requires']) &&
 		    !in_array('"'.$this->s_['requires'].'"', $requires_))
 		{
