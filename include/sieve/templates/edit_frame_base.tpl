@@ -3,8 +3,8 @@
 	<tr>
 		<td style='background-color: #CCCCCC; padding:5px;'>
 			
-			<input type='submit' name='Save_Copy' value="{t}Save copy{/t}">
-			<input type='submit' name='Import_Copy' value="{t}Import copy{/t}">
+			<input type='submit' name='Save_Copy' value="{t}Export{/t}">
+			<input type='submit' name='Import_Script' value="{t}Import{/t}">
 
 			{if $Mode != "Source-Only"}			
 				<input type='submit' name='View_Source' value="{t}View source{/t}">
