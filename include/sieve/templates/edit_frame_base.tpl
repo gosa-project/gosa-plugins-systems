@@ -3,7 +3,6 @@
 	<tr>
 		<td style='background-color: #CCCCCC; padding:5px;'>
 			
-			<input type='submit' name='Add_Element' value="{t}Add element{/t}">
 			<input type='submit' name='Save_Copy' value="{t}Save copy{/t}">
 			<input type='submit' name='Import_Copy' value="{t}Import copy{/t}">
 

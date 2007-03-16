@@ -10,27 +10,6 @@ class My_Parser extends Parser
 
 	function execute()
 	{
-		/* Create dump of current sieve script */
-		if(isset($_POST['Save_Copy'])){
-
-			/* force download dialog */
-			header("Content-type: application/tiff\n");
-			if (preg_match('/MSIE 5.5/', $HTTP_USER_AGENT) ||
-					preg_match('/MSIE 6.0/', $HTTP_USER_AGENT)) {
-				header('Content-Disposition: filename="dump.script"');
-			} else {
-				header('Content-Disposition: attachment; filename="dump.script"');
-			}
-			header("Content-transfer-encoding: binary\n");
-			header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
-			header("Last-Modified: ".gmdate("D, d M Y H:i:s")." GMT");
-			header("Cache-Control: no-cache");
-			header("Pragma: no-cache");
-			header("Cache-Control: post-check=0, pre-check=0");
-			echo $this->get_sieve_script();	
-			exit();	
-		}
-
 		$ret = $this->dumpParseTree();
 		return($ret);
 	}

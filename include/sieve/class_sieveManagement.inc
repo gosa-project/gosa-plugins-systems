@@ -51,28 +51,6 @@ class sieveManagement extends plugin
   var $add_element_type   = "sieve_comment";
 
 
-  function get_sieve()
-  {
-    /* Connect to sieve class and try to get all available sieve scripts */
-    $cfg=  $this->config->data['SERVERS']['IMAP'][$this->parent->gosaMailServer];
-    $this->Sieve_Error = "";
-  
-    /* Log into the mail server */
-    $sieve= new sieve(
-        $cfg["sieve_server"], 
-        $cfg["sieve_port"], 
-        $this->parent->uid, 
-        $cfg["password"], 
-        $cfg["admin"]);
-
-    /* Try to login */
-    if (!$sieve->sieve_login()){
-      $this->Sieve_Error = $sieve->error_raw;
-      return(FALSE);
-    }
-    return($sieve);
-  }
-
   /* Initialize the class and load all sieve scripts 
    *  try to parse them and display errors 
    */ 
@@ -137,6 +115,32 @@ class sieveManagement extends plugin
       $this->scripts[$key]['EDITED'] = FALSE;
     }
     $this->sieve_handle = $sieve;
+  }
+
+
+  /* Return a sieve class hanlde,
+   *  false if login fails
+   */
+  function get_sieve()
+  {
+    /* Connect to sieve class and try to get all available sieve scripts */
+    $cfg=  $this->config->data['SERVERS']['IMAP'][$this->parent->gosaMailServer];
+    $this->Sieve_Error = "";
+  
+    /* Log into the mail server */
+    $sieve= new sieve(
+        $cfg["sieve_server"], 
+        $cfg["sieve_port"], 
+        $this->parent->uid, 
+        $cfg["password"], 
+        $cfg["admin"]);
+
+    /* Try to login */
+    if (!$sieve->sieve_login()){
+      $this->Sieve_Error = $sieve->error_raw;
+      return(FALSE);
+    }
+    return($sieve);
   }
 
 
@@ -382,6 +386,28 @@ class sieveManagement extends plugin
      */
     if($this->current_handler){
 
+        /* Create dump of current sieve script */
+        if(isset($_POST['Save_Copy'])){
+
+            /* force download dialog */
+            header("Content-type: application/tiff\n");
+            if (preg_match('/MSIE 5.5/', $HTTP_USER_AGENT) ||
+                    preg_match('/MSIE 6.0/', $HTTP_USER_AGENT)) {
+                header('Content-Disposition: filename="dump.script"');
+            } else {
+                header('Content-Disposition: attachment; filename="dump.script"');
+            }
+            header("Content-transfer-encoding: binary\n");
+            header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+            header("Last-Modified: ".gmdate("D, d M Y H:i:s")." GMT");
+            header("Cache-Control: no-cache");
+            header("Pragma: no-cache");
+            header("Cache-Control: post-check=0, pre-check=0");
+            echo $this->scripts[$this->current_script]['SCRIPT'];
+            exit();
+        }
+
+
       /****
        * Add new element to ui
        ****/
@@ -418,6 +444,34 @@ class sieveManagement extends plugin
          */
         if(isset($_POST['select_new_element_type'])){
 
+          $this->add_new_id;
+
+          $data = $this->current_handler->tree_->pap;
+
+          /* Get index of the element identified by object_id == $this->add_new_id; */
+          $index = -1;
+          foreach($data as $key => $obj){
+            if($obj->object_id == $this->add_new_id && $index==-1){
+              $index = $key;
+            }
+          }
+ 
+          /* We have found the specified object_id 
+           *  and want to detect the next free position 
+           *  to insert the new element.
+           */
+          if($index != -1){
+            if($this->add_above_below == "above"){
+              $direction ="up";
+              $next_free = $this->current_handler->tree_->_get_next_free_move_slot($index,$direction);
+              $next_free ++;
+            }else{
+              $next_free = $this->current_handler->tree_->_get_next_free_move_slot($index,$direction);
+              $direction = "down";
+            }
+            $this->add_new_id = $this->current_handler->tree_->pap[$next_free]->object_id;
+          }
+
           /* Create elements we should add */
           $ele[] = new $this->add_element_type(NULL, preg_replace("/[^0-9]/","",microtime()));
           if($this->add_element_type == "sieve_if"){
@@ -426,7 +480,6 @@ class sieveManagement extends plugin
           }
           $start = $end = array();
           $found = false;
-          $data = $this->current_handler->tree_->pap;
 
           /* Add above current element*/
           if($this->add_above_below == "above"){
