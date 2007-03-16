@@ -723,6 +723,7 @@ class sieveManagement extends plugin
        *  if we are currently in a subdialog 
        */
 
+      $this->current_handler->save_object();
       $Mode = $this->scripts[$this->current_script]['MODE'];
       $skip_mode_change = false;
       if(in_array($Mode,array("Source-Only","Source"))){
@@ -774,7 +775,6 @@ class sieveManagement extends plugin
           } 
         }
       }
-      $this->current_handler->save_object();
     }
   }
 
