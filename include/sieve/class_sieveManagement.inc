@@ -490,7 +490,6 @@ class sieveManagement extends plugin
         if(isset($_POST['select_new_element_type'])){
 
           $this->add_new_id;
-
           $data = $this->current_handler->tree_->pap;
 
           /* Get index of the element identified by object_id == $this->add_new_id; */
@@ -546,10 +545,8 @@ class sieveManagement extends plugin
               }else{
                 $end[] = $obj;
               }
-              echo $obj->object_id." --> ".$this->add_new_id."<br>";
               if($obj->object_id == $this->add_new_id){
                 $found = true;
-                echo "Jop";
               }
             }
           }
