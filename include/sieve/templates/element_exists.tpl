@@ -1,11 +1,10 @@
 <table cellspacing=0 cellpadding=2 style='background-color:#EEEEDD;width:100%; border: solid 1px #CCCCCC'>
     <tr>
-        <td style='vertical-align:top; width:20%'>
+        <td style='vertical-align:top; width:200px;'>
             {if $LastError != ""}
                 <font color='red'>{$LastError}</font>
                 <br>
             {/if}
-
             {if $Inverse}
                 <input type='submit' name='toggle_inverse_{$ID}' value='{t}Not{/t}'>
             {else}

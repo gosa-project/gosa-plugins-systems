@@ -1,7 +1,7 @@
-<table cellspacing=0 style='width:100%;background-color:#EEEEEE;border: solid 1px #BBB;346575;'>
+<table cellspacing=0 width='100%'>
 	<tr>
-		<td>
-			<b>{t}else{/t}</b>
-		</td>
+    	<td style='width:100%;background-color:#f2bf4c; padding:5px;'>
+			<b>{t}Else{/t}</b>
+    	</td>
 	</tr>
 </table>

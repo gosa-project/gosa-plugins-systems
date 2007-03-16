@@ -797,7 +797,12 @@ class sieve_if
 
     $smarty->assign("Name", $name);
     $smarty->assign("Contents", $this->get_as_html());
-    $object = $smarty->fetch(get_template_path("templates/element_if_else.tpl",TRUE,dirname(__FILE__)));
+
+    if($this->TYPE == "if"){
+      $object = $smarty->fetch(get_template_path("templates/element_if.tpl",TRUE,dirname(__FILE__)));
+    }else{
+      $object = $smarty->fetch(get_template_path("templates/element_elsif.tpl",TRUE,dirname(__FILE__)));
+    }
     $str = preg_replace("/%%OBJECT_CONTENT%%/",$object,$object_container);
     return($str);
   }
