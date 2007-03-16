@@ -480,7 +480,8 @@ class sieveManagement extends plugin
 
 
         /* Element selected */
-        if(isset($_POST['element_type']) && isset($element_types[$_POST['element_type']])){
+        if(isset($_POST['element_type']) && isset($element_types[$_POST['element_type']]) 
+           || isset($_POST['element_type']) &&in_array($_POST['element_type'],array("sieve_else","sieve_elsif"))){
           $this->add_element_type = $_POST['element_type'];
         }
 
@@ -517,11 +518,22 @@ class sieveManagement extends plugin
           }
 
           /* Create elements we should add */
-          $ele[] = new $this->add_element_type(NULL, preg_replace("/[^0-9]/","",microtime()));
           if($this->add_element_type == "sieve_if"){
+            $ele[] = new $this->add_element_type(NULL, preg_replace("/[^0-9]/","",microtime()));
             $ele[] = new sieve_block_start(NULL,preg_replace("/[^0-9]/","",microtime()));
             $ele[] = new sieve_block_end(NULL,preg_replace("/[^0-9]/","",microtime()));
+          }elseif($this->add_element_type == "sieve_else"){
+            $ele[] = new sieve_block_end(NULL,preg_replace("/[^0-9]/","",microtime()));
+            $ele[] = new $this->add_element_type(NULL, preg_replace("/[^0-9]/","",microtime()));
+            $ele[] = new sieve_block_start(NULL,preg_replace("/[^0-9]/","",microtime()));
+          }elseif($this->add_element_type == "sieve_elsif"){
+            $ele[] = new sieve_block_end(NULL,preg_replace("/[^0-9]/","",microtime()));
+            $ele[] = new $this->add_element_type(NULL, preg_replace("/[^0-9]/","",microtime()));
+            $ele[] = new sieve_block_start(NULL,preg_replace("/[^0-9]/","",microtime()));
+          }else{
+            $ele[] = new $this->add_element_type(NULL, preg_replace("/[^0-9]/","",microtime()));
           }
+
           $start = $end = array();
           $found = false;
 
@@ -576,6 +588,19 @@ class sieveManagement extends plugin
       /* Only display select dialog if it is necessary */
       if($this->add_new_element){
         $smarty = get_smarty();
+    
+        $add_else_elsif = FALSE;
+        foreach($this->current_handler->tree_->pap as $obj){
+          if($obj->object_id == $this->add_new_id && in_array(get_class($obj),array("sieve_if","sieve_elsif"))){
+            $add_else_elsif = TRUE;
+          }
+        }
+
+        if($add_else_elsif){
+          $element_types['sieve_else'] = _("Else");
+          $element_types['sieve_elsif'] = _("Else if");
+        }
+  
         $smarty->assign("element_types",$element_types );
         $smarty->assign("element_type",$this->add_element_type);
         $str = $smarty->fetch(get_template_path("templates/add_element.tpl",TRUE,dirname(__FILE__)));

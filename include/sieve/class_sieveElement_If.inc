@@ -61,7 +61,7 @@ class sieve_if
    */
   function get_sieve_script_part()
   {
-    $tmp = "if ".$this->get_sieve_script_part_recursive($parsed = NULL,$id = 1,$obj_id=1);
+    $tmp = $this->TYPE." ".$this->get_sieve_script_part_recursive($parsed = NULL,$id = 1,$obj_id=1);
     return($tmp);
   } 
 
@@ -779,6 +779,8 @@ class sieve_if
     $name .= "<b>"._("Condition")."</b>";
     if($this->TYPE == "if"){
       $name .= "&nbsp;-&nbsp;"._("If");
+    }elseif($this->TYPE == "elsif"){
+      $name .= "&nbsp;-&nbsp;"._("Else if");
     }else{
       $name .= "&nbsp;-&nbsp;"._("Else");
     }

@@ -169,9 +169,10 @@ class My_Tree extends Tree
   function remove_object($key_id)
   {
     $class = get_class($this->pap[$key_id]);
-    if(in_array($class,array("sieve_if"))){
+    if(in_array($class,array("sieve_if","sieve_elsif","sieve_else"))){
       $block_start= $key_id;
       $block_end  = $this->get_block_end($key_id);
+
       for($i = $block_start ; $i <= $block_end ; $i ++ ){
         unset($this->pap[$i]);
       }
@@ -309,7 +310,7 @@ class My_Tree extends Tree
     /* Only execute if this is a really a block element. 
      * Block elements is only sieve_if
      */
-    if(in_array(get_class($this->pap[$start]),array("sieve_if"))){
+    if(in_array(get_class($this->pap[$start]),array("sieve_if","sieve_elsif","sieve_else"))){
 
       $class      = get_class($this->pap[$start]);
       $next_class = get_class($this->pap[$start+1]);
@@ -335,7 +336,12 @@ class My_Tree extends Tree
         }
         $start ++;       
         $class      = get_class($this->pap[$start]);
-        $next_class = get_class($this->pap[$start+1]);
+        
+        if(isset($this->pap[$start+1])){ 
+          $next_class = get_class($this->pap[$start+1]);
+        }else{
+          $next_class ="";
+        }
       }
     }
     return($start);
