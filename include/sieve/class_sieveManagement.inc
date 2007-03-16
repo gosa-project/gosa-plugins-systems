@@ -108,7 +108,7 @@ class sieveManagement extends plugin
       $ret = $p->parse($script);
       if(!$ret){
         $this->scripts[$key]['STATUS']   = FALSE;
-        $this->scripts[$key]['MODE']    = "Source-Only";
+        $this->scripts[$key]['MODE']    = "Source";
         $this->scripts[$key]['MSG'] = _("Parse failed")."<font color='red'>".$p->status_text."</font>";
       }else{
         $this->scripts[$key]['STATUS']   = TRUE;
