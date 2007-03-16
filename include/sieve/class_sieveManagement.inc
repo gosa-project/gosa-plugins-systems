@@ -511,8 +511,8 @@ class sieveManagement extends plugin
               $next_free = $this->current_handler->tree_->_get_next_free_move_slot($index,$direction);
               $next_free ++;
             }else{
-              $next_free = $this->current_handler->tree_->_get_next_free_move_slot($index,$direction);
               $direction = "down";
+              $next_free = $this->current_handler->tree_->_get_next_free_move_slot($index,$direction);
             }
             $this->add_new_id = $this->current_handler->tree_->pap[$next_free]->object_id;
           }
@@ -546,11 +546,14 @@ class sieveManagement extends plugin
               }else{
                 $end[] = $obj;
               }
+              echo $obj->object_id." --> ".$this->add_new_id."<br>";
               if($obj->object_id == $this->add_new_id){
                 $found = true;
+                echo "Jop";
               }
             }
           }
+
 
           /* Only add, if current element could be located */
           if($found){
@@ -567,6 +570,7 @@ class sieveManagement extends plugin
             $data= $new;
             $this->current_handler->tree_->pap = $data;
             $this->add_new_element = FALSE;
+          }else{
             print_red(_("Something went wrong while adding a new entry."));
           }
         }
@@ -717,52 +721,60 @@ class sieveManagement extends plugin
           }
         }
       }
-      
+
       /* Skip Mode changes and Parse tests 
        *  if we are currently in a subdialog 
        */
-      if(1==1 || !$this->add_new_element && !isset($_POST['Save_Copy']) && !$this->Import_Script &&!isset($_POST['add_type'])) {
 
-
-
-        $Mode = $this->scripts[$this->current_script]['MODE'];
-        $skip_mode_change = false;
-        if(in_array($Mode,array("Source-Only","Source"))){
-          if(isset($_POST['script_contents'])){
-            $sc = stripslashes($_POST['script_contents']);
-            $this->scripts[$this->current_script]['SCRIPT'] = $sc;
-            $p = new My_Parser;
-            if($p -> parse($sc)){
-#              $this->current_handler = $p;
-              $this->Script_Error = "";
-            } else {
-              $this->Script_Error = $p->status_text;
-              $skip_mode_change = TRUE;
-            }
-          }
-        }
-        if(in_array($Mode,array("Structured"))){
-          $this->current_handler->save_object();
-          $sc = $this->current_handler->get_sieve_script();
+      $Mode = $this->scripts[$this->current_script]['MODE'];
+      $skip_mode_change = false;
+      if(in_array($Mode,array("Source-Only","Source"))){
+        if(isset($_POST['script_contents'])){
+          $sc = stripslashes($_POST['script_contents']);
           $this->scripts[$this->current_script]['SCRIPT'] = $sc;
           $p = new My_Parser;
           if($p -> parse($sc)){
- #           $this->current_handler = $p;
             $this->Script_Error = "";
           } else {
             $this->Script_Error = $p->status_text;
             $skip_mode_change = TRUE;
           }
         }
-        if(!$skip_mode_change){
-          if($this->scripts[$this->current_script]['MODE'] != "Source-Only"){
-            if(isset($_POST['View_Source'])){
-              $this->scripts[$this->current_script]['MODE'] = "Source";
-            }
-            if(isset($_POST['View_Structured'])){
-              $this->scripts[$this->current_script]['MODE'] = "Structured";
-            }
+      }
+      if(in_array($Mode,array("Structured"))){
+        $sc = $this->current_handler->get_sieve_script();
+        $this->scripts[$this->current_script]['SCRIPT'] = $sc;
+        $p = new My_Parser;
+        if($p -> parse($sc)){
+          $this->Script_Error = "";
+        } else {
+          $this->Script_Error = $p->status_text;
+          $skip_mode_change = TRUE;
+        }
+      }
+      if(!$skip_mode_change){
+        if($this->scripts[$this->current_script]['MODE'] != "Source-Only"){
+          $old_mode = $this->scripts[$this->current_script]['MODE'];
+          if(isset($_POST['View_Source'])){
+            $this->scripts[$this->current_script]['MODE'] = "Source";
           }
+          if(isset($_POST['View_Structured'])){
+            $this->scripts[$this->current_script]['MODE'] = "Structured";
+          }
+          $new_mode = $this->scripts[$this->current_script]['MODE'];
+
+          if($old_mode != $new_mode){
+
+            $sc = $this->scripts[$this->current_script]['SCRIPT'];
+            $p = new My_Parser;
+
+            if($p -> parse($sc)){
+              $this->current_handler->parse($sc);
+              $this->Script_Error = "";
+            } else {
+              $this->Script_Error = $p->status_text;
+            }
+          } 
         }
       }
       $this->current_handler->save_object();

@@ -32,7 +32,7 @@ class sieve_comment
   function save_object()
   {
     if(isset($_POST['comment_'.$this->object_id])){
-      $cm = $_POST['comment_'.$this->object_id];
+      $cm = stripslashes( $_POST['comment_'.$this->object_id]);
       $this->data = "/*".$cm."*/";
     }
   }
