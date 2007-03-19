@@ -11,11 +11,14 @@ class sieve_vacation
   var $addresses= array();
   var $object_id= -1;
   var $Expert   = FALSE;
+  var $parent   = NULL;
 
-  function sieve_vacation($data,$object_id)
+  function sieve_vacation($data,$object_id,$parent)
   {
-
+    $this->parent = $parent;
     $this->object_id = $object_id;
+    $this->parent->add_require("vacation");
+
     /* Usage:   vacation [":days" number] [":subject" string]
        [":from" string] [":addresses" string-list]
        [":mime"] [":handle" string] <reason: string> */
