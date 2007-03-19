@@ -93,7 +93,7 @@ class sieveManagement extends plugin
 
     /* Get script contents */
     foreach($this->scripts as $key => $script){
-      $p = new My_Parser;
+      $p = new My_Parser($this);
       $this->sieve_handle->sieve_getscript($script['NAME']);
 
       $script = "";
@@ -214,7 +214,7 @@ class sieveManagement extends plugin
                   "stop;";
 
         /* Create a new parser and initialize default values */
-        $p = new My_Parser;
+        $p = new My_Parser($this);
         $ret = $p->parse($script);
         $sc['SCRIPT'] = $script;
         $sc['ORIG_SCRIPT'] = $script;
@@ -370,7 +370,7 @@ class sieveManagement extends plugin
       if(!count($chk)){
 
         $sc = $this->scripts[$this->current_script]['SCRIPT'];
-        $p = new My_Parser;
+        $p = new My_Parser($this);
         if($p -> parse($sc)){
 
           if($this->scripts[$this->current_script]['MODE'] == "Source-Only"){
@@ -526,21 +526,23 @@ class sieveManagement extends plugin
             $this->add_new_id = $this->current_handler->tree_->pap[$next_free]->object_id;
           }
 
+          $parent = $this->current_handler->tree_;
+
           /* Create elements we should add */
           if($this->add_element_type == "sieve_if"){
-            $ele[] = new $this->add_element_type(NULL, preg_replace("/[^0-9]/","",microtime()));
-            $ele[] = new sieve_block_start(NULL,preg_replace("/[^0-9]/","",microtime()));
-            $ele[] = new sieve_block_end(NULL,preg_replace("/[^0-9]/","",microtime()));
+            $ele[] = new $this->add_element_type(NULL, preg_replace("/[^0-9]/","",microtime()),$parent);
+            $ele[] = new sieve_block_start(NULL,preg_replace("/[^0-9]/","",microtime()),$parent);
+            $ele[] = new sieve_block_end(NULL,preg_replace("/[^0-9]/","",microtime()),$parent);
           }elseif($this->add_element_type == "sieve_else"){
-            $ele[] = new sieve_block_end(NULL,preg_replace("/[^0-9]/","",microtime()));
-            $ele[] = new $this->add_element_type(NULL, preg_replace("/[^0-9]/","",microtime()));
-            $ele[] = new sieve_block_start(NULL,preg_replace("/[^0-9]/","",microtime()));
+            $ele[] = new sieve_block_end(NULL,preg_replace("/[^0-9]/","",microtime()),$parent);
+            $ele[] = new $this->add_element_type(NULL, preg_replace("/[^0-9]/","",microtime()),$parent);
+            $ele[] = new sieve_block_start(NULL,preg_replace("/[^0-9]/","",microtime()),$parent);
           }elseif($this->add_element_type == "sieve_elsif"){
-            $ele[] = new sieve_block_end(NULL,preg_replace("/[^0-9]/","",microtime()));
-            $ele[] = new $this->add_element_type(NULL, preg_replace("/[^0-9]/","",microtime()));
-            $ele[] = new sieve_block_start(NULL,preg_replace("/[^0-9]/","",microtime()));
+            $ele[] = new sieve_block_end(NULL,preg_replace("/[^0-9]/","",microtime()),$parent);
+            $ele[] = new $this->add_element_type(NULL, preg_replace("/[^0-9]/","",microtime()),$parent);
+            $ele[] = new sieve_block_start(NULL,preg_replace("/[^0-9]/","",microtime()),$parent);
           }else{
-            $ele[] = new $this->add_element_type(NULL, preg_replace("/[^0-9]/","",microtime()));
+            $ele[] = new $this->add_element_type(NULL, preg_replace("/[^0-9]/","",microtime()),$parent);
           }
 
           $start = $end = array();
@@ -764,7 +766,7 @@ class sieveManagement extends plugin
         if(isset($_POST['script_contents'])){
           $sc = stripslashes($_POST['script_contents']);
           $this->scripts[$this->current_script]['SCRIPT'] = $sc;
-          $p = new My_Parser;
+          $p = new My_Parser($this);
           if($p -> parse($sc)){
             $this->Script_Error = "";
           } else {
@@ -776,7 +778,7 @@ class sieveManagement extends plugin
       if(in_array($Mode,array("Structured"))){
         $sc = $this->current_handler->get_sieve_script();
         $this->scripts[$this->current_script]['SCRIPT'] = $sc;
-        $p = new My_Parser;
+        $p = new My_Parser($this);
         if($p -> parse($sc)){
           $this->Script_Error = "";
         } else {
@@ -798,7 +800,7 @@ class sieveManagement extends plugin
           if($old_mode != $new_mode){
 
             $sc = $this->scripts[$this->current_script]['SCRIPT'];
-            $p = new My_Parser;
+            $p = new My_Parser($this);
 
             if($p -> parse($sc)){
               $this->current_handler->parse($sc);

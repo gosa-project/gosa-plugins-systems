@@ -15,6 +15,13 @@ class My_Tree extends Tree
 
   var $mode_stack = array();
   var $pap		= array();
+  var $parent = NULL;
+
+	function My_Tree(&$root,$parent)
+	{
+    $this->parent = $parent;
+		$this->_construct($root);
+	}
 
   function execute()
   {
@@ -136,7 +143,7 @@ class My_Tree extends Tree
     
     $class_name= "sieve_".$type ;
     if(class_exists($class_name)){
-      $this->pap[] = new $class_name($data,$id);
+      $this->pap[] = new $class_name($data,$id,$this);
     }else{
       echo "<font color='red'>Missing : ".$class_name."</font>"."<br>";
     }
