@@ -7,7 +7,7 @@ class sieve_vacation
   var $from     = "";
   var $mime     = "";
   var $handle   = "";
-  var $reason   = "";
+  var $reason   = "\"I am not available, currently.\"";
   var $addresses= array();
   var $object_id= -1;
   var $Expert   = FALSE;
