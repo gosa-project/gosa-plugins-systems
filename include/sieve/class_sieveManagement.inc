@@ -262,6 +262,7 @@ class sieveManagement extends plugin
 
         $this->current_script = $script;
         $this->current_handler = $this->scripts[$script]['PARSER'];
+        $this->scripts[$script]['SCRIPT_BACKUP'] = $this->scripts[$script]['SCRIPT'];
       }
 
       /* remove script requested */
@@ -361,6 +362,9 @@ class sieveManagement extends plugin
 
     /* Abort saving */
     if(isset($_POST['cancel_sieve_changes'])){
+      $tmp = $this->scripts[$this->current_script]['SCRIPT_BACKUP'];
+      $this->scripts[$this->current_script]['SCRIPT'] = $tmp;
+      $this->scripts[$this->current_script]['PARSER']->parse($tmp);
       $this->current_handler = NULL;
     }
 
