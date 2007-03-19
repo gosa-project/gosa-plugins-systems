@@ -5,6 +5,7 @@ class sieve_comment
 {
   var $data = "";
   var $object_id= -1;
+  var $small  = TRUE;
 
   function get_sieve_script_part()
   {
@@ -16,7 +17,7 @@ class sieve_comment
     $this->object_id = $object_id;
 
     if($data == NULL){
-      $data = array('ELEMENTS' => array(array('class' => "quoted-string" ,"text" => _("Your comment here"))));
+      $data = array('ELEMENTS' => array(array('class' => "quoted-string" ,"text" => "/*"._("Your comment here")."*/")));
     }
 
     foreach($data['ELEMENTS'] as $node){
@@ -35,12 +36,17 @@ class sieve_comment
       $cm = stripslashes( $_POST['comment_'.$this->object_id]);
       $this->data = "/*".$cm."*/";
     }
+  
+    if(isset($_POST['toggle_small_'.$this->object_id])){
+      $this->small = !$this->small;
+    }
   }
 
   function execute()
   {
     $smarty = get_smarty();
     $smarty->assign("ID", $this->object_id);
+    $smarty->assign("Small", $this->small);
     $object_container = $smarty->fetch(get_template_path("templates/object_container.tpl",TRUE,dirname(__FILE__)));
     $Comment = $this->data;
 
@@ -50,6 +56,10 @@ class sieve_comment
     }elseif(preg_match("#\/\*#",$Comment)){
       $Comment = preg_replace("#^\/\*#","",$Comment);
       $Comment = preg_replace("#\*\/$#","",$Comment);
+    }
+
+    if($this->small){
+      $Comment = nl2br($Comment);
     }
  
     /* Create html object */ 
