@@ -2131,6 +2131,23 @@ function is_php4()
   return (preg_match('/^4/', phpversion()));
 }
 
+/* Add "str_split" if this function is missing.
+ * This function is only available in PHP5
+ */
+  if(!function_exists("str_split")){
+    function str_split($str,$length =1)
+    {
+      if($length < 1 ) $length =1;
+
+      $ret = array();
+      for($i = 0 ; $i < strlen($str); $i = $i +$length){
+        $ret[] = substr($str,$i ,$length);
+      }
+      return($ret);
+    }
+  }
+
+
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
