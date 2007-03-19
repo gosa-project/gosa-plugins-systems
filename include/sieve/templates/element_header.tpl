@@ -72,16 +72,12 @@
         </td>
     </tr>
     <tr>
-        <td>
-            {t}Address fields to include{/t}
-        </td>
-        <td>
+        <td colspan=2>
+            {t}Address fields to include{/t}<br>
             <textarea style='width:95%;height:50px;' name='keys_{$ID}'>{$keys}</textarea>
         </td>
-        <td>
-            {t}Values to match for{/t}
-        </td>
-        <td>
+        <td colspan=3>
+            {t}Values to match for{/t}<br>
             <textarea style='width:95%;height:50px;' name='values_{$ID}'>{$values}</textarea>
         </td>
     </tr>
