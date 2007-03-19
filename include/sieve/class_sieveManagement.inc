@@ -222,11 +222,11 @@ class sieveManagement extends plugin
         $sc['MSG']   = "";
         if(!$ret){
           $sc['STATUS']   = FALSE;
-          $sc['MODE']    = "Source-Only";
+          $sc['MODE']    = "Source";
           $sc['MSG'] = _("Parse failed")."<font color='red'>".$p->status_text."</font>";
         }else{
           $sc['STATUS']   = TRUE;
-          $sc['MODE']    = "Strucktured";
+          $sc['MODE']    = "Structured";
           $sc['MSG'] = _("Parse successful");
         }
         $sc['PARSER'] = $p;
