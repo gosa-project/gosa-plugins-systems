@@ -41,11 +41,13 @@ class pluglist {
 
                 /* Fill info part of pluglist */
                 $classes= get_declared_classes();
-                foreach (get_declared_classes() as $cname){
-                        if (method_exists($cname, 'plInfo')){
-                                $this->info[$cname]= @call_user_func(array($cname, 'plInfo'));
-                        }
-                }
+
+				foreach ($classes as $cname){
+					$cmethods = get_class_methods($cname);
+					if (in_array_ics('plInfo',$cmethods)){
+						$this->info[$cname]= @call_user_func(array($cname, 'plInfo'));
+					}
+				}
 
 		/* Provide field for 'all' */
 		$this->info['all']= array();

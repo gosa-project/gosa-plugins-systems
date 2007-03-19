@@ -19,7 +19,6 @@
 			<select name='Value_Unit_{$ID}' title='{t}Select value unit{/t}'>
 				{html_options options=$Units selected=$Value_Unit}
 			</select>
-			<input type='submit'>
 		</td>
 	</tr>
 </table>
