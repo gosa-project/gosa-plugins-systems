@@ -7,8 +7,12 @@
 			<input type='submit' name='Import_Script' value="{t}Import{/t}">
 
 			{if $Mode != "Source-Only"}			
-				<input type='submit' name='View_Source' value="{t}View source{/t}">
+				
+				{if $Mode == "Source"}
 				<input type='submit' name='View_Structured' value="{t}View structured{/t}">
+				{else}
+				<input type='submit' name='View_Source' value="{t}View source{/t}">
+				{/if}
 			{/if}
 		</td>
 	</tr>

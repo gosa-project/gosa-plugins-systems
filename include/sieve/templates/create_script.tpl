@@ -17,6 +17,6 @@
         &nbsp;
     <input type='submit' name='create_script_save' value='{t}Next{/t}' id='create_script_save'>
 </div>
-<script type='javascript'>
-	document.getElementById('create_script_save').focus();
+<script language="JavaScript" type="text/javascript">
+	document.mainform.NewScriptName.focus();
 </script>
