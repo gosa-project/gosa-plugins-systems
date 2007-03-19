@@ -28,7 +28,7 @@
 	</tr>
 	<tr>
 		<td >
-			{t}Release date{/t}&nbsp;
+			{t}Release interval{/t}&nbsp;
 		</td>
 		<td>
 			<input type='text' name='vacation_release_{$ID}' value='{$Days}'>
