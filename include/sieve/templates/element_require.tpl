@@ -23,7 +23,7 @@
 		</td>
 	</tr>
 	<tr>
-		<td style='padding-left:20px; height:50px;'>
+		<td style='padding-left:20px;;'>
 			<input type='text'  name='require_{$ID}' style='width:100%' value='{$Require}'>
 		</td>
 	</tr>

@@ -12,13 +12,18 @@
 	{if $Expert}
     	{if $LastError != ""}
         	<tr>
-				<td colspan=4>
+				<td colspan=2>
 		            <font color='red'><b>{$LastError}</b></font>
 				</td>
 			</tr>
 
         {/if}
 
+	<tr>
+		<td colspan=2 style='text-align:right; vertical-align:top;'>
+			<input type='submit' name='Toggle_Expert_{$ID}' value='{t}Normal mode{/t}'>
+		</td>
+	</tr>
 	<tr>
 		<td>
 			{t}Match type{/t}
@@ -29,6 +34,8 @@
 			</select>
 
 		</td>
+	</tr>
+	<tr>
 		<td>
 			{t}Invert test{/t}?
 		</td>
@@ -38,9 +45,6 @@
 			{else}
 				<input type='submit' name='toggle_inverse_{$ID}' value='{t}No{/t}'>
 			{/if}
-		</td>
-		<td style='text-align:right; vertical-align:top;'>
-			<input type='submit' name='Toggle_Expert_{$ID}' value='{t}Normal mode{/t}'>
 		</td>
 	</tr>
 	<tr>
@@ -52,6 +56,8 @@
 				{html_options options=$address_parts selected=$address_part}
 			</select>
 		</td>
+	</tr>
+	<tr>
 		<td>
 			{t}Comparator{/t}
 		</td>
@@ -60,7 +66,9 @@
 				{html_options options=$comparators selected=$comparator}
 			</select>
 		</td>
+	</tr>
 		{if $match_type == ":count" || $match_type == ":value"}
+	<tr>
 		<td>
 			{t}operator{/t}
 		</td>
@@ -69,21 +77,17 @@
 				{html_options options=$operators selected=$operator}
 			</select>
 		</td>
-		{else}
-		<td style='text-align:right;'>
-			&nbsp;
-		</td>
-		{/if}
-		<td style='text-align:right;'>
-			&nbsp;
-		</td>
 	</tr>
-	    <tr>
-        <td colspan=2>
+		{/if}
+	<tr>
+		<td colspan=2>&nbsp;</td>
+	</tr>
+    <tr>
+        <td >
             {t}Address fields to include{/t}<br>
             <textarea style='width:95%;height:50px;' name='keys_{$ID}'>{$keys}</textarea>
         </td>
-        <td colspan=3>
+        <td >
             {t}Values to match for{/t}<br>
             <textarea style='width:95%;height:50px;' name='values_{$ID}'>{$values}</textarea>
         </td>
