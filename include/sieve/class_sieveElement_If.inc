@@ -11,14 +11,16 @@ class sieve_if
   var $comparators      = array();
   var $match_types      = array();
   var $operators        = array();
-
+  var $parent           = NULL;
   
   /* Initialize class 
    *  $elements   contains all tokens that belongs to this if/else tag
    *  $object_id  cotains an unique tag id, to be able to create uniqe html post names
    */
-  function sieve_if($elements,$object_id)
+  function sieve_if($elements,$object_id,$parent)
   {
+    $this->parent = $parent;
+  
     /* Possible address parts we can select */
     $this->address_parts = array( 
         ":all"       => _("Complete adress")."&nbsp;("._("Default").")",
@@ -426,6 +428,12 @@ class sieve_if
           $values["Address_Part"]    = ":all";
         }
         $data[$type]=$values;
+
+        if($type == "envelope"){
+          $this->parent->add_require("envelope");
+        }
+    
+
         break;
       }
       case "allof" :
@@ -583,6 +591,10 @@ class sieve_if
               $parsed[$key]['LastError'] = _("Invalid operator given.");
             }
             $parsed[$key]['Comparator'] = $cp;
+
+            if($cp == "i;ascii-numeric"){
+              $this->parent->add_require("comparator-i;ascii-numeric");
+            }
           }
 
           /* In case of :count and :value match types 

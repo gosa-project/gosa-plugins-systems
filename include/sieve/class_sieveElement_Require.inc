@@ -18,6 +18,22 @@ class sieve_require
     }
   }
 
+  /* Add a new require statement and ensure 
+   *  that it is not specified twice 
+   */
+  function Add_Require($str)
+  {
+    $current = array();
+
+    foreach($this->data as $dat){
+      $current[] = preg_replace("/\"/","",$dat);
+    }
+    if(!in_array($str,$current)){
+      $this->data[] = $str;
+    }
+    $this->data = array_unique($this->data);;
+  }
+
   function save_object()
   {
     /* Get the values should check for, they are seperated by , */
@@ -32,7 +48,7 @@ class sieve_require
     
         if(empty($val)) continue;        
   
-        $tmp[] = "\"".$val."\"";
+        $tmp[] = $val;
       }
       $this->data = $tmp;
     }
@@ -58,7 +74,7 @@ class sieve_require
   {
     $Require = "";
     foreach($this->data as $key){
-      $Require .= $key.", ";
+      $Require .= "\"".$key."\"".", ";
     }
     $Require = preg_replace("/,$/","",trim($Require));
 

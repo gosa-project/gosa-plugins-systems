@@ -4,7 +4,7 @@ class sieve_reject
 {
   var $data = "";
   var $object_id = -1;
-
+  var $parent = NULL;
 
   function save_object()
   {
@@ -20,9 +20,11 @@ class sieve_reject
     return(array());
   }
 
-  function sieve_reject($data,$object_id)
+  function sieve_reject($data,$object_id,$parent)
   {
     $this->object_id = $object_id;
+    $this->parent = $parent;
+    $this->parent->add_require("reject");
 
     /* If the given data is emtpy 
      *  (This is the case when we add new elements in the ui) 

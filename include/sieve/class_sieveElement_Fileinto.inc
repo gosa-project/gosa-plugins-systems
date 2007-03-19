@@ -38,6 +38,7 @@ class sieve_fileinto
   {
     $this->object_id = $object_id;
     $this->parent = $parent;
+    $this->parent->add_require("fileinto");
 
     $mbs = $this->get_mail_boxes();
       

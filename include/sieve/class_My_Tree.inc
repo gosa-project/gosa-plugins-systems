@@ -571,6 +571,35 @@ class My_Tree extends Tree
 		}
 		return($msgs);
   }
+
+
+  /* We are forced to add a new require.
+   *  This function is called by the 
+   *  sieveElement_Classes->parent->add_require()  
+   */ 
+  function add_require($str)
+  {
+    $require_id = -1;
+    foreach($this->pap as $key => $obj){
+      if(get_class($obj) == "sieve_require"){
+        $require_id = $key;
+      }
+    }
+  
+    /* No require found, add one */
+    if($require_id == -1){
+      $require = new sieve_require(NULL,preg_replace("/[^0-9]/","",microtime()));
+      $require -> Add_Require($str);
+      $new = array();
+      $new[] = $require;
+      foreach($this->pap as $obj){
+        $new[] = $obj;
+      }
+      $this->pap = $new;
+    } else { 
+      $this->pap[$require_id]->Add_Require($str);
+    } 
+  }
 }
 
 
