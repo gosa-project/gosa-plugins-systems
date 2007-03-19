@@ -438,7 +438,7 @@ class sieve_if
       {
         $tmp= array( 
             "Inverse"    => FALSE,
-            "Match_type" => ":contains",
+            "Match_type" => ":over",
             "Value_List" => array(1,"M"));
 
         $tmp['LastError'] = "";

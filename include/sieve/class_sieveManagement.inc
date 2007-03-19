@@ -601,17 +601,46 @@ class sieveManagement extends plugin
         $smarty = get_smarty();
     
         $add_else_elsif = FALSE;
-        foreach($this->current_handler->tree_->pap as $obj){
-          if($obj->object_id == $this->add_new_id && in_array(get_class($obj),array("sieve_if","sieve_elsif"))){
-            $add_else_elsif = TRUE;
+
+        /* Check if we should add else/elsif to the select box 
+         *  or not. We can't add else twice!.
+         */
+        if($this->add_above_below == "below"){
+
+          /* Get posistion of the current element 
+           */
+          foreach($this->current_handler->tree_->pap as $key => $obj){
+        
+            if($obj->object_id == $this->add_new_id && in_array(get_class($obj),array("sieve_if","sieve_elsif"))){
+  
+              /* Get block start/end */
+              $end_id = $this->current_handler->tree_->get_block_end($key);
+              $else_found = FALSE;
+              $elsif_found = FALSE;
+          
+              /* Check if there is already an else in this block 
+               */
+              for($i =  $key ; $i < $end_id ; $i ++){
+                if(get_class($this->current_handler->tree_->pap[$i]) == "sieve_else"){
+                  $else_found = TRUE;
+                }
+                if(get_class($this->current_handler->tree_->pap[$i]) == "sieve_elsif"){
+                  $elsif_found = TRUE;
+                }
+              }
+  
+              /* Only allow adding 'else' if there is currently 
+               *  no 'else' statement. And don't allow adding 
+               *  'else' before 'elseif'
+               */ 
+              if(!$else_found && (!(get_class($obj) == "sieve_if" && $elsif_found))){
+                $element_types['sieve_else'] = _("Else");
+              }
+              $element_types['sieve_elsif'] = _("Else if");
+            }
           }
         }
 
-        if($add_else_elsif && $this->add_above_below == "below"){
-          $element_types['sieve_else'] = _("Else");
-          $element_types['sieve_elsif'] = _("Else if");
-        }
-  
         $smarty->assign("element_types",$element_types );
         $smarty->assign("element_type",$this->add_element_type);
         $str = $smarty->fetch(get_template_path("templates/add_element.tpl",TRUE,dirname(__FILE__)));
