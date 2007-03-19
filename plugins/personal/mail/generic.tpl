@@ -1,6 +1,7 @@
 <table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding="0" border="0">
  <tr>
   <td style="width:50%; vertical-align:top;">
+
    <h2><img class="center" alt="" align="middle" src="images/rightarrow.png" />&nbsp;{t}Generic{/t}</h2>
    <table summary="">
     <tr>
@@ -45,19 +46,14 @@
 {/render}
      </td>
     </tr>
-	<tr>
-	 <td>	
-		<input type='submit' name='sieveManagement' value='{t}Sieve Management{/t}'>
-	 </td>
-	</tr>
-   </table>
+	</table>
   </td>
 
-  <td style="border-left:1px solid #A0A0A0">
-   &nbsp;
-  </td>
 
-  <td style="vertical-align:top;">
+  <td style="border-left:1px solid #A0A0A0;vertical-align:top;">
+	&nbsp;
+  </td>
+	<td>	
    <h2><img class="center" alt="" align="middle" src="images/alternatemail.png" /><label for="alternates_list"> {t}Alternative addresses{/t}</label></h2>
 {render acl=$gosaMailAlternateAddressACL}
    <select id="alternates_list" style="width:100%;height:100px;" name="alternates_list[]" size="15" multiple 
@@ -81,8 +77,15 @@
 </table>
 
 <p class="seperator">&nbsp;</p>
-
 <h2><img class="center" alt="" align="middle" src="images/envelope.png" />&nbsp;{t}Mail options{/t}</h2>
+<table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding=4 border=0>
+ <tr>
+  <td>	
+   <input type='submit' name='sieveManagement' value='{t}Sieve Management{/t}'>
+  </td>
+ </tr>
+</table>
+<!--
 <table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding=4 border=0>
  <tr style="padding-bottom:0px;">
   <td style="width:50%">
@@ -173,7 +176,6 @@
   </td>
  </tr>
 </table>
-
 <p class="seperator">&nbsp;</p>
 
 <h2><img class="center" alt="" align="middle" src="images/false.png" />&nbsp;{t}Advanced mail options{/t}</h2>
@@ -199,6 +201,7 @@
 </table>
 
 <input type="hidden" name="mailTab" value="mailTab">
+-->
 
 <!-- Place cursor -->
 <script language="JavaScript" type="text/javascript">
