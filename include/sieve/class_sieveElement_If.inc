@@ -429,6 +429,7 @@ class sieve_if
         }
         $data[$type]=$values;
 
+        $this->parent->add_require("relational");
         if($type == "envelope"){
           $this->parent->add_require("envelope");
         }
