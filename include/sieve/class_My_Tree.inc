@@ -588,7 +588,7 @@ class My_Tree extends Tree
   
     /* No require found, add one */
     if($require_id == -1){
-      $require = new sieve_require(NULL,preg_replace("/[^0-9]/","",microtime()));
+      $require = new sieve_require(NULL,preg_replace("/[^0-9]/","",microtime()),$this);
       $require -> Add_Require($str);
       $new = array();
       $new[] = $require;
