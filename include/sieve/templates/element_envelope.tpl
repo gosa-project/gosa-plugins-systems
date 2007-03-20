@@ -85,8 +85,6 @@
         {/if}
 	<tr>
 		<td style='vertical-align:top;'>
-			{t}If{/t}
-			&nbsp;
 			<b>{t}Envelope{/t}</b>
 		
 			{if $Inverse}

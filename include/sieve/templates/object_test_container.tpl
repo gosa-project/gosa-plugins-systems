@@ -1,4 +1,4 @@
-<table cellspacing=0 style='width:100%;background-color:#EEEEEE;border: solid 1px #BBB;'>
+<table class='sieve_test_container'>
 	<tr>
 		<td style='width:20px; ; text-align:center;'>	
 			{if $DisplayAdd}

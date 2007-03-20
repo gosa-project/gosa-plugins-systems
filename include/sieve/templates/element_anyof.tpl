@@ -9,7 +9,7 @@
 			<br>
 			<b>{t}Any of{/t}</b>
 		</td>
-        <td style='background-color:#BDBDBD ; border: solid 0px #EEEEEE'>
+        <td class='sieve_anyof_right'>
 			{$Contents}
         </td>
 	</tr>
