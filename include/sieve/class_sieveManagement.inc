@@ -684,7 +684,27 @@ class sieveManagement extends plugin
       trigger_error("Can't add new element, there is no valid script editor opened.");
       return(FALSE);
     }
-    
+
+    /* Create elements we should add 
+     * -Some element require also surrounding block elements
+     */
+    $parent = $this->current_handler->tree_;
+    if($this->add_element_type == "sieve_if"){
+      $ele[] = new $this->add_element_type(NULL, preg_replace("/[^0-9]/","",microtime()),$parent);
+      $ele[] = new sieve_block_start(NULL,preg_replace("/[^0-9]/","",microtime()),$parent);
+      $ele[] = new sieve_block_end(NULL,preg_replace("/[^0-9]/","",microtime()),$parent);
+    }elseif($this->add_element_type == "sieve_else"){
+      $ele[] = new sieve_block_end(NULL,preg_replace("/[^0-9]/","",microtime()),$parent);
+      $ele[] = new $this->add_element_type(NULL, preg_replace("/[^0-9]/","",microtime()),$parent);
+      $ele[] = new sieve_block_start(NULL,preg_replace("/[^0-9]/","",microtime()),$parent);
+    }elseif($this->add_element_type == "sieve_elsif"){
+      $ele[] = new sieve_block_end(NULL,preg_replace("/[^0-9]/","",microtime()),$parent);
+      $ele[] = new $this->add_element_type(NULL, preg_replace("/[^0-9]/","",microtime()),$parent);
+      $ele[] = new sieve_block_start(NULL,preg_replace("/[^0-9]/","",microtime()),$parent);
+    }else{
+      $ele[] = new $this->add_element_type(NULL, preg_replace("/[^0-9]/","",microtime()),$parent);
+    }
+
     /* Get index of the element identified by object_id == $id; 
      */
     $index = -1;
@@ -714,27 +734,6 @@ class sieveManagement extends plugin
       $direction = "down";
       $next_free = $this->current_handler->tree_->_get_next_free_move_slot($index,$direction,TRUE);
     }
-
-    /* Create elements we should add 
-     * -Some element require also surrounding block elements
-     */
-    $parent = $this->current_handler->tree_;
-    if($this->add_element_type == "sieve_if"){
-      $ele[] = new $this->add_element_type(NULL, preg_replace("/[^0-9]/","",microtime()),$parent);
-      $ele[] = new sieve_block_start(NULL,preg_replace("/[^0-9]/","",microtime()),$parent);
-      $ele[] = new sieve_block_end(NULL,preg_replace("/[^0-9]/","",microtime()),$parent);
-    }elseif($this->add_element_type == "sieve_else"){
-      $ele[] = new sieve_block_end(NULL,preg_replace("/[^0-9]/","",microtime()),$parent);
-      $ele[] = new $this->add_element_type(NULL, preg_replace("/[^0-9]/","",microtime()),$parent);
-      $ele[] = new sieve_block_start(NULL,preg_replace("/[^0-9]/","",microtime()),$parent);
-    }elseif($this->add_element_type == "sieve_elsif"){
-      $ele[] = new sieve_block_end(NULL,preg_replace("/[^0-9]/","",microtime()),$parent);
-      $ele[] = new $this->add_element_type(NULL, preg_replace("/[^0-9]/","",microtime()),$parent);
-      $ele[] = new sieve_block_start(NULL,preg_replace("/[^0-9]/","",microtime()),$parent);
-    }else{
-      $ele[] = new $this->add_element_type(NULL, preg_replace("/[^0-9]/","",microtime()),$parent);
-    }
-
     /* This is extremly necessary, cause some objects 
      *  updates the tree objects ... Somehow i should change this ... 
      */
