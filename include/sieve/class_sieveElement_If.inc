@@ -1132,13 +1132,7 @@ class sieve_if
         } 
         default : 
         {
-          $ret = "<table width='100%'  cellspacing=0 cellpadding=0>
-                    <tr>
-                      <td style='background-color: #FEDCA9 ; border: solid 1px        #EEEEEE'>";
-          $ret.= $key."<br>"; 
-          $ret.= "    </td>
-                    </tr>
-                  </table>";
+          trigger_error(_("Unhandled switch type"));
         }
       }
     }

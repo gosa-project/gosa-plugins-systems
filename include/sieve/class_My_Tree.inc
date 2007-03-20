@@ -47,10 +47,25 @@ class My_Tree extends Tree
     /* Create html results */
     $smarty = get_smarty();
 
+    $block_indent_start = $smarty->fetch(get_template_path("templates/block_indent_start.tpl",TRUE,dirname(__FILE__)));
+    $block_indent_stop  = $smarty->fetch(get_template_path("templates/block_indent_stop.tpl",TRUE,dirname(__FILE__))); 
+  
+  
+
     $this -> dump_ = "";
+    $ends = array();
     foreach($this->pap as $key => $object){
       if(is_object($object)){
+        $end = $this->get_block_end($key);
+
+        if($end != $key && get_class($object) == "sieve_if") {
+          $ends[$end] = $end;  
+          $this->dump_  .= $block_indent_start;
+        }
         $this->dump_ .= preg_replace("/>/",">\n",$object->execute()); 
+        if(isset($ends[$key])){
+          $this->dump_  .= $block_indent_stop;
+        }
       }
     }
     

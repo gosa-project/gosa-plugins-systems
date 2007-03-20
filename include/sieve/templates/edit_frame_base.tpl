@@ -1,7 +1,7 @@
 
 <table style='width:100%;' cellspacing=0 cellpadding=0>
 	<tr>
-		<td style='background-color: #CCCCCC; padding:5px;'>
+		<td style='background-color: #DDDDDD; padding:5px;'>
 			
 			<input type='submit' name='Save_Copy' value="{t}Export{/t}">
 			<input type='submit' name='Import_Script' value="{t}Import{/t}">
