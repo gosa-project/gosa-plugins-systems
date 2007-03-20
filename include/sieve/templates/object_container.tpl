@@ -1,10 +1,9 @@
-<table cellspacing=0 style='width:100%;background-color:#EEEEEE;border: solid 1px #AAAAAA;'>
+<table class='object_container_container'> 
 	<tr>
-		<td  style='background-color: #CCCCCC; text-align:center; '>
+		<td class='object_container_cell_top_left'>
 			&nbsp;	
 		</td>
-		<td  style='background-color: #CCCCCC; text-align:left; padding:2px;  border-bottom: solid 1px #AAAAAA;'>
-
+		<td class='object_container_cell_top_right'>
 			<input type='image' src='images/sieve_move_object_down.png' name='Move_Down_Object_{$ID}' 
 				title='{t}Move this object one position down{/t}' alt='{t}Down{/t}' class='center'>
 			{t}Move down{/t}
@@ -23,7 +22,7 @@
 		</td>
 	</tr>
 	<tr>
-		<td style='width:5px; background-color: #CCCCCC; text-align:center; border-right: solid 1px #AAAAAA;'>	
+		<td class='object_container_cell_bottom_left'>
 		</td>
 		<td>
 			%%OBJECT_CONTENT%%

@@ -68,8 +68,12 @@ class sieve_require
 
   function get_sieve_script_part()
   {
+    if(count($this->data)){
     $tmp = sieve_create_strings($this->data);
     return("require ".$tmp.";\n");
+    }else{
+      return("");
+    }
   } 
     
   function execute()

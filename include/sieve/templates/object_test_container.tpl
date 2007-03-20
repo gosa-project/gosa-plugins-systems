@@ -1,6 +1,6 @@
-<table cellspacing=0 style='width:100%;background-color:#EEEEEE;border: solid 1px #BBB;346575;'>
+<table cellspacing=0 style='width:100%;background-color:#EEEEEE;border: solid 1px #BBB;'>
 	<tr>
-		<td style='width:20px; background-color: #235464; text-align:center;'>	
+		<td style='width:20px; ; text-align:center;'>	
 			{if $DisplayAdd}
 				<input type='image' src='images/sieve_add_test.png' name='Add_Test_Object_{$ID}' 
 					title='{t}Add this object{/t}' alt='R' class='center'>

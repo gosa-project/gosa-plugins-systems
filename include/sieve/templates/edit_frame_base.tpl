@@ -1,7 +1,7 @@
 
-<table style='width:100%;' cellspacing=0 cellpadding=0>
+<table class='editing_surface'>
 	<tr>
-		<td style='background-color: #DDDDDD; padding:5px;'>
+		<td class='editing_surface_menu'>
 			
 			<input type='submit' name='Save_Copy' value="{t}Export{/t}">
 			<input type='submit' name='Import_Script' value="{t}Import{/t}">
@@ -17,23 +17,19 @@
 		</td>
 	</tr>
 	<tr>
-		<td style='background-color: #FFFFFF; border: solid 2px #CCCCCC; '>
+		<td class='editing_surface_content'>
 
 			{if $Script_Error != ""}
-			<table style='width:100%;' cellspacing=0 cellpadding=0>	
-				<tr>	
-					<td style='background-color: orange;padding:5px;'>
-						<b>{$Script_Error}</b>
-					</td>
-				</tr>
-			</table>
+						<div  class='sieve_error_msgs'>
+							{$Script_Error}
+						</div>
 			{/if}
 
 
 			{if $Mode == "Structured"}
 				{$Contents}
 			{else}
-				<textarea name='script_contents' style='width:100%;height:350px;'>{$Contents}</textarea>
+				<textarea class='editing_source' name='script_contents'>{$Contents}</textarea>
 			{/if}
 
 		</td>

@@ -1,4 +1,4 @@
-<table cellspacing=0 style='width:100%;background-color:d8d8ff;'>
+<table class='sieve_comment_container'> 
 	<tr>
 		<td>
 			<b>{t}Comment{/t}</b>
@@ -16,7 +16,7 @@
 		{if $Small}
 			{$Comment}
 		{else}
-			<textarea  name='comment_{$ID}' style='width:100%;height:80px'>{$Comment}</textarea>
+			<textarea  name='comment_{$ID}' class='sieve_comment_area'>{$Comment}</textarea>
 		{/if}
 		</td>
 	</tr>

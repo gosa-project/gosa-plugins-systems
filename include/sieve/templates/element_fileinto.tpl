@@ -1,7 +1,7 @@
-<table cellspacing=0 width='100%' style='width:100%;background-color: #d8e1f2; '>
+<table class='sieve_fileinto_container'>
 	<tr>
-		<td>
-			{t}Move mail into folder{/t}
+		<td colspan=2>
+			<b>{t}Move mail into folder{/t}</b>
 		</td>
 		<td style='text-align:right;'>
 			{if $User_Mode}
@@ -12,15 +12,19 @@
 		</td>
 	</tr>
 	<tr>
-		<td colspan=2>
-			<b>{t}Folder{/t}</b>
+		<td style='width:20px;'>
+		</td>
+		<td>
+			{t}Folder{/t}
 			{if $User_Mode}
-				<input type='text' value='{$Selected}' name='fileinto_{$ID}' style='width:300px;'>
+				<input class='sieve_fileinto_input' type='text' value='{$Selected}' name='fileinto_{$ID}'>
 			{else}
-				<select name='fileinto_{$ID}'>
+				<select name='fileinto_{$ID}' class='sieve_fileinto_input'>
 					{html_options values=$Boxes output=$Boxes selected=$Selected}
 				</select>
 			{/if}
+		</td>
+		<td >
 		</td>
 	</tr>
 </table>

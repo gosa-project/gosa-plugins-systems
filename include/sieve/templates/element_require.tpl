@@ -1,18 +1,8 @@
-{if $LastErrorCnt != 0}
-    <table style='width:100%;'>
-        <tr>
-            <td style='width:40px; background-color: #FF0000; text-align:center; border: dotted 3px #ff7c1c'>
-                <img src='images/warning.png' alt='{t}Error{/t}'>
-            </td>
-            <td>
-{/if}
-
-<table cellspacing=0 style='width:100%;background-color:#e4ffc9;'>
-	
+<table class='sieve_require_container'>
 	{foreach from=$LastError item=val key=key}
 		<tr>
 			<td colspan=4>
-				<font color='red'><b>{$LastError[$key]}</b></font>
+				<div class='sieve_error_msgs'>{$LastError[$key]}</div>
 			</td>
 		</tr>
 
@@ -24,15 +14,8 @@
 	</tr>
 	<tr>
 		<td style='padding-left:20px;;'>
-			<input type='text'  name='require_{$ID}' style='width:100%' value='{$Require}'>
+			<input type='text'  name='require_{$ID}' class='sieve_require_input' value='{$Require}'>
 		</td>
 	</tr>
 </table>
-
-{if $LastErrorCnt != 0}
-
-            </td>
-        </tr>
-    </table>
-{/if}
 
