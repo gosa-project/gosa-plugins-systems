@@ -1362,10 +1362,10 @@ textarea.sieve_vacation_input {
 
 table.sieve_allof_container {
     width:100%;
-    margin: 0px;
     border-spacing: 0px ;
+    margin: 0px;
     padding:0px;
-	border: solid 2px #CCCCCC;
+	border: solid 1px #999999;
 }
 
 /* Container */
@@ -1373,10 +1373,14 @@ td.sieve_allof_left {
 	text-align:center;
 	vertical-align: middle;
 	width:35px;
-	background-color: #BDBDBD;
+	background-color: #CCCCCC;
 	border: solid 0px #EEEEEE
 }
 
+/* Container */
+td.sieve_allof_right {
+	background-color:#BDBDBD ; 
+}
 
 /*************
  * Sieve anyof 
@@ -1395,13 +1399,28 @@ td.sieve_anyof_left {
 	text-align:center;
 	vertical-align: middle;
 	width:35px;
-	background-color: #BDBDBD;
+	background-color: #CCCCCC;
 	border: solid 0px #EEEEEE
+}
+
+/* Container */
+td.sieve_anyof_right {
+	background-color:#BDBDBD ; 
+	border: solid 1px #AAAAAA;
 }
 
 /*************
  * Sieve Test Cases  
  *************/
+
+table.sieve_test_container {
+	width:100%;
+	background-color:#EEEEEE;
+	margin: 0px;
+	border-spacing: 0px ;
+	padding:0px;
+	border: solid 1px #AAAAAA;
+}
 
 table.sieve_test_case {
 	width:100%;
@@ -1409,5 +1428,3 @@ table.sieve_test_case {
 	border-spacing: 0px ;
 	padding:0px;
 }
-
-

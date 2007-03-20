@@ -114,7 +114,7 @@ class sieve_if
          *******************/
 
         case "true" :
-        case "fasle" : 
+        case "false" : 
         {
           /* Can't fail anyway */
           break;
@@ -127,6 +127,7 @@ class sieve_if
         default: 
         {
           if(isset($data['LastError']) && !empty($data['LastError'])){
+            print_a(array($data));
             $ret[] = $data['LastError'];
           }
         }
@@ -448,7 +449,7 @@ class sieve_if
         $tmp= array( 
             "Inverse"    => FALSE,
             "Match_type" => ":over",
-            "Value_List" => array(1,"M"));
+            "Value_List" => array("1M"));
 
         $tmp['LastError'] = "";
         $data[$type] = $tmp;
