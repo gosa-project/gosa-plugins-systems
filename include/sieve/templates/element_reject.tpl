@@ -1,6 +1,6 @@
-<table cellspacing=0 width='100%' style='background-color: #ffba4d'>
+<table class='sieve_reject_container'>
 	<tr>
-		<td style='width:100%;'>
+		<td>
 			<b>{t}Reject mail{/t}</b>
 			&nbsp;
 			{if $Multiline}
@@ -11,8 +11,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td style='padding-left:20px;'>
-			<textarea name='reject_message_{$ID}' style='width:100%;height:40px;' >{$Message}</textarea>
+		<td class='sieve_reject_input'>
+			<textarea name='reject_message_{$ID}' class='sieve_reject_input'>{$Message}</textarea>
 		</td>
 	</tr>
 </table>

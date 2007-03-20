@@ -1,7 +1,12 @@
-<table cellspacing=0 width='100%'>
+<table class='sieve_keep_container'>
 	<tr>
-		<td style='width:100%;background-color:#faffcd;'>
-			<b>{t}Keep message{/t}</b>
+		<td>
+			<b>{t}Keep{/t}</b>
+		</td>
+	</tr>
+	<tr>
+		<td class='sieve_keep_input'>
+			{t}Keep the message{/t}
 		</td>
 	</tr>
 </table>

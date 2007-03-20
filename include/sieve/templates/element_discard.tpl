@@ -1,7 +1,12 @@
-<table cellspacing=0 width='100%'>
+<table class='sieve_discard_container'>
 	<tr>
-		<td style='background-color:#ffeccc;'>
-			<b>{t}Discard message{/t}</b>
+		<td>
+			<b>{t}Discard{/t}</b>
+		</td>
+	</tr>
+	<tr>
+		<td class='sieve_discard_input'>
+			{t}Discard the message{/t}
 		</td>
 	</tr>
 </table>

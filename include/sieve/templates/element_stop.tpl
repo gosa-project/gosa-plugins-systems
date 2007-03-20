@@ -1,7 +1,11 @@
-<table cellspacing=0 width='100%'>
+<table class='sieve_stop_container'>
 	<tr>
-		<td style='width:100%;background-color:#ffc9c9;'>
+		<td>
 			<b>{t}Stop{/t}</b><br>
+		</td>
+	</tr>
+	<tr>
+		<td class='sieve_stop_input'>
 			{t}Stop execution here!{/t}
 		</td>
 	</tr>

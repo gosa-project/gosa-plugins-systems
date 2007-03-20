@@ -1228,7 +1228,132 @@ select.sieve_fileinto_input {
 }
 
 
+/*************
+ * Sieve keep 
+ *************/
 
+/* Container */
+table.sieve_keep_container {
+	margin:0px;
+	padding:0px;
+	border-spacing: 0px ;
+	width:100%;
+	background-color: #EEEEEE;
+}
+
+/* Editing area */
+td.sieve_keep_input {
+	padding-left:20px;
+}
+
+
+/*************
+ * Sieve discard 
+ *************/
+
+/* Container */
+table.sieve_discard_container {
+	margin:0px;
+	padding:0px;
+	border-spacing: 0px ;
+	width:100%;
+	background-color: #EEEEEE;
+}
+
+/* Editing area */
+td.sieve_discard_input {
+	padding-left:20px;
+}
+
+
+/*************
+ * Sieve redirect 
+ *************/
+
+/* Container */
+table.sieve_redirect_container {
+	margin:0px;
+	padding:0px;
+	border-spacing: 0px ;
+	width:100%;
+	background-color: #EEEEEE;
+}
+
+/* Editing area */
+td.sieve_redirect_input {
+	padding-left:20px;
+}
+textarea.sieve_redirect_input {
+	width:100%; 
+	height:30px;
+}
+
+
+/*************
+ * Sieve reject
+ *************/
+
+/* Container */
+table.sieve_reject_container {
+	margin:0px;
+	padding:0px;
+	border-spacing: 0px ;
+	width:100%;
+	background-color: #EEEEEE;
+}
+
+/* Editing area */
+td.sieve_reject_input {
+	padding-left:20px;
+}
+textarea.sieve_reject_input {
+	width:100%; 
+	height:30px;
+}
+
+
+/*************
+ * Sieve end 
+ *************/
+
+/* Container */
+table.sieve_stop_container {
+	margin:0px;
+	padding:0px;
+	border-spacing: 0px ;
+	width:100%;
+	background-color: #EEEEEE;
+}
+
+/* Editing area */
+td.sieve_stop_input {
+	padding-left:20px;
+}
+
+
+/*************
+ * Sieve vacation 
+ *************/
+
+/* Container */
+table.sieve_vacation_container {
+	margin:0px;
+	padding:0px;
+	border-spacing: 0px ;
+	width:100%;
+	background-color: #EEEEEE;
+}
+
+/* Editing area */
+td.sieve_vacation_input {
+	padding-left:20px;
+}
+
+/* Editing area */
+textarea.sieve_vacation_input {
+	width:100%;
+	height : 45px;
+}
 
 
 
