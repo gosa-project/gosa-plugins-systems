@@ -502,100 +502,10 @@ class sieveManagement extends plugin
          *  the selected position 
          */
         if(isset($_POST['select_new_element_type'])){
-
-          $this->add_new_id;
-          $data = $this->current_handler->tree_->pap;
-
-          /* Get index of the element identified by object_id == $this->add_new_id; */
-          $index = -1;
-          foreach($data as $key => $obj){
-            if($obj->object_id == $this->add_new_id && $index==-1){
-              $index = $key;
-            }
-          }
- 
-          /* We have found the specified object_id 
-           *  and want to detect the next free position 
-           *  to insert the new element.
-           */
-          if($index != -1){
-            if($this->add_above_below == "above"){
-              $direction ="up";
-              $next_free = $this->current_handler->tree_->_get_next_free_move_slot($index,$direction);
-              $next_free ++;
-            }else{
-              $direction = "down";
-              $next_free = $this->current_handler->tree_->_get_next_free_move_slot($index,$direction);
-            }
-            $this->add_new_id = $this->current_handler->tree_->pap[$next_free]->object_id;
-          }
-
-          $parent = $this->current_handler->tree_;
-
-          /* Create elements we should add */
-          if($this->add_element_type == "sieve_if"){
-            $ele[] = new $this->add_element_type(NULL, preg_replace("/[^0-9]/","",microtime()),$parent);
-            $ele[] = new sieve_block_start(NULL,preg_replace("/[^0-9]/","",microtime()),$parent);
-            $ele[] = new sieve_block_end(NULL,preg_replace("/[^0-9]/","",microtime()),$parent);
-          }elseif($this->add_element_type == "sieve_else"){
-            $ele[] = new sieve_block_end(NULL,preg_replace("/[^0-9]/","",microtime()),$parent);
-            $ele[] = new $this->add_element_type(NULL, preg_replace("/[^0-9]/","",microtime()),$parent);
-            $ele[] = new sieve_block_start(NULL,preg_replace("/[^0-9]/","",microtime()),$parent);
-          }elseif($this->add_element_type == "sieve_elsif"){
-            $ele[] = new sieve_block_end(NULL,preg_replace("/[^0-9]/","",microtime()),$parent);
-            $ele[] = new $this->add_element_type(NULL, preg_replace("/[^0-9]/","",microtime()),$parent);
-            $ele[] = new sieve_block_start(NULL,preg_replace("/[^0-9]/","",microtime()),$parent);
-          }else{
-            $ele[] = new $this->add_element_type(NULL, preg_replace("/[^0-9]/","",microtime()),$parent);
-          }
-
-          $start = $end = array();
-          $found = false;
-
-          /* Add above current element*/
-          if($this->add_above_below == "above"){
-            foreach($data as $key => $obj){
-              if($obj->object_id == $this->add_new_id){
-                $found = true;
-              }
-              if(!$found){
-                $start[] = $obj;
-              }else{
-                $end[] = $obj;
-              }
-            }
-          }else{
-            /* Add below current element */
-            foreach($data as $key => $obj){
-              if(!$found){
-                $start[] = $obj;
-              }else{
-                $end[] = $obj;
-              }
-              if($obj->object_id == $this->add_new_id){
-                $found = true;
-              }
-            }
-          }
-
-
-          /* Only add, if current element could be located */
-          if($found){
-            $new = array();
-            foreach($start as $obj){
-              $new[] = $obj;
-            }
-            foreach($ele as $el){
-              $new[] = $el;
-            }
-            foreach($end as $obj){
-              $new[] = $obj;
-            }
-            $data= $new;
-            $this->current_handler->tree_->pap = $data;
+          if($this->add_new_element_to_current_script($this->add_element_type,$this->add_new_id,$this->add_above_below)){
             $this->add_new_element = FALSE;
           }else{
-            print_red(_("Something went wrong while adding a new entry."));
+            print_red(_("Failed to add new element."));
           }
         }
       }
@@ -749,6 +659,112 @@ class sieveManagement extends plugin
     $display .= "</p>";
     return($display);;
   }
+
+
+  /* Add a new element to the currently opened script editor.
+   * The insert position is specified by 
+   */
+  function add_new_element_to_current_script($type,$id,$position)
+  {
+    /* Test given data */
+    if(!in_array_ics($position,array("above","below"))){
+      trigger_error("Can't add new element with \$position=".$position.". Only 'above','below' are allowed here.");
+      return(FALSE);
+    }
+    if(!is_numeric($id)){
+      trigger_error("Can't add new element, given id is not numeric.");
+      return(FALSE);
+    }
+    $tmp = get_declared_classes();  
+    if(!in_array($type,$tmp)){
+      trigger_error("Can't add new element, given \$class=".$class." does not exists.");
+      return(FALSE);
+    }
+    if(!is_object($this->current_handler) || get_class($this->current_handler) != "My_Parser"){
+      trigger_error("Can't add new element, there is no valid script editor opened.");
+      return(FALSE);
+    }
+    
+    /* Get index of the element identified by object_id == $id; 
+     */
+    $index = -1;
+    $data = $this->current_handler->tree_->pap;
+    foreach($data as $key => $obj){
+      if($obj->object_id == $id && $index==-1){
+        $index = $key;
+      }
+    }
+
+    /* Tell to user that we couldn't find the given object 
+     *  so we can't add an element. 
+     */
+    if($index == -1 ){
+      trigger_error("Can't add new element, specified \$id=".$id." could not be found in object tree.");
+      return(FALSE);
+    }
+
+    /* We have found the specified object_id 
+     *  and want to detect the next free position 
+     *  to insert the new element.
+     */
+    if($position == "above"){
+      $direction ="up";
+      $next_free = $this->current_handler->tree_->_get_next_free_move_slot($index,$direction,TRUE);
+    }else{
+      $direction = "down";
+      $next_free = $this->current_handler->tree_->_get_next_free_move_slot($index,$direction,TRUE);
+    }
+
+    /* Create elements we should add 
+     * -Some element require also surrounding block elements
+     */
+    $parent = $this->current_handler->tree_;
+    if($this->add_element_type == "sieve_if"){
+      $ele[] = new $this->add_element_type(NULL, preg_replace("/[^0-9]/","",microtime()),$parent);
+      $ele[] = new sieve_block_start(NULL,preg_replace("/[^0-9]/","",microtime()),$parent);
+      $ele[] = new sieve_block_end(NULL,preg_replace("/[^0-9]/","",microtime()),$parent);
+    }elseif($this->add_element_type == "sieve_else"){
+      $ele[] = new sieve_block_end(NULL,preg_replace("/[^0-9]/","",microtime()),$parent);
+      $ele[] = new $this->add_element_type(NULL, preg_replace("/[^0-9]/","",microtime()),$parent);
+      $ele[] = new sieve_block_start(NULL,preg_replace("/[^0-9]/","",microtime()),$parent);
+    }elseif($this->add_element_type == "sieve_elsif"){
+      $ele[] = new sieve_block_end(NULL,preg_replace("/[^0-9]/","",microtime()),$parent);
+      $ele[] = new $this->add_element_type(NULL, preg_replace("/[^0-9]/","",microtime()),$parent);
+      $ele[] = new sieve_block_start(NULL,preg_replace("/[^0-9]/","",microtime()),$parent);
+    }else{
+      $ele[] = new $this->add_element_type(NULL, preg_replace("/[^0-9]/","",microtime()),$parent);
+    }
+
+    /* This is extremly necessary, cause some objects 
+     *  updates the tree objects ... Somehow i should change this ... 
+     */
+    $data = $this->current_handler->tree_->pap;
+    $start = $end = array();
+
+    if($position == "above"){
+      $start = array_slice($data,0,$next_free);
+      $end   = array_slice($data,$next_free);
+    }else{
+      $start = array_slice($data,0,$next_free+1);
+      $end   = array_slice($data,$next_free+1);
+    }
+
+    $new = array();
+    foreach($start as $obj){
+      $new[] = $obj;
+    }
+    foreach($ele as $el){
+      $new[] = $el;
+    }
+    foreach($end as $obj){
+      $new[] = $obj;
+    }
+    $data= $new;
+    $this->current_handler->tree_->pap = $data;
+    return(TRUE);
+  }
+
+
 
   function save_object()
   {

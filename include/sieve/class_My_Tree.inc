@@ -430,7 +430,7 @@ class My_Tree extends Tree
    *    $key_id     = Current position
    *    $direction  = Forward or backward.
    */
-  function _get_next_free_move_slot($key_id,$direction)
+  function _get_next_free_move_slot($key_id,$direction,$include_self = FALSE)
   {
     $last_class = "";
     $current_class ="";
@@ -472,7 +472,10 @@ class My_Tree extends Tree
         if(($key_id+1) == count($test)) {
           return($key_id);
         }
-        $key_id ++;
+
+        if(!$include_self){
+          $key_id ++;
+        }
         $current_class  = get_class($test[$key_id]);
         if(in_array($current_class, $allowed_to_add_after)){
           return($key_id);
@@ -484,7 +487,9 @@ class My_Tree extends Tree
       if($key_id == 0) {
         return($key_id);
       }
-      $key_id --;
+      if(!$include_self){
+        $key_id --;
+      }
       while($key_id >=0 ){
         $current_class  = get_class($test[$key_id]);
         if(in_array($current_class, $allowed_to_add_before)){
