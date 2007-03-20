@@ -1356,8 +1356,58 @@ textarea.sieve_vacation_input {
 }
 
 
+/*************
+ * Sieve allof 
+ *************/
+
+table.sieve_allof_container {
+    width:100%;
+    margin: 0px;
+    border-spacing: 0px ;
+    padding:0px;
+	border: solid 2px #CCCCCC;
+}
+
+/* Container */
+td.sieve_allof_left {
+	text-align:center;
+	vertical-align: middle;
+	width:35px;
+	background-color: #BDBDBD;
+	border: solid 0px #EEEEEE
+}
 
 
+/*************
+ * Sieve anyof 
+ *************/
 
+table.sieve_anyof_container {
+    width:100%;
+    margin: 0px;
+    border-spacing: 0px ;
+    padding:0px;
+	border: solid 2px #CCCCCC;
+}
+
+/* Container */
+td.sieve_anyof_left {
+	text-align:center;
+	vertical-align: middle;
+	width:35px;
+	background-color: #BDBDBD;
+	border: solid 0px #EEEEEE
+}
+
+/*************
+ * Sieve Test Cases  
+ *************/
+
+table.sieve_test_case {
+	width:100%;
+	margin: 0px;
+	border-spacing: 0px ;
+	padding:0px;
+}
 
 

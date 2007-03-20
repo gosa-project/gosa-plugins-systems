@@ -1,4 +1,4 @@
-<table cellspacing=0 cellpadding=2 style='background-color:#EEEEDD;width:100%; border: solid 1px #CCCCCC'>
+<table class='sieve_test_case'>
 	<tr>
 		<td>
 <b>{t}Size{/t}</b>
