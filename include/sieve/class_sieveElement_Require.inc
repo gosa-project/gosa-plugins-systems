@@ -4,12 +4,14 @@ class sieve_require
 {
   var $data = array();
   var $object_id = -1;
-  
-  function sieve_require($data,$object_id)
+  var $parent = NULL;  
+
+  function sieve_require($data,$object_id,$parent)
   {
+    $this->parent = $parent;
+    $this->object_id = $object_id;
     if($data != NULL){
 
-      $this->object_id = $object_id;
       foreach($data['ELEMENTS'] as $node ){
         if(in_array($node['class'],array("quoted-string","text"))){
           $this->data[] = preg_replace("/\"/","",$node['text']);
