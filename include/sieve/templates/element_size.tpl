@@ -6,12 +6,13 @@
 				<font color='red'>{$LastError}</font>
 				<br>
 			{/if}			
-		
-			{if $Inverse}
-				{t}If size is{/t} <b>{t}not{/t}</b>
-			{else}
-				{t}If size is{/t}
-			{/if}
+
+     		{if $Inverse}
+                <input type='submit' name='toggle_inverse_{$ID}' value='{t}Not{/t}'>
+            {else}
+                <input type='submit' name='toggle_inverse_{$ID}' value='{t}-{/t}'>
+            {/if}
+
 			<select name='Match_type_{$ID}' title='{t}Select match type{/t}'>
 				{html_options options=$Match_types selected=$Match_type}
 			</select>

@@ -381,7 +381,10 @@ class sieve_if
           }          
 
           /* Add allof/anyof tag */
-          $script.= " ".$key." ( ";
+          if($Inverse){
+            $script .= "not ";
+          }
+          $script.= $key." ( ";
 
           /* Add each test parameter */
           foreach($data as $key2 => $dat){
@@ -692,6 +695,11 @@ class sieve_if
 
           $Units       = array( "M" => _("Megabyte") ,
                                 "K" => _("Kilobyte"));
+
+          /* Toggle Inverse ? */
+          if(isset($_POST['toggle_inverse_'.$element_id])){
+            $parsed[$key]['Inverse'] = !$parsed[$key]['Inverse'];
+          }
 
           /* Reset error */
           $parsed[$key]['LastError'] ="";
