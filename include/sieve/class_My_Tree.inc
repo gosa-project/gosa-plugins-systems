@@ -706,11 +706,12 @@ function sieve_get_strings($data,$id)
 {
   $ret = array();
   if($data[$id]['class'] == "left-bracket"){
-    while($data[$id]['class']  != "right-bracket" && $id < count($data)){
+    while(isset($data[$id]) && $data[$id]['class']  != "right-bracket" && $id < count($data)){
       
       if($data[$id]['class'] == "quoted-string"){
         $ret[] = $data[$id]['text'];
       }
+
       $id ++;
     }
   }elseif($data[$id]['class'] == "quoted-string"){
