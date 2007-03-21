@@ -562,16 +562,10 @@ class My_Tree extends Tree
         }
         $tmp2 = $part->get_sieve_script_part();
 
-        if(get_class($part) == "sieve_reject"){
-          $tmp.=$tmp2;
-        }else{
-
-          $tmp3 = split("\n",$tmp2);
-          foreach($tmp3 as $str){
-            $str2 = trim($str);
-            #if(empty($str2)) continue;
-            $tmp.= $buffer.$str."\n";
-          }
+        $tmp3 = split("\n",$tmp2);
+        foreach($tmp3 as $str){
+          $str2 = trim($str);
+          $tmp.= $buffer.$str."\n";
         }
         if(get_class($part) == "sieve_block_start"){
           $buffer .= SIEVE_INDENT_TAB;
