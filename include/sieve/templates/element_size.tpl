@@ -1,7 +1,7 @@
 <table class='sieve_test_case'>
 	<tr>
 		<td>
-<b>{t}Size{/t}</b>
+			<b>{t}Size{/t}</b>
 			{if $LastError != ""}
 				<font color='red'>{$LastError}</font>
 				<br>
