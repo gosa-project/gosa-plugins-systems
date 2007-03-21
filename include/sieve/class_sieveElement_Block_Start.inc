@@ -26,7 +26,7 @@ class sieve_block_start
 
   function get_sieve_script_part()
   {
-    return("{\n");
+    return("{");
   } 
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

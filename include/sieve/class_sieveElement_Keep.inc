@@ -30,7 +30,7 @@ class sieve_keep
   }
   function get_sieve_script_part()
   {
-    return("keep;\n");
+    return("keep;");
   } 
 }
 

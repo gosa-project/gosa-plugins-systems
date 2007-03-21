@@ -20,6 +20,7 @@ class sieve_if
   function sieve_if($elements,$object_id,$parent)
   {
     $this->parent = $parent;
+    print_a($elements);;
   
     /* Possible address parts we can select */
     $this->address_parts = array( 

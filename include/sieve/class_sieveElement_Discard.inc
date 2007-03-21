@@ -12,7 +12,7 @@ class sieve_discard
 
   function get_sieve_script_part()
   {
-    return("discard;\n");
+    return("discard;");
   } 
   function check()
   {

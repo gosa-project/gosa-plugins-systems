@@ -53,7 +53,7 @@ class sieve_reject
 
   function get_sieve_script_part()
   {
-    return("reject ".sieve_create_strings($this->data).";\n");
+    return("reject ".sieve_create_strings($this->data).";");
   } 
 
   function execute()

@@ -36,7 +36,7 @@ class sieve_else
 
   function get_sieve_script_part()
   {
-    return(" else ");
+    return("else");
   }
 }
 

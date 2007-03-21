@@ -65,10 +65,10 @@ class sieve_fileinto
   function get_sieve_script_part()
   {
     $tmp = "";
-      $tmp.= "\"".$this->data."\", ";
+    $tmp.= "\"".$this->data."\", ";
     $tmp = preg_replace("/,$/","",trim($tmp));
     $tmp = preg_replace ("/\"\"/","\"",$tmp);
-    return("fileinto ".$tmp.";\n");
+    return("fileinto ".$tmp.";");
   } 
     
   function execute()

@@ -9,7 +9,7 @@ class sieve_comment
 
   function get_sieve_script_part()
   {
-    $str = "/*".$this->data."*/\n";
+    $str = "\n/*".$this->data."*/";
     return($str);
   } 
     
@@ -39,6 +39,7 @@ class sieve_comment
 
       $this->data .= $text."\n";
     }
+    $this->data = rtrim($this->data)."\n";
   }
 
   function check()

@@ -21,7 +21,7 @@ class sieve_block_end
 
   function get_sieve_script_part()
   {
-    return("}\n");
+    return("}");
   } 
   function save_object()
   {

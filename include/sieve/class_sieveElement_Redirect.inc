@@ -45,7 +45,7 @@ class sieve_redirect
 
   function get_sieve_script_part()
   {
-    return("redirect ".sieve_create_strings($this->data).";\n");
+    return("redirect ".sieve_create_strings($this->data).";");
   } 
    
  
