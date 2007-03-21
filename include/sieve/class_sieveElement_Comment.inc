@@ -9,7 +9,8 @@ class sieve_comment
 
   function get_sieve_script_part()
   {
-    return($this->data."\n");
+    $str = "/*".$this->data."*/\n";
+    return($str);
   } 
     
   function sieve_comment($data,$object_id)
@@ -21,7 +22,22 @@ class sieve_comment
     }
 
     foreach($data['ELEMENTS'] as $node){
-       $this->data .= $node['text'];
+
+      $text = $node['text'];
+  
+      /* Convert \t to spaces  */ 
+      $text = preg_replace("#\t#","    ",$text);
+      
+      /* Remove comment indicator '#' but keep spaces */
+      $text = preg_replace("/^([ ]*)\#/","\\1",$text);
+     
+      /* Remove comment indicator '/ *' */ 
+      $text = preg_replace("#\/\*#","",$text);
+      
+      /* Remove comment indicator '* /' */ 
+      $text = preg_replace("#\*\/#","",$text);
+
+      $this->data .= $text."\n";
     }
   }
 
@@ -34,7 +50,7 @@ class sieve_comment
   {
     if(isset($_POST['comment_'.$this->object_id])){
       $cm = stripslashes( $_POST['comment_'.$this->object_id]);
-      $this->data = "/*".$cm."*/";
+      $this->data = $cm;
     }
   
     if(isset($_POST['toggle_small_'.$this->object_id])){
@@ -50,16 +66,8 @@ class sieve_comment
     $object_container = $smarty->fetch(get_template_path("templates/object_container.tpl",TRUE,dirname(__FILE__)));
     $Comment = $this->data;
 
-    /* Remove comment tags */
-    if(preg_match("/^#/",$Comment)){
-      $Comment = preg_replace("/^#/","",$Comment);
-    }elseif(preg_match("#\/\*#",$Comment)){
-      $Comment = preg_replace("#^\/\*#","",$Comment);
-      $Comment = preg_replace("#\*\/$#","",$Comment);
-    }
-
     if($this->small){
-      $Comment = nl2br($Comment);
+      $Comment = nl2br(preg_replace("/ /","&nbsp;",$Comment));
     }
  
     /* Create html object */ 
