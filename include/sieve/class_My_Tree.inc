@@ -87,12 +87,17 @@ class My_Tree extends Tree
     /* Get node */ 
     $node = $this->nodes_[$node_id];
 
-    /* Get last element class */
+    /* Get last element class and type */
     $last_class = "";
+    $last_type  = "";
     if(count($this->mode_stack)){
       $key = key($this->mode_stack);
       $tmp = array_reverse($this->mode_stack[$key]['ELEMENTS']);
       $last_class = $tmp[key($tmp)]['class'];
+      
+      if(isset($this->mode_stack[$key]['TYPE'])){
+        $last_type  = $this->mode_stack[$key]['TYPE'];
+      }
     }
 
     /* This closes the last mode */
@@ -115,27 +120,29 @@ class My_Tree extends Tree
       $this->handle_elements($tmp,$node_id);
     }
 
+    /* We can't handle comments within if tag right now */
+    if($last_type != "if"){
 
-    /* Comments require special attention.
-     * We do not want to create a single comment element 
-     *  foreach each  "#comment"  string found in the script. 
-     * Sometimes comments are used like this 
-     *   # This is a comment
-     *   #  and it still is a comment 
-     *   #  ...
-     * So we combine them to one single comment.
-     */
-    if($last_class != "comment" && $node['class'] == "comment"){
-      $tmp =array_pop($this->mode_stack);
-      $this->handle_elements($tmp,$node_id);
-      $this->mode_stack[] = array("TYPE" => $node['class']); 
-    }  
+      /* Comments require special attention.
+       * We do not want to create a single comment element 
+       *  foreach each  "#comment"  string found in the script. 
+       * Sometimes comments are used like this 
+       *   # This is a comment
+       *   #  and it still is a comment 
+       *   #  ...
+       * So we combine them to one single comment.
+       */
+      if($last_class != "comment" && $node['class'] == "comment"){
+        $tmp =array_pop($this->mode_stack);
+        $this->handle_elements($tmp,$node_id);
+        $this->mode_stack[] = array("TYPE" => $node['class']); 
+      }  
 
-    if($last_class == "comment" && $node['class'] != "comment"){
-      $tmp =array_pop($this->mode_stack);
-      $this->handle_elements($tmp,$node_id);
+      if($last_class == "comment" && $node['class'] != "comment"){
+        $tmp =array_pop($this->mode_stack);
+        $this->handle_elements($tmp,$node_id);
+      }
     }
-
 
     /* Handle identifiers */
     $identifiers = array("else","if","elsif","end","reject","redirect","vacation","keep","discard","fileinto","require","stop");
@@ -143,10 +150,12 @@ class My_Tree extends Tree
       $this->mode_stack[] = array("TYPE" => $node['text']); 
     }
 
-    /* Add current node to current command stack */
-    end($this->mode_stack);
-    $key = key($this->mode_stack);
-    $this->mode_stack[$key]['ELEMENTS'][] = $node;
+    if(!($last_type == "if" && $node['class'] == "comment")){
+      /* Add current node to current command stack */
+      end($this->mode_stack);
+      $key = key($this->mode_stack);
+      $this->mode_stack[$key]['ELEMENTS'][] = $node;
+    }
 
     /* Remove last mode from mode stack, cause it was only valid for a single line */
     if($rewoke_last){
@@ -560,7 +569,7 @@ class My_Tree extends Tree
           $tmp3 = split("\n",$tmp2);
           foreach($tmp3 as $str){
             $str2 = trim($str);
-            if(empty($str2)) continue;
+            #if(empty($str2)) continue;
             $tmp.= $buffer.$str."\n";
           }
         }
