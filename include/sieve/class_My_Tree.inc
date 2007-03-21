@@ -524,6 +524,7 @@ class My_Tree extends Tree
         if(!$include_self){
           $key_id ++;
         }
+        $include_self = FALSE;
         $current_class  = get_class($test[$key_id]);
         if(in_array($current_class, $allowed_to_add_after)){
           return($key_id);
