@@ -42,6 +42,13 @@ class My_Tree extends Tree
       $this->mode_stack = array();
       $this->pap = array();
       $this->doDump_(0, '', true);
+
+      /* Add left elements */
+      if(count($this->mode_stack)){
+        foreach($this->mode_stack as $element){
+          $this->handle_elements( $element,preg_replace("/[^0-9]/","",microtime()));
+        }
+      }
     }
 
     /* Create html results */
