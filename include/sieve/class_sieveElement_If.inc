@@ -825,7 +825,7 @@ class sieve_if
     }else{
       $object = $smarty->fetch(get_template_path("templates/element_elsif.tpl",TRUE,dirname(__FILE__)));
     }
-    $str = preg_replace("/%%OBJECT_CONTENT%%/",$object,$object_container);
+    $str = preg_replace("/%%OBJECT_CONTENT%%/",addcslashes($object,"\\"),$object_container);
     return($str);
   }
 
@@ -1157,7 +1157,7 @@ class sieve_if
     $smarty->assign("DisplayAdd",FALSE);
     $smarty->assign("DisplayDel",TRUE);
     $str = $smarty->fetch(get_template_path("templates/object_test_container.tpl",TRUE,dirname(__FILE__)));
-    $ret = preg_replace("/%%OBJECT_CONTENT%%/",$ret,$str);
+    $ret = preg_replace("/%%OBJECT_CONTENT%%/",addcslashes($ret,"\\"),$str);
     return($ret);
   }
 

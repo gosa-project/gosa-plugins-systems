@@ -75,7 +75,7 @@ class sieve_comment
     $smarty->assign("Comment",$Comment);
     $smarty->assign("ID",$this->object_id);
     $object = $smarty->fetch(get_template_path("templates/element_comment.tpl",TRUE,dirname(__FILE__)));    
-    $str = preg_replace("/%%OBJECT_CONTENT%%/",$object,$object_container);
+    $str = preg_replace("/%%OBJECT_CONTENT%%/",addcslashes($object,"\\"),$object_container);
     return($str);
   }
 }

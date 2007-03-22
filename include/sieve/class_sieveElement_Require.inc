@@ -92,7 +92,7 @@ class sieve_require
     $smarty->assign("ID", $this->object_id);
     $object_container = $smarty->fetch(get_template_path("templates/object_container.tpl",TRUE,dirname(__FILE__)));
     $object= $smarty->fetch(get_template_path("templates/element_require.tpl",TRUE,dirname(__FILE__)));
-    $str = preg_replace("/%%OBJECT_CONTENT%%/",$object,$object_container);
+    $str = preg_replace("/%%OBJECT_CONTENT%%/",addcslashes($object,"\\"),$object_container);
     return($str);
   }
 }
