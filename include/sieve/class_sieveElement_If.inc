@@ -36,6 +36,7 @@ class sieve_if
     /* Match types */
     $this->match_types  = array(  
         ":is"         => _("is"),
+        ":regex"      => _("regex"),
         ":contains"   => _("contains"),
         ":matches"    => _("matches"),
         ":count"      => _("count"),
@@ -1010,10 +1011,13 @@ class sieve_if
             $values .= $key.", ";
           }
           $values = preg_replace("/,$/","",trim($values));
+
           $smarty->assign("keys",$keys);
-          $smarty->assign("values",$values);
+          $smarty->assign("values", $values);
           $smarty->assign("ID"  , $element_id); 
-          $ret .= $smarty->fetch(get_template_path("templates/element_address.tpl",TRUE,dirname(__FILE__)));
+          $str = $smarty->fetch(get_template_path("templates/element_address.tpl",TRUE,dirname(__FILE__)));
+          $ret .= $str;
+          echo htmlentities($str);
           break;
         }
       
@@ -1163,8 +1167,16 @@ class sieve_if
    */
   function _parse($data,$id = 0)
   {
-    $av_methods   = array("address","allof","anyof","exists","false","header","not","size","true","envelope");
-    $av_match_type= array(":is",":contains",":matches",":over",":count",":value",":under");
+    $av_match_type = array();
+    foreach($this->match_types as $name => $description){
+      $av_match_type[] = $name;
+    }
+    $av_match_type[] = ":over";
+    $av_match_type[] = ":under";
+
+
+
+    $av_methods= array("address","allof","anyof","exists","false","header","not","size","true","envelope");
     $type = $data[$id]['text'];
     $tmp = array();
 
@@ -1199,7 +1211,7 @@ class sieve_if
    
         
         $part     = "(:all|:localpart|:domain)";
-        $operator = "(:contains|:is|:matches|:count|:value)";
+        $operator = "(:regex|:contains|:is|:matches|:count|:value)";
         $value_op = "(lt|le|eq|ge|gt|ne)";
 
         $Address_Part     = "";
