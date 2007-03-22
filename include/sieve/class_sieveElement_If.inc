@@ -1017,7 +1017,6 @@ class sieve_if
           $smarty->assign("ID"  , $element_id); 
           $str = $smarty->fetch(get_template_path("templates/element_address.tpl",TRUE,dirname(__FILE__)));
           $ret .= $str;
-          echo htmlentities($str);
           break;
         }
       
