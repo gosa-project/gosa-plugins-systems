@@ -72,7 +72,6 @@ class sieve_comment
     }
  
     /* Create html object */ 
-    $smarty = get_smarty();
     $smarty->assign("Comment",$Comment);
     $smarty->assign("ID",$this->object_id);
     $object = $smarty->fetch(get_template_path("templates/element_comment.tpl",TRUE,dirname(__FILE__)));    
