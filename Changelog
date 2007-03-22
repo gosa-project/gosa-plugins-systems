@@ -2,10 +2,31 @@ GOsa2 changelog
 ===============
 
 * gosa 2.5.10
-  - Added hook for dynamic uid-bases
+  - Included hook to make use of dynamic uid-bases
 
 * gosa 2.5.9
   - Fixed ldap tls connections when schema check was being used
+  - Updated italian translation
+  - Added the possiblility to choose a RDN style for DN's when
+    a CN is already in use
+  - Fixed a problem with cut'n paste for groups and ogroups
+  - Added new mail method "golab" which has some tweaks against
+    the standard kolab mode
+  - Fixed object tagging for workstation/printer assignement
+  - Fixed undefined index in FAI package lists
+  - Fixed copy'n paste for groups and object groups
+  - Enabled non ASCII characters in vacation messages
+  - Fixed "none" permissions in IMAP shared folders to be assignable
+
+* gosa 2.5.8
+  - Fixed problem with winstations shown in user list. 
+  - Allow basic regex ().*^$ in fax blocklist numbers.
+  - Fixed date of birth and shadow expire in template adaption
+  - Updated user mail account to search for CYRUSUNIXSTYLE in all
+    relevant sections of the config file
+  - Added support for sambaLogonHours 
+  - Security fix, that allows non priviledged users to change
+    several settings - including admin passwords
 
 * gosa 2.5.7
   - Fixed login.tpl to display error msgs in the middle of the screen
@@ -22,6 +43,9 @@ GOsa2 changelog
     can edit specified objects.
   - Fixed simultaneous move + rename for deparments
   - Internally updated to smarty 2.6.16
+  - Removed asterisk status view in user display. This was too slow in
+    bigger installations.
+  - Re-enabled phone queues. They got optimized for invisibility.
 
 * gosa 2.5.6
   - Copy & paste implemented into FAI
