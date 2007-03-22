@@ -347,7 +347,7 @@ class Semantics
 			global $requires_;
 			if (!in_array('"relational"', $requires_))
 			{
-				$this->message = 'missing require for match-type '. $text;
+				$this->message = sprintf(_("Missing require statement for '%s' object."), $text);
 				return false;
 			}
 
@@ -374,7 +374,7 @@ class Semantics
 			global $requires_;
 			if (!in_array('"subaddress"', $requires_))
 			{
-				$this->message = 'missing require for tag '. $text;
+				$this->message = sprintf(_("Missing require statement for '%s' object."), $text);
 				return false;
 			}
 		}
@@ -387,7 +387,7 @@ class Semantics
 		    $this->matchType_ == ':count' &&
 		    $this->comparator_ != '"i;ascii-numeric"')
 		{
-			$this->message = 'match-type :count needs comparator i;ascii-numeric';
+			$this->message = sprintf(_("Match type '%s' needs comparator '%s'."),":count","i;ascii-numeric");
 			return false;
 		}
 		return true;
@@ -403,7 +403,7 @@ class Semantics
 		// Check if command expects any arguments
 		if (!isset($this->s_['arguments']))
 		{
-			$this->message = $id .' where semicolon expected';
+			$this->message = sprintf(_("Unexpected %s where semicolon expected"),$id);
 			return false;
 		}
 
@@ -417,7 +417,7 @@ class Semantics
 			// Is the argument required
 			if ($arg['occurrences'] != '?' && $arg['occurrences'] != '*')
 			{
-				$this->message = $id .' where '. $arg['class'] .' expected';
+				$this->message = sprintf(_("Unexpected '%s' where '%s' expected"),$id,$arg['class']);
 				return false;
 			}
 
@@ -429,7 +429,7 @@ class Semantics
 			array_shift($this->s_['arguments']);
 		}
 
-		$this->message = 'unexpected '. $id;
+		$this->message = sprintf(_("Unexpected '%s'."),$id);
 		return false;
 	}
 
@@ -437,12 +437,12 @@ class Semantics
 	{
 		if (!$this->validClass_('string', 'string'))
 		{
-			$this->message = 'line '. $line .': '. $this->message;
+			$this->message = sprintf(_("Error in line %s"),$line).": ". $this->message;
 			return false;
 		}
 		else if (!isset($this->s_['arguments'][0]['list']))
 		{
-			$this->message = 'line '. $line .': '. 'left bracket where '. $this->s_['arguments'][0]['class'] .' expected';
+			$this->message = sprintf(_("Error in line %s left bracket where '%s' expected"),$line,$this->s_['arguments'][0]['class']);
 			return false;
 		}
 
@@ -470,14 +470,14 @@ class Semantics
 		if (isset($this->s_['requires']) &&
 		    !in_array('"'.$this->s_['requires'].'"', $requires_))
 		{
-			$this->message = 'line '. $line .': missing require for '. $this->command_;
+			$this->message = sprintf(_("Error in line %s"),$line)." :".sprintf(_("Missing require statement for '%s' object."), $this->command_);
 			return false;
 		}
 
 		// Make sure the argument has a valid class
 		if (!$this->validClass_($class, $name))
 		{
-			$this->message = 'line '. $line .': '. $this->message;
+			$this->message = sprintf(_("Error in line %s"),$line).' : '. $this->message;
 			return false;
 		}
 
@@ -491,7 +491,7 @@ class Semantics
 				if (isset($val['requires']) &&
 					!in_array('"'.$val['requires'].'"', $requires_))
 				{
-					$this->message = 'line '. $line .': missing require for '. $val['name'] .' '. $text;
+					$this->message = sprintf(_("Error in line %s"),$line)." :".sprintf(_("Missing require statement for '%s' object."), $val['name']);
 					return false;
 				}
 
@@ -506,7 +506,7 @@ class Semantics
 				}
 				else if ($val['occurrences'] == '0')
 				{
-					$this->message = 'line '. $line .': too many '. $val['name'] .' '. $class .'s near '. $text;
+					$this->message = sprintf(_("Error in line %s too many %s near %s."),$line,$class,$text);
 					return false;
 				}
 
@@ -514,7 +514,7 @@ class Semantics
 				if (isset($val['call']) && !call_user_func(array(&$this, $val['call']), $text) ||
 					isset($arg['call']) && !call_user_func(array(&$this, $arg['call']), $text))
 				{
-					$this->message = 'line '. $line .': '. $this->message;
+					$this->message = sprintf(_("Error in line %s"),$line).' : '. $this->message;
 					return false;
 				}
 
@@ -541,7 +541,7 @@ class Semantics
 			}
 		}
 
-		$this->message = 'line '. $line .': unexpected '. $name;
+		$this->message = sprintf(_("Error in line %s unexpected %s."),$line,$name);
 		return false;
 	}
 
@@ -553,7 +553,7 @@ class Semantics
 			{
 				if ($arg['occurrences'] == '+' || $arg['occurrences'] == '1')
 				{
-					$this->message = 'line '. $line .': '. $class .' '. $text .' where '. $arg['class'] .' expected';
+					$this->message = sprintf(_("Error in line %s unexpected %s where %s expected."),$line,$class .' '. $text,$arg['class']);
 					return false;
 				}
 			}
