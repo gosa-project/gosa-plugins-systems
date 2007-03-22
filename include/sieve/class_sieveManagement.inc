@@ -889,7 +889,7 @@ class sieveManagement extends plugin
     foreach($this->scripts as $key => $script){
       if($script['EDITED']){
         $data = $this->scripts[$key]['SCRIPT'];
-        if(!$this->sieve_handle->sieve_sendscript($script['NAME'], $data)){
+        if(!$this->sieve_handle->sieve_sendscript($script['NAME'], addcslashes ($data,"\\"))){
           gosa_log("Failed to save sieve script named '".$script['NAME']."': ".to_string($this->sieve_handle->error_raw));
           $everything_went_fine = FALSE;
           print_red(to_string($this->sieve_handle->error_raw));

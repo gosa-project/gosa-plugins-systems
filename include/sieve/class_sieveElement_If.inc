@@ -585,6 +585,9 @@ class sieve_if
             if(!isset($match_types[$mt])){
               $parsed[$key]['LastError'] = _("Invalid match type given.");
             }
+              if($mt == ":regex"){
+                $this->parent->add_require("regex");
+              }
             $parsed[$key]['Match_type'] = $mt;
           }
 
@@ -694,8 +697,9 @@ class sieve_if
           $Match_types = array( ":over" => _("greater than") ,
                                 ":under" => _("lower than"));
 
-          $Units       = array( "M" => _("Megabyte") ,
-                                "K" => _("Kilobyte"));
+          $Units       = array( "M" => _("Megabyte"),
+                                "K" => _("Kilobyte"),
+                                ""  => _("Bytes"));
 
           /* Toggle Inverse ? */
           if(isset($_POST['toggle_inverse_'.$element_id])){
@@ -1030,8 +1034,9 @@ class sieve_if
           $Match_types = array( ":over" => _("greater than") , 
                                 ":under" => _("lower than"));
 
-          $Units       = array( "M" => _("Megabyte") , 
-                                "K" => _("Kilobyte")); 
+          $Units       = array( "M" => _("Megabyte"),
+                                "K" => _("Kilobyte"),
+                                ""  => _("Bytes"));
 
           $Match_type   = $data['Match_type'];
           $Value        = preg_replace("/[^0-9]/","",$data['Value_List'][0]);
