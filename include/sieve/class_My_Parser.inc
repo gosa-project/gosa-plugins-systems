@@ -9,8 +9,11 @@ class My_Parser extends Parser
 {
 	var $parent = NULL;
 
+	var $registeredExtensions_ =array();
+
 	function My_Parser($parent)
 	{
+		$this->registeredExtensions_ = array();		
 		$this->parent = $parent;
 	}
 
@@ -33,11 +36,12 @@ class My_Parser extends Parser
      */
 	function parse($script) 
 	{
+		$this->registeredExtensions_ = array();
         $this->status_text = "incomplete";
         $this->script_ = $script;
         $this->tree_ = new My_Tree(@Scanner::scriptStart(),$this);
         $this->tree_->setDumpFunc(array(&$this, 'dumpToken_'));
-        $this->scanner_ = new Scanner($this->script_);
+        $this->scanner_ = new My_Scanner($this->script_);
         $this->scanner_->setCommentFunc(array($this, 'comment_'));
 
         if ($this->commands_($this->tree_->getRoot()) &&
