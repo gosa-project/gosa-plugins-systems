@@ -43,6 +43,7 @@ class My_Parser extends Parser
         if ($this->commands_($this->tree_->getRoot()) &&
             $this->scanner_->nextTokenIs('script-end'))
         {
+   			$this->scanner_->nextToken(); 
             return $this->success_('success');
         }
 
