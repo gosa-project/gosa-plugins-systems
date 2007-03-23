@@ -131,7 +131,7 @@ class My_Tree extends Tree
     }
 
     /* We can't handle comments within if tag right now */
-    if($last_type != "if"){
+    if(!in_array_ics($last_type,array("if","elsif"))){
 
       /* Comments require special attention.
        * We do not want to create a single comment element 

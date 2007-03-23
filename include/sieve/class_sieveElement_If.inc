@@ -51,6 +51,15 @@ class sieve_if
         "gt"  => _("greater than"),
         "ne"  => _("not equal"));
 
+    /* Remove comments from tests */  
+    $tmp = array();
+    foreach($elements['ELEMENTS'] as $ele){
+      if($ele['class'] != "comment"){
+        $tmp[] = $ele;
+      }
+    }
+    $elements['ELEMENTS'] = $tmp;
+
     $this->object_id       = $object_id;
     if($elements!=NULL){
       $this->elements = $elements;
