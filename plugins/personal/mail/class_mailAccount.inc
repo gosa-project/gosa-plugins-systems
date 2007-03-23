@@ -239,7 +239,7 @@ class mailAccount extends plugin
     /* 
      * Sieve Management 
      */
-    if(isset($_POST['sieveManagement'])) {
+    if(isset($_POST['sieveManagement']) && !preg_match("/C/",$this->gosaMailDeliveryMode)) {
       $this->dialog = new sieveManagement($this->config,$this->dn,$this);
     }
    
@@ -672,56 +672,68 @@ class mailAccount extends plugin
   function save_object()
   {
     if (isset($_POST['mailTab'])){
+
       /* Save ldap attributes */
       plugin::save_object();
 
-      /* Assemble mail delivery mode
-         The mode field in ldap consists of values between braces, this must
-         be called when 'mail' is set, because checkboxes may not be set when
-         we're in some other dialog.
 
-         Example for gosaMailDeliveryMode [LR        ]
-         L: Local delivery
-         R: Reject when exceeding mailsize limit
-         S: Use spam filter
-         V: Use vacation message
-         C: Use custm sieve script
-         I: Only insider delivery */
+      if(isset($_POST['own_script'])){
 
-      $tmp= preg_replace("/[^a-z]/i","",$this->gosaMailDeliveryMode);
-
-
-      /* Handle delivery flags */
-      if($this->acl_is_writeable("gosaMailDeliveryModeL")){
-        if(!preg_match("/L/",$tmp) && !isset($_POST['only_local'])){
-          $tmp.="L";
-        }elseif(preg_match("/L/",$tmp) && isset($_POST['only_local'])){
-          $tmp = preg_replace("/L/","",$tmp);
+        if(!preg_match("/C/",$this->gosaMailDeliveryMode)){
+          $str= preg_replace("/[\[\]]/","",$this->gosaMailDeliveryMode);
+          $this->gosaMailDeliveryMode = "[".$str."C]";
         }
-      }
 
-      $opts = array(     
-          "R"   => "use_mailsize_limit",
-          "S"   => "use_spam_filter",
-          "V"   => "use_vacation",
-          "C"   => "own_script",
-          "I"   => "drop_own_mails");
+      }else{
 
-      foreach($opts as $flag => $post){
-        if($this->acl_is_writeable("gosaMailDeliveryMode".$flag)){
-          if(!preg_match("/".$flag."/",$tmp) && isset($_POST[$post])){
-            $tmp.= $flag;
-          }elseif(preg_match("/".$flag."/",$tmp) && !isset($_POST[$post])){
-            $tmp = preg_replace("/".$flag."/","",$tmp);
+        /* Assemble mail delivery mode
+           The mode field in ldap consists of values between braces, this must
+           be called when 'mail' is set, because checkboxes may not be set when
+           we're in some other dialog.
+
+          Example for gosaMailDeliveryMode [LR        ]
+          L: Local delivery
+          R: Reject when exceeding mailsize limit
+          S: Use spam filter
+          V: Use vacation message
+          C: Use custm sieve script
+          I: Only insider delivery */
+
+        $tmp= preg_replace("/[^a-z]/i","",$this->gosaMailDeliveryMode);
+
+
+        /* Handle delivery flags */
+        if($this->acl_is_writeable("gosaMailDeliveryModeL")){
+          if(!preg_match("/L/",$tmp) && !isset($_POST['only_local'])){
+            $tmp.="L";
+          }elseif(preg_match("/L/",$tmp) && isset($_POST['only_local'])){
+            $tmp = preg_replace("/L/","",$tmp);
           }
         }
-      }
 
-      $tmp= "[$tmp]";
-      if ($this->gosaMailDeliveryMode != $tmp){
-        $this->is_modified= TRUE;
+        $opts = array(     
+            "R"   => "use_mailsize_limit",
+            "S"   => "use_spam_filter",
+            "V"   => "use_vacation",
+            "C"   => "own_script",
+            "I"   => "drop_own_mails");
+
+        foreach($opts as $flag => $post){
+          if($this->acl_is_writeable("gosaMailDeliveryMode".$flag)){
+            if(!preg_match("/".$flag."/",$tmp) && isset($_POST[$post])){
+              $tmp.= $flag;
+            }elseif(preg_match("/".$flag."/",$tmp) && !isset($_POST[$post])){
+              $tmp = preg_replace("/".$flag."/","",$tmp);
+            }
+          }
+        }
+
+        $tmp= "[$tmp]";
+        if ($this->gosaMailDeliveryMode != $tmp){
+          $this->is_modified= TRUE;
+        }
+        $this->gosaMailDeliveryMode= $tmp;
       }
-      $this->gosaMailDeliveryMode= $tmp;
     }
   }
 
