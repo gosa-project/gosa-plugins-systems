@@ -581,7 +581,18 @@ class My_Tree extends Tree
         $tmp3 = split("\n",$tmp2);
         foreach($tmp3 as $str){
           $str2 = trim($str);
-          $tmp.= $buffer.$str."\n";
+
+          /* If the current line only contains an '.'    
+           *  we must skip the line indent. 
+           * The text: statement uses a single '.' to mark the text end.
+           * This '.' must be the only char in the current line, no
+           *  whitespaces are allowed here.
+           */
+          if($str2 == "."){
+            $tmp.=$str."\n";
+          }else{
+            $tmp.= $buffer.$str."\n";
+          }
         }
         if(get_class($part) == "sieve_block_start"){
           $buffer .= SIEVE_INDENT_TAB;
