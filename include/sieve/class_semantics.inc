@@ -141,7 +141,7 @@ class Semantics
 				'valid_after' => $this->nonTestCommands_,
 				'arguments' => array(
 					array('class' => 'string', 'occurrences' => '1', 'values' => array(
-						array('occurrences' => '1', 'regex' => '".*"', 'name' => 'reason')
+						array('occurrences' => '1', 'regex' => '("|).*("|)', 'name' => 'reason')
 					))
 				)
 			);
