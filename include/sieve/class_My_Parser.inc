@@ -36,6 +36,8 @@ class My_Parser extends Parser
      */
 	function parse($script) 
 	{
+		$script = preg_replace("/^###GOSA/","",$script);
+
 		$this->registeredExtensions_ = array();
         $this->status_text = "incomplete";
         $this->script_ = $script;
@@ -57,7 +59,7 @@ class My_Parser extends Parser
 	
 	function get_sieve_script()
 	{
-		return($this->tree_->get_sieve_script());
+		return("###GOSA\n".$this->tree_->get_sieve_script());
 	}		
 
 	

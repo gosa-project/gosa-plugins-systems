@@ -85,7 +85,6 @@
   </td>
  </tr>
 </table>
-<!--
 <table summary="" style="width:100%; vertical-align:top; text-align:left;" cellpadding=4 border=0>
  <tr style="padding-bottom:0px;">
   <td style="width:50%">
@@ -201,7 +200,6 @@
 </table>
 
 <input type="hidden" name="mailTab" value="mailTab">
--->
 
 <!-- Place cursor -->
 <script language="JavaScript" type="text/javascript">

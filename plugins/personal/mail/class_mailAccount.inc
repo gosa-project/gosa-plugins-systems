@@ -774,7 +774,7 @@ class mailAccount extends plugin
         /* Ensure that this is an existing account */
         if($this->initially_was_account){
 
-          /* Write sieve information only if not in C mode * /
+          /* Write sieve information only if not in C mode */
           if (!is_integer(strpos($this->gosaMailDeliveryMode, "C"))){
             $method->configureFilter($this->$id,
                 $this->gosaMailDeliveryMode,
@@ -785,7 +785,6 @@ class mailAccount extends plugin
                 $this->gosaSpamSortLevel,
                 $this->gosaVacationMessage);
           }
-          */
         }
       }
     }
