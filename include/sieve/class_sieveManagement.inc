@@ -127,24 +127,31 @@ class sieveManagement extends plugin
    */
   function get_sieve()
   {
+    
     /* Connect to sieve class and try to get all available sieve scripts */
-    $cfg=  $this->config->data['SERVERS']['IMAP'][$this->parent->gosaMailServer];
-    $this->Sieve_Error = "";
-  
-    /* Log into the mail server */
-    $this->sieve_handle= new sieve(
-        $cfg["sieve_server"], 
-        $cfg["sieve_port"], 
-        $this->parent->uid, 
-        $cfg["password"], 
-        $cfg["admin"]);
+    if(isset($this->config->data['SERVERS']['IMAP'][$this->parent->gosaMailServer])){
+      $cfg=  $this->config->data['SERVERS']['IMAP'][$this->parent->gosaMailServer];
+      $this->Sieve_Error = "";
 
-    /* Try to login */
-    if (!$this->sieve_handle->sieve_login()){
-      $this->Sieve_Error = $this->sieve_handle->error_raw;
+      /* Log into the mail server */
+      $this->sieve_handle= new sieve(
+          $cfg["sieve_server"], 
+          $cfg["sieve_port"], 
+          $this->parent->uid, 
+          $cfg["password"], 
+          $cfg["admin"]);
+
+      /* Try to login */
+      if (!$this->sieve_handle->sieve_login()){
+        $this->Sieve_Error = $this->sieve_handle->error_raw;
+        return(FALSE);
+      }
+      return($this->sieve_handle);
+    }else{
+      $this->Sieve_Error = sprintf(_("The specified mail server '%s' does not exist within the GOsa configuration."),
+        $this->parent->gosaMailServer);
       return(FALSE);
     }
-    return($this->sieve_handle);
   }
 
 
