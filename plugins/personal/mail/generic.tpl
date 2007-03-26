@@ -99,7 +99,9 @@
 			changeState('gosaSpamSortLevel');
 			changeState('gosaSpamMailbox');
 			changeState('gosaMailMaxSize');
-			
+	
+			changeStates();
+
 		"
 
 > {t}Use custom sieve script{/t} <b>({t}disables all Mail options!{/t})</b>
@@ -121,11 +123,67 @@
 {render acl=$gosaMailDeliveryModeIACL}
    <input {if $own_script != ""} disabled {/if} id='drop_own_mails' type=checkbox name="drop_own_mails" value="1" {$drop_own_mails} title="{t}Select if you want to forward mails without getting own copies of them{/t}"> {t}No delivery to own mailbox{/t}
 {/render}
-   <br>
+
+<br>
 {render acl=$gosaMailDeliveryModeVACL}
-   <input {if $own_script != ""} disabled {/if} id='use_vacation' type=checkbox name="use_vacation" value="1" {$use_vacation} title="{t}Select to automatically response with the vacation message defined below{/t}"> {t}Activate vacation message{/t}
+ <input type=checkbox name="use_vacation" value="1" {$use_vacation} id="use_vacation" {if $own_script != ""} disabled {/if}
+    title="{t}Select to automatically response with the vacation message defined below{/t}"
+onclick="changeState('day'); changeState('month'); changeState('year'); changeState('sday'); changeState('smonth'); changeState('syear');
+"> {t}Activate vacation message{/t}
 {/render}
-  </td>
+
+   <br>
+
+    <table>
+         <tr>
+          <td>
+    {t}from{/t}
+          </td>
+          <td>
+{render acl=$gosaVacationMessageACL}
+    <select {if $own_script != ""} disabled {/if} name=day id="day" onChange="createResult(this.form,this.form.gosaVacationStart);" {$rangeEnabled}>
+        {html_options values=$days output=$days selected=$start_day}
+    </select>
+{/render}
+{render acl=$gosaVacationMessageACL}
+    <select  {if $own_script != ""} disabled {/if} name=month id="month" onChange="populate(this.form,this.form.gosaVacationStart);" {$rangeEnabled}>
+        {html_options options=$months selected=$start_month}
+    </select>
+{/render}
+{render acl=$gosaVacationMessageACL}
+    <select  {if $own_script != ""} disabled {/if} name=year id="year" onChange="populate(this.form,this.form.gosaVacationStart);" {$rangeEnabled}>
+        {html_options values=$years output=$years selected=$start_year}
+    </select>
+{/render}
+    <input type="hidden" name="gosaVacationStart" value="{$gosaVacationStart}">
+          </td>
+         </tr>
+         <tr>
+          <td>
+    {t}till{/t}
+          </td>
+          <td>
+{render acl=$gosaVacationMessageACL}
+    <select  {if $own_script != ""} disabled {/if} name=sday id="sday" onChange="createResult2(this.form,this.form.gosaVacationStop);" {$rangeEnabled}>
+        {html_options values=$days output=$days selected=$end_day}
+    </select>
+{/render}
+{render acl=$gosaVacationMessageACL}
+    <select  {if $own_script != ""} disabled {/if} name=smonth id="smonth" onChange="populate2(this.form,this.form.gosaVacationStop);" {$rangeEnabled}>
+        {html_options options=$months selected=$end_month}
+    </select>
+{/render}
+{render acl=$gosaVacationMessageACL}
+    <select {if $own_script != ""} disabled {/if}  name=syear id="syear" onChange="populate2(this.form,this.form.gosaVacationStop);" {$rangeEnabled}>
+        {html_options values=$years output=$years selected=$end_year}
+    </select>
+{/render}
+    <input type="hidden" name="gosaVacationStop" value="{$gosaVacationStop}">
+          </td>
+         </tr>
+        </table>
+
+
    <td rowspan=2 style="border-left:1px solid #A0A0A0">
    &nbsp;
   </td>
@@ -227,7 +285,31 @@
 
 <!-- Place cursor -->
 <script language="JavaScript" type="text/javascript">
-  <!-- // First input field on page
+
+	{literal}
+	function changeStates()
+	{
+
+		if(document.getElementById('use_vacation').checked){
+			changeState('day');
+			changeState('month');
+			changeState('year');
+			changeState('sday');
+			changeState('smonth');
+			changeState('syear');
+		}else{
+			changeSubselectState('use_vacation','day');
+			changeSubselectState('use_vacation','month');
+			changeSubselectState('use_vacation','year');
+			changeSubselectState('use_vacation','sday');
+			changeSubselectState('use_vacation','smonth');
+			changeSubselectState('use_vacation','syear');
+		}
+	}
+
+	{/literal}
+
+<!-- // First input field on page
   document.mainform.mail.focus();
   -->
 </script>

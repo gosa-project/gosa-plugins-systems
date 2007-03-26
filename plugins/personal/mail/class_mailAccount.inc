@@ -24,9 +24,8 @@ class mailAccount extends plugin
   var $method             = "mailMethod";
 
   /* CLI vars */
-  var $cli_summary        = "Manage users mail account";
-  var $cli_description    = "Some longer text\nfor help";
-  var $cli_parameters     = array("eins" => "Eins ist toll", "zwei" => "Zwei ist noch besser");
+  var $gosaVacationStart                  = 0;
+  var $gosaVacationStop                   = 0;
 
   /* plugin specific values */
   var $mail                               = "";
@@ -57,7 +56,7 @@ class mailAccount extends plugin
 
   /* attribute list for save action */
   var $attributes= array("mail", "gosaMailServer", "gosaMailQuota", "gosaMailMaxSize","gosaMailForwardingAddress",
-      "gosaMailDeliveryMode", "gosaSpamSortLevel", "gosaSpamMailbox","gosaMailAlternateAddress",
+      "gosaMailDeliveryMode", "gosaSpamSortLevel", "gosaSpamMailbox","gosaMailAlternateAddress","gosaVacationStart","gosaVacationStop",
       "gosaVacationMessage", "gosaMailAlternateAddress", "gosaMailForwardingAddress");
   var $objectclasses= array("gosaMailAccount");
   var $uid;
@@ -239,7 +238,7 @@ class mailAccount extends plugin
     /* 
      * Sieve Management 
      */
-    if(isset($_POST['sieveManagement']) && !preg_match("/C/",$this->gosaMailDeliveryMode)) {
+    if(isset($_POST['sieveManagement']) && preg_match("/C/",$this->gosaMailDeliveryMode)) {
       $this->dialog = new sieveManagement($this->config,$this->dn,$this);
     }
    
@@ -259,13 +258,6 @@ class mailAccount extends plugin
       $this->dialog->save_object();
       return($this->dialog->execute());
     } 
-
-
-
-
-
-
-
 
 
     /* Handle account state */
@@ -539,8 +531,8 @@ class mailAccount extends plugin
 
     foreach(array("gosaMailServer", "gosaMailQuota", "perms", "mail",
           "gosaMailAlternateAddress", "gosaMailForwardingAddress",
-          "gosaVacationMessage", "gosaMailDeliveryMode",
-          "gosaMailMaxSize", "gosaSpamSortLevel", "gosaSpamMailbox") as $val){
+          "gosaVacationMessage", "gosaMailDeliveryMode", "gosaVacationStart",
+          "gosaVacationStop", "gosaMailMaxSize", "gosaSpamSortLevel", "gosaSpamMailbox") as $val){
       $smarty->assign("$val", $this->$val);
     }
 
@@ -557,6 +549,11 @@ class mailAccount extends plugin
       $smarty->assign("mailACL", preg_replace("/w/","",$this->getacl("mail",$SkipWrite)));
     }
 
+    if (preg_match('/V/', $this->gosaMailDeliveryMode)){
+      $smarty->assign('rangeEnabled', "");
+    } else {
+      $smarty->assign('rangeEnabled', "disabled");
+    }
 
     if (!preg_match("/L/", $this->gosaMailDeliveryMode)) {
       $smarty->assign("only_local", "checked");
@@ -579,7 +576,43 @@ class mailAccount extends plugin
         $smarty->assign($varname, "");
       }
     }
-    
+   
+    /* Display mail account tab */
+    if($this->gosaVacationStart ==0){
+      $date= getdate(time());
+    }else{
+      $date= getdate($this->gosaVacationStart);
+    }
+    $days= array();
+    for($d= 1; $d<32; $d++){
+      $days[$d]= $d;
+    }
+    $years= array();
+    for($y= $date['year']-10; $y<$date['year']+10; $y++){
+      $years[]= $y;
+    }
+    $months= array(_("January"), _("February"), _("March"), _("April"),
+        _("May"), _("June"), _("July"), _("August"), _("September"),
+        _("October"), _("November"), _("December"));
+    $smarty->assign("start_day", $date["mday"]);
+    $smarty->assign("days", $days);
+    $smarty->assign("months", $months);
+    $smarty->assign("start_month", $date["mon"]-1);
+    $smarty->assign("years", $years);
+    $smarty->assign("start_year", $date["year"]);
+
+    if($this->gosaVacationStop ==0){
+      $date= getdate(time());
+      $date["mday"]++;
+    }else{
+      $date= getdate($this->gosaVacationStop);
+    }
+    $smarty->assign("end_day", $date["mday"]);
+    $smarty->assign("end_month", $date["mon"]-1);
+    $smarty->assign("end_year", $date["year"]);
+
+
+ 
     /* Have vacation templates? */
     $smarty->assign("template", "");
     if (count($this->vacation)){
@@ -735,6 +768,7 @@ class mailAccount extends plugin
         $this->gosaMailDeliveryMode= $tmp;
       }
     }
+
   }
 
 
@@ -766,6 +800,19 @@ class mailAccount extends plugin
     }
 
     $this->attrs['mail'] = strtolower($this->attrs['mail']); 
+
+        /* Remove attributes - if not needed */
+    if (!preg_match('/V/', $this->gosaMailDeliveryMode)){
+      unset($this->attrs['gosaVacationStart']);
+      unset($this->attrs['gosaVacationStop']);
+    }
+
+
+    /* Remove attributes - if not needed */
+    if (!preg_match('/V/', $this->gosaMailDeliveryMode)){
+      unset($this->attrs['gosaVacationStart']);
+      unset($this->attrs['gosaVacationStop']);
+    }
 
     /* Save data to LDAP */
     $ldap->cd($this->dn);
@@ -873,6 +920,10 @@ class mailAccount extends plugin
 
     if((preg_match("/S/", $this->gosaMailDeliveryMode))&&(empty($this->gosaSpamMailbox))) {
       $message[]= _("You specified Spam settings, but there is no Folder specified.");
+    }
+
+    if (preg_match('/V/', $this->gosaMailDeliveryMode) && $this->gosaVacationStart >= $this->gosaVacationStop){
+      $message[]= _("Time interval to show vacation message is not valid.");
     }
 
     return ($message);
