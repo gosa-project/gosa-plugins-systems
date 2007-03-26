@@ -4,13 +4,13 @@
 			&nbsp;	
 		</td>
 		<td class='object_container_cell_top_right'>
-			<input type='image' src='images/sieve_move_object_down.png' name='Move_Down_Object_{$ID}' 
-				title='{t}Move this object one position down{/t}' alt='{t}Down{/t}' class='center'>
-			<a href='{$plug}&amp;Move_Down_Object_ID={$ID}'>{t}Move down{/t}</a>
-
 			<input type='image' src='images/sieve_move_object_up.png' name='Move_Up_Object_{$ID}' 
 				title='{t}Move this object one position up{/t}' alt='{t}Up{/t}' class='center'>
 			<a href='{$plug}&amp;Move_Up_Object_ID={$ID}'>{t}Move up{/t}</a>
+
+			<input type='image' src='images/sieve_move_object_down.png' name='Move_Down_Object_{$ID}' 
+				title='{t}Move this object one position down{/t}' alt='{t}Down{/t}' class='center'>
+			<a href='{$plug}&amp;Move_Down_Object_ID={$ID}'>{t}Move down{/t}</a>
 
 			<input type='image' src='images/sieve_del_object.png' name='Remove_Object_{$ID}' 
 				title='{t}Remove this object{/t}' alt='R' class='center'>
