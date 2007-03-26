@@ -20,6 +20,7 @@ class sieve_if
   function sieve_if($elements,$object_id,$parent)
   {
     $this->parent = $parent;
+    $this->object_id       = $object_id;
   
     /* Possible address parts we can select */
     $this->address_parts = array( 
@@ -51,19 +52,22 @@ class sieve_if
         "gt"  => _("greater than"),
         "ne"  => _("not equal"));
 
-    /* Remove comments from tests */  
-    $tmp = array();
-    foreach($elements['ELEMENTS'] as $ele){
-      if($ele['class'] != "comment"){
-        $tmp[] = $ele;
-      }
-    }
-    $elements['ELEMENTS'] = $tmp;
+    /* Skip parsing if this element is new */
+    if($elements != NULL){
 
-    $this->object_id       = $object_id;
-    if($elements!=NULL){
-      $this->elements = $elements;
-      $this->_parsed  = $this->_parse($elements['ELEMENTS'],1);
+      /* Remove comments from tests */  
+      $tmp = array();
+      foreach($elements['ELEMENTS'] as $ele){
+        if($ele['class'] != "comment"){
+          $tmp[] = $ele;
+        }
+      }
+      $elements['ELEMENTS'] = $tmp;
+
+      if($elements!=NULL){
+        $this->elements = $elements;
+        $this->_parsed  = $this->_parse($elements['ELEMENTS'],1);
+      }
     }
   }
 
