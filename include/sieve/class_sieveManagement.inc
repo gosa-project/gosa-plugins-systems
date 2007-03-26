@@ -273,16 +273,15 @@ class sieveManagement extends plugin
       }
 
       /* remove script requested */
-      if(preg_match("/^delscript_/",$name) && $once && !$this->current_handler){
+      if($this->parent->acl_is_writeable("sieveManagement") && preg_match("/^delscript_/",$name) && $once && !$this->current_handler){
         $script = preg_replace("/^delscript_/","",$name);
         $script = preg_replace("/_(x|y)/","",$script);
         $once = FALSE;
- 
         $this->script_to_delete = $script;  
       }
 
       /* Activate script */
-      if(preg_match("/^active_script_/",$name) && $once && !$this->current_handler){
+      if($this->parent->acl_is_writeable("sieveManagement") && preg_match("/^active_script_/",$name) && $once && !$this->current_handler){
         $script = preg_replace("/^active_script_/","",$name);
         $script = preg_replace("/_(x|y)/","",$script);
         $once = FALSE;
@@ -327,7 +326,7 @@ class sieveManagement extends plugin
     }
 
     /* Remove confirmed */
-    if(isset($_POST['delete_script_confirm'])){
+    if($this->parent->acl_is_writeable("sieveManagement") && isset($_POST['delete_script_confirm'])){
 
       $script = $this->scripts[$this->script_to_delete];
 
@@ -376,7 +375,7 @@ class sieveManagement extends plugin
     }
 
     /* Save currently edited sieve script. */
-    if(isset($_POST['save_sieve_changes'])){
+    if($this->parent->acl_is_writeable("sieveManagement") && isset($_POST['save_sieve_changes'])){
       $chk = $this->current_handler->check();
       if(!count($chk)){
 
@@ -642,15 +641,19 @@ class sieveManagement extends plugin
                         "attach" => "style='width:30px;'");
       }
 
-      if($active || $script['IS_NEW']){
-        $field6 = array("string" => "<img src='images/empty.png' alt=' '>".
-                                    "<input type='image' name='editscript_".$key."' src='images/edit.png'>".
-                                    "<input type='image' name='delscript_".$key."' src='images/edittrash.png'>");
+      if($this->parent->acl_is_writeable("sieveManagement")){
+        $del = "<input type='image' name='delscript_".$key."' src='images/edittrash.png'>";
       }else{
-        $field6 = array("string" => "<input type='image' name='active_script_".$key."' src='images/true.png'>".
-                                    "<input type='image' name='editscript_".$key."' src='images/edit.png'>".
-                                    "<input type='image' name='delscript_".$key."' src='images/edittrash.png'>");
+        $del = "<img src='images/empty' alt=' '>";
       }
+
+      if($active || $script['IS_NEW'] || !$this->parent->acl_is_writeable("sieveManagement")){
+        $activate = "<img src='images/empty' alt=' '>";
+      }else{
+        $activate = "<input type='image' name='active_script_".$key."' src='images/true.png'>";
+      }
+
+      $field6 = array("string" => $activate."<input type='image' name='editscript_".$key."' src='images/edit.png'>".$del);
       $List ->AddEntry(array($field1,$field2,$field3,$field4,$field5,$field6)); 
     }
   

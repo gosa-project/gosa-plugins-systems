@@ -238,7 +238,9 @@ class mailAccount extends plugin
     /* 
      * Sieve Management 
      */
-    if(isset($_POST['sieveManagement']) && preg_match("/C/",$this->gosaMailDeliveryMode)) {
+    if(isset($_POST['sieveManagement']) 
+        && preg_match("/C/",$this->gosaMailDeliveryMode)
+        && $this->acl_is_writeable("sieveManagement")) {
       $this->dialog = new sieveManagement($this->config,$this->dn,$this);
     }
    
@@ -549,7 +551,10 @@ class mailAccount extends plugin
       $smarty->assign("mailACL", preg_replace("/w/","",$this->getacl("mail",$SkipWrite)));
     }
 
-    if (preg_match('/V/', $this->gosaMailDeliveryMode)){
+    /* Disable/Enable range select, but do not disable them twice 
+     *  if they are already diabled by "use own sieve script"
+     */
+    if (preg_match('/V/', $this->gosaMailDeliveryMode) || preg_match("/C/",$this->gosaMailDeliveryMode)){
       $smarty->assign('rangeEnabled', "");
     } else {
       $smarty->assign('rangeEnabled', "disabled");
@@ -1126,6 +1131,8 @@ class mailAccount extends plugin
             "gosaMailDeliveryModeS"     =>  _("Use spam filter"),           // This is flag of gosaMailDeliveryMode
             "gosaSpamSortLevel"         =>  _("Spam level"),
             "gosaSpamMailbox"           =>  _("Spam mail box"),
+
+            "sieveManagement"           =>  _("Sieve manamgent"),
 
             "gosaMailDeliveryModeR"     =>  _("Reject due to mailsize"),    // This is flag of gosaMailDeliveryMode
             "gosaMailMaxSize"           =>  _("Mail max size"),

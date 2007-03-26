@@ -109,8 +109,10 @@
   </td>
  </tr>
  <tr>
-  <td>	
+  <td>
+{render acl=$sieveManagementACL}	
    <input {if $own_script == ""} disabled {/if} id='sieveManagement' type='submit' name='sieveManagement' value='{t}Sieve Management{/t}'>
+{/render}
   </td>
  </tr>
 </table>
