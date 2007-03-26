@@ -61,13 +61,17 @@ class My_Tree extends Tree
 
     $this -> dump_ = "";
     $ends = array();
-    if(!count($this->pap)){
-#      $this->pap[] = new sieve_comment(NULL,preg_replace("/[^0-9]/","",microtime()),$this);
-    }
+    $ends_complete_block = array();
+
     foreach($this->pap as $key => $object){
       if(is_object($object)){
-        $end = $this->get_block_end($key,false);
 
+        $end = $this->get_block_end($key,false);
+        $end2 = $this->get_block_end($key);
+        if($end != $key && in_array(get_class($object),array("sieve_if"))){
+          $ends_complete_block[$end2] = $end2;
+          $this->dump_ .= "<div style='height:12px;'>&nbsp;</div>";
+        }
         if(isset($ends[$key])){
           $this->dump_  .= $block_indent_stop;
         }
@@ -75,6 +79,10 @@ class My_Tree extends Tree
         if($end != $key && in_array(get_class($object),array("sieve_if","sieve_else","sieve_elsif"))) {
           $ends[$end] = $end;  
           $this->dump_  .= $block_indent_start;
+        }
+
+        if(isset($ends_complete_block[$key])){
+          $this->dump_ .= "<div style='height:12px;'>&nbsp;</div>";
         }
       }
     }
