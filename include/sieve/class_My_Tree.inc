@@ -66,15 +66,15 @@ class My_Tree extends Tree
     }
     foreach($this->pap as $key => $object){
       if(is_object($object)){
-        $end = $this->get_block_end($key);
+        $end = $this->get_block_end($key,false);
 
-        if($end != $key && get_class($object) == "sieve_if") {
-          $ends[$end] = $end;  
-          $this->dump_  .= $block_indent_start;
-        }
-        $this->dump_ .= preg_replace("/>/",">\n",$object->execute()); 
         if(isset($ends[$key])){
           $this->dump_  .= $block_indent_stop;
+        }
+        $this->dump_ .= preg_replace("/>/",">\n",$object->execute()); 
+        if($end != $key && in_array(get_class($object),array("sieve_if","sieve_else","sieve_elsif"))) {
+          $ends[$end] = $end;  
+          $this->dump_  .= $block_indent_start;
         }
       }
     }
@@ -380,7 +380,7 @@ class My_Tree extends Tree
   /* This function returns the id of the element 
    *  where the current block ends  
    */
-  function get_block_end($start)
+  function get_block_end($start,$complete = TRUE)
   {
     /* Only execute if this is a really a block element. 
      * Block elements is only sieve_if
@@ -403,12 +403,22 @@ class My_Tree extends Tree
           $block_depth --;
         }
 
-        if( $block_depth == 0 && 
-            $class == "sieve_block_end" && 
-            !in_array($next_class,array("sieve_else","sieve_elsif"))){
-          $end = TRUE;
-          $start --;
+        if($complete){
+          if( $block_depth == 0 && 
+              $class == "sieve_block_end" && 
+              !in_array($next_class,array("sieve_else","sieve_elsif"))){
+            $end = TRUE;
+            $start --;
+          }
+        }else{
+
+          if( $block_depth == 0 && 
+              $class == "sieve_block_end" ){ 
+            $end = TRUE;
+            $start --;
+          }
         }
+
         $start ++;       
         $class      = get_class($this->pap[$start]);
         
