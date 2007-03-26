@@ -779,6 +779,55 @@ class sieveManagement extends plugin
   {
     if($this->current_handler){
 
+      if(isset($_GET['Add_Object_Top_ID'])){
+        $this->add_new_element    = TRUE;
+        $this->add_new_id         = $_GET['Add_Object_Top_ID'];
+        $this->add_above_below    = "above";
+      }  
+
+      if(isset($_GET['Add_Object_Bottom_ID'])){
+        $this->add_new_element    = TRUE;
+        $this->add_new_id         = $_GET['Add_Object_Bottom_ID'];
+        $this->add_above_below    = "below";
+      }  
+
+      if(isset($_GET['Remove_Object_ID'])){
+        $found_id = -1;
+        foreach($this->current_handler->tree_->pap as $key => $element){
+          if($element->object_id == $_GET['Remove_Object_ID']){
+            $found_id = $key;
+          }
+        }
+        if($found_id != -1 ){
+          $this->current_handler->tree_->remove_object($found_id);  
+        }
+      }  
+ 
+      if(isset($_GET['Move_Up_Object_ID'])){
+        $found_id = -1;
+        foreach($this->current_handler->tree_->pap as $key => $element){
+          if($element->object_id == $_GET['Move_Up_Object_ID']){
+            $found_id = $key;
+          }
+        }
+        if($found_id != -1 ){
+          $this->current_handler->tree_->move_up_down($found_id,"up");
+        }
+      }  
+ 
+      if(isset($_GET['Move_Down_Object_ID'])){
+        $found_id = -1;
+        foreach($this->current_handler->tree_->pap as $key => $element){
+          if($element->object_id == $_GET['Move_Down_Object_ID']){
+            $found_id = $key;
+          }
+        }
+        if($found_id != -1 ){
+          $this->current_handler->tree_->move_up_down($found_id,"down");
+        }
+      }  
+  
+
       /* Check if there is an add object requested 
        */
       $data = $this->current_handler->tree_->pap;

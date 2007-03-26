@@ -238,6 +238,11 @@ class My_Tree extends Tree
       return;
     }
 
+    if(!isset($this->pap[$key_id])){
+      trigger_error(_("Can't remove element with object_id=".$key_id.", there is no object with this identifier. Remove aborted."));
+      return(false);
+    }
+
     $class = get_class($this->pap[$key_id]);
     if(in_array($class,array("sieve_if","sieve_elsif","sieve_else"))){
       $block_start= $key_id;
