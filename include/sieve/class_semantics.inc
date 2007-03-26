@@ -195,7 +195,7 @@ class Semantics
 						array('occurrences' => '?', 'regex' => ':mime', 'name' => 'mime')
 					)),
 					array('class' => 'string', 'occurrences' => '1', 'values' => array(
-						array('occurrences' => '1', 'regex' => '".*"', 'name' => 'reason')
+						array('occurrences' => '1', 'regex' => '.*', 'name' => 'reason')
 					))
 				)
 			);
@@ -456,8 +456,8 @@ class Semantics
 		// Check if command may appear here
 		if (!ereg($this->s_['valid_after'], $prev))
 		{
-			$this->message = 'line '. $line .': "'. $this->command_ .'" may not appear after "'. $prev .'"';
-			return false;
+#			$this->message = 'line '. $line .': "'. $this->command_ .'" may not appear after "'. $prev .'"';
+#			return false;
 		}
 
 		return true;
