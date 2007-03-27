@@ -630,12 +630,12 @@ class My_Tree extends Tree
 
   function check()
   {
-		$msgs = array();
+    $msgs = array();
 
     /* Some logical checks. 
      *  like :  only sieve_comment can appear before require.
      */
-    
+
     /* Ensure that there are no command before require 
      *  - Get id of last require tag
      *  - Collect object types in from of this tag. 
@@ -659,14 +659,14 @@ class My_Tree extends Tree
       $msgs[] = $str;
       print_red($str);;
     }
-    
-		foreach($this->pap as $obj){
-			$o_msgs = $obj->check();
-			foreach($o_msgs as $o_msg){
-				$msgs[] = $o_msg;
-			}
-		}
-		return($msgs);
+
+    foreach($this->pap as $obj){
+      $o_msgs = $obj->check();
+      foreach($o_msgs as $o_msg){
+        $msgs[] = $o_msg;
+      }
+    }
+    return($msgs);
   }
 
 
@@ -682,7 +682,7 @@ class My_Tree extends Tree
         $require_id = $key;
       }
     }
-  
+
     /* No require found, add one */
     if($require_id == -1){
       $require = new sieve_require(NULL,preg_replace("/[^0-9]/","",microtime()),$this);
@@ -735,7 +735,7 @@ function sieve_create_strings($data,$force_string = FALSE)
   }
   $ret = preg_replace("/\"\"/","\"",$ret);
   $ret = preg_replace("/\n/","\r\n",$ret);
-  
+
   return($ret);
 }
 
@@ -751,7 +751,7 @@ function sieve_get_strings($data,$id)
   $ret = array();
   if($data[$id]['class'] == "left-bracket"){
     while(isset($data[$id]) && $data[$id]['class']  != "right-bracket" && $id < count($data)){
-      
+
       if($data[$id]['class'] == "quoted-string"){
         $ret[] = $data[$id]['text'];
       }
@@ -767,7 +767,7 @@ function sieve_get_strings($data,$id)
     $str = trim(preg_replace("/\.$/","",$str));
     $ret[] = $str;
   }
-  
+
   return(array("OFFSET" => $id, "STRINGS" => $ret));
 }
 
