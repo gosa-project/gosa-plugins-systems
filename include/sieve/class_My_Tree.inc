@@ -17,11 +17,11 @@ class My_Tree extends Tree
   var $pap		= array();
   var $parent = NULL;
 
-	function My_Tree(&$root,$parent)
-	{
+  function My_Tree(&$root,$parent)
+  {
     $this->parent = $parent;
-		$this->_construct($root);
-	}
+    $this->_construct($root);
+  }
 
   function execute()
   {
@@ -56,7 +56,7 @@ class My_Tree extends Tree
 
     $block_indent_start = $smarty->fetch(get_template_path("templates/block_indent_start.tpl",TRUE,dirname(__FILE__)));
     $block_indent_stop  = $smarty->fetch(get_template_path("templates/block_indent_stop.tpl",TRUE,dirname(__FILE__))); 
-  
+
     $this -> dump_ = "";
     $ends = array();
     $ends_complete_block = array();
