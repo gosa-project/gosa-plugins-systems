@@ -70,7 +70,7 @@ class My_Tree extends Tree
         $end2 = $this->get_block_end($key);
         if($end != $key && in_array(get_class($object),array("sieve_if"))){
           $ends_complete_block[$end2] = $end2;
-          $this->dump_ .= "<div style='height:12px;'>&nbsp;</div>";
+          $this->dump_ .= "<div class='container_'>";
         }
         if(isset($ends[$key])){
           $this->dump_  .= $block_indent_stop;
@@ -82,7 +82,7 @@ class My_Tree extends Tree
         }
 
         if(isset($ends_complete_block[$key])){
-          $this->dump_ .= "<div style='height:12px;'>&nbsp;</div>";
+          $this->dump_ .= "</div>";
         }
       }
     }

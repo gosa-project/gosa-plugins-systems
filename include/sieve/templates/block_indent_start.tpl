@@ -7,4 +7,6 @@
 		<td style='width:3px;'>
 		</td>
 		<td>
-			<div style='height:12px;'>&nbsp;</div>
+			
+			<div class=''style='height:12px;'>&nbsp;</div>
+			<div class='container_'>
