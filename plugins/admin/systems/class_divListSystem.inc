@@ -101,7 +101,7 @@ class divListSystem extends MultiSelectWindow
 
     /* Load possible departments */
     $ui= get_userinfo();
-    $department = array();
+    $department = $departments = array();
     foreach($this->module as $module){
       $d = $ui->get_module_departments($module);      
       foreach($d as $department){
@@ -212,7 +212,7 @@ class divListSystem extends MultiSelectWindow
     $img9  = "<img class='center' src='images/fax_small.png'          alt='F' title='"._("Fax Server") ."'>";
     $img10 = "<img class='center' src='images/save.png'               alt='L' title='"._("Ldap Server") ."'>";
 
-    $empty    ="<img src='images/empty.png' style='width:16px ; height: 16px;' class='center'>";
+    $empty    ="<img src='images/empty.png' style='width:16px ; height: 16px;' class='center' alt=''>";
 
     /* Dynamic action col, depending on snapshot icons */
     $action_col_size = 70;
