@@ -51,6 +51,7 @@ class sieve_comment
   {
     if(isset($_POST['comment_'.$this->object_id])){
       $cm = stripslashes( $_POST['comment_'.$this->object_id]);
+      $cm = preg_replace("/\*\//","* /",$cm);
       $this->data = $cm;
     }
   
