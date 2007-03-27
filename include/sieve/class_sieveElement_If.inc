@@ -598,9 +598,12 @@ class sieve_if
             if(!isset($match_types[$mt])){
               $parsed[$key]['LastError'] = _("Invalid match type given.");
             }
-              if($mt == ":regex"){
-                $this->parent->add_require("regex");
-              }
+            if($mt == ":regex"){
+              $this->parent->add_require("regex");
+            }
+            if($mt == ":count"){
+              $this->parent->add_require("comparator-i;ascii-numeric");
+            }
             $parsed[$key]['Match_type'] = $mt;
           }
 
