@@ -23,6 +23,7 @@ class user extends plugin
 
   /* Plugin specific values */
   var $base= "";
+  var $orig_base= "";
   var $cn= "";
   var $new_dn= "";
   var $personalTitle= "";
@@ -203,6 +204,8 @@ class user extends plugin
     if (isset ($this->attrs['gender'])){
       $this->gender= strtoupper($this->attrs['gender'][0]);
     }
+  
+    $this->orig_base = $this->base;
   }
 
 
@@ -1050,7 +1053,8 @@ class user extends plugin
       $this->new_dn= 'uid='.$this->uid.','.get_people_ou().$this->base;
     } else {
       /* Don't touch dn, if cn hasn't changed */
-      if (isset($this->saved_attributes['cn']) && $this->saved_attributes['cn'] == $this->cn){
+      if (isset($this->saved_attributes['cn']) && $this->saved_attributes['cn'] == $this->cn &&
+          $this->orig_base == $this->base ){
         $this->new_dn= $this->dn;
       } else {
         $this->new_dn= $this->create_unique_dn('cn', get_people_ou().$this->base);
