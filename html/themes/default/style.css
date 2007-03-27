@@ -1308,7 +1308,7 @@ td.sieve_reject_input {
 }
 textarea.sieve_reject_input {
 	width:100%; 
-	height:30px;
+	height:55px;
 }
 
 
@@ -1352,7 +1352,7 @@ td.sieve_vacation_input {
 /* Editing area */
 textarea.sieve_vacation_input {
 	width:100%;
-	height : 45px;
+	height : 55px;
 }
 
 

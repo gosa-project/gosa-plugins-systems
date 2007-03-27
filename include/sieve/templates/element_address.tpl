@@ -10,12 +10,15 @@
         {/if}
 
 	<tr>
-		<td colspan=2 style='text-align:right; vertical-align:top;'>
+		<td style='width:50%;'>
+			<b>{t}Address{/t}</b>
+		</td>
+        <td style='text-align:right; vertical-align:top;'>
 			<input type='submit' name='Toggle_Expert_{$ID}' value='{t}Normal mode{/t}'>
 		</td>
 	</tr>
 	<tr>
-		<td>
+		<td style='width:50%;'>
 			{t}Match type{/t}
 		</td>
 		<td>
@@ -75,11 +78,11 @@
     <tr>
         <td >
             {t}Address fields to include{/t}<br>
-            <textarea style='width:95%;height:50px;' name='keys_{$ID}'>{$keys}</textarea>
+            <textarea style='width:100%;height:70px;' name='keys_{$ID}'>{$keys}</textarea>
         </td>
         <td >
             {t}Values to match for{/t}<br>
-            <textarea style='width:95%;height:50px;' name='values_{$ID}'>{$values}</textarea>
+            <textarea style='width:100%;height:70px;' name='values_{$ID}'>{$values}</textarea>
         </td>
     </tr>
 	{else}
@@ -92,7 +95,11 @@
 
         {/if}
 	<tr>
-		<td style='vertical-align:top;'>
+		{if $match_type == ":count" || $match_type == ":value"}
+		<td style='vertical-align:top; width:350px;'>
+		{else}
+		<td style='vertical-align:top; width:200px;'>
+		{/if}
 			<b>{t}Address{/t}</b>
 		
 			{if $Inverse}
@@ -112,10 +119,12 @@
 			{/if}
 		</td>
 		<td>
-			<textarea style='width:45%;height:20px;' name='keys_{$ID}'>{$keys}</textarea>
-			<textarea style='width:45%;height:20px;' name='values_{$ID}'>{$values}</textarea>
+			<textarea style='width:100%;height:40px;' name='keys_{$ID}'>{$keys}</textarea>
 		</td>
-		<td style='text-align:right; vertical-align:top;'>
+		<td>
+			<textarea style='width:100%;height:40px;' name='values_{$ID}'>{$values}</textarea>
+		</td>
+		<td style='text-align:right; vertical-align:top; width:120px;'>
 			<input type='submit' name='Toggle_Expert_{$ID}' value='{t}Expert mode{/t}'>
 		</td>
 	</tr>
