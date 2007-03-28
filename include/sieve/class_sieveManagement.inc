@@ -630,23 +630,17 @@ class sieveManagement extends plugin
       $field1 = array("string" => "&nbsp;",
                       "attach" => "style='width:20px;'");  
       if($active){
-        $field1 = array("string" => "<img src='images/true.png' alt='"._("Active")."'>",
+        $field1 = array("string" => "<img src='images/true.png' alt='"._("Active")."' 
+                                      title='"._("This script is marked as active")."'>",
                         "attach" => "style='width:20px;'");  
       }
       $field2 = array("string" => $script['NAME']);  
       $field3 = array("string" => $script['MSG']);
       $field4 = array("string" => _("Script length")."&nbsp;:&nbsp;".strlen($script['SCRIPT']));
 
-      if($edited){
-        $field5 = array("string" => "<img src='images/fai_new_hook.png' alt='"._("Edited")."'>",
-                        "attach" => "style='width:30px;'");
-      }else{
-        $field5 = array("string" => "",
-                        "attach" => "style='width:30px;'");
-      }
-
       if($this->parent->acl_is_writeable("sieveManagement")){
-        $del = "<input type='image' name='delscript_".$key."' src='images/edittrash.png'>";
+        $del = "<input type='image' name='delscript_".$key."' src='images/edittrash.png'
+                  title='"._("Remove script")."'>";
       }else{
         $del = "<img src='images/empty' alt=' '>";
       }
@@ -654,11 +648,14 @@ class sieveManagement extends plugin
       if($active || $script['IS_NEW'] || !$this->parent->acl_is_writeable("sieveManagement")){
         $activate = "<img src='images/empty' alt=' '>";
       }else{
-        $activate = "<input type='image' name='active_script_".$key."' src='images/true.png'>";
+        $activate = "<input type='image' name='active_script_".$key."' src='images/true.png'
+                       title='"._("Activate script")."'>";
       }
 
-      $field6 = array("string" => $activate."<input type='image' name='editscript_".$key."' src='images/edit.png'>".$del);
-      $List ->AddEntry(array($field1,$field2,$field3,$field4,$field5,$field6)); 
+      $field6 = array("string" => $activate."<input type='image' name='editscript_".$key."' src='images/edit.png'
+                        title='"._("Edit script")."'>".$del,
+                      "attach" => "style='border-right:0px; width:70px;'");
+      $List ->AddEntry(array($field1,$field2,$field3,$field4,$field6)); 
     }
   
     $display ="<h2>Sieve script management</h2>";
