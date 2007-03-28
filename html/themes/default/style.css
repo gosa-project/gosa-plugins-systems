@@ -1433,10 +1433,11 @@ table.sieve_test_case {
 
 td.container_, div.container_{
 	padding-left:2px;
+	border-left: solid 2px #EEEEEE;
 }
 
 td.container_:hover,div.container_:hover {
-	background-color: #777777;
+	border-left: solid 2px #777777;
 	display:block;
 }
 
