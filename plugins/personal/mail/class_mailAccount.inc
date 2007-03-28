@@ -241,7 +241,11 @@ class mailAccount extends plugin
     if(isset($_POST['sieveManagement']) 
         && preg_match("/C/",$this->gosaMailDeliveryMode)
         && $this->acl_is_writeable("sieveManagement")) {
-      $this->dialog = new sieveManagement($this->config,$this->dn,$this);
+
+        $method = new $this->method($this->config);
+        $id     = $method->uattrib;
+
+      $this->dialog = new sieveManagement($this->config,$this->dn,$this,$id);
     }
    
     /* Cancel sieve edit */

@@ -31,7 +31,7 @@ class sieveManagement extends plugin
 {
   var $parent = NULL;
   var $scripts= array();  
-
+  var $uattrib = "uid";
   var $current_script  = -1;
   var $current_handler = NULL;
   var $script_to_delete =-1;
@@ -58,8 +58,9 @@ class sieveManagement extends plugin
   /* Initialize the class and load all sieve scripts 
    *  try to parse them and display errors 
    */ 
-  function sieveManagement($config,$dn,$parent)
+  function sieveManagement($config,$dn,$parent,$uattrib)
   {
+    $this->uattrib = $uattrib;
     $this->parent = $parent;
     plugin::plugin($config,$dn);
 
@@ -133,11 +134,13 @@ class sieveManagement extends plugin
       $cfg=  $this->config->data['SERVERS']['IMAP'][$this->parent->gosaMailServer];
       $this->Sieve_Error = "";
 
+      $uattrib = $this->uattrib;
+
       /* Log into the mail server */
       $this->sieve_handle= new sieve(
           $cfg["sieve_server"], 
           $cfg["sieve_port"], 
-          $this->parent->uid, 
+          $this->parent->$uattrib, 
           $cfg["password"], 
           $cfg["admin"]);
 
