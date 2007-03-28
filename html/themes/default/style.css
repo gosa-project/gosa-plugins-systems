@@ -1438,7 +1438,6 @@ td.container_, div.container_{
 td.container_:hover,div.container_:hover {
 	background-color: #777777;
 	display:block;
-	width:100%;	
 }
 
 
