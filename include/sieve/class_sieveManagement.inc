@@ -439,6 +439,7 @@ class sieveManagement extends plugin
             }else{
               $this->scripts[$this->current_script]['MODE'] = "Structured";
             }
+            $this->Script_Error = "";
             $this->Import_Script = FALSE;
           }
         }
