@@ -1248,6 +1248,16 @@ class environment extends plugin
     return($a_return);
   }
 
+
+  function saveCopyDialog()
+  {
+    if(isset($_POST['cn'])){
+      $this->cn = $_POST['cn'];
+      $this->uid = $_POST['cn'];
+    }
+  }
+
+
   /* Generates ListBox frienly output of used logonscripts 
    */
   function printOutLogonScripts()
