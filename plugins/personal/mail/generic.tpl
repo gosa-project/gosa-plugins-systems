@@ -90,16 +90,16 @@
 			changeState('use_spam_filter');
 			changeState('use_mailsize_limit');
 			changeState('import_vacation');
-			changeState('forward_address');
-			changeState('add_forwarder');
-			changeState('add_local_forwarder');
-			changeState('delete_forwarder');
+			changeState('vacation_template');
+//			changeState('forward_address');
+//			changeState('add_forwarder');
+//			changeState('add_local_forwarder');
+//			changeState('delete_forwarder');
 			changeState('only_local');
 			changeState('gosaVacationMessage');
 			changeState('gosaSpamSortLevel');
 			changeState('gosaSpamMailbox');
 			changeState('gosaMailMaxSize');
-	
 			changeStates();
 
 		"
@@ -229,7 +229,7 @@ onclick="changeState('day'); changeState('month'); changeState('year'); changeSt
 
    {if $show_templates eq "true"}
 {render acl=$gosaVacationMessageACL}
-   <select name="vacation_template" {if $own_script != ""} disabled {/if}>
+   <select id='vacation_template' name="vacation_template" {if $own_script != ""} disabled {/if}>
         	{html_options options=$vacationtemplates selected=$template}
 		<option disabled>&nbsp;</option>
    </select>
@@ -244,23 +244,23 @@ onclick="changeState('day'); changeState('month'); changeState('year'); changeSt
     <b><label for="forwarder_list">{t}Forward messages to{/t}</label></b>
    </p>
 {render acl=$gosaMailForwardingAddressACL}
-   <select id="gosaMailForwardingAddress" style="width:100%; height:100px;" name="forwarder_list[]" size=15 multiple {if $own_script != ""} disabled {/if}>
+   <select id="gosaMailForwardingAddress" style="width:100%; height:100px;" name="forwarder_list[]" size=15 multiple>
 			{html_options values=$gosaMailForwardingAddress output=$gosaMailForwardingAddress selected=$template}        
 			<option disabled>&nbsp;</option>
    </select>
 {/render}
    <br>
 {render acl=$gosaMailForwardingAddressACL}
-   <input {if $own_script != ""} disabled {/if} id='forward_address' name="forward_address" size=20 align="middle" maxlength=65 value="">
+   <input id='forward_address' name="forward_address" size=20 align="middle" maxlength=65 value="">
 {/render}
 {render acl=$gosaMailForwardingAddressACL}
-   <input {if $own_script != ""} disabled {/if} id='add_forwarder' type="submit" value="{t}Add{/t}" name="add_forwarder" >&nbsp;
+   <input id='add_forwarder' type="submit" value="{t}Add{/t}" name="add_forwarder" >&nbsp;
 {/render}
 {render acl=$gosaMailForwardingAddressACL}
-   <input {if $own_script != ""} disabled {/if} id='add_local_forwarder' type="submit" value="{t}Add local{/t}" name="add_local_forwarder" >&nbsp;
+   <input id='add_local_forwarder' type="submit" value="{t}Add local{/t}" name="add_local_forwarder" >&nbsp;
 {/render}
 {render acl=$gosaMailForwardingAddressACL}
-   <input {if $own_script != ""} disabled {/if} id='delete_forwarder' type="submit" value="{t}Delete{/t}" name="delete_forwarder">
+   <input id='delete_forwarder' type="submit" value="{t}Delete{/t}" name="delete_forwarder">
 {/render}
   </td>
  </tr>
