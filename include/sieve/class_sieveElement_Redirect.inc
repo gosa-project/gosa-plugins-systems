@@ -1,7 +1,7 @@
 <?php
 class sieve_redirect 
 {
-  var $data = array();
+  var $data = "";
   var $object_id = -1;
   var $LastError   ="";
   
@@ -10,7 +10,7 @@ class sieve_redirect
     if(isset($_POST['redirect_to_'.$this->object_id])){
       $rt = stripslashes($_POST['redirect_to_'.$this->object_id]);
 
-      $rt = "\"".trim(preg_replace("/\"/","",$rt))."\"";
+      $rt = trim($rt);
       $this->data = $rt;
     }
   }
@@ -20,7 +20,7 @@ class sieve_redirect
   {
     $msgs = array();
     
-    if(!is_email(preg_replace("/\"/","",$this->data))){
+    if(!is_email($this->data)){
       $msgs[] =_("Please specify a valid email address.");
     }
     
@@ -35,9 +35,15 @@ class sieve_redirect
       $data = array('ELEMENTS' => array(array('class' => "quoted-string" ,"text" => _("Put a mail address here"))));
     }
 
-    foreach($data['ELEMENTS'] as $node ){
+    foreach($data['ELEMENTS'] as $key => $node ){
       if(in_array($node['class'],array("quoted-string","text"))){
-        $this->data = $node['text'];
+        $tmp = sieve_get_strings($data['ELEMENTS'],$key);
+        if(count($tmp['STRINGS'])){
+
+          foreach($tmp['STRINGS'] as $str){
+            $this->data.= $str;
+          }
+        }
       }
     }
   }
@@ -51,8 +57,7 @@ class sieve_redirect
  
   function execute()
   {
-    $values = $this->data;
-
+    $values = htmlentities($this->data);
     $smarty = get_smarty();
     $smarty->assign("ID", $this->object_id);
     $smarty->assign("Destinations" , $values);

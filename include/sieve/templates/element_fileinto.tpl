@@ -17,7 +17,7 @@
 		<td>
 			{t}Folder{/t}
 			{if $User_Mode}
-				<input class='sieve_fileinto_input' type='text' value='{$Selected}' name='fileinto_{$ID}'>
+				<input class='sieve_fileinto_input' type='text' value="{$Selected}" name='fileinto_{$ID}'>
 			{else}
 				<select name='fileinto_{$ID}' class='sieve_fileinto_input'>
 					{html_options values=$Boxes output=$Boxes selected=$Selected}

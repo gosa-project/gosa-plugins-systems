@@ -13,8 +13,7 @@ class sieve_fileinto
     $mbs = $this->get_mail_boxes();
     
     if(isset($_POST['fileinto_'.$this->object_id])){
-      $mb = $_POST['fileinto_'.$this->object_id];
-
+      $mb = stripslashes($_POST['fileinto_'.$this->object_id]);
 
       /* Depending on the user mode we only accept 
        *  existing mailboxes 
@@ -74,7 +73,7 @@ class sieve_fileinto
   function execute()
   {
     $smarty = get_smarty();
-    $smarty->assign("Selected",$this->data);
+    $smarty->assign("Selected",htmlentities($this->data));
     $smarty->assign("Boxes", $this->get_mail_boxes());
     $smarty->assign("User_Mode", $this->user_mode);
     $smarty->assign("ID", $this->object_id);
