@@ -643,6 +643,10 @@ class sieve_if
             $tmp2 = split(",",$vls);
             foreach($tmp2 as $val){
               $tmp[] = trim($val);
+  
+              if(preg_match("/\"/",$val)){
+                $parsed[$key]['LastError'] = _("Invalid character found in address attribute. Quotes are not allowed here.");
+              }
             }
             $parsed[$key]['Key_List'] = $tmp;
           }
@@ -655,6 +659,9 @@ class sieve_if
             $tmp2 = split(",",$vls);
             foreach($tmp2 as $val){
               $tmp[] = trim($val);
+              if(preg_match("/\"/",$val)){
+                $parsed[$key]['LastError'] = _("Invalid character found in value attribute. Quotes are not allowed here.");
+              }
             }
             $parsed[$key]['Value_List'] = $tmp;
           }
