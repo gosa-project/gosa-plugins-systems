@@ -57,7 +57,7 @@ class sieve_vacation
             }
           }
         }else{
-	       $this->addresses[] = $data['ELEMENTS'][$i]['text'] ;
+	       $this->addresses[] =  preg_replace("/\"/i","",$data['ELEMENTS'][$i]['text']);
         }
       }
 

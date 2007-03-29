@@ -378,7 +378,9 @@ class sieveManagement extends plugin
     }
 
     /* Save currently edited sieve script. */
-    if($this->parent->acl_is_writeable("sieveManagement") && isset($_POST['save_sieve_changes'])){
+    if($this->parent->acl_is_writeable("sieveManagement") && 
+       isset($_POST['save_sieve_changes']) && 
+       is_object($this->current_handler)){
       $chk = $this->current_handler->check();
       if(!count($chk)){
 
