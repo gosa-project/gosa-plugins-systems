@@ -2,7 +2,7 @@
 
 class sieve_fileinto 
 {
-  var $data     = array();
+  var $data     = "";
   var $object_id= -1;
   var $options  = array();
   var $parent   = NULL;
@@ -46,10 +46,17 @@ class sieve_fileinto
       $data = array('ELEMENTS' => array(array('class' => "quoted-string" ,"text" => $mbs[key($mbs)])));
     }
 
-    /* Set mailbox */
-    foreach($data['ELEMENTS'] as $node ){
+    /* Load element contents, should normaly be only one string 
+     *  but if we found more than one, just append the following strings.
+     */
+    foreach($data['ELEMENTS'] as $key => $node ){
       if(in_array($node['class'],array("quoted-string","text"))){
-        $this->data = preg_replace("/\"/","",$node['text']);
+        $tmp = sieve_get_strings($data['ELEMENTS'],$key);
+        if(count($tmp['STRINGS'])){
+          foreach($tmp['STRINGS'] as $str){
+            $this->data.= $str;
+          }
+        }
       }
     }
 
