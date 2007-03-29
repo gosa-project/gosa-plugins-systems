@@ -16,7 +16,11 @@ class sieve_reject
 
   function check()
   {
-    return(array());
+    $msgs = array();
+    if(preg_match("/\"/",$this->data)){
+      $msgs [] = _("Invalid character found, quotes are not allowed in a reject message.");
+    }
+    return($msgs);
   }
 
   function sieve_reject($data,$object_id,$parent)
@@ -60,6 +64,8 @@ class sieve_reject
     $smarty->assign("ID", $this->object_id);
     $smarty->assign("Message",$this->data);
     $smarty->assign("Multiline",$Multiline);
+    $smarty->assign("LastError" , $this->check());
+    $smarty->assign("LastErrorCnt" , count($this->check()));
     $object_container = $smarty->fetch(get_template_path("templates/object_container.tpl",TRUE,dirname(__FILE__)));
     $object= $smarty->fetch(get_template_path("templates/element_reject.tpl",TRUE,dirname(__FILE__)));
     $str = preg_replace("/%%OBJECT_CONTENT%%/",addcslashes($object,"\\"),$object_container);

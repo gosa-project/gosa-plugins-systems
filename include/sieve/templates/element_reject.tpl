@@ -1,4 +1,14 @@
 <table class='sieve_reject_container'>
+
+{foreach from=$LastError item=val key=key}
+        <tr>
+            <td colspan=4>
+                <div class='sieve_error_msgs'>{$LastError[$key]}</div>
+
+            </td>
+        </tr>
+
+    {/foreach}
 	<tr>
 		<td>
 			<b>{t}Reject mail{/t}</b>

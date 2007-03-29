@@ -399,7 +399,9 @@ class sieveManagement extends plugin
           print_red($p->status_text);;
         }
       }else{
-        print_red(_("Please fix all errors before saving."));
+        foreach($chk as $msgs){
+          print_red(sprintf(_("Please fix all errors before saving. Last error was : %s"),$msgs));
+        }
       }
     }
 

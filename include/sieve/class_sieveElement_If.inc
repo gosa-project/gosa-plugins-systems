@@ -98,6 +98,10 @@ class sieve_if
       $parsed = $this->_parsed;
     }
 
+    if($parsed == NULL) {
+        return(array(_("Can't save empty tests.")));
+    }
+
     /* Walk through all elements */
     foreach($parsed as $key => $data){
 
@@ -525,7 +529,9 @@ class sieve_if
       $parsed = $this->_parsed;
     }
 
-    if(!is_array($parsed)) return;
+    if(!is_array($parsed)) {
+      return;
+    }
 
     /* Walk through all elements */
     foreach($parsed as $key => $data){
@@ -1129,7 +1135,7 @@ class sieve_if
           $smarty->assign("DisplayAdd",TRUE);
           $smarty->assign("DisplayDel",FALSE);
           $cont_tmp = $smarty->fetch(get_template_path("templates/object_test_container.tpl",TRUE,dirname(__FILE__)));
-          $cont_tmp = preg_replace("/%%OBJECT_CONTENT%%/",_("Click here to add a new test"),$cont_tmp);
+          $cont_tmp = preg_replace("/%%OBJECT_CONTENT%%/","<b>"._("Click here to add a new test")."</b>",$cont_tmp);
 
           $smarty->assign("Inverse",$Inverse);
           $smarty->assign("Contents",$cont_tmp.$Contents);
