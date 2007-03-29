@@ -105,7 +105,7 @@ class sieve_vacation
   {
     /* Get release date */
     if(isset($_POST['vacation_release_'.$this->object_id])){
-      $this->days = $_POST['vacation_release_'.$this->object_id];
+      $this->days = stripslashes($_POST['vacation_release_'.$this->object_id]);
     }
 
     /* Check if we want to toggle the expert mode */
@@ -119,7 +119,7 @@ class sieve_vacation
       $tmp = array();
       $tmp2 = split(",",$vr);
       foreach($tmp2 as $val){
-        $ad = trim(preg_replace("/\"/","",$val));
+        $ad = trim($val);
         if(!empty($ad)){
           $tmp[] = $ad;
         }
