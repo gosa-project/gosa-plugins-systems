@@ -71,7 +71,7 @@ class sieve_vacation
         foreach($strs as $str){
           $data .= $str;
         }
-        $this->reason = $data;//preg_replace("/\"/","",$data);
+        $this->reason = $data;
       }
     }
   }
@@ -92,7 +92,12 @@ class sieve_vacation
     if($this->mime){
       $str.= ":mime ".sieve_create_strings($this->mime);
     }
-    $str .= "\n ".sieve_create_strings($this->reason);
+  
+    /* Append reason and ensure that this will be 
+     *  handled as multiline text element 
+     *  by adding a "\n" new line 
+     */
+    $str .= "\n ".sieve_create_strings($this->reason."\n");
     return($str." ; \n");
   }
 
@@ -116,7 +121,7 @@ class sieve_vacation
       foreach($tmp2 as $val){
         $ad = trim(preg_replace("/\"/","",$val));
         if(!empty($ad)){
-          $tmp[] = "\"".$ad."\"";
+          $tmp[] = $ad;
         }
       }
       $this->addresses = $tmp;
@@ -125,7 +130,7 @@ class sieve_vacation
     /* Get reason */
     if(isset($_POST['vacation_reason_'.$this->object_id])){
       $vr = stripslashes ($_POST['vacation_reason_'.$this->object_id]);
-      $this->reason = "\"".trim(preg_replace("/\"/","",$vr))."\"";
+      $this->reason = trim($vr);
     }
   }
 
@@ -134,7 +139,7 @@ class sieve_vacation
     $msgs = array();
     $err = FALSE;
     foreach($this->addresses as $addr){
-      if(!is_email(preg_replace("/\"/","",$addr))){
+      if(!is_email($addr)){
         $err = true;
       }
     }

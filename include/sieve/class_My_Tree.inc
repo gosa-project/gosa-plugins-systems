@@ -731,9 +731,9 @@ function sieve_create_strings($data,$force_string = FALSE)
       $ret = "text: \r\n".$data."\r\n.\r\n";
     }else{
       $ret = "\"".$data."\"";
+      $ret = preg_replace("/\"\"/","\"",$ret);
     }
   }
-  $ret = preg_replace("/\"\"/","\"",$ret);
   $ret = preg_replace("/\n/","\r\n",$ret);
 
   return($ret);
@@ -759,7 +759,10 @@ function sieve_get_strings($data,$id)
       $id ++;
     }
   }elseif($data[$id]['class'] == "quoted-string"){
-    $ret[] = $data[$id]['text'];
+    $text = $data[$id]['text']; 
+    $text= preg_replace("/^\"/","",$text);
+    $text= preg_replace("/\"$/","",$text);
+    $ret[] = $text;
   }elseif($data[$id]['class'] == "number"){
     $ret[] = $data[$id]['text'];
   }elseif($data[$id]['class'] == "multi-line"){
