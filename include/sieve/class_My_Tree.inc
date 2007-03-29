@@ -722,6 +722,7 @@ function sieve_create_strings($data,$force_string = FALSE)
       $ret = preg_replace("/,$/","",trim($ret));
       $ret = "[".$ret."]";
     }
+      $ret = preg_replace("/\"\"/","\"",$ret);
   }else{
 
     $Multiline = preg_match("/\n/",$data);
@@ -753,7 +754,10 @@ function sieve_get_strings($data,$id)
     while(isset($data[$id]) && $data[$id]['class']  != "right-bracket" && $id < count($data)){
 
       if($data[$id]['class'] == "quoted-string"){
-        $ret[] = $data[$id]['text'];
+        $text = $data[$id]['text']; 
+        $text= preg_replace("/^\"/","",$text);
+        $text= preg_replace("/\"$/","",$text);
+        $ret[] = $text;
       }
 
       $id ++;

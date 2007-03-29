@@ -49,14 +49,11 @@ class sieve_fileinto
     /* Load element contents, should normaly be only one string 
      *  but if we found more than one, just append the following strings.
      */
-    foreach($data['ELEMENTS'] as $key => $node ){
-      if(in_array($node['class'],array("quoted-string","text"))){
-        $tmp = sieve_get_strings($data['ELEMENTS'],$key);
-        if(count($tmp['STRINGS'])){
-          foreach($tmp['STRINGS'] as $str){
-            $this->data.= $str;
-          }
-        }
+    for($i = 0 ; $i < count($data['ELEMENTS']) ; $i++){
+      $tmp = sieve_get_strings($data['ELEMENTS'],$i);
+      $i  = $i + $tmp['OFFSET'];
+      foreach($tmp['STRINGS'] as $str){
+        $this->data .= $str;
       }
     }
 

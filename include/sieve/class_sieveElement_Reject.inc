@@ -10,7 +10,6 @@ class sieve_reject
   {
     if(isset($_POST['reject_message_'.$this->object_id])){
       $msg = stripslashes($_POST['reject_message_'.$this->object_id]);
-
       $this->data = $msg;
     }
   }
@@ -34,20 +33,13 @@ class sieve_reject
       $this->data = _("Your reject text here");
     }else{
 
-      /* Get reject text */
-      $str = "";
-      foreach($data['ELEMENTS'] as $node ){
-        if(in_array($node['class'],array("quoted-string","text","multi-line"))){
-
-          if($node['class'] == "multi-line"){
-            $str .= preg_replace("/^text:[ \n\r]*/","",$node['text']);
-            $str =  preg_replace("/[  \n\r]*\.[  \n\r]*$/","",$str);
-          }else{
-            $str .= $node['text'];
-          }
+      for($i = 0 ; $i < count($data['ELEMENTS']) ; $i++){
+        $tmp = sieve_get_strings($data['ELEMENTS'],$i);
+        $i  = $i + $tmp['OFFSET'];
+        foreach($tmp['STRINGS'] as $str){
+          $this->data .= $str;
         }
       }
-      $this->data = preg_replace("/\"/","",$str);
     }
   }
 

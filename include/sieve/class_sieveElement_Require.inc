@@ -12,13 +12,16 @@ class sieve_require
     $this->object_id = $object_id;
     if($data != NULL){
 
-      foreach($data['ELEMENTS'] as $node ){
-        if(in_array($node['class'],array("quoted-string","text"))){
-          $this->data[] = preg_replace("/\"/","",$node['text']);
+      for($i = 0 ; $i < count($data['ELEMENTS']) ; $i++){
+        $tmp = sieve_get_strings($data['ELEMENTS'],$i);
+        $i  = $i + $tmp['OFFSET'];
+        foreach($tmp['STRINGS'] as $str){
+          $this->data[]= $str;
         }
       }
     }
   }
+
 
   /* Add a new require statement and ensure 
    *  that it is not specified twice 
@@ -26,9 +29,8 @@ class sieve_require
   function Add_Require($str)
   {
     $current = array();
-
     foreach($this->data as $dat){
-      $current[] = preg_replace("/\"/","",$dat);
+      $current[] = $dat;
     }
     if(!in_array($str,$current)){
       $this->data[] = $str;
@@ -46,7 +48,7 @@ class sieve_require
       $tmp2 = split(",",$vls);
       foreach($tmp2 as $val){
         
-        $val = trim(preg_replace("/\"/","",$val));
+        $val = trim($val);
     
         if(empty($val)) continue;        
   
@@ -80,7 +82,7 @@ class sieve_require
   {
     $Require = "";
     foreach($this->data as $key){
-      $Require .= "\"".$key."\"".", ";
+      $Require .= $key.", ";
     }
     $Require = preg_replace("/,$/","",trim($Require));
 
