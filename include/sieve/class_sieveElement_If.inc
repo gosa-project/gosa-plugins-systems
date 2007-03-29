@@ -642,7 +642,7 @@ class sieve_if
 
             $tmp2 = split(",",$vls);
             foreach($tmp2 as $val){
-              $tmp[] = "\"".trim(preg_replace("/\"/","",$val))."\"";
+              $tmp[] = trim($val);
             }
             $parsed[$key]['Key_List'] = $tmp;
           }
@@ -654,7 +654,7 @@ class sieve_if
 
             $tmp2 = split(",",$vls);
             foreach($tmp2 as $val){
-              $tmp[] = "\"".trim(preg_replace("/\"/","",$val))."\"";
+              $tmp[] = trim($val);
             }
             $parsed[$key]['Value_List'] = $tmp;
           }
