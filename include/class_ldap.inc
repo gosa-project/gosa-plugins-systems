@@ -991,7 +991,7 @@ class LDAP{
       $ndn = split("#", $lineone[0]);
       $line = base64_decode($ndn[1]);
 
-      $dnn = split (":",$line);
+      $dnn = split (":",$line,2);
       $current_line = $ndn[0];
       $dn    = $dnn[0];
       $value = $dnn[1];
