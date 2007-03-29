@@ -30,6 +30,7 @@ class servgeneric extends plugin
   var $ui   ;
   var $mapActions   = array("reboot"          => "",
                             "instant_update"  => "softupdate",
+                            "localboot"       => "localboot",
                             "update"          => "sceduledupdate",
                             "reinstall"       => "install",
                             "rescan"          => "",
@@ -203,12 +204,14 @@ class servgeneric extends plugin
                                        "reinstall" => _("Reinstall"),
                                        "rescan" => _("Rescan hardware"),
                                        "memcheck" => _("Memory test"),
+                                       "localboot" => _("Force localboot"),
                                        "sysinfo"  => _("System analysis")));
     } else {
       $smarty->assign("actions", array("wake" => _("Wake up"),
                                        "reinstall" => _("Reinstall"),
                                        "update" => _("Scheduled update"),
                                        "memcheck" => _("Memory test"),
+                                       "localboot" => _("Force localboot"),
                                        "sysinfo"  => _("System analysis")));
     }
 
