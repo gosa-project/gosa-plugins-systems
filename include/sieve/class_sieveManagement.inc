@@ -41,7 +41,7 @@ class sieveManagement extends plugin
   var $create_script = FALSE;
 
   /* To add new elements we need to know 
-   *  Where to the element                  -> add_new_id
+   *  Where to add the element              -> add_new_id
    *  Whould we add above or below this id  -> add_above_below
    *  What kind of element should we add    -> add_element_type
    */
@@ -60,16 +60,21 @@ class sieveManagement extends plugin
    */ 
   function sieveManagement($config,$dn,$parent,$uattrib)
   {
+    /* Check given parameter */
+    if(!isset($parent->$uattrib)){
+      trigger_error("Sieve Management implementation error. Parameter 4 must be part of the given parent element.");
+    }
+
     $this->uattrib = $uattrib;
     $this->parent = $parent;
     plugin::plugin($config,$dn);
 
     /* Get sieve */
     if(!$this->sieve_handle = $this->get_sieve()){
-      print_red(
-        sprintf(
-          _("Can't log into SIEVE server. Server says '%s'."),
-          to_string($this->Sieve_Error)));
+#      print_red(
+ #       sprintf(
+  #        _("Can't log into SIEVE server. Server says '%s'."),
+   #       to_string($this->Sieve_Error)));
       return;
     }
 
@@ -661,18 +666,25 @@ class sieveManagement extends plugin
                       "attach" => "style='border-right:0px; width:70px;'");
       $List ->AddEntry(array($field1,$field2,$field3,$field4,$field6)); 
     }
-  
-    $display ="<h2>Sieve script management</h2>";
-    $display .= _("Be careful. All your changes will be saved directly to sieve, if you use the save button below.");
-    $display .= "<br><input type='submit' name='create_new_script' value='"._("Create new script")."'>";
-    $display .=  $List->DrawList();
-    
-    $display .= "<p style=\"text-align:right\">\n";
-    $display .= "<input type=submit name=\"sieve_finish\" style=\"width:80px\" value=\""._("Ok")."\">\n";
-    $display .= "&nbsp;\n";
-    $display .= "<input type=submit name=\"sieve_cancel\" value=\""._("Cancel")."\">\n";
-    $display .= "</p>";
-    return($display);;
+ 
+    /* If the uattrib is empty   (Attribute to use for atuthentification with sieve)
+     *  Display a message that a connection can't be established right now.
+     */
+    $uattrib = $this->uattrib;
+    $smarty = get_smarty();
+
+
+    if(!$this->get_sieve()){
+      $smarty->assign("Sieve_Error",sprintf(
+        _("Can't log into SIEVE server. Server says '%s'."),
+          to_string($this->Sieve_Error)));
+    }else{
+      $smarty->assign("Sieve_Error","");
+    }
+
+    $smarty->assign("uattrib_empty",empty($this->parent->$uattrib));
+    $smarty->assign("List",$List->DrawList());
+    return($smarty->fetch(get_template_path("templates/management.tpl",TRUE,dirname(__FILE__))));
   }
 
 
