@@ -436,7 +436,7 @@ class groupManagement extends plugin
             "groups", $base,array("gidNumber", "cn"),  GL_SUBSEARCH);
       } else {
         $res = get_list("(&(uid=$Regex)(!(uid=*$))(objectClass=posixAccount)(gidNumber=*))",
-            "groups", $base,array("gidNumber", "cn"));
+            "groups", $base,array("gidNumber", "cn"), GL_NONE);
       }
       foreach ($res as $attrs){
         $primaries[$attrs['gidNumber'][0]]= $attrs['cn'][0];
@@ -449,7 +449,7 @@ class groupManagement extends plugin
     if ($SubSearch){
       $res = get_list($ff, "groups", $base,array("gidNumber", "cn", "description"), GL_SUBSEARCH);
     } else {
-      $res = get_list($ff, "groups", $base,array("gidNumber", "cn", "description"));
+      $res = get_list($ff, "groups", $base,array("gidNumber", "cn", "description"), GL_NONE);
     }
     foreach($res as $attrs){
       if (!isset($primaries[$attrs['gidNumber'][0]])){
