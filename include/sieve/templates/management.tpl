@@ -17,6 +17,8 @@
 	<font color='red'><b>{t}Connection to sieve could not be established.{/t}</b></font><br>
 	{$Sieve_Error}
 	<br>
+	{t}Possibly the sieve account was not created yet.{/t}
+	<br>
 	<br>
 
 	{$List}
