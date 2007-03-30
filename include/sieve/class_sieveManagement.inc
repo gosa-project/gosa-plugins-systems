@@ -69,12 +69,8 @@ class sieveManagement extends plugin
     $this->parent = $parent;
     plugin::plugin($config,$dn);
 
-    /* Get sieve */
+    /* Get sieve, if this fail abort class initialization */
     if(!$this->sieve_handle = $this->get_sieve()){
-#      print_red(
- #       sprintf(
-  #        _("Can't log into SIEVE server. Server says '%s'."),
-   #       to_string($this->Sieve_Error)));
       return;
     }
 
@@ -128,7 +124,7 @@ class sieveManagement extends plugin
   }
 
 
-  /* Return a sieve class hanlde,
+  /* Return a sieve class handle,
    *  false if login fails
    */
   function get_sieve()
@@ -667,12 +663,11 @@ class sieveManagement extends plugin
       $List ->AddEntry(array($field1,$field2,$field3,$field4,$field6)); 
     }
  
-    /* If the uattrib is empty   (Attribute to use for atuthentification with sieve)
-     *  Display a message that a connection can't be established right now.
+    /* If the uattrib is empty   (Attribute to use for authentification with sieve)
+     *  Display a message that the connection can't be established.
      */
     $uattrib = $this->uattrib;
     $smarty = get_smarty();
-
 
     if(!$this->get_sieve()){
       $smarty->assign("Sieve_Error",sprintf(

@@ -1,6 +1,8 @@
 <?php
 
+/* String used to indent the different code blocks */
 define("SIEVE_INDENT_TAB","  ");
+
 
 /* This class is inherited from the original 'Parser'
  *  class written by Heiko Hund
@@ -8,7 +10,6 @@ define("SIEVE_INDENT_TAB","  ");
 class My_Parser extends Parser 
 {
 	var $parent = NULL;
-
 	var $registeredExtensions_ =array();
 
 	function My_Parser($parent)
@@ -66,22 +67,6 @@ class My_Parser extends Parser
 	function save_object()
 	{
 		$this->tree_->save_object();
-	}
-
-
-	/* Should be obsolete in the end. */
-	function dumpToken_(&$token)
-	{
-		if (is_array($token))
-		{
-			$str = "<" . $token['text'] . "> ";
-			foreach ($token as $k => $v)
-			{
-				$str .= " $k:$v";
-			}
-			return $str;
-		}
-		return strval($token);
 	}
 
 

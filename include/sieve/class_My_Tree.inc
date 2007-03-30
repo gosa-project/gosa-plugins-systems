@@ -1,7 +1,5 @@
 <?php
 
-
-
 /* This class is inherited from the original 'Tree'
  *  class written by Heiko Hund.
  * It is partly rewritten to create a useable html interface 
@@ -23,10 +21,12 @@ class My_Tree extends Tree
     $this->_construct($root);
   }
 
+
   function execute()
   {
     return($this->dump());
   }
+
 
   /* Create a html interface for the current sieve filter 
    */
