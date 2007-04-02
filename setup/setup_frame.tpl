@@ -33,6 +33,7 @@
 		</div>
 	</div>
 </div>
+<input type='hidden' name='setup_goto_step' value=''>
 </form>
 </center>
 

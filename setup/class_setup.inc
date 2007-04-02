@@ -84,7 +84,7 @@ class setup
     }
 
     /* Check if step was selected */
-    if(isset($_GET['step']) || isset($_POST['next']) || isset($_POST['last'])){
+    if(isset($_GET['step']) || isset($_POST['next']) || isset($_POST['last']) || isset($_POST['setup_goto_step'])){
 
       /* check if current setup step is completed now 
           and activate the next step if possible */
@@ -97,19 +97,29 @@ class setup
           $this->disable_steps_from($i+1);
         }
       }
+    }
+    if(isset($_GET['step'])){
+      $step = $_GET['step'];
+    }elseif(isset($_POST['next'])){
+      $step = $this->i_current + 1;
+    }elseif(isset($_POST['last'])){
+      $step = $this->i_current - 1;
+    }
+  
+    if(isset($_POST['setup_goto_step'])){
+      $step= $_POST['setup_goto_step'];
+    }
 
-      if(isset($_GET['step'])){
-        $step = $_GET['step'];
-      }elseif(isset($_POST['next'])){
-        $step = $this->i_current + 1;
-      }elseif(isset($_POST['last'])){
-        $step = $this->i_current - 1;
+    $once = true;
+    foreach($_POST as $name => $value){
+      if(preg_match("/^step_[0-9]*$/",$name) && $once ){
+        $step = preg_replace("/^step_/","",$name);
       }
+    }
 
-      if($this->selectable_step($step)){
-        $this->i_last    = $this->i_current;
-        $this->i_current = $step;
-      }
+    if($this->selectable_step($step)){
+      $this->i_last    = $this->i_current;
+      $this->i_current = $step;
     }
   }
 
@@ -123,7 +133,6 @@ class setup
       }
 
       if($found){ 
-        echo $key." ";
         $this->o_steps[$key]->set_enabled(false);
         $this->o_steps[$key]->set_completed(false);
       }
@@ -142,24 +151,51 @@ class setup
       $b_active   = $step -> is_active();
       $b_enabled  = $step -> is_enabled();
 
-      $str .="<div >";
-      if($b_enabled){
-        if($b_active){
-          $str .= "<a href='?step=".$key."' class='navigation_element_active'>";
-          $str .= "<div class='navigation_title_active'>".$s_title."</div>";
-          $str .= "<div class='navigation_info'>".$s_info."</div>";
-          $str .= "</a><br>\n";
+      $_SESSION['js'] = 0;
+      if($_SESSION['js']){
+
+        $str .="<div >";
+        if($b_enabled){
+          if($b_active){
+            $str .= "<div class='navigation_element_active'>";
+            $str .= "<div onClick='document.mainform.setup_goto_step.value=\"$key\";document.mainform.submit();'
+              class='navigation_title_active'>".$s_title."</div>";
+            $str .= "<div onClick='document.mainform.setup_goto_step.value=\"$key\";document.mainform.submit();'
+              class='navigation_info'>".$s_info."</div>";
+            $str .= "</div>";
+          }else{
+            $str .= "<div class='navigation_element'>";
+            $str .= "<div onClick='document.mainform.setup_goto_step.value=\"$key\";document.mainform.submit();'
+              class='navigation_title_inactive'>".$s_title."</div>";
+            $str .= "</div>";
+          }
         }else{
-          $str .= "<a href='?step=".$key."' class='navigation_element'>";
-          $str .= "<div class='navigation_title_inactive'>".$s_title."</div>";
-          $str .= "</a><br>\n";
+          $str .= "<div class='navigation_element'>";
+          $str .= "<div class='navigation_title_disabled'>".$s_title."</div>";
+          $str .= "</div>";
         }
+        $str .= "</div>" ;
       }else{
-        $str .= "<div class='navigation_element'>";
-        $str .= "<div class='navigation_title_disabled'>".$s_title."</div>";
-        $str .= "</div>";
+        $str .="<div >";
+        if($b_enabled){
+          if($b_active){
+            $str .= "<div class='navigation_element_active'>";
+            $str .= "<input style='text-align: left; color: #00008F; font-weight: bold; width:100%;' 
+                        type='submit' value='".$s_title."' name='step_".$key."'>";
+            $str .= "</div>";
+          }else{
+            $str .= "<div class='navigation_element'>";
+            $str .= "<input style='text-align: left; color: #00008F; font-weight: bold; width:100%;' 
+                        type='submit' value='".$s_title."' name='step_".$key."'>";
+            $str .= "</div>";
+          }
+        }else{
+          $str .= "<div class='navigation_element'>";
+          $str .= "<div class='navigation_title_disabled'>".$s_title."</div>";
+          $str .= "</div>";
+        }
+        $str .= "</div>" ;
       }
-      $str .= "</div>" ;
     }
     return($str);
   }

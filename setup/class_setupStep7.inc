@@ -25,8 +25,9 @@ class setup_step_7 extends setup_step
   var $checked = array();
   var $not_checked = array();
   var $schema_readable  = FALSE;
-  var $attributes       = array();
+  var $attributes       = array("enable_schema_check");
   var $display_type     = "failed";
+  var $enable_schema_check = TRUE;
 
   function setup_step_7()
   {
@@ -53,8 +54,10 @@ class setup_step_7 extends setup_step
     }
 
     $smarty = get_smarty();
+    $smarty->assign("bool",array(FALSE => _("No"), TRUE => _("Yes")));
     $smarty->assign("display_type",$this->display_type);
     $smarty->assign("schema_readable",$this->schema_readable);
+    $smarty->assign("enable_schema_check",$this->enable_schema_check);
     $smarty->assign("checks",$this->checked);
     $smarty->assign("not_checked",$this->not_checked);
     $smarty->assign("failed_checks",$failed_checks);
