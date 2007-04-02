@@ -22,12 +22,10 @@ require_once("class_setupStep.inc");
 
 class setup 
 {
-
   var $i_steps  = 8;  // Number of setup steps 
   var $i_current= 1;  // Current step
   var $i_last   = 1;  // Last setup step;
   var $o_steps  = array(); 
-
   var $captured_values = array();
 
   function setup()
@@ -45,21 +43,8 @@ class setup
     foreach($this->o_steps as $key => $step){
       $this->o_steps[$key]->parent = $this;
     }
-
-/*
-    for($i = 1 ; $i <= $this->i_steps; $ii ++ ){
-      $class= "setup_step_".$i;
-    
-      if(class_exists($class)){
-        $this->o_steps[$i] = new $class();
-      }else{
-        $this->o_steps[$i] = new setup_step();
-        trigger_error("Try to create class '".$class."' but it is not available, possibly you have forgotten to add the include in setup.php");
-      }
-      $this->o_steps[$i]->parent = $this;
-    }
-*/
   }
+
 
   function execute()
   {
@@ -107,10 +92,9 @@ class setup
         if($this->o_steps[$i]->is_completed()){
           if(isset($this->o_steps[($i+1)])){
             $this->o_steps[($i+1)]->set_enabled();
-          }else{
-            $this->o_steps[($i+1)]->set_enabled(false);
-          
           }
+        }else{
+          $this->disable_steps_from($i+1);
         }
       }
 
@@ -125,6 +109,23 @@ class setup
       if($this->selectable_step($step)){
         $this->i_last    = $this->i_current;
         $this->i_current = $step;
+      }
+    }
+  }
+
+
+  function disable_steps_from($start)
+  {
+    $found = false;
+    foreach($this->o_steps as $key => $step){
+      if($key == $start){
+        $found = true;
+      }
+
+      if($found){ 
+        echo $key." ";
+        $this->o_steps[$key]->set_enabled(false);
+        $this->o_steps[$key]->set_completed(false);
       }
     }
   }

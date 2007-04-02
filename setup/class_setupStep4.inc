@@ -140,6 +140,7 @@ class setup_step_4 extends setup_step
       }
     }
 
+    $this->get_connection_status();
     if($this->bind_id){
       $this->is_completed =TRUE;
     }else{

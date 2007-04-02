@@ -113,7 +113,7 @@ class setup_step_7 extends setup_step
 
     /* The gosa base schema */
     $checks['gosaObject'] = $def_check;
-    $checks['gosaObject']['REQUIRED_VERSION'] = "22.4";
+    $checks['gosaObject']['REQUIRED_VERSION'] = "2.4";
     $checks['gosaObject']['SCHEMA_FILES']     = array("gosa+samba3.schema","gosa.schema");
     $checks['gosaObject']['CLASSES_REQUIRED'] = array("gosaObject");
     $checks['gosaObject']['IS_MUST_HAVE']     = TRUE;
