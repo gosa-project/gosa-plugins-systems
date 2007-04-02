@@ -36,11 +36,20 @@ class setup_step_7 extends setup_step
   
   function execute()
   {
+    $checks = $this->check_schema();
+
     $smarty = get_smarty();
     $smarty->assign("schema_readable",$this->schema_readable);
-    $smarty->assign("checks",$this->checks);
+    $smarty->assign("checks",$checks);
     return($smarty -> fetch (get_template_path("../setup/setup_step7.tpl")));
   }
+
+  function check_schema_version($description, $version)
+  {
+    $desc= preg_replace("/^.* DESC\s+\(*\s*'([^']+)'\s*\)*.*$/", '\\1', $description);
+    return preg_match("/\(v$version\)/", $desc);
+  }
+
 
   function save_object()
   {
@@ -55,10 +64,19 @@ class setup_step_7 extends setup_step
     }
   }
 
-  
+
   function check_schema()
   {
+    $cfg = $this->parent->captured_values;
     $messages= array();
+
+    /* Get objectclasses */
+    $ldap = new LDAP($cfg['admin'],$cfg['password'],$cfg['connection'] ,FALSE,$cfg['tls']);
+    $objectclasses = $ldap->get_objectclasses();
+    if(count($objectclasses) == 0){
+      return (array(array("msg" => _("Can't get schema information from server. No schema check possible!"), "status" => FALSE)));
+    }
+
 
     $checks["gosaObject"]["VERSION"]  = "2.4";
     $checks["gosaObject"]["FILE"]     = "gosa+samba3.schema/gosa.schema";
@@ -68,66 +86,110 @@ class setup_step_7 extends setup_step
     $checks["gosaObject"]["MSG"]      = ""; // The error message to display
     $checks["gosaObject"]["INFO"]     = _("GOsa object is used to store acls.");
 
-    $checks["gosaAccount"]["VERSION"]  = "2.4";
-    $checks["gosaAccount"]["FILE"]     = "gosa+samba3.schema/gosa.schema";
-    $checks["gosaAccount"]["CLASS"]    = array("gosaAccount");
-    $checks["gosaAccount"]["STATUS"]   = FALSE;
-    $checks["gosaAccount"]["MUST"]     = TRUE;
-    $checks["gosaAccount"]["MSG"]      = ""; // The error message to display
-    $checks["gosaAccount"]["INFO"]     = _("Used to store account specific informations.");
+    /* This is the default block used for each entry. 
+     *  to avoid unset indexes. 
+     */
+    $def_check = array("REQUIRED_VERSION" => "0",
+                       "SCHEMA_FILES"     => array(),
+                       "CLASSES_REQUIRED" => array(),
+                       "STATUS"           => FALSE,
+                       "IS_MUST_HAVE"     => FALSE,
+                       "MSG"              => "",
+                       "INFO"             => _("There is currently no information specified for this schema extension."));
 
-    $checks["gosaLockEntry"]["VERSION"]  = "2.4";
-    $checks["gosaLockEntry"]["FILE"]     = "gosa+samba3.schema/gosa.schema";
-    $checks["gosaLockEntry"]["CLASS"]    = array("gosaLockEntry");
-    $checks["gosaLockEntry"]["STATUS"]   = FALSE;
-    $checks["gosaLockEntry"]["MUST"]     = TRUE;
-    $checks["gosaLockEntry"]["MSG"]      = ""; // The error message to display
-    $checks["gosaLockEntry"]["INFO"]     = _("Used to lock currently edited entries to avoid multiple changes at the same time.");
 
-    $checks["gosaLockEntry"]["VERSION"]  = "2.4";
-    $checks["gosaLockEntry"]["FILE"]     = "gosa+samba3.schema/gosa.schema";
-    $checks["gosaLockEntry"]["CLASS"]    = array("gosaLockEntry");
-    $checks["gosaLockEntry"]["STATUS"]   = FALSE;
-    $checks["gosaLockEntry"]["MUST"]     = TRUE;
-    $checks["gosaLockEntry"]["MSG"]      = ""; // The error message to display
-    $checks["gosaLockEntry"]["INFO"]     = _("Used to lock currently edited entries to avoid multiple changes at the same time.");
+    /* The gosa base schema */
+    $checks['gosaObject'] = $def_check;
+    $checks['gosaObject']['REQUIRED_VERSION'] = "2.4";
+    $checks['gosaObject']['SCHEMA_FILES']     = array("gosa+samba3.schema","gosa.schema");
+    $checks['gosaObject']['CLASSES_REQUIRED'] = array("gosaObject");
+    $checks['gosaObject']['IS_MUST_HAVE']     = TRUE;
+
+    /* GOsa Account class */
+    $checks["gosaAccount"]["REQUIRED_VERSION"]= "2.4";
+    $checks["gosaAccount"]["SCHEMA_FILES"]    = array("gosa+samba3.schema","gosa.schema");
+    $checks["gosaAccount"]["CLASSES_REQUIRED"]= array("gosaAccount");
+    $checks["gosaAccount"]["IS_MUST_HAVE"]    = TRUE;
+    $checks["gosaAccount"]["INFO"]            = _("Used to store account specific informations.");
+
+    /* GOsa lock entry, used to mark currently edited objects as 'in use' */
+    $checks["gosaLockEntry"]["REQUIRED_VERSION"] = "2.4";
+    $checks["gosaLockEntry"]["SCHEMA_FILES"]     = array("gosa+samba3.schema","gosa.schema");
+    $checks["gosaLockEntry"]["CLASSES_REQUIRED"] = array("gosaLockEntry");
+    $checks["gosaLockEntry"]["IS_MUST_HAVE"]     = TRUE;
+    $checks["gosaLockEntry"]["INFO"]             = _("Used to lock currently edited entries to avoid multiple changes at the same time.");
+
+    /* Some other checks */
+
+    
 
     /* asdfasdf */
+    foreach(array(
+          "gosaCacheEntry"        => array("version" => "2.4"),
+          "gosaDepartment"        => array("version" => "2.4"),
+          "goFaxAccount"          => array("version" => "1.0.4", "class" => "gofaxAccount","file" => "gofax.schema"),
+          "goFaxSBlock"           => array("version" => "1.0.4", "class" => "gofaxAccount","file" => "gofax.schema"),
+          "goFaxRBlock"           => array("version" => "1.0.4", "class" => "gofaxAccount","file" => "gofax.schema"),
+          "gosaUserTemplate"      => array("version" => "2.4", "class" => "posixAccount","file" => "nis.schema"),
+          "gosaMailAccount"       => array("version" => "2.4", "class" => "mailAccount","file" => "gosa+samba3.schema"),
+          "gosaProxyAccount"      => array("version" => "2.4", "class" => "proxyAccount","file" => "gosa+samba3.schema"),
+          "gosaApplication"       => array("version" => "2.4", "class" => "appgroup","file" => "gosa.schema"),
+          "gosaApplicationGroup"  => array("version" => "2.4", "class" => "appgroup","file" => "gosa.schema"),
+          "GOhard"                => array("version" => "2.5", "class" => "terminals","file" => "goto.schema"),
+          "gotoTerminal"          => array("version" => "2.5", "class" => "terminals","file" => "goto.schema"),
+          "goServer"              => array("version" => "2.4","class" => "server","file" => "goserver.schema"),
+          "goTerminalServer"      => array("version" => "2.4", "class" => "terminals","file" => "goto.schema"),
+          "goShareServer"         => array("version" => "2.4", "class" => "terminals","file" => "goto.schema"),
+          "goNtpServer"           => array("version" => "2.4", "class" => "terminals","file" => "goto.schema"),
+          "goSyslogServer"        => array("version" => "2.4", "class" => "terminals","file" => "goto.schema"),
+          "goLdapServer"          => array("version" => "2.4"),
+          "goCupsServer"          => array("version" => "2.4", "class" => array("posixAccount", "terminals"),),
+          "goImapServer"          => array("version" => "2.4", "class" => array("mailAccount", "mailgroup"),"file" => "gosa+samba3.schema"),
+          "goKrbServer"           => array("version" => "2.4"),
+          "goFaxServer"           => array("version" => "2.4", "class" => "gofaxAccount","file" => "gofax.schema"),
+          ) as $name => $values){
+
+            $checks[$name] = $def_check;
+            if(isset($values['version'])){
+              $checks[$name]["REQUIRED_VERSION"] = $values['version'];
+            }
+            if(isset($values['file'])){
+              $checks[$name]["SCHEMA_FILES"] = array($values['file']);
+            }
+            $checks[$name]["CLASSES_REQUIRED"] = array($name);
+     }
 
 
-    $checks= array(
-        "gosaObject"            => array("version" => "2.4"),
-        "gosaAccount"           => array("version" => "2.4"),
-        "gosaLockEntry"         => array("version" => "2.4"),
-        "gosaCacheEntry"        => array("version" => "2.4"),
-        "gosaDepartment"        => array("version" => "2.4"),
 
-        "goFaxAccount"          => array("version" => "1.0.4", "class" => "gofaxAccount","file" => "gofax.schema"),
-        "goFaxSBlock"           => array("version" => "1.0.4", "class" => "gofaxAccount","file" => "gofax.schema"),
-        "goFaxRBlock"           => array("version" => "1.0.4", "class" => "gofaxAccount","file" => "gofax.schema"),
 
-        "gosaUserTemplate"      => array("version" => "2.4", "class" => "posixAccount","file" => "nis.schema"),
-        "gosaMailAccount"       => array("version" => "2.4", "class" => "mailAccount","file" => "gosa+samba3.schema"),
-        "gosaProxyAccount"      => array("version" => "2.4", "class" => "proxyAccount","file" => "gosa+samba3.schema"),
-        "gosaApplication"       => array("version" => "2.4", "class" => "appgroup","file" => "gosa.schema"),
-        "gosaApplicationGroup"  => array("version" => "2.4", "class" => "appgroup","file" => "gosa.schema"),
 
-        "GOhard"                => array("version" => "2.5", "class" => "terminals","file" => "goto.schema"),
-        "gotoTerminal"          => array("version" => "2.5", "class" => "terminals","file" => "goto.schema"),
-        "goServer"              => array("version" => "2.4","class" => "server","file" => "goserver.schema"),
-        "goTerminalServer"      => array("version" => "2.4", "class" => "terminals","file" => "goto.schema"),
-        "goShareServer"           => array("version" => "2.4", "class" => "terminals","file" => "goto.schema"),
-        "goNtpServer"           => array("version" => "2.4", "class" => "terminals","file" => "goto.schema"),
-        "goSyslogServer"        => array("version" => "2.4", "class" => "terminals","file" => "goto.schema"),
-        "goLdapServer"          => array("version" => "2.4"),
-        "goCupsServer"          => array("version" => "2.4", "class" => array("posixAccount", "terminals"),),
-        "goImapServer"          => array("version" => "2.4", "class" => array("mailAccount", "mailgroup"),"file" => "gosa+samba3.schema"),
-        "goKrbServer"           => array("version" => "2.4"),
-        "goFaxServer"           => array("version" => "2.4", "class" => "gofaxAccount","file" => "gofax.schema"),
-        );
+    foreach($checks as $name => $value){
 
+      foreach($value['CLASSES_REQUIRED'] as $class){
+
+        if(!isset($objectclasses[$name])){
+          $checks[$name]['STATUS'] = FALSE;
+          if($value['IS_MUST_HAVE']){
+            $checks[$name]['MSG']    = sprintf(_("The required objectClass '%s' is not present in your schema setup"),$class);
+          }else{
+            $checks[$name]['MSG']    = sprintf(_("The optional objectClass '%s' is not present in your schema setup"),$class);
+          }
+        }elseif(!$this->check_schema_version($objectclasses[$name],$value['REQUIRED_VERSION'])){
+          $checks[$name]['STATUS'] = FALSE;
+
+          if($value['IS_MUST_HAVE']){
+            $checks[$name]['MSG'] = sprintf(_("Required objectclass '%s' does not have version %s"), $class, $value['REQUIRED_VERSION']);
+          }else{
+            $checks[$name]['MSG'] = sprintf(_("Optional objectclass '%s' does not have version %s"), $class, $value['REQUIRED_VERSION']);
+          }
+        }else{
+          $checks[$name]['STATUS'] = TRUE;
+          $checks[$name]['MSG'] = sprintf(_("Class(es) available"));
+        }
+      }
+    }
+    return($checks);
   }
-
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
