@@ -34,6 +34,7 @@ require_once("../setup/class_setupStep4.inc");
 require_once("../setup/class_setupStep5.inc");
 require_once("../setup/class_setupStep6.inc");
 require_once("../setup/class_setupStep7.inc");
+require_once("../setup/class_setupStep8.inc");
 
 
 /* Set header */

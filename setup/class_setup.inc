@@ -23,7 +23,7 @@ require_once("class_setupStep.inc");
 class setup 
 {
 
-  var $i_steps  = 7;  // Number of setup steps 
+  var $i_steps  = 8;  // Number of setup steps 
   var $i_current= 1;  // Current step
   var $i_last   = 1;  // Last setup step;
   var $o_steps  = array(); 
@@ -32,7 +32,22 @@ class setup
 
   function setup()
   {
-    for($i = 1 ; $i <= $this->i_steps; $i ++ ){
+    
+    $this->o_steps[1] = new setup_step_1();
+    $this->o_steps[2] = new setup_step_2();
+    $this->o_steps[3] = new setup_step_3();
+    $this->o_steps[4] = new setup_step_4();
+    $this->o_steps[5] = new setup_step_5();
+    $this->o_steps[6] = new setup_step_6();
+    $this->o_steps[7] = new setup_step_7();
+    $this->o_steps[8] = new setup_step_8();
+
+    foreach($this->o_steps as $key => $step){
+      $this->o_steps[$key]->parent = $this;
+    }
+
+/*
+    for($i = 1 ; $i <= $this->i_steps; $ii ++ ){
       $class= "setup_step_".$i;
     
       if(class_exists($class)){
@@ -43,6 +58,7 @@ class setup
       }
       $this->o_steps[$i]->parent = $this;
     }
+*/
   }
 
   function execute()
@@ -91,6 +107,9 @@ class setup
         if($this->o_steps[$i]->is_completed()){
           if(isset($this->o_steps[($i+1)])){
             $this->o_steps[($i+1)]->set_enabled();
+          }else{
+            $this->o_steps[($i+1)]->set_enabled(false);
+          
           }
         }
       }

@@ -46,6 +46,12 @@ class setup_step_7 extends setup_step
       }
     }
 
+    if($failed_checks == 0){
+      $this->is_completed = TRUE;
+    }else{
+      $this->is_completed = FALSE;
+    }
+
     $smarty = get_smarty();
     $smarty->assign("display_type",$this->display_type);
     $smarty->assign("schema_readable",$this->schema_readable);
@@ -93,15 +99,6 @@ class setup_step_7 extends setup_step
       return (array(array("msg" => _("Can't get schema information from server. No schema check possible!"), "status" => FALSE)));
     }
 
-
-    $checks["gosaObject"]["VERSION"]  = "2.4";
-    $checks["gosaObject"]["FILE"]     = "gosa+samba3.schema/gosa.schema";
-    $checks["gosaObject"]["CLASS"]    = array("gosaObject");
-    $checks["gosaObject"]["STATUS"]   = FALSE;
-    $checks["gosaObject"]["MUST"]     = FALSE;
-    $checks["gosaObject"]["MSG"]      = ""; // The error message to display
-    $checks["gosaObject"]["INFO"]     = _("GOsa object is used to store acls.");
-
     /* This is the default block used for each entry. 
      *  to avoid unset indexes. 
      */
@@ -116,7 +113,7 @@ class setup_step_7 extends setup_step
 
     /* The gosa base schema */
     $checks['gosaObject'] = $def_check;
-    $checks['gosaObject']['REQUIRED_VERSION'] = "2.4";
+    $checks['gosaObject']['REQUIRED_VERSION'] = "22.4";
     $checks['gosaObject']['SCHEMA_FILES']     = array("gosa+samba3.schema","gosa.schema");
     $checks['gosaObject']['CLASSES_REQUIRED'] = array("gosaObject");
     $checks['gosaObject']['IS_MUST_HAVE']     = TRUE;

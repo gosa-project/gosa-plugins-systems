@@ -36,6 +36,10 @@ class setup_step
   {
   }
 
+  function execute()
+  { 
+  }
+
   function save_object()
   {
     /* Do not call plugin::save_object. This causes acl trouble  */
