@@ -76,7 +76,7 @@
             {t}Windows workstation ou{/t}
         </div>
         <div class='step4_value'>
-            {if $generic_settings.minid_active == FALSE}
+            {if $generic_settings.wws_ou_active == FALSE}
                 <input type='checkbox' value='1' name='wws_ou_active'
                     onClick='changeState("wws_ou");'>
                 <input style='width:90%' id='wws_ou' name='wws_ou' type='text' value='{$generic_settings.wws_ou}' disabled>

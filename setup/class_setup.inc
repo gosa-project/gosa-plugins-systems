@@ -101,6 +101,10 @@ class setup
   
     $step = -1;
 
+    if(isset($_POST['setup_goto_step'])){
+      $step= $_POST['setup_goto_step'];
+    }
+
     if(isset($_GET['step'])){
       $step = $_GET['step'];
     }elseif(isset($_POST['next'])){
@@ -109,10 +113,6 @@ class setup
       $step = $this->i_current - 1;
     }
   
-    if(isset($_POST['setup_goto_step'])){
-      $step= $_POST['setup_goto_step'];
-    }
-
     $once = true;
     foreach($_POST as $name => $value){
       if(preg_match("/^step_[0-9]*$/",$name) && $once ){

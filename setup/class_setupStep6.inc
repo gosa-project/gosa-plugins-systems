@@ -90,6 +90,24 @@ class setup_step_6 extends setup_step
         }
       }
 
+      if(isset($_POST['minid_active'])){
+        $this->generic_settings['minid_active'] = TRUE;
+        if(isset($_POST['minid'])){
+          $this->generic_settings['minid'] = $_POST['minid'];
+        }
+      }else{
+        $this->generic_settings['minid_active'] = FALSE;
+      }
+
+      if(isset($_POST['wws_ou_active'])){
+        $this->generic_settings['wws_ou_active'] = TRUE;
+        if(isset($_POST['wws_ou'])){
+          $this->generic_settings['wws_ou'] = $_POST['wws_ou'];
+        }
+      }else{
+        $this->generic_settings['wws_ou_active'] = FALSE;
+      }
+
       /* Generic settings */
       if(isset($_POST['idgen_active'])){
         $this->generic_settings['idgen_active'] = TRUE;
