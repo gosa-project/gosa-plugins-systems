@@ -22,9 +22,11 @@
 
 class setup_step_7 extends setup_step
 {
-  var $checks = array();
+  var $checked = array();
+  var $not_checked = array();
   var $schema_readable  = FALSE;
   var $attributes       = array();
+  var $display_type     = "faild";
 
   function setup_step_7()
   {
@@ -36,11 +38,20 @@ class setup_step_7 extends setup_step
   
   function execute()
   {
-    $checks = $this->check_schema();
+    $this->check_schema();
+    $failed_checks = 0 ; 
+    foreach($this->checked as $val) {
+      if(!$val['STATUS']){
+        $failed_checks ++;
+      }
+    }
 
     $smarty = get_smarty();
+    $smarty->assign("display_type",$this->display_type);
     $smarty->assign("schema_readable",$this->schema_readable);
-    $smarty->assign("checks",$checks);
+    $smarty->assign("checks",$this->checked);
+    $smarty->assign("not_checked",$this->not_checked);
+    $smarty->assign("failed_checks",$failed_checks);
     return($smarty -> fetch (get_template_path("../setup/setup_step7.tpl")));
   }
 
@@ -54,6 +65,11 @@ class setup_step_7 extends setup_step
   function save_object()
   {
     if(isset($_POST['step7_posted'])){
+
+      /* Get diplay method */
+      if(isset($_POST['display_type']) && in_array($_POST['display_type'],array("failed","checked","all"))){
+        $this->display_type = $_POST['display_type'];
+      }
 
       /* Get attributes */
       foreach($this->attributes as $attr){
@@ -95,12 +111,12 @@ class setup_step_7 extends setup_step
                        "STATUS"           => FALSE,
                        "IS_MUST_HAVE"     => FALSE,
                        "MSG"              => "",
-                       "INFO"             => _("There is currently no information specified for this schema extension."));
+                       "INFO"             => "");#_("There is currently no information specified for this schema extension."));
 
 
     /* The gosa base schema */
     $checks['gosaObject'] = $def_check;
-    $checks['gosaObject']['REQUIRED_VERSION'] = "2.4";
+    $checks['gosaObject']['REQUIRED_VERSION'] = "22.4";
     $checks['gosaObject']['SCHEMA_FILES']     = array("gosa+samba3.schema","gosa.schema");
     $checks['gosaObject']['CLASSES_REQUIRED'] = array("gosaObject");
     $checks['gosaObject']['IS_MUST_HAVE']     = TRUE;
@@ -120,27 +136,23 @@ class setup_step_7 extends setup_step
     $checks["gosaLockEntry"]["INFO"]             = _("Used to lock currently edited entries to avoid multiple changes at the same time.");
 
     /* Some other checks */
-
-    
-
-    /* asdfasdf */
     foreach(array(
           "gosaCacheEntry"        => array("version" => "2.4"),
           "gosaDepartment"        => array("version" => "2.4"),
           "goFaxAccount"          => array("version" => "1.0.4", "class" => "gofaxAccount","file" => "gofax.schema"),
           "goFaxSBlock"           => array("version" => "1.0.4", "class" => "gofaxAccount","file" => "gofax.schema"),
           "goFaxRBlock"           => array("version" => "1.0.4", "class" => "gofaxAccount","file" => "gofax.schema"),
-          "gosaUserTemplate"      => array("version" => "2.4", "class" => "posixAccount","file" => "nis.schema"),
+          "gosaUserTemplate"      => array("version" => "22.4", "class" => "posixAccount","file" => "nis.schema"),
           "gosaMailAccount"       => array("version" => "2.4", "class" => "mailAccount","file" => "gosa+samba3.schema"),
           "gosaProxyAccount"      => array("version" => "2.4", "class" => "proxyAccount","file" => "gosa+samba3.schema"),
           "gosaApplication"       => array("version" => "2.4", "class" => "appgroup","file" => "gosa.schema"),
-          "gosaApplicationGroup"  => array("version" => "2.4", "class" => "appgroup","file" => "gosa.schema"),
+          "gosaApplicationGroup"  => array("version" => "22.4", "class" => "appgroup","file" => "gosa.schema"),
           "GOhard"                => array("version" => "2.5", "class" => "terminals","file" => "goto.schema"),
           "gotoTerminal"          => array("version" => "2.5", "class" => "terminals","file" => "goto.schema"),
           "goServer"              => array("version" => "2.4","class" => "server","file" => "goserver.schema"),
           "goTerminalServer"      => array("version" => "2.4", "class" => "terminals","file" => "goto.schema"),
           "goShareServer"         => array("version" => "2.4", "class" => "terminals","file" => "goto.schema"),
-          "goNtpServer"           => array("version" => "2.4", "class" => "terminals","file" => "goto.schema"),
+          "goNtpServer"           => array("version" => "22.4", "class" => "terminals","file" => "goto.schema"),
           "goSyslogServer"        => array("version" => "2.4", "class" => "terminals","file" => "goto.schema"),
           "goLdapServer"          => array("version" => "2.4"),
           "goCupsServer"          => array("version" => "2.4", "class" => array("posixAccount", "terminals"),),
@@ -149,22 +161,17 @@ class setup_step_7 extends setup_step
           "goFaxServer"           => array("version" => "2.4", "class" => "gofaxAccount","file" => "gofax.schema"),
           ) as $name => $values){
 
-            $checks[$name] = $def_check;
-            if(isset($values['version'])){
-              $checks[$name]["REQUIRED_VERSION"] = $values['version'];
-            }
-            if(isset($values['file'])){
-              $checks[$name]["SCHEMA_FILES"] = array($values['file']);
-            }
-            $checks[$name]["CLASSES_REQUIRED"] = array($name);
-     }
-
-
-
-
+      $checks[$name] = $def_check;
+      if(isset($values['version'])){
+        $checks[$name]["REQUIRED_VERSION"] = $values['version'];
+      }
+      if(isset($values['file'])){
+        $checks[$name]["SCHEMA_FILES"] = array($values['file']);
+      }
+      $checks[$name]["CLASSES_REQUIRED"] = array($name);
+    }
 
     foreach($checks as $name => $value){
-
       foreach($value['CLASSES_REQUIRED'] as $class){
 
         if(!isset($objectclasses[$name])){
@@ -178,9 +185,9 @@ class setup_step_7 extends setup_step
           $checks[$name]['STATUS'] = FALSE;
 
           if($value['IS_MUST_HAVE']){
-            $checks[$name]['MSG'] = sprintf(_("Required objectclass '%s' does not have version %s"), $class, $value['REQUIRED_VERSION']);
+            $checks[$name]['MSG'] = sprintf(_("The required objectclass '%s' does not have version %s"), $class, $value['REQUIRED_VERSION']);
           }else{
-            $checks[$name]['MSG'] = sprintf(_("Optional objectclass '%s' does not have version %s"), $class, $value['REQUIRED_VERSION']);
+            $checks[$name]['MSG'] = sprintf(_("The optional objectclass '%s' does not have version %s"), $class, $value['REQUIRED_VERSION']);
           }
         }else{
           $checks[$name]['STATUS'] = TRUE;
@@ -188,7 +195,20 @@ class setup_step_7 extends setup_step
         }
       }
     }
-    return($checks);
+  
+    $this->checked = $checks;
+    $tmp = $objectclasses;
+    $not_checked = array();
+    foreach($tmp as $name => $val){
+      $desc = "no description.";
+      if(preg_match("/DESC/",$val)){ 
+        $desc = preg_replace("/^.*DESC[ ]*'/i","",$val) ;
+        $desc = preg_replace("/'.*$/i","",$desc) ;
+      }  
+      $not_checked[$name] = $desc;
+    }
+
+    $this->not_checked = $not_checked;  
   }
 }
 
