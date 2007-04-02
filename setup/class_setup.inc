@@ -98,6 +98,9 @@ class setup
         }
       }
     }
+  
+    $step = -1;
+
     if(isset($_GET['step'])){
       $step = $_GET['step'];
     }elseif(isset($_POST['next'])){
@@ -151,7 +154,6 @@ class setup
       $b_active   = $step -> is_active();
       $b_enabled  = $step -> is_enabled();
 
-      $_SESSION['js'] = 0;
       if($_SESSION['js']){
 
         $str .="<div >";
