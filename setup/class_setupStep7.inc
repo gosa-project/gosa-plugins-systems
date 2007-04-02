@@ -26,7 +26,7 @@ class setup_step_7 extends setup_step
   var $not_checked = array();
   var $schema_readable  = FALSE;
   var $attributes       = array();
-  var $display_type     = "faild";
+  var $display_type     = "failed";
 
   function setup_step_7()
   {
@@ -116,7 +116,7 @@ class setup_step_7 extends setup_step
 
     /* The gosa base schema */
     $checks['gosaObject'] = $def_check;
-    $checks['gosaObject']['REQUIRED_VERSION'] = "22.4";
+    $checks['gosaObject']['REQUIRED_VERSION'] = "2.4";
     $checks['gosaObject']['SCHEMA_FILES']     = array("gosa+samba3.schema","gosa.schema");
     $checks['gosaObject']['CLASSES_REQUIRED'] = array("gosaObject");
     $checks['gosaObject']['IS_MUST_HAVE']     = TRUE;
@@ -142,17 +142,17 @@ class setup_step_7 extends setup_step
           "goFaxAccount"          => array("version" => "1.0.4", "class" => "gofaxAccount","file" => "gofax.schema"),
           "goFaxSBlock"           => array("version" => "1.0.4", "class" => "gofaxAccount","file" => "gofax.schema"),
           "goFaxRBlock"           => array("version" => "1.0.4", "class" => "gofaxAccount","file" => "gofax.schema"),
-          "gosaUserTemplate"      => array("version" => "22.4", "class" => "posixAccount","file" => "nis.schema"),
+          "gosaUserTemplate"      => array("version" => "2.4", "class" => "posixAccount","file" => "nis.schema"),
           "gosaMailAccount"       => array("version" => "2.4", "class" => "mailAccount","file" => "gosa+samba3.schema"),
           "gosaProxyAccount"      => array("version" => "2.4", "class" => "proxyAccount","file" => "gosa+samba3.schema"),
           "gosaApplication"       => array("version" => "2.4", "class" => "appgroup","file" => "gosa.schema"),
-          "gosaApplicationGroup"  => array("version" => "22.4", "class" => "appgroup","file" => "gosa.schema"),
+          "gosaApplicationGroup"  => array("version" => "2.4", "class" => "appgroup","file" => "gosa.schema"),
           "GOhard"                => array("version" => "2.5", "class" => "terminals","file" => "goto.schema"),
           "gotoTerminal"          => array("version" => "2.5", "class" => "terminals","file" => "goto.schema"),
           "goServer"              => array("version" => "2.4","class" => "server","file" => "goserver.schema"),
           "goTerminalServer"      => array("version" => "2.4", "class" => "terminals","file" => "goto.schema"),
           "goShareServer"         => array("version" => "2.4", "class" => "terminals","file" => "goto.schema"),
-          "goNtpServer"           => array("version" => "22.4", "class" => "terminals","file" => "goto.schema"),
+          "goNtpServer"           => array("version" => "2.4", "class" => "terminals","file" => "goto.schema"),
           "goSyslogServer"        => array("version" => "2.4", "class" => "terminals","file" => "goto.schema"),
           "goLdapServer"          => array("version" => "2.4"),
           "goCupsServer"          => array("version" => "2.4", "class" => array("posixAccount", "terminals"),),
