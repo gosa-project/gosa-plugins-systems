@@ -44,7 +44,7 @@ class setup_step_6 extends setup_step
                                   "samba_sid_active" => FALSE,
                                   "samba_rid"        => 1000,
                                   "samba_rid_active" => FALSE); 
-  var $attributes = array("strict","governmentmode","sambaidmapping","minid","account_expiration");
+  var $attributes = array("strict","governmentmode","sambaidmapping","account_expiration");
 
   function setup_step_6()
   {

@@ -37,8 +37,11 @@ class setup_step_8 extends setup_step
 
   function get_conf_data()
   {
-    return("currently not implemented.");
-  }
+    $smarty = get_smarty();
+    $smarty->assign("cv",$this->parent->captured_values);
+    $str =  $smarty->fetch(CONFIG_TEMPLATE_DIR.$this->gosa_conf_name);
+    return($str);
+  }  
 
 
   function execute()
@@ -61,13 +64,21 @@ class setup_step_8 extends setup_step
 
     /* Downlaod config */
     if(isset($_POST['getconf'])){
+
       header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
       header("Last-Modified: ".gmdate("D, d M Y H:i:s")." GMT");
       header("Cache-Control: no-cache");
       header("Pragma: no-cache");
       header("Cache-Control: post-check=0, pre-check=0");
       header("Content-type: text/plain");
-      header('Content-Disposition: attachment; filename="gosa.conf"');
+     
+      if (preg_match('/MSIE 5.5/', $_SERVER['HTTP_USER_AGENT']) ||
+          preg_match('/MSIE 6.0/', $_SERVER['HTTP_USER_AGENT'])){
+        header('Content-Disposition: filename="gosa.conf"');
+      } else {
+        header('Content-Disposition: attachment; filename="gosa.conf"');
+      }
+
       echo $this->get_conf_data();
       exit();
     }
@@ -95,7 +106,7 @@ class setup_step_8 extends setup_step
         }else{
 
           $data = $this->get_conf_data();
-          if(!fwrite($fp,strlen($data))){
+          if(!fwrite($fp,$data)){
             $err_msg = sprintf(_("Can not write file '%s'. Please check folder permission and try again. Or use the manual method if this can not be fixed anyway."),CONFIG_DIR.$this->gosa_conf_name);
             $abort  =TRUE;
           }else{
