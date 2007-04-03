@@ -44,6 +44,9 @@ class setup_step_8 extends setup_step
   function execute()
   {
 
+    $info= posix_getgrgid(posix_getgid());
+    $webgroup = $info['name'];
+      
     
     /* Check if there is currently an active gosa.conf 
      */
@@ -95,6 +98,11 @@ class setup_step_8 extends setup_step
           if(!fwrite($fp,strlen($data))){
             $err_msg = sprintf(_("Can not write file '%s'. Please check folder permission and try again. Or use the manual method if this can not be fixed anyway."),CONFIG_DIR.$this->gosa_conf_name);
             $abort  =TRUE;
+          }else{
+            
+            @chgrp(CONFIG_DIR.$this->gosa_conf_name,$webgroup);
+            @chown(CONFIG_DIR.$this->gosa_conf_name,"root");
+            @chmod(CONFIG_DIR.$this->gosa_conf_name,0640);    
           }
         }
       }
@@ -102,15 +110,14 @@ class setup_step_8 extends setup_step
 
 
     if($exists && $this->is_world_readable(CONFIG_DIR.$this->gosa_conf_name)){
-      $err_msg = _("Your configuration file is currently world readable. This is a big security issue. Please updated the file permissions as shown in the manual configuration part below.");
+      $err_msg = _("Your configuration file is currently world readable. This is a big security risk. Please updated the file permissions as shown in the manual configuration part below.");
     }
 
-    $info= posix_getgrgid(posix_getgid());
 
     $smarty = get_smarty();
     $smarty->assign("save_requested", isset($_POST['saveconf']));
     $smarty->assign("err_msg",$err_msg);
-    $smarty->assign("webgroup", $info['name']);
+    $smarty->assign("webgroup", $webgroup);
     $smarty->assign("gosa_conf_name" , $this->gosa_conf_name);
     $smarty->assign("create_backup" , $this->create_backup);
     $smarty->assign("CONFIG_DIR",CONFIG_DIR);
@@ -138,6 +145,8 @@ class setup_step_8 extends setup_step
    */
   function create_backup()
   {
+    $info= posix_getgrgid(posix_getgid());
+    $webgroup = $info['name'];
     if(is_writeable(CONFIG_DIR) && is_writeable(CONFIG_DIR.$this->gosa_conf_name)){
       $src = CONFIG_DIR.$this->gosa_conf_name;
       $dst = CONFIG_DIR.$this->gosa_conf_name."_".date("Ymd");
@@ -147,9 +156,11 @@ class setup_step_8 extends setup_step
         $dst = $dst_backup."-".$i;
         $i ++;
       }
-#      if(rename($src,$dst)){
       if(copy($src,$dst)){
         $this->last_backup_name = $dst;
+        @chgrp($dst,$webgroup);
+        @chown($dst,"root");
+        @chmod($dst,0640);    
         return(TRUE);
       }else{
         return(FALSE);
