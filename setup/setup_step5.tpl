@@ -125,7 +125,7 @@
 				{t}Different characters from old password{/t}
 				<input id='pwdiffer' name='pwdiffer' type='text' value='{$pwd_rules.pwdiffer}' size=3 disabled>
 			{else}
-				<input type='checkbox' value='1' name='pwminlen_active' checked>
+				<input type='checkbox' value='1' name='pwdiffer_active' checked>
 				{t}Different characters from old password{/t}
 				<input id='pwdiffer' name='pwdiffer' type='text' value='{$pwd_rules.pwdiffer}' size=3 >
 			{/if}

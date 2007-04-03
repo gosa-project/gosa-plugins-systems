@@ -158,6 +158,8 @@ class setup_step_5 extends setup_step
       }else{
         $this->pwd_rules['pwdiffer_active'] = FALSE;
       }
+
+      /* Get password minimum length posts */
       if(isset($_POST['pwminlen_active'])){
         $this->pwd_rules['pwminlen_active'] = TRUE;
         if(isset($_POST['pwminlen'])){
@@ -175,6 +177,16 @@ class setup_step_5 extends setup_step
         }
       }else{
         $this->mail_settings['vacationdir_active'] = FALSE;
+      }
+
+      /* Mail settings */
+      if(isset($_POST['externalpwdhook_active'])){
+        $this->pwd_rules['externalpwdhook_active'] = TRUE;
+        if(isset($_POST['externalpwdhook'])){
+          $this->pwd_rules['externalpwdhook'] = $_POST['externalpwdhook'];
+        }
+      }else{
+        $this->pwd_rules['externalpwdhook_active'] = FALSE;
       }
     }
 
