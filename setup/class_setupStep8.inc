@@ -22,20 +22,29 @@
 
 class setup_step_8 extends setup_step
 {
-  var $create_backup = TRUE;
-  var $gosa_conf_name = "/gosa.conf";
+  var $create_backup    = TRUE;
+  var $gosa_conf_name   = "/gosa.conf";
+  var $cfg_file_written = FALSE;
+  var $last_backup_name = "";
 
   function setup_step_8()
   {
     $this->s_title      = _("Configuration file");
-    $this->s_title_long = _("In this step the configuration file will be created.");
-    $this->s_info       = _("Saving configuration file");
+    $this->s_info       = _("In this step the configuration file will be created.");
+    $this->s_title_long = _("Saving configuration file");
+  }
+
+
+  function get_conf_data()
+  {
+    return("currently not implemented.");
   }
 
 
   function execute()
   {
 
+    
     /* Check if there is currently an active gosa.conf 
      */
     $exists = file_exists(CONFIG_DIR.$this->gosa_conf_name); 
@@ -47,22 +56,81 @@ class setup_step_8 extends setup_step
       $writeable = is_writeable(CONFIG_DIR);
     }
 
-    $smarty = get_smarty();
-  
-    $info= posix_getgrgid(posix_getgid());
-    $smarty->assign("webgroup", $info['name']);
+    /* Downlaod config */
+    if(isset($_POST['getconf'])){
+      header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+      header("Last-Modified: ".gmdate("D, d M Y H:i:s")." GMT");
+      header("Cache-Control: no-cache");
+      header("Pragma: no-cache");
+      header("Cache-Control: post-check=0, pre-check=0");
+      header("Content-type: text/plain");
+      header('Content-Disposition: attachment; filename="gosa.conf"');
+      echo $this->get_conf_data();
+      exit();
+    }
+   
+    
+    /* Try to save configuration */
+    $abort    = FALSE;
+    $err_msg  = "";
+    if(isset($_POST['saveconf'])){
+      if($exists && $this->create_backup){
+        if(!$this->create_backup()){
+          $abort = TRUE;
+          $err_msg = _("Could not create requested configuration file backup. Aborted writing config file. Please check folder permission and try again. Or use the manual method if this can not be fixed anyway.");
+        }
+      }
+    
+      if(!$abort){
+        
+        /* Try to create file handle */
+        $fp = @fopen(CONFIG_DIR.$this->gosa_conf_name, "w");
+    
+        if(!$fp){
+          $err_msg = sprintf(_("Can not create handle on file '%s', the configuration could not be written. Please check folder permission and try again. Or use the manual method if this can not be fixed anyway."),CONFIG_DIR.$this->gosa_conf_name);
+          $abort  =TRUE;
+        }else{
 
+          $data = $this->get_conf_data();
+          if(!fwrite($fp,strlen($data))){
+            $err_msg = sprintf(_("Can not write file '%s'. Please check folder permission and try again. Or use the manual method if this can not be fixed anyway."),CONFIG_DIR.$this->gosa_conf_name);
+            $abort  =TRUE;
+          }
+        }
+      }
+    } 
+
+
+    if($exists && $this->is_world_readable(CONFIG_DIR.$this->gosa_conf_name)){
+      $err_msg = _("Your configuration file is currently world readable. This is a big security issue. Please updated the file permissions as shown in the manual configuration part below.");
+    }
+
+    $info= posix_getgrgid(posix_getgid());
+
+    $smarty = get_smarty();
+    $smarty->assign("save_requested", isset($_POST['saveconf']));
+    $smarty->assign("err_msg",$err_msg);
+    $smarty->assign("webgroup", $info['name']);
     $smarty->assign("gosa_conf_name" , $this->gosa_conf_name);
     $smarty->assign("create_backup" , $this->create_backup);
     $smarty->assign("CONFIG_DIR",CONFIG_DIR);
-  
-    $smarty->assign("msg_permissions",sprintf(_("The following file(s), folders(s) must be writeable for the web-user '%s'."),$info['name']));
- 
     $smarty->assign("exists",$exists);
+    $smarty->assign("last_backup_name",$this->last_backup_name);
     $smarty->assign("writeable",$writeable);
- 
     $smarty->assign("cv",$this->parent->captured_values);
+    $smarty->assign("msg_permissions",
+      sprintf(_("The following file(s), folders(s) must be writeable for the web-user '%s'."),$info['name']));
     return($smarty -> fetch (get_template_path("../setup/setup_step8.tpl")));
+  }
+
+
+  /* check if given file is world readable */
+  function is_world_readable($file)
+  {
+    clearstatcache();
+    $p = fileperms($file);
+    $w_r = (decbin($p & 4) == TRUE);
+    return($w_r);
   }
 
 
@@ -79,7 +147,13 @@ class setup_step_8 extends setup_step
         $dst = $dst_backup."-".$i;
         $i ++;
       }
-      return(rename($src,$dst));
+#      if(rename($src,$dst)){
+      if(copy($src,$dst)){
+        $this->last_backup_name = $dst;
+        return(TRUE);
+      }else{
+        return(FALSE);
+      }
     }else{
       return(FALSE);
     }
@@ -98,10 +172,12 @@ class setup_step_8 extends setup_step
       }
 
       /* Backup toggle */
-      if(isset($_POST['create_backup'])){
-        $this->create_backup = TRUE;
-      }else{
-        $this->create_backup = FALSE;
+      if(isset($_POST['create_backup_visible'])){
+        if(isset($_POST['create_backup'])){
+          $this->create_backup = TRUE;
+        }else{
+          $this->create_backup = FALSE;
+        }
       }
     }
   }
