@@ -72,6 +72,28 @@
         </div>
     </div>
 
+
+  	<div class='step4_container'>
+    	<div class='step4_name'>
+                {t}Base hook{/t}
+        </div>
+        <div class='step4_value'>
+            {if $base_hook_active == FALSE}
+                <input type='checkbox' value='1' name='base_hook_active'
+                    onClick='changeState("base_hook");'>
+                <input style='width:90%' id='base_hook' name='base_hook' type='text' value='{$base_hook}'      disabled>
+            {else}
+                <input type='checkbox' value='1' name='base_hook_active' checked>
+                <input style='width:90%' id='base_hook' name='base_hook' type='text' value='{$base_hook}'  >
+            {/if}
+        </div>
+        <div class='step4_status'>
+            {t}Infos in FAQ{/t}&nbsp;
+            <img class='center' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
+        </div>
+    </div>
+
+
     <div class='step4_container'>
         <div class='step4_name'>
             {t}Display PHP errors{/t}

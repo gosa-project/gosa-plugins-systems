@@ -30,6 +30,22 @@
 
     <div class='step4_container'>
         <div class='step4_name'>
+            {t}Disable primary group filter{/t}
+        </div>
+        <div class='step4_value'>
+	
+            <select name="noprimarygroup" size="1" title="">
+            	{html_options options=$bool selected=$optional.noprimarygroup}
+            </select>
+        </div>
+        <div class='step4_status'>
+            {t}Infos in FAQ{/t}&nbsp;
+            <img class='center' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
+        </div>
+    </div>
+
+    <div class='step4_container'>
+        <div class='step4_name'>
             {t}Force globals{/t}
         </div>
         <div class='step4_value'>
@@ -88,6 +104,72 @@
             {else}
                 <input type='checkbox' value='1' name='ppd_path_active' checked>
                 <input style='width:90%' id='ppd_path' name='ppd_path' type='text' value='{$optional.ppd_path}'  >
+            {/if}
+        </div>
+        <div class='step4_status'>
+            {t}Infos in FAQ{/t}&nbsp;
+            <img class='center' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
+        </div>
+    </div>
+
+    <div class='step4_container'>
+        <div class='step4_name'>
+            {t}Network resolv hook{/t}
+        </div>
+        <div class='step4_value'>
+            {if $optional.auto_network_hook_active == FALSE}
+                <input type='checkbox' value='1' name='auto_network_hook_active'
+                    onClick='changeState("auto_network_hook");'>
+                <input style='width:90%' id='auto_network_hook' name='auto_network_hook' 
+					type='text' value='{$optional.auto_network_hook}' disabled>
+            {else}
+                <input type='checkbox' value='1' name='auto_network_hook_active' checked>
+                <input style='width:90%' id='auto_network_hook' name='auto_network_hook' type='text' 
+					value='{$optional.auto_network_hook}'  >
+            {/if}
+        </div>
+        <div class='step4_status'>
+            {t}Infos in FAQ{/t}&nbsp;
+            <img class='center' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
+        </div>
+    </div>
+
+    <div class='step4_container'>
+        <div class='step4_name'>
+            {t}Mail queue script path{/t}
+        </div>
+        <div class='step4_value'>
+            {if $optional.mailQueueScriptPath_active == FALSE}
+                <input type='checkbox' value='1' name='mailQueueScriptPath_active'
+                    onClick='changeState("mailQueueScriptPath");'>
+                <input style='width:90%' id='mailQueueScriptPath' name='mailQueueScriptPath' 
+					type='text' value='{$optional.mailQueueScriptPath}' disabled>
+            {else}
+                <input type='checkbox' value='1' name='mailQueueScriptPath_active' checked>
+                <input style='width:90%' id='mailQueueScriptPath' name='mailQueueScriptPath' type='text' 
+					value='{$optional.mailQueueScriptPath}'  >
+            {/if}
+        </div>
+        <div class='step4_status'>
+            {t}Infos in FAQ{/t}&nbsp;
+            <img class='center' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
+        </div>
+    </div>
+
+    <div class='step4_container'>
+        <div class='step4_name'>
+            {t}Notification path{/t}
+        </div>
+        <div class='step4_value'>
+            {if $optional.notifydir_active == FALSE}
+                <input type='checkbox' value='1' name='notifydir_active'
+                    onClick='changeState("notifydir");'>
+                <input style='width:90%' id='notifydir' name='notifydir' 
+					type='text' value='{$optional.notifydir}' disabled>
+            {else}
+                <input type='checkbox' value='1' name='notifydir_active' checked>
+                <input style='width:90%' id='notifydir' name='notifydir' 
+					type='text' value='{$optional.notifydir}'  >
             {/if}
         </div>
         <div class='step4_status'>

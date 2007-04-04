@@ -36,6 +36,17 @@ class setup_step_6a extends setup_step
               "session_lifetime" => 7200,
               "max_ldap_query_time" => "5.0",
               "max_ldap_query_time_active" => FALSE,
+
+              "mailQueueScriptPath" => "/usr/bin/sudo /usr/local/sbin/mailqueue %action %id %server",
+              "mailQueueScriptPath_active" => FALSE,
+
+              "auto_network_hook" => "/etc/gosa/net-resolv.sh",
+              "auto_network_hook_active" => FALSE,
+
+              "notifydir" => "",
+              "notifydir_active" => FALSE,
+
+              "noprimarygroup"  => FALSE,
               "smbhash" => 'SMBHASH');
 
 
@@ -126,6 +137,32 @@ class setup_step_6a extends setup_step
         $this->optional['max_ldap_query_time_active'] = FALSE;
       }
 
+      if(isset($_POST['mailQueueScriptPath_active'])){
+        $this->optional['mailQueueScriptPath_active'] = TRUE;
+        if(isset($_POST['mailQueueScriptPath'])){
+          $this->optional['mailQueueScriptPath'] = $_POST['mailQueueScriptPath'];
+        }
+      }else{
+        $this->optional['mailQueueScriptPath_active'] = FALSE;
+      }
+
+      if(isset($_POST['auto_network_hook_active'])){
+        $this->optional['auto_network_hook_active'] = TRUE;
+        if(isset($_POST['auto_network_hook'])){
+          $this->optional['auto_network_hook'] = $_POST['auto_network_hook'];
+        }
+      }else{
+        $this->optional['auto_network_hook_active'] = FALSE;
+      }
+
+      if(isset($_POST['notifydir_active'])){
+        $this->optional['notifydir_active'] = TRUE;
+        if(isset($_POST['notifydir'])){
+          $this->optional['notifydir'] = $_POST['notifydir'];
+        }
+      }else{
+        $this->optional['notifydir_active'] = FALSE;
+      }
     }
 
     $tmp = $this->check();

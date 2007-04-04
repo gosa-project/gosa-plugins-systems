@@ -27,6 +27,10 @@ class setup_step_5 extends setup_step
   var $groupou    =  "ou=groups";
   var $peopledn   = "cn";
   var $uidbase    = 1000;
+
+  var $base_hook         = "/usr/bin/sudo myscript"; 
+  var $base_hook_active  = FALSE; 
+
   var $encryption = "crypt";
   var $mail       = "none";
   var $theme      = "default"; 
@@ -47,7 +51,8 @@ class setup_step_5 extends setup_step
   var $mail_methods   = array();
 
 
-  var $attributes = array("peopleou","groupou","peopledn","uidbase","encryption","mail","theme","errorlvl","cyrusunixstyle");
+  var $attributes = array("peopleou","groupou","peopledn","uidbase","encryption","mail","theme","errorlvl","cyrusunixstyle",
+                          "base_hook","base_hook_active");
 
   function setup_step_5()
   {
@@ -202,6 +207,16 @@ class setup_step_5 extends setup_step
         }
       }else{
         $this->pwd_rules['externalpwdhook_active'] = FALSE;
+      }
+
+      /* Mail settings */
+      if(isset($_POST['base_hook_active'])){
+        $this->pwd_rules['base_hook_active'] = TRUE;
+        if(isset($_POST['base_hook'])){
+          $this->pwd_rules['base_hook'] = $_POST['base_hook'];
+        }
+      }else{
+        $this->pwd_rules['base_hook_active'] = FALSE;
       }
     }
 
