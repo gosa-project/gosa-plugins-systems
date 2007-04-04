@@ -52,7 +52,7 @@
 					</td>
 					<td>
 	{render acl=$uidNumberACL}
-						<input id="uidNumber" name="uidNumber" size=5 maxlength=5 {$forceMode} value="{$uidNumber}">
+						<input id="uidNumber" name="uidNumber" size=9 maxlength=9 {$forceMode} value="{$uidNumber}">
 	{/render}
 					</td>
 				</tr>
@@ -63,7 +63,7 @@
 					</td>
      <td>
 	{render acl=$gidNumberACL}
-						<input id="gidNumber" name="gidNumber" size=5 maxlength=5 {$forceMode} value="{$gidNumber}">
+						<input id="gidNumber" name="gidNumber" size=9 maxlength=9 {$forceMode} value="{$gidNumber}">
 	{/render}
 					</td>
 				</tr>

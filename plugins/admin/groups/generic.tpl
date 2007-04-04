@@ -56,7 +56,7 @@
 	<LABEL for="gidNumber">{t}Force GID{/t}</LABEL>
       &nbsp;
 {render acl=$gidNumberACL}
-      <input name="gidNumber" size=5 maxlength=5 id="gidNumber" {$forceMode} value="{$gidNumber}" title="{t}Forced ID number{/t}">
+      <input name="gidNumber" size=9 maxlength=9 id="gidNumber" {$forceMode} value="{$gidNumber}" title="{t}Forced ID number{/t}">
 {/render}
      </td>
     </tr>
