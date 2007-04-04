@@ -36,15 +36,15 @@ class setup_step_1 extends setup_step
     $this->s_title      = _("Language selection");
     $this->s_title_long = _("Please choose a language");
     $this->s_info       = _("This step is allows you to define your prefered language.");
-
-    $this->languages = array("de_DE" => _("German"),
-                             "fr_FR" => _("French"),
-                             "en_EN" => _("English"),
-                             "ru_RU" => _("Russian"));
   }
   
   function execute()
   {
+    $this->languages = array("de_DE" => _("German"),
+                             "fr_FR" => _("French"),
+                             "en_EN" => _("English"),
+                             "ru_RU" => _("Russian"));
+
     $smarty = get_smarty();
     $smarty->assign("languages", $this->languages);
     $smarty->assign("lang", $this->lang);
