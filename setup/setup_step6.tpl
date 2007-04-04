@@ -173,11 +173,11 @@
 			<img class='center' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
         </div>
     </div>
-	<div class='step4_container' style='height:10em;'>
-       <div class='step4_name'  style='height:10em;'>
+	<div class='step4_container' style='height:12em;'>
+       <div class='step4_name'  style='height:12em;'>
             {t}Enable snapshot functionality{/t}
         </div>
-        <div class='step4_value'  style='height:10em;'>
+        <div class='step4_value'  style='height:12em;'>
             {if $generic_settings.snapshot_active == FALSE}
                 <input type='checkbox' value='1' name='snapshot_active'
                     onClick='changeState("snapshot_base");
@@ -238,7 +238,7 @@
 					type='password' value='{$generic_settings.snapshot_password}'>
             {/if}
         </div>
-        <div class='step4_status'  style='height:10em;'>
+        <div class='step4_status'  style='height:12em;'>
             {t}Infos in FAQ{/t}&nbsp;
             <img class='center' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
         </div>
