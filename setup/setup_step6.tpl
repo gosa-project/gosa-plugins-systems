@@ -185,10 +185,15 @@
 								changeState("snapshot_user");							
 								changeState("snapshot_password");'>{t}Enable{/t}<br>
                 <div style='float:left;width:120px;'>
-					{t}Base{/t}&nbsp;
+					{t}Snapshot base{/t}&nbsp;
 				</div>
 				<input style='width:60%' id='snapshot_base' name='snapshot_base' 
 					type='text' value='{$generic_settings.snapshot_base}' disabled><br>
+                <div style='float:left;width:120px;'>
+            	    {t}Ldap base{/t}&nbsp;
+				</div>
+				<input style='width:60%' id='snapshot_ldap_base' name='snapshot_ldap_base' 
+					type='text' value='{$generic_settings.snapshot_ldap_base}' disabled><br>
                 <div style='float:left;width:120px;'>
     	            {t}Server{/t}&nbsp;
 				</div>
@@ -207,10 +212,15 @@
             {else}
                 <input type='checkbox' value='1' name='snapshot_active' checked>{t}Enable{/t}<br>
                 <div style='float:left;width:120px;'>
-            	    {t}Base{/t}&nbsp;
+            	    {t}Snapshot base{/t}&nbsp;
 				</div>
 				<input style='width:60%' id='snapshot_base' name='snapshot_base' 
 					type='text' value='{$generic_settings.snapshot_base}'><br>
+                <div style='float:left;width:120px;'>
+            	    {t}Ldap base{/t}&nbsp;
+				</div>
+				<input style='width:60%' id='snapshot_ldap_base' name='snapshot_ldap_base' 
+					type='text' value='{$generic_settings.snapshot_ldap_base}'><br>
                 <div style='float:left;width:120px;'>
         	        {t}Server{/t}&nbsp;
 				</div>
