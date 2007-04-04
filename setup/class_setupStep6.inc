@@ -48,8 +48,8 @@ class setup_step_6 extends setup_step
 
   function setup_step_6()
   {
-    $this->s_title      = _("GOsa settings 2/2");
-    $this->s_title_long = _("GOsa generic settings, page 2/2");
+    $this->s_title      = _("GOsa settings 2/3");
+    $this->s_title_long = _("GOsa generic settings, page 2/3");
     $this->s_info       = _("This dialog allows you to setup GOsa behaviour");
   }
 

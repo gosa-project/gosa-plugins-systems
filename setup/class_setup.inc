@@ -22,7 +22,7 @@ require_once("class_setupStep.inc");
 
 class setup 
 {
-  var $i_steps  = 8;  // Number of setup steps 
+  var $i_steps  = 9;  // Number of setup steps 
   var $i_current= 1;  // Current step
   var $i_last   = 1;  // Last setup step;
   var $o_steps  = array(); 
@@ -37,8 +37,9 @@ class setup
     $this->o_steps[4] = new setup_step_4();
     $this->o_steps[5] = new setup_step_5();
     $this->o_steps[6] = new setup_step_6();
-    $this->o_steps[7] = new setup_step_7();
-    $this->o_steps[8] = new setup_step_8();
+    $this->o_steps[7] = new setup_step_6a();
+    $this->o_steps[8] = new setup_step_7();
+    $this->o_steps[9] = new setup_step_8();
 
     foreach($this->o_steps as $key => $step){
       $this->o_steps[$key]->parent = $this;

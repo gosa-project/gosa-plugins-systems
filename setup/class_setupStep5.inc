@@ -51,8 +51,8 @@ class setup_step_5 extends setup_step
 
   function setup_step_5()
   {
-    $this->s_title      = _("GOsa settings 1/2");
-    $this->s_title_long = _("GOsa generic settings, page 1/2");
+    $this->s_title      = _("GOsa settings 1/3");
+    $this->s_title_long = _("GOsa generic settings, page 1/3");
     $this->s_info       = _("This dialog allows you to setup GOsa behaviour");
 
     $tmp = @passwordMethod::get_available_methods_if_not_loaded();
