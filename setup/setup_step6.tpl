@@ -180,7 +180,9 @@
         <div class='step4_value'  style='height:12em;'>
             {if $generic_settings.snapshot_active == FALSE}
                 <input type='checkbox' value='1' name='snapshot_active'
-                    onClick='changeState("snapshot_base");
+                    onClick='	
+								changeState("snapshot_base");
+								changeState("snapshot_ldap_base");
 								changeState("snapshot_server");							
 								changeState("snapshot_user");							
 								changeState("snapshot_password");'>{t}Enable{/t}<br>
