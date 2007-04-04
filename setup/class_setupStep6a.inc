@@ -41,12 +41,18 @@ class setup_step_6a extends setup_step
 
   function setup_step_6a()
   {
+    $this->update_strings();
+  }
+
+
+  function update_strings()
+  {
     $this->s_title      = _("GOsa settings 3/3");
     $this->s_title_long = _("GOsa generic settings, page 3/3");
     $this->s_info       = _("This dialog allows you to setup GOsa behaviour");
   }
-
   
+
   function execute()
   {
     $smarty = get_smarty();

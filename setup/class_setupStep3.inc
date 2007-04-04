@@ -27,10 +27,8 @@ class setup_step_3 extends setup_step
 
   function setup_step_3()
   {
-    $this->s_title      = _("License");
-    $this->s_title_long = _("GNU / GPL-License");
-    $this->s_info       = _("GNU / GPL-License");
-      
+    $this->update_strings();
+
     if(!file_exists("../setup/license.txt")){
       $this->License = "<font color='red'>License not found. Setup stops here.</font>";
     }else{
@@ -42,6 +40,15 @@ class setup_step_3 extends setup_step
       $this->license_found = true;
     }
   }
+
+
+  function update_strings()
+  {
+    $this->s_title      = _("License");
+    $this->s_title_long = _("GNU / GPL-License");
+    $this->s_info       = _("GNU / GPL-License");
+  }
+
  
   function execute()
   {

@@ -28,11 +28,17 @@ class setup_step_2 extends setup_step
 
   function setup_step_2()
   {
+    $this->update_strings();
+  }
+ 
+
+  function update_strings()
+  {
     $this->s_title      = _("Installation check");
     $this->s_title_long = _("Basic installation checks");
     $this->s_info       = _("Some basic checks for PHP version, ldap extension...");
   }
- 
+  
   
   /* Execute and display template */ 
   function execute()

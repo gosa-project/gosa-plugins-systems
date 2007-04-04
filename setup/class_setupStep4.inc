@@ -39,10 +39,17 @@ class setup_step_4 extends setup_step
 
   function setup_step_4()
   {
+    $this->update_strings();
+  }
+
+  
+  function update_strings()
+  {
     $this->s_title      = _("Ldap settings");
     $this->s_title_long = _("Ldap connection setup");
     $this->s_info       = _("This dialog allows the basic configuration of GOsa's behaviour and properties in your main configuration.");
   }
+  
   
   function execute()
   {

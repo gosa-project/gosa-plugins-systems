@@ -32,7 +32,12 @@ class setup_step_1 extends setup_step
 
     $this->is_enabled = TRUE;
     $this->is_active  = TRUE;
-    
+   
+    $this->update_strings(); 
+  }
+
+  function update_strings()
+  {
     $this->s_title      = _("Language selection");
     $this->s_title_long = _("Please choose a language");
     $this->s_info       = _("This step is allows you to define your prefered language.");

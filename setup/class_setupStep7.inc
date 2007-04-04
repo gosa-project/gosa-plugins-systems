@@ -32,6 +32,12 @@ class setup_step_7 extends setup_step
 
   function setup_step_7()
   {
+    $this->update_strings();
+  }
+
+  
+  function update_strings()
+  {
     $this->s_title      = _("Ldap schema check");
     $this->s_title_long = _("Ldap schema check");
     $this->s_info       = _("This dialog checks your ldap schema setup");

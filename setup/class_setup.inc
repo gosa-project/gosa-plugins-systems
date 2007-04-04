@@ -150,6 +150,8 @@ class setup
     $str = "";
     foreach($this->o_steps as $key => $step){
 
+      $step -> update_strings();
+
       $s_title    = $step -> get_title();
       $s_info     = $step -> get_small_info();
       $b_active   = $step -> is_active();

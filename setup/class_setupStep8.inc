@@ -29,6 +29,12 @@ class setup_step_8 extends setup_step
 
   function setup_step_8()
   {
+    $this->update_strings();
+  }
+
+  
+  function update_strings()
+  {
     $this->s_title      = _("Configuration file");
     $this->s_info       = _("In this step the configuration file will be created.");
     $this->s_title_long = _("Saving configuration file");
