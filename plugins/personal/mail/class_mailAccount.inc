@@ -672,6 +672,10 @@ class mailAccount extends plugin
     @DEBUG (DEBUG_LDAP, __LINE__, __FUNCTION__, __FILE__,$this->attributes, "Save");
     $ldap->cd($this->dn);
     $this->cleanup();
+
+    print_a($this->attrs);
+    exit();
+
     $ldap->modify ($this->attrs); 
 
     show_ldap_error($ldap->get_error(), sprintf(_("Removing of user/mail account with dn '%s' failed."),$this->dn));
