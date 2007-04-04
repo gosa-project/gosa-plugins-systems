@@ -130,6 +130,15 @@ class setup_step_5 extends setup_step
   function check()
   {
     $message = array();
+
+    if(preg_match("/,$/",$this->peopleou)){
+      $message[] =sprintf(_("Don't add a trailing comma to '%s'."),_("People storage ou"));
+    }
+
+    if(preg_match("/,$/",$this->groupou)){
+      $message[] =sprintf(_("Don't add a trailing comma to '%s'."),_("Group storage ou"));
+    }
+
     if(!is_numeric($this->uidbase)){
       $message[] = _("Uid base must be numeric");
     }

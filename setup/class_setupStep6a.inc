@@ -42,6 +42,17 @@ class setup_step_6a extends setup_step
   function setup_step_6a()
   {
     $this->update_strings();
+
+    /* Look for samba password generation method */
+    if(file_exists("/usr/bin/mkntpasswd")){
+      $pwdhash  = "/usr/bin/mkntpasswd";
+    } elseif (preg_match("/^Usage: mkntpwd /", shell_exec ("mkntpwd 2>&1"))){
+      $pwdhash= "mkntpwd";
+    } else {
+      $pwdhash= 'perl -MCrypt::SmbHash -e "print join(q[:], ntlmgen \$ARGV[0]), $/;"';
+    }
+
+    $this->optional['smbhash'] = $pwdhash;
   }
 
 
@@ -84,7 +95,7 @@ class setup_step_6a extends setup_step
       
       foreach(array("enableCopyPaste","forceglobals","forcessl","warnssl","compile","debuglevel","session_lifetime","smbhash") as $name){
         if(isset($_POST[$name])){
-          $this->optional[$name] = $_POST[$name];
+          $this->optional[$name] = stripslashes($_POST[$name]);
         }
       } 
 
@@ -129,6 +140,15 @@ class setup_step_6a extends setup_step
   function check()
   {
     $message = array();
+
+    if(!is_numeric( $this->optional['session_lifetime'])){
+      $message[] = _("Session lifetime must be a numeric value.");
+    }
+
+    if(!is_numeric( $this->optional['max_ldap_query_time'])){
+      $message[] = _("Maximal ldap query time must be a numeric value. ");
+    }
+  
     return($message);
   }
   

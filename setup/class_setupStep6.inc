@@ -177,6 +177,11 @@ class setup_step_6 extends setup_step
   function check()
   {
     $message = array();
+    
+    if(isset($this->generic_settings['minid_active']) && !is_numeric($this->generic_settings['minid'])){
+      $message[] = sprintf(_("The specified value for '%s' must be a numeric value"),_("GID / UID min id"));
+    }
+  
     return($message);
   }
   
