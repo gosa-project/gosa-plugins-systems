@@ -79,6 +79,9 @@ class setup_step_8 extends setup_step
         header('Content-Disposition: attachment; filename="gosa.conf"');
       }
 
+      $str = $this->get_conf_data();
+      $str = preg_replace("/\n[ ]*\n/","",$str);
+
       echo $this->get_conf_data();
       exit();
     }

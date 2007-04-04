@@ -25,9 +25,10 @@ class setup_step_7 extends setup_step
   var $checked = array();
   var $not_checked = array();
   var $schema_readable  = FALSE;
-  var $attributes       = array("enable_schema_check");
+  var $attributes       = array("enable_schema_check","samba_version");
   var $display_type     = "failed";
   var $enable_schema_check = TRUE;
+  var $samba_version       = 3;
 
   function setup_step_7()
   {
@@ -100,6 +101,16 @@ class setup_step_7 extends setup_step
     $objectclasses = $ldap->get_objectclasses();
     if(count($objectclasses) == 0){
       return (array(array("msg" => _("Can't get schema information from server. No schema check possible!"), "status" => FALSE)));
+    }
+
+  
+    /* Which samba version do we use? */
+    if(isset($objectclasses['sambaSamAccount'])){
+      $this->samba_version = 3;
+    } elseif(isset($objectclasses['sambaAccount'])) {
+      $this->samba_version = 2;
+    }else{
+      $this->samba_version = 0;
     }
 
     /* This is the default block used for each entry. 
