@@ -29,8 +29,6 @@ class setup_step_6a extends setup_step
               "warnssl" => false,
               "ppd_path" => "/var/spool/ppd/",
               "ppd_path_active" => FALSE,
-              "kde_applications_menu" => "",
-              "kde_applications_menu_active" => FALSE,
               "compile" =>  "/var/spool/gosa",
               "debuglevel" => 0,
               "session_lifetime" => 7200,
@@ -117,15 +115,6 @@ class setup_step_6a extends setup_step
         }
       }else{
         $this->optional['ppd_path_active'] = FALSE;
-      }
-
-      if(isset($_POST['kde_applications_menu_active'])){
-        $this->optional['kde_applications_menu_active'] = TRUE;
-        if(isset($_POST['kde_applications_menu'])){
-          $this->optional['kde_applications_menu'] = $_POST['kde_applications_menu'];
-        }
-      }else{
-        $this->optional['kde_applications_menu_active'] = FALSE;
       }
 
       if(isset($_POST['max_ldap_query_time_active'])){

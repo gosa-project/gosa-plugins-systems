@@ -180,28 +180,6 @@
 
     <div class='step4_container'>
         <div class='step4_name'>
-            {t}Kde applications menu{/t}
-        </div>
-        <div class='step4_value'>
-            {if $optional.kde_applications_menu_active == FALSE}
-                <input type='checkbox' value='1' name='kde_applications_menu_active'
-                    onClick='changeState("kde_applications_menu");'>
-                <input style='width:90%' id='kde_applications_menu' name='kde_applications_menu' 
-					type='text' value='{$optional.kde_applications_menu}' disabled>
-            {else}
-                <input type='checkbox' value='1' name='kde_applications_menu_active' checked>
-                <input style='width:90%' id='kde_applications_menu' name='kde_applications_menu' 
-					type='text' value='{$optional.kde_applications_menu}'  >
-            {/if}
-        </div>
-        <div class='step4_status'>
-            {t}Infos in FAQ{/t}&nbsp;
-            <img class='center' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
-        </div>
-    </div>
-
-    <div class='step4_container'>
-        <div class='step4_name'>
             {t}Smarty compile directory{/t}
         </div>
         <div class='step4_value'>
