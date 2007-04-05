@@ -7,11 +7,6 @@
 	<br>
 	<br>
 
-	{$List}
-
-	<p style="text-align:right">
-		<input type=submit name="sieve_cancel" value="{t}Cancel{/t}">
-	</p>
 {elseif $Sieve_Error != ""}
 
 	<font color='red'><b>{t}Connection to sieve could not be established.{/t}</b></font><br>
@@ -20,14 +15,7 @@
 	{t}Possibly the sieve account was not created yet.{/t}
 	<br>
 	<br>
-
-	{$List}
-
-	<p style="text-align:right">
-		<input type=submit name="sieve_cancel" value="{t}Cancel{/t}">
-	</p>
-	
-{else}
+{/if}
 	{t}Be careful. All your changes will be saved directly to sieve, if you use the save button below.{/t}
 	<br>
 	<input type='submit' name='create_new_script' value='{t}Create new script{/t}'>
@@ -37,4 +25,3 @@
 		&nbsp;
 		<input type=submit name="sieve_cancel" value="{t}Cancel{/t}">
 	</p>
-{/if}

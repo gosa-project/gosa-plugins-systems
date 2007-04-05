@@ -953,6 +953,7 @@ class sieveManagement extends plugin
           sprintf(
             _("Can't log into SIEVE server. Server says '%s'."),
             to_string($this->Sieve_Error)));
+      return;
     }
 
     $everything_went_fine = TRUE;

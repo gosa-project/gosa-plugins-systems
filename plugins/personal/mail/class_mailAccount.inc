@@ -61,6 +61,8 @@ class mailAccount extends plugin
   var $objectclasses= array("gosaMailAccount");
   var $uid;
 
+  var $sieve_management = NULL;
+
   /* constructor, if 'dn' is set, the node loads the given
      'dn' from LDAP */
   function mailAccount ($config, $dn= NULL)
@@ -182,8 +184,10 @@ class mailAccount extends plugin
       }
     }
 
-
-  /* Create filter */
+    /* Create sieve management class */
+    $method = new $this->method($this->config);
+    $id     = $method->uattrib;
+    $this->sieve_management = new sieveManagement($this->config,$this->dn,$this,$id);
 
     /* Get global filter config */
     if (!is_global("mailfilter")){
@@ -242,10 +246,7 @@ class mailAccount extends plugin
         && preg_match("/C/",$this->gosaMailDeliveryMode)
         && $this->acl_is_writeable("sieveManagement")) {
 
-        $method = new $this->method($this->config);
-        $id     = $method->uattrib;
-
-      $this->dialog = new sieveManagement($this->config,$this->dn,$this,$id);
+      $this->dialog = $this->sieve_management;
     }
    
     /* Cancel sieve edit */
@@ -255,9 +256,8 @@ class mailAccount extends plugin
  
     /* Save sieve changes */
     if(isset($_POST['sieve_finish'])){
-      if($this->dialog->save()){
-        $this->dialog = NULL;
-      }
+      $this->sieve_management = $this->dialog;
+      $this->dialog = NULL;
     }
  
     if(is_object($this->dialog)){
@@ -844,7 +844,7 @@ class mailAccount extends plugin
         $method->disconnect();
 
         /* Ensure that this is an existing account */
-        if($this->initially_was_account){
+        if(1==1 || $this->initially_was_account){
 
           /* Write sieve information only if not in C mode */
           if (!is_integer(strpos($this->gosaMailDeliveryMode, "C"))){
@@ -856,6 +856,8 @@ class mailAccount extends plugin
                 $this->gosaSpamMailbox,
                 $this->gosaSpamSortLevel,
                 $this->gosaVacationMessage);
+          }else{
+            $this->sieve_management->save();
           }
         }
       }
