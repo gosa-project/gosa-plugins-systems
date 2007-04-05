@@ -12,23 +12,14 @@
 		</select>
 	</div>
 	
-	<div  class='default' style='float:left;width:160px;'>
-		<br>
-		<br>
+	<div  class='default' style='float:left;width:160px;padding-top:25px;'>
 		{t}GOsa language settings{/t}
 	</div>
-	<div class='default' style='float:left;'>
+	<div class='default' style='float:left;padding-top:25px;'>
+		<input type='radio' value='0' name='force_global_lang' {if !$force_global_lang} checked {/if}>&nbsp;
+		{t}GOsa will automatically detect the language to use in the GOsa user interface.{/t}
 		<br>
-		<br>
-		{t}To force GOsa to use the selected language as global default language, use the option below.{/t}
-		<br> 
-		{t}If you want GOsa to automatically detect the language settings, leave this option clear.{/t} 
-		&nbsp; 
-		<br> 
-		{if $force_global_lang}
-		<input checked type='checkbox' name='force_global_lang'>&nbsp;{t}Force global language{/t} 
-		{else}
-		<input type='checkbox' name='force_global_lang'>&nbsp;{t}Force global language{/t} 
-		{/if}
+		<input type='radio' value='1' name='force_global_lang' {if $force_global_lang} checked {/if}>&nbsp;
+		{t}Force GOsa to use the above selected language as default language.{/t}
 	</div>
 </div>

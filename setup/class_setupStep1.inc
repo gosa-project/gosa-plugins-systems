@@ -64,11 +64,13 @@ class setup_step_1 extends setup_step
       $this->lang = $_POST['lang'];
       $this->is_completed = TRUE;
       $_SESSION['lang'] = $this->lang;
-    
+
       if(isset($_POST['force_global_lang'])){
-        $this->force_global_lang = TRUE;
-      }else{
-        $this->force_global_lang = FALSE;
+        if($_POST['force_global_lang'] == 1 ){
+          $this->force_global_lang = TRUE;
+        }else{
+          $this->force_global_lang = FALSE;
+        }
       }
     }
   }
