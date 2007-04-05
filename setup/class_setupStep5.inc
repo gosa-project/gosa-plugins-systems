@@ -34,7 +34,7 @@ class setup_step_5 extends setup_step
   var $encryption = "crypt";
   var $mail       = "none";
   var $theme      = "default"; 
-  var $errorlvl   = TRUE;
+  var $errorlvl   = FALSE;
   var $cyrusunixstyle = FALSE;
 
   var $pwd_rules  = array("pwminlen" => 6, 
