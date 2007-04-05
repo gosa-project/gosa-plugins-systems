@@ -848,15 +848,19 @@ class sieveManagement extends plugin
         foreach($data as $key => $obj){
           if(isset($obj->object_id) && preg_match("/^Add_Object_Top_".$obj->object_id."_/",$name) && $once){
             $once = FALSE;
-            $this->add_new_element    = TRUE;
+            $this->add_element_type   =  $_POST['element_type_'.$obj->object_id];
+            $this->add_new_element    = FALSE;
             $this->add_new_id         = $obj->object_id;
             $this->add_above_below    = "above";
+            $this->add_new_element_to_current_script($this->add_element_type,$this->add_new_id,$this->add_above_below);
           }
           if(isset($obj->object_id) && preg_match("/^Add_Object_Bottom_".$obj->object_id."_/",$name) && $once){
             $once = FALSE;
-            $this->add_new_element    = TRUE;
+            $this->add_element_type   =  $_POST['element_type_'.$obj->object_id];
+            $this->add_new_element    = FALSE;
             $this->add_new_id         = $obj->object_id;
             $this->add_above_below    = "below";
+            $this->add_new_element_to_current_script($this->add_element_type,$this->add_new_id,$this->add_above_below);
           }
         
           if(isset($obj->object_id) && preg_match("/^Remove_Object_".$obj->object_id."_/",$name) && $once){

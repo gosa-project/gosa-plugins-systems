@@ -1,5 +1,3 @@
-
-<h1> Nur aus Joomla kopiert, bitte prüfen </h1>
 Table of Contents
 
     * GNU GENERAL PUBLIC LICENSE

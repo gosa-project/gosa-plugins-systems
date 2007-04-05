@@ -5,6 +5,7 @@ class sieve_require
   var $data = array();
   var $object_id = -1;
   var $parent = NULL;  
+  var $skip_save_object =FALSE;
 
   function sieve_require($data,$object_id,$parent)
   {
@@ -35,11 +36,17 @@ class sieve_require
     if(!in_array($str,$current)){
       $this->data[] = $str;
     }
-    $this->data = array_unique($this->data);;
+    $this->data = array_unique($this->data);
+    $this->skip_save_object = TRUE;
   }
 
   function save_object()
   {
+    if($this->skip_save_object){
+      $this->skip_save_object = FALSE;
+      return;
+    }
+
     /* Get the values should check for, they are seperated by , */
     if(isset($_POST['require_'.$this->object_id])){
       $vls = stripslashes($_POST['require_'.$this->object_id]);
