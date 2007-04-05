@@ -699,7 +699,9 @@ class sieveManagement extends plugin
     }
     $tmp = get_declared_classes();  
     if(!in_array($type,$tmp)){
-      trigger_error("Can't add new element, given \$class=".$class." does not exists.");
+      if(!empty($type)){
+        trigger_error("Can't add new element, given \$class=".$class." does not exists.");
+      }
       return(FALSE);
     }
     if(!is_object($this->current_handler) || get_class($this->current_handler) != "My_Parser"){

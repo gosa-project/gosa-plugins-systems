@@ -18,6 +18,7 @@
 
 	
 			<select name='element_type_{$ID}'>
+				<option value=''>&nbsp;</option>
 				<option value='sieve_comment'>comment</option>
 				<option value='sieve_fileinto'>sieve_fileinto</option>
 				<option value='sieve_keep'>sieve_keep</option>
