@@ -259,16 +259,16 @@ class setup_step_2 extends setup_step
     $this->is_writeable[] = array("NAME" => $N , "DESC" => $D , "RESULT" => $R , "SOLUTION" => $S , "MUST" => $M );
 
     /* If we have writeaccess to the config dir, check if there is already a config file */
-    if($R){
-
-      /* check if there is already a config file. */
-      $N = _("No old configuration file.");
-      $D = "";//_("");
-      $S = _("If there is already a configuration file, this file will be overwritten when GOsa setup finishes. Please move your old config file away.");
-      $R =  !file_exists("/etc/gosa/gosa.conf");
-      $M = FALSE;
-      $this->is_writeable[] = array("NAME" => $N , "DESC" => $D , "RESULT" => $R , "SOLUTION" => $S , "MUST" => $M );
-    }
+#    if($R){
+#
+#      /* check if there is already a config file. */
+#      $N = _("No old configuration file.");
+#      $D = "";//_("");
+#      $S = _("If there is already a configuration file, this file will be overwritten when GOsa setup finishes. Please move your old config file away.");
+#      $R =  !file_exists("/etc/gosa/gosa.conf");
+#      $M = FALSE;
+#      $this->is_writeable[] = array("NAME" => $N , "DESC" => $D , "RESULT" => $R , "SOLUTION" => $S , "MUST" => $M );
+#    }
   }
  
 

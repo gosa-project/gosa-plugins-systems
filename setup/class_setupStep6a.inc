@@ -102,7 +102,7 @@ class setup_step_6a extends setup_step
         }
       }
       
-      foreach(array("enableCopyPaste","forceglobals","forcessl","warnssl","compile","debuglevel","session_lifetime","smbhash") as $name){
+      foreach(array("noprimarygroup","enableCopyPaste","forceglobals","forcessl","warnssl","compile","debuglevel","session_lifetime","smbhash") as $name){
         if(isset($_POST[$name])){
           $this->optional[$name] = stripslashes($_POST[$name]);
         }
