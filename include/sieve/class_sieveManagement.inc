@@ -146,7 +146,7 @@ class sieveManagement extends plugin
           $cfg["admin"]);
 
       /* Try to login */
-      if (!$this->sieve_handle->sieve_login()){
+      if (!@$this->sieve_handle->sieve_login()){
         $this->Sieve_Error = $this->sieve_handle->error_raw;
         return(FALSE);
       }
