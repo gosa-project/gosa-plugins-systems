@@ -1,5 +1,5 @@
 <h2>{t}Sieve script management{/t}</h2>
-
+<!--
 {if $uattrib_empty}
 		
 	<font color='red'><b>{t}Connection to sieve could not be established, the authentification attribute is empty.{/t}</b></font><br>
@@ -17,6 +17,7 @@
 	<br>
 {/if}
 	{t}Be careful. All your changes will be saved directly to sieve, if you use the save button below.{/t}
+-->
 	<br>
 	<input type='submit' name='create_new_script' value='{t}Create new script{/t}'>
 	{$List}
