@@ -3,11 +3,6 @@
 
 <br>
 <br>
-{if $Error != ""}
-	<font color='red'>{$Error}</font>
-	<br>
-	<br>
-{/if}
 <p class="seperator">&nbsp;</p>
 <br>
 <b>{t}Script name{/t}</b> <input type='text' name='NewScriptName' value='{$NewScriptName}'>

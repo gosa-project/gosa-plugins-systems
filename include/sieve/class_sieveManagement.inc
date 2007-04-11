@@ -191,31 +191,35 @@ class sieveManagement extends plugin
       }
  
       /* Check given name */ 
-      $err = "";
+      $err = false;
 
       /* Is given name in lower case characters ? */
       if(isset($_POST['create_script_save'])){
         if(!strlen($name)){
-          $err = _("You should specify a name for your new script.");
+          $err =true;
+          print_red(_("You should specify a name for your new script."));
         }
         /* Is given name in lower case characters ? */
         if($name != strtolower($name)){
-          $err = _("Only lower case names are allowed here.");
+          $err =true;
+          print_red(_("Only lower case names are allowed here."));
         }
 
         /* Only chars are allowed here */
         if(preg_match("/[^a-z]/i",$name)){
-          $err = _("Only a-z are allowed in script names.");
+          $err =true;
+          print_red(_("Only a-z are allowed in script names."));
         }
 
         $tmp = $this->get_used_script_names();
         if(in_array_ics($name,$tmp)){
-          $err =_("The specified name is already in use.");
+          $err =true;
+          print_red(_("The specified name is already in use."));
         }
       }
 
       /* Create script if everything is ok */
-      if($this->create_script && isset($_POST['create_script_save']) && $err == "" ){
+      if($this->create_script && isset($_POST['create_script_save']) && !$err){
 
         /* Close dialog */
         $this->create_script = FALSE;
@@ -252,7 +256,6 @@ class sieveManagement extends plugin
         /* Display dialog to enter new script name */
         $smarty = get_smarty();
         $smarty->assign("NewScriptName",$name);
-        $smarty->assign("Error",$err);
         return($smarty->fetch(get_template_path("templates/create_script.tpl",TRUE,dirname(__FILE__))));
       }
     }
