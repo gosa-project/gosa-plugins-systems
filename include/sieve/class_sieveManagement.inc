@@ -641,7 +641,7 @@ class sieveManagement extends plugin
       }
       $field2 = array("string" => $script['NAME']);  
       $field3 = array("string" => $script['MSG']);
-      $field4 = array("string" => _("Script length")."&nbsp;:&nbsp;".strlen($script['SCRIPT']));
+      $field4 = array("string" => _("Script length").":&nbsp;".strlen($script['SCRIPT']));
 
       if($this->parent->acl_is_writeable("sieveManagement")){
         $del = "<input type='image' name='delscript_".$key."' src='images/edittrash.png'
@@ -660,7 +660,7 @@ class sieveManagement extends plugin
       $field6 = array("string" => $activate."<input type='image' name='editscript_".$key."' src='images/edit.png'
                         title='"._("Edit script")."'>".$del,
                       "attach" => "style='border-right:0px; width:70px;'");
-      $List ->AddEntry(array($field1,$field2,$field3,$field4,$field6)); 
+      $List->AddEntry(array($field1,$field2,$field3,$field4,$field6)); 
     }
  
     /* If the uattrib is empty   (Attribute to use for authentification with sieve)
