@@ -1019,7 +1019,6 @@ div.step2_failed_text {
 
 /* Text used in info div. On warnings */
 div.step2_warning_text{
-	background-image: url('images/warning.png'); 
 	background-repeat: no-repeat;     
 	padding-left: 35px;
 }

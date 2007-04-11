@@ -3,7 +3,7 @@
 <div style='width:600px;'>
 {t}Please enter the server URI to allow the GOsa setup to connect your LDAP server (Example: ldap://your.server:389).{/t}
 <br>
-{t}Use the 'Test' button to try a connect. The status will be shown on the bottom of the page.{/t}
+{t}Use the 'Test' button to try to connect with the given values. The status will be shown on the bottom of the page.{/t}
 <br>
 
 </div>

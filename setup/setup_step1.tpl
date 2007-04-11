@@ -1,6 +1,6 @@
 <div>
 	<div class='default'>
-		<b>{t}Please select the language you prefer to use GOsa with.{/t}</b>
+		<b>{t}Please select prefered language{/t}</b>
 	</div>
 	<br>
 	<div  class='default' style='float:left;width:160px;'>

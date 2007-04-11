@@ -42,7 +42,7 @@
 						<div class='step2_failed_text'>
 						<b>{t}GOsa will NOT run without fixing this.{/t}</b>
 					{else}
-						<div class="step2_warning_text">
+						<div class="step2_warning_text" style="background-image: url('images/warning.png')">
 						<i>{t}GOsa will run without fixing this.{/t}</i>
 					{/if}
 					<br>
@@ -105,7 +105,7 @@
 						<div class='step2_failed_text'>
 						<b>{t}GOsa will NOT run without fixing this.{/t}</b>
 					{else}
-						<div class='step2_warning_text'>
+						<div class='step2_warning_text' style="background-image: url('images/warning.png')">
 						<i>{t}GOsa will run without fixing this.{/t}</i>
 					{/if}
 					<br>
@@ -160,7 +160,7 @@
 						<div class='step2_failed_text'>
 						<b>{t}GOsa will NOT run without fixing this.{/t}</b>
 					{else}
-						<div class='step2_warning_text'>
+						<div class='step2_warning_text' style="background-image: url('images/warning.png')">
 						<i>{t}GOsa will run without fixing this.{/t}</i>
 					{/if}
 					<br>
