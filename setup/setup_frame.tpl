@@ -29,7 +29,7 @@
 		</div>
 
 		<div class='setup_bottom'>
-			Bottom	
+			{$version}	
 		</div>
 	</div>
 </div>

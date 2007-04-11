@@ -28,9 +28,14 @@ class setup_step_3 extends setup_step
   function setup_step_3()
   {
     $this->update_strings();
+  }
 
+  
+  function load_license()
+  {
     if(!file_exists("../setup/license.txt")){
       $this->License = "<font color='red'>License not found. Setup stops here.</font>";
+      $this->license_found = false;
     }else{
       $fp = fopen("../setup/license.txt","r");
       $this->License = "";
@@ -52,13 +57,24 @@ class setup_step_3 extends setup_step
  
   function execute()
   {
+    $this->load_license();
+
     $smarty = get_smarty();
     $smarty -> assign("License",nl2br($this->License));
     $smarty -> assign("license_found",$this->license_found);
-    $this->is_completed = true;
+
     return($smarty -> fetch (get_template_path("../setup/setup_step3.tpl")));
   }
 
+  
+  function save_object()
+  {
+    if($this->license_found){
+      $this->is_completed = true;
+    }else{
+      $this->is_completed = false;
+    }
+  }
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

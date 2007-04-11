@@ -122,6 +122,8 @@ if (isset($_SESSION['errors'])){
   $smarty->assign("errors"    , "");
 }
 
+$smarty->assign("version",get_gosa_version());
+
 echo $header.$smarty->fetch("../setup/setup_frame.tpl");
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
