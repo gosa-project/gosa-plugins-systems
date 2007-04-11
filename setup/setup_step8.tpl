@@ -33,6 +33,7 @@
 			{if $last_backup_name}
 				<br>
 				<div style='padding-left:20px;'>{t}Last created backup{/t}: &nbsp;<i>{$last_backup_name}</i></div> 
+				<br>
 			{/if}
 
 
