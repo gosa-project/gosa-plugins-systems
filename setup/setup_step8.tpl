@@ -34,6 +34,16 @@
 				<br>
 				<div style='padding-left:20px;'>{t}Last created backup{/t}: &nbsp;<i>{$last_backup_name}</i></div> 
 			{/if}
+
+
+			
+			{if $exists}
+				<br>
+				<br>
+				<b>{t}Use GOsa with current configuration file{/t}</b>
+				<br>
+				<input type='submit' name='use_gosa' value='{t}Use GOsa now{/t}'> 
+			{/if}
 		{else}		
 			<div style='font-weight: bold; color: red;'>{t}Can't write configuration file, please check permissions.{/t}</div>
 			<pre>

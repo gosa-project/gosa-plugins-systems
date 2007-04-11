@@ -68,6 +68,13 @@ class setup_step_8 extends setup_step
       $writeable = is_writeable(CONFIG_DIR);
     }
 
+    /* Redirect to GOsa login */
+    if(isset($_POST['use_gosa'])){
+      session_destroy();
+      header("Location: index.php");
+      exit();
+    }
+
     /* Downlaod config */
     if(isset($_POST['getconf'])){
 

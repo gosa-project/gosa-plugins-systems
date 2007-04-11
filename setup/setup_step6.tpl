@@ -189,54 +189,54 @@
                 <div style='float:left;width:120px;'>
 					{t}Snapshot base{/t}&nbsp;
 				</div>
-				<input style='width:60%' id='snapshot_base' name='snapshot_base' 
+				<input style='width:220' id='snapshot_base' name='snapshot_base' 
 					type='text' value='{$generic_settings.snapshot_base}' disabled><br>
                 <div style='float:left;width:120px;'>
             	    {t}Ldap base{/t}&nbsp;
 				</div>
-				<input style='width:60%' id='snapshot_ldap_base' name='snapshot_ldap_base' 
+				<input style='width:220' id='snapshot_ldap_base' name='snapshot_ldap_base' 
 					type='text' value='{$generic_settings.snapshot_ldap_base}' disabled><br>
                 <div style='float:left;width:120px;'>
     	            {t}Server{/t}&nbsp;
 				</div>
-				<input style='width:60%' id='snapshot_server' name='snapshot_server' 
+				<input style='width:220' id='snapshot_server' name='snapshot_server' 
 					type='text' value='{$generic_settings.snapshot_server}' disabled><br>
                 <div style='float:left;width:120px;'>
 	                {t}User{/t}&nbsp;
 				</div>
-				<input style='width:60%' id='snapshot_user' name='snapshot_user' 
+				<input style='width:220' id='snapshot_user' name='snapshot_user' 
 					type='text' value='{$generic_settings.snapshot_user}' disabled><br>
                 <div style='float:left;width:120px;'>
 	                {t}Password{/t}&nbsp;
 				</div>
-				<input style='width:60%' id='snapshot_password' name='snapshot_password' 
+				<input style='width:220' id='snapshot_password' name='snapshot_password' 
 					type='password' value='{$generic_settings.snapshot_password}' disabled>
             {else}
                 <input type='checkbox' value='1' name='snapshot_active' checked>{t}Enable{/t}<br>
                 <div style='float:left;width:120px;'>
             	    {t}Snapshot base{/t}&nbsp;
 				</div>
-				<input style='width:60%' id='snapshot_base' name='snapshot_base' 
+				<input style='width:220' id='snapshot_base' name='snapshot_base' 
 					type='text' value='{$generic_settings.snapshot_base}'><br>
                 <div style='float:left;width:120px;'>
             	    {t}Ldap base{/t}&nbsp;
 				</div>
-				<input style='width:60%' id='snapshot_ldap_base' name='snapshot_ldap_base' 
+				<input style='width:220' id='snapshot_ldap_base' name='snapshot_ldap_base' 
 					type='text' value='{$generic_settings.snapshot_ldap_base}'><br>
                 <div style='float:left;width:120px;'>
         	        {t}Server{/t}&nbsp;
 				</div>
-				<input style='width:60%' id='snapshot_server' name='snapshot_server' 
+				<input style='width:220' id='snapshot_server' name='snapshot_server' 
 					type='text' value='{$generic_settings.snapshot_server}'><br>
                 <div style='float:left;width:120px;'>
     	            {t}User{/t}&nbsp;
 				</div>
-				<input style='width:60%' id='snapshot_user' name='snapshot_user' 
+				<input style='width:220' id='snapshot_user' name='snapshot_user' 
 					type='text' value='{$generic_settings.snapshot_user}'><br>
                 <div style='float:left;width:120px;'>
 	                {t}Password{/t}&nbsp;
 				</div>
-				<input style='width:60%' id='snapshot_password' name='snapshot_password' 
+				<input style='width:220;' id='snapshot_password' name='snapshot_password' 
 					type='password' value='{$generic_settings.snapshot_password}'>
             {/if}
         </div>

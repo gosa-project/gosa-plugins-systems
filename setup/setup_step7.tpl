@@ -17,7 +17,7 @@
             <img class='center' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
         </div>
     </div>
-	<div style='float:left'>
+	<div style='float:left; width:600px;' >
 
 		{if $failed_checks == 0}
 			<h2>{t}Schema check was completely successful{/t}</h2>

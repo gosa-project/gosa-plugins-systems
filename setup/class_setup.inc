@@ -41,6 +41,13 @@ class setup
     $this->o_steps[8] = new setup_step_7();
     $this->o_steps[9] = new setup_step_8();
 
+    /* Ensure that setup is not reachable if gosa.conf */
+    if(file_exists(CONFIG_DIR."/gosa.conf")){
+      session_destroy();
+      header("Location: index.php")    ;
+      exit();
+    }
+    
     foreach($this->o_steps as $key => $step){
       $this->o_steps[$key]->parent = $this;
     }
