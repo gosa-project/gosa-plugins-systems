@@ -1158,6 +1158,14 @@ class appgroup extends plugin
   }
 
 
+  function PrepareForCopyPaste($source)
+  {
+    $this->FAIrelease = $this->InitialFAIrelease = $source->FAIrelease;
+    $this->gosaMemberApplication = $source->gosaMemberApplication;
+    $this->appoption = $source->appoption;
+  }
+
+
   /* Return plugin informations for acl handling  */ 
   function plInfo()
   {
