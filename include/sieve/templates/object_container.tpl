@@ -36,8 +36,12 @@
 
 			<input type='image' src='images/sieve_add_new_top.png' name='Add_Object_Top_{$ID}'
 				alt='{t}Add new{/t}' title='{t}Add a new new object on top of this one.{/t}' class='center'>
+			<input type='image' src='images/truly_not_available_image' name='Add_Object_Top_{$ID}'
+				alt='{t}Add element above{/t}' title='{t}Add a new new object on top of this one.{/t}' class='center'>
 			<input type='image' src='images/sieve_add_new_bottom.png' name='Add_Object_Bottom_{$ID}'
 				alt='{t}Add new{/t}' title='{t}Add a new new object at the bottom of this one.{/t}' class='center'>	
+			<input type='image' src='images/truly_not_available_image' name='Add_Object_Bottom_{$ID}'
+				alt='{t}Add element below{/t}' title='{t}Add a new new object at the bottom of this one.{/t}' class='center'>	
 		</td>
 	</tr>
 	<tr>
