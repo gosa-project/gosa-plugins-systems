@@ -19,18 +19,19 @@
 	
 			<select name='element_type_{$ID}'>
 				<option value=''>&nbsp;</option>
-				<option value='sieve_comment'>comment</option>
-				<option value='sieve_fileinto'>sieve_fileinto</option>
-				<option value='sieve_keep'>sieve_keep</option>
-				<option value='sieve_discard'>sieve_discard</option>
-				<option value='sieve_redirect'>sieve_redirect</option>
-				<option value='sieve_reject'>sieve_reject</option>
-				<option value='sieve_require'>sieve_require</option>
-				<option value='sieve_stop'>sieve_stop</option>
-				<option value='sieve_vacation'>sieve_vacation</option>
-				<option value='sieve_if'>sieve_if</option>
-				<option value='sieve_elsif'>sieve_elsif</option>
-				<option value='sieve_else'>sieve_else</option>
+				<option value='sieve_keep'>{t}Keep{/t}</option>
+				<option value='sieve_comment'>{t}Comment{/t}</option>
+				<option value='sieve_fileinto'>{t}Fileinto{/t}</option>
+				<option value='sieve_keep'>{t}Keep{/t}</option>
+				<option value='sieve_discard'>{t}Discard{/t}</option>
+				<option value='sieve_redirect'>{t}Redirect{/t}</option>
+				<option value='sieve_reject'>{t}Reject{/t}</option>
+				<option value='sieve_require'>{t}Require{/t}</option>
+				<option value='sieve_stop'>{t}Stop{/t}</option>
+				<option value='sieve_vacation'>{t}Vacationmessage{/t}</option>
+				<option value='sieve_if'>{t}If{/t}</option>
+				<option value='sieve_else'>{t}Else{/t}</option>
+				<option value='sieve_elsif'>{t}Else if{/t}</option>
 			</select>
 
 			<input type='image' src='images/sieve_add_new_top.png' name='Add_Object_Top_{$ID}'

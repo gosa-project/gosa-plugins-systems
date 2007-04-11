@@ -709,6 +709,72 @@ class sieveManagement extends plugin
       return(FALSE);
     }
 
+    /* These element types are allowed to be added here */
+    $element_types= array(
+        "sieve_keep"      => _("Keep"),
+        "sieve_comment"   => _("Comment"),
+        "sieve_fileinto"  => _("File into"),
+        "sieve_keep"      => _("Keep"),
+        "sieve_discard"   => _("Discard"),
+        "sieve_redirect"  => _("Redirect"),
+        "sieve_reject"    => _("Reject"),
+        "sieve_require"   => _("Require"),
+        "sieve_stop"      => _("Stop"),
+        "sieve_vacation"  => _("Vacation message"),
+        "sieve_if"        => _("If"));
+
+    /* Check if we should add else/elsif to the select box
+     *  or not. We can't add else twice!.
+     */
+
+    /* Get posistion of the current element
+     */
+    foreach($this->current_handler->tree_->pap as $key => $obj){
+
+      if($obj->object_id == $id && in_array(get_class($obj),array("sieve_if","sieve_elsif"))){
+
+        /* Get block start/end */
+        $end_id = $this->current_handler->tree_->get_block_end($key);
+        $else_found = FALSE;
+        $elsif_found = FALSE;
+
+        /* Check if there is already an else in this block
+         */
+        for($i =  $key ; $i < $end_id ; $i ++){
+          if(get_class($this->current_handler->tree_->pap[$i]) == "sieve_else"){
+            $else_found = TRUE;
+          }
+          if(get_class($this->current_handler->tree_->pap[$i]) == "sieve_elsif"){
+            $elsif_found = TRUE;
+          }
+        }
+
+        if($this->add_above_below == "below"){
+
+          /* Only allow adding 'else' if there is currently
+           *  no 'else' statement. And don't allow adding
+           *  'else' before 'elseif'
+           */
+          if(!$else_found && (!(get_class($obj) == "sieve_if" && $elsif_found))){
+            $element_types['sieve_else'] = _("Else");
+          }
+          $element_types['sieve_elsif'] = _("Else if");
+        }else{
+         
+          /* Allow adding elsif above elsif */ 
+          if(in_array(get_class($obj),array("sieve_elsif"))){
+            $element_types['sieve_elsif'] = _("Else if");
+          }
+        }
+      }
+    }
+
+    if(!isset($element_types[$type])){
+      print_red(sprintf(_("Can't add the specified element at the given position.")));
+      return;
+    }
+
+
     /* Create elements we should add 
      * -Some element require also surrounding block elements
      */
