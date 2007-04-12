@@ -20,7 +20,7 @@
 */
 
 
-class setup_step 
+class setup_step extends plugin
 {
   var $s_title      = "Still undefined";
   var $s_title_long = "This is a still undefined long title";
@@ -29,9 +29,12 @@ class setup_step
   var $is_enabled   = false;
   var $is_completed = false;
 
+  var $header_image = "images/personal.png";
+
   var $attributes   = array();
   var $parent       = NULL;
 
+  
   function setup_step()
   {
   }
@@ -110,6 +113,12 @@ class setup_step
       $tmp[$attr] = $this->$attr;
     }
     return($tmp);
+  }
+
+  function print_header()
+  {
+    $display= print_header(get_template_path($this->header_image),$this->s_title_long,"");  
+    return($display);
   }
 }
 

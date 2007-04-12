@@ -233,26 +233,7 @@ class setup
   /* Create header entry */
   function get_header_html()
   {
-    $str ="";
-    $str.=" <div >";
-    $str.="   <div style='padding:3px;'>";
-    $str.="     <img src='images/system.png' alt='' class='center'>";
-    $str.=   $this->o_steps[$this->i_current]->get_long_title();
-    $str.="     ";
-    $str.="   </div>";
-#     $str.="   <div style='text-align:right;float:top;'>";
-#     if(isset($this->o_steps[$this->i_current -1]) && $this->o_steps[$this->i_current -1]->is_enabled()){
-#       $str.="   <input class='center' type='image' name='last' src='images/setup_step_back.png'  title='"._("Last step")."'>";
-#     }else{
-#       $str.="   <img class='center' src='images/setup_step_back_gray.png' title='"._("Last step")."'>";
-#     }
-#     if(isset($this->o_steps[$this->i_current +1]) && $this->o_steps[$this->i_current +1]->is_enabled()){
-#       $str.="   <input class='center' type='image' name='next' src='images/setup_step_forward.png'  title='"._("Next step")."'>";
-#     }else{
-#       $str.="   <img class='center' src='images/setup_step_forward_gray.png'  title='"._("Next step")."'>";
-#     }
-#     $str.= "  </div>";
-    $str.= "</div>";
+    $str=   $this->o_steps[$this->i_current]->print_header();
     return ($str);
   }
 

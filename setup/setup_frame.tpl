@@ -21,9 +21,7 @@
 			<li>
 				<div style='border-top: solid 1px #BBBBBB; '>
 					<div style='padding:12px;'>
-						<div class='plugtop'>
-							{$header}
-						</div>
+						{$header}
 					</div>
 				</div>
 			</li>
