@@ -114,6 +114,7 @@ $header= "<!-- headers.tpl-->".$smarty->fetch(get_template_path('setup_headers.t
 $smarty->assign("contents"  , $display);
 $smarty->assign("navigation", $_SESSION['setup']->get_navigation_html());
 $smarty->assign("header", $_SESSION['setup']->get_header_html());
+$smarty->assign("bottom", $_SESSION['setup']->get_bottom_html());
 
 if ($error_collector != ""){
   $smarty->assign("php_errors", $error_collector."</div>");

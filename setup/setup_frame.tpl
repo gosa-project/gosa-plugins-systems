@@ -29,13 +29,16 @@
 		</div>
 
 		<div class='setup_bottom'>
-			{$version}	
+			{$bottom}
 		</div>
 	</div>
 </div>
 <input type='hidden' name='setup_goto_step' value=''>
 </form>
 </center>
+<div style='width:100%; text-align:right'>
+	{$version}
+</div>
 
 <script type='javascript'>
 	document.getElementById('focus').focus();

@@ -213,6 +213,23 @@ class setup
   }
 
   
+
+  function get_bottom_html()
+  {
+    $str ="";
+    $str.="   <div style='text-align:right;float:top;'>";
+    if(isset($this->o_steps[$this->i_current -1]) && $this->o_steps[$this->i_current -1]->is_enabled()){
+      $str .= "<input type='submit' name='last' value='"._("Backward")."'>";
+    }else{
+      $str .= "<input type='button' name='last' value='"._("Backward")."' disabled>";
+    }
+
+    $str .= "<input type='submit' name='next' value='"._("Forward")."'>";
+    $str .="</div>";
+    return($str);
+  }
+
+  
   /* Create header entry */
   function get_header_html()
   {
@@ -223,18 +240,18 @@ class setup
     $str.=   $this->o_steps[$this->i_current]->get_long_title();
     $str.="     </font>";
     $str.="   </div>";
-    $str.="   <div style='text-align:right;float:top;'>";
-    if(isset($this->o_steps[$this->i_current -1]) && $this->o_steps[$this->i_current -1]->is_enabled()){
-      $str.="   <input class='center' type='image' name='last' src='images/setup_step_back.png'  title='"._("Last step")."'>";
-    }else{
-      $str.="   <img class='center' src='images/setup_step_back_gray.png' title='"._("Last step")."'>";
-    }
-#   if(isset($this->o_steps[$this->i_current +1]) && $this->o_steps[$this->i_current +1]->is_enabled()){
-      $str.="   <input class='center' type='image' name='next' src='images/setup_step_forward.png'  title='"._("Next step")."'>";
-#   }else{
-#     $str.="   <img class='center' src='images/setup_step_forward_gray.png'  title='"._("Next step")."'>";
-#   }
-    $str.= "  </div>";
+#     $str.="   <div style='text-align:right;float:top;'>";
+#     if(isset($this->o_steps[$this->i_current -1]) && $this->o_steps[$this->i_current -1]->is_enabled()){
+#       $str.="   <input class='center' type='image' name='last' src='images/setup_step_back.png'  title='"._("Last step")."'>";
+#     }else{
+#       $str.="   <img class='center' src='images/setup_step_back_gray.png' title='"._("Last step")."'>";
+#     }
+#     if(isset($this->o_steps[$this->i_current +1]) && $this->o_steps[$this->i_current +1]->is_enabled()){
+#       $str.="   <input class='center' type='image' name='next' src='images/setup_step_forward.png'  title='"._("Next step")."'>";
+#     }else{
+#       $str.="   <img class='center' src='images/setup_step_forward_gray.png'  title='"._("Next step")."'>";
+#     }
+#     $str.= "  </div>";
     $str.= "</div>";
     return ($str);
   }

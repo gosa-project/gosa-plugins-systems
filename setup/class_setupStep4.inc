@@ -37,6 +37,7 @@ class setup_step_4 extends setup_step
 
   var $attributes = array("connection","location","admin","password","base","tls");
 
+
   function setup_step_4()
   {
     $this->update_strings();
