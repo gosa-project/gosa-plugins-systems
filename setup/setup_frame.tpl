@@ -2,11 +2,13 @@
 <center>
 {$php_errors}
 <form action='setup.php' name='mainform' method='post' enctype='multipart/form-data'>
-<input id='focus' name='focus' type='image' src='images/empty.png' style='width:1px; height:1px;' >
+<input id='focus' name='focus' type='image' src='images/empty.png' style='width:0px; height:0px;' >
 <div class='setup_dialog'>
 	<div class='setup_header'>
 		<img src='themes/default/images/go_logo.png' class='center' alt='GOsa'>
-		{t}GOsa - GOnicus System Administrator Setup{/t}
+	</div>
+	<div class='setup_menu'>
+		{t}GOsa setup{/t}
 	</div>
 	<div style="width:100%;">
 
@@ -19,9 +21,11 @@
 
 		<ul style='padding:0px;margin:0px;	list-style-type: none;'>
 			<li>
-				<div style='border-top: solid 1px #BBBBBB; '>
+				<div>
 					<div style='padding:12px;'>
-						{$header}
+						<div class='plugtop'>
+							{$header}
+						</div>
 					</div>
 				</div>
 			</li>
