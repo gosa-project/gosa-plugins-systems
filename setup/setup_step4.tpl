@@ -1,3 +1,4 @@
+
 <h2>{t}ldap connection{/t}</h2>
 
 <div style='width:100%;'>

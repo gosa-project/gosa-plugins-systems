@@ -787,18 +787,17 @@ td.tbrhead {
 body.setup_body {
 	background-image: none;
 	background-color: #979797;
-	margin: 10px;
+/*	margin: 10px;*/
 }
 
 /* The setup complete setup dialog */
 div.setup_dialog {
-	background-color: #F0F0F0;
+	background-color:#FFF;
 	border-right: solid 2px #444444;
 	border-bottom: solid 2px #666666;
 	border-top: solid 1px #666;
-	border-left: solid 1px #666;
+	/*border-left: solid 1px #666;*/
 	text-align: left;
-	width:100%;
 }
 
 /* Header col */
@@ -838,17 +837,18 @@ div.setup_bottom {
 
 /* Header col */
 div.setup_plug_header {
-	margin: 1px;
-	padding: 5px;
-	border-top: solid 2px #D0D0D0;
-	border-bottom: solid 2px #D0D0D0;
-	background-color:#E3E3E3
+	padding: 10px;
+	border-bottom: solid 1px #D0D0D0;
+	background-color: #E0E0F0;
+	border: 10px solid #FFFFFF;
+	
 }
 
 /* Content col */
 div.setup_contents {
-	padding: 5px;
-	max-height: 400px;
+	border-bottom: solid 1px #D0D0D0;
+	margin-right:2px;
+	background-color:#FFFFFF;
 	width:100%;
 }
 
@@ -861,10 +861,8 @@ div.default {
 /* Navigation col */
 div.setup_navigation {
 	width:200px;
-	min-height:300px;
 	clear:bottom;
 	background-color:#E8E8E8;
-	border-right: solid 1px #D0D0D0; 
 	float:left ; 
 	padding-left: 2px;;
 	padding-right: 2px;;
@@ -874,7 +872,7 @@ div.setup_navigation {
 /* Navigation title */
 div.setup_navigation_title {
 	font-size: 1.7em;
-	background: #D8D8D8 ;
+	background:#EEFFE6 ;
 	text-decoration:none;
 	width:100%;
 	padding-top:8px;
@@ -885,7 +883,7 @@ div.setup_navigation_title {
 
 /* The box used for each setup step */
 a.navigation_element, div.navigation_element {
-	background: #E8E8E8;
+	background: #EEFFE6;
 	text-decoration:none;
 	border-right: solid 1px #AAAAAA;
 	border-bottom: solid 1px #BBBBBB;
@@ -895,7 +893,8 @@ a.navigation_element, div.navigation_element {
 
 /* The box used for each setup step */
 a.navigation_element_active, div.navigation_element_active {
-	background: #E8E8E8;
+	background: #D2F6C2;
+	background: #dfffdf;
 	text-decoration:none;
 	float:left;
 	width:100%;
@@ -923,6 +922,9 @@ div.navigation_title_disabled {
 
 /* Disabled setup steps */
 div.navigation_title_inactive {
+
+	background-color: #dfffdf;
+	background-color: #e5e5e5;
 	font-size: 1.2em;
 	font-weight: bold;
 	text-decoration:none;

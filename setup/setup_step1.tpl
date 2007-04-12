@@ -1,4 +1,4 @@
-<div>
+<div style='width:100%;'>
 	<div class='default'>
 		<b>{t}Please select your prefered language{/t}</b>
 	</div>
@@ -12,3 +12,13 @@
 		</select>
 	</div>
 </div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>

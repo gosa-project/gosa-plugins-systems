@@ -68,4 +68,11 @@
 		</div>
 	{/if}
 </div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>.
 <input type='hidden' value='1' name='step7_posted'>
