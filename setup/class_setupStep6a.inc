@@ -24,9 +24,9 @@ class setup_step_6a extends setup_step
 {
   var $optional = array(
               "enableCopyPaste" => false,
-              "forceglobals" => false,
+              "forceglobals" => true,
               "forcessl" => false,
-              "warnssl" => false,
+              "warnssl" => true,
               "ppd_path" => "/var/spool/ppd/",
               "ppd_path_active" => FALSE,
               "compile" =>  "/var/spool/gosa",
