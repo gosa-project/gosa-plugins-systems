@@ -41,8 +41,8 @@ class setup
     $this->o_steps[8] = new setup_step_7();
     $this->o_steps[9] = new setup_step_8();
 
-    /* Ensure that setup is not reachable if gosa.conf */
-    if(file_exists(CONFIG_DIR."/gosa.conf")){
+    /* Ensure that setup is not reachable if gosa.conf (CONFIG_FILE) */
+    if(file_exists(CONFIG_DIR."/".CONFIG_FILE)){
       session_destroy();
       header("Location: index.php")    ;
       exit();

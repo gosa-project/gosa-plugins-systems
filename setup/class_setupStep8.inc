@@ -23,7 +23,7 @@
 class setup_step_8 extends setup_step
 {
   var $create_backup    = TRUE;
-  var $gosa_conf_name   = "/gosa.conf";
+  var $gosa_conf_contrib   = "/gosa.conf";
   var $cfg_file_written = FALSE;
   var $last_backup_name = "";
 
@@ -45,7 +45,7 @@ class setup_step_8 extends setup_step
   {
     $smarty = get_smarty();
     $smarty->assign("cv",$this->parent->captured_values);
-    $str =  $smarty->fetch(CONFIG_TEMPLATE_DIR.$this->gosa_conf_name);
+    $str =  $smarty->fetch(CONFIG_TEMPLATE_DIR.$this->gosa_conf_contrib);
     return($str);
   }  
 
@@ -59,11 +59,11 @@ class setup_step_8 extends setup_step
     
     /* Check if there is currently an active gosa.conf 
      */
-    $exists = file_exists(CONFIG_DIR.$this->gosa_conf_name); 
+    $exists = file_exists(CONFIG_DIR."/".CONFIG_FILE); 
 
     /* Check if existing config file is writeable */
     if($exists){
-      $writeable = is_writeable(CONFIG_DIR.$this->gosa_conf_name);
+      $writeable = is_writeable(CONFIG_DIR."/".CONFIG_FILE);
     }else{
       $writeable = is_writeable(CONFIG_DIR);
     }
@@ -87,9 +87,9 @@ class setup_step_8 extends setup_step
      
       if (preg_match('/MSIE 5.5/', $_SERVER['HTTP_USER_AGENT']) ||
           preg_match('/MSIE 6.0/', $_SERVER['HTTP_USER_AGENT'])){
-        header('Content-Disposition: filename="gosa.conf"');
+        header('Content-Disposition: filename="'.CONFIG_FILE.'"');
       } else {
-        header('Content-Disposition: attachment; filename="gosa.conf"');
+        header('Content-Disposition: attachment; filename="'.CONFIG_FILE.'"');
       }
 
       $str = $this->get_conf_data();
@@ -114,29 +114,29 @@ class setup_step_8 extends setup_step
       if(!$abort){
         
         /* Try to create file handle */
-        $fp = @fopen(CONFIG_DIR.$this->gosa_conf_name, "w");
+        $fp = @fopen(CONFIG_DIR."/".CONFIG_FILE, "w");
     
         if(!$fp){
-          $err_msg = sprintf(_("Can not create handle on file '%s', the configuration could not be written. Please check folder permission and try again. Or use the manual method if this can not be fixed anyway."),CONFIG_DIR.$this->gosa_conf_name);
+          $err_msg = sprintf(_("Can not create handle on file '%s', the configuration could not be written. Please check folder permission and try again. Or use the manual method if this can not be fixed anyway."),CONFIG_DIR."/".CONFIG_FILE);
           $abort  =TRUE;
         }else{
 
           $data = $this->get_conf_data();
           if(!fwrite($fp,$data)){
-            $err_msg = sprintf(_("Can not write file '%s'. Please check folder permission and try again. Or use the manual method if this can not be fixed anyway."),CONFIG_DIR.$this->gosa_conf_name);
+            $err_msg = sprintf(_("Can not write file '%s'. Please check folder permission and try again. Or use the manual method if this can not be fixed anyway."),CONFIG_DIR."/".CONFIG_FILE);
             $abort  =TRUE;
           }else{
             
-            @chgrp(CONFIG_DIR.$this->gosa_conf_name,$webgroup);
-            @chown(CONFIG_DIR.$this->gosa_conf_name,"root");
-            @chmod(CONFIG_DIR.$this->gosa_conf_name,0640);    
+            @chgrp(CONFIG_DIR."/".CONFIG_FILE,$webgroup);
+            @chown(CONFIG_DIR."/".CONFIG_FILE,"root");
+            @chmod(CONFIG_DIR."/".CONFIG_FILE,0640);    
           }
         }
       }
     } 
 
 
-    if($exists && $this->is_world_readable(CONFIG_DIR.$this->gosa_conf_name)){
+    if($exists && $this->is_world_readable(CONFIG_DIR."/".CONFIG_FILE)){
       $err_msg = _("Your configuration file is currently world readable. This is a big security risk. Please updated the file permissions as shown in the manual configuration part below.");
     }
 
@@ -145,10 +145,15 @@ class setup_step_8 extends setup_step
     $smarty->assign("save_requested", isset($_POST['saveconf']));
     $smarty->assign("err_msg",$err_msg);
     $smarty->assign("webgroup", $webgroup);
-    $smarty->assign("gosa_conf_name" , $this->gosa_conf_name);
     $smarty->assign("create_backup" , $this->create_backup);
     $smarty->assign("CONFIG_DIR",CONFIG_DIR);
+    $smarty->assign("CONFIG_FILE" , CONFIG_FILE);
     $smarty->assign("exists",$exists);
+
+    $smarty->assign("msg1", sprintf(_("If you want the setup routine to write the configuration file, use the 'Save configuration' button below. If you prefer to copy the '%s' manually to '%s' you can download the configuration file by using the 'Download configuration' button."), CONFIG_FILE,CONFIG_DIR));
+
+    $smarty->assign("msg2", sprintf(_("After placing the file under %s, place make sure that the webserver user is able to read %s, while other users shouldn't. You may want to execute these commands to achieve this requirement"),CONFIG_DIR,CONFIG_FILE));
+
     $smarty->assign("last_backup_name",$this->last_backup_name);
     $smarty->assign("writeable",$writeable);
     $smarty->assign("cv",$this->parent->captured_values);
@@ -174,9 +179,9 @@ class setup_step_8 extends setup_step
   {
     $info= posix_getgrgid(posix_getgid());
     $webgroup = $info['name'];
-    if(is_writeable(CONFIG_DIR) && is_writeable(CONFIG_DIR.$this->gosa_conf_name)){
-      $src = CONFIG_DIR.$this->gosa_conf_name;
-      $dst = CONFIG_DIR.$this->gosa_conf_name."_".date("Ymd");
+    if(is_writeable(CONFIG_DIR) && is_writeable(CONFIG_DIR."/".CONFIG_FILE)){
+      $src = CONFIG_DIR."/".CONFIG_FILE;
+      $dst = CONFIG_DIR."/".CONFIG_FILE."_".date("Ymd");
       $dst_backup= $dst;
       $i = 1;
       while(file_exists($dst)){

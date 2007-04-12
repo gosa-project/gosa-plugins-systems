@@ -252,9 +252,9 @@ class setup_step_2 extends setup_step
     /* Check if we can create a config file.*/
     $N = _("Configuration file writeable.");
     $D = _("The Configuration file can't be written");
-    $S = _("The GOsa reads its configuration from a file located in (/etc/gosa/gosa.conf). The setup can write the configuration directly in this file, if it is writeable."); 
-    $R =    ( file_exists("/etc/gosa/gosa.conf") && is_writeable("/etc/gosa/gosa.conf")) // is there a config file ? 
-        ||  (!file_exists("/etc/gosa/gosa.conf") && is_writeable("/etc/gosa"));  // There is non, but can we create a file there ?
+    $S = sprintf(_("The GOsa reads its configuration from a file located in (%s/%s). The setup can write the configuration directly in this file, if it is writeable."),CONFIG_DIR,CONFIG_FILE); 
+    $R =    ( file_exists(CONFIG_DIR."/".CONFIG_FILE) && is_writeable(CONFIG_DIR."/".CONFIG_FILE)) // is there a config file ? 
+        ||  (!file_exists(CONFIG_DIR."/".CONFIG_FILE) && is_writeable(CONFIG_DIR));  // There is non, but can we create a file there ?
     $M = FALSE;
     $this->is_writeable[] = array("NAME" => $N , "DESC" => $D , "RESULT" => $R , "SOLUTION" => $S , "MUST" => $M );
 
@@ -265,7 +265,7 @@ class setup_step_2 extends setup_step
 #      $N = _("No old configuration file.");
 #      $D = "";//_("");
 #      $S = _("If there is already a configuration file, this file will be overwritten when GOsa setup finishes. Please move your old config file away.");
-#      $R =  !file_exists("/etc/gosa/gosa.conf");
+#      $R =  !file_exists(CONFIG_DIR."/".CONFIG_FILE);
 #      $M = FALSE;
 #      $this->is_writeable[] = array("NAME" => $N , "DESC" => $D , "RESULT" => $R , "SOLUTION" => $S , "MUST" => $M );
 #    }

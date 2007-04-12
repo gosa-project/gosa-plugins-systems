@@ -41,7 +41,7 @@ class setup_step_5 extends setup_step
                           "pwminlen_active" => FALSE,
                           "pwdiffer" => 5,
                           "pwdiffer_active" => FALSE,
-                          "externalpwdhook" => "/usr/bin/sudo myscript",
+                          "externalpwdhook" => "/path/to/your/script username oldpassword newpassword",
                           "externalpwdhook_active" => FALSE);
 
   var $mail_settings = array("vacationdir"        => "/etc/gosa/vacation",

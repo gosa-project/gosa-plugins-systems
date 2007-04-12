@@ -22,7 +22,7 @@
 
 class setup_step_1 extends setup_step
 {
-  var $lang       = "en_EN";
+  var $lang       = "";
   var $languages  = array();
   var $attributes = array("lang","force_global_lang");
   var $force_global_lang = FALSE;
@@ -46,7 +46,8 @@ class setup_step_1 extends setup_step
   
   function execute()
   {
-    $this->languages = array("de_DE" => _("German"),
+    $this->languages = array(""      => _("Automatic detection"),
+                             "de_DE" => _("German"),
                              "fr_FR" => _("French"),
                              "en_EN" => _("English"),
                              "ru_RU" => _("Russian"));
