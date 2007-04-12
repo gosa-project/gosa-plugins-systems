@@ -5,29 +5,30 @@
 <input id='focus' name='focus' type='image' src='images/empty.png' style='width:1px; height:1px;' >
 <div class='setup_dialog'>
 	<div class='setup_header'>
+		<img src='themes/default/images/go_logo.png' class='center'>
 		{t}GOsa - GOnicus System Administrator Setup{/t}
 	</div>
 	<div style="width:100%; ">
 
 		<div class='setup_navigation'>
 			<div class='setup_navigation_title'>	
-				{t}Setup steps{/t}
 			</div>
 			{$navigation}		
 		</div>
 
-		<div class="setup_plug_header_container">
-			<div class='setup_plug_header'>
-				{$header}
-			</div>
-
-		</div>
-		<div class="setup_contents_container">
-			<div class='setup_contents'>
-				{$contents}
-			</div>
-		</div>
-
+		<ul style='padding:0px; margin:0px; list-style-type: none;'>
+			<li>
+				<div class='setup_plug_header'>
+					{$header}
+				</div>
+			</li>
+			<li>
+				<div class='setup_contents'>
+					{$contents}
+				</div>
+			</li>
+		</ul>
+	
 		<div class='setup_bottom'>
 			{$bottom}
 		</div>

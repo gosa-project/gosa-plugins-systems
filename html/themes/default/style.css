@@ -798,7 +798,7 @@ div.setup_dialog {
 	border-top: solid 1px #666;
 	border-left: solid 1px #666;
 	text-align: left;
-	width:980px;
+	width:100%;
 }
 
 /* Header col */
@@ -806,7 +806,8 @@ div.setup_header {
     background-color: #D2F6C2;
 	font-size: 2.0em;
 	font-weight: bold;
-	padding:7px;
+/*	vertical-align: center;*/
+/*	padding:7px;*/
 }
 
 /* Setup content header container */
@@ -815,7 +816,6 @@ div.setup_plug_header_container {
 
 /* Setup content container */
 div.setup_contents_container { 
-	float:left; 
 }
 
 /* Setup footer */
@@ -842,7 +842,6 @@ div.setup_plug_header {
 	padding: 5px;
 	border-top: solid 2px #D0D0D0;
 	border-bottom: solid 2px #D0D0D0;
-	margin-left:202px;
 	background-color:#E3E3E3
 }
 
