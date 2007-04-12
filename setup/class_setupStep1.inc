@@ -22,18 +22,17 @@
 
 class setup_step_1 extends setup_step
 {
-  var $lang       = "";
-  var $languages  = array();
-  var $attributes = array("lang","force_global_lang");
-  var $force_global_lang = FALSE;
+  var $lang_selected  = "";       /* Language selected from select box  */
+  var $lang           = "en_EN";  /* Detected language */
+  var $languages      = array();
+  var $attributes     = array("lang","lang_selected");
 
   function setup_step_1()
   {
-    $this->lang = get_browser_language();
-
-    $this->is_enabled = TRUE;
-    $this->is_active  = TRUE;
-   
+    $this->lang           = get_browser_language();
+    $this->lang_selected  = "";
+    $this->is_enabled     = TRUE;
+    $this->is_active      = TRUE;
     $this->update_strings(); 
   }
 
@@ -46,32 +45,29 @@ class setup_step_1 extends setup_step
   
   function execute()
   {
-    $this->languages = array(""      => _("Automatic detection"),
+    $this->languages = array(""      => _("Automatic"),
                              "de_DE" => _("German"),
                              "fr_FR" => _("French"),
                              "en_EN" => _("English"),
                              "ru_RU" => _("Russian"));
 
     $smarty = get_smarty();
-    $smarty->assign("languages", $this->languages);
-    $smarty->assign("lang", $this->lang);
-    $smarty->assign("force_global_lang", $this->force_global_lang);
+    $smarty->assign("languages",    $this->languages);
+    $smarty->assign("lang",         $this->lang);
+    $smarty->assign("lang_selected",$this->lang_selected);
     return($smarty->fetch(get_template_path("setup_step1.tpl",TRUE,dirname(__FILE__))));
   }
 
   function save_object()
   {
-    if((isset($_POST['lang'])) && isset($this->languages[$_POST['lang']])) {
-      $this->lang = $_POST['lang'];
+    if((isset($_POST['lang_selected'])) && isset($this->languages[$_POST['lang_selected']])) {
+      $this->lang_selected = $_POST['lang_selected'];
       $this->is_completed = TRUE;
-      $_SESSION['lang'] = $this->lang;
 
-      if(isset($_POST['force_global_lang'])){
-        if($_POST['force_global_lang'] == 1 ){
-          $this->force_global_lang = TRUE;
-        }else{
-          $this->force_global_lang = FALSE;
-        }
+      if($this->lang_selected != ""){
+        $_SESSION['lang'] = $this->lang_selected;
+      }else{
+        $_SESSION['lang'] = $this->lang;
       }
     }
   }

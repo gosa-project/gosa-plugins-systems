@@ -79,8 +79,12 @@ if (isset ($config->data['MAIN']['COMPILE'])){
 if(!isset($_SESSION['lang'])){
   $_SESSION['lang'] = get_browser_language();
 }
-if(isset($_POST['lang'])){
-  $_SESSION['lang'] = $_POST['lang'];
+if(isset($_POST['lang_selected'])){
+  if($_POST['lang_selected'] != ""){
+    $_SESSION['lang'] = $_POST['lang_selected'];
+  }else{
+    $_SESSION['lang'] = get_browser_language();
+  }
 }
 
 $lang = $_SESSION['lang'];

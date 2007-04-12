@@ -140,7 +140,6 @@ class setup_step_8 extends setup_step
       $err_msg = _("Your configuration file is currently world readable. This is a big security risk. Please updated the file permissions as shown in the manual configuration part below.");
     }
 
-
     $smarty = get_smarty();
     $smarty->assign("save_requested", isset($_POST['saveconf']));
     $smarty->assign("err_msg",$err_msg);
