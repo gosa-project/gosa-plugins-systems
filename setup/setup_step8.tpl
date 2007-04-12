@@ -54,7 +54,6 @@
 	{$CONFIG_DIR}/{$CONFIG_FILE}
 			</pre>
 		{/if}
-	</p>
 	<br>
 	<p>
 		<b>{t}Manually create configuration file{/t}</b>
