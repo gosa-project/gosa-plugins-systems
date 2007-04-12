@@ -200,7 +200,7 @@ class setup_step_2 extends setup_step
     $session_auto_start = ini_get('session.auto_start');
     $N = _("session.auto_start"."&nbsp;"."<b>"._("Off")."</b>");
     $D = _("In Order to use GOsa without any trouble, the session.auto_register option in your php.ini must be set to 'Off'.");
-    $S = _("Serach for 'session.auto_start' in your php.ini and set it to 'Off'.");
+    $S = _("Search for 'session.auto_start' in your php.ini and set it to 'Off'.");
     $R = !$session_auto_start['local_value'];
     $M = TRUE;
     $this->config_checks[] = array("NAME" => $N , "DESC" => $D , "RESULT" => $R , "SOLUTION" => $S , "MUST" => $M );

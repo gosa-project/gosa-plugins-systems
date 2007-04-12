@@ -433,7 +433,7 @@ class sieveManagement extends plugin
           $file     = $_FILES['Script_To_Import'];
 
           if($file['size'] == 0){
-            print_red(_("Specified file seams to empty."));
+            print_red(_("Specified file seems to be empty."));
           }elseif(!file_exists($file['tmp_name'])){
             print_red(_("Upload failed, somehow nothing was uploaded or the temporary file can't be accessed."));
           }elseif(!is_readable ($file['tmp_name'])){
@@ -568,7 +568,7 @@ class sieveManagement extends plugin
               if(!$else_found && (!(get_class($obj) == "sieve_if" && $elsif_found))){
                 $element_types['sieve_else'] = _("Else");
               }
-              $element_types['sieve_elsif'] = _("Else if");
+              $element_types['sieve_elsif'] = _("Else If");
             }
           }
         }
@@ -761,12 +761,12 @@ class sieveManagement extends plugin
           if(!$else_found && (!(get_class($obj) == "sieve_if" && $elsif_found))){
             $element_types['sieve_else'] = _("Else");
           }
-          $element_types['sieve_elsif'] = _("Else if");
+          $element_types['sieve_elsif'] = _("Else If");
         }else{
          
           /* Allow adding elsif above elsif */ 
           if(in_array(get_class($obj),array("sieve_elsif"))){
-            $element_types['sieve_elsif'] = _("Else if");
+            $element_types['sieve_elsif'] = _("Else If");
           }
         }
       }

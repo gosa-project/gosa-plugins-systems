@@ -31,7 +31,7 @@
 				<option value='sieve_vacation'>{t}Vacationmessage{/t}</option>
 				<option value='sieve_if'>{t}If{/t}</option>
 				<option value='sieve_else'>{t}Else{/t}</option>
-				<option value='sieve_elsif'>{t}Else if{/t}</option>
+				<option value='sieve_elsif'>{t}Else If{/t}</option>
 			</select>
 
 			<input type='image' src='images/sieve_add_new_top.png' name='Add_Object_Top_{$ID}'

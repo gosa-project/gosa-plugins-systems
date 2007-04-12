@@ -1139,7 +1139,7 @@ class mailAccount extends plugin
             "gosaSpamSortLevel"         =>  _("Spam level"),
             "gosaSpamMailbox"           =>  _("Spam mail box"),
 
-            "sieveManagement"           =>  _("Sieve manamgent"),
+            "sieveManagement"           =>  _("Sieve management"),
 
             "gosaMailDeliveryModeR"     =>  _("Reject due to mailsize"),    // This is flag of gosaMailDeliveryMode
             "gosaMailMaxSize"           =>  _("Mail max size"),

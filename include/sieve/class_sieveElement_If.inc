@@ -24,8 +24,8 @@ class sieve_if
   
     /* Possible address parts we can select */
     $this->address_parts = array( 
-        ":all"       => _("Complete adress")."&nbsp;("._("Default").")",
-        ":domain"    => _("Domian part") ,
+        ":all"       => _("Complete address")."&nbsp;("._("Default").")",
+        ":domain"    => _("Domain part") ,
         ":localpart" => _("Local part"));
 
     /* comparator type */
@@ -835,7 +835,7 @@ class sieve_if
     if($this->TYPE == "if"){
       $name .= "&nbsp;-&nbsp;"._("If");
     }elseif($this->TYPE == "elsif"){
-      $name .= "&nbsp;-&nbsp;"._("Else if");
+      $name .= "&nbsp;-&nbsp;"._("Else If");
     }else{
       $name .= "&nbsp;-&nbsp;"._("Else");
     }
@@ -1161,7 +1161,7 @@ class sieve_if
           $smarty->assign("DisplayAdd",TRUE);
           $smarty->assign("DisplayDel",FALSE);
           $cont_tmp = $smarty->fetch(get_template_path("templates/object_test_container.tpl",TRUE,dirname(__FILE__)));
-          $cont_tmp = preg_replace("/%%OBJECT_CONTENT%%/",_("Klick here to add a new test"),$cont_tmp);
+          $cont_tmp = preg_replace("/%%OBJECT_CONTENT%%/",_("Click here to add a new test"),$cont_tmp);
 
           $smarty->assign("Inverse",$Inverse);
           $smarty->assign("Contents",$cont_tmp.$Contents);
