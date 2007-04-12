@@ -20,8 +20,10 @@
 		<ul style='padding:0px;margin:0px;	list-style-type: none;'>
 			<li>
 				<div style='border-top: solid 1px #BBBBBB; '>
-					<div class='setup_plug_header'>
-						{$header}
+					<div style='padding:12px;'>
+						<div class='plugtop'>
+							{$header}
+						</div>
 					</div>
 				</div>
 			</li>

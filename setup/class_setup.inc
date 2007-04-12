@@ -235,10 +235,10 @@ class setup
   {
     $str ="";
     $str.=" <div >";
-    $str.="   <div>";
-    $str.="     <font style='font-size:20px;float:top'>";
+    $str.="   <div style='padding:3px;'>";
+    $str.="     <img src='images/system.png' alt='' class='center'>";
     $str.=   $this->o_steps[$this->i_current]->get_long_title();
-    $str.="     </font>";
+    $str.="     ";
     $str.="   </div>";
 #     $str.="   <div style='text-align:right;float:top;'>";
 #     if(isset($this->o_steps[$this->i_current -1]) && $this->o_steps[$this->i_current -1]->is_enabled()){
