@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-12 09:03+0200\n"
-"PO-Revision-Date: 2007-04-12 09:54+0200\n"
+"POT-Creation-Date: 2007-04-12 14:27+0200\n"
+"PO-Revision-Date: 2007-04-12 14:32+0200\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1437,7 +1437,7 @@ msgstr "Es wurde kein Ordner für die gewählten Spam-Einstellungen angegeben."
 
 #: plugins/personal/mail/class_mailAccount.inc:938
 msgid "Time interval to show vacation message is not valid."
-msgstr ""
+msgstr "Das Zeit-Intervall, um die Urlaubsnachricht zu zeigen, ist ungültig,"
 
 #: plugins/personal/mail/class_mailAccount.inc:978
 #: plugins/personal/mail/class_mailAccount.inc:990
@@ -4306,7 +4306,6 @@ msgstr "Open-Xchange"
 #: plugins/personal/connectivity/class_oxchangeAccount.inc:717
 #: plugins/personal/connectivity/class_oxchangeAccount.inc:721
 #: plugins/personal/connectivity/class_oxchangeAccount.inc:725
-#, fuzzy
 msgid "Openexchange"
 msgstr "Open-Xchange"
 
@@ -5577,8 +5576,8 @@ msgstr "Eine DFS-Freigabe nach oben"
 #: plugins/admin/systems/class_servDNSeditZone.inc:289
 #: plugins/admin/systems/class_baseSelectDialog.inc:30
 #: plugins/admin/ogroups/phonequeue.tpl:24
-#: include/sieve/templates/object_container_clear.tpl:8
 #: include/sieve/templates/object_container.tpl:8
+#: include/sieve/templates/object_container_clear.tpl:8
 #: include/class_MultiSelectWindow.inc:194
 #: include/class_MultiSelectWindow.inc:196 include/class_acl.inc:370
 msgid "Up"
@@ -6381,9 +6380,8 @@ msgid "ACLs"
 msgstr "ACLs"
 
 #: plugins/admin/acl/class_aclManagement.inc:141
-#, fuzzy
 msgid "You are not allowed to create a new role."
-msgstr "Es ist Ihnen nicht erlaubt, einen neuen Branch zu erstellen."
+msgstr "Es ist Ihnen nicht erlaubt, eine neue Rolle zu erstellen."
 
 #: plugins/admin/acl/class_aclManagement.inc:178
 msgid "You are not allowed to edit this acl."
@@ -6418,9 +6416,8 @@ msgid "Display acls matching"
 msgstr "Zeige ACLs, auf die zutrifft"
 
 #: plugins/admin/acl/class_divListACL.inc:115
-#, fuzzy
 msgid "New acl role"
-msgstr "Neues Profil"
+msgstr "Neue ACL-Rolle"
 
 #: plugins/admin/acl/class_divListACL.inc:158
 #: plugins/admin/groups/class_divListGroup.inc:208
@@ -6459,24 +6456,20 @@ msgid "Copy this entry"
 msgstr "Diesen Eintrag kopieren"
 
 #: plugins/admin/acl/class_divListACL.inc:166
-#, fuzzy
 msgid "Edit acl role"
-msgstr "Makro bearbeiten"
+msgstr "ACL-Rolle bearbeiten"
 
 #: plugins/admin/acl/class_divListACL.inc:176
-#, fuzzy
 msgid "Delete acl role"
-msgstr "Makro entfernen"
+msgstr "ACL-Rolle entfernen"
 
 #: plugins/admin/acl/class_divListACL.inc:188
-#, fuzzy
 msgid "Edit acl"
-msgstr "Klasse bearbeiten"
+msgstr "ACL bearbeiten"
 
 #: plugins/admin/acl/class_divListACL.inc:192
-#, fuzzy
 msgid "Delete acl"
-msgstr "Klasse entfernen"
+msgstr "ACL entfernen"
 
 #: plugins/admin/acl/class_divListACL.inc:231
 #: plugins/admin/acl/class_divListACL.inc:232
@@ -6490,32 +6483,28 @@ msgstr "Zugriffsregeln"
 #: plugins/admin/acl/class_divListACL.inc:232
 #: plugins/admin/acl/class_divListACL.inc:237
 #: plugins/admin/acl/class_aclRole.inc:930
-#, fuzzy
 msgid "ACL roles"
-msgstr "ACLs"
+msgstr "ACL-Rollen"
 
 #: plugins/admin/acl/class_divListACL.inc:232
 msgid "Access control list"
 msgstr "Zugriffskontrollliste"
 
 #: plugins/admin/acl/class_divListACL.inc:240
-#, fuzzy
 msgid "Role name"
-msgstr "Umbenennen"
+msgstr "Rollenname"
 
 #: plugins/admin/acl/class_divListACL.inc:241
-#, fuzzy
 msgid "Role description"
-msgstr "Aufgabengebiet"
+msgstr "Rollenbeschreibung"
 
 #: plugins/admin/acl/main.inc:43 plugins/admin/acl/main.inc:45
 msgid "ACL management"
 msgstr "ACL-Verwaltung"
 
 #: plugins/admin/acl/class_aclRole.inc:6
-#, fuzzy
 msgid "Access control list templates"
-msgstr "Zugriffskontrollliste"
+msgstr "Vorlagen für Zugriffskontrollisten"
 
 #: plugins/admin/acl/class_aclRole.inc:102 include/class_acl.inc:145
 msgid "All categories"
@@ -6546,8 +6535,9 @@ msgstr "Vollständiger Teilbaum (permanent)"
 #: plugins/admin/fai/class_faiProfile.inc:305
 #: plugins/admin/systems/class_servDNSeditZone.inc:290
 #: plugins/admin/ogroups/phonequeue.tpl:27
+#: include/sieve/templates/object_container.tpl:12
 #: include/sieve/templates/object_container_clear.tpl:12
-#: include/sieve/templates/object_container.tpl:12 include/class_acl.inc:371
+#: include/class_acl.inc:371
 msgid "Down"
 msgstr "Ab"
 
@@ -6676,9 +6666,8 @@ msgid "Saving ACLs with dn '%s' failed."
 msgstr "Speichern der ACLs von dn '%s' fehlgeschlagen."
 
 #: plugins/admin/acl/class_aclRole.inc:935
-#, fuzzy
 msgid "Acl roles"
-msgstr "FAI-Profil"
+msgstr "ACL-Rollen"
 
 #: plugins/admin/fai/faiVariable.tpl:36
 #: plugins/admin/fai/faiPartitionTable.tpl:36
@@ -7265,16 +7254,16 @@ msgstr "Bewahren"
 #: plugins/admin/fai/class_faiPartitionTableEntry.inc:288
 #: plugins/admin/systems/class_printerPPDDialog.inc:463
 #: plugins/admin/systems/class_printerPPDDialog.inc:466
-#: include/sieve/class_sieveManagement.inc:604
 #: include/sieve/class_sieveElement_If.inc:915
+#: include/sieve/class_sieveManagement.inc:604
 msgid "False"
 msgstr "falsch"
 
 #: plugins/admin/fai/class_faiPartitionTableEntry.inc:290
 #: plugins/admin/systems/class_printerPPDDialog.inc:462
 #: plugins/admin/systems/class_printerPPDDialog.inc:465
-#: include/sieve/class_sieveManagement.inc:603
 #: include/sieve/class_sieveElement_If.inc:915
+#: include/sieve/class_sieveManagement.inc:603
 msgid "True"
 msgstr "wahr"
 
@@ -8485,15 +8474,15 @@ msgstr "Eintrag entfernen"
 
 #: plugins/admin/groups/class_groupApplication.inc:709
 #: plugins/admin/groups/class_groupApplication.inc:743
-#: include/sieve/templates/object_container_clear.tpl:9
 #: include/sieve/templates/object_container.tpl:9
+#: include/sieve/templates/object_container_clear.tpl:9
 msgid "Move up"
 msgstr "Nach oben bewegen"
 
 #: plugins/admin/groups/class_groupApplication.inc:712
 #: plugins/admin/groups/class_groupApplication.inc:746
-#: include/sieve/templates/object_container_clear.tpl:13
 #: include/sieve/templates/object_container.tpl:13
+#: include/sieve/templates/object_container_clear.tpl:13
 msgid "Move down"
 msgstr "Nach unten bewegen"
 
@@ -9496,8 +9485,8 @@ msgstr "Betriebssystem"
 #: plugins/admin/systems/glpiPrinterCartridgesEdit.tpl:25
 #: plugins/admin/systems/class_glpiAccount.inc:780
 #: plugins/admin/systems/glpiAttachmentEdit.tpl:18
-#: include/sieve/templates/element_comment.tpl:4
 #: include/sieve/templates/object_container.tpl:23
+#: include/sieve/templates/element_comment.tpl:4
 #: include/sieve/class_sieveManagement.inc:501
 #: include/sieve/class_sieveManagement.inc:718
 msgid "Comment"
@@ -10135,8 +10124,8 @@ msgstr "Start"
 #: plugins/admin/systems/class_goLogDBServer.inc:93
 #: plugins/admin/systems/class_goImapServer.inc:165
 #: plugins/gofon/phoneaccount/class_phoneAccount.inc:1320
-#: include/sieve/templates/element_stop.tpl:4
 #: include/sieve/templates/object_container.tpl:30
+#: include/sieve/templates/element_stop.tpl:4
 #: include/sieve/class_sieveManagement.inc:508
 #: include/sieve/class_sieveManagement.inc:725
 msgid "Stop"
@@ -10274,7 +10263,7 @@ msgstr "Speichertest"
 #: plugins/admin/systems/class_servGeneric.inc:207
 #: plugins/admin/systems/class_servGeneric.inc:214
 msgid "Force localboot"
-msgstr ""
+msgstr "Erzwinge lokalen Systemstart"
 
 #: plugins/admin/systems/class_workstationGeneric.inc:292
 #: plugins/admin/systems/class_workstationGeneric.inc:299
@@ -15842,17 +15831,15 @@ msgstr "Nicht"
 #: include/sieve/templates/element_envelope.tpl:105
 #: include/sieve/templates/element_allof.tpl:7
 msgid "-"
-msgstr ""
+msgstr "-"
 
 #: include/sieve/templates/element_size.tpl:16
-#, fuzzy
 msgid "Select match type"
-msgstr "Wählen Sie einen ACL-Typ"
+msgstr "Wählen Sie eine Art der Übereinstimmung"
 
 #: include/sieve/templates/element_size.tpl:20
-#, fuzzy
 msgid "Select value unit"
-msgstr "Wählen Sie die Abteilung"
+msgstr "Wählen Sie die Werteinheit"
 
 #: include/sieve/templates/element_require.tpl:12
 #: include/sieve/templates/object_container.tpl:29
@@ -15867,16 +15854,16 @@ msgstr "Mail ablehnen"
 
 #: include/sieve/templates/element_reject.tpl:17
 msgid "This will be a multiline text element"
-msgstr ""
+msgstr "Dies wird ein mehrzeiliges Text-Element"
 
 #: include/sieve/templates/element_reject.tpl:19
 msgid "this will be stored as single string"
-msgstr ""
+msgstr "dies wird als einzelner String gespeichert"
 
 #: include/sieve/templates/element_anyof.tpl:10
 #: include/sieve/class_sieveManagement.inc:602
 msgid "Any of"
-msgstr ""
+msgstr "Einer von"
 
 #: include/sieve/templates/create_script.tpl:2
 msgid ""
@@ -15911,16 +15898,14 @@ msgstr "Nachricht behalten"
 #: include/sieve/templates/element_header.tpl:18
 #: include/sieve/templates/element_envelope.tpl:18
 #: include/sieve/templates/element_vacation.tpl:16
-#, fuzzy
 msgid "Normal mode"
-msgstr "Postleitzahl"
+msgstr "Normaler Modus"
 
 #: include/sieve/templates/element_address.tpl:22
 #: include/sieve/templates/element_header.tpl:23
 #: include/sieve/templates/element_envelope.tpl:23
-#, fuzzy
 msgid "Match type"
-msgstr "Authentifizierung"
+msgstr "Art der Übereinstimmung"
 
 #: include/sieve/templates/element_address.tpl:25
 #: include/sieve/templates/element_address.tpl:48
@@ -15939,9 +15924,8 @@ msgstr "Authentifizierung"
 #: include/sieve/templates/element_envelope.tpl:108
 #: include/sieve/templates/element_envelope.tpl:113
 #: include/sieve/templates/element_boolean.tpl:5
-#, fuzzy
 msgid "Boolean value"
-msgstr "Standardwert"
+msgstr "Boolscher Wert"
 
 #: include/sieve/templates/element_address.tpl:33
 #: include/sieve/templates/element_header.tpl:34
@@ -15956,9 +15940,8 @@ msgstr ""
 #: include/sieve/templates/element_address.tpl:55
 #: include/sieve/templates/element_header.tpl:46
 #: include/sieve/templates/element_envelope.tpl:48
-#, fuzzy
 msgid "Comparator"
-msgstr "Systeme"
+msgstr "Vergleichsoperator"
 
 #: include/sieve/templates/element_address.tpl:66
 #: include/sieve/templates/element_header.tpl:57
@@ -15988,15 +15971,14 @@ msgstr "Experten-Modus"
 #: include/sieve/templates/element_header.tpl:15
 #: include/sieve/templates/element_header.tpl:97
 #: include/sieve/class_sieveManagement.inc:597
-#, fuzzy
 msgid "Header"
 msgstr "Kopfzeilen"
 
 #: include/sieve/templates/element_else.tpl:4
 #: include/sieve/templates/object_container.tpl:33
+#: include/sieve/class_sieveElement_If.inc:840
 #: include/sieve/class_sieveManagement.inc:569
 #: include/sieve/class_sieveManagement.inc:762
-#: include/sieve/class_sieveElement_If.inc:840
 msgid "Else"
 msgstr "Sonst"
 
@@ -16005,12 +15987,93 @@ msgstr "Sonst"
 msgid "Condition"
 msgstr "Bedingung"
 
-#: include/sieve/templates/element_redirect.tpl:13
+#: include/sieve/templates/object_container.tpl:8
+#: include/sieve/templates/object_container_clear.tpl:8
+msgid "Move this object one position up"
+msgstr "Verschiebe dieses Objekt um eine Position nach oben"
+
+#: include/sieve/templates/object_container.tpl:12
+#: include/sieve/templates/object_container_clear.tpl:12
+msgid "Move this object one position down"
+msgstr "Verschiebe dieses Objekt um eine Position nach unten"
+
+#: include/sieve/templates/object_container.tpl:16
+#: include/sieve/templates/object_test_container.tpl:10
+#: include/sieve/templates/object_container_clear.tpl:16
+msgid "Remove this object"
+msgstr "Dieses Objekt entfernen"
+
+#: include/sieve/templates/object_container.tpl:17
+#: include/sieve/templates/object_container_clear.tpl:17
+msgid "Remove this element"
+msgstr "Dieses Element entfernen"
+
+#: include/sieve/templates/object_container.tpl:24
+msgid "Fileinto"
+msgstr "Ablegen unter"
+
+#: include/sieve/templates/object_container.tpl:26
+#: include/sieve/templates/element_discard.tpl:4
+#: include/sieve/class_sieveManagement.inc:504
+#: include/sieve/class_sieveManagement.inc:721
+msgid "Discard"
+msgstr "Verwerfen"
+
 #: include/sieve/templates/object_container.tpl:27
+#: include/sieve/templates/element_redirect.tpl:13
 #: include/sieve/class_sieveManagement.inc:505
 #: include/sieve/class_sieveManagement.inc:722
 msgid "Redirect"
 msgstr "Umleiten"
+
+#: include/sieve/templates/object_container.tpl:28
+#: include/sieve/class_sieveManagement.inc:506
+#: include/sieve/class_sieveManagement.inc:723
+msgid "Reject"
+msgstr "Ablehnen"
+
+#: include/sieve/templates/object_container.tpl:31
+msgid "Vacationmessage"
+msgstr "Urlaubsnachricht"
+
+#: include/sieve/templates/object_container.tpl:32
+#: include/sieve/class_sieveElement_If.inc:836
+#: include/sieve/class_sieveManagement.inc:510
+#: include/sieve/class_sieveManagement.inc:727
+msgid "If"
+msgstr "Wenn"
+
+#: include/sieve/templates/object_container.tpl:34
+#: include/sieve/templates/element_elsif.tpl:4
+#: include/sieve/class_sieveElement_If.inc:838
+#: include/sieve/class_sieveManagement.inc:571
+#: include/sieve/class_sieveManagement.inc:764
+#: include/sieve/class_sieveManagement.inc:769
+msgid "Else If"
+msgstr "Sonst Wenn"
+
+#: include/sieve/templates/object_container.tpl:38
+#: include/sieve/templates/object_container.tpl:42
+msgid "Add new"
+msgstr "Neu hinzufügen"
+
+#: include/sieve/templates/object_container.tpl:38
+#: include/sieve/templates/object_container.tpl:40
+msgid "Add a new new object on top of this one."
+msgstr "Füge ein neues Objekt an der Wurzel ein."
+
+#: include/sieve/templates/object_container.tpl:40
+msgid "Add element above"
+msgstr "Füge Element oberhalb ein"
+
+#: include/sieve/templates/object_container.tpl:42
+#: include/sieve/templates/object_container.tpl:44
+msgid "Add a new new object at the bottom of this one."
+msgstr ""
+
+#: include/sieve/templates/object_container.tpl:44
+msgid "Add element below"
+msgstr "Füge Element unterhalb ein"
 
 #: include/sieve/templates/element_redirect.tpl:18
 #, fuzzy
@@ -16033,13 +16096,6 @@ msgstr "Manuelle Auswahl"
 msgid "Folder"
 msgstr "Ordner"
 
-#: include/sieve/templates/element_discard.tpl:4
-#: include/sieve/templates/object_container.tpl:26
-#: include/sieve/class_sieveManagement.inc:504
-#: include/sieve/class_sieveManagement.inc:721
-msgid "Discard"
-msgstr "Verwerfen"
-
 #: include/sieve/templates/element_discard.tpl:9
 msgid "Discard the message"
 msgstr "Verwerfe Nachricht"
@@ -16048,7 +16104,7 @@ msgstr "Verwerfe Nachricht"
 #: include/sieve/templates/element_envelope.tpl:100
 #: include/sieve/class_sieveManagement.inc:598
 msgid "Envelope"
-msgstr ""
+msgstr "Umschlag"
 
 #: include/sieve/templates/element_boolean.tpl:8
 msgid "update"
@@ -16056,7 +16112,7 @@ msgstr "aktualisieren"
 
 #: include/sieve/templates/edit_frame_base.tpl:12
 msgid "View structured"
-msgstr ""
+msgstr "Strukturierte Ansicht"
 
 #: include/sieve/templates/edit_frame_base.tpl:14
 msgid "View source"
@@ -16078,7 +16134,7 @@ msgstr "Zu importierendes Skript"
 
 #: include/sieve/templates/element_stop.tpl:9
 msgid "Stop execution here!"
-msgstr ""
+msgstr "Beende Ausführung hier!"
 
 #: include/sieve/templates/add_element.tpl:1
 msgid "Add a new element"
@@ -16100,28 +16156,12 @@ msgstr "Vor"
 
 #: include/sieve/templates/element_allof.tpl:10
 #: include/sieve/class_sieveManagement.inc:601
-#, fuzzy
 msgid "All of"
 msgstr "Alle"
 
 #: include/sieve/templates/object_test_container.tpl:6
 msgid "Add this object"
 msgstr "Dieses Objekt hinzufügen"
-
-#: include/sieve/templates/object_test_container.tpl:10
-#: include/sieve/templates/object_container_clear.tpl:16
-#: include/sieve/templates/object_container.tpl:16
-msgid "Remove this object"
-msgstr "Dieses Objekt entfernen"
-
-#: include/sieve/templates/element_elsif.tpl:4
-#: include/sieve/templates/object_container.tpl:34
-#: include/sieve/class_sieveManagement.inc:571
-#: include/sieve/class_sieveManagement.inc:764
-#: include/sieve/class_sieveManagement.inc:769
-#: include/sieve/class_sieveElement_If.inc:838
-msgid "Else If"
-msgstr "Sonst Wenn"
 
 #: include/sieve/templates/management.tpl:1
 msgid "Sieve script management"
@@ -16144,7 +16184,7 @@ msgstr ""
 
 #: include/sieve/templates/management.tpl:15
 msgid "Possibly the sieve account has not been created yet."
-msgstr ""
+msgstr "Wahrscheinlich wurde das Sieve-Konto noch nicht erstellt."
 
 #: include/sieve/templates/management.tpl:19
 #, fuzzy
@@ -16162,9 +16202,8 @@ msgstr "Neues Skript erstellen"
 
 #: include/sieve/templates/element_vacation.tpl:13
 #: include/sieve/templates/element_vacation.tpl:44
-#, fuzzy
 msgid "Vacation Message"
-msgstr "Urlaubsbenachrichtigung"
+msgstr "Urlaubsnachricht"
 
 #: include/sieve/templates/element_vacation.tpl:21
 #, fuzzy
@@ -16175,21 +16214,6 @@ msgstr "Zeit-Intervall"
 msgid "Alternative sender addresses"
 msgstr "Alternative Absender-Adressen"
 
-#: include/sieve/templates/object_container_clear.tpl:8
-#: include/sieve/templates/object_container.tpl:8
-msgid "Move this object one position up"
-msgstr ""
-
-#: include/sieve/templates/object_container_clear.tpl:12
-#: include/sieve/templates/object_container.tpl:12
-msgid "Move this object one position down"
-msgstr ""
-
-#: include/sieve/templates/object_container_clear.tpl:17
-#: include/sieve/templates/object_container.tpl:17
-msgid "Remove this element"
-msgstr "Dieses Element entfernen"
-
 #: include/sieve/templates/select_test_type.tpl:1
 msgid "Select the test type you want to add"
 msgstr "Wählen Sie die Art des Tests, den Sie hinzufügen möchten"
@@ -16198,230 +16222,8 @@ msgstr "Wählen Sie die Art des Tests, den Sie hinzufügen möchten"
 msgid "Available test types"
 msgstr "Verfügbare Testarten"
 
-#: include/sieve/templates/object_container.tpl:24
-msgid "Fileinto"
-msgstr "Ablegen unter"
-
-#: include/sieve/templates/object_container.tpl:28
-#: include/sieve/class_sieveManagement.inc:506
-#: include/sieve/class_sieveManagement.inc:723
-msgid "Reject"
-msgstr "Ablehnen"
-
-#: include/sieve/templates/object_container.tpl:31
-msgid "Vacationmessage"
-msgstr "Urlaubsnachricht"
-
-#: include/sieve/templates/object_container.tpl:32
-#: include/sieve/class_sieveManagement.inc:510
-#: include/sieve/class_sieveManagement.inc:727
-#: include/sieve/class_sieveElement_If.inc:836
-msgid "If"
-msgstr "Wenn"
-
-#: include/sieve/templates/object_container.tpl:38
-#: include/sieve/templates/object_container.tpl:42
-msgid "Add new"
-msgstr "Neu hinzufügen"
-
-#: include/sieve/templates/object_container.tpl:38
-#: include/sieve/templates/object_container.tpl:40
-msgid "Add a new new object on top of this one."
-msgstr ""
-
-#: include/sieve/templates/object_container.tpl:40
-msgid "Add element above"
-msgstr ""
-
-#: include/sieve/templates/object_container.tpl:42
-#: include/sieve/templates/object_container.tpl:44
-msgid "Add a new new object at the bottom of this one."
-msgstr ""
-
-#: include/sieve/templates/object_container.tpl:44
-msgid "Add element below"
-msgstr ""
-
-#: include/sieve/class_My_Tree.inc:245
-msgid "Can't remove last element."
-msgstr ""
-
-#: include/sieve/class_My_Tree.inc:250
-msgid "Can't remove element with object_id="
-msgstr ""
-
-#: include/sieve/class_My_Tree.inc:250
-msgid ", there is no object with this identifier. Remove aborted."
-msgstr ""
-
-#: include/sieve/class_My_Tree.inc:658
-msgid "Require must be the first command in the script."
-msgstr ""
-
-#: include/sieve/class_sieveElement_Redirect.inc:24
-#, fuzzy
-msgid "Please specify a valid email address."
-msgstr "Bitte geben Sie einen gültige Disk-Namen ein."
-
-#: include/sieve/class_sieveElement_Redirect.inc:35
-#, fuzzy
-msgid "Put a mail address here"
-msgstr "Bitte geben Sie eine Mail-Adresse ein"
-
-#: include/sieve/class_sieveElement_Comment.inc:21
-msgid "Your comment here"
-msgstr ""
-
-#: include/sieve/class_sieveManagement.inc:114
-#: include/sieve/class_sieveManagement.inc:241
-#, fuzzy
-msgid "Parse failed"
-msgstr "Fehlgeschlagen"
-
-#: include/sieve/class_sieveManagement.inc:118
-#: include/sieve/class_sieveManagement.inc:245
-#, fuzzy
-msgid "Parse successful"
-msgstr "Import erfolgreich"
-
-#: include/sieve/class_sieveManagement.inc:155
-#, php-format
-msgid ""
-"The specified mail server '%s' does not exist within the GOsa configuration."
-msgstr ""
-"Der angegebene Mail-Server '%s' wurde nicht in Ihrer GOsa-Konfiguration "
-"gefunden."
-
-#: include/sieve/class_sieveManagement.inc:200
-#, fuzzy
-msgid "You should specify a name for your new script."
-msgstr "Bitte geben Sie einen Freigabe-Namen an."
-
-#: include/sieve/class_sieveManagement.inc:205
-#, fuzzy
-msgid "Only lower case names are allowed here."
-msgstr "Für den Zonennamen sind nur Kleinbuchstaben zugelassen."
-
-#: include/sieve/class_sieveManagement.inc:211
-msgid "Only a-z are allowed in script names."
-msgstr "Nur 'a-z' sind zulässig für Skript-Namen."
-
-#: include/sieve/class_sieveManagement.inc:217
-msgid "The specified name is already in use."
-msgstr "Der angegebene Name wird bereits verwendet."
-
-#: include/sieve/class_sieveManagement.inc:303
-#: include/sieve/class_sieveManagement.inc:349
-#: include/sieve/class_sieveManagement.inc:677
-#: include/sieve/class_sieveManagement.inc:1029
-#: include/class_mail-methods-cyrus.inc:269
-#, php-format
-msgid "Can't log into SIEVE server. Server says '%s'."
-msgstr ""
-"Die Anmeldung am SIEVE-Server ist fehlgeschlagen. Die Meldung war '%s'."
-
-#: include/sieve/class_sieveManagement.inc:311
-#, php-format
-msgid "Can't activate sieve script on server. Server says '%s'."
-msgstr "Kann das Sieve-Skript nicht aktivieren. Die Meldung lautet '%s'."
-
-#: include/sieve/class_sieveManagement.inc:354
-#, php-format
-msgid "Can't remove sieve script from server. Server says '%s'."
-msgstr ""
-"Kann das Sieve-Skript nicht entfernen. Die Meldung des Servers lautet '%s'."
-
-#: include/sieve/class_sieveManagement.inc:366
-#, php-format
-msgid "You are going to remove the sieve script '%s' from your mail server."
-msgstr ""
-"Sie sind dabei ,das Sieve-Skript '%s' von Ihrem Mail-Server zu entfernen."
-
-#: include/sieve/class_sieveManagement.inc:402
-msgid "Edited"
-msgstr "Bearbeitet"
-
-#: include/sieve/class_sieveManagement.inc:409
-#, php-format
-msgid "Please fix all errors before saving. Last error was : %s"
-msgstr ""
-"Bitte beheben Sie vor dem Speichern alle Fehler. Der letzte Fehler war: %s"
-
-#: include/sieve/class_sieveManagement.inc:436
-#, fuzzy
-msgid "Specified file seams to empty."
-msgstr "Die angebene Datei ist leer."
-
-#: include/sieve/class_sieveManagement.inc:438
-msgid ""
-"Upload failed, somehow nothing was uploaded or the temporary file can't be "
-"accessed."
-msgstr ""
-
-#: include/sieve/class_sieveManagement.inc:440
-#, fuzzy, php-format
-msgid "Can't open file '%s' to read uploaded file contents."
-msgstr "Kann Verzeichnis '%s' für hochgeladene PPD-Datei nicht anlegen."
-
-#: include/sieve/class_sieveManagement.inc:502
-#: include/sieve/class_sieveManagement.inc:719
-msgid "File into"
-msgstr "Ablegen unter"
-
-#: include/sieve/class_sieveManagement.inc:526
-msgid "Failed to add new element."
-msgstr ""
-
-#: include/sieve/class_sieveManagement.inc:642
-msgid "This script is marked as active"
-msgstr ""
-
-#: include/sieve/class_sieveManagement.inc:647
-msgid "Script length"
-msgstr "Skript-Länge"
-
-#: include/sieve/class_sieveManagement.inc:651
-#, fuzzy
-msgid "Remove script"
-msgstr "Dienst entfernen"
-
-#: include/sieve/class_sieveManagement.inc:660
-msgid "Activate script"
-msgstr "Skript aktivieren"
-
-#: include/sieve/class_sieveManagement.inc:664
-#, fuzzy
-msgid "Edit script"
-msgstr "Letztes Skript"
-
-#: include/sieve/class_sieveManagement.inc:776
-#, php-format
-msgid "Can't add the specified element at the given position."
-msgstr ""
-
-#: include/sieve/class_sieveManagement.inc:1044
-#, fuzzy
-msgid "Failed to save sieve script"
-msgstr "Eigenes Sieve-Skript verwenden"
-
-#: include/sieve/class_sieveElement_Vacation.inc:147
-msgid "Alternative sender addresse must be valid email addresses."
-msgstr ""
-
-#: include/sieve/class_sieveElement_Reject.inc:21
-msgid "Invalid character found, quotes are not allowed in a reject message."
-msgstr ""
-
-#: include/sieve/class_sieveElement_Reject.inc:37
-msgid "Your reject text here"
-msgstr ""
-
-#: include/sieve/class_sieveElement_Require.inc:73
-msgid "Please specify at least one valid requirement."
-msgstr "Bitte geben Sie mindestens eine gültige Bedingung an."
-
 #: include/sieve/class_sieveElement_If.inc:27
-msgid "Complete adress"
+msgid "Complete address"
 msgstr "Vollständige Adresse"
 
 #: include/sieve/class_sieveElement_If.inc:27
@@ -16430,13 +16232,12 @@ msgid "Default"
 msgstr "Standard"
 
 #: include/sieve/class_sieveElement_If.inc:28
-#, fuzzy
-msgid "Domian part"
-msgstr "Domänen-Benutzer"
+msgid "Domain part"
+msgstr "Domänen-Teil"
 
 #: include/sieve/class_sieveElement_If.inc:29
 msgid "Local part"
-msgstr ""
+msgstr "Lokaler Teil"
 
 #: include/sieve/class_sieveElement_If.inc:33
 msgid "Case insensitive"
@@ -16564,9 +16365,9 @@ msgid "Bytes"
 msgstr "Bytes"
 
 #: include/sieve/class_sieveElement_If.inc:745
-#, fuzzy
 msgid "Please select a valid match type in the list box below."
-msgstr "Bitte wählen Sie einen gültigen Mail-Server."
+msgstr ""
+"Bitte wählen Sie eine gültige Art der Übereinstimmung in der Liste unterhalb."
 
 #: include/sieve/class_sieveElement_If.inc:759
 #, fuzzy
@@ -16574,26 +16375,199 @@ msgid "Only numeric values are allowed here."
 msgstr "Der Wert für 'Nummer' muss numerisch sein."
 
 #: include/sieve/class_sieveElement_If.inc:769
-#, fuzzy
 msgid "No valid unit selected"
-msgstr "Kein gültiges Zertifikat geladen"
+msgstr "Keine gültige Einheit ausgewählt"
 
 #: include/sieve/class_sieveElement_If.inc:876
 msgid "Empty"
 msgstr "leer"
 
 #: include/sieve/class_sieveElement_If.inc:1134
+#: include/sieve/class_sieveElement_If.inc:1164
 msgid "Click here to add a new test"
 msgstr "Hier klicken, um einen neuen Test hinzuzufügen"
-
-#: include/sieve/class_sieveElement_If.inc:1164
-#, fuzzy
-msgid "Klick here to add a new test"
-msgstr "Hier klicken zum Anmelden"
 
 #: include/sieve/class_sieveElement_If.inc:1176
 msgid "Unhandled switch type"
 msgstr ""
+
+#: include/sieve/class_My_Tree.inc:245
+msgid "Can't remove last element."
+msgstr "Kann letztes Element nicht entfernen."
+
+#: include/sieve/class_My_Tree.inc:250
+msgid "Can't remove element with object_id="
+msgstr "Kann Element nicht entfernen - object_id="
+
+#: include/sieve/class_My_Tree.inc:250
+msgid ", there is no object with this identifier. Remove aborted."
+msgstr ""
+
+#: include/sieve/class_My_Tree.inc:658
+msgid "Require must be the first command in the script."
+msgstr ""
+
+#: include/sieve/class_sieveElement_Redirect.inc:24
+msgid "Please specify a valid email address."
+msgstr "Bitte geben Sie eine gültige E-Mail-Adresse ein."
+
+#: include/sieve/class_sieveElement_Redirect.inc:35
+#, fuzzy
+msgid "Put a mail address here"
+msgstr "Bitte geben Sie eine Mail-Adresse ein"
+
+#: include/sieve/class_sieveElement_Comment.inc:21
+msgid "Your comment here"
+msgstr "Hier folgt Ihr Kommentar"
+
+#: include/sieve/class_sieveManagement.inc:114
+#: include/sieve/class_sieveManagement.inc:241
+#, fuzzy
+msgid "Parse failed"
+msgstr "Fehlgeschlagen"
+
+#: include/sieve/class_sieveManagement.inc:118
+#: include/sieve/class_sieveManagement.inc:245
+#, fuzzy
+msgid "Parse successful"
+msgstr "Import erfolgreich"
+
+#: include/sieve/class_sieveManagement.inc:155
+#, php-format
+msgid ""
+"The specified mail server '%s' does not exist within the GOsa configuration."
+msgstr ""
+"Der angegebene Mail-Server '%s' wurde nicht in Ihrer GOsa-Konfiguration "
+"gefunden."
+
+#: include/sieve/class_sieveManagement.inc:200
+#, fuzzy
+msgid "You should specify a name for your new script."
+msgstr "Bitte geben Sie einen Freigabe-Namen an."
+
+#: include/sieve/class_sieveManagement.inc:205
+#, fuzzy
+msgid "Only lower case names are allowed here."
+msgstr "Für den Zonennamen sind nur Kleinbuchstaben zugelassen."
+
+#: include/sieve/class_sieveManagement.inc:211
+msgid "Only a-z are allowed in script names."
+msgstr "Nur 'a-z' sind zulässig für Skript-Namen."
+
+#: include/sieve/class_sieveManagement.inc:217
+msgid "The specified name is already in use."
+msgstr "Der angegebene Name wird bereits verwendet."
+
+#: include/sieve/class_sieveManagement.inc:303
+#: include/sieve/class_sieveManagement.inc:349
+#: include/sieve/class_sieveManagement.inc:677
+#: include/sieve/class_sieveManagement.inc:1029
+#: include/class_mail-methods-cyrus.inc:269
+#, php-format
+msgid "Can't log into SIEVE server. Server says '%s'."
+msgstr ""
+"Die Anmeldung am SIEVE-Server ist fehlgeschlagen. Die Meldung war '%s'."
+
+#: include/sieve/class_sieveManagement.inc:311
+#, php-format
+msgid "Can't activate sieve script on server. Server says '%s'."
+msgstr "Kann das Sieve-Skript nicht aktivieren. Die Meldung lautet '%s'."
+
+#: include/sieve/class_sieveManagement.inc:354
+#, php-format
+msgid "Can't remove sieve script from server. Server says '%s'."
+msgstr ""
+"Kann das Sieve-Skript nicht entfernen. Die Meldung des Servers lautet '%s'."
+
+#: include/sieve/class_sieveManagement.inc:366
+#, php-format
+msgid "You are going to remove the sieve script '%s' from your mail server."
+msgstr ""
+"Sie sind dabei ,das Sieve-Skript '%s' von Ihrem Mail-Server zu entfernen."
+
+#: include/sieve/class_sieveManagement.inc:402
+msgid "Edited"
+msgstr "Bearbeitet"
+
+#: include/sieve/class_sieveManagement.inc:409
+#, php-format
+msgid "Please fix all errors before saving. Last error was : %s"
+msgstr ""
+"Bitte beheben Sie vor dem Speichern alle Fehler. Der letzte Fehler war: %s"
+
+#: include/sieve/class_sieveManagement.inc:436
+#, fuzzy
+msgid "Specified file seems to be empty."
+msgstr "Die angebene Datei ist leer."
+
+#: include/sieve/class_sieveManagement.inc:438
+msgid ""
+"Upload failed, somehow nothing was uploaded or the temporary file can't be "
+"accessed."
+msgstr ""
+
+#: include/sieve/class_sieveManagement.inc:440
+#, fuzzy, php-format
+msgid "Can't open file '%s' to read uploaded file contents."
+msgstr "Kann Verzeichnis '%s' für hochgeladene PPD-Datei nicht anlegen."
+
+#: include/sieve/class_sieveManagement.inc:502
+#: include/sieve/class_sieveManagement.inc:719
+msgid "File into"
+msgstr "Ablegen unter"
+
+#: include/sieve/class_sieveManagement.inc:526
+msgid "Failed to add new element."
+msgstr ""
+
+#: include/sieve/class_sieveManagement.inc:642
+msgid "This script is marked as active"
+msgstr ""
+
+#: include/sieve/class_sieveManagement.inc:647
+msgid "Script length"
+msgstr "Skript-Länge"
+
+#: include/sieve/class_sieveManagement.inc:651
+msgid "Remove script"
+msgstr "Skript entfernen"
+
+#: include/sieve/class_sieveManagement.inc:660
+msgid "Activate script"
+msgstr "Skript aktivieren"
+
+#: include/sieve/class_sieveManagement.inc:664
+msgid "Edit script"
+msgstr "Skript bearbeiten"
+
+#: include/sieve/class_sieveManagement.inc:776
+#, php-format
+msgid "Can't add the specified element at the given position."
+msgstr ""
+"Kann das angegebene Element nicht in die vorgegebene Position einfügen."
+
+#: include/sieve/class_sieveManagement.inc:1044
+#, fuzzy
+msgid "Failed to save sieve script"
+msgstr "Eigenes Sieve-Skript verwenden"
+
+#: include/sieve/class_sieveElement_Vacation.inc:147
+msgid "Alternative sender addresse must be valid email addresses."
+msgstr ""
+
+#: include/sieve/class_sieveElement_Reject.inc:21
+msgid "Invalid character found, quotes are not allowed in a reject message."
+msgstr ""
+"Ungültiges Zeichen gefunden, Hochkommata sind in der Ablehnungsmeldung nicht "
+"erlaubt."
+
+#: include/sieve/class_sieveElement_Reject.inc:37
+msgid "Your reject text here"
+msgstr ""
+
+#: include/sieve/class_sieveElement_Require.inc:73
+msgid "Please specify at least one valid requirement."
+msgstr "Bitte geben Sie mindestens eine gültige Bedingung an."
 
 #: include/php_setup.inc:71
 msgid "Generating this page caused the PHP interpreter to raise some errors!"
@@ -17880,7 +17854,7 @@ msgstr "Letzter Schritt"
 
 #: setup/class_setup.inc:233
 msgid "Next step"
-msgstr ""
+msgstr "Nächster Schritt"
 
 #: setup/class_setupStep6.inc:58
 msgid "GOsa settings 2/3"
@@ -17922,7 +17896,7 @@ msgstr "GID / UID min id"
 #: setup/setup_step5.tpl:157 setup/setup_step5.tpl:177
 #: setup/setup_step5.tpl:216 setup/setup_step5.tpl:231
 msgid "Infos in FAQ"
-msgstr ""
+msgstr "Infos in FAQ"
 
 #: setup/setup_step6.tpl:32 setup/setup_step6.tpl:52 setup/setup_step6.tpl:66
 #: setup/setup_step6.tpl:90 setup/setup_step6.tpl:110
@@ -17938,9 +17912,8 @@ msgstr ""
 #: setup/setup_step7.tpl:17 setup/setup_step4.tpl:113 setup/setup_step5.tpl:92
 #: setup/setup_step5.tpl:158 setup/setup_step5.tpl:178
 #: setup/setup_step5.tpl:217 setup/setup_step5.tpl:232
-#, fuzzy
 msgid "Please read the FAQ for more informations"
-msgstr "Hole Kopfzeilen"
+msgstr "Bitte schauen Sie in die FAQ für mehr Informationen"
 
 #: setup/setup_step6.tpl:38
 msgid "RID base"
@@ -17952,9 +17925,8 @@ msgid "Samba SID mapping"
 msgstr "Samba SID"
 
 #: setup/setup_step6.tpl:71
-#, fuzzy
 msgid "Additional GOsa settings"
-msgstr "Anwendungs-Einstellungen"
+msgstr "Zusätzliche GOsa-Einstellungen"
 
 #: setup/setup_step6.tpl:76
 #, fuzzy
@@ -17963,17 +17935,15 @@ msgstr "Windows Arbeitsstation"
 
 #: setup/setup_step6.tpl:116
 msgid "Strict units"
-msgstr ""
+msgstr "Strikte Einheiten"
 
 #: setup/setup_step6.tpl:131
-#, fuzzy
 msgid "Government mode"
-msgstr "GOto-Modus"
+msgstr "Behörden-Modus"
 
 #: setup/setup_step6.tpl:145
-#, fuzzy
 msgid "Automatic uids"
-msgstr "Automatische Modelines"
+msgstr "Automatische UIDs"
 
 #: setup/setup_step6.tpl:164
 #, fuzzy
@@ -17994,58 +17964,59 @@ msgid "Snapshot base"
 msgstr "Abbild fehlgeschlagen."
 
 #: setup/class_setupStep7.inc:41 setup/class_setupStep7.inc:42
-#, fuzzy
 msgid "Ldap schema check"
-msgstr "LDAP-Dienst"
+msgstr "LDAP-Schema-Prüfung"
 
 #: setup/class_setupStep7.inc:43
 msgid "This dialog checks your ldap schema setup"
-msgstr ""
+msgstr "Dieser Dialog überprüft Ihre LDAP-Schema-Einrichtung"
 
 #: setup/class_setupStep7.inc:146
 msgid "Used to store account specific informations."
-msgstr ""
+msgstr "Verwendet, um kontenbezogene Informationen zu speichern."
 
 #: setup/class_setupStep7.inc:153
 msgid ""
 "Used to lock currently edited entries to avoid multiple changes at the same "
 "time."
 msgstr ""
+"Verwenden, um die momentan bearbeiteten Einträge für andere zu sperren (um "
+"gleichzeitige Änderungen zu verhindern)."
 
 #: setup/class_setupStep7.inc:197
-#, fuzzy, php-format
+#, php-format
 msgid "The required objectClass '%s' is not present in your schema setup"
-msgstr "Die benötigte Objektklasse '%s' ist nicht im LDAP vorhanden"
+msgstr ""
+"Die benötigte Objektklasse '%s' ist nicht in Ihrer Schema-Umgebung vorhanden"
 
 #: setup/class_setupStep7.inc:199
-#, fuzzy, php-format
+#, php-format
 msgid "The optional objectClass '%s' is not present in your schema setup"
-msgstr "Die benötigte Objektklasse '%s' ist nicht im LDAP vorhanden"
+msgstr ""
+"Die optionale Objektklasse '%s' ist nicht in Ihrer Schema-Umgebung vorhanden"
 
 #: setup/class_setupStep7.inc:205
-#, fuzzy, php-format
+#, php-format
 msgid "The required objectclass '%s' does not have version %s"
 msgstr "Die benötigte Objektklasse '%s' hat nicht die Version %s"
 
 #: setup/class_setupStep7.inc:207
-#, fuzzy, php-format
+#, php-format
 msgid "The optional objectclass '%s' does not have version %s"
-msgstr "Die benötigte Objektklasse '%s' hat nicht die Version %s"
+msgstr "Die optionale Objektklasse '%s' hat nicht die Version %s"
 
 #: setup/class_setupStep7.inc:211
-#, fuzzy, php-format
+#, php-format
 msgid "Class(es) available"
-msgstr "Datei ist verfügbar."
+msgstr "Verfügbare Klasse(n)"
 
 #: setup/class_setupStep6a.inc:70
-#, fuzzy
 msgid "GOsa settings 3/3"
-msgstr "GOsa-Einstellungen 1/2"
+msgstr "GOsa-Einstellungen 3/3"
 
 #: setup/class_setupStep6a.inc:71
-#, fuzzy
 msgid "GOsa generic settings, page 3/3"
-msgstr "Allgemeine GOsa-Einstellungen, Seite 1/2"
+msgstr "Allgemeine GOsa-Einstellungen, Seite 3/3"
 
 #: setup/class_setupStep6a.inc:171
 #, fuzzy
@@ -18058,13 +18029,12 @@ msgid "Maximal ldap query time must be a numeric value. "
 msgstr "Benötiger Wert muß numerisch sein."
 
 #: setup/setup_step6a.tpl:12
-#, fuzzy
 msgid "Optional settings"
-msgstr "Anwendungs-Einstellungen"
+msgstr "Zusätzliche Einstellungen"
 
 #: setup/setup_step6a.tpl:17
 msgid "Enable Copy & Paste"
-msgstr ""
+msgstr "Ermögliche Kopieren & Einfügen"
 
 #: setup/setup_step6a.tpl:33
 #, fuzzy
@@ -18111,12 +18081,11 @@ msgstr "Basisverzeichnis"
 
 #: setup/setup_step6a.tpl:197
 msgid "SMB hash"
-msgstr ""
+msgstr "SMB Hash"
 
 #: setup/setup_step6a.tpl:218
-#, fuzzy
 msgid "Session lifetime"
-msgstr "Ein Sitzungskonflikt wurde festgestellt"
+msgstr "Lebenszeit der Sitzung"
 
 #: setup/setup_step6a.tpl:232
 #, fuzzy
@@ -18138,15 +18107,15 @@ msgstr "Aktiviert"
 
 #: setup/setup_step7.tpl:3
 msgid "Validate schema when login into GOsa?"
-msgstr ""
+msgstr "Bei der GOsa-Anmeldung das Schema validieren?"
 
 #: setup/setup_step7.tpl:8
 msgid "Enable schema validation"
-msgstr ""
+msgstr "Ermögliche Schema-Validierung"
 
 #: setup/setup_step7.tpl:23
 msgid "Schema check was completely successful"
-msgstr ""
+msgstr "Die Schema-Validierung war erfolgreich."
 
 #: setup/setup_step7.tpl:25
 #, fuzzy
@@ -18155,7 +18124,7 @@ msgstr "Die Suche verlief ergebnislos..."
 
 #: setup/setup_step7.tpl:29
 msgid "Only display failed tests"
-msgstr ""
+msgstr "Zeige nur fehlgeschlagene Tests"
 
 #: setup/setup_step7.tpl:31
 #, fuzzy
@@ -18167,24 +18136,20 @@ msgid "Display all objectClasses also not checked but available classes"
 msgstr ""
 
 #: setup/setup_step7.tpl:60
-#, fuzzy
 msgid "All available objectClasses"
-msgstr "Verfügbare Mitglieder"
+msgstr "Alle verfügbaren Objekt-Klassen"
 
 #: setup/class_setupStep8.inc:38
-#, fuzzy
 msgid "Configuration file"
 msgstr "Konfigurationsdatei"
 
 #: setup/class_setupStep8.inc:39
-#, fuzzy
 msgid "In this step the configuration file will be created."
-msgstr "Die Konfigurationsdatei kann nicht geschrieben werden"
+msgstr "In diesem Schritt wird die Konfigurationsdatei erzeugt."
 
 #: setup/class_setupStep8.inc:40
-#, fuzzy
 msgid "Saving configuration file"
-msgstr "Speichern der Arbeitsstation ist fehlgeschlagen"
+msgstr "Speichern der Konfigurationsdatei"
 
 #: setup/class_setupStep8.inc:110
 msgid ""
@@ -18207,6 +18172,9 @@ msgid ""
 "Can not write file '%s'. Please check folder permission and try again. Or "
 "use the manual method if this can not be fixed anyway."
 msgstr ""
+"Kann Datei '%s' nicht schreiben. Bitte überprüfen Sie die Ordnerberechtigung "
+"und versuchen Sie es erneut(Oder versuchen Sie die manuelle Variante, wenn "
+"das Problem weiterhin bestehen sollte)."
 
 #: setup/class_setupStep8.inc:140
 msgid ""
@@ -18214,6 +18182,9 @@ msgid ""
 "risk. Please updated the file permissions as shown in the manual "
 "configuration part below."
 msgstr ""
+"Ihre Konfigurationsdatei ist momentan für jeden lesbar. Dies ist ein großer "
+"Sicherheitsrisiko. Bitte verändern Sie die Zugriffsrechte entsprechend der "
+"manuellen Variante unterhalb."
 
 #: setup/class_setupStep8.inc:152
 #, php-format
@@ -18223,76 +18194,75 @@ msgid ""
 "you can download the configuration file by using the 'Download "
 "configuration' button."
 msgstr ""
+"Wenn Sie möchten, dass die Einrichtung die Konfigurationsdatei schreibt, "
+"drücken Sie auf den Knopf 'Konfiguration speichern' unterhalb. Wenn Sie es "
+"bevorzugen, '%s' manuell nach '%s' zu kopieren, können Sie die "
+"Konfigurationsdatei herunterladen, wenn Sie auf den Knopf 'Konfiguration "
+"herunterladen' drücken."
 
 #: setup/class_setupStep8.inc:154
-#, fuzzy, php-format
+#, php-format
 msgid ""
 "After placing the file under %s, place make sure that the webserver user is "
 "able to read %s, while other users shouldn't. You may want to execute these "
 "commands to achieve this requirement"
 msgstr ""
-"Nachdem Sie die Konfigurationsdatei unter /etc/gosa abgelegt haben, muß "
-"sichergestellt werden, daß der Webserver auch darauf zugreifen kann - "
-"während normale Nutzer dies nicht dürfen. Führen Sie diese Kommandos aus, um "
-"die obigen Voraussetzungen zu erfüllen:"
+"Nachdem Sie die Konfigurationsdatei unter %s abgelegt haben, muß "
+"sichergestellt werden, daß der Webserver auf %s zugreifen kann - während "
+"normale Nutzer dies nicht dürfen. Führen Sie diese Kommandos aus, um die "
+"obigen Voraussetzungen zu erfüllen:"
 
 #: setup/class_setupStep8.inc:160
 #, php-format
 msgid ""
 "The following file(s), folders(s) must be writeable for the web-user '%s'."
 msgstr ""
+"Der/Die folgende(n) Datei(en); Ordner muß/müssen schreibbar für den Web-"
+"Benutzer '%s' sein."
 
 #: setup/setup_step8.tpl:3 ihtml/themes/default/setup_finish.tpl:12
 msgid "Configuration File"
 msgstr "Konfigurationsdatei"
 
 #: setup/setup_step8.tpl:5
-#, fuzzy
 msgid ""
 "GOsa setup has collected all data needed to create an initial configuration "
 "file."
 msgstr ""
-"GOsa Einrichtung besitzt nun genügend Informationen, um eine initiale "
-"Konfiguration zu erstellen. Speichern Sie den untenstehenden Link als gosa."
-"conf und nehmen Sie gegebenenfalls Anpassungen vor. Verschieben Sie diese "
-"Datei in das Verzeichnis /etc/gosa."
+"Die GOsa Einrichtung besitzt nun genügend Informationen, um eine initiale "
+"Konfiguration zu erstellen."
 
 #: setup/setup_step8.tpl:11
-#, fuzzy
 msgid "Automatically write configuration"
-msgstr "Paket-Konfiguration"
+msgstr "Konfiguration automatisch speichern"
 
 #: setup/setup_step8.tpl:15
-#, fuzzy
 msgid "Write configuration file"
-msgstr "Konfigurationsdatei"
+msgstr "Schreibe Konfigurationsdatei"
 
 #: setup/setup_step8.tpl:16
-#, fuzzy
 msgid "Save configuration"
-msgstr "Paket-Konfiguration"
+msgstr "Konfiguration speichern"
 
 #: setup/setup_step8.tpl:22
 msgid "Create a backup from existing configuration file"
-msgstr ""
+msgstr "Erstelle eine Sicherung von der bestehenden Konfigurationsdatei"
 
 #: setup/setup_step8.tpl:29
-#, fuzzy
 msgid "Configuration succesfully written."
-msgstr "Konfigurationsdatei schreibbar"
+msgstr "Konfigurationsdatei wurde erfolgreich geschrieben."
 
 #: setup/setup_step8.tpl:35
 msgid "Last created backup"
-msgstr ""
+msgstr "Zuletzt erstellte Sicherung"
 
 #: setup/setup_step8.tpl:44
-#, fuzzy
 msgid "Use GOsa with current configuration file"
-msgstr "Keine alte Konfigurationsdatei"
+msgstr "Verwende GOsa mit der aktuellen Konfigurationsdatei\t\t"
 
 #: setup/setup_step8.tpl:46
 msgid "Use GOsa now"
-msgstr ""
+msgstr "GOsa jetzt verwenden"
 
 #: setup/setup_step8.tpl:49
 #, fuzzy
@@ -18300,14 +18270,12 @@ msgid "Can't write configuration file, please check permissions."
 msgstr "Kann '%s/encodings' nicht lesen, bitte prüfen Sie die Rechte."
 
 #: setup/setup_step8.tpl:59
-#, fuzzy
 msgid "Manually create configuration file"
-msgstr "Keine alte Konfigurationsdatei"
+msgstr "Erzeuge Konfigurationsdatei manuell"
 
 #: setup/setup_step8.tpl:62
-#, fuzzy
 msgid "Download the configuration file"
-msgstr "Konfiguration herunterladen"
+msgstr "Konfigurationsdatei herunterladen"
 
 #: setup/setup_step8.tpl:63 ihtml/themes/default/setup_finish.tpl:17
 msgid "Download configuration"
@@ -18318,19 +18286,16 @@ msgid "GOsa - GOnicus System Administrator Setup"
 msgstr "GOSA - GOnicus System Administrator Setup"
 
 #: setup/setup_frame.tpl:14
-#, fuzzy
 msgid "Setup steps"
-msgstr "Status setzen"
+msgstr "Schritte der Einrichtung"
 
 #: setup/setup_step1.tpl:3
-#, fuzzy
 msgid "Please select your prefered language"
-msgstr "Bevorzugte Sprache"
+msgstr "Bitte wählen Sie Ihre bevorzugte Sprache"
 
 #: setup/setup_step1.tpl:7
-#, fuzzy
 msgid "Setup language"
-msgstr "Sprache"
+msgstr "Sprache der Einrichtung"
 
 #: setup/setup_step1.tpl:10
 #, fuzzy
@@ -18353,9 +18318,8 @@ msgstr ""
 "hinzuzufügen."
 
 #: setup/class_setupStep1.inc:48
-#, fuzzy
 msgid "Automatic"
-msgstr "automatisch"
+msgstr "Automatisch"
 
 #: setup/class_setupStep2.inc:37
 msgid "Installation check"
@@ -18376,12 +18340,11 @@ msgid "Checking PHP version"
 msgstr "Prüfe PHP-Version"
 
 #: setup/class_setupStep2.inc:64
-#, fuzzy, php-format
+#, php-format
 msgid "PHP must be of version %s or %s or above for some functions."
 msgstr ""
-"PHP muß mindestens in der Version 4.1.0 vorliegen. GOsa verwendet einige "
-"Funktionen, die in früheren Versionen fehlerhaft oder gar nicht "
-"implementiert waren."
+"PHP muß für manche Funktionen in der Version %s oder %s (oder höher) "
+"vorliegen "
 
 #: setup/class_setupStep2.inc:65
 msgid ""
@@ -18396,6 +18359,8 @@ msgid ""
 "The ldap module (PHP4-ldap/PHP5-ldap) is required to communicate with your "
 "ldap server."
 msgstr ""
+"Das LDAP-Modul (php4-ldap/php5-ldap) wird zur Kommunikation mit dem LDAP-"
+"Server benötigt."
 
 #: setup/class_setupStep2.inc:81
 msgid "This should be activated while compiling your PHP. (--with-gettext)"
@@ -18403,17 +18368,17 @@ msgstr ""
 "Dies sollte aktiviert sein, während Sie PHP kompilieren (--with-gettext)."
 
 #: setup/class_setupStep2.inc:88
-#, fuzzy
 msgid ""
 "This module is used by GOsa to convert samba munged dial informations and is "
 "therefore required. "
 msgstr ""
-"Dieses Modul wird von GOsa benutzt, um Informationen der samba-Erweiterung "
-"zu verarbeiten und wird daher benötigt."
+"Dieses Modul wird von GOsa benutzt, um Samba Munged Dial-Information zu "
+"konvertieren und wird daher benötigt."
 
 #: setup/class_setupStep2.inc:89
-msgid "his should be activated while compiling your PHP. (--with-iconv)"
-msgstr ""
+#, fuzzy
+msgid "This should be activated while compiling your PHP. (--with-iconv)"
+msgstr "Dies sollte aktiviert sein, wenn Sie PHP kompilieren (--with-iconv)."
 
 #: setup/class_setupStep2.inc:96
 #, fuzzy
@@ -18428,18 +18393,25 @@ msgid ""
 "The mhash module for PHP 4/5 is not available, please install it. (php4-"
 "mhash/php5-mhash)"
 msgstr ""
+"Das MHASH-Modul für PHP 4/5 ist nicht verfügbar, bitte installieren Sie es "
+"(php4-mhash/php5-mhash)."
 
 #: setup/class_setupStep2.inc:105
 msgid ""
 "This module is used to communicate with your mail server. Please install "
 "(PHP4-imap PHP5-imap)"
 msgstr ""
+"Dieses Modul wird verwendet, um mit Ihrem Mail-Server zu kommunizieren. "
+"Bitte installieren Sie es (php4-imap/php5-imap)."
 
 #: setup/class_setupStep2.inc:121
 msgid ""
 "This module is required to communicate with database servers, for example "
 "used in phone and fax addons. Please install (PHP4-mysql PHP5-mysql)"
 msgstr ""
+"Dieses Modul wird verwendet, um mit Datenbank-Servern zu kommunizieren (wird "
+"z.B. in der Telefon- oder Fax-Erweiterung verwendet). Bitte installieren Sie "
+"das Modul (php4-mysql/php5-mysql)."
 
 #: setup/class_setupStep2.inc:129
 #, fuzzy
@@ -18522,16 +18494,17 @@ msgstr ""
 
 #: setup/class_setupStep2.inc:194
 msgid ""
-"Serach for 'session.gc_maxlifetime' in your php.ini and set it to 86400 or "
+"Search for 'session.gc_maxlifetime' in your php.ini and set it to 86400 or "
 "higher."
 msgstr ""
+"Suchen Sie in Ihrer php.ini nach 'session.gc_maxlifetime' und setzen Sie es "
+"auf 84600 oder höher."
 
 #: setup/class_setupStep2.inc:201
 msgid "session.auto_start"
 msgstr "session.auto_start"
 
 #: setup/class_setupStep2.inc:203
-#, fuzzy
 msgid "Search for 'session.auto_start' in your php.ini and set it to 'Off'."
 msgstr ""
 "Suchen Sie in Ihrer php.ini nach 'session.auto_start' und setzen Sie es auf "
@@ -18547,7 +18520,7 @@ msgid ""
 "GOsa needs at least 32MB of memory, less will cause unpredictable errors! "
 "Increase it for larger setups."
 msgstr ""
-"GOsa benötigt mindestens 16MB Speicher, weniger Speicher würde "
+"GOsa benötigt mindestens 32MB Speicher, weniger Speicher würde "
 "unvorhersehbare Probleme verursachen! Bei größeren Installationen sollte "
 "dieser Wert noch erweitert werden."
 
@@ -18555,6 +18528,8 @@ msgstr ""
 msgid ""
 "Search for 'memory_limit' in your php.ini and set it to '32M' or higher."
 msgstr ""
+"Suchen Sie in Ihrer php.ini nach 'memory_limit' und setzen Sie es auf '32M' "
+"oder höher."
 
 #: setup/class_setupStep2.inc:217
 msgid "implicit_flush"
@@ -18563,6 +18538,8 @@ msgstr "implicit_flush"
 #: setup/class_setupStep2.inc:219
 msgid "Search for 'implicit_flush' in your php.ini and set it to 'Off'."
 msgstr ""
+"Suchen Sie in Ihrer php.ini nach 'implicit_flush' und setzen Sie es auf "
+"'Off'."
 
 #: setup/class_setupStep2.inc:225
 msgid "max_execution_time"
@@ -18572,14 +18549,17 @@ msgstr "max_execution_time"
 msgid ""
 "Search for 'max_execution_time' in your php.ini and set it to '30' or higher."
 msgstr ""
+"Suchen Sie in Ihrer php.ini nach 'max_execution_time' und setzen Sie es auf "
+"'30' oder höher."
 
 #: setup/class_setupStep2.inc:233
 msgid "expose_php"
-msgstr ""
+msgstr "expose_php"
 
 #: setup/class_setupStep2.inc:235
 msgid "Search for 'expose_php' in your php.ini and set if to 'Off'."
 msgstr ""
+"Suchen Sie in Ihrer php.ini nach 'expose_php' und setzen Sie es auf 'Off'."
 
 #: setup/class_setupStep2.inc:241
 msgid "magic_quotes_gpc"
@@ -18590,7 +18570,6 @@ msgid "On"
 msgstr "An"
 
 #: setup/class_setupStep2.inc:242
-#, fuzzy
 msgid ""
 "Increase your server security by setting magic_quotes_gpc to 'on'. PHP will "
 "escape all quotes   in strings in this case."
@@ -18599,8 +18578,10 @@ msgstr ""
 "stellen. PHP wird in dieser Einstellung alle 'quotes' in 'strings' umwandeln."
 
 #: setup/class_setupStep2.inc:243
-msgid "Search for 'magic_quotes_gpc' in yout php.ini and set it to 'On'."
+msgid "Search for 'magic_quotes_gpc' in your php.ini and set it to 'On'."
 msgstr ""
+"Suchen Sie in Ihrer php.ini nach 'magic_quotes_gpc' und setzen Sie es auf "
+"'On'."
 
 #: setup/class_setupStep2.inc:253
 msgid "Configuration file writeable."
@@ -18619,7 +18600,7 @@ msgstr ""
 
 #: setup/setup_step2.tpl:10
 msgid "PHP module and extension checks"
-msgstr ""
+msgstr "PHP Modul- und Erweiterungsprüfung"
 
 #: setup/setup_step2.tpl:30 setup/setup_step2.tpl:91 setup/setup_step2.tpl:146
 msgid "Successful"
@@ -18629,6 +18610,7 @@ msgstr "Erfolgreich"
 #: setup/setup_step2.tpl:161
 msgid "GOsa will NOT run without fixing this."
 msgstr ""
+"GOsa kann nicht ausgeführt werden, wenn das Problem nicht behoben wird."
 
 #: setup/setup_step2.tpl:46 setup/setup_step2.tpl:109
 #: setup/setup_step2.tpl:164
@@ -18636,9 +18618,8 @@ msgid "GOsa will run without fixing this."
 msgstr "GOsa wird verwendbar sein, ohne dies zu beheben."
 
 #: setup/setup_step2.tpl:70
-#, fuzzy
 msgid "PHP setup configuration"
-msgstr "Konfiguration der Parameter"
+msgstr "Konfiguration der PHP-Umgebung"
 
 #: setup/setup_step2.tpl:125
 msgid "Configuration file writeable"
@@ -18684,11 +18665,13 @@ msgstr "Verbindung als Benutzer '%s' zu Server '%s' schlug fehl."
 msgid ""
 "Anonymous bind successful on server '%s'. Please specify user and password."
 msgstr ""
+"Anonyme Verbindung zu Server '%s' erfolgreich. Bitte geben Sie nun Ihren "
+"Benutzernamen und das Kennwort ein."
 
 #: setup/class_setupStep4.inc:104
 #, php-format
 msgid "Bind as user '%s' successful on server '%s'."
-msgstr ""
+msgstr "Verbindung als Benutzer '%s' zu Server '%s' war erfolgreich."
 
 #: setup/setup_step4.tpl:1
 msgid "ldap connection"
@@ -18707,6 +18690,8 @@ msgid ""
 "Use the 'Test' button to try to connect with the given values. The status "
 "will be shown on the bottom of the page."
 msgstr ""
+"Verwenden Sie den 'Test'-Knopf, um eine Verbindung mit den angebenen Werten "
+"zu versuchen. Der Status wird am Ende der Seite angezeigt."
 
 #: setup/setup_step4.tpl:13
 #, fuzzy
@@ -18752,7 +18737,7 @@ msgstr "Allgemeine GOsa-Einstellungen, Seite 1/3"
 #: setup/class_setupStep5.inc:140 setup/class_setupStep5.inc:144
 #, php-format
 msgid "Don't add a trailing comma to '%s'."
-msgstr ""
+msgstr "Fügen Sie kein Komma an das Ende von '%s'."
 
 #: setup/class_setupStep5.inc:140 setup/setup_step5.tpl:43
 #: ihtml/themes/default/setup_step4.tpl:43
@@ -18765,9 +18750,8 @@ msgid "Group storage ou"
 msgstr "Ablage-OU für Gruppen:"
 
 #: setup/class_setupStep5.inc:148
-#, fuzzy
 msgid "Uid base must be numeric"
-msgstr "Der Wert für 'Wartezeit' muss numerisch sein"
+msgstr "Der Wert für 'UID Base' muss numerisch sein"
 
 #: setup/class_setupStep5.inc:152
 #, fuzzy
@@ -18822,7 +18806,7 @@ msgstr "Minimale Passwortlänge"
 
 #: setup/setup_step5.tpl:147 setup/setup_step5.tpl:151
 msgid "Different characters from old password"
-msgstr ""
+msgstr "Verschiedene Zeichen vom vorherigen Kennwort"
 
 #: setup/setup_step5.tpl:164
 msgid "External script"
@@ -19247,9 +19231,8 @@ msgid "ACLs for this object"
 msgstr "ACLs für dieses Objekt"
 
 #: ihtml/themes/default/acl.tpl:69
-#, fuzzy
 msgid "Available roles"
-msgstr "Verfügbare Mitglieder"
+msgstr "Verfügbare Rollen"
 
 #: ihtml/themes/default/sizelimit.tpl:3
 msgid ""
@@ -19613,6 +19596,10 @@ msgstr "Zeitstempel"
 #: ihtml/themes/default/snapshotdialog.tpl:79
 msgid "Reason for generating this snapshot"
 msgstr "Grund für das Erzeugen dieses Abbilds"
+
+#, fuzzy
+#~ msgid "Klick here to add a new test"
+#~ msgstr "Hier klicken zum Anmelden"
 
 #, fuzzy
 #~ msgid "Sieve manamgent"

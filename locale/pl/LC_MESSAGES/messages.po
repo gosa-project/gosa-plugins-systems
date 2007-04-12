@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-12 09:03+0200\n"
+"POT-Creation-Date: 2007-04-12 14:27+0200\n"
 "PO-Revision-Date: 2006-07-28 14:47+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -5524,8 +5524,8 @@ msgstr "Idź w górę jeden udział DFS"
 #: plugins/admin/systems/class_servDNSeditZone.inc:289
 #: plugins/admin/systems/class_baseSelectDialog.inc:30
 #: plugins/admin/ogroups/phonequeue.tpl:24
-#: include/sieve/templates/object_container_clear.tpl:8
 #: include/sieve/templates/object_container.tpl:8
+#: include/sieve/templates/object_container_clear.tpl:8
 #: include/class_MultiSelectWindow.inc:194
 #: include/class_MultiSelectWindow.inc:196 include/class_acl.inc:370
 msgid "Up"
@@ -6490,8 +6490,9 @@ msgstr "Pełne poddrzewo (trwałe)"
 #: plugins/admin/fai/class_faiProfile.inc:305
 #: plugins/admin/systems/class_servDNSeditZone.inc:290
 #: plugins/admin/ogroups/phonequeue.tpl:27
+#: include/sieve/templates/object_container.tpl:12
 #: include/sieve/templates/object_container_clear.tpl:12
-#: include/sieve/templates/object_container.tpl:12 include/class_acl.inc:371
+#: include/class_acl.inc:371
 msgid "Down"
 msgstr "W dół"
 
@@ -7216,16 +7217,16 @@ msgstr "Zachowaj"
 #: plugins/admin/fai/class_faiPartitionTableEntry.inc:288
 #: plugins/admin/systems/class_printerPPDDialog.inc:463
 #: plugins/admin/systems/class_printerPPDDialog.inc:466
-#: include/sieve/class_sieveManagement.inc:604
 #: include/sieve/class_sieveElement_If.inc:915
+#: include/sieve/class_sieveManagement.inc:604
 msgid "False"
 msgstr "Nie"
 
 #: plugins/admin/fai/class_faiPartitionTableEntry.inc:290
 #: plugins/admin/systems/class_printerPPDDialog.inc:462
 #: plugins/admin/systems/class_printerPPDDialog.inc:465
-#: include/sieve/class_sieveManagement.inc:603
 #: include/sieve/class_sieveElement_If.inc:915
+#: include/sieve/class_sieveManagement.inc:603
 msgid "True"
 msgstr "Tak"
 
@@ -8419,15 +8420,15 @@ msgstr "Usuń wpis"
 
 #: plugins/admin/groups/class_groupApplication.inc:709
 #: plugins/admin/groups/class_groupApplication.inc:743
-#: include/sieve/templates/object_container_clear.tpl:9
 #: include/sieve/templates/object_container.tpl:9
+#: include/sieve/templates/object_container_clear.tpl:9
 msgid "Move up"
 msgstr "Przesuń w górę"
 
 #: plugins/admin/groups/class_groupApplication.inc:712
 #: plugins/admin/groups/class_groupApplication.inc:746
-#: include/sieve/templates/object_container_clear.tpl:13
 #: include/sieve/templates/object_container.tpl:13
+#: include/sieve/templates/object_container_clear.tpl:13
 msgid "Move down"
 msgstr "Przesuń w dół"
 
@@ -9417,8 +9418,8 @@ msgstr "System operacyjny"
 #: plugins/admin/systems/glpiPrinterCartridgesEdit.tpl:25
 #: plugins/admin/systems/class_glpiAccount.inc:780
 #: plugins/admin/systems/glpiAttachmentEdit.tpl:18
-#: include/sieve/templates/element_comment.tpl:4
 #: include/sieve/templates/object_container.tpl:23
+#: include/sieve/templates/element_comment.tpl:4
 #: include/sieve/class_sieveManagement.inc:501
 #: include/sieve/class_sieveManagement.inc:718
 msgid "Comment"
@@ -10050,8 +10051,8 @@ msgstr "Start"
 #: plugins/admin/systems/class_goLogDBServer.inc:93
 #: plugins/admin/systems/class_goImapServer.inc:165
 #: plugins/gofon/phoneaccount/class_phoneAccount.inc:1320
-#: include/sieve/templates/element_stop.tpl:4
 #: include/sieve/templates/object_container.tpl:30
+#: include/sieve/templates/element_stop.tpl:4
 #: include/sieve/class_sieveManagement.inc:508
 #: include/sieve/class_sieveManagement.inc:725
 msgid "Stop"
@@ -15826,9 +15827,9 @@ msgstr "nagłówek"
 
 #: include/sieve/templates/element_else.tpl:4
 #: include/sieve/templates/object_container.tpl:33
+#: include/sieve/class_sieveElement_If.inc:840
 #: include/sieve/class_sieveManagement.inc:569
 #: include/sieve/class_sieveManagement.inc:762
-#: include/sieve/class_sieveElement_If.inc:840
 #, fuzzy
 msgid "Else"
 msgstr "fałsz"
@@ -15839,13 +15840,102 @@ msgstr "fałsz"
 msgid "Condition"
 msgstr "Połączenie"
 
-#: include/sieve/templates/element_redirect.tpl:13
+#: include/sieve/templates/object_container.tpl:8
+#: include/sieve/templates/object_container_clear.tpl:8
+msgid "Move this object one position up"
+msgstr ""
+
+#: include/sieve/templates/object_container.tpl:12
+#: include/sieve/templates/object_container_clear.tpl:12
+msgid "Move this object one position down"
+msgstr ""
+
+#: include/sieve/templates/object_container.tpl:16
+#: include/sieve/templates/object_test_container.tpl:10
+#: include/sieve/templates/object_container_clear.tpl:16
+#, fuzzy
+msgid "Remove this object"
+msgstr "Usuń obiekt"
+
+#: include/sieve/templates/object_container.tpl:17
+#: include/sieve/templates/object_container_clear.tpl:17
+#, fuzzy
+msgid "Remove this element"
+msgstr "Usuń pozycję"
+
+#: include/sieve/templates/object_container.tpl:24
+#, fuzzy
+msgid "Fileinto"
+msgstr "Plik"
+
+#: include/sieve/templates/object_container.tpl:26
+#: include/sieve/templates/element_discard.tpl:4
+#: include/sieve/class_sieveManagement.inc:504
+#: include/sieve/class_sieveManagement.inc:721
+#, fuzzy
+msgid "Discard"
+msgstr "Dyski"
+
 #: include/sieve/templates/object_container.tpl:27
+#: include/sieve/templates/element_redirect.tpl:13
 #: include/sieve/class_sieveManagement.inc:505
 #: include/sieve/class_sieveManagement.inc:722
 #, fuzzy
 msgid "Redirect"
 msgstr "bezpośredni"
+
+#: include/sieve/templates/object_container.tpl:28
+#: include/sieve/class_sieveManagement.inc:506
+#: include/sieve/class_sieveManagement.inc:723
+#, fuzzy
+msgid "Reject"
+msgstr "Wybierz"
+
+#: include/sieve/templates/object_container.tpl:31
+#, fuzzy
+msgid "Vacationmessage"
+msgstr "Treść autorespondera"
+
+#: include/sieve/templates/object_container.tpl:32
+#: include/sieve/class_sieveElement_If.inc:836
+#: include/sieve/class_sieveManagement.inc:510
+#: include/sieve/class_sieveManagement.inc:727
+#, fuzzy
+msgid "If"
+msgstr "NI"
+
+#: include/sieve/templates/object_container.tpl:34
+#: include/sieve/templates/element_elsif.tpl:4
+#: include/sieve/class_sieveElement_If.inc:838
+#: include/sieve/class_sieveManagement.inc:571
+#: include/sieve/class_sieveManagement.inc:764
+#: include/sieve/class_sieveManagement.inc:769
+msgid "Else If"
+msgstr ""
+
+#: include/sieve/templates/object_container.tpl:38
+#: include/sieve/templates/object_container.tpl:42
+#, fuzzy
+msgid "Add new"
+msgstr "Dodaj użytkownika"
+
+#: include/sieve/templates/object_container.tpl:38
+#: include/sieve/templates/object_container.tpl:40
+msgid "Add a new new object on top of this one."
+msgstr ""
+
+#: include/sieve/templates/object_container.tpl:40
+msgid "Add element above"
+msgstr ""
+
+#: include/sieve/templates/object_container.tpl:42
+#: include/sieve/templates/object_container.tpl:44
+msgid "Add a new new object at the bottom of this one."
+msgstr ""
+
+#: include/sieve/templates/object_container.tpl:44
+msgid "Add element below"
+msgstr ""
 
 #: include/sieve/templates/element_redirect.tpl:18
 #, fuzzy
@@ -15871,14 +15961,6 @@ msgstr "Język"
 #, fuzzy
 msgid "Folder"
 msgstr "Filtr"
-
-#: include/sieve/templates/element_discard.tpl:4
-#: include/sieve/templates/object_container.tpl:26
-#: include/sieve/class_sieveManagement.inc:504
-#: include/sieve/class_sieveManagement.inc:721
-#, fuzzy
-msgid "Discard"
-msgstr "Dyski"
 
 #: include/sieve/templates/element_discard.tpl:9
 #, fuzzy
@@ -15958,22 +16040,6 @@ msgstr "Wszystkie"
 msgid "Add this object"
 msgstr "ACLe dla tego obiektu"
 
-#: include/sieve/templates/object_test_container.tpl:10
-#: include/sieve/templates/object_container_clear.tpl:16
-#: include/sieve/templates/object_container.tpl:16
-#, fuzzy
-msgid "Remove this object"
-msgstr "Usuń obiekt"
-
-#: include/sieve/templates/element_elsif.tpl:4
-#: include/sieve/templates/object_container.tpl:34
-#: include/sieve/class_sieveManagement.inc:571
-#: include/sieve/class_sieveManagement.inc:764
-#: include/sieve/class_sieveManagement.inc:769
-#: include/sieve/class_sieveElement_If.inc:838
-msgid "Else If"
-msgstr ""
-
 #: include/sieve/templates/management.tpl:1
 #, fuzzy
 msgid "Sieve script management"
@@ -16028,22 +16094,6 @@ msgstr "Interwał czasowy"
 msgid "Alternative sender addresses"
 msgstr "Adresy alternatywne"
 
-#: include/sieve/templates/object_container_clear.tpl:8
-#: include/sieve/templates/object_container.tpl:8
-msgid "Move this object one position up"
-msgstr ""
-
-#: include/sieve/templates/object_container_clear.tpl:12
-#: include/sieve/templates/object_container.tpl:12
-msgid "Move this object one position down"
-msgstr ""
-
-#: include/sieve/templates/object_container_clear.tpl:17
-#: include/sieve/templates/object_container.tpl:17
-#, fuzzy
-msgid "Remove this element"
-msgstr "Usuń pozycję"
-
 #: include/sieve/templates/select_test_type.tpl:1
 #, fuzzy
 msgid "Select the test type you want to add"
@@ -16054,238 +16104,9 @@ msgstr "Wybierz elementy do dodania"
 msgid "Available test types"
 msgstr "Dostępni członkowie"
 
-#: include/sieve/templates/object_container.tpl:24
-#, fuzzy
-msgid "Fileinto"
-msgstr "Plik"
-
-#: include/sieve/templates/object_container.tpl:28
-#: include/sieve/class_sieveManagement.inc:506
-#: include/sieve/class_sieveManagement.inc:723
-#, fuzzy
-msgid "Reject"
-msgstr "Wybierz"
-
-#: include/sieve/templates/object_container.tpl:31
-#, fuzzy
-msgid "Vacationmessage"
-msgstr "Treść autorespondera"
-
-#: include/sieve/templates/object_container.tpl:32
-#: include/sieve/class_sieveManagement.inc:510
-#: include/sieve/class_sieveManagement.inc:727
-#: include/sieve/class_sieveElement_If.inc:836
-#, fuzzy
-msgid "If"
-msgstr "NI"
-
-#: include/sieve/templates/object_container.tpl:38
-#: include/sieve/templates/object_container.tpl:42
-#, fuzzy
-msgid "Add new"
-msgstr "Dodaj użytkownika"
-
-#: include/sieve/templates/object_container.tpl:38
-#: include/sieve/templates/object_container.tpl:40
-msgid "Add a new new object on top of this one."
-msgstr ""
-
-#: include/sieve/templates/object_container.tpl:40
-msgid "Add element above"
-msgstr ""
-
-#: include/sieve/templates/object_container.tpl:42
-#: include/sieve/templates/object_container.tpl:44
-msgid "Add a new new object at the bottom of this one."
-msgstr ""
-
-#: include/sieve/templates/object_container.tpl:44
-msgid "Add element below"
-msgstr ""
-
-#: include/sieve/class_My_Tree.inc:245
-msgid "Can't remove last element."
-msgstr ""
-
-#: include/sieve/class_My_Tree.inc:250
-msgid "Can't remove element with object_id="
-msgstr ""
-
-#: include/sieve/class_My_Tree.inc:250
-msgid ", there is no object with this identifier. Remove aborted."
-msgstr ""
-
-#: include/sieve/class_My_Tree.inc:658
-msgid "Require must be the first command in the script."
-msgstr ""
-
-#: include/sieve/class_sieveElement_Redirect.inc:24
-#, fuzzy
-msgid "Please specify a valid email address."
-msgstr "Proszę podać prawidłową nazwę skryptu."
-
-#: include/sieve/class_sieveElement_Redirect.inc:35
-#, fuzzy
-msgid "Put a mail address here"
-msgstr "Proszę podać prawidłową nazwę."
-
-#: include/sieve/class_sieveElement_Comment.inc:21
-msgid "Your comment here"
-msgstr ""
-
-#: include/sieve/class_sieveManagement.inc:114
-#: include/sieve/class_sieveManagement.inc:241
-#, fuzzy
-msgid "Parse failed"
-msgstr "błąd"
-
-#: include/sieve/class_sieveManagement.inc:118
-#: include/sieve/class_sieveManagement.inc:245
-#, fuzzy
-msgid "Parse successful"
-msgstr "Import powiódł się"
-
-#: include/sieve/class_sieveManagement.inc:155
-#, php-format
-msgid ""
-"The specified mail server '%s' does not exist within the GOsa configuration."
-msgstr ""
-
-#: include/sieve/class_sieveManagement.inc:200
-#, fuzzy
-msgid "You should specify a name for your new script."
-msgstr "Proszę podać nazwę dla udziału."
-
-#: include/sieve/class_sieveManagement.inc:205
-#, fuzzy
-msgid "Only lower case names are allowed here."
-msgstr "Tylko małe liter są dozwolone jako nazwa strefy."
-
-#: include/sieve/class_sieveManagement.inc:211
-#, fuzzy
-msgid "Only a-z are allowed in script names."
-msgstr "Tylko liczby są dozwolone w okresie życia"
-
-#: include/sieve/class_sieveManagement.inc:217
-#, fuzzy
-msgid "The specified name is already in use."
-msgstr "Wybrana nazwie już jest w użyciu."
-
-#: include/sieve/class_sieveManagement.inc:303
-#: include/sieve/class_sieveManagement.inc:349
-#: include/sieve/class_sieveManagement.inc:677
-#: include/sieve/class_sieveManagement.inc:1029
-#: include/class_mail-methods-cyrus.inc:269
-#, php-format
-msgid "Can't log into SIEVE server. Server says '%s'."
-msgstr "Nie można zalogować się do serwera SIEVE. Odpowiedź serwera '%s'."
-
-#: include/sieve/class_sieveManagement.inc:311
-#, fuzzy, php-format
-msgid "Can't activate sieve script on server. Server says '%s'."
-msgstr "Nie można aktywować skryptu sieve. Odpowiedź serwera '%s'."
-
-#: include/sieve/class_sieveManagement.inc:354
-#, fuzzy, php-format
-msgid "Can't remove sieve script from server. Server says '%s'."
-msgstr "Nie można pobrać skryptu sieve. Odpowiedź serwera '%s'."
-
-#: include/sieve/class_sieveManagement.inc:366
-#, fuzzy, php-format
-msgid "You are going to remove the sieve script '%s' from your mail server."
-msgstr ""
-"Brak uprawnień do usunięcia obiektu '%s' z listy członków drukarki '%s'."
-
-#: include/sieve/class_sieveManagement.inc:402
-#, fuzzy
-msgid "Edited"
-msgstr "Edytuj"
-
-#: include/sieve/class_sieveManagement.inc:409
-#, php-format
-msgid "Please fix all errors before saving. Last error was : %s"
-msgstr ""
-
-#: include/sieve/class_sieveManagement.inc:436
-#, fuzzy
-msgid "Specified file seams to empty."
-msgstr "Podany plik jest pusty."
-
-#: include/sieve/class_sieveManagement.inc:438
-msgid ""
-"Upload failed, somehow nothing was uploaded or the temporary file can't be "
-"accessed."
-msgstr ""
-
-#: include/sieve/class_sieveManagement.inc:440
-#, fuzzy, php-format
-msgid "Can't open file '%s' to read uploaded file contents."
-msgstr "Nie można utworzyć katalogu '%s' dla wgrywanych plików ppd."
-
-#: include/sieve/class_sieveManagement.inc:502
-#: include/sieve/class_sieveManagement.inc:719
-#, fuzzy
-msgid "File into"
-msgstr "Właściciel pliku"
-
-#: include/sieve/class_sieveManagement.inc:526
-msgid "Failed to add new element."
-msgstr ""
-
-#: include/sieve/class_sieveManagement.inc:642
-msgid "This script is marked as active"
-msgstr ""
-
-#: include/sieve/class_sieveManagement.inc:647
-#, fuzzy
-msgid "Script length"
-msgstr "Zawartość skryptu"
-
-#: include/sieve/class_sieveManagement.inc:651
-#, fuzzy
-msgid "Remove script"
-msgstr "Usuń usługę"
-
-#: include/sieve/class_sieveManagement.inc:660
-#, fuzzy
-msgid "Activate script"
-msgstr "Ostatni skrypt"
-
-#: include/sieve/class_sieveManagement.inc:664
-#, fuzzy
-msgid "Edit script"
-msgstr "Ostatni skrypt"
-
-#: include/sieve/class_sieveManagement.inc:776
-#, php-format
-msgid "Can't add the specified element at the given position."
-msgstr ""
-
-#: include/sieve/class_sieveManagement.inc:1044
-#, fuzzy
-msgid "Failed to save sieve script"
-msgstr "Użyj własnego skryptu SIEVE"
-
-#: include/sieve/class_sieveElement_Vacation.inc:147
-msgid "Alternative sender addresse must be valid email addresses."
-msgstr ""
-
-#: include/sieve/class_sieveElement_Reject.inc:21
-msgid "Invalid character found, quotes are not allowed in a reject message."
-msgstr ""
-
-#: include/sieve/class_sieveElement_Reject.inc:37
-msgid "Your reject text here"
-msgstr ""
-
-#: include/sieve/class_sieveElement_Require.inc:73
-#, fuzzy
-msgid "Please specify at least one valid requirement."
-msgstr "Proszę podać conajmniej jeden wzorzec pliku."
-
 #: include/sieve/class_sieveElement_If.inc:27
 #, fuzzy
-msgid "Complete adress"
+msgid "Complete address"
 msgstr "Pełne poddrzewo"
 
 #: include/sieve/class_sieveElement_If.inc:27
@@ -16296,7 +16117,7 @@ msgstr "domyślny"
 
 #: include/sieve/class_sieveElement_If.inc:28
 #, fuzzy
-msgid "Domian part"
+msgid "Domain part"
 msgstr "Użytkownicy domeny"
 
 #: include/sieve/class_sieveElement_If.inc:29
@@ -16458,18 +16279,194 @@ msgid "Empty"
 msgstr "pusto"
 
 #: include/sieve/class_sieveElement_If.inc:1134
-#, fuzzy
-msgid "Click here to add a new test"
-msgstr "Kliknij tutaj aby się zalogować"
-
 #: include/sieve/class_sieveElement_If.inc:1164
 #, fuzzy
-msgid "Klick here to add a new test"
+msgid "Click here to add a new test"
 msgstr "Kliknij tutaj aby się zalogować"
 
 #: include/sieve/class_sieveElement_If.inc:1176
 msgid "Unhandled switch type"
 msgstr ""
+
+#: include/sieve/class_My_Tree.inc:245
+msgid "Can't remove last element."
+msgstr ""
+
+#: include/sieve/class_My_Tree.inc:250
+msgid "Can't remove element with object_id="
+msgstr ""
+
+#: include/sieve/class_My_Tree.inc:250
+msgid ", there is no object with this identifier. Remove aborted."
+msgstr ""
+
+#: include/sieve/class_My_Tree.inc:658
+msgid "Require must be the first command in the script."
+msgstr ""
+
+#: include/sieve/class_sieveElement_Redirect.inc:24
+#, fuzzy
+msgid "Please specify a valid email address."
+msgstr "Proszę podać prawidłową nazwę skryptu."
+
+#: include/sieve/class_sieveElement_Redirect.inc:35
+#, fuzzy
+msgid "Put a mail address here"
+msgstr "Proszę podać prawidłową nazwę."
+
+#: include/sieve/class_sieveElement_Comment.inc:21
+msgid "Your comment here"
+msgstr ""
+
+#: include/sieve/class_sieveManagement.inc:114
+#: include/sieve/class_sieveManagement.inc:241
+#, fuzzy
+msgid "Parse failed"
+msgstr "błąd"
+
+#: include/sieve/class_sieveManagement.inc:118
+#: include/sieve/class_sieveManagement.inc:245
+#, fuzzy
+msgid "Parse successful"
+msgstr "Import powiódł się"
+
+#: include/sieve/class_sieveManagement.inc:155
+#, php-format
+msgid ""
+"The specified mail server '%s' does not exist within the GOsa configuration."
+msgstr ""
+
+#: include/sieve/class_sieveManagement.inc:200
+#, fuzzy
+msgid "You should specify a name for your new script."
+msgstr "Proszę podać nazwę dla udziału."
+
+#: include/sieve/class_sieveManagement.inc:205
+#, fuzzy
+msgid "Only lower case names are allowed here."
+msgstr "Tylko małe liter są dozwolone jako nazwa strefy."
+
+#: include/sieve/class_sieveManagement.inc:211
+#, fuzzy
+msgid "Only a-z are allowed in script names."
+msgstr "Tylko liczby są dozwolone w okresie życia"
+
+#: include/sieve/class_sieveManagement.inc:217
+#, fuzzy
+msgid "The specified name is already in use."
+msgstr "Wybrana nazwie już jest w użyciu."
+
+#: include/sieve/class_sieveManagement.inc:303
+#: include/sieve/class_sieveManagement.inc:349
+#: include/sieve/class_sieveManagement.inc:677
+#: include/sieve/class_sieveManagement.inc:1029
+#: include/class_mail-methods-cyrus.inc:269
+#, php-format
+msgid "Can't log into SIEVE server. Server says '%s'."
+msgstr "Nie można zalogować się do serwera SIEVE. Odpowiedź serwera '%s'."
+
+#: include/sieve/class_sieveManagement.inc:311
+#, fuzzy, php-format
+msgid "Can't activate sieve script on server. Server says '%s'."
+msgstr "Nie można aktywować skryptu sieve. Odpowiedź serwera '%s'."
+
+#: include/sieve/class_sieveManagement.inc:354
+#, fuzzy, php-format
+msgid "Can't remove sieve script from server. Server says '%s'."
+msgstr "Nie można pobrać skryptu sieve. Odpowiedź serwera '%s'."
+
+#: include/sieve/class_sieveManagement.inc:366
+#, fuzzy, php-format
+msgid "You are going to remove the sieve script '%s' from your mail server."
+msgstr ""
+"Brak uprawnień do usunięcia obiektu '%s' z listy członków drukarki '%s'."
+
+#: include/sieve/class_sieveManagement.inc:402
+#, fuzzy
+msgid "Edited"
+msgstr "Edytuj"
+
+#: include/sieve/class_sieveManagement.inc:409
+#, php-format
+msgid "Please fix all errors before saving. Last error was : %s"
+msgstr ""
+
+#: include/sieve/class_sieveManagement.inc:436
+#, fuzzy
+msgid "Specified file seems to be empty."
+msgstr "Podany plik jest pusty."
+
+#: include/sieve/class_sieveManagement.inc:438
+msgid ""
+"Upload failed, somehow nothing was uploaded or the temporary file can't be "
+"accessed."
+msgstr ""
+
+#: include/sieve/class_sieveManagement.inc:440
+#, fuzzy, php-format
+msgid "Can't open file '%s' to read uploaded file contents."
+msgstr "Nie można utworzyć katalogu '%s' dla wgrywanych plików ppd."
+
+#: include/sieve/class_sieveManagement.inc:502
+#: include/sieve/class_sieveManagement.inc:719
+#, fuzzy
+msgid "File into"
+msgstr "Właściciel pliku"
+
+#: include/sieve/class_sieveManagement.inc:526
+msgid "Failed to add new element."
+msgstr ""
+
+#: include/sieve/class_sieveManagement.inc:642
+msgid "This script is marked as active"
+msgstr ""
+
+#: include/sieve/class_sieveManagement.inc:647
+#, fuzzy
+msgid "Script length"
+msgstr "Zawartość skryptu"
+
+#: include/sieve/class_sieveManagement.inc:651
+#, fuzzy
+msgid "Remove script"
+msgstr "Usuń usługę"
+
+#: include/sieve/class_sieveManagement.inc:660
+#, fuzzy
+msgid "Activate script"
+msgstr "Ostatni skrypt"
+
+#: include/sieve/class_sieveManagement.inc:664
+#, fuzzy
+msgid "Edit script"
+msgstr "Ostatni skrypt"
+
+#: include/sieve/class_sieveManagement.inc:776
+#, php-format
+msgid "Can't add the specified element at the given position."
+msgstr ""
+
+#: include/sieve/class_sieveManagement.inc:1044
+#, fuzzy
+msgid "Failed to save sieve script"
+msgstr "Użyj własnego skryptu SIEVE"
+
+#: include/sieve/class_sieveElement_Vacation.inc:147
+msgid "Alternative sender addresse must be valid email addresses."
+msgstr ""
+
+#: include/sieve/class_sieveElement_Reject.inc:21
+msgid "Invalid character found, quotes are not allowed in a reject message."
+msgstr ""
+
+#: include/sieve/class_sieveElement_Reject.inc:37
+msgid "Your reject text here"
+msgstr ""
+
+#: include/sieve/class_sieveElement_Require.inc:73
+#, fuzzy
+msgid "Please specify at least one valid requirement."
+msgstr "Proszę podać conajmniej jeden wzorzec pliku."
 
 #: include/php_setup.inc:71
 msgid "Generating this page caused the PHP interpreter to raise some errors!"
@@ -18225,7 +18222,7 @@ msgstr ""
 "dlatego jest wymagany."
 
 #: setup/class_setupStep2.inc:89
-msgid "his should be activated while compiling your PHP. (--with-iconv)"
+msgid "This should be activated while compiling your PHP. (--with-iconv)"
 msgstr ""
 
 #: setup/class_setupStep2.inc:96
@@ -18331,10 +18328,13 @@ msgstr ""
 "cookie zanim faktycznie wygasną."
 
 #: setup/class_setupStep2.inc:194
+#, fuzzy
 msgid ""
-"Serach for 'session.gc_maxlifetime' in your php.ini and set it to 86400 or "
+"Search for 'session.gc_maxlifetime' in your php.ini and set it to 86400 or "
 "higher."
 msgstr ""
+"Aby używać GOsa bez problemow, opcja session.auto_register w pliku php.ini "
+"musi być ustawiona na 'off'."
 
 #: setup/class_setupStep2.inc:201
 msgid "session.auto_start"
@@ -18414,8 +18414,9 @@ msgstr ""
 "będzie zabezpieczać cudzysłowa w stringach."
 
 #: setup/class_setupStep2.inc:243
-msgid "Search for 'magic_quotes_gpc' in yout php.ini and set it to 'On'."
-msgstr ""
+#, fuzzy
+msgid "Search for 'magic_quotes_gpc' in your php.ini and set it to 'On'."
+msgstr "Sprawdzam, czy register_globals jest ustawione na 'off'"
 
 #: setup/class_setupStep2.inc:253
 #, fuzzy
@@ -19406,6 +19407,10 @@ msgstr "Czas"
 #: ihtml/themes/default/snapshotdialog.tpl:79
 msgid "Reason for generating this snapshot"
 msgstr "Przyczyna utworzenia tego snapshot'u"
+
+#, fuzzy
+#~ msgid "Klick here to add a new test"
+#~ msgstr "Kliknij tutaj aby się zalogować"
 
 #, fuzzy
 #~ msgid "Sieve manamgent"

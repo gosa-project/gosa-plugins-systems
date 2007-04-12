@@ -86,7 +86,7 @@ class setup_step_2 extends setup_step
     /* Checing for iconv */
     $N = _("Checking for iconv support");
     $D = _("This module is used by GOsa to convert samba munged dial informations and is therefore required. ");
-    $S = _("his should be activated while compiling your PHP. (--with-iconv)");
+    $S = _("This should be activated while compiling your PHP. (--with-iconv)");
     $R = is_callable("iconv");
     $M = TRUE;
     $this->basic_checks[] = array("NAME" => $N , "DESC" => $D , "RESULT" => $R , "SOLUTION" => $S , "MUST" => $M );
@@ -191,7 +191,7 @@ class setup_step_2 extends setup_step
     $N = ("session.gc_maxlifetime"."&nbsp;"."<b> &gt;= 86400</b>");
     $D = _("PHP uses this value for the garbage collector to delete old sessions.")."&nbsp;".
          _("Setting this value to one day will prevent loosing session and cookie before they really timeout.");
-    $S = _("Serach for 'session.gc_maxlifetime' in your php.ini and set it to 86400 or higher.");
+    $S = _("Search for 'session.gc_maxlifetime' in your php.ini and set it to 86400 or higher.");
     $R = ini_get("session.gc_maxlifetime") >= 86400;
     $M = FALSE;
     $this->config_checks[] = array("NAME" => $N , "DESC" => $D , "RESULT" => $R , "SOLUTION" => $S , "MUST" => $M );
@@ -240,7 +240,7 @@ class setup_step_2 extends setup_step
     /* Automatic quoting must be turned on */
     $N = _("magic_quotes_gpc")."&nbsp;<b>"._("On")."</b>";
     $D = _("Increase your server security by setting magic_quotes_gpc to 'on'. PHP will escape all quotes   in strings in this case."); 
-    $S = _("Search for 'magic_quotes_gpc' in yout php.ini and set it to 'On'."); 
+    $S = _("Search for 'magic_quotes_gpc' in your php.ini and set it to 'On'."); 
     $R = ini_get('magic_quotes_gpc'); 
     $M = TRUE;
     $this->config_checks[] = array("NAME" => $N , "DESC" => $D , "RESULT" => $R , "SOLUTION" => $S , "MUST" => $M );
