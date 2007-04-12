@@ -113,7 +113,14 @@
         </div>
     </div>
 	{/if}
+    <div class='step4_container' style='height:45px;'>
+        <div class='step4_name' style='height:45px;'>
+            {t}Status{/t}
+        </div>
+        <div class='step4_value' style='height:45px;'>
+			{$connection_status}
+        </div>
+        <div class='step4_status' style='height:45px;'>
+        </div>
+    </div>
 </div>
-	<div style='float:left; width:680px;padding-bottom:10px;'>
-		{t}Status{/t}: {$connection_status}
-	</div>
