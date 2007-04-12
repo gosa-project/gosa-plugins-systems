@@ -1,4 +1,7 @@
-    <div style='float:left; width:600px;'>
+
+
+<div class='default' style='margin:12px; '>
+    <div style='float:left; '>
         <br>
         <b>{t}Validate schema when login into GOsa?{/t}</b>
     </div>
@@ -17,7 +20,7 @@
             <img class='center' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
         </div>
     </div>
-	<div style='float:left; width:600px;' >
+	<div style='float:left;' >
 
 		{if $failed_checks == 0}
 			<h2>{t}Schema check was completely successful{/t}</h2>
@@ -55,6 +58,7 @@
 		{/foreach}
 	</div>
 
+</div>
 	{if $display_type == "all"}
 		<div style='float:left'>
 			<h2>{t}All available objectClasses{/t}</h2>

@@ -1,4 +1,5 @@
-<div style='float:left;width:690px;'>
+<div class='default' style='margin:12px;' >
+<div style='float:left;'>
 
 <h2>{t}Configuration File{/t}</h2>
 	<p>
@@ -73,5 +74,6 @@
 
 
 
+</div>
 </div>
 <input type='hidden' value='1' name='step8_posted'>

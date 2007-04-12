@@ -6,7 +6,7 @@
 	<font style='color:red' >{$val}</font>
 {/foreach}
 {/if}
-
+<div class='default' style='margin:12px; '>  
     <div style='float:left; width:600px;'>
 		<br>
 		<b>{t}Samba settings{/t}</b>
@@ -245,6 +245,6 @@
             <img class='center' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
         </div>
     </div>
-
+</div>
 
 <input type='hidden' value='1' name='step6_posted'>

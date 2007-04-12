@@ -7,7 +7,8 @@
 {/foreach}
 {/if}
 
-    <div style='float:left; width:600px;'>
+<div class='default' style='margin:12px; '>
+    <div style='float:left; '>
 		<br>
 		<b>{t}GOsa settings{/t}</b>
 	</div>
@@ -106,7 +107,7 @@
         <div class='step4_status'>
         </div>
     </div>
-    <div style='float:left; width:600px;'>
+    <div style='float:left;'>
 		<br>
 		<b>{t}Password settings{/t}</b>
 	</div>
@@ -179,7 +180,7 @@
         </div>
     </div>
 
-    <div style='float:left; width:600px;'>
+    <div style='float:left; '>
 		<br>
 		<b>{t}Mail settings{/t}</b>
 	</div>
@@ -232,6 +233,7 @@
 			<img class='center' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
         </div>
     </div>
+</div>
 
 <input type='hidden' value='1' name='step5_posted'>
 <!--
