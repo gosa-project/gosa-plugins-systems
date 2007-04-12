@@ -90,7 +90,7 @@
         </div>
         <div class='step4_status'>
             {t}Infos in FAQ{/t}&nbsp;
-            <img class='center' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
+            <img class='center'  alt='!' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
         </div>
     </div>
 
@@ -156,7 +156,7 @@
         </div>
         <div class='step4_status'  style='height:4em;'>
 			{t}Infos in FAQ{/t}&nbsp;
-			<img class='center' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
+			<img class='center'  alt='!' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
         </div>
     </div>
 
@@ -176,7 +176,7 @@
         </div>
         <div class='step4_status'>
 			{t}Infos in FAQ{/t}&nbsp;
-			<img class='center' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
+			<img class='center'  alt='!' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
         </div>
     </div>
 
@@ -191,7 +191,7 @@
         </div>
         <div class='step4_value'>
             <select name="mail" size="1" title="">
-                <option name="mail" value="disabled">{t}disabled{/t}</option>
+                <option  value="disabled">{t}disabled{/t}</option>
                 {html_options options=$mail_methods selected=$mail}
             </select>
         </div>
@@ -215,7 +215,7 @@
         </div>
         <div class='step4_status'>
 			{t}Infos in FAQ{/t}&nbsp;
-			<img class='center' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
+			<img class='center'  alt='!'  src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
         </div>
     </div>
 
@@ -230,7 +230,7 @@
         </div>
         <div class='step4_status'>
 			{t}Infos in FAQ{/t}&nbsp;
-			<img class='center' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
+			<img class='center'  alt='!'  src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
         </div>
     </div>
 </div>

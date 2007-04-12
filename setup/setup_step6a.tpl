@@ -25,7 +25,7 @@
         </div>
         <div class='step4_status'>
             {t}Infos in FAQ{/t}&nbsp;
-            <img class='center' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
+            <img class='center' alt='!'  src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
         </div>
     </div>
 
@@ -41,7 +41,7 @@
         </div>
         <div class='step4_status'>
             {t}Infos in FAQ{/t}&nbsp;
-            <img class='center' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
+            <img class='center'  alt='!' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
         </div>
     </div>
 
@@ -57,7 +57,7 @@
         </div>
         <div class='step4_status'>
             {t}Infos in FAQ{/t}&nbsp;
-            <img class='center' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
+            <img class='center'  alt='!' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
         </div>
     </div>
 
@@ -73,7 +73,7 @@
         </div>
         <div class='step4_status'>
             {t}Infos in FAQ{/t}&nbsp;
-            <img class='center' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
+            <img class='center'  alt='!' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
         </div>
     </div>
 
@@ -89,7 +89,7 @@
         </div>
         <div class='step4_status'>
             {t}Infos in FAQ{/t}&nbsp;
-            <img class='center' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
+            <img class='center'  alt='!' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
         </div>
     </div>
 
@@ -109,7 +109,7 @@
         </div>
         <div class='step4_status'>
             {t}Infos in FAQ{/t}&nbsp;
-            <img class='center' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
+            <img class='center'  alt='!' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
         </div>
     </div>
 
@@ -131,7 +131,7 @@
         </div>
         <div class='step4_status'>
             {t}Infos in FAQ{/t}&nbsp;
-            <img class='center' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
+            <img class='center'  alt='!' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
         </div>
     </div>
 
@@ -153,7 +153,7 @@
         </div>
         <div class='step4_status'>
             {t}Infos in FAQ{/t}&nbsp;
-            <img class='center' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
+            <img class='center'  alt='!' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
         </div>
     </div>
 
@@ -175,7 +175,7 @@
         </div>
         <div class='step4_status'>
             {t}Infos in FAQ{/t}&nbsp;
-            <img class='center' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
+            <img class='center'  alt='!' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
         </div>
     </div>
 
@@ -189,7 +189,7 @@
         </div>
         <div class='step4_status'>
             {t}Infos in FAQ{/t}&nbsp;
-            <img class='center' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
+            <img class='center'  alt='!' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
         </div>
     </div>
 
@@ -210,7 +210,7 @@
         </div>
         <div class='step4_status' style='height:5em;'>
             {t}Infos in FAQ{/t}&nbsp;
-            <img class='center' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
+            <img class='center'  alt='!'  src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
         </div>
     </div>
 
@@ -224,7 +224,7 @@
         </div>
         <div class='step4_status'>
             {t}Infos in FAQ{/t}&nbsp;
-            <img class='center' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
+            <img class='center' alt='!'  src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
         </div>
     </div>
 
@@ -246,7 +246,7 @@
         </div>
         <div class='step4_status'>
             {t}Infos in FAQ{/t}&nbsp;
-            <img class='center' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
+            <img class='center' alt='!'  src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
         </div>
     </div>
 
@@ -267,7 +267,7 @@
         </div>
         <div class='step4_status'>
             {t}Infos in FAQ{/t}&nbsp;
-            <img class='center' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
+            <img class='center'  alt='!' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
         </div>
     </div>
 </div>

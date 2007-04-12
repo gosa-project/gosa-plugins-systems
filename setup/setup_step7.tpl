@@ -17,7 +17,7 @@
         </div>
         <div class='step4_status'>
             {t}Infos in FAQ{/t}&nbsp;
-            <img class='center' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
+            <img  alt='!'  class='center' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
         </div>
     </div>
 	<div style='float:left;' >
@@ -68,11 +68,4 @@
 		</div>
 	{/if}
 </div>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>.
 <input type='hidden' value='1' name='step7_posted'>

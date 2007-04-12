@@ -70,7 +70,6 @@
 	# chown root.{$webgroup} {$CONFIG_DIR}/{$CONFIG_FILE}
 	# chmod 640 {$CONFIG_DIR}/{$CONFIG_FILE}
 	</pre>
-</p>
 
 
 
