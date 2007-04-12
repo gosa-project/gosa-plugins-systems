@@ -8,18 +8,15 @@
 		<img src='themes/default/images/go_logo.png' class='center' alt='GOsa'>
 	</div>
 	<div class='setup_menu'>
-		{t}GOsa setup{/t}
+		<b>{t}GOsa setup wizard{/t}</b>
 	</div>
-	<div style="width:100%;">
+	<div style="padding:10px;background-color:red;">
 
 		<div class='setup_navigation'>
-			<div class='setup_navigation_title'>
-				{t}Setup steps{/t}	
-			</div>
 			{$navigation}		
 		</div>
 
-		<ul style='padding:0px;margin:0px;	list-style-type: none;'>
+		<ul style='padding:0px;margin:0px; list-style-type:none;'>
 			<li>
 				<div>
 					<div style='padding:12px;'>
@@ -39,11 +36,11 @@
 				
 			</li>
 		</ul>
+	</div>
+</div>
 		<div class='setup_bottom'>
 			{$bottom}
 		</div>
-	</div>
-</div>
 <input type='hidden' name='setup_goto_step' value=''>
 </form>
 </center>

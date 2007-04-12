@@ -39,8 +39,8 @@ class setup_step_1 extends setup_step
 
   function update_strings()
   {
-    $this->s_title      = _("Language selection");
-    $this->s_title_long = _("Please choose a language");
+    $this->s_title      = _("Language setup");
+    $this->s_title_long = _("Language setup");
     $this->s_info       = _("This step is allows you to select your prefered language.");
   }
   
