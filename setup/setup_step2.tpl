@@ -1,7 +1,7 @@
 <!-- 
 	Div container with PHP module checks 
 -->
-<div style='float:left'> 
+<div style='float:left;width:50%;'> 
 
 	<!-- Set content styles -->	
 	<div class='default' style='margin:10px;'>
@@ -61,7 +61,7 @@
 <!-- 
 	Div container with PHP config checks 
 -->
-<div style='float:left;'>
+<div style='width:50%; float:left;'>
 
 	<!-- Set content styles -->	
 	<div class='default' style='margin:10px;'>

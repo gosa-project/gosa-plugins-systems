@@ -956,7 +956,7 @@ div.solution_visible {
 	background-color: orange;
 	background-image: url('images/personal.png');
 	border: dotted 2px red;
-	width: 346px;
+	width: 100%;
 	text-align:left;
 }
 
@@ -968,13 +968,13 @@ h2.step2_container_title {
 
 /* Container for name and status */
 div.step2_entry_container { 
-	width:350px; 
+	width:100%; 
 	cursor:default;
 }
 
 /* Container for name and status, when status is failed */
 div.step2_entry_container_info { 
-	width:350px;
+	width:100%;
 	background: #DDDDFF;
 	cursor:default;
 }
