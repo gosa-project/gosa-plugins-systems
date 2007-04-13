@@ -20,7 +20,7 @@
 */
 
 
-class setup_step_6a extends setup_step
+class Step_Config3 extends setup_step
 {
   var $optional = array(
               "enableCopyPaste" => false,
@@ -48,7 +48,7 @@ class setup_step_6a extends setup_step
               "smbhash" => 'SMBHASH');
 
 
-  function setup_step_6a()
+  function Step_Config3()
   {
     $this->update_strings();
 

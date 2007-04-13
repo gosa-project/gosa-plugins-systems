@@ -20,7 +20,7 @@
 */
 
 
-class setup_step_4 extends setup_step
+class Step_Ldap extends setup_step
 {
   var $connection = "ldap://localhost:389";
   var $location   = "default";
@@ -38,7 +38,7 @@ class setup_step_4 extends setup_step
   var $attributes = array("connection","location","admin","password","base","tls");
 
 
-  function setup_step_4()
+  function Step_Ldap()
   {
     $this->update_strings();
   }

@@ -20,12 +20,12 @@
 */
 
 
-class setup_step_3 extends setup_step
+class Step_License extends setup_step
 {
   var $license_found  = false;
   var $License        = "";
 
-  function setup_step_3()
+  function Step_License()
   {
     $this->update_strings();
   }

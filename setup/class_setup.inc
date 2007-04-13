@@ -31,15 +31,15 @@ class setup
   function setup()
   {
     
-    $this->o_steps[1] = new setup_step_1();
-    $this->o_steps[2] = new setup_step_2();
-    $this->o_steps[3] = new setup_step_3();
-    $this->o_steps[4] = new setup_step_4();
-    $this->o_steps[5] = new setup_step_5();
-    $this->o_steps[6] = new setup_step_6();
-    $this->o_steps[7] = new setup_step_6a();
-    $this->o_steps[8] = new setup_step_7();
-    $this->o_steps[9] = new setup_step_8();
+    $this->o_steps[1] = new Step_Language();
+    $this->o_steps[2] = new Step_Checks();
+    $this->o_steps[3] = new Step_License();
+    $this->o_steps[4] = new Step_Ldap();
+    $this->o_steps[5] = new Step_Schema();
+    $this->o_steps[6] = new Step_Config1();
+    $this->o_steps[7] = new Step_Config2();
+    $this->o_steps[8] = new Step_Config3();
+    $this->o_steps[9] = new Step_Finish();
 
     /* Ensure that setup is not reachable if gosa.conf (CONFIG_FILE) */
     if(file_exists(CONFIG_DIR."/".CONFIG_FILE)){

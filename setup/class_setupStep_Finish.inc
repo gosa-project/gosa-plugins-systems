@@ -20,14 +20,14 @@
  */
 
 
-class setup_step_8 extends setup_step
+class Step_Finish extends setup_step
 {
   var $create_backup    = TRUE;
   var $gosa_conf_contrib   = "/gosa.conf";
   var $cfg_file_written = FALSE;
   var $last_backup_name = "";
 
-  function setup_step_8()
+  function Step_Finish()
   {
     $this->update_strings();
   }

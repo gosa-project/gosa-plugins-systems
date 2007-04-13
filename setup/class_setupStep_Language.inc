@@ -20,7 +20,7 @@
 */
 
 
-class setup_step_1 extends setup_step
+class Step_Language extends setup_step
 {
   var $lang_selected  = "";       /* Language selected from select box  */
   var $lang           = "en_EN";  /* Detected language */
@@ -28,7 +28,7 @@ class setup_step_1 extends setup_step
   var $attributes     = array("lang","lang_selected");
   var $header_image   = "images/system.png";
 
-  function setup_step_1()
+  function Step_Language()
   {
     $this->lang           = get_browser_language();
     $this->lang_selected  = "";

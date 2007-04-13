@@ -20,7 +20,7 @@
 */
 
 
-class setup_step_7 extends setup_step
+class Step_Schema extends setup_step
 {
   var $checked = array();
   var $not_checked = array();
@@ -29,7 +29,7 @@ class setup_step_7 extends setup_step
   var $enable_schema_check = TRUE;
   var $samba_version       = 3;
 
-  function setup_step_7()
+  function Step_Schema()
   {
     $this->update_strings();
   }

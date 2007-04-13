@@ -20,7 +20,7 @@
 */
 
 
-class setup_step_6 extends setup_step
+class Step_Config2 extends setup_step
 {
   var $strict         = TRUE;
   var $governmentmode = FALSE;
@@ -47,7 +47,7 @@ class setup_step_6 extends setup_step
                                   "samba_rid_active" => FALSE); 
   var $attributes = array("strict","governmentmode","sambaidmapping","account_expiration");
 
-  function setup_step_6()
+  function Step_Config2()
   {
     $this->update_strings();
   }

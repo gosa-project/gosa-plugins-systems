@@ -20,13 +20,13 @@
 */
 
 
-class setup_step_2 extends setup_step
+class Step_Checks extends setup_step
 {
   var $basic_checks = array();
   var $config_checks= array();
   var $is_writeable = array();
 
-  function setup_step_2()
+  function Step_Checks()
   {
     $this->update_strings();
   }
