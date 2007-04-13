@@ -224,7 +224,11 @@ class setup
       $str .= "<input type='button' name='last' value='"._("Backward")."' disabled>";
     }
 
-    $str .= "<input type='submit' name='next' value='"._("Forward")."'>";
+    if(isset($this->o_steps[$this->i_current + 1])){
+      $str .= "<input type='submit' name='next' value='"._("Forward")."'>";
+    }else{
+      $str .= "<input type='button' value='"._("Forward")."' disabled>";
+    }
     $str .="</div>";
     return($str);
   }
