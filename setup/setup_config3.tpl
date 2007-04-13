@@ -95,6 +95,22 @@
 
     <div class='step4_container'>
         <div class='step4_name'>
+            {t}Strict units{/t}
+        </div>
+        <div class='step4_value'>
+	
+            <select name="strict_units" size="1" title="">
+            	{html_options options=$bool selected=$optional.strict_units}
+            </select>
+        </div>
+        <div class='step4_status'>
+            {t}Infos in FAQ{/t}&nbsp;
+            <img class='center'  alt='!' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
+        </div>
+    </div>
+
+    <div class='step4_container'>
+        <div class='step4_name'>
             {t}PPd path{/t}
         </div>
         <div class='step4_value'>

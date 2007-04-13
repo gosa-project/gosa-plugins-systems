@@ -24,6 +24,7 @@ class Step_Config3 extends setup_step
 {
   var $optional = array(
               "enableCopyPaste" => false,
+              "strict_units" => false,
               "forceglobals" => true,
               "forcessl" => false,
               "warnssl" => true,
@@ -77,9 +78,7 @@ class Step_Config3 extends setup_step
   {
     $smarty = get_smarty();
     $smarty->assign("bool",array(FALSE => _("No"), TRUE => _("Yes")));
-
     $smarty->assign("optional", $this->optional);
-
     foreach($this->attributes as $attr){
       $smarty->assign($attr,$this->$attr);
     }
@@ -102,7 +101,7 @@ class Step_Config3 extends setup_step
         }
       }
       
-      foreach(array("noprimarygroup","enableCopyPaste","forceglobals","forcessl","warnssl","compile","debuglevel","session_lifetime","smbhash") as $name){
+      foreach(array("strict_units","noprimarygroup","enableCopyPaste","forceglobals","forcessl","warnssl","compile","debuglevel","session_lifetime","smbhash") as $name){
         if(isset($_POST[$name])){
           $this->optional[$name] = stripslashes($_POST[$name]);
         }

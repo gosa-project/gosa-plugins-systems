@@ -113,7 +113,7 @@
 
     <div class='step4_container'>
         <div class='step4_name'>
-            {t}Strict units{/t}
+            {t}Relaxed naming policies{/t}
         </div>
         <div class='step4_value'>
             <select name="strict" size="1" title="">
