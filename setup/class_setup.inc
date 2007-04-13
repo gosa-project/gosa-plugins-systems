@@ -92,7 +92,7 @@ class setup
     }
 
     /* Check if step was selected */
-    if(isset($_GET['step']) || isset($_POST['next']) || isset($_POST['last']) || isset($_POST['setup_goto_step'])){
+    if(isset($_GET['step']) || isset($_POST['next']) || isset($_POST['last'])){
 
       /* check if current setup step is completed now 
           and activate the next step if possible */
