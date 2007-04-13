@@ -77,7 +77,7 @@ class Step_Ldap extends setup_step
       $smarty->assign("resolved_users_count",count($tmp));
       $smarty->assign("resolve_filter",$this->resolve_filter);
     }
-    return($smarty -> fetch (get_template_path("../setup/setup_step4.tpl")));
+    return($smarty -> fetch (get_template_path("../setup/setup_ldap.tpl")));
   }
 
   function get_connection_status()

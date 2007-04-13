@@ -66,7 +66,7 @@ class Step_Schema extends setup_step
     $smarty->assign("checks",$this->checked);
     $smarty->assign("not_checked",$this->not_checked);
     $smarty->assign("failed_checks",$failed_checks);
-    return($smarty -> fetch (get_template_path("../setup/setup_step7.tpl")));
+    return($smarty -> fetch (get_template_path("../setup/setup_schema.tpl")));
   }
 
   function check_schema_version($description, $version)

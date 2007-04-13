@@ -48,7 +48,7 @@ class Step_Checks extends setup_step
     $smarty->assign("basic"       ,$this->basic_checks);
     $smarty->assign("config"      ,$this->config_checks);
     $smarty->assign("is_writeable",$this->is_writeable);
-    return($smarty->fetch(get_template_path("setup_step2.tpl",TRUE,dirname(__FILE__))));
+    return($smarty->fetch(get_template_path("setup_checks.tpl",TRUE,dirname(__FILE__))));
   }
 
 

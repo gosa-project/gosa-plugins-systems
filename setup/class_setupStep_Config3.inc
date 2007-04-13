@@ -87,7 +87,7 @@ class Step_Config3 extends setup_step
     $smarty->assign("warnings" ,$this->check());
     $smarty->assign("warnings_cnt" ,count($this->check()));
 
-    return($smarty -> fetch (get_template_path("../setup/setup_step6a.tpl")));
+    return($smarty -> fetch (get_template_path("../setup/setup_config3.tpl")));
   }
 
 

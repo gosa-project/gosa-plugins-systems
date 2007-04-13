@@ -158,7 +158,7 @@ class Step_Finish extends setup_step
     $smarty->assign("cv",$this->parent->captured_values);
     $smarty->assign("msg_permissions",
       sprintf(_("The following file(s), folders(s) must be writeable for the web-user '%s'."),$info['name']));
-    return($smarty -> fetch (get_template_path("../setup/setup_step8.tpl")));
+    return($smarty -> fetch (get_template_path("../setup/setup_finish.tpl")));
   }
 
 

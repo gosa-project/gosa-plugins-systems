@@ -63,7 +63,7 @@ class Step_License extends setup_step
     $smarty -> assign("License",nl2br($this->License));
     $smarty -> assign("license_found",$this->license_found);
 
-    return($smarty -> fetch (get_template_path("../setup/setup_step3.tpl")));
+    return($smarty -> fetch (get_template_path("../setup/setup_license.tpl")));
   }
 
   

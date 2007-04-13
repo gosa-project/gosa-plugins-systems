@@ -83,7 +83,7 @@ class Step_Config2 extends setup_step
         foreach($this->attributes as $attr){
       $smarty->assign($attr,$this->$attr);
     }
-    return($smarty -> fetch (get_template_path("../setup/setup_step6.tpl")));
+    return($smarty -> fetch (get_template_path("../setup/setup_config2.tpl")));
   }
 
   function save_object()
