@@ -26,7 +26,6 @@ class setup_step_7 extends setup_step
   var $not_checked = array();
   var $schema_readable  = FALSE;
   var $attributes       = array("enable_schema_check","samba_version");
-  var $display_type     = "failed";
   var $enable_schema_check = TRUE;
   var $samba_version       = 3;
 
@@ -62,7 +61,6 @@ class setup_step_7 extends setup_step
 
     $smarty = get_smarty();
     $smarty->assign("bool",array(FALSE => _("No"), TRUE => _("Yes")));
-    $smarty->assign("display_type",$this->display_type);
     $smarty->assign("schema_readable",$this->schema_readable);
     $smarty->assign("enable_schema_check",$this->enable_schema_check);
     $smarty->assign("checks",$this->checked);
@@ -81,11 +79,6 @@ class setup_step_7 extends setup_step
   function save_object()
   {
     if(isset($_POST['step7_posted'])){
-
-      /* Get diplay method */
-      if(isset($_POST['display_type']) && in_array($_POST['display_type'],array("failed","checked","all"))){
-        $this->display_type = $_POST['display_type'];
-      }
 
       /* Get attributes */
       foreach($this->attributes as $attr){
