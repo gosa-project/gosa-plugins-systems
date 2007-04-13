@@ -25,7 +25,7 @@ class mailgroup extends plugin
   var $gosaVacationMessage        = "";       // Vocation message 
 
   var $imapacl                    = array('anyone'    => 'p',     // Set acls for everyone
-      '%members%' => 'lrsp',  // %members% are all group-members
+      '%members%' => 'lrswp',  // %members% are all group-members
       ''          => 'p');    // Every user added gets this right
 
 
@@ -285,11 +285,12 @@ class mailgroup extends plugin
       $this->gosaMailServer =  $this->attrs['gosaMailServer'][0];
     }
     /* Fill translations */
-    $this->perms["lrs"]= _("read");
-    $this->perms["lrsp"]= _("post");
+    $this->perms["lrsw"]= _("read");
+    $this->perms["lrspw"]= _("post");
     $this->perms["p"]= _("external post");
-    $this->perms["lrsip"]= _("append");
+    $this->perms["lrsipw"]= _("append");
     $this->perms["lrswipcd"]= _("write");
+    $this->perms["lrswipcda"]= _("admin");
     $this->perms[""]= _("none");
   }
 
