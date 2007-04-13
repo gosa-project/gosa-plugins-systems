@@ -27,15 +27,15 @@ require_once ("functions.inc");
 
 require_once("../setup/class_setup.inc");
 require_once("../setup/class_setupStep.inc");
-require_once("../setup/class_setupStep1.inc");
-require_once("../setup/class_setupStep2.inc");
-require_once("../setup/class_setupStep3.inc");
-require_once("../setup/class_setupStep4.inc");
-require_once("../setup/class_setupStep5.inc");
-require_once("../setup/class_setupStep6.inc");
-require_once("../setup/class_setupStep6a.inc");
-require_once("../setup/class_setupStep7.inc");
-require_once("../setup/class_setupStep8.inc");
+require_once("../setup/class_setupStep_Language.inc");
+require_once("../setup/class_setupStep_Checks.inc");
+require_once("../setup/class_setupStep_License.inc");
+require_once("../setup/class_setupStep_Ldap.inc");
+require_once("../setup/class_setupStep_Config1.inc");
+require_once("../setup/class_setupStep_Config2.inc");
+require_once("../setup/class_setupStep_Config3.inc");
+require_once("../setup/class_setupStep_Schema.inc");
+require_once("../setup/class_setupStep_Finish.inc");
 
 
 /* Set header */
