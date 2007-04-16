@@ -69,16 +69,16 @@ class gotomasses extends plugin
     if(isset($_POST['import_gotomass_csv']) && isset($_FILES['mass_file'])){
       $str = @file_get_contents($_FILES['mass_file']['tmp_name']);
       if(empty($str)){
-        print_red(_("Uploaded file seams to be empty, import aborted."));
+        print_red(_("The uploaded file seams to be empty, import aborted."));
       }else{
         $this->load_csv_data($str);
       }
     }
- 
+
+    /* Add a new empty entry to the list */ 
     if(isset($_POST['add_new_entry'])){
       $this->contents[] = array("MAC" => "", "OG" => "");
     }
- 
 
     /* Call parent execute */
     plugin::execute();
@@ -92,7 +92,6 @@ class gotomasses extends plugin
 
   function load_csv_data($data = NULL)
   {
-
     if($data == NULL){
       if(!file_exists($this->file_to_read) || !is_readable($this->file_to_read)){
         print_red(sprintf(_("Can't locate or read goto masses csv storage file '%s'."),$this->file_to_read));
@@ -209,7 +208,7 @@ class gotomasses extends plugin
         "plDepends"     => array(),
         "plPriority"    => 0,
         "plSection"     => array("addon"),
-        "plCategory"    => array("mass_machines" => array("objectClass" => "none", "description" => _("Mass machine deployment"))),
+        "plCategory"    => array("gotomasses" => array("objectClass" => "none", "description" => _("Mass machine deployment"))),
         "plProvidedAcls" => array()
         ));
   }

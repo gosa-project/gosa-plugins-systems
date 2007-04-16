@@ -8,12 +8,19 @@
 	<table summary="" width="100%" class="contentboxb" style="border-top:1px solid #B0B0B0; padding:0px;">
 		<tr>
 			<td>
-	<input type='submit' name='export_gotomass_csv' value='{t}Export{/t}'>
-	<input type='file' name='mass_file'>
+				{t}Export{/t}&nbsp;
+				<input type='submit' name='export_gotomass_csv' value='{t}Export{/t}'>
+			</td>
+			<td style='width:20px;'>
+			</td>
+			<td>
+				{t}Import{/t}&nbsp;
+			
+				<input type='file' name='mass_file'>
 
-	<input type='submit' name='import_gotomass_csv' value='{t}Import{/t}'>
-	</td>
-	</tr>
+				<input type='submit' name='import_gotomass_csv' value='{t}Import{/t}'>
+			</td>
+		</tr>
 	</table>
 </div>
 	<table summary="" width="100%" class="contentboxb">
