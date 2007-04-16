@@ -23,7 +23,8 @@
 		</tr>
 	</table>
 </div>
-	<table summary="" width="100%" class="contentboxb">
+<p>&nbsp;</p>
+	<table summary="" width="100%" class="contentboxb" cellspacing=0>
 		<tr>
 			<td>
 				<b>{t}No.{/t}</b>
@@ -40,7 +41,11 @@
 		</tr>
 	{foreach from=$contents item=val key=key}
 
-		<tr>
+		{if ($key+2)%2 ==0 }
+		<tr class='rowxp1'>
+		{else}
+		<tr class='rowxp0'>
+		{/if}
 			<td>
 				{$key+1}
 			</td>
