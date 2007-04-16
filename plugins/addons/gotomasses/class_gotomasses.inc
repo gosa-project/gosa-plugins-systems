@@ -24,7 +24,6 @@ class gotomasses extends plugin
   
     /* Include config object */
     $this->config= $config;
-
     $this->load_csv_data();
   }
 
@@ -94,13 +93,13 @@ class gotomasses extends plugin
   {
     if($data == NULL){
       if(!file_exists($this->file_to_read) || !is_readable($this->file_to_read)){
-        print_red(sprintf(_("Can't locate or read goto masses csv storage file '%s'."),$this->file_to_read));
+        print_red(sprintf(_("Can't locate or read csv storage file '%s'."),$this->file_to_read));
         return(FALSE);
       }
 
       $fp = @fopen($this->file_to_read,"r");
       if(!$fp){
-        print_red(sprintf(_("Can't read goto masses csv storage file '%s'."),$this->file_to_read));
+        print_red(sprintf(_("Can't read csv storage file '%s'."),$this->file_to_read));
         return(FALSE);
       }
 
@@ -138,13 +137,11 @@ class gotomasses extends plugin
   function save_csv_data()
   {
     if(!file_exists($this->file_to_read) || !is_writeable($this->file_to_read)){
-      print_red(sprintf(_("Can't locate or write goto masses csv storage file '%s'."),$this->file_to_read));
+      print_red(sprintf(_("Can't locate or write csv storage file '%s'."),$this->file_to_read));
     }else{
-      
       $fp = @fopen($this->file_to_read,"w");
-        
       if(!$fp){
-        print_red(sprintf(_("Can't write goto masses csv storage file '%s'."),$this->file_to_read));
+        print_red(sprintf(_("Can't write csv storage file '%s'."),$this->file_to_read));
       }else{  
         $data = "";
         foreach($this->contents as $val){
