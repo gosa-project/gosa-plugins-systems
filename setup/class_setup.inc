@@ -106,7 +106,15 @@ class setup
         }
       }
     }
-  
+ 
+    /* Disable all following steps, if one step isn't compelted right now .*/
+    for($i = 1 ; $i <= $this->i_steps ; $i ++ ){
+      if($this->o_steps[$i]->is_completed()){
+      }else{
+        $this->disable_steps_from($i+1);
+      }
+    }
+ 
     $step = -1;
 
     if(isset($_POST['setup_goto_step'])){
@@ -163,27 +171,35 @@ class setup
       $s_info     = $step -> get_small_info();
       $b_active   = $step -> is_active();
       $b_enabled  = $step -> is_enabled();
+      $b_completed= $step -> is_completed();
+
+      if($b_completed){
+        $s = "<img src='images/true.png' alt='"._("Completed")."' class='center'>&nbsp;"; 
+      }else{
+        $s = "<img src='images/empty.png' alt=' ' class='center'>&nbsp;";
+      }
 
       if($_SESSION['js']){
 
         $str .="<div >";
+    
         if($b_enabled){
           if($b_active){
             $str .= "<div class='navigation_element_active'>";
             $str .= "<div onClick='document.mainform.setup_goto_step.value=\"$key\";document.mainform.submit();'
-              class='navigation_title_active'>".$s_title."</div>";
+              class='navigation_title_active'>".$s.$s_title."</div>";
             $str .= "<div onClick='document.mainform.setup_goto_step.value=\"$key\";document.mainform.submit();'
               class='navigation_info'>".$s_info."</div>";
             $str .= "</div>";
           }else{
             $str .= "<div class='navigation_element'>";
             $str .= "<div onClick='document.mainform.setup_goto_step.value=\"$key\";document.mainform.submit();'
-              class='navigation_title_inactive'>".$s_title."</div>";
+              class='navigation_title_inactive'>".$s.$s_title."</div>";
             $str .= "</div>";
           }
         }else{
           $str .= "<div class='navigation_element'>";
-          $str .= "<div class='navigation_title_disabled'>".$s_title."</div>";
+          $str .= "<div class='navigation_title_disabled'>".$s.$s_title."</div>";
           $str .= "</div>";
         }
         $str .= "</div>" ;
