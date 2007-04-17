@@ -350,7 +350,7 @@ class MultiSelectWindow{
 				</label>
 				</td>
 				<td width=\"99%\">
-				<input type=\"text\" style='width:99%' name=\"".$regex['name']."\" maxlength='20'
+				<input id=\"".$regex['name']."\" type=\"text\" style='width:99%' name=\"".$regex['name']."\" maxlength='20'
 				value=\"".htmlentities($regex['value'])."\" title=\"".htmlentities($regex['string'])."\"> 
 				</td>
 				</tr>
@@ -597,7 +597,7 @@ class MultiSelectWindow{
 
 
 	/* this function adds the sub-departments of the current tree to the list */
-	function AddDepartments($base = false,$numtabs = 3)
+	function AddDepartments($base = false,$numtabs = 3,$empty_tabs_in_front = 0)
 	{
 		$this->DepartmentsAdded = true;
 
@@ -656,6 +656,14 @@ class MultiSelectWindow{
 
 			/* Add to divlist */
 			$row = array();
+
+      if($empty_tabs_in_front){
+        for($i = 0; $i < $empty_tabs_in_front ; $i ++){
+          $row[] = array("string"=>"&nbsp;", "attach" => "style='text-align:center;width:20px;'");
+        }
+        $numtabs -= $empty_tabs_in_front;
+      }
+
 			$row[]=$field1=array("string"=>"<img src='images/".$non_empty."folder.png' alt='department'>","attach"=>"style='text-align:center;width:20px;'");
 			$row[]=$field2=array("string"=>sprintf($linkopen,base64_encode($key),$val), "attach" => "style=''");
 
