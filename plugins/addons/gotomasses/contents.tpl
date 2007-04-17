@@ -9,7 +9,11 @@
 		<tr>
 			<td>
 				{t}Export{/t}&nbsp;
-				<input type='submit' name='export_gotomass_csv' value='{t}Export{/t}'>
+				{if $is_readable}
+					<input type='submit' name='export_gotomass_csv' value='{t}Export{/t}'>
+				{else}
+					<input type='button' name='empty_1' value='{t}Export{/t}' disabled>
+				{/if}
 			</td>
 			<td style='width:20px;'>
 			</td>
@@ -20,8 +24,8 @@
 					<input type='file' name='mass_file'>
 					<input type='submit' name='import_gotomass_csv' value='{t}Import{/t}'>
 				{else}
-					<input type='file' name='mass_file' disabled>
-					<input type='submit' name='import_gotomass_csv' value='{t}Import{/t}' disabled>
+					<input type='file' name='epmpty_file' disabled>
+					<input type='button' name='empty_2' value='{t}Import{/t}' disabled>
 				{/if}
 			</td>
 		</tr>
@@ -110,8 +114,8 @@
 	{/if}
 	<input type='submit' name='reload_gotomass_data' value='{t}Cancel{/t}'>
 {else}
-	<input type='submit' name='save_gotomass_changes' value='{t}Apply{/t}' disabled>
-	<input type='submit' name='reload_gotomass_data' value='{t}Cancel{/t}' disabled>
+	<input type='button' name='empty_3' value='{t}Apply{/t}' disabled>
+	<input type='button' name='empty_4' value='{t}Cancel{/t}' disabled>
 {/if}
  </p>
 </div>

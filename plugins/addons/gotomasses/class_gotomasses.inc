@@ -55,7 +55,7 @@ class gotomasses extends plugin
       $this->contents_initially_loaded = TRUE;
     }
 
-    if(isset($_POST['export_gotomass_csv'])){
+    if(isset($_POST['export_gotomass_csv']) && $this->acl_is_writeable("something")){
         $data = "";
         foreach($this->contents as $val){
           $data .= $val['MAC'].", ".$val['OG']."\n";
