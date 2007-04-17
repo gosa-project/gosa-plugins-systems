@@ -27,6 +27,13 @@ function chk_set_all(regex,value)
 }
 
 
+function toggle_all_(regex,state_object)
+{
+		state = document.getElementById(state_object).checked;
+		chk_set_all(regex, state);
+}
+
+
 function scrollDown() {
   document.body.scrollTop = document.body.scrollHeight - document.body.clientHeight;
   timeout= setTimeout("scrollDown()", 500);

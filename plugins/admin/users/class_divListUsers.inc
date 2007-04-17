@@ -51,8 +51,12 @@ class divListUsers extends MultiSelectWindow
       $action_col_size += 38;
     }
 
+    /* Toggle all selected / deselected */
+    $chk = "<input type='checkbox' id='select_all' name='select_all' 
+               onClick='toggle_all_(\"^item_selected_[0-9]*$\",\"select_all\");' >";
+
     /* set Page header */
-    $this->AddHeader(array("string"=>"&nbsp;",          "attach"=>"style='width:20px;'"));
+    $this->AddHeader(array("string"=> $chk,          "attach"=>"style='width:20px;'"));
     $this->AddHeader(array("string"=>_("Username")." / "._("Department")));
     $this->AddHeader(array("string"=>_("Properties"),   "attach" => "style='width:166px;'"));
     $this->AddHeader(array("string"=>_("Actions"),      "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'"));
@@ -287,13 +291,14 @@ class divListUsers extends MultiSelectWindow
       $UseImg = $usrimg2."&nbsp;".$posix."&nbsp;".$enviro."&nbsp;".$maila."&nbsp;".$fonac."&nbsp;".$faxac."&nbsp;".$samba."&nbsp;".$netatalk;
 
       /* Create each field */
+      $field0 = array("string" => "<input type='checkbox' id='item_selected_".$key."' name='item_selected_".$key."' >");
       $field1 = array("string" => sprintf($tpl,$val['dn']), "attach" => "style='text-align:center;width:20px;'");
       $field2 = array("string" => sprintf($editlink,$key,$display), "attach" => "style='' title='".preg_replace('/ /', '&nbsp;', @LDAP::fix($val['dn']))."'");
       $field3 = array("string" => $UseImg, "attach" => "style='width:166px;'");
       $field4 = array("string" => $s_img_create_from_template.preg_replace("/%KEY%/", "$key", $action),
                       "attach" => "style='width:".$action_col_size."px;border-right:0px;    text-align:right;'");
       /* Add to list */
-      $add = array($field1,$field2,$field3,$field4);
+      $add = array($field0,$field1,$field2,$field3,$field4);
       $this->AddElement($add);
 
       // Template or User

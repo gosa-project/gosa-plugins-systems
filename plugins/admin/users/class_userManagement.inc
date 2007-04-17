@@ -674,7 +674,7 @@ class userManagement extends plugin
 
     /* Add departments if subsearch is disabled */
     if(!$this->DivListUsers->SubSearch){
-      $this->DivListUsers->AddDepartments($this->DivListUsers->selectedBase,4);
+      $this->DivListUsers->AddDepartments($this->DivListUsers->selectedBase,4,1);
     }
     $this->reload();
     $this->DivListUsers->setEntries($this->list);
