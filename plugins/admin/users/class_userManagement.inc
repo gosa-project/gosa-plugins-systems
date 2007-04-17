@@ -345,9 +345,23 @@ class userManagement extends plugin
           }
           /* Remove lock file after successfull deletion */
           del_lock ($dn);
+          unset($this->dns[$key]);
       }
     }
 
+
+    /********************
+      Delete MULTIPLE entries Canceled 
+     ********************/
+
+    /* Remove lock */
+    if(isset($_POST['delete_multiple_user_cancel'])){
+      foreach($this->dns as $key => $dn){
+        del_lock ($dn);
+        unset($this->dns[$key]);
+      }
+    }
+  
 
     /********************
       Delete entry requested, display confirm dialog
