@@ -30,7 +30,9 @@ if (!$remove_lock){
 	/* Execute formular */
 	$display= $gotomasses->save_object();
 	$display= $gotomasses->execute ();
-	$display.= "<input type=\"hidden\" name=\"ignore\">\n";
+
+/* Ignore plugin changes is handled by the gotomasses class itself */
+#	$display.= "<input type=\"hidden\" name=\"ignore\">\n";
 
 	/* Page header*/
 	$display= print_header(get_template_path('images/system.png'), _("Mass machine deployment")).$display;

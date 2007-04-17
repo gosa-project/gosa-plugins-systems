@@ -82,8 +82,25 @@
 <p>&nbsp;</p>
 <div class="contentboxb" style="border-top: 1px solid #B0B0B0; padding:0px;">
  <p class="contentboxb" style='text-align:right'>
+{if $contents_modified}
 	<input type='submit' name='reload_gotomass_data' value='{t}Discard changes{/t}'>
 	<input type='submit' name='save_gotomass_changes' value='{t}Apply changes{/t}'>
+{else}
+	<input type='submit' name='reload_gotomass_data' value='{t}Discard changes{/t}' disabled>
+	<input type='submit' name='save_gotomass_changes' value='{t}Apply changes{/t}' disabled>
+{/if}
  </p>
 </div>
 <input type='hidden' name='gotomasses' value='1'>
+
+<!-- Display a warning if the content was modified, but not saved yet -->
+{if !$contents_modified}
+	<input type='hidden' name='ignore' value='1'>
+{/if}
+
+
+
+
+
+
+

@@ -14,7 +14,13 @@ class gotomasses extends plugin
   var $file_to_read = "Undefined"; #Set in constructor 
 
   /* Parsed csv content */
-  var $contents = array();
+  var $contents         = array();
+
+  /* Used to detect changes made on the csv content.
+   *  Buttons will be disabled and js warnings will be 
+   *  shown if the content wasn't saved or discarded
+   */
+  var $contents_backup  = array();
 
 
   function gotomasses($config, $dn= NULL)
@@ -82,10 +88,36 @@ class gotomasses extends plugin
     /* Call parent execute */
     plugin::execute();
     $smarty= get_smarty();
+    $smarty->assign("contents_modified",$this->contents_modified());
     $smarty->assign("ogs", $this->get_object_groups());
     $smarty->assign("contents", $this->contents);
     $smarty->assign("launchimage","images/launch.png");
     return ($smarty->fetch (get_template_path('contents.tpl', TRUE)));
+  }
+
+  
+  /* Check if something is modified */
+  function contents_modified($display = FALSE)
+  {
+    $a = $this->contents;
+    $b = $this->contents_backup;
+    if(count($a) != count($b)){
+      if($display){
+        print_a(array_diff_assoc($a,$b));
+      }
+      return(TRUE);
+    }else{
+      foreach($a as $a_key => $a_val){
+        if(count(array_diff($a_val, $b[$a_key]))){
+
+          if($display){
+            print_a(array_diff($a_val, $b[$a_key]));
+          }
+          return(TRUE);
+        }
+      }
+    }
+    return(FALSE); 
   }
 
 
@@ -131,6 +163,7 @@ class gotomasses extends plugin
         }
       }
     }
+    $this->contents_backup = $this->contents;
   }
 
 
@@ -186,6 +219,11 @@ class gotomasses extends plugin
       /* Write back all changes */
       if(isset($_POST['save_gotomass_changes'])){
         $this->save_csv_data();
+
+        /* Call load again, so we will see if everything is fine. 
+         * And load_csv_data causes the contents_backup to be updated 
+         */
+        $this->load_csv_data();
       }
 
       /* Reload data from csv file ? */
