@@ -3,7 +3,7 @@
 class gotomasses extends plugin
 {
   /* Definitions */
-  var $plHeadline     = "Mass machine";
+  var $plHeadline     = "System mass deployment";
   var $plDescription  = "This does something";
 
   /* attribute list for save action */
@@ -238,13 +238,13 @@ class gotomasses extends plugin
   function plInfo()
   {
     return (array(
-        "plShortName"   => _("Mass machine deployment"),
-        "plDescription" => _("Mass machine deployment addon"),
+        "plShortName"   => _("System mass deployment"),
+        "plDescription" => _("Provide a mechanism to automatically activate a set of systems"),
         "plSelfModify"  => FALSE,
         "plDepends"     => array(),
         "plPriority"    => 0,
         "plSection"     => array("addon"),
-        "plCategory"    => array("gotomasses" => array("objectClass" => "none", "description" => _("Mass machine deployment"))),
+        "plCategory"    => array("gotomasses" => array("objectClass" => "none", "description" => _("System mass deployment"))),
         "plProvidedAcls" => array()
         ));
   }

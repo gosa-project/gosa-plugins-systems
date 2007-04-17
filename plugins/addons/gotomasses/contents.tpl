@@ -3,7 +3,7 @@
 	{t}Options{/t}&nbsp;
  </p>
 </div>
-<div class="contentboxb">
+<div class="contentboxb" style="margin-bottom:10px">
 
 	<table summary="" width="100%" class="contentboxb" style="border-top:1px solid #B0B0B0; padding:0px;">
 		<tr>
@@ -23,7 +23,6 @@
 		</tr>
 	</table>
 </div>
-<p>&nbsp;</p>
 	<table summary="" width="100%" class="contentboxb" cellspacing=0>
 		<tr>
 			<td style='width:40px'>
@@ -35,10 +34,10 @@
 			<td>&nbsp;
 			</td>
 			<td style='width:40%;'>
-				<b>{t}Object group{/t}</b>
+				<b>{t}Assigned object group{/t}</b>
 			</td>
 			<td style='text-align:right ; width:20%;'>
-				<b>{t}Options{/t}</b>
+				<b>{t}Action{/t}</b>
 			</td>
 		</tr>
 	{foreach from=$contents item=val key=key}
@@ -91,15 +90,14 @@
 			</td>
 		</tr>
 	</table>
-<p>&nbsp;</p>
-<div class="contentboxb" style="border-top: 1px solid #B0B0B0; padding:0px;">
+<div class="contentboxb" style="border-top: 1px solid #B0B0B0; padding:0px; margin-top:10px;">
  <p class="contentboxb" style='text-align:right'>
 {if $contents_modified}
-	<input type='submit' name='reload_gotomass_data' value='{t}Discard changes{/t}'>
-	<input type='submit' name='save_gotomass_changes' value='{t}Apply changes{/t}'>
+	<input type='submit' name='save_gotomass_changes' value='{t}Apply{/t}'>
+	<input type='submit' name='reload_gotomass_data' value='{t}Cancel{/t}'>
 {else}
-	<input type='submit' name='reload_gotomass_data' value='{t}Discard changes{/t}' disabled>
-	<input type='submit' name='save_gotomass_changes' value='{t}Apply changes{/t}' disabled>
+	<input type='submit' name='save_gotomass_changes' value='{t}Apply{/t}' disabled>
+	<input type='submit' name='reload_gotomass_data' value='{t}Cancel{/t}' disabled>
 {/if}
  </p>
 </div>

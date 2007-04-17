@@ -35,7 +35,7 @@ if (!$remove_lock){
 #	$display.= "<input type=\"hidden\" name=\"ignore\">\n";
 
 	/* Page header*/
-	$display= print_header(get_template_path('images/system.png'), _("Mass machine deployment")).$display;
+	$display= print_header(get_template_path('images/system.png'), _("System mass deployment")).$display;
 
 	/* Store changes  in session */
 	$_SESSION['gotomasses']= $gotomasses;
