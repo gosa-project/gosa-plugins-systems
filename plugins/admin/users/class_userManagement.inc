@@ -60,7 +60,7 @@ class userManagement extends plugin
     plugin::execute();
 
     /* LOCK MESSAGE Vars */
-    $_SESSION['LOCK_VARS_TO_USE'] = array("/^act$/","/^id$/","/^user_edit_/","/^user_del_/");
+    $_SESSION['LOCK_VARS_TO_USE'] = array("/^act$/","/^id$/","/^user_edit_/","/^user_del_/","/^item_selected/","/^remove_multiple_user/");
 
     $smarty       = get_smarty();                 // Smarty instance
     $s_action     = "";                           // Contains the action to be taken
@@ -79,6 +79,7 @@ class userManagement extends plugin
       foreach(array("del"       => "user_del",    "edit"      => "user_edit",
                     "new"       => "user_new",
                     "new_tpl"   => "user_tplnew",
+                    "del_multiple" => "^remove_multiple_user",
                     "create_user_from_tpl"          => "userfrom_tpl",
                     "change_pw" => "user_chgpw", 
                     "editPaste" => "editPaste",   "copy"      => "copy",
@@ -288,6 +289,67 @@ class userManagement extends plugin
 
 
     /********************
+      Delete MULTIPLE entries requested, display confirm dialog
+     ********************/
+
+    if ($s_action=="del_multiple"){
+      $ids = $this->list_get_selected_items();
+
+      foreach($ids as $id){
+        $dn = $this->list[$id]['dn'];
+        if (($user= get_lock($dn)) != ""){
+          return(gen_locked_message ($user, $dn));
+        }
+        $this->dns[$id] = $dn; 
+      }
+
+      $dns_names = "<br><pre>";
+      foreach($this->dns as $dn){
+        add_lock ($dn, $this->ui->dn);
+        $dns_names .= $dn."\n";
+      }
+      $dns_names .="</pre>";
+
+      /* Lock the current entry, so nobody will edit it during deletion */
+      $smarty->assign("info",     sprintf(_("You're about to delete the following user(s) %s"), @LDAP::fix($dns_names)));
+      $smarty->assign("multiple", true);
+      return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
+    }
+
+
+    /********************
+      Delete MULTIPLE entries confirmed 
+     ********************/
+
+      /* Confirmation for deletion has been passed. Users should be deleted. */
+      if (isset($_POST['delete_multiple_user_confirm'])){
+
+        /* Remove user by user and check acls before removeing them */
+        foreach($this->dns as $key => $dn){
+
+          $acl = $this->ui->get_permissions($dn, "users/user"); 
+          if (preg_match('/d/', $acl)){
+
+            /* Delete request is permitted, perform LDAP action */
+            $this->usertab= new usertabs($this->config, $this->config->data['TABS']['USERTABS'],$dn);
+            $this->usertab->set_acl_base();
+            $this->usertab->delete ();
+            gosa_log ("User object '".$dn."' has been removed");
+            unset ($this->usertab);
+            $this->usertab= NULL;
+          } else {
+            print_red (sprintf(_("You are not allowed to delete the user '%s'!"),$dn));
+            if(isset($this->ui->uid)){
+              gosa_log ("Warning: '".$this->ui->uid."' tried to trick user deletion.");
+            }
+          }
+          /* Remove lock file after successfull deletion */
+          del_lock ($dn);
+      }
+    }
+
+
+    /********************
       Delete entry requested, display confirm dialog
      ********************/
 
@@ -309,6 +371,7 @@ class userManagement extends plugin
       /* Lock the current entry, so nobody will edit it during deletion */
       add_lock ($this->dn, $this->ui->dn);
       $smarty->assign("info", sprintf(_("You're about to delete the user %s."), @LDAP::fix($this->dn)));
+      $smarty->assign("multiple", false);
       return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
     }
 
@@ -876,6 +939,20 @@ class userManagement extends plugin
       $this->DivListUsers->save_object();
     }
   }
+
+    
+  function list_get_selected_items()
+  {
+    $ids = array();
+    foreach($_POST as $name => $value){
+      if(preg_match("/^item_selected_[0-9]*$/",$name)){
+        $id   = preg_replace("/^item_selected_/","",$name);
+        $ids[$id] = $id;
+      }
+    }
+    return($ids);
+  }
+  
 
   /* A set of disabled and therefore overloaded functions. They are
      not needed in this class. */

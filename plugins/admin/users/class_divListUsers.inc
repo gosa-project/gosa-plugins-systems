@@ -132,9 +132,14 @@ class divListUsers extends MultiSelectWindow
     $listhead .=
       _("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
       " <input class='center' type='image' src='images/list_submit.png' align='middle' 
-      title='"._("Submit department")."' name='submit_department' alt='".  _("Submit")."'>&nbsp;".
-      "</div>";
+      title='"._("Submit department")."' name='submit_department' alt='".  _("Submit")."'>&nbsp;";
 
+  
+    /* Multiple options */ 
+    $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/edittrash.png'
+        title='"._("Remove selected user")."' alt='"._("Remove user")."' name='remove_multiple_user'>&nbsp;";
+    
+    $listhead .="</div>";;
     $this->SetListHeader($listhead);
   }
 
