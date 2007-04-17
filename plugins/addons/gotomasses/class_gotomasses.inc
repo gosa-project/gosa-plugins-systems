@@ -82,7 +82,7 @@ class gotomasses extends plugin
 
     /* Add a new empty entry to the list */ 
     if(isset($_POST['add_new_entry'])){
-      $this->contents[] = array("MAC" => "", "OG" => "");
+      $this->contents[] = array("MAC" => "", "OG" => "","VALID_MAC" => FALSE);
     }
 
     /* Call parent execute */
@@ -145,7 +145,7 @@ class gotomasses extends plugin
         $mac = preg_replace("/(,|;).*$/","",$str);
 
         if(!empty($og) || !empty($mac)){
-          $this->contents[] = array("MAC" => $mac , "OG" => $og);
+          $this->contents[] = array("MAC" => $mac , "OG" => $og,"VALID_MAC" => is_mac($mac));
         }
       }
       fclose($fp);
@@ -159,7 +159,7 @@ class gotomasses extends plugin
         $mac = preg_replace("/(,|;).*$/","",$str);
 
         if(!empty($og) || !empty($mac)){
-          $this->contents[] = array("MAC" => $mac , "OG" => $og);
+          $this->contents[] = array("MAC" => $mac , "OG" => $og, "VALID_MAC" => is_mac($mac));
         }
       }
     }
@@ -195,7 +195,8 @@ class gotomasses extends plugin
       $ogs = $this->get_object_groups();
       foreach($this->contents as $id => $data){
         if(isset($_POST['mac_'.$id])){
-          $this->contents[$id]['MAC'] = $_POST['mac_'.$id];
+          $this->contents[$id]['MAC']       = $_POST['mac_'.$id];
+          $this->contents[$id]['VALID_MAC'] = is_mac($_POST['mac_'.$id]);
         }
         if(isset($_POST['og_'.$id]) && in_array_ics($_POST['og_'.$id],$ogs)){
           $this->contents[$id]['OG'] = $_POST['og_'.$id];

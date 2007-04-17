@@ -26,16 +26,18 @@
 <p>&nbsp;</p>
 	<table summary="" width="100%" class="contentboxb" cellspacing=0>
 		<tr>
-			<td>
+			<td style='width:40px'>
 				<b>{t}No.{/t}</b>
 			</td>
-			<td>
+			<td style='width:200px'>
 				<b>{t}Mac address{/t}</b>
 			</td>
-			<td>
+			<td>&nbsp;
+			</td>
+			<td style='width:40%;'>
 				<b>{t}Object group{/t}</b>
 			</td>
-			<td style='text-align:right'>
+			<td style='text-align:right ; width:20%;'>
 				<b>{t}Options{/t}</b>
 			</td>
 		</tr>
@@ -49,8 +51,15 @@
 			<td>
 				{$key+1}
 			</td>
+
+			{if !$contents.$key.VALID_MAC}
+			<td  style='background-color: #FF0000;' >
+			{else}
 			<td>
-				<input name='mac_{$key}' type='text' value='{$contents.$key.MAC}'>
+			{/if}
+				<input name='mac_{$key}' type='text' value='{$contents.$key.MAC}' style='width:200px'>
+			</td>
+			<td>
 			</td>
 			<td>
 				<select name='og_{$key}' title='{t}Select object group{/t}'>
@@ -65,6 +74,9 @@
 
 	{/foreach}
 		<tr>
+			<td>
+				&nbsp;-	
+			</td>
 			<td>
 				&nbsp;-	
 			</td>
