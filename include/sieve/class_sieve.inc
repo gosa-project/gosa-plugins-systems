@@ -280,7 +280,7 @@ class sieve
   function sieve_login()
   {
 
-    $this->fp=fsockopen($this->host,$this->port);
+    $this->fp=@fsockopen($this->host,$this->port);
     if($this->fp == false)
         return false;
  
