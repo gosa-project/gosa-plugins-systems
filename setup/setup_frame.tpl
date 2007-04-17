@@ -10,37 +10,29 @@
 	<div class='setup_menu'>
 		<b>{t}GOsa setup wizard{/t}</b>
 	</div>
-	<div style="padding:10px;background-color:red;">
+
+	<div style="padding:10px;background-color:green;">
 
 		<div class='setup_navigation'>
 			{$navigation}		
 		</div>
-
-		<ul style='padding:0px;margin:0px; list-style-type:none;'>
-			<li>
-				<div>
-					<div style='padding:12px;'>
-						<div class='plugtop'>
-							{$header}
-						</div>
-					</div>
+	
+		<div class='setup_contents'>
+				<div class='plugtop'>
+					{$header}
 				</div>
-			</li>
-			<li>
-				
-				<div class='setup_contents' style='float:left'>
-					<div style='padding-left:12px;'>
-						{$contents}
-					</div>
-				</div>
-				
-			</li>
-		</ul>
+			<div style='padding-left:12px;'>
+				{$contents}
+			</div>
+		</div>
+	
 	</div>
 </div>
-		<div class='setup_bottom'>
-			{$bottom}
-		</div>
+
+<div class='setup_bottom'>
+	{$bottom}
+</div>
+
 <input type='hidden' name='setup_goto_step' value=''>
 </form>
 </center>

@@ -855,7 +855,8 @@ div.setup_plug_header {
 div.setup_contents {
 	margin-right:2px;
 	background-color:#FFFFFF;
-	width:100%;
+	width:80%;
+	margin-left:20%;
 }
 
 /* default.*/
@@ -866,10 +867,8 @@ div.default {
 
 /* Navigation col */
 div.setup_navigation {
-	width:200px;
-	clear:bottom;
+	width:19%;
 	background-color:#E8E8E8;
-	float:left ; 
 	padding-left: 2px;;
 	padding-right: 2px;;
 }
