@@ -15,10 +15,14 @@
 			</td>
 			<td>
 				{t}Import{/t}&nbsp;
-			
-				<input type='file' name='mass_file'>
-
-				<input type='submit' name='import_gotomass_csv' value='{t}Import{/t}'>
+		
+				{if $is_writeable}	
+					<input type='file' name='mass_file'>
+					<input type='submit' name='import_gotomass_csv' value='{t}Import{/t}'>
+				{else}
+					<input type='file' name='mass_file' disabled>
+					<input type='submit' name='import_gotomass_csv' value='{t}Import{/t}' disabled>
+				{/if}
 			</td>
 		</tr>
 	</table>
@@ -66,12 +70,17 @@
 				</select>
 			</td>
 			<td style='text-align:right'>
+				{if $is_writeable}
 				<input type='image' name='remove_{$key}' src='images/edittrash.png'
 				 	title='{t}Remove this entry{/t}'>
+				{else}
+					&nbsp;	
+				{/if}
 			</td>
 		</tr>
 
 	{/foreach}
+		{if $is_writeable}
 		<tr>
 			<td>
 				&nbsp;-	
@@ -89,11 +98,16 @@
 				<input type='submit' name='add_new_entry' value='{t}New entry{/t}'>
 			</td>
 		</tr>
+		{/if}
 	</table>
 <div class="contentboxb" style="border-top: 1px solid #B0B0B0; padding:0px; margin-top:10px;">
  <p class="contentboxb" style='text-align:right'>
 {if $contents_modified}
-	<input type='submit' name='save_gotomass_changes' value='{t}Apply{/t}'>
+	{if $is_writeable}
+		<input type='submit' name='save_gotomass_changes' value='{t}Apply{/t}'>
+	{else}
+		<input type='submit' name='save_gotomass_changes' value='{t}Apply{/t}' disabled>
+	{/if}
 	<input type='submit' name='reload_gotomass_data' value='{t}Cancel{/t}'>
 {else}
 	<input type='submit' name='save_gotomass_changes' value='{t}Apply{/t}' disabled>

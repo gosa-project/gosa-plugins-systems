@@ -22,6 +22,7 @@ class gotomasses extends plugin
    */
   var $contents_backup  = array();
 
+  var $contents_initially_loaded = FALSE;
 
   function gotomasses($config, $dn= NULL)
   {
@@ -30,7 +31,6 @@ class gotomasses extends plugin
   
     /* Include config object */
     $this->config= $config;
-    $this->load_csv_data();
   }
 
 
@@ -49,6 +49,12 @@ class gotomasses extends plugin
 
   function execute()
   {
+    /* Load contents */
+    if(!$this->contents_initially_loaded){
+      $this->load_csv_data();
+      $this->contents_initially_loaded = TRUE;
+    }
+
     if(isset($_POST['export_gotomass_csv'])){
         $data = "";
         foreach($this->contents as $val){
@@ -72,11 +78,15 @@ class gotomasses extends plugin
    
     /* Import given file */ 
     if(isset($_POST['import_gotomass_csv']) && isset($_FILES['mass_file'])){
-      $str = @file_get_contents($_FILES['mass_file']['tmp_name']);
-      if(empty($str)){
-        print_red(_("The uploaded file seams to be empty, import aborted."));
+      if(!$this->acl_is_writeable("something")){
+        print_red(_("Your are not allowed to import csv data into this plugin."));
       }else{
-        $this->load_csv_data($str);
+        $str = @file_get_contents($_FILES['mass_file']['tmp_name']);
+        if(empty($str)){
+          print_red(_("The uploaded file seams to be empty, import aborted."));
+        }else{
+          $this->load_csv_data($str); 
+        }
       }
     }
 
@@ -88,6 +98,8 @@ class gotomasses extends plugin
     /* Call parent execute */
     plugin::execute();
     $smarty= get_smarty();
+    $smarty->assign("is_writeable",$this->acl_is_writeable("something"));
+    $smarty->assign("is_readable", $this->acl_is_readable("something"));
     $smarty->assign("contents_modified",$this->contents_modified());
     $smarty->assign("ogs", $this->get_object_groups());
     $smarty->assign("contents", $this->contents);
@@ -123,6 +135,14 @@ class gotomasses extends plugin
 
   function load_csv_data($data = NULL)
   {
+    $ui = get_userinfo();
+
+    if(!$this->acl_is_readable("something")){
+      $this->contents =array(); 
+      print_red(_("Your are not allowed to view contents of this plugin."));
+      return(FALSE);
+    }
+
     if($data == NULL){
       if(!file_exists($this->file_to_read) || !is_readable($this->file_to_read)){
         print_red(sprintf(_("Can't locate or read csv storage file '%s'."),$this->file_to_read));
@@ -149,6 +169,7 @@ class gotomasses extends plugin
         }
       }
       fclose($fp);
+      $this->contents_backup = $this->contents;
     }else{
       $this->contents =array(); 
       $rows = split("\n",$data);
@@ -163,12 +184,17 @@ class gotomasses extends plugin
         }
       }
     }
-    $this->contents_backup = $this->contents;
   }
 
 
   function save_csv_data()
   {
+    if(!$this->acl_is_writeable("something")){
+      $this->contents =array(); 
+      print_red(_("Your are not allowed to write the content of this plugin."));
+      return(FALSE);
+    }
+
     if(!file_exists($this->file_to_read) || !is_writeable($this->file_to_read)){
       print_red(sprintf(_("Can't locate or write csv storage file '%s'."),$this->file_to_read));
     }else{
