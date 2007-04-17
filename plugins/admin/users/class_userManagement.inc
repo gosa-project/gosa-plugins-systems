@@ -295,25 +295,30 @@ class userManagement extends plugin
     if ($s_action=="del_multiple"){
       $ids = $this->list_get_selected_items();
 
-      foreach($ids as $id){
-        $dn = $this->list[$id]['dn'];
-        if (($user= get_lock($dn)) != ""){
-          return(gen_locked_message ($user, $dn));
+      if(count($ids)){
+
+        foreach($ids as $id){
+          $dn = $this->list[$id]['dn'];
+          if (($user= get_lock($dn)) != ""){
+            return(gen_locked_message ($user, $dn));
+          }
+          $this->dns[$id] = $dn; 
         }
-        $this->dns[$id] = $dn; 
-      }
 
-      $dns_names = "<br><pre>";
-      foreach($this->dns as $dn){
-        add_lock ($dn, $this->ui->dn);
-        $dns_names .= $dn."\n";
-      }
-      $dns_names .="</pre>";
 
-      /* Lock the current entry, so nobody will edit it during deletion */
-      $smarty->assign("info",     sprintf(_("You're about to delete the following user(s) %s"), @LDAP::fix($dns_names)));
-      $smarty->assign("multiple", true);
-      return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
+
+        $dns_names = "<br><pre>";
+        foreach($this->dns as $dn){
+          add_lock ($dn, $this->ui->dn);
+          $dns_names .= $dn."\n";
+        }
+        $dns_names .="</pre>";
+
+        /* Lock the current entry, so nobody will edit it during deletion */
+        $smarty->assign("info",     sprintf(_("You're about to delete the following user(s) %s"), @LDAP::fix($dns_names)));
+        $smarty->assign("multiple", true);
+        return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
+      }
     }
 
 
