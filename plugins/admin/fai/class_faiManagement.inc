@@ -84,7 +84,7 @@ class faiManagement extends plugin
 		$s_entry 	= "";
     
     /* If an entry was locked, these vars will be stored in a session to allow direct edit */
-    $_SESSION['LOCK_VARS_TO_USE'] = array("/^edit_entry$/","/^id$/","/^entry_edit_/","/^entry_delete_/");
+    $_SESSION['LOCK_VARS_TO_USE'] = array("/^edit_entry$/","/^id$/","/^entry_edit_/","/^entry_delete_/","/^item_selected/","/^remove_multiple_fai_objects/");
 
 
     /****************
@@ -99,7 +99,9 @@ class faiManagement extends plugin
                     "/create_script/i"=>"new_script",      "/create_hook/i"=>"new_hook",
                     "/create_variable/i"=>"new_variable",  "/create_template/i"=>"new_template",
                     "/create_package/i"=>"new_package",    "/create_profile/i"=>"new_profile",
-                    "/edit_continue/"=>"select_class_name_finished");
+                    "/edit_continue/"=>"select_class_name_finished",
+  
+                    "/^remove_multiple_fai_objects/" => "del_multiple");
 
 		foreach($_POST as $name => $value){
       foreach($posts as $reg => $act ){
@@ -160,6 +162,7 @@ class faiManagement extends plugin
 				/* Lock the current entry, so nobody will edit it during deletion */
 				add_lock ($this->dn, $this->ui->dn);
 				$smarty->assign("warning", sprintf(_("You're about to delete all information about the FAI class at '%s'."), @LDAP::fix($this->dn)));
+        $smarty->assign("multiple", false);
 				return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
 			} else {
 
@@ -168,6 +171,102 @@ class faiManagement extends plugin
 				print_red (_("You are not allowed to delete this component!"));
 			}
 		}
+
+
+    /********************
+      Delete MULTIPLE entries requested, display confirm dialog
+     ********************/
+
+    if ($s_action=="del_multiple"){
+      $this->dns = array();
+      $ids = $this->list_get_selected_items();
+
+      if(count($ids)){
+
+        foreach($ids as $id){
+          $dn = $this->objects[$id]['dn'];
+          if (($user= get_lock($dn)) != ""){
+            return(gen_locked_message ($user, $dn));
+          }
+          $this->dns[$id] = $dn;
+        }
+
+        $dns_names = "<br><pre>";
+        foreach($this->dns as $dn){
+          add_lock ($dn, $this->ui->dn);
+          $dns_names .= $dn."\n";
+        }
+        $dns_names .="</pre>";
+
+        /* Lock the current entry, so nobody will edit it during deletion */
+        $smarty->assign("warning",     sprintf(_("You're about to delete the following fai object(s) %s"), @LDAP::fix($dns_names)));
+        $smarty->assign("multiple", true);
+        return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
+      }
+    }
+
+
+    /********************
+      Delete MULTIPLE entries confirmed
+     ********************/
+
+    /* Confirmation for deletion has been passed. Users should be deleted. */
+    if (isset($_POST['delete_multiple_fai_object_confirm'])){
+
+      /* Find out more about the object type */
+      $ldap   = $this->config->get_ldap_link();
+
+      /* Remove user by user and check acls before removeing them */
+      foreach($this->dns as $key => $dn){
+
+        $ldap->cat($dn, array('objectClass'));
+        $attrs  = $ldap->fetch();
+        $type   = $this->get_type($attrs);
+
+        $acl  = $this->ui->get_permissions($dn,"fai/".$type[1]);
+        if(preg_match("/d/",$acl)){
+
+          $this->dialog = new $type[0]($this->config, $this->config->data['TABS'][$type[2]], $dn,"fai");
+          $this->dialog->set_acl_base($dn);
+          $this->dialog->by_object[$type[1]]->remove_from_parent ();
+          unset ($this->dialog);
+          gosa_log ("FAI class '".$dn."' has been tagged as removed");
+          $this->dialog= NULL;
+          $to_del = clean_up_releases($dn);
+          save_release_changes_now();
+
+          foreach($to_del as $dn){
+            $ldap->rmdir_recursive($dn);
+            gosa_log(sprintf(_("Release cleanup : Removing object (tagged as remvoed) that is no longer in use '%s'."),$dn));
+          }
+
+        } else {
+
+          /* Normally this shouldn't be reached, send some extra
+             logs to notify the administrator */
+          print_red (_("You are not allowed to delete this component!"));
+          gosa_log ("Warning: '".$this->ui->uid."' tried to trick system ".
+              "deletion.");
+        }
+
+        /* Remove lock file after successfull deletion */
+        del_lock ($dn);
+        unset($this->dns[$key]);
+      }
+    }
+
+
+    /********************
+      Delete MULTIPLE entries Canceled
+     ********************/
+
+    /* Remove lock */
+    if(isset($_POST['delete_multiple_fai_object_cancel'])){
+      foreach($this->dns as $key => $dn){
+        del_lock ($dn);
+        unset($this->dns[$key]);
+      }
+    }
 
 
     /****************
@@ -658,7 +757,7 @@ class faiManagement extends plugin
     /* Display dialog with system list */
     $this->DivListFai->parent = $this;
     $this->DivListFai->execute();
-    $this->DivListFai->AddDepartments($this->DivListFai->selectedBase,4);
+    $this->DivListFai->AddDepartments($this->DivListFai->selectedBase,4,1);
     $this->reload();
     $this->DivListFai->setEntries($this->objects);
     return($this->DivListFai->Draw());
@@ -695,8 +794,20 @@ class faiManagement extends plugin
     }
     return ($ret);
   }
-
   
+
+  function list_get_selected_items()
+  {
+    $ids = array();
+    foreach($_POST as $name => $value){
+      if(preg_match("/^item_selected_[0-9]*$/",$name)){
+        $id   = preg_replace("/^item_selected_/","",$name);
+        $ids[$id] = $id;
+      }
+    }
+    return($ids);
+  }
+
 
   /* reload list of objects */
   function reload()

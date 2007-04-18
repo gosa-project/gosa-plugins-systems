@@ -59,7 +59,12 @@ class divListFai extends MultiSelectWindow
       $action_col_size += 20;
     }
 
+    /* Toggle all selected / deselected */
+    $chk = "<input type='checkbox' id='select_all' name='select_all'
+               onClick='toggle_all_(\"^item_selected_[0-9]*$\",\"select_all\");' >";
+
     /* set Page header */
+    $this->AddHeader(array("string"=> $chk,          "attach"=>"style='width:20px;'"));
     $this->AddHeader(array("string" => "&nbsp;",                "attach" => "style='text-align:center;width:20px;'"));
     $this->AddHeader(array("string" => _("Name of FAI class"),  "attach" => "style=''"));
     $this->AddHeader(array("string" => _("Class type"),         "attach" => "style='width:200px;'"));
@@ -170,8 +175,14 @@ class divListFai extends MultiSelectWindow
   
     $listhead .=  _("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
                   " <input class='center' type='image' src='images/list_submit.png' align='middle' 
-                  title='"._("Submit department")."' name='submit_department' alt='".  _("Submit")."'>&nbsp;".
-                "</div>";
+                  title='"._("Submit department")."' name='submit_department' alt='".  _("Submit")."'>&nbsp;";
+
+    /* Multiple options */
+    $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/edittrash.png'
+        title='"._("Remove selected fai objects")."' alt='"._("Remove fai objects")."' name='remove_multiple_fai_objects'>&nbsp;";
+
+    $listhead .="</div>";;
+
 
     $this->SetListHeader($listhead);
   }
@@ -255,11 +266,14 @@ class divListFai extends MultiSelectWindow
        $edi = $editlink;
        $acti = $action;
 
+       /* Create each field */
+       $field0 = array("string" => "<input type='checkbox' id='item_selected_".$key."' name='item_selected_".$key."'>" ,
+           "attach" => "style='width:20px;'");
        $field1 = array("string" => $img , "attach" => "style='text-align:center;width:20px;'");
        $field2 = array("string" => preg_replace(array("/%KEY%/","/%NAME%/","/%TITLE%/"),array($key,$value['cn'].$desc,preg_replace('/ /', '&nbsp;', @LDAP::fix($value['dn']))),$edi) , "attach" => "style=''");
        $field3 = array("string" => $info, "attach" => "style='width:200px;'");
        $field4 = array("string" => preg_replace("/%KEY%/",$key,$acti) , "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'");
-       $this->AddElement(array($field1,$field2,$field3,$field4));
+       $this->AddElement(array($field0,$field1,$field2,$field3,$field4));
      }
   }
 
