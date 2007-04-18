@@ -61,7 +61,7 @@
 <!-- 
 	Div container with PHP config checks 
 -->
-<div style='width:50%; float:left; margin-bottom:20px;'>
+<div style='width:50%; float:left; margin-bottom:40px;'>
 
 	<!-- Set content styles -->	
 	<div class='default' style='margin:10px;'>
@@ -172,9 +172,6 @@
 			</div>
 			</div>
 		{/foreach}
-
-
-			
 	</div>
 </div>
 
