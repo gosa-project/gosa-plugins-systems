@@ -138,7 +138,7 @@ class divListUsers extends MultiSelectWindow
   
     /* Multiple options */ 
     $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/edittrash.png'
-        title='"._("Remove selected user")."' alt='"._("Remove user")."' name='remove_multiple_user'>&nbsp;";
+        title='"._("Remove selected user")."' alt='"._("Remove user")."' name='remove_multiple_users'>&nbsp;";
     
     $listhead .="</div>";;
     $this->SetListHeader($listhead);

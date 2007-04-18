@@ -59,7 +59,7 @@ class ogroupManagement extends plugin
       Variable intialisation && Check posts for commands  
      ****************/
 
-    $_SESSION['LOCK_VARS_TO_USE'] = array("/^act$/","/^id$/","/^group_edit_/","/^group_del_/");
+    $_SESSION['LOCK_VARS_TO_USE'] = array("/^act$/","/^id$/","/^group_edit_/","/^group_del_/","/^item_selected/","/^remove_multiple_ogroups/");
 
     $smarty     = get_smarty();
     $s_action   = "";
@@ -86,6 +86,8 @@ class ogroupManagement extends plugin
       }elseif(preg_match("/^cut_.*/",$key)){
         $s_action="cut";
         $s_entry  = preg_replace("/^cut_/i","",$key);
+      }elseif(preg_match("/^remove_multiple_ogroups/",$key)){
+        $s_action="del_multiple";
       }elseif(preg_match("/_group_edit_/",$key)){
         $type = preg_replace("/_group_edit_.*$/","",$key);
         $s_action="edit";
@@ -129,6 +131,84 @@ class ogroupManagement extends plugin
     }
 
 
+
+
+
+
+
+    /********************
+      Delete MULTIPLE entries requested, display confirm dialog
+     ********************/
+    if ($s_action=="del_multiple"){
+      $ids = $this->list_get_selected_items();
+      if(count($ids)){
+        foreach($ids as $id){
+          $dn = $this->ogrouplist[$id]['dn'];
+          if (($user= get_lock($dn)) != ""){
+            return(gen_locked_message ($user, $dn));
+          }
+          $this->dns[$id] = $dn;
+        }
+        $dns_names = "<br><pre>";
+        foreach($this->dns as $dn){
+          add_lock ($dn, $this->ui->dn);
+          $dns_names .= $dn."\n";
+        }
+        $dns_names .="</pre>";
+        /* Lock the current entry, so nobody will edit it during deletion */
+        $smarty->assign("info",     sprintf(_("You're about to delete the following object group(s) %s"), @LDAP::fix($dns_names)));
+        $smarty->assign("multiple", true);
+        return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
+      }
+    }
+
+
+    /********************
+      Delete MULTIPLE entries confirmed
+     ********************/
+
+    /* Confirmation for deletion has been passed. Users should be deleted. */
+    if (isset($_POST['delete_multiple_ogroup_confirm'])){
+
+      /* Remove user by user and check acls before removeing them */
+      foreach($this->dns as $key => $dn){
+
+        $acl = $this->ui->get_permissions($dn, "ogroups");
+        if (preg_match('/d/', $acl)){
+
+          /* Delete request is permitted, perform LDAP action */
+          $this->ogroup= new ogrouptabs($this->config,$this->config->data['TABS']['OGROUPTABS'], $dn);
+          $this->ogroup->delete ();
+          gosa_log ("Object group'".$this->dn."' has been removed");
+          unset ($this->ogroup);
+          $this->ogroup= NULL;
+        } else {
+
+          /* Normally this shouldn't be reached, send some extra
+             logs to notify the administrator */
+          print_red (_("You are not allowed to delete this object group!"));
+          gosa_log ("Warning: '".$this->ui->uid."' tried to trick group deletion.");
+        }
+        /* Remove lock file after successfull deletion */
+        del_lock ($dn);
+        unset($this->dns[$key]);
+      }
+    }
+
+
+    /********************
+      Delete MULTIPLE entries Canceled
+     ********************/
+
+    /* Remove lock */
+    if(isset($_POST['delete_multiple_ogroup_cancel'])){
+      foreach($this->dns as $key => $dn){
+        del_lock ($dn);
+        unset($this->dns[$key]);
+      }
+    }
+
+
     /****************
       Delete object group
      ****************/
@@ -152,6 +232,7 @@ class ogroupManagement extends plugin
         /* Lock the current entry, so nobody will edit it during deletion */
         add_lock ($this->dn, $this->ui->dn);
         $smarty->assign("info", sprintf(_("You're about to delete the object group '%s'."), @LDAP::fix($this->dn)));
+        $smarty->assign("multiple", false);
         return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
       } else {
 
@@ -321,7 +402,7 @@ class ogroupManagement extends plugin
 
     /* Add departments if subsearch is disabled */
     if(!$this->DivListOGroup->SubSearch){
-      $this->DivListOGroup->AddDepartments($this->DivListOGroup->selectedBase,4);
+      $this->DivListOGroup->AddDepartments($this->DivListOGroup->selectedBase,4,1);
     }
     $this->reload ();
     $this->DivListOGroup->setEntries($this->ogrouplist);
@@ -436,6 +517,19 @@ class ogroupManagement extends plugin
       $this->ogrouplist[]=$val;
     }
     reset ($this->ogrouplist);
+  }
+
+
+  function list_get_selected_items()
+  {
+    $ids = array();
+    foreach($_POST as $name => $value){
+      if(preg_match("/^item_selected_[0-9]*$/",$name)){
+        $id   = preg_replace("/^item_selected_/","",$name);
+        $ids[$id] = $id;
+      }
+    }
+    return($ids);
   }
 
 

@@ -53,7 +53,12 @@ class divListOGroup extends MultiSelectWindow
       $action_col_size += 38; 
     }
 
+    /* Toggle all selected / deselected */
+    $chk = "<input type='checkbox' id='select_all' name='select_all'
+               onClick='toggle_all_(\"^item_selected_[0-9]*$\",\"select_all\");' >";
+
     /* set Page header */
+    $this->AddHeader(array("string"=> $chk,          "attach"=>"style='width:20px;'"));
     $this->AddHeader(array("string" => "&nbsp;", "attach" => "style='text-align:center;width:20px;'"));
     $this->AddHeader(array("string" => _("Name of object groups")." / "._("Departments"), "attach" => "style=''"));
     $this->AddHeader(array("string" => _("Properties"), "attach" => "style='width:136px;'"));
@@ -148,8 +153,13 @@ class divListOGroup extends MultiSelectWindow
     /* Add department selector */
     $listhead .= _("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
       " <input class='center' type='image' src='images/list_submit.png' align='middle' 
-      title='"._("Submit department")."' name='submit_department' alt='"._("Submit")."'>&nbsp;".
-      "</div>";
+      title='"._("Submit department")."' name='submit_department' alt='"._("Submit")."'>&nbsp;";
+
+    /* Multiple options */
+    $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/edittrash.png'
+        title='"._("Remove selected object groups")."' alt='"._("Remove object groups")."' name='remove_multiple_ogroups'>&nbsp;";
+
+    $listhead .="</div>";
 
     $this->SetListHeader($listhead);
   }
@@ -219,12 +229,15 @@ class divListOGroup extends MultiSelectWindow
       }else{
         $desc = " - [ ".$val['description'][0]." ]";
       }
+      /* Create each field */
+      $field0 = array("string" => "<input type='checkbox' id='item_selected_".$key."' name='item_selected_".$key."'>" ,
+                      "attach" => "style='width:20px;'");
       $field1 = array("string" => "<img src='images/list_ogroup.png' alt='"._("Object group")."' ".$title.">", "attach" => "style='text-align:center;width: 20px;'");
       $field2 = array("string" => sprintf($editlink,$key,($val['cn']['0'].$desc)), "attach" => "style='' ".$title);
       $field3 = array("string" => preg_replace("/%KEY/", $key, $this->parent->convert_list($val))."&nbsp;".$mail, "attach" => "style='width:136px;'");
       $field4 = array("string" => preg_replace("/%KEY%/", $key, $actions), "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'");
 
-      $this->AddElement(array($field1,$field2,$field3,$field4));
+      $this->AddElement(array($field0,$field1,$field2,$field3,$field4));
     }
   }
 

@@ -79,7 +79,7 @@ class userManagement extends plugin
       foreach(array("del"       => "user_del",    "edit"      => "user_edit",
                     "new"       => "user_new",
                     "new_tpl"   => "user_tplnew",
-                    "del_multiple" => "^remove_multiple_user",
+                    "del_multiple" => "^remove_multiple_users",
                     "create_user_from_tpl"          => "userfrom_tpl",
                     "change_pw" => "user_chgpw", 
                     "editPaste" => "editPaste",   "copy"      => "copy",
@@ -304,8 +304,6 @@ class userManagement extends plugin
           }
           $this->dns[$id] = $dn; 
         }
-
-
 
         $dns_names = "<br><pre>";
         foreach($this->dns as $dn){

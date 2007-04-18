@@ -11,8 +11,14 @@
 </p>
 
 <p class="plugbottom">
-  <input type=submit name="delete_group_confirm" value="{t}Delete{/t}">
-  &nbsp;
-  <input type=submit name="delete_cancel" value="{t}Cancel{/t}">
+	{if $multiple}
+		<input type=submit name="delete_multiple_ogroup_confirm" value="{t}Delete{/t}">
+  		&nbsp;
+	  	<input type=submit name="delete_multiple_ogroup_cancel" value="{t}Cancel{/t}">
+  	{else}
+  		<input type=submit name="delete_group_confirm" value="{t}Delete{/t}">
+  		&nbsp;
+  		<input type=submit name="delete_cancel" value="{t}Cancel{/t}">
+	{/if}
 </p>
 
