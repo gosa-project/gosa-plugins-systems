@@ -39,7 +39,7 @@ class blocklist extends plugin
     /* Call parent execute */
     plugin::execute();
 
-    $_SESSION['LOCK_VARS_TO_USE'] = array("/^goFaxBlocklist_/","/^act$/","/^id$/");
+    $_SESSION['LOCK_VARS_TO_USE'] = array("/^goFaxBlocklist_/","/^act$/","/^id$/","/^remove_multiple_blocklists/","/^item_selected/");
 
     /***************
       Init vars 
@@ -69,6 +69,8 @@ class blocklist extends plugin
         // Post for new
       }elseif(preg_match("/^goFaxBlocklist_new.*/",$key)){
         $s_action="new";
+      }elseif(preg_match("/^remove_multiple_blocklists/",$key)){
+        $s_action="del_multiple";
       }
     }
 
@@ -149,6 +151,76 @@ class blocklist extends plugin
     }
 
 
+    /********************
+      Delete MULTIPLE entries requested, display confirm dialog
+     ********************/
+
+    if ($s_action=="del_multiple"){
+
+      $this->dns = array();
+      $ids = $this->list_get_selected_items();
+
+      if(count($ids)){
+        foreach($ids as $id){
+          $dn = $this->blocklists[$id]['dn'];
+          if (($user= get_lock($dn)) != ""){
+            return(gen_locked_message ($user, $dn));
+          }
+          $this->dns[$id] = $dn;
+        }
+
+        $dns_names = "<br><pre>";
+        foreach($this->dns as $dn){
+          add_lock ($dn, $this->ui->dn);
+          $dns_names .= $dn."\n";
+        }
+        $dns_names .="</pre>";
+
+        /* Lock the current entry, so nobody will edit it during deletion */
+        $smarty->assign("info",     sprintf(_("You're about to delete the following blocklists(s) %s"), @LDAP::fix($dns_names)));
+        $smarty->assign("multiple", true);
+        return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
+      }
+    }
+
+
+    /********************
+      Delete MULTIPLE entries confirmed
+     ********************/
+
+    /* Confirmation for deletion has been passed. Users should be deleted. */
+    if (isset($_POST['delete_multiple_blocklist_confirm'])){
+
+      /* Remove user by user and check acls before removeing them */
+      foreach($this->dns as $key => $dn){
+        $acl = $this->ui->get_permissions($dn, "blocklist/blocklist");
+        if (preg_match('/d/', $acl)){
+          $this->dn = $dn;
+          $this->remove_from_parent();
+        } else {
+          print_red (sprintf(_("You are not allowed to delete the blocklist '%s'!"),$dn));
+        }
+        /* Remove lock file after successfull deletion */
+        del_lock ($dn);
+        unset($this->dns[$key]);
+      }
+      $this->reload();
+    }
+
+
+    /********************
+      Delete MULTIPLE entries Canceled
+     ********************/
+
+    /* Remove lock */
+    if(isset($_POST['delete_multiple_blocklist_cancel'])){
+      foreach($this->dns as $key => $dn){
+        del_lock ($dn);
+        unset($this->dns[$key]);
+      }
+    }
+
+
     /***************
       Remove blocklist
      ***************/
@@ -165,6 +237,7 @@ class blocklist extends plugin
         add_lock ($this->dn, $this->ui->dn);
 
         $smarty->assign("info", sprintf(_("You're about to delete the blocklist '%s'."), $this->dn));
+        $smarty->assign("multiple", false);
         return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
       }
     }
@@ -351,12 +424,25 @@ class blocklist extends plugin
 
       /* Add departments if subsearch is disabled */
       if(!$this->DivListBlocklist->SubSearch){
-        $this->DivListBlocklist->AddDepartments($this->DivListBlocklist->selectedBase);
+        $this->DivListBlocklist->AddDepartments($this->DivListBlocklist->selectedBase,3,1);
       }
       $this->reload();
       $this->DivListBlocklist->setEntries($this->blocklists);
       return($this->DivListBlocklist->Draw());
     }
+  }
+
+
+  function list_get_selected_items()
+  {
+    $ids = array();
+    foreach($_POST as $name => $value){
+      if(preg_match("/^item_selected_[0-9]*$/",$name)){
+        $id   = preg_replace("/^item_selected_/","",$name);
+        $ids[$id] = $id;
+      }
+    }
+    return($ids);
   }
 
 

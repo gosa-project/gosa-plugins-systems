@@ -47,7 +47,12 @@ class divListBlocklist extends MultiSelectWindow
       $action_col_size += 20;
     }
 
+    /* Toggle all selected / deselected */
+    $chk = "<input type='checkbox' id='select_all' name='select_all'
+               onClick='toggle_all_(\"^item_selected_[0-9]*$\",\"select_all\");' >";
+
     /* set Page header */
+    $this->AddHeader(array("string"=> $chk,          "attach"=>"style='width:20px;'"));
     $this->AddHeader(array("string" => "&nbsp;", "attach" => "style='text-align:center;width:20px;'"));
     $this->AddHeader(array("string" => _("Blocklist name")." / "._("Department"), "attach" => "style=''"));
     $this->AddHeader(array("string" => _("Actions"), "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'" ));
@@ -114,8 +119,13 @@ class divListBlocklist extends MultiSelectWindow
     /* Append department selector */
     $listhead .= "&nbsp;"._("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
       " <input class='center' type='image' src='images/list_submit.png' align='middle' 
-          title='"._("Submit department")."' name='submit_department' alt='"._("Submit")."'>&nbsp;".
-      "</div>";
+          title='"._("Submit department")."' name='submit_department' alt='"._("Submit")."'>&nbsp;";
+
+    /* Multiple options */
+    $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/edittrash.png'
+        title='"._("Remove selected blocklists")."' alt='"._("Remove blocklists")."' name='remove_multiple_blocklists'>&nbsp;";
+
+    $listhead .="</div>";
 
     $this->SetListHeader($listhead);
   }
@@ -167,10 +177,15 @@ class divListBlocklist extends MultiSelectWindow
       }else{
         $display= $val["cn"][0];
       }
+
+      
+      /* Create each field */
+      $field0 = array("string" => "<input type='checkbox' id='item_selected_".$key."' name='item_selected_".$key."'>" ,
+                      "attach" => "style='width:20px;'");
       $field1 = array("string" => sprintf($blockimg,$val['dn']), "attach" => "style='text-align:center;width:20px;'");
       $field2 = array("string" => sprintf($editlink,$key,$display), "attach" => "style='' title='".preg_replace('/ /', '&nbsp;', @LDAP::fix($val['dn']))."'");
       $field3 = array("string" => preg_replace("/%KEY%/", "$key", $action), "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'");
-      $this->AddElement( array($field1,$field2,$field3));
+      $this->AddElement( array($field0,$field1,$field2,$field3));
     }
   }
 
