@@ -51,7 +51,7 @@ class Step_Language extends setup_step
                              "fr_FR" => _("French"),
                              "en_EN" => _("English"),
                              "ru_RU" => _("Russian"));
-
+    asort($this->languages);
     $smarty = get_smarty();
     $smarty->assign("languages",    $this->languages);
     $smarty->assign("lang",         $this->lang);
