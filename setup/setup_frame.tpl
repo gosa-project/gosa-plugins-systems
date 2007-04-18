@@ -22,9 +22,7 @@
 	
 		<div class='setup_contents'>
 			<div style='border-bottom:1px dashed #AAAAAA'>
-				<font style="font-size:24px;">
 				{$header}
-				</font>
 			</div>
 			<div style='padding-left:12px;'>
 				{$contents}
