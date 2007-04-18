@@ -152,7 +152,7 @@ class Step_Checks extends setup_step
     $query= "LC_ALL=C LANG=C fping -v 2>&1";
     $output= shell_exec ($query);
     $N = _("Checking for fping utility");
-    $D = _("The fping utility is only used if you've got a thin client based terminal environment running.");
+    $D = _("The fping utility is used if you've got a thin client based terminal environment.");
     $S = _("The fping utility is only used in thin client based terminal environment.");
     $R = preg_match("/^fping:/", $output);
     $M = FALSE;
@@ -168,9 +168,9 @@ class Step_Checks extends setup_step
       $have_mkntpwd |= ($ret == 0);
     }
 
-    $N = _("Password hashes");
-    $D = _("In order to use SAMBA 2/3, you've to install some additional packages to generate password hashes.");
-    $S = _("In order to use samba 2/3 you've to install some additional packages to generate password hashes. (e.g. libmhash2)");
+    $N = _("SAMBA password hash generation");
+    $D = _("In order to use SAMBA 2/3 passwords, you've to install additional packages to generate password hashes.");
+    $S = _("In order to use SAMBA 2/3 you've to install additional perl libraries. Take a look at mkntpasswd.");
     $R = $have_mkntpwd;
     $M = TRUE;
     $this->basic_checks[] = array("NAME" => $N , "DESC" => $D , "RESULT" => $R , "SOLUTION" => $S , "MUST" => $M );
@@ -180,8 +180,8 @@ class Step_Checks extends setup_step
      */
 
     /* Register_globals off */
-    $N = _("register_globals"."&nbsp;"."<b>"._("Off")."</b>");
-    $D = _("register_globals is a PHP mechanism to register all global varibales to be accessible from scripts without changing the scope. This may be a security risk. GOsa will run in both modes.");
+    $N = "register_globals = <b>"._("Off")."</b>";
+    $D = _("register_globals is a PHP mechanism to register all global varibales to be accessible from scripts without changing the scope. This may be a security risk.");
     $S = _("Search for 'register_globals' in your php.ini and switch it to 'Off'.");
     $R = ini_get("register_globals") == 0;
     $M = FALSE;
@@ -189,9 +189,9 @@ class Step_Checks extends setup_step
 
 
     /* session lifetime set to >=86400 seconds ? */
-    $N = ("session.gc_maxlifetime"."&nbsp;"."<b> &gt;= 86400</b>");
-    $D = _("PHP uses this value for the garbage collector to delete old sessions.")."&nbsp;".
-         _("Setting this value to one day will prevent loosing session and cookie before they really timeout.");
+    $N = "session.gc_maxlifetime &gt;= <b>86400</b>";
+    $D = _("PHP uses this value for the garbage collector to delete old sessions.")." ".
+         _("Setting this value to one day will prevent loosing session and cookies before they really timeout.");
     $S = _("Search for 'session.gc_maxlifetime' in your php.ini and set it to 86400 or higher.");
     $R = ini_get("session.gc_maxlifetime") >= 86400;
     $M = FALSE;
@@ -199,48 +199,48 @@ class Step_Checks extends setup_step
 
     /* Session auto start must be turned off */
     $session_auto_start = ini_get('session.auto_start');
-    $N = _("session.auto_start"."&nbsp;"."<b>"._("Off")."</b>");
-    $D = _("In Order to use GOsa without any trouble, the session.auto_register option in your php.ini must be set to 'Off'.");
+    $N = "session.auto_start = <b>"._("Off")."</b>";
+    $D = _("In Order to use GOsa without any trouble, the session.auto_register option in your php.ini should be set to 'Off'.");
     $S = _("Search for 'session.auto_start' in your php.ini and set it to 'Off'.");
     $R = !$session_auto_start['local_value'];
     $M = TRUE;
     $this->config_checks[] = array("NAME" => $N , "DESC" => $D , "RESULT" => $R , "SOLUTION" => $S , "MUST" => $M );
 
     /* Check if memory limit is set to 32 or > */
-    $N = _("memory_limit")."&nbsp;"."<b> &gt;= 32</b>";
-    $D = _("GOsa needs at least 32MB of memory, less will cause unpredictable errors! Increase it for larger setups.");
+    $N = "memory_limit &gt;= <b>32</b>";
+    $D = _("GOsa needs at least 32MB of memory. Setting it below this limit may cause errors that are not reproducable! Increase it for larger setups.");
     $S = _("Search for 'memory_limit' in your php.ini and set it to '32M' or higher.");
     $R = ini_get('memory_limit') >= 32 ;
     $M = TRUE;
     $this->config_checks[] = array("NAME" => $N , "DESC" => $D , "RESULT" => $R , "SOLUTION" => $S , "MUST" => $M );
 
     /* Implicit Flush disabled can increase performance */
-    $N = _("implicit_flush")."&nbsp;"."<b>"._("Off")."</b>";
-    $D = _("This option influences the Output handling. Turn this Option off, to increase performance.");
+    $N = "implicit_flush = <b>"._("Off")."</b>";
+    $D = _("This option influences the PHP output handling. Turn this Option off, to increase performance.");
     $S = _("Search for 'implicit_flush' in your php.ini and set it to 'Off'."); 
     $R = ini_get('implicit_flush');
     $M = FALSE;
     $this->config_checks[] = array("NAME" => $N , "DESC" => $D , "RESULT" => $R , "SOLUTION" => $S , "MUST" => $M );
 
     /* Check if execution time is set to 30 */
-    $N = _("max_execution_time")."&nbsp;"."<b> &gt;= 30</b>";
-    $D = _("The Execution time should be at least 30 seconds, because some actions may consume more time.");
+    $N = "max_execution_time &gt;= <b>30</b>";
+    $D = _("The Execution time should be at least 30 seconds.");
     $S = _("Search for 'max_execution_time' in your php.ini and set it to '30' or higher.");
     $R = ini_get("max_execution_time") >= 30 ;
     $M = TRUE;
     $this->config_checks[] = array("NAME" => $N , "DESC" => $D , "RESULT" => $R , "SOLUTION" => $S , "MUST" => $M );
 
     /* Expose php should be set to off */
-    $N = _("expose_php")."&nbsp;<b>"._("Off")."</b>";
-    $D = _("Increase the server security by setting expose_php to 'off'. PHP won't send any Information about the server you are running in this case.");
+    $N = "expose_php = <b>"._("Off")."</b>";
+    $D = _("Increase the server security by setting expose_php to 'off'. PHP won't send any information about the server you are running in this case.");
     $S = _("Search for 'expose_php' in your php.ini and set if to 'Off'.");
     $R = !ini_get("expose_php");
     $M = FALSE;
     $this->config_checks[] = array("NAME" => $N , "DESC" => $D , "RESULT" => $R , "SOLUTION" => $S , "MUST" => $M );
 
     /* Automatic quoting must be turned on */
-    $N = _("magic_quotes_gpc")."&nbsp;<b>"._("On")."</b>";
-    $D = _("Increase your server security by setting magic_quotes_gpc to 'on'. PHP will escape all quotes   in strings in this case."); 
+    $N = "magic_quotes_gpc = <b>"._("On")."</b>";
+    $D = _("Increase your server security by setting magic_quotes_gpc to 'on'. PHP will escape all quotes in strings in this case."); 
     $S = _("Search for 'magic_quotes_gpc' in your php.ini and set it to 'On'."); 
     $R = ini_get('magic_quotes_gpc'); 
     $M = TRUE;
@@ -251,9 +251,9 @@ class Step_Checks extends setup_step
      */
 
     /* Check if we can create a config file.*/
-    $N = _("Configuration file writeable.");
-    $D = _("The Configuration file can't be written");
-    $S = sprintf(_("The GOsa reads its configuration from a file located in (%s/%s). The setup can write the configuration directly in this file, if it is writeable."),CONFIG_DIR,CONFIG_FILE); 
+    $N = _("Configuration writeable");
+    $D = _("The configuration file can't be written");
+    $S = sprintf(_("GOsa reads its configuration from a file located in (%s/%s). The setup can write the configuration directly if it is writeable."),CONFIG_DIR,CONFIG_FILE); 
     $R =    ( file_exists(CONFIG_DIR."/".CONFIG_FILE) && is_writeable(CONFIG_DIR."/".CONFIG_FILE)) // is there a config file ? 
         ||  (!file_exists(CONFIG_DIR."/".CONFIG_FILE) && is_writeable(CONFIG_DIR));  // There is non, but can we create a file there ?
     $M = FALSE;
