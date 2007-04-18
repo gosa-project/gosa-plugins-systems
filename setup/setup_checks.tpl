@@ -61,7 +61,7 @@
 <!-- 
 	Div container with PHP config checks 
 -->
-<div style='width:50%; float:left; margin-bottom:40px;'>
+<div style='width:50%; float:left;'>
 
 	<!-- Set content styles -->	
 	<div class='default' style='margin:10px;'>
@@ -175,3 +175,4 @@
 	</div>
 </div>
 
+<div style="clear:both"></div>
