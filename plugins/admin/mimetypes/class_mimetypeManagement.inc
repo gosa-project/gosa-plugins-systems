@@ -100,7 +100,7 @@ class mimetypeManagement extends plugin
 
     /* These vars will be stored if you try to open a locked mime, 
         to be able to perform your last requests after showing a warning message */
-    $_SESSION['LOCK_VARS_TO_USE'] = array("/^act$/","/^id$/","/^mime_edit_/","/^mime_del_/");
+    $_SESSION['LOCK_VARS_TO_USE'] = array("/^act$/","/^id$/","/^mime_edit_/","/^mime_del_/","/^item_selected/","/^remove_multiple_mimetypes/");
 
     $smarty       = get_smarty();             // Smarty instance
     $s_action     = "";                       // Contains the action to proceed
@@ -127,6 +127,8 @@ class mimetypeManagement extends plugin
         // Post for new
       }elseif(preg_match("/^mime_new.*/",$key)){
         $s_action="new";
+      }elseif(preg_match("/^remove_multiple_mimetypes/",$key)){
+        $s_action="del_multiple";
       }elseif(preg_match("/^editPaste.*/i",$key)){
         $s_action="editPaste";
       }
@@ -250,6 +252,89 @@ class mimetypeManagement extends plugin
     }
 
 
+    /********************
+      Delete MULTIPLE entries requested, display confirm dialog
+     ********************/
+
+    if ($s_action=="del_multiple"){
+      $ids = $this->list_get_selected_items();
+
+      if(count($ids)){
+
+        foreach($ids as $id){
+          $dn = $this->mimetypes[$id]['dn'];
+          if (($user= get_lock($dn)) != ""){
+            return(gen_locked_message ($user, $dn));
+          }
+          $this->dns[$id] = $dn;
+        }
+
+        $dns_names = "<br><pre>";
+        foreach($this->dns as $dn){
+          add_lock ($dn, $this->ui->dn);
+          $dns_names .= $dn."\n";
+        }
+        $dns_names .="</pre>";
+
+        /* Lock the current entry, so nobody will edit it during deletion */
+        $smarty->assign("intro",     sprintf(_("You're about to delete the following user(s) %s"), @LDAP::fix($dns_names)));
+        $smarty->assign("multiple", true);
+        return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
+      }
+    }
+
+
+
+
+    /********************
+      Delete MULTIPLE entries confirmed
+     ********************/
+
+    /* Confirmation for deletion has been passed. Users should be deleted. */
+    if (isset($_POST['delete_multiple_mimetype_confirm'])){
+
+      $ui = get_userinfo();
+
+      /* Remove user by user and check acls before removeing them */
+      foreach($this->dns as $key => $dn){
+
+        $acl = $ui->get_permissions($dn,"mimetypes/mimetype");
+        if(preg_match("/d/",$acl)){
+
+          /* Delete request is permitted, perform LDAP action */
+          $this->mimetabs= new mimetabs($this->config, $this->config->data['TABS']['MIMETABS'], $dn,"mimetypes");
+          $this->mimetabs->set_acl_base($dn);
+          $this->mimetabs->delete ();
+          gosa_log ("Mime type object'".$dn."' has been removed");
+          unset ($this->mimetabs);
+          $this->mimetabs= NULL;
+
+        } else {
+          /* Normally this shouldn't be reached, send some extra
+             logs to notify the administrator */
+          print_red (_("You are not allowed to delete this mime type!"));
+          gosa_log ("Warning: '".$this->ui->uid."' tried to trick group deletion.");
+        }
+        /* Remove lock file after successfull deletion */
+        del_lock ($dn);
+        unset($this->dns[$key]);
+      }
+    }
+
+
+    /********************
+      Delete MULTIPLE entries Canceled
+     ********************/
+
+    /* Remove lock */
+    if(isset($_POST['delete_multiple_mimetype_cancel'])){
+      foreach($this->dns as $key => $dn){
+        del_lock ($dn);
+        unset($this->dns[$key]);
+      }
+    }
+
+
     /**************** 
       Delete mime type 
      ****************/
@@ -276,6 +361,7 @@ class mimetypeManagement extends plugin
         add_lock ($this->dn, $this->ui->dn);
         $smarty= get_smarty();
         $smarty->assign("intro", sprintf(_("You're about to delete the mime type '%s'."), @LDAP::fix($this->dn)));
+        $smarty->assign("multiple", false);
         return($smarty->fetch (get_template_path('remove.tpl', TRUE)));
       } else {
 
@@ -298,6 +384,7 @@ class mimetypeManagement extends plugin
       $ui = get_userinfo();
       $acl = $ui->get_permissions($this->dn,"mimetypes/mimetype");
       if(preg_match("/d/",$acl)){
+
         /* Delete request is permitted, perform LDAP action */
         $this->mimetabs= new mimetabs($this->config, $this->config->data['TABS']['MIMETABS'], $this->dn,"mimetypes");
         $this->mimetabs->set_acl_base($this->dn);
@@ -362,7 +449,7 @@ class mimetypeManagement extends plugin
     /* Display dialog with system list */
     $this->DivListMimeTypes->parent = $this;
     $this->DivListMimeTypes->execute();
-    $this->DivListMimeTypes->AddDepartments($this->DivListMimeTypes->selectedBase);
+    $this->DivListMimeTypes->AddDepartments($this->DivListMimeTypes->selectedBase,3,1);
     $this->reload();
     $this->DivListMimeTypes->setEntries($this->mimetypes);
     return($this->DivListMimeTypes->Draw());
@@ -485,6 +572,20 @@ class mimetypeManagement extends plugin
     }
     return(false);
   }
+
+
+  function list_get_selected_items()
+  {
+    $ids = array();
+    foreach($_POST as $name => $value){
+      if(preg_match("/^item_selected_[0-9]*$/",$name)){
+        $id   = preg_replace("/^item_selected_/","",$name);
+        $ids[$id] = $id;
+      }
+    }
+    return($ids);
+  }
+
 
   /* Save to LDAP */
   function save()
