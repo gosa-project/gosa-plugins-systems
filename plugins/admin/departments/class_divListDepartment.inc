@@ -156,9 +156,15 @@ class divListDepartment extends MultiSelectWindow
       }
 
       $title = preg_replace('/ /', '&nbsp;', @LDAP::fix($this->config->departments[$key]));
-          /* Create each field */
-      $field01 = array("string" => "<input type='checkbox' id='item_selected_".base64_encode($key)."' name='item_selected_".base64_encode($key)."'>" ,
-                      "attach" => "style='width:20px;'");
+
+      if($val == "."){
+        $field01 = array("string" => "&nbsp;",
+            "attach" => "style='width:20px;'");
+      }else{
+        $field01 = array("string" => "<input type='checkbox' id='item_selected_".base64_encode($key)."' 
+            name='item_selected_".base64_encode($key)."'>" ,
+            "attach" => "style='width:20px;'");
+      }
 
       $field0 = array("string" => "<img src='images/".$non_empty."folder.png' title='"._("department")."' alt='department'>", "attach" => "style='text-align:center;width:20px;'");
       $field1 = array("string" => sprintf($linkopen,base64_encode($key),$val), "attach" => "style='' title='".$title."'");
