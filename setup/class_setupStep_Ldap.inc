@@ -36,6 +36,7 @@ class Step_Ldap extends setup_step
   var $tls            = FALSE;
 
   var $attributes = array("connection","location","admin","password","base","tls");
+  var $header_image= "images/proxy.png";
 
 
   function Step_Ldap()
@@ -46,9 +47,9 @@ class Step_Ldap extends setup_step
   
   function update_strings()
   {
-    $this->s_title      = _("Ldap settings");
-    $this->s_title_long = _("Ldap connection setup");
-    $this->s_info       = _("This dialog allows the basic configuration of GOsa's behaviour and properties in your main configuration.");
+    $this->s_title      = _("LDAP setup");
+    $this->s_title_long = _("LDAP connection setup");
+    $this->s_info       = _("This dialog performs the basic configuration of the LDAP connectivity for GOsa.");
   }
   
   
@@ -117,7 +118,7 @@ class Step_Ldap extends setup_step
     $ldap->search("(&(objectClass=person)(|(uid=".$filter.")(cn=".$filter.")))");
     $tmp = array();
     while($attrs = $ldap->fetch()){
-      $tmp[$attrs['dn']]=$attrs['dn'];
+      $tmp[$attrs['dn']]= @LDAP::fix($attrs['dn']);
       natcasesort($tmp);
     }
     return($tmp);
@@ -132,6 +133,9 @@ class Step_Ldap extends setup_step
       }
     }
 
+    if(isset($_POST['resolve_user_x'])){
+      $this->resolve_user = !$this->resolve_user;
+    }
     if(isset($_POST['resolve_user'])){
       $this->resolve_user = !$this->resolve_user;
     }
