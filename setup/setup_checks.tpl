@@ -27,26 +27,26 @@
 			<div class='step2_entry_status'>
 
 			{if $basic[$key].RESULT}
-				<div class='step2_successful'>{t}Successful{/t}</div>
+				<div class='step2_successful'>{t}Ok{/t}</div>
 			{else}
 				{if $basic[$key].MUST}
-					<div class='step2_failed'>{t}Failed{/t}</div>
+					<div class='step2_failed'>{t}Error{/t}</div>
 				{else}
-					<div class='step2_warning'>{t}Failed{/t}</div>
+					<div class='step2_warning'>{t}Warning{/t}</div>
 				{/if}
 				{if $basic[$key].SOLUTION != ""}
 	
 				<!-- Inforamtion popup -->
-				<div class='solution_hidden' id='sol_{$key}'>
+				<div class='solution_visible' id='sol_{$key}'>
 					{if $basic[$key].MUST}
-						<div class='step2_failed_text'>
+						<div class='step2_failed_text' style="background-image: url('images/small_error.png')">
+						{$basic[$key].SOLUTION}
 						<b>{t}GOsa will NOT run without fixing this.{/t}</b>
 					{else}
-						<div class="step2_warning_text" style="background-image: url('images/warning.png')">
-						<i>{t}GOsa will run without fixing this.{/t}</i>
+						<div class="step2_warning_text" style="background-image: url('images/small_warning.png')">
+						{$basic[$key].SOLUTION}
+						<b>{t}GOsa will run without fixing this.{/t}</b>
 					{/if}
-					<br>
-					{$basic[$key].SOLUTION}
 					</div>
 				</div>
 				{/if}
@@ -61,7 +61,7 @@
 <!-- 
 	Div container with PHP config checks 
 -->
-<div style='width:50%; float:left;'>
+<div style='width:50%; float:left; margin-bottom:20px;'>
 
 	<!-- Set content styles -->	
 	<div class='default' style='margin:10px;'>
@@ -88,28 +88,28 @@
 			<div class='step2_entry_name'>{$config[$key].NAME}</div>
 			<div class='step2_entry_status'>
 			{if $config[$key].RESULT}
-				<div class='step2_successful'>{t}Successful{/t}</div>
+				<div class='step2_successful'>{t}Ok{/t}</div>
 			{else}
 
 				{if $config[$key].MUST}
-					<div class='step2_failed'>{t}Failed{/t}</div>
+					<div class='step2_failed'>{t}Error{/t}</div>
 				{else}
-					<div class='step2_warning'>{t}Failed{/t}</div>
+					<div class='step2_warning'>{t}Warning{/t}</div>
 				{/if}
 
 				{if $config[$key].SOLUTION != ""}
 	
 				<!-- Inforamtion popup -->
-				<div class='solution_hidden' id='sol_config_{$key}'>
+				<div class='solution_visible' id='sol_config_{$key}'>
 					{if $config[$key].MUST}
-						<div class='step2_failed_text'>
+						<div class='step2_failed_text' style="background-image: url('images/small_error.png')">
+						{$config[$key].SOLUTION}
 						<b>{t}GOsa will NOT run without fixing this.{/t}</b>
 					{else}
-						<div class='step2_warning_text' style="background-image: url('images/warning.png')">
-						<i>{t}GOsa will run without fixing this.{/t}</i>
+						<div class='step2_warning_text' style="background-image: url('images/small_warning.png')">
+						{$config[$key].SOLUTION}
+						<b>{t}GOsa will run without fixing this.{/t}</b>
 					{/if}
-					<br>
-					{$config[$key].SOLUTION}
 					</div>
 				</div>
 				{/if}
@@ -143,28 +143,28 @@
 			<div class='step2_entry_name'>{$is_writeable[$key].NAME}</div>
 			<div class='step2_entry_status'>
 			{if $is_writeable[$key].RESULT}
-				<div class='step2_successful'>{t}Successful{/t}</div>
+				<div class='step2_successful'>{t}Ok{/t}</div>
 			{else}
 
 				{if $is_writeable[$key].MUST}
-					<div class='step2_failed'>{t}Failed{/t}</div>
+					<div class='step2_failed'>{t}Error{/t}</div>
 				{else}
-					<div class='step2_warning'>{t}Failed{/t}</div>
+					<div class='step2_warning'>{t}Warning{/t}</div>
 				{/if}
 
 				{if $is_writeable[$key].SOLUTION != ""}
 	
 				<!-- Inforamtion popup -->
-				<div class='solution_hidden' id='sol_is_writeable{$key}'>
+				<div class='solution_visible' id='sol_is_writeable{$key}'>
 					{if $is_writeable[$key].MUST}
-						<div class='step2_failed_text'>
+						<div class='step2_failed_text' style="background-image: url('images/small_error.png')">
+						{$is_writeable[$key].SOLUTION}
 						<b>{t}GOsa will NOT run without fixing this.{/t}</b>
 					{else}
-						<div class='step2_warning_text' style="background-image: url('images/warning.png')">
-						<i>{t}GOsa will run without fixing this.{/t}</i>
+						<div class='step2_warning_text' style="background-image: url('images/small_warning.png')">
+						{$is_writeable[$key].SOLUTION}
+						<b>{t}GOsa will run without fixing this.{/t}</b>
 					{/if}
-					<br>
-					{$is_writeable[$key].SOLUTION}
 					</div>
 				</div>
 				{/if}
@@ -177,16 +177,4 @@
 			
 	</div>
 </div>
-<script type="text/javascript">
-{literal}
-	function display_solution(str){
-		obj = document.getElementById(str);
-		obj.className='solution_visible';
-	}
-	function hide_solution(str){
-		obj = document.getElementById(str);
-		obj.className='solution_hidden';
-	}
 
-{/literal}
-</script>
