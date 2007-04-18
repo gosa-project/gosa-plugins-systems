@@ -25,6 +25,7 @@ class Step_Checks extends setup_step
   var $basic_checks = array();
   var $config_checks= array();
   var $is_writeable = array();
+  var $header_image = "images/system.png";
 
   function Step_Checks()
   {
