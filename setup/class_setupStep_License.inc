@@ -24,6 +24,7 @@ class Step_License extends setup_step
 {
   var $license_found  = false;
   var $License        = "";
+  var $header_image   = "images/ldif.png";
 
   function Step_License()
   {
@@ -50,8 +51,8 @@ class Step_License extends setup_step
   function update_strings()
   {
     $this->s_title      = _("License");
-    $this->s_title_long = _("GNU / GPL-License");
-    $this->s_info       = _("GNU / GPL-License");
+    $this->s_title_long = _("License");
+    $this->s_info       = _("Terms and conditions for usage");
   }
 
  
