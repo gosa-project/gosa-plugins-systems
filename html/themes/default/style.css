@@ -913,7 +913,7 @@ div.navigation_title_active {
 	font-size: 1.2em;
 	background-color:#F0F0F0;
 	font-weight: bold;
-	cursor: pointer;
+	cursor: default;
 	padding: 3px;
 }
 
@@ -942,7 +942,7 @@ div.navigation_info {
 	color: black;
 	padding: 4px 4px 3px 23px;
 	margin: 0px;
-	cursor: pointer;
+	cursor: default;
 }
 
 

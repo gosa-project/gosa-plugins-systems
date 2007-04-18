@@ -185,10 +185,8 @@ class setup
         if($b_enabled){
           if($b_active){
             $str .= "<div class='navigation_element_active'>";
-            $str .= "<div onClick='document.mainform.setup_goto_step.value=\"$key\";document.mainform.submit();'
-              class='navigation_title_active'>".$s.$s_title."</div>";
-            $str .= "<div onClick='document.mainform.setup_goto_step.value=\"$key\";document.mainform.submit();'
-              class='navigation_info'>".$s_info."</div>";
+            $str .= "<div class='navigation_title_active'>".$s.$s_title."</div>";
+            $str .= "<div class='navigation_info'>".$s_info."</div>";
             $str .= "</div>";
           }else{
             $str .= "<div class='navigation_element'>";
@@ -208,7 +206,7 @@ class setup
           if($b_active){
             $str .= "<div class='navigation_element_active'>";
             $str .= "<input style='text-align: left; color: #00008F; font-weight: bold; width:100%;' 
-                        type='submit' value='".$s_title."' name='step_".$key."'>";
+                        type='button' value='".$s_title."' name='step_".$key."'>";
             $str .= "</div>";
           }else{
             $str .= "<div class='navigation_element'>";
