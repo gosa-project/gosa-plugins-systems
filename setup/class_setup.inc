@@ -56,7 +56,6 @@ class setup
 
   function execute()
   {
-    $smarty = get_smarty();
     $this->o_steps[$this->i_last]->set_active(FALSE);
     $this->o_steps[$this->i_current]->set_active();
     $content = $this->o_steps[$this->i_current]->execute();
@@ -235,15 +234,15 @@ class setup
     $str ="";
     $str.="   <div style='text-align:right;float:top;'>";
     if(isset($this->o_steps[$this->i_current -1]) && $this->o_steps[$this->i_current -1]->is_enabled()){
-      $str .= "<input type='submit' name='last' value='"._("Backward")."'>";
+      $str .= "<input type='submit' name='last' value='"._("Back")."'>";
     }else{
-      $str .= "<input type='button' name='last' value='"._("Backward")."' disabled>";
+      $str .= "<input type='button' name='last' value='"._("Back")."' disabled>";
     }
-
+    $str.= "&nbsp;";
     if(isset($this->o_steps[$this->i_current + 1])){
-      $str .= "<input type='submit' name='next' value='"._("Forward")."'>";
+      $str .= "<input type='submit' name='next' value='"._("Continue")."'>";
     }else{
-      $str .= "<input type='button' value='"._("Forward")."' disabled>";
+      $str .= "<input type='button' value='"._("Continue")."' disabled>";
     }
     $str .="</div>";
     return($str);

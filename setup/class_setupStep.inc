@@ -117,12 +117,14 @@ class setup_step extends plugin
 
   function print_header()
   {
-    $display= print_header(get_template_path($this->header_image),$this->s_title_long,"");  
+    $image= get_template_path($this->header_image);
+    $display= "<div style='padding:3px;'>";
+    $display.= "  <p class=\"center\" style=\"margin:0px 0px 0px 5px;padding:0px;font-size:24px;\"><img class=\"center\" src=\"$image\" align=\"middle\" alt=\"*\">&nbsp;".$this->s_title_long."</p>\n";
+    $display.= "</div>\n";
+
     return($display);
   }
 }
-
-
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

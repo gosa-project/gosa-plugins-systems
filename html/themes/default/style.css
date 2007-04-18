@@ -792,7 +792,7 @@ body.setup_body {
 	color:#00008F;
 	font-family:arial,helvetica,sans-serif;
 	font-size:12px;
-	background-color: #979797;
+	background-color: white;
 	background-image: none;
 }
 
@@ -854,9 +854,11 @@ div.setup_plug_header {
 /* Content col */
 div.setup_contents {
 	margin-right:2px;
-	background-color:#FFFFFF;
+	background-color:white;
 	width:80%;
 	margin-left:20%;
+	border:1px solid #AAAAAA;
+	padding:2px;
 }
 
 /* default.*/
@@ -868,9 +870,11 @@ div.default {
 /* Navigation col */
 div.setup_navigation {
 	width:19%;
-	background-color:#E8E8E8;
-	padding-left: 2px;;
-	padding-right: 2px;;
+	background-color:white;
+	padding-left: 2px;
+	padding-right: 2px;
+	border:1px solid #AAAAAA;
+	float:left;
 }
 
 
@@ -878,39 +882,36 @@ div.setup_navigation {
 div.setup_navigation_title {
 	font-size: 1.2em;
 	font-weight: bold;
-	background:#EEFFE6 ;
 	text-decoration:none;
 	width:100%;
 	padding-top:8px;
 	padding-bottom:8px;
-	border-right: solid 1px #AAAAAA;
-	border-bottom: solid 1px #BBBBBB;
+	border-top:1px dashed #AAAAAA;
 }
 
 /* The box used for each setup step */
 a.navigation_element, div.navigation_element {
-	background: #EEFFE6;
 	text-decoration:none;
-	border-right: solid 1px #AAAAAA;
-	border-bottom: solid 1px #BBBBBB;
-	float:left;
+	padding-top:8px;
+	padding-bottom:8px;
+	border-top:1px dashed #AAAAAA;
 	width:100%;
 }
 
 /* The box used for each setup step */
 a.navigation_element_active, div.navigation_element_active {
-	background: #D2F6C2;
-	background: #dfffdf;
 	text-decoration:none;
-	float:left;
 	width:100%;
-	border-right: solid 1px #AAAAAA;
-	border-bottom: solid 1px #BBBBBB;
+	padding-top:8px;
+	padding-bottom:8px;
+	border-top:1px dashed #AAAAAA;
+	background-color:#F0F0F0;
 }
 
 /* An enabled setup step will use this style in navigation*/
 div.navigation_title_active {
 	font-size: 1.2em;
+	background-color:#F0F0F0;
 	font-weight: bold;
 	cursor: pointer;
 	padding: 3px;
@@ -928,9 +929,6 @@ div.navigation_title_disabled {
 
 /* Disabled setup steps */
 div.navigation_title_inactive {
-
-	background-color: #dfffdf;
-	background-color: #e5e5e5;
 	font-size: 1.2em;
 	font-weight: bold;
 	text-decoration:none;
