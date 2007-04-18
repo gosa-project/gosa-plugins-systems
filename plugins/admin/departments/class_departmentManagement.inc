@@ -64,7 +64,7 @@ class departmentManagement extends plugin
       Var init 
      ***************/
 
-    $_SESSION['LOCK_VARS_TO_USE'] = array("/^act$/","/^id$/","/^dep_edit_.*/","/^dep_del_.*/");
+    $_SESSION['LOCK_VARS_TO_USE'] = array("/^act$/","/^id$/","/^dep_edit_.*/","/^dep_del_.*/","/^item_selected/","/^remove_multiple_departments/");
 
     /* Reload departments */
     $smarty						= get_smarty();
@@ -92,10 +92,11 @@ class departmentManagement extends plugin
         $s_entry  = preg_replace("/_.*$/","",$s_entry);
         $s_entry  = base64_decode($s_entry);
         // Post for new
+      }elseif(preg_match("/^remove_multiple_departments/",$key)){
+        $s_action="del_multiple";
       }elseif(preg_match("/dep_new.*/",$key)){
         $s_action="new";
       }
-
     }
 
 
@@ -134,6 +135,81 @@ class departmentManagement extends plugin
       $this->deptabs->set_acl_base($this->dn);
 
       $_SESSION['objectinfo']= $this->dn;
+    }
+
+
+    /********************
+      Delete MULTIPLE entries requested, display confirm dialog
+     ********************/
+
+    if ($s_action=="del_multiple"){
+      $ids = $this->list_get_selected_items();
+
+
+      if(count($ids)){
+        foreach($ids as $id){
+          $id = base64_decode($id);
+          $dn = $this->config->departments[$id];
+  
+          if (($user= get_lock($dn)) != ""){
+            return(gen_locked_message ($user, $dn));
+          }
+          $this->dns[$id] = $dn;
+        }
+
+        $dns_names = "<br><pre>";
+        foreach($this->dns as $dn){
+          add_lock ($dn, $this->ui->dn);
+          $dns_names .= $dn."\n";
+        }
+        $dns_names .="</pre>";
+
+        /* Lock the current entry, so nobody will edit it during deletion */
+        $smarty->assign("info",     sprintf(_("You're about to delete the following department(s) %s"), @LDAP::fix($dns_names)));
+        $smarty->assign("multiple", true);
+        return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
+      }
+    }
+   
+
+    /********************
+      Delete MULTIPLE entries confirmed
+     ********************/
+
+    /* Confirmation for deletion has been passed. Users should be deleted. */
+    if (isset($_POST['delete_multiple_department_confirm'])){
+
+      /* Remove user by user and check acls before removeing them */
+      foreach($this->dns as $key => $dn){
+        $acl = $this->ui->get_permissions($dn,"department/department");
+        if (preg_match('/d/', $acl)){
+
+          /* Delete request is permitted, perform LDAP action */
+          $this->deptabs= new deptabs($this->config,$this->config->data['TABS']['DEPTABS'], $dn,"department");
+          $this->deptabs->set_acl_base();
+          $this->deptabs->delete ();
+          $this->deptabs = NULL;
+          gosa_log ("Department object'".$this->dn."' has been removed");
+        } else {
+          print_red (_("You have no permission to remove this department."));
+        }
+        /* Remove lock file after successfull deletion */
+        del_lock ($dn);
+        unset($this->dns[$key]);
+      }
+    }
+
+ 
+    /********************
+      Delete MULTIPLE entries Canceled
+     ********************/
+
+    /* Remove lock */
+    if(isset($_POST['delete_multiple_department_cancel'])){
+      foreach($this->dns as $key => $dn){
+        del_lock ($dn);
+        unset($this->dns[$key]);
+      }
     }
 
 
@@ -408,6 +484,20 @@ class departmentManagement extends plugin
     }
 
   }
+
+
+  function list_get_selected_items()
+  {
+    $ids = array();
+    foreach($_POST as $name => $value){
+      if(preg_match("/^item_selected_[a-z0-9\=]*$/i",$name)){
+        $id   = preg_replace("/^item_selected_/","",$name);
+        $ids[$id] = $id;
+      }
+    }
+    return($ids);
+  }
+
 
   function remove_lock()
   {

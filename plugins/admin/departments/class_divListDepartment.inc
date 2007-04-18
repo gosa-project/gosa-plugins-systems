@@ -36,7 +36,14 @@ class divListDepartment extends MultiSelectWindow
     $this->EnableCloseButton(false);
     $this->EnableSaveButton (false);
 
+
+
+   /* Toggle all selected / deselected */
+    $chk = "<input type='checkbox' id='select_all' name='select_all'
+               onClick='toggle_all_(\"^item_selected_[a-zA-Z0-9\=]*$\",\"select_all\");' >";
+
     /* set Page header */
+    $this->AddHeader(array("string"=> $chk,          "attach"=>"style='width:20px;'"));
     $this->AddHeader(array("string" => "&nbsp;", "attach" => "style='text-align:center;width:20px;'"));
     $this->AddHeader(array("string"=>_("Department name"), "attach" => "style=''"));
     $this->AddHeader(array("string" =>_("Actions"), "attach" => "style='width:60px;border-right:0px;text-align:right;'"));
@@ -99,8 +106,13 @@ class divListDepartment extends MultiSelectWindow
       " alt='' height='16' width='1'>&nbsp;".
       " "._("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
       " <input class='center' type='image' src='images/list_submit.png' align='middle' ".
-      "   title='"._("Submit department")."' name='submit_department' alt='"._("Submit")."'>&nbsp;".
-      "</div>";
+      "   title='"._("Submit department")."' name='submit_department' alt='"._("Submit")."'>&nbsp;";
+
+    /* Multiple options */
+    $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/edittrash.png'
+        title='"._("Remove selected departments")."' alt='"._("Remove departments")."' name='remove_multiple_departments'>&nbsp;";
+
+    $listhead .="</div>";;
 
     $this->SetListHeader($listhead);
   }
@@ -144,12 +156,16 @@ class divListDepartment extends MultiSelectWindow
       }
 
       $title = preg_replace('/ /', '&nbsp;', @LDAP::fix($this->config->departments[$key]));
+          /* Create each field */
+      $field01 = array("string" => "<input type='checkbox' id='item_selected_".base64_encode($key)."' name='item_selected_".base64_encode($key)."'>" ,
+                      "attach" => "style='width:20px;'");
+
       $field0 = array("string" => "<img src='images/".$non_empty."folder.png' title='"._("department")."' alt='department'>", "attach" => "style='text-align:center;width:20px;'");
       $field1 = array("string" => sprintf($linkopen,base64_encode($key),$val), "attach" => "style='' title='".$title."'");
       $field2 = array("string" => preg_replace("/%KEY%/", base64_encode($key), $actions), "attach" => "style='width:60px;border-right:0px;text-align:
           right;'");
 
-      $this->AddElement( array($field0,$field1,$field2));
+      $this->AddElement( array($field01,$field0,$field1,$field2));
     }
   }
 
