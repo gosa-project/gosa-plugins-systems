@@ -434,6 +434,13 @@ function getDNSHostEntriesDiff($config,$oldName,$newEntry,$newName)
   $del    = array();
   $move   = array();
 
+  /* Don't go further if there is nothing to do
+   * Is no account / was no account
+   */
+  if(($newEntry['exists'] == false )&& ($oldEntry['exists'] == false)){
+    return(array("move"=>$move,"add"=>$add,"del"=>$del));
+  }
+
   $zones              = getAvailableZones($config);
   $specialAttributes  = array("cNAMERecord","pTRRecord");
   $newRecords         = array();  // Used to remember which records are removed 
@@ -455,13 +462,6 @@ function getDNSHostEntriesDiff($config,$oldName,$newEntry,$newName)
     $newEntry['exists'] = false;
   }
 
-  /* Don't go further if there is nothing to do
-   * Is no account / was no account
-   */
-  if(($newEntry['exists'] == false )&& ($oldEntry['exists'] == false)){
-    return(array("move"=>$move,"add"=>$add,"del"=>$del));
-  }
-  
   /* If account was edited prepare some
    *  attributes & arrays ... if required add some 
    *  dns to $move 

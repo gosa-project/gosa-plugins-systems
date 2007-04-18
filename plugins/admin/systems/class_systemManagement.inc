@@ -54,7 +54,7 @@ class systems extends plugin
     /* Call parent execute */
     plugin::execute();
 
-    $_SESSION['LOCK_VARS_TO_USE'] = array("/^system_edit_/i","/^system_del_/","/^act/","/^id/");
+    $_SESSION['LOCK_VARS_TO_USE'] = array("/^system_edit_/i","/^system_del_/","/^act/","/^id/","/^item_selected/","/^remove_multiple_systems/");
 
     /********************
       Check for functional posts, edit|delete|add|... system devices 
@@ -85,6 +85,8 @@ class systems extends plugin
       }elseif(preg_match("/gen_cd_.*/i",$key)){
         $s_action="gen_cd";
         $s_entry  = preg_replace("/gen_cd_/i","",$key);
+      }elseif(preg_match("/^remove_multiple_systems/i",$key)){
+        $s_action="del_multiple";
       }elseif(preg_match("/newsystem_.*/i",$key)){
         $s_action="newsystem";
         $s_entry  = preg_replace("/newsystem_/i","",$key);
@@ -426,6 +428,118 @@ class systems extends plugin
 
 
     /********************
+      Delete MULTIPLE entries requested, display confirm dialog
+     ********************/
+
+    if ($s_action=="del_multiple"){
+      $this->dns = array();
+      $ids = $this->list_get_selected_items();
+
+      if(count($ids)){
+
+        foreach($ids as $id){
+          $dn = $this->terminals[$id]['dn'];
+          if (($user= get_lock($dn)) != ""){
+            return(gen_locked_message ($user, $dn));
+          }
+          $this->dns[$id] = $dn;
+        }
+
+        $dns_names = "<br><pre>";
+        foreach($this->dns as $dn){
+          add_lock ($dn, $this->ui->dn);
+          $dns_names .= $dn."\n";
+        }
+        $dns_names .="</pre>";
+
+        /* Lock the current entry, so nobody will edit it during deletion */
+        $smarty->assign("warning",     sprintf(_("You're about to delete the following user(s) %s"), @LDAP::fix($dns_names)));
+        $smarty->assign("multiple", true);
+        return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
+      }
+    }
+
+
+    /********************
+      Delete MULTIPLE entries confirmed
+     ********************/
+
+    /* Confirmation for deletion has been passed. Users should be deleted. */
+    if (isset($_POST['delete_multiple_system_confirm'])){
+
+      $ui = get_userinfo();
+      $tabs = array(
+          "terminal"    => array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "terminal/termgeneric"),
+          "workstation" => array("CLASS"=>"WORKTABS",     "TABCLASS" =>"worktabs",      "ACL"=> "workstation/workgeneric"),
+          "server"      => array("CLASS"=>"SERVTABS",     "TABCLASS" =>"servtabs",      "ACL"=> "server/servgeneric"),
+          "printer"     => array("CLASS"=>"PRINTTABS",    "TABCLASS" =>"printtabs",     "ACL"=> "printer/printgeneric"),
+          "phone"       => array("CLASS"=>"PHONETABS",    "TABCLASS" =>"phonetabs",     "ACL"=> "phone/phoneGeneric"),
+          "winstation"  => array("CLASS"=>"WINTABS",      "TABCLASS" =>"wintabs",       "ACL"=> "winworkstation/wingeneric"),
+          "component"   => array("CLASS"=>"COMPONENTTABS","TABCLASS" =>"componenttabs", "ACL"=> "component/componentGeneric"));
+
+
+      /* Remove user by user and check acls before removeing them */
+      foreach($this->dns as $key => $dn){
+
+        /* Get 'dn' from posted termlinst */
+        $attrs    = $this->terminals[$key];
+        $type= $this->get_system_type($attrs['objectClass']);
+
+        /* get object type */
+        $tabtype  = "termtabs";
+        $tabobj   = "TERMTABS";
+        $tabacl   = "";
+        if(isset($tabs[$type])){
+          $tabtype = $tabs[$type]['TABCLASS'];
+          $tabobj  = $tabs[$type]['CLASS'];
+          $tabacl  = $ui->get_permissions($dn,$tabs[$type]['ACL']);
+
+          /* Load permissions for selected 'dn' and check if
+             we're allowed to remove this 'dn' */
+          if(preg_match("/d/",$tabacl)){ 
+
+            /* Delete request is permitted, perform LDAP action */
+            if($tabtype=="phonetabs"){
+              $this->systab= new $tabtype($this->config, $this->config->data['TABS'][$tabobj], $dn,$type);
+              $this->systab->set_acl_base($dn);
+              $this->systab->by_object['phonegeneric']->remove_from_parent ();
+            }else{
+              $this->systab= new $tabtype($this->config,$this->config->data['TABS'][$tabobj], $dn,$type);
+              $this->systab->set_acl_base($dn);
+              $this->systab->delete();
+            }
+            unset ($this->systab);
+            gosa_log ("System object'".$dn."' has been removed");
+            $this->systab= NULL;
+
+          } else {
+            /* Normally this shouldn't be reached, send some extra
+               logs to notify the administrator */
+            print_red (_("You are not allowed to delete this component!"));
+            gosa_log ("Warning: '".$this->ui->uid."' tried to trick system ".
+                "deletion.");
+          }
+          /* Remove lock file after successfull deletion */
+          del_lock ($dn);
+          unset($this->dns[$key]);
+        }
+      }
+    }
+
+    /********************
+      Delete MULTIPLE entries Canceled
+     ********************/
+
+    /* Remove lock */
+   if(isset($_POST['delete_multiple_system_cancel'])){
+      foreach($this->dns as $key => $dn){
+        del_lock ($dn);
+        unset($this->dns[$key]);
+      }
+    }
+
+
+    /********************
       Delete system, confirm dialog
      ********************/
 
@@ -471,6 +585,7 @@ class systems extends plugin
         /* Lock the current entry, so nobody will edit it during deletion */
         add_lock ($this->dn, $this->ui->dn);
         $smarty->assign("warning", sprintf(_("You're about to delete all information about the component at '%s'."), @LDAP::fix($this->dn)));
+        $smarty->assign("multiple", false);
         return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
       } else {
 
@@ -699,7 +814,7 @@ class systems extends plugin
 
     /* Add departments if subsearch is disabled */
     if(!$this->DivListSystem->SubSearch){
-      $this->DivListSystem->AddDepartments($this->DivListSystem->selectedBase);
+      $this->DivListSystem->AddDepartments($this->DivListSystem->selectedBase,3,1);
     }
     $this->reload();
     $this->DivListSystem->setEntries($this->terminals);
@@ -1077,6 +1192,19 @@ class systems extends plugin
 
 
     return ($type);
+  }
+
+
+  function list_get_selected_items()
+  {
+    $ids = array();
+    foreach($_POST as $name => $value){
+      if(preg_match("/^item_selected_[0-9]*$/",$name)){
+        $id   = preg_replace("/^item_selected_/","",$name);
+        $ids[$id] = $id;
+      }
+    }
+    return($ids);
   }
 
 
