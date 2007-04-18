@@ -131,11 +131,6 @@ class ogroupManagement extends plugin
     }
 
 
-
-
-
-
-
     /********************
       Delete MULTIPLE entries requested, display confirm dialog
      ********************/
@@ -179,7 +174,7 @@ class ogroupManagement extends plugin
           /* Delete request is permitted, perform LDAP action */
           $this->ogroup= new ogrouptabs($this->config,$this->config->data['TABS']['OGROUPTABS'], $dn);
           $this->ogroup->delete ();
-          gosa_log ("Object group'".$this->dn."' has been removed");
+          gosa_log ("Object group'".$dn."' has been removed");
           unset ($this->ogroup);
           $this->ogroup= NULL;
         } else {
