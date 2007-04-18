@@ -804,10 +804,10 @@ div.setup_dialog {
 
 /* Header col */
 div.setup_header {
-	background-color: #D2F6C2;
+	background-color: #A9FBA6;
 	height:30px;
 	padding:2px 5px 2px 5px;
-	border-bottom: 1px solid #778F6E;
+	border-bottom: 1px solid #999;
 }
 
 div.setup_menu {
