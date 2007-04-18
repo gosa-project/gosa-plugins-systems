@@ -10,8 +10,14 @@
 </p>
 
 <p class="plugbottom">
- <input type=submit name="delete_app_confirm" value="{t}Delete{/t}">
- &nbsp;
- <input type=submit name="delete_cancel" value="{t}Cancel{/t}">
+	{if $multiple}
+		<input type=submit name="delete_multiple_application_confirm" value="{t}Delete{/t}">
+		&nbsp;
+		<input type=submit name="delete_multiple_application_cancel" value="{t}Cancel{/t}">
+	{else}
+		<input type=submit name="delete_app_confirm" value="{t}Delete{/t}">
+		&nbsp;
+		<input type=submit name="delete_cancel" value="{t}Cancel{/t}">
+	{/if}
 </p>
 
