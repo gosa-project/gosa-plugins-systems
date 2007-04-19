@@ -1,8 +1,5 @@
 <div class='default' style='margin:12px; '>
-    <div style='float:left; '>
-		<br>
-		<b>{t}Optional settings{/t}</b>
-	</div>
+     <p><b>{t}GOsa core settings{/t}</b></p>
 
     <div class='step4_container'>
         <div class='step4_name'>
@@ -18,43 +15,7 @@
 
     <div class='step4_container'>
         <div class='step4_name'>
-            {t}Force globals{/t}
-        </div>
-        <div class='step4_value'>
-	
-            <select name="forceglobals" size="1" title="">
-            	{html_options options=$bool selected=$optional.forceglobals}
-            </select>
-        </div>
-    </div>
-
-    <div class='step4_container'>
-        <div class='step4_name'>
-            {t}Force SSL{/t}
-        </div>
-        <div class='step4_value'>
-	
-            <select name="forcessl" size="1" title="">
-            	{html_options options=$bool selected=$optional.forcessl}
-            </select>
-        </div>
-    </div>
-
-    <div class='step4_container'>
-        <div class='step4_name'>
-            {t}Warn SSL{/t}
-        </div>
-        <div class='step4_value'>
-	
-            <select name="warnssl" size="1" title="">
-            	{html_options options=$bool selected=$optional.warnssl}
-            </select>
-        </div>
-    </div>
-
-    <div class='step4_container'>
-        <div class='step4_name'>
-            {t}Strict units{/t}
+            {t}Honour administrative units{/t}
         </div>
         <div class='step4_value'>
 	
@@ -66,16 +27,16 @@
 
     <div class='step4_container'>
         <div class='step4_name'>
-            {t}PPd path{/t}
+            {t}Path for PPD storage{/t}
         </div>
         <div class='step4_value'>
             {if $optional.ppd_path_active == FALSE}
                 <input type='checkbox' value='1' name='ppd_path_active'
                     onClick='changeState("ppd_path");'>
-                <input style='width:90%' id='ppd_path' name='ppd_path' type='text' value='{$optional.ppd_path}' disabled>
+                <input size=60 id='ppd_path' name='ppd_path' type='text' value='{$optional.ppd_path}' disabled>
             {else}
                 <input type='checkbox' value='1' name='ppd_path_active' checked>
-                <input style='width:90%' id='ppd_path' name='ppd_path' type='text' value='{$optional.ppd_path}'  >
+                <input size=60 id='ppd_path' name='ppd_path' type='text' value='{$optional.ppd_path}'  >
             {/if}
         </div>
     </div>
@@ -88,11 +49,11 @@
             {if $optional.auto_network_hook_active == FALSE}
                 <input type='checkbox' value='1' name='auto_network_hook_active'
                     onClick='changeState("auto_network_hook");'>
-                <input style='width:90%' id='auto_network_hook' name='auto_network_hook' 
+                <input size=60 id='auto_network_hook' name='auto_network_hook' 
 					type='text' value='{$optional.auto_network_hook}' disabled>
             {else}
                 <input type='checkbox' value='1' name='auto_network_hook_active' checked>
-                <input style='width:90%' id='auto_network_hook' name='auto_network_hook' type='text' 
+                <input size=60 id='auto_network_hook' name='auto_network_hook' type='text' 
 					value='{$optional.auto_network_hook}'  >
             {/if}
         </div>
@@ -106,11 +67,11 @@
             {if $optional.mailQueueScriptPath_active == FALSE}
                 <input type='checkbox' value='1' name='mailQueueScriptPath_active'
                     onClick='changeState("mailQueueScriptPath");'>
-                <input style='width:90%' id='mailQueueScriptPath' name='mailQueueScriptPath' 
+                <input size=60 id='mailQueueScriptPath' name='mailQueueScriptPath' 
 					type='text' value='{$optional.mailQueueScriptPath}' disabled>
             {else}
                 <input type='checkbox' value='1' name='mailQueueScriptPath_active' checked>
-                <input style='width:90%' id='mailQueueScriptPath' name='mailQueueScriptPath' type='text' 
+                <input size=60 id='mailQueueScriptPath' name='mailQueueScriptPath' type='text' 
 					value='{$optional.mailQueueScriptPath}'  >
             {/if}
         </div>
@@ -124,11 +85,11 @@
             {if $optional.notifydir_active == FALSE}
                 <input type='checkbox' value='1' name='notifydir_active'
                     onClick='changeState("notifydir");'>
-                <input style='width:90%' id='notifydir' name='notifydir' 
+                <input size=60 id='notifydir' name='notifydir' 
 					type='text' value='{$optional.notifydir}' disabled>
             {else}
                 <input type='checkbox' value='1' name='notifydir_active' checked>
-                <input style='width:90%' id='notifydir' name='notifydir' 
+                <input size=60 id='notifydir' name='notifydir' 
 					type='text' value='{$optional.notifydir}'  >
             {/if}
         </div>
@@ -142,11 +103,11 @@
             {if $optional.kioskpath_active == FALSE}
                 <input type='checkbox' value='1' name='kioskpath_active'
                     onClick='changeState("kioskpath");'>
-                <input style='width:90%' id='kioskpath' name='kioskpath' 
+                <input size=60 id='kioskpath' name='kioskpath' 
 					type='text' value='{$optional.kioskpath}' disabled>
             {else}
                 <input type='checkbox' value='1' name='kioskpath_active' checked>
-                <input style='width:90%' id='kioskpath' name='kioskpath' 
+                <input size=60 id='kioskpath' name='kioskpath' 
 					type='text' value='{$optional.kioskpath}'  >
             {/if}
         </div>
@@ -157,8 +118,44 @@
             {t}Smarty compile directory{/t}
         </div>
         <div class='step4_value'>
-			<input style='width:90%' id='compile' name='compile' 
+			<input size=60 id='compile' name='compile' 
 				type='text' value='{$optional.compile}'>
+        </div>
+    </div>
+    <p><b>{t}Login and session{/t}</b></p>
+    <div class='step4_container'>
+        <div class='step4_name'>
+            {t}Enforce register_globals to be activated{/t}
+        </div>
+        <div class='step4_value'>
+	
+            <select name="forceglobals" size="1" title="">
+            	{html_options options=$bool selected=$optional.forceglobals}
+            </select>
+        </div>
+    </div>
+
+    <div class='step4_container'>
+        <div class='step4_name'>
+            {t}Enforce encrypted connections{/t}
+        </div>
+        <div class='step4_value'>
+	
+            <select name="forcessl" size="1" title="">
+            	{html_options options=$bool selected=$optional.forcessl}
+            </select>
+        </div>
+    </div>
+
+    <div class='step4_container'>
+        <div class='step4_name'>
+            {t}Warn if session is not encrypted{/t}
+        </div>
+        <div class='step4_value'>
+	
+            <select name="warnssl" size="1" title="">
+            	{html_options options=$bool selected=$optional.warnssl}
+            </select>
         </div>
     </div>
 
@@ -184,24 +181,25 @@
             {t}Session lifetime{/t}
         </div>
         <div class='step4_value'>
-			<input style='width:90%' id='session_lifetime' name='session_lifetime' 
+			<input size=60 id='session_lifetime' name='session_lifetime' 
 				type='text' value='{$optional.session_lifetime}'>
         </div>
     </div>
 
+    <p><b>{t}Debugging{/t}</b></p>
     <div class='step4_container'>
         <div class='step4_name'>
-            {t}Maximal ldap query time{/t}
+            {t}Maximum LDAP query time{/t}
         </div>
         <div class='step4_value'>
             {if $optional.max_ldap_query_time_active == FALSE}
                 <input type='checkbox' value='1' name='max_ldap_query_time_active'
                     onClick='changeState("max_ldap_query_time");'>
-                <input style='width:90%' id='max_ldap_query_time' name='max_ldap_query_time' 
+                <input size=60 id='max_ldap_query_time' name='max_ldap_query_time' 
 					type='text' value='{$optional.max_ldap_query_time}' disabled>
             {else}
                 <input type='checkbox' value='1' name='max_ldap_query_time_active' checked>
-                <input style='width:90%' id='max_ldap_query_time' name='max_ldap_query_time' 
+                <input size=60 id='max_ldap_query_time' name='max_ldap_query_time' 
 					type='text' value='{$optional.max_ldap_query_time}'  >
             {/if}
         </div>
@@ -209,7 +207,7 @@
 
     <div class='step4_container'>
         <div class='step4_name'>
-            {t}Debuglevel{/t}
+            {t}Debug level{/t}
         </div>
         <div class='step4_value'>
 			<select name='debuglevel'>

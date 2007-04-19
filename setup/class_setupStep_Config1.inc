@@ -32,7 +32,7 @@ class Step_Config1 extends setup_step
 
   var $header_image = "images/ldapserver.png";
   var $account_expiration  =FALSE;
-  var $base_hook         = "/usr/bin/sudo myscript"; 
+  var $base_hook         = ""; 
   var $base_hook_active  = FALSE; 
 
   var $encryption = "crypt";
@@ -46,7 +46,7 @@ class Step_Config1 extends setup_step
                           "pwminlen_active" => FALSE,
                           "pwdiffer" => 5,
                           "pwdiffer_active" => FALSE,
-                          "externalpwdhook" => "/path/to/your/script username oldpassword newpassword",
+                          "externalpwdhook" => "",
                           "externalpwdhook_active" => FALSE);
 
   var $id_settings = array(       "idgen"         => "{%sn}-{%givenName[2-4]}",
