@@ -40,7 +40,9 @@ class setup
     $this->o_steps[$i++] = new Step_Config1();
     $this->o_steps[$i++] = new Step_Config2();
     $this->o_steps[$i++] = new Step_Config3();
+    $this->o_steps[$i++] = new Step_Migrate();
     $this->o_steps[$i++] = new Step_Finish();
+    $this->i_steps = $i-1;
 
     /* Ensure that setup is not reachable if gosa.conf (CONFIG_FILE) */
     if(file_exists(CONFIG_DIR."/".CONFIG_FILE)){
