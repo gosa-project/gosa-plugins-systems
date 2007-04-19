@@ -17,6 +17,8 @@
 		<input type='submit' value='{t}Cancel{/t}' name='resolve_user'>
 		</div>
 	</div>		
+	
+	<div style="clear:both;"></div>
 
 	{else}
 	<p>
