@@ -340,6 +340,7 @@ class macro extends plugin
         $res    = @mysql_query($query,$r_con);
         if(!$res){
           gosa_log(@mysql_error($r_con));
+          gosa_log($query);
           return(sprintf(_("Insert of new macro failed for server '%s'."),$cfg['SERVER']));
         }
         @mysql_close($r_con);
@@ -444,6 +445,10 @@ class macro extends plugin
       $message[] = _("Makro length must be lower than 100 lines");
     }
 
+    /* Macro content must be smaller than 100 lines */
+    if(empty($this->goFonMacroContent)){
+      $message[] = _("You can't save an empty macro.");
+    }
     return $message;
   }
 
