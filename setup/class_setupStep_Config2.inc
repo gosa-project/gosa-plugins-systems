@@ -24,7 +24,6 @@ class Step_Config2 extends setup_step
 {
   var $governmentmode = FALSE;
   var $sambaidmapping = FALSE;
-  var $strict         = TRUE;
   var $header_image = "images/ldapserver.png";
 
   var $cyrusunixstyle = FALSE;
@@ -47,7 +46,7 @@ class Step_Config2 extends setup_step
                                   "samba_rid"        => 1000,
                                   "samba_rid_active" => FALSE); 
 
-  var $attributes = array("strict","governmentmode","sambaidmapping","cyrusunixstyle","mail");
+  var $attributes = array("governmentmode","sambaidmapping","cyrusunixstyle","mail");
 
   function Step_Config2()
   {

@@ -27,6 +27,9 @@ class Step_Config1 extends setup_step
   var $groupou    =  "ou=groups";
   var $peopledn   = "cn";
   var $uidbase    = 1000;
+
+  var $strict     = TRUE;
+
   var $header_image = "images/ldapserver.png";
   var $account_expiration  =FALSE;
   var $base_hook         = "/usr/bin/sudo myscript"; 
@@ -51,7 +54,7 @@ class Step_Config1 extends setup_step
   var $crypt_methods  = array();
 
   var $attributes = array("peopleou","groupou","peopledn","uidbase","encryption","theme","errorlvl",
-                          "base_hook","base_hook_active","account_expiration");
+                          "base_hook","base_hook_active","account_expiration","strict");
 
   function Step_Config1()
   {

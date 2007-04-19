@@ -52,6 +52,17 @@
         </div>
     </div>
 
+ 	<div class='step4_container'>
+        <div class='step4_name'>
+            {t}Relaxed naming policies{/t}
+        </div>
+        <div class='step4_value'>
+            <select name="strict" size="1" title="">
+            {html_options options=$bool selected=$strict}
+            </select>
+        </div>
+    </div>
+
   	<div class='step4_container'>
         <div class='step4_name'>
             {t}Automatic uids{/t}
