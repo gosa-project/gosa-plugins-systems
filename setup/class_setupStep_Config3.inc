@@ -27,6 +27,7 @@ class Step_Config3 extends setup_step
               "strict_units" => false,
               "forceglobals" => true,
               "forcessl" => false,
+              "ldapstats" => false,
               "warnssl" => true,
               "ppd_path" => "/var/spool/ppd/",
               "ppd_path_active" => FALSE,
@@ -88,7 +89,7 @@ class Step_Config3 extends setup_step
         }
       }
       
-      foreach(array("strict_units","noprimarygroup","forceglobals","forcessl","warnssl","compile","debuglevel","session_lifetime") as $name){
+      foreach(array("strict_units","noprimarygroup","forceglobals","forcessl","ldapstats","warnssl","compile","debuglevel","session_lifetime") as $name){
         if(isset($_POST[$name])){
           $this->optional[$name] = stripslashes($_POST[$name]);
         }

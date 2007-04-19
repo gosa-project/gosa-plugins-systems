@@ -1,6 +1,5 @@
 <div>
     <div class='default'>
-        <p><b>{t}Migration dialog{/t}</b></p>
-		Nothing yet
-	</div>
+        <p><b>{t}This one is empty, currently.{/t}</b></p>
+    </div>
 </div>
