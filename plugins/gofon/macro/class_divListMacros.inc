@@ -42,12 +42,17 @@ class divListMacro extends MultiSelectWindow
     $this->EnableSaveButton (false);
 
     /* Dynamic action col, depending on snapshot icons */
-    $action_col_size = 50;
+    $action_col_size = 60;
     if($this->parent->snapshotEnabled()){
       $action_col_size += 20;
     }
 
+    /* Toggle all selected / deselected */
+    $chk = "<input type='checkbox' id='select_all' name='select_all'
+               onClick='toggle_all_(\"^item_selected_[0-9]*$\",\"select_all\");' >";
+
     /* set Page header */
+    $this->AddHeader(array("string"=> $chk,          "attach"=>"style='width:20px;'"));
     $this->AddHeader(array("string" => "&nbsp;", "attach" => "style='text-align:center;width:20px;'"));
     $this->AddHeader(array("string" => _("Macro name")." / "._("Department"), "attach" => "style=''"));
     $this->AddHeader(array("string" => _("Visible"), "attach" => "style='width:50px;'"));
@@ -105,9 +110,13 @@ class divListMacro extends MultiSelectWindow
     }
     $listhead .= _("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
       " <input class='center' type='image' src='images/list_submit.png' align='middle' 
-      title='"._("Submit department")."' name='submit_department' alt='"._("Submit")."'>&nbsp;".
-      "</div>";
+      title='"._("Submit department")."' name='submit_department' alt='"._("Submit")."'>&nbsp;";
+    
+    /* Multiple options */
+    $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/edittrash.png'
+        title='"._("Remove selected macros")."' alt='"._("Remove macros")."' name='remove_multiple_macros'>&nbsp;";
 
+    $listhead .="</div>";
     $this->SetListHeader($listhead);
   }
 
@@ -127,7 +136,7 @@ class divListMacro extends MultiSelectWindow
     $editlink   = "<a href='?plug=".$_GET['plug']."&amp;id=%s&amp;act=edit_entry'>%s</a>";
 
     /* Dynamic action col, depending on snapshot icons */
-    $action_col_size = 50;
+    $action_col_size = 60;
     if($this->parent->snapshotEnabled()){
       $action_col_size += 20;
     }
@@ -172,13 +181,15 @@ class divListMacro extends MultiSelectWindow
         $display .= "&nbsp;[".$desc."]";
       }
 
-
+      /* Create each field */
+      $field0 = array("string" => "<input type='checkbox' id='item_selected_".$key."' name='item_selected_".$key."'>" ,
+                      "attach" => "style='width:20px;'");
       $field1 = array("string" => sprintf($macroimg,$val['dn']), "attach" => "style='text-align:center;width:20px;'");
       $field2 = array("string" => sprintf($editlink,$key,$display), "attach" => "style='' title='".preg_replace('/ /', '&nbsp;', @LDAP::fix($val['dn']))."'");
       $field3 = array("string" => $pic1, "attach" => "style='width:50px;'");
       $field4 = array("string" => preg_replace("/%KEY%/", "$key", $action), "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'");
 
-      $this->AddElement(array($field1,$field2,$field3,$field4));
+      $this->AddElement(array($field0,$field1,$field2,$field3,$field4));
     }
   }
 

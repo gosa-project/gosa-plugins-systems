@@ -45,7 +45,7 @@ class gofonMacro extends plugin
     /* Call parent execute */
     plugin::execute();
 
-    $_SESSION['LOCK_VARS_TO_USE'] = array("/^goFonMacro_/","/^act$/","/^id$/");
+    $_SESSION['LOCK_VARS_TO_USE'] = array("/^goFonMacro_/","/^act$/","/^id$/","/^item_selected/","/^remove_multiple_macros/");
 
     /*****************
       Variable initialisation
@@ -74,6 +74,8 @@ class gofonMacro extends plugin
         // Post for new
       }elseif(preg_match("/^goFonMacro_new/",$key)){
         $s_action="new";
+      }elseif(preg_match("/^remove_multiple_macros/",$key)){
+        $s_action="del_multiple";
       }
     }
     if((isset($_GET['act']))&&($_GET['act']=="edit_entry")){
@@ -180,10 +182,88 @@ class gofonMacro extends plugin
       }
     }
 
+
+
+    /********************
+      Delete MULTIPLE entries requested, display confirm dialog
+     ********************/
+
+    if ($s_action=="del_multiple"){
+      $ids = $this->list_get_selected_items();
+
+      if(count($ids)){
+
+        foreach($ids as $id){
+          $dn = $this->macros[$id]['dn'];
+          if (($user= get_lock($dn)) != ""){
+            return(gen_locked_message ($user, $dn));
+          }
+          $this->dns[$id] = $dn;
+        }
+
+        $dns_names = "<br><pre>";
+        foreach($this->dns as $dn){
+          add_lock ($dn, $this->ui->dn);
+          $dns_names .= $dn."\n";
+        }
+        $dns_names .="</pre>";
+
+        /* Lock the current entry, so nobody will edit it during deletion */
+        $smarty->assign("intro",     sprintf(_("You're about to delete the following user(s) %s"), @LDAP::fix($dns_names)));
+        $smarty->assign("multiple", true);
+        return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
+      }
+    }
+
+
+    /********************
+      Delete MULTIPLE entries confirmed
+     ********************/
+
+    /* Confirmation for deletion has been passed. Users should be deleted. */
+    if (isset($_POST['delete_multiple_macro_confirm'])){
+
+      /* Remove user by user and check acls before removeing them */
+      foreach($this->dns as $key => $dn){
+
+        $acl = $this->ui->get_permissions($dn,"gofonmacro/macro");
+        if(preg_match("/d/",$acl)){
+
+          /* Delete request is permitted, perform LDAP action */
+          $this->macrotabs= new macrotabs($this->config,$this->config->data['TABS']['MACROTABS'], $dn,"gofonmacro");
+          $this->macrotabs->delete ();
+          gosa_log ("macro object'".$dn."' has been removed");
+          unset ($this->macrotabs);
+          $this->macrotabs= NULL;
+
+        } else {
+          print_red (_("You are not allowed to delete this macro!"));
+        }
+
+        /* Remove lock file after successfull deletion */
+        del_lock ($dn);
+        unset($this->dns[$key]);
+      }
+    }
+
+
+    /********************
+      Delete MULTIPLE entries Canceled
+     ********************/
+
+    /* Remove lock */
+    if(isset($_POST['delete_multiple_macro_cancel'])){
+      foreach($this->dns as $key => $dn){
+        del_lock ($dn);
+        unset($this->dns[$key]);
+      }
+    }
+
+
     /*****************
       Remove macro
      *****************/
-    
+
     /* Remove user was requested */
     if ($s_action=="del"){
 
@@ -284,7 +364,7 @@ class gofonMacro extends plugin
 
     /* Add departments if subsearch is disabled */
     if(!$this->DivListMacro->SubSearch){
-      $this->DivListMacro->AddDepartments($this->DivListMacro->selectedBase,4);
+      $this->DivListMacro->AddDepartments($this->DivListMacro->selectedBase,4,1);
     }
     $this->reload();
     $this->DivListMacro->setEntries($this->macros);
@@ -337,6 +417,19 @@ class gofonMacro extends plugin
   function save_object()
   {
     $this->DivListMacro->save_object();
+  }
+
+
+  function list_get_selected_items()
+  {
+    $ids = array();
+    foreach($_POST as $name => $value){
+      if(preg_match("/^item_selected_[0-9]*$/",$name)){
+        $id   = preg_replace("/^item_selected_/","",$name);
+        $ids[$id] = $id;
+      }
+    }
+    return($ids);
   }
 
 
