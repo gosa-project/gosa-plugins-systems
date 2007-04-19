@@ -7,110 +7,83 @@
 {/foreach}
 {/if}
 
-<div class='default' style='margin:12px; '>
-    <div style='float:left; '>
-		<br>
-		<b>{t}GOsa settings{/t}</b>
-	</div>
+<div class='default'>
+    <p><b>{t}Look and feel{/t}</b></p>
 
     <div class='step4_container'>
         <div class='step4_name'>
-            {t}GOsa theme{/t}
+            {t}Theme{/t}
         </div>
         <div class='step4_value'>
             <select name="theme">
                 {html_options options=$themes selected=$theme}
             </select>
         </div>
-        <div class='step4_status'>
-        </div>
     </div>
-
     <div class='step4_container'>
         <div class='step4_name'>
-            {t}People dn attribute{/t}
-        </div>
-        <div class='step4_value'>
-            <select size="1" name="peopledn">
-                {html_options values=$peopledns output=$peopledns selected=$peopledn}
-            </select>
-        </div>
-        <div class='step4_status'>
-        </div>
-    </div>
-
-	<div class='step4_container'>
-        <div class='step4_name'>
-            {t}People storage ou{/t}
-        </div>
-        <div class='step4_value'>
-            <input type='text' name='peopleou' maxlength='40' size='20' value='{$peopleou}'>
-        </div>
-        <div class='step4_status'>
-        </div>
-    </div>
-
-
-	<div class='step4_container'>
-        <div class='step4_name'>
-            {t}Group storage ou{/t}
-        </div>
-        <div class='step4_value'>
-            <input type='text' name='groupou' maxlength='40' size='20' value='{$groupou}'>
-        </div>
-        <div class='step4_status'>
-        </div>
-    </div>
-
-    <div class='step4_container'>
-        <div class='step4_name'>
-            {t}ID base for users/groups{/t}
-        </div>
-        <div class='step4_value'>
-            <input type='text' name='uidbase' maxlength='20' size='10' value='{$uidbase}'>
-        </div>
-        <div class='step4_status'>
-        </div>
-    </div>
-
-
-  	<div class='step4_container'>
-    	<div class='step4_name'>
-                {t}Base hook{/t}
-        </div>
-        <div class='step4_value'>
-            {if $base_hook_active == FALSE}
-                <input type='checkbox' value='1' name='base_hook_active'
-                    onClick='changeState("base_hook");'>
-                <input style='width:90%' id='base_hook' name='base_hook' type='text' value='{$base_hook}'      disabled>
-            {else}
-                <input type='checkbox' value='1' name='base_hook_active' checked>
-                <input style='width:90%' id='base_hook' name='base_hook' type='text' value='{$base_hook}'  >
-            {/if}
-        </div>
-        <div class='step4_status'>
-            {t}Infos in FAQ{/t}&nbsp;
-            <img class='center'  alt='!' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
-        </div>
-    </div>
-
-
-    <div class='step4_container'>
-        <div class='step4_name'>
-            {t}Display PHP errors{/t}
+            {t}Show PHP errors{/t}
         </div>
         <div class='step4_value'>
             <select name="errorlvl" size="1" title="">
 			{html_options options=$bool selected=$errorlvl}
             </select>
         </div>
-        <div class='step4_status'>
+    </div>
+
+    <p><b>{t}People and group storage{/t}</b></p>
+    <div class='step4_container'>
+        <div class='step4_name'>
+            {t}People DN attribute{/t}
+        </div>
+        <div class='step4_value'>
+            <select size="1" name="peopledn">
+                {html_options values=$peopledns output=$peopledns selected=$peopledn}
+            </select>
         </div>
     </div>
-    <div style='float:left;'>
-		<br>
-		<b>{t}Password settings{/t}</b>
-	</div>
+
+	<div class='step4_container'>
+        <div class='step4_name'>
+            {t}People storage subtree{/t}
+        </div>
+        <div class='step4_value'>
+            <input type='text' name='peopleou' maxlength='40' size='40' value='{$peopleou}'>
+        </div>
+    </div>
+
+
+	<div class='step4_container'>
+        <div class='step4_name'>
+            {t}Group storage subtree{/t}
+        </div>
+        <div class='step4_value'>
+            <input type='text' name='groupou' maxlength='40' size='40' value='{$groupou}'>
+        </div>
+    </div>
+
+    <div class='step4_container' style="margin-bottom:5px;">
+        <div class='step4_name'>
+            {t}Number base for people/groups{/t}
+        </div>
+        <div class='step4_value'>
+            <input type='text' name='uidbase' maxlength='20' size='10' value='{$uidbase}'>
+	    <br>
+            {if $base_hook_active == FALSE}
+                <input type='checkbox' value='1' name='base_hook_active'
+                    onClick='changeState("base_hook");'>
+                {t}Use hook{/t}
+                <input id='base_hook' name='base_hook' size=40 type='text' value='{$base_hook}'      disabled>
+            {else}
+                <input type='checkbox' value='1' name='base_hook_active' checked>
+                {t}Use hook{/t}
+                <input id='base_hook' name='base_hook' size=40 type='text' value='{$base_hook}'  >
+            {/if}
+        </div>
+        </div>
+    </div>
+
+    <p><b>{t}Password settings{/t}</b></p>
 
     <div class='step4_container'>
         <div class='step4_name'>
@@ -154,36 +127,25 @@
 			{/if}
 	
         </div>
-        <div class='step4_status'  style='height:4em;'>
-			{t}Infos in FAQ{/t}&nbsp;
-			<img class='center'  alt='!' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
-        </div>
     </div>
 
 	   <div class='step4_container'>
         <div class='step4_name'>
-                {t}External script{/t}
+                {t}Password change hook{/t}
         </div>
         <div class='step4_value'>
             {if $pwd_rules.externalpwdhook_active == FALSE}
                 <input type='checkbox' value='1' name='externalpwdhook_active'
                     onClick='changeState("externalpwdhook");'>
-                <input style='width:90%' id='externalpwdhook' name='externalpwdhook' type='text' value='{$pwd_rules.externalpwdhook}' disabled>
+                <input id='externalpwdhook' name='externalpwdhook' type='text' value='{$pwd_rules.externalpwdhook}' disabled>
             {else}
                 <input type='checkbox' value='1' name='externalpwdhook_active' checked>
-                <input style='width:90%' id='externalpwdhook' name='externalpwdhook' type='text' value='{$pwd_rules.externalpwdhook}'  >
+                <input size=40 id='externalpwdhook' name='externalpwdhook' type='text' value='{$pwd_rules.externalpwdhook}'  >
             {/if}
-        </div>
-        <div class='step4_status'>
-			{t}Infos in FAQ{/t}&nbsp;
-			<img class='center'  alt='!' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
         </div>
     </div>
 
-    <div style='float:left; '>
-		<br>
-		<b>{t}Mail settings{/t}</b>
-	</div>
+    <p><b>{t}Mail settings{/t}</b></p>
 
     <div class='step4_container'>
         <div class='step4_name'>
@@ -207,33 +169,24 @@
             {if $mail_settings.vacationdir_active == FALSE}
                 <input type='checkbox' value='1' name='vacationdir_active'
                     onClick='changeState("vacationdir");'>
-                <input style='width:90%' id='vacationdir' name='vacationdir' type='text' value='{$mail_settings.vacationdir}' disabled>
+                <input size=40 id='vacationdir' name='vacationdir' type='text' value='{$mail_settings.vacationdir}' disabled>
             {else}
                 <input type='checkbox' value='1' name='vacationdir_active' checked>
-                <input style='width:90%' id='vacationdir' name='vacationdir' type='text' value='{$mail_settings.vacationdir}'  >
+                <input size=40 id='vacationdir' name='vacationdir' type='text' value='{$mail_settings.vacationdir}'  >
             {/if}
-        </div>
-        <div class='step4_status'>
-			{t}Infos in FAQ{/t}&nbsp;
-			<img class='center'  alt='!'  src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
         </div>
     </div>
 
     <div class='step4_container'>
         <div class='step4_name'>
-            {t}Use cyrus account style{/t}
+            {t}Use Cyrus UNIX style{/t}
         </div>
         <div class='step4_value'>
             <select name="cyrusunixstyle" size="1" title="">
 			{html_options options=$bool selected=$cyrusunixstyle}
             </select>
         </div>
-        <div class='step4_status'>
-			{t}Infos in FAQ{/t}&nbsp;
-			<img class='center'  alt='!'  src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
-        </div>
     </div>
-</div>
 
 <input type='hidden' value='1' name='step5_posted'>
 <!--
