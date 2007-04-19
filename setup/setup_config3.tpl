@@ -160,23 +160,6 @@
         </div>
     </div>
 
-    <div class='step4_container' style='height:5em;'>
-        <div class='step4_name' style='height:5em;'>
-            {t}SMB hash{/t}
-        </div>
-        <div class='step4_value' style='height:5em;'>
-			<input {if $optional.smbhash == "/usr/bin/mkntpasswd"} checked {/if} 
-				type='radio' name='smbhash' value='/usr/bin/mkntpasswd'>&nbsp;
-				/usr/bin/mkntpasswd<br>
-			<input {if $optional.smbhash == "mkntpwd"} checked {/if}
-				type='radio' name='smbhash' value='mkntpwd'>&nbsp;
-				mkntpwd<br>
-			<input {if $optional.smbhash == 'perl -MCrypt::SmbHash -e "print join(q[:], ntlmgen \$ARGV[0]), $/;"'} checked {/if}
-				type='radio' name='smbhash' value='perl -MCrypt::SmbHash -e "print join(q[:], ntlmgen \$ARGV[0]), $/;"'>&nbsp;
-				perl -MCrypt::SmbHash ...
-        </div>
-    </div>
-
     <div class='step4_container'>
         <div class='step4_name'>
             {t}Session lifetime{/t}

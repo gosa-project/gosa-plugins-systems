@@ -48,24 +48,12 @@ class Step_Config3 extends setup_step
               "kioskpath" => "/var/spool/kiosk",
               "kioskpath_active" => FALSE,
 
-              "noprimarygroup"  => FALSE,
-              "smbhash" => 'SMBHASH');
+              "noprimarygroup"  => FALSE);
 
 
   function Step_Config3()
   {
     $this->update_strings();
-
-    /* Look for samba password generation method */
-    if(file_exists("/usr/bin/mkntpasswd")){
-      $pwdhash  = "/usr/bin/mkntpasswd";
-    } elseif (preg_match("/^Usage: mkntpwd /", shell_exec ("mkntpwd 2>&1"))){
-      $pwdhash= "mkntpwd";
-    } else {
-      $pwdhash= 'perl -MCrypt::SmbHash -e "print join(q[:], ntlmgen \$ARGV[0]), $/;"';
-    }
-
-    $this->optional['smbhash'] = $pwdhash;
   }
 
 
@@ -100,7 +88,7 @@ class Step_Config3 extends setup_step
         }
       }
       
-      foreach(array("strict_units","noprimarygroup","forceglobals","forcessl","warnssl","compile","debuglevel","session_lifetime","smbhash") as $name){
+      foreach(array("strict_units","noprimarygroup","forceglobals","forcessl","warnssl","compile","debuglevel","session_lifetime") as $name){
         if(isset($_POST[$name])){
           $this->optional[$name] = stripslashes($_POST[$name]);
         }

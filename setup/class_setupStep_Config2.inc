@@ -44,6 +44,7 @@ class Step_Config2 extends setup_step
   var $samba_settings    = array( "samba_sid"        => "0-815-4711",
                                   "samba_sid_active" => FALSE,
                                   "samba_rid"        => 1000,
+                                  "smbhash"          => 'SMBHASH',
                                   "samba_rid_active" => FALSE); 
 
   var $attributes = array("governmentmode","sambaidmapping","cyrusunixstyle","mail");
@@ -55,6 +56,17 @@ class Step_Config2 extends setup_step
     foreach($tmp['name'] as $name){
       $this->mail_methods[$name] = $name;
     }
+
+    /* Look for samba password generation method */
+    if(file_exists("/usr/bin/mkntpasswd")){
+      $pwdhash  = "/usr/bin/mkntpasswd";
+    } elseif (preg_match("/^Usage: mkntpwd /", shell_exec ("mkntpwd 2>&1"))){
+      $pwdhash= "mkntpwd";
+    } else {
+      $pwdhash= 'perl -MCrypt::SmbHash -e "print join(q[:], ntlmgen \$ARGV[0]), $/;"';
+    }
+
+    $this->samba_settings['smbhash'] = $pwdhash;
   }
 
  
@@ -159,6 +171,9 @@ class Step_Config2 extends setup_step
         }
       }else{
         $this->samba_settings['samba_rid_active'] = FALSE;
+      }
+      if(isset($_POST['smbhash'])){
+        $this->samba_settings['smbhash'] = $_POST['smbhash'];
       }
 
     }

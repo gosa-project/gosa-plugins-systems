@@ -1,5 +1,15 @@
 <div class='default' style='margin:12px; '>  
     <p><b>{t}Samba settings{/t}</b></p>
+
+    <div class='step4_container'>
+        <div class='step4_name'>
+            {t}Samba hash generator{/t}
+        </div>
+        <div class='step4_value'>
+                <input size=40 id='smbhash' name='smbhash' type='text' value='{$samba_settings.smbhash}'  >
+        </div>
+    </div>
+
     <div class='step4_container'>
         <div class='step4_name'>
             {t}Samba SID{/t}
