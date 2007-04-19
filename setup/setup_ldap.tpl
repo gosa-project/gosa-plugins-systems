@@ -102,6 +102,18 @@
         </div>
     </div>
 	{/if}
+
+    <div class='step4_container'>
+        <div class='step4_name'>
+            {t}rfc2307bis compliant groups{/t}
+        </div>
+        <div class='step4_value'>
+            <select name="rfc2307bis" size="1" title="">
+            {html_options options=$bool selected=$rfc2307bis}
+            </select>
+        </div>
+    </div>
+
 </div>
 <!-- Place cursor -->
 <script language="JavaScript" type="text/javascript">

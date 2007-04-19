@@ -40,7 +40,6 @@ class Step_Config1 extends setup_step
   var $errorlvl   = FALSE;
 
   var $include_personal_title = FALSE;
-  var $rfc2307bis             = FALSE;
 
   var $pwd_rules  = array("pwminlen" => 6, 
                           "pwminlen_active" => FALSE,
@@ -56,7 +55,7 @@ class Step_Config1 extends setup_step
 
   var $crypt_methods  = array();
 
-  var $attributes = array("peopleou","groupou","peopledn","uidbase","encryption","theme","errorlvl","rfc2307bis","krbsasl",
+  var $attributes = array("peopleou","groupou","peopledn","uidbase","encryption","theme","errorlvl","krbsasl",
                           "base_hook","base_hook_active","account_expiration","strict","include_personal_title");
 
   function Step_Config1()

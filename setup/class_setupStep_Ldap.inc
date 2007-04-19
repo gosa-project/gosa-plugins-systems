@@ -35,13 +35,17 @@ class Step_Ldap extends setup_step
   var $resolve_user   = FALSE;
   var $tls            = FALSE;
 
-  var $attributes = array("connection","location","admin","password","base","tls");
-  var $header_image= "images/proxy.png";
+  var $rfc2307bis             = FALSE;
+  var $attributes = array("connection","location","admin","password","base","tls","rfc2307bis");
 
+  var $header_image= "images/proxy.png";
 
   function Step_Ldap()
   {
     $this->update_strings();
+
+    
+  
   }
 
   
