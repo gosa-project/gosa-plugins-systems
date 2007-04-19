@@ -135,50 +135,6 @@
             {/if}
         </div>
     </div>
-
-    <p><b>{t}Mail settings{/t}</b></p>
-
-    <div class='step4_container'>
-        <div class='step4_name'>
-            {t}Mail method{/t}
-        </div>
-        <div class='step4_value'>
-            <select name="mail" size="1" title="">
-                <option  value="disabled">{t}disabled{/t}</option>
-                {html_options options=$mail_methods selected=$mail}
-            </select>
-        </div>
-        <div class='step4_status'>
-        </div>
-    </div>
-
-    <div class='step4_container'>
-        <div class='step4_name'>
-            {t}Vacation templates{/t}
-        </div>
-        <div class='step4_value'>
-            {if $mail_settings.vacationdir_active == FALSE}
-                <input type='checkbox' value='1' name='vacationdir_active'
-                    onClick='changeState("vacationdir");'>
-                <input size=40 id='vacationdir' name='vacationdir' type='text' value='{$mail_settings.vacationdir}' disabled>
-            {else}
-                <input type='checkbox' value='1' name='vacationdir_active' checked>
-                <input size=40 id='vacationdir' name='vacationdir' type='text' value='{$mail_settings.vacationdir}'  >
-            {/if}
-        </div>
-    </div>
-
-    <div class='step4_container'>
-        <div class='step4_name'>
-            {t}Use Cyrus UNIX style{/t}
-        </div>
-        <div class='step4_value'>
-            <select name="cyrusunixstyle" size="1" title="">
-			{html_options options=$bool selected=$cyrusunixstyle}
-            </select>
-        </div>
-    </div>
-
 <input type='hidden' value='1' name='step5_posted'>
 <!--
          {t}GOsa supports several encryption types for your passwords. Normally this is adjustable via user templates, but you can specify a default method to be used here, too.{/t}

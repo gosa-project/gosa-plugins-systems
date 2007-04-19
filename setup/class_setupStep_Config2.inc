@@ -29,6 +29,12 @@ class Step_Config2 extends setup_step
   var $account_expiration  =FALSE;
   var $header_image = "images/ldapserver.png";
 
+  var $cyrusunixstyle = FALSE;
+  var $mail       = "none";
+  var $mail_methods   = array();
+  var $mail_settings = array("vacationdir"        => "/etc/gosa/vacation",
+                             "vacationdir_active" => FALSE);
+
   var $generic_settings  = array( "idgen"         => "{%sn}-{%givenName[2-4]}",
                                   "idgen_active"  => FALSE,
                                   "minid"         => "100",
@@ -46,11 +52,15 @@ class Step_Config2 extends setup_step
                                   "samba_sid_active" => FALSE,
                                   "samba_rid"        => 1000,
                                   "samba_rid_active" => FALSE); 
-  var $attributes = array("strict","governmentmode","sambaidmapping","account_expiration");
+  var $attributes = array("strict","governmentmode","sambaidmapping","account_expiration","cyrusunixstyle","mail");
 
   function Step_Config2()
   {
     $this->update_strings();
+    $tmp = $this->get_available_mail_classes();
+    foreach($tmp['name'] as $name){
+      $this->mail_methods[$name] = $name;
+    }
   }
 
  
@@ -77,6 +87,8 @@ class Step_Config2 extends setup_step
 
     $smarty = get_smarty();
     $smarty->assign("generic_settings",$this->generic_settings);
+    $smarty->assign("mail_settings",$this->mail_settings);
+    $smarty->assign("mail_methods",$this->mail_methods);
     $smarty->assign("samba_settings",$this->samba_settings);
     $smarty->assign("bool",array(FALSE => _("No"), TRUE => _("Yes")));
         foreach($this->attributes as $attr){
@@ -94,6 +106,16 @@ class Step_Config2 extends setup_step
         if(isset($_POST[$attr])){
           $this->$attr = validate($_POST[$attr]);
         }
+      }
+
+      /* Mail settings */
+      if(isset($_POST['vacationdir_active'])){
+        $this->mail_settings['vacationdir_active'] = TRUE;
+        if(isset($_POST['vacationdir'])){
+          $this->mail_settings['vacationdir'] = $_POST['vacationdir'];
+        }
+      }else{
+        $this->mail_settings['vacationdir_active'] = FALSE;
       }
 
       if(isset($_POST['minid_active'])){
@@ -189,10 +211,34 @@ class Step_Config2 extends setup_step
   function get_attributes()
   {
     $tmp = setup_step::get_attributes();
-    foreach(array("samba_settings","generic_settings") as $attr){
+    foreach(array("samba_settings","generic_settings","mail_settings") as $attr){
       $tmp[$attr]= $this->$attr;
     }
     return($tmp);
+  }
+
+/* Returns the classnames auf the mail classes */
+  function get_available_mail_classes()
+  {
+    $dir = opendir( "../include");
+    $methods = array();
+    $suffix = "class_mail-methods-";
+    $lensuf = strlen($suffix);
+    $prefix = ".inc";
+    $lenpre = strlen($prefix);
+    $i = 0;
+    while (($file = readdir($dir)) !== false){
+
+      if(stristr($file,$suffix)) {
+        $lenfile = strlen($file);
+        $methods['name'][$i] = substr($file,$lensuf,($lenfile-$lensuf)-$lenpre);
+        $methods['file'][$i] = $file;
+        $methods[$i]['file'] = $file;
+        $methods[$i]['name'] = substr($file,$lensuf,($lenfile-$lensuf)-$lenpre);
+        $i++;
+      }
+    }
+    return($methods);
   }
 
 }

@@ -33,10 +33,8 @@ class Step_Config1 extends setup_step
   var $base_hook_active  = FALSE; 
 
   var $encryption = "crypt";
-  var $mail       = "none";
   var $theme      = "default"; 
   var $errorlvl   = FALSE;
-  var $cyrusunixstyle = FALSE;
 
   var $pwd_rules  = array("pwminlen" => 6, 
                           "pwminlen_active" => FALSE,
@@ -45,14 +43,9 @@ class Step_Config1 extends setup_step
                           "externalpwdhook" => "/path/to/your/script username oldpassword newpassword",
                           "externalpwdhook_active" => FALSE);
 
-  var $mail_settings = array("vacationdir"        => "/etc/gosa/vacation",
-                             "vacationdir_active" => FALSE);
- 
   var $crypt_methods  = array();
-  var $mail_methods   = array();
 
-
-  var $attributes = array("peopleou","groupou","peopledn","uidbase","encryption","mail","theme","errorlvl","cyrusunixstyle",
+  var $attributes = array("peopleou","groupou","peopledn","uidbase","encryption","theme","errorlvl",
                           "base_hook","base_hook_active");
 
   function Step_Config1()
@@ -62,10 +55,6 @@ class Step_Config1 extends setup_step
     $tmp = @passwordMethod::get_available_methods_if_not_loaded();
     foreach($tmp['name'] as $name){
       $this->crypt_methods[$name] = $name;
-    }
-    $tmp = $this->get_available_mail_classes();
-    foreach($tmp['name'] as $name){
-      $this->mail_methods[$name] = $name;
     }
   }
 
@@ -83,10 +72,8 @@ class Step_Config1 extends setup_step
     $smarty = get_smarty();
     $smarty->assign("peopledns",array("uid","cn"));
     $smarty->assign("crypt_methods",$this->crypt_methods);
-    $smarty->assign("mail_methods",$this->mail_methods);
     $smarty->assign("themes",$this->get_themes());
     $smarty->assign("pwd_rules",$this->pwd_rules);
-    $smarty->assign("mail_settings",$this->mail_settings);
     $smarty->assign("bool",array(FALSE => _("No"), TRUE => _("Yes")));
     foreach($this->attributes as $attr){
       $smarty->assign($attr,$this->$attr);
@@ -94,30 +81,6 @@ class Step_Config1 extends setup_step
     return($smarty -> fetch (get_template_path("../setup/setup_config1.tpl")));
   }
 
-
-  /* Returns the classnames auf the mail classes */
-  function get_available_mail_classes()
-  {
-    $dir = opendir( "../include");
-    $methods = array();
-    $suffix = "class_mail-methods-";
-    $lensuf = strlen($suffix);
-    $prefix = ".inc";
-    $lenpre = strlen($prefix);
-    $i = 0;
-    while (($file = readdir($dir)) !== false){
-
-      if(stristr($file,$suffix)) {
-        $lenfile = strlen($file);
-        $methods['name'][$i] = substr($file,$lensuf,($lenfile-$lensuf)-$lenpre);
-        $methods['file'][$i] = $file;
-        $methods[$i]['file'] = $file;
-        $methods[$i]['name'] = substr($file,$lensuf,($lenfile-$lensuf)-$lenpre);
-        $i++;
-      }
-    }
-    return($methods); 
-  }
 
   function get_themes()
   {
@@ -187,17 +150,7 @@ class Step_Config1 extends setup_step
         $this->pwd_rules['pwminlen_active'] = FALSE;
       }
 
-      /* Mail settings */
-      if(isset($_POST['vacationdir_active'])){
-        $this->mail_settings['vacationdir_active'] = TRUE;
-        if(isset($_POST['vacationdir'])){
-          $this->mail_settings['vacationdir'] = $_POST['vacationdir'];
-        }
-      }else{
-        $this->mail_settings['vacationdir_active'] = FALSE;
-      }
-
-      /* Mail settings */
+      /* External pwd settings */
       if(isset($_POST['externalpwdhook_active'])){
         $this->pwd_rules['externalpwdhook_active'] = TRUE;
         if(isset($_POST['externalpwdhook'])){
@@ -207,7 +160,7 @@ class Step_Config1 extends setup_step
         $this->pwd_rules['externalpwdhook_active'] = FALSE;
       }
 
-      /* Mail settings */
+      /* base hook settings */
       if(isset($_POST['base_hook_active'])){
         $this->pwd_rules['base_hook_active'] = TRUE;
         if(isset($_POST['base_hook'])){
@@ -231,7 +184,7 @@ class Step_Config1 extends setup_step
   function get_attributes()
   {
     $tmp = setup_step::get_attributes();
-    foreach(array("pwd_rules","mail_settings") as $attr){
+    foreach(array("pwd_rules") as $attr){
       $tmp[$attr]= $this->$attr;
     }
     return($tmp);
