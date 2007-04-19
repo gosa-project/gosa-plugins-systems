@@ -27,6 +27,7 @@ class Step_Config2 extends setup_step
   var $sambaidmapping = FALSE;
   var $minid          = 100;       
   var $account_expiration  =FALSE;
+  var $header_image = "images/ldapserver.png";
 
   var $generic_settings  = array( "idgen"         => "{%sn}-{%givenName[2-4]}",
                                   "idgen_active"  => FALSE,
@@ -56,8 +57,8 @@ class Step_Config2 extends setup_step
   function update_strings()
   {
     $this->s_title      = _("GOsa settings 2/3");
-    $this->s_title_long = _("GOsa generic settings, page 2/3");
-    $this->s_info       = _("This dialog allows you to setup GOsa behaviour");
+    $this->s_title_long = _("GOsa settings 2/3");
+    $this->s_info       = _("Customize special parameters");
   }
 
  

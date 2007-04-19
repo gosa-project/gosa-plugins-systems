@@ -27,6 +27,7 @@ class Step_Config1 extends setup_step
   var $groupou    =  "ou=groups";
   var $peopledn   = "cn";
   var $uidbase    = 1000;
+  var $header_image = "images/ldapserver.png";
 
   var $base_hook         = "/usr/bin/sudo myscript"; 
   var $base_hook_active  = FALSE; 
