@@ -81,19 +81,6 @@
         </div>
     </div>
 
-    <div class='step4_container'>
-        <div class='step4_name'>
-            {t}Use account expiration{/t}
-        </div>
-        <div class='step4_value'>
-            <select name="account_expiration" size="1" title="">
-			{html_options options=$bool selected=$account_expiration}
-            </select>
-        </div>
-    </div>
-
-
-
     <p><b>{t}Mail settings{/t}</b></p>
 
     <div class='step4_container'>

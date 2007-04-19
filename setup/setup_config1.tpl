@@ -166,6 +166,18 @@
             {/if}
         </div>
     </div>
+		  <div class='step4_container'>
+        <div class='step4_name'>
+            {t}Use account expiration{/t}
+        </div>
+        <div class='step4_value'>
+            <select name="account_expiration" size="1" title="">
+            {html_options options=$bool selected=$account_expiration}
+            </select>
+        </div>
+    </div>
+
+
 <input type='hidden' value='1' name='step5_posted'>
 <!--
          {t}GOsa supports several encryption types for your passwords. Normally this is adjustable via user templates, but you can specify a default method to be used here, too.{/t}
