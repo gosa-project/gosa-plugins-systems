@@ -206,19 +206,36 @@ class Step_Schema extends setup_step
       }
     }
   
-    $this->checked = $checks;
     $tmp = $objectclasses;
-    $not_checked = array();
-    foreach($tmp as $name => $val){
-      $desc = "no description.";
-      if(preg_match("/DESC/",$val)){ 
-        $desc = preg_replace("/^.*DESC[ ]*'/i","",$val) ;
-        $desc = preg_replace("/'.*$/i","",$desc) ;
-      }  
-      $not_checked[$name] = $desc;
+
+    /* Depending on selected rfc2307bis mode, we need different schema configurations */
+    $rfc2307bis = $this->parent->captured_values['rfc2307bis'];
+    $posixGroup = $tmp['posixGroup'];
+    $structural = preg_match("/STRUCTURAL/i",$posixGroup);
+
+    /* The gosa base schema */
+    $checks['posixGroup'] = $def_check;
+    $checks['posixGroup']['REQUIRED_VERSION'] = "2.4";
+    $checks['posixGroup']['SCHEMA_FILES']     = array("gosa+samba3.schema","gosa.schema");
+    $checks['posixGroup']['CLASSES_REQUIRED'] = array("posixGroup");
+    $checks['posixGroup']['STATUS']           = TRUE;
+    $checks['posixGroup']['IS_MUST_HAVE']     = TRUE;
+    $checks['posixGroup']['MSG']              = "";
+    $checks['posixGroup']['INFO']             = "";
+
+    if($rfc2307bis && $structural){
+      $checks['posixGroup']['STATUS']           = FALSE;
+      $checks['posixGroup']['MSG']              = _("You have enabled the rfc2307bis option on the 'ldap setup' step, but your schema configuration do not support this option.");
+      $checks['posixGroup']['INFO']             = _("In order to use rfc2307bis corform groups the objectClass 'posixGroup' must be AUXILIARY");
+    }
+    if(!$rfc2307bis && !$structural){
+      $checks['posixGroup']['STATUS']           = FALSE;
+      $checks['posixGroup']['MSG']              = _("You have disabled the rfc2307bis option on the 'ldap setup' step, but your schema configuration do not support this option.");
+      $checks['posixGroup']['INFO']             = _("The objectClass 'posixGroup' must be STRUCTURAL");
     }
 
-    $this->not_checked = $not_checked;  
+
+    $this->checked = $checks;
   }
 }
 
