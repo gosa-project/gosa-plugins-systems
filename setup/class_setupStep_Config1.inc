@@ -27,7 +27,7 @@ class Step_Config1 extends setup_step
   var $groupou    =  "ou=groups";
   var $peopledn   = "cn";
   var $uidbase    = 1000;
-
+  var $krbsasl    = FALSE;
   var $strict     = TRUE;
 
   var $header_image = "images/ldapserver.png";
@@ -56,7 +56,7 @@ class Step_Config1 extends setup_step
 
   var $crypt_methods  = array();
 
-  var $attributes = array("peopleou","groupou","peopledn","uidbase","encryption","theme","errorlvl","rfc2307bis",
+  var $attributes = array("peopleou","groupou","peopledn","uidbase","encryption","theme","errorlvl","rfc2307bis","krbsasl",
                           "base_hook","base_hook_active","account_expiration","strict","include_personal_title");
 
   function Step_Config1()
@@ -90,6 +90,11 @@ class Step_Config1 extends setup_step
     foreach($this->attributes as $attr){
       $smarty->assign($attr,$this->$attr);
     }
+
+    /* !!! Attention strict is inverse. If you change this, 
+     *  don't forget to change save_object too 
+     */
+    $smarty->assign("strict",!$this->strict);
     return($smarty -> fetch (get_template_path("../setup/setup_config1.tpl")));
   }
 
@@ -143,6 +148,17 @@ class Step_Config1 extends setup_step
       foreach($this->attributes as $attr){
         if(isset($_POST[$attr])){
           $this->$attr = validate($_POST[$attr]);
+        }
+      }
+
+      /* !!! Attention strict is inverse. If you change this, 
+       *  don't forget to change the smarty assignment too 
+       */
+      if(isset($_POST['strict'])){
+        if($_POST['strict']){
+          $this->strict = FALSE;
+        }else{
+          $this->strict = TRUE;
         }
       }
 
