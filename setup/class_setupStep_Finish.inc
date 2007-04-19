@@ -22,10 +22,9 @@
 
 class Step_Finish extends setup_step
 {
-  var $create_backup    = TRUE;
   var $gosa_conf_contrib   = "/gosa.conf";
   var $cfg_file_written = FALSE;
-  var $last_backup_name = "";
+  var $header_image= 'images/ldapserver.png';
 
   function Step_Finish()
   {
@@ -35,9 +34,9 @@ class Step_Finish extends setup_step
   
   function update_strings()
   {
-    $this->s_title      = _("Configuration file");
-    $this->s_info       = _("In this step the configuration file will be created.");
-    $this->s_title_long = _("Saving configuration file");
+    $this->s_title      = _("Finish");
+    $this->s_info       = _("Write configuration file");
+    $this->s_title_long = _("Finish - write the configuration file");
   }
 
 
@@ -60,13 +59,6 @@ class Step_Finish extends setup_step
     /* Check if there is currently an active gosa.conf 
      */
     $exists = file_exists(CONFIG_DIR."/".CONFIG_FILE); 
-
-    /* Check if existing config file is writeable */
-    if($exists){
-      $writeable = is_writeable(CONFIG_DIR."/".CONFIG_FILE);
-    }else{
-      $writeable = is_writeable(CONFIG_DIR);
-    }
 
     /* Redirect to GOsa login */
     if(isset($_POST['use_gosa'])){
@@ -99,65 +91,21 @@ class Step_Finish extends setup_step
       exit();
     }
    
+    $err_msg= "";
     
-    /* Try to save configuration */
-    $abort    = FALSE;
-    $err_msg  = "";
-    if(isset($_POST['saveconf'])){
-      if($exists && $this->create_backup){
-        if(!$this->create_backup()){
-          $abort = TRUE;
-          $err_msg = _("Could not create requested configuration file backup. Aborted writing config file. Please check folder permission and try again. Or use the manual method if this can not be fixed anyway.");
-        }
-      }
-    
-      if(!$abort){
-        
-        /* Try to create file handle */
-        $fp = @fopen(CONFIG_DIR."/".CONFIG_FILE, "w");
-    
-        if(!$fp){
-          $err_msg = sprintf(_("Can not create handle on file '%s', the configuration could not be written. Please check folder permission and try again. Or use the manual method if this can not be fixed anyway."),CONFIG_DIR."/".CONFIG_FILE);
-          $abort  =TRUE;
-        }else{
-
-          $data = $this->get_conf_data();
-          if(!fwrite($fp,$data)){
-            $err_msg = sprintf(_("Can not write file '%s'. Please check folder permission and try again. Or use the manual method if this can not be fixed anyway."),CONFIG_DIR."/".CONFIG_FILE);
-            $abort  =TRUE;
-          }else{
-            
-            @chgrp(CONFIG_DIR."/".CONFIG_FILE,$webgroup);
-            @chown(CONFIG_DIR."/".CONFIG_FILE,"root");
-            @chmod(CONFIG_DIR."/".CONFIG_FILE,0640);    
-          }
-        }
-      }
-    } 
-
-
     if($exists && $this->is_world_readable(CONFIG_DIR."/".CONFIG_FILE)){
-      $err_msg = _("Your configuration file is currently world readable. This is a big security risk. Please updated the file permissions as shown in the manual configuration part below.");
+      $err_msg = _("Your configuration file is currently world readable. This is a big security risk. Please updated the file permissions!");
     }
 
     $smarty = get_smarty();
-    $smarty->assign("save_requested", isset($_POST['saveconf']));
     $smarty->assign("err_msg",$err_msg);
     $smarty->assign("webgroup", $webgroup);
-    $smarty->assign("create_backup" , $this->create_backup);
     $smarty->assign("CONFIG_DIR",CONFIG_DIR);
     $smarty->assign("CONFIG_FILE" , CONFIG_FILE);
-    $smarty->assign("exists",$exists);
 
-    $smarty->assign("msg1", sprintf(_("If you want the setup routine to write the configuration file, use the 'Save configuration' button below. If you prefer to copy the '%s' manually to '%s' you can download the configuration file by using the 'Download configuration' button."), CONFIG_FILE,CONFIG_DIR));
+    $smarty->assign("msg2", sprintf(_("After downloading and placing the file under %s, please make sure that the user the webserver is running with is able to read %s, while other users shouldn't. You may want to execute these commands to achieve this requirement:"),CONFIG_DIR,CONFIG_FILE));
 
-    $smarty->assign("msg2", sprintf(_("After placing the file under %s, place make sure that the webserver user is able to read %s, while other users shouldn't. You may want to execute these commands to achieve this requirement"),CONFIG_DIR,CONFIG_FILE));
-
-    $smarty->assign("last_backup_name",$this->last_backup_name);
-    $smarty->assign("writeable",$writeable);
     $smarty->assign("cv",$this->parent->captured_values);
-    $smarty->assign("msg_permissions",
-      sprintf(_("The following file(s), folders(s) must be writeable for the web-user '%s'."),$info['name']));
     return($smarty -> fetch (get_template_path("../setup/setup_finish.tpl")));
   }
 
@@ -172,36 +120,6 @@ class Step_Finish extends setup_step
   }
 
 
-  /* Create a backup of the currently existing configuration file. 
-   */
-  function create_backup()
-  {
-    $info= posix_getgrgid(posix_getgid());
-    $webgroup = $info['name'];
-    if(is_writeable(CONFIG_DIR) && is_writeable(CONFIG_DIR."/".CONFIG_FILE)){
-      $src = CONFIG_DIR."/".CONFIG_FILE;
-      $dst = CONFIG_DIR."/".CONFIG_FILE."_".date("Ymd");
-      $dst_backup= $dst;
-      $i = 1;
-      while(file_exists($dst)){
-        $dst = $dst_backup."-".$i;
-        $i ++;
-      }
-      if(copy($src,$dst)){
-        $this->last_backup_name = $dst;
-        @chgrp($dst,$webgroup);
-        @chown($dst,"root");
-        @chmod($dst,0640);    
-        return(TRUE);
-      }else{
-        return(FALSE);
-      }
-    }else{
-      return(FALSE);
-    }
-  }
-
-
   function save_object()
   {
     if(isset($_POST['step8_posted'])){
@@ -210,15 +128,6 @@ class Step_Finish extends setup_step
       foreach($this->attributes as $attr){
         if(isset($_POST[$attr])){
           $this->$attr = validate($_POST[$attr]);
-        }
-      }
-
-      /* Backup toggle */
-      if(isset($_POST['create_backup_visible'])){
-        if(isset($_POST['create_backup'])){
-          $this->create_backup = TRUE;
-        }else{
-          $this->create_backup = FALSE;
         }
       }
     }
