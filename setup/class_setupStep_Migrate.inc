@@ -24,7 +24,7 @@ class Step_Migrate extends setup_step
 {
   var $languages      = array();
   var $attributes     = array();
-  var $header_image   = "images/locale.png";
+  var $header_image   = "images/monitoring.png";
 
   function Step_Migrate()
   {
@@ -33,9 +33,9 @@ class Step_Migrate extends setup_step
 
   function update_strings()
   {
-    $this->s_title      = _("Ldap migration assistent");
-    $this->s_title_long = _("Ldap migration assistent");
-    $this->s_info       = _("This step allows you to migrate your ldap database");
+    $this->s_title      = _("LDAP inspection");
+    $this->s_title_long = _("LDAP inspection");
+    $this->s_info       = _("Analyze your current LDAP for GOsa compatibility");
   }
   
   function execute()

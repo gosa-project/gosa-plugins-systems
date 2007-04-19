@@ -27,7 +27,6 @@
 		{foreach from=$checks item=val key=key}
 				{if !$checks[$key].STATUS}
 				<br>
-				{$checks[$key].INFO}
 					{if $checks[$key].IS_MUST_HAVE}
 						<font color='red'>{$checks[$key].MSG}</font>
 					{else}
