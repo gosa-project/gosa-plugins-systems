@@ -27,6 +27,15 @@
 
     <div class='step4_container'>
         <div class='step4_name'>
+            {t}Smarty compile directory{/t}
+        </div>
+        <div class='step4_value'>
+			<input size=60 id='compile' name='compile' 
+				type='text' value='{$optional.compile}'>
+        </div>
+    </div>
+    <div class='step4_container'>
+        <div class='step4_name'>
             {t}Path for PPD storage{/t}
         </div>
         <div class='step4_value'>
@@ -40,6 +49,25 @@
             {/if}
         </div>
     </div>
+
+    <div class='step4_container'>
+        <div class='step4_name'>
+            {t}Path for kiosk profile storage{/t}
+        </div>
+        <div class='step4_value'>
+            {if $optional.kioskpath_active == FALSE}
+                <input type='checkbox' value='1' name='kioskpath_active'
+                    onClick='changeState("kioskpath");'>
+                <input size=60 id='kioskpath' name='kioskpath' 
+					type='text' value='{$optional.kioskpath}' disabled>
+            {else}
+                <input type='checkbox' value='1' name='kioskpath_active' checked>
+                <input size=60 id='kioskpath' name='kioskpath' 
+					type='text' value='{$optional.kioskpath}'  >
+            {/if}
+        </div>
+    </div>
+
 
     <div class='step4_container'>
         <div class='step4_name'>
@@ -61,7 +89,7 @@
 
     <div class='step4_container'>
         <div class='step4_name'>
-            {t}Mail queue script path{/t}
+            {t}Mail queue script{/t}
         </div>
         <div class='step4_value'>
             {if $optional.mailQueueScriptPath_active == FALSE}
@@ -79,7 +107,7 @@
 
     <div class='step4_container'>
         <div class='step4_name'>
-            {t}Notification path{/t}
+            {t}Notification script{/t}
         </div>
         <div class='step4_value'>
             {if $optional.notifydir_active == FALSE}
@@ -95,33 +123,6 @@
         </div>
     </div>
 
-    <div class='step4_container'>
-        <div class='step4_name'>
-            {t}Kiosk path{/t}
-        </div>
-        <div class='step4_value'>
-            {if $optional.kioskpath_active == FALSE}
-                <input type='checkbox' value='1' name='kioskpath_active'
-                    onClick='changeState("kioskpath");'>
-                <input size=60 id='kioskpath' name='kioskpath' 
-					type='text' value='{$optional.kioskpath}' disabled>
-            {else}
-                <input type='checkbox' value='1' name='kioskpath_active' checked>
-                <input size=60 id='kioskpath' name='kioskpath' 
-					type='text' value='{$optional.kioskpath}'  >
-            {/if}
-        </div>
-    </div>
-
-    <div class='step4_container'>
-        <div class='step4_name'>
-            {t}Smarty compile directory{/t}
-        </div>
-        <div class='step4_value'>
-			<input size=60 id='compile' name='compile' 
-				type='text' value='{$optional.compile}'>
-        </div>
-    </div>
     <p><b>{t}Login and session{/t}</b></p>
     <div class='step4_container'>
         <div class='step4_name'>
@@ -181,7 +182,7 @@
             {t}Session lifetime{/t}
         </div>
         <div class='step4_value'>
-			<input size=60 id='session_lifetime' name='session_lifetime' 
+			<input size=10 id='session_lifetime' name='session_lifetime' 
 				type='text' value='{$optional.session_lifetime}'>
         </div>
     </div>
@@ -195,11 +196,11 @@
             {if $optional.max_ldap_query_time_active == FALSE}
                 <input type='checkbox' value='1' name='max_ldap_query_time_active'
                     onClick='changeState("max_ldap_query_time");'>
-                <input size=60 id='max_ldap_query_time' name='max_ldap_query_time' 
+                <input size=10 id='max_ldap_query_time' name='max_ldap_query_time' 
 					type='text' value='{$optional.max_ldap_query_time}' disabled>
             {else}
                 <input type='checkbox' value='1' name='max_ldap_query_time_active' checked>
-                <input size=60 id='max_ldap_query_time' name='max_ldap_query_time' 
+                <input size=10 id='max_ldap_query_time' name='max_ldap_query_time' 
 					type='text' value='{$optional.max_ldap_query_time}'  >
             {/if}
         </div>
