@@ -635,6 +635,11 @@ class MultiSelectWindow{
 		}
 		natcasesort($this->departments);
 
+
+    if($empty_tabs_in_front){
+#      $numtabs -= $empty_tabs_in_front;
+    }
+  
 		/* Add deps to this dialog object list */
 		foreach($this->departments as $key=> $val){
 
@@ -661,14 +666,13 @@ class MultiSelectWindow{
         for($i = 0; $i < $empty_tabs_in_front ; $i ++){
           $row[] = array("string"=>"&nbsp;", "attach" => "style='text-align:center;width:20px;'");
         }
-        $numtabs -= $empty_tabs_in_front;
       }
 
 			$row[]=$field1=array("string"=>"<img src='images/".$non_empty."folder.png' alt='department'>","attach"=>"style='text-align:center;width:20px;'");
 			$row[]=$field2=array("string"=>sprintf($linkopen,base64_encode($key),$val), "attach" => "style=''");
 
 			if($numtabs > 2){	
-				for($i = 2 ; $i <$numtabs;$i++){
+				for($i = 3 ; $i <=$numtabs;$i++){
           if(isset( $this->array_Header[$i]['attach'])){
             $row[] = array("string"=>"&nbsp;","attach" => $this->array_Header[$i]['attach']);
           }else{
