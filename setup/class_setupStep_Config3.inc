@@ -22,6 +22,7 @@
 
 class Step_Config3 extends setup_step
 {
+  var $header_image= "images/ldap.png";
   var $optional = array(
               "strict_units" => false,
               "forceglobals" => true,
@@ -71,8 +72,8 @@ class Step_Config3 extends setup_step
   function update_strings()
   {
     $this->s_title      = _("GOsa settings 3/3");
-    $this->s_title_long = _("GOsa generic settings, page 3/3");
-    $this->s_info       = _("This dialog allows you to setup GOsa behaviour");
+    $this->s_title_long = _("GOsa settings 3/3");
+    $this->s_info       = _("Tweak some GOsa core behaviour");
   }
   
 
