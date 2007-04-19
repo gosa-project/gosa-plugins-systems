@@ -42,12 +42,17 @@ class divListConference extends MultiSelectWindow
     $this->EnableSaveButton (false);
 
     /* Dynamic action col, depending on snapshot icons */
-    $action_col_size = 50;
+    $action_col_size = 60;
     if($this->parent->snapshotEnabled()){
       $action_col_size += 20;
     }
 
+    /* Toggle all selected / deselected */
+    $chk = "<input type='checkbox' id='select_all' name='select_all'
+      onClick='toggle_all_(\"^item_selected_[0-9]*$\",\"select_all\");' >";
+
     /* set Page header */
+    $this->AddHeader(array("string"=> $chk,          "attach"=>"style='width:20px;'"));
     $this->AddHeader(array("string" => "&nbsp;", "attach" => "style='text-align:center;width:20px;'"));
     $this->AddHeader(array("string" =>_("Name - Number"), "attach" => "style=''"));
     $this->AddHeader(array("string" => _("Owner"), "attach" => "style='width:200px;'"));
@@ -113,8 +118,13 @@ class divListConference extends MultiSelectWindow
     /* Add the rest (base select ....)*/
     $listhead .= _("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
       " <input class='center' type='image' src='images/list_submit.png' align='middle' 
-      title='"._("Submit department")."' name='submit_department' alt='".  _("Submit").     "'>&nbsp;".
-      "</div>";
+      title='"._("Submit department")."' name='submit_department' alt='".  _("Submit").     "'>&nbsp;";
+
+    /* Multiple options */
+    $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/edittrash.png'
+      title='"._("Remove selected conferences")."' alt='"._("Remove conferences")."' name='remove_multiple_conferences'>&nbsp;";
+
+    $listhead .="</div>";
 
     $this->SetListHeader($listhead);
   }
@@ -133,7 +143,7 @@ class divListConference extends MultiSelectWindow
     $editlink = "<a href='?plug=".$_GET['plug']."&amp;id=%s&amp;act=edit_entry'>%s</a>";
 
     /* Dynamic action col, depending on snapshot icons */
-    $action_col_size = 50;
+    $action_col_size = 60;
     if($this->parent->snapshotEnabled()){
       $action_col_size += 20;
     }
@@ -195,6 +205,9 @@ class divListConference extends MultiSelectWindow
       /* Create title */
       $title = " title='".preg_replace("/ /","&nbsp;",@LDAP::fix($data['dn']))."' ";
 
+      /* Create each field */
+      $field0 = array("string" => "<input type='checkbox' id='item_selected_".$conferencekey."' name='item_selected_".$conferencekey."'>" ,
+          "attach" => "style='width:20px;'");
       $a_field1 = array("string"=>sprintf($userimg,_("Conference")), "attach" => $title." style='text-align:center;width:20px;'");
       $a_field2 = array("string"=>sprintf($editlink,$conferencekey,$conference['cn'][0].$number), "attach" => $title." style=''");
       $a_field3 = array("string"=> $cn , "attach" =>  $title." style='width:200px;'");
@@ -202,7 +215,7 @@ class divListConference extends MultiSelectWindow
       $a_field5 = array("string"=> preg_replace("/%KEY%/",$conferencekey,$actions), 
                         "attach"=> $title."style='width:".$action_col_size."px;border-right:0px;text-align:right;'");
 
-      $this->AddElement(array($a_field1,$a_field2,$a_field3,$a_field4,$a_field5));
+      $this->AddElement(array($field0,$a_field1,$a_field2,$a_field3,$a_field4,$a_field5));
     }
   }
 

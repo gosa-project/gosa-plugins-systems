@@ -1,8 +1,8 @@
 <div style="font-size:18px;">
  <img alt="" src="images/button_cancel.png" align=top>&nbsp;{t}Warning{/t}
 </div>
-<p>
  {$info}
+<p>
  {t}This includes 'all' accounts, systems, etc. in this subtree. Please double check if your really want to do this since there is no way for GOsa to get your data back.{/t}
 </p>
 
@@ -11,8 +11,14 @@
 </p>
 
 <p class="plugbottom">
-  <input type=submit name="delete_department_confirm" value="{t}Delete{/t}">
-  &nbsp;
-  <input type=submit name="delete_cancel" value="{t}Cancel{/t}">
+{if $multiple}
+	<input type=submit name="delete_multiple_conference_confirm" value="{t}Delete{/t}">
+	&nbsp;
+	<input type=submit name="delete_multiple_conference_cancel" value="{t}Cancel{/t}">
+{else}
+	<input type=submit name="delete_department_confirm" value="{t}Delete{/t}">
+	&nbsp;
+	<input type=submit name="delete_cancel" value="{t}Cancel{/t}">
+{/if}
 </p>
 

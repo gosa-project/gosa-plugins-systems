@@ -55,7 +55,7 @@ class phoneConferenceManagment extends plugin
     /* Call parent execute */
     plugin::execute();
 
-    $_SESSION['LOCK_VARS_TO_USE'] = array("/^id$/","/^act$/","/^conference_/");
+    $_SESSION['LOCK_VARS_TO_USE'] = array("/^id$/","/^act$/","/^conference_/","/^item_selected/","/^remove_multiple_conferences/");
 
     /***************
       Variable initialisation
@@ -85,6 +85,8 @@ class phoneConferenceManagment extends plugin
         $s_action="edit";
         $s_entry  = preg_replace("/conference_edit_/i","",$key);
         $s_entry  = preg_replace("/_.*$/","",$s_entry);
+      }elseif(preg_match("/^remove_multiple_conferences/",$key)){
+        $s_action="del_multiple";
       } 
     }
 
@@ -112,6 +114,76 @@ class phoneConferenceManagment extends plugin
     }
 
 
+
+    /********************
+      Delete MULTIPLE entries requested, display confirm dialog
+     ********************/
+
+    if ($s_action=="del_multiple"){
+      $ids = $this->list_get_selected_items();
+
+      if(count($ids)){
+
+        foreach($ids as $id){
+          $dn = $this->conferences[$id]['dn'];
+          if (($user= get_lock($dn)) != ""){
+            return(gen_locked_message ($user, $dn));
+          }
+          $this->dns[$id] = $dn;
+        }
+
+        $dns_names = "<br><pre>";
+        foreach($this->dns as $dn){
+          add_lock ($dn, $this->ui->dn);
+          $dns_names .= $dn."\n";
+        }
+        $dns_names .="</pre>";
+
+        /* Lock the current entry, so nobody will edit it during deletion */
+        $smarty->assign("info",     sprintf(_("You're about to delete the following user(s) %s"), @LDAP::fix($dns_names)));
+        $smarty->assign("multiple", true);
+        return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
+      }
+    }
+
+
+    /********************
+      Delete MULTIPLE entries confirmed
+     ********************/
+
+    /* Confirmation for deletion has been passed. Users should be deleted. */
+    if (isset($_POST['delete_multiple_conference_confirm'])){
+
+      /* Remove user by user and check acls before removeing them */
+      foreach($this->dns as $key => $dn){
+        $this->dn = $dn;
+        $acl = $this->ui->get_permissions($this->dn,"gofonconference/conference");
+        if(preg_match("/d/",$acl)){
+          $this->remove_from_parent();
+          gosa_log ("Department object'".$this->dn."' has been removed");
+        } else {
+          print_red (_("You have no permission to remove this department."));
+        }
+        /* Remove lock file after successfull deletion */
+        del_lock ($dn);
+        unset($this->dns[$key]);
+      }
+    }
+
+
+    /********************
+      Delete MULTIPLE entries Canceled
+     ********************/
+
+    /* Remove lock */
+    if(isset($_POST['delete_multiple_conference_cancel'])){
+      foreach($this->dns as $key => $dn){
+        del_lock ($dn);
+        unset($this->dns[$key]);
+      }
+    }
+
+
     /***************
       Delete 
      ***************/
@@ -132,6 +204,7 @@ class phoneConferenceManagment extends plugin
         } else {
           add_lock ($this->dn, $this->ui->dn);
           $smarty->assign("info", sprintf(_("You're about to delete the whole LDAP subtree placed under '%s'."), $this->dn));
+          $smarty->assign("multiple", false);
           $display.= $smarty->fetch (get_template_path('remove.tpl', TRUE));
           return ($display);
         }
@@ -277,7 +350,7 @@ class phoneConferenceManagment extends plugin
 
     /* Add departments if subsearch is disabled */
     if(!$this->DivListConference->SubSearch){
-      $this->DivListConference->AddDepartments($this->DivListConference->selectedBase,5);
+      $this->DivListConference->AddDepartments($this->DivListConference->selectedBase,5,1);
     }
     $this->reload();
     $this->DivListConference->setEntries($this->conferences);
@@ -349,6 +422,20 @@ class phoneConferenceManagment extends plugin
       del_lock ($this->dn);
     }
   }
+
+
+  function list_get_selected_items()
+  {
+    $ids = array();
+    foreach($_POST as $name => $value){
+      if(preg_match("/^item_selected_[0-9]*$/",$name)){
+        $id   = preg_replace("/^item_selected_/","",$name);
+        $ids[$id] = $id;
+      }
+    }
+    return($ids);
+  }
+
 
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

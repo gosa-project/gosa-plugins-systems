@@ -285,6 +285,7 @@ class gofonMacro extends plugin
         add_lock ($this->dn, $this->ui->dn);
         $smarty= get_smarty();
         $smarty->assign("intro", sprintf(_("You're about to delete the macro '%s'."), $this->dn));
+        $smarty->assign("multiple", false);
         return($smarty->fetch (get_template_path('remove.tpl', TRUE)));
       } else {
 
