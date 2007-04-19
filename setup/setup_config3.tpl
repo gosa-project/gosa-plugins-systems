@@ -14,10 +14,6 @@
             	{html_options options=$bool selected=$optional.noprimarygroup}
             </select>
         </div>
-        <div class='step4_status'>
-            {t}Infos in FAQ{/t}&nbsp;
-            <img class='center'  alt='!' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
-        </div>
     </div>
 
     <div class='step4_container'>
@@ -29,10 +25,6 @@
             <select name="forceglobals" size="1" title="">
             	{html_options options=$bool selected=$optional.forceglobals}
             </select>
-        </div>
-        <div class='step4_status'>
-            {t}Infos in FAQ{/t}&nbsp;
-            <img class='center'  alt='!' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
         </div>
     </div>
 
@@ -46,10 +38,6 @@
             	{html_options options=$bool selected=$optional.forcessl}
             </select>
         </div>
-        <div class='step4_status'>
-            {t}Infos in FAQ{/t}&nbsp;
-            <img class='center'  alt='!' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
-        </div>
     </div>
 
     <div class='step4_container'>
@@ -62,10 +50,6 @@
             	{html_options options=$bool selected=$optional.warnssl}
             </select>
         </div>
-        <div class='step4_status'>
-            {t}Infos in FAQ{/t}&nbsp;
-            <img class='center'  alt='!' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
-        </div>
     </div>
 
     <div class='step4_container'>
@@ -77,10 +61,6 @@
             <select name="strict_units" size="1" title="">
             	{html_options options=$bool selected=$optional.strict_units}
             </select>
-        </div>
-        <div class='step4_status'>
-            {t}Infos in FAQ{/t}&nbsp;
-            <img class='center'  alt='!' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
         </div>
     </div>
 
@@ -97,10 +77,6 @@
                 <input type='checkbox' value='1' name='ppd_path_active' checked>
                 <input style='width:90%' id='ppd_path' name='ppd_path' type='text' value='{$optional.ppd_path}'  >
             {/if}
-        </div>
-        <div class='step4_status'>
-            {t}Infos in FAQ{/t}&nbsp;
-            <img class='center'  alt='!' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
         </div>
     </div>
 
@@ -120,10 +96,6 @@
 					value='{$optional.auto_network_hook}'  >
             {/if}
         </div>
-        <div class='step4_status'>
-            {t}Infos in FAQ{/t}&nbsp;
-            <img class='center'  alt='!' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
-        </div>
     </div>
 
     <div class='step4_container'>
@@ -141,10 +113,6 @@
                 <input style='width:90%' id='mailQueueScriptPath' name='mailQueueScriptPath' type='text' 
 					value='{$optional.mailQueueScriptPath}'  >
             {/if}
-        </div>
-        <div class='step4_status'>
-            {t}Infos in FAQ{/t}&nbsp;
-            <img class='center'  alt='!' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
         </div>
     </div>
 
@@ -164,10 +132,6 @@
 					type='text' value='{$optional.notifydir}'  >
             {/if}
         </div>
-        <div class='step4_status'>
-            {t}Infos in FAQ{/t}&nbsp;
-            <img class='center'  alt='!' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
-        </div>
     </div>
 
     <div class='step4_container'>
@@ -186,10 +150,6 @@
 					type='text' value='{$optional.kioskpath}'  >
             {/if}
         </div>
-        <div class='step4_status'>
-            {t}Infos in FAQ{/t}&nbsp;
-            <img class='center'  alt='!' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
-        </div>
     </div>
 
     <div class='step4_container'>
@@ -199,10 +159,6 @@
         <div class='step4_value'>
 			<input style='width:90%' id='compile' name='compile' 
 				type='text' value='{$optional.compile}'>
-        </div>
-        <div class='step4_status'>
-            {t}Infos in FAQ{/t}&nbsp;
-            <img class='center'  alt='!' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
         </div>
     </div>
 
@@ -221,10 +177,6 @@
 				type='radio' name='smbhash' value='perl -MCrypt::SmbHash -e "print join(q[:], ntlmgen \$ARGV[0]), $/;"'>&nbsp;
 				perl -MCrypt::SmbHash ...
         </div>
-        <div class='step4_status' style='height:5em;'>
-            {t}Infos in FAQ{/t}&nbsp;
-            <img class='center'  alt='!'  src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
-        </div>
     </div>
 
     <div class='step4_container'>
@@ -234,10 +186,6 @@
         <div class='step4_value'>
 			<input style='width:90%' id='session_lifetime' name='session_lifetime' 
 				type='text' value='{$optional.session_lifetime}'>
-        </div>
-        <div class='step4_status'>
-            {t}Infos in FAQ{/t}&nbsp;
-            <img class='center' alt='!'  src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
         </div>
     </div>
 
@@ -257,10 +205,6 @@
 					type='text' value='{$optional.max_ldap_query_time}'  >
             {/if}
         </div>
-        <div class='step4_status'>
-            {t}Infos in FAQ{/t}&nbsp;
-            <img class='center' alt='!'  src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
-        </div>
     </div>
 
     <div class='step4_container'>
@@ -277,10 +221,6 @@
 					<option value='1' selected>1 {t}Enabled{/t}</option>
 				{/if}
 			</select>		
-        </div>
-        <div class='step4_status'>
-            {t}Infos in FAQ{/t}&nbsp;
-            <img class='center'  alt='!' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
         </div>
     </div>
 </div>
