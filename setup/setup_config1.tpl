@@ -1,12 +1,3 @@
-
-{if $warnings_cnt}
-<b><font style='color:red' >Errors:</font></b>
-{foreach from=$warnings item=val key=key}
-	<br>
-	<font style='color:red' >{$val}</font>
-{/foreach}
-{/if}
-
 <div class='default'>
     <p><b>{t}Look and feel{/t}</b></p>
 

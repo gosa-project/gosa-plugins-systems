@@ -88,8 +88,6 @@ class Step_Config1 extends setup_step
     $smarty->assign("pwd_rules",$this->pwd_rules);
     $smarty->assign("mail_settings",$this->mail_settings);
     $smarty->assign("bool",array(FALSE => _("No"), TRUE => _("Yes")));
-    $smarty->assign("warnings" ,$this->check());
-    $smarty->assign("warnings_cnt" ,count($this->check()));
     foreach($this->attributes as $attr){
       $smarty->assign($attr,$this->$attr);
     }
@@ -156,7 +154,6 @@ class Step_Config1 extends setup_step
       $message[] = _("The given password differ value is not numeric.");
     }
     return($message);
-
   }
 
   function save_object()

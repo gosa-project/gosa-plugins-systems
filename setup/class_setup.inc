@@ -59,6 +59,12 @@ class setup
 
   function execute()
   {
+    /* display step error msgs */
+    $msgs = $this->o_steps[$this->i_current]->check();
+    foreach($msgs as $msg){
+      print_red($msg);
+    }
+
     $this->o_steps[$this->i_last]->set_active(FALSE);
     $this->o_steps[$this->i_current]->set_active();
     $content = $this->o_steps[$this->i_current]->execute();

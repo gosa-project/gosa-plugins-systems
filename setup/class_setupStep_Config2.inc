@@ -78,8 +78,6 @@ class Step_Config2 extends setup_step
     $smarty = get_smarty();
     $smarty->assign("generic_settings",$this->generic_settings);
     $smarty->assign("samba_settings",$this->samba_settings);
-    $smarty->assign("warnings" ,$this->check());
-    $smarty->assign("warnings_cnt" ,count($this->check()));
     $smarty->assign("bool",array(FALSE => _("No"), TRUE => _("Yes")));
         foreach($this->attributes as $attr){
       $smarty->assign($attr,$this->$attr);

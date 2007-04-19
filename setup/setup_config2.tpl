@@ -1,11 +1,3 @@
-
-{if $warnings_cnt}
-<b><font style='color:red' >Errors:</font></b>
-{foreach from=$warnings item=val key=key}
-	<br>
-	<font style='color:red' >{$val}</font>
-{/foreach}
-{/if}
 <div class='default' style='margin:12px; '>  
     <p><b>{t}Samba settings{/t}</b></p>
     <div class='step4_container'>

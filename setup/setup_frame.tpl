@@ -22,6 +22,7 @@
 	
 		<div class='setup_contents'>
 			<div style='border-bottom:1px dashed #AAAAAA'>
+				{$errors}
 				{$header}
 			</div>
 			<div style='padding-left:12px;'>
