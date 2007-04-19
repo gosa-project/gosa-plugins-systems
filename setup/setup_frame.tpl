@@ -26,7 +26,6 @@
 			</div>
 			<div style='padding-left:12px;'>
 				{$contents}
-				<p class='seperator' style='margin-bottom:10px;'>&nbsp;</p>
 				{$bottom}
 				<br>
 			</div>

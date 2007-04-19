@@ -238,7 +238,7 @@ class setup
     if($this->o_steps[$this->i_current]->dialog){
       $str ="";
     }else{
-      $str ="";
+      $str ="<p class='seperator' style='margin-bottom:10px;'>&nbsp;</p>";
       $str.="   <div style='text-align:right;float:top;'>";
       if(isset($this->o_steps[$this->i_current -1]) && $this->o_steps[$this->i_current -1]->is_enabled()){
         $str .= "<input type='submit' name='last' value='"._("Back")."'>";
