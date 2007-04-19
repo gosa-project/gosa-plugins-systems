@@ -43,6 +43,11 @@ class Step_Config1 extends setup_step
                           "externalpwdhook" => "/path/to/your/script username oldpassword newpassword",
                           "externalpwdhook_active" => FALSE);
 
+  var $id_settings = array(       "idgen"         => "{%sn}-{%givenName[2-4]}",
+                                  "idgen_active"  => FALSE,
+                                  "minid"         => "100",
+                                  "minid_active"  => FALSE);
+
   var $crypt_methods  = array();
 
   var $attributes = array("peopleou","groupou","peopledn","uidbase","encryption","theme","errorlvl",
@@ -71,6 +76,7 @@ class Step_Config1 extends setup_step
   {
     $smarty = get_smarty();
     $smarty->assign("peopledns",array("uid","cn"));
+    $smarty->assign("id_settings",$this->id_settings);
     $smarty->assign("crypt_methods",$this->crypt_methods);
     $smarty->assign("themes",$this->get_themes());
     $smarty->assign("pwd_rules",$this->pwd_rules);
@@ -97,6 +103,10 @@ class Step_Config1 extends setup_step
   function check()
   {
     $message = array();
+
+    if(isset($this->id_settings['minid_active']) && !is_numeric($this->id_settings['minid'])){
+      $message[] = sprintf(_("The specified value for '%s' must be a numeric value"),_("GID / UID min id"));
+    }
 
     if(preg_match("/,$/",$this->peopleou)){
       $message[] =sprintf(_("Don't add a trailing comma to '%s'."),_("People storage ou"));
@@ -128,6 +138,25 @@ class Step_Config1 extends setup_step
         if(isset($_POST[$attr])){
           $this->$attr = validate($_POST[$attr]);
         }
+      }
+
+      if(isset($_POST['minid_active'])){
+        $this->id_settings['minid_active'] = TRUE;
+        if(isset($_POST['minid'])){
+          $this->id_settings['minid'] = $_POST['minid'];
+        }
+      }else{
+        $this->id_settings['minid_active'] = FALSE;
+      }
+
+      /* Generic settings */
+      if(isset($_POST['idgen_active'])){
+        $this->id_settings['idgen_active'] = TRUE;
+        if(isset($_POST['idgen'])){
+          $this->id_settings['idgen'] = $_POST['idgen'];
+        }
+      }else{
+        $this->id_settings['idgen_active'] = FALSE;
       }
 
       /* Get password settings */ 
@@ -184,7 +213,7 @@ class Step_Config1 extends setup_step
   function get_attributes()
   {
     $tmp = setup_step::get_attributes();
-    foreach(array("pwd_rules") as $attr){
+    foreach(array("pwd_rules","id_settings") as $attr){
       $tmp[$attr]= $this->$attr;
     }
     return($tmp);

@@ -43,13 +43,44 @@
         </div>
     </div>
 
-
 	<div class='step4_container'>
         <div class='step4_name'>
             {t}Group storage subtree{/t}
         </div>
         <div class='step4_value'>
             <input type='text' name='groupou' maxlength='40' size='40' value='{$groupou}'>
+        </div>
+    </div>
+
+  	<div class='step4_container'>
+        <div class='step4_name'>
+            {t}Automatic uids{/t}
+        </div>
+        <div class='step4_value'>
+            {if $id_settings.idgen_active == FALSE}
+                <input type='checkbox' value='1' name='idgen_active'
+                    onClick='changeState("idgen");'>
+                <input style='width:90%' id='idgen' name='idgen' type='text' value='{$id_settings.idgen}' disabled>
+            {else}
+                <input type='checkbox' value='1' name='idgen_active' checked>
+                <input style='width:90%' id='idgen' name='idgen' type='text' value='{$id_settings.idgen}'  >
+            {/if}
+        </div>
+    </div>
+
+ 	<div class='step4_container'>
+        <div class='step4_name'>
+            {t}GID / UID min id{/t}
+        </div>
+        <div class='step4_value'>
+            {if $id_settings.minid_active == FALSE}
+                <input type='checkbox' value='1' name='minid_active'
+                    onClick='changeState("minid");'>
+                <input style='width:90%' id='minid' name='minid' type='text' value='{$id_settings.minid}' disabled>
+            {else}
+                <input type='checkbox' value='1' name='minid_active' checked>
+                <input style='width:90%' id='minid' name='minid' type='text' value='{$id_settings.minid}'  >
+            {/if}
         </div>
     </div>
 

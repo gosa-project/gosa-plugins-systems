@@ -22,10 +22,9 @@
 
 class Step_Config2 extends setup_step
 {
-  var $strict         = TRUE;
   var $governmentmode = FALSE;
   var $sambaidmapping = FALSE;
-  var $minid          = 100;       
+  var $strict         = TRUE;
   var $account_expiration  =FALSE;
   var $header_image = "images/ldapserver.png";
 
@@ -35,11 +34,7 @@ class Step_Config2 extends setup_step
   var $mail_settings = array("vacationdir"        => "/etc/gosa/vacation",
                              "vacationdir_active" => FALSE);
 
-  var $generic_settings  = array( "idgen"         => "{%sn}-{%givenName[2-4]}",
-                                  "idgen_active"  => FALSE,
-                                  "minid"         => "100",
-                                  "minid_active"  => FALSE,
-                                  "wws_ou"        => "ou=winstations",
+  var $generic_settings  = array( "wws_ou"        => "ou=winstations",
                                   "wws_ou_active" => FALSE,
                                   "snapshot_active"     => FALSE,
                                   "snapshot_base"       => "ou=snapshots,%base%",
@@ -52,6 +47,7 @@ class Step_Config2 extends setup_step
                                   "samba_sid_active" => FALSE,
                                   "samba_rid"        => 1000,
                                   "samba_rid_active" => FALSE); 
+
   var $attributes = array("strict","governmentmode","sambaidmapping","account_expiration","cyrusunixstyle","mail");
 
   function Step_Config2()
@@ -118,15 +114,6 @@ class Step_Config2 extends setup_step
         $this->mail_settings['vacationdir_active'] = FALSE;
       }
 
-      if(isset($_POST['minid_active'])){
-        $this->generic_settings['minid_active'] = TRUE;
-        if(isset($_POST['minid'])){
-          $this->generic_settings['minid'] = $_POST['minid'];
-        }
-      }else{
-        $this->generic_settings['minid_active'] = FALSE;
-      }
-
       if(isset($_POST['wws_ou_active'])){
         $this->generic_settings['wws_ou_active'] = TRUE;
         if(isset($_POST['wws_ou'])){
@@ -136,15 +123,6 @@ class Step_Config2 extends setup_step
         $this->generic_settings['wws_ou_active'] = FALSE;
       }
 
-      /* Generic settings */
-      if(isset($_POST['idgen_active'])){
-        $this->generic_settings['idgen_active'] = TRUE;
-        if(isset($_POST['idgen'])){
-          $this->generic_settings['idgen'] = $_POST['idgen'];
-        }
-      }else{
-        $this->generic_settings['idgen_active'] = FALSE;
-      }
       if(isset($_POST['snapshot_active'])){
         $this->generic_settings['snapshot_active'] = TRUE;
         if(isset($_POST['snapshot_base'])){
@@ -198,11 +176,6 @@ class Step_Config2 extends setup_step
   function check()
   {
     $message = array();
-    
-    if(isset($this->generic_settings['minid_active']) && !is_numeric($this->generic_settings['minid'])){
-      $message[] = sprintf(_("The specified value for '%s' must be a numeric value"),_("GID / UID min id"));
-    }
-  
     return($message);
   }
   
