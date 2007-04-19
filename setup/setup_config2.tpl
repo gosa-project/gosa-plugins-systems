@@ -133,7 +133,6 @@
                 <input type='checkbox' value='1' name='snapshot_active'
                     onClick='
                                                                 changeState("snapshot_base");
-                                                                changeState("snapshot_ldap_base");
                                                                 changeState("snapshot_server");
                                                                 changeState("snapshot_user");
                                                                 changeState("snapshot_password");'>{t}Enable snapshots{/t}
@@ -148,15 +147,6 @@
                 <input style='width:220' id='snapshot_base' name='snapshot_base'
                                         type='text' value='{$generic_settings.snapshot_base}' disabled>
          </div>
-        </div>
-        <div class='step4_container'>
-         <div class='step4_name'>
-                    {t}LDAP base{/t}
-         </div>
-         <div class='step4_value'>
-                                <input style='width:220' id='snapshot_ldap_base' name='snapshot_ldap_base'
-                                        type='text' value='{$generic_settings.snapshot_ldap_base}' disabled>
-        </div>
         </div>
         <div class='step4_container'>
          <div class='step4_name'>
@@ -201,15 +191,6 @@
          <div class='step4_value'>
            <input style='width:220' id='snapshot_base' name='snapshot_base'
                                         type='text' value='{$generic_settings.snapshot_base}'>
-        </div>
-        </div>
-        <div class='step4_container'>
-         <div class='step4_name'>
-                    {t}Ldap base{/t}
-        </div>
-         <div class='step4_value'>
-                                <input style='width:220' id='snapshot_ldap_base' name='snapshot_ldap_base'
-                                        type='text' value='{$generic_settings.snapshot_ldap_base}'>
         </div>
         </div>
         <div class='step4_container'>
