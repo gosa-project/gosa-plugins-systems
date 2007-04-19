@@ -24,7 +24,7 @@ class Step_Welcome  extends setup_step
 {
   var $languages      = array();
   var $attributes     = array();
-  var $header_image   = "images/locale.png";
+  var $header_image   = "images/welcome.png";
 
   function Step_Welcome()
   {
@@ -36,8 +36,8 @@ class Step_Welcome  extends setup_step
   function update_strings()
   {
     $this->s_title      = _("Welcome");
-    $this->s_title_long = _("Welcome to GOsa setup");
-    $this->s_info       = _("Welcome to GOsa setup");
+    $this->s_info       = _("The welcome message");
+    $this->s_title_long = _("Welcome to GOsa setup wizard");
   }
   
   function execute()

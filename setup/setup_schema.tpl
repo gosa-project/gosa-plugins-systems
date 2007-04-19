@@ -1,40 +1,37 @@
-<div class='default' style='margin:12px; '>
-    <div style='float:left; '>
-        <br>
-        <b>{t}Validate schema when login into GOsa?{/t}</b>
-    </div>
-	<div class='step4_container'>
-        <div class='step4_name'>
-            {t}Enable schema validation{/t}
+<div class='default'>
+    <p>
+     <b>{t}Schema specific settings{/t}</b>
+    </p>
+    <div class='step4_container'>
+        <div class='step4_name' style='width:30%'>
+            {t}Enable schema validation when logging in{/t}
         </div>
         <div class='step4_value'>
 			<select name='enable_schema_check'>
 				{html_options options=$bool selected=$enable_schema_check}
             </select>
         </div>
-        <div class='step4_status'>
-            {t}Infos in FAQ{/t}&nbsp;
-            <img  alt='!'  class='center' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
-        </div>
     </div>
-	<div style='float:left;' >
+    <p>
+     <b>{t}Check status{/t}</b>
+    </p>
+	<div>
 		{if $failed_checks == 0}
-			<h2>{t}Schema check was completely successful{/t}</h2>
+			<font style="color:green">{t}Schema check succeeded{/t}</font>
 		{else}
-			<h2><img src='images/warning.png' class='center'>
-				<font color='red'>{t}The schema check returned the following results{/t}</font></h2>
+			<img src='images/small_warning.png' class='center'>
+				<font style="color:red">{t}Schema check failed{/t}</font>
 		{/if}
-	<div style='float:left'>
+	</div>
+	<div style="margin-left:20px;">
 		{foreach from=$checks item=val key=key}
 				{if !$checks[$key].STATUS}
 				<br>
-				<b>{$key}</b>
 				{$checks[$key].INFO}
-				<br>
 					{if $checks[$key].IS_MUST_HAVE}
-						<i><font color='red'>{$checks[$key].MSG}</font></i>
+						<font color='red'>{$checks[$key].MSG}</font>
 					{else}
-						<i><font color='orange'>{$checks[$key].MSG}</font></i>
+						{$checks[$key].MSG}
 					{/if}
 				<br>
 				{/if}

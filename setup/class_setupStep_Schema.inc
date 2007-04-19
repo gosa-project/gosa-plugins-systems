@@ -37,9 +37,9 @@ class Step_Schema extends setup_step
   
   function update_strings()
   {
-    $this->s_title      = _("Ldap schema check");
-    $this->s_title_long = _("Ldap schema check");
-    $this->s_info       = _("This dialog checks your ldap schema setup");
+    $this->s_title      = _("LDAP schema check");
+    $this->s_title_long = _("LDAP schema check");
+    $this->s_info       = _("Perform test on your curren LDAP schema");
   }
 
   
