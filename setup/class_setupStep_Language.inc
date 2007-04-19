@@ -32,8 +32,6 @@ class Step_Language extends setup_step
   {
     $this->lang           = get_browser_language();
     $this->lang_selected  = "";
-    $this->is_enabled     = TRUE;
-    $this->is_active      = TRUE;
     $this->update_strings(); 
   }
 
