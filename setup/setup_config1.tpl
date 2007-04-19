@@ -54,6 +54,17 @@
 
  	<div class='step4_container'>
         <div class='step4_name'>
+            {t}Personal title in user dn{/t}
+        </div>
+        <div class='step4_value'>
+            <select name="include_personal_title" size="1" title="">
+            {html_options options=$bool selected=$include_personal_title}
+            </select>
+        </div>
+    </div>
+
+ 	<div class='step4_container'>
+        <div class='step4_name'>
             {t}Relaxed naming policies{/t}
         </div>
         <div class='step4_value'>
