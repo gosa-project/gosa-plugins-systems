@@ -23,7 +23,6 @@
 class Step_Config3 extends setup_step
 {
   var $optional = array(
-              "enableCopyPaste" => false,
               "strict_units" => false,
               "forceglobals" => true,
               "forcessl" => false,
@@ -97,7 +96,7 @@ class Step_Config3 extends setup_step
         }
       }
       
-      foreach(array("strict_units","noprimarygroup","enableCopyPaste","forceglobals","forcessl","warnssl","compile","debuglevel","session_lifetime","smbhash") as $name){
+      foreach(array("strict_units","noprimarygroup","forceglobals","forcessl","warnssl","compile","debuglevel","session_lifetime","smbhash") as $name){
         if(isset($_POST[$name])){
           $this->optional[$name] = stripslashes($_POST[$name]);
         }

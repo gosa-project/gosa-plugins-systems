@@ -33,7 +33,8 @@ class Step_Config2 extends setup_step
   var $mail_settings = array("vacationdir"        => "/etc/gosa/vacation",
                              "vacationdir_active" => FALSE);
 
-  var $generic_settings  = array( "wws_ou"        => "ou=winstations",
+  var $generic_settings  = array( "enableCopyPaste" => false,
+                                  "wws_ou"        => "ou=winstations",
                                   "wws_ou_active" => FALSE,
                                   "snapshot_active"     => FALSE,
                                   "snapshot_base"       => "ou=snapshots,%base%",
@@ -111,6 +112,10 @@ class Step_Config2 extends setup_step
         }
       }else{
         $this->mail_settings['vacationdir_active'] = FALSE;
+      }
+
+      if(isset($_POST['enableCopyPaste'])){
+        $this->generic_settings['enableCopyPaste'] = $_POST['enableCopyPaste'];
       }
 
       if(isset($_POST['wws_ou_active'])){
