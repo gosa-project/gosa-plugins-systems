@@ -172,6 +172,28 @@
 
     <div class='step4_container'>
         <div class='step4_name'>
+            {t}Kiosk path{/t}
+        </div>
+        <div class='step4_value'>
+            {if $optional.kioskpath_active == FALSE}
+                <input type='checkbox' value='1' name='kioskpath_active'
+                    onClick='changeState("kioskpath");'>
+                <input style='width:90%' id='kioskpath' name='kioskpath' 
+					type='text' value='{$optional.kioskpath}' disabled>
+            {else}
+                <input type='checkbox' value='1' name='kioskpath_active' checked>
+                <input style='width:90%' id='kioskpath' name='kioskpath' 
+					type='text' value='{$optional.kioskpath}'  >
+            {/if}
+        </div>
+        <div class='step4_status'>
+            {t}Infos in FAQ{/t}&nbsp;
+            <img class='center'  alt='!' src='images/info_small.png' title='{t}Please read the FAQ for more informations{/t}'>
+        </div>
+    </div>
+
+    <div class='step4_container'>
+        <div class='step4_name'>
             {t}Smarty compile directory{/t}
         </div>
         <div class='step4_value'>

@@ -44,6 +44,9 @@ class Step_Config3 extends setup_step
               "notifydir" => "",
               "notifydir_active" => FALSE,
 
+              "kioskpath" => "/var/spool/kiosk",
+              "kioskpath_active" => FALSE,
+
               "noprimarygroup"  => FALSE,
               "smbhash" => 'SMBHASH');
 
@@ -127,6 +130,15 @@ class Step_Config3 extends setup_step
         }
       }else{
         $this->optional['mailQueueScriptPath_active'] = FALSE;
+      }
+
+      if(isset($_POST['kioskpath_active'])){
+        $this->optional['kioskpath_active'] = TRUE;
+        if(isset($_POST['kioskpath'])){
+          $this->optional['kioskpath'] = $_POST['kioskpath'];
+        }
+      }else{
+        $this->optional['kioskpath_active'] = FALSE;
       }
 
       if(isset($_POST['auto_network_hook_active'])){
