@@ -33,7 +33,7 @@ class setup_step extends plugin
 
   var $attributes   = array();
   var $parent       = NULL;
-
+  var $dialog       = FALSE;
   
   function setup_step()
   {

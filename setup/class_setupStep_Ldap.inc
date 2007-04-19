@@ -118,7 +118,7 @@ class Step_Ldap extends setup_step
     $ldap->search("(&(objectClass=person)(|(uid=".$filter.")(cn=".$filter.")))");
     $tmp = array();
     while($attrs = $ldap->fetch()){
-      $tmp[$attrs['dn']]= @LDAP::fix($attrs['dn']);
+      $tmp[base64_encode($attrs['dn'])]= @LDAP::fix($attrs['dn']);
       natcasesort($tmp);
     }
     return($tmp);
@@ -139,7 +139,10 @@ class Step_Ldap extends setup_step
     if(isset($_POST['resolve_user'])){
       $this->resolve_user = !$this->resolve_user;
     }
-    
+  
+    /* Hide backward forward button*/
+    $this->dialog = $this->resolve_user;
+ 
     if(isset($_POST['resolve_filter'])){
       $this->resolve_filter = $_POST['resolve_filter'];
     }
@@ -147,7 +150,7 @@ class Step_Ldap extends setup_step
     if(isset($_POST['use_selected_user'])){
 
       if(isset($_POST['admin_to_use'])){
-        $this->admin = $_POST['admin_to_use'];
+        $this->admin = base64_decode($_POST['admin_to_use']);
         $this->resolve_user = false;
       }
     }
