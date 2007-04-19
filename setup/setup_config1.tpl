@@ -60,10 +60,10 @@
             {if $id_settings.idgen_active == FALSE}
                 <input type='checkbox' value='1' name='idgen_active'
                     onClick='changeState("idgen");'>
-                <input style='width:90%' id='idgen' name='idgen' type='text' value='{$id_settings.idgen}' disabled>
+                <input size='20' id='idgen' name='idgen' type='text' value='{$id_settings.idgen}' disabled>
             {else}
                 <input type='checkbox' value='1' name='idgen_active' checked>
-                <input style='width:90%' id='idgen' name='idgen' type='text' value='{$id_settings.idgen}'  >
+                <input size='20' id='idgen' name='idgen' type='text' value='{$id_settings.idgen}'  >
             {/if}
         </div>
     </div>
@@ -76,10 +76,10 @@
             {if $id_settings.minid_active == FALSE}
                 <input type='checkbox' value='1' name='minid_active'
                     onClick='changeState("minid");'>
-                <input style='width:90%' id='minid' name='minid' type='text' value='{$id_settings.minid}' disabled>
+                <input size='10' id='minid' name='minid' type='text' value='{$id_settings.minid}' disabled>
             {else}
                 <input type='checkbox' value='1' name='minid_active' checked>
-                <input style='width:90%' id='minid' name='minid' type='text' value='{$id_settings.minid}'  >
+                <input size='10' id='minid' name='minid' type='text' value='{$id_settings.minid}'  >
             {/if}
         </div>
     </div>
@@ -90,18 +90,22 @@
         </div>
         <div class='step4_value'>
             <input type='text' name='uidbase' maxlength='20' size='10' value='{$uidbase}'>
-	    <br>
+        </div>
+     </div>
+    <div class='step4_container' style="margin-bottom:5px;">
+        <div class='step4_name'>
+                {t}Hook for number base{/t}
+	</div>
+        <div class='step4_value'>
             {if $base_hook_active == FALSE}
                 <input type='checkbox' value='1' name='base_hook_active'
                     onClick='changeState("base_hook");'>
-                {t}Use hook{/t}
                 <input id='base_hook' name='base_hook' size=40 type='text' value='{$base_hook}'      disabled>
             {else}
                 <input type='checkbox' value='1' name='base_hook_active' checked>
-                {t}Use hook{/t}
                 <input id='base_hook' name='base_hook' size=40 type='text' value='{$base_hook}'  >
             {/if}
-        </div>
+     </div>
         </div>
     </div>
 
@@ -115,8 +119,6 @@
             <select name="encryption" size="1" title="">
                 {html_options options=$crypt_methods selected=$encryption}
             </select>
-        </div>
-        <div class='step4_status'>
         </div>
     </div>
 
@@ -151,7 +153,7 @@
         </div>
     </div>
 
-	   <div class='step4_container'>
+    <div class='step4_container'>
         <div class='step4_name'>
                 {t}Password change hook{/t}
         </div>
@@ -159,14 +161,14 @@
             {if $pwd_rules.externalpwdhook_active == FALSE}
                 <input type='checkbox' value='1' name='externalpwdhook_active'
                     onClick='changeState("externalpwdhook");'>
-                <input id='externalpwdhook' name='externalpwdhook' type='text' value='{$pwd_rules.externalpwdhook}' disabled>
+                <input size=40 id='externalpwdhook' name='externalpwdhook' type='text' value='{$pwd_rules.externalpwdhook}' disabled>
             {else}
                 <input type='checkbox' value='1' name='externalpwdhook_active' checked>
                 <input size=40 id='externalpwdhook' name='externalpwdhook' type='text' value='{$pwd_rules.externalpwdhook}'  >
             {/if}
         </div>
     </div>
-		  <div class='step4_container'>
+    <div class='step4_container'>
         <div class='step4_name'>
             {t}Use account expiration{/t}
         </div>

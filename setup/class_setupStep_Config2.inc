@@ -38,7 +38,6 @@ class Step_Config2 extends setup_step
                                   "wws_ou_active" => FALSE,
                                   "snapshot_active"     => FALSE,
                                   "snapshot_base"       => "ou=snapshots,%base%",
-                                  "snapshot_ldap_base"  => "%base%",
                                   "snapshot_user"       => "cn=ldapadmin,%base%",
                                   "snapshot_password"   => "",
                                   "snapshot_server"     => "%connection%");
@@ -72,7 +71,7 @@ class Step_Config2 extends setup_step
   {
     /* Update snapshot values, with already collected values */
     foreach($this->generic_settings as $key => $value){
-      foreach(array("snapshot_ldap_base","snapshot_base","snapshot_user","snapshot_server") as $attr){
+      foreach(array("snapshot_base","snapshot_user","snapshot_server") as $attr){
         foreach($this->parent->captured_values as $replace_name => $replace_value){
           if(is_string($replace_value))  {
             $this->generic_settings[$attr] = preg_replace("/%".$replace_name."%/",$replace_value,$this->generic_settings[$attr]);
@@ -140,9 +139,6 @@ class Step_Config2 extends setup_step
         }
         if(isset($_POST['snapshot_server'])){
           $this->generic_settings['snapshot_server'] = $_POST['snapshot_server'];
-        }
-        if(isset($_POST['snapshot_ldap_base'])){
-          $this->generic_settings['snapshot_ldap_base'] = $_POST['snapshot_ldap_base'];
         }
       }else{
         $this->generic_settings['snapshot_active'] = FALSE;

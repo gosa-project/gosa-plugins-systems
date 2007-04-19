@@ -137,56 +137,121 @@
     </div>
 
 
-
-
-
-
-	<div class='step4_container' style='height:12em;'>
-       <p><b>{t}Snapshots / Undo{/t}</b></p>
-        <div class='step4_name'  style='height:12em;width:60%;background-color:red;'>
+        <p><b>{t}Snapshots / Undo{/t}</b></p>
             {if $generic_settings.snapshot_active == FALSE}
+        <div class='step4_container'>
+         <div class='step4_name'>
                 <input type='checkbox' value='1' name='snapshot_active'
-                    onClick='	
-								changeState("snapshot_base");
-								changeState("snapshot_ldap_base");
-								changeState("snapshot_server");							
-								changeState("snapshot_user");							
-								changeState("snapshot_password");'>{t}Enable{/t}<br>
-		{t}Snapshot base{/t}&nbsp;
-		<input style='width:220' id='snapshot_base' name='snapshot_base' 
-					type='text' value='{$generic_settings.snapshot_base}' disabled><br>
-            	    {t}Ldap base{/t}&nbsp;
-				<input style='width:220' id='snapshot_ldap_base' name='snapshot_ldap_base' 
-					type='text' value='{$generic_settings.snapshot_ldap_base}' disabled><br>
-    	            {t}Server{/t}&nbsp;
-				<input style='width:220' id='snapshot_server' name='snapshot_server' 
-					type='text' value='{$generic_settings.snapshot_server}' disabled><br>
-	                {t}User{/t}&nbsp;
-				<input style='width:220' id='snapshot_user' name='snapshot_user' 
-					type='text' value='{$generic_settings.snapshot_user}' disabled><br>
-	                {t}Password{/t}&nbsp;
-				<input style='width:220' id='snapshot_password' name='snapshot_password' 
-					type='password' value='{$generic_settings.snapshot_password}' disabled>
-            {else}
-                <input type='checkbox' value='1' name='snapshot_active' checked>{t}Enable{/t}<br>
-            	    {t}Snapshot base{/t}&nbsp;
-				<input style='width:220' id='snapshot_base' name='snapshot_base' 
-					type='text' value='{$generic_settings.snapshot_base}'><br>
-            	    {t}Ldap base{/t}&nbsp;
-				<input style='width:220' id='snapshot_ldap_base' name='snapshot_ldap_base' 
-					type='text' value='{$generic_settings.snapshot_ldap_base}'><br>
-        	        {t}Server{/t}&nbsp;
-				<input style='width:220' id='snapshot_server' name='snapshot_server' 
-					type='text' value='{$generic_settings.snapshot_server}'><br>
-    	            {t}User{/t}&nbsp;
-				<input style='width:220' id='snapshot_user' name='snapshot_user' 
-					type='text' value='{$generic_settings.snapshot_user}'><br>
-	                {t}Password{/t}&nbsp;
-				<input style='width:220;' id='snapshot_password' name='snapshot_password' 
-					type='password' value='{$generic_settings.snapshot_password}'>
-            {/if}
+                    onClick='
+                                                                changeState("snapshot_base");
+                                                                changeState("snapshot_ldap_base");
+                                                                changeState("snapshot_server");
+                                                                changeState("snapshot_user");
+                                                                changeState("snapshot_password");'>{t}Enable snapshots{/t}
+         </div>
         </div>
-    </div>
+        <div style='margin-left:10px;'>
+        <div class='step4_container'>
+         <div class='step4_name'>
+                {t}Snapshot base{/t}
+         </div>
+         <div class='step4_value'>
+                <input style='width:220' id='snapshot_base' name='snapshot_base'
+                                        type='text' value='{$generic_settings.snapshot_base}' disabled>
+         </div>
+        </div>
+        <div class='step4_container'>
+         <div class='step4_name'>
+                    {t}LDAP base{/t}
+         </div>
+         <div class='step4_value'>
+                                <input style='width:220' id='snapshot_ldap_base' name='snapshot_ldap_base'
+                                        type='text' value='{$generic_settings.snapshot_ldap_base}' disabled>
+        </div>
+        </div>
+        <div class='step4_container'>
+         <div class='step4_name'>
+                    {t}Server{/t}
+         </div>
+         <div class='step4_value'>
+                                <input style='width:220' id='snapshot_server' name='snapshot_server'
+                                        type='text' value='{$generic_settings.snapshot_server}' disabled>
+        </div>
+        </div>
+        <div class='step4_container'>
+         <div class='step4_name'>
+                        {t}User{/t}
+         </div>
+         <div class='step4_value'>
+                                <input style='width:220' id='snapshot_user' name='snapshot_user'
+                                        type='text' value='{$generic_settings.snapshot_user}' disabled>
+        </div>
+        </div>
+        <div class='step4_container'>
+         <div class='step4_name'>
+                        {t}Password{/t}
+         </div>
+         <div class='step4_value'>
+                                <input style='width:220' id='snapshot_password' name='snapshot_password'
+                                        type='password' value='{$generic_settings.snapshot_password}' disabled>
+        </div>
+        </div>
+        </div>
+
+            {else}
+        <div class='step4_container'>
+         <div class='step4_name'>
+                <input type='checkbox' value='1' name='snapshot_active' checked>{t}Enable snapshots{/t}
+        </div>
+        </div>
+        <div style='margin-left:10px;'>
+        <div class='step4_container'>
+         <div class='step4_name'>
+                    {t}Snapshot base{/t}
+        </div>
+         <div class='step4_value'>
+           <input style='width:220' id='snapshot_base' name='snapshot_base'
+                                        type='text' value='{$generic_settings.snapshot_base}'>
+        </div>
+        </div>
+        <div class='step4_container'>
+         <div class='step4_name'>
+                    {t}Ldap base{/t}
+        </div>
+         <div class='step4_value'>
+                                <input style='width:220' id='snapshot_ldap_base' name='snapshot_ldap_base'
+                                        type='text' value='{$generic_settings.snapshot_ldap_base}'>
+        </div>
+        </div>
+        <div class='step4_container'>
+         <div class='step4_name'>
+                        {t}Server{/t}
+        </div>
+         <div class='step4_value'>
+                                <input style='width:220' id='snapshot_server' name='snapshot_server'
+                                        type='text' value='{$generic_settings.snapshot_server}'>
+        </div>
+        </div>
+        <div class='step4_container'>
+         <div class='step4_name'>
+                    {t}User{/t}
+        </div>
+         <div class='step4_value'>
+                                <input style='width:220' id='snapshot_user' name='snapshot_user'
+                                        type='text' value='{$generic_settings.snapshot_user}'>
+        </div>
+        </div>
+        <div class='step4_container'>
+         <div class='step4_name'>
+                        {t}Password{/t}
+        </div>
+         <div class='step4_value'>
+                                <input style='width:220;' id='snapshot_password' name='snapshot_password'
+                                        type='password' value='{$generic_settings.snapshot_password}'>
+        </div>
+        </div>
+        </div>
+            {/if}
 </div>
 
 <input type='hidden' value='1' name='step6_posted'>
