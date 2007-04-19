@@ -42,8 +42,21 @@ class Step_Welcome  extends setup_step
   
   function execute()
   {
-    $this->is_completed = true;
+    /* Get auth ID from file */
+    if (file_exists('/tmp/gosa.auth') && is_readable('/tmp/gosa.auth')){
+      $contents= file('/tmp/gosa.auth');
+      $id= chop($contents[0]);
+    }
+
+    /* Continue if we've the correct ID */
+    if ($id == session_id()){
+      $this->is_completed = true;
+    } else {
+      $this->is_completed = false;
+    }
+
     $smarty = get_smarty();
+    $smarty->assign('auth_id', session_id());
     return($smarty->fetch(get_template_path("setup_welcome.tpl",TRUE,dirname(__FILE__))));
   }
 
