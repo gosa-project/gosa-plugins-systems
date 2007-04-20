@@ -29,7 +29,8 @@
 	<div style='border-bottom:1px dashed #AAAAAA'>
 
 	    <div style='padding:12px;text-align:center;'>
-		{t}Please use your username and your password to log into the site administration system.{/t}
+		{t}Please use your username and your password to log into the site administration system.{/t}<br>
+		<b>{$ssl}</b>
 	    </div>
   
 
@@ -44,7 +45,6 @@
 		<input type='password' name='password' maxlength='25' value=''
 			 title='{t}Password{/t}' onFocus="nextfield= 'login';">
 		</div>	
-
 		<div style='text-align:center; padding:15px;'>
 		        <img class='center' align='middle' src='{$directory_img}' alt='{t}Directory{/t}' title='{t}Directory{/t}'>&nbsp;
 			<select name='server'  title='{t}Directory{/t}'>
