@@ -119,7 +119,7 @@ class setup_step extends plugin
   {
     $image= get_template_path($this->header_image);
     $display= "<div style='padding:3px;'>";
-    $display.= "  <p class=\"center\" style=\"margin:0px 0px 0px 5px;padding:0px;font-size:24px;\"><img class=\"center\" src=\"$image\" align=\"middle\" alt=\"*\">&nbsp;".$this->s_title_long."</p>\n";
+    $display.= "  <p class=\"center\" style=\"margin:0px 0px 0px 5px;padding:0px;font-size:24px;font-weight:bold;\"><img class=\"center\" src=\"$image\" align=\"middle\" alt=\"*\">&nbsp;".$this->s_title_long."</p>\n";
     $display.= "</div>\n";
 
     return($display);

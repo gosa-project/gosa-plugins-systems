@@ -35,12 +35,12 @@
 
 	    	<input id='focus' name='focus' type='image' src='images/empty.png' style='width:0px; height:0px;' >
 		<div style='text-align:center; padding:10px;'>	
-		<img class='center' align='middle' src='{$personal_img}' alt='{t}Directory{/t}' title='{t}Directory{/t}'>&nbsp;
+		<img class='center' align='middle' src='{$personal_img}' alt='{t}Username{/t}' title='{t}Username{/t}'>&nbsp;
 		<input type='text' name='username' maxlength='25' value='{$username}'
 			 title='{t}Username{/t}' onFocus="nextfield= 'password';">
 		<br>
 		<br>
-		<img class='center' align='middle' src='{$password_img}' alt='{t}Directory{/t}' title='{t}Directory{/t}'>&nbsp;
+		<img class='center' align='middle' src='{$password_img}' alt='{t}Password{/t}' title='{t}Password{/t}'>&nbsp;
 		<input type='password' name='password' maxlength='25' value=''
 			 title='{t}Password{/t}' onFocus="nextfield= 'login';">
 		</div>	
@@ -92,6 +92,3 @@
   -->
 </script>
 
-<!-- Spacer for some browsers -->
-<div class='gosaLoginSpacer'></div>
-</body>
