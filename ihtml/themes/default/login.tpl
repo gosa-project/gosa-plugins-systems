@@ -11,12 +11,12 @@
 </div>
 
 {* GOsa login - smarty template *}
-{$php_errors}
 
 <!-- Spacer for some browsers -->
 <div class='gosaLoginSpacer'></div>
 
 <div style='float:left; width:25%;'>&nbsp;</div>
+<form action='index.php' method='post' name='mainform' onSubmit='js_check(this);return true;'>
 <div style='float:left; width:50%; border:1px solid #AAAAAA;'>
 
 	<div style='border-bottom:1px dashed #AAAAAA'>
@@ -26,13 +26,12 @@
 		</p>
 		</div>
 	</div>
-	<div>
+	<div style='border-bottom:1px dashed #AAAAAA'>
 
 	    <div style='padding:12px;text-align:center;'>
 		{t}Please use your username and your password to log into the site administration system.{/t}
 	    </div>
   
-	    <form action='index.php' method='post' name='mainform' onSubmit='js_check(this);return true;'>
 
 	    	<input id='focus' name='focus' type='image' src='images/empty.png' style='width:0px; height:0px;' >
 		<div style='text-align:center; padding:10px;'>	
@@ -52,10 +51,7 @@
 				{html_options options=$server_options selected=$server_id}
 			</select>
 		</div>
-	    </form>
 
-	    <!-- Display error message on demand -->
-	    <p class='gosaLoginWarning'> {$message} </p>
 	    <!-- check, if cookies are enabled -->
 	    <p class='gosaLoginWarning'>
 	     <script language="JavaScript" type="text/javascript">
@@ -68,14 +64,23 @@
 		-->
 	     </script>
 	    </p>
+{$errors}
 	</div>
-	<div style='border-top:1px dashed #AAAAAA; text-align:right; padding:5px;'>
+	<div style='padding:10px;'>
+	<div style='float:left; color:red; font-weight:bold'>
+	{$message}
+	</div>
+	<div style='float:right; text-align:right; background-color:blue'>
+		<!-- Display error message on demand -->
 		  <input type='submit' name='login' value='{t}Sign in{/t}'
 			 title='{t}Click here to log in{/t}'>
 		<input type='hidden' name='javascript' value='false'/>		
 	</div>
+<div style="clear:both"></div>
+	</div>
 
 </div>
+</form>
 
 <div style="clear:both"></div>
 
