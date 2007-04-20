@@ -2,6 +2,8 @@
     <div class='default'>
         <p><b>{t}Tasks{/t}</b></p>
 
+	* Create a test department with some objects to check for correct permissions
+	<br>
 	* Look for ACL's. If none is there, choose one user to be the super administrator
 	<br>
 	* Look for organizationalUnits and let add GOsa departments for selected ones
