@@ -17,7 +17,7 @@
 
 <div style='float:left; width:25%;'>&nbsp;</div>
 <form action='index.php' method='post' name='mainform' onSubmit='js_check(this);return true;'>
-<div style='float:left; width:50%; border:1px solid #AAAAAA;'>
+<div style='float:left; width:50%; border:1px solid #AAAAAA;background-color:#F8F8F8'>
 
 	<div style='border-bottom:1px dashed #AAAAAA'>
 		<div style='padding:3px;'>
