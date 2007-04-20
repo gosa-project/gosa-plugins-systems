@@ -30,7 +30,7 @@
             {t}Smarty compile directory{/t}
         </div>
         <div class='step4_value'>
-			<input size=60 id='compile' name='compile' 
+			<input size=40 id='compile' name='compile' 
 				type='text' value='{$optional.compile}'>
         </div>
     </div>
@@ -42,10 +42,10 @@
             {if $optional.ppd_path_active == FALSE}
                 <input type='checkbox' value='1' name='ppd_path_active'
                     onClick='changeState("ppd_path");'>
-                <input size=60 id='ppd_path' name='ppd_path' type='text' value='{$optional.ppd_path}' disabled>
+                <input size=40 id='ppd_path' name='ppd_path' type='text' value='{$optional.ppd_path}' disabled>
             {else}
                 <input type='checkbox' value='1' name='ppd_path_active' checked>
-                <input size=60 id='ppd_path' name='ppd_path' type='text' value='{$optional.ppd_path}'  >
+                <input size=40 id='ppd_path' name='ppd_path' type='text' value='{$optional.ppd_path}'  >
             {/if}
         </div>
     </div>
@@ -58,11 +58,11 @@
             {if $optional.kioskpath_active == FALSE}
                 <input type='checkbox' value='1' name='kioskpath_active'
                     onClick='changeState("kioskpath");'>
-                <input size=60 id='kioskpath' name='kioskpath' 
+                <input size=40 id='kioskpath' name='kioskpath' 
 					type='text' value='{$optional.kioskpath}' disabled>
             {else}
                 <input type='checkbox' value='1' name='kioskpath_active' checked>
-                <input size=60 id='kioskpath' name='kioskpath' 
+                <input size=40 id='kioskpath' name='kioskpath' 
 					type='text' value='{$optional.kioskpath}'  >
             {/if}
         </div>
@@ -77,11 +77,11 @@
             {if $optional.auto_network_hook_active == FALSE}
                 <input type='checkbox' value='1' name='auto_network_hook_active'
                     onClick='changeState("auto_network_hook");'>
-                <input size=60 id='auto_network_hook' name='auto_network_hook' 
+                <input size=40 id='auto_network_hook' name='auto_network_hook' 
 					type='text' value='{$optional.auto_network_hook}' disabled>
             {else}
                 <input type='checkbox' value='1' name='auto_network_hook_active' checked>
-                <input size=60 id='auto_network_hook' name='auto_network_hook' type='text' 
+                <input size=40 id='auto_network_hook' name='auto_network_hook' type='text' 
 					value='{$optional.auto_network_hook}'  >
             {/if}
         </div>
@@ -95,11 +95,11 @@
             {if $optional.mailQueueScriptPath_active == FALSE}
                 <input type='checkbox' value='1' name='mailQueueScriptPath_active'
                     onClick='changeState("mailQueueScriptPath");'>
-                <input size=60 id='mailQueueScriptPath' name='mailQueueScriptPath' 
+                <input size=40 id='mailQueueScriptPath' name='mailQueueScriptPath' 
 					type='text' value='{$optional.mailQueueScriptPath}' disabled>
             {else}
                 <input type='checkbox' value='1' name='mailQueueScriptPath_active' checked>
-                <input size=60 id='mailQueueScriptPath' name='mailQueueScriptPath' type='text' 
+                <input size=40 id='mailQueueScriptPath' name='mailQueueScriptPath' type='text' 
 					value='{$optional.mailQueueScriptPath}'  >
             {/if}
         </div>
@@ -113,11 +113,11 @@
             {if $optional.notifydir_active == FALSE}
                 <input type='checkbox' value='1' name='notifydir_active'
                     onClick='changeState("notifydir");'>
-                <input size=60 id='notifydir' name='notifydir' 
+                <input size=40 id='notifydir' name='notifydir' 
 					type='text' value='{$optional.notifydir}' disabled>
             {else}
                 <input type='checkbox' value='1' name='notifydir_active' checked>
-                <input size=60 id='notifydir' name='notifydir' 
+                <input size=40 id='notifydir' name='notifydir' 
 					type='text' value='{$optional.notifydir}'  >
             {/if}
         </div>
