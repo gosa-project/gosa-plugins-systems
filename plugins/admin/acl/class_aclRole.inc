@@ -905,6 +905,7 @@ class aclrole extends plugin
 
   function remove_from_parent()
   {
+    echo "Role should be deleted here- What happens with assigned roles ... ";
   }
 
   function save_object()

@@ -11,7 +11,13 @@
 </p>
 
 <p class="plugbottom">
+{if $is_role}
+  <input type=submit name="delete_acl_role_confirmed" value="{t}Delete{/t}">
+  &nbsp;
+  <input type=submit name="delete_acl_role_cancel" value="{t}Cancel{/t}">
+{else}
   <input type=submit name="delete_acl_confirm" value="{t}Delete{/t}">
   &nbsp;
   <input type=submit name="delete_acl_cancel" value="{t}Cancel{/t}">
+{/if}
 </p>

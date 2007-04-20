@@ -56,7 +56,7 @@ class aclManagement extends plugin
     /* Call parent execute */
     plugin::execute();
 
-    $_SESSION['LOCK_VARS_TO_USE'] = array("/^list/","/^id_/");
+    $_SESSION['LOCK_VARS_TO_USE'] = array("/^list/","/^id_/","/^list_acl_role_del/");
 
     $smarty       = get_smarty();                 // Smarty instance
     $s_action     = "";                           // Contains the action to be taken
@@ -204,6 +204,71 @@ class aclManagement extends plugin
      ********************/
 
     /* Remove acl was requested */
+    if ($s_action=="del_role"){
+
+      /* Get 'dn' from posted acl */
+      $this->dn= $this->list[trim($s_entry)]['dn'];
+
+      /* Check permissions */
+      if(preg_match("/d/",$this->ui->get_permissions($this->dn,"aclroles/aclrole"))){
+
+        /* Check locking, save current plugin in 'back_plugin', so
+           the dialog knows where to return. */
+        if (($acl= get_lock($this->dn)) != ""){
+          return(gen_locked_message ($acl, $this->dn));
+        }
+
+        /* Lock the current entry, so nobody will edit it during deletion */
+        add_lock ($this->dn, $this->ui->dn);
+        $smarty->assign("info", sprintf(_("You're about to delete the acl %s."), @LDAP::fix($this->dn)));
+        $smarty->assign("is_role",true);
+  
+        return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
+      } else {
+
+        /* Obviously the acl isn't allowed to delete. Show message and
+           clean session. */
+        print_red (_("You are not allowed to delete this acl!"));
+      }
+    }
+
+
+    /********************
+      Delete entry confirmed 
+     ********************/
+
+    /* Confirmation for deletion has been passed. Acl should be deleted. */
+    if (isset($_POST['delete_acl_role_confirmed'])){
+
+      /* Check permissions */
+      if(preg_match("/d/",$this->ui->get_permissions($this->dn,"aclroles/aclrole"))){
+
+        /* Delete request is permitted, perform LDAP action */
+        $this->acltabs= new aclroletab($this->config, NULL,$this->dn);
+        $this->acltabs->delete();
+        gosa_log ("ACL role object '".$this->dn."' has been removed");
+        unset ($this->acltabs);
+        $this->acltabs= NULL;
+      } else {
+
+        /* Normally this shouldn't be reached, send some extra
+           logs to notify the administrator */
+        print_red (_("You are not allowed to delete this acl role!"));
+
+        if(isset($this->ui->uid)){
+          gosa_log ("Warning: '".$this->ui->uid."' tried to trick acl role deletion.");
+        }
+      }
+
+      /* Remove lock file after successfull deletion */
+      del_lock ($this->dn);
+    }
+
+    /********************
+      Delete entry requested, display confirm dialog
+     ********************/
+
+    /* Remove acl was requested */
     if ($s_action=="del"){
 
       /* Get 'dn' from posted acl */
@@ -221,6 +286,7 @@ class aclManagement extends plugin
         /* Lock the current entry, so nobody will edit it during deletion */
         add_lock ($this->dn, $this->ui->dn);
         $smarty->assign("info", sprintf(_("You're about to delete the acl %s."), @LDAP::fix($this->dn)));
+        $smarty->assign("is_role",false);
         return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
       } else {
 
