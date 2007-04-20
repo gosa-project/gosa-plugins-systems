@@ -1,8 +1,11 @@
 var browserType;
+var firefoxType;
 
 if (document.layers) {browserType = "nn4"}
 if (document.all) {browserType = "ie"}
 if (window.navigator.userAgent.toLowerCase().match("gecko")) {browserType= "gecko"}
+if (browserType=="gecko" && window.navigator.userAgent.toLowerCase().match("firefox\/2")) {firefoxType= "firefox2"}
+else {firefoxType= "firefox"};
 
 netscape = "";
 ver= navigator.appVersion; len = ver.length;
@@ -78,6 +81,7 @@ function keyPress(DnEvents) {
   if (k == 13) { // enter key pressed
 		if(typeof(nextfield)!='undefined') {
 			if(nextfield == 'login') {
+				alert("login");
     	  return true; // submit, we finished all fields
     	} else { // we are not done yet, send focus to next box
       	eval('document.mainform.' + nextfield + '.focus()');
@@ -196,8 +200,10 @@ function changeTripleSelectState_2nd_neg(firstTriggerField, secondTriggerField, 
 }
 // work together to analyze keystrokes
 if (netscape){
-  document.captureEvents(Event.KEYPRESS);
-	document.onkeypress= keyPress;
+  if(firefoxType== "firefox") {
+		window.captureEvents(Event.KEYPRESS);
+	}
+	window.onkeypress= keyPress;
 } else {
 	document.onkeydown= keyPress;
 }
