@@ -42,6 +42,8 @@ class Step_Welcome  extends setup_step
   
   function execute()
   {
+    $id = "";
+    
     /* Get auth ID from file */
     if (file_exists('/tmp/gosa.auth') && is_readable('/tmp/gosa.auth')){
       $contents= file('/tmp/gosa.auth');
