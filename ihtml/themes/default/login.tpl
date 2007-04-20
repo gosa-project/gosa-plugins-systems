@@ -30,7 +30,7 @@
 
 	    <div style='padding:12px;text-align:center;'>
 		{t}Please use your username and your password to log into the site administration system.{/t}<br>
-		<b>{$ssl}</b>
+		{if $ssl}<b>{$ssl}</b>{/if}
 	    </div>
   
 
