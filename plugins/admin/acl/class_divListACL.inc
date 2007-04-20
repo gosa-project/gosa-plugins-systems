@@ -42,7 +42,7 @@ class divListACL extends MultiSelectWindow
     $this->EnableSaveButton (false);
 
     /* Dynamic action col */
-    $this->action_col_size = 110;
+    $this->action_col_size = 120;
 
     /* set Page header */
     $this->AddHeader(array("string"=>"&nbsp;",          "attach"=>"style='width:20px;'"));
