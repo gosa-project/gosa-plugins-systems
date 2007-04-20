@@ -43,9 +43,6 @@ class Step_Ldap extends setup_step
   function Step_Ldap()
   {
     $this->update_strings();
-
-    
-  
   }
 
   

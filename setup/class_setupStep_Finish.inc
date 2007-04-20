@@ -61,7 +61,7 @@ class Step_Finish extends setup_step
     $exists = file_exists(CONFIG_DIR."/".CONFIG_FILE); 
 
     /* Redirect to GOsa login */
-    if(isset($_POST['use_gosa'])){
+    if(isset($_POST['next']) && $exists){
       session_destroy();
       header("Location: index.php");
       exit();
