@@ -672,15 +672,14 @@ class MultiSelectWindow{
 			$row[]=$field2=array("string"=>sprintf($linkopen,base64_encode($key),$val), "attach" => "style=''");
 
 			if($numtabs > 2){	
-				for($i = 3 ; $i <=$numtabs;$i++){
-          if(isset( $this->array_Header[$i]['attach'])){
-            $row[] = array("string"=>"&nbsp;","attach" => $this->array_Header[$i]['attach']);
+				for($i = 2 ; $i < $numtabs;$i++){
+          if(isset( $this->array_Header[$i + $empty_tabs_in_front]['attach'])){
+            $row[] = array("string"=>"&nbsp;","attach" => $this->array_Header[$i + $empty_tabs_in_front]['attach']);
           }else{
             $row[] = array("string"=>"&nbsp;");
           }
 				}
 			}
-
 			$this->AddElement($row);
 		}
 	}
