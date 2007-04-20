@@ -60,8 +60,11 @@ class Step_Finish extends setup_step
      */
     $exists = file_exists(CONFIG_DIR."/".CONFIG_FILE); 
 
-    /* Redirect to GOsa login */
-    if(isset($_POST['next']) && $exists){
+    /* Redirect to GOsa login, if : 
+     *   - gosa.conf exists
+     *   - Permisssion are set correctly 
+     */ 
+    if(isset($_POST['next']) && $exists && !is_world_readable(CONFIG_DIR."/".CONFIG_FILE)){
       session_destroy();
       header("Location: index.php");
       exit();
@@ -95,6 +98,8 @@ class Step_Finish extends setup_step
     
     if($exists && $this->is_world_readable(CONFIG_DIR."/".CONFIG_FILE)){
       $err_msg = _("Your configuration file is currently world readable. This is a big security risk. Please updated the file permissions!");
+    }elseif(!$exists){
+      $err_msg = _("The configuration is currently not readable or it does not exists.");
     }
 
     $smarty = get_smarty();
