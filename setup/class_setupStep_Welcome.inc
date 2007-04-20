@@ -42,6 +42,13 @@ class Step_Welcome  extends setup_step
   
   function execute()
   {
+    $smarty = get_smarty();
+    $smarty->assign('auth_id', session_id());
+    return($smarty->fetch(get_template_path("setup_welcome.tpl",TRUE,dirname(__FILE__))));
+  }
+
+  function save_object()
+  {
     $id = "";
     
     /* Get auth ID from file */
@@ -57,13 +64,6 @@ class Step_Welcome  extends setup_step
       $this->is_completed = false;
     }
 
-    $smarty = get_smarty();
-    $smarty->assign('auth_id', session_id());
-    return($smarty->fetch(get_template_path("setup_welcome.tpl",TRUE,dirname(__FILE__))));
-  }
-
-  function save_object()
-  {
   }
 }
 
