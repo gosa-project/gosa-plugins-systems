@@ -6,8 +6,8 @@
 		{$msg2}
 	</p>
 	<tt>
-	# chown root.{$webgroup} {$CONFIG_DIR}/{$CONFIG_FILE}<br>
-	# chmod 640 {$CONFIG_DIR}/{$CONFIG_FILE}
+	chown root.{$webgroup} {$CONFIG_DIR}/{$CONFIG_FILE}<br>
+	chmod 640 {$CONFIG_DIR}/{$CONFIG_FILE}
 	</tt>
 	<p>	
 		<input type='submit' name='getconf' value='{t}Download configuration{/t}'>
