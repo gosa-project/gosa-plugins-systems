@@ -81,7 +81,6 @@ function keyPress(DnEvents) {
   if (k == 13) { // enter key pressed
 		if(typeof(nextfield)!='undefined') {
 			if(nextfield == 'login') {
-				alert("login");
     	  return true; // submit, we finished all fields
     	} else { // we are not done yet, send focus to next box
       	eval('document.mainform.' + nextfield + '.focus()');
