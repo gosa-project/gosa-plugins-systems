@@ -2,7 +2,7 @@
 {$php_errors}
 <div>
         <div class='setup_header'>
-                <div style="float:left;"><img src='themes/default/images/go_logo.png' class='center' alt='GOsa'></div>
+                <div style="float:left;"><img src='themes/default/images/go_logo.png' class='center' alt='GOsa' /></div>
                 <div style="padding-top:8px;text-align:right;height:28px">{$version}</div>
         </div>
         <div class='setup_menu'>
@@ -16,37 +16,37 @@
 <div class='gosaLoginSpacer'></div>
 
 <div style='float:left; width:25%;'>&nbsp;</div>
-<form action='index.php' method='post' name='mainform' onSubmit='js_check(this);return true;'>
 <div style='float:left; width:50%; border:1px solid #AAAAAA;background-color:#F8F8F8'>
+<form action='index.php' method='post' name='mainform' onSubmit='js_check(this);return true;'>
 
 	<div style='border-bottom:1px dashed #AAAAAA'>
 		<div style='padding:3px;'>
 		<p class="center" style="margin:0px 0px 0px 5px;padding:0px;font-size:24px;font-weight:bold;">
-			<img class="center" src='{$password_img}' align="middle" alt="*">&nbsp;{t}Login{/t}
+			<img class="center" src='{$password_img}' align="middle" alt="*"/>&nbsp;{t}Login{/t}
 		</p>
 		</div>
 	</div>
 	<div style='border-bottom:1px dashed #AAAAAA'>
 
 	    <div style='padding:12px;text-align:center;'>
-		{t}Please use your username and your password to log into the site administration system.{/t}<br>
+		{t}Please use your username and your password to log into the site administration system.{/t}<br />
 		{if $ssl}<b>{$ssl}</b>{/if}
 	    </div>
   
 
-	    	<input id='focus' name='focus' type='image' src='images/empty.png' style='width:0px; height:0px;' >
+	    	<input id='focus' name='focus' type='image' src='images/empty.png' style='width:0px; height:0px;' />
 		<div style='text-align:center; padding:10px;'>	
-		<img class='center' align='middle' src='{$personal_img}' alt='{t}Username{/t}' title='{t}Username{/t}'>&nbsp;
+		<img class='center' align='middle' src='{$personal_img}' alt='{t}Username{/t}' title='{t}Username{/t}' />&nbsp;
 		<input type='text' name='username' maxlength='25' value='{$username}'
-			 title='{t}Username{/t}' onFocus="nextfield= 'password';">
-		<br>
-		<br>
-		<img class='center' align='middle' src='{$password_img}' alt='{t}Password{/t}' title='{t}Password{/t}'>&nbsp;
+			 title='{t}Username{/t}' onFocus="nextfield= 'password';" />
+		<br />
+		<br />
+		<img class='center' align='middle' src='{$password_img}' alt='{t}Password{/t}' title='{t}Password{/t}' />&nbsp;
 		<input type='password' name='password' maxlength='25' value=''
-			 title='{t}Password{/t}' onFocus="nextfield= 'login';">
+			 title='{t}Password{/t}' onFocus="nextfield= 'login';" />
 		</div>	
 		<div style='text-align:center; padding:15px;'>
-		        <img class='center' align='middle' src='{$directory_img}' alt='{t}Directory{/t}' title='{t}Directory{/t}'>&nbsp;
+		        <img class='center' align='middle' src='{$directory_img}' alt='{t}Directory{/t}' title='{t}Directory{/t}' />&nbsp;
 			<select name='server'  title='{t}Directory{/t}'>
 				{html_options options=$server_options selected=$server_id}
 			</select>
@@ -67,20 +67,21 @@
 {$errors}
 	</div>
 	<div style='padding:10px;'>
-	<div style='float:left; color:red; font-weight:bold'>
-	{$message}
-	</div>
-	<div style='float:right; text-align:right; background-color:blue'>
-		<!-- Display error message on demand -->
-		  <input type='submit' name='login' value='{t}Sign in{/t}'
-			 title='{t}Click here to log in{/t}'>
-		<input type='hidden' name='javascript' value='false'/>		
-	</div>
-<div style="clear:both"></div>
+		<div style='float:left; color:red; font-weight:bold'>
+		{$message}
+		</div>
+		<div style='float:right; text-align:right; background-color:blue'>
+			<!-- Display error message on demand -->
+			  <input type='submit' name='login' value='{t}Sign in{/t}'
+				 title='{t}Click here to log in{/t}' onFocus="nextfield='login';" />
+			<input type='hidden' name='javascript' value='false' />		
+			<input type='hidden' name='login' value='{t}Sign in{/t}' />		
+		</div>
+		<div style="clear:both"></div>
 	</div>
 
-</div>
 </form>
+</div>
 
 <div style="clear:both"></div>
 
