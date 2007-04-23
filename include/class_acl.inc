@@ -289,6 +289,7 @@ class acl extends plugin
       }
 
       if(isset($_POST['selected_role'])){
+        $this->aclContents = "";
         $this->aclContents = base64_decode($_POST['selected_role']);
       }
     }
@@ -549,7 +550,7 @@ class acl extends plugin
     $D_List =new DivSelectBox("Acl_Roles");
  
     $selected = $this->aclContents;
-    if(!isset($list[$this->aclContents])){
+    if(!is_string($this->aclContents) || !isset($list[$this->aclContents])){
       $selected = key($list);
     }
 
@@ -562,9 +563,9 @@ class acl extends plugin
         $option = "<input type='radio' name='selected_role' value='".base64_encode($dn)."'>";
       }
  
-      $field1 = array("string" => $values['cn'], "attach" => "style='width:200px;'") ;
-      $field2 = array("string" => $values['description']) ;
-      $field3 = array("string" => $option, "attach" => "style='border-right:0px;'") ;
+      $field1 = array("string" => $option) ;
+      $field2 = array("string" => $values['cn'], "attach" => "style='width:200px;'") ;
+      $field3 = array("string" => $values['description'],"attach" => "style='border-right:0px;'") ;
 
       $D_List->AddEntry(array($field1,$field2,$field3));
     }
