@@ -21,6 +21,7 @@ class acl extends plugin
   var $aclObjects= array();
   var $aclMyObjects= array();
   var $users= array();
+  var $roles= array();
   var $groups= array();
   var $recipients= array();
   var $isContainer= FALSE;
@@ -83,6 +84,30 @@ class acl extends plugin
       $this->groups['G:'.$attrs['dn']]= $attrs['cn'][0].' ['.$dsc.']';
     }
     ksort($this->groups);
+
+    /* Roles */
+    $ldap->cd($config->current['BASE']);
+    if ($tag == ""){
+      $ldap->search('(objectClass=gosaRole)', array('cn', 'description','gosaAclTemplate','dn'));
+    } else {
+      $ldap->search('(&(objectClass=gosaRole)(gosaUnitTag='.$tag.'))', array('cn', 'description','gosaAclTemplate','dn'));
+    }
+    while ($attrs= $ldap->fetch()){
+      $dsc= "";
+      if (isset($attrs['description'][0])){
+        $dsc= $attrs['description'][0];
+      }
+
+      $role_id = $attrs['dn'];
+
+      $this->roles[$role_id]['acls'] =array();
+      for ($i= 0; $i < $attrs['gosaAclTemplate']['count']; $i++){
+        $acl= $attrs['gosaAclTemplate'][$i];
+        $this->roles[$role_id]['acls'] = array_merge($this->roles[$role_id]['acls'],$this->explodeACL($acl));
+      }
+      $this->roles[$role_id]['description'] = $dsc;
+      $this->roles[$role_id]['cn'] = $attrs['cn'][0];
+    }
 
     /* Objects */
     $tmp= get_global('plist');
@@ -173,7 +198,7 @@ class acl extends plugin
   {
     /* Call parent execute */
     plugin::execute();
-
+  
     $tmp= get_global('plist');
     $plist= $tmp->info;
 
@@ -261,6 +286,10 @@ class acl extends plugin
         } else {
           $new_acl[$object][$attribute]= $value;
         }
+      }
+
+      if(isset($_POST['selected_role'])){
+        $this->aclContents = base64_decode($_POST['selected_role']);
       }
     }
     
@@ -365,7 +394,7 @@ class acl extends plugin
       
       /* Fill in entries */
       foreach ($this->gosaAclEntry as $key => $entry){
-        $field1= array("string" => $this->aclTypes[$entry['type']], "attach" => "style='width:100px'");
+        $field1= array("string" => $this->aclTypes[$entry['type']], "attach" => "style='width:150px'");
         $field2= array("string" => $this->assembleAclSummary($entry));
         $action= "<input type='image' name='sortup_$key' alt='up' title='"._("Up")."' src='images/sort_up.png' align='top'>";
         $action.= "<input type='image' name='sortdown_$key' alt='down' title='"._("Down")."' src='images/sort_down.png'>";
@@ -455,6 +484,7 @@ class acl extends plugin
       /* Role selector if scope is base */
       if ($this->aclType == 'role'){
         $smarty->assign('roleSelector', "Role selector");#, $this->buildRoleSelector($this->myAclObjects));
+        $smarty->assign('roleSelector', $this->buildRoleSelector($this->roles));
       }
     }
 
@@ -474,7 +504,7 @@ class acl extends plugin
 
       /* Role selector if scope is base */
       if ($this->aclType == 'role'){
-        $smarty->assign('roleSelector', "Role selector");#, $this->buildRoleSelector($this->myAclObjects));
+        $smarty->assign('roleSelector', $this->buildRoleSelector($this->roles));
       } else {
         $smarty->assign('aclSelector', $this->buildAclSelector($aclObjects));
       }
@@ -485,6 +515,7 @@ class acl extends plugin
 
     return ($smarty->fetch (get_template_path('acl.tpl')));
   }
+
 
   function sort_by_priority($list)
   {
@@ -511,6 +542,35 @@ class acl extends plugin
     }
     return($ret);
   }
+
+
+  function buildRoleSelector($list)
+  {
+    $D_List =new DivSelectBox("Acl_Roles");
+ 
+    $selected = $this->aclContents;
+    if(!isset($list[$this->aclContents])){
+      $selected = key($list);
+    }
+
+    $str ="";
+    foreach($list as $dn => $values){
+
+      if($dn == $selected){    
+        $option = "<input type='radio' name='selected_role' value='".base64_encode($dn)."' checked>";
+      }else{
+        $option = "<input type='radio' name='selected_role' value='".base64_encode($dn)."'>";
+      }
+ 
+      $field1 = array("string" => $values['cn'], "attach" => "style='width:200px;'") ;
+      $field2 = array("string" => $values['description']) ;
+      $field3 = array("string" => $option, "attach" => "style='border-right:0px;'") ;
+
+      $D_List->AddEntry(array($field1,$field2,$field3));
+    }
+    return($D_List->DrawList());
+  } 
+
 
   function buildAclSelector($list)
   {
@@ -710,8 +770,8 @@ class acl extends plugin
   {
     list($index, $type)= split(':', $acl);
     $a= array( $index => array("type" => $type,
-                               "members" => acl::extractMembers($acl)));
-    
+                               "members" => acl::extractMembers($acl,$type == "role")));
+   
     /* Handle different types */
     switch ($type){
 
@@ -723,7 +783,7 @@ class acl extends plugin
         break;
       
       case 'role':
-        echo "Role: $acl";
+        $a[$index]['acl']= base64_decode(preg_replace('/^[^:]+:[^:]+:([^:]+).*$/', '\1', $acl));
         break;
 
       case 'reset':
@@ -733,18 +793,21 @@ class acl extends plugin
         print_red(sprintf(_("Unkown ACL type '%s'. Don't know how to handle it."), $type));
         $a= array();
     }
-    
     return ($a);
   }
 
 
-  function extractMembers($acl)
+  function extractMembers($acl,$role = FALSE)
   {
     global $config;
     $a= array();
 
     /* Rip acl off the string, seperate by ',' and place it in an array */
-    $ms= preg_replace('/^[^:]+:[^:]+:([^:]+).*$/', '\1', $acl);
+    if($role){
+      $ms= preg_replace('/^[^:]+:[^:]+:[^:]+:([^:]+).*$/', '\1', $acl);
+    }else{
+      $ms= preg_replace('/^[^:]+:[^:]+:([^:]+).*$/', '\1', $acl);
+    }
     if ($ms == $acl){
       return $a;
     }
@@ -826,12 +889,22 @@ class acl extends plugin
     /* Summarize ACL */
     if (isset($entry['acl'])){
       $acl= "";
-      foreach ($entry['acl'] as $name => $object){
-        if (count($object)){
-          $acl.= "$name, ";
+
+      if($entry['type'] == "role"){
+
+        if(isset($this->roles[$entry['acl']])){  
+          $summary.= sprintf(_("Role: %s"), $this->roles[$entry['acl']]['cn']);
+        }else{
+          $summary.= sprintf(_("Role: %s"), "<i>"._("Unknown role, possibly removed")."</i>");
         }
+      }else{
+        foreach ($entry['acl'] as $name => $object){
+          if (count($object)){
+            $acl.= "$name, ";
+          }
+        }
+        $summary.= sprintf(_("Contains settings for these objects: %s"), preg_replace('/, $/', '', $acl));
       }
-      $summary.= sprintf(_("Contains settings for these objects: %s"), preg_replace('/, $/', '', $acl));
     }
 
     /* Summarize members */
@@ -893,7 +966,12 @@ class acl extends plugin
           $members.= base64_encode(preg_replace('/^.:/', '', $key)).',';
         }
       }
-      $final= $prio.":".$entry['type'].":".preg_replace('/,$/', '', $members);
+
+      if($entry['type'] != "role"){
+        $final= $prio.":".$entry['type'].":".preg_replace('/,$/', '', $members);
+      }else{
+        $final= $prio.":".$entry['type'].":".base64_encode($entry['acl']).":".preg_replace('/,$/', '', $members);
+      }
 
       /* ACL's if needed */
       if ($entry['type'] != "reset" && $entry['type'] != "role"){
