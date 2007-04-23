@@ -97,6 +97,28 @@ class userinfo
       $aclc[$attrs['dn']]= $ol;
     }
 
+    /* Resolve roles here. 
+     */
+    foreach($aclc as $dn => $data){
+      foreach($data as $prio => $aclc_value)  {
+        if($aclc_value['type'] == "role"){
+
+          unset($aclc[$dn][$prio]);
+
+          $ldap->cat($aclc_value['acl'],array("gosaAclTemplate"));
+          $attrs = $ldap->fetch();
+          for($i= 0; $i<$attrs['gosaAclTemplate']['count']; $i++){
+            $tmp = @acl::explodeAcl($attrs['gosaAclTemplate'][$i]);  
+
+            foreach($tmp as $new_acl){
+              $new_acl['members'] = $aclc_value['members'];
+              $aclc[$dn][] =$new_acl;
+            }
+          }      
+        }
+      }
+    }
+
     /* ACL's read, sort for tree depth */
     asort($aclp);
 
