@@ -182,6 +182,11 @@ class userinfo
             continue;
           }
 
+          if($subacl['type'] == "role") {
+            echo "role skipped";
+            continue;
+          }
+
           /* Per attribute ACL? */
           if (isset($subacl['acl'][$object][$attribute])){
             $acl= $this->mergeACL($acl, $subacl['type'], $subacl['acl'][$object][$attribute]);
@@ -284,6 +289,11 @@ class userinfo
             /* Reset? Just clean the ACL and turn over to the next one... */
             if ($subacl['type'] == 'reset'){
               $acl= $this->cleanACL($acl, TRUE);
+              continue;
+            }
+    
+            if($subacl['type'] == 'role'){
+              echo "role skipped";
               continue;
             }
 
