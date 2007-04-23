@@ -259,7 +259,7 @@ class aclrole extends plugin
     }
 
     /* Save new acl in case of base edit mode */
-    if ($this->aclType == 'base' && !$firstedit){
+    if (1 == 0 && $this->aclType == 'base' && !$firstedit){
       $this->aclContents= $new_acl;
     }
 
@@ -625,7 +625,7 @@ class aclrole extends plugin
   {
     $state= $state?"checked":"";
     return "\n      <input id='acl_".preg_replace("/[^a-z0-9]/i","_",$name)."' type=checkbox name='acl_$name' $state>".
-           "\n      <label for='acl_$name'>$text</label>";
+           "\n      <label for='acl_".preg_replace("/[^a-z0-9]/i","_",$name)."'>$text</label>";
   }
 
 
@@ -634,9 +634,9 @@ class aclrole extends plugin
     $rstate= preg_match('/r/', $state)?'checked':'';
     $wstate= preg_match('/w/', $state)?'checked':'';
     return ("\n      <input id='acl_".preg_replace("/[^a-z0-9]/i","_",$name)."_r' type=checkbox name='acl_${name}_r' $rstate>".
-            "\n      <label for='acl_${name}_r'>"._("read")."</label>".
+            "\n      <label for='acl_".preg_replace("/[^a-z0-9]/i","_",$name)."_r'>"._("read")."</label>".
             "\n      <input id='acl_".preg_replace("/[^a-z0-9]/i","_",$name)."_w' type=checkbox name='acl_${name}_w' $wstate>".
-            "\n      <label for='acl_${name}_w'>"._("write")."</label>");
+            "\n      <label for='acl_".preg_replace("/[^a-z0-9]/i","_",$name)."_w'>"._("write")."</label>");
   }
 
 
