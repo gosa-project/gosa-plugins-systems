@@ -107,14 +107,17 @@ class userinfo
 
           $ldap->cat($aclc_value['acl'],array("gosaAclTemplate"));
           $attrs = $ldap->fetch();
-          for($i= 0; $i<$attrs['gosaAclTemplate']['count']; $i++){
-            $tmp = @acl::explodeAcl($attrs['gosaAclTemplate'][$i]);  
 
-            foreach($tmp as $new_acl){
-              $new_acl['members'] = $aclc_value['members'];
-              $aclc[$dn][] =$new_acl;
-            }
-          }      
+          if(isset($attrs['gosaAclTemplate'])){
+            for($i= 0; $i<$attrs['gosaAclTemplate']['count']; $i++){
+              $tmp = @acl::explodeAcl($attrs['gosaAclTemplate'][$i]);  
+
+              foreach($tmp as $new_acl){
+                $new_acl['members'] = $aclc_value['members'];
+                $aclc[$dn][] =$new_acl;
+              }
+            }      
+          }
         }
       }
     }
