@@ -1043,6 +1043,17 @@ class acl extends plugin
 
   function remove_from_parent()
   {
+    plugin::remove_from_parent();
+
+    /* include global link_info */
+    $ldap= $this->config->get_ldap_link();
+
+    $ldap->cd($this->dn);
+    $this->cleanup();
+    $ldap->modify ($this->attrs);
+
+    /* Optionally execute a command after we're done */
+    $this->handle_post_events("remove",array("uid" => $this->uid));
   }
 
 }

@@ -56,7 +56,7 @@ class aclManagement extends plugin
     /* Call parent execute */
     plugin::execute();
 
-    $_SESSION['LOCK_VARS_TO_USE'] = array("/^list/","/^id_/","/^list_acl_role_del/");
+    $_SESSION['LOCK_VARS_TO_USE'] = array("/^list/","/^id_/","/^list_acl_role_del/","/^list_acl_del/");
 
     $smarty       = get_smarty();                 // Smarty instance
     $s_action     = "";                           // Contains the action to be taken
@@ -302,14 +302,14 @@ class aclManagement extends plugin
      ********************/
 
     /* Confirmation for deletion has been passed. Acl should be deleted. */
-    if (isset($_POST['delete_acl_confirmed'])){
+    if (isset($_POST['delete_acl_confirm'])){
 
       /* Check permissions */
       if(preg_match("/d/",$this->ui->get_permissions($this->dn,"acl/acl"))){
 
         /* Delete request is permitted, perform LDAP action */
         $this->acltabs= new acl($this->config, NULL,$this->dn);
-        $this->acltabs->delete ();
+        $this->acltabs->remove_from_parent();
         gosa_log ("ACL object '".$this->dn."' has been removed");
         unset ($this->acltabs);
         $this->acltabs= NULL;
