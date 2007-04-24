@@ -441,7 +441,7 @@ class aclManagement extends plugin
     /* Get divlist informations from filter part */
     $Regex      = $this->DivListACL -> Regex;
     $SubSearch  = $this->DivListACL -> SubSearch;
-    $base       = $_SESSION['CurrentMainBase']; 
+    $base       = $this->DivListACL -> selectedBase; 
     $Attrs      = array("ou","cn","description","gosaAclEntry","objectClass");
     $res        = array();
     $tmp        = array();                                    // Will contain temporary results 
