@@ -126,7 +126,8 @@ class selectPrinterDialog extends plugin
 
     foreach($res as $printer)  {
 
-      $acl = $this->ui->get_permissions($printer['dn'],"printer","gotoUserPrinter");
+      $acl = $this->ui->get_permissions($printer['dn'],"printer/printgeneric","gotoUserPrinter");
+
       if(!preg_match("/w/",$acl)){
         continue;
       }
