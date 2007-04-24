@@ -22,7 +22,7 @@
 	<div style='border-bottom:1px dashed #AAAAAA'>
 		<div style='padding:3px;'>
 		<p class="center" style="margin:0px 0px 0px 5px;padding:0px;font-size:24px;font-weight:bold;">
-			<img class="center" src='{$password_img}' align="middle" alt="*"/>&nbsp;{t}Login{/t}
+			<img class="center" src='{$password_img}' align="middle" alt="*"/>&nbsp;{t}Login screen{/t}
 		</p>
 		</div>
 	</div>
@@ -72,7 +72,7 @@
 		</div>
 		<div style='float:right; text-align:right; background-color:blue'>
 			<!-- Display error message on demand -->
-			  <input type='submit' name='login' value='{t}Sign in{/t}'
+			  <input border=0 type='submit' name='login' value='{t}Sign in{/t}'
 				 title='{t}Click here to log in{/t}' onFocus="nextfield='login';" />
 			<input type='hidden' name='javascript' value='false' />		
 			<input type='hidden' name='login' value='{t}Sign in{/t}' />		
