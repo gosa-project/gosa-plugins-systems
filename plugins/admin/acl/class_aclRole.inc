@@ -19,7 +19,7 @@ class aclrole extends plugin
   var $aclTypes= array();
   var $aclObjects= array();
   var $recipients= array();
-  var $isContainer= FALSE;
+  var $isContainer= TRUE;
   var $currentIndex= 0;
   var $wasNewEntry= FALSE;
   var $ocMapping= array();
