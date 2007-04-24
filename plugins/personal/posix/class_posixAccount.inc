@@ -1020,14 +1020,13 @@ class posixAccount extends plugin
   function delGroup ($groups)
   {
     $dest= array();
-
-    foreach ($this->groupMembership as $key => $value){
-      if ((!in_array($key, $groups)) || (obj_is_writable($attrs['dn'],"groups/group","memberUid"))){
-        $dest[$key]= $value;
+    foreach($groups as $dn_to_del){
+      if(isset($this->groupMembership[$dn_to_del]) && obj_is_writable($dn_to_del,"groups/group","memberUid")){
+        unset($this->groupMembership[$dn_to_del]);
       }
     }
-    $this->groupMembership= $dest;
   }
+
 
   /* Adapt from template, using 'dn' */
   function adapt_from_template($dn)
