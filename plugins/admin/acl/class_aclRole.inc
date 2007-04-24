@@ -565,8 +565,49 @@ class aclrole extends acl
 
   function remove_from_parent()
   {
-    echo "Role should be deleted here- What happens with assigned roles ... ";
+    $ldap = $this->config->get_ldap_link();
+    $serach_for = "*:role:".base64_encode($this->dn).":*"; 
+    $ldap->search ("(&(objectClass=gosaACL)(gosaAclEntry=".$serach_for."))",array('dn','cn','sn','givenName','uid'));
+    $all_names = "";
+
+
+    $cnt = 3;
+    while(($attrs = $ldap->fetch()) && $cnt){
+      $name = $attrs['dn'];
+      $name = preg_replace("/[ ]/","&nbsp;",$name);
+      $name = "<i>'".$name."'</i>";
+      $all_names .= $name.", ";
+      $cnt --;
+    }
+
+    if(!empty($all_names)){
+      $all_names = preg_replace("/, $/","",$all_names);
+      if(!$cnt){
+        $all_names .= ", ...";
+      }
+      $all_names = "<span style='text-align:left;'>".$all_names."</span>";
+      print_red(sprintf(_("This role can't be removed while it is in use. Follwing objects are using this role %s"),$all_names));
+      return;
+    }
+        
+
+    $ldap->rmDir($this->dn);
+    show_ldap_error($ldap->get_error(), sprintf(_("Removing of aclRole with dn '%s' failed."),$this->dn));
+
+    /* Optionally execute a command after we're done */
+    $this->handle_post_events("remove");
+
+    /* Delete references to object groups */
+    $ldap->cd ($this->config->current['BASE']);
+    $ldap->search ("(&(objectClass=gosaGroupOfNames)(member=".$this->dn."))", array("cn"));
+    while ($ldap->fetch()){
+      $og= new ogroup($this->config, $ldap->getDN());
+      unset($og->member[$this->dn]);
+      $og->save ();
+      show_ldap_error($ldap->get_error(), sprintf(_("Removing aclRole from objectgroup '%s' failed"), $og->dn));
+    }
   }
+
 
   function save_object()
   {
