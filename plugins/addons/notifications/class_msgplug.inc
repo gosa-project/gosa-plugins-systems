@@ -40,7 +40,6 @@ class msgplug extends plugin
       $this->users['U:'.$attrs['uid'][0]]= $attrs['cn'][0].' ['.$attrs['uid'][0].']';
     }
     ksort($this->users);
-    print_a($this->users);
 
     $res = get_list("(objectClass=posixGroup)", "groups", $this->config->current['BASE'],array('cn','description'));
     foreach($res as $key => $attrs){
