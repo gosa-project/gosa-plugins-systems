@@ -106,6 +106,8 @@ class divListSystem extends MultiSelectWindow
 
     /* Load possible departments */
     $ui= get_userinfo();
+    $first = "";
+    $found = FALSE;
     $department = $departments = array();
     foreach($this->module as $module){
       $d = $ui->get_module_departments($module);      
@@ -119,6 +121,13 @@ class divListSystem extends MultiSelectWindow
     foreach($deps as $dep){
       if(isset($ids[$dep['dn']]) && in_array_ics($dep['dn'], $departments)){
 
+        /* Keep first base dn in mind, we could need this
+         *  info if no valid base was found
+         */
+        if(empty($first)) {
+          $first = $dep['dn'];
+        }
+
         $value = $ids[$dep['dn']];
         if ($this->selectedBase == $dep['dn']){
           $options.= "<option selected='selected' value='".$dep['dn']."'>$value</option>";
@@ -126,6 +135,13 @@ class divListSystem extends MultiSelectWindow
           $options.= "<option value='".$dep['dn']."'>$value</option>";
         }
       }
+    }
+
+    /* The currently used base is not visible with your acl setup.
+     * Set base to first useable base.
+     */
+    if(!$found){
+      $this->selectedBase = $first;
     }
 
     /* If there is at least one c (Create) and one w (Write) acl in this combination

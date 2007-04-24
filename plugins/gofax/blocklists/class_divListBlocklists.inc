@@ -82,11 +82,21 @@ class divListBlocklist extends MultiSelectWindow
                     array("ou", "description"), GL_SIZELIMIT | GL_SUBSEARCH);
 
     /* Load possible departments */
+    $first = "";
+    $found = FALSE;
     $ui= get_userinfo();
     $tdeps= $ui->get_module_departments("gofaxlist");
     $ids = $this->config->idepartments;
     foreach($deps as $dep){
       if(isset($ids[$dep['dn']]) && in_array_ics($dep['dn'], $tdeps)){
+
+        /* Keep first base dn in mind, we could need this
+         *  info if no valid base was found
+         */
+        if(empty($first)) {
+          $first = $dep['dn'];
+        }
+  
         $value = $ids[$dep['dn']];
         if ($this->selectedBase == $dep['dn']){
           $options.= "<option selected='selected' value='".$dep['dn']."'>$value</option>";
@@ -96,6 +106,13 @@ class divListBlocklist extends MultiSelectWindow
       }
     }
 
+    /* The currently used base is not visible with your acl setup.
+     * Set base to first useable base.
+     */
+    if(!$found){
+      $this->selectedBase = $first;
+    }
+  
     /* Get acls */
     $ui       = get_userinfo();
     $acl      = $ui->get_permissions($this->selectedBase,"gofaxlist/blocklist");

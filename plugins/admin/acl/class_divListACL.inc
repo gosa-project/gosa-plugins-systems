@@ -70,6 +70,9 @@ class divListACL extends MultiSelectWindow
     $Copy_Paste = "";
 
     /* Get all departments within this subtree */
+    $ui= get_userinfo();
+    $first = "";
+    $found = FALSE;
     $base = $this->config->current['BASE'];
     $deps= get_list("(&(|(ou=*)(description=*))(objectClass=gosaDepartment))", "acl", $base,
                     array("ou", "description"), GL_SIZELIMIT | GL_SUBSEARCH);
@@ -80,6 +83,14 @@ class divListACL extends MultiSelectWindow
     $ids    = $this->config->idepartments;
     foreach($deps as $dep){
       if(isset($ids[$dep['dn']]) && in_array_ics($dep['dn'], $tdeps)){
+
+        /* Keep first base dn in mind, we could need this
+         *  info if no valid base was found
+         */
+        if(empty($first)) {
+          $first = $dep['dn'];
+        }
+  
         $value = $ids[$dep['dn']];
         if ($this->selectedBase == $dep['dn']){
           $options.= "<option selected='selected' value='".$dep['dn']."'>$value</option>";
@@ -87,6 +98,13 @@ class divListACL extends MultiSelectWindow
           $options.= "<option value='".$dep['dn']."'>$value</option>";
         }
       }
+    }
+
+    /* The currently used base is not visible with your acl setup.
+     * Set base to first useable base.
+     */
+    if(!$found){
+      $this->selectedBase = $first;
     }
 
     /* Allow copy & paste for roles */ 

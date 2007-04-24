@@ -88,6 +88,9 @@ class divListGroup extends MultiSelectWindow
 
     
     /* Get all departments within this subtree */
+    $ui= get_userinfo();
+    $first = "";
+    $found = FALSE;
     $base = $this->config->current['BASE'];
     $deps= get_list("(&(|(ou=*)(description=*))(objectClass=gosaDepartment))", $this->module, $base,
                     array("ou", "description"), GL_SIZELIMIT | GL_SUBSEARCH);
@@ -101,6 +104,13 @@ class divListGroup extends MultiSelectWindow
     foreach($deps as $dep){
       if(isset($ids[$dep['dn']]) && in_array_ics($dep['dn'], $tdeps)){
 
+        /* Keep first base dn in mind, we could need this 
+         *  info if no valid base was found 
+         */
+        if(empty($first)) {
+          $first = $dep['dn'];
+        }
+
         $value = $ids[$dep['dn']];
         if ($this->selectedBase == $dep['dn']){
           $options.= "<option selected='selected' value='".$dep['dn']."'>$value</option>";
@@ -110,6 +120,13 @@ class divListGroup extends MultiSelectWindow
       }
     }
 
+    /* The currently used base is not visible with your acl setup.
+     * Set base to first useable base.
+     */
+    if(!$found){
+      $this->selectedBase = $first;
+    }
+  
     /* Get acls */
     $acls   = $ui->get_permissions($this->selectedBase,"groups/group");
     $acl_all= $ui->has_complete_category_acls($this->selectedBase,"groups");

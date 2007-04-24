@@ -790,7 +790,7 @@ class aclrole extends plugin
   {
     /* New entry gets presets... */
     if ($new){
-      $this->aclType= 'base';
+      $this->aclType= 'sub';
       $this->recipients= array();
       $this->aclContents= array();
     } else {
