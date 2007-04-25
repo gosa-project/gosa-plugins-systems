@@ -17,7 +17,7 @@
    You should have received a copy of the GNU General Public License
    along with this program; if not, write to the Free Software
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-*/
+ */
 
 
 class Step_Migrate extends setup_step
@@ -47,7 +47,7 @@ class Step_Migrate extends setup_step
     $this->s_title_long = _("LDAP inspection");
     $this->s_info       = _("Analyze your current LDAP for GOsa compatibility");
   }
- 
+
   function initialize_checks()
   {
     $this->checks = array();
@@ -67,7 +67,7 @@ class Step_Migrate extends setup_step
     $this->checks['users_visible']['STATUS']    = FALSE;
     $this->checks['users_visible']['STATUS_MSG']= "";
     $this->checks['users_visible']['ERROR_MSG'] = "";
-    $this->check_visible_gosaAccounts();
+    $this->check_invisible_gosaAccounts();
   }
 
 
@@ -79,10 +79,13 @@ class Step_Migrate extends setup_step
   {
     $cv = $this->parent->captured_values;
     $ldap = new LDAP($cv['admin'],
-                     $cv['password'],
-                     $cv['connection'],
-                     FALSE,
-                     $cv['tls']);
+        $cv['password'],
+        $cv['connection'],
+        FALSE,
+        $cv['tls']);
+
+    /* Create dummy entry 
+     */
     $name     = "GOsa_setup_text_entry_".session_id().rand(0,999999);
     $dn       = "ou=".$name.",".$cv['base'];
     $testEntry= array();
@@ -91,7 +94,9 @@ class Step_Migrate extends setup_step
     $testEntry['objectClass'][]= "gosaDepartment";
     $testEntry['description']= "Created by GOsa setup, this object can be removed.";
     $testEntry['ou']  = $name;
- 
+
+    /* Try to create dummy object 
+     */ 
     $ldap->cd ($dn);
     $res = $ldap->add($testEntry);
     if(!$res){
@@ -104,6 +109,8 @@ class Step_Migrate extends setup_step
       return(false);
     }
 
+    /* Try to remove created entry 
+     */
     $res = $ldap->rmDir($dn);
     if(!$res){
       $this->checks['permissions']['STATUS']    = FALSE;
@@ -115,6 +122,7 @@ class Step_Migrate extends setup_step
       return(false);
     }
 
+    /* Create & remove of dummy object was successful */
     $this->checks['permissions']['STATUS']    = TRUE;
     $this->checks['permissions']['STATUS_MSG']= _("Ok");
     $this->checks['permissions']['ERROR_MSG'] = "<input type='submit' name='retry_permissions' value='"._("Retry")."'>";
@@ -122,30 +130,34 @@ class Step_Migrate extends setup_step
   } 
 
 
-
-  function check_visible_gosaAccounts()
+  /* Check if there are users which will 
+   *  be invisible for GOsa 
+   */
+  function check_invisible_gosaAccounts()
   {
-    $old = $this->users_to_migrate;
-    $this->users_to_migrate = array();
+    /* Remember old list of ivisible users, to be able to set 
+     *  the 'html checked' status for the checkboxes again 
+     */
     $cnt_ok = 0;
+    $old    = $this->users_to_migrate;
+    $this->users_to_migrate = array();
 
     /* Get collected configuration settings */
     $cv = $this->parent->captured_values;
 
     /* Establish ldap connection */
     $ldap = new LDAP($cv['admin'],
-                     $cv['password'],
-                     $cv['connection'],
-                     FALSE,
-                     $cv['tls']);
+        $cv['password'],
+        $cv['connection'],
+        FALSE,
+        $cv['tls']);
 
-    /* Get all invisible departments */
+    /* Get all invisible users 
+     */
     $ldap->cd($cv['base']); 
     $ldap->search("(&(|(objectClass=posixAccount)(objectClass=inetOrgPerson)(objectClass=organizationalPerson))(!(objectClass=gosaAccount)))",array("sn","givenName","cn","uid"));
     while($attrs = $ldap->fetch()){
-  
       if(!preg_match("/,dc=addressbook,/",$attrs['dn'])){
-
         $attrs['checked'] = FALSE;
         $attrs['before']  = "";
         $attrs['after']   = "";
@@ -158,7 +170,7 @@ class Step_Migrate extends setup_step
       }
     }
 
-      /* No invisible */
+    /* No invisible */
     if(count($this->users_to_migrate) == 0){
       $this->checks['users_visible']['STATUS']    = TRUE;
       $this->checks['users_visible']['STATUS_MSG']= _("Ok");
@@ -168,14 +180,15 @@ class Step_Migrate extends setup_step
       $this->checks['users_visible']['STATUS']    = FALSE;
       $this->checks['users_visible']['STATUS_MSG']= "";
       $this->checks['users_visible']['ERROR_MSG'] = sprintf(_("Found %s users that will not be visible in GOsa."), 
-        count($this->users_to_migrate));
+          count($this->users_to_migrate));
       $this->checks['users_visible']['ERROR_MSG'] .= "<input type='submit' name='users_visible_migrate' value='"._("Migrate")."'>";
       $this->checks['users_visible']['ERROR_MSG'] .= "<input type='submit' name='users_visible_migrate_refresh' value='"._("Reload list").   "'>";
     }
-
   }
 
-  /* Start deparmtment migration */  
+
+  /* Start user account migration 
+   */  
   function migrate_gosaAccounts($only_ldif = FALSE)
   {
     /* Get collected configuration settings */
@@ -183,23 +196,30 @@ class Step_Migrate extends setup_step
 
     /* Establish ldap connection */
     $ldap = new LDAP($cv['admin'],
-                     $cv['password'],
-                     $cv['connection'],
-                     FALSE,
-                     $cv['tls']);
+        $cv['password'],
+        $cv['connection'],
+        FALSE,
+        $cv['tls']);
 
+    /* Add gosaAccount objectClass to the selected users  
+     */
     foreach($this->users_to_migrate as $key => $dep){
       if($dep['checked']){
 
+        /* Get old objectClasses */
         $ldap->cat($dep['dn'],array("objectClass"));
         $attrs      = $ldap->fetch();
-        $new_attrs  = array();
 
+        /* Create new objectClass array */
+        $new_attrs  = array();
         for($i = 0 ; $i < $attrs['objectClass']['count']; $i ++ ){
           $new_attrs['objectClass'][]   = $attrs['objectClass'][$i];
         }
         $new_attrs['objectClass'][] = "gosaAccount";
-    
+
+        /* Set info attributes for current object, 
+         *  or write changes to the ldap database 
+         */
         if($only_ldif){
           $this->users_to_migrate[$key]['before'] = $this->array_to_ldif($attrs);
           $this->users_to_migrate[$key]['after']  = $this->array_to_ldif($new_attrs);
@@ -216,27 +236,29 @@ class Step_Migrate extends setup_step
   }
 
 
+  /* Check if there are invisible organizational Units 
+   */
   function check_visible_organizationalUnits()
   {
+    $cnt_ok = 0;
     $old = $this->deps_to_migrate;
     $this->deps_to_migrate = array();
-    $cnt_ok = 0;
 
     /* Get collected configuration settings */
     $cv = $this->parent->captured_values;
 
     /* Establish ldap connection */
     $ldap = new LDAP($cv['admin'],
-                     $cv['password'],
-                     $cv['connection'],
-                     FALSE,
-                     $cv['tls']);
+        $cv['password'],
+        $cv['connection'],
+        FALSE,
+        $cv['tls']);
 
     /* Skip GOsa internal departments */
     $skip_dns = array("/^ou=people,/","/^ou=groups,/","/(,|)ou=configs,/","/(,|)ou=systems,/",
-                      "/^ou=apps,/","/^ou=mime,/","/^ou=aclroles,/","/^ou=incoming,/",
-                      "/ou=snapshots,/","/(,|)dc=addressbook,/","/^(,|)ou=machineaccounts,/",
-                      "/(,|)ou=winstations,/");
+        "/^ou=apps,/","/^ou=mime,/","/^ou=aclroles,/","/^ou=incoming,/",
+        "/ou=snapshots,/","/(,|)dc=addressbook,/","/^(,|)ou=machineaccounts,/",
+        "/(,|)ou=winstations,/");
 
 
     /* Get all invisible departments */
@@ -253,8 +275,10 @@ class Step_Migrate extends setup_step
       }
       $this->deps_to_migrate[base64_encode($attrs['dn'])] = $attrs;
     }
-  
-    /* Filter returned list of departments */
+
+    /* Filter returned list of departments and ensure that 
+     *  GOsa internal departments will not be listed 
+     */
     foreach($this->deps_to_migrate as $key => $attrs){
       $dn = $attrs['dn'];
       $skip = false;
@@ -267,8 +291,10 @@ class Step_Migrate extends setup_step
         unset($this->deps_to_migrate[$key]);
       }
     }
-  
-    /* No invisible */
+
+    /* If we have no invisible departments found  
+     *  tell the user that everything is ok 
+     */
     if(count($this->deps_to_migrate) == 0){
       $this->checks['deps_visible']['STATUS']    = TRUE;
       $this->checks['deps_visible']['STATUS_MSG']= _("Ok");
@@ -281,11 +307,10 @@ class Step_Migrate extends setup_step
       $this->checks['deps_visible']['ERROR_MSG'] .= "<input type='submit' name='deps_visible_migrate' value='"._("Migrate")."'>";
       $this->checks['deps_visible']['ERROR_MSG'] .= "<input type='submit' name='deps_visible_migrate_refresh' value='"._("Reload list")."'>";
     }
-
   }
 
 
-    
+
   /* Start deparmtment migration */  
   function migrate_organizationalUnits($only_ldif = FALSE)
   {
@@ -294,29 +319,35 @@ class Step_Migrate extends setup_step
 
     /* Establish ldap connection */
     $ldap = new LDAP($cv['admin'],
-                     $cv['password'],
-                     $cv['connection'],
-                     FALSE,
-                     $cv['tls']);
+        $cv['password'],
+        $cv['connection'],
+        FALSE,
+        $cv['tls']);
 
+    /* Add gosaDepartment objectClass to each selected entry 
+     */
     foreach($this->deps_to_migrate as $key => $dep){
       if($dep['checked']){
 
+        /* Get current objectClasses */
         $ldap->cat($dep['dn'],array("objectClass","description"));
         $attrs      = $ldap->fetch();
-        $new_attrs  = array();
 
+        /* Create new objectClass attribute including gosaDepartment*/
+        $new_attrs  = array();
         for($i = 0 ; $i < $attrs['objectClass']['count']; $i ++ ){
           $new_attrs['objectClass'][]   = $attrs['objectClass'][$i];
         }
         $new_attrs['objectClass'][] = "gosaDepartment";
-    
+
+        /* Append description it is missing */
         if(!isset($attrs['description'])){
           $new_attrs['description'][] = "GOsa department";
         }
-      
-        
-   
+
+        /* Depending on the parameter >only_diff< we save the changes as ldif
+         *  or we write our changes directly to the ldap database
+         */
         if($only_ldif){
           $this->deps_to_migrate[$key]['before'] = $this->array_to_ldif($attrs);
           $this->deps_to_migrate[$key]['after']  = $this->array_to_ldif($new_attrs);
@@ -339,12 +370,14 @@ class Step_Migrate extends setup_step
     /* Permission check */
     $this->check_ldap_permissions();
 
-    /* User Migration 
-     */
+
+    /*************
+     * User Migration handling 
+     *************
 
     /* Refresh list of deparments */
     if(isset($_POST['users_visible_migrate_refresh'])){
-      $this->check_visible_gosaAccounts();
+      $this->check_invisible_gosaAccounts();
     }
 
     /* Open migration dialog */
@@ -362,7 +395,7 @@ class Step_Migrate extends setup_step
     /* Start migration */
     if(isset($_POST['users_visible_migrate_migrate'])){
       if($this->migrate_gosaAccounts()){
-        $this->check_visible_gosaAccounts();
+        $this->check_invisible_gosaAccounts();
       }
     }
 
@@ -380,8 +413,9 @@ class Step_Migrate extends setup_step
     }
 
 
-    /* Department migration options 
-     */
+    /*************
+     * Department Migration handling 
+     *************
 
     /* Refresh list of deparments */
     if(isset($_POST['deps_visible_migrate_refresh'])){
@@ -428,6 +462,7 @@ class Step_Migrate extends setup_step
 
   function save_object()
   {
+    /* Get selected departments */
     if($this->dep_migration_dialog){
       foreach($this->deps_to_migrate as $id => $data){
         if(isset($_POST['migrate_'.$id])){
@@ -437,6 +472,8 @@ class Step_Migrate extends setup_step
         }
       }
     }
+
+    /* Get selected users */
     if($this->users_migration_dialog){
       foreach($this->users_to_migrate as $id => $data){
         if(isset($_POST['migrate_'.$id])){
@@ -449,17 +486,19 @@ class Step_Migrate extends setup_step
 
   }
 
+
+  /* Return ldif information for a 
+   * given attribute array 
+   */
   function array_to_ldif($atts)
   {
     $ret = "";
     unset($atts['count']);
     unset($atts['dn']);
     foreach($atts as $name => $value){
-
       if(is_numeric($name)) {
         continue;
       }
-
       if(is_array($value)){
         unset($value['count']);
         foreach($value as $a_val){
@@ -479,7 +518,6 @@ class Step_Migrate extends setup_step
     }
     return(preg_replace("/\n$/","",$ret));
   }
-
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
