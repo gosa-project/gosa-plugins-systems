@@ -28,10 +28,12 @@ class Step_Migrate extends setup_step
   var $checks         = array();
 
   /* Department migration attributes */
-  var $migration_dialog   = FALSE;
-  var $deps_to_migrate    = array();
+  var $dep_migration_dialog = FALSE;
+  var $deps_to_migrate      = array();
 
-  
+  /* Department migration attributes */
+  var $users_migration_dialog= FALSE;
+  var $users_to_migrate      = array();
 
   function Step_Migrate()
   {
@@ -60,6 +62,12 @@ class Step_Migrate extends setup_step
     $this->checks['deps_visible']['STATUS_MSG']= "";
     $this->checks['deps_visible']['ERROR_MSG'] = "";
     $this->check_visible_organizationalUnits();
+
+    $this->checks['users_visible']['TITLE']     = _("Checking for invisible user");
+    $this->checks['users_visible']['STATUS']    = FALSE;
+    $this->checks['users_visible']['STATUS_MSG']= "";
+    $this->checks['users_visible']['ERROR_MSG'] = "";
+    $this->check_visible_gosaAccounts();
   }
 
 
@@ -114,8 +122,103 @@ class Step_Migrate extends setup_step
   } 
 
 
+
+  function check_visible_gosaAccounts()
+  {
+    $old = $this->users_to_migrate;
+    $this->users_to_migrate = array();
+    $cnt_ok = 0;
+
+    /* Get collected configuration settings */
+    $cv = $this->parent->captured_values;
+
+    /* Establish ldap connection */
+    $ldap = new LDAP($cv['admin'],
+                     $cv['password'],
+                     $cv['connection'],
+                     FALSE,
+                     $cv['tls']);
+
+    /* Get all invisible departments */
+    $ldap->cd($cv['base']); 
+    $ldap->search("(&(|(objectClass=posixAccount)(objectClass=inetOrgPerson)(objectClass=organizationalPerson))(!(objectClass=gosaAccount)))",array("sn","givenName","cn","uid"));
+    while($attrs = $ldap->fetch()){
+  
+      if(!preg_match("/,dc=addressbook,/",$attrs['dn'])){
+
+        $attrs['checked'] = FALSE;
+        $attrs['before']  = "";
+        $attrs['after']   = "";
+
+        /* Set objects to selected, that were selected before reload */
+        if(isset($old[base64_encode($attrs['dn'])])){
+          $attrs['checked'] = $old[base64_encode($attrs['dn'])]['checked'];
+        }
+        $this->users_to_migrate[base64_encode($attrs['dn'])] = $attrs;
+      }
+    }
+
+      /* No invisible */
+    if(count($this->users_to_migrate) == 0){
+      $this->checks['users_visible']['STATUS']    = TRUE;
+      $this->checks['users_visible']['STATUS_MSG']= _("Ok");
+      $this->checks['users_visible']['ERROR_MSG'] = "";
+      $this->checks['users_visible']['ERROR_MSG'] .= "<input type='submit' name='users_visible_migrate_refresh' value='"._("Retry")."'>";
+    }else{
+      $this->checks['users_visible']['STATUS']    = FALSE;
+      $this->checks['users_visible']['STATUS_MSG']= "";
+      $this->checks['users_visible']['ERROR_MSG'] = sprintf(_("Found %s users that will not be visible in GOsa."), 
+        count($this->users_to_migrate));
+      $this->checks['users_visible']['ERROR_MSG'] .= "<input type='submit' name='users_visible_migrate' value='"._("Migrate")."'>";
+      $this->checks['users_visible']['ERROR_MSG'] .= "<input type='submit' name='users_visible_migrate_refresh' value='"._("Reload list").   "'>";
+    }
+
+  }
+
+  /* Start deparmtment migration */  
+  function migrate_gosaAccounts($only_ldif = FALSE)
+  {
+    /* Get collected configuration settings */
+    $cv = $this->parent->captured_values;
+
+    /* Establish ldap connection */
+    $ldap = new LDAP($cv['admin'],
+                     $cv['password'],
+                     $cv['connection'],
+                     FALSE,
+                     $cv['tls']);
+
+    foreach($this->users_to_migrate as $key => $dep){
+      if($dep['checked']){
+
+        $ldap->cat($dep['dn'],array("objectClass"));
+        $attrs      = $ldap->fetch();
+        $new_attrs  = array();
+
+        for($i = 0 ; $i < $attrs['objectClass']['count']; $i ++ ){
+          $new_attrs['objectClass'][]   = $attrs['objectClass'][$i];
+        }
+        $new_attrs['objectClass'][] = "gosaAccount";
+    
+        if($only_ldif){
+          $this->users_to_migrate[$key]['before'] = $this->array_to_ldif($attrs);
+          $this->users_to_migrate[$key]['after']  = $this->array_to_ldif($new_attrs);
+        }else{
+          $ldap->cd($attrs['dn']);
+          if(!$ldap->modify($new_attrs)){
+            print_red(sprintf(_("Failed to migrate the department '%s' into GOsa, error message is as follows '%s'."),$attrs['dn'],$ldap->get_error()));
+            return(false);
+          }
+        }
+      }
+    }
+    return(TRUE);
+  }
+
+
   function check_visible_organizationalUnits()
   {
+    $old = $this->deps_to_migrate;
     $this->deps_to_migrate = array();
     $cnt_ok = 0;
 
@@ -144,7 +247,11 @@ class Step_Migrate extends setup_step
       $attrs['before']  = "";
       $attrs['after']   = "";
 
-      $this->deps_to_migrate[] = $attrs;
+      /* Set objects to selected, that were selected before reload */
+      if(isset($old[base64_encode($attrs['dn'])])){
+        $attrs['checked'] = $old[base64_encode($attrs['dn'])]['checked'];
+      }
+      $this->deps_to_migrate[base64_encode($attrs['dn'])] = $attrs;
     }
   
     /* Filter returned list of departments */
@@ -232,8 +339,50 @@ class Step_Migrate extends setup_step
     /* Permission check */
     $this->check_ldap_permissions();
 
-    /* Migration options 
+    /* User Migration 
      */
+
+    /* Refresh list of deparments */
+    if(isset($_POST['users_visible_migrate_refresh'])){
+      $this->check_visible_gosaAccounts();
+    }
+
+    /* Open migration dialog */
+    if(isset($_POST['users_visible_migrate'])){
+      $this->users_migration_dialog = TRUE;
+      $this->dialog =TRUE;
+    }
+
+    /* Close migration dialog */
+    if(isset($_POST['users_visible_migrate_close'])){
+      $this->users_migration_dialog = FALSE;
+      $this->dialog =FALSE;
+    }
+
+    /* Start migration */
+    if(isset($_POST['users_visible_migrate_migrate'])){
+      if($this->migrate_gosaAccounts()){
+        $this->check_visible_gosaAccounts();
+      }
+    }
+
+    /* Start migration */
+    if(isset($_POST['users_visible_migrate_whatsdone'])){
+      $this->migrate_gosaAccounts(TRUE);
+    }
+
+    /* Display migration dialog */
+    if($this->users_migration_dialog){
+      $smarty = get_smarty();
+      $smarty->assign("users_to_migrate",$this->users_to_migrate);
+      $smarty->assign("method","migrate_users");
+      return($smarty->fetch(get_template_path("setup_migrate.tpl",TRUE,dirname(__FILE__))));
+    }
+
+
+    /* Department migration options 
+     */
+
     /* Refresh list of deparments */
     if(isset($_POST['deps_visible_migrate_refresh'])){
       $this->check_visible_organizationalUnits();
@@ -241,13 +390,13 @@ class Step_Migrate extends setup_step
 
     /* Open migration dialog */
     if(isset($_POST['deps_visible_migrate'])){
-      $this->migration_dialog = TRUE;
+      $this->dep_migration_dialog = TRUE;
       $this->dialog =TRUE;
     }
 
     /* Close migration dialog */
     if(isset($_POST['deps_visible_migrate_close'])){
-      $this->migration_dialog = FALSE;
+      $this->dep_migration_dialog = FALSE;
       $this->dialog =FALSE;
     }
 
@@ -264,10 +413,10 @@ class Step_Migrate extends setup_step
     }
 
     /* Display migration dialog */
-    if($this->migration_dialog){
+    if($this->dep_migration_dialog){
       $smarty = get_smarty();
       $smarty->assign("deps_to_migrate",$this->deps_to_migrate);
-      $smarty->assign("method","migrate");
+      $smarty->assign("method","migrate_deps");
       return($smarty->fetch(get_template_path("setup_migrate.tpl",TRUE,dirname(__FILE__))));
     }
 
@@ -279,13 +428,21 @@ class Step_Migrate extends setup_step
 
   function save_object()
   {
-    if($this->migration_dialog){
+    if($this->dep_migration_dialog){
       foreach($this->deps_to_migrate as $id => $data){
-
         if(isset($_POST['migrate_'.$id])){
           $this->deps_to_migrate[$id]['checked'] = TRUE;
         }else{
           $this->deps_to_migrate[$id]['checked'] = FALSE;
+        }
+      }
+    }
+    if($this->users_migration_dialog){
+      foreach($this->users_to_migrate as $id => $data){
+        if(isset($_POST['migrate_'.$id])){
+          $this->users_to_migrate[$id]['checked'] = TRUE;
+        }else{
+          $this->users_to_migrate[$id]['checked'] = FALSE;
         }
       }
     }

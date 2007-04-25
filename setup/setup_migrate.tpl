@@ -19,7 +19,7 @@
 				{/if}
 				<div style='height:10px;'>&nbsp;</div>
 			{/foreach}
-		{elseif $method == "migrate"}
+		{elseif $method == "migrate_deps"}
 	
 			<h2>Department migration</h2>
 
@@ -71,6 +71,59 @@ dn: {$deps_to_migrate.$key.dn}
 
 			<div style='width:100%; text-align:right; padding:5px;'>
 				<input type='submit' name='deps_visible_migrate_close' value='{t}Close{/t}'>
+			</div>
+		{elseif $method == "migrate_users"}
+	
+			<h2>User migration</h2>
+
+			{t}The listed deparmtents below are currenlty invisble in the GOsa user interface. If you want to migrate a set of departments, just select them and use the migrate button below.{/t}<br>
+			{t}If you want to know what will be done when migrating the selected entries, just use the 'What will be done here' button and you will see a list of changes.{/t}
+					
+
+			<br><br>
+			{foreach from=$users_to_migrate item=val key=key}
+
+				{if $users_to_migrate.$key.checked}
+					<input type='checkbox' name='migrate_{$key}' checked>
+					{$users_to_migrate.$key.dn}
+					{if $users_to_migrate.$key.after != ""}
+						<div class="step2_entry_container_info" id="sol_8">
+
+{t}Current{/t}
+<div style='padding-left:20px;'>
+<pre>
+dn: {$users_to_migrate.$key.dn}
+{$users_to_migrate.$key.before}
+</pre>
+</div>
+{t}After migration{/t}
+<div style='padding-left:20px;'>
+<pre>
+dn: {$users_to_migrate.$key.dn}
+{$users_to_migrate.$key.after}
+</pre>
+</div>
+						</div>
+					{/if}
+				{else}
+					<input type='checkbox' name='migrate_{$key}'>
+					{$users_to_migrate.$key.dn}
+				{/if}
+
+				<br>
+				
+
+			{/foreach}
+			<br>
+
+			<input type='submit' name='users_visible_migrate_refresh' value='{t}Reload list{/t}'>
+			<input type='submit' name='users_visible_migrate_migrate' value='{t}Migrate{/t}'>
+			<input type='submit' name='users_visible_migrate_whatsdone' value='{t}What will be done here{/t}'>
+
+			<p class='seperator'>&nbsp;</p>	
+
+			<div style='width:100%; text-align:right; padding:5px;'>
+				<input type='submit' name='users_visible_migrate_close' value='{t}Close{/t}'>
 			</div>
 		{else}
 
