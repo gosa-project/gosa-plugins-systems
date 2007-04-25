@@ -169,7 +169,7 @@ class Step_Migrate extends setup_step
       $this->checks['deps_visible']['ERROR_MSG'] .= "<input type='submit' name='deps_visible_migrate_refresh' value='"._("Retry")."'>";
     }else{
       $this->checks['deps_visible']['STATUS']    = FALSE;
-      $this->checks['deps_visible']['STATUS_MSG']= sprintf(_("%s entries found"),count($this->deps_to_migrate));
+      $this->checks['deps_visible']['STATUS_MSG']= "";//sprintf(_("%s entries found"),count($this->deps_to_migrate));
       $this->checks['deps_visible']['ERROR_MSG'] = sprintf(_("Found %s departments that will not be visible in GOsa."),count($this->deps_to_migrate));
       $this->checks['deps_visible']['ERROR_MSG'] .= "<input type='submit' name='deps_visible_migrate' value='"._("Migrate")."'>";
       $this->checks['deps_visible']['ERROR_MSG'] .= "<input type='submit' name='deps_visible_migrate_refresh' value='"._("Reload list")."'>";
