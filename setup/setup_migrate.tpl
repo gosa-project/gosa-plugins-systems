@@ -1,6 +1,36 @@
 <div>
     <div class='default'>
-        <p><b>{t}Tasks{/t}</b></p>
+
+		{foreach from=$checks item=val key=key}
+	
+	        <div class='step2_entry_name'><b>{$checks.$key.TITLE}</b></div>
+
+
+				
+			{if $checks.$key.STATUS}
+				<div class='step2_successful'>{$checks.$key.STATUS_MSG}</div>
+			{else}
+				<div class='step2_failed'>{$checks.$key.STATUS_MSG}</div>
+				{if $checks.$key.ERROR_MSG}
+					{$checks.$key.ERROR_MSG}
+				{/if}
+			{/if}
+				<input type='submit' name='retry_{$key}' value='{t}Retry{/t}'>
+			<p>&nbsp;</p>
+		{/foreach}
+
+
+	<p>&nbsp; </p>
+	<p>&nbsp; </p>
+	<p>&nbsp; </p>
+	<p> </p>
+	<p></p>
+	<p class='seperator'></p>
+	<p></p>
+	<p class='seperator'></p>
+
+
+
 
 	* Create a test department with some objects to check for correct permissions
 	<br>
