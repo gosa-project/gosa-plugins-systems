@@ -72,7 +72,7 @@
 		</div>
 		<div style='float:right; text-align:right; background-color:blue'>
 			<!-- Display error message on demand -->
-			  <input border=0 type='submit' name='login' value='{t}Sign in{/t}'
+			  <input type='submit' name='login' value='{t}Sign in{/t}'
 				 title='{t}Click here to log in{/t}' onFocus="nextfield='login';" />
 			<input type='hidden' name='javascript' value='false' />		
 			<input type='hidden' name='login' value='{t}Sign in{/t}' />		

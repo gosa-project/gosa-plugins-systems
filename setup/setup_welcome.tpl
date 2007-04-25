@@ -3,7 +3,6 @@
 	<p>
 	{t}This seems to be the first time you start GOsa - we didn't find any configuration right now. This simple wizard intends to help you while setting it up.{/t}
 	</p>
-	<p>
 	
 	<p style='border-top:1px solid #AAAAAA; padding-top:10px;'>
 	<b>{t}What will the wizard do for you?{/t}</b>
@@ -22,7 +21,6 @@
 	 <li>{t}Migrate every possible LDAP setup - create backup dumps!{/t}</li>
 	</ul>
 
-	</p>
 	<p style='border-top:1px solid #AAAAAA; padding-top:10px;'>
 	<b>{t}To continue...{/t}</b>
 	</p>
