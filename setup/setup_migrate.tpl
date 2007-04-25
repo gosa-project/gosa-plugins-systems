@@ -32,12 +32,36 @@
 
 				{if $deps_to_migrate.$key.checked}
 					<input type='checkbox' name='migrate_{$key}' checked>
+					{$deps_to_migrate.$key.dn}
+					{if $deps_to_migrate.$key.after != ""}
+						<div class="step2_entry_container_info" id="sol_8">
+
+{t}Current{/t}
+<div style='padding-left:20px;'>
+<pre>
+dn: {$deps_to_migrate.$key.dn}
+{$deps_to_migrate.$key.before}
+</pre>
+</div>
+{t}After migration{/t}
+<div style='padding-left:20px;'>
+<pre>
+dn: {$deps_to_migrate.$key.dn}
+{$deps_to_migrate.$key.after}
+</pre>
+</div>
+						</div>
+					{/if}
 				{else}
 					<input type='checkbox' name='migrate_{$key}'>
+					{$deps_to_migrate.$key.dn}
 				{/if}
-				{$deps_to_migrate.$key.dn}
+
 				<br>
+				
+
 			{/foreach}
+			<br>
 
 			<input type='submit' name='deps_visible_migrate_refresh' value='{t}Reload list{/t}'>
 			<input type='submit' name='deps_visible_migrate_migrate' value='{t}Migrate{/t}'>

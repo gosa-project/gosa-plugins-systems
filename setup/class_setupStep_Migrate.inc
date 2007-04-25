@@ -141,6 +141,9 @@ class Step_Migrate extends setup_step
     $ldap->search("(&(objectClass=organizationalUnit)(!(objectClass=gosaDepartment)))",array("ou","description","dn"));
     while($attrs = $ldap->fetch()){
       $attrs['checked'] = FALSE;
+      $attrs['before']  = "";
+      $attrs['after']   = "";
+
       $this->deps_to_migrate[] = $attrs;
     }
   
@@ -177,7 +180,7 @@ class Step_Migrate extends setup_step
 
     
   /* Start deparmtment migration */  
-  function migrate_organizationalUnits()
+  function migrate_organizationalUnits($only_ldif = FALSE)
   {
     /* Get collected configuration settings */
     $cv = $this->parent->captured_values;
@@ -189,7 +192,7 @@ class Step_Migrate extends setup_step
                      FALSE,
                      $cv['tls']);
 
-    foreach($this->deps_to_migrate as $dep){
+    foreach($this->deps_to_migrate as $key => $dep){
       if($dep['checked']){
 
         $ldap->cat($dep['dn'],array("objectClass","description"));
@@ -204,11 +207,18 @@ class Step_Migrate extends setup_step
         if(!isset($attrs['description'])){
           $new_attrs['description'][] = "GOsa department";
         }
+      
         
-        $ldap->cd($attrs['dn']);
-        if(!$ldap->modify($new_attrs)){
-          print_red(sprintf(_("Failed to migrate the department '%s' into GOsa, error message is as follows '%s'."),$attrs['dn'],$ldap->get_error()));
-          return(false);
+   
+        if($only_ldif){
+          $this->deps_to_migrate[$key]['before'] = $this->array_to_ldif($attrs);
+          $this->deps_to_migrate[$key]['after']  = $this->array_to_ldif($new_attrs);
+        }else{
+          $ldap->cd($attrs['dn']);
+          if(!$ldap->modify($new_attrs)){
+            print_red(sprintf(_("Failed to migrate the department '%s' into GOsa, error message is as follows '%s'."),$attrs['dn'],$ldap->get_error()));
+            return(false);
+          }
         }
       }
     }
@@ -248,6 +258,11 @@ class Step_Migrate extends setup_step
       }
     }
 
+    /* Start migration */
+    if(isset($_POST['deps_visible_migrate_whatsdone'])){
+      $this->migrate_organizationalUnits(TRUE);
+    }
+
     /* Display migration dialog */
     if($this->migration_dialog){
       $smarty = get_smarty();
@@ -276,6 +291,38 @@ class Step_Migrate extends setup_step
     }
 
   }
+
+  function array_to_ldif($atts)
+  {
+    $ret = "";
+    unset($atts['count']);
+    unset($atts['dn']);
+    foreach($atts as $name => $value){
+
+      if(is_numeric($name)) {
+        continue;
+      }
+
+      if(is_array($value)){
+        unset($value['count']);
+        foreach($value as $a_val){
+          if(!preg_match('/^[a-z0-9+@#.=, \/ -]+$/i', $a_val)){
+            $ret .= $name.":: ". base64_encode($a_val)."\n";
+          }else{
+            $ret .= $name.": ". $a_val."\n";
+          }
+        }
+      }else{
+        if(!preg_match('/^[a-z0-9+@#.=, \/ -]+$/i', $value)){
+          $ret .= $name.": ". base64_encode($value)."\n";
+        }else{
+          $ret .= $name.": ". $value."\n";
+        }
+      }
+    }
+    return(preg_replace("/\n$/","",$ret));
+  }
+
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
