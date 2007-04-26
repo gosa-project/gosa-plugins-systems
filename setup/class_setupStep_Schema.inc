@@ -56,7 +56,7 @@ class Step_Schema extends setup_step
     if($failed_checks == 0){
       $this->is_completed = TRUE;
     }else{
-      $this->is_completed = FALSE;
+      $this->is_completed = TRUE;
     }
 
     $smarty = get_smarty();
@@ -99,7 +99,7 @@ class Step_Schema extends setup_step
     $ldap = new LDAP($cfg['admin'],$cfg['password'],$cfg['connection'] ,FALSE,$cfg['tls']);
     $objectclasses = $ldap->get_objectclasses();
     if(count($objectclasses) == 0){
-      return (array(array("msg" => _("Can't get schema information from server. No schema check possible!"), "status" => FALSE)));
+      print_red(_("Can't get schema information from server. No schema check possible!"));
     }
 
   
@@ -210,8 +210,7 @@ class Step_Schema extends setup_step
 
     /* Depending on selected rfc2307bis mode, we need different schema configurations */
     $rfc2307bis = $this->parent->captured_values['rfc2307bis'];
-    $posixGroup = $tmp['posixGroup'];
-    $structural = preg_match("/STRUCTURAL/i",$posixGroup);
+
 
     /* The gosa base schema */
     $checks['posixGroup'] = $def_check;
@@ -223,17 +222,21 @@ class Step_Schema extends setup_step
     $checks['posixGroup']['MSG']              = "";
     $checks['posixGroup']['INFO']             = "";
 
-    if($rfc2307bis && $structural){
-      $checks['posixGroup']['STATUS']           = FALSE;
-      $checks['posixGroup']['MSG']              = _("You have enabled the rfc2307bis option on the 'ldap setup' step, but your schema configuration do not support this option.");
-      $checks['posixGroup']['INFO']             = _("In order to use rfc2307bis corform groups the objectClass 'posixGroup' must be AUXILIARY");
-    }
-    if(!$rfc2307bis && !$structural){
-      $checks['posixGroup']['STATUS']           = FALSE;
-      $checks['posixGroup']['MSG']              = _("You have disabled the rfc2307bis option on the 'ldap setup' step, but your schema configuration do not support this option.");
-      $checks['posixGroup']['INFO']             = _("The objectClass 'posixGroup' must be STRUCTURAL");
-    }
+    if(isset($tmp['posixGroup'])){
+      $posixGroup = $tmp['posixGroup'];
+      $structural = preg_match("/STRUCTURAL/i",$posixGroup);
 
+      if($rfc2307bis && $structural){
+        $checks['posixGroup']['STATUS']           = FALSE;
+        $checks['posixGroup']['MSG']              = _("You have enabled the rfc2307bis option on the 'ldap setup' step, but your schema configuration do not support this option.");
+        $checks['posixGroup']['INFO']             = _("In order to use rfc2307bis corform groups the objectClass 'posixGroup' must be AUXILIARY");
+      }
+      if(!$rfc2307bis && !$structural){
+        $checks['posixGroup']['STATUS']           = FALSE;
+        $checks['posixGroup']['MSG']              = _("You have disabled the rfc2307bis option on the 'ldap setup' step, but your schema configuration do not support this option.");
+        $checks['posixGroup']['INFO']             = _("The objectClass 'posixGroup' must be STRUCTURAL");
+      }
+    }
 
     $this->checked = $checks;
   }
