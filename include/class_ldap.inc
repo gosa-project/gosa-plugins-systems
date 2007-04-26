@@ -1188,6 +1188,10 @@ class LDAP{
   	
 	  # Get base to look for schema 
 	  $sr = @ldap_read ($this->cid, NULL, "objectClass=*", array("subschemaSubentry"));
+    if(!$sr){
+	    $sr = @ldap_read ($this->cid, "", "objectClass=*", array("subschemaSubentry"));
+    }
+
 	  $attr = @ldap_get_entries($this->cid,$sr);
 	  if (!isset($attr[0]['subschemasubentry'][0])){
 	    return array();
