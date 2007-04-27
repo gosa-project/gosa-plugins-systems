@@ -42,10 +42,12 @@ class Step_Migrate extends setup_step
   var $acl_create_changes = ""; // Contains ldif information about changes 
   var $acl_create_confirmed= FALSE;
 
+  /* Checks initialised ? */
+  var $checks_initialised = FALSE;
+
   function Step_Migrate()
   {
     $this->update_strings(); 
-    $this->initialize_checks();
   }
 
   function update_strings()
@@ -104,19 +106,20 @@ class Step_Migrate extends setup_step
 
     /* Search for gosaAcls */ 
     $ldap->cd($cv['base']);
-    $ldap->search("(&(objectClass=gosaAccount)(|(objectClass=posixAccount)(objectClass=inetOrgPerson)(objectClass=organizationalPerson)))");
-
-    if($ldap->count() ==0){
+    $res = $ldap->search("(&(objectClass=gosaAccount)(|(objectClass=posixAccount)".     
+                           "(objectClass=inetOrgPerson)(objectClass=organizationalPerson)))");
+    if(!$res){
+      $this->checks['acls']['STATUS']    = FALSE;
+      $this->checks['acls']['STATUS_MSG']= _("Ldap query failed.");
+      $this->checks['acls']['ERROR_MSG'] = _("Possibly the 'root object' is missing.");
+    }elseif($ldap->count() == 0){
       $this->checks['acls']['STATUS']    = TRUE;
       $this->checks['acls']['STATUS_MSG']= _("Ok");
-      $this->checks['acls']['ERROR_MSG'] = "<input type='submit' name='retry_acls' value='"._("Retry")."'>";
     }else{
       $this->checks['acls']['STATUS']    = FALSE;
       $this->checks['acls']['STATUS_MSG']= _("Failed");
-      $this->checks['acls']['ERROR_MSG'] = "<input type='submit' name='retry_acls' value='"._("Retry")."'>";
       $this->checks['acls']['ERROR_MSG'].= "<input type='submit' name='create_acls' value='"._("Create adminitrational account")."'>";
     }
-
     return($ldap->count()>=1);
   }
 
@@ -145,6 +148,16 @@ class Step_Migrate extends setup_step
     $testEntry['description']= "Created by GOsa setup, this object can be removed.";
     $testEntry['ou']  = $name;
 
+    /* check if simple ldap cat will be successful 
+     */
+    $res = $ldap->cat($cv['base']);  
+    if(!$res){
+      $this->checks['permissions']['STATUS']    = FALSE;
+      $this->checks['permissions']['STATUS_MSG']= _("Ldap query failed.");
+      $this->checks['permissions']['ERROR_MSG'] = _("Possibly the 'root object' is missing.");
+      return(false);
+    }
+  
     /* Try to create dummy object 
      */ 
     $ldap->cd ($dn);
@@ -156,8 +169,6 @@ class Step_Migrate extends setup_step
       $this->checks['permissions']['STATUS_MSG']= _("Failed");
       $this->checks['permissions']['ERROR_MSG'] = 
         sprintf(_("The specified user '%s' does not have full access to your ldap database."),$cv['admin']);
-      $this->checks['permissions']['ERROR_MSG'].=
-        "<input type='submit' name='retry_permissions' value='"._("Retry")."'>";
       return(false);
     }
 
@@ -170,15 +181,13 @@ class Step_Migrate extends setup_step
       $this->checks['permissions']['STATUS_MSG']= _("Failed");
       $this->checks['permissions']['ERROR_MSG'] = 
         sprintf(_("The specified user '%s' does not have full access to your ldap database."),$cv['admin']);
-      $this->checks['permissions']['ERROR_MSG'].=
-        "<input type='submit' name='retry_permissions' value='"._("Retry")."'>";
       return(false);
     }
 
     /* Create & remove of dummy object was successful */
     $this->checks['permissions']['STATUS']    = TRUE;
     $this->checks['permissions']['STATUS_MSG']= _("Ok");
-    $this->checks['permissions']['ERROR_MSG'] = "<input type='submit' name='retry_permissions' value='"._("Retry")."'>";
+    $this->checks['permissions']['ERROR_MSG'] = "";
     return(true);
   } 
 
@@ -208,7 +217,7 @@ class Step_Migrate extends setup_step
     /* Get all invisible users 
      */
     $ldap->cd($cv['base']); 
-    $ldap->search("(&(|(objectClass=posixAccount)(objectClass=inetOrgPerson)(objectClass=organizationalPerson))(!(objectClass=gosaAccount)))",array("sn","givenName","cn","uid"));
+    $res =$ldap->search("(&(|(objectClass=posixAccount)(objectClass=inetOrgPerson)(objectClass=organizationalPerson))(!(objectClass=gosaAccount)))",array("sn","givenName","cn","uid"));
     while($attrs = $ldap->fetch()){
       if(!preg_match("/,dc=addressbook,/",$attrs['dn'])){
         $attrs['checked'] = FALSE;
@@ -224,18 +233,20 @@ class Step_Migrate extends setup_step
     }
 
     /* No invisible */
-    if(count($this->users_to_migrate) == 0){
+    if(!$res){
+      $this->checks['users_visible']['STATUS']    = FALSE;
+      $this->checks['users_visible']['STATUS_MSG']= _("Ldap query failed.");
+      $this->checks['users_visible']['ERROR_MSG'] = _("Possibly the 'root object' is missing.");
+    }elseif(count($this->users_to_migrate) == 0){
       $this->checks['users_visible']['STATUS']    = TRUE;
       $this->checks['users_visible']['STATUS_MSG']= _("Ok");
       $this->checks['users_visible']['ERROR_MSG'] = "";
-      $this->checks['users_visible']['ERROR_MSG'] .= "<input type='submit' name='users_visible_migrate_refresh' value='"._("Retry")."'>";
     }else{
       $this->checks['users_visible']['STATUS']    = FALSE;
       $this->checks['users_visible']['STATUS_MSG']= "";
       $this->checks['users_visible']['ERROR_MSG'] = sprintf(_("Found %s users that will not be visible in GOsa."), 
           count($this->users_to_migrate));
       $this->checks['users_visible']['ERROR_MSG'] .= "<input type='submit' name='users_visible_migrate' value='"._("Migrate")."'>";
-      $this->checks['users_visible']['ERROR_MSG'] .= "<input type='submit' name='users_visible_migrate_refresh' value='"._("Reload list").   "'>";
     }
   }
 
@@ -318,7 +329,7 @@ class Step_Migrate extends setup_step
 
     /* Get all invisible departments */
     $ldap->cd($cv['base']); 
-    $ldap->search("(&(objectClass=organizationalUnit)(!(objectClass=gosaDepartment)))",array("ou","description","dn"));
+    $res = $ldap->search("(&(objectClass=organizationalUnit)(!(objectClass=gosaDepartment)))",array("ou","description","dn"));
     while($attrs = $ldap->fetch()){
       $attrs['checked'] = FALSE;
       $attrs['before']  = "";
@@ -350,17 +361,19 @@ class Step_Migrate extends setup_step
     /* If we have no invisible departments found  
      *  tell the user that everything is ok 
      */
-    if(count($this->deps_to_migrate) == 0){
+    if(!$res){
+      $this->checks['deps_visible']['STATUS']    = FALSE;
+      $this->checks['deps_visible']['STATUS_MSG']= _("Ldap query failed.");
+      $this->checks['deps_visible']['ERROR_MSG'] = _("Possibly the 'root object' is missing.");
+    }elseif(count($this->deps_to_migrate) == 0 ){
       $this->checks['deps_visible']['STATUS']    = TRUE;
       $this->checks['deps_visible']['STATUS_MSG']= _("Ok");
       $this->checks['deps_visible']['ERROR_MSG'] = "";
-      $this->checks['deps_visible']['ERROR_MSG'] .= "<input type='submit' name='deps_visible_migrate_refresh' value='"._("Retry")."'>";
     }else{
       $this->checks['deps_visible']['STATUS']    = FALSE;
       $this->checks['deps_visible']['STATUS_MSG']= "";//sprintf(_("%s entries found"),count($this->deps_to_migrate));
       $this->checks['deps_visible']['ERROR_MSG'] = sprintf(_("Found %s departments that will not be visible in GOsa."),count($this->deps_to_migrate));
       $this->checks['deps_visible']['ERROR_MSG'] .= "<input type='submit' name='deps_visible_migrate' value='"._("Migrate")."'>";
-      $this->checks['deps_visible']['ERROR_MSG'] .= "<input type='submit' name='deps_visible_migrate_refresh' value='"._("Reload list")."'>";
     }
   }
 
@@ -529,6 +542,12 @@ class Step_Migrate extends setup_step
 
   function execute()
   {
+    /* Initialise checks if this is the first call */
+    if(!$this->checks_initialised || isset($_POST['reload'])){
+      $this->initialize_checks();
+      $this->checks_initialised = TRUE;
+    }
+
     /* Permission check */
     $this->check_ldap_permissions();
   
@@ -536,10 +555,6 @@ class Step_Migrate extends setup_step
      * Root object check  
      *************/
   
-    if(isset($_POST['retry_root'])) {
-      $this->checkBase();
-    }
-
     if(isset($_POST['retry_root_create'])){
       $this->checkBase(FALSE);
     }
@@ -743,44 +758,13 @@ class Step_Migrate extends setup_step
       if($just_check){
         $this->checks['root']['STATUS']    = FALSE;
         $this->checks['root']['STATUS_MSG']= _("Failed");
-        $this->checks['root']['ERROR_MSG'] =  "<input type='submit' name='retry_root' value='"._("Retry")."'>";
         $this->checks['root']['ERROR_MSG'].=  "<input type='submit' name='retry_root_create' value='"._("Try to create root object")."'>";
         return(FALSE);
       }else{
 
-        /* Try to find out which values are necessary */
-        $tmp = $ldap->get_objectclasses();
-        $oc = $tmp['organization'];
-        $must_attrs = array();
-        if(preg_match("/MUST/",$oc)){
-          $must       = preg_replace("/^.* MUST/","",$oc);
-          $must       = preg_replace("/MAY.*$/","",$must);
-          $must       = trim(preg_replace("/[\(\)\$]/","",$must));
-          $must_attrs = split(" ",$must);
-          foreach($must_attrs as $key => $attrs){
-            if(empty($attrs)){
-              unset($must_attrs[$key]);
-            }
-          }
-        }
-
-        /* Root object does not exists try to create it */
-        $ldapadd["objectclass"][0]="top";
-        $ldapadd["objectclass"][1]="organization";
-
-        /* Try to fill all collected must attributes */
-        $base_parts = preg_split("/,/",$cv['base']);
-        foreach($must_attrs as $attr){
-          foreach($base_parts as $part){
-            if(preg_match("/^".$attr."=/",$part) && !isset($ldapadd[$attr])){
-              $ldapadd[$attr]= preg_replace("/^[^=]*+=/","",$part);
-            }
-          }
-        }
-
         /* Add root object */ 
         $ldap->cd($cv['base']);
-        $res = $ldap->add($ldapadd);
+        $res = $ldap->create_missing_trees($cv['base']);
   
         /* If adding failed, tell the user */
         if(!$res){
@@ -796,7 +780,6 @@ class Step_Migrate extends setup_step
     /* Create & remove of dummy object was successful */
     $this->checks['root']['STATUS']    = TRUE;
     $this->checks['root']['STATUS_MSG']= _("Ok");
-    $this->checks['root']['ERROR_MSG'] = "<input type='submit' name='retry_root' value='"._("Retry")."'>";
   }
 
 

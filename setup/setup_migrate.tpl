@@ -2,6 +2,11 @@
 
 	<h1 style='color:red'>Style fixes necessary here ;-)</h1>
 
+	<p>	
+		Create a reload for each entry later 
+		<input type='submit' name='reload' value='{t}Reload{/t}'>
+	</p>
+
     <div class='default'>
 
 		{if $method == "default"}
