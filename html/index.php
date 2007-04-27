@@ -208,9 +208,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])){
   /* Admin-logon and verify */
   $ldap = $config->get_ldap_link();
   if (is_null($ldap) || (is_int($ldap) && $ldap == 0)){
-#    print_red (_("Can't bind to LDAP. Please contact the system administrator."));
-#    displayLogin();
-#    exit();
+    print_red (_("Can't bind to LDAP. Please contact the system administrator."));
+    displayLogin();
+    exit();
   }
 
   /* Check for schema file presence */
@@ -250,9 +250,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])){
   $ldap->cd($config->current['BASE']);
   $ldap->search("(&(objectClass=gosaObject)(gosaSubtreeACL=:all))");
   if ($ldap->count() < 1){
-    print_red(_("You're missing an administrative account for GOsa, you'll not be able to administrate anything!"));
-    displayLogin();
-    exit();
+#    print_red(_("You're missing an administrative account for GOsa, you'll not be able to administrate anything!"));
+#    displayLogin();
+#    exit();
   }
 
   /* Check for valid input */
