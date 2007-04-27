@@ -98,6 +98,9 @@ class divListSystem extends MultiSelectWindow
     $deps= get_list("(&(|(ou=*)(description=*))(objectClass=gosaDepartment))", $this->module, $base,
                     array("ou", "description"), GL_SIZELIMIT | GL_SUBSEARCH);
 
+    /* Add base */
+    $deps[] = array("dn"=>$this->config->current['BASE']);
+
     $tmp =array();
     foreach($deps as $dep){
       $tmp[$dep['dn']] = $dep;

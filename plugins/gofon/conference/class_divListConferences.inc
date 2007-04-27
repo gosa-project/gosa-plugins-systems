@@ -79,6 +79,9 @@ class divListConference extends MultiSelectWindow
     $deps= get_list("(&(|(ou=*)(description=*))(objectClass=gosaDepartment))", $this->module, $base,
                     array("ou", "description"), GL_SIZELIMIT | GL_SUBSEARCH);
 
+    /* Add base */
+    $deps[] = array("dn"=>$this->config->current['BASE']);
+
     /* Load possible departments */
     $ui     = get_userinfo();
     $first = "";
