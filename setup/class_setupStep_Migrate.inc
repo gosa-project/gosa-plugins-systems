@@ -35,6 +35,13 @@ class Step_Migrate extends setup_step
   var $users_migration_dialog= FALSE;
   var $users_to_migrate      = array();
 
+  /* Create Acl attributes */
+  var $acl_create_dialog  = FALSE;
+  var $acl_create_type    = "group";
+  var $acl_create_selected= ""; // Currently selected element, that should receive admin rights 
+  var $acl_create_changes = ""; // Contains ldif information about changes 
+  var $acl_create_confirmed= FALSE;
+
   function Step_Migrate()
   {
     $this->update_strings(); 
@@ -51,6 +58,12 @@ class Step_Migrate extends setup_step
   function initialize_checks()
   {
     $this->checks = array();
+    $this->checks['root']['TITLE']     = _("Checking for root object");
+    $this->checks['root']['STATUS']    = FALSE;
+    $this->checks['root']['STATUS_MSG']= "";
+    $this->checks['root']['ERROR_MSG'] = "";
+    $this->checkBase();
+
     $this->checks['permissions']['TITLE']     = _("Checking permissions on ldap database");
     $this->checks['permissions']['STATUS']    = FALSE;
     $this->checks['permissions']['STATUS_MSG']= "";
@@ -68,6 +81,43 @@ class Step_Migrate extends setup_step
     $this->checks['users_visible']['STATUS_MSG']= "";
     $this->checks['users_visible']['ERROR_MSG'] = "";
     $this->check_invisible_gosaAccounts();
+
+    $this->checks['acls']['TITLE']     = _("Checking for administrational account");
+    $this->checks['acls']['STATUS']    = FALSE;
+    $this->checks['acls']['STATUS_MSG']= "";
+    $this->checks['acls']['ERROR_MSG'] = "";
+    $this->check_acls();
+  }
+
+  
+  /* Check Acls if there is at least one object with acls defined 
+   */
+  function check_acls()
+  {
+    /* Establish ldap connection */
+    $cv = $this->parent->captured_values;
+    $ldap = new LDAP($cv['admin'],
+        $cv['password'],
+        $cv['connection'],
+        FALSE,
+        $cv['tls']);
+
+    /* Search for gosaAcls */ 
+    $ldap->cd($cv['base']);
+    $ldap->search("(&(objectClass=gosaAccount)(|(objectClass=posixAccount)(objectClass=inetOrgPerson)(objectClass=organizationalPerson)))");
+
+    if($ldap->count() ==0){
+      $this->checks['acls']['STATUS']    = TRUE;
+      $this->checks['acls']['STATUS_MSG']= _("Ok");
+      $this->checks['acls']['ERROR_MSG'] = "<input type='submit' name='retry_acls' value='"._("Retry")."'>";
+    }else{
+      $this->checks['acls']['STATUS']    = FALSE;
+      $this->checks['acls']['STATUS_MSG']= _("Failed");
+      $this->checks['acls']['ERROR_MSG'] = "<input type='submit' name='retry_acls' value='"._("Retry")."'>";
+      $this->checks['acls']['ERROR_MSG'].= "<input type='submit' name='create_acls' value='"._("Create adminitrational account")."'>";
+    }
+
+    return($ldap->count()>=1);
   }
 
 
@@ -98,8 +148,10 @@ class Step_Migrate extends setup_step
     /* Try to create dummy object 
      */ 
     $ldap->cd ($dn);
+    $ldap->create_missing_trees($dn);
     $res = $ldap->add($testEntry);
     if(!$res){
+      gosa_log($ldap->get_error());
       $this->checks['permissions']['STATUS']    = FALSE;
       $this->checks['permissions']['STATUS_MSG']= _("Failed");
       $this->checks['permissions']['ERROR_MSG'] = 
@@ -113,6 +165,7 @@ class Step_Migrate extends setup_step
      */
     $res = $ldap->rmDir($dn);
     if(!$res){
+      gosa_log($ldap->get_error());
       $this->checks['permissions']['STATUS']    = FALSE;
       $this->checks['permissions']['STATUS_MSG']= _("Failed");
       $this->checks['permissions']['ERROR_MSG'] = 
@@ -212,10 +265,12 @@ class Step_Migrate extends setup_step
 
         /* Create new objectClass array */
         $new_attrs  = array();
+        $new_attrs['objectClass']= array("gosaAccount","inetOrgPerson","organizationalPerson");
         for($i = 0 ; $i < $attrs['objectClass']['count']; $i ++ ){
-          $new_attrs['objectClass'][]   = $attrs['objectClass'][$i];
+          if(!in_array_ics($attrs['objectClass'][$i], $new_attrs['objectClass'])){
+            $new_attrs['objectClass'][]   = $attrs['objectClass'][$i];
+          }
         }
-        $new_attrs['objectClass'][] = "gosaAccount";
 
         /* Set info attributes for current object, 
          *  or write changes to the ldap database 
@@ -364,16 +419,171 @@ class Step_Migrate extends setup_step
   }
 
 
+  function get_user_list()
+  {
+    /* Get collected configuration settings */
+    $cv = $this->parent->captured_values;
+
+    /* Establish ldap connection */
+    $ldap = new LDAP($cv['admin'],
+        $cv['password'],
+        $cv['connection'],
+        FALSE,
+        $cv['tls']);
+    
+    $ldap->cd($cv['base']);
+    $ldap->search("(objectClass=gosaAccount)",array("dn"));
+  
+    $tmp = array();
+    while($attrs = $ldap->fetch()){
+      $tmp[base64_encode($attrs['dn'])] = @LDAP::fix($attrs['dn']);
+    }
+
+    return($tmp);
+  }
+
+  function get_group_list()
+  {
+    /* Get collected configuration settings */
+    $cv = $this->parent->captured_values;
+
+    /* Establish ldap connection */
+    $ldap = new LDAP($cv['admin'],
+        $cv['password'],
+        $cv['connection'],
+        FALSE,
+        $cv['tls']);
+    
+    $ldap->cd($cv['base']);
+    $ldap->search("(objectClass=posixGroup)",array("dn"));
+  
+    $tmp = array();
+    while($attrs = $ldap->fetch()){
+      $tmp[base64_encode($attrs['dn'])] = @LDAP::fix($attrs['dn']);
+    }
+
+    return($tmp);
+  }
+
+
+
+  function create_admin($only_ldif = FALSE)
+  {
+    /* Reset '' */
+    $this->acl_create_changes="";
+
+    /* Object that should receive admin acls */
+    $dn = $this->acl_create_selected;
+
+    /* Get collected configuration settings */
+    $cv = $this->parent->captured_values;
+
+    /* Establish ldap connection */
+    $ldap = new LDAP($cv['admin'],
+        $cv['password'],
+        $cv['connection'],
+        FALSE,
+        $cv['tls']);
+
+    /* Get current base attributes */
+    $ldap->cd($cv['base']);
+    $ldap->cat($cv['base'],array("dn","objectClass","gosaAclEntry"));
+    $attrs = $ldap->fetch();
+
+    /* Add acls for the selcted user to the base */
+    $attrs_new['objectClass'] = array("gosaACL");
+
+    for($i = 0; $i < $attrs['objectClass']['count']; $i ++){
+      if(!in_array_ics($attrs['objectClass'][$i],$attrs_new['objectClass'])){
+        $attrs_new['objectClass'][] = $attrs['objectClass'][$i];
+      }
+    }
+
+    $acl = "0:sub:".base64_encode($dn).":all;cmdrw";    
+    $attrs_new['gosaAclEntry'][] = $acl;
+    if(isset($attrs['gosaAclEntry'])){
+      for($i = 0 ; $i < $attrs['gosaAclEntry']['count']; $i ++){
+          
+        $prio = preg_replace("/[:].*$/","",$attrs['gosaAclEntry'][$i]);
+        $rest = preg_replace("/^[^:]/","",$attrs['gosaAclEntry'][$i]);
+ 
+        $data = ($prio+1).$rest;
+        $attrs_new['gosaAclEntry'][] = $data;
+      }
+    }
+
+    if($only_ldif){
+      $this->acl_create_changes ="\n".$cv['base']."\n";
+      $this->acl_create_changes.=$this->array_to_ldif($attrs)."\n";
+      $this->acl_create_changes.="\n".$cv['base']."\n";
+      $this->acl_create_changes.=$this->array_to_ldif($attrs_new);
+    }else{
+   
+      $ldap->cd($cv['base']);
+      if(!$ldap->modify($attrs_new)){
+        print_red(sprintf(_("Adding acls for user '%s' failed, ldap says '%s'."),$dn,$ldap->get_error()));
+      }
+    }
+  }
+  
 
   function execute()
   {
     /* Permission check */
     $this->check_ldap_permissions();
+  
+    /*************
+     * Root object check  
+     *************/
+  
+    if(isset($_POST['retry_root'])) {
+      $this->checkBase();
+    }
 
+    if(isset($_POST['retry_root_create'])){
+      $this->checkBase(FALSE);
+    }
+ 
+    /*************
+     * User Migration handling 
+     *************/
+
+    if(isset($_POST['retry_acls'])){
+      $this->check_acls();
+    }
+
+    if(isset($_POST['create_acls'])){
+      $this->acl_create_dialog = TRUE;
+      $this->dialog = TRUE;
+    }
+  
+    if(isset($_POST['create_acls_cancel'])){
+      $this->acl_create_dialog = FALSE;
+      $this->dialog = FALSE;
+    }
+
+    if(isset($_POST['create_acls_create_confirmed'])){
+      $this->create_admin();
+    }
+
+    if(isset($_POST['create_acls_create'])){
+      $this->create_admin(TRUE);
+    }
+
+    if($this->acl_create_dialog){
+      $smarty = get_smarty();
+      $smarty->assign("users" ,$this->get_user_list());
+      $smarty->assign("groups",$this->get_group_list());
+      $smarty->assign("type"  ,$this->acl_create_type);
+      $smarty->assign("method","create_acls");
+      $smarty->assign("acl_create_selected",$this->acl_create_selected);
+      $smarty->assign("what_will_be_done_now",$this->acl_create_changes);
+      return($smarty->fetch(get_template_path("setup_migrate.tpl",TRUE,dirname(__FILE__))));
+    }
 
     /*************
      * User Migration handling 
-     *************
+     *************/
 
     /* Refresh list of deparments */
     if(isset($_POST['users_visible_migrate_refresh'])){
@@ -415,7 +625,7 @@ class Step_Migrate extends setup_step
 
     /*************
      * Department Migration handling 
-     *************
+     *************/
 
     /* Refresh list of deparments */
     if(isset($_POST['deps_visible_migrate_refresh'])){
@@ -460,8 +670,28 @@ class Step_Migrate extends setup_step
     return($smarty->fetch(get_template_path("setup_migrate.tpl",TRUE,dirname(__FILE__))));
   }
 
+
   function save_object()
   {
+    /* Get "create acl" dialog posts */
+    if($this->acl_create_dialog){
+      if(isset($_POST['create_acls_create'])){
+        if(isset($_POST['create_acls_selected'])){
+          $this->acl_create_selected = base64_decode($_POST['create_acls_selected']);
+        }else{
+          $this->acl_create_selected = ""; 
+        }
+      }
+
+      if(isset($_POST['create_acls_create_abort'])){
+        $this->acl_create_selected = "";
+      }
+
+      if(isset($_POST['acl_create_type'])){
+        $this->acl_create_type = $_POST['acl_create_type'];
+      }
+    }
+
     /* Get selected departments */
     if($this->dep_migration_dialog){
       foreach($this->deps_to_migrate as $id => $data){
@@ -483,7 +713,90 @@ class Step_Migrate extends setup_step
         }
       }
     }
+  }
 
+
+  // checks for valid base entry
+  function checkBase($just_check = TRUE)
+  {
+    /* Get collected setup informations */
+    $cv = $this->parent->captured_values;
+
+    /* Establish ldap connection */
+    $ldap = new LDAP($cv['admin'],
+        $cv['password'],
+        $cv['connection'],
+        FALSE,
+        $cv['tls']);
+
+    /* Check if root object exists */
+    $ldap->cd($cv['base']);
+    $res = $ldap->search("(objectClass=*)");
+    $err = ldap_errno($ldap->cid); 
+
+    if( !$res || 
+        $err == 0x20 ||  # LDAP_NO_SUCH_OBJECT
+        $err == 0x40) {  # LDAP_NAMING_VIOLATION
+
+      /* Root object doesn't exists 
+       */
+      if($just_check){
+        $this->checks['root']['STATUS']    = FALSE;
+        $this->checks['root']['STATUS_MSG']= _("Failed");
+        $this->checks['root']['ERROR_MSG'] =  "<input type='submit' name='retry_root' value='"._("Retry")."'>";
+        $this->checks['root']['ERROR_MSG'].=  "<input type='submit' name='retry_root_create' value='"._("Try to create root object")."'>";
+        return(FALSE);
+      }else{
+
+        /* Try to find out which values are necessary */
+        $tmp = $ldap->get_objectclasses();
+        $oc = $tmp['organization'];
+        $must_attrs = array();
+        if(preg_match("/MUST/",$oc)){
+          $must       = preg_replace("/^.* MUST/","",$oc);
+          $must       = preg_replace("/MAY.*$/","",$must);
+          $must       = trim(preg_replace("/[\(\)\$]/","",$must));
+          $must_attrs = split(" ",$must);
+          foreach($must_attrs as $key => $attrs){
+            if(empty($attrs)){
+              unset($must_attrs[$key]);
+            }
+          }
+        }
+
+        /* Root object does not exists try to create it */
+        $ldapadd["objectclass"][0]="top";
+        $ldapadd["objectclass"][1]="organization";
+
+        /* Try to fill all collected must attributes */
+        $base_parts = preg_split("/,/",$cv['base']);
+        foreach($must_attrs as $attr){
+          foreach($base_parts as $part){
+            if(preg_match("/^".$attr."=/",$part) && !isset($ldapadd[$attr])){
+              $ldapadd[$attr]= preg_replace("/^[^=]*+=/","",$part);
+            }
+          }
+        }
+
+        /* Add root object */ 
+        $ldap->cd($cv['base']);
+        $res = $ldap->add($ldapadd);
+  
+        /* If adding failed, tell the user */
+        if(!$res){
+          $this->checks['root']['STATUS']    = FALSE;
+          $this->checks['root']['STATUS_MSG']= _("Failed");
+          $this->checks['root']['ERROR_MSG'] = _("Root object couldn't be created, you should try it on your own.");
+          $this->checks['root']['ERROR_MSG'].= "<input type='submit' name='retry_root_create' value='"._("Try to create root object")."'>";
+          return($res);;
+        }
+      }
+    }
+
+    /* Create & remove of dummy object was successful */
+    $this->checks['root']['STATUS']    = TRUE;
+    $this->checks['root']['STATUS_MSG']= _("Ok");
+    $this->checks['root']['ERROR_MSG'] = "<input type='submit' name='retry_root' value='"._("Retry")."'>";
   }
 
 
@@ -502,18 +815,10 @@ class Step_Migrate extends setup_step
       if(is_array($value)){
         unset($value['count']);
         foreach($value as $a_val){
-          if(!preg_match('/^[a-z0-9+@#.=, \/ -]+$/i', $a_val)){
-            $ret .= $name.":: ". base64_encode($a_val)."\n";
-          }else{
-            $ret .= $name.": ". $a_val."\n";
-          }
+          $ret .= $name.": ". $a_val."\n";
         }
       }else{
-        if(!preg_match('/^[a-z0-9+@#.=, \/ -]+$/i', $value)){
-          $ret .= $name.": ". base64_encode($value)."\n";
-        }else{
-          $ret .= $name.": ". $value."\n";
-        }
+        $ret .= $name.": ". $value."\n";
       }
     }
     return(preg_replace("/\n$/","",$ret));

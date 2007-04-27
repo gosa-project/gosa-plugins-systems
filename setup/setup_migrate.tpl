@@ -1,4 +1,7 @@
 <div>
+
+	<h1 style='color:red'>Style fixes necessary here ;-)</h1>
+
     <div class='default'>
 
 		{if $method == "default"}
@@ -12,13 +15,94 @@
 					</div>
 				{else}
 					<div class='step2_failed'>{$checks.$key.STATUS_MSG}
+					</div>
+					<div>
 					{if $checks.$key.ERROR_MSG}
 						{$checks.$key.ERROR_MSG}
 					{/if}
 					</div>
 				{/if}
-				<div style='height:10px;'>&nbsp;</div>
+				<p>&nbsp;</p>	
 			{/foreach}
+
+		{elseif $method == "create_acls"}
+
+		<h2>{t}Acl setup{/t}</h2>
+	
+		{if $acl_create_selected != "" && $what_will_be_done_now!=""}
+			<div>
+<pre>
+{$what_will_be_done_now}
+</pre>
+			</div>		
+			<input type='submit' name='create_acls_create_confirmed' value='{t}Next{/t}'>
+			<input type='submit' name='create_acls_create_abort' value='{t}Abort{/t}'>
+		{else}
+		<b>{t}Create a new user and a group with adminstrational acls{/t}</b><br>
+	
+			<p style='padding-left:10px;'>
+			{t}To automatically add a new administrative user and group to your ldap database use the formular below.{/t}<br>
+			<table>
+				<tr>
+					<td>
+						{t}User uid{/t}:&nbsp;
+					</td>
+					<td>
+						<input type='input' value='' name='new_user_uid'><br>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						{t}User password{/t}:&nbsp;
+					</td>
+					<td>
+						<input type='input' value='' name='new_user_password'><br>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						{t}Group name{/t}:&nbsp;
+					</td>
+					<td>
+						<input type='input' value='' name='new_group_cn'>
+					</td>
+				</tr>
+			</table>	
+			</p>
+
+			<p>&nbsp;</p>
+			<b>{t}Append administrational acls to existing an user or a group{/t}</b><br>
+			Bla {t}To grant administrative permissions to a user or a group, select an element and use button below.{/t}
+			<p style='padding-left:10px;'>
+			<select name='acl_create_type' onChange='document.mainform.submit();' >
+				{if $type == "user"}
+				<option value='group'>{t}Group{/t}</option>
+				<option selected value='user'>{t}User{/t}</option>
+				{else}
+				<option selected value='group'>{t}Group{/t}</option>
+				<option value='user'>{t}User{/t}</option>
+				{/if}
+			</select>
+			<select name='create_acls_selected' size="12" style='width:100%;'>
+				{if $type == "user"}
+					{html_options options=$users selected=$acl_create_selected}
+				{else}
+					{html_options options=$groups selected=$acl_create_selected}
+				{/if}
+			</select>
+
+				<input type='submit' name='create_acls_create' value='{t}Add administrational acls to this object{/t}'>
+			</p>
+		{/if}
+
+
+			<p class='seperator'>&nbsp;</p>	
+
+			<div style='width:100%; text-align:right; padding:5px;'>
+				<input type='submit' name='create_acls_cancel' value='{t}Close{/t}'>
+			</div>
+		
+
 		{elseif $method == "migrate_deps"}
 	
 			<h2>Department migration</h2>
