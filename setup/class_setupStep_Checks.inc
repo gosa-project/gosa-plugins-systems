@@ -246,6 +246,16 @@ class Step_Checks extends setup_step
     $M = TRUE;
     $this->config_checks[] = array("NAME" => $N , "DESC" => $D , "RESULT" => $R , "SOLUTION" => $S , "MUST" => $M );
 
+    /* Emulating old stuff? */
+    if (!preg_match('/^4/', phpversion())){
+      $N = "zend.ze1_compatibility_mode = <b>"._("Off")."</b>";
+      $D = _("Increase your server performance by setting magic_quotes_gpc to 'off'."); 
+      $S = _("Search for 'zend.ze1_compatibility_mode' in your php.ini and set it to 'Off'."); 
+      $R = !ini_get('zend.ze1_compatibility_mode'); 
+      $M = FALSE;
+      $this->config_checks[] = array("NAME" => $N , "DESC" => $D , "RESULT" => $R , "SOLUTION" => $S , "MUST" => $M );
+    }
+
 
     /* Configuration file  
      */
