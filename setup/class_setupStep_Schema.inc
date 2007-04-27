@@ -222,15 +222,13 @@ class Step_Schema extends setup_step
     $checks['posixGroup']['INFO']             = "";
 
     if(isset($tmp['posixGroup'])){
-      $posixGroup = $tmp['posixGroup'];
-      $structural = preg_match("/STRUCTURAL/i",$posixGroup);
 
-      if($rfc2307bis && $structural){
+      if($rfc2307bis && isset($tmp['posixGroup']['STRUCTURAL'])){
         $checks['posixGroup']['STATUS']           = FALSE;
         $checks['posixGroup']['MSG']              = _("You have enabled the rfc2307bis option on the 'ldap setup' step, but your schema configuration do not support this option.");
         $checks['posixGroup']['INFO']             = _("In order to use rfc2307bis corform groups the objectClass 'posixGroup' must be AUXILIARY");
       }
-      if(!$rfc2307bis && !$structural){
+      if(!$rfc2307bis && !isset($tmp['posixGroup']['STRUCTURAL'])){
         $checks['posixGroup']['STATUS']           = FALSE;
         $checks['posixGroup']['MSG']              = _("You have disabled the rfc2307bis option on the 'ldap setup' step, but your schema configuration do not support this option.");
         $checks['posixGroup']['INFO']             = _("The objectClass 'posixGroup' must be STRUCTURAL");
