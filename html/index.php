@@ -246,15 +246,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])){
     $ldap->create_missing_trees($config->current['CONFIG']);
   }
 
-  /* Check for at least one subtreeACL in the complete tree */
-  $ldap->cd($config->current['BASE']);
-  $ldap->search("(&(objectClass=gosaObject)(gosaSubtreeACL=:all))");
-  if ($ldap->count() < 1){
-#    print_red(_("You're missing an administrative account for GOsa, you'll not be able to administrate anything!"));
-#    displayLogin();
-#    exit();
-  }
-
   /* Check for valid input */
   $username= $_POST["username"];
   if (!ereg("^[A-Za-z0-9_.-]+$", $username)){

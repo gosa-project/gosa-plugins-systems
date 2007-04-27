@@ -20,6 +20,8 @@
  */
 
 
+
+
 class Step_Migrate extends setup_step
 {
   var $languages      = array();
@@ -91,37 +93,6 @@ class Step_Migrate extends setup_step
     $this->check_acls();
   }
 
-  
-  /* Check Acls if there is at least one object with acls defined 
-   */
-  function check_acls()
-  {
-    /* Establish ldap connection */
-    $cv = $this->parent->captured_values;
-    $ldap = new LDAP($cv['admin'],
-        $cv['password'],
-        $cv['connection'],
-        FALSE,
-        $cv['tls']);
-
-    /* Search for gosaAcls */ 
-    $ldap->cd($cv['base']);
-    $res = $ldap->search("(&(objectClass=gosaAccount)(|(objectClass=posixAccount)".     
-                           "(objectClass=inetOrgPerson)(objectClass=organizationalPerson)))");
-    if(!$res){
-      $this->checks['acls']['STATUS']    = FALSE;
-      $this->checks['acls']['STATUS_MSG']= _("Ldap query failed.");
-      $this->checks['acls']['ERROR_MSG'] = _("Possibly the 'root object' is missing.");
-    }elseif($ldap->count() == 0){
-      $this->checks['acls']['STATUS']    = TRUE;
-      $this->checks['acls']['STATUS_MSG']= _("Ok");
-    }else{
-      $this->checks['acls']['STATUS']    = FALSE;
-      $this->checks['acls']['STATUS_MSG']= _("Failed");
-      $this->checks['acls']['ERROR_MSG'].= "<input type='submit' name='create_acls' value='"._("Create adminitrational account")."'>";
-    }
-    return($ldap->count()>=1);
-  }
 
 
   /* Check ldap accessibility 
@@ -432,6 +403,38 @@ class Step_Migrate extends setup_step
   }
 
 
+  /* Check Acls if there is at least one object with acls defined 
+   */
+  function check_acls()
+  {
+    /* Establish ldap connection */
+    $cv = $this->parent->captured_values;
+    $ldap = new LDAP($cv['admin'],
+        $cv['password'],
+        $cv['connection'],
+        FALSE,
+        $cv['tls']);
+
+    /* Search for gosaAcls */ 
+    $ldap->cd($cv['base']);
+    $res = $ldap->search("(&(objectClass=gosaAccount)(|(objectClass=posixAccount)".     
+                           "(objectClass=inetOrgPerson)(objectClass=organizationalPerson)))");
+    if(!$res){
+      $this->checks['acls']['STATUS']    = FALSE;
+      $this->checks['acls']['STATUS_MSG']= _("Ldap query failed.");
+      $this->checks['acls']['ERROR_MSG'] = _("Possibly the 'root object' is missing.");
+    }elseif($ldap->count()){
+      $this->checks['acls']['STATUS']    = TRUE;
+      $this->checks['acls']['STATUS_MSG']= _("Ok");
+    }else{
+      $this->checks['acls']['STATUS']    = FALSE;
+      $this->checks['acls']['STATUS_MSG']= _("Failed");
+      $this->checks['acls']['ERROR_MSG'].= "<input type='submit' name='create_acls' value='"._("Create adminitrational account")."'>";
+    }
+    return($ldap->count()>=1);
+  }
+
+
   function get_user_list()
   {
     /* Get collected configuration settings */
@@ -538,7 +541,62 @@ class Step_Migrate extends setup_step
       }
     }
   }
+ 
   
+  function create_admin_user()
+  {
+    if(isset($_POST['new_user_password']) && !empty($_POST['new_user_password'])){
+      $pwd = $_POST['new_user_password'];
+    }else{
+      print_red(_("Please specify a valid password for the new GOsa admin user."));
+      return(FALSE);
+    }
+    
+    /* Establish ldap connection */
+    $cv = $this->parent->captured_values;
+    $ldap = new LDAP($cv['admin'],
+        $cv['password'],
+        $cv['connection'],
+        FALSE,
+        $cv['tls']);
+
+    /* Get current base attributes */
+    $ldap->cd($cv['base']);
+  
+    if($cv['peopledn'] == "cn"){
+      $dn = "cn=System Administrator,".$cv['peopleou'].",".$cv['base'];
+    }else{
+      $dn = "uid=admin,".$cv['peopleou'].",".$cv['base'];
+    }
+
+    $methods = @passwordMethod::get_available_methods_if_not_loaded();
+    $p_m = $methods[$cv['encryption']];
+    $p_c = new $p_m(array());
+    $hash = $p_c->generate_hash($pwd);
+
+    $new_user=array();
+    $new_user['objectClass']= array("gosaAccount","organizationalPerson","inetOrgPerson");
+    $new_user['givenName']  = "System";
+    $new_user['sn']  = "Administrator";
+    $new_user['cn']  = "System Administrator";
+    $new_user['uid'] = "admin";
+    $new_user['userPassword'] = $hash;
+    
+    $ldap->cd($cv['base']);
+    $ldap->create_missing_trees(preg_replace("/^[^,]+,/","",$dn));
+    $ldap->cd($dn);  
+    $res = $ldap->add($new_user);
+    $this->acl_create_selected = $dn;
+    $this->create_admin();
+    
+    if(!$res){
+      print_red($ldap->get_error());
+    }
+  
+    $this->acl_create_dialog=FALSE;        
+    $this->check_acls();
+  }
+ 
 
   function execute()
   {
@@ -547,10 +605,7 @@ class Step_Migrate extends setup_step
       $this->initialize_checks();
       $this->checks_initialised = TRUE;
     }
-
-    /* Permission check */
-    $this->check_ldap_permissions();
-  
+ 
     /*************
      * Root object check  
      *************/
@@ -585,10 +640,17 @@ class Step_Migrate extends setup_step
       $this->create_admin(TRUE);
     }
 
+    if(isset($_POST['create_admin_user'])){
+      $this->create_admin_user();
+    }
+
     if($this->acl_create_dialog){
       $smarty = get_smarty();
+      $smarty->assign("new_user_password",@$_POST['new_user_password']);
       $smarty->assign("users" ,$this->get_user_list());
+      $smarty->assign("users_cnt" ,count($this->get_user_list()));
       $smarty->assign("groups",$this->get_group_list());
+      $smarty->assign("groups_cnt",count($this->get_group_list()));
       $smarty->assign("type"  ,$this->acl_create_type);
       $smarty->assign("method","create_acls");
       $smarty->assign("acl_create_selected",$this->acl_create_selected);

@@ -1,15 +1,15 @@
 <div>
 
 	<h1 style='color:red'>Style fixes necessary here ;-)</h1>
+    <div class='default'>
+
+		{if $method == "default"}
 
 	<p>	
 		Create a reload for each entry later 
 		<input type='submit' name='reload' value='{t}Reload{/t}'>
 	</p>
 
-    <div class='default'>
-
-		{if $method == "default"}
 			{foreach from=$checks item=val key=key}
 				<div class='step2_entry_name'><b>{$checks.$key.TITLE}</b></div>
 				{if $checks.$key.STATUS}
@@ -45,36 +45,39 @@
 		{else}
 		<b>{t}Create a new user and a group with adminstrational acls{/t}</b><br>
 	
+			{t}To automatically add a new administrative user to your ldap database use the formular below.{/t}<br>
 			<p style='padding-left:10px;'>
-			{t}To automatically add a new administrative user and group to your ldap database use the formular below.{/t}<br>
 			<table>
 				<tr>
 					<td>
-						{t}User uid{/t}:&nbsp;
+						{t}Name{/t}:&nbsp;
 					</td>
 					<td>
-						<input type='input' value='' name='new_user_uid'><br>
+						<i>System administrator</i>
 					</td>
-				</tr>
+				<tr>
 				<tr>
 					<td>
-						{t}User password{/t}:&nbsp;
+						{t}User ID{/t}:&nbsp;
 					</td>
 					<td>
-						<input type='input' value='' name='new_user_password'><br>
+						<i>admin</i>
 					</td>
-				</tr>
 				<tr>
+				</tr>
 					<td>
-						{t}Group name{/t}:&nbsp;
+						{t}Password{/t}:&nbsp;
 					</td>
 					<td>
-						<input type='input' value='' name='new_group_cn'>
+						<input type='input' value='{$new_user_password}' name='new_user_password'><br>
 					</td>
 				</tr>
-			</table>	
+			</table>
+			<input type='submit' name='create_admin_user' value='{t}Create{/t}'>	
 			</p>
-
+			
+			{if $users_cnt != 0 && $groups_cnt != 0}
+			
 			<p>&nbsp;</p>
 			<b>{t}Append administrational acls to existing an user or a group{/t}</b><br>
 			Bla {t}To grant administrative permissions to a user or a group, select an element and use button below.{/t}
@@ -98,6 +101,7 @@
 
 				<input type='submit' name='create_acls_create' value='{t}Add administrational acls to this object{/t}'>
 			</p>
+			{/if}
 		{/if}
 
 
