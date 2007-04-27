@@ -59,6 +59,14 @@ class setup
 
   function execute()
   {
+    /* Display phpinfo() dialog when $_GET['info'] is set,
+     *  but only do this, if user is allowed to use the setup.
+     * If setupStep_Welcome is_completed, we are allowed to view those infos-
+     */
+    if(isset($_GET['info']) && get_class($this->o_steps[1]) == "Step_Welcome" && $this->o_steps[1]->is_completed()){
+      phpinfo();
+    }
+
     /* display step error msgs */
     $msgs = $this->o_steps[$this->i_current]->check();
     foreach($msgs as $msg){
