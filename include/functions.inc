@@ -2129,6 +2129,9 @@ function gosa_ldap_explode_dn($dn,$config = NULL,$verify_in_ldap=false)
 
 function is_php4()
 {
+  if (isset($_SESSION['PHP4COMPATIBLE'])){
+    return true;
+  }
   return (preg_match('/^4/', phpversion()));
 }
 
