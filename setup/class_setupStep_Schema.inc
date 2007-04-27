@@ -69,10 +69,9 @@ class Step_Schema extends setup_step
     return($smarty -> fetch (get_template_path("../setup/setup_schema.tpl")));
   }
 
-  function check_schema_version($description, $version)
+  function check_schema_version($class, $version)
   {
-    $desc= preg_replace("/^.* DESC\s+\(*\s*'([^']+)'\s*\)*.*$/", '\\1', $description);
-    return preg_match("/\(v$version\)/", $desc);
+    return preg_match("/\(v$version\)/", $class['DESC']);
   }
 
 

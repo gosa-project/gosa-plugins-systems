@@ -642,6 +642,8 @@ class LDAP{
 
   function create_missing_trees($target)
   {
+    global $config;
+
     /* Ignore create_missing trees if the base equals target */
     if ($target == $this->basedn){
      return;
@@ -652,6 +654,11 @@ class LDAP{
     unset($l['count']);
     $cdn= $this->basedn;
     $tag= "";
+
+    /* Load schema if available... */
+    if(isset($config->data['MAIN']['SCHEMA_CHECK'])){
+      $classes= $this->get_objectclasses();
+    }
 
     foreach ($l as $part){
       $cdn= "$part,$cdn";
@@ -685,32 +692,87 @@ class LDAP{
         $param= preg_replace('/^[^=]+=([^,]+),.*$/', '\\1', $cdn);
 
         $na= array();
-        switch ($type){
-          case 'ou':
-            if ($tag != ""){
-              $na["objectClass"]= array("organizationalUnit", "gosaAdministrativeUnitTag");
-              $na["gosaUnitTag"]= $tag;
-            } else {
-              $na["objectClass"]= "organizationalUnit";
+
+        /* Automatic or traditional? */
+        if(isset($config->data['MAIN']['SCHEMA_CHECK'])){
+
+          /* Get name of first matching objectClass */
+          $ocname= "";
+          foreach($classes as $class){
+            if (isset($class['MUST']) && $class['MUST'] == "$type"){
+
+              /* Look for first classes that is structural... */
+              if (isset($class['STRUCTURAL'])){
+                $ocname= $class['NAME'];
+                break;
+              }
+
+              /* Look for classes that are auxiliary... */
+              if (isset($class['AUXILIARY'])){
+                $ocname= $class['NAME'];
+              }
             }
-            $na["ou"]= $param;
-            break;
-          case 'dc':
-            if ($tag != ""){
-              $na["objectClass"]= array("dcObject", "top", "locality", "gosaAdministrativeUnitTag");
-              $na["gosaUnitTag"]= $tag;
-            } else {
-              $na["objectClass"]= array("dcObject", "top", "locality");
-            }
-            $na["dc"]= $param;
-            break;
-          default:
-            print_red(sprintf(_("Autocreation of type '%s' is currently not supported. Please report to the GOsa team."), $type));
+          }
+
+          /* Bail out, if we've nothing to do... */
+          if ($ocname == ""){
+            print_red(sprintf(_("Autocreation of subtree failed. No objectClass found for attribute '%s'."), $type));
             echo $_SESSION['errors'];
             exit;
+          }
+
+          /* Assemble_entry */
+          if ($tag != ""){
+            $na['objectClass']= array($ocname, "gosaAdministrativeUnitTag");
+          } else {
+            $na['objectClass']= array($ocname);
+          }
+          if (isset($classes[$ocname]['AUXILIARY'])){
+            $na['objectClass'][]= $classes[$ocname]['SUP'];
+          }
+          if ($type == "dc"){
+            /* This is bad actually, but - tell me a better way? */
+            $na['objectClass'][]= 'locality';
+          }
+          $na[$type]= $param;
+          if (is_array($classes[$ocname]['MUST'])){
+            foreach($classes[$ocname]['MUST'] as $attr){
+              $na[$attr]= "filled";
+            }
+          }
+
+        } else {
+
+          /* Use alternative add... */
+          switch ($type){
+            case 'ou':
+              if ($tag != ""){
+                $na["objectClass"]= array("organizationalUnit", "gosaAdministrativeUnitTag");
+                $na["gosaUnitTag"]= $tag;
+              } else {
+                $na["objectClass"]= "organizationalUnit";
+              }
+              $na["ou"]= $param;
+              break;
+            case 'dc':
+              if ($tag != ""){
+                $na["objectClass"]= array("dcObject", "top", "locality", "gosaAdministrativeUnitTag");
+                $na["gosaUnitTag"]= $tag;
+              } else {
+                $na["objectClass"]= array("dcObject", "top", "locality");
+              }
+              $na["dc"]= $param;
+              break;
+            default:
+              print_red(sprintf(_("Autocreation of type '%s' is currently not supported. Please report to the GOsa team."), $type));
+              echo $_SESSION['errors'];
+              exit;
+          }
+
         }
         $this->cd($cdn);
         $this->add($na);
+        show_ldap_error($this->get_error(), sprintf(_("Creating subtree '%s' failed."),$cdn));
       }
     }
   }
@@ -1184,7 +1246,7 @@ class LDAP{
   
   function get_objectclasses()
   {
-  	  $objectclasses = array();
+    $objectclasses = array();
   	
 	  # Get base to look for schema 
 	  $sr = @ldap_read ($this->cid, NULL, "objectClass=*", array("subschemaSubentry"));
@@ -1197,7 +1259,7 @@ class LDAP{
 	    return array();
 	  }
 	
-	  # Get list of objectclasses
+	  /* Get list of objectclasses and fill array */
 	  $nb= $attr[0]['subschemasubentry'][0];
 	  $objectclasses= array();
 	  $sr= ldap_read ($this->cid, $nb, "objectClass=*", array("objectclasses"));
@@ -1206,14 +1268,74 @@ class LDAP{
 	    return array();
 	  }
 	  foreach ($attrs[0]['objectclasses'] as $val){
-	    $name= preg_replace("/^.* NAME\s+\(*\s*'([^']+)'\s*\)*.*$/", '\\1', $val);
-	    if ($name != $val){
-	      $objectclasses[$name]= $val;
-	    }
+      if (preg_match('/^[0-9]+$/', $val)){
+        continue;
+      }
+      $name= "OID";
+      $pattern= split(' ', $val);
+      $ocname= preg_replace("/^.* NAME\s+\(*\s*'([^']+)'\s*\)*.*$/", '\\1', $val);
+      $objectclasses[$ocname]= array();
+
+      foreach($pattern as $chunk){
+        switch($chunk){
+
+          case '(':
+                    $value= "";
+                    break;
+
+          case ')': if ($name != ""){
+                      $objectclasses[$ocname][$name]= $this->value2container($value);
+                    }
+                    $name= "";
+                    $value= "";
+                    break;
+
+          case 'NAME':
+          case 'DESC':
+          case 'SUP':
+          case 'STRUCTURAL':
+          case 'ABSTRACT':
+          case 'AUXILIARY':
+          case 'MUST':
+          case 'MAY':
+                    if ($name != ""){
+                      $objectclasses[$ocname][$name]= $this->value2container($value);
+                    }
+                    $name= $chunk;
+                    $value= "";
+                    break;
+
+          default:  $value.= $chunk." ";
+        }
+      }
+
 	  }
-	  
+
 	  return $objectclasses;
   }
+
+
+  function value2container($value)
+  {
+    /* Set emtpy values to "true" only */
+    if (preg_match('/^\s*$/', $value)){
+      return true;
+    }
+
+    /* Remove ' and " if needed */
+    $value= preg_replace('/^[\'"]/', '', $value);
+    $value= preg_replace('/[\'"] *$/', '', $value);
+
+    /* Convert to array if $ is inside... */
+    if (preg_match('/\$/', $value)){
+      $container= preg_split('/\s*\$\s*/', $value);
+    } else {
+      $container= chop($value);
+    }
+
+    return ($container);
+  }
+
 
   function log($string)
   {
