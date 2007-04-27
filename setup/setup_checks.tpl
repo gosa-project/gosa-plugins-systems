@@ -13,9 +13,7 @@
 			{if $basic[$key].SOLUTION != "" && !$basic[$key].RESULT}
 		
 				<!-- Add ability to display info popup -->	
-				<div class='step2_entry_container_info'
-					onMouseOver="javascript: display_solution('sol_{$key}');"
-					onMouseOut="javascript: hide_solution('sol_{$key}');" >
+				<div class='step2_entry_container_info'>
 			{else}
 
 				<!-- Normal entry everything is fine -->
@@ -74,9 +72,7 @@
             {if $config[$key].SOLUTION != "" && !$config[$key].RESULT}
 
                 <!-- Add ability to display info popup -->
-                <div class='step2_entry_container_info'
-                    onMouseOver="javascript: display_solution('sol_config_{$key}');"
-                    onMouseOut="javascript: hide_solution('sol_config_{$key}');" >
+                <div class='step2_entry_container_info'>
             {else}
 
                 <!-- Normal entry everything is fine -->
