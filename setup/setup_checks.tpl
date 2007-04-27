@@ -5,6 +5,7 @@
 
 	<!-- Set content styles -->	
 	<div class='default' style='margin:10px;'>
+		<a href='?info' target='_blank'>{t}Show PHP information{/t}</a>
 
 		<!-- Beginning PHP module check output -->
 		<h2 class='step2_container_title'>{t}PHP module and extension checks{/t}</h2>

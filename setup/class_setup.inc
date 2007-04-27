@@ -56,7 +56,6 @@ class setup
     }
   }
 
-
   function execute()
   {
     /* Display phpinfo() dialog when $_GET['info'] is set,
@@ -65,6 +64,7 @@ class setup
      */
     if(isset($_GET['info']) && get_class($this->o_steps[1]) == "Step_Welcome" && $this->o_steps[1]->is_completed()){
       phpinfo();
+      exit();
     }
 
     /* display step error msgs */
