@@ -21,6 +21,33 @@
 
 
 
+/****************
+ * FUNCTIONS 
+
+Step_Migrate                - Constructor.
+update_strings              - Used to update the displayed step informations.
+initialize_checks           - Initialize migration steps.
+check_ldap_permissions      - Check if the used admin account has full access to the ldap database.
+check_gosaAccounts          - Check if there are users without the required objectClasses.
+migrate_gosaAccounts        - Migrate selected users to GOsa user accounts.
+check_organizationalUnits   - Check if there are departments, that are not visible for GOsa
+migrate_organizationalUnits - Migrate selected departments 
+check_administrativeAccount - Check if there is at least one acl entry available                  
+checkBase                   - Check if there is a root object available 
+
+get_user_list               - Get list of available users
+get_group_list              - Get list of groups
+  
+create_admin                
+create_admin_user           
+
+execute                     - Generate html output of this plugin
+save_object                 - Save posts 
+array_to_ldif               - Create ldif output of an ldap result array 
+ 
+ ****************/
+
+
 
 class Step_Migrate extends setup_step
 {
@@ -46,6 +73,27 @@ class Step_Migrate extends setup_step
 
   /* Checks initialised ? */
   var $checks_initialised = FALSE;
+
+  /* Users outside to people ou */
+  var $outside_users        = array();
+  var $outside_users_dialog = FALSE;
+
+  /* Users outside to groups ou */
+  var $outside_groups        = array();
+  var $outside_groups_dialog = FALSE;
+
+  /* Win-Workstations outside to reserved ou */
+  var $outside_winstations        = array();
+  var $outside_winstations_dialog = FALSE;
+
+  /* check for multiple use of same uidNumber */
+  var $check_uidNumbers        = array();
+  var $check_uidNumbers_dialog = FALSE;
+
+  /* check for multiple use of same gidNumber */
+  var $check_gidNumbers        = array();
+  var $check_gidNumbers_dialog = FALSE;
+
 
   function Step_Migrate()
   {
@@ -78,21 +126,272 @@ class Step_Migrate extends setup_step
     $this->checks['deps_visible']['STATUS']    = FALSE;
     $this->checks['deps_visible']['STATUS_MSG']= "";
     $this->checks['deps_visible']['ERROR_MSG'] = "";
-    $this->check_visible_organizationalUnits();
+    $this->check_organizationalUnits();
 
     $this->checks['users_visible']['TITLE']     = _("Checking for invisible user");
     $this->checks['users_visible']['STATUS']    = FALSE;
     $this->checks['users_visible']['STATUS_MSG']= "";
     $this->checks['users_visible']['ERROR_MSG'] = "";
-    $this->check_invisible_gosaAccounts();
+    $this->check_gosaAccounts();
 
     $this->checks['acls']['TITLE']     = _("Checking for administrational account");
     $this->checks['acls']['STATUS']    = FALSE;
     $this->checks['acls']['STATUS_MSG']= "";
     $this->checks['acls']['ERROR_MSG'] = "";
-    $this->check_acls();
+    $this->check_administrativeAccount();
+
+    $this->checks['outside_users']['TITLE']     = _("Checking for users outside the people department.");
+    $this->checks['outside_users']['STATUS']    = FALSE;
+    $this->checks['outside_users']['STATUS_MSG']= "";
+    $this->checks['outside_users']['ERROR_MSG'] = "";
+    $this->search_outside_users();
+    
+    $this->checks['outside_groups']['TITLE']     = _("Checking for groups outside the groups department.");
+    $this->checks['outside_groups']['STATUS']    = FALSE;
+    $this->checks['outside_groups']['STATUS_MSG']= "";
+    $this->checks['outside_groups']['ERROR_MSG'] = "";
+    $this->search_outside_groups();
+
+    $this->checks['outside_winstations']['TITLE']     = _("Checking for windows workstations outside the winstation department.");
+    $this->checks['outside_winstations']['STATUS']    = FALSE;
+    $this->checks['outside_winstations']['STATUS_MSG']= "";
+    $this->checks['outside_winstations']['ERROR_MSG'] = "";
+    $this->search_outside_winstations();
+
+    $this->checks['uidNumber_usage']['TITLE']     = _("Checking for multiple use of same uidNumber value.");
+    $this->checks['uidNumber_usage']['STATUS']    = FALSE;
+    $this->checks['uidNumber_usage']['STATUS_MSG']= "";
+    $this->checks['uidNumber_usage']['ERROR_MSG'] = "";
+    $this->check_uidNumber();
+    
+    $this->checks['gidNumber_usage']['TITLE']     = _("Checking for multiple use of same gidNumber value.");
+    $this->checks['gidNumber_usage']['STATUS']    = FALSE;
+    $this->checks['gidNumber_usage']['STATUS_MSG']= "";
+    $this->checks['gidNumber_usage']['ERROR_MSG'] = "";
+    $this->check_gidNumber();
   }
 
+  function check_uidNumber()
+  {
+    $cv = $this->parent->captured_values;
+    $ldap = new LDAP($cv['admin'],
+        $cv['password'],
+        $cv['connection'],
+        FALSE,
+        $cv['tls']);
+
+    $ldap->cd($cv['base']);
+    $res = $ldap->search("uidNumber=*",array("dn","uidNumber"));
+    if(!$res){
+      $this->checks['uidNumber_usage']['STATUS']    = FALSE;
+      $this->checks['uidNumber_usage']['STATUS_MSG']= _("Ldap query failed.");
+      $this->checks['uidNumber_usage']['ERROR_MSG'] = _("Possibly the 'root object' is missing.");
+      return(false);
+    }
+
+    $this->check_uidNumbers= array(); 
+    while($attrs = $ldap->fetch()){
+      $tmp[$attrs['uidNumber'][0]][] = $attrs;
+    }
+
+    foreach($tmp as $id => $entries){
+      if(count($entries) > 1){
+        foreach($entries as $entry){
+          $this->check_uidNumbers[base64_encode($entry['dn'])] = $entry;
+        }
+      }
+    }
+
+    if($this->check_uidNumbers){
+      $this->checks['uidNumber_usage']['STATUS']    = FALSE;
+      $this->checks['uidNumber_usage']['STATUS_MSG']= _("Failed");
+      $this->checks['uidNumber_usage']['ERROR_MSG'] =
+        sprintf(_("Found %s duplicated uidNumber values."),count($this->check_uidNumbers));
+      return(false);
+    }else{
+      $this->checks['uidNumber_usage']['STATUS']    = TRUE;
+      $this->checks['uidNumber_usage']['STATUS_MSG']= _("Ok");
+      $this->checks['uidNumber_usage']['ERROR_MSG'] = "";
+      return(TRUE);
+    }
+  }
+
+  function check_gidNumber()
+  {
+    $cv = $this->parent->captured_values;
+    $ldap = new LDAP($cv['admin'],
+        $cv['password'],
+        $cv['connection'],
+        FALSE,
+        $cv['tls']);
+
+    $ldap->cd($cv['base']);
+    $res = $ldap->search("gidNumber=*",array("dn","gidNumber"));
+    if(!$res){
+      $this->checks['gidNumber_usage']['STATUS']    = FALSE;
+      $this->checks['gidNumber_usage']['STATUS_MSG']= _("Ldap query failed.");
+      $this->checks['gidNumber_usage']['ERROR_MSG'] = _("Possibly the 'root object' is missing.");
+      return(false);
+    }
+
+    $this->check_gidNumbers= array(); 
+    while($attrs = $ldap->fetch()){
+      $tmp[$attrs['gidNumber'][0]][] = $attrs;
+    }
+
+    foreach($tmp as $id => $entries){
+      if(count($entries) > 1){
+        foreach($entries as $entry){
+          $this->check_gidNumbers[base64_encode($entry['dn'])] = $entry;
+        }
+      }
+    }
+
+    if($this->check_gidNumbers){
+      $this->checks['gidNumber_usage']['STATUS']    = FALSE;
+      $this->checks['gidNumber_usage']['STATUS_MSG']= _("Failed");
+      $this->checks['gidNumber_usage']['ERROR_MSG'] =
+        sprintf(_("Found %s duplicated gidNumber values."),count($this->check_gidNumbers));
+      return(false);
+    }else{
+      $this->checks['gidNumber_usage']['STATUS']    = TRUE;
+      $this->checks['gidNumber_usage']['STATUS_MSG']= _("Ok");
+      $this->checks['gidNumber_usage']['ERROR_MSG'] = "";
+      return(TRUE);
+    }
+  }
+
+
+  /* Search for winstations outside the winstation ou */
+  function search_outside_winstations()
+  {
+    $cv = $this->parent->captured_values;
+    $ldap = new LDAP($cv['admin'],
+        $cv['password'],
+        $cv['connection'],
+        FALSE,
+        $cv['tls']);
+
+    /* Get winstation ou */
+    if($cv['generic_settings']['wws_ou_active']) {
+      $winstation_ou = $cv['generic_settings']['ws_ou'];
+    }else{
+      $winstation_ou = "ou=winstations";
+    }
+ 
+    $ldap->cd($cv['base']);
+    $res = $ldap->search("(&(objectClass=posixGroup)(sambaGroupType=2)(sambaSID=*))",array("dn","sambaSID"));
+    if(!$res){
+      $this->checks['outside_winstations']['STATUS']    = FALSE;
+      $this->checks['outside_winstations']['STATUS_MSG']= _("Ldap query failed.");
+      $this->checks['outside_winstations']['ERROR_MSG'] = _("Possibly the 'root object' is missing.");
+      return(false);
+    }
+
+    $this->outside_winstations = array();
+    while($attrs = $ldap->fetch()){
+      if(preg_match("/-516$/","",$attrs['sambaSID'][0]) && !preg_match("/^[^,]+,".normalizePreg($winstation_ou)."/",$attrs['dn'])){
+        $this->outside_winstations[base64_encode($attrs['dn'])] = $attrs;
+      }
+    }
+
+    if(count($this->outside_winstations)){
+      $this->checks['outside_winstations']['STATUS']    = FALSE;
+      $this->checks['outside_winstations']['STATUS_MSG']= _("Failed");
+      $this->checks['outside_winstations']['ERROR_MSG'] = 
+        sprintf(_("Found %s winstations outside the predefined winstation department ou '%s'."),count($this->outside_winstations),$winstation_ou);
+      return(false);
+    }else{
+      $this->checks['outside_winstations']['STATUS']    = TRUE;
+      $this->checks['outside_winstations']['STATUS_MSG']= _("Ok");
+      $this->checks['outside_winstations']['ERROR_MSG'] = "";
+      return(TRUE);
+    }
+  }
+
+
+  /* Search for groups outside the group ou */
+  function search_outside_groups()
+  {
+    $cv = $this->parent->captured_values;
+    $ldap = new LDAP($cv['admin'],
+        $cv['password'],
+        $cv['connection'],
+        FALSE,
+        $cv['tls']);
+
+    $group_ou = $cv['groupou'];
+    $ldap->cd($cv['base']);
+    $res = $ldap->search("(objectClass=posixGroup)",array("dn"));
+    if(!$res){
+      $this->checks['outside_groups']['STATUS']    = FALSE;
+      $this->checks['outside_groups']['STATUS_MSG']= _("Ldap query failed.");
+      $this->checks['outside_groups']['ERROR_MSG'] = _("Possibly the 'root object' is missing.");
+      return(false);
+    }
+
+
+    $this->outside_groups = array();
+    while($attrs = $ldap->fetch()){
+      if(!preg_match("/^[^,]+,".normalizePreg($group_ou)."/",$attrs['dn'])){
+        $this->outside_groups[base64_encode($attrs['dn'])] = $attrs;
+      }
+    }
+
+    if(count($this->outside_groups)){
+      $this->checks['outside_groups']['STATUS']    = FALSE;
+      $this->checks['outside_groups']['STATUS_MSG']= _("Failed");
+      $this->checks['outside_groups']['ERROR_MSG'] = 
+        sprintf(_("Found %s groups outside the selected group ou '%s'."),count($this->outside_groups),$group_ou);
+      return(false);
+    }else{
+      $this->checks['outside_groups']['STATUS']    = TRUE;
+      $this->checks['outside_groups']['STATUS_MSG']= _("Ok");
+      $this->checks['outside_groups']['ERROR_MSG'] = "";
+      return(TRUE);
+    }
+  }
+
+  /* Search for users outside the people ou */
+  function search_outside_users()
+  {
+    $cv = $this->parent->captured_values;
+    $ldap = new LDAP($cv['admin'],
+        $cv['password'],
+        $cv['connection'],
+        FALSE,
+        $cv['tls']);
+    $people_ou = $cv['peopleou'];
+    $ldap->cd($cv['base']);
+    $res = $ldap->search("(objectClass=gosaAccount)",array("dn"));
+    if(!$res){
+      $this->checks['outside_users']['STATUS']    = FALSE;
+      $this->checks['outside_users']['STATUS_MSG']= _("Ldap query failed.");
+      $this->checks['outside_users']['ERROR_MSG'] = _("Possibly the 'root object' is missing.");
+      return(false);
+    }
+
+
+    $this->outside_users = array();
+    while($attrs = $ldap->fetch()){
+      if(!preg_match("/^[^,]+,".normalizePreg($people_ou)."/",$attrs['dn'])){
+        $this->outside_users[base64_encode($attrs['dn'])] = $attrs;
+      }
+    }
+
+    if(count($this->outside_users)){
+      $this->checks['outside_users']['STATUS']    = FALSE;
+      $this->checks['outside_users']['STATUS_MSG']= _("Failed");
+      $this->checks['outside_users']['ERROR_MSG'] = 
+        sprintf(_("Found %s users outside the selected user ou '%s'."),count($this->outside_users),$people_ou);
+      return(false);
+    }else{
+      $this->checks['outside_users']['STATUS']    = TRUE;
+      $this->checks['outside_users']['STATUS_MSG']= _("Ok");
+      $this->checks['outside_users']['ERROR_MSG'] = "";
+      return(TRUE);
+    }
+  }
 
 
   /* Check ldap accessibility 
@@ -166,7 +465,7 @@ class Step_Migrate extends setup_step
   /* Check if there are users which will 
    *  be invisible for GOsa 
    */
-  function check_invisible_gosaAccounts()
+  function check_gosaAccounts()
   {
     /* Remember old list of ivisible users, to be able to set 
      *  the 'html checked' status for the checkboxes again 
@@ -275,7 +574,7 @@ class Step_Migrate extends setup_step
 
   /* Check if there are invisible organizational Units 
    */
-  function check_visible_organizationalUnits()
+  function check_organizationalUnits()
   {
     $cnt_ok = 0;
     $old = $this->deps_to_migrate;
@@ -405,7 +704,7 @@ class Step_Migrate extends setup_step
 
   /* Check Acls if there is at least one object with acls defined 
    */
-  function check_acls()
+  function check_administrativeAccount()
   {
     /* Establish ldap connection */
     $cv = $this->parent->captured_values;
@@ -575,7 +874,7 @@ class Step_Migrate extends setup_step
     $hash = $p_c->generate_hash($pwd);
 
     $new_user=array();
-    $new_user['objectClass']= array("gosaAccount","organizationalPerson","inetOrgPerson");
+    $new_user['objectClass']= array("top","person","gosaAccount","organizationalPerson","inetOrgPerson");
     $new_user['givenName']  = "System";
     $new_user['sn']  = "Administrator";
     $new_user['cn']  = "System Administrator";
@@ -594,7 +893,7 @@ class Step_Migrate extends setup_step
     }
   
     $this->acl_create_dialog=FALSE;        
-    $this->check_acls();
+    $this->check_administrativeAccount();
   }
  
 
@@ -619,7 +918,7 @@ class Step_Migrate extends setup_step
      *************/
 
     if(isset($_POST['retry_acls'])){
-      $this->check_acls();
+      $this->check_administrativeAccount();
     }
 
     if(isset($_POST['create_acls'])){
@@ -664,7 +963,7 @@ class Step_Migrate extends setup_step
 
     /* Refresh list of deparments */
     if(isset($_POST['users_visible_migrate_refresh'])){
-      $this->check_invisible_gosaAccounts();
+      $this->check_gosaAccounts();
     }
 
     /* Open migration dialog */
@@ -682,7 +981,7 @@ class Step_Migrate extends setup_step
     /* Start migration */
     if(isset($_POST['users_visible_migrate_migrate'])){
       if($this->migrate_gosaAccounts()){
-        $this->check_invisible_gosaAccounts();
+        $this->check_gosaAccounts();
       }
     }
 
@@ -706,7 +1005,7 @@ class Step_Migrate extends setup_step
 
     /* Refresh list of deparments */
     if(isset($_POST['deps_visible_migrate_refresh'])){
-      $this->check_visible_organizationalUnits();
+      $this->check_organizationalUnits();
     }
 
     /* Open migration dialog */
@@ -724,7 +1023,7 @@ class Step_Migrate extends setup_step
     /* Start migration */
     if(isset($_POST['deps_visible_migrate_migrate'])){
       if($this->migrate_organizationalUnits()){
-        $this->check_visible_organizationalUnits();
+        $this->check_organizationalUnits();
       }
     }
 
@@ -824,9 +1123,36 @@ class Step_Migrate extends setup_step
         return(FALSE);
       }else{
 
+         /* Try to find out which values are necessary */
+        $tmp = $ldap->get_objectclasses();
+        $oc = $tmp['organization'];
+      
+        $must_attrs = $oc['MUST'];
+        if(!is_array($must_attrs)){
+          $must_attrs = array($must_attrs);
+        }
+      
+        /* Root object does not exists try to create it */
+        $ldapadd["objectclass"][0]="top";
+        $ldapadd["objectclass"][1]="organization";
+
+        /* Try to fill all collected must attributes */
+        $base_parts = preg_split("/,/",$cv['base']);
+        foreach($must_attrs as $attr){
+          foreach($base_parts as $part){
+            if(preg_match("/^".$attr."=/",$part) && !isset($ldapadd[$attr])){
+              $ldapadd[$attr]= preg_replace("/^[^=]*+=/","",$part);
+            }
+          }
+        }
+
         /* Add root object */ 
         $ldap->cd($cv['base']);
-        $res = $ldap->create_missing_trees($cv['base']);
+        $res = $ldap->add($ldapadd);
+
+        /* Add root object */ 
+ #       $ldap->cd($cv['base']);
+#        $res = $ldap->create_missing_trees($cv['base']);
   
         /* If adding failed, tell the user */
         if(!$res){

@@ -76,7 +76,7 @@
 			<input type='submit' name='create_admin_user' value='{t}Create{/t}'>	
 			</p>
 			
-			{if $users_cnt != 0 && $groups_cnt != 0}
+			{if $users_cnt != 0 || $groups_cnt != 0}
 			
 			<p>&nbsp;</p>
 			<b>{t}Append administrational acls to existing an user or a group{/t}</b><br>
