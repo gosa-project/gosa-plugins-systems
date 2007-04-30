@@ -190,6 +190,7 @@ class Step_Migrate extends setup_step
     }
 
     $this->check_uidNumbers= array(); 
+    $tmp = array();
     while($attrs = $ldap->fetch()){
       $tmp[$attrs['uidNumber'][0]][] = $attrs;
     }
@@ -235,6 +236,7 @@ class Step_Migrate extends setup_step
     }
 
     $this->check_gidNumbers= array(); 
+    $tmp = array();
     while($attrs = $ldap->fetch()){
       $tmp[$attrs['gidNumber'][0]][] = $attrs;
     }
@@ -1122,6 +1124,8 @@ class Step_Migrate extends setup_step
         $this->checks['root']['ERROR_MSG'].=  "<input type='submit' name='retry_root_create' value='"._("Try to create root object")."'>";
         return(FALSE);
       }else{
+
+      echo "REMOVE this : Autocreation of the root object will be donw be create_missing_trees later. !!!!!!!";
 
          /* Try to find out which values are necessary */
         $tmp = $ldap->get_objectclasses();
