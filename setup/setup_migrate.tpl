@@ -31,6 +31,54 @@
 				<div>&nbsp;</div>
 			{/foreach}
 
+		{elseif $method == "outside_groups"}
+
+			<h2>{t}Move groups into valid group departments{/t}</h2>
+
+			{t}This dialog allows you to move the displayed groups into a valid group department{/t}
+			<br>
+			{t}Be careful with this tool, there may be references pointing to this group that can't be migrated.{/t}
+			<br>
+			<br>	
+
+			{foreach from=$outside_groups item=val key=key}
+				{if $outside_groups.$key.selected}
+					<input type='checkbox' name='select_group_{$key}' checked>
+				{else}
+					<input type='checkbox' name='select_group_{$key}'>
+				{/if}
+
+				&nbsp;{$outside_groups.$key.dn}
+				{if $outside_groups.$key.ldif != ""}
+                      <div class="step2_entry_container_info" id="sol_8">
+<div style='padding-left:20px;'>
+<pre>
+{$outside_groups.$key.ldif}
+</pre>
+</div>
+</div>
+				{/if}
+				<br>
+			{/foreach}
+
+			<p>
+			<b>{t}Move selected group into the following GOsa people department{/t} : </b>
+			<select name='move_group_to'>
+				{html_options options=$ous}
+			</select>
+			<br>
+			<input type='submit' name='outside_groups_dialog_perform' value='{t}Move selected groups{/t}'>
+			<input type='submit' name='outside_groups_dialog_whats_done' value='{t}What will be done here{/t}'>
+			</p>
+				
+
+			<p class='seperator'>&nbsp;</p>	
+			<div style='width:100%; text-align:right; padding:5px;'>
+				<input type='submit' name='outside_groups_dialog_cancel' value='{t}Close{/t}'>
+			</div>
+		
+
+		{elseif $method == "create_acls"}
 		{elseif $method == "outside_users"}
 
 			<h2>{t}Move users into valid user departments{/t}</h2>
