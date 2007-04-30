@@ -8,6 +8,7 @@
 	<p>	
 		Create a reload for each entry later 
 		<input type='submit' name='reload' value='{t}Reload{/t}'>
+		<p>&nbsp;</p>
 	</p>
 
 			{foreach from=$checks item=val key=key}
@@ -27,8 +28,58 @@
 					{/if}
 					</div>
 				{/if}
-				<p>&nbsp;</p>	
+				<div>&nbsp;</div>
 			{/foreach}
+
+		{elseif $method == "outside_users"}
+
+			<h2>{t}Move users into valid user departments{/t}</h2>
+
+			{t}This dialog allows you to move the displayed users into a valid user department{/t}
+			<br>
+			{t}Be careful with this tool, there may be references pointing to this user that can't be migrated.{/t}
+			<br>
+			<font color='red'>{t}Attention, groupOfNames will not be updated to destination dn right now.{/t}</font>
+			<br>	
+			<br>	
+
+			{foreach from=$outside_users item=val key=key}
+				{if $outside_users.$key.selected}
+					<input type='checkbox' name='select_user_{$key}' checked>
+				{else}
+					<input type='checkbox' name='select_user_{$key}'>
+				{/if}
+
+				{if $outside_users.$key.ldif != ""}
+                      <div class="step2_entry_container_info" id="sol_8">
+<div style='padding-left:20px;'>
+<pre>
+{$outside_users.$key.ldif}
+</pre>
+</div>
+</div>
+				{/if}
+
+				&nbsp;{$outside_users.$key.dn}
+				<br>
+			{/foreach}
+
+			<p>
+			<b>{t}Move selected user into the following GOsa people department{/t} : </b>
+			<select name='move_user_to'>
+				{html_options options=$ous}
+			</select>
+			<br>
+			<input type='submit' name='outside_users_dialog_perform' value='{t}Move selected user{/t}'>
+			<input type='submit' name='outside_users_dialog_whats_done' value='{t}What will be done here{/t}'>
+			</p>
+				
+
+			<p class='seperator'>&nbsp;</p>	
+			<div style='width:100%; text-align:right; padding:5px;'>
+				<input type='submit' name='outside_users_dialog_cancel' value='{t}Close{/t}'>
+			</div>
+		
 
 		{elseif $method == "create_acls"}
 

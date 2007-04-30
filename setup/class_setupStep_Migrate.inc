@@ -171,6 +171,7 @@ class Step_Migrate extends setup_step
     $this->check_gidNumber();
   }
 
+
   function check_uidNumber()
   {
     $cv = $this->parent->captured_values;
@@ -377,6 +378,8 @@ class Step_Migrate extends setup_step
     $this->outside_users = array();
     while($attrs = $ldap->fetch()){
       if(!preg_match("/^[^,]+,".normalizePreg($people_ou)."/",$attrs['dn'])){
+        $attrs['selected'] = FALSE;
+        $attrs['ldif']     = "";
         $this->outside_users[base64_encode($attrs['dn'])] = $attrs;
       }
     }
@@ -386,6 +389,7 @@ class Step_Migrate extends setup_step
       $this->checks['outside_users']['STATUS_MSG']= _("Failed");
       $this->checks['outside_users']['ERROR_MSG'] = 
         sprintf(_("Found %s users outside the selected user ou '%s'."),count($this->outside_users),$people_ou);
+      $this->checks['outside_users']['ERROR_MSG'].= "<input type='submit' name='outside_users_dialog' value='"._("Migrate")."'>";
       return(false);
     }else{
       $this->checks['outside_users']['STATUS']    = TRUE;
@@ -736,53 +740,6 @@ class Step_Migrate extends setup_step
   }
 
 
-  function get_user_list()
-  {
-    /* Get collected configuration settings */
-    $cv = $this->parent->captured_values;
-
-    /* Establish ldap connection */
-    $ldap = new LDAP($cv['admin'],
-        $cv['password'],
-        $cv['connection'],
-        FALSE,
-        $cv['tls']);
-    
-    $ldap->cd($cv['base']);
-    $ldap->search("(objectClass=gosaAccount)",array("dn"));
-  
-    $tmp = array();
-    while($attrs = $ldap->fetch()){
-      $tmp[base64_encode($attrs['dn'])] = @LDAP::fix($attrs['dn']);
-    }
-
-    return($tmp);
-  }
-
-  function get_group_list()
-  {
-    /* Get collected configuration settings */
-    $cv = $this->parent->captured_values;
-
-    /* Establish ldap connection */
-    $ldap = new LDAP($cv['admin'],
-        $cv['password'],
-        $cv['connection'],
-        FALSE,
-        $cv['tls']);
-    
-    $ldap->cd($cv['base']);
-    $ldap->search("(objectClass=posixGroup)",array("dn"));
-  
-    $tmp = array();
-    while($attrs = $ldap->fetch()){
-      $tmp[base64_encode($attrs['dn'])] = @LDAP::fix($attrs['dn']);
-    }
-
-    return($tmp);
-  }
-
-
 
   function create_admin($only_ldif = FALSE)
   {
@@ -899,6 +856,31 @@ class Step_Migrate extends setup_step
   }
  
 
+  function migrate_outside_users($perform = FALSE)
+  {
+    /* Check if there was a destination department posted */
+    if(isset($_POST['move_user_to'])){
+      $destination_dep = $_POST['move_user_to'];
+    }else{
+      print_red(_("Couldn't move users to specified department."));
+      return(false);
+    }
+ 
+    foreach($this->outside_users as $b_dn => $data){
+      $this->outside_users[$b_dn]['ldif'] ="";
+      if($data['selected']){
+        $dn = base64_decode($b_dn);
+        $d_dn = preg_replace("/,.*$/",",".base64_decode($destination_dep),$dn);
+        if(!$perform){
+          $this->outside_users[$b_dn]['ldif'] = $dn."<br>".$d_dn;
+        }else{
+          $this->move($dn,$d_dn);
+        }
+      }
+    }
+  }
+  
+
   function execute()
   {
     /* Initialise checks if this is the first call */
@@ -906,13 +888,49 @@ class Step_Migrate extends setup_step
       $this->initialize_checks();
       $this->checks_initialised = TRUE;
     }
+
+    /*************
+     * User outside the people ou 
+     *************/
+    
+    if(isset($_POST['outside_users_dialog_cancel'])){
+      $this->outside_users_dialog = FALSE;
+      $this->dialog = FALSE;
+    }
+   
+    if(isset($_POST['outside_users_dialog_whats_done'])){
+      $this->migrate_outside_users(FALSE);
+    }
+ 
+    if(isset($_POST['outside_users_dialog_perform'])){
+      $this->migrate_outside_users(TRUE);
+      $this->search_outside_users();
+    }
+
+    if(isset($_POST['outside_users_dialog'])){
+      $this->outside_users_dialog = TRUE;
+      $this->dialog = TRUE;
+    }
+    
+    if($this->outside_users_dialog){
+      $smarty = get_smarty();
+      $smarty->assign("ous",$this->get_all_people_ous());
+      $smarty->assign("method","outside_users");
+      $smarty->assign("outside_users",$this->outside_users);
+      return($smarty->fetch(get_template_path("setup_migrate.tpl",TRUE,dirname(__FILE__))));
+    }
  
     /*************
      * Root object check  
      *************/
   
     if(isset($_POST['retry_root_create'])){
+
+      $state = $this->checks['root']['STATUS'];
       $this->checkBase(FALSE);
+      if($state != $this->checks['root']['STATUS']){
+        $this->initialize_checks();
+      }
     }
  
     /*************
@@ -1051,6 +1069,17 @@ class Step_Migrate extends setup_step
 
   function save_object()
   {
+    /* Capture all selected users from outside_users_dialog */
+    if($this->outside_users_dialog){
+      foreach($this->outside_users as $dn => $data){
+        if(isset($_POST['select_user_'.$dn])){
+          $this->outside_users[$dn]['selected'] = TRUE;
+        }else{
+          $this->outside_users[$dn]['selected'] = FALSE;
+        }
+      }
+    }
+
     /* Get "create acl" dialog posts */
     if($this->acl_create_dialog){
       if(isset($_POST['create_acls_create'])){
@@ -1094,7 +1123,11 @@ class Step_Migrate extends setup_step
   }
 
 
-  // checks for valid base entry
+  /* Check if the root object exists.
+   * If the parameter just_check is true, then just check if the 
+   *  root object is missing and update the info messages.
+   * If the Parameter is false, try to create a new root object.
+   */
   function checkBase($just_check = TRUE)
   {
     /* Get collected setup informations */
@@ -1125,7 +1158,7 @@ class Step_Migrate extends setup_step
         return(FALSE);
       }else{
 
-      echo "REMOVE this : Autocreation of the root object will be donw be create_missing_trees later. !!!!!!!";
+      echo "REMOVE this : Autocreation of the root object will be done by create_missing_tree later. !!!!!!!";
 
          /* Try to find out which values are necessary */
         $tmp = $ldap->get_objectclasses();
@@ -1155,9 +1188,9 @@ class Step_Migrate extends setup_step
         $res = $ldap->add($ldapadd);
 
         /* Add root object */ 
- #       $ldap->cd($cv['base']);
-#        $res = $ldap->create_missing_trees($cv['base']);
-  
+        $ldap->cd($cv['base']);
+ #       $res = $ldap->create_missing_trees($cv['base']);
+
         /* If adding failed, tell the user */
         if(!$res){
           $this->checks['root']['STATUS']    = FALSE;
@@ -1197,6 +1230,144 @@ class Step_Migrate extends setup_step
       }
     }
     return(preg_replace("/\n$/","",$ret));
+  }
+
+
+  function get_user_list()
+  {
+    /* Get collected configuration settings */
+    $cv = $this->parent->captured_values;
+
+    /* Establish ldap connection */
+    $ldap = new LDAP($cv['admin'],
+        $cv['password'],
+        $cv['connection'],
+        FALSE,
+        $cv['tls']);
+    
+    $ldap->cd($cv['base']);
+    $ldap->search("(objectClass=gosaAccount)",array("dn"));
+  
+    $tmp = array();
+    while($attrs = $ldap->fetch()){
+      $tmp[base64_encode($attrs['dn'])] = @LDAP::fix($attrs['dn']);
+    }
+    return($tmp);
+  }
+
+
+  function get_all_people_ous()
+  {
+    /* Get collected configuration settings */
+    $cv = $this->parent->captured_values;
+
+    /* Establish ldap connection */
+    $ldap = new LDAP($cv['admin'],
+        $cv['password'],
+        $cv['connection'],
+        FALSE,
+        $cv['tls']);
+
+    $ldap->cd($cv['base']);
+    $ldap->search("(".$cv['peopleou'].")",array("dn"));
+  
+    if($ldap->count() == 0 ){
+      $add_dn = $cv['peopleou'].",".$cv['base'];
+      $naming_attr = preg_replace("/=.*$/","",$add_dn);
+      $naming_value = preg_replace("/^[^=]*+=([^,]*).*$/","\\1",$add_dn);
+      $add = array();
+      $add['objectClass'] = array("organizationalUnit");
+      $add[$naming_attr] = $naming_value;
+
+      $ldap->cd($cv['base']);
+      $ldap->create_missing_trees(preg_replace("/^[^,]+,/","",$add_dn));
+      $ldap->cd($add_dn);
+      $ldap->add($add);
+    }
+
+    $ldap->search("(".$cv['peopleou'].")",array("dn"));
+    $tmp = array();
+    while($attrs= $ldap->fetch()){
+      if(!preg_match("/ou=snapshots,/",$attrs['dn'])){
+        $tmp[base64_encode($attrs['dn'])] = $ldap->fix($attrs['dn']);
+      }
+    }
+    return($tmp); 
+  }
+
+
+  function get_group_list()
+  {
+    /* Get collected configuration settings */
+    $cv = $this->parent->captured_values;
+
+    /* Establish ldap connection */
+    $ldap = new LDAP($cv['admin'],
+        $cv['password'],
+        $cv['connection'],
+        FALSE,
+        $cv['tls']);
+    
+    $ldap->cd($cv['base']);
+    $ldap->search("(objectClass=posixGroup)",array("dn"));
+  
+    $tmp = array();
+    while($attrs = $ldap->fetch()){
+      $tmp[base64_encode($attrs['dn'])] = @LDAP::fix($attrs['dn']);
+    }
+    return($tmp);
+  }
+
+
+  function move($source,$destination)
+  {
+    /* Get collected configuration settings */
+    $cv = $this->parent->captured_values;
+
+    /* Establish ldap connection */
+    $ldap = new LDAP($cv['admin'],
+        $cv['password'],
+        $cv['connection'],
+        FALSE,
+        $cv['tls']);
+
+     /* Rename dn in possible object groups */
+#    $ldap->cd($cv['base']);
+#    $ldap->search('(&(objectClass=gosaGroupOfNames)(member='.@LDAP::fix($source).'))',
+#        array('cn'));
+ #   while ($attrs= $ldap->fetch()){
+ #     $og= new ogroup($this->config, $ldap->getDN());
+ #     unset($og->member[$src_dn]);
+ #     $og->member[$dst_dn]= $dst_dn;
+ #     $og->save ();
+ #   }
+
+    $ldap->cat($source);
+    $new_data = $this->cleanup_array($ldap->fetch());
+    $ldap->cd($destination);
+    $res = $ldap->add($new_data);
+    
+    if(!$res){
+      print_red(_("Failed to copy '%s' to '%s'. Ldap says '%s'."),$source,$destination,$ldap->get_error());
+    }else{
+      $ldap->rmDir($source);
+      show_ldap_error($ldap->get_error(),_("Something went wrong while copying dns."));
+    }
+  }
+
+  
+  /* Cleanup ldap result to be able to write it be to ldap */
+  function cleanup_array($attrs)
+  {
+    foreach($attrs as $key => $value) {
+      if(is_numeric($key) || in_array($key,array("count","dn"))){
+        unset($attrs[$key]);
+      }
+      if(is_array($value) && isset($value['count'])){
+        unset($attrs[$key]['count']);
+      }
+    }
+    return($attrs);
   }
 }
 
