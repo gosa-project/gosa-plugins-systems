@@ -39,8 +39,6 @@
 			<br>
 			{t}Be careful with this tool, there may be references pointing to this user that can't be migrated.{/t}
 			<br>
-			<font color='red'>{t}Attention, groupOfNames will not be updated to destination dn right now.{/t}</font>
-			<br>	
 			<br>	
 
 			{foreach from=$outside_users item=val key=key}
@@ -50,6 +48,7 @@
 					<input type='checkbox' name='select_user_{$key}'>
 				{/if}
 
+				&nbsp;{$outside_users.$key.dn}
 				{if $outside_users.$key.ldif != ""}
                       <div class="step2_entry_container_info" id="sol_8">
 <div style='padding-left:20px;'>
@@ -59,8 +58,6 @@
 </div>
 </div>
 				{/if}
-
-				&nbsp;{$outside_users.$key.dn}
 				<br>
 			{/foreach}
 

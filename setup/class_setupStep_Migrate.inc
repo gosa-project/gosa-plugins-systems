@@ -858,6 +858,16 @@ class Step_Migrate extends setup_step
 
   function migrate_outside_users($perform = FALSE)
   {
+    /* Establish ldap connection */
+    $cv = $this->parent->captured_values;
+    $ldap = new LDAP($cv['admin'],
+        $cv['password'],
+        $cv['connection'],
+        FALSE,
+        $cv['tls']);
+
+    $ldap->cd($cv['base']);
+
     /* Check if there was a destination department posted */
     if(isset($_POST['move_user_to'])){
       $destination_dep = $_POST['move_user_to'];
@@ -873,6 +883,18 @@ class Step_Migrate extends setup_step
         $d_dn = preg_replace("/,.*$/",",".base64_decode($destination_dep),$dn);
         if(!$perform){
           $this->outside_users[$b_dn]['ldif'] = $dn."<br>".$d_dn;
+
+          /* Check if there are references to this object */
+          $ldap->search("(&(member=".$dn.")(|(objectClass=gosaGroupOfNames)(objectClass=groupOfNames)))",array('dn'));
+          $refs = "";
+          while($attrs = $ldap->fetch()){
+            $ref_dn = $attrs['dn'];
+            $refs .= "<br />".$ref_dn;
+          } 
+          if(!empty($refs)){ 
+            $this->outside_users[$b_dn]['ldif'] .= "<br /><br /><i>"._("Updating following references too").":</i>".$refs;
+          }
+
         }else{
           $this->move($dn,$d_dn);
         }
@@ -1331,27 +1353,41 @@ class Step_Migrate extends setup_step
         FALSE,
         $cv['tls']);
 
-     /* Rename dn in possible object groups */
-#    $ldap->cd($cv['base']);
-#    $ldap->search('(&(objectClass=gosaGroupOfNames)(member='.@LDAP::fix($source).'))',
-#        array('cn'));
- #   while ($attrs= $ldap->fetch()){
- #     $og= new ogroup($this->config, $ldap->getDN());
- #     unset($og->member[$src_dn]);
- #     $og->member[$dst_dn]= $dst_dn;
- #     $og->save ();
- #   }
+     /* Update object references in gosaGroupOfNames */
+    $ogs_to_fix = array();
+    $ldap->cd($cv['base']);
+    $ldap->search('(&(objectClass=gosaGroupOfNames)(member='.@LDAP::fix($source).'))', array('cn','member'));
+    while ($attrs= $ldap->fetch()){
+      $dn = $attrs['dn'];
+      $attrs = $this->cleanup_array($attrs);
+      $member_new = array($destination);
+      foreach($attrs['member'] as $member){
+        if($member != $source){
+          $member_new[] = $member;
+        }
+      }
+      $attrs['member'] = $member_new;
+      $ogs_to_fix[$dn] = $attrs;
+    }
 
+    /* Copy source to destination dn */
     $ldap->cat($source);
     $new_data = $this->cleanup_array($ldap->fetch());
     $ldap->cd($destination);
     $res = $ldap->add($new_data);
-    
+
+    /* Display warning if copy failed */
     if(!$res){
       print_red(_("Failed to copy '%s' to '%s'. Ldap says '%s'."),$source,$destination,$ldap->get_error());
     }else{
-      $ldap->rmDir($source);
+      $res = $ldap->rmDir($source);
       show_ldap_error($ldap->get_error(),_("Something went wrong while copying dns."));
+
+      /* Object is copied, so update its references */
+      foreach($ogs_to_fix as $dn => $data){
+        $ldap->cd($dn);
+        $ldap->modify($data);
+      }
     }
   }
 
