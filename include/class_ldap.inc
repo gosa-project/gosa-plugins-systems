@@ -1369,8 +1369,19 @@ class LDAP{
 
   function get_naming_contexts($server, $admin= "", $password= "")
   {
-    $attr= $this->get_root_dse($server, $admin, $password);
-    return ($attr['namingcontexts']);
+    /* Build LDAP connection */
+    $ds= ldap_connect ($server);
+    if (!$ds) {
+      die ("Can't bind to LDAP. No check possible!");
+    }
+    ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3);
+    $r= ldap_bind ($ds, $admin, $password);
+
+    /* Get base to look for naming contexts */
+    $sr  = @ldap_read ($ds, "", "objectClass=*", array("+"));
+    $attr= @ldap_get_entries($ds,$sr);
+
+    return ($attr[0]['namingcontexts']);
   }
 
 
@@ -1399,8 +1410,6 @@ class LDAP{
       $result[$attr[0][$i]]= $attr[0][$attr[0][$i]];
       unset($result[$attr[0][$i]]['count']);
     }
-
-print_a($result);
 
     return ($result);
   }
