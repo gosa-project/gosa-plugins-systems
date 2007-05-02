@@ -665,6 +665,8 @@ class sieveManagement extends plugin
                       "attach" => "style='border-right:0px; width:70px;'");
       $List->AddEntry(array($field1,$field2,$field3,$field4,$field6)); 
     }
+
+    $List->SetHeight(400);
  
     /* If the uattrib is empty   (Attribute to use for authentification with sieve)
      *  Display a message that the connection can't be established.
