@@ -819,13 +819,20 @@ class Step_Migrate extends setup_step
   
   function create_admin_user()
   {
-    if(isset($_POST['new_user_password']) && !empty($_POST['new_user_password'])){
-      $pwd = $_POST['new_user_password'];
-    }else{
-      print_red(_("Please specify a valid password for the new GOsa admin user."));
-      return(FALSE);
+    $pw1 = $pw2 = "";
+
+    if(isset($_POST['new_user_password'])){
+      $pw1 = $_POST['new_user_password'];
     }
-    
+    if(isset($_POST['new_user_password2'])){
+      $pw2 = $_POST['new_user_password2'];
+    }
+  
+    if(empty($pw1) || empty($pw2) | ($pw1 != $pw2)){
+      print_red(_("Specified passwords are empty or not equal."));
+      return false;
+    }
+ 
     /* Establish ldap connection */
     $cv = $this->parent->captured_values;
     $ldap = new LDAP($cv['admin'],
@@ -846,7 +853,7 @@ class Step_Migrate extends setup_step
     $methods = @passwordMethod::get_available_methods_if_not_loaded();
     $p_m = $methods[$cv['encryption']];
     $p_c = new $p_m(array());
-    $hash = $p_c->generate_hash($pwd);
+    $hash = $p_c->generate_hash($pw2);
 
     $new_user=array();
     $new_user['objectClass']= array("top","person","gosaAccount","organizationalPerson","inetOrgPerson");
@@ -865,10 +872,12 @@ class Step_Migrate extends setup_step
     
     if(!$res){
       print_red($ldap->get_error());
+      return(FALSE);
     }
   
     $this->acl_create_dialog=FALSE;        
     $this->check_administrativeAccount();
+    return(TRUE);
   }
  
 
@@ -1155,13 +1164,15 @@ class Step_Migrate extends setup_step
     }
 
     if(isset($_POST['create_admin_user'])){
-      $this->create_admin_user();
-      $this->dialog = FALSE;
+      if($this->create_admin_user()){
+        $this->dialog = FALSE;
+      }
     }
 
     if($this->acl_create_dialog){
       $smarty = get_smarty();
       $smarty->assign("new_user_password",@$_POST['new_user_password']);
+      $smarty->assign("new_user_password2",@$_POST['new_user_password2']);
       $smarty->assign("users" ,$this->get_user_list());
       $smarty->assign("users_cnt" ,count($this->get_user_list()));
       $smarty->assign("groups",$this->get_group_list());

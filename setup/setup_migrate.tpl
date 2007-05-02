@@ -213,6 +213,14 @@
 						<input type='input' value='{$new_user_password}' name='new_user_password'><br>
 					</td>
 				</tr>
+				</tr>
+					<td>
+						{t}Retype password{/t}:&nbsp;
+					</td>
+					<td>
+						<input type='input' value='{$new_user_password2}' name='new_user_password2'><br>
+					</td>
+				</tr>
 			</table>
 			<input type='submit' name='create_admin_user' value='{t}Create{/t}'>	
 			</p>
