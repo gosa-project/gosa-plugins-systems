@@ -656,9 +656,7 @@ class LDAP{
     $tag= "";
 
     /* Load schema if available... */
-    if(isset($config->data['MAIN']['SCHEMA_CHECK'])){
-      $classes= $this->get_objectclasses();
-    }
+    $classes= $this->get_objectclasses();
 
     foreach ($l as $part){
       $cdn= "$part,$cdn";
@@ -694,7 +692,7 @@ class LDAP{
         $na= array();
 
         /* Automatic or traditional? */
-        if(isset($config->data['MAIN']['SCHEMA_CHECK'])){
+        if(count($classes)){
 
           /* Get name of first matching objectClass */
           $ocname= "";
@@ -776,6 +774,7 @@ class LDAP{
       }
     }
   }
+
 
   function recursive_remove()
   {
@@ -1360,6 +1359,7 @@ class LDAP{
     }
   }
 
+
   function get_naming_contexts($server, $admin= "", $password= "")
   {
     /* Build LDAP connection */
@@ -1371,10 +1371,30 @@ class LDAP{
     $r= ldap_bind ($ds, $admin, $password);
 
     /* Get base to look for naming contexts */
-    $sr  = @ldap_read ($ds, "", "objectClass=*", array("namingContexts"));
+    $sr  = @ldap_read ($ds, "", "objectClass=*", array("namingContexts", ));
     $attr= @ldap_get_entries($ds,$sr);
     
     return ($attr[0]['namingcontexts']);
+  }
+
+
+  function get_root_dse($server, $admin= "", $password= "")
+  {
+    /* Build LDAP connection */
+    $ds= ldap_connect ($server);
+    if (!$ds) {
+      die ("Can't bind to LDAP. No check possible!");
+    }
+    ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3);
+    $r= ldap_bind ($ds, $admin, $password);
+
+    /* Get base to look for naming contexts */
+    $sr  = @ldap_read ($ds, "", "objectClass=*", array("+"));
+    $attr= @ldap_get_entries($ds,$sr);
+   
+    print_a($attr); 
+
+    return ($attr);
   }
 
 
