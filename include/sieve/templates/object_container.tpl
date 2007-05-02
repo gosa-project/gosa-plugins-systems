@@ -18,7 +18,7 @@
 			&nbsp;&nbsp;&nbsp;
 	
 			<select name='element_type_{$ID}'>
-				<option value=''>&nbsp;</option>
+				<option value=''>&lt;{t}choose element{/t}&gt;</option>
 				<option value='sieve_keep'>{t}Keep{/t}</option>
 				<option value='sieve_comment'>{t}Comment{/t}</option>
 				<option value='sieve_fileinto'>{t}Fileinto{/t}</option>
