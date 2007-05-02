@@ -124,8 +124,6 @@
 				<input type='submit' name='outside_groups_dialog_cancel' value='{t}Close{/t}'>
 			</div>
 		
-
-		{elseif $method == "create_acls"}
 		{elseif $method == "outside_users"}
 
 			<h2>{t}Move users into valid user departments{/t}</h2>

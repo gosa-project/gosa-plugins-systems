@@ -453,7 +453,8 @@ class Step_Migrate extends setup_step
     $ldap->cd ($dn);
     $ldap->create_missing_trees($dn);
     $res = $ldap->add($testEntry);
-    if(!$res){
+    $ldap->cat($dn);
+    if(!$ldap->count()){
       gosa_log($ldap->get_error());
       $this->checks['permissions']['STATUS']    = FALSE;
       $this->checks['permissions']['STATUS_MSG']= _("Failed");
@@ -465,7 +466,8 @@ class Step_Migrate extends setup_step
     /* Try to remove created entry 
      */
     $res = $ldap->rmDir($dn);
-    if(!$res){
+    $ldap->cat($dn);
+    if($ldap->count()){
       gosa_log($ldap->get_error());
       $this->checks['permissions']['STATUS']    = FALSE;
       $this->checks['permissions']['STATUS_MSG']= _("Failed");
