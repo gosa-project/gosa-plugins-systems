@@ -659,7 +659,7 @@ class LDAP{
     $classes= $this->get_objectclasses();
 
     foreach ($l as $part){
-      if ($party != "dummy"){
+      if ($part != "dummy"){
         $cdn= "$part,$cdn";
       }
 
