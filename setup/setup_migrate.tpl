@@ -210,7 +210,7 @@
 						{t}Password{/t}:&nbsp;
 					</td>
 					<td>
-						<input type='input' value='{$new_user_password}' name='new_user_password'><br>
+						<input type='password' value='{$new_user_password}' name='new_user_password'><br>
 					</td>
 				</tr>
 				</tr>
@@ -218,7 +218,7 @@
 						{t}Retype password{/t}:&nbsp;
 					</td>
 					<td>
-						<input type='input' value='{$new_user_password2}' name='new_user_password2'><br>
+						<input type='password' value='{$new_user_password2}' name='new_user_password2'><br>
 					</td>
 				</tr>
 			</table>
