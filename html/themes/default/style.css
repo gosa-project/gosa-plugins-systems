@@ -1076,8 +1076,8 @@ table.editing_surface {
 
 /* Editing surface menu */
 td.editing_surface_menu {
-	background-color: #CCCCCC; 
-	border: 1px solid #AAAAAA;
+	background-color: #EEE;
+	border: 1px solid #BBB;
 	padding:5px;
 }
 
@@ -1113,19 +1113,19 @@ textarea.editing_source {
 table.object_container_container { 
 	width:100%;
 	border-spacing: 0px ;
-	background-color:#EEEEEE;
+	background-color: #F8F8F8;
 	border: solid 1px #AAAAAA;
 }
 
 /* Container cell top left */
 td.object_container_cell_top_left {
-	background-color: #DDDDDD; 
+	background-color: #EEE; 
 	text-align:center; 
 }
 
 /* Container cell top right */
 td.object_container_cell_top_right {
-	background-color: #DDDDDD; 
+	background-color: #EEE; 
 	text-align:left; 
 	padding:2px;  
 	border-bottom: solid 1px #AAAAAA;
@@ -1134,7 +1134,7 @@ td.object_container_cell_top_right {
 /* Container cell bottom left */
 td.object_container_cell_bottom_left {
 	width:5px; 
-	background-color: #DDDDDD; 
+	background-color: #EEE; 
 	text-align:center; 
 	border-right: solid 1px #AAAAAA;
 }
@@ -1150,7 +1150,7 @@ table.sieve_comment_container {
 	padding:0px;
 	border-spacing: 0px ;
 	width:100%;
-	background-color: #EEEEEE;
+	background-color: #F8F8F8;
 }
 
 /* Editing area */
@@ -1170,7 +1170,7 @@ table.sieve_require_container {
 	padding:0px;
 	border-spacing: 0px ;
 	width:100%;
-	background-color: #EEEEEE;
+	background-color: #F8F8F8;
 }
 
 /* Editing area */
@@ -1190,7 +1190,7 @@ table.sieve_fileinto_container {
 	padding:0px;
 	border-spacing: 0px ;
 	width:100%;
-	background-color: #EEEEEE;
+	background-color: #F8F8F8;
 }
 
 /* Editing area */
@@ -1212,7 +1212,7 @@ table.sieve_keep_container {
 	padding:0px;
 	border-spacing: 0px ;
 	width:100%;
-	background-color: #EEEEEE;
+	background-color: #F8F8F8;
 }
 
 /* Editing area */
@@ -1231,7 +1231,7 @@ table.sieve_discard_container {
 	padding:0px;
 	border-spacing: 0px ;
 	width:100%;
-	background-color: #EEEEEE;
+	background-color: #F8F8F8;
 }
 
 /* Editing area */
@@ -1250,7 +1250,7 @@ table.sieve_redirect_container {
 	padding:0px;
 	border-spacing: 0px ;
 	width:100%;
-	background-color: #EEEEEE;
+	background-color: #F8F8F8;
 }
 
 /* Editing area */
@@ -1273,7 +1273,7 @@ table.sieve_reject_container {
 	padding:0px;
 	border-spacing: 0px ;
 	width:100%;
-	background-color: #EEEEEE;
+	background-color: #F8F8F8;
 }
 
 /* Editing area */
@@ -1296,7 +1296,7 @@ table.sieve_stop_container {
 	padding:0px;
 	border-spacing: 0px ;
 	width:100%;
-	background-color: #EEEEEE;
+	background-color: #F8F8F8;
 }
 
 /* Editing area */
@@ -1315,7 +1315,7 @@ table.sieve_vacation_container {
 	padding:0px;
 	border-spacing: 0px ;
 	width:100%;
-	background-color: #EEEEEE;
+	background-color: #F8F8F8;
 }
 
 /* Editing area */
@@ -1348,7 +1348,7 @@ td.sieve_allof_left {
 	vertical-align: middle;
 	width:35px;
 	background-color: #CCCCCC;
-	border: solid 0px #EEEEEE
+	border: solid 0px #EEE;
 }
 
 /* Container */
@@ -1389,7 +1389,7 @@ td.sieve_anyof_right {
 
 table.sieve_test_container {
 	width:100%;
-	background-color:#EEEEEE;
+	background-color:#F8F8F8;
 	margin: 0px;
 	border-spacing: 0px ;
 	padding:0px;
@@ -1407,11 +1407,11 @@ table.sieve_test_case {
 
 td.container_, div.container_{
 	padding-left:2px;
-	border-left: solid 2px #EEEEEE;
+	border-left: solid 2px #F8F8F8;
 }
 
 td.container_:hover,div.container_:hover {
-	border-left: solid 2px #777777;
+	border-left: solid 2px red;
 	display:block;
 }
 
