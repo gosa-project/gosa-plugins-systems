@@ -773,8 +773,13 @@ class LDAP{
         $this->cd($cdn);
         $this->add($na);
         show_ldap_error($this->get_error(), sprintf(_("Creating subtree '%s' failed."),$cdn));
+        if (!preg_match('/success/i', $this->error)){
+          return FALSE;
+        }
       }
     }
+
+    return TRUE;
   }
 
 
@@ -1364,17 +1369,7 @@ class LDAP{
 
   function get_naming_contexts($server, $admin= "", $password= "")
   {
-    /* Build LDAP connection */
-    $ds= ldap_connect ($server);
-    if (!$ds) {
-      die ("Can't bind to LDAP. No check possible!");
-    }
-    ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3);
-    $r= ldap_bind ($ds, $admin, $password);
-
-    /* Get base to look for naming contexts */
-    $sr  = @ldap_read ($ds, "", "objectClass=*", array("namingContexts", ));
-    $attr= @ldap_get_entries($ds,$sr);
+    $attr= $this->get_root_dse($server, $admin, $password);
     
     return ($attr[0]['namingcontexts']);
   }
