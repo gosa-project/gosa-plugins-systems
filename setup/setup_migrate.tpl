@@ -31,6 +31,53 @@
 				<div>&nbsp;</div>
 			{/foreach}
 
+		{elseif $method == "outside_winstations"}
+
+			<h2>{t}Move windows workstations into a valid windows workstation department{/t}</h2>
+
+			{t}This dialog allows you to move the displayed windows workstations into a valid department{/t}
+			<br>
+			{t}Be careful with this tool, there may be references pointing to this workstations that can't be migrated.{/t}
+			<br>
+			<br>	
+
+			{foreach from=$outside_winstations item=val key=key}
+				{if $outside_winstations.$key.selected}
+					<input type='checkbox' name='select_winstation_{$key}' checked>
+				{else}
+					<input type='checkbox' name='select_winstation_{$key}'>
+				{/if}
+
+				&nbsp;{$outside_winstations.$key.dn}
+				{if $outside_winstations.$key.ldif != ""}
+                      <div class="step2_entry_container_info" id="sol_8">
+<div style='padding-left:20px;'>
+<pre>
+{$outside_winstations.$key.ldif}
+</pre>
+</div>
+</div>
+				{/if}
+				<br>
+			{/foreach}
+
+			<p>
+			<b>{t}Move selected windows workstations into the following GOsa department{/t} : </b>
+			<select name='move_winstation_to'>
+				{html_options options=$ous}
+			</select>
+			<br>
+			<input type='submit' name='outside_winstations_dialog_perform' value='{t}Move selected workstations{/t}'>
+			<input type='submit' name='outside_winstations_dialog_whats_done' value='{t}What will be done here{/t}'>
+			</p>
+				
+
+			<p class='seperator'>&nbsp;</p>	
+			<div style='width:100%; text-align:right; padding:5px;'>
+				<input type='submit' name='outside_winstations_dialog_cancel' value='{t}Close{/t}'>
+			</div>
+		
+
 		{elseif $method == "outside_groups"}
 
 			<h2>{t}Move groups into valid group departments{/t}</h2>
