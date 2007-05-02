@@ -432,7 +432,11 @@ class aclrole extends acl
 
     foreach($list as $name => $translation){
       $na  =  preg_replace("/^.*\//","",$name);
-      $prio=  $plist[$na]['plPriority'] ;
+      if (!isset($plist[$na]['plPriority'])){
+        $prio= 0;
+      } else {
+        $prio=  $plist[$na]['plPriority'] ;
+      }
 
       $newSort[$name] = $prio;
     }

@@ -151,7 +151,11 @@ class ogroupManagement extends plugin
         }
         $dns_names .="</pre>";
         /* Lock the current entry, so nobody will edit it during deletion */
-        $smarty->assign("info",     sprintf(_("You're about to delete the following object group(s) %s"), @LDAP::fix($dns_names)));
+        if (count($this->dns) == 1){
+          $smarty->assign("info",     sprintf(_("You're about to delete the following object entry %s"), @LDAP::fix($dns_names)));
+        } else {
+          $smarty->assign("info",     sprintf(_("You're about to delete the following object entries %s"), @LDAP::fix($dns_names)));
+        }
         $smarty->assign("multiple", true);
         return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
       }
