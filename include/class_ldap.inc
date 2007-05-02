@@ -1370,8 +1370,7 @@ class LDAP{
   function get_naming_contexts($server, $admin= "", $password= "")
   {
     $attr= $this->get_root_dse($server, $admin, $password);
-    
-    return ($attr[0]['namingcontexts']);
+    return ($attr['namingcontexts']);
   }
 
 
@@ -1389,9 +1388,21 @@ class LDAP{
     $sr  = @ldap_read ($ds, "", "objectClass=*", array("+"));
     $attr= @ldap_get_entries($ds,$sr);
    
-    print_a($attr); 
+    /* Return empty array, if nothing was set */
+    if (!isset($attr[0])){
+      return array();
+    }
 
-    return ($attr);
+    /* Rework array... */
+    $result= array();
+    for ($i= 0; $i<$attr[0]['count']; $i++){
+      $result[$attr[0][$i]]= $attr[0][$attr[0][$i]];
+      unset($result[$attr[0][$i]]['count']);
+    }
+
+print_a($result);
+
+    return ($result);
   }
 
 
