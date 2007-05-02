@@ -277,9 +277,6 @@ onclick="changeState('day'); changeState('month'); changeState('year'); changeSt
 {/render}
    {t}User is only allowed to send and receive local mails{/t}
   </td>
-  <td style="border-left:1px solid #A0A0A0">
-   &nbsp;
-  </td>
  </tr>
 </table>
 
