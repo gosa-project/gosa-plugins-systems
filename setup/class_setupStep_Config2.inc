@@ -47,7 +47,11 @@ class Step_Config2 extends setup_step
                                   "smbhash"          => 'SMBHASH',
                                   "samba_rid_active" => FALSE); 
 
+  var $sambaDomain_found = FALSE;
+
   var $attributes = array("governmentmode","sambaidmapping","cyrusunixstyle","mail");
+  var $called = FALSE;
+
 
   function Step_Config2()
   {
@@ -80,6 +84,31 @@ class Step_Config2 extends setup_step
  
   function execute()
   {
+    /* On first call check for rid/sid base */
+    $cv = $this->parent->captured_values;
+    $ldap = new LDAP($cv['admin'],
+        $cv['password'],
+        $cv['connection'],
+        FALSE,
+        $cv['tls']);
+
+    $ldap->cd($cv['base']);
+    $ldap->search("(objectClass=sambaDomain)",array("dn"));
+    if($ldap->count()){
+      $this->sambaDomain_found =TRUE;
+    }else{
+      $this->sambaDomain_found =FALSE;
+    }
+
+    if(!$this->called){
+      if(!$this->sambaDomain_found){
+        $this->samba_settings['samba_sid_active'] = TRUE;
+        $this->samba_settings['samba_rid_active'] = TRUE;
+      }
+   
+      $this->called = TRUE;
+    }
+
     /* Update snapshot values, with already collected values */
     foreach($this->generic_settings as $key => $value){
       foreach(array("snapshot_base","snapshot_user","snapshot_server") as $attr){
@@ -92,6 +121,7 @@ class Step_Config2 extends setup_step
     }
 
     $smarty = get_smarty();
+    $smarty->assign("sambaDomain_found",$this->sambaDomain_found);
     $smarty->assign("generic_settings",$this->generic_settings);
     $smarty->assign("mail_settings",$this->mail_settings);
     $smarty->assign("mail_methods",$this->mail_methods);
@@ -176,6 +206,10 @@ class Step_Config2 extends setup_step
         $this->samba_settings['smbhash'] = $_POST['smbhash'];
       }
 
+      if(!$this->sambaDomain_found){
+        $this->samba_settings['samba_sid_active'] = TRUE;
+        $this->samba_settings['samba_rid_active'] = TRUE;
+      }
     }
 
     $tmp = $this->check();

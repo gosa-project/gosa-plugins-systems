@@ -20,7 +20,7 @@
                     onClick='changeState("samba_sid");'>
                 <input size=20 id='samba_sid' name='samba_sid' type='text' value='{$samba_settings.samba_sid}' disabled>
             {else}
-                <input type='checkbox' value='1' name='samba_sid_active' checked>
+                <input type='checkbox' value='1' name='samba_sid_active' checked {if !$sambaDomain_found} disabled {/if}>
                 <input size=20 id='samba_sid' name='samba_sid' type='text' value='{$samba_settings.samba_sid}'  >
             {/if}
         </div>
@@ -36,7 +36,7 @@
                     onClick='changeState("samba_rid");'>
                 <input size=20 id='samba_rid' name='samba_rid' type='text' value='{$samba_settings.samba_rid}' disabled>
             {else}
-                <input type='checkbox' value='1' name='samba_rid_active' checked>
+                <input type='checkbox' value='1' name='samba_rid_active' checked {if !$sambaDomain_found} disabled {/if}>
                 <input size=20 id='samba_rid' name='samba_rid' type='text' value='{$samba_settings.samba_rid}'  >
             {/if}
         </div>
