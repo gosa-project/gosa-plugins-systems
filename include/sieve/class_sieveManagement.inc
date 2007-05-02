@@ -202,13 +202,13 @@ class sieveManagement extends plugin
         /* Is given name in lower case characters ? */
         if($name != strtolower($name)){
           $err =true;
-          print_red(_("Only lower case names are allowed here."));
+          print_red(_("Only lower case names are allowed."));
         }
 
         /* Only chars are allowed here */
         if(preg_match("/[^a-z]/i",$name)){
           $err =true;
-          print_red(_("Only a-z are allowed in script names."));
+          print_red(_("Only alphabetical characters are allowed in script names."));
         }
 
         $tmp = $this->get_used_script_names();
