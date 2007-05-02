@@ -301,7 +301,7 @@ class Step_Migrate extends setup_step
 
     $this->outside_winstations = array();
     while($attrs = $ldap->fetch()){
-      if(!preg_match("/^[^,]+,".normalizePreg($winstation_ou)."/",$attrs['dn'])){
+      if((!preg_match("/^[^,]+,".normalizePreg($winstation_ou)."/",$attrs['dn'])) && !preg_match("/,dc=addressbook,/",$attrs['dn'])){
         $attrs['selected'] = FALSE;
         $attrs['ldif']     = "";
         $this->outside_winstations[base64_encode($attrs['dn'])] = $attrs;
@@ -347,7 +347,7 @@ class Step_Migrate extends setup_step
 
     $this->outside_groups = array();
     while($attrs = $ldap->fetch()){
-      if(!preg_match("/^[^,]+,".normalizePreg($group_ou)."/",$attrs['dn'])){
+      if((!preg_match("/^[^,]+,".normalizePreg($group_ou)."/",$attrs['dn'])) && !preg_match("/,dc=addressbook,/",$attrs['dn'])){
         $attrs['selected'] = FALSE;
         $attrs['ldif']     = "";
         $this->outside_groups[base64_encode($attrs['dn'])] = $attrs;
@@ -391,7 +391,7 @@ class Step_Migrate extends setup_step
 
     $this->outside_users = array();
     while($attrs = $ldap->fetch()){
-      if(!preg_match("/^[^,]+,".normalizePreg($people_ou)."/",$attrs['dn'])){
+      if((!preg_match("/^[^,]+,".normalizePreg($people_ou)."/",$attrs['dn'])  && !preg_match("/,dc=addressbook,/",$attrs['dn']))){
         $attrs['selected'] = FALSE;
         $attrs['ldif']     = "";
         $this->outside_users[base64_encode($attrs['dn'])] = $attrs;
@@ -1373,38 +1373,9 @@ class Step_Migrate extends setup_step
         return(FALSE);
       }else{
 
-      echo "REMOVE this : Autocreation of the root object will be done by create_missing_tree later. !!!!!!!";
-
-         /* Try to find out which values are necessary */
-        $tmp = $ldap->get_objectclasses();
-        $oc = $tmp['organization'];
-      
-        $must_attrs = $oc['MUST'];
-        if(!is_array($must_attrs)){
-          $must_attrs = array($must_attrs);
-        }
-      
-        /* Root object does not exists try to create it */
-        $ldapadd["objectclass"][0]="top";
-        $ldapadd["objectclass"][1]="organization";
-
-        /* Try to fill all collected must attributes */
-        $base_parts = preg_split("/,/",$cv['base']);
-        foreach($must_attrs as $attr){
-          foreach($base_parts as $part){
-            if(preg_match("/^".$attr."=/",$part) && !isset($ldapadd[$attr])){
-              $ldapadd[$attr]= preg_replace("/^[^=]*+=/","",$part);
-            }
-          }
-        }
-
         /* Add root object */ 
         $ldap->cd($cv['base']);
-        $res = $ldap->add($ldapadd);
-
-        /* Add root object */ 
-        $ldap->cd($cv['base']);
- #       $res = $ldap->create_missing_trees($cv['base']);
+        $res = $ldap->create_missing_trees($cv['base']);
 
         /* If adding failed, tell the user */
         if(!$res){
@@ -1533,7 +1504,7 @@ class Step_Migrate extends setup_step
     $ldap->search("(".$winstation_ou.")",array("dn"));
   
     if($ldap->count() == 0 ){
-      $add_dn = $cv['groupou'].",".$cv['base'];
+      $add_dn = $winstation_ou.",ou=systems,".$cv['base'];
       $naming_attr = preg_replace("/=.*$/","",$add_dn);
       $naming_value = preg_replace("/^[^=]*+=([^,]*).*$/","\\1",$add_dn);
       $add = array();
