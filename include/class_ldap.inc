@@ -644,13 +644,13 @@ class LDAP{
   {
     global $config;
 
-    /* Ignore create_missing trees if the base equals target */
-    if ($target == $this->basedn){
-     return;
-    }
-
     $real_path= substr($target, 0, strlen($target) - strlen($this->basedn) -1 );
-    $l= array_reverse(gosa_ldap_explode_dn($real_path));
+
+    if ($target == $this->basedn){
+      $l= array("dummy");
+    } else {
+      $l= array_reverse(gosa_ldap_explode_dn($real_path));
+    }
     unset($l['count']);
     $cdn= $this->basedn;
     $tag= "";
@@ -659,7 +659,9 @@ class LDAP{
     $classes= $this->get_objectclasses();
 
     foreach ($l as $part){
-      $cdn= "$part,$cdn";
+      if ($party != "dummy"){
+        $cdn= "$part,$cdn";
+      }
 
       /* Ignore referrals */
       $found= false;
