@@ -1,6 +1,6 @@
 <table class='sieve_test_container'>
 	<tr>
-		<td style='width:20px; ; text-align:center;'>	
+		<td style='width:20px; ; text-align:center; vertical-align:top;'>	
 			{if $DisplayAdd}
 				<input type='image' src='images/sieve_add_test.png' name='Add_Test_Object_{$ID}' 
 					title='{t}Add this object{/t}' alt='R' class='center'>

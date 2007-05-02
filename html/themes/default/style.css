@@ -1411,7 +1411,7 @@ td.container_, div.container_{
 }
 
 td.container_:hover,div.container_:hover {
-	border-left: solid 2px red;
+	border-left: solid 2px black;
 	display:block;
 }
 

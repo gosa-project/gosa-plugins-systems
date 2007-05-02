@@ -11,7 +11,7 @@
 
 
 	<tr>
-		<td style='width:50%;'>
+		<td>
 			<b>{t}Header{/t}</b>
 		</td>
         <td style='text-align:right; vertical-align:top;'>
@@ -67,6 +67,8 @@
 	 <tr>
         <td colspan=2>&nbsp;</td>
     </tr>
+   </table>
+   <table class='sieve_test_case'>
     <tr>
         <td >
             {t}Address fields to include{/t}<br>
