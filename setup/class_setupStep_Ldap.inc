@@ -101,8 +101,8 @@ class Step_Ldap extends setup_step
       return("<font color='red'>".$str."</font>");
     }else{
       if(empty($this->admin)){
-        $str = sprintf(_("Anonymous bind on server '%s' succeeded. Please specify user and password."),$this->connection); 
-        return("<font color='blue'>".$str."</font>");
+        $str = sprintf(_("Anonymous bind on server '%s' succeeded."), $this->connection);
+        return("<font color='blue'>".$str."</font> <font color='red'>"._("Please specify user and password.")."</font>");
       }else{
         $str = sprintf(_("Bind as user '%s' on server '%s' succeeded."),$this->admin,$this->connection);
         return("<font color='green'>".$str."</font>");
