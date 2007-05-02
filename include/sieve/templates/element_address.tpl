@@ -14,7 +14,7 @@
 			<b>{t}Address{/t}</b>
 		</td>
         <td style='text-align:right; vertical-align:top;'>
-			<input type='submit' name='Toggle_Expert_{$ID}' value='{t}Normal mode{/t}'>
+			<input type='submit' name='Toggle_Expert_{$ID}' value='{t}Normal view{/t}'>
 		</td>
 	</tr>
 	<tr>
@@ -42,7 +42,7 @@
 	</tr>
 	<tr>
 		<td>
-			{t}Address part that should be used{/t}
+			{t}Part of address that should be used{/t}
 		</td>
 		<td>
 			<select name='address_part_{$ID}' title='{t}Boolean value{/t}'> 
@@ -63,7 +63,7 @@
 		{if $match_type == ":count" || $match_type == ":value"}
 	<tr>
 		<td>
-			{t}operator{/t}
+			{t}Operator{/t}
 		</td>
 		<td>
 			<select name='operator_{$ID}' title='{t}Boolean value{/t}' onChange='document.mainform.submit();'>
@@ -125,7 +125,7 @@
 			<textarea style='width:100%;height:40px;' name='values_{$ID}'>{$values}</textarea>
 		</td>
 		<td style='text-align:right; vertical-align:top; width:120px;'>
-			<input type='submit' name='Toggle_Expert_{$ID}' value='{t}Expert mode{/t}'>
+			<input type='submit' name='Toggle_Expert_{$ID}' value='{t}Expert view{/t}'>
 		</td>
 	</tr>
 	{/if}

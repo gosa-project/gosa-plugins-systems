@@ -7,7 +7,7 @@
 			{if $Small}
 				<input type='submit' name='toggle_small_{$ID}' value='{t}Edit{/t}'> 	
 			{else}
-				<input type='submit' name='toggle_small_{$ID}' value='{t}Close{/t}'> 	
+				<input type='submit' name='toggle_small_{$ID}' value='{t}Cancel{/t}'> 	
 			{/if}
 		</td>
 	</tr>

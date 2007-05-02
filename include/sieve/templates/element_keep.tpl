@@ -6,7 +6,7 @@
 	</tr>
 	<tr>
 		<td class='sieve_keep_input'>
-			{t}Keep the message{/t}
+			{t}Keep message{/t}
 		</td>
 	</tr>
 </table>

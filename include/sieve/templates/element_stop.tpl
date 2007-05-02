@@ -6,7 +6,7 @@
 	</tr>
 	<tr>
 		<td class='sieve_stop_input'>
-			{t}Stop execution here!{/t}
+			{t}Stop execution here{/t}
 		</td>
 	</tr>
 </table>

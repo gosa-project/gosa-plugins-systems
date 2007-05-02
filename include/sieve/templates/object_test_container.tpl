@@ -3,11 +3,11 @@
 		<td style='width:20px; ; text-align:center; vertical-align:top;'>	
 			{if $DisplayAdd}
 				<input type='image' src='images/sieve_add_test.png' name='Add_Test_Object_{$ID}' 
-					title='{t}Add this object{/t}' alt='R' class='center'>
+					title='{t}Add object{/t}' alt='R' class='center'>
 			{/if}
 			{if $DisplayDel}
 				<input type='image' src='images/sieve_del_object.png' name='Remove_Test_Object_{$ID}' 
-					title='{t}Remove this object{/t}' alt='R' class='center'>
+					title='{t}Remove object{/t}' alt='R' class='center'>
 			{/if}
 		</td>
 		<td>

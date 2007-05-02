@@ -8,7 +8,7 @@
 <p class='seperator'>&nbsp;</p>
 <br>
 <div class='seperator' style='text-align:right; width:100%;'>
+    <input type='submit' name='select_new_element_type' value='{t}Continue{/t}'>
+    &nbsp;
     <input type='submit' name='select_new_element_type_cancel' value='{t}Abort{/t}'>
-    	&nbsp;
-	<input type='submit' name='select_new_element_type' value='{t}Next{/t}'>
 </div>

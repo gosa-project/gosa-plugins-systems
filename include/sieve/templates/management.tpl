@@ -21,7 +21,7 @@
 	{$List}
 	<input type='submit' name='create_new_script' value='{t}Create new script{/t}'>
 	<p style="text-align:right;border-top:1px solid #999; padding-top:10px;">
-		<input type=submit name="sieve_finish" style="width:80px" value="{t}Ok{/t}">
+		<input type=submit name="sieve_finish" style="width:80px" value="{t}Save{/t}">
 		&nbsp;
 		<input type=submit name="sieve_cancel" value="{t}Cancel{/t}">
 	</p>

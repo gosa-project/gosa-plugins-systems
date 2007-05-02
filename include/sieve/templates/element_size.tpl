@@ -8,9 +8,9 @@
 			{/if}			
 
      		{if $Inverse}
-                <input type='submit' name='toggle_inverse_{$ID}' value='{t}Not{/t}'>
+                <input type='submit' name='toggle_inverse_{$ID}' value='{t}Not{/t}' title='{t}Inverse match{/t}'>
             {else}
-                <input type='submit' name='toggle_inverse_{$ID}' value='{t}-{/t}'>
+                <input type='submit' name='toggle_inverse_{$ID}' value='{t}-{/t}' title='{t}Inverse match{/t}'>
             {/if}
 
 			<select name='Match_type_{$ID}' title='{t}Select match type{/t}'>

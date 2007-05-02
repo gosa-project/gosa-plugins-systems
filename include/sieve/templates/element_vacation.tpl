@@ -13,7 +13,7 @@
 			<b>{t}Vacation Message{/t}</b>
 		</td>	
         <td style='text-align:right; vertical-align:top;'>
-            <input type='submit' name='Toggle_Expert_{$ID}' value='{t}Normal mode{/t}'>
+            <input type='submit' name='Toggle_Expert_{$ID}' value='{t}Normal view{/t}'>
         </td>
 	</tr>
 	<tr>
@@ -41,10 +41,10 @@
 	{else}
 	<tr>
 		<td>	
-			<b>{t}Vacation Message{/t}</b>
+			<b>{t}Vacation message{/t}</b>
 		</td>	
 		<td width='10%' style='vertical-align:top;'>
-            <input type='submit' name='Toggle_Expert_{$ID}' value='{t}Expert mode{/t}'>
+            <input type='submit' name='Toggle_Expert_{$ID}' value='{t}Expert view{/t}'>
 		</td>
 	</tr>
 	<tr>

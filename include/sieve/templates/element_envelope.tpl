@@ -15,7 +15,7 @@
 			<b>{t}Envelope{/t}</b>
 		</td>
         <td style='text-align:right; vertical-align:top;'>
-            <input type='submit' name='Toggle_Expert_{$ID}' value='{t}Normal mode{/t}'>
+            <input type='submit' name='Toggle_Expert_{$ID}' value='{t}Normal view{/t}'>
         </td>
     </tr>
     <tr>
@@ -37,9 +37,9 @@
         </td>
         <td>
             {if $Inverse}
-                <input type='submit' name='toggle_inverse_{$ID}' value='{t}Yes{/t}'>
+                <input type='submit' name='toggle_inverse_{$ID}' value='{t}Yes{/t}' title='{t}Inverse match{/t}'>
             {else}
-                <input type='submit' name='toggle_inverse_{$ID}' value='{t}No{/t}'>
+                <input type='submit' name='toggle_inverse_{$ID}' value='{t}No{/t}' title='{t}Inverse match{/t}'>
             {/if}
         </td>
     </tr>
@@ -56,7 +56,7 @@
         {if $match_type == ":count" || $match_type == ":value"}
     <tr>
         <td>
-            {t}operator{/t}
+            {t}Operator{/t}
         </td>
         <td>
             <select name='operator_{$ID}' title='{t}Boolean value{/t}' onChange='document.mainform.submit();'>
@@ -122,7 +122,7 @@
 			<textarea style='width:100%;height:40px;' name='values_{$ID}'>{$values}</textarea>
 		</td>
 		<td style='text-align:right; vertical-align:top; width:120px;'>
-			<input type='submit' name='Toggle_Expert_{$ID}' value='{t}Expert mode{/t}'>
+			<input type='submit' name='Toggle_Expert_{$ID}' value='{t}Expert view{/t}'>
 		</td>
 	</tr>
 	{/if}
