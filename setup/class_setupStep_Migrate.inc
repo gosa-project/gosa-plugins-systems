@@ -1156,6 +1156,7 @@ class Step_Migrate extends setup_step
 
     if(isset($_POST['create_admin_user'])){
       $this->create_admin_user();
+      $this->dialog = FALSE;
     }
 
     if($this->acl_create_dialog){
@@ -1264,6 +1265,8 @@ class Step_Migrate extends setup_step
 
   function save_object()
   {
+    $this->is_completed= TRUE;
+
     /* Capture all selected winstations from outside_winstations_dialog */
     if($this->outside_winstations_dialog){
       foreach($this->outside_winstations as $dn => $data){
