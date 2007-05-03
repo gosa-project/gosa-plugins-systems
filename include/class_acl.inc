@@ -50,7 +50,7 @@ class acl extends plugin
     $this->parent= $parent;
 
     /* Container? */
-    if (preg_match('/^(ou|c|l|dc)=/i', $dn)){
+    if (preg_match('/^(o|ou|c|l|dc)=/i', $dn)){
       $this->isContainer= TRUE;
     }
 
