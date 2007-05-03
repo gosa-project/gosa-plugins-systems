@@ -62,7 +62,7 @@ class sieveManagement extends plugin
   {
     /* Check given parameter */
     if(!isset($parent->$uattrib)){
-      trigger_error("Sieve Management implementation error. Parameter 4 (".$uattrib.") must be part of the given parent element.");
+      trigger_error("Sieve Management implementation error. Parameter 4 (".$uattrib.") must be part of the given parent element (".get_class($parent).").");
     }
 
     $this->uattrib = $uattrib;
