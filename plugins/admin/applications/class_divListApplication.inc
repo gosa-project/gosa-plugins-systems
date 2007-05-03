@@ -95,19 +95,36 @@ class divListApplication extends MultiSelectWindow
     /* Load possible departments */
     $ui= get_userinfo();
     $tdeps= $ui->get_module_departments("application");
-
+    $first = "";
+    $found = FALSE;
     $ids = $this->config->idepartments;
 
     foreach($deps as $dep){
       if(isset($ids[$dep['dn']]) && in_array_ics($dep['dn'], $tdeps)){
 
         $value = $ids[$dep['dn']];
+
+        /* Keep first base dn in mind, we could need this
+         *  info if no valid base was found
+         */
+        if(empty($first)) {
+          $first = $dep['dn'];
+        }  
+  
         if ($this->selectedBase == $dep['dn']){
+          $found = TRUE;
           $options.= "<option selected='selected' value='".$dep['dn']."'>$value</option>";
         } else {
           $options.= "<option value='".$dep['dn']."'>$value</option>";
         }
       }
+    }
+
+    /* The currently used base is not visible with your acl setup.
+     * Set base to first useable base.
+     */
+    if(!$found){
+      $this->selectedBase = $first;
     }
 
     /* Get acls */

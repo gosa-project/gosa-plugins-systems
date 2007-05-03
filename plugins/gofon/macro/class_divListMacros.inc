@@ -101,6 +101,7 @@ class divListMacro extends MultiSelectWindow
         $value = $ids[$dep['dn']];
         if ($this->selectedBase == $dep['dn']){
           $options.= "<option selected='selected' value='".$dep['dn']."'>$value</option>";
+          $found = TRUE;
         } else {
           $options.= "<option value='".$dep['dn']."'>$value</option>";
         }

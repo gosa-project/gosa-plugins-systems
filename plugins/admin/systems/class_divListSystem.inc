@@ -133,6 +133,7 @@ class divListSystem extends MultiSelectWindow
 
         $value = $ids[$dep['dn']];
         if ($this->selectedBase == $dep['dn']){
+          $found = TRUE;
           $options.= "<option selected='selected' value='".$dep['dn']."'>$value</option>";
         } else {
           $options.= "<option value='".$dep['dn']."'>$value</option>";
