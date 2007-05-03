@@ -16,7 +16,7 @@
 <div class='gosaLoginSpacer'></div>
 
 <div style='float:left; width:25%;'>&nbsp;</div>
-<div style='float:left; width:50%; border:1px solid #AAAAAA;background-color:#F8F8F8'>
+<div style='float:left; width:50%; border:1px solid #AAAAAA;background-color:white'>
 <form action='index.php' method='post' name='mainform' onSubmit='js_check(this);return true;'>
 
 	<div style='border-bottom:1px dashed #AAAAAA'>
