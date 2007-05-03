@@ -3,7 +3,7 @@
 	<h1 style='color:red'>Style fixes necessary here ;-)</h1>
     <div class='default'>
 
-		{if $method == "default"}
+	{if $method == "default"}
 
 	<p>	
 		Create a reload for each entry later 
@@ -20,7 +20,7 @@
 					{/if}
 					</div>
 				{else}
-					<div class='step2_failed'>{$checks.$key.STATUS_MSG}
+					<div class='step2_failed' style='float:none'>{$checks.$key.STATUS_MSG}
 					</div>
 					<div>
 					{if $checks.$key.ERROR_MSG}
@@ -50,13 +50,13 @@
 
 				&nbsp;{$outside_winstations.$key.dn}
 				{if $outside_winstations.$key.ldif != ""}
-                      <div class="step2_entry_container_info" id="sol_8">
-<div style='padding-left:20px;'>
-<pre>
-{$outside_winstations.$key.ldif}
-</pre>
-</div>
-</div>
+                    <div class="step2_entry_container_info" id="sol_8">
+						<div style='padding-left:20px;'>
+							<pre>
+								{$outside_winstations.$key.ldif}
+							</pre>
+						</div>
+					</div>
 				{/if}
 				<br>
 			{/foreach}
@@ -229,7 +229,7 @@
 			
 			<p>&nbsp;</p>
 			<b>{t}Append administrational acls to existing an user or a group{/t}</b><br>
-			Bla {t}To grant administrative permissions to a user or a group, select an element and use button below.{/t}
+			{t}To grant administrative permissions to a user or a group, select an element and use button below.{/t}
 			<p style='padding-left:10px;'>
 			<select name='acl_create_type' onChange='document.mainform.submit();' >
 				{if $type == "user"}

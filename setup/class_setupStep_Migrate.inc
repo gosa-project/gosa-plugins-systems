@@ -172,6 +172,8 @@ class Step_Migrate extends setup_step
   }
 
 
+  /* Check if there are uidNumbers which are used more than once. 
+   */
   function check_uidNumber()
   {
     $cv = $this->parent->captured_values;
@@ -218,6 +220,9 @@ class Step_Migrate extends setup_step
     }
   }
 
+  
+  /* Check if there are duplicated gidNumbers present in ldap
+   */
   function check_gidNumber()
   {
     $cv = $this->parent->captured_values;
@@ -265,7 +270,8 @@ class Step_Migrate extends setup_step
   }
 
 
-  /* Search for winstations outside the winstation ou */
+  /* Search for winstations outside the winstation ou 
+   */
   function search_outside_winstations()
   {
     $cv = $this->parent->captured_values;
@@ -274,8 +280,6 @@ class Step_Migrate extends setup_step
         $cv['connection'],
         FALSE,
         $cv['tls']);
-
-    
 
     /* Get winstation ou */
     if($cv['generic_settings']['wws_ou_active']) {
@@ -324,7 +328,8 @@ class Step_Migrate extends setup_step
   }
 
 
-  /* Search for groups outside the group ou */
+  /* Search for groups outside the group ou 
+   */
   function search_outside_groups()
   {
     $cv = $this->parent->captured_values;
@@ -369,7 +374,9 @@ class Step_Migrate extends setup_step
     }
   }
 
-  /* Search for users outside the people ou */
+
+  /* Search for users outside the people ou 
+   */
   function search_outside_users()
   {
     $cv = $this->parent->captured_values;
@@ -747,6 +754,7 @@ class Step_Migrate extends setup_step
     }elseif($ldap->count()){
       $this->checks['acls']['STATUS']    = TRUE;
       $this->checks['acls']['STATUS_MSG']= _("Ok");
+      $this->checks['acls']['ERROR_MSG'] = "";
     }else{
       $this->checks['acls']['STATUS']    = FALSE;
       $this->checks['acls']['STATUS_MSG']= _("Failed");
@@ -1385,6 +1393,7 @@ class Step_Migrate extends setup_step
       if($just_check){
         $this->checks['root']['STATUS']    = FALSE;
         $this->checks['root']['STATUS_MSG']= _("Failed");
+        $this->checks['root']['ERROR_MSG'] =  "The ldap root object is missing, but it is required to use GOsa.&nbsp;";
         $this->checks['root']['ERROR_MSG'].=  "<input type='submit' name='retry_root_create' value='"._("Try to create root object")."'>";
         return(FALSE);
       }else{
@@ -1542,7 +1551,6 @@ class Step_Migrate extends setup_step
     }
     return($tmp); 
   }
-
 
 
   function get_all_group_ous()
