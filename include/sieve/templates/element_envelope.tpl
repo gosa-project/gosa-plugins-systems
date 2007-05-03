@@ -1,15 +1,16 @@
 
-<table class='sieve_test_case'>
     {if $Expert}
         {if $LastError != ""}
+		<table class='sieve_test_case'>
             <tr>
                 <td colspan=2>
                     <font color='red'><b>{$LastError}</b></font>
                 </td>
             </tr>
-
+		</table>
         {/if}
 
+<table class='sieve_test_case'>
     <tr>
 		<td style='width:50%;'>
 			<b>{t}Envelope{/t}</b>
@@ -18,6 +19,8 @@
             <input type='submit' name='Toggle_Expert_{$ID}' value='{t}Normal view{/t}'>
         </td>
     </tr>
+</table>
+<table>
     <tr>
         <td style='width:50%;'>
             {t}Match type{/t}
@@ -29,8 +32,6 @@
 
         </td>
     </tr>
-
-
 	    <tr>
         <td>
             {t}Invert test{/t}?
@@ -68,6 +69,8 @@
   <tr>
         <td colspan=2>&nbsp;</td>
     </tr>
+</table>
+<table style='width:100%;'> 
     <tr>
         <td >
             {t}Address fields to include{/t}<br>
@@ -78,17 +81,19 @@
             <textarea style='width:100%;height:70px;' name='values_{$ID}'>{$values}</textarea>
         </td>
     </tr>
-
+</table>
 
 	{else}
     	{if $LastError != ""}
+		<table class='sieve_test_case'>
         	<tr>
 				<td colspan=4>
 		            <font color='red'><b>{$LastError}</b></font>
 				</td>
 			</tr>
-
+		</table>
         {/if}
+<table class='sieve_test_case'>
 	<tr>
 		{if $match_type == ":count" || $match_type == ":value"}
 		<td style='vertical-align:top; width:350px;'>
@@ -125,5 +130,5 @@
 			<input type='submit' name='Toggle_Expert_{$ID}' value='{t}Expert view{/t}'>
 		</td>
 	</tr>
-	{/if}
 </table>
+	{/if}

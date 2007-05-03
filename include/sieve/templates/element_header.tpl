@@ -1,15 +1,16 @@
-<table class='sieve_test_case'>
 	{if $Expert}
     	{if $LastError != ""}
+		<table class='sieve_test_case'>
         	<tr>
 				<td colspan=4>
 		            <font color='red'><b>{$LastError}</b></font>
 				</td>
 			</tr>
-
+		</table>
         {/if}
 
 
+<table class='sieve_test_case'>
 	<tr>
 		<td>
 			<b>{t}Header{/t}</b>
@@ -18,6 +19,8 @@
             <input type='submit' name='Toggle_Expert_{$ID}' value='{t}Normal view{/t}'>
         </td>
     </tr>
+</table>
+<table>
     <tr>
 		<td>
             {t}Match type{/t}
@@ -79,18 +82,22 @@
             <textarea style='width:100%;height:70px;' name='values_{$ID}'>{$values}</textarea>
         </td>
     </tr>
-
+	</table>
 
 	{else}
     	{if $LastError != ""}
+		<table class='sieve_test_case'>
         	<tr>
 				<td colspan=4>
 		            <font color='red'><b>{$LastError}</b></font>
 				</td>
 			</tr>
-
+		</table>
         {/if}
-		 <tr>
+
+		
+<table class='sieve_test_case'>
+    <tr>
 		{if $match_type == ":count" || $match_type == ":value"}
 		<td style='vertical-align:top; width:350px;'>
 		{else}
@@ -125,5 +132,5 @@
         </td>
     </tr>
 
-	{/if}
 </table>
+	{/if}
