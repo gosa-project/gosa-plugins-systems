@@ -797,7 +797,7 @@ class Step_Migrate extends setup_step
       }
     }
 
-    $acl = "0:sub:".base64_encode($dn).":all;cmdrw";    
+    $acl = "0:psub:".base64_encode($dn).":all;cmdrw";    
     $attrs_new['gosaAclEntry'][] = $acl;
     if(isset($attrs['gosaAclEntry'])){
       for($i = 0 ; $i < $attrs['gosaAclEntry']['count']; $i ++){
