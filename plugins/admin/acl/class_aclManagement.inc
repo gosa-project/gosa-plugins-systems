@@ -496,12 +496,17 @@ class aclManagement extends plugin
           }
         }else{
           $ldap->cat($fetch_base,$Attrs);
-          if($ldap->count())          {
-            $attrs = $ldap->fetch();
+          $attrs = $ldap->fetch();
+          if($attrs && isset($attrs['gosaAclEntry'])){
             $re2 = preg_replace("/\*/",".*",$Regex);
-            if( (isset($attrs['cn'][0]) && preg_match("/".$re2."/i",$attrs['cn'][0]))
-               |(isset($attrs['ou'][0]) && preg_match("/".$re2."/i",$attrs['ou'][0]))){
 
+            if(!isset($attrs['ou']) && !isset($attrs['cn'])){
+              $namingAttr= preg_replace("/^[^=]*+=([^,]*),.*$/","\\1",$fetch_base);
+              if(preg_match("/".$re2."/i",$namingAttr)){
+                $res[] = $attrs;
+              }
+            }elseif( (isset($attrs['cn'][0]) && preg_match("/".$re2."/i",$attrs['cn'][0]))
+               ||(isset($attrs['ou'][0]) && preg_match("/".$re2."/i",$attrs['ou'][0]))){
               $res[] = $attrs;
             }
           }
