@@ -287,7 +287,7 @@ class userinfo
     }
 
     /* Load departments here, if we are using php4 */
-    if(is_php4()){
+    if(is_php4() && !count($this->config->departments)){
       $this->config->get_departments();
     }
 
