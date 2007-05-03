@@ -286,6 +286,11 @@ class userinfo
       }
     }
 
+    /* Load departments here, if we are using php4 */
+    if(is_php4()){
+      $this->config->get_departments();
+    }
+
     /* For all gosaDepartments */
     foreach ($this->config->departments as $dn){
       $acl= array("r" => "", "w" => "", "c" => "", "d" => "", "m" => "", "a" => "");
