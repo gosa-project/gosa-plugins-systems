@@ -30,7 +30,8 @@ class sieve_vacation
     if(($data == NULL) || !is_array($data)) return;
 
     /* Walk through elements */
-    for($i = 0 ; $i < count($data['ELEMENTS']) ; $i ++){
+    $p= count($data['ELEMENTS']);
+    for ($i= 0; $i < $p; $i++){
 
       /* get current element */
       $node = $data['ELEMENTS'][$i];
