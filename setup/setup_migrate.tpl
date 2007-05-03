@@ -5,11 +5,8 @@
 
 	{if $method == "default"}
 
-	<p>	
-		Create a reload for each entry later 
-		<input type='submit' name='reload' value='{t}Reload{/t}'>
+		<input type='submit' name='reload' value='{t}Check again{/t}'>
 		<p>&nbsp;</p>
-	</p>
 
 			{foreach from=$checks item=val key=key}
 				<div class='step2_entry_name'><b>{$checks.$key.TITLE}</b></div>
