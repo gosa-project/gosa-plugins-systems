@@ -76,11 +76,11 @@ class divListMacro extends MultiSelectWindow
     $base = $this->config->current['BASE'];
     $first = "";
     $found = FALSE;
-    $deps= get_list("(&(|(ou=*)(description=*))(objectClass=gosaDepartment))", $this->module, $base,
-                    array("ou", "description"), GL_SIZELIMIT | GL_SUBSEARCH);
 
     /* Add base */
     $deps[] = array("dn"=>$this->config->current['BASE']);
+    $deps= array_merge($deps,get_list("(&(|(ou=*)(description=*))(objectClass=gosaDepartment))", $this->module, $base,
+                    array("ou", "description"), GL_SIZELIMIT | GL_SUBSEARCH));
 
     /* Load possible departments */
     $ui= get_userinfo();

@@ -95,11 +95,11 @@ class divListSystem extends MultiSelectWindow
 
     /* Get all departments within this subtree */
     $base = $this->config->current['BASE'];
-    $deps= get_list("(&(|(ou=*)(description=*))(objectClass=gosaDepartment))", $this->module, $base,
-                    array("ou", "description"), GL_SIZELIMIT | GL_SUBSEARCH);
 
     /* Add base */
     $deps[] = array("dn"=>$this->config->current['BASE']);
+    $deps= array_merge($deps,get_list("(&(|(ou=*)(description=*))(objectClass=gosaDepartment))", $this->module, $base,
+                    array("ou", "description"), GL_SIZELIMIT | GL_SUBSEARCH));
 
     $tmp =array();
     foreach($deps as $dep){
