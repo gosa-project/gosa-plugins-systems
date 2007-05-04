@@ -1,32 +1,36 @@
 <div>
-
-	<h1 style='color:red'>Style fixes necessary here ;-)</h1>
     <div class='default'>
 
 	{if $method == "default"}
-
-		<input type='submit' name='reload' value='{t}Check again{/t}'>
-		<p>&nbsp;</p>
+			<p>{t}During the LDAP inspection, we're going to check for several common pitfalls that may occur when migration to GOsa base LDAP administration. You may want to fix the problems below, in order to provide smooth services.{/t}
+			</p>
 
 			{foreach from=$checks item=val key=key}
-				<div class='step2_entry_name'><b>{$checks.$key.TITLE}</b></div>
+				<div style='width:98%; padding:4px; background-color:{cycle values="#F0F0F0, #FFF"}'>
+
+			{if $checks.$key.ERROR_MSG}
+                                <!-- Add ability to display info popup -->
+                                <div class='step2_entry_container_info'>
+                        {else}
+                                <!-- Normal entry everything is fine -->
+                                <div class='step2_entry_container'>
+                        {/if}
+				<div class='step2_entry_name'>{$checks.$key.TITLE}</div>
+				<div class='step2_entry_status'>
 				{if $checks.$key.STATUS}
-					<div class='step2_successful'>{$checks.$key.STATUS_MSG}
-					{if $checks.$key.ERROR_MSG}
-						{$checks.$key.ERROR_MSG}
-					{/if}
-					</div>
+					<div class='step2_successful'>{$checks.$key.STATUS_MSG}</div>
 				{else}
-					<div class='step2_failed' style='float:none'>{$checks.$key.STATUS_MSG}
-					</div>
-					<div>
+					<div class='step2_failed'>{$checks.$key.STATUS_MSG}</div>
+				{/if}
+				</div>
 					{if $checks.$key.ERROR_MSG}
 						{$checks.$key.ERROR_MSG}
 					{/if}
-					</div>
-				{/if}
-				<div>&nbsp;</div>
+				</div>
+				</div>
 			{/foreach}
+		<br>
+		<input type='submit' name='reload' value='{t}Check again{/t}'>
 
 		{elseif $method == "outside_winstations"}
 

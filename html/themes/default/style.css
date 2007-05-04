@@ -960,21 +960,22 @@ div.solution_visible {
 
 /* Container headline */
 h2.step2_container_title {
-	background-color:#DDDDDD;
+	background-color:#F0F0F0;
 	border: solid 1px #CCCCCC;
-	padding:2px;
+	width:100%; 
+	padding:3px;
 }
 
 /* Container for name and status */
 div.step2_entry_container { 
-	padding:1px;
+	padding:3px;
 	width:100%; 
 	cursor:default;
 }
 
 /* Container for name and status, when status is failed */
 div.step2_entry_container_info { 
-	padding:1px;
+	padding:3px;
 	border: 1px dashed #AAAAAA;
 	width:100%;
 	cursor:default;
