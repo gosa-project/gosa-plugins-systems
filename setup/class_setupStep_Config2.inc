@@ -37,7 +37,7 @@ class Step_Config2 extends setup_step
                                   "wws_ou_active" => FALSE,
                                   "snapshot_active"     => FALSE,
                                   "snapshot_base"       => "ou=snapshots,%base%",
-                                  "snapshot_user"       => "cn=ldapadmin,%base%",
+                                  "snapshot_user"       => "%admin%",
                                   "snapshot_password"   => "",
                                   "snapshot_server"     => "%connection%");
 
