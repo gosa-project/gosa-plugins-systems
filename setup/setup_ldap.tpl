@@ -83,7 +83,7 @@
 		</div>
 		<div class='step4_value'>
 			<input {if $append_base_to_admin_dn} checked {/if} type='checkbox' name='append_base_to_admin_dn' value='1'>&nbsp;
-			{t}Append base to admin dn{/t}
+			{t}Automatically append LDAP base to admin DN{/t}
 		</div>
 	</div>
 
