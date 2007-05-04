@@ -140,7 +140,7 @@ class Step_Config2 extends setup_step
       /* Get attributes */
       foreach($this->attributes as $attr){
         if(isset($_POST[$attr])){
-          $this->$attr = validate($_POST[$attr]);
+          $this->$attr = validate(get_post($attr));
         }
       }
 
@@ -148,20 +148,20 @@ class Step_Config2 extends setup_step
       if(isset($_POST['vacationdir_active'])){
         $this->mail_settings['vacationdir_active'] = TRUE;
         if(isset($_POST['vacationdir'])){
-          $this->mail_settings['vacationdir'] = $_POST['vacationdir'];
+          $this->mail_settings['vacationdir'] = get_post('vacationdir');
         }
       }else{
         $this->mail_settings['vacationdir_active'] = FALSE;
       }
 
       if(isset($_POST['enableCopyPaste'])){
-        $this->generic_settings['enableCopyPaste'] = $_POST['enableCopyPaste'];
+        $this->generic_settings['enableCopyPaste'] = get_post('enableCopyPaste');
       }
 
       if(isset($_POST['wws_ou_active'])){
         $this->generic_settings['wws_ou_active'] = TRUE;
         if(isset($_POST['wws_ou'])){
-          $this->generic_settings['wws_ou'] = $_POST['wws_ou'];
+          $this->generic_settings['wws_ou'] = get_post('wws_ou');
         }
       }else{
         $this->generic_settings['wws_ou_active'] = FALSE;
@@ -170,16 +170,16 @@ class Step_Config2 extends setup_step
       if(isset($_POST['snapshot_active'])){
         $this->generic_settings['snapshot_active'] = TRUE;
         if(isset($_POST['snapshot_base'])){
-          $this->generic_settings['snapshot_base'] = $_POST['snapshot_base'];
+          $this->generic_settings['snapshot_base'] = get_post('snapshot_base');
         }
         if(isset($_POST['snapshot_user'])){
-          $this->generic_settings['snapshot_user'] = $_POST['snapshot_user'];
+          $this->generic_settings['snapshot_user'] = get_post('snapshot_user');
         }
         if(isset($_POST['snapshot_password'])){
-          $this->generic_settings['snapshot_password'] = $_POST['snapshot_password'];
+          $this->generic_settings['snapshot_password'] = get_post('snapshot_password');
         }
         if(isset($_POST['snapshot_server'])){
-          $this->generic_settings['snapshot_server'] = $_POST['snapshot_server'];
+          $this->generic_settings['snapshot_server'] = get_post('snapshot_server');
         }
       }else{
         $this->generic_settings['snapshot_active'] = FALSE;
@@ -189,7 +189,7 @@ class Step_Config2 extends setup_step
       if(isset($_POST['samba_sid_active'])){
         $this->samba_settings['samba_sid_active'] = TRUE;
         if(isset($_POST['samba_sid'])){
-          $this->samba_settings['samba_sid'] = $_POST['samba_sid'];
+          $this->samba_settings['samba_sid'] = get_post('samba_sid');
         }
       }else{
         $this->samba_settings['samba_sid_active'] = FALSE;
@@ -197,13 +197,13 @@ class Step_Config2 extends setup_step
       if(isset($_POST['samba_rid_active'])){
         $this->samba_settings['samba_rid_active'] = TRUE;
         if(isset($_POST['samba_rid'])){
-          $this->samba_settings['samba_rid'] = $_POST['samba_rid'];
+          $this->samba_settings['samba_rid'] = get_post('samba_rid');
         }
       }else{
         $this->samba_settings['samba_rid_active'] = FALSE;
       }
       if(isset($_POST['smbhash'])){
-        $this->samba_settings['smbhash'] = $_POST['smbhash'];
+        $this->samba_settings['smbhash'] = get_post('smbhash');
       }
 
       if(!$this->sambaDomain_found){

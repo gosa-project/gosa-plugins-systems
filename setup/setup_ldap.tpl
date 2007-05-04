@@ -60,7 +60,7 @@
 					{html_options values=$namingContexts output=$namingContexts selected=$base}
 				</select>
 			{else}
-				<input type='text' name='base_given' maxlength='80' size='40' value='{$base_given}'>
+				<input type='text' name='base' maxlength='80' size='40' value='{$base}'>
 			{/if}
 			<input type='image' class='center' src='images/list_reload.png' title='{t}Reload{/t}' name='reload' alt='{t}Reload{/t}'>
 		</div>

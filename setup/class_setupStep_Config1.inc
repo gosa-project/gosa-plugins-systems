@@ -145,7 +145,7 @@ class Step_Config1 extends setup_step
       /* Get attributes */
       foreach($this->attributes as $attr){
         if(isset($_POST[$attr])){
-          $this->$attr = validate($_POST[$attr]);
+          $this->$attr = validate(get_post($attr));
         }
       }
 
@@ -163,7 +163,7 @@ class Step_Config1 extends setup_step
       if(isset($_POST['minid_active'])){
         $this->id_settings['minid_active'] = TRUE;
         if(isset($_POST['minid'])){
-          $this->id_settings['minid'] = $_POST['minid'];
+          $this->id_settings['minid'] = get_post('minid');
         }
       }else{
         $this->id_settings['minid_active'] = FALSE;
@@ -173,7 +173,7 @@ class Step_Config1 extends setup_step
       if(isset($_POST['idgen_active'])){
         $this->id_settings['idgen_active'] = TRUE;
         if(isset($_POST['idgen'])){
-          $this->id_settings['idgen'] = $_POST['idgen'];
+          $this->id_settings['idgen'] = get_post('idgen');
         }
       }else{
         $this->id_settings['idgen_active'] = FALSE;
@@ -183,7 +183,7 @@ class Step_Config1 extends setup_step
       if(isset($_POST['pwdiffer_active'])){
         $this->pwd_rules['pwdiffer_active'] = TRUE;
         if(isset($_POST['pwdiffer'])){
-          $this->pwd_rules['pwdiffer'] = $_POST['pwdiffer'];
+          $this->pwd_rules['pwdiffer'] = get_post('pwdiffer');
         }
       }else{
         $this->pwd_rules['pwdiffer_active'] = FALSE;
@@ -193,7 +193,7 @@ class Step_Config1 extends setup_step
       if(isset($_POST['pwminlen_active'])){
         $this->pwd_rules['pwminlen_active'] = TRUE;
         if(isset($_POST['pwminlen'])){
-          $this->pwd_rules['pwminlen'] = $_POST['pwminlen'];
+          $this->pwd_rules['pwminlen'] = get_post('pwminlen');
         }
       }else{
         $this->pwd_rules['pwminlen_active'] = FALSE;
@@ -203,7 +203,7 @@ class Step_Config1 extends setup_step
       if(isset($_POST['externalpwdhook_active'])){
         $this->pwd_rules['externalpwdhook_active'] = TRUE;
         if(isset($_POST['externalpwdhook'])){
-          $this->pwd_rules['externalpwdhook'] = $_POST['externalpwdhook'];
+          $this->pwd_rules['externalpwdhook'] = get_post('externalpwdhook');
         }
       }else{
         $this->pwd_rules['externalpwdhook_active'] = FALSE;
@@ -213,7 +213,7 @@ class Step_Config1 extends setup_step
       if(isset($_POST['base_hook_active'])){
         $this->pwd_rules['base_hook_active'] = TRUE;
         if(isset($_POST['base_hook'])){
-          $this->pwd_rules['base_hook'] = $_POST['base_hook'];
+          $this->pwd_rules['base_hook'] = get_post('base_hook');
         }
       }else{
         $this->pwd_rules['base_hook_active'] = FALSE;

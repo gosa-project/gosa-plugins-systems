@@ -132,7 +132,7 @@ class Step_Ldap extends setup_step
   {
     foreach($this->attributes as $attr){
       if(isset($_POST[$attr])){
-        $this->$attr = $_POST[$attr];
+        $this->$attr = get_post($attr);
       }
     }
 
@@ -147,13 +147,13 @@ class Step_Ldap extends setup_step
     $this->dialog = $this->resolve_user;
  
     if(isset($_POST['resolve_filter'])){
-      $this->resolve_filter = $_POST['resolve_filter'];
+      $this->resolve_filter = get_post('resolve_filter');
     }
 
     if(isset($_POST['use_selected_user'])){
 
       if(isset($_POST['admin_to_use'])){
-        $this->admin = base64_decode($_POST['admin_to_use']);
+        $this->admin = base64_decode(get_post('admin_to_use'));
         $this->resolve_user = false;
       }
     }

@@ -89,20 +89,20 @@ class Step_Config3 extends setup_step
       /* Get attributes */
       foreach($this->attributes as $attr){
         if(isset($_POST[$attr])){
-          $this->$attr = validate($_POST[$attr]);
+          $this->$attr = validate(get_post($attr));
         }
       }
       
       foreach(array("strict_units","noprimarygroup","forceglobals","forcessl","ldapstats","warnssl","compile","debuglevel","session_lifetime") as $name){
         if(isset($_POST[$name])){
-          $this->optional[$name] = stripslashes($_POST[$name]);
+          $this->optional[$name] = get_post($name);
         }
       } 
 
       if(isset($_POST['ppd_path_active'])){
         $this->optional['ppd_path_active'] = TRUE;
         if(isset($_POST['ppd_path'])){
-          $this->optional['ppd_path'] = $_POST['ppd_path'];
+          $this->optional['ppd_path'] = get_post('ppd_path');
         }
       }else{
         $this->optional['ppd_path_active'] = FALSE;
@@ -111,7 +111,7 @@ class Step_Config3 extends setup_step
       if(isset($_POST['max_ldap_query_time_active'])){
         $this->optional['max_ldap_query_time_active'] = TRUE;
         if(isset($_POST['max_ldap_query_time'])){
-          $this->optional['max_ldap_query_time'] = $_POST['max_ldap_query_time'];
+          $this->optional['max_ldap_query_time'] = get_post('max_ldap_query_time');
         }
       }else{
         $this->optional['max_ldap_query_time_active'] = FALSE;
@@ -120,7 +120,7 @@ class Step_Config3 extends setup_step
       if(isset($_POST['mailQueueScriptPath_active'])){
         $this->optional['mailQueueScriptPath_active'] = TRUE;
         if(isset($_POST['mailQueueScriptPath'])){
-          $this->optional['mailQueueScriptPath'] = $_POST['mailQueueScriptPath'];
+          $this->optional['mailQueueScriptPath'] = get_post('mailQueueScriptPath');
         }
       }else{
         $this->optional['mailQueueScriptPath_active'] = FALSE;
@@ -129,7 +129,7 @@ class Step_Config3 extends setup_step
       if(isset($_POST['kioskpath_active'])){
         $this->optional['kioskpath_active'] = TRUE;
         if(isset($_POST['kioskpath'])){
-          $this->optional['kioskpath'] = $_POST['kioskpath'];
+          $this->optional['kioskpath'] = get_post('kioskpath');
         }
       }else{
         $this->optional['kioskpath_active'] = FALSE;
@@ -138,7 +138,7 @@ class Step_Config3 extends setup_step
       if(isset($_POST['auto_network_hook_active'])){
         $this->optional['auto_network_hook_active'] = TRUE;
         if(isset($_POST['auto_network_hook'])){
-          $this->optional['auto_network_hook'] = $_POST['auto_network_hook'];
+          $this->optional['auto_network_hook'] = get_post('auto_network_hook');
         }
       }else{
         $this->optional['auto_network_hook_active'] = FALSE;
@@ -147,7 +147,7 @@ class Step_Config3 extends setup_step
       if(isset($_POST['notifydir_active'])){
         $this->optional['notifydir_active'] = TRUE;
         if(isset($_POST['notifydir'])){
-          $this->optional['notifydir'] = $_POST['notifydir'];
+          $this->optional['notifydir'] = get_post('notifydir');
         }
       }else{
         $this->optional['notifydir_active'] = FALSE;
