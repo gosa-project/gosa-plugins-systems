@@ -23,6 +23,9 @@
 class Step_Config3 extends setup_step
 {
   var $header_image= "images/ldapserver.png";
+
+  var $errorlvl   = FALSE;
+
   var $optional = array(
               "strict_units" => false,
               "forceglobals" => true,
@@ -51,6 +54,7 @@ class Step_Config3 extends setup_step
 
               "noprimarygroup"  => FALSE);
 
+  var $attributes = array("errorlvl");
 
   function Step_Config3()
   {

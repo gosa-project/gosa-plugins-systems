@@ -37,7 +37,6 @@ class Step_Config1 extends setup_step
 
   var $encryption = "crypt";
   var $theme      = "default"; 
-  var $errorlvl   = FALSE;
 
   var $include_personal_title = FALSE;
 
@@ -55,7 +54,7 @@ class Step_Config1 extends setup_step
 
   var $crypt_methods  = array();
 
-  var $attributes = array("peopleou","groupou","peopledn","uidbase","encryption","theme","errorlvl","krbsasl",
+  var $attributes = array("peopleou","groupou","peopledn","uidbase","encryption","theme","krbsasl",
                           "base_hook","base_hook_active","account_expiration","strict","include_personal_title");
 
   function Step_Config1()

@@ -171,6 +171,19 @@
     </div>
 
     <p><b>{t}Debugging{/t}</b></p>
+	
+    <div class='step4_container'>
+        <div class='step4_name'>
+            {t}Show PHP errors{/t}
+        </div>
+        <div class='step4_value'>
+            <select name="errorlvl" size="1" title="">
+            {html_options options=$bool selected=$errorlvl}
+            </select>
+        </div>
+    </div>
+
+
     <div class='step4_container'>
         <div class='step4_name'>
             {t}Maximum LDAP query time{/t}
