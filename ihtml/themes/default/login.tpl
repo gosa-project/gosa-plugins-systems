@@ -21,8 +21,8 @@
 
 	<div style='border-bottom:1px dashed #AAAAAA'>
 		<div style='padding:3px;'>
-		<p class="center" style="margin:0px 0px 0px 5px;padding:0px;font-size:24px;font-weight:bold;">
-			<img class="center" src='{$password_img}' align="middle" alt="*"/>&nbsp;{t}Login screen{/t}
+		<p class="center" style="margin:0px 0px 0px 5px;padding:5px;font-size:24px;font-weight:bold;">
+			{t}Login screen{/t}
 		</p>
 		</div>
 	</div>
