@@ -27,6 +27,8 @@ class Step_Ldap extends setup_step
   var $admin      = "";
   var $password   = "";
   var $base       = "";
+  var $append_base_to_admin_dn = FALSE;
+  var $admin_given = "";
 
   var $connect_id = FALSE;
   var $bind_id    = FALSE;
@@ -36,7 +38,7 @@ class Step_Ldap extends setup_step
   var $tls            = FALSE;
 
   var $rfc2307bis             = FALSE;
-  var $attributes = array("connection","location","admin","password","base","tls","rfc2307bis");
+  var $attributes = array("connection","location","admin","password","base","admin_given","append_base_to_admin_dn","tls","rfc2307bis");
 
   var $header_image= "images/proxy.png";
 
@@ -161,6 +163,22 @@ class Step_Ldap extends setup_step
       $this->is_completed =TRUE;
     }else{
       $this->is_completed =FALSE;
+    }
+
+    if(isset($_POST['append_base_to_admin_dn'])){
+      $this->append_base_to_admin_dn = TRUE;
+    }else{
+      $this->append_base_to_admin_dn = FALSE;
+    }
+ 
+    if($this->append_base_to_admin_dn){
+      $base = $this->base;      
+      if(!preg_match("/,$/",$this->admin_given)){
+        $base = ",".$base;
+      }
+      $this->admin = $this->admin_given.$base;
+    }else{
+      $this->admin = $this->admin_given;
     }
   }
 }

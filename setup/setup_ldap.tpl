@@ -60,7 +60,7 @@
 					{html_options values=$namingContexts output=$namingContexts selected=$base}
 				</select>
 			{else}
-				<input type='text' name='base' maxlength='80' size='40' value='{$base}'>
+				<input type='text' name='base_given' maxlength='80' size='40' value='{$base_given}'>
 			{/if}
 			<input type='image' class='center' src='images/list_reload.png' title='{t}Reload{/t}' name='reload' alt='{t}Reload{/t}'>
 		</div>
@@ -73,8 +73,17 @@
 			{t}Admin DN{/t}
 		</div>
 		<div class='step4_value'>
-			<input type='text' name='admin' maxlength='160' size='40' value='{$admin}'>
+			<input type='text' name='admin_given' maxlength='160' size='40' value='{$admin_given}'>
 			<input type='image' class='center' src='images/folder.png' title='{t}Select user{/t}' name='resolve_user' alt='{t}Select user{/t}'>
+		</div>
+	</div>
+
+	<div class='step4_container'>
+		<div class='step4_name'> 
+		</div>
+		<div class='step4_value'>
+			<input {if $append_base_to_admin_dn} checked {/if} type='checkbox' name='append_base_to_admin_dn' value='1'>&nbsp;
+			{t}Append base to admin dn{/t}
 		</div>
 	</div>
 
