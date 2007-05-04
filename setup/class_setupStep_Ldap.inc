@@ -158,13 +158,6 @@ class Step_Ldap extends setup_step
       }
     }
 
-    $this->get_connection_status();
-    if($this->bind_id && !empty($this->admin) && !empty($this->base)){
-      $this->is_completed =TRUE;
-    }else{
-      $this->is_completed =FALSE;
-    }
-
     if(isset($_POST['append_base_to_admin_dn'])){
       $this->append_base_to_admin_dn = TRUE;
     }else{
@@ -180,6 +173,14 @@ class Step_Ldap extends setup_step
     }else{
       $this->admin = $this->admin_given;
     }
+
+    $this->get_connection_status();
+    if($this->bind_id && !empty($this->admin) && !empty($this->base)){
+      $this->is_completed =TRUE;
+    }else{
+      $this->is_completed =FALSE;
+    }
+
   }
 }
 
