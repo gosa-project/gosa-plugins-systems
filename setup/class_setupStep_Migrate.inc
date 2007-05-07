@@ -141,31 +141,31 @@ class Step_Migrate extends setup_step
     $this->checks['acls']['ERROR_MSG'] = "";
     $this->check_administrativeAccount();
 
-    $this->checks['outside_users']['TITLE']     = _("Checking for users outside the people department");
+    $this->checks['outside_users']['TITLE']     = _("Checking for users outside the people tree");
     $this->checks['outside_users']['STATUS']    = FALSE;
     $this->checks['outside_users']['STATUS_MSG']= "";
     $this->checks['outside_users']['ERROR_MSG'] = "";
     $this->search_outside_users();
     
-    $this->checks['outside_groups']['TITLE']     = _("Checking for groups outside the groups department");
+    $this->checks['outside_groups']['TITLE']     = _("Checking for groups outside the groups tree");
     $this->checks['outside_groups']['STATUS']    = FALSE;
     $this->checks['outside_groups']['STATUS_MSG']= "";
     $this->checks['outside_groups']['ERROR_MSG'] = "";
     $this->search_outside_groups();
 
-    $this->checks['outside_winstations']['TITLE']     = _("Checking for windows workstations outside the winstation department");
+    $this->checks['outside_winstations']['TITLE']     = _("Checking for windows workstations outside the winstation tree");
     $this->checks['outside_winstations']['STATUS']    = FALSE;
     $this->checks['outside_winstations']['STATUS_MSG']= "";
     $this->checks['outside_winstations']['ERROR_MSG'] = "";
     $this->search_outside_winstations();
 
-    $this->checks['uidNumber_usage']['TITLE']     = _("Checking for multiple use of same uidNumber value");
+    $this->checks['uidNumber_usage']['TITLE']     = _("Checking for duplicate uid numbers");
     $this->checks['uidNumber_usage']['STATUS']    = FALSE;
     $this->checks['uidNumber_usage']['STATUS_MSG']= "";
     $this->checks['uidNumber_usage']['ERROR_MSG'] = "";
     $this->check_uidNumber();
     
-    $this->checks['gidNumber_usage']['TITLE']     = _("Checking for multiple use of same gidNumber value");
+    $this->checks['gidNumber_usage']['TITLE']     = _("Checking for duplicate gid numbers");
     $this->checks['gidNumber_usage']['STATUS']    = FALSE;
     $this->checks['gidNumber_usage']['STATUS_MSG']= "";
     $this->checks['gidNumber_usage']['ERROR_MSG'] = "";
@@ -517,7 +517,7 @@ class Step_Migrate extends setup_step
     /* Get all invisible users 
      */
     $ldap->cd($cv['base']); 
-    $res =$ldap->search("(&(|(objectClass=posixAccount)(objectClass=inetOrgPerson)(objectClass=organizationalPerson))(!(objectClass=gosaAccount)))",array("sn","givenName","cn","uid"));
+    $res =$ldap->search("(&(|(objectClass=posixAccount)(&(objectClass=inetOrgPerson)(objectClass=organizationalPerson)))(!(objectClass=gosaAccount))(uid=*))",array("sn","givenName","cn","uid"));
     while($attrs = $ldap->fetch()){
       if(!preg_match("/,dc=addressbook,/",$attrs['dn'])){
         $attrs['checked'] = FALSE;
