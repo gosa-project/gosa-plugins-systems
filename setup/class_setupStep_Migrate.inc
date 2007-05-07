@@ -134,7 +134,7 @@ class Step_Migrate extends setup_step
     $this->checks['users_visible']['ERROR_MSG'] = "";
     $this->check_gosaAccounts();
 
-    $this->checks['acls']['TITLE']     = _("Checking for administrational account");
+    $this->checks['acls']['TITLE']     = _("Checking for super administrator");
     $this->checks['acls']['STATUS']    = FALSE;
     $this->checks['acls']['STATUS_MSG']= "";
     $this->checks['acls']['ERROR_MSG'] = "";
@@ -187,7 +187,7 @@ class Step_Migrate extends setup_step
     $res = $ldap->search("uidNumber=*",array("dn","uidNumber"));
     if(!$res){
       $this->checks['uidNumber_usage']['STATUS']    = FALSE;
-      $this->checks['uidNumber_usage']['STATUS_MSG']= _("Ldap query failed.");
+      $this->checks['uidNumber_usage']['STATUS_MSG']= _("LDAP query failed");
       $this->checks['uidNumber_usage']['ERROR_MSG'] = _("Possibly the 'root object' is missing.");
       return(false);
     }
@@ -236,7 +236,7 @@ class Step_Migrate extends setup_step
     $res = $ldap->search("gidNumber=*",array("dn","gidNumber"));
     if(!$res){
       $this->checks['gidNumber_usage']['STATUS']    = FALSE;
-      $this->checks['gidNumber_usage']['STATUS_MSG']= _("Ldap query failed.");
+      $this->checks['gidNumber_usage']['STATUS_MSG']= _("LDAP query failed");
       $this->checks['gidNumber_usage']['ERROR_MSG'] = _("Possibly the 'root object' is missing.");
       return(false);
     }
@@ -298,7 +298,7 @@ class Step_Migrate extends setup_step
     $res = $ldap->search("(&(objectClass=".$oc.")(uid=*$))",array("dn","sambaSID"));
     if(!$res){
       $this->checks['outside_winstations']['STATUS']    = FALSE;
-      $this->checks['outside_winstations']['STATUS_MSG']= _("Ldap query failed.");
+      $this->checks['outside_winstations']['STATUS_MSG']= _("LDAP query failed");
       $this->checks['outside_winstations']['ERROR_MSG'] = _("Possibly the 'root object' is missing.");
       return(false);
     }
@@ -344,7 +344,7 @@ class Step_Migrate extends setup_step
     $res = $ldap->search("(objectClass=posixGroup)",array("dn"));
     if(!$res){
       $this->checks['outside_groups']['STATUS']    = FALSE;
-      $this->checks['outside_groups']['STATUS_MSG']= _("Ldap query failed.");
+      $this->checks['outside_groups']['STATUS_MSG']= _("LDAP query failed");
       $this->checks['outside_groups']['ERROR_MSG'] = _("Possibly the 'root object' is missing.");
       return(false);
     }
@@ -390,7 +390,7 @@ class Step_Migrate extends setup_step
     $res = $ldap->search("(&(objectClass=gosaAccount)(!(uid=*$)))",array("dn"));
     if(!$res){
       $this->checks['outside_users']['STATUS']    = FALSE;
-      $this->checks['outside_users']['STATUS_MSG']= _("Ldap query failed.");
+      $this->checks['outside_users']['STATUS_MSG']= _("LDAP query failed");
       $this->checks['outside_users']['ERROR_MSG'] = _("Possibly the 'root object' is missing.");
       return(false);
     }
@@ -450,7 +450,7 @@ class Step_Migrate extends setup_step
     $res = $ldap->cat($cv['base']);  
     if(!$res){
       $this->checks['permissions']['STATUS']    = FALSE;
-      $this->checks['permissions']['STATUS_MSG']= _("Ldap query failed.");
+      $this->checks['permissions']['STATUS_MSG']= _("LDAP query failed");
       $this->checks['permissions']['ERROR_MSG'] = _("Possibly the 'root object' is missing.");
       return(false);
     }
@@ -534,7 +534,7 @@ class Step_Migrate extends setup_step
     /* No invisible */
     if(!$res){
       $this->checks['users_visible']['STATUS']    = FALSE;
-      $this->checks['users_visible']['STATUS_MSG']= _("Ldap query failed.");
+      $this->checks['users_visible']['STATUS_MSG']= _("LDAP query failed");
       $this->checks['users_visible']['ERROR_MSG'] = _("Possibly the 'root object' is missing.");
     }elseif(count($this->users_to_migrate) == 0){
       $this->checks['users_visible']['STATUS']    = TRUE;
@@ -662,7 +662,7 @@ class Step_Migrate extends setup_step
      */
     if(!$res){
       $this->checks['deps_visible']['STATUS']    = FALSE;
-      $this->checks['deps_visible']['STATUS_MSG']= _("Ldap query failed.");
+      $this->checks['deps_visible']['STATUS_MSG']= _("LDAP query failed");
       $this->checks['deps_visible']['ERROR_MSG'] = _("Possibly the 'root object' is missing.");
     }elseif(count($this->deps_to_migrate) == 0 ){
       $this->checks['deps_visible']['STATUS']    = TRUE;
@@ -749,7 +749,7 @@ class Step_Migrate extends setup_step
                            "(objectClass=inetOrgPerson)(objectClass=organizationalPerson)))");
     if(!$res){
       $this->checks['acls']['STATUS']    = FALSE;
-      $this->checks['acls']['STATUS_MSG']= _("Ldap query failed.");
+      $this->checks['acls']['STATUS_MSG']= _("LDAP query failed");
       $this->checks['acls']['ERROR_MSG'] = _("Possibly the 'root object' is missing.");
     }elseif($ldap->count()){
       $this->checks['acls']['STATUS']    = TRUE;
@@ -758,7 +758,8 @@ class Step_Migrate extends setup_step
     }else{
       $this->checks['acls']['STATUS']    = FALSE;
       $this->checks['acls']['STATUS_MSG']= _("Failed");
-      $this->checks['acls']['ERROR_MSG'].= "<input type='submit' name='create_acls' value='"._("Create adminitrational account")."'>";
+      $this->checks['acls']['ERROR_MSG']= _("There is no GOsa administrator account inside your LDAP.")."&nbsp;";
+      $this->checks['acls']['ERROR_MSG'].= "<input type='submit' name='create_acls' value='"._("Create")."'>";
     }
     return($ldap->count()>=1);
   }
@@ -1393,7 +1394,7 @@ class Step_Migrate extends setup_step
       if($just_check){
         $this->checks['root']['STATUS']    = FALSE;
         $this->checks['root']['STATUS_MSG']= _("Failed");
-        $this->checks['root']['ERROR_MSG'] =  "The ldap root object is missing, but it is required to use GOsa.&nbsp;";
+        $this->checks['root']['ERROR_MSG'] =  _("The LDAP root object is missing. It is required to use your LDAP service.").'&nbsp;';
         $this->checks['root']['ERROR_MSG'].=  "<input type='submit' name='retry_root_create' value='"._("Try to create root object")."'>";
         return(FALSE);
       }else{
@@ -1653,7 +1654,7 @@ class Step_Migrate extends setup_step
 
     /* Display warning if copy failed */
     if(!$res){
-      print_red(_("Failed to copy '%s' to '%s'. Ldap says '%s'."),$source,$destination,$ldap->get_error());
+      print_red(_("Failed to copy '%s' to '%s'. LDAP says '%s'."),$source,$destination,$ldap->get_error());
     }else{
       $res = $ldap->rmDir($source);
       show_ldap_error($ldap->get_error(),_("Something went wrong while copying dns."));

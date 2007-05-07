@@ -15,7 +15,7 @@
                                 <!-- Normal entry everything is fine -->
                                 <div class='step2_entry_container'>
                         {/if}
-				<div class='step2_entry_name'>{$checks.$key.TITLE}</div>
+				<div class='step2_entry_name'><b>{$checks.$key.TITLE}</b></div>
 				<div class='step2_entry_status'>
 				{if $checks.$key.STATUS}
 					<div class='step2_successful'>{$checks.$key.STATUS_MSG}</div>
@@ -174,8 +174,6 @@
 
 		{elseif $method == "create_acls"}
 
-		<h2>{t}Acl setup{/t}</h2>
-	
 		{if $acl_create_selected != "" && $what_will_be_done_now!=""}
 			<div>
 <pre>
@@ -185,10 +183,11 @@
 			<input type='submit' name='create_acls_create_confirmed' value='{t}Next{/t}'>
 			<input type='submit' name='create_acls_create_abort' value='{t}Abort{/t}'>
 		{else}
-		<b>{t}Create a new user with adminstrational acls{/t}</b><br>
+			<h2>{t}Create a new GOsa administrator account{/t}</h2>
 	
-			{t}To automatically add a new administrative user to your ldap database use the formular below.{/t}<br>
-			<p style='padding-left:10px;'>
+			<p>
+			{t}This dialog will automatically add a new super administrator to your LDAP tree.{/t}
+			</p>
 			<table>
 				<tr>
 					<td>
@@ -216,22 +215,18 @@
 				</tr>
 				</tr>
 					<td>
-						{t}Retype password{/t}:&nbsp;
+						{t}Password (again){/t}:&nbsp;
 					</td>
 					<td>
 						<input type='password' value='{$new_user_password2}' name='new_user_password2'><br>
 					</td>
 				</tr>
 			</table>
-			<input type='submit' name='create_admin_user' value='{t}Create{/t}'>	
-			</p>
 			
 			{if $users_cnt != 0 || $groups_cnt != 0}
 			
-			<p>&nbsp;</p>
-			<b>{t}Append administrational acls to existing an user or a group{/t}</b><br>
-			{t}To grant administrative permissions to a user or a group, select an element and use button below.{/t}
-			<p style='padding-left:10px;'>
+			<h2>{t}Assign super administrator permissions to an existing user or group{/t}</h2>
+			<p>{t}To grant administrative permissions to a user or a group, select an object and choose 'Assign'.{/t}</p>
 			<select name='acl_create_type' onChange='document.mainform.submit();' >
 				{if $type == "user"}
 				<option value='group'>{t}Group{/t}</option>
@@ -248,17 +243,20 @@
 					{html_options options=$groups selected=$acl_create_selected}
 				{/if}
 			</select>
-
-				<input type='submit' name='create_acls_create' value='{t}Add administrational acls to this object{/t}'>
-			</p>
 			{/if}
 		{/if}
 
 
 			<p class='seperator'>&nbsp;</p>	
 
-			<div style='width:100%; text-align:right; padding:5px;'>
-				<input type='submit' name='create_acls_cancel' value='{t}Close{/t}'>
+			<div style='width:99%; text-align:right; padding:5px;'>
+				{if $users_cnt != 0 || $groups_cnt != 0}
+				<input type='submit' name='create_acls_create' value='{t}Assign{/t}'>
+				{else}
+				<input type='submit' name='create_admin_user' value='{t}Create{/t}'>	
+				{/if}
+				&nbsp;
+				<input type='submit' name='create_acls_cancel' value='{t}Cancel{/t}'>
 			</div>
 		
 
