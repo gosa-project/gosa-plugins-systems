@@ -11,7 +11,7 @@
 #
 Summary: 		Web Based LDAP Administration Program 
 Name:			gosa
-Version: 		2.5.10cvs
+Version: 		2.5.99cvs
 Release:		1
 License: 		GPL
 Source: 		ftp://oss.GONICUS.de/pub/gosa/%{sourcename}.tar.bz2
@@ -169,7 +169,7 @@ EOF
 
 mkdir -p %{buildroot}/etc/openldap/schema/gosa
 mv contrib/openldap/*.schema %{buildroot}/etc/openldap/schema/gosa
-sed 's§"CONFIG_TEMPLATE_DIR", "../contrib/"§"CONFIG_TEMPLATE_DIR", "%{docdir}/"§g' %{buildroot}/usr/share/gosa/include/functions.inc > %{buildroot}/usr/share/gosa/include/functions.inc.new
+sed 'sï¿½"CONFIG_TEMPLATE_DIR", "../contrib/"ï¿½"CONFIG_TEMPLATE_DIR", "%{docdir}/"ï¿½g' %{buildroot}/usr/share/gosa/include/functions.inc > %{buildroot}/usr/share/gosa/include/functions.inc.new
 mv -f %{buildroot}/usr/share/gosa/include/functions.inc.new %{buildroot}/usr/share/gosa/include/functions.inc
 
 mv -f doc manual
@@ -238,6 +238,9 @@ rm -rf %{buildroot}
 /usr/share/gosa/doc/guide/user/nl
 
 %changelog
+* Mon May 7 2007 Lars Scheiter <lars.scheiter@GONICUS.de> 2.5.99cvs
+- Changed packageversion to reflect CVS status of resulting build
+
 * Wed Apr 11 2007 Lars Scheiter <lars.scheiter@GONICUS.de> 2.5.10
 - New upstream
 - Added new subpackage mkntpasswd
