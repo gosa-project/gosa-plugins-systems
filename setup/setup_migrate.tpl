@@ -81,13 +81,20 @@
 
 		{elseif $method == "outside_groups"}
 
-			<h2>{t}Move groups into valid group departments{/t}</h2>
+			<h2>{t}Move groups into configured group tree{/t}</h2>
 
-			{t}This dialog allows you to move the displayed groups into a valid group department{/t}
-			<br>
-			{t}Be careful with this tool, there may be references pointing to this group that can't be migrated.{/t}
-			<br>
-			<br>	
+                        <p>
+                        {t}This dialog allows moving a couple of groups to the configured group tree. Doing this may straighten your LDAP service.{/t}
+                        </p>
+                        <p style='color:red'>
+                        {t}Be careful with this option! There may be references pointing to these groups. The GOsa setup can't migrate references, so you may want to cancel the migration in this case in this case.{/t}
+                        </p>
+			<p>
+			{t}Move selected groups into this group tree{/t}: 
+			<select name='move_group_to'>
+				{html_options options=$ous}
+			</select>
+			</p>
 
 			{foreach from=$outside_groups item=val key=key}
 				{if $outside_groups.$key.selected}
@@ -97,7 +104,7 @@
 				{/if}
 
 				&nbsp;{$outside_groups.$key.dn}
-				{if $outside_groups.$key.ldif != ""}
+				{if $outside_groups.$key.ldif != "" && $group_details}
                       <div class="step2_entry_container_info" id="sol_8">
 <div style='padding-left:20px;'>
 <pre>
@@ -110,19 +117,18 @@
 			{/foreach}
 
 			<p>
-			<b>{t}Move selected group into the following GOsa people department{/t} : </b>
-			<select name='move_group_to'>
-				{html_options options=$ous}
-			</select>
-			<br>
-			<input type='submit' name='outside_groups_dialog_perform' value='{t}Move selected groups{/t}'>
-			<input type='submit' name='outside_groups_dialog_whats_done' value='{t}What will be done here{/t}'>
+                        {if $group_details}
+                        <input type='submit' name='outside_groups_dialog_refresh' value='{t}Hide changes{/t}'>
+                        {else}
+                        <input type='submit' name='outside_groups_dialog_whats_done' value='{t}Show changes{/t}'>
+                        {/if}
 			</p>
-				
 
 			<p class='seperator'>&nbsp;</p>	
-			<div style='width:100%; text-align:right; padding:5px;'>
-				<input type='submit' name='outside_groups_dialog_cancel' value='{t}Close{/t}'>
+			<div style='width:99%; text-align:right; padding:5px;'>
+				<input type='submit' name='outside_groups_dialog_perform' value='{t}Apply{/t}'>
+				&nbsp;
+				<input type='submit' name='outside_groups_dialog_cancel' value='{t}Cancel{/t}'>
 			</div>
 		
 		{elseif $method == "outside_users"}
@@ -135,7 +141,7 @@
 			{t}Be careful with this option! There may be references pointing to these users. The GOsa setup can't migrate references, so you may want to cancel the migration in this case in this case.{/t}
 			</p>	
 			<p>
-			{t}Move selected user into the following GOsa people department{/t}: 
+			{t}Move selected users into this people tree{/t}: 
 			<select name='move_user_to'>
 				{html_options options=$ous}
 			</select>
@@ -148,7 +154,7 @@
 				{/if}
 
 				&nbsp;{$outside_users.$key.dn}
-				{if $outside_users.$key.ldif != ""}
+				{if $outside_users.$key.ldif != "" && $user_details}
                       <div class="step2_entry_container_info" id="sol_8">
 <div style='padding-left:20px;'>
 <pre>
@@ -168,7 +174,7 @@
 
 			<p class='seperator'>&nbsp;</p>	
 			<div style='width:99%; text-align:right; padding:5px;'>
-				<input type='submit' name='outside_users_dialog_perform' value='{t}Move{/t}'>
+				<input type='submit' name='outside_users_dialog_perform' value='{t}Apply{/t}'>
 				&nbsp;
 				<input type='submit' name='outside_users_dialog_cancel' value='{t}Cancel{/t}'>
 			</div>
@@ -253,9 +259,9 @@
 
 			<div style='width:99%; text-align:right; padding:5px;'>
 				{if $users_cnt != 0 || $groups_cnt != 0}
-				<input type='submit' name='create_acls_create' value='{t}Assign{/t}'>
+				<input type='submit' name='create_acls_create' value='{t}Apply{/t}'>
 				{else}
-				<input type='submit' name='create_admin_user' value='{t}Create{/t}'>	
+				<input type='submit' name='create_admin_user' value='{t}Apply{/t}'>	
 				{/if}
 				&nbsp;
 				<input type='submit' name='create_acls_cancel' value='{t}Cancel{/t}'>
@@ -311,7 +317,7 @@ dn: {$deps_to_migrate.$key.dn}
 			<p class='seperator'>&nbsp;</p>	
 
 			<div style='width:99%; text-align:right; padding:5px;'>
-				<input type='submit' name='deps_visible_migrate_migrate' value='{t}Migrate{/t}'>
+				<input type='submit' name='deps_visible_migrate_migrate' value='{t}Apply{/t}'>
 				&nbsp;
 				<input type='submit' name='deps_visible_migrate_close' value='{t}Cancel{/t}'>
 			</div>
@@ -365,7 +371,7 @@ dn: {$users_to_migrate.$key.dn}
 			<p class='seperator'>&nbsp;</p>	
 
 			<div style='width:99%; text-align:right; padding-top:5px;'>
-				<input type='submit' name='users_visible_migrate_migrate' value='{t}Migrate{/t}'>
+				<input type='submit' name='users_visible_migrate_migrate' value='{t}Apply{/t}'>
 				&nbsp;
 				<input type='submit' name='users_visible_migrate_close' value='{t}Cancel{/t}'>
 			</div>

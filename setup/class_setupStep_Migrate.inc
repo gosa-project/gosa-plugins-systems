@@ -211,7 +211,7 @@ class Step_Migrate extends setup_step
       $this->checks['uidNumber_usage']['STATUS']    = FALSE;
       $this->checks['uidNumber_usage']['STATUS_MSG']= "<font style='color:#F0A500'>"._("Warning")."</font>";
       $this->checks['uidNumber_usage']['ERROR_MSG'] =
-        sprintf(_("Found %s duplicated uidNumber values."),count($this->check_uidNumbers));
+        sprintf(_("Found %s duplicate values for attribute 'uidNumber'."),count($this->check_uidNumbers));
       return(false);
     }else{
       $this->checks['uidNumber_usage']['STATUS']    = TRUE;
@@ -260,7 +260,7 @@ class Step_Migrate extends setup_step
       $this->checks['gidNumber_usage']['STATUS']    = FALSE;
       $this->checks['gidNumber_usage']['STATUS_MSG']= "<font style='color:#F0A500'>"._("Warning")."</font>";
       $this->checks['gidNumber_usage']['ERROR_MSG'] =
-        sprintf(_("Found %s duplicate gidNumber."),count($this->check_gidNumbers));
+        sprintf(_("Found %s duplicate values for attribute 'gidNumber'."),count($this->check_gidNumbers));
       return(false);
     }else{
       $this->checks['gidNumber_usage']['STATUS']    = TRUE;
@@ -362,10 +362,10 @@ class Step_Migrate extends setup_step
 
     if(count($this->outside_groups)){
       $this->checks['outside_groups']['STATUS']    = FALSE;
-      $this->checks['outside_groups']['STATUS_MSG']= _("Failed");
+      $this->checks['outside_groups']['STATUS_MSG']= "<font style='color:#F0A500'>"._("Warning")."</font>";
       $this->checks['outside_groups']['ERROR_MSG'] = 
-        sprintf(_("Found %s groups outside the selected group ou '%s'."),count($this->outside_groups),$group_ou);
-      $this->checks['outside_groups']['ERROR_MSG'].= "<input type='submit' name='outside_groups_dialog' value='"._("Migrate")."...'>";
+        sprintf(_("Found %s groups outside the configured tree '%s'."),count($this->outside_groups),$group_ou);
+      $this->checks['outside_groups']['ERROR_MSG'].= "&nbsp;<input type='submit' name='outside_groups_dialog' value='"._("Move")."...'>";
       return(false);
     }else{
       $this->checks['outside_groups']['STATUS']    = TRUE;
@@ -410,7 +410,7 @@ class Step_Migrate extends setup_step
       $this->checks['outside_users']['STATUS']    = FALSE;
       $this->checks['outside_users']['STATUS_MSG']= "<font style='color:#F0A500'>"._("Warning")."</font>";
       $this->checks['outside_users']['ERROR_MSG'] = 
-        sprintf(_("Found %s user(s) outside the selected user ou '%s'."),count($this->outside_users),$people_ou);
+        sprintf(_("Found %s user(s) outside the configured tree '%s'."),count($this->outside_users),$people_ou);
       $this->checks['outside_users']['ERROR_MSG'].= "<input type='submit' name='outside_users_dialog' value='"._("Move")."...'>";
       return(false);
     }else{
@@ -993,8 +993,6 @@ class Step_Migrate extends setup_step
 
   function migrate_outside_users($perform = FALSE)
   {
-    $this->show_details= $perform;
-
     /* Establish ldap connection */
     $cv = $this->parent->captured_values;
     $ldap = new LDAP($cv['admin'],
@@ -1029,7 +1027,7 @@ class Step_Migrate extends setup_step
             $refs .= "<br />\t".$ref_dn;
           } 
           if(!empty($refs)){ 
-            $this->outside_users[$b_dn]['ldif'] .= "<br /><br /><i>"._("Updating following references too").":</i>".$refs;
+            $this->outside_users[$b_dn]['ldif'] .= "<br /><br /><i>"._("The following references will be updated").":</i>".$refs;
           }
 
         }else{
@@ -1088,9 +1086,14 @@ class Step_Migrate extends setup_step
     }
    
     if(isset($_POST['outside_groups_dialog_whats_done'])){
+      $this->show_details= TRUE;
       $this->migrate_outside_groups(FALSE);
     }
  
+    if(isset($_POST['outside_groups_dialog_refresh'])){
+      $this->show_details= FALSE;
+    }
+
     if(isset($_POST['outside_groups_dialog_perform'])){
       $this->migrate_outside_groups(TRUE);
       $this->search_outside_groups();
@@ -1106,6 +1109,7 @@ class Step_Migrate extends setup_step
       $smarty->assign("ous",$this->get_all_group_ous());
       $smarty->assign("method","outside_groups");
       $smarty->assign("outside_groups",$this->outside_groups);
+      $smarty->assign("group_details", $this->show_details);
       return($smarty->fetch(get_template_path("setup_migrate.tpl",TRUE,dirname(__FILE__))));
     }
  
@@ -1119,12 +1123,17 @@ class Step_Migrate extends setup_step
     }
    
     if(isset($_POST['outside_users_dialog_whats_done'])){
+      $this->show_details= TRUE;
       $this->migrate_outside_users(FALSE);
     }
  
     if(isset($_POST['outside_users_dialog_perform'])){
       $this->migrate_outside_users(TRUE);
       $this->search_outside_users();
+    }
+
+    if (isset($_POST['outside_users_dialog_refresh'])){
+      $this->show_details= FALSE;
     }
 
     if(isset($_POST['outside_users_dialog'])){
@@ -1138,7 +1147,6 @@ class Step_Migrate extends setup_step
       $smarty->assign("method","outside_users");
       $smarty->assign("outside_users",$this->outside_users);
       $smarty->assign("user_details", $this->show_details);
-var_dump($this->show_details);
       return($smarty->fetch(get_template_path("setup_migrate.tpl",TRUE,dirname(__FILE__))));
     }
  
