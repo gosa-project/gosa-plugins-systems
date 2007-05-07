@@ -129,7 +129,7 @@ class Step_Migrate extends setup_step
     $this->checks['deps_visible']['ERROR_MSG'] = "";
     $this->check_organizationalUnits();
 
-    $this->checks['users_visible']['TITLE']     = _("Checking for invisible user");
+    $this->checks['users_visible']['TITLE']     = _("Checking for invisible users");
     $this->checks['users_visible']['STATUS']    = FALSE;
     $this->checks['users_visible']['STATUS_MSG']= "";
     $this->checks['users_visible']['ERROR_MSG'] = "";
@@ -410,7 +410,7 @@ class Step_Migrate extends setup_step
       $this->checks['outside_users']['STATUS']    = FALSE;
       $this->checks['outside_users']['STATUS_MSG']= _("Failed");
       $this->checks['outside_users']['ERROR_MSG'] = 
-        sprintf(_("Found %s users outside the selected user ou '%s'."),count($this->outside_users),$people_ou);
+        sprintf(_("Found %s user(s) outside the selected user ou '%s'."),count($this->outside_users),$people_ou);
       $this->checks['outside_users']['ERROR_MSG'].= "<input type='submit' name='outside_users_dialog' value='"._("Migrate")."'>";
       return(false);
     }else{
@@ -543,8 +543,8 @@ class Step_Migrate extends setup_step
       $this->checks['users_visible']['ERROR_MSG'] = "";
     }else{
       $this->checks['users_visible']['STATUS']    = FALSE;
-      $this->checks['users_visible']['STATUS_MSG']= "";
-      $this->checks['users_visible']['ERROR_MSG'] = sprintf(_("Found %s users that will not be visible in GOsa."), 
+      $this->checks['users_visible']['STATUS_MSG']= "<font style='color:#F0A500'>"._("Warning")."</font>";
+      $this->checks['users_visible']['ERROR_MSG'] = sprintf(_("Found %s user(s) that will not be visible in GOsa."), 
           count($this->users_to_migrate));
       $this->checks['users_visible']['ERROR_MSG'] .= "<input type='submit' name='users_visible_migrate' value='"._("Migrate")."'>";
     }
