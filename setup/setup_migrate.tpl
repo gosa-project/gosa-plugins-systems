@@ -185,7 +185,7 @@
 			<input type='submit' name='create_acls_create_confirmed' value='{t}Next{/t}'>
 			<input type='submit' name='create_acls_create_abort' value='{t}Abort{/t}'>
 		{else}
-		<b>{t}Create a new user and a group with adminstrational acls{/t}</b><br>
+		<b>{t}Create a new user with adminstrational acls{/t}</b><br>
 	
 			{t}To automatically add a new administrative user to your ldap database use the formular below.{/t}<br>
 			<p style='padding-left:10px;'>
@@ -319,7 +319,7 @@ dn: {$deps_to_migrate.$key.dn}
 	
 			<h2>User migration</h2>
 
-			{t}The listed deparmtents below are currenlty invisble in the GOsa user interface. If you want to migrate a set of departments, just select them and use the migrate button below.{/t}<br>
+			{t}The listed users below are currenlty invisble in the GOsa user interface. If you want to migrate a set of users, just select them and use the migrate button below.{/t}<br>
 			{t}If you want to know what will be done when migrating the selected entries, just use the 'What will be done here' button and you will see a list of changes.{/t}
 					
 
