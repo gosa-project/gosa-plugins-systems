@@ -969,7 +969,7 @@ h2.step2_container_title {
 /* Container for name and status */
 div.step2_entry_container { 
 	padding:3px;
-	width:100%; 
+	width:99%; 
 	cursor:default;
 }
 
@@ -977,7 +977,7 @@ div.step2_entry_container {
 div.step2_entry_container_info { 
 	padding:3px;
 	border: 1px dashed #AAAAAA;
-	width:100%;
+	width:99%;
 	cursor:default;
 }
 

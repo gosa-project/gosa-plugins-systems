@@ -317,11 +317,8 @@ dn: {$deps_to_migrate.$key.dn}
 	
 			<h2>User migration</h2>
 
-			{t}The listed users below are currenlty invisble in the GOsa user interface. If you want to migrate a set of users, just select them and use the migrate button below.{/t}<br>
-			{t}If you want to know what will be done when migrating the selected entries, just use the 'What will be done here' button and you will see a list of changes.{/t}
-					
-
-			<br><br>
+			<p>{t}The listed users are currenlty invisble in the GOsa user interface. If you want to change this for a couple of users, just select them and use the 'Migrate' button below.{/t}</p>
+			<p>{t}If you want to know what will be done when migrating the selected entries, use the 'Show changes' button to see the LDIF.{/t}</p>
 			{foreach from=$users_to_migrate item=val key=key}
 
 				{if $users_to_migrate.$key.checked}
@@ -357,14 +354,18 @@ dn: {$users_to_migrate.$key.dn}
 			{/foreach}
 			<br>
 
-			<input type='submit' name='users_visible_migrate_refresh' value='{t}Reload list{/t}'>
-			<input type='submit' name='users_visible_migrate_migrate' value='{t}Migrate{/t}'>
-			<input type='submit' name='users_visible_migrate_whatsdone' value='{t}What will be done here{/t}'>
+			{if $user_details}
+			<input type='submit' name='users_visible_migrate_refresh' value='{t}Hide changes{/t}'>
+			{else}
+			<input type='submit' name='users_visible_migrate_whatsdone' value='{t}Show changes{/t}'>
+			{/if}
 
 			<p class='seperator'>&nbsp;</p>	
 
-			<div style='width:100%; text-align:right; padding:5px;'>
-				<input type='submit' name='users_visible_migrate_close' value='{t}Close{/t}'>
+			<div style='width:99%; text-align:right; padding-top:5px;'>
+				<input type='submit' name='users_visible_migrate_migrate' value='{t}Migrate{/t}'>
+				&nbsp;
+				<input type='submit' name='users_visible_migrate_close' value='{t}Cancel{/t}'>
 			</div>
 	{/if}
     </div>

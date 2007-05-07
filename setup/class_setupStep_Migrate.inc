@@ -555,6 +555,8 @@ class Step_Migrate extends setup_step
    */  
   function migrate_gosaAccounts($only_ldif = FALSE)
   {
+    $this->show_details= $only_ldif;
+
     /* Get collected configuration settings */
     $cv = $this->parent->captured_values;
 
@@ -682,6 +684,8 @@ class Step_Migrate extends setup_step
   /* Start deparmtment migration */  
   function migrate_organizationalUnits($only_ldif = FALSE)
   {
+    $this->show_details= $only_ldif;
+
     /* Get collected configuration settings */
     $cv = $this->parent->captured_values;
 
@@ -1205,6 +1209,7 @@ class Step_Migrate extends setup_step
 
     /* Open migration dialog */
     if(isset($_POST['users_visible_migrate'])){
+      $this->show_details= FALSE;
       $this->users_migration_dialog = TRUE;
       $this->dialog =TRUE;
     }
@@ -1232,6 +1237,7 @@ class Step_Migrate extends setup_step
       $smarty = get_smarty();
       $smarty->assign("users_to_migrate",$this->users_to_migrate);
       $smarty->assign("method","migrate_users");
+      $smarty->assign("user_details", $this->show_details);
       return($smarty->fetch(get_template_path("setup_migrate.tpl",TRUE,dirname(__FILE__))));
     }
 
@@ -1242,7 +1248,6 @@ class Step_Migrate extends setup_step
 
     /* Refresh list of deparments */
     if(isset($_POST['deps_visible_migrate_refresh'])){
-      $this->show_details= false;
       $this->check_organizationalUnits();
     }
 
@@ -1261,13 +1266,13 @@ class Step_Migrate extends setup_step
     /* Start migration */
     if(isset($_POST['deps_visible_migrate_migrate'])){
       if($this->migrate_organizationalUnits()){
+        $this->show_details= FALSE;
         $this->check_organizationalUnits();
       }
     }
 
     /* Start migration */
     if(isset($_POST['deps_visible_migrate_whatsdone'])){
-      $this->show_details= TRUE;
       $this->migrate_organizationalUnits(TRUE);
     }
 
