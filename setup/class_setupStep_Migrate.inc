@@ -209,7 +209,7 @@ class Step_Migrate extends setup_step
 
     if($this->check_uidNumbers){
       $this->checks['uidNumber_usage']['STATUS']    = FALSE;
-      $this->checks['uidNumber_usage']['STATUS_MSG']= _("Failed");
+      $this->checks['uidNumber_usage']['STATUS_MSG']= "<font style='color:#F0A500'>"._("Warning")."</font>";
       $this->checks['uidNumber_usage']['ERROR_MSG'] =
         sprintf(_("Found %s duplicated uidNumber values."),count($this->check_uidNumbers));
       return(false);
@@ -234,7 +234,7 @@ class Step_Migrate extends setup_step
         $cv['tls']);
 
     $ldap->cd($cv['base']);
-    $res = $ldap->search("gidNumber=*",array("dn","gidNumber"));
+    $res = $ldap->search("(&(objectClass=posixGroup)(gidNumber=*))",array("dn","gidNumber"));
     if(!$res){
       $this->checks['gidNumber_usage']['STATUS']    = FALSE;
       $this->checks['gidNumber_usage']['STATUS_MSG']= _("LDAP query failed");
@@ -258,9 +258,9 @@ class Step_Migrate extends setup_step
 
     if($this->check_gidNumbers){
       $this->checks['gidNumber_usage']['STATUS']    = FALSE;
-      $this->checks['gidNumber_usage']['STATUS_MSG']= _("Failed");
+      $this->checks['gidNumber_usage']['STATUS_MSG']= "<font style='color:#F0A500'>"._("Warning")."</font>";
       $this->checks['gidNumber_usage']['ERROR_MSG'] =
-        sprintf(_("Found %s duplicated gidNumber values."),count($this->check_gidNumbers));
+        sprintf(_("Found %s duplicate gidNumber."),count($this->check_gidNumbers));
       return(false);
     }else{
       $this->checks['gidNumber_usage']['STATUS']    = TRUE;
@@ -318,7 +318,7 @@ class Step_Migrate extends setup_step
       $this->checks['outside_winstations']['STATUS_MSG']= _("Failed");
       $this->checks['outside_winstations']['ERROR_MSG'] = 
         sprintf(_("Found %s winstations outside the predefined winstation department ou '%s'."),count($this->outside_winstations),$winstation_ou);
-      $this->checks['outside_winstations']['ERROR_MSG'].= "<input type='submit' name='outside_winstations_dialog' value='"._("Migrate")."'>";
+      $this->checks['outside_winstations']['ERROR_MSG'].= "<input type='submit' name='outside_winstations_dialog' value='"._("Migrate")."...'>";
       return(false);
     }else{
       $this->checks['outside_winstations']['STATUS']    = TRUE;
@@ -365,7 +365,7 @@ class Step_Migrate extends setup_step
       $this->checks['outside_groups']['STATUS_MSG']= _("Failed");
       $this->checks['outside_groups']['ERROR_MSG'] = 
         sprintf(_("Found %s groups outside the selected group ou '%s'."),count($this->outside_groups),$group_ou);
-      $this->checks['outside_groups']['ERROR_MSG'].= "<input type='submit' name='outside_groups_dialog' value='"._("Migrate")."'>";
+      $this->checks['outside_groups']['ERROR_MSG'].= "<input type='submit' name='outside_groups_dialog' value='"._("Migrate")."...'>";
       return(false);
     }else{
       $this->checks['outside_groups']['STATUS']    = TRUE;
@@ -411,7 +411,7 @@ class Step_Migrate extends setup_step
       $this->checks['outside_users']['STATUS_MSG']= "<font style='color:#F0A500'>"._("Warning")."</font>";
       $this->checks['outside_users']['ERROR_MSG'] = 
         sprintf(_("Found %s user(s) outside the selected user ou '%s'."),count($this->outside_users),$people_ou);
-      $this->checks['outside_users']['ERROR_MSG'].= "<input type='submit' name='outside_users_dialog' value='"._("Migrate")."'>";
+      $this->checks['outside_users']['ERROR_MSG'].= "<input type='submit' name='outside_users_dialog' value='"._("Move")."...'>";
       return(false);
     }else{
       $this->checks['outside_users']['STATUS']    = TRUE;
@@ -546,7 +546,7 @@ class Step_Migrate extends setup_step
       $this->checks['users_visible']['STATUS_MSG']= "<font style='color:#F0A500'>"._("Warning")."</font>";
       $this->checks['users_visible']['ERROR_MSG'] = sprintf(_("Found %s user(s) that will not be visible in GOsa."), 
           count($this->users_to_migrate));
-      $this->checks['users_visible']['ERROR_MSG'] .= "<input type='submit' name='users_visible_migrate' value='"._("Migrate")."'>";
+      $this->checks['users_visible']['ERROR_MSG'] .= "<input type='submit' name='users_visible_migrate' value='"._("Migrate")."...'>";
     }
   }
 
@@ -675,7 +675,7 @@ class Step_Migrate extends setup_step
       $this->checks['deps_visible']['STATUS']    = TRUE;
       $this->checks['deps_visible']['STATUS_MSG']= '<font style="color:#FFA500">'._("Warning").'</font>';
       $this->checks['deps_visible']['ERROR_MSG'] = sprintf(_("Found %s department(s) that will not be visible in GOsa."),count($this->deps_to_migrate));
-      $this->checks['deps_visible']['ERROR_MSG'] .= "<input type='submit' name='deps_visible_migrate' value='"._("Migrate")."'>";
+      $this->checks['deps_visible']['ERROR_MSG'] .= "&nbsp;<input type='submit' name='deps_visible_migrate' value='"._("Migrate")."...'>";
     }
   }
 
@@ -993,6 +993,8 @@ class Step_Migrate extends setup_step
 
   function migrate_outside_users($perform = FALSE)
   {
+    $this->show_details= $perform;
+
     /* Establish ldap connection */
     $cv = $this->parent->captured_values;
     $ldap = new LDAP($cv['admin'],
@@ -1135,6 +1137,8 @@ class Step_Migrate extends setup_step
       $smarty->assign("ous",$this->get_all_people_ous());
       $smarty->assign("method","outside_users");
       $smarty->assign("outside_users",$this->outside_users);
+      $smarty->assign("user_details", $this->show_details);
+var_dump($this->show_details);
       return($smarty->fetch(get_template_path("setup_migrate.tpl",TRUE,dirname(__FILE__))));
     }
  
@@ -1417,7 +1421,7 @@ class Step_Migrate extends setup_step
           $this->checks['root']['STATUS']    = FALSE;
           $this->checks['root']['STATUS_MSG']= _("Failed");
           $this->checks['root']['ERROR_MSG'] = _("Root object couldn't be created, you should try it on your own.");
-          $this->checks['root']['ERROR_MSG'].= "<input type='submit' name='retry_root_create' value='"._("Try to create root object")."'>";
+          $this->checks['root']['ERROR_MSG'].= "&nbsp;<input type='submit' name='retry_root_create' value='"._("Try to create root object")."'>";
           return($res);;
         }
       }

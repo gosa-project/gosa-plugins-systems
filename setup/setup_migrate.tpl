@@ -129,12 +129,17 @@
 
 			<h2>{t}Move users into configured user tree{/t}</h2>
 			<p>
-			{t}This dialog allows moving a couple of users to the configured user tree.{/t}
+			{t}This dialog allows moving a couple of users to the configured user tree. Doing this may straighten your LDAP service.{/t}
 			</p>
 			<p style='color:red'>
-			{t}Be careful with this option! There may be references pointing to these users. The setup can't migrate references, so you may want to abort in this case.{/t}
+			{t}Be careful with this option! There may be references pointing to these users. The GOsa setup can't migrate references, so you may want to cancel the migration in this case in this case.{/t}
 			</p>	
-
+			<p>
+			{t}Move selected user into the following GOsa people department{/t}: 
+			<select name='move_user_to'>
+				{html_options options=$ous}
+			</select>
+			</p>
 			{foreach from=$outside_users item=val key=key}
 				{if $outside_users.$key.selected}
 					<input type='checkbox' name='select_user_{$key}' checked>
@@ -154,16 +159,12 @@
 				{/if}
 				<br>
 			{/foreach}
-
-			<p>
-			<b>{t}Move selected user into the following GOsa people department{/t} : </b>
-			<select name='move_user_to'>
-				{html_options options=$ous}
-			</select>
 			<br>
+			{if $user_details}
+			<input type='submit' name='outside_users_dialog_refresh' value='{t}Hide changes{/t}'>
+                        {else}
 			<input type='submit' name='outside_users_dialog_whats_done' value='{t}Show changes{/t}'>
-			</p>
-				
+			{/if}
 
 			<p class='seperator'>&nbsp;</p>	
 			<div style='width:99%; text-align:right; padding:5px;'>
