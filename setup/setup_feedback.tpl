@@ -3,9 +3,9 @@
 	<h2>
 		<input {if $subscribe} checked {/if} type='checkbox' name='subscribe' value='1' class='center'>&nbsp;{t}Subscribe to the gosa-announce mailinglist{/t}
 	</h2>
-
+	<p>
 	{t}When checking this option, GOsa will try to connect http://oss.gonicus.de in order to subscribe you to the gosa-announce mailing list. You've to confirm this by mail.{/t}
-
+	</p>
 	<table>	
 		<tr>
 			<td>
@@ -25,7 +25,7 @@
 		</tr>
 		<tr>
 			<td>
-				{t}eMail{/t}{$must}
+				{t}Mail address{/t}{$must}
 			</td>
 			<td>
 				<input name='eMail' type='text' value='{$eMail}' style='width:300px;'>	
@@ -37,12 +37,14 @@
 	<p>&nbsp;</p>
 	<h2>
   		<input {if $use_gosa_announce} checked {/if} type='checkbox' name='use_gosa_announce' value='1' class='center'>&nbsp;{t}Send feedback to the GOsa project team{/t}
-	</h2> 
+	</h2>
+	<p>
 	{t}When checking this option, GOsa will try to connect http://oss.gonicus.de in order to submit your form anonymously.{/t}
-	<br><b>{t}Generic{/t}</b>
+	</p>
+	<b>{t}Generic{/t}</b>
 	<table>	
 		<tr>
-			<td>
+			<td style='vertical-align:top'>
 				{t}Did the setup procedure help you to get started?{/t}   
 			</td>
 			<td>
@@ -52,54 +54,49 @@
 			</td>
 		</tr>
 		<tr>
-			<td>
+			<td style='vertical-align:top'>
 				{t}If not, what problems did you encounter{/t}:
 			</td>
 			<td>
-				<textarea name='problems_encountered' rows='4' cols='20'style='width:100%'>{$problems_encountered}</textarea>
+				<textarea name='problems_encountered' rows='4' cols='50' style='width:100%'>{$problems_encountered}</textarea>
 			</td>
 		</tr>
 		<tr>
-			<td>
+			<td style='vertical-align:top'>
 				{t}Is this the first time you use GOsa?{/t}
 			</td>
 			<td>
 				<input {if $first_use} checked {/if} type='radio' name='first_use' value='1'>{t}Yes{/t}
 				<br>
-				<input {if !$first_use} checked {/if} type='radio' name='first_use' value='0'>{t}No{/t}
-			</td>	
-		</tr>
-		<tr>
-			<td></td>
-			<td>
+				<input {if !$first_use} checked {/if} type='radio' name='first_use' value='0'>{t}No{/t},
 				{t}I use it since{/t}
 				<select name='use_since' title='{t}Select the year since when you are using GOsa{/t}'> 
 					{html_options options=$years}
 				</select>
+			</td>	
+		</tr>
+		<tr>
+			<td style='vertical-align:top'>
+				{t}What operating system / distribution do you use?{/t}
+			</td>
+			<td>
+				<input type='text' name='distribution' size=50 value='{$distribution}'>
 			</td>
 		</tr>
 		<tr>
-			<td>
-				{t}What operation system / distribution do you use?{/t}
-			</td>
-			<td>
-				<input type='text' name='distribution' value='{$distribution}'>
-			</td>
-		</tr>
-		<tr>
-			<td>
+			<td style='vertical-align:top'>
 				{t}What web server do you use?{/t}
 			</td>
 			<td>
-				<input type='text' name='web_server' value='{$web_server}'>
+				<input type='text' size=50 name='web_server' value='{$web_server}'>
 			</td>
 		</tr>
 		<tr>
-			<td>
+			<td style='vertical-align:top'>
 				{t}What PHP version do you use?{/t}
 			</td>
 			<td>
-				<input type='text' name='php_version' value='{$php_version}'>
+				<input type='text' size=50 name='php_version' value='{$php_version}'>
 			</td>
 		</tr>
 	</table>
@@ -107,15 +104,16 @@
 	<br><b>{t}LDAP{/t}</b>
 	<table>
 		<tr>
-			<td>{t}What kind of LDAP server(s) do you use?{/t}
+			<td style='vertical-align:top'>
+			{t}What kind of LDAP server(s) do you use?{/t}
 			</td>
-			<td><input type='text' name='ldap_server' value='{$ldap_server}'>
+			<td><input type='text' name='ldap_server' size=50 value='{$ldap_server}'>
 			</td>
 		</tr>
 		<tr>
 			<td>{t}How many objects are in your LDAP?{/t}
 			</td>
-			<td><input type='text' name='object_count' value='{$object_count}'>
+			<td><input type='text' name='object_count' size=50 value='{$object_count}'>
 			</td>
 		</tr>
 	</table>
@@ -123,7 +121,7 @@
 	<br><b>{t}Features{/t}</b>
 	<table>
 		<tr>
-			<td>{t}What features of GOsa do you use?{/t}
+			<td style='vertical-align:top'>{t}What features of GOsa do you use?{/t}
 			</td>
 			<td>
 				{foreach from=$features_used item=data key=key}
@@ -133,9 +131,9 @@
 			</td>
 		</tr>
 		<tr>
-			<td>{t}What features do you want to see in next versions of GOsa?{/t}
+			<td style="vertical-align:top">{t}What features do you want to see in future versions of GOsa?{/t}
 			</td>
-			<td><textarea name='want_to_see_next'>{$want_to_see_next}</textarea>
+			<td><textarea name='want_to_see_next' cols=50 rows=3>{$want_to_see_next}</textarea>
 			</td>
 		</tr>
 	</table>
