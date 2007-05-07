@@ -127,13 +127,13 @@
 		
 		{elseif $method == "outside_users"}
 
-			<h2>{t}Move users into valid user departments{/t}</h2>
-
-			{t}This dialog allows you to move the displayed users into a valid user department{/t}
-			<br>
-			{t}Be careful with this tool, there may be references pointing to this user that can't be migrated.{/t}
-			<br>
-			<br>	
+			<h2>{t}Move users into configured user tree{/t}</h2>
+			<p>
+			{t}This dialog allows moving a couple of users to the configured user tree.{/t}
+			</p>
+			<p style='color:red'>
+			{t}Be careful with this option! There may be references pointing to these users. The setup can't migrate references, so you may want to abort in this case.{/t}
+			</p>	
 
 			{foreach from=$outside_users item=val key=key}
 				{if $outside_users.$key.selected}
@@ -161,14 +161,15 @@
 				{html_options options=$ous}
 			</select>
 			<br>
-			<input type='submit' name='outside_users_dialog_perform' value='{t}Move selected user{/t}'>
-			<input type='submit' name='outside_users_dialog_whats_done' value='{t}What will be done here{/t}'>
+			<input type='submit' name='outside_users_dialog_whats_done' value='{t}Show changes{/t}'>
 			</p>
 				
 
 			<p class='seperator'>&nbsp;</p>	
-			<div style='width:100%; text-align:right; padding:5px;'>
-				<input type='submit' name='outside_users_dialog_cancel' value='{t}Close{/t}'>
+			<div style='width:99%; text-align:right; padding:5px;'>
+				<input type='submit' name='outside_users_dialog_perform' value='{t}Move{/t}'>
+				&nbsp;
+				<input type='submit' name='outside_users_dialog_cancel' value='{t}Cancel{/t}'>
 			</div>
 		
 

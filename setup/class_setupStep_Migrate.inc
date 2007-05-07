@@ -408,7 +408,7 @@ class Step_Migrate extends setup_step
 
     if(count($this->outside_users)){
       $this->checks['outside_users']['STATUS']    = FALSE;
-      $this->checks['outside_users']['STATUS_MSG']= _("Failed");
+      $this->checks['outside_users']['STATUS_MSG']= "<font style='color:#F0A500'>"._("Warning")."</font>";
       $this->checks['outside_users']['ERROR_MSG'] = 
         sprintf(_("Found %s user(s) outside the selected user ou '%s'."),count($this->outside_users),$people_ou);
       $this->checks['outside_users']['ERROR_MSG'].= "<input type='submit' name='outside_users_dialog' value='"._("Migrate")."'>";
