@@ -23,14 +23,87 @@
 class Step_Feedback  extends setup_step
 {
   var $languages      = array();
-  var $attributes     = array();
   var $header_image   = "images/welcome.png";
+
+  var $organization       = "";
+  var $eMail              = "";
+  var $name               = "";
+  var $subscribe          = TRUE;
+  var $use_gosa_announce  = TRUE;
+
+  var $get_started          = TRUE;
+  var $problems_encountered = "";
+  
+  var $first_use            = TRUE;
+  var $use_since            = "";
+
+  var $distribution         = "";
+  var $web_server           = "";
+  var $php_version          = "";
+
+  var $ldap_server          = "";
+  var $object_count         = "";
+    
+  var $want_to_see_next     = "";
+
+  var $features_used        = array();  
+  var $initialized          = FALSE; 
+
+  var $attributes = array("organization","eMail","name","subscribe","use_gosa_announce","get_started","problems_encountered","features_used",
+                          "first_use","use_since","distribution","web_server","php_version","ldap_server","object_count","want_to_see_next");
+  
 
   function Step_Feedback()
   {
     $this->is_enabled     = TRUE;
     $this->is_active      = TRUE;
     $this->update_strings(); 
+  }
+
+  function init()
+  {
+    $cv = $this->parent->captured_values;
+
+    /* Initialize values */
+    $this->use_since      = date("Y");
+    $this->organization   = preg_replace("/^[^=]*+=(.*),.*$/","\\1",$cv['base']);
+    $this->distribution   = PHP_OS."/".$_SERVER['SERVER_SOFTWARE']; 
+    $this->web_server     = $_SERVER['SERVER_SOFTWARE'];
+
+    $this->php_version    = PHP_VERSION;
+
+    /* On first call check for rid/sid base */
+    $cv = $this->parent->captured_values;
+    $ldap = new LDAP($cv['admin'],
+        $cv['password'],
+        $cv['connection'],
+        FALSE,
+        $cv['tls']);
+
+    $ldap->cd($cv['base']);
+    $ldap->search("(objectClass=*)",array("dn"));
+    $this->object_count=$ldap->count();
+
+    $oc = $ldap->get_objectclasses();
+
+  
+    $this->features_used                = array();
+    $this->features_used['posix']       = array("USED" => isset($oc['posixAccount']) , 
+                                                "NAME" => _("UNIX accounts/groups"));
+    $this->features_used['samba']       = array("USED" => isset($oc['sambaSamAccount']) || isset($oc['sambaAccount']) , 
+                                                "NAME" => _("Samba management"));
+    $this->features_used['mail']        = array("USED" => $cv['mail']  != "none", 
+                                                "NAME" => _("Mailsystem management"));
+    $this->features_used['fax']         = array("USED" => isset($oc['goFaxAccount']) , 
+                                                "NAME" => _("FAX system administration"));
+    $this->features_used['asterisk']    = array("USED" => isset($oc['goFonAccount']), 
+                                                "NAME" => _("Asterisk administration"));
+    $this->features_used['inventory']   = array("USED" => isset($oc['glpiAccount']) , 
+                                                "NAME" => _("System invetory"));
+    $this->features_used['system']      = array("USED" => FALSE , 
+                                                "NAME" => _("System-/Configmanagement"));
+    $this->features_used['addressbook'] = array("USED" => FALSE , 
+                                                "NAME" => _("Addressbook"));
   }
 
   function update_strings()
@@ -42,16 +115,121 @@ class Step_Feedback  extends setup_step
   
   function execute()
   {
+    if(!$this->initialized){
+      $this->initialized = TRUE;
+      $this->init();
+    }
+
+    $years = array();
+    for($i = date("Y") ; $i >= 2001; $i--){
+      $years[$i] = $i;
+    }
+
     $this->is_completed=TRUE;
     $smarty = get_smarty();
+
+    foreach($this->attributes as $attr){
+      $smarty->assign($attr, $this->$attr);
+    }
+    $smarty->assign("years",$years);
+    $smarty->assign("features_used",$this->features_used);
     $smarty->assign ("must", "<font class=\"must\">*</font>");
-    $smarty->assign('auth_id', session_id());
     return($smarty->fetch(get_template_path("setup_feedback.tpl",TRUE,dirname(__FILE__))));
   }
 
   function save_object()
   {
+    if(isset($_POST['step_feedback'])){
+      foreach($this->attributes as $attr){
+        if(isset($_POST[$attr])){
+          $this->$attr = get_post($attr);
+        }
+      }
 
+      if(isset($_POST['subscribe'])){
+        $this->subscribe = TRUE;
+      }else{
+        $this->subscribe = FALSE;
+      }
+
+      if(isset($_POST['use_gosa_announce'])){
+        $this->use_gosa_announce = TRUE;
+      }else{
+        $this->use_gosa_announce = FALSE;
+      }
+    
+      foreach($this->features_used as $key => $data){
+        if(isset($_POST['feature_'.$key])){
+          $this->features_used[$key]['USED'] = TRUE;
+        }else{
+          $this->features_used[$key]['USED'] = FALSE;
+        }
+      }
+      if(isset($_POST['send_feedback'])){
+        $str = $this->create_serialise_data_string();  
+      
+        $feedback_url = "http://dyn-111/hickert-test/feedback.php?data=".serialize($str);
+        $ret = fopen($feedback_url,"r");
+        $ret_value = fgets($ret,256);
+        fclose($ret);
+
+        if(!preg_match("/successfully/i",$ret_value)){
+          print_red(_("Could not send feedback."));
+        }
+      }
+    }
+
+  }
+
+  function create_serialise_data_string()
+  {
+
+    $str = "#FEEDBACK ".date("H:i:s d:m:Y");
+    if($this->subscribe){
+
+      $str.= "\n\nSubscribe";
+      $str .= "\nOrganization: ".$this->organization; 
+      $str .= "\nName: ".$this->name;
+      $str .= "\neMail: ".$this->eMail;
+    }
+  
+    if($this->use_gosa_announce){
+
+      $str.= "\n\nFeedback";    
+  
+      if($this->get_started) {
+        $str .= "\nGet started: TRUE";
+      }else{
+        $str .= "\nGet started: FALSE";
+      }
+      $str .= "\nProblems : ".base64_encode($this->problems_encountered);
+
+      if($this->first_use){
+        $str .= "\nFirst use: TRUE";
+      }else{
+        $str .= "\nFirst use: FALSE";
+      }
+      $str .= "\nUsing GOsa since: ".$this->use_since;
+
+      $str .="\nDistribution: ".$this->distribution;
+      $str .="\nWeb Server: ".$this->web_server;
+      $str .="\nPHP_Version: ".$this->php_version;
+      $str .="\nLDAP Server: ".$this->ldap_server;
+      $str .="\nObject count: ".$this->object_count;
+      $str .="\nMissing features: ".base64_encode($this->want_to_see_next);
+    }
+
+    $str .= "\n\nFeatures used";
+    foreach($this->features_used as $name => $data){
+      $str.="\n".$name.": ";
+      if($data['USED']){
+        $str .= "TRUE";
+      }else{
+        $str .= "FALSE";
+      }
+    }
+
+    return($str);  
   }
 }
 
