@@ -59,6 +59,7 @@ class Step_Migrate extends setup_step
   /* Department migration attributes */
   var $dep_migration_dialog = FALSE;
   var $deps_to_migrate      = array();
+  var $show_details         = FALSE;
 
   /* Department migration attributes */
   var $users_migration_dialog= FALSE;
@@ -116,7 +117,7 @@ class Step_Migrate extends setup_step
     $this->checks['root']['ERROR_MSG'] = "";
     $this->checkBase();
 
-    $this->checks['permissions']['TITLE']     = _("Checking permissions on ldap database");
+    $this->checks['permissions']['TITLE']     = _("Checking permissions on LDAP database");
     $this->checks['permissions']['STATUS']    = FALSE;
     $this->checks['permissions']['STATUS_MSG']= "";
     $this->checks['permissions']['ERROR_MSG'] = "";
@@ -669,9 +670,9 @@ class Step_Migrate extends setup_step
       $this->checks['deps_visible']['STATUS_MSG']= _("Ok");
       $this->checks['deps_visible']['ERROR_MSG'] = "";
     }else{
-      $this->checks['deps_visible']['STATUS']    = FALSE;
-      $this->checks['deps_visible']['STATUS_MSG']= "";//sprintf(_("%s entries found"),count($this->deps_to_migrate));
-      $this->checks['deps_visible']['ERROR_MSG'] = sprintf(_("Found %s departments that will not be visible in GOsa."),count($this->deps_to_migrate));
+      $this->checks['deps_visible']['STATUS']    = TRUE;
+      $this->checks['deps_visible']['STATUS_MSG']= '<font style="color:#FFA500">'._("Warning").'</font>';
+      $this->checks['deps_visible']['ERROR_MSG'] = sprintf(_("Found %s department(s) that will not be visible in GOsa."),count($this->deps_to_migrate));
       $this->checks['deps_visible']['ERROR_MSG'] .= "<input type='submit' name='deps_visible_migrate' value='"._("Migrate")."'>";
     }
   }
@@ -1241,6 +1242,7 @@ class Step_Migrate extends setup_step
 
     /* Refresh list of deparments */
     if(isset($_POST['deps_visible_migrate_refresh'])){
+      $this->show_details= false;
       $this->check_organizationalUnits();
     }
 
@@ -1265,6 +1267,7 @@ class Step_Migrate extends setup_step
 
     /* Start migration */
     if(isset($_POST['deps_visible_migrate_whatsdone'])){
+      $this->show_details= TRUE;
       $this->migrate_organizationalUnits(TRUE);
     }
 
@@ -1273,6 +1276,7 @@ class Step_Migrate extends setup_step
       $smarty = get_smarty();
       $smarty->assign("deps_to_migrate",$this->deps_to_migrate);
       $smarty->assign("method","migrate_deps");
+      $smarty->assign("deps_details", $this->show_details);
       return($smarty->fetch(get_template_path("setup_migrate.tpl",TRUE,dirname(__FILE__))));
     }
 

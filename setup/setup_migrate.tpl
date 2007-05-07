@@ -264,11 +264,9 @@
 	
 			<h2>Department migration</h2>
 
-			{t}The listed deparmtents below are currenlty invisble in the GOsa user interface. If you want to migrate a set of departments, just select them and use the migrate button below.{/t}<br>
-			{t}If you want to know what will be done when migrating the selected entries, just use the 'What will be done here' button and you will see a list of changes.{/t}
+			<p>{t}The listed deparmtents are currenlty invisble in the GOsa user interface. If you want to change this for a couple of entries, select them and use the migrate button below.{/t}</p>
+			<p>{t}If you want to know what will be done when migrating the selected entries, use the 'Show changes' button to see the LDIF.{/t}</p>
 					
-
-			<br><br>
 			{foreach from=$deps_to_migrate item=val key=key}
 
 				{if $deps_to_migrate.$key.checked}
@@ -297,21 +295,23 @@ dn: {$deps_to_migrate.$key.dn}
 					<input type='checkbox' name='migrate_{$key}'>
 					{$deps_to_migrate.$key.dn}
 				{/if}
-
-				<br>
 				
 
 			{/foreach}
-			<br>
 
-			<input type='submit' name='deps_visible_migrate_refresh' value='{t}Reload list{/t}'>
-			<input type='submit' name='deps_visible_migrate_migrate' value='{t}Migrate{/t}'>
-			<input type='submit' name='deps_visible_migrate_whatsdone' value='{t}What will be done here{/t}'>
+			<br>
+			{if $deps_details}
+			<input type='submit' name='deps_visible_migrate_refresh' value='{t}Hide changes{/t}'>
+			{else}
+			<input type='submit' name='deps_visible_migrate_whatsdone' value='{t}Show changes{/t}'>
+			{/if}
 
 			<p class='seperator'>&nbsp;</p>	
 
-			<div style='width:100%; text-align:right; padding:5px;'>
-				<input type='submit' name='deps_visible_migrate_close' value='{t}Close{/t}'>
+			<div style='width:99%; text-align:right; padding:5px;'>
+				<input type='submit' name='deps_visible_migrate_migrate' value='{t}Migrate{/t}'>
+				&nbsp;
+				<input type='submit' name='deps_visible_migrate_close' value='{t}Cancel{/t}'>
 			</div>
 		{elseif $method == "migrate_users"}
 	
@@ -366,27 +366,6 @@ dn: {$users_to_migrate.$key.dn}
 			<div style='width:100%; text-align:right; padding:5px;'>
 				<input type='submit' name='users_visible_migrate_close' value='{t}Close{/t}'>
 			</div>
-		{else}
-
-	* Create a test department with some objects to check for correct permissions
-	<br>
-	* Look for ACL's. If none is there, choose one user to be the super administrator
-	<br>
-	* Look for organizationalUnits and let add GOsa departments for selected ones
-	<br>
-	* Look for person / organizationalPerson and add GOsa account
-	<br>
-	* Allow to move selected users to people ou's - take care for groupOfNames
-	<br>
-	* Allow to move selected groups to group ou's - take care for groupOfNames
-	<br>
-	* Allow to move selected winstations to winstation ou's - take care for groupOfNames
-	<br>
-	* Check for double uidNumbers/gidNumbers
-	<br>
-	* Check for mail accounts and add gosaMailAccount - optionally create these accounts on the IMAP server
-
-	
 	{/if}
     </div>
 </div>
