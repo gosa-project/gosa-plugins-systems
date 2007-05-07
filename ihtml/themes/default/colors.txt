@@ -10,4 +10,4 @@ Highlight:         #F0F0F0
 Borders:           #AAAAAA
 Font Error:        #FF0000
 Font Warning:      #FFA500
-Font OK:           #00FF00
+Font OK:           #008000
