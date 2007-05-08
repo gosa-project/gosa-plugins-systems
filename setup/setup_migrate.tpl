@@ -204,7 +204,7 @@
 					<td>
 						<i>System administrator</i>
 					</td>
-				<tr>
+				</tr>
 				<tr>
 					<td>
 						{t}User ID{/t}:&nbsp;
@@ -212,8 +212,8 @@
 					<td>
 						<i>admin</i>
 					</td>
-				<tr>
 				</tr>
+				<tr>
 					<td>
 						{t}Password{/t}:&nbsp;
 					</td>
@@ -221,7 +221,7 @@
 						<input type='password' value='{$new_user_password}' name='new_user_password'><br>
 					</td>
 				</tr>
-				</tr>
+				<tr>
 					<td>
 						{t}Password (again){/t}:&nbsp;
 					</td>
