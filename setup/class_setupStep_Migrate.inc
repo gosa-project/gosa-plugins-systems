@@ -1302,6 +1302,7 @@ class Step_Migrate extends setup_step
     /* Refresh list of deparments */
     if(isset($_POST['deps_visible_migrate_refresh'])){
       $this->check_organizationalUnits();
+      $this->show_details= FALSE;
     }
 
     /* Open migration dialog */
