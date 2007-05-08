@@ -1082,6 +1082,7 @@ class Step_Migrate extends setup_step
     if(isset($_POST['outside_winstations_dialog_cancel'])){
       $this->outside_winstations_dialog = FALSE;
       $this->dialog = FALSE;
+      $this->show_details = FALSE;
     }
    
     if(isset($_POST['outside_winstations_dialog_whats_done'])){
@@ -1092,6 +1093,7 @@ class Step_Migrate extends setup_step
       $this->migrate_outside_winstations(TRUE);
       $this->search_outside_winstations();
       $this->dialog = FALSE;
+      $this->show_details = FALSE;
       $this->outside_winstations_dialog = FALSE;
     }
 
@@ -1113,6 +1115,7 @@ class Step_Migrate extends setup_step
     
     if(isset($_POST['outside_groups_dialog_cancel'])){
       $this->outside_groups_dialog = FALSE;
+      $this->show_details = FALSE;
       $this->dialog = FALSE;
     }
    
@@ -1129,6 +1132,7 @@ class Step_Migrate extends setup_step
       $this->migrate_outside_groups(TRUE);
       $this->search_outside_groups();
       $this->dialog = FALSE;
+      $this->show_details = FALSE;
       $this->outside_groups_dialog = FALSE;
     }
 
@@ -1153,6 +1157,7 @@ class Step_Migrate extends setup_step
     if(isset($_POST['outside_users_dialog_cancel'])){
       $this->outside_users_dialog = FALSE;
       $this->dialog = FALSE;
+      $this->show_details = FALSE;
     }
    
     if(isset($_POST['outside_users_dialog_whats_done'])){
@@ -1164,6 +1169,7 @@ class Step_Migrate extends setup_step
       $this->migrate_outside_users(TRUE);
       $this->search_outside_users();
       $this->dialog = FALSE;
+      $this->show_details = FALSE;
       $this->outside_users_dialog = FALSE;
     }
 
@@ -1214,12 +1220,14 @@ class Step_Migrate extends setup_step
     if(isset($_POST['create_acls_cancel'])){
       $this->acl_create_dialog = FALSE;
       $this->dialog = FALSE;
+      $this->show_details = FALSE;
     }
 
     if(isset($_POST['create_acls_create_confirmed'])){
       if($this->create_admin()){
         $this->acl_create_dialog = FALSE;
         $this->dialog = FALSE;
+      $this->show_details = FALSE;
         $this->initialize_checks();
       }
     }
@@ -1231,6 +1239,7 @@ class Step_Migrate extends setup_step
     if(isset($_POST['create_admin_user'])){
       if($this->create_admin_user()){
         $this->dialog = FALSE;
+      $this->show_details = FALSE;
       }
     }
 
@@ -1269,6 +1278,7 @@ class Step_Migrate extends setup_step
     if(isset($_POST['users_visible_migrate_close'])){
       $this->users_migration_dialog = FALSE;
       $this->dialog =FALSE;
+      $this->show_details = FALSE;
     }
 
     /* Start migration */
@@ -1276,6 +1286,7 @@ class Step_Migrate extends setup_step
       if($this->migrate_gosaAccounts()){
         $this->check_gosaAccounts();
         $this->dialog = FALSE;
+      $this->show_details = FALSE;
         $this->users_migration_dialog = FALSE;
       }
     }
@@ -1315,6 +1326,7 @@ class Step_Migrate extends setup_step
     if(isset($_POST['deps_visible_migrate_close'])){
       $this->dep_migration_dialog = FALSE;
       $this->dialog =FALSE;
+      $this->show_details = FALSE;
     }
 
     /* Start migration */
