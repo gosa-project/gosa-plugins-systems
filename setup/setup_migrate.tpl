@@ -230,6 +230,7 @@
 					</td>
 				</tr>
 			</table>
+				<input type='submit' name='create_admin_user' value='{t}Apply{/t}'>	
 			
 			{if $users_cnt != 0 || $groups_cnt != 0}
 			
@@ -251,6 +252,7 @@
 					{html_options options=$groups selected=$acl_create_selected}
 				{/if}
 			</select>
+			<input type='submit' name='create_acls_create' value='{t}Apply{/t}'>
 			{/if}
 		{/if}
 
@@ -258,12 +260,6 @@
 			<p class='seperator'>&nbsp;</p>	
 
 			<div style='width:99%; text-align:right; padding:5px;'>
-				{if $users_cnt != 0 || $groups_cnt != 0}
-				<input type='submit' name='create_acls_create' value='{t}Apply{/t}'>
-				{else}
-				<input type='submit' name='create_admin_user' value='{t}Apply{/t}'>	
-				{/if}
-				&nbsp;
 				<input type='submit' name='create_acls_cancel' value='{t}Cancel{/t}'>
 			</div>
 		
