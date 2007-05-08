@@ -144,7 +144,7 @@ class Step_Feedback  extends setup_step
             $ret_value.= fgets($ret,256);
           }
           if(!preg_match("/successfully/i",$ret_value)){
-            print_red(sprintf(_("Could not send feedback. Script said '%s'."),$ret_value));
+            print_red(_("Error while sending feedback."));
           }else{
             $additional_info = "<font color='green'>"._("Feedback sucessfully send")."</font>";
           }
