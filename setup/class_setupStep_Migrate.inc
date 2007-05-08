@@ -1091,6 +1091,8 @@ class Step_Migrate extends setup_step
     if(isset($_POST['outside_winstations_dialog_perform'])){
       $this->migrate_outside_winstations(TRUE);
       $this->search_outside_winstations();
+      $this->dialog = FALSE;
+      $this->outside_winstations_dialog = FALSE;
     }
 
     if(isset($_POST['outside_winstations_dialog'])){
@@ -1126,6 +1128,8 @@ class Step_Migrate extends setup_step
     if(isset($_POST['outside_groups_dialog_perform'])){
       $this->migrate_outside_groups(TRUE);
       $this->search_outside_groups();
+      $this->dialog = FALSE;
+      $this->outside_groups_dialog = FALSE;
     }
 
     if(isset($_POST['outside_groups_dialog'])){
@@ -1159,6 +1163,8 @@ class Step_Migrate extends setup_step
     if(isset($_POST['outside_users_dialog_perform'])){
       $this->migrate_outside_users(TRUE);
       $this->search_outside_users();
+      $this->dialog = FALSE;
+      $this->outside_users_dialog = FALSE;
     }
 
     if (isset($_POST['outside_users_dialog_refresh'])){
@@ -1269,6 +1275,8 @@ class Step_Migrate extends setup_step
     if(isset($_POST['users_visible_migrate_migrate'])){
       if($this->migrate_gosaAccounts()){
         $this->check_gosaAccounts();
+        $this->dialog = FALSE;
+        $this->users_migration_dialog = FALSE;
       }
     }
 
@@ -1313,6 +1321,8 @@ class Step_Migrate extends setup_step
       if($this->migrate_organizationalUnits()){
         $this->show_details= FALSE;
         $this->check_organizationalUnits();
+        $this->dialog = FALSE;
+        $this->dep_migration_dialog = FALSE;
       }
     }
 
