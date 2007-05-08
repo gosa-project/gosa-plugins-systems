@@ -750,21 +750,47 @@ class Step_Migrate extends setup_step
 
     /* Search for gosaAcls */ 
     $ldap->cd($cv['base']);
-    $res = $ldap->search("(&(objectClass=gosaAccount)(|(objectClass=posixAccount)".     
-                           "(objectClass=inetOrgPerson)(objectClass=organizationalPerson)))");
+    $res = $ldap->cat($cv['base']);
+    
     if(!$res){
       $this->checks['acls']['STATUS']    = FALSE;
       $this->checks['acls']['STATUS_MSG']= _("LDAP query failed");
       $this->checks['acls']['ERROR_MSG'] = _("Possibly the 'root object' is missing.");
-    }elseif($ldap->count()){
-      $this->checks['acls']['STATUS']    = TRUE;
-      $this->checks['acls']['STATUS_MSG']= _("Ok");
-      $this->checks['acls']['ERROR_MSG'] = "";
     }else{
-      $this->checks['acls']['STATUS']    = FALSE;
-      $this->checks['acls']['STATUS_MSG']= _("Failed");
-      $this->checks['acls']['ERROR_MSG']= _("There is no GOsa administrator account inside your LDAP.")."&nbsp;";
-      $this->checks['acls']['ERROR_MSG'].= "<input type='submit' name='create_acls' value='"._("Create")."'>";
+      $found = false;
+      $attrs = $ldap->fetch();
+      if(isset($attrs['gosaAclEntry'])){
+        $acls = $attrs['gosaAclEntry'];
+        for($i = 0 ; $i < $acls['count'] ; $i++){
+          $acl = $acls[$i];
+          $tmp = split(":",$acl);
+  
+          /* Only check permanent acls */
+          if($tmp[1] == "psub"){
+
+            /* Check if acl owner is a valid GOsa user account */
+            $ldap->cat(base64_decode($tmp[2]),array("objectClass"));
+            $ret = $ldap->fetch();
+
+            if(in_array("gosaAccount",$ret['objectClass']) && 
+               in_array("organizationalPerson",$ret['objectClass']) &&
+               in_array("inetOrgPerson",$ret['objectClass'])){
+              $found = TRUE;
+            }
+          }
+        }
+      }
+
+      if($found){
+        $this->checks['acls']['STATUS']    = TRUE;
+        $this->checks['acls']['STATUS_MSG']= _("Ok");
+        $this->checks['acls']['ERROR_MSG'] = "";
+      }else{
+        $this->checks['acls']['STATUS']    = FALSE;
+        $this->checks['acls']['STATUS_MSG']= _("Failed");
+        $this->checks['acls']['ERROR_MSG']= _("There is no GOsa administrator account inside your LDAP.")."&nbsp;";
+        $this->checks['acls']['ERROR_MSG'].= "<input type='submit' name='create_acls' value='"._("Create")."'>";
+      }
     }
     return($ldap->count()>=1);
   }
