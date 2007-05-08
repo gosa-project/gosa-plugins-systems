@@ -143,8 +143,8 @@ class Step_Feedback  extends setup_step
           while($ret && !feof($ret)){
             $ret_value.= fgets($ret,256);
           }
-          if(!preg_match("/successfully/i",$ret_value)){
-            print_red(_("Error while sending feedback."));
+          if(!preg_match("/successful/i",$ret_value)){
+            print_red(_("Error while sending your feedback. The service is possible temporary unavailable"));
           }else{
             $additional_info = "<font color='green'>"._("Feedback sucessfully send")."</font>";
           }
