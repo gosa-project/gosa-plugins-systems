@@ -181,7 +181,7 @@ class Step_Checks extends setup_step
 
     /* Register_globals off */
     $N = "register_globals = <b>"._("Off")."</b>";
-    $D = _("register_globals is a PHP mechanism to register all global varibales to be accessible from scripts without changing the scope. This may be a security risk.");
+    $D = _("register_globals is a PHP mechanism to register all global variables to be accessible from scripts without changing the scope. This may be a security risk.");
     $S = _("Search for 'register_globals' in your php.ini and switch it to 'Off'.");
     $R = ini_get("register_globals") == 0;
     $M = FALSE;
