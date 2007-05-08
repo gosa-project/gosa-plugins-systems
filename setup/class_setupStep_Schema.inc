@@ -39,7 +39,7 @@ class Step_Schema extends setup_step
   {
     $this->s_title      = _("LDAP schema check");
     $this->s_title_long = _("LDAP schema check");
-    $this->s_info       = _("Perform test on your curren LDAP schema");
+    $this->s_info       = _("Perform test on your current LDAP schema");
   }
 
   
