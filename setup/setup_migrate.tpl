@@ -138,7 +138,7 @@
 			{t}This dialog allows moving a couple of users to the configured user tree. Doing this may straighten your LDAP service.{/t}
 			</p>
 			<p style='color:red'>
-			{t}Be careful with this option! There may be references pointing to these users. The GOsa setup can't migrate references, so you may want to cancel the migration in this case in this case.{/t}
+			{t}Be careful with this option! There may be references pointing to these users. The GOsa setup can't migrate references, so you may want to cancel the migration in this case.{/t}
 			</p>	
 			<p>
 			{t}Move selected users into this people tree{/t}: 
