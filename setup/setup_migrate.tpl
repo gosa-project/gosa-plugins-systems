@@ -272,7 +272,7 @@
 	
 			<h2>Department migration</h2>
 
-			<p>{t}The listed deparmtents are currenlty invisble in the GOsa user interface. If you want to change this for a couple of entries, select them and use the migrate button below.{/t}</p>
+			<p>{t}The listed departments are currenlty invisble in the GOsa user interface. If you want to change this for a couple of entries, select them and use the migrate button below.{/t}</p>
 			<p>{t}If you want to know what will be done when migrating the selected entries, use the 'Show changes' button to see the LDIF.{/t}</p>
 					
 			{foreach from=$deps_to_migrate item=val key=key}

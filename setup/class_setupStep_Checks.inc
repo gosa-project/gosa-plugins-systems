@@ -95,7 +95,7 @@ class Step_Checks extends setup_step
     /* Check for installed mhash module */
     $N = _("Checking for mhash support");
     $D = _("You'll need this module to make use of SSHA encryption");
-    $S = _("The mhash module for PHP 4/5 is not available.Pplease install php4-mhash/php5-mhash.");
+    $S = _("The mhash module for PHP 4/5 is not available.Please install php4-mhash/php5-mhash.");
     $R = is_callable("mhash");
     $M = FALSE;
     $this->basic_checks[] = array("NAME" => $N , "DESC" => $D , "RESULT" => $R , "SOLUTION" => $S , "MUST" => $M );
