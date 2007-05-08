@@ -98,7 +98,7 @@ class Step_Feedback  extends setup_step
     $this->features_used['asterisk']    = array("USED" => isset($oc['goFonAccount']), 
                                                 "NAME" => _("Asterisk administration"));
     $this->features_used['inventory']   = array("USED" => isset($oc['glpiAccount']) , 
-                                                "NAME" => _("System invetory"));
+                                                "NAME" => _("System inventory"));
     $this->features_used['system']      = array("USED" => FALSE , 
                                                 "NAME" => _("System-/Configmanagement"));
     $this->features_used['addressbook'] = array("USED" => FALSE , 
