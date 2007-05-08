@@ -230,6 +230,13 @@
 					</td>
 				</tr>
 			</table>
+	
+<!-- Place cursor -->
+<script language="JavaScript" type="text/javascript">
+  <!-- // First input field on page
+  document.mainform.new_user_password.focus();
+  -->
+</script>
 				<input type='submit' name='create_admin_user' value='{t}Apply{/t}'>	
 			
 			{if $users_cnt != 0 || $groups_cnt != 0}
