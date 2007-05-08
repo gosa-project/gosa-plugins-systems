@@ -772,7 +772,7 @@ class Step_Migrate extends setup_step
             $ldap->cat(base64_decode($tmp[2]),array("objectClass"));
             $ret = $ldap->fetch();
 
-            if(in_array("gosaAccount",$ret['objectClass']) && 
+            if(isset($ret['objectClass']) && in_array("gosaAccount",$ret['objectClass']) && 
                in_array("organizationalPerson",$ret['objectClass']) &&
                in_array("inetOrgPerson",$ret['objectClass'])){
               $found = TRUE;
@@ -852,6 +852,9 @@ class Step_Migrate extends setup_step
       $ldap->cd($cv['base']);
       if(!$ldap->modify($attrs_new)){
         print_red(sprintf(_("Adding acls for user '%s' failed, ldap says '%s'."),$dn,$ldap->get_error()));
+        return(FALSE);
+      }else{
+        return(TRUE);
       }
     }
   }
@@ -1208,7 +1211,11 @@ class Step_Migrate extends setup_step
     }
 
     if(isset($_POST['create_acls_create_confirmed'])){
-      $this->create_admin();
+      if($this->create_admin()){
+        $this->acl_create_dialog = FALSE;
+        $this->dialog = FALSE;
+        $this->initialize_checks();
+      }
     }
 
     if(isset($_POST['create_acls_create'])){

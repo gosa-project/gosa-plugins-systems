@@ -261,15 +261,15 @@
 			</select>
 			<input type='submit' name='create_acls_create' value='{t}Apply{/t}'>
 			{/if}
-		{/if}
-
-
 			<p class='seperator'>&nbsp;</p>	
 
 			<div style='width:99%; text-align:right; padding:5px;'>
 				<input type='submit' name='create_acls_cancel' value='{t}Cancel{/t}'>
 			</div>
 		
+		{/if}
+
+
 
 		{elseif $method == "migrate_deps"}
 	
