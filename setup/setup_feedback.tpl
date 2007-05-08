@@ -1,5 +1,7 @@
 <div class='default' style='margin:12px; '>  
 
+	<h2>{$additional_info}</h2>
+
 	<h2>
 		<input {if $subscribe} checked {/if} type='checkbox' name='subscribe' value='1' class='center'>&nbsp;{t}Subscribe to the gosa-announce mailinglist{/t}
 	</h2>

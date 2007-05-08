@@ -121,6 +121,8 @@ class Step_Feedback  extends setup_step
       $this->init();
     }
 
+    $additional_info ="";
+
     if(isset($_POST['send_feedback'])){
 
       $msgs = $this->check();
@@ -143,6 +145,8 @@ class Step_Feedback  extends setup_step
           }
           if(!preg_match("/successfully/i",$ret_value)){
             print_red(sprintf(_("Could not send feedback. Script said '%s'."),$ret_value));
+          }else{
+            $additional_info = "<font color='green'>"._("Feedback sucessfully send")."</font>";
           }
         }
         @fclose($ret);
@@ -162,6 +166,7 @@ class Step_Feedback  extends setup_step
     }
     $smarty->assign("years",$years);
     $smarty->assign("features_used",$this->features_used);
+    $smarty->assign("additional_info",$additional_info);
     $smarty->assign ("must", "<font class=\"must\">*</font>");
     return($smarty->fetch(get_template_path("setup_feedback.tpl",TRUE,dirname(__FILE__))));
   }
