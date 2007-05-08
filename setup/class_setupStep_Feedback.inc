@@ -31,6 +31,7 @@ class Step_Feedback  extends setup_step
   var $subscribe          = TRUE;
   var $use_gosa_announce  = TRUE;
 
+  var $feedback_url         = "https://oss.gonicus.de/feedback/send.php";
   var $get_started          = TRUE;
   var $problems_encountered = "";
   
@@ -60,6 +61,7 @@ class Step_Feedback  extends setup_step
     $this->update_strings(); 
   }
 
+
   function init()
   {
     $cv = $this->parent->captured_values;
@@ -67,9 +69,8 @@ class Step_Feedback  extends setup_step
     /* Initialize values */
     $this->use_since      = date("Y");
     $this->organization   = preg_replace("/^[^=]*+=(.*),.*$/","\\1",$cv['base']);
-    $this->distribution   = PHP_OS."/".$_SERVER['SERVER_SOFTWARE']; 
+    $this->distribution   = "";
     $this->web_server     = $_SERVER['SERVER_SOFTWARE'];
-
     $this->php_version    = PHP_VERSION;
 
     /* On first call check for rid/sid base */
@@ -79,14 +80,12 @@ class Step_Feedback  extends setup_step
         $cv['connection'],
         FALSE,
         $cv['tls']);
-
     $ldap->cd($cv['base']);
     $ldap->search("(objectClass=*)",array("dn"));
     $this->object_count=$ldap->count();
 
+    /* Preselect used features */
     $oc = $ldap->get_objectclasses();
-
-  
     $this->features_used                = array();
     $this->features_used['posix']       = array("USED" => isset($oc['posixAccount']) , 
                                                 "NAME" => _("UNIX accounts/groups"));
@@ -106,18 +105,48 @@ class Step_Feedback  extends setup_step
                                                 "NAME" => _("Addressbook"));
   }
 
+
   function update_strings()
   {
     $this->s_title      = _("Notification and feedback");
     $this->s_info       = _("Get notifications or send feedback");
     $this->s_title_long = _("Notification and feedback");
   }
+
   
   function execute()
   {
     if(!$this->initialized){
       $this->initialized = TRUE;
       $this->init();
+    }
+
+    if(isset($_POST['send_feedback'])){
+
+      $msgs = $this->check();
+      if(count($msgs)){
+        foreach($msgs as $msg){
+          print_red($msg);
+        }
+      }else{
+        $str = $this->create_serialise_data_string(); 
+        $feedback_url = $this->feedback_url."?data=".base64_encode($str);
+
+        $ret = @fopen($feedback_url,"r");
+
+        if(!$ret){
+          print_red(sprintf(_("Could not connect to feedback server (%s). There is possibly no connection to the internet."),$this->feedback_url));
+        }else{
+          $ret_value="";
+          while($ret && !feof($ret)){
+            $ret_value.= fgets($ret,256);
+          }
+          if(!preg_match("/successfully/i",$ret_value)){
+            print_red(sprintf(_("Could not send feedback. Script said '%s'."),$ret_value));
+          }
+        }
+        @fclose($ret);
+      }
     }
 
     $years = array();
@@ -136,6 +165,17 @@ class Step_Feedback  extends setup_step
     $smarty->assign ("must", "<font class=\"must\">*</font>");
     return($smarty->fetch(get_template_path("setup_feedback.tpl",TRUE,dirname(__FILE__))));
   }
+
+
+  function check()
+  {
+    $msgs = array();
+    if(!is_email($this->eMail) || empty($this->eMail)){
+      $msgs[] = _("Please specify a valid email address.");
+    }
+    return($msgs);
+  }
+  
 
   function save_object()
   {
@@ -165,25 +205,12 @@ class Step_Feedback  extends setup_step
           $this->features_used[$key]['USED'] = FALSE;
         }
       }
-      if(isset($_POST['send_feedback'])){
-        $str = $this->create_serialise_data_string();  
-      
-        $feedback_url = "http://dyn-111/hickert-test/feedback.php?data=".serialize($str);
-        $ret = fopen($feedback_url,"r");
-        $ret_value = fgets($ret,256);
-        fclose($ret);
-
-        if(!preg_match("/successfully/i",$ret_value)){
-          print_red(_("Could not send feedback."));
-        }
-      }
     }
-
   }
+
 
   function create_serialise_data_string()
   {
-
     $str = "#FEEDBACK ".date("H:i:s d:m:Y");
     if($this->subscribe){
 
