@@ -300,6 +300,17 @@ class setup
     }
     return(false);
   }
+
+  function step_name_to_id($name)
+  {
+    foreach($this->o_steps as $id => $class){
+      if(get_class($class) == $name){
+        return($id);
+      }
+    }
+    return(0);
+  }
+  
 }
 
 
