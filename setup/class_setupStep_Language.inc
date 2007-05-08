@@ -39,7 +39,7 @@ class Step_Language extends setup_step
   {
     $this->s_title      = _("Language setup");
     $this->s_title_long = _("Language setup");
-    $this->s_info       = _("This step is allows you to select your prefered language.");
+    $this->s_info       = _("This step allows you to select your preferred language.");
   }
   
   function execute()
