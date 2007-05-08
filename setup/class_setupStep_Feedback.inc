@@ -31,7 +31,7 @@ class Step_Feedback  extends setup_step
   var $subscribe          = TRUE;
   var $use_gosa_announce  = TRUE;
 
-  var $feedback_url         = "https://oss.gonicus.de/feedback/send.php";
+  var $feedback_url         = "http://oss.gonicus.de/gosa-feedback/";
   var $get_started          = TRUE;
   var $problems_encountered = "";
   
@@ -125,7 +125,7 @@ class Step_Feedback  extends setup_step
 
     if(isset($_POST['send_feedback'])){
 
-      $msgs = $this->check();
+      $msgs = $this->check_feedback();
       if(count($msgs)){
         foreach($msgs as $msg){
           print_red($msg);
@@ -172,7 +172,7 @@ class Step_Feedback  extends setup_step
   }
 
 
-  function check()
+  function check_feedback()
   {
     $msgs = array();
     if(!is_email($this->eMail) || empty($this->eMail)){
