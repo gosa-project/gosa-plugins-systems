@@ -758,32 +758,73 @@ class Step_Migrate extends setup_step
       $this->checks['acls']['ERROR_MSG'] = _("Possibly the 'root object' is missing.");
     }else{
       $found = false;
+      $username = "";
       $attrs = $ldap->fetch();
       if(isset($attrs['gosaAclEntry'])){
         $acls = $attrs['gosaAclEntry'];
         for($i = 0 ; $i < $acls['count'] ; $i++){
           $acl = $acls[$i];
           $tmp = split(":",$acl);
-  
-          /* Only check permanent acls */
           if($tmp[1] == "psub"){
+            $members = split(",",$tmp[2]);
+            foreach($members as $member){
+              $member = base64_decode($member);
+
+              /* Check if acl owner is a valid GOsa user account */
+              $ldap->cat($member,array("objectClass","uid","cn"));
+              $ret = $ldap->fetch();
+
+              if(isset($ret['objectClass']) && in_array("posixGroup",$ret['objectClass'])){
+                $found = TRUE;
+                $username .= _("ACL-Group").":&nbsp;".$ret['cn'][0]."<br>";
+              }elseif(isset($ret['objectClass']) && in_array("gosaAccount",$ret['objectClass']) &&
+                  in_array("organizationalPerson",$ret['objectClass']) &&
+                  in_array("inetOrgPerson",$ret['objectClass'])){
+                $found = TRUE;
+                $username .= _("ACL").":&nbsp;".$ret['uid'][0]."<br>";
+              }
+            }
+          }elseif($tmp[1] == "role"){
 
             /* Check if acl owner is a valid GOsa user account */
-            $ldap->cat(base64_decode($tmp[2]),array("objectClass"));
+            $ldap->cat(base64_decode($tmp[2]),array("gosaAclTemplate"));
             $ret = $ldap->fetch();
 
-            if(isset($ret['objectClass']) && in_array("gosaAccount",$ret['objectClass']) && 
-               in_array("organizationalPerson",$ret['objectClass']) &&
-               in_array("inetOrgPerson",$ret['objectClass'])){
-              $found = TRUE;
+            if(isset($ret['gosaAclTemplate'])){
+              $cnt = $ret['gosaAclTemplate']['count'];
+              for($e = 0 ; $e < $cnt ; $e++){
+
+                $a_str = $ret['gosaAclTemplate'][$e];
+                if(preg_match("/^[0-9]*:psub:/",$a_str) && preg_match("/:all;cmdrw$/",$a_str)){
+
+                  $members = split(",",$tmp[3]);
+                  foreach($members as $member){
+                    $member = base64_decode($member);
+
+                    /* Check if acl owner is a valid GOsa user account */
+                    $ldap->cat($member,array("objectClass","uid"));
+                    $ret = $ldap->fetch();
+  
+                    if(isset($ret['objectClass']) && in_array("gosaAccount",$ret['objectClass']) &&
+                        in_array("organizationalPerson",$ret['objectClass']) &&
+                        in_array("inetOrgPerson",$ret['objectClass'])){
+                      $found = TRUE;
+                      $username .= _("ACL Role").":&nbsp;".$ret['uid'][0]."<br>";
+                    }
+                  }
+                }
+              }
             }
           }
         }
       }
 
+      # For debugging
+      #echo $username;
+
       if($found){
         $this->checks['acls']['STATUS']    = TRUE;
-        $this->checks['acls']['STATUS_MSG']= _("Ok");
+        $this->checks['acls']['STATUS_MSG']= _("Ok")."&nbsp;";
         $this->checks['acls']['ERROR_MSG'] = "";
       }else{
         $this->checks['acls']['STATUS']    = FALSE;
