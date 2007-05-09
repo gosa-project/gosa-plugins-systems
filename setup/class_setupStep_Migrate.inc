@@ -776,12 +776,12 @@ class Step_Migrate extends setup_step
 
               if(isset($ret['objectClass']) && in_array("posixGroup",$ret['objectClass'])){
                 $found = TRUE;
-                $username .= _("ACL-Group").":&nbsp;".$ret['cn'][0]."<br>";
+                $username .= "ACL-Group:&nbsp;".$ret['cn'][0]."<br>";
               }elseif(isset($ret['objectClass']) && in_array("gosaAccount",$ret['objectClass']) &&
                   in_array("organizationalPerson",$ret['objectClass']) &&
                   in_array("inetOrgPerson",$ret['objectClass'])){
                 $found = TRUE;
-                $username .= _("ACL").":&nbsp;".$ret['uid'][0]."<br>";
+                $username .= "ACL:&nbsp;".$ret['uid'][0]."<br>";
               }
             }
           }elseif($tmp[1] == "role"){
@@ -809,7 +809,7 @@ class Step_Migrate extends setup_step
                         in_array("organizationalPerson",$ret['objectClass']) &&
                         in_array("inetOrgPerson",$ret['objectClass'])){
                       $found = TRUE;
-                      $username .= _("ACL Role").":&nbsp;".$ret['uid'][0]."<br>";
+                      $username .= "ACL Role:&nbsp;".$ret['uid'][0]."<br>";
                     }
                   }
                 }
