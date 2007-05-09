@@ -1130,10 +1130,10 @@ class Step_Migrate extends setup_step
 
     if(isset($_POST['outside_groups_dialog_perform'])){
       $this->migrate_outside_groups(TRUE);
-      $this->search_outside_groups();
       $this->dialog = FALSE;
       $this->show_details = FALSE;
       $this->outside_groups_dialog = FALSE;
+      $this->initialize_checks();
     }
 
     if(isset($_POST['outside_groups_dialog'])){
@@ -1167,7 +1167,7 @@ class Step_Migrate extends setup_step
  
     if(isset($_POST['outside_users_dialog_perform'])){
       $this->migrate_outside_users(TRUE);
-      $this->search_outside_users();
+      $this->initialize_checks();
       $this->dialog = FALSE;
       $this->show_details = FALSE;
       $this->outside_users_dialog = FALSE;
