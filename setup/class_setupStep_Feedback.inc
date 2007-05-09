@@ -28,8 +28,8 @@ class Step_Feedback  extends setup_step
   var $organization       = "";
   var $eMail              = "";
   var $name               = "";
-  var $subscribe          = TRUE;
-  var $use_gosa_announce  = TRUE;
+  var $subscribe          = FALSE;
+  var $use_gosa_announce  = FALSE;
 
   var $feedback_url         = "http://oss.gonicus.de/gosa-feedback/";
   var $get_started          = TRUE;
@@ -178,6 +178,11 @@ class Step_Feedback  extends setup_step
     if(!is_email($this->eMail) || empty($this->eMail)){
       $msgs[] = _("Please specify a valid email address.");
     }
+
+    if(!$this->subscribe && !$this->use_gosa_announce){
+      $msgs[] = _("You should have enabled at least one option, to subscribe or send your feedback.");
+    }
+
     return($msgs);
   }
   
