@@ -1284,9 +1284,9 @@ class Step_Migrate extends setup_step
     /* Start migration */
     if(isset($_POST['users_visible_migrate_migrate'])){
       if($this->migrate_gosaAccounts()){
-        $this->check_gosaAccounts();
+        $this->initialize_checks();
         $this->dialog = FALSE;
-      $this->show_details = FALSE;
+        $this->show_details = FALSE;
         $this->users_migration_dialog = FALSE;
       }
     }
