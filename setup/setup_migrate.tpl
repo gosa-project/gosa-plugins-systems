@@ -287,10 +287,8 @@ dn: {$deps_to_migrate.$key.dn}
 					{$deps_to_migrate.$key.dn}
 				{/if}
 				
-
-			{/foreach}
-
 			<br>
+			{/foreach}
 			<input type='checkbox' id='toggle_calue' onClick="toggle_all_('^migrate_','toggle_calue')">
 			{t}Select all{/t}
 			<br>
