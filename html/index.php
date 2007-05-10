@@ -221,22 +221,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])){
     $recursive = (isset($config->current['RECURSIVE']) && $config->current['RECURSIVE'] == "true");
     $tls =       (isset($config->current['TLS'])       && $config->current['TLS'] == "true");
 
-#    if(!is_schema_readable($config->current['SERVER'], $config->current['ADMIN'], $config->current['PASSWORD'], $recursive, $tls)){
-#
-#      print_red(_("GOsa cannot retrieve information about the installed schema files. Please make sure, that this is possible."));
-#      displayLogin();
-#      exit()  ;
-#    }else{
-#      $str = (schema_check($config->current['SERVER'],$config->current['ADMIN'],$config->current['PASSWORD'], $recursive, $tls, 0, TRUE));
-#      $checkarr = array();
-#      foreach($str as $tr){
-#        if(isset($tr['needonstartup'])){
-#          print_red($tr['msg']."<br>"._("Your ldap setup contains old schema definitions. Please re-run the setup."));
-#          displayLogin();
-#          exit()  ;
-#        }
-#      }
-#    }
+    if(!count($ldap->get_objectclasses())){
+      print_red(_("GOsa cannot retrieve information about the installed schema files. Please make sure, that this is possible."));
+      displayLogin();
+      exit()  ;
+    }else{
+      $cfg = array();
+      $cfg['admin']     = $config->current['ADMIN'];
+      $cfg['password']  = $config->current['PASSWORD'];
+      $cfg['connection']= $config->current['SERVER'];
+      $cfg['tls']       = $tls;
+      $str = check_schema($cfg,isset($config->current['RFC2307BIS']) && preg_match("/(true|yes|on|1)/i",$config->current['RFC2307BIS']));
+      $checkarr = array();
+      foreach($str as $tr){
+        if(isset($tr['IS_MUST_HAVE']) && !$tr['STATUS']){
+          print_red($tr['MSG']."<br>"._("Your ldap setup contains old schema definitions. Please re-run the setup."));
+          displayLogin();
+          exit();
+        }
+      }
+    }
   }
   /* Check for locking area */
   $ldap->cat($config->current['CONFIG'], array("dn"));

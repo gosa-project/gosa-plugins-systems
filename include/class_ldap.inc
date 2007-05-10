@@ -1316,7 +1316,6 @@ class LDAP{
       }
 
 	  }
-
 	  return $objectclasses;
   }
 
