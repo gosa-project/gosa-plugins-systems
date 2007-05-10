@@ -67,7 +67,6 @@ class Step_Migrate extends setup_step
 
   /* Create Acl attributes */
   var $acl_create_dialog  = FALSE;
-  var $acl_create_type    = "group";
   var $acl_create_selected= ""; // Currently selected element, that should receive admin rights 
   var $acl_create_changes = ""; // Contains ldif information about changes 
   var $acl_create_confirmed= FALSE;
@@ -1264,14 +1263,14 @@ class Step_Migrate extends setup_step
       $this->show_details = FALSE;
     }
 
-    if(isset($_POST['create_acls_create_confirmed'])){
-      if($this->create_admin()){
-        $this->acl_create_dialog = FALSE;
-        $this->dialog = FALSE;
-      $this->show_details = FALSE;
-        $this->initialize_checks();
-      }
-    }
+#    if(isset($_POST['create_acls_create_confirmed'])){
+#      if($this->create_admin()){
+#        $this->acl_create_dialog = FALSE;
+#        $this->dialog = FALSE;
+#      $this->show_details = FALSE;
+#        $this->initialize_checks();
+#      }
+#    }
 
     if(isset($_POST['create_acls_create'])){
       $this->create_admin(TRUE);
@@ -1288,11 +1287,6 @@ class Step_Migrate extends setup_step
       $smarty = get_smarty();
       $smarty->assign("new_user_password",@$_POST['new_user_password']);
       $smarty->assign("new_user_password2",@$_POST['new_user_password2']);
-      $smarty->assign("users" ,$this->get_user_list());
-      $smarty->assign("users_cnt" ,count($this->get_user_list()));
-      $smarty->assign("groups",$this->get_group_list());
-      $smarty->assign("groups_cnt",count($this->get_group_list()));
-      $smarty->assign("type"  ,$this->acl_create_type);
       $smarty->assign("method","create_acls");
       $smarty->assign("acl_create_selected",$this->acl_create_selected);
       $smarty->assign("what_will_be_done_now",$this->acl_create_changes);
@@ -1440,20 +1434,9 @@ class Step_Migrate extends setup_step
 
     /* Get "create acl" dialog posts */
     if($this->acl_create_dialog){
-      if(isset($_POST['create_acls_create'])){
-        if(isset($_POST['create_acls_selected'])){
-          $this->acl_create_selected = base64_decode($_POST['create_acls_selected']);
-        }else{
-          $this->acl_create_selected = ""; 
-        }
-      }
 
       if(isset($_POST['create_acls_create_abort'])){
         $this->acl_create_selected = "";
-      }
-
-      if(isset($_POST['acl_create_type'])){
-        $this->acl_create_type = $_POST['acl_create_type'];
       }
     }
 
