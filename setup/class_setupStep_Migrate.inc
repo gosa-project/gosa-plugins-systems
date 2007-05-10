@@ -955,8 +955,15 @@ class Step_Migrate extends setup_step
     $new_user['cn']  = "System Administrator";
     $new_user['uid'] = $uid;
     $new_user['userPassword'] = $hash;
-    
+   
     $ldap->cd($cv['base']);
+  
+    $ldap->cat($dn,array("dn"));
+    if($ldap->count()){
+      print_red(sprintf(_("Could not add administrative user, there is already an object with the same dn '%s' in your ldap database."),$dn));
+      return(FALSE);  
+    }
+
     $ldap->create_missing_trees(preg_replace("/^[^,]+,/","",$dn));
     $ldap->cd($dn);  
     $res = $ldap->add($new_user);
