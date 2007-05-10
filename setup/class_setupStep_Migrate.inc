@@ -823,7 +823,7 @@ class Step_Migrate extends setup_step
 
       if($found){
         $this->checks['acls']['STATUS']    = TRUE;
-        $this->checks['acls']['STATUS_MSG']= _("Ok")."&nbsp;";
+        $this->checks['acls']['STATUS_MSG']= _("Ok");
         $this->checks['acls']['ERROR_MSG'] = "";
       }else{
         $this->checks['acls']['STATUS']    = FALSE;
@@ -903,7 +903,11 @@ class Step_Migrate extends setup_step
   function create_admin_user()
   {
     $pw1 = $pw2 = "";
-
+    $uid = "";
+  
+    if(isset($_POST['new_user_uid'])){
+      $uid = $_POST['new_user_uid'];
+    }
     if(isset($_POST['new_user_password'])){
       $pw1 = $_POST['new_user_password'];
     }
@@ -916,6 +920,12 @@ class Step_Migrate extends setup_step
       return false;
     }
  
+    if(!is_uid($uid) || empty($uid)){
+      print_red(_("Please specify a valid uid."));
+      return false;
+    }
+    
+
     /* Establish ldap connection */
     $cv = $this->parent->captured_values;
     $ldap = new LDAP($cv['admin'],
@@ -930,7 +940,7 @@ class Step_Migrate extends setup_step
     if($cv['peopledn'] == "cn"){
       $dn = "cn=System Administrator,".$cv['peopleou'].",".$cv['base'];
     }else{
-      $dn = "uid=admin,".$cv['peopleou'].",".$cv['base'];
+      $dn = "uid=".$uid.",".$cv['peopleou'].",".$cv['base'];
     }
 
     $methods = @passwordMethod::get_available_methods_if_not_loaded();
@@ -943,7 +953,7 @@ class Step_Migrate extends setup_step
     $new_user['givenName']  = "System";
     $new_user['sn']  = "Administrator";
     $new_user['cn']  = "System Administrator";
-    $new_user['uid'] = "admin";
+    $new_user['uid'] = $uid;
     $new_user['userPassword'] = $hash;
     
     $ldap->cd($cv['base']);
@@ -1285,6 +1295,13 @@ class Step_Migrate extends setup_step
 
     if($this->acl_create_dialog){
       $smarty = get_smarty();
+  
+      $uid = "admin";
+      if(isset($_POST['new_user_uid'])){
+        $uid = $_POST['new_user_uid'];
+      }
+
+      $smarty->assign("new_user_uid",$uid);
       $smarty->assign("new_user_password",@$_POST['new_user_password']);
       $smarty->assign("new_user_password2",@$_POST['new_user_password2']);
       $smarty->assign("method","create_acls");

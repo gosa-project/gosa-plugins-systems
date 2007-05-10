@@ -216,7 +216,7 @@
 						{t}User ID{/t}:&nbsp;
 					</td>
 					<td>
-						<i>admin</i>
+						<input type='text' value='{$new_user_uid}' name='new_user_uid'><br>
 					</td>
 				</tr>
 				<tr>
