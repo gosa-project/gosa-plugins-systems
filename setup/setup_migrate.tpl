@@ -245,7 +245,7 @@
 </script>
 				<input type='submit' name='create_admin_user' value='{t}Apply{/t}'>	
 			
-			{if $users_cnt != 0 || $groups_cnt != 0}
+			{if $users_cnt != 0 || $groups_cnt != 0 || 1}
 			
 			<h2>{t}Assign super administrator permissions to an existing user or group{/t}</h2>
 			<p>{t}To grant administrative permissions to a user or a group, select an object and choose 'Assign'.{/t}</p>
