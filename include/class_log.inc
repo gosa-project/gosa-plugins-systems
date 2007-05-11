@@ -19,14 +19,13 @@
  */
 
 
-/*! \brief   The plugin base class
-  \author  Cajus Pollmeier <pollmeier@gonicus.de>
-  \version 2.00
-  \date    24.07.2003
+/*! \brief   The logging base class
+  \author  Fabian Hickert <hickert@gonicus.de>
+  \version 2.6
+  \date    11.04.2007
 
-  This is the base class for all plugins. It can be used standalone or
-  can be included by the tabs class. All management should be done
-  within this class. Extend your plugins from this class.
+  This is the base class for the GOsa logging functionality.
+  All logging should lead to this class. 
  */
 class log {
 
@@ -34,26 +33,29 @@ class log {
   var $LOG_TO_SYSLOG= FALSE;
   
 
- /*! \brief plugin constructor
+ /*! \brief logging constructor
 
-    If 'dn' is set, the node loads the given 'dn' from LDAP
+    \param action         One of these values (modify|create|remove|snapshot|copy)
+    \param objecttype     represents the current edited objecttype, like users/user
+    \param object         represents the current edited object dn
+    \param changes_array  An array containing names of all touched attributes
+    \param result         A status message, containing errors or success messages 
 
-    \param dn Distinguished name to initialize plugin from
-    \sa plugin()
+    \sa log()
    */
   function log($action,$objecttype,$object,$changes_array = array(),$result = TRUE)
   {
     global $config;
-
     $ui   = get_userinfo(); 
 
+    /* Create string out of changes */
     $changes  ="";
     foreach($changes_array as $str ){
       $changes .= $str.",";
     }
-    $changes = preg_replace("/,$/","",$str);
+    $changes = preg_replace("/,$/","",$changes );
     
-    
+    /* Create data object */
     $entry = array(); 
     $entry['timestamp'] = time();
     $entry['user']  =$ui->dn;
@@ -63,6 +65,7 @@ class log {
     $entry['changes'] = $changes;
     $entry['result'] = $result;
  
+    /* Start logging for configured methods */
     if(isset($this->config->current['LOGGING']) && preg_match("/(^|,)syslog(,|$)/i",$this->config->current['LOGGING'])){
       @log::log_into_syslog($entry);
     }
@@ -71,8 +74,8 @@ class log {
     }
   }
 
-  
-
+   
+  /* This function is used to into the systems syslog */
   function log_into_syslog($entry)
   {
     $str = $entry['user']." ".$entry['action']." ".$entry['object']." from type ".$entry['objecttype']." ".$data." : Result was ".$entry['result'];
@@ -80,6 +83,7 @@ class log {
   }
 
 
+  /* Log into configured logging databses.*/
   function log_into_db($entry)
   {
     if(isset($this->config->data['SERVERS']['LOGGING'])){
@@ -124,11 +128,6 @@ class log {
     }
   }
 }
-
-
-
-
-
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
