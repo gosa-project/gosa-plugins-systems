@@ -63,13 +63,10 @@ class log {
     $entry['changes'] = $changes;
     $entry['result'] = $result;
  
-  
-
-
-    if(isset($this->config->current['LOGGING']) && preg_match("/syslog/i",$this->config->current['LOGGING'])){
+    if(isset($this->config->current['LOGGING']) && preg_match("/(^|,)syslog(,|$)/i",$this->config->current['LOGGING'])){
       @log::log_into_syslog($entry);
     }
-    if(isset($this->config->current['LOGGING']) && preg_match("/mysql/i",$this->config->current['LOGGING'])){
+    if(isset($this->config->current['LOGGING']) && preg_match("/(^|,)mysql(,|$)/i",$this->config->current['LOGGING'])){
       @log::log_into_db($entry);
     }
   }
