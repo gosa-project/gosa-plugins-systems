@@ -4,8 +4,6 @@ Target for 2.6:
 * Move from gosa.conf-trunk to gosa.conf when we're ready
 
 * ACL
-  - Acl roles should be selectable in acl dialog
-  - Role checks are missing
   - Copy & Paste tmplates for acl roles
   - Check Title strings 
   - Check role and acl remove
@@ -13,8 +11,6 @@ Target for 2.6:
   - Implement a kind of "umask"
   - Ensure that acls will be the same after renaming and moving objects
   
-* Redo the setup
-
 * Create a bug submitter
 
 * Make plugin loader react on predefined info values from plugins itself instead of
