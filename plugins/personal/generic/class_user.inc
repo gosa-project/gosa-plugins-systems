@@ -113,8 +113,6 @@ class user extends plugin
       $this->attributes=array_merge($this->attributes,$this->govattrs);
     }
 
-    @log::log("view","users/user",$dn);
-
     /* Load base attributes */
     plugin::plugin ($config, $dn);
 
@@ -138,6 +136,8 @@ class user extends plugin
     /* Create me for new accounts */
     if ($dn == "new"){
       $this->is_account= TRUE;
+    }else{
+      @log::log("view","users/user",$dn);
     }
 
     /* Make hash default to md5 if not set in config */
@@ -591,7 +591,9 @@ class user extends plugin
     $ldap= $this->config->get_ldap_link();
     $ldap->rmdir ($this->dn);
     show_ldap_error($ldap->get_error(), sprintf(_("Removing of user/generic account with dn '%s' failed."),$this->dn));
-
+  
+    @log::log("remove","users/user",$dn,$this->attributes,$ldap->get_error());
+  
     /* Delete references to groups */
     $ldap->cd ($this->config->current['BASE']);
     $ldap->search ("(&(objectClass=posixGroup)(memberUid=".$this->uid."))", array("uid"));
@@ -938,10 +940,14 @@ class user extends plugin
     $ldap->cd ($this->dn);
     $ldap->$mode ($this->attrs);
     if (show_ldap_error($ldap->get_error(), sprintf(_("Saving of user/generic account with dn '%s' failed."),$this->dn))){
-      @log::log("modify","users/user",$this->dn,array_keys($this->attrs),$ldap->get_error());
       return (1);
     }
-    @log::log("modify","users/user",$this->dn,array_keys($this->attrs),$ldap->get_error());
+
+    if($mode == "modify"){
+      @log::log("modify","users/user",$this->dn,array_keys($this->attrs),$ldap->get_error());
+    }else{
+      @log::log("create","users/user",$this->dn,array_keys($this->attrs),$ldap->get_error());
+    }
 
     /* Remove cert? 
        For some reason, the 'ldap' class doesn't want to remove binary entries, so I need

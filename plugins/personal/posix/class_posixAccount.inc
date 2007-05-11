@@ -96,6 +96,10 @@ class posixAccount extends plugin
 
     $ldap= $this->config->get_ldap_link();
 
+    if($this->is_account){
+      @log::log("view","users/posix",$this->dn);
+    }
+
     if ($dn != NULL){
 
       /* Correct is_account. shadowAccount is not required. */
@@ -611,6 +615,8 @@ class posixAccount extends plugin
     $this->cleanup();
     $ldap->modify ($this->attrs); 
 
+    @log::log("remove","users/posix",$this->dn,array_keys($this->attrs),$ldap->get_error());
+
     show_ldap_error($ldap->get_error(), sprintf(_("Removing of user/posix account with dn '%s' failed."),$this->dn));
 
     /* Delete group only if cn is uid and there are no other
@@ -847,6 +853,8 @@ class posixAccount extends plugin
     $this->cleanup();
     unset($this->attrs['uid']);
     $ldap->modify ($this->attrs); 
+
+    @log::log("modify","users/posix",$this->dn,array_keys($this->attrs),$ldap->get_error());
 
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of user/posix account with dn '%s' failed."),$this->dn));
 

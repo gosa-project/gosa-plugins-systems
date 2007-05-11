@@ -81,6 +81,11 @@ class environment extends plugin
   {
     plugin::plugin ($config, $dn);
 
+    if($this->is_account){
+      @log::log("view","users/environment",$this->dn);
+    }
+
+
     /* Setting uid to default */
     if(isset($this->attrs['uid'][0])){
       $this->uid = $this->attrs['uid'][0];
@@ -933,6 +938,7 @@ class environment extends plugin
     $this->cleanup();
     $ldap->modify ($this->attrs); 
 
+    @log::log("remove","users/environment",$this->dn,array_keys($this->attrs),$ldap->get_error());
     show_ldap_error($ldap->get_error(), sprintf(_("Removing of user/environment account with dn '%s' failed."),$this->dn));
 
     /* Optionally execute a command after we're done */
@@ -1186,6 +1192,13 @@ class environment extends plugin
     $ldap->cd($this->dn);
     $this->cleanup();
     $ldap->$mode($this->attrs);
+
+    if($mode == "modify"){
+      @log::log("modify","users/environment",$this->dn,array_keys($this->attrs),$ldap->get_error());
+    }else{
+      @log::log("create","users/environment",$this->dn,array_keys($this->attrs),$ldap->get_error());
+    }
+
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of user/environment account with dn '%s' failed."),$this->dn));
     $this->handle_post_events($mode,array("uid"=>$this->uid));
   }
