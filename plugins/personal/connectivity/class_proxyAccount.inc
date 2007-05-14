@@ -148,7 +148,7 @@ class proxyAccount extends plugin
 
   function remove_from_parent()
   {
-    if($this->acl_is_removeable()){   
+    if($this->acl_is_removeable() && $this->initially_was_account){   
 
       plugin::remove_from_parent();
 
