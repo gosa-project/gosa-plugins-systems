@@ -70,6 +70,7 @@ class log {
     if(count($msgs)){
       foreach($msgs as $msg){
         trigger_error("Logging failed, reason was: ".$msg);
+        print_red("Logging failed, reason was: ".$msg);
       }
     }else{
 
@@ -91,7 +92,7 @@ class log {
       $msgs[] = "Currently active user is empty.";
     }
 
-    if(!isset($entry['action']) || !in_array($entry['action'],array("modify","create","remove","copy","snapshot"))){
+    if(!isset($entry['action']) || !in_array($entry['action'],array("modify","create","remove","copy","snapshot","view"))){
       $msgs[] = "Invalid option specified '".$entry['action']."'";
     }
 
