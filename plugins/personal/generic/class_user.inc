@@ -137,7 +137,7 @@ class user extends plugin
     if ($dn == "new"){
       $this->is_account= TRUE;
     }else{
-      @log::log("view","users/user",$dn);
+      @log::log("view","users/".get_class($this),$this->dn);
     }
 
     /* Make hash default to md5 if not set in config */
@@ -592,7 +592,7 @@ class user extends plugin
     $ldap->rmdir ($this->dn);
     show_ldap_error($ldap->get_error(), sprintf(_("Removing of user/generic account with dn '%s' failed."),$this->dn));
   
-    @log::log("remove","users/user",$dn,$this->attributes,$ldap->get_error());
+    @log::log("remove","users/".get_class($this),$this->dn,$this->attributes,$ldap->get_error());
   
     /* Delete references to groups */
     $ldap->cd ($this->config->current['BASE']);
@@ -944,9 +944,9 @@ class user extends plugin
     }
 
     if($mode == "modify"){
-      @log::log("modify","users/user",$this->dn,array_keys($this->attrs),$ldap->get_error());
+      @log::log("modify","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }else{
-      @log::log("create","users/user",$this->dn,array_keys($this->attrs),$ldap->get_error());
+      @log::log("create","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }
 
     /* Remove cert? 

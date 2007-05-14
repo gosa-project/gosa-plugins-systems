@@ -1193,7 +1193,8 @@ class environment extends plugin
     $this->cleanup();
     $ldap->$mode($this->attrs);
 
-    if($mode == "modify"){
+    /* Log last action */ 
+    if($this->initially_was_account){
       @log::log("modify","users/environment",$this->dn,array_keys($this->attrs),$ldap->get_error());
     }else{
       @log::log("create","users/environment",$this->dn,array_keys($this->attrs),$ldap->get_error());

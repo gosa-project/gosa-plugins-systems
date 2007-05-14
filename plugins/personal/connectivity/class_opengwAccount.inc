@@ -118,6 +118,12 @@ class opengwAccount extends plugin
 			/* Transmit data back to ogw handle */
 			$this->handle->SetInfos($this->info);
 		}
+
+    /* Log view */
+    if($this->is_account){
+      @log::log("view","users/".get_class($this),$this->dn);
+    }
+
 	}
 
 	function execute()
@@ -225,6 +231,8 @@ class opengwAccount extends plugin
 			$this->handle = new ogw($this->serverCon['LOGIN'],$this->serverCon['PASSWORD'],$this->serverCon['SERVER'],$this->serverCon['DB']);
 			$this->handle->SetInfos($this->info);
 			$this->handle->Perform("REMOVE");
+
+      @log::log("remove","users/".get_class($this),$this->dn);
 		}
 	}
 
@@ -290,8 +298,10 @@ class opengwAccount extends plugin
 		$this->handle->checkInfos();
 		if($this->initialy_was_account){
 			$this->handle->Perform("EDIT");
+      @log::log("modify","users/".get_class($this),$this->dn);
 		}else{
 			$this->handle->Perform("ADD");
+      @log::log("create","users/".get_class($this),$this->dn);
 		}
 	}
 

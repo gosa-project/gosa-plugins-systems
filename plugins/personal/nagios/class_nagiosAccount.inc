@@ -77,6 +77,10 @@ class nagiosAccount extends plugin
 
     /* Save initial account state */  
     $this->initially_was_account= $this->is_account;
+
+    if($this->is_account){
+      @log::log("view","users/".get_class($this),$this->dn);
+    }
   }
 
   function execute()
@@ -161,6 +165,13 @@ class nagiosAccount extends plugin
     $this->cleanup();
     $ldap->modify ($this->attrs); 
 
+    /* Log last action */
+    if($this->initially_was_account){
+      @log::log("modify","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    }else{
+      @log::log("create","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    }
+
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of user/nagios account with dn '%s' failed."),$this->dn));
 
     /* Optionally execute a command after we're done */
@@ -241,6 +252,8 @@ class nagiosAccount extends plugin
     $ldap->cd($this->dn);
     $this->cleanup();
     $ldap->modify ($this->attrs); 
+
+    @log::log("view","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
 
     show_ldap_error($ldap->get_error(), sprintf(_("Removing of user/nagios account with dn '%s' failed."),$this->dn));
 

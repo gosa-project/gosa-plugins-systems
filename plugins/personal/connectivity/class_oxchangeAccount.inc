@@ -598,6 +598,12 @@ class oxchangeAccount extends plugin
     if(isset($this->attrs[$this->dnmode][0])){
       $this->dnModeValue = $this->attrs[$this->dnmode][0];
     }
+
+    /* Log view */
+    if($this->is_account){
+      @log::log("view","users/".get_class($this),$this->dn);
+    }
+
   }
 
   function execute()
@@ -739,6 +745,9 @@ class oxchangeAccount extends plugin
         $this->attributes, "Save");
     $this->cleanup();
     $ldap->modify ($this->attrs); 
+
+    @log::log("remove","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+
 		show_ldap_error($ldap->get_error(), sprintf(_("Removing of user/oxchange addressbook account with dn '%s' failed."),$this->dn));
 
     /* Optionally execute a command after we're done */
@@ -841,6 +850,12 @@ class oxchangeAccount extends plugin
     $ldap->cd($this->dn);
     $this->cleanup();
     $ldap->modify ($this->attrs); 
+
+    if($this->initially_was_account){
+      @log::log("modify","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    }else{
+      @log::log("create","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    }
 
 		show_ldap_error($ldap->get_error(), sprintf(_("Saving of user/oxchange account with dn '%s' failed."),$this->dn));
 

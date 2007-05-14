@@ -97,7 +97,7 @@ class posixAccount extends plugin
     $ldap= $this->config->get_ldap_link();
 
     if($this->is_account){
-      @log::log("view","users/posix",$this->dn);
+      @log::log("view","users/".get_class($this),$this->dn);
     }
 
     if ($dn != NULL){
@@ -615,7 +615,7 @@ class posixAccount extends plugin
     $this->cleanup();
     $ldap->modify ($this->attrs); 
 
-    @log::log("remove","users/posix",$this->dn,array_keys($this->attrs),$ldap->get_error());
+    @log::log("remove","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
 
     show_ldap_error($ldap->get_error(), sprintf(_("Removing of user/posix account with dn '%s' failed."),$this->dn));
 
@@ -854,7 +854,12 @@ class posixAccount extends plugin
     unset($this->attrs['uid']);
     $ldap->modify ($this->attrs); 
 
-    @log::log("modify","users/posix",$this->dn,array_keys($this->attrs),$ldap->get_error());
+    /* Log last action */ 
+    if($this->initially_was_account){
+      @log::log("modify","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    }else{
+      @log::log("create","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    }
 
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of user/posix account with dn '%s' failed."),$this->dn));
 

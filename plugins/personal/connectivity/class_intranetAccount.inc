@@ -1,5 +1,7 @@
 <?php
 
+
+
 /*!
   \author  Harald Falk <hf@doellken-weimar.de>
   \version 1.00
@@ -35,10 +37,15 @@ class intranetAccount extends plugin
   {
     plugin::plugin ($config, $dn,$parent);
 
-     /* Setting uid to default */
-     if(isset($this->attrs['uid'][0])){
-       $this->uid = $this->attrs['uid'][0];
-     }
+    /* Setting uid to default */
+    if(isset($this->attrs['uid'][0])){
+      $this->uid = $this->attrs['uid'][0];
+    }
+
+    /* Log view */
+    if($this->is_account){
+      @log::log("view","users/".get_class($this),$this->dn);
+    }
   }
 
   /*!
@@ -105,6 +112,9 @@ class intranetAccount extends plugin
       $this->cleanup();
       $ldap->modify ($this->attrs); 
 
+      /* Log last action */
+      @log::log("remove","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+
       show_ldap_error($ldap->get_error(), sprintf(_("Removing of user/intranet account with dn '%s' failed."),$this->dn));
 
       /* Optionally execute a command after we're done */
@@ -162,6 +172,13 @@ class intranetAccount extends plugin
       $ldap->cd($this->dn);
       $this->cleanup();
       $ldap->modify ($this->attrs); 
+
+      /* Log last action */
+      if($this->initially_was_account){
+        @log::log("modify","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      }else{
+        @log::log("create","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      }
 
       show_ldap_error($ldap->get_error(), sprintf(_("Saving of user/intranet account with dn '%s' failed."),$this->dn));
 

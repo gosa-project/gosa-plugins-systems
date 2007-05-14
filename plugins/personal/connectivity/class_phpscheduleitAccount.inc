@@ -35,6 +35,10 @@ class phpscheduleitAccount extends plugin
   function phpscheduleitAccount ($config, $dn= NULL)
   {
     plugin::plugin ($config, $dn);
+
+    if($this->is_account){
+      @log::log("view","users/".get_class($this),$this->dn);
+    }
   }
 
   function execute()
@@ -77,6 +81,9 @@ class phpscheduleitAccount extends plugin
       $ldap->modify ($this->attrs); 
       show_ldap_error($ldap->get_error(), sprintf(_("Removing of user/PHPscheduleit account with dn '%s' failed."),$this->dn));
 
+      if($this->is_account){
+        @log::log("remove","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      }
       /* Optionally execute a command after we're done */
       $this->handle_post_events('remove',array("uid" => $this->uid));
     }
@@ -120,6 +127,12 @@ class phpscheduleitAccount extends plugin
     $ldap->cd($this->dn);
     $this->cleanup();
     $ldap->modify ($this->attrs); 
+
+    if($this->initially_was_account){
+      @log::log("modify","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    }else{
+      @log::log("create","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    }
 
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of user/PHPscheduleit account with dn '%s' failed."),$this->dn));
 
