@@ -278,6 +278,10 @@ class kolabAccount extends plugin
 
   function remove_from_parent()
   {
+    if(!$this->initially_was_account){
+      return;
+    }
+  
     /* Optionally execute a command after we're done */
     plugin::remove_from_parent();
     

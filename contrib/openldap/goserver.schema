@@ -443,13 +443,13 @@ attributetype ( 1.3.6.1.4.1.10098.1.1.9.79 NAME 'goLogDB'
 	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26
 	SINGLE-VALUE)
 
-attributetype ( 1.3.6.1.4.1.10098.1.1.9.80 NAME 'goLogDBUser'
+attributetype ( 1.3.6.1.4.1.10098.1.1.9.80 NAME 'goLogDBServerUser'
 	DESC 'Auth user for logging DB'
 	EQUALITY caseExactIA5Match
 	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26
 	SINGLE-VALUE)
 
-attributetype ( 1.3.6.1.4.1.10098.1.1.9.81 NAME 'goLogDBPassword'
+attributetype ( 1.3.6.1.4.1.10098.1.1.9.81 NAME 'goLogDBServerPassword'
 	DESC 'Password for logging DB user'
 	EQUALITY caseExactIA5Match
 	SYNTAX 1.3.6.1.4.1.1466.115.121.1.26
