@@ -423,27 +423,14 @@ class config  {
 
     /* Get logdb server */
     $ldap->cd ($this->current['BASE']);
-    $ldap->search ("(objectClass=goLogDBServer)");
+    $ldap->search ("(objectClass=goLogDBServer)",array("cn","goLogDBServerUser","goLogDBServerPassword","goLogDB"));
     if ($ldap->count()){
       $attrs= $ldap->fetch();
-      $this->data['SERVERS']['LOG']= array( 'SERVER' => $attrs['cn'][0],
-          'LOGIN' => $attrs['goLogAdmin'][0],
-          'PASSWORD' => $attrs['goLogPassword'][0]);
+      $this->data['SERVERS']['LOGGING'][$attrs['cn'][0]]= 
+          array('USER'    => $attrs['goLogDBServerUser'][0],
+          'PWD'     => $attrs['goLogDBServerPassword'][0],
+          'DB'      => $attrs['goLogDB'][0]);
     }
-
-    /* Logging databases */
-    $this->data['SERVERS']['LOGGING']= 
-      array("testserver1" => 
-        array(
-              "SERVER"  => "localhost",
-              "USER"    => "gosa_log",
-              "PWD"     => "tester",
-              "DB"      => "gosa_log"
-             )
-           );
-
-
-
 
     /* Get NFS server lists */
     $tmp= array("default");
