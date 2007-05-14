@@ -3,16 +3,24 @@
     <tr>
      <td>{t}Logging DB user{/t}{$must}</td>
      <td>
-{render acl=$goLogAdminACL}
-	<input name="goLogAdmin" id="goLogAdmin" size=30 maxlength=60 value="{$goLogAdmin}">
+{render acl=$goLogDBServerUserACL}
+	<input name="goLogDBServerUser" id="goLogDBServerUser" size=30 maxlength=60 value="{$goLogDBServerUser}">
 {/render}
      </td>
     </tr>
     <tr>
      <td>{t}Password{/t}{$must}</td>
      <td>
-{render acl=$goLogPasswordACL}
- 	<input type=password name="goLogPassword" id="goLogPassword" size=30 maxlength=60 value="{$goLogPassword}">
+{render acl=$goLogDBServerPasswordACL}
+ 	<input type="password" name="goLogDBServerPassword" id="goLogDBServerPassword" size=30 maxlength=60 value="{$goLogDBServerPassword}">
+{/render}
+     </td>
+    </tr>
+    <tr>
+     <td>{t}Database{/t}{$must}</td>
+     <td>
+{render acl=$goLogDBACL}
+ 	<input type="text" name="goLogDB" id="goLogDB" size=30 maxlength=60 value="{$goLogDB}">
 {/render}
      </td>
     </tr>
