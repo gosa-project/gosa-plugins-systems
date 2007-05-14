@@ -58,20 +58,48 @@ class log {
     /* Create data object */
     $entry = array(); 
     $entry['timestamp'] = time();
-    $entry['user']  =$ui->dn;
-    $entry['action'] = $action;
-    $entry['objecttype'] = $objecttype;
-    $entry['object'] = $object;
-    $entry['changes'] = $changes;
-    $entry['result'] = $result;
+    $entry['user']      = $ui->dn;
+    $entry['action']    = $action;
+    $entry['objecttype']= $objecttype;
+    $entry['object']    = $object;
+    $entry['changes']   = $changes;
+    $entry['result']    = $result;
  
-    /* Start logging for configured methods */
-    if(isset($this->config->current['LOGGING']) && preg_match("/(^|,)syslog(,|$)/i",$this->config->current['LOGGING'])){
-      @log::log_into_syslog($entry);
+    /* Check if all given values are valid */
+    $msgs = @log::check($entry);
+    if(count($msgs)){
+      foreach($msgs as $msg){
+        trigger_error("Logging failed, reason was: ".$msg);
+      }
+    }else{
+
+      /* Start logging for configured methods */
+      if(isset($this->config->current['LOGGING']) && preg_match("/(^|,)syslog(,|$)/i",$this->config->current['LOGGING'])){
+        @log::log_into_syslog($entry);
+      }
+      if(isset($this->config->current['LOGGING']) && preg_match("/(^|,)mysql(,|$)/i",$this->config->current['LOGGING'])){
+        @log::log_into_db($entry);
+      }
     }
-    if(isset($this->config->current['LOGGING']) && preg_match("/(^|,)mysql(,|$)/i",$this->config->current['LOGGING'])){
-      @log::log_into_db($entry);
+  }
+
+
+  function check($entry = array())
+  {
+    $msgs = array();
+    if(!isset($entry['user']) || empty($entry['user'])){
+      $msgs[] = "Currently active user is empty.";
     }
+
+    if(!isset($entry['action']) || !in_array($entry['action'],array("modify","create","remove","copy","snapshot"))){
+      $msgs[] = "Invalid option specified '".$entry['action']."'";
+    }
+
+    if(!isset($entry['objecttype']) || empty($entry['objecttype'])){
+      $msgs[] = "Specified objectType is empty or invalid.";
+    }
+  
+    return($msgs);
   }
 
    
