@@ -44,7 +44,7 @@ class glpiAccount extends plugin
   var $objectclasses= array("whatever");
 
   /* Used to remember if this was an account (simply: is this an edited entry) */
-  var $initialy_was_account = false;
+  var $initially_was_account = false;
 
   /* Remember current dialog */
   var $edit_type            = false;
@@ -110,9 +110,11 @@ class glpiAccount extends plugin
     /* set defaults */
     $this->name                 = $this->dn;
     $this->orig_dn              = $this->dn;
-    $this->initialy_was_account = $this->is_account;
+    $this->initially_was_account = $this->is_account;
 
-
+    if($this->is_account){
+      @log::log("view","undefined/".get_class($this),$this->dn);
+    }
   }
 
   function execute()
@@ -667,11 +669,13 @@ class glpiAccount extends plugin
     }
     if(function_exists("mysql_pconnect")){
       $this->handle = new glpiDB($this->data['SERVER'],$this->data['LOGIN'],$this->data['PASSWORD'],$this->data['DB']);
-      if($this->initialy_was_account){
+      if($this->initially_was_account){
         $this->handle->removeComputerInformations($this->dn); 
+        @log::log("remove","undefined/".get_class($this),$this->dn);
       }
     }else{
       print_red(_("Can't remove glpi account, while mysql extension is missing."));
+      @log::log("remove","undefined/".get_class($this),$this->dn,array(),_("Can't remove glpi account, while mysql extension is missing."));
     }
   
   }
@@ -714,6 +718,7 @@ class glpiAccount extends plugin
     return ($message);
   }
 
+
   /* Save to LDAP */
   function save()
   {
@@ -728,15 +733,18 @@ class glpiAccount extends plugin
       $this->handle = new glpiDB($this->data['SERVER'],$this->data['LOGIN'],$this->data['PASSWORD'],$this->data['DB']);
 
       /* check if we have to update, add */
-      if($this->initialy_was_account&&$this->is_account){
+      if($this->initially_was_account&&$this->is_account){
         $this->handle->updateComputerInformations($attrs,$this->orig_dn);
+        @log::log("modify","undefined/".get_class($this),$this->dn);
       }elseif($this->is_account){
         $this->handle->addComputerInformations($attrs,$this->dn);
+        @log::log("create","undefined/".get_class($this),$this->dn);
       }
       $tmp = $this->handle->getComputerInformations($this->dn);
       $this->handle->addDevicesToComputer($this->usedDevices,$tmp[0]['ID']);
     }
   }
+
 
   /* Return used attachments */
   function getUsedAttachments($divlist = false)
