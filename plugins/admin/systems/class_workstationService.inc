@@ -348,7 +348,7 @@ class workservice extends plugin
   function remove_from_parent()
   {
     $this->handle_post_events("remove");
-    @log::log("remove","workstation/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    @log::log("remove","workstation/".get_class($this),$this->dn);
   }
 
   /* Save data to object */
