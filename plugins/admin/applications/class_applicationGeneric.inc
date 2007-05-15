@@ -70,10 +70,15 @@ class application extends plugin
         $this->base= preg_replace ("/^[^,]+,[^,]+,/", "", $this->dn);
       }
     }
+      
+    if($this->is_account && $dn != "new"){
+      @log::log("view","application/".get_class($this),$this->dn);
+    }
   }
 
 
-  function generateTemplate(){
+  function generateTemplate()
+  {
     $str= "# This code is part of GOsa (https://gosa.gonicus.de)\n#\n";
 
     $values = array();
@@ -224,6 +229,7 @@ class application extends plugin
   {
     $ldap= $this->config->get_ldap_link();
     $ldap->rmDir($this->dn);
+    @log::log("remove","application/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     show_ldap_error($ldap->get_error(), sprintf(_("Removing of application with dn '%s' failed."),$this->dn));
 
     /* Optionally execute a command after we're done */
@@ -450,6 +456,7 @@ class application extends plugin
       $this->cleanup();
       $ldap->modify ($this->attrs); 
       $this->handle_post_events("modify");
+      @log::log("modify","application/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     } else {
       
       /* Remove gotoLogonScript if it is empty */
@@ -461,6 +468,7 @@ class application extends plugin
       $ldap->create_missing_trees(preg_replace('/^[^,]+,/', '', $this->dn));
       $ldap->cd($this->dn);
       $ldap->add($this->attrs);
+      @log::log("create","application/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
       $this->handle_post_events("add");
     }
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of application with dn '%s' failed."),$this->dn));
