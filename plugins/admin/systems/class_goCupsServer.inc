@@ -24,10 +24,11 @@ class goCupsServer extends goService{
  
   function goCupsServer($config,$dn)
   {
-    plugin::plugin($config,$dn);
+    goService::goService($config,$dn);
     $this->DisplayName = _("Print service");
   }
 
+    
   function execute()
   { 
     $smarty = get_smarty(); 

@@ -23,6 +23,10 @@ class goService extends plugin{
   {
     plugin::plugin($config,$dn);
     $this->DisplayName = _("Empty service");
+
+    if($this->is_account){
+      @log::log("view","server/".get_class($this),$this->dn);
+    }
   }
 
   
@@ -88,7 +92,11 @@ class goService extends plugin{
     }else{
       $ldap->cd($this->dn);
       $ldap->add($this->attrs);
+      
     }
+
+    @log::log("remove","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+
     show_ldap_error($ldap->get_error(), sprintf(_("Removing of server services/".get_class($this)." - (".$this->DisplayName.") with dn '%s' failed."),$this->dn));
     $this->handle_post_events("remove");
   }
@@ -104,9 +112,11 @@ class goService extends plugin{
     if($ldap->count()){
       $ldap->cd($this->dn);
       $ldap->modify($this->attrs);
+      @log::log("modify","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }else{
       $ldap->cd($this->dn);
       $ldap->add($this->attrs);
+      @log::log("create","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }
     if($this->initially_was_account){
       $this->handle_post_events("modify");

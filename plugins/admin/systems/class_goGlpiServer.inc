@@ -29,7 +29,7 @@ class goGlpiServer extends goService {
  
   function goGlpiServer($config,$dn)
   {
-    plugin::plugin($config,$dn);
+    goService::goService($config,$dn);
     $this->DisplayName = _("Inventory database");
   }
 
