@@ -45,7 +45,7 @@ class gospamserver extends goService{
   function gospamserver($config,$dn, $parent= NULL)
   {
     /* Init class */
-    plugin::plugin($config,$dn, $parent);
+    goService::goService($config,$dn, $parent);
     $this->DisplayName = _("Spamassassin");
 
     /* Get userinfo & acls */
@@ -270,8 +270,10 @@ class gospamserver extends goService{
     }
     if($this->initially_was_account){
       $this->handle_post_events("modify");
+      @log::log("modify","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }else{
       $this->handle_post_events("add");
+      @log::log("create","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }
 
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of server services/spamassassin with dn '%s' failed."),$this->dn));

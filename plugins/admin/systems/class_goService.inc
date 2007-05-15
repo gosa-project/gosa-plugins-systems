@@ -112,16 +112,16 @@ class goService extends plugin{
     if($ldap->count()){
       $ldap->cd($this->dn);
       $ldap->modify($this->attrs);
-      @log::log("modify","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }else{
       $ldap->cd($this->dn);
       $ldap->add($this->attrs);
-      @log::log("create","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }
     if($this->initially_was_account){
+      @log::log("modify","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
       $this->handle_post_events("modify");
     }else{
       $this->handle_post_events("add");
+      @log::log("create","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of server services/".get_class($this)." - (".$this->DisplayName.") with dn '%s' failed."),$this->dn));
   }

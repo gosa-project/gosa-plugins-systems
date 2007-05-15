@@ -26,7 +26,7 @@ class goLogDBServer extends goService{
 
   function goLogDBServer($config,$dn)
   {
-    plugin::plugin($config,$dn);
+    goService::goService($config,$dn);
     $this->DisplayName = _("Logging database");
   }
 

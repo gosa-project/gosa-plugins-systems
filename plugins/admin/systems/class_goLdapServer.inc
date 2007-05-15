@@ -24,7 +24,7 @@ class goLdapServer extends goService{
 
   function goLdapServer($config,$dn)
   {
-    plugin::plugin($config,$dn);
+    goService::goService($config,$dn);
     $this->DisplayName = _("LDAP service");
   }
 

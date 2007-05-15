@@ -27,7 +27,7 @@ class goShareServer extends goService{
 
   function goShareServer($config,$dn)
   {
-    plugin::plugin($config,$dn);
+    goService::goService($config,$dn);
 
     $this->DisplayName = _("File service");
 
@@ -187,8 +187,10 @@ class goShareServer extends goService{
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of system server/shares with dn '%s' failed."),$this->dn));
     if($this->initially_was_account){
       $this->handle_post_events("modify");
+      @log::log("modify","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }else{
       $this->handle_post_events("add");
+      @log::log("create","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }
   }
 

@@ -26,7 +26,7 @@ class goKrbServer extends goService{
  
   function goKrbServer($config,$dn)
   {
-    plugin::plugin($config,$dn);
+    goService::goService($config,$dn);
     $this->DisplayName = _("Kerberos service");
   }
 

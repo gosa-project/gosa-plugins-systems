@@ -24,7 +24,7 @@ class goSyslogServer extends goService{
  
   function goSyslogServer($config,$dn)
   {
-    plugin::plugin($config,$dn);
+    goService::goService($config,$dn);
     $this->DisplayName = _("Logging service");
   }
 

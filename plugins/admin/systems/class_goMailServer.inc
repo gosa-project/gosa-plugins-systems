@@ -42,7 +42,7 @@ class goMailServer extends goService{
 
   function goMailServer($config,$dn)
   {
-    plugin::plugin($config,$dn);
+    goService::goService($config,$dn);
     $this->DisplayName = _("Mail smtp service (Postfix)");
 
     $this->Actions = array( SERVICE_STOPPED=>SERVICE_STOPPED,
@@ -577,8 +577,10 @@ class goMailServer extends goService{
     show_ldap_error($ldap->get_error(), sprintf(_("Saving server services/mail with dn '%s' failed."),$this->dn));
     if($this->initially_was_account){
       $this->handle_post_events("modify");
+      @log::log("modify","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());  
     }else{
       $this->handle_post_events("add");
+      @log::log("create","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());  
     }
 
   }

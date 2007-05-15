@@ -27,7 +27,7 @@ class goTerminalServer extends goService{
 
   function goTerminalServer($config,$dn)
   {
-    plugin::plugin($config,$dn);
+    goService::goService($config,$dn);
     $this->DisplayName = _("Terminal service");
   }
 
@@ -78,8 +78,10 @@ class goTerminalServer extends goService{
     show_ldap_error($ldap->get_error(), sprintf(_("Saving server services/terminalServer with dn '%s' failed."),$this->dn));
     if($this->initially_was_account){
       $this->handle_post_events("modify");
+      @log::log("modify","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }else{
       $this->handle_post_events("add");
+      @log::log("create","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }
   }
 

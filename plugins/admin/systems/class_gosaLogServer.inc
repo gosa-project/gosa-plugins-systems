@@ -23,7 +23,7 @@ class gosaLogServer extends goService{
 
   function gosaLogServer($config,$dn)
   {
-    plugin::plugin($config,$dn);
+    goService::goService($config,$dn);
     $this->DisplayName = _("GOsa logging service");
   }
 
