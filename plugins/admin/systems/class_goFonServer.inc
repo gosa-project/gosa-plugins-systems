@@ -30,7 +30,7 @@ class goFonServer extends goService{
  
   function goFonServer($config,$dn)
   {
-    plugin::plugin($config,$dn);
+    goService::goService($config,$dn);
     $this->DisplayName = _("VoIP service");
   }
 
