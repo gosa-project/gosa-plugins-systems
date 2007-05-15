@@ -367,6 +367,7 @@ class applicationManagement extends plugin
         add_lock ($this->dn, $this->ui->dn);
         $smarty= get_smarty();
         $smarty->assign("intro", sprintf(_("You're about to delete the application '%s'."), @LDAP::fix($this->dn)));
+        $smarty->assign("multiple", false);
         return($smarty->fetch (get_template_path('remove.tpl', TRUE)));
       } else {
 
