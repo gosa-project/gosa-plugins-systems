@@ -420,6 +420,8 @@ class config  {
           'PASSWORD' 	=> $attrs['goGlpiPassword'][0],
           'DB'		=> $attrs['goGlpiDatabase'][0]);
     }
+
+
     /* Get logdb server */
     $ldap->cd ($this->current['BASE']);
     $ldap->search ("(objectClass=goLogDBServer)");
@@ -429,6 +431,20 @@ class config  {
           'LOGIN' => $attrs['goLogAdmin'][0],
           'PASSWORD' => $attrs['goLogPassword'][0]);
     }
+
+
+    /* GOsa logging databases */
+    $ldap->cd ($this->current['BASE']);
+    $ldap->search ("(objectClass=gosaLogServer)");
+    if ($ldap->count()){
+      $attrs= $ldap->fetch();
+      $this->data['SERVERS']['LOGGING'][$attrs['cn'][0]]= 
+          array(
+          'USER'  => $attrs['goLogDBUser'][0],
+          'DB'    => $attrs['goLogDB'][0],
+          'PWD'   => $attrs['goLogDBPassword'][0]);
+    }
+
 
     /* Get NFS server lists */
     $tmp= array("default");
