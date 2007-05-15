@@ -127,6 +127,10 @@ class workgeneric extends plugin
       $this->gotoSyslogServers[$server] = $visible;
     }
 
+    if($this->is_account){
+      @log::log("view","workstation/".get_class($this),$this->dn);
+    } 
+
     /* Save 'dn' for later referal */
     $this->orig_dn= $this->dn;
   }
@@ -332,6 +336,7 @@ class workgeneric extends plugin
       $this->netConfigDNS->remove_from_parent();
       $ldap= $this->config->get_ldap_link();
       $ldap->rmdir($this->dn);
+      @log::log("remove","workstation/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
       show_ldap_error($ldap->get_error(), sprintf(_("Removing of system workstation/generic with dn '%s' failed."),$this->dn));
 
       /* Optionally execute a command after we're done */
@@ -491,6 +496,7 @@ class workgeneric extends plugin
       $ldap->create_missing_trees(preg_replace('/^[^,]+,/', '', $this->dn));
       $ldap->cd($this->dn);
       $ldap->add($this->attrs);
+      @log::log("create","workstation/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
       show_ldap_error($ldap->get_error(), sprintf(_("Saving of system workstation/generic with dn '%s' failed."),$this->dn));
       if(!$this->didAction){
         $this->handle_post_events("add");
@@ -502,6 +508,7 @@ class workgeneric extends plugin
       $ldap->cd($this->dn);
       $this->cleanup();
       $ldap->modify ($this->attrs); 
+      @log::log("modify","workstation/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
 
       if(!$this->didAction){
         $this->handle_post_events("modify");

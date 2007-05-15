@@ -62,6 +62,10 @@ class wingeneric extends plugin
     $this->orig_dn= $this->dn;
 
     $this->cn= preg_replace("/\\\$\$/","",$this->cn);
+
+    if($this->is_account){
+      @log::log("view","winworkstation/".get_class($this),$this->dn);
+    }
   }
 
 
@@ -144,6 +148,7 @@ class wingeneric extends plugin
     $this->netConfigDNS->remove_from_parent();
     $ldap= $this->config->get_ldap_link();
     $ldap->rmdir($this->dn);
+    @log::log("remove","winworkstation/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     show_ldap_error($ldap->get_error(), sprintf(_("Removing of system wingeneric/generic with dn '%s' failed."),$this->dn));
     $this->handle_post_events("remove");
 
@@ -243,6 +248,7 @@ class wingeneric extends plugin
       $ldap->create_missing_trees(preg_replace('/^[^,]+,/', '', $this->dn));
       $ldap->cd($this->dn);
       $ldap->add($this->attrs);
+      @log::log("create","winworkstation/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
       $this->handle_post_events("add");
     } else {
       if ($this->orig_dn != $this->dn){
@@ -252,7 +258,7 @@ class wingeneric extends plugin
       $ldap->cd($this->dn);
       $this->cleanup();
       $ldap->modify ($this->attrs); 
-
+      @log::log("modify","winworkstation/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
       $this->handle_post_events("modify");
     }
 

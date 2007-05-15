@@ -83,6 +83,10 @@ class servrepository extends goService
         $this->repositories[$tmp[2]]=$tmp2;      
       }
     }
+
+    if($this->is_account){
+      @log::log("view","server/".get_class($this),$this->dn);
+    }
   }
 
   function execute()
@@ -345,6 +349,12 @@ class servrepository extends goService
       $ldap->cd($this->dn);
       $ldap->add($this->attrs);
       $this->handle_post_events("add");
+    }
+
+    if($this->initially_was_account){
+      @log::log("modify","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    }else{
+      @log::log("create","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }
   }
 

@@ -243,6 +243,8 @@ class termservice extends plugin
       $this->gotoXHsync = preg_replace("/\+/","-",$this->gotoXHsync);
       $this->gotoXVsync = preg_replace("/\+/","-",$this->gotoXVsync);
     }
+
+    @log::log("view","terminal/".get_class($this),$this->dn);
   }
 
   function execute()
@@ -346,6 +348,7 @@ class termservice extends plugin
 
   function remove_from_parent()
   {
+    @log::log("remove","terminal/".get_class($this),$this->dn,array_keys($this->attrs));
     $this->handle_post_events("remove");
   }
 
@@ -453,6 +456,7 @@ class termservice extends plugin
     $ldap->cd($this->dn);
     $this->cleanup();
     $ldap->modify ($this->attrs); 
+    @log::log("modify","terminal/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
 
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of object system terminal/service with dn '%s' failed."),$this->dn));
     $this->handle_post_events("modify");

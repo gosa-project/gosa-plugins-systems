@@ -124,6 +124,10 @@ class termgeneric extends plugin
     }
 
     $this->orig_dn= $this->dn;
+    
+    if($this->is_account){
+      @log::log("view","terminal/".get_class($this),$this->dn);
+    }
   }
 
   function set_acl_base($base)
@@ -345,6 +349,9 @@ class termgeneric extends plugin
       if($ldap->count()){
         $this->netConfigDNS->remove_from_parent();
         $ldap->rmDir($this->dn);
+  
+        @log::log("remove","terminal/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+  
         show_ldap_error($ldap->get_error(), sprintf(_("Removing of object system terminal/generic with dn '%s' failed."),$this->dn));
 
         /* Optionally execute a command after we're done */
@@ -510,12 +517,13 @@ class termgeneric extends plugin
         unset($this->attrs['gotoNtpServer']);
       }
       $ldap->add($this->attrs);
+      @log::log("create","terminal/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
       $this->handle_post_events("add");
     } else {
       $ldap->cd($this->dn);
       $this->cleanup();
       $ldap->modify ($this->attrs); 
-
+      @log::log("modify","terminal/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
       $this->handle_post_events("modify");
     }
     

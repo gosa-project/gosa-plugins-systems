@@ -234,6 +234,8 @@ class workservice extends plugin
       $this->MouseTypes= array('AUTO' => _("inherited"));
       $this->MousePorts= array('AUTO' => _("inherited"));
     }
+
+    @log::log("view","workstation/".get_class($this),$this->dn);
   }
 
   function execute()
@@ -344,6 +346,7 @@ class workservice extends plugin
   function remove_from_parent()
   {
     $this->handle_post_events("remove");
+    @log::log("remove","workstation/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
   }
 
   /* Save data to object */
@@ -440,6 +443,7 @@ class workservice extends plugin
     $ldap->cd($this->dn);
     $this->cleanup();
     $ldap->modify ($this->attrs); 
+    @log::log("modify","workstation/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of system workstation/service with dn '%s' failed."),$this->dn));
     $this->handle_post_events("modify");
   }

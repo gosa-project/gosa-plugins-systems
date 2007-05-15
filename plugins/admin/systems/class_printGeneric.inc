@@ -151,6 +151,10 @@ class printgeneric extends plugin
         }
       }
     }
+    
+    if($this->is_account){
+      @log::log("view","printer/".get_class($this),$this->dn);
+    }
   }
 
   function set_acl_base($base)
@@ -587,6 +591,9 @@ class printgeneric extends plugin
       /* Remove account & dns extension */ 
       $this->netConfigDNS->remove_from_parent();
       $ldap->rmdir($this->dn);
+
+      @log::log("remove","printer/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+  
       show_ldap_error($ldap->get_error(), sprintf(_("Removing of system print/generic with dn '%s' failed."),$this->dn));
       $this->handle_post_events("remove");
 
@@ -823,11 +830,13 @@ class printgeneric extends plugin
 
       $ldap->add($this->attrs);
       $this->handle_post_events("add");
+      @log::log("create","printer/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     } else {
       $ldap->cd($this->dn);
       $this->cleanup();
       $ldap->modify ($this->attrs); 
       $this->handle_post_events("modify");
+      @log::log("modify","printer/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of system print/generic with dn '%s' failed."),$this->dn));
 

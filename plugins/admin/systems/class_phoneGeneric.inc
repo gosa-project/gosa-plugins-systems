@@ -92,6 +92,10 @@ class phoneGeneric extends plugin
 
     /* Save dn for later references */
     $this->orig_dn= $this->dn;
+
+    if($this->is_account){
+      @log::log("view","phone/".get_class($this),$this->dn);
+    }
   }
 
   function set_acl_base($base)
@@ -266,6 +270,9 @@ class phoneGeneric extends plugin
 
       $this->netConfigDNS->remove_from_parent();
       $ldap->rmdir($this->dn);
+  
+      @log::log("remove","phone/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+
       show_ldap_error($ldap->get_error(), sprintf(_("Removing of system phone/generic with dn '%s' failed."),$this->dn));
       $this->handle_post_events("remove");
 
@@ -392,6 +399,7 @@ class phoneGeneric extends plugin
       $ldap->create_missing_trees(preg_replace('/^[^,]+,/', '', $this->dn));
       $ldap->cd($this->dn);
       $ldap->add($this->attrs);
+      @log::log("create","phone/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
       $this->handle_post_events("add");
     } else {
       if ($this->orig_dn != $this->dn){
@@ -401,6 +409,7 @@ class phoneGeneric extends plugin
       $ldap->cd($this->dn);
       $this->cleanup();
       $ldap->modify ($this->attrs); 
+      @log::log("modify","phone/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
 
       // $user_phone_reload   
       $ldap->cd ($this->config->current['BASE']); 

@@ -77,6 +77,9 @@ class servkolab extends goService {
       }
     } 
 
+    if($this->is_account){
+      @log::log("view","server/".get_class($this),$this->dn);
+    }
   }
 
 
@@ -212,6 +215,8 @@ class servkolab extends goService {
       gosa_log("Removing ".$this->hostname." from list of kolabHosts");
     }
 
+    @log::log("remove","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+
     /* Optionally execute a command after we're done */
     $this->handle_post_events("remove");
   }
@@ -345,6 +350,13 @@ class servkolab extends goService {
     $ldap->cd($this->dn);
     $this->cleanup();;
     $ldap->$mode($this->attrs);
+
+    if($mode == "add"){
+      @log::log("create","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    }else{
+      @log::log("modify","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    }
+
     show_ldap_error($ldap->get_error(), sprintf(_("Saving system server/kolab with dn '%s' failed."),$this->dn));
 
     /* Optionally execute a command after we're done */

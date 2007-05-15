@@ -144,6 +144,7 @@ class termstartup extends plugin
         }
       }
     }
+    @log::log("view","terminal/".get_class($this),$this->dn);
   }
 
   function execute()
@@ -289,6 +290,7 @@ class termstartup extends plugin
   {
     if($this->acl_is_removeable()){
       $this->handle_post_events("remove");
+      @log::log("remove","terminal/".get_class($this),$this->dn,array_keys($this->attrs));
     }
   }
 
@@ -397,6 +399,8 @@ class termstartup extends plugin
     
     $this->cleanup();
     $ldap->modify ($this->attrs); 
+
+    @log::log("modify","terminal/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
 
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of system terminal/startup with dn '%s' failed."),$this->dn));
     $this->handle_post_events("modify");
