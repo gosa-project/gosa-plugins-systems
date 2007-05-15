@@ -9,7 +9,7 @@ class goLogDBServer extends goService{
 
   /* This plugin only writes its objectClass */
   var $objectclasses    = array("goLogDBServer");
-  var $attributes       = array("goLogDBServerUser", "goLogDBServerPassword", "goLogDB" );
+  var $attributes       = array("goLogAdmin", "goLogPassword");
   var $StatusFlag       = "goLogDBServerStatus";
 
   /* This class can't be assigned twice so it conflicts with itsself */
@@ -20,9 +20,8 @@ class goLogDBServer extends goService{
   var $acl;
   var $cn                   = "";
   var $goLogDBServerStatus  = "";
-  var $goLogDBServerUser   = "";
-  var $goLogDBServerPassword= "";  
-  var $goLogDB              = "gosa_log";  
+  var $goLogAdmin           = "";
+  var $goLogPassword        = "";  
 
 
   function goLogDBServer($config,$dn)
@@ -60,14 +59,11 @@ class goLogDBServer extends goService{
   function check()
   { 
     $message = plugin::check();
-    if (empty($this->goLogDBServerUser)){
+    if (empty($this->goLogAdmin)){
       $message[]= sprintf_("The attribute user is empty or contains invalid characters.");
     }
-    if (empty($this->goLogDBServerPassword)){
+    if (empty($this->goLogPassword)){
       $message[]= sprintf_("The attribute password is empty or contains invalid characters.");
-    }
-    if (empty($this->goLogDB)){
-      $message[]= sprintf_("The attribute database is empty or contains invalid characters.");
     }
     return($message);
   }
@@ -96,9 +92,8 @@ class goLogDBServer extends goService{
             "start"         => _("Start"),
             "stop"          => _("Stop"),
             "restart"       => _("Restart"),
-            "goLogDBServerUser"    => _("User"),
-            "goLogDBServerPassword" => _("Password"),
-            "goLogDB"       => _("Database"))
+            "goLogAdmin"    => _("Admin"),
+            "goLogPassword" => _("Password"))
           ));
   }
 }
