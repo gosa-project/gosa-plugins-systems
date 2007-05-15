@@ -235,7 +235,9 @@ class workservice extends plugin
       $this->MousePorts= array('AUTO' => _("inherited"));
     }
 
-    @log::log("view","workstation/".get_class($this),$this->dn);
+    if($this->is_account){
+      @log::log("view","workstation/".get_class($this),$this->dn);
+    }
   }
 
   function execute()

@@ -368,7 +368,9 @@ class workstartup extends plugin
       $this->gotoBootKernel= "default";
     }
 
-    @log::log("view","workstation/".get_class($this),$this->dn);
+    if($this->is_account){
+      @log::log("view","workstation/".get_class($this),$this->dn);
+    }
   }
 
   

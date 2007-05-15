@@ -271,8 +271,8 @@ class termDNS extends plugin
       foreach($tmp['del'] as $dn => $del){
         $ldap->cd($dn);
         $ldap->rmdir_recursive($dn);
+        @log::log("remove","unknown/".get_class($this),$dn);
       }
-      @log::log("remove","unknown/".get_class($this),$dn);
     }
   }
 

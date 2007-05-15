@@ -244,7 +244,9 @@ class termservice extends plugin
       $this->gotoXVsync = preg_replace("/\+/","-",$this->gotoXVsync);
     }
 
-    @log::log("view","terminal/".get_class($this),$this->dn);
+    if($this->is_account){
+      @log::log("view","terminal/".get_class($this),$this->dn);
+    }
   }
 
   function execute()
