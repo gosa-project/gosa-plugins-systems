@@ -99,6 +99,8 @@ class faiPartitionTable extends plugin
           $this->disks[$name]['partitions'][$partition['FAIpartitionNr']] = $partition; 
         }  
       }
+  
+      @log::log("view","fai/".get_class($this),$this->dn);
     }
     ksort($this->disks);
   }
@@ -342,7 +344,9 @@ class faiPartitionTable extends plugin
     }
 
     prepare_to_save_FAI_object($use_dn,array(),true);
-    
+
+    @log::log("remove","fai/".get_class($this),$use_dn,$this->attributes);   
+ 
     foreach($this->disks as $disk){
 
       $disk_dn = "cn=".$disk['cn'].",".$this->dn;
@@ -406,7 +410,13 @@ class faiPartitionTable extends plugin
 
     prepare_to_save_FAI_object($this->dn,$this->attrs);
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of FAI/partition table with dn '%s' failed."),$this->dn));
-  
+
+    if($this->initially_was_account){
+      @log::log("modify","fai/".get_class($this),$this->dn,$this->attributes);
+    }else{
+      @log::log("create","fai/".get_class($this),$this->dn,$this->attributes);
+    }
+ 
     /* Do object tagging */
     $this->handle_object_tagging();
   

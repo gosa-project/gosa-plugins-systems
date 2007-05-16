@@ -288,44 +288,48 @@ class faiManagement extends plugin
      ****************/
 
 		/* Deltetion was confirmed, so delete this entry
-		 */
-		if (isset($_POST['delete_terminal_confirm'])){
+     */
+    if (isset($_POST['delete_terminal_confirm'])){
 
-			/* Some nice guy may send this as POST, so we've to check
-			   for the permissions again. */
+      /* Some nice guy may send this as POST, so we've to check
+         for the permissions again. */
 
       /* Find out more about the object type */
       $ldap	  = $this->config->get_ldap_link();
       $ldap->cat($this->dn, array('objectClass'));
-      $attrs	= $ldap->fetch();
-      $type	  = $this->get_type($attrs);			
+      if($ldap->count()){
+        $attrs	= $ldap->fetch();
+        $type	  = $this->get_type($attrs);			
 
-      $acl  = $this->ui->get_permissions($this->dn,"fai/".$type[1]);
-      if(preg_match("/d/",$acl)){
+        $acl  = $this->ui->get_permissions($this->dn,"fai/".$type[1]);
+        if(preg_match("/d/",$acl)){
 
-        $this->dialog = new $type[0]($this->config,	$this->config->data['TABS'][$type[2]], $this->dn,"fai");
-        $this->dialog->set_acl_base($this->dn);
-        $this->dialog->by_object[$type[1]]->remove_from_parent ();
-        unset ($this->dialog);
-        gosa_log ("FAI class '".$this->dn."' has been tagged as removed");
-        $this->dialog= NULL;
-        $to_del = clean_up_releases($this->dn);
-        save_release_changes_now();
+          $this->dialog = new $type[0]($this->config,	$this->config->data['TABS'][$type[2]], $this->dn,"fai");
+          $this->dialog->set_acl_base($this->dn);
+          $this->dialog->by_object[$type[1]]->remove_from_parent ();
+          unset ($this->dialog);
+          gosa_log ("FAI class '".$this->dn."' has been tagged as removed");
+          $this->dialog= NULL;
+          $to_del = clean_up_releases($this->dn);
+          save_release_changes_now();
 
-        foreach($to_del as $dn){
-          $ldap->rmdir_recursive($dn);
-          gosa_log(sprintf(_("Release cleanup : Removing object (tagged as remvoed) that is no longer in use '%s'."),$dn));
+          foreach($to_del as $dn){
+            $ldap->rmdir_recursive($dn);
+            gosa_log(sprintf(_("Release cleanup : Removing object (tagged as remvoed) that is no longer in use '%s'."),$dn));
+          }
+
+        } else {
+
+          /* Normally this shouldn't be reached, send some extra
+             logs to notify the administrator */
+          print_red (_("You are not allowed to delete this component!"));
+          gosa_log ("Warning: '".$this->ui->uid."' tried to trick system ".
+              "deletion.");
         }
 
-      } else {
-
-        /* Normally this shouldn't be reached, send some extra
-           logs to notify the administrator */
-        print_red (_("You are not allowed to delete this component!"));
-        gosa_log ("Warning: '".$this->ui->uid."' tried to trick system ".
-            "deletion.");
+      }else{
+        print_red(sprintf(_("Object could not be deleted '%s', object does not exist."),$this->dn));
       }
-
       /* Remove lock file after successfull deletion */
       del_lock ($this->dn);
     }

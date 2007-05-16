@@ -37,7 +37,7 @@ class faiPackage extends plugin
   var $SubObjects       = array();  // All leafobjects of this object
 
   var $FAIdebianRelease          = ""; // The selected release
-  var $FAIdebianSection          = ""; // selected section
+  var $FAIdebianSection          = array(); // selected section
   var $FAIinstallMethod          = "aptitude"; // hard coded
   var $mirror                    = ""; // selected mirror
 
@@ -134,6 +134,7 @@ class faiPackage extends plugin
           $this->ConfiguredPackages[$attr['FAIpackage'][0]][$attr['FAIvariable'][0]]=$tmp;
         }
       }
+      @log::log("view","fai/".get_class($this),$this->dn);
     }
 
     if (isset($this->attrs['FAIdebianSection']['count'])){
@@ -338,6 +339,8 @@ class faiPackage extends plugin
 
     prepare_to_save_FAI_object($use_dn,array(),true);
 
+    @log::log("remove","fai/".get_class($this),$use_dn,$this->attributes);
+
     foreach($this->ConfiguredPackages as $pkgname => $attrs){
       foreach($attrs as $name => $attr){
         $pkgdn =  "FAIvariable=".$name.",".$this->dn;
@@ -417,7 +420,8 @@ class faiPackage extends plugin
     return($a_ret);
   }
 
-  function genPkgs(){
+  function genPkgs()
+  {
     /* Generate a list off available packages for this mirror, section and release
      */
     /* Only read this file if it wasn't read before */
@@ -473,6 +477,12 @@ class faiPackage extends plugin
 
     prepare_to_save_FAI_object($this->dn,$this->attrs);
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of FAI/package list with dn '%s' failed."),$this->dn));
+    
+    if($this->initially_was_account){
+      @log::log("modify","fai/".get_class($this),$this->dn,$this->attributes);
+    }else{
+      @log::log("create","fai/".get_class($this),$this->dn,$this->attributes);
+    }
 
     /* Do object tagging */
     $this->handle_object_tagging();

@@ -85,6 +85,8 @@ class faiVariable extends plugin
         $this->SubObjects[$object['cn'][0]]['status']      = "edited";
         $this->SubObjects[$object['cn'][0]]['dn']          = $object['dn'];
       }
+
+      @log::log("view","fai/".get_class($this),$this->dn);
     }
     $this->ui = get_userinfo();
   }
@@ -280,8 +282,9 @@ class faiVariable extends plugin
       if($_SESSION['faifilter']['branch'] == "main"){
         $use_dn = $this->dn;
       }
-
+  
       prepare_to_save_FAI_object($use_dn,array(),true);
+      @log::log("remove","fai/".get_class($this),$use_dn,$this->attributes);
 
       foreach($this->SubObjects as $name => $obj){
         $use_dn = preg_replace("/".normalizePreg(get_release_dn($this->dn))."/i", $_SESSION['faifilter']['branch'], $obj['dn']);
@@ -328,6 +331,12 @@ class faiVariable extends plugin
     $ldap = $this->config->get_ldap_link();
     prepare_to_save_FAI_object($this->dn,$this->attrs);
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of FAI/variable with dn '%s' failed."),$this->dn));
+
+    if($this->initially_was_account){
+      @log::log("modify","fai/".get_class($this),$this->dn,$this->attributes);
+    }else{
+      @log::log("create","fai/".get_class($this),$this->dn,$this->attributes);
+    }
  
     /* Do object tagging */
     $this->handle_object_tagging();
