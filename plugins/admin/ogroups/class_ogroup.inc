@@ -94,6 +94,10 @@ class ogroup extends plugin
       $this->base= preg_replace("/^[^,]+,".get_groups_ou()."/","",$this->dn);
     }
 
+    if($this->is_account){
+      @log::log("view","ogroup/".get_class($this),$this->dn);
+    }
+
     /* Load member data */
     $this->reload();
   }
@@ -636,6 +640,7 @@ class ogroup extends plugin
         $this->attrs['member']= array();
       }
       $mode= "modify";
+
     } else {
       $mode= "add";
       $ldap->cd($this->config->current['BASE']);
@@ -646,6 +651,12 @@ class ogroup extends plugin
     $ldap->cd($this->dn);
     $this->cleanup();
     $ldap->$mode($this->attrs);
+
+    if($mode == "add"){
+      @log::log("create","ogroups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    }else{
+      @log::log("modify","ogroups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    }
 
     /* Trigger post signal */
     $this->handle_post_events($mode);
@@ -665,6 +676,8 @@ class ogroup extends plugin
     $ldap= $this->config->get_ldap_link();
     $ldap->rmdir($this->dn);
     show_ldap_error($ldap->get_error(), sprintf(_("Removing of object group/generic with dn '%s' failed."),$this->dn));
+
+    @log::log("remove","ogroups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
 
     /* Trigger remove signal */
     $this->handle_post_events("remove");

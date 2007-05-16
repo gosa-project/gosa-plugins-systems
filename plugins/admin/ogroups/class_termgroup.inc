@@ -96,7 +96,9 @@ class termgroup extends plugin
       }
     }
 
-
+    if($this->is_account){
+      @log::log("view","ogroups/".get_class($this),$this->dn);
+    }
   }
 
   function check()
@@ -129,6 +131,7 @@ class termgroup extends plugin
     $ldap->cd($this->orig_dn);
     $ldap->modify($this->attrs);
     $this->handle_post_events("remove");
+    @log::log("remove","ogroups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
   }
 
 
@@ -368,6 +371,12 @@ class termgroup extends plugin
     $ldap->cd($this->dn);
     $this->cleanup();
     $ldap->modify ($this->attrs);
+
+    if($this->initially_was_account){
+      @log::log("modify","ogroups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    }else{
+      @log::log("create","ogroups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    }
 
     if(!$this->didAction){
       $this->handle_post_events("modify");

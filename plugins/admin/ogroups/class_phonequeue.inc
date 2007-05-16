@@ -135,6 +135,10 @@ class phonequeue extends plugin
     $this->goFonQueueStrategy= $tmp[$this->goFonQueueStrategy];
     $this->old_cn = $this->cn;
     $this->old_phone_numbers = $this->telephoneNumber;
+  
+    if($this->is_account){
+      @log::log("view","ogroups/".get_class($this),$this->dn);
+    }
   }
 
 
@@ -827,6 +831,12 @@ class phonequeue extends plugin
     $this->cleanup();
     $ldap->modify ($this->attrs); 
 
+    if($this->initially_was_account){
+      @log::log("modify","ogroups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    }else{
+      @log::log("modify","ogroups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    }
+
     show_ldap_error($ldap->get_error(), _("Saving phone queue failed"));
 
     /* Optionally execute a command after we're done */
@@ -879,6 +889,7 @@ class phonequeue extends plugin
     $ldap->cd($this->dn);
     $this->cleanup();
     $ldap->modify ($this->attrs); 
+    @log::log("remove","ogroups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     show_ldap_error($ldap->get_error(), _("Removing phone queue failed"));
   }
 
