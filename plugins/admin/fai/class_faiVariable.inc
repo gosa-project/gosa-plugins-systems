@@ -213,7 +213,7 @@ class faiVariable extends plugin
     $tmp = array();
     foreach($this->SubObjects as $key => $obj){
       $acl = $ui->get_permissions($obj['dn'],"fai/faiVariableEntry");
-      if(preg_match("/r/",$acl)){
+      if(preg_match("/r/",$acl) || $obj['dn'] == "new"){
         $tmp[$key] = $ret[$key];
       } 
     }
