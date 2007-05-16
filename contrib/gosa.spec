@@ -121,7 +121,7 @@ find . -depth -name CVS -type d | xargs rm -rf
 mkdir -p %{buildroot}/usr/share/gosa
 
 # Copy
-DIRS="doc ihtml plugins html include locale"
+DIRS="doc ihtml plugins html include locale setup"
 for i in $DIRS; do \
   cp -ua $i %{buildroot}/usr/share/gosa/$i ; \
 done
@@ -169,7 +169,7 @@ EOF
 
 mkdir -p %{buildroot}/etc/openldap/schema/gosa
 mv contrib/openldap/*.schema %{buildroot}/etc/openldap/schema/gosa
-sed 's�"CONFIG_TEMPLATE_DIR", "../contrib/"�"CONFIG_TEMPLATE_DIR", "%{docdir}/"�g' %{buildroot}/usr/share/gosa/include/functions.inc > %{buildroot}/usr/share/gosa/include/functions.inc.new
+sed 's%"CONFIG_TEMPLATE_DIR", "../contrib/"%"CONFIG_TEMPLATE_DIR", "%{docdir}/"%g' %{buildroot}/usr/share/gosa/include/functions.inc > %{buildroot}/usr/share/gosa/include/functions.inc.new
 mv -f %{buildroot}/usr/share/gosa/include/functions.inc.new %{buildroot}/usr/share/gosa/include/functions.inc
 
 mv -f doc manual
@@ -209,6 +209,7 @@ rm -rf %{buildroot}
 %attr(0744, %{apacheuser}, %{apachegroup}) /usr/share/gosa/ihtml
 %attr(0744, %{apacheuser}, %{apachegroup}) /usr/share/gosa/include
 %attr(0744, %{apacheuser}, %{apachegroup}) /usr/share/gosa/locale
+%attr(0744, %{apacheuser}, %{apachegroup}) /usr/share/gosa/setup
 %attr(0744, %{apacheuser}, %{apachegroup}) /usr/share/gosa/plugins
 %attr(0744, %{apacheuser}, %{apachegroup}) /usr/share/gosa/doc/guide.xml
 
