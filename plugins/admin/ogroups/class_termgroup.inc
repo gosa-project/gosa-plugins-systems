@@ -96,7 +96,7 @@ class termgroup extends plugin
       }
     }
 
-    if($this->is_account){
+    if($this->is_account && $dn != "new"){
       @log::log("view","ogroups/".get_class($this),$this->dn);
     }
   }

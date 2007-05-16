@@ -94,7 +94,7 @@ class ogroup extends plugin
       $this->base= preg_replace("/^[^,]+,".get_groups_ou()."/","",$this->dn);
     }
 
-    if($this->is_account){
+    if($this->is_account && $dn != "new"){
       @log::log("view","ogroup/".get_class($this),$this->dn);
     }
 
