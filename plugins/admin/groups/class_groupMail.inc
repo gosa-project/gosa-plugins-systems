@@ -292,6 +292,10 @@ class mailgroup extends plugin
     $this->perms["lrswipcd"]= _("write");
     $this->perms["lrswipcda"]= _("admin");
     $this->perms[""]= _("none");
+    
+    if($this->is_account){
+      @log::log("view","groups/".get_class($this),$this->dn);
+    }
   }
 
   function execute()
@@ -643,6 +647,10 @@ class mailgroup extends plugin
   /* remove object from parent */
   function remove_from_parent()
   {
+    if(!$this->initially_was_account){
+      return;
+    }
+  
     /* Added these ObjectClass and Attributes, because they were not 
        removed correctly, only in case of kolab ... 
      */
@@ -679,6 +687,9 @@ class mailgroup extends plugin
     $ldap->cd($this->dn);
     $ldap->modify ($this->attrs); 
     show_ldap_error($ldap->get_error(), sprintf(_("Removing of groups/mail with dn '%s' failed."),$this->dn));
+
+
+    @log::log("remove","groups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
 
     /* Optionally execute a command after we're done */
     $this->handle_post_events("remove");
@@ -875,6 +886,13 @@ I: Only insider delivery */
     $this->cleanup();
     $ldap->modify ($this->attrs); 
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of groups/mail with dn '%s' failed."),$this->dn));
+    
+    if($this->initially_was_account){
+      @log::log("modify","groups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    }else{
+      @log::log("create","groups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());  
+    }
+    
 
     /* Optionally execute a command after we're done */
     if ($this->initially_was_account == $this->is_account){

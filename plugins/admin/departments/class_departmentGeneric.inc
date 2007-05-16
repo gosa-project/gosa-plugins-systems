@@ -90,6 +90,10 @@ class department extends plugin
 			$this->is_administrational_unit= true;
       $this->initially_was_tagged = true;
 		}
+
+    if($this->is_account && $dn != "new"){
+      @log::log("view","department/".get_class($this),$this->dn);
+    }
 	}
 
 	function execute()
@@ -187,6 +191,7 @@ class department extends plugin
 		$ldap= $this->config->get_ldap_link();
 		$ldap->cd ($this->dn);
 		$ldap->recursive_remove();
+    @log::log("remove","department/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     show_ldap_error($ldap->get_error(), sprintf(_("Removing of department with dn '%s' failed."),$this->dn));
 
 		/* Optionally execute a command after we're done */
@@ -356,14 +361,17 @@ class department extends plugin
 		$a= $ldap->fetch();
 		$ldap->cd($this->dn);
 
+      print_a(debug_backtrace());
+
 		if (count($a)){
 			$this->cleanup();
 			$ldap->modify ($this->attrs); 
-
+      @log::log("modify","department/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
 			$this->handle_post_events('modify');
 		} else {
 			$ldap->add($this->attrs);
 			$this->handle_post_events('add');
+      @log::log("create","department/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
 		}
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of department with dn '%s' failed."),$this->dn));
 

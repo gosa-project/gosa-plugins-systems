@@ -238,6 +238,7 @@ class departmentManagement extends plugin
         } else {
           add_lock ($this->dn, $this->ui->dn);
           $smarty->assign("info", sprintf(_("You're about to delete the whole LDAP subtree placed under '%s'."), @LDAP::fix($this->dn)));
+          $smarty->assign("multiple", false);
           $display.= $smarty->fetch (get_template_path('remove.tpl', TRUE));
           return ($display);
         }

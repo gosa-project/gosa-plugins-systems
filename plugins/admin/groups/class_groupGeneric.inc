@@ -171,6 +171,10 @@ class group extends plugin
       $this->base =preg_replace ("/^[^,]+,".normalizePreg(get_groups_ou())."/","",$this->dn);
     }
 
+    if($this->dn != "new"){
+      @log::log("view","groups/".get_class($this),$this->dn);
+    }
+
     /* This is always an account */
     $this->is_account= TRUE;
     $this->reload();
@@ -514,6 +518,8 @@ class group extends plugin
     $ldap->rmdir($this->dn);
     show_ldap_error($ldap->get_error(), sprintf(_("Removing of groups/generic with dn '%s' failed."),$this->dn));
 
+    @log::log("remove","groups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+
     /* Delete references to object groups */
     $ldap->cd ($this->config->current['BASE']);
     $ldap->search ("(&(objectClass=gosaGroupOfNames)(member=".$this->dn."))", array("cn"));
@@ -737,6 +743,12 @@ class group extends plugin
     $ldap->cd($this->dn);
     $this->cleanup();
     $ldap->$mode($this->attrs);
+
+    if($this->initially_was_account){
+      @log::log("modify","groups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    }else{
+      @log::log("create","groups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    }
 
     $ret= 0;
     if ( show_ldap_error($ldap->get_error(), sprintf(_("Removing of groups/generic with dn '%s' failed."),$this->dn))){
