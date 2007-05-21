@@ -159,9 +159,9 @@ function change_password ($dn, $password, $mode=0, $hash= "")
   $attrs['userPassword']= array();
   $attrs['userPassword']= $newpass;
 
-
   $ldap->modify($attrs);
-
+  
+  new log("modify","users/passwordMethod",$dn,array_keys($attrs),$ldap->get_error());
 
   if ($ldap->error != 'Success') {
     print_red(sprintf(_("Setting the password failed. LDAP server says '%s'."),

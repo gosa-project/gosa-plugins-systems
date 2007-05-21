@@ -31,7 +31,7 @@ class log {
 
   var $LOG_TO_MYSQL = FALSE;
   var $LOG_TO_SYSLOG= FALSE;
-  
+  var $config;
 
  /*! \brief logging constructor
 
@@ -46,6 +46,7 @@ class log {
   function log($action,$objecttype,$object,$changes_array = array(),$result = TRUE)
   {
     global $config;
+    $this->config = $config;
     $ui   = get_userinfo(); 
 
     /* Create string out of changes */
