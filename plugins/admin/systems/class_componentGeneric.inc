@@ -130,7 +130,7 @@ class componentGeneric extends plugin
     @log::log("remove","component/".get_class($this),$this->dn,$this->attributes,$ldap->get_error());
 
     show_ldap_error($ldap->get_error(), sprintf(_("Removing of system component/generic with dn '%s' failed."),$this->dn));
-    $this->handle_post_events("remove");
+    $this->handle_post_events(array("macAddress" => $this->netConfigDNS->macAddress,"ipHostNumber" => $this->netConfigDNS->ipHostNumber));
 
     /* Delete references to object groups */
     $ldap->cd ($this->config->current['BASE']);
@@ -238,7 +238,7 @@ class componentGeneric extends plugin
       $ldap->cd($this->dn);
       $ldap->add($this->attrs);
       @log::log("create","component/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
-      $this->handle_post_events("add");
+      $this->handle_post_events("add",array("macAddress" => $this->netConfigDNS->macAddress,"ipHostNumber" => $this->netConfigDNS->ipHostNumber));
       
     } else {
       if ($this->orig_dn != $this->dn){
@@ -249,16 +249,13 @@ class componentGeneric extends plugin
       $this->cleanup();
       $ldap->modify ($this->attrs); 
       @log::log("modify","component/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
-      $this->handle_post_events("modify");
+      $this->handle_post_events("modify",array("macAddress" => $this->netConfigDNS->macAddress,"ipHostNumber" => $this->netConfigDNS->ipHostNumber));
     }
 
     $this->netConfigDNS->cn = $this->cn;
     $this->netConfigDNS->save($this->dn);
 
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of system component/generic with dn '%s' failed."),$this->dn));
-
-    /* Optionally execute a command after we're done */
-    $this->postcreate();
   }
 
   /* Return plugin informations for acl handling */
