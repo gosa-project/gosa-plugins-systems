@@ -340,7 +340,7 @@ class workgeneric extends plugin
       show_ldap_error($ldap->get_error(), sprintf(_("Removing of system workstation/generic with dn '%s' failed."),$this->dn));
 
       /* Optionally execute a command after we're done */
-      $this->handle_post_events("remove", array("macAddress" => $this->netConfigDNS->macAddress,"ipHostNumber" => $this->netConfigDNS-    >ipHostNumber));
+      $this->handle_post_events("remove", array("macAddress" => $this->netConfigDNS->macAddress,"ipHostNumber" => $this->netConfigDNS-ipHostNumber));
 
       /* Delete references to object groups */
       $ldap->cd ($this->config->current['BASE']);
@@ -499,7 +499,7 @@ class workgeneric extends plugin
       @log::log("create","workstation/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
       show_ldap_error($ldap->get_error(), sprintf(_("Saving of system workstation/generic with dn '%s' failed."),$this->dn));
       if(!$this->didAction){
-        $this->handle_post_events("add",array("macAddress" => $this->netConfigDNS->macAddress,"ipHostNumber" => $this->netConfigDNS-    >ipHostNumber));
+        $this->handle_post_events("add",array("macAddress" => $this->netConfigDNS->macAddress,"ipHostNumber" => $this->netConfigDNS->ipHostNumber));
       }
     } else {
       if ($this->orig_dn != $this->dn){

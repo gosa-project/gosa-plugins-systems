@@ -355,7 +355,7 @@ class termgeneric extends plugin
         show_ldap_error($ldap->get_error(), sprintf(_("Removing of object system terminal/generic with dn '%s' failed."),$this->dn));
 
         /* Optionally execute a command after we're done */
-        $this->handle_post_events("remove", array("macAddress" => $this->netConfigDNS->macAddress));
+        $this->handle_post_events("remove",array("macAddress" => $this->netConfigDNS->macAddress,"ipHostNumber" => $this->netConfigDNS->ipHostNumber));
 
         /* Delete references to object groups */
         $ldap->cd ($this->config->current['BASE']);
@@ -518,13 +518,13 @@ class termgeneric extends plugin
       }
       $ldap->add($this->attrs);
       @log::log("create","terminal/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
-      $this->handle_post_events("add");
+      $this->handle_post_events("add",array("macAddress" => $this->netConfigDNS->macAddress,"ipHostNumber" => $this->netConfigDNS->ipHostNumber));
     } else {
       $ldap->cd($this->dn);
       $this->cleanup();
       $ldap->modify ($this->attrs); 
       @log::log("modify","terminal/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
-      $this->handle_post_events("modify");
+      $this->handle_post_events("modify",array("macAddress" => $this->netConfigDNS->macAddress,"ipHostNumber" => $this->netConfigDNS->ipHostNumber));
     }
     
     /* cn=default and macAddress=- indicates that this is a template */
