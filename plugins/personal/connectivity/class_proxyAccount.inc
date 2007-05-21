@@ -21,6 +21,7 @@ class proxyAccount extends plugin
   var $ReadOnly = false;
 
   var $uid = "";
+  var $view_logged = FALSE;
 
   function proxyAccount ($config, $dn= NULL)
   {
@@ -30,17 +31,18 @@ class proxyAccount extends plugin
     if(isset($this->attrs['uid'][0])){
       $this->uid = $this->attrs['uid'][0];
     }
-
-    /* Log view */
-    if($this->is_account){
-      @log::log("view","users/".get_class($this),$this->dn);
-    }
   }
 
   function execute()
   {
     /* Call parent execute */
     plugin::execute();
+
+    /* Log view */
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","users/".get_class($this),$this->dn);
+    }
 
     $display= "";
 

@@ -31,18 +31,21 @@ class phpscheduleitAccount extends plugin
   var $attributes= array();
   var $objectclasses= array("phpscheduleitAccount");
   var $ReadOnly =false;
+  var $view_logged = FALSE;
 
   function phpscheduleitAccount ($config, $dn= NULL)
   {
     plugin::plugin ($config, $dn);
-
-    if($this->is_account){
-      @log::log("view","users/".get_class($this),$this->dn);
-    }
   }
 
   function execute()
   {
+    /* Log view */
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","users/".get_class($this),$this->dn);
+    }
+
     /* Show tab dialog headers */
     $display= "";
 

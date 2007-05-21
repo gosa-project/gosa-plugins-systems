@@ -20,7 +20,7 @@ class kolabAccount extends plugin
   var $imapping= array();
   var $mail_Account   = false;
   var $ReadOnly = false;
-
+  var $view_logged = FALSE;
   var $uid = "";
 
   function kolabAccount ($config, $dn= NULL,$parent = NULL)
@@ -68,18 +68,19 @@ class kolabAccount extends plugin
        $this->is_account  = false;
       $this->mail_Account = false;
     }
-
-    /* Log view */
-    if($this->is_account){
-      @log::log("view","users/".get_class($this),$this->dn);
-    }
   }
 
 
   function execute()
   {
-	/* Call parent execute */
+	  /* Call parent execute */
   	plugin::execute();
+
+    /* Log view */
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","users/".get_class($this),$this->dn);
+    }
 
     /* Show tab dialog headers */
     $display= "";

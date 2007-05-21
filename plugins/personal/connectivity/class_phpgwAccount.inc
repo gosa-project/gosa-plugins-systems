@@ -16,6 +16,7 @@ class phpgwAccount extends plugin
   var $ReadOnly = false;
 
   var $uid  = "";
+  var $view_logged = FALSE;
 
   function phpgwAccount ($config, $dn= NULL)
   {
@@ -25,18 +26,19 @@ class phpgwAccount extends plugin
     if(isset($this->attrs['uid'][0])){
       $this->uid = $this->attrs['uid'][0];
     }
-
-
-    if($this->is_account){
-      @log::log("view","users/".get_class($this),$this->dn);
-    }
   }
 
   function execute()
   {
 	/* Call parent execute */
 //	plugin::execute();
-  
+ 
+    /* Log view */
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","users/".get_class($this),$this->dn);
+    }
+ 
     /* Show tab dialog headers */
     $display= "";
 

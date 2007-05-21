@@ -24,6 +24,7 @@ class pureftpdAccount extends plugin
       "FTPUploadBandwidth","FTPDownloadBandwidth","FTPStatus","FTPuid","FTPgid");
   var $objectclasses= array("PureFTPdUser");
   var $ReadOnly;
+  var $view_logged = FALSE;
 
   function pureftpdAccount ($config, $dn= NULL, $parent= NULL)
   {
@@ -33,15 +34,16 @@ class pureftpdAccount extends plugin
     if(isset($this->attrs['uid'][0])){
       $this->uid = $this->attrs['uid'][0];
     }
-
-    /* Log view */
-    if($this->is_account){
-      @log::log("view","users/".get_class($this),$this->dn);
-    }
   }
 
   function execute()
   {
+    /* Log view */
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","users/".get_class($this),$this->dn);
+    }
+
     /* Show tab dialog headers */
     $display= "";
 

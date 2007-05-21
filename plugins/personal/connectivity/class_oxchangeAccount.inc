@@ -30,6 +30,7 @@ class oxchangeAccount extends plugin
   var $OXTimeZone="GMT";
   var $mailEnabled="OK";
   var $dnModeValue = "";
+  var $view_logged = FALSE;
 
   /* attribute list for save action */
   var $attributes= array("OXAppointmentDays", "OXTaskDays", "OXTimeZone","mailEnabled");
@@ -598,21 +599,20 @@ class oxchangeAccount extends plugin
     if(isset($this->attrs[$this->dnmode][0])){
       $this->dnModeValue = $this->attrs[$this->dnmode][0];
     }
-
-    /* Log view */
-    if($this->is_account){
-      @log::log("view","users/".get_class($this),$this->dn);
-    }
-
   }
 
   function execute()
   {
-	/* Call parent execute */
-	//plugin::execute();
-  
+    /* Call parent execute */
+    //plugin::execute();
 
-	$display="";
+    /* Log view */
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","users/".get_class($this),$this->dn);
+    }
+
+    $display="";
 
     /* Show main page */
     $smarty= get_smarty();

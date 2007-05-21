@@ -25,6 +25,8 @@ class intranetAccount extends plugin
 
   var $uid ="";
 
+  var $view_logged = FALSE;
+
   /*! \brief Konstructor  
 
     \param $config 	The Config Object used to initialise plugin
@@ -40,11 +42,6 @@ class intranetAccount extends plugin
     /* Setting uid to default */
     if(isset($this->attrs['uid'][0])){
       $this->uid = $this->attrs['uid'][0];
-    }
-
-    /* Log view */
-    if($this->is_account){
-      @log::log("view","users/".get_class($this),$this->dn);
     }
   }
 
@@ -62,6 +59,12 @@ class intranetAccount extends plugin
   {
     /* Call parent execute */
     //	plugin::execute();
+
+    /* Log view */
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","users/".get_class($this),$this->dn);
+    }
 
     $display= "";
 
