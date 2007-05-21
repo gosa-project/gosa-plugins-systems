@@ -97,6 +97,7 @@ class divListUsers extends MultiSelectWindow
     $ui= get_userinfo();
     $tdeps= $ui->get_module_departments("users");
     $ids = $this->config->idepartments;
+print_a($ids);
     $first = "";
     $found = FALSE;
     foreach($deps as $dep){
