@@ -22,7 +22,7 @@
   <b>{t}GOsa main menu{/t}</b>
 </div>-->
 
-<table summary="" class="framework" cellspacing="0" cellpadding="0" style='margin-top:7px; margin-left:3px'>
+<table summary="" class="framework" cellspacing="0" cellpadding="0" style='margin-top:7px'>
   <tr style="vertical-align:top;">
     <!-- Menu -->
     <td style="background-color:white; vertical-align:top;" id="menucell">

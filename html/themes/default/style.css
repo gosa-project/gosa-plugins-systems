@@ -253,7 +253,7 @@ p.menuheader {
 	font-family:arial,helvetica,sans-serif;
 	color:#00008F;
 	text-decoration:none;
-	border-bottom:1px dashed #AAA;
+	border-bottom:1px solid #AAA;
 	font-weight:bold;
 	font-size:12px;
 	text-align:center;
@@ -276,7 +276,7 @@ p.menuitem {
 	padding-bottom:2px;
 	vertical-align:middle;
 	margin:2px;
-	background-color:#F8F8F8;
+	background-color:white;
 	padding-right:5px;
 }
 
@@ -293,7 +293,7 @@ table.menuitem {
 }
 
 table.menuitem:hover {
-	background-color:#c5c5c5;
+	background-color:#F0F0F0;
 }
 
 
@@ -307,7 +307,7 @@ td.phonelist {
 
 h1.menuheader {
 	border-style:solid;
-	border-color:#707070;
+	border-color:#AAA;
 	width:100%;
 	border-top-width:1px;
 	border-bottom-width:0px;
@@ -319,7 +319,7 @@ h1.menuheader {
 
 div.copynotice{
 	border-style:solid;
-	border-color:#707070;
+	border-color:#AAA;
 	width:100%;
 	border-top-width:1px;
 	border-bottom-width:0px;
@@ -362,7 +362,7 @@ a.iconmenu:link {
 }
 
 td.iconmenu:hover {
-	background-color:#e0e0e0;
+	background-color:#F0F0F0;
 }
 
 a.iconmenu:visited {
@@ -393,7 +393,7 @@ h1.plugtop{
 
 div.plugtop {
 	width:100%;
-	border-bottom:1px dashed #B0B0B0;
+	border-bottom:1px solid #B0B0B0;
 	padding-top:0px;
 	padding-bottom:6px;
 	margin-bottom: 0px;
@@ -406,22 +406,21 @@ div.plugtop {
 }
 
 div.pluginfo {
-	border:solid;
-	border:0px;
+	border-bottom:1px solid #AAA;
 	width:100%;
 	padding-top:2px;
 	padding-bottom:2px;
 	margin-bottom:10px;
 	text-align:right;
 	vertical-align:middle;
-	background-color:#c0c0e0;
+	background-color:#F8F8F8;
 	font-family:arial,helvetica,sans-serif;
 	font-size:11px;
 }
 
 p.seperator {
 	border-style:solid;
-	border-color:#a0a0a0;
+	border-color:#AAA;
 	width:100%;
 	border-top-width:0px;
 	border-bottom-width:1px;
@@ -661,13 +660,11 @@ p.gosaAccountExpiredHeader {
 } 
 
 table.framework {
-	width:100%;
 	height:100%;
 	border:0px;
 	border-spacing:0px;
 	padding:0px;
-	margin:0px;
-        background-color: #A9FBA6;
+	margin-left:3px;
 	vertical-align:top;
 }
 
@@ -741,13 +738,13 @@ a.alphaselect:hover {
 table.check {
 	background-color:#e1e1f1;
 	color:black;
-	border:1px dashed #a0a0a0;
+	border:1px solid #AAA;
 	width:95%;
 	margin-left:20px;
 }
 
 td.check {
-	border-right:1px dashed #a0a0a0;
+	border-right:1px solid #AAA;
 }
 
 option.select {
@@ -883,7 +880,7 @@ div.setup_navigation_title {
 	width:100%;
 	padding-top:8px;
 	padding-bottom:8px;
-	border-top:1px dashed #AAAAAA;
+	border-top:1px solid #AAAAAA;
 }
 
 /* The box used for each setup step */
@@ -891,7 +888,7 @@ a.navigation_element, div.navigation_element {
 	text-decoration:none;
 	padding-top:8px;
 	padding-bottom:8px;
-	border-top:1px dashed #AAAAAA;
+	border-top:1px solid #AAAAAA;
 	width:100%;
 }
 
@@ -901,7 +898,7 @@ a.navigation_element_active, div.navigation_element_active {
 	width:100%;
 	padding-top:8px;
 	padding-bottom:8px;
-	border-top:1px dashed #AAAAAA;
+	border-top:1px solid #AAAAAA;
 	background-color:#F0F0F0;
 }
 
@@ -973,7 +970,7 @@ div.step2_entry_container {
 /* Container for name and status, when status is failed */
 div.step2_entry_container_info { 
 	padding:3px;
-	border: 1px dashed #AAAAAA;
+	border: 1px solid #AAAAAA;
 	width:99%;
 	cursor:default;
 }
