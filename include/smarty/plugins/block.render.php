@@ -13,7 +13,9 @@ function smarty_block_render($params, $text, &$smarty)
 		unset($params['acl']);
 	}
 
-	echo "<font color='blue' size='2'>&nbsp;".$acl."</font>";
+	if (isset($_SESSION['DEBUGLEVEL']) && $_SESSION['DEBUGLEVEL'] & DEBUG_ACL ){
+		echo "<font color='blue' size='2'>&nbsp;".$acl."</font>";
+	}
 
 	/* Read / Write*/
 	if(preg_match("/w/i",$acl)){
@@ -70,6 +72,7 @@ function smarty_block_render($params, $text, &$smarty)
 			"\\1 \\2");
 	$text 	= preg_replace($from,$to,$text);
 	$text = preg_replace("/GOSA_LINE_BREAK/","\n",$text);
+
 	return $text;
 }
 
