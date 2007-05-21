@@ -117,11 +117,18 @@ class pluglist {
 	function gen_menu()
 	{
 		if ($this->menu == ""){
+			$first= TRUE;
 			$cfg= $this->config->data['MENU'];
 
 			/* Parse headlines */
 			foreach ($cfg as $headline => $plug){
-				$menu= "<p class=\"menuheader\">"._($headline)."</p>\n";
+				if ($first){
+					$style= "";
+					$first= FALSE;
+				} else {
+					$style= "style='border-top:1px solid #AAA; margin-top:0.8em;'";
+				}
+				$menu= "<p class=\"menuheader\" $style>"._($headline)."</p>\n";
 				$entries= "";
 				$this->menuparts[_($headline)]= array();
 

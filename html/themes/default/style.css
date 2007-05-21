@@ -23,6 +23,10 @@ td.listheader {
 	height:22px;
 }
 
+td#menucell {
+	border:1px solid #AAA;
+}
+
 td.scrollhead {
 	vertical-align:top;
 	padding:0px;
@@ -211,8 +215,6 @@ body {
 	margin-top:0px;
 	margin-bottom:0px;
 	background-color:white;
-	background-image:url("images/border.png"); 
-	background-repeat:repeat-y;
 	color:#00008F;
 	font-family:arial,helvetica,sans-serif;
 	font-size:12px;
@@ -249,21 +251,22 @@ a.maintitlebar:hover {
 
 p.menuheader {
 	font-family:arial,helvetica,sans-serif;
-	color:#00378a;
+	color:#00008F;
 	text-decoration:none;
-	background-color:#CDF6BD;
+	border-bottom:1px dashed #AAA;
 	font-weight:bold;
 	font-size:12px;
 	text-align:center;
 	width:100%;
 	vertical-align:middle;
-	padding:3px;
-	margin-top:20px;
+	padding:5px;
+	margin-top:0px;
+	margin-bottom:3px;
 }
 
 p.menuitem {
 	font-family:arial,helvetica,sans-serif;
-	color:#00378a;
+	color:#00008F;
 	text-decoration:none;
 	font-weight:normal;
 	font-size:12px;
@@ -273,12 +276,12 @@ p.menuitem {
 	padding-bottom:2px;
 	vertical-align:middle;
 	margin:2px;
-	background-color:#dfffdf;
+	background-color:#F8F8F8;
 	padding-right:5px;
 }
 
 p.menuitem:hover {
-	background-color:#d2f6c2;
+	background-color:#F0F0F0;
 }
 
 table.menuitem {
@@ -389,20 +392,14 @@ h1.plugtop{
 }
 
 div.plugtop {
-	border-style:solid;
-	border-color:#b0b0b0;
 	width:100%;
-	border-top-color:#e0e0f0;
-	border-top-width:6px;
-	border-bottom-width:1px;
-	border-left-width:0px;
-	border-right-width:0px;
+	border-bottom:1px dashed #B0B0B0;
 	padding-top:0px;
 	padding-bottom:6px;
 	margin-bottom: 0px;
 	text-align:left;
 	vertical-align:middle;
-	background-color:#e0e0f0;
+	background-color:white;
 	font-family:arial,helvetica,sans-serif;
 	font-weight:bold;
 	font-size:24px;
@@ -670,7 +667,7 @@ table.framework {
 	border-spacing:0px;
 	padding:0px;
 	margin:0px;
-	background-color:#cdf6bd;
+        background-color: #A9FBA6;
 	vertical-align:top;
 }
 
@@ -681,7 +678,7 @@ table.maintab {
         border-spacing:0px;
         padding:0px;
         margin:0px;
-        background-color:#cdf6bd;
+        background-color: #A9FBA6;
         vertical-align:top;
 }
 
