@@ -33,9 +33,10 @@ class xlsexport extends plugin
       @log::log("view","all/".get_class($this),$this->dn);
     }
 
+    $dn = $this->config->current['BASE'];
+
     /* Set government mode */
     $smarty= get_smarty();
-
     $smarty->assign("type",FALSE);
     $smarty->assign("depselectivbb","");
     
@@ -105,7 +106,7 @@ class xlsexport extends plugin
       $acls = $this->ui->get_permissions($dn,"all/all");
     }
  
-    if(!preg_match("/r/",$acls)){
+    if(!preg_match("/r/",$acls) && (isset($_POST['sfrmgetsingle']) || isset($_POST['sfrmgetfull']) || isset($_POST['sfrmgetivbb']))){
 
       /* Show error msg */      
       print_red(sprintf(_("You are not allowed to export the given ldap entry (%s)"),@LDAP::fix($dn)));
