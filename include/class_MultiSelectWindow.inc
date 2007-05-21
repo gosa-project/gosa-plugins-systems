@@ -178,7 +178,7 @@ class MultiSelectWindow{
     }
 
     /* Create header with selected base */
-    $listhead = "<div style='background:#F0F0F9;padding:5px;'>";
+    $listhead = "<div style='background:white;padding:5px;'>";
 
     /* Draw root button */
     if($enable_root){

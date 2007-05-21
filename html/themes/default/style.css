@@ -15,10 +15,10 @@ tr.rowxp:hover {
 }
 
 td.listheader {
-	background:#E5E5E5;
+	background:#F0F0F0;
 	font-weight:bold;
-	border-right:1px solid #C0C0C0;
-	border-bottom: 1px solid #b0b0b0;
+	border-right:1px solid #AAA;
+	border-bottom: 1px solid #AAA;
 	padding:3px;
 	height:22px;
 }
@@ -454,9 +454,9 @@ font.must {
 
 div.tab_active {
 	text-align:center;
-	background-color:#f0f0f0;
+	background-color:#f8f8f8;
 	border-style:solid;
-	border-color:black;
+	border-color:#999;
 	border-top-width:1px;
 	border-bottom-width:0px;
 	border-left-width:1px;
@@ -470,9 +470,9 @@ div.tab_active {
 
 div.tab_left {
 	text-align:center;
-	background-color:#c0c0c0;
+	background-color:#D0D0D0;
 	border-style:solid;
-	border-color:black;
+	border-color:#999;
 	border-top-width:1px;
 	border-bottom-width:1px;
 	border-left-width:1px;
@@ -486,9 +486,9 @@ div.tab_left {
 
 div.tab_right {
 	text-align:center;
-	background-color:#c0c0c0;
+	background-color:#D0D0D0;
 	border-style:solid;
-	border-color:black;
+	border-color:#999;
 	border-top-width:1px;
 	border-bottom-width:1px;
 	border-left-width:0px;
@@ -502,9 +502,9 @@ div.tab_right {
 
 div.tab_near_active {
 	text-align:center;
-	background-color:#c0c0c0;
+	background-color:#D0D0D0;
 	border-style:solid;
-	border-color:black;
+	border-color:#999;
 	border-top-width:1px;
 	border-bottom-width:1px;
 	border-left-width:1px;
@@ -519,7 +519,7 @@ div.tab_near_active {
 div.tab_border {
 	width:100%;
 	border-style:solid;
-	border-color:black;
+	border-color:#999;
 	border-top-width:0px;
 	border-bottom-width:1px;
 	border-left-width:0px;
@@ -531,9 +531,9 @@ a.tab_active, input.tab_active {
 	margin:0px;
 	height:22px;
 	font-family:arial,helvetica,sans-serif;
-	background-color:#f0f0f0;
+	background-color:#f8f8f8;
 	text-decoration:none;
-	color:#00348B;
+	color:#00008F;
 	font-size:13px;
 	font-weight:bold;
 }
@@ -543,9 +543,9 @@ a.tab_right, input.tab_right {
 	border:0px;
 	margin:0px;
 	font-family:arial,helvetica,sans-serif;
-	background-color:#c0c0c0;
+	background-color:#D0D0D0;
 	text-decoration:none;
-	color:#00348b;
+	color:#00008F;
 	font-size:13px;
 	font-weight:bold;
 }
@@ -555,9 +555,9 @@ a.tab_left, input.tab_left {
 	border:0px;
 	margin:0px;
 	font-family:arial,helvetica,sans-serif;
-	background-color:#c0c0c0;
+	background-color:#D0D0D0;
 	text-decoration:none;
-	color:#00348b;
+	color:#00008F;
 	font-size:13px;
 	font-weight:bold;
 }
@@ -567,9 +567,9 @@ a.tab_near_active, input.tab_near_active {
 	border:0px;
 	margin:0px;
 	font-family:arial,helvetica,sans-serif;
-	background-color:#c0c0c0;
+	background-color:#D0D0D0;
 	text-decoration:none;
-	color:#00348b;
+	color:#00008F;
 	font-size:13px;
 	font-weight:bold;
 }
@@ -701,8 +701,8 @@ textarea:focus {
 }
 
 div.contentboxh {
-	background-color:#e8e8e8;
-	border:1px solid #b0b0b0;
+	background-color:#F0F0F0;
+	border:1px solid #AAA;
 	border-bottom-width:0px;
 	height:26px;
 	vertical-align:middle;

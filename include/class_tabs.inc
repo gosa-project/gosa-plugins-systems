@@ -85,7 +85,7 @@ class tabs
 	$display= $this->gen_tabs();
 
 	/* Show object */
-	$display.= "<table summary=\"\" cellpadding=4 cellspacing=0 border=0 style=\"width:100%; background-color:#F0F0F0; border-style:solid; border-color:black; border-top-width:0px; border-bottom-width:1px; border-left-width:1px; border-right-width:1px;\">\n";
+	$display.= "<table summary=\"\" cellpadding=4 cellspacing=0 border=0 style=\"width:100%; background-color:#F8F8F8; border-style:solid; border-color:#AAA; border-top-width:0px; border-bottom-width:1px; border-left-width:1px; border-right-width:1px;\">\n";
 	$display.= "<tr><td>\n";
 
 	$obj= $this->by_object[$this->current];
