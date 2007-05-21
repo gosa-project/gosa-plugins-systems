@@ -18,6 +18,7 @@ class logview extends plugin
   var $fields= array("log_level", "host", "time_stamp", "message");
   var $last= array("log_level", "host", "time", "regex");
   var $range = 25;
+  var $view_logged = FALSE;
 
   function logview ($config, $dn= NULL)
   {
@@ -42,6 +43,12 @@ class logview extends plugin
   {
     /* Call parent execute */
     plugin::execute();
+
+    /* Log view */
+    if(!$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","logview/".get_class($this),$this->dn);
+    }
 
     $logfilter= get_global("logfilter");
     $smarty= get_smarty();

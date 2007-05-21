@@ -19,6 +19,7 @@ class mailqueue extends plugin
   var $SortType       = "up";
   var $disp_header    = false;
   var $range          = 20;   
+  var $view_logged = FALSE;
 
   function mailqueue($config, $dn= NULL)
   {
@@ -46,6 +47,12 @@ class mailqueue extends plugin
   {
     /* Call parent execute */
     plugin::execute();
+
+    /* Log view */
+    if(!$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","mailqueue/".get_class($this),$this->dn);
+    }
 
     if(isset($_POST['EntriesPerPage'])){
       $this->range = $_POST['EntriesPerPage'];

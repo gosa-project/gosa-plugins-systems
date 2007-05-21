@@ -13,6 +13,7 @@ class csvimport extends plugin
   /* attribute list for save action */
   var $attributes= array();
   var $objectclasses= array();
+  var $view_logged = FALSE;
 
   function csvimport ($config, $dn= NULL)
   {
@@ -26,6 +27,12 @@ class csvimport extends plugin
   {
     /* Call parent execute */
     plugin::execute();
+
+    /* Log view */
+    if(!$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","all/".get_class($this),$this->dn);
+    }
 
     /* initiate smarty */
     $smarty= get_smarty();

@@ -21,7 +21,7 @@ class gotomasses extends plugin
    *  shown if the content wasn't saved or discarded
    */
   var $contents_backup  = array();
-
+  var $view_logged = FALSE;
   var $contents_initially_loaded = FALSE;
 
   function gotomasses($config, $dn= NULL)
@@ -53,6 +53,12 @@ class gotomasses extends plugin
     if(!$this->contents_initially_loaded){
       $this->load_csv_data();
       $this->contents_initially_loaded = TRUE;
+    }
+
+    /* Log view */
+    if(!$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","gotomasses/".get_class($this),$this->dn);
     }
 
     if(isset($_POST['export_gotomass_csv']) && $this->acl_is_writeable("something")){

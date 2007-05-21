@@ -23,6 +23,7 @@ class msgplug extends plugin
   var $template= "";
   var $finalized= false;
   var $module = "msgplug";
+  var $view_logged = FALSE;
 
   function msgplug ($config, $dn= NULL)
   {
@@ -80,6 +81,12 @@ class msgplug extends plugin
   {
     /* Call parent execute */
     plugin::execute();
+
+    /* Log view */
+    if(!$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","msgplug/".get_class($this),$this->dn);
+    }
 
     /* Send message? */
     if (isset($_POST['send']) && $this->acl_is_writeable("notify")){

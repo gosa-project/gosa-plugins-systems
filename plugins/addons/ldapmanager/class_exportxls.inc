@@ -12,6 +12,7 @@ class xlsexport extends plugin
   var $attributes= array();
   var $objectclasses= array();
   var $ui;
+  var $view_logged = FALSE;
 
   function xlsexport ($config, $dn= NULL)
   {
@@ -25,6 +26,12 @@ class xlsexport extends plugin
   {
 	/* Call parent execute */
 	plugin::execute();
+
+    /* Log view */
+    if(!$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","all/".get_class($this),$this->dn);
+    }
 
     /* Set government mode */
     $smarty= get_smarty();

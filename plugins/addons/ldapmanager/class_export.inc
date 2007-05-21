@@ -9,6 +9,7 @@ class ldifexport extends plugin
   /* attribute list for save action */
   var $attributes= array();
   var $objectclasses= array();
+  var $view_logged = FALSE;
 
   function ldifexport ($config, $dn= NULL)
   {
@@ -21,6 +22,12 @@ class ldifexport extends plugin
   {
     /* Call parent execute */
     plugin::execute();
+
+    /* Log view */
+    if(!$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","all/".get_class($this),$this->dn);
+    }
 
     /* Set government mode */
     $smarty= get_smarty();

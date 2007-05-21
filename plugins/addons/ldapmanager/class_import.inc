@@ -11,6 +11,7 @@ class ldifimport extends plugin
   var $attributes= array();
   var $objectclasses= array();
   var $ui;
+  var $view_logged = FALSE;
 
   function ldifimport ($config, $dn= NULL)
   {
@@ -24,6 +25,12 @@ class ldifimport extends plugin
   {
     /* Call parent execute */
     plugin::execute();
+
+    /* Log view */
+    if(!$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","all/".get_class($this),$this->dn);
+    }
 
     /* Set government mode */
     $smarty= get_smarty();
