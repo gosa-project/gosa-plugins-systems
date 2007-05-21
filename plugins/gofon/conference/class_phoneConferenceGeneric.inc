@@ -52,7 +52,7 @@ class conference extends plugin
   /* Headpage attributes */
   var $last_dep_sorting= "invalid";
   var $departments= array();
-
+  var $view_logged = FALSE;
   var $dialog ;
 
   /* attribute list for save action */
@@ -147,6 +147,12 @@ class conference extends plugin
   {
     /* Call parent execute */
     plugin::execute();
+
+    /* Log last action */
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","gofonconference/".get_class($this),$this->dn);
+    }
 
     $smarty= get_smarty();
 
@@ -249,6 +255,8 @@ class conference extends plugin
     $ldap= $this->config->get_ldap_link();
     $ldap->cd ($this->dn);
     $ldap->recursive_remove();
+
+    @log::log("remove","gofonconference/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
 
     /* Optionally execute a command after we're done */
     $this->handle_post_events('remove');
@@ -660,6 +668,14 @@ class conference extends plugin
       $ldap->add($this->attrs);
       $this->handle_post_events('add');
     }
+
+    /* Log last action */
+    if($this->initially_was_account){
+      @log::log("modify","gofonconference/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    }else{
+      @log::log("create","gofonconference/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    }
+
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of goFonConference/generic with dn '%s' failed."),$this->dn));
 
     /* Optionally execute a command after we're done */

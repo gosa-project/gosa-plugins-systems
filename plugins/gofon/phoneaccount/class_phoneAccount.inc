@@ -46,6 +46,8 @@ class phoneAccount extends plugin
 
   var $uid;
 
+  var $view_logged = FALSE;
+
   function phoneAccount ($config, $dn= NULL, $parent= NULL)
   {
     plugin::plugin ($config, $dn, $parent);
@@ -788,10 +790,14 @@ class phoneAccount extends plugin
     /* Call parent execute */
     plugin::execute();
 
+    /* Log view */
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","users/".get_class($this),$this->dn);
+    }
+
     $display = "";
-
     $SkipWrite = (!isset($this->parent) || !$this->parent) && !isset($_SESSION['edit']);
-
     if(empty($this->macro)&&(!empty($this->goFonMacro))){
 
       /* Go through already saved values, for a parameter */
@@ -1230,6 +1236,13 @@ class phoneAccount extends plugin
     $this->attrs['telephoneNumber'] =$tmp_numbers;
     $ldap->modify ($this->attrs); 
 
+    /* Log last action */
+    if($this->initially_was_account){
+      @log::log("modify","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    }else{
+      @log::log("create","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    }
+
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of user/phone account with dn '%s' failed."),$this->dn));
 
     /* Optionally execute a command after we're done */
@@ -1367,6 +1380,7 @@ class phoneAccount extends plugin
     $this->cleanup();
     $ldap->modify ($this->attrs); 
 
+    @log::log("remove","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     show_ldap_error($ldap->get_error(), sprintf(_("Removing of user/phone account with dn '%s' failed."),$this->dn));
 
     /* Optionally execute a command after we're done */

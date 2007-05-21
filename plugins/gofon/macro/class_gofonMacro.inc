@@ -42,7 +42,7 @@ class macro extends plugin
 
   /*! attribute list for save action */
   var $attributes     = array("cn","base", "description","displayName","goFonMacroContent","goFonMacroVisible");
-
+  var $view_logged = FALSE;
   var $orig_cn = ""; 
   /*! Objectclasses that this calls handles */
   var $objectclasses  = array("top", "goFonMacro");
@@ -96,6 +96,12 @@ class macro extends plugin
   {
     /* Call parent execute */
     plugin::execute();
+
+    /* Log view */
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","gofonmacro/".get_class($this),$this->dn);
+    }
 
     /* Variables */
     $vars 	= "";
@@ -482,7 +488,8 @@ class macro extends plugin
     }
 
     /* Remove phone macro */ 
-    $ldap->rmDir($this->dn); 
+    $ldap->rmDir($this->dn);
+    @log::log("remove","gofonmacro/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error()); 
     show_ldap_error($ldap->get_error(), sprintf(_("Removing of goFonMacro/generic account with dn '%s' failed."),$this->dn));
 
     /* Delete references to object groups */
@@ -527,6 +534,13 @@ class macro extends plugin
         $this->handle_post_events("add");
       }
       show_ldap_error($ldap->get_error(), sprintf(_("Saving of goFonMacro/generic account with dn '%s' failed."),$this->dn));
+
+      /* Log last action */
+      if($this->initially_was_account){
+        @log::log("modify","gofonmacro/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      }else{
+        @log::log("create","gofonmacro/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      }
     }
   }
 

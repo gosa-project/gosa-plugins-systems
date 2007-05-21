@@ -24,7 +24,7 @@ class fonreport extends plugin
   /* attribute list for save action */
   var $attributes_SO  = array("start","search_for","search_base","range","month","sort_direction","sort","year");
   var $objectclasses  = array();
-
+  var $view_logged = FALSE;
   
   /* Construct class */
   function fonreport ($config, $ui)
@@ -104,6 +104,11 @@ class fonreport extends plugin
     /* GVet template engine */
     $smarty= get_smarty();
 
+    /* Log view */
+    if(!$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","gofon/".get_class($this),$this->dn);
+    }
 
     /*****************
       Variable Init
