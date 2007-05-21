@@ -112,16 +112,24 @@ class divListFai extends MultiSelectWindow
     $base = $this->config->current['BASE'];
 
     /* Add base */
-    $deps[] = array("dn"=>$this->config->current['BASE']);
-    $deps= array_merge($deps,get_list("(&(|(ou=*)(description=*))(objectClass=gosaDepartment))", $this->module, $base,
+    $tmp = array();
+    $tmp[] = array("dn"=>$this->config->current['BASE']);
+    $tmp=  array_merge($tmp,get_list("(&(|(ou=*)(description=*))(objectClass=gosaDepartment))", $this->module, $base,
                     array("ou", "description"), GL_SIZELIMIT | GL_SUBSEARCH));
+
+    $deps = array();
+    foreach($tmp as $tm){
+      $deps[$tm['dn']] = $tm['dn'];
+    }
 
     /* Load possible departments */
     $ui= get_userinfo();
     $tdeps= $ui->get_module_departments("fai");
     $ids = $this->config->idepartments;
-    foreach($deps as $dep){
-      if(isset($ids[$dep['dn']]) && in_array_ics($dep['dn'], $tdeps)){
+    $first = "";
+    $found = FALSE;
+    foreach($ids as $dep => $name){
+      if(isset($deps[$dep]) && in_array_ics($dep, $tdeps)){
 
         /* Keep first base dn in mind, we could need this
          *  info if no valid base was found
@@ -129,13 +137,13 @@ class divListFai extends MultiSelectWindow
         if(empty($first)) {
           $first = $dep['dn'];
         }
-  
-        $value = $ids[$dep['dn']];
-        if ($this->selectedBase == $dep['dn']){
+
+        $value = $ids[$dep];
+        if ($this->selectedBase == $dep){
           $found = TRUE;
-          $options.= "<option selected='selected' value='".$dep['dn']."'>$value</option>";
+          $options.= "<option selected='selected' value='".$dep."'>$value</option>";
         } else {
-          $options.= "<option value='".$dep['dn']."'>$value</option>";
+          $options.= "<option value='".$dep."'>$value</option>";
         }
       }
     }

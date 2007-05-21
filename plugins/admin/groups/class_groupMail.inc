@@ -48,6 +48,8 @@ class mailgroup extends plugin
   var $indexed_acl= array();
   var $indexed_user= array();
 
+  var $view_logged = FALSE;
+
   /* attribute list for save action */
   var $attributes= array( "mail",   "gosaMailServer", "gosaMailQuota", "gosaMailMaxSize",
       "gosaMailAlternateAddress", "gosaMailForwardingAddress",
@@ -62,7 +64,6 @@ class mailgroup extends plugin
     /* Initialise all available attributes ... if possible
      */
     plugin::plugin($config, $dn);
-
     $this->orig_cn = $this->cn;
 
     /* Set mailMethod to the one defined in gosa.conf 
@@ -292,16 +293,18 @@ class mailgroup extends plugin
     $this->perms["lrswipcd"]= _("write");
     $this->perms["lrswipcda"]= _("admin");
     $this->perms[""]= _("none");
-    
-    if($this->is_account){
-      @log::log("view","groups/".get_class($this),$this->dn);
-    }
   }
 
   function execute()
   {
     /* Call parent execute */
     //plugin::execute();
+
+    /* Log view */
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","groups/".get_class($this),$this->dn);
+    }
 
     /* Load templating engine */
     $smarty= get_smarty();

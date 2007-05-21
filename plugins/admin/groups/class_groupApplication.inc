@@ -34,7 +34,7 @@ class appgroup extends plugin
 
   var $AllAppsForRelease        = array();
   var $AllAppsForReleaseParameter = array();
-
+  var $view_logged = FALSE;
   var $CopyPasteVars            = array("Categories");
   var $gosaApplicationParameter ;
   var $ui                       = NULL;
@@ -157,9 +157,6 @@ class appgroup extends plugin
       $this->Releases           = $this->getReleases();
     }
 
-    if($this->is_account){
-      @log::log("view","groups/".get_class($this),$this->dn);
-    }
   }
 
 
@@ -384,6 +381,12 @@ class appgroup extends plugin
   {
     /* Call parent execute */
     plugin::execute();
+
+    /* Log view */
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","groups/".get_class($this),$this->dn);
+    }
 
     /* Check if department was selected */ 
     if((isset($_GET['act']))&&($_GET['act']=="depopen")){

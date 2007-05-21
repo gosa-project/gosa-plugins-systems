@@ -40,7 +40,7 @@ class group extends plugin
   var $rfc2307bis= FALSE;
   var $OnlyShowFirstEntries =200;
   var $dnMapping= array();
-
+  var $view_logged = FALSE;
   var $allowGroupsWithSameNameInOtherSubtrees = true;
 
   /* attribute list for save action */
@@ -171,10 +171,6 @@ class group extends plugin
       $this->base =preg_replace ("/^[^,]+,".normalizePreg(get_groups_ou())."/","",$this->dn);
     }
 
-    if($this->dn != "new"){
-      @log::log("view","groups/".get_class($this),$this->dn);
-    }
-
     /* This is always an account */
     $this->is_account= TRUE;
     $this->reload();
@@ -182,10 +178,16 @@ class group extends plugin
 
   function execute()
   {
-	/* Call parent execute */
-	plugin::execute();
+    /* Call parent execute */
+    plugin::execute();
 
-  /* Do we represent a valid group? */
+    /* Log view */
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","groups/".get_class($this),$this->dn);
+    }
+
+    /* Do we represent a valid group? */
     if (!$this->is_account && $this->parent == NULL){
       $display= "<img alt=\"\" src=\"images/stop.png\" align=\"middle\">&nbsp;<b>".
         _("This 'dn' is no group.")."</b>";
