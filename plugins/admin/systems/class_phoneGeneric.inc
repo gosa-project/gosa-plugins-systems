@@ -425,9 +425,6 @@ class phoneGeneric extends plugin
     $this->netConfigDNS->cn = $this->cn;    
     $this->netConfigDNS->save($this->dn);
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of system phone/generic with dn '%s' failed."),$this->dn));
-
-    /* Optionally execute a command after we're done */
-    $this->postcreate();
   }
 
 
