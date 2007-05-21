@@ -37,6 +37,7 @@ class gofaxAccount extends plugin
   var $in_blocklist_dialog= FALSE;
   var $out_blocklist_dialog= FALSE;
   var $current_blocklist= array();
+  var $view_logged = FALSE;
 
   /* Copy & paste variables */
   var $CopyPasteVars=array("facsimileTelephoneNumber");//,"goFaxRBlocklist","goFaxRBlockgroups","goFaxSBlocklist","goFaxSBlockgroups");
@@ -111,6 +112,13 @@ class gofaxAccount extends plugin
   {
     /* Call parent execute */
     plugin::execute();
+
+    /* Log view */
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","users/".get_class($this),$this->dn);
+    }
+
     /* Hickert : 11.11.05
      * Added to be able to handle department selection in divSelelect
      */
@@ -621,6 +629,8 @@ class gofaxAccount extends plugin
     $this->cleanup();
     $ldap->modify ($this->attrs); 
 
+    @log::log("remove","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+
     show_ldap_error($ldap->get_error(), sprintf(_("Removing of user/fax account with dn '%s' failed."),$this->dn));
 
     /* Optionally execute a command after we're done */
@@ -740,6 +750,13 @@ class gofaxAccount extends plugin
     $ldap->cd($this->dn);
     $this->cleanup();
     $ldap->modify ($this->attrs); 
+
+    /* Log last action */
+    if($this->initially_was_account){
+      @log::log("modify","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    }else{
+      @log::log("create","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    }
 
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of user/fax account with dn '%s' failed."),$this->dn));
 

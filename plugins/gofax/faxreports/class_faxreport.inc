@@ -17,6 +17,7 @@ class faxreport extends plugin
   var $report_list    = array();
   var $ui             = NULL;
   var $range          = 20;
+  var $view_logged = FALSE;
 
   /* Constant stuff */
   var $status= array( "SENT", "MAILED", "SERROR", "RERROR", "SBLOCK", "RBLOCK",
@@ -63,6 +64,12 @@ class faxreport extends plugin
   {
     /* Call parent execute */
     plugin::execute();
+
+    /* Log view */
+    if(!$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","users/".get_class($this),$this->dn);
+    }
 
     /************ 
       Variable initialisation 
