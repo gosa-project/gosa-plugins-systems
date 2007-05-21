@@ -43,6 +43,7 @@ class addressbook extends plugin
 	var $telephoneNumber          = "";
 	var $facsimileTelephoneNumber = "";
 	var $pager                    = "";
+  var $view_logged              = FALSE;
 
 	/* attribute list for save action */
 	var $attributes= array("sn", "givenName", "mail", "title",
@@ -78,7 +79,7 @@ class addressbook extends plugin
           "object_type"       => "*");
       register_global("phonefilter", $phonefilter);
     }
-    
+     
     $this->ui = get_userinfo();
   }
 
@@ -200,6 +201,7 @@ class addressbook extends plugin
         /* Delete request is permitted, perform LDAP action */
         $ldap= $this->config->get_ldap_link();
         $ldap->rmdir ($this->dn);
+        @log::log("remove","addressbook/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
         show_ldap_error($ldap->get_error(), sprintf(_("Removing of addressbook entry '%s' failed."),$this->dn));
         gosa_log ("Address book object'".$this->dn."' has been removed");
 
@@ -329,6 +331,11 @@ class addressbook extends plugin
         $_SESSION['saved_start']= $_GET['start'];
       }
       $this->dn = base64_decode($_GET['show']);
+      $this->view_logged =FALSE;
+      if(!$this->view_logged){
+        $this->view_logged = TRUE;
+        @log::log("view","addressbook/".get_class($this),$this->dn);
+      }
       $_SESSION['show_info']= base64_decode($_GET['show']);
     }
 
@@ -716,6 +723,7 @@ class addressbook extends plugin
   {
     /* Load base attributes */
     plugin::plugin ($this->config, $this->dn);
+    $this->view_logged = FALSE;
     $this->storage_base= preg_replace('/^[^,]+,/', '', preg_replace('/'.$this->abobjectclass.',/', '', $this->dn));
   }
 
@@ -752,6 +760,12 @@ class addressbook extends plugin
     $ldap->$mode ($this->attrs);
     if (show_ldap_error($ldap->get_error(), sprintf(_("Removing of addressbook entry '%s' failed."),$this->dn))){
       return (1);
+    }
+
+    if($mode == "add"){
+      @log::log("create","addressbook/".get_class($this),$this->dn, array_keys($this->attrs),$ldap->get_error());
+    }else{
+      @log::log("modify","addressbook/".get_class($this),$this->dn, array_keys($this->attrs),$ldap->get_error());
     }
   }
 
