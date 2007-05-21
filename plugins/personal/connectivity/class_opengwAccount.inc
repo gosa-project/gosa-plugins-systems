@@ -32,7 +32,7 @@ class opengwAccount extends plugin
 	var $initialy_was_account = false;
   var $OGWPassword          = "";
   var $ReadOnly = false;
-  
+  var $view_logged = FALSE;  
   var $uid = "";
 
 	function opengwAccount ($config, $dn= NULL)
@@ -118,20 +118,32 @@ class opengwAccount extends plugin
 			/* Transmit data back to ogw handle */
 			$this->handle->SetInfos($this->info);
 		}
-
-    /* Log view */
-    if($this->is_account){
-      @log::log("view","users/".get_class($this),$this->dn);
-    }
-
 	}
 
 	function execute()
 	{
+    /* Log view */
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","users/".get_class($this),$this->dn);
+    }
+
 		/* Show tab dialog headers */
 		$display= "";
 		$smarty= get_smarty();
 
+    $smarty->assign("validTeams","");
+    $smarty->assign("is_account", " ");
+    $smarty->assign("OGWstate"," disabled ");
+    $smarty->assign("validLocationTeam",array("&nbsp;"));
+    $smarty->assign("validLocationTeams",array("&nbsp;"));
+    $smarty->assign("LocationTeam",0);
+    $smarty->assign("validTemplateUser",array("&nbsp;"));
+    $smarty->assign("validTemplateUsers",array("&nbsp;"));
+    $smarty->assign("TemplateUser",0);
+    $smarty->assign("is_lockedCHK", "  ");
+    $smarty->assign("is_locked", "  ");
+ 
 		/* set default values */
     $tmp = $this->plInfo();
     foreach($tmp['plProvidedAcls'] as $acl => $desc){
