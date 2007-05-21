@@ -255,9 +255,9 @@ p.menuheader {
 	text-decoration:none;
 	border-bottom:1px solid #AAA;
 	font-weight:bold;
+	background-color:#F0F0F0;
 	font-size:12px;
 	text-align:center;
-	width:100%;
 	vertical-align:middle;
 	padding:5px;
 	margin-top:0px;

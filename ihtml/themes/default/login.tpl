@@ -20,7 +20,7 @@
 <form action='index.php' method='post' name='mainform' onSubmit='js_check(this);return true;'>
 
 	<div style='border-bottom:1px solid #AAAAAA'>
-		<div style='padding:3px;'>
+		<div style='padding:3px; background-color:#F8F8F8'>
 		<p class="center" style="margin:0px 0px 0px 5px;padding:5px;font-size:24px;font-weight:bold;">
 			{t}Login screen{/t}
 		</p>
