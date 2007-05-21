@@ -26,6 +26,7 @@ class mailAccount extends plugin
   /* CLI vars */
   var $gosaVacationStart                  = 0;
   var $gosaVacationStop                   = 0;
+  var $view_logged = FALSE;
 
   /* plugin specific values */
   var $mail                               = "";
@@ -198,11 +199,6 @@ class mailAccount extends plugin
           "regex"           => "*");
       register_global("mailfilter", $mailfilter);
     }
-   
-    /* Add "view" to logging class */ 
-    if($this->is_account){
-      @log::log("view","users/".get_class($this),$this->dn);
-    }
   }
 
 
@@ -231,6 +227,12 @@ class mailAccount extends plugin
   {
     /* Call parent execute */
     plugin::execute();
+
+    /* Log view */
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","users/".get_class($this),$this->dn);
+    }
 
     /* Initialise vars */
 

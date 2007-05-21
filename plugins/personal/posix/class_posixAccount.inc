@@ -65,6 +65,8 @@ class posixAccount extends plugin
   var $GroupUserRegex   = "*";
   var $SubSearch        = false;
 
+  var $view_logged = FALSE;
+
   /* attribute list for save action */
   var $CopyPasteVars  = 
       array("grouplist","groupMembership","use_shadowMin",
@@ -95,10 +97,6 @@ class posixAccount extends plugin
     }
 
     $ldap= $this->config->get_ldap_link();
-
-    if($this->is_account){
-      @log::log("view","users/".get_class($this),$this->dn);
-    }
 
     if ($dn != NULL){
 
@@ -228,6 +226,12 @@ class posixAccount extends plugin
     /* Call parent execute */
     plugin::execute();
     $display= "";
+
+    /* Log view */
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","users/".get_class($this),$this->dn);
+    }
 
     /* Department has changed? */
     if(isset($_POST['depselect'])){

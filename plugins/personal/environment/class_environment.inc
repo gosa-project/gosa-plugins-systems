@@ -17,6 +17,7 @@ class environment extends plugin
   var $uid                  = "";
 
   var $is_group             = false;
+  var $view_logged = FALSE;
   
   /* Attribute definition
    */
@@ -235,14 +236,6 @@ class environment extends plugin
     $this->gotoShareSelections= $config->getShareList(true);
     $this->gotoAvailableShares= $config->getShareList(false);  
 
-    if($this->is_account){
-
-      if(in_array("gosaAccount",$this->attrs['objectClass'])){
-        @log::log("view","users/".get_class($this),$this->dn);
-      }else{
-        @log::log("view","groups/".get_class($this),$this->dn);
-      }
-    }
   }
 
 
@@ -263,6 +256,15 @@ class environment extends plugin
   {
     /* Call parent execute */
     plugin::execute();
+    /* Log view */
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      if(in_array("gosaAccount",$this->attrs['objectClass'])){
+        @log::log("view","users/".get_class($this),$this->dn);
+      }else{
+        @log::log("view","groups/".get_class($this),$this->dn);
+      }
+    }
 
     /* Are we editing from MyAccount and not editing a user */
     $WriteOnly = (!isset($this->parent)|| !$this->parent) && !isset($_SESSION['edit']);

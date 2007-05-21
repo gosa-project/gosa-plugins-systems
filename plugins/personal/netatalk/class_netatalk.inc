@@ -40,6 +40,7 @@ class netatalk extends plugin {
   var $cli_summary = "Manage netatalk account";
   var $cli_description = "Manage Account \nfor netatalk";
   var $cli_parameters = array ("eins" => "Eins ist toll", "zwei" => "Zwei ist noch besser");
+  var $view_logged = FALSE;
 
   /* Plugin specific values */
   var $apple_user_homepath_raw   = "";
@@ -102,10 +103,6 @@ class netatalk extends plugin {
 
     /* Save initial account state */
     $this->initially_was_account = $this->is_account;
-
-    if($this->is_account){
-      @log::log("view","users/".get_class($this),$this->dn);
-    }
   }
 
 
@@ -156,6 +153,12 @@ class netatalk extends plugin {
   function execute() 
   {
     plugin :: execute();
+
+    /* Log view */
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","users/".get_class($this),$this->dn);
+    }
 
     /* Use the smarty templating engine here... */
     $smarty = get_smarty();

@@ -60,6 +60,7 @@ class nagiosAccount extends plugin
   var $objectclasses= array("nagiosContact","nagiosAuth");
 
   var $uid = "";
+  var $view_logged = FALSE;
 
   /* constructor, if 'dn' is set, the node loads the given
      'dn' from LDAP */
@@ -77,16 +78,18 @@ class nagiosAccount extends plugin
 
     /* Save initial account state */  
     $this->initially_was_account= $this->is_account;
-
-    if($this->is_account){
-      @log::log("view","users/".get_class($this),$this->dn);
-    }
   }
 
   function execute()
   {
     /* Call parent execute */
     plugin::execute();
+
+    /* Log view */
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","users/".get_class($this),$this->dn);
+    }
 
     /* Load templating engine */
     $smarty= get_smarty();

@@ -85,6 +85,8 @@ class user extends plugin
   var $last_pw_storage= "unset";
   var $had_userCertificate= FALSE;
 
+  var $view_logged = FALSE;
+
   /* attribute list for save action */
   var $attributes= array("sn", "givenName", "uid", "personalTitle", "academicTitle",
       "homePostalAddress", "homePhone", "labeledURI", "ou", "o", "dateOfBirth", "gender","preferredLanguage",
@@ -136,8 +138,6 @@ class user extends plugin
     /* Create me for new accounts */
     if ($dn == "new"){
       $this->is_account= TRUE;
-    }else{
-      @log::log("view","users/".get_class($this),$this->dn);
     }
 
     /* Make hash default to md5 if not set in config */
@@ -216,6 +216,12 @@ class user extends plugin
   {
     /* Call parent execute */
     plugin::execute();
+
+    /* Log view */
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","users/".get_class($this),$this->dn);
+    }
 
     $smarty= get_smarty();
 

@@ -23,6 +23,7 @@ class sambaAccount extends plugin
   /* Definitions */
   var $plHeadline= "Samba";
   var $plDescription= "This does something";
+  var $view_logged = FALSE;
 
   /* CLI vars */
   var $cli_summary= "Manage users samba account";
@@ -188,16 +189,18 @@ class sambaAccount extends plugin
 
     /* Save initial account state */
     $this->initially_was_account= $this->is_account;
-
-    if($this->is_account){
-      @log::log("view","users/".get_class($this),$this->dn);
-    }
   }
 
   function execute()
   {
-	/* Call parent execute */
-	plugin::execute();
+    /* Call parent execute */
+    plugin::execute();
+
+    /* Log view */
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","users/".get_class($this),$this->dn);
+    }
 
     /* Do we need to flip is_account state? */
     if (isset($_POST['modify_state'])){
