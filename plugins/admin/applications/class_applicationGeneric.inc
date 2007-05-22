@@ -16,6 +16,7 @@ class application extends plugin
   var $gosaApplicationIcon= "";
   var $gotoLogonScript	="";
   var $iconData;
+  var $view_logged = FALSE;
 
   /* Headpage attributes */
   var $last_sorting= "invalid";
@@ -70,10 +71,6 @@ class application extends plugin
         $this->base= preg_replace ("/^[^,]+,[^,]+,/", "", $this->dn);
       }
     }
-      
-    if($this->is_account && $dn != "new"){
-      @log::log("view","application/".get_class($this),$this->dn);
-    }
   }
 
 
@@ -117,6 +114,12 @@ class application extends plugin
   {
     /* Call parent execute */
     plugin::execute();
+
+    /* Log view */
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","application/".get_class($this),$this->dn);
+    }
 
     $smarty= get_smarty();
 

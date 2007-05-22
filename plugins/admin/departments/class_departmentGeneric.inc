@@ -33,7 +33,7 @@ class department extends plugin
 	var $orig_dn= "";
 	var $is_administrational_unit= false;
 	var $gosaUnitTag= "";
-
+  var $view_logged = FALSE;
 	var $rec_dst=false;	// Destination for recursive move
 	var $rec_src=false;	// Source for recursive move 
 	var $rec_cpy=false;	// Is recursive move requested ? 
@@ -90,16 +90,18 @@ class department extends plugin
 			$this->is_administrational_unit= true;
       $this->initially_was_tagged = true;
 		}
-
-    if($this->is_account && $dn != "new"){
-      @log::log("view","department/".get_class($this),$this->dn);
-    }
 	}
 
 	function execute()
 	{
 		/* Call parent execute */
 		plugin::execute();
+
+    /* Log view */
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","department/".get_class($this),$this->dn);
+    }
 
 		/* Reload departments */
 		$this->config->get_departments($this->dn);
