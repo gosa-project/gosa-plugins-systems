@@ -39,7 +39,7 @@ if(isset($_SESSION['ui'])){
   del_user_locks($ui->dn);
   
   /* Write something to log */  
-  gosa_log ("User \"".$ui->username."\" logged out");
+  new log("security","logout","",array(),"User \"".$ui->username."\" logged out") ;
 }
 
 /* If GET request is posted, the logout was forced by pressing the link */

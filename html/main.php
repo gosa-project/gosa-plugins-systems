@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
 /* Logged in? Simple security check */
 if (!isset($_SESSION['config'])){
-  gosa_log ("main.php called without session - logging out");
+  new log("security","login","",array(),"main.php called without session - logging out") ;
   header ("Location: logout.php");
   exit;
 } 
@@ -73,7 +73,7 @@ $_SESSION['LastError']          = "";
 /* Check for uniqe ip address */
 $ui= $_SESSION["ui"];
 if ($_SERVER['REMOTE_ADDR'] != $ui->ip){
-  gosa_log ("main.php called with session which has a changed IP address.", 3);
+  new log("security","login","",array(),"main.php called with session which has a changed IP address.") ;
   header ("Location: logout.php");
   exit;
 }
@@ -99,7 +99,7 @@ if(empty($_SESSION['_LAST_PAGE_REQUEST'])){
    */
   if($request_time > $max_life){
     session_unset();
-    gosa_log ("main.php called without session - logging out");
+    new log("security","login","",array(),"main.php called without session - logging out") ;
     header ("Location: logout.php");
     exit;
   }
@@ -170,7 +170,7 @@ $plist= $_SESSION['plist'];
 /* Check for register globals */
 if (isset($global_check) && $config->data['MAIN']['FORCEGLOBALS'] == 'true'){
   echo _("FATAL: Register globals is on. GOsa will refuse to login unless this is fixed by an administrator.");
-  gosa_log ("Register globals is on. For security reasons, this should be turned off.");
+  new log("security","login","",array(),"Register globals is on. For security reasons, this should be turned off.") ;
   session_destroy ();
   exit ();
 }
@@ -186,7 +186,7 @@ if (isset($_GET['plug'])){
   $plugin_dir= $plist->get_path($plug);
   $_SESSION['plugin_dir']= $plugin_dir;
   if ($plugin_dir == ""){
-    gosa_log ("main.php called with invalid plug parameter \"$plug\"", 3);
+    new log("security","gosa","",array(),"main.php called with invalid plug parameter \"$plug\"") ;
     header ("Location: logout.php");
     exit;
   }
@@ -349,7 +349,7 @@ if((isset($config->data['MAIN']['ACCOUNT_EXPIRATION'])) &&
   $expired= ldap_expired_account($config, $ui->dn, $ui->username);
 
   if ($expired == 2){
-    gosa_log ("password for user \"$ui->username\" is about to expire");
+    new log("security","gosa","",array(),"password for user \"$ui->username\" is about to expire") ;
     print_red(_("Your password is about to expire, please change your password"));
   }
 }

@@ -26,7 +26,7 @@ session_start ();
 
 /* Logged in? Simple security check */
 if (!isset($_SESSION['ui'])){
-  gosa_log ("Error: getfax.php called without session");
+  new log("security","faxreport/faxreport","",array(),"Error: getfax.php called without session") ;
   header ("Location: index.php");
   exit;
 }
@@ -34,7 +34,7 @@ $ui= $_SESSION["ui"];
 
 /* User object present? */
 if (!isset($_SESSION['fuserfilter'])){
-  gosa_log ("Error: getfax.php called without propper session data");
+  new log("security","faxreport/faxreport","",array(),"getfax.php called without propper session data") ;
   header ("Location: index.php");
   exit;
 }
@@ -101,22 +101,22 @@ if (!isset($_GET['download'])){
 
     /* Loading image */
     if(!$handle  =  imagick_blob2image($data))	{
-      gosa_log("Can't Load image");
+      new log("view","faxreport/faxreport","",array(),"Can't load fax image") ;
     }
 
     /* Converting image to PNG */
     if(!imagick_convert($handle,"PNG")) {
-      gosa_log("Can't Convert to PNG");
+      new log("view","faxreport/faxreport","",array(),"Can't convert fax image to png") ;
     }
 
     /* Resizing image to 420x594 and blur */
     if(!imagick_resize($handle,420,594,IMAGICK_FILTER_GAUSSIAN,1)){
-      gosa_log("imagick_resize failed");
+      new log("view","faxreport/faxreport","",array(),"Can't resize fax image") ;
     }
 
     /* Creating binary Code for the Image */
     if(!$data = imagick_image2blob($handle)){
-      gosa_log("Can't create blob for image");
+      new log("view","faxreport/faxreport","",array(),"Reading fax image image failed") ;
     }	
   }
 

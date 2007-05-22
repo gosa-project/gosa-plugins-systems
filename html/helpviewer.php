@@ -33,7 +33,7 @@ $config= $_SESSION['config'];
 
 /* If no config object is found in the session, abort help */
 if (!isset($_SESSION['config'])){
-  gosa_log ("main.php called without session");
+  new log("security","all/all","",array(),"Help viewer called without session") ;
   header ("Location: index.php");
   exit;
 }

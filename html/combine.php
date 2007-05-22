@@ -26,7 +26,7 @@ session_start ();
 
 /* Logged in? Simple security check */
 if (!isset($_SESSION['ui'])){
-  gosa_log ("Error: combine.php called without session");
+  new log("security","all/all","",array(),"Error: combine.php called without session") ;
   header ("Location: index.php");
   exit;
 }

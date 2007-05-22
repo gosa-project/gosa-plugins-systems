@@ -21,6 +21,7 @@
 /* Load required includes */
 require_once ("../include/php_setup.inc");
 require_once ("functions.inc");
+require_once ("class_log.inc");
 header("Content-type: text/html; charset=UTF-8");
 
 function displayLogin()
@@ -264,7 +265,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])){
     if ($ui === NULL || $ui == 0){
       $message= _("Please check the username/password combination.");
       $smarty->assign ('nextfield', 'password');
-      gosa_log ("Authentication failed for user \"$username\"");
+      new log("security","login","",array(),"Authentication failed for user \"$username\"") ;
     } else {
       /* Remove all locks of this user */
       del_user_locks($ui->dn);
@@ -293,13 +294,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])){
         if ($expired == 1){
           $message= _("Account locked. Please contact your system administrator.");
           $smarty->assign ('nextfield', 'password');
-          gosa_log ("Account for user \"$username\" has expired");
+          new log("security","login","",array(),"Account for user \"$username\" has expired") ;
         } elseif ($expired == 3){
             $plist= new pluglist($config, $ui);
             foreach ($plist->dirlist as $key => $value){
               if (preg_match("/\bpassword\b/i",$value)){
                 $plug=$key;
-                gosa_log ("User \"$username\" password forced to change");
+                new log("security","login","",array(),"User \"$username\" password forced to change") ;
                 header ("Location: main.php?plug=$plug&amp;reset=1");
                 exit;
               }
@@ -307,13 +308,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])){
           }
 
         /* Not account expired or password forced change go to main page */
-        gosa_log ("User \"$username\" logged in successfully");
+        new log("security","login","",array(),"User \"$username\" logged in successfully") ;
         header ("Location: main.php?global_check=1");
         exit;
         
       } else {
         /* Go to main page */
-        gosa_log ("User \"$username\" logged in successfully");
+        new log("security","login","",array(),"User \"$username\" logged in successfully") ;
         header ("Location: main.php?global_check=1");
         exit;
       }
