@@ -39,6 +39,7 @@ class glpiAccount extends plugin
   var $renameTypeDialog   = false;
   var $renameOSDialog     = false;
   var $select_type        ;
+  var $view_logged = FALSE;
   
   /* Not necessary, cause we use mysql databse */
   var $objectclasses= array("whatever");
@@ -111,16 +112,17 @@ class glpiAccount extends plugin
     $this->name                 = $this->dn;
     $this->orig_dn              = $this->dn;
     $this->initially_was_account = $this->is_account;
-
-    if($this->is_account){
-      @log::log("view","undefined/".get_class($this),$this->dn);
-    }
   }
 
   function execute()
   {
     /* Call parent execute */
     plugin::execute();
+
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","all/".get_class($this),$this->dn);
+    }
 
     /* Fill templating stuff */
     $smarty= get_smarty();

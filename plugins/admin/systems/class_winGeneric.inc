@@ -44,6 +44,7 @@ class wingeneric extends plugin
                             "sambaNTPassword","sambaPwdLastSet","sambaAcctFlags");
   var $objectclasses= array("posixAccount","person","organizationalPerson","inetOrgPerson","gosaAccount","shadowAccount","sambaSamAccount","top");
 
+  var $view_logged = FALSE;
 
   function wingeneric ($config, $dn= NULL, $parent= NULL)
   {
@@ -62,10 +63,6 @@ class wingeneric extends plugin
     $this->orig_dn= $this->dn;
 
     $this->cn= preg_replace("/\\\$\$/","",$this->cn);
-
-    if($this->is_account){
-      @log::log("view","winworkstation/".get_class($this),$this->dn);
-    }
   }
 
 
@@ -84,8 +81,14 @@ class wingeneric extends plugin
 
   function execute()
   {
-	/* Call parent execute */
-	plugin::execute();
+    /* Call parent execute */
+    plugin::execute();
+
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","winworkstation/".get_class($this),$this->dn);
+    }
+
 
     /* Do we represent a valid phone? */
     if (!$this->is_account && $this->parent == NULL){

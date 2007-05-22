@@ -31,6 +31,7 @@ class termservice extends plugin
   var $goFonHardware= "automatic";
 
   var $AutoSync = false;
+  var $view_logged = FALSE;
 
   /* Needed values and lists */
   var $ignore_account= TRUE;
@@ -243,16 +244,17 @@ class termservice extends plugin
       $this->gotoXHsync = preg_replace("/\+/","-",$this->gotoXHsync);
       $this->gotoXVsync = preg_replace("/\+/","-",$this->gotoXVsync);
     }
-
-    if($this->is_account){
-      @log::log("view","terminal/".get_class($this),$this->dn);
-    }
   }
 
   function execute()
   {
-	/* Call parent execute */
-	plugin::execute();
+    /* Call parent execute */
+    plugin::execute();
+
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","terminal/".get_class($this),$this->dn);
+    }
 
     /* Do we need to flip is_account state? */
     if (isset($_POST['modify_state'])){

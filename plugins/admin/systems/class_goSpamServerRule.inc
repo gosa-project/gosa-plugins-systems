@@ -6,6 +6,7 @@ class goSpamServerRule extends plugin {
 	var $rule = "";
 	
 	var $orig_name = "";
+  var $view_logged  =FALSE;
 	
 	function goSpamServerRule($config,$dn,$name = "",$rule ="")
 	{
@@ -18,6 +19,12 @@ class goSpamServerRule extends plugin {
 	function execute()
 	{
 		$smarty = get_smarty();
+
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","server/".get_class($this),$this->dn);
+    }
+
 		foreach($this->attributes as $attr){
 			$smarty->assign($attr,$this->$attr);
 		}

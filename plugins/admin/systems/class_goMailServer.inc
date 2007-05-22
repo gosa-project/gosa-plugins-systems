@@ -39,6 +39,7 @@ class goMailServer extends goService{
   var $Actions                          = array();
   var $cn                               = "";
   var $conflicts                        = array("goMailServer","kolab");
+  var $view_logged  =FALSE;
 
   function goMailServer($config,$dn)
   {
@@ -191,6 +192,11 @@ class goMailServer extends goService{
   function execute()
   { 
     $smarty   = get_smarty();
+
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","server/".get_class($this),$this->dn);
+    }
 
     $tmp = $this->plInfo();
     foreach($tmp['plProvidedAcls'] as $name => $translation){

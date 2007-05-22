@@ -26,7 +26,8 @@ class servrepository extends goService
   var $conflicts             = array("FAIrepositoryServer");
   var $DisplayName           = "";
   var $StatusFlag            = "";
-
+  
+  var $view_logged            = FALSE;
   var $fai_activated          = FALSE;
 
   function servrepository ($config, $dn= NULL, $parent= NULL)
@@ -83,16 +84,17 @@ class servrepository extends goService
         $this->repositories[$tmp[2]]=$tmp2;      
       }
     }
-
-    if($this->is_account){
-      @log::log("view","server/".get_class($this),$this->dn);
-    }
   }
 
   function execute()
   {
     /* Call parent execute */
     plugin::execute();
+
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","server/".get_class($this),$this->dn);
+    }
 
     if(!$this->fai_activated){
       $str = "<h2>"._("You can't use this plugin until FAI is activated.")."</h2>";

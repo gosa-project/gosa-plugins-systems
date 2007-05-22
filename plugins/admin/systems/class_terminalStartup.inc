@@ -26,6 +26,7 @@ class termstartup extends plugin
   /* attribute list for save action */
   var $attributes= array("gotoLdapServer", "gotoBootKernel", "gotoKernelParameters","gotoModules");
   var $objectclasses= array("GOhard");
+  var $view_logged = FALSE;
 
   /* Helper */
   var $customParameters= "";
@@ -144,16 +145,17 @@ class termstartup extends plugin
         }
       }
     }
-
-    if($this->is_account){
-      @log::log("view","terminal/".get_class($this),$this->dn);
-    }
   }
 
   function execute()
   {
     /* Call parent execute */
     plugin::execute();
+
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","terminal/".get_class($this),$this->dn);
+    }
 
     /* Do we need to flip is_account state? */
     if (isset($_POST['modify_state'])){

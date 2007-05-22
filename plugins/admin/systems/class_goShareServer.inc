@@ -24,6 +24,7 @@ class goShareServer extends goService{
   var $allow_mounts         = false;
   var $mounts_to_remove     = array();
   var $mounts_to_add        = array();
+  var $view_logged  =FALSE;
 
   function goShareServer($config,$dn)
   {
@@ -53,6 +54,11 @@ class goShareServer extends goService{
   function execute()
   { 
     $smarty = get_smarty(); 
+
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","server/".get_class($this),$this->dn);
+    }
 
 
     if((isset($_POST['DelNfsEnt']))&&(isset($_POST['goExportEntryList'])) && ($this->acl_is_writeable("name"))){

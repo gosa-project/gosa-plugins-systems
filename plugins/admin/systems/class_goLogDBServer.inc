@@ -22,6 +22,7 @@ class goLogDBServer extends goService{
   var $goLogDBServerStatus  = "";
   var $goLogAdmin           = "";
   var $goLogPassword        = "";  
+  var $view_logged  =FALSE;
 
 
   function goLogDBServer($config,$dn)
@@ -34,6 +35,11 @@ class goLogDBServer extends goService{
   function execute()
   { 
     $smarty = get_smarty(); 
+
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","server/".get_class($this),$this->dn);
+    }
 
     $tmp = $this->plInfo();
     foreach($tmp['plProvidedAcls'] as $name => $translation){

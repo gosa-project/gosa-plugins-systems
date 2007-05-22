@@ -56,6 +56,7 @@ class termgeneric extends plugin
                             "sysinfo"         => "sysinfo");
 
   var $fai_activated = FALSE;
+  var $view_logged = FALSE;
 
   function termgeneric ($config, $dn= NULL, $parent= NULL)
   {
@@ -124,10 +125,6 @@ class termgeneric extends plugin
     }
 
     $this->orig_dn= $this->dn;
-    
-    if($this->is_account){
-      @log::log("view","terminal/".get_class($this),$this->dn);
-    }
   }
 
   function set_acl_base($base)
@@ -146,6 +143,11 @@ class termgeneric extends plugin
   {
     /* Call parent execute */
     plugin::execute();
+
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","terminal/".get_class($this),$this->dn);
+    }
 
     /* Do we need to flip is_account state? */
     if (isset($_POST['modify_state'])){

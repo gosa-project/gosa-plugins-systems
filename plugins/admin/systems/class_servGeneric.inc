@@ -38,6 +38,7 @@ class servgeneric extends plugin
                             "sysinfo"         => "sysinfo");
 
   var $fai_activated  =FALSE;
+  var $view_logged = FALSE;
 
   function servgeneric ($config, $dn= NULL, $parent= NULL)
   {
@@ -64,10 +65,6 @@ class servgeneric extends plugin
     $this->netConfigDNS = new termDNS($this->config,$this->dn,$this->objectclasses);
     $this->netConfigDNS->set_acl_category("server");
     $this->netConfigDNS->set_acl_base($this->base);
- 
-    if($this->is_account){
-      @log::log("view","server/".get_class($this),$this->dn);
-    }
        
     /* Save dn for later references */
     $this->orig_dn= $this->dn;
@@ -92,6 +89,11 @@ class servgeneric extends plugin
   {
     /* Call parent execute */
     plugin::execute();
+
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","server/".get_class($this),$this->dn);
+    }
 
     /* Do we represent a valid server? */
     if (!$this->is_account && $this->parent == NULL){

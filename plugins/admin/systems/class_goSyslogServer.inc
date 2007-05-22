@@ -21,6 +21,7 @@ class goSyslogServer extends goService{
   var $acl;
   var $cn                    = "";
   var $goSyslogServerStatus  = "";
+  var $view_logged  =FALSE;
  
   function goSyslogServer($config,$dn)
   {
@@ -31,6 +32,12 @@ class goSyslogServer extends goService{
 
   function execute()
   { 
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","server/".get_class($this),$this->dn);
+    }
+
+
     $smarty = get_smarty(); 
     return($smarty->fetch(get_template_path("goSyslogServer.tpl",TRUE,dirname(__FILE__))));
   }

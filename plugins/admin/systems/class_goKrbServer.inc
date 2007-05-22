@@ -23,6 +23,7 @@ class goKrbServer extends goService{
   var $goKrbRealm     = "";
   var $goKrbAdmin     = "";
   var $goKrbPassword  ="";  
+  var $view_logged  =FALSE;
  
   function goKrbServer($config,$dn)
   {
@@ -34,6 +35,11 @@ class goKrbServer extends goService{
   function execute()
   { 
     $smarty = get_smarty(); 
+
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","server/".get_class($this),$this->dn);
+    }
 
     $tmp = $this->plinfo();
     foreach($tmp['plProvidedAcls'] as $name => $translation){

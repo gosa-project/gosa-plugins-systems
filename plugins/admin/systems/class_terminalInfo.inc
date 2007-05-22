@@ -25,6 +25,7 @@ class terminfo extends plugin
   /* Needed values and lists */
   var $base= "";
   var $cn= "";
+  var $view_logged = FALSE;
 
   /* attribute list for save action */
   var $ignore_account= TRUE;
@@ -60,6 +61,11 @@ class terminfo extends plugin
   {
     /* Call parent execute */
     plugin::execute();
+
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","terminal/".get_class($this),$this->dn);
+    }
 
     /* Do we represent a valid terminal? */
     if (!$this->is_account && $this->parent == NULL){

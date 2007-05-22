@@ -21,6 +21,7 @@ class componentGeneric extends plugin
   var $attributes= array("cn", "description");
   var $objectclasses= array("top", "device", "ipHost", "ieee802Device");
   var $netConfigDNS;
+  var $view_logged  = FALSE;
 
   function componentgeneric ($config, $dn= NULL, $parent= NULL)
   {
@@ -37,16 +38,18 @@ class componentGeneric extends plugin
     $this->netConfigDNS = new termDNS($this->config,$this->dn,$this->objectclasses, true);
     /* Save dn for later references */
     $this->orig_dn= $this->dn;
-
-    if($this->is_account){
-      @log::log("view","component/".get_class($this),$this->dn);
-    }
   }
+
 
   function execute()
   {
-	/* Call parent execute */
-	plugin::execute();
+    /* Call parent execute */
+    plugin::execute();
+
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","component/".get_class($this),$this->dn);
+    }
 
     /* Do we represent a valid phone? */
     if (!$this->is_account && $this->parent == NULL){

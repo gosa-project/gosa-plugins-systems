@@ -28,6 +28,7 @@ class workgeneric extends plugin
   var $FAIscript= "";
   var $didAction= FALSE;
   var $FAIstate= "";
+  var $view_logged = FALSE;
 
   /* Needed values and lists */
   var $base= "";
@@ -127,10 +128,6 @@ class workgeneric extends plugin
       $this->gotoSyslogServers[$server] = $visible;
     }
 
-    if($this->is_account){
-      @log::log("view","workstation/".get_class($this),$this->dn);
-    } 
-
     /* Save 'dn' for later referal */
     $this->orig_dn= $this->dn;
   }
@@ -152,6 +149,11 @@ class workgeneric extends plugin
   {
     /* Call parent execute */
     plugin::execute();
+
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","workstation/".get_class($this),$this->dn);
+    }
 
     /* Do we need to flip is_account state? */
     if(isset($_POST['modify_state'])){

@@ -11,20 +11,22 @@ class servdhcp extends plugin
   var $ignore_account= TRUE;
   var $attributes= array();
   var $objectclasses= array("whatever");
+  var $view_logged  = FALSE;
 
   function servdhcp ($config, $dn= NULL, $parent= NULL)
   {
     plugin::plugin ($config, $dn, $parent);
-
-    if($this->is_account){
-      @log::log("view","unknown/".get_class($this),$this->dn);
-    }
   }
 
   function execute()
   {
-	/* Call parent execute */
-	plugin::execute();
+    /* Call parent execute */
+    plugin::execute();
+
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","server/".get_class($this),$this->dn);
+    }
 
     /* Fill templating stuff */
     $smarty= get_smarty();

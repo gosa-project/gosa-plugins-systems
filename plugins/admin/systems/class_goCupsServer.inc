@@ -21,6 +21,7 @@ class goCupsServer extends goService{
   var $acl;
   var $cn                  = "";
   var $goCupsServerStatus  = "";
+  var $view_logged  =FALSE;
  
   function goCupsServer($config,$dn)
   {
@@ -31,6 +32,11 @@ class goCupsServer extends goService{
     
   function execute()
   { 
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","server/".get_class($this),$this->dn);
+    }
+
     $smarty = get_smarty(); 
     foreach($this->attributes as $attr){
       $smarty->assign($attr,$this->$attr);

@@ -37,6 +37,7 @@ class goImapServer extends goService {
   var $cyrusPop3            = false;
   var $cyrusPop3SSL         = false;
   var $is_account           = false;
+  var $view_logged  =FALSE;
 
   var $acl; 
 
@@ -59,7 +60,12 @@ class goImapServer extends goService {
   function execute()
   { 
     $smarty = get_smarty();
-  
+ 
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","server/".get_class($this),$this->dn);
+    }
+ 
     /* set new status */
     if(isset($_POST['ExecAction'])){
       if(isset($this->Actions[$_POST['action']])){

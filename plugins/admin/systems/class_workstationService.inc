@@ -24,6 +24,7 @@ class workservice extends plugin
   var $gotoScannerClients= "";
   var $gotoScannerBackend= "";
   var $goFonHardware= "automatic";
+  var $view_logged = FALSE;
 
   /* Needed values and lists */
   var $ignore_account= TRUE;
@@ -234,16 +235,17 @@ class workservice extends plugin
       $this->MouseTypes= array('AUTO' => _("inherited"));
       $this->MousePorts= array('AUTO' => _("inherited"));
     }
-
-    if($this->is_account){
-      @log::log("view","workstation/".get_class($this),$this->dn);
-    }
   }
 
   function execute()
   {
     /* Call parent execute */
     plugin::execute();
+
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","workstation/".get_class($this),$this->dn);
+    }
 
     /* Do we need to flip is_account state? */
     if (isset($_POST['modify_state'])){

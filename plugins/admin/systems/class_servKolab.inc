@@ -29,6 +29,7 @@ class servkolab extends goService {
   var $apache_http                      = "TRUE";
   var $kolabHost                        = array();
   var $orig_cn                          = "";
+  var $view_logged                      = FALSE;
 
   var $attributes =  array("postfix_mydomain", "postfix_mydestination", "proftpd_ftp", "k",
       "postfix_mynetworks", "postfix_enable_virus_scan", "postfix_relayhost", "apache_http",
@@ -76,10 +77,6 @@ class servkolab extends goService {
         $this->initially_was_account = true;
       }
     } 
-
-    if($this->is_account){
-      @log::log("view","server/".get_class($this),$this->dn);
-    }
   }
 
 
@@ -87,6 +84,11 @@ class servkolab extends goService {
   {
     /* Call parent execute */
     plugin::execute();
+
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","server/".get_class($this),$this->dn);
+    }
 
     /***************  
       Variable initialisation

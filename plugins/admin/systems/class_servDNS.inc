@@ -26,6 +26,7 @@ class servdns extends goService
   var $conflicts        = array("servdns");
   var $DisplayName      = "";
   var $StatusFlag       = "";
+  var $view_logged      = FALSE;
 
   function servdns ($config, $dn= NULL, $parent= NULL)
   {
@@ -50,11 +51,6 @@ class servdns extends goService
     }else{
       $this->is_account = true;
     }
-  
-    if($this->is_account){
-      @log::log("view","unknown/".get_class($this),$this->dn);
-    }
-
     $this->initially_was_account = $this->is_account;
   }
 
@@ -64,6 +60,11 @@ class servdns extends goService
     /* Call parent execute 
      */
     plugin::execute();
+
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","server/".get_class($this),$this->dn);
+    }
 
     /* Fill templating stuff 
      */

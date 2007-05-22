@@ -42,7 +42,7 @@ class workstartup extends plugin
   var $FAIdebianMirror    = "auto";
 
   var $unresolved_classes = array();
-
+  var $view_logged        = FALSE;
   
   /* FAI class selection */
   var $InheritedFAIclass           = array();
@@ -367,10 +367,6 @@ class workstartup extends plugin
     if (!isset($this->gotoBootKernels['default-inherited']) && $this->gotoBootKernel == "default-inherited"){
       $this->gotoBootKernel= "default";
     }
-
-    if($this->is_account){
-      @log::log("view","workstation/".get_class($this),$this->dn);
-    }
   }
 
   
@@ -491,6 +487,11 @@ class workstartup extends plugin
 
   	/* Call parent execute */
   	plugin::execute();
+
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","workstation/".get_class($this),$this->dn);
+    }
 
     /* Do we need to flip is_account state? */
     if(isset($_POST['modify_state'])){

@@ -16,6 +16,7 @@ class goService extends plugin{
   var $dn                   = NULL;
   var $cn                   = "";
   var $DisplayName          = "";
+  var $view_logged  =FALSE;
 
    
   /* Construcktion */ 
@@ -23,16 +24,17 @@ class goService extends plugin{
   {
     plugin::plugin($config,$dn);
     $this->DisplayName = _("Empty service");
-
-    if($this->is_account){
-      @log::log("view","server/".get_class($this),$this->dn);
-    }
   }
 
   
   /* Create content */
   function execute()
   {
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","server/".get_class($this),$this->dn);
+    }
+
     $str ="<div style='width:100%; text-align:right;'>".
           "  <input type='submit' name='SaveService' value='"._("Save")."'>&nbsp;".
           "  <input type='submit' name='CancelService' value='"._("Cancel")."'>".

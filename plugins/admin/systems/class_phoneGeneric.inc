@@ -32,6 +32,7 @@ class phoneGeneric extends plugin
   var $goFonMSN         = "";
   var $selected_categorie    = 0;
   var $netConfigDNS;
+  var $view_logged      = FALSE;
 
   /* attribute list for save action */
   var $attributes= array("cn", "description",
@@ -92,10 +93,6 @@ class phoneGeneric extends plugin
 
     /* Save dn for later references */
     $this->orig_dn= $this->dn;
-
-    if($this->is_account){
-      @log::log("view","phone/".get_class($this),$this->dn);
-    }
   }
 
   function set_acl_base($base)
@@ -113,8 +110,13 @@ class phoneGeneric extends plugin
 
   function execute()
   {
-	/* Call parent execute */
-	plugin::execute();
+    /* Call parent execute */
+    plugin::execute();
+
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","phone/".get_class($this),$this->dn);
+    }
 
     /* Do we represent a valid phone? */
     if (!$this->is_account && $this->parent == NULL){

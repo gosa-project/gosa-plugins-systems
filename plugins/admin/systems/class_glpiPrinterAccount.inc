@@ -66,6 +66,8 @@ class glpiPrinterAccount extends plugin
   var $usedAttachments  = array();  // Used Attachments 
   var $usedCartridges   = array();  // Used Cartridges
 
+  var $view_logged      = FALSE;
+
   /* Contructor 
      Sets default values and checks if we already have an existing glpi account
    */
@@ -125,16 +127,17 @@ class glpiPrinterAccount extends plugin
     $this->name                 = $this->dn;
     $this->orig_dn              = $this->dn;
     $this->initially_was_account = $this->is_account;
-
-    if($this->is_account){
-      @log::log("view","printer/".get_class($this),$this->dn); 
-    }
   }
 
   function execute()
   {
     /* Call parent execute */
     plugin::execute();
+
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","printer/".get_class($this),$this->dn);
+    }
 
     /* Fill templating stuff */
     $smarty= get_smarty();

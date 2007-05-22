@@ -39,6 +39,7 @@ class govirusserver extends goService{
   var $avUser                       = "";
   var $avHttpProxyURL               = "";
   var $avDatabaseMirror             = "";
+  var $view_logged  =FALSE;
 
   function govirusserver($config,$dn, $parent= NULL)
   {
@@ -62,6 +63,12 @@ class govirusserver extends goService{
   function execute()
   {
     $smarty = get_smarty(); 
+
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","server/".get_class($this),$this->dn);
+    }
+
 
     /* Set acls */
     $tmp = $this->plInfo();

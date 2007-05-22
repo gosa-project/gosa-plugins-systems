@@ -22,6 +22,7 @@ class goNtpServer extends goService{
   var $goNtpServerStatus= "";
   var $acl;
   var $cn               = "";
+  var $view_logged  =FALSE;
 
   function goNtpServer($config,$dn)
   {
@@ -42,6 +43,11 @@ class goNtpServer extends goService{
   function execute()
   { 
     $smarty = get_smarty(); 
+
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","server/".get_class($this),$this->dn);
+    }
 
     /* Here we add a new entry  */
     if(isset($_POST['NewNTPAdd']) && $_POST['NewNTPExport'] != "" && $this->acl_is_writeable("goTimeSource")) {

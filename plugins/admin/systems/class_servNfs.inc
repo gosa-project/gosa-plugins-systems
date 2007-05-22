@@ -28,6 +28,7 @@ class servnfs extends plugin
   var $create_mount = false; //save mount entry
 
   var $parent       = NULL;
+  var $view_logged  = FALSE;
 
   function servnfs ($config, $parent,$entry= false,$mount =false)
   {
@@ -82,6 +83,11 @@ class servnfs extends plugin
   {
     /* Call parent execute */
     plugin::execute();
+
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","server/".get_class($this),$this->dn);
+    }
 
     /* Fill templating stuff */
     $smarty= get_smarty();

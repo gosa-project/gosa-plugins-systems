@@ -49,7 +49,7 @@ class printgeneric extends plugin
   var $attributes     = array("cn", "description", "l", "labeledURI", "gotoPrinterPPD","gotoUserPrinter", "macAddress", 
                               "gotoUserAdminPrinter","gotoGroupAdminPrinter","gotoUserPrinter","gotoGroupPrinter");
   var $objectclasses  = array("top", "gotoPrinter");
-
+  var $view_logged    = FALSE;
   var $parent;
 
   function printgeneric ($config, $dn,$parent_init,$parent)
@@ -150,10 +150,6 @@ class printgeneric extends plugin
           }
         }
       }
-    }
-    
-    if($this->is_account){
-      @log::log("view","printer/".get_class($this),$this->dn);
     }
   }
 
@@ -256,6 +252,12 @@ class printgeneric extends plugin
   {
     /* Call parent execute */
     plugin::execute();
+
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","printer/".get_class($this),$this->dn);
+    }
+
 
     /* If type of printer couldn't be detected (because of missing parent object in construction) 
      * hide this tab.

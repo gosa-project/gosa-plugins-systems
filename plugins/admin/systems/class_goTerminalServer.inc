@@ -23,6 +23,7 @@ class goTerminalServer extends goService{
   var $goTerminalServerStatus  = "";
   var $goXdmcpIsEnabled        = false;  
   var $goFontPath              = "";
+  var $view_logged  =FALSE;
 
 
   function goTerminalServer($config,$dn)
@@ -35,6 +36,12 @@ class goTerminalServer extends goService{
   function execute()
   { 
     $smarty = get_smarty();
+
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","server/".get_class($this),$this->dn);
+    }
+
   
     $tmp = $this->plinfo();
     foreach($tmp['plProvidedAcls'] as $name => $translation){

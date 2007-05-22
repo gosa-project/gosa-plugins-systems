@@ -41,6 +41,7 @@ class gospamserver extends goService{
   var $dialog           = NULL;
   var $ui               = NULL;
   var $acl              = NULL;
+  var $view_logged  =FALSE;
 
   function gospamserver($config,$dn, $parent= NULL)
   {
@@ -88,6 +89,11 @@ class gospamserver extends goService{
     $display ="";
     $smarty = get_smarty(); 
     
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","server/".get_class($this),$this->dn);
+    }
+
     /* If displayed, it is ever true*/
     $this->is_account =true;
 
