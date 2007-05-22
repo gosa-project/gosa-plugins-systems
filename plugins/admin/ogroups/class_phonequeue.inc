@@ -43,6 +43,8 @@ class phonequeue extends plugin
   var $init_HomeServer  = "0";
   var $goFonHomeServers = array();
 
+  var $view_logged = FALSE;
+
   /* attribute list for save action */
   var $attributes= array( "goFonTimeOut","goFonMaxLen","goFonAnnounceFrequency","goFonDialOptiont","goFonDialOptionT",
       "goFonDialOptionh","goFonDialOptionr","cn","goFonHomeServer",
@@ -135,10 +137,6 @@ class phonequeue extends plugin
     $this->goFonQueueStrategy= $tmp[$this->goFonQueueStrategy];
     $this->old_cn = $this->cn;
     $this->old_phone_numbers = $this->telephoneNumber;
-  
-    if($this->is_account){
-      @log::log("view","ogroups/".get_class($this),$this->dn);
-    }
   }
 
 
@@ -197,6 +195,11 @@ class phonequeue extends plugin
   {
     /* Call parent execute */
     plugin::execute();
+
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","ogroups/".get_class($this),$this->dn);
+    }
 
     if(isset($_POST['modify_state'])){
       if($this->is_account && $this->acl_is_removeable()){

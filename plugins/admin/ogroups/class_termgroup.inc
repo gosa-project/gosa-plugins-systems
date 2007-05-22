@@ -25,6 +25,8 @@ class termgroup extends plugin
   var $attributes     = array("gotoMode","gotoSyslogServer", "gotoNtpServer");
   var $objectclasses  = array("gotoWorkstationTemplate");
   var $CopyPasteVars  = array("gotoNtpServers","modes","inheritTimeServer","members");
+  var $view_logged    = FALSE;
+
 
   function termgroup ($config, $dn= NULL, $parent= NULL)
   {
@@ -94,10 +96,6 @@ class termgroup extends plugin
       if($server == "default"){
         unset($this->gotoNtpServers[$key]);
       }
-    }
-
-    if($this->is_account && $dn != "new"){
-      @log::log("view","ogroups/".get_class($this),$this->dn);
     }
   }
 
@@ -183,6 +181,10 @@ class termgroup extends plugin
     /* Call parent execute */
     plugin::execute();
 
+    if(!$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","ogroups/".get_class($this),$this->dn);
+    }
 
     /*************** 
       Handle requested action

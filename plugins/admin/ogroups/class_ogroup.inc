@@ -30,6 +30,7 @@ class ogroup extends plugin
   var $member= array();
   var $orig_dn= "";
   var $group_dialog= FALSE;
+  var $view_logged = FALSE;
 
   /* attribute list for save action */
   var $attributes= array("cn", "description", "gosaGroupObjects","member");
@@ -94,10 +95,6 @@ class ogroup extends plugin
       $this->base= preg_replace("/^[^,]+,".get_groups_ou()."/","",$this->dn);
     }
 
-    if($this->is_account && $dn != "new"){
-      @log::log("view","ogroup/".get_class($this),$this->dn);
-    }
-
     /* Load member data */
     $this->reload();
   }
@@ -143,10 +140,14 @@ class ogroup extends plugin
 
   function execute()
   {
-	/* Call parent execute */
-	plugin::execute();
+    /* Call parent execute */
+    plugin::execute();
 
-//    $this->reload();
+    if(!$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","ogroups/".get_class($this),$this->dn);
+    }
+
 
     /* Do we represent a valid group? */
     if (!$this->is_account){

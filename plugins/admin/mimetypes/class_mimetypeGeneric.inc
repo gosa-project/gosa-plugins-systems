@@ -47,6 +47,8 @@ class mimetype extends plugin
   var $CopyPasteVars        = array("use_gotoMimeFilePattern","use_gotoMimeApplication","use_gotoMimeEmbeddedApplication","iconData",
                                     "gotoMimeLeftClickAction_I","gotoMimeLeftClickAction_E","gotoMimeLeftClickAction_Q","use_gotoMimeIcon");
 
+  var $view_logged  = FALSE;
+
   /* Select options */
   var $MimeGroups			      = array("application","audio","chemical","image","inode","message","model",
                                       "multipart","text","video","x-conference","x-world");
@@ -127,7 +129,6 @@ class mimetype extends plugin
         $this->base= dn2base($ui->dn);
       }
     } else {
-      @log::log("view","mimetypes/".get_class($this),$this->dn);
       $this->base= preg_replace ("/^[^,]+,[^,]+,/", "", $this->dn);
     }
 
@@ -148,6 +149,11 @@ class mimetype extends plugin
   function execute()
   {
     $smarty = get_smarty();
+
+    if(!$this->view_logged){
+      $this->view_logged =TRUE;
+      @log::log("view","mimetypes/".get_class($this),$this->dn);
+    }
 
     $tmp = $this->plInfo();
     foreach($tmp['plProvidedAcls'] as $name => $translation){

@@ -10,7 +10,7 @@ class mailogroup extends plugin
   var $attributes= array("mail");
   var $objectclasses= array("kolabGroupOfNames");
   var $members= array();
-
+  var $view_logged = FALSE;
 
   function mailogroup ($config, $dn= NULL, $parent= NULL)
   {
@@ -21,10 +21,6 @@ class mailogroup extends plugin
 
     /* Save initial account state */
     $this->initially_was_account= $this->is_account;
-    
-    if($this->is_account){
-      @log::log("view","ogroups/".get_class($this),$this->dn);
-    }
   }
 
 
@@ -32,6 +28,12 @@ class mailogroup extends plugin
   {
     /* Call parent execute */
     plugin::execute();
+
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","ogroups/".get_class($this),$this->dn);
+    }
+
 
     /* Do we need to flip is_account state? */
     if(isset($_POST['modify_state'])){
