@@ -912,6 +912,10 @@ class appgroup extends plugin
 
   function remove_from_parent()
   {
+    if(!$this->initially_was_account){
+      return;
+    }
+
     plugin::remove_from_parent();
 
     $ldap= $this->config->get_ldap_link();
