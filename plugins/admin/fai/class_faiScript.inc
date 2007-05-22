@@ -38,6 +38,7 @@ class faiScript extends plugin
 
   var $FAIstate         ="";
 
+  var $view_logged = FALSE;
   var $ui;
 
   function faiScript ($config, $dn= NULL)
@@ -85,7 +86,6 @@ class faiScript extends plugin
         $this->SubObjects[$objects['cn']] = $objects;
       }
     
-      @log::log("view","fai/".get_class($this),$this->dn);
     }
     $this->ui = get_userinfo();
   }
@@ -140,6 +140,11 @@ class faiScript extends plugin
   {
     /* Call parent execute */
     plugin::execute();
+
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","fai/".get_class($this),$this->dn);
+    }
 
     /* Fill templating stuff */
     $smarty= get_smarty();

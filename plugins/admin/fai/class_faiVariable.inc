@@ -36,6 +36,7 @@ class faiVariable extends plugin
 
   var $FAIstate         = "";
   var $ui   ;
+  var $view_logged      = FALSE;
 
   function faiVariable ($config, $dn= NULL)
   {
@@ -86,7 +87,6 @@ class faiVariable extends plugin
         $this->SubObjects[$object['cn'][0]]['dn']          = $object['dn'];
       }
 
-      @log::log("view","fai/".get_class($this),$this->dn);
     }
     $this->ui = get_userinfo();
   }
@@ -109,6 +109,11 @@ class faiVariable extends plugin
   {
     /* Call parent execute */
     plugin::execute();
+
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","fai/".get_class($this),$this->dn);
+    }
 
     /* Fill templating stuff */
     $smarty= get_smarty();

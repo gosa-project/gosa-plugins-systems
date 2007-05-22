@@ -38,6 +38,7 @@ class faiTemplate extends plugin
 
   var $FAIstate         = "";
   var $ui;
+  var $view_logged      = FALSE;
 
   function faiTemplate ($config, $dn= NULL)
   {
@@ -82,8 +83,6 @@ class faiTemplate extends plugin
         $objects                = $this->get_object_attributes($objects,$this->subAttributes);
         $this->SubObjects[$objects['cn']] = $objects;
       }
-  
-      @log::log("view","fai/".get_class($this),$this->dn);
     }
     $this->ui = get_userinfo();
   }
@@ -124,6 +123,11 @@ class faiTemplate extends plugin
   {
     /* Call parent execute */
     plugin::execute();
+
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","fai/".get_class($this),$this->dn);
+    }
 
     /* Fill templating stuff */
     $smarty= get_smarty();

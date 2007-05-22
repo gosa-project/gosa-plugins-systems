@@ -22,6 +22,8 @@ class faiPartitionTable extends plugin
   var $FAIstate         = "";
   var $ui;
 
+  var $view_logged      = FALSE;
+
   function faiPartitionTable ($config, $dn= NULL)
   {
     /* Load Attributes */
@@ -99,8 +101,6 @@ class faiPartitionTable extends plugin
           $this->disks[$name]['partitions'][$partition['FAIpartitionNr']] = $partition; 
         }  
       }
-  
-      @log::log("view","fai/".get_class($this),$this->dn);
     }
     ksort($this->disks);
   }
@@ -121,8 +121,13 @@ class faiPartitionTable extends plugin
 
   function execute()
   {
-	/* Call parent execute */
-	plugin::execute();
+    /* Call parent execute */
+    plugin::execute();
+
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","fai/".get_class($this),$this->dn);
+    }
 
     /* Fill templating stuff */
     $smarty= get_smarty();

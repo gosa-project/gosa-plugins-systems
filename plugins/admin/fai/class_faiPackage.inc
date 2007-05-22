@@ -55,6 +55,7 @@ class faiPackage extends plugin
   var $newDialogShown   =false;
 
   var $FAIstate         = "";
+  var $view_logged      = FALSE;
 
   var $FAIinstallMethods  = array( "install", "ninstall", "remove", 
       "dselect-upgrade", "taskinst", "taskrm",
@@ -134,7 +135,6 @@ class faiPackage extends plugin
           $this->ConfiguredPackages[$attr['FAIpackage'][0]][$attr['FAIvariable'][0]]=$tmp;
         }
       }
-      @log::log("view","fai/".get_class($this),$this->dn);
     }
 
     if (isset($this->attrs['FAIdebianSection']['count'])){
@@ -169,8 +169,12 @@ class faiPackage extends plugin
   function execute()
   {
     /* Call parent execute */
-
     plugin::execute();
+
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","fai/".get_class($this),$this->dn);
+    }
 
     /* Fill templating stuff */
     $smarty= get_smarty();

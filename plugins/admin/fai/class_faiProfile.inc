@@ -27,6 +27,7 @@ class faiProfile extends plugin
   var $FAIAllclasses    = array();  // Contains all possible Classnames
   var $ui               ;
   var $FAIstate      = "";
+  var $view_logged      = FALSE;
 
   function faiProfile($config, $dn= NULL)
   {
@@ -100,7 +101,6 @@ class faiProfile extends plugin
 
     if($dn != "new"){
       $this->dn =$dn;
-      @log::log("view","fai/".get_class($this),$this->dn);
     }
     $this->old_cn   = $this->cn;
   }
@@ -205,6 +205,12 @@ class faiProfile extends plugin
   {
     /* Call parent execute */
     plugin::execute();
+
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","fai/".get_class($this),$this->dn);
+    }
+
     /* Fill templating stuff */
     $smarty= get_smarty();
     $display= "";

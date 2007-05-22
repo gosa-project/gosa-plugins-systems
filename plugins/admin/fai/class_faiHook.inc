@@ -35,7 +35,7 @@ class faiHook extends plugin
   var $is_dialog        = false;    // specifies which buttons will be shown to save or abort
   var $dialog           = NULL;     // a dialog, e.g. new disk dialog
   var $SubObjects       = array();  // All leafobjects of this object
-
+  var $view_logged      = FALSE;
   var $FAIstate         = "";  
   var $ui;
 
@@ -82,8 +82,6 @@ class faiHook extends plugin
       }
     }
     $this->ui = get_userinfo();
-
-    @log::log("view","fai/".get_class($this),$this->dn);
   }
 
 
@@ -149,6 +147,11 @@ class faiHook extends plugin
   {
     /* Call parent execute */
     plugin::execute();
+
+    if($this->is_account && !$this->view_logged){
+      $this->view_logged = TRUE;
+      @log::log("view","fai/".get_class($this),$this->dn);
+    }
 
     /* Fill templating stuff */
     $smarty= get_smarty();
