@@ -178,7 +178,6 @@ class ogroupManagement extends plugin
           /* Delete request is permitted, perform LDAP action */
           $this->ogroup= new ogrouptabs($this->config,$this->config->data['TABS']['OGROUPTABS'], $dn);
           $this->ogroup->delete ();
-          gosa_log ("Object group'".$dn."' has been removed");
           unset ($this->ogroup);
           $this->ogroup= NULL;
         } else {
@@ -186,7 +185,7 @@ class ogroupManagement extends plugin
           /* Normally this shouldn't be reached, send some extra
              logs to notify the administrator */
           print_red (_("You are not allowed to delete this object group!"));
-          gosa_log ("Warning: '".$this->ui->uid."' tried to trick group deletion.");
+          @log::log("security","ogroups/".get_class($this),$dn,array(),"Tried to trick deletion.");
         }
         /* Remove lock file after successfull deletion */
         del_lock ($dn);
@@ -258,7 +257,6 @@ class ogroupManagement extends plugin
         $this->ogroup= new ogrouptabs($this->config,
             $this->config->data['TABS']['OGROUPTABS'], $this->dn);
         $this->ogroup->delete ();
-        gosa_log ("Object group'".$this->dn."' has been removed");
         unset ($this->ogroup);
         $this->ogroup= NULL;
       } else {
@@ -266,7 +264,7 @@ class ogroupManagement extends plugin
         /* Normally this shouldn't be reached, send some extra
            logs to notify the administrator */
         print_red (_("You are not allowed to delete this object group!"));
-        gosa_log ("Warning: '".$this->ui->uid."' tried to trick group deletion.");
+        @log::log("security","ogroups/".get_class($this),$dn,array(),"Tried to trick deletion.");
       }
 
       /* Remove lock file after successfull deletion */
@@ -327,7 +325,6 @@ class ogroupManagement extends plugin
 
         /* Save user data to ldap */
         $this->ogroup->save();
-        gosa_log ("Object group'".$this->dn."' has been saved");
 
         if (!isset($_POST['edit_apply'])){
           /* Group has been saved successfully, remove lock from

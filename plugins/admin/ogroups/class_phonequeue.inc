@@ -157,13 +157,13 @@ class phonequeue extends plugin
     $cfg_Current  = $this->goFonHomeServers[$this->goFonHomeServer];
     $r_current    =  @mysql_pconnect($cfg_Current['SERVER'],$cfg_Current['LOGIN'],$cfg_Current['PASSWORD']);
     if(!$r_current){
-      gosa_log(@mysql_error($r_current));
+      @log::log("debug","ogroups/".get_class($this),"",array(),@mysql_error($r_current));
       return(sprintf(_("The MySQL home server '%s' isn't reachable as user '%s', check GOsa log for mysql error."),
             $cfg_Current['SERVER'],$cfg_Current['LOGIN']));
     }
     $db_current  =  @mysql_select_db($cfg_Current['DB'],$r_current);
     if(!$db_current){
-      gosa_log(@mysql_error($r_current));
+      @log::log("debug","ogroups/".get_class($this),"",array(),@mysql_error($r_current));
       mysql_close($r_current);
       return( sprintf(_("Can't select database '%s' on home server '%s'."),$cfg_Current['DB'],$cfg_Current['SERVER']));
     }
@@ -176,13 +176,13 @@ class phonequeue extends plugin
       $cfg_Init  = $this->goFonHomeServers[$this->init_HomeServer] ;
       $r_init    =  @mysql_pconnect($cfg_Init['SERVER'],$cfg_Init['LOGIN'],$cfg_Init['PASSWORD']);
       if(!$r_init){
-        gosa_log(@mysql_error($r_init));
+        @log::log("debug","ogroups/".get_class($this),"",array(),@mysql_error($r_init));
         return(sprintf(_("The MySQL initial home server '%s' isn't reachable as user '%s', check GOsa log for mysql error."),
               $cfg_Init['SERVER'],$cfg_Init['LOGIN']));
       }
       $db_init  =  @mysql_select_db($cfg_Init['DB'],$r_init);
       if(!$db_init){
-        gosa_log(@mysql_error($r_init));
+        @log::log("debug","ogroups/".get_class($this),"",array(),@mysql_error($r_init));
         mysql_close($r_init);
         return( sprintf(_("Can't select database '%s' on initial home server '%s'."),$cfg_Init['DB'],$cfg_Init['SERVER']));
       }
@@ -379,7 +379,7 @@ class phonequeue extends plugin
         foreach($delete as $sql){
           $res = @mysql_query($sql,$res_cur);
           if(!$res){
-            gosa_log(@mysql_error($res_cur));
+            @log::log("debug","ogroups/".get_class($this),"",array(),@mysql_error($r_current));
             return(_("Error while removing old queue entries from database.").
                 "&nbsp;"._("Please have a look a the gosa logfiles."));
           }
@@ -439,7 +439,7 @@ class phonequeue extends plugin
       $query = "SELECT * FROM ".$cfg_Current['QUEUE_TABLE']."  WHERE name='".$this->old_cn."';";
       $res   = mysql_query($query,$res_cur);
       if(!$res){
-        gosa_log(@mysql_error($res_cur));
+        @log::log("debug","ogroups/".get_class($this),"",array(),@mysql_error($res_cur));
         return(_("Could not detect old queue entry, query failed.")."&nbsp;"._("Please have a look a the gosa logfiles."));
       }
       $cnt = mysql_affected_rows($res_cur);
@@ -734,7 +734,7 @@ class phonequeue extends plugin
       foreach($SQL as $query)
       $res   = mysql_query($query,$res_cur);
       if(!$res){
-        gosa_log(@mysql_error($res_cur));
+        @log::log("debug","ogroups/".get_class($this),"",array(),@mysql_error($res_cur));
         return(_("Mysql query failed.")."&nbsp;"._("Please have a look a the gosa logfiles."));
       }
     }

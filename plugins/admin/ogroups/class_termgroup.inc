@@ -166,12 +166,6 @@ class termgroup extends plugin
         $ldap->cd ($key);
         $ldap->modify($attrs);
         show_ldap_error($ldap->get_error(),sprintf(_("Setting action state (FAIstate) failed for object '%s', value was '%s'."),$key,$action));
-        
-        if(!preg_match("/success/i",$ldap->get_error())) {
-          gosa_log("FAILED !! Updating FAIstate to '".$action."' : ".$key);
-        }else{
-          gosa_log("OK.  Updating FAIstate to '".$action."' : ".$key);
-        }
       }
     }
   }
