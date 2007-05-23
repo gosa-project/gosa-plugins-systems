@@ -173,7 +173,6 @@ class groupManagement extends plugin
 
         /* Save user data to ldap */
         $this->grouptab->save();
-        gosa_log ("Group object '".$this->dn."' has been saved");
 
         if (!isset($_POST['edit_apply'])){
           /* Group has been saved successfully, remove lock from LDAP. */
@@ -272,13 +271,12 @@ class groupManagement extends plugin
             $this->usertab= new usertabs($this->config, $this->config->data['TABS']['USERTABS'],$dn);
             $this->usertab->set_acl_base();
             $this->usertab->delete ();
-            gosa_log ("User object '".$dn."' has been removed");
             unset ($this->usertab);
             $this->usertab= NULL;
           } else {
             print_red (sprintf(_("You are not allowed to delete the user '%s'!"),$dn));
             if(isset($this->ui->uid)){
-              gosa_log ("Warning: '".$this->ui->uid."' tried to trick user deletion.");
+              @log::log("security","groups/".get_class($this),$dn,array(),"Tried to trick deletion.");
             }
           }
           /* Remove lock file after successfull deletion */
@@ -307,7 +305,6 @@ class groupManagement extends plugin
             $this->grouptab= new grouptabs($this->config,$this->config->data['TABS']['GROUPTABS'], $this->dn);
             $this->grouptab->set_acl_base($this->dn);
             $this->grouptab->delete ();
-            gosa_log ("Group object'".$this->dn."' has been removed");
             unset ($this->grouptab);
             $this->grouptab= NULL;
 
@@ -316,7 +313,7 @@ class groupManagement extends plugin
             /* Normally this shouldn't be reached, send some extra
                logs to notify the administrator */
             print_red (_("You are not allowed to delete this group!"));
-            gosa_log ("Warning: '".$this->ui->uid."' tried to trick group deletion.");
+            @log::log("security","groups/".get_class($this),$dn,array(),"Tried to trick deletion.");
           }
           /* Remove lock file after successfull deletion */
           del_lock ($dn);
@@ -389,7 +386,6 @@ class groupManagement extends plugin
         $this->grouptab= new grouptabs($this->config,$this->config->data['TABS']['GROUPTABS'], $this->dn);
         $this->grouptab->set_acl_base($this->dn);
         $this->grouptab->delete ();
-        gosa_log ("Group object'".$this->dn."' has been removed");
         unset ($this->grouptab);
         $this->grouptab= NULL;
 
@@ -401,7 +397,7 @@ class groupManagement extends plugin
         /* Normally this shouldn't be reached, send some extra
            logs to notify the administrator */
         print_red (_("You are not allowed to delete this group!"));
-        gosa_log ("Warning: '".$this->ui->uid."' tried to trick group deletion.");
+        @log::log("security","groups/".get_class($this),$dn,array(),"Tried to trick deletion.");
       }
 
       /* Remove lock file after successfull deletion */
