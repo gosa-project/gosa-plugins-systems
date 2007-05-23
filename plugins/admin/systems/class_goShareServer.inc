@@ -262,7 +262,7 @@ class goShareServer extends goService{
         $ldap->cd($mountsdn);
         $ldap->add($mounts);
         show_ldap_error($ldap->get_error(), sprintf(_("Creating system server/shares (mount container) with dn '%s' failed."),$this->dn)); 
-        gosa_log("Mount container '$mountsdn' has been created");
+        new log("modify","server/".get_class($this),$mountdn,array_keys($mount),$ldap->get_error());
     }
 
     # remove deleted mounts from the container
@@ -276,7 +276,7 @@ class goShareServer extends goService{
       if (count($attrs) != 0) {
         $ldap->rmdir($mountdn);
         show_ldap_error($ldap->get_error(), sprintf(_("Removing system server/shares (mount container) with dn '%s' failed."),$this->dn)); 
-        gosa_log("Mount object '".$mountdn."' has been removed");
+        new log("remove","server/".get_class($this),$mountdn,array_keys($mount),$ldap->get_error());
       }
     }
 
@@ -287,7 +287,7 @@ class goShareServer extends goService{
       $ldap->cd($mountdn);
       $ldap->add($mount);
       show_ldap_error($ldap->get_error(), sprintf(_("Saving system server/shares (mount container) with dn '%s' failed."),$this->dn)); 
-      gosa_log("Mount object '".$mountdn."' has been added");
+      new log("create","server/".get_class($this),$mountdn,array_keys($mount),$ldap->get_error());
     }
   }
 

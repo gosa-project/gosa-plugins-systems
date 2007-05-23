@@ -405,7 +405,7 @@ class systems extends plugin
             $attrs['gotoRootPasswd']= crypt($_POST['new_password'],substr(session_id(),0,2));
           }
           $ldap->modify($attrs);
-          gosa_log ("Password for '".$this->dn."' has been changed");
+          @log::log("security","systems/".get_class($this),$this->dn,array_keys($attrs),$ldap->get_error());
         }else{
           print_red(_("You are not allowed to change the password for this object."));
         }
@@ -513,15 +513,13 @@ class systems extends plugin
               $this->systab->delete();
             }
             unset ($this->systab);
-            gosa_log ("System object'".$dn."' has been removed");
             $this->systab= NULL;
 
           } else {
             /* Normally this shouldn't be reached, send some extra
                logs to notify the administrator */
             print_red (_("You are not allowed to delete this component!"));
-            gosa_log ("Warning: '".$this->ui->uid."' tried to trick system ".
-                "deletion.");
+            @log::log("security","systems/".get_class($this),$dn,array(),"Tried to trick deletion.");
           }
           /* Remove lock file after successfull deletion */
           del_lock ($dn);
@@ -647,7 +645,6 @@ class systems extends plugin
           $this->systab->delete();
         }
         unset ($this->systab);
-        gosa_log ("System object'".$this->dn."' has been removed");
         $this->systab= NULL;
 
         /* Terminal list has changed, reload it. */
@@ -656,8 +653,7 @@ class systems extends plugin
         /* Normally this shouldn't be reached, send some extra
            logs to notify the administrator */
         print_red (_("You are not allowed to delete this component!"));
-        gosa_log ("Warning: '".$this->ui->uid."' tried to trick system ".
-            "deletion.");
+        @log::log("security","systems/".get_class($this),$dn,array(),"Tried to trick deletion.");
       }
 
       /* Remove lock file after successfull deletion */
@@ -715,7 +711,6 @@ class systems extends plugin
         }
 
         $this->systab->save();
-        gosa_log ("System object'".$this->dn."' has been saved");
 
         /* Incoming behavior; you can select a system type and an ogroup membership.
          * If this object is an Incoming object, $_SESSION['SelectedSystemType'] isset.

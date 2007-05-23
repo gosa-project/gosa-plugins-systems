@@ -198,8 +198,6 @@ class servkolab extends goService {
       /* Remove complete entry */
       $ldap->rmdir ($this->dn);
       show_ldap_error($ldap->get_error(), sprintf(_("Removing host entry from system server/kolab with dn '%s' failed."),$this->dn));
-      gosa_log("k=kolab entry removed, ".$this->hostname." was the last kolabHost entry.");
-
     } else {
 
       /* Only modify kolabHost */
@@ -214,7 +212,6 @@ class servkolab extends goService {
       $this->cleanup();
       $ldap->modify ($attrs); 
       show_ldap_error($ldap->get_error(), sprintf(_("Removing host entry from system server/kolab with dn '%s' failed."),$this->dn));
-      gosa_log("Removing ".$this->hostname." from list of kolabHosts");
     }
 
     @log::log("remove","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());

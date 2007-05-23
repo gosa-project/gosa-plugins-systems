@@ -258,8 +258,7 @@ class userManagement extends plugin
             if (isset($config->data['MAIN']['EXTERNALPWDHOOK'])){
               exec($config->data['MAIN']['EXTERNALPWDHOOK']." ".$username." ".$_POST['new_password'], $resarr);
             }
-
-            gosa_log ("Password for '".$this->usertab->dn."' has been changed");
+            @log::log("modify","users/".get_class($this),$this->usertab->dn,array(),"Password has been changed");
             unset($this->usertab);
             $this->usertab= NULL;
           }
@@ -269,7 +268,7 @@ class userManagement extends plugin
             exec($config->data['MAIN']['EXTERNALPWDHOOK']." ".$username." ".$_POST['new_password'], $resarr);
           }
 
-          gosa_log ("Password for '".$this->dn."' has been changed");
+          @log::log("modify","users/".get_class($this),$this->dn,array(),"Password has been changed");
         }
       } else {
 
@@ -341,13 +340,12 @@ class userManagement extends plugin
             $this->usertab= new usertabs($this->config, $this->config->data['TABS']['USERTABS'],$dn);
             $this->usertab->set_acl_base();
             $this->usertab->delete ();
-            gosa_log ("User object '".$dn."' has been removed");
             unset ($this->usertab);
             $this->usertab= NULL;
           } else {
             print_red (sprintf(_("You are not allowed to delete the user '%s'!"),$dn));
             if(isset($this->ui->uid)){
-              gosa_log ("Warning: '".$this->ui->uid."' tried to trick user deletion.");
+              @log::log("security","users/".get_class($this),$dn,array(),"Tried to trick deletion.");
             }
           }
           /* Remove lock file after successfull deletion */
@@ -415,7 +413,6 @@ class userManagement extends plugin
         $this->usertab= new usertabs($this->config, $this->config->data['TABS']['USERTABS'],$this->dn);
         $this->usertab->set_acl_base();
         $this->usertab->delete ();
-        gosa_log ("User object '".$this->dn."' has been removed");
         unset ($this->usertab);
         $this->usertab= NULL;
       } else {
@@ -425,7 +422,7 @@ class userManagement extends plugin
         print_red (_("You are not allowed to delete this user!"));
 
         if(isset($this->ui->uid)){
-          gosa_log ("Warning: '".$this->ui->uid."' tried to trick user deletion.");
+          @log::log("security","users/".get_class($this),$this->dn,array(),"Tried to trick deletion.");
         }
       }
 
@@ -472,10 +469,8 @@ class userManagement extends plugin
 
         /* Save user data to ldap */
         if($this->usertab->save() == 1){
-          gosa_log ("User object '".$this->dn."' saving failed.");
           return;
         }
-        gosa_log ("User object '".$this->dn."' has been saved");
 
         if (!isset($_POST['edit_apply'])){
           /* User has been saved successfully, remove lock from LDAP. */
