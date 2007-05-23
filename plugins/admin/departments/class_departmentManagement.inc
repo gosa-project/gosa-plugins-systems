@@ -193,7 +193,6 @@ class departmentManagement extends plugin
           $this->deptabs->set_acl_base();
           $this->deptabs->delete ();
           $this->deptabs = NULL;
-          gosa_log ("Department object'".$this->dn."' has been removed");
         } else {
           print_red (_("You have no permission to remove this department."));
         }
@@ -261,7 +260,6 @@ class departmentManagement extends plugin
       $acl = $this->ui->get_permissions($this->dn,"department/department");
       if(preg_match("/d/",$acl)){
         $this->remove_from_parent();
-        gosa_log ("Department object'".$this->dn."' has been removed");
       } else {
         print_red (_("You have no permission to remove this department."));
       }
@@ -367,7 +365,6 @@ class departmentManagement extends plugin
       if ($this->dn != "new"){
         del_lock ($this->dn);
       }
-      gosa_log ("Department object'".$this->dn."' has been saved");
       unset ($this->deptabs);
       $this->deptabs= NULL;
       unset ($_SESSION['objectinfo']);
