@@ -133,7 +133,6 @@ class gofonMacro extends plugin
 
         /* Save data data to ldap */
         $this->macrotabs->save();
-        gosa_log ("Macro object'".$this->dn."' has been saved");
 
         if (!isset($_POST['edit_apply'])){
           /* macro has been saved successfully, remove lock from
@@ -232,7 +231,6 @@ class gofonMacro extends plugin
           /* Delete request is permitted, perform LDAP action */
           $this->macrotabs= new macrotabs($this->config,$this->config->data['TABS']['MACROTABS'], $dn,"gofonmacro");
           $this->macrotabs->delete ();
-          gosa_log ("macro object'".$dn."' has been removed");
           unset ($this->macrotabs);
           $this->macrotabs= NULL;
 
@@ -310,14 +308,13 @@ class gofonMacro extends plugin
         /* Delete request is permitted, perform LDAP action */
         $this->macrotabs= new macrotabs($this->config,$this->config->data['TABS']['MACROTABS'], $this->dn,"gofonmacro");
         $this->macrotabs->delete ();
-        gosa_log ("macro object'".$this->dn."' has been removed");
         unset ($this->macrotabs);
         $this->macrotabs= NULL;
       } else {
         /* Normally this shouldn't be reached, send some extra
            logs to notify the administrator */
         print_red (_("You are not allowed to delete this macro!"));
-        gosa_log ("Warning: '".$this->ui->uid."' tried to trick group deletion.");
+        @log::log("security","gofonmacro/".get_class($this),$this->dn,array(),"Tried to trick deletion.");
       }
       /* Remove lock file after successfull deletion */
       del_lock ($this->dn);

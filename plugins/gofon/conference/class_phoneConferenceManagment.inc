@@ -160,7 +160,6 @@ class phoneConferenceManagment extends plugin
         $acl = $this->ui->get_permissions($this->dn,"gofonconference/conference");
         if(preg_match("/d/",$acl)){
           $this->remove_from_parent();
-          gosa_log ("Department object'".$this->dn."' has been removed");
         } else {
           print_red (_("You have no permission to remove this department."));
         }
@@ -223,7 +222,6 @@ class phoneConferenceManagment extends plugin
       $acl = $this->ui->get_permissions($this->dn,"gofonconference/conference"); 
       if(preg_match("/d/",$acl)){
         $this->remove_from_parent();
-        gosa_log ("Department object'".$this->dn."' has been removed");
       } else {
         print_red (_("You have no permission to remove this department."));
       }
@@ -287,10 +285,8 @@ class phoneConferenceManagment extends plugin
 
       if (count($message) == 0){
         if($this->conftab->save() == 1){
-          gosa_log ("goFonConference object '".$this->dn."' saving failed.");
           return;
         }
-        gosa_log ("goFonConference object '".$this->dn."' has been saved");
 
         if (!isset($_POST['edit_apply'])){
           if ($this->dn != "new"){

@@ -72,7 +72,6 @@ if (!$remove_lock){
 		if (count ($message) == 0){
 			$phoneAccount->save ();
 
-			gosa_log ("User/phone object'".$ui->dn."' has been saved");
 			del_lock ($ui->dn);
 			sess_del ('edit');
 

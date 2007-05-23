@@ -200,13 +200,13 @@ class macro extends plugin
     foreach($this->goFonHomeServers as $goFonHomeServer => $cfg_Current){
       $r_current    =  @mysql_pconnect($cfg_Current['SERVER'],$cfg_Current['LOGIN'],$cfg_Current['PASSWORD']);
       if(!$r_current){
-        gosa_log(@mysql_error($r_current));
+        @log::log("debug","gofonmacro/".get_class($this),"",array(),@mysql_error($r_current));
         return(sprintf(_("The MySQL home server '%s' isn't reachable as user '%s', check GOsa log for mysql error."),
               $cfg_Current['SERVER'],$cfg_Current['LOGIN']));
       }
       $db_current  =  @mysql_select_db($cfg_Current['DB'],$r_current);
       if(!$db_current){
-        gosa_log(@mysql_error($r_current));
+        @log::log("debug","gofonmacro/".get_class($this),"",array(),@mysql_error($r_current));
         mysql_close($r_current);
         return( sprintf(_("Can't select database '%s' on home server '%s'."),$cfg_Current['DB'],$cfg_Current['SERVER']));
       }
@@ -237,7 +237,7 @@ class macro extends plugin
         $db_current =  @mysql_select_db($Server['DB'],$r_current);
         $res = @mysql_query($query,$r_current);
         if(!$res){
-          gosa_log(@mysql_error($r_current));
+          @log::log("debug","gofonmacro/".get_class($this),"",array(),@mysql_error($r_current));
           return(sprintf(_("Removing macro from '%s' failed. Check GOsa log for mysql error."),$Server['SERVER']));
         }
         @mysql_close($r_current);
@@ -345,8 +345,7 @@ class macro extends plugin
         $query  = preg_replace("/%TABLENAME%/",$cfg['EXT_TABLE'],$sql);
         $res    = @mysql_query($query,$r_con);
         if(!$res){
-          gosa_log(@mysql_error($r_con));
-          gosa_log($query);
+          @log::log("debug","gofonmacro/".get_class($this),"",array(),@mysql_error($r_con));
           return(sprintf(_("Insert of new macro failed for server '%s'."),$cfg['SERVER']));
         }
         @mysql_close($r_con);

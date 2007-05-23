@@ -252,7 +252,6 @@ class blocklist extends plugin
     if (isset($_POST['delete_blocklist_confirm'])){
       if ($this->acl_is_removeable()){
         $this->remove_from_parent();
-        gosa_log ("Blocklist object'".$this->dn."' has been removed");
         $this->reload ();
       } else {
         print_red (_("You have no permission to remove this blocklist."));
@@ -303,7 +302,6 @@ class blocklist extends plugin
         }
 
         $this->save ();
-        gosa_log ("Blocklist object'".$this->dn."' has been saved");
       
         if (!isset($_POST['edit_apply'])){
           $this->dn= "";

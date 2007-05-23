@@ -55,7 +55,6 @@ if (!$remove_lock){
                 /* No errors, save object */
                 if (count ($message) == 0){
                         $gofaxAccount->save ();
-			gosa_log ("User/fax object'".$ui->dn."' has been saved");
                         del_lock ($ui->dn);
                         sess_del ('edit');
 
