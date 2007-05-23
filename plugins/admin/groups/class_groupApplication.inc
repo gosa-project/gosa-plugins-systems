@@ -936,7 +936,8 @@ class appgroup extends plugin
   {
     /* Skip saving application settings, if we do not have release acls */
     if($this->no_release_acls){
-      gosa_log("Skip saving group application extension. Caused by insufficient acls");
+      new log("security","groups/".get_class($this),$this->dn,array(),"Skip saving group application extension. Caused by insufficient acls");
+      
       return;
     }
 

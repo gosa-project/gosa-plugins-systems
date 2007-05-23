@@ -205,7 +205,6 @@ class mimetypeManagement extends plugin
         /* Save data data to ldap */
         $this->mimetabs->set_release($this->DivListMimeTypes->selectedRelease);
         $this->mimetabs->save();
-        gosa_log ("Mime object'".$this->dn."' has been saved");
 
         if (!isset($_POST['edit_apply'])){
           /* Mime type has been saved successfully, remove lock from LDAP. */
@@ -309,7 +308,6 @@ class mimetypeManagement extends plugin
           $this->mimetabs= new mimetabs($this->config, $this->config->data['TABS']['MIMETABS'], $dn,"mimetypes");
           $this->mimetabs->set_acl_base($dn);
           $this->mimetabs->delete ();
-          gosa_log ("Mime type object'".$dn."' has been removed");
           unset ($this->mimetabs);
           $this->mimetabs= NULL;
 
@@ -317,7 +315,7 @@ class mimetypeManagement extends plugin
           /* Normally this shouldn't be reached, send some extra
              logs to notify the administrator */
           print_red (_("You are not allowed to delete this mime type!"));
-          gosa_log ("Warning: '".$this->ui->uid."' tried to trick group deletion.");
+          @log::log("security","mimetypes/".get_class($this),$dn,array(),"Tried to trick deletion.");
         }
         /* Remove lock file after successfull deletion */
         del_lock ($dn);
@@ -393,7 +391,6 @@ class mimetypeManagement extends plugin
         $this->mimetabs= new mimetabs($this->config, $this->config->data['TABS']['MIMETABS'], $this->dn,"mimetypes");
         $this->mimetabs->set_acl_base($this->dn);
         $this->mimetabs->delete ();
-        gosa_log ("Mime type object'".$this->dn."' has been removed");
         unset ($this->mimetabs);
         $this->mimetabs= NULL;
 
@@ -402,7 +399,7 @@ class mimetypeManagement extends plugin
         /* Normally this shouldn't be reached, send some extra
            logs to notify the administrator */
         print_red (_("You are not allowed to delete this mime type!"));
-        gosa_log ("Warning: '".$this->ui->uid."' tried to trick group deletion.");
+        @log::log("security","mimetypes/".get_class($this),$dn,array(),"Tried to trick deletion.");
       }
 
       /* Remove lock file after successfull deletion */
