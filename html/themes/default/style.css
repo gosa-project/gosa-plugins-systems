@@ -375,18 +375,9 @@ a.iconmenu:hover {
 }
 
 h1.plugtop{
-	border-style:solid;
-	border-color:#707070;
 	width:100%;
-	border-top-width:0px;
-	border-bottom-width:1px;
-	border-left-width:0px;
-	border-right-width:0px;
-	padding-top:0px;
-	margin-top:0px;
 	padding-bottom:6px;
 	text-align:left;
-	background-color:red;
 	font-family:arial,helvetica,sans-serif;
 	font-size:24px;
 }
@@ -399,7 +390,7 @@ div.plugtop {
 	margin-bottom: 0px;
 	text-align:left;
 	vertical-align:middle;
-	background-color:white;
+	background-color:#F0F0F0;
 	font-family:arial,helvetica,sans-serif;
 	font-weight:bold;
 	font-size:24px;
