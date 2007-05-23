@@ -59,28 +59,38 @@ class log {
     /* Create data object */
     $entry = array(); 
     $entry['timestamp'] = time();
-    $entry['user']      = $ui->dn;
+    $entry['user']      = @$ui->dn;
     $entry['action']    = $action;
     $entry['objecttype']= $objecttype;
     $entry['object']    = $object;
     $entry['changes']   = $changes;
     $entry['result']    = $result;
+
+    if(!isset($this->config->current['LOGGING']) && empty($entry['user'])){
+      $entry['user']  = "unknown";
+    }
  
     /* Check if all given values are valid */
     $msgs = @log::check($entry);
     if(count($msgs)){
       foreach($msgs as $msg){
         trigger_error("Logging failed, reason was: ".$msg);
-        print_red("Logging failed, reason was: ".$msg);
+        print_red("Logging failed, reason was: ".$msg); 
       }
+      
     }else{
 
-      /* Start logging for configured methods */
-      if(isset($this->config->current['LOGGING']) && preg_match("/(^|,)syslog(,|$)/i",$this->config->current['LOGGING'])){
+      if(!isset($this->config->current['LOGGING'])){
         @log::log_into_syslog($entry);
-      }
-      if(isset($this->config->current['LOGGING']) && preg_match("/(^|,)mysql(,|$)/i",$this->config->current['LOGGING'])){
-        @log::log_into_db($entry);
+      }else{
+
+        /* Start logging for configured methods */
+        if(isset($this->config->current['LOGGING']) && preg_match("/(^|,)syslog(,|$)/i",$this->config->current['LOGGING'])){
+          @log::log_into_syslog($entry);
+        }
+        if(isset($this->config->current['LOGGING']) && preg_match("/(^|,)mysql(,|$)/i",$this->config->current['LOGGING'])){
+          @log::log_into_db($entry);
+        }
       }
     }
   }
@@ -89,11 +99,11 @@ class log {
   function check($entry = array())
   {
     $msgs = array();
-    if(!isset($entry['user']) || empty($entry['user'])){
-      $msgs[] = "Currently active user is empty.";
-    }
+  #  if(!isset($entry['user']) || empty($entry['user'])){
+  #    $msgs[] = "Currently active user is empty.";
+  #  }
 
-    if(!isset($entry['action']) || !in_array($entry['action'],array("modify","create","remove","copy","snapshot","view"))){
+    if(!isset($entry['action']) || !in_array($entry['action'],array("modify","create","remove","copy","snapshot","view","security"))){
       $msgs[] = "Invalid option specified '".$entry['action']."'";
     }
 

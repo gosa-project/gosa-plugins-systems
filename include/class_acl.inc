@@ -1032,7 +1032,9 @@ class acl extends plugin
     $this->cleanup();
     $ldap->modify ($this->attrs);
 
-    @log::log("modify","acls/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    if(count($this->attrs)){
+      @log::log("modify","acls/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    }
 
     show_ldap_error($ldap->get_error(), sprintf(_("Saving ACLs with dn '%s' failed."),$this->dn));
 
