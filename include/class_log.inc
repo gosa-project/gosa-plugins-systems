@@ -45,8 +45,7 @@ class log {
    */
   function log($action,$objecttype,$object,$changes_array = array(),$result = TRUE)
   {
-    global $config;
-    $this->config = $config;
+    $this->config = $_SESSION['config'];
     $ui   = get_userinfo(); 
 
     /* Create string out of changes */
@@ -81,15 +80,15 @@ class log {
     }else{
 
       if(!isset($this->config->current['LOGGING'])){
-        @log::log_into_syslog($entry);
+        $this->log_into_syslog($entry);
       }else{
 
         /* Start logging for configured methods */
         if(isset($this->config->current['LOGGING']) && preg_match("/(^|,)syslog(,|$)/i",$this->config->current['LOGGING'])){
-          @log::log_into_syslog($entry);
+          $this->log_into_syslog($entry);
         }
         if(isset($this->config->current['LOGGING']) && preg_match("/(^|,)mysql(,|$)/i",$this->config->current['LOGGING'])){
-          @log::log_into_db($entry);
+          $this->log_into_db($entry);
         }
       }
     }
@@ -118,7 +117,7 @@ class log {
   /* This function is used to into the systems syslog */
   function log_into_syslog($entry)
   {
-    $str = $entry['user']." ".$entry['action']." ".$entry['object']." from type ".$entry['objecttype']." ".$data." : Result was ".$entry['result'];
+    $str = $entry['user']." ".$entry['action']." ".$entry['object']." from type ".$entry['objecttype']." ".$entry['changes']." : Result was ".$entry['result'];
     gosa_log($str);
   }
 
@@ -135,7 +134,7 @@ class log {
 
     foreach($servers as $server_name => $server){
   
-      $con = mysql_pconnect($server['SERVER'],$server['USER'],$server['PWD']);
+      $con = mysql_pconnect($server_name,$server['USER'],$server['PWD']);
       if(!$con){
         print_red(sprintf(_("Could not connect to logging server %s."),$server['SERVER']));
       }else{
