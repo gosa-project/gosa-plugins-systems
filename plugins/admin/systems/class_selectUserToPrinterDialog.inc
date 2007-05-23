@@ -12,6 +12,7 @@ class selectUserToPrinterDialog extends plugin
   var $attributes           = array();
   var $objectclasses        = array("whatever");
   var $regex                = "*";
+  var $subtree              = FALSE;
   var $depselect            = "/";
   var $deplist              = "/";
 
@@ -74,6 +75,7 @@ class selectUserToPrinterDialog extends plugin
       $this->regex=$_POST['regexPrinter'];
       $this->depselect = $_POST['depselectPrinter'];
     }
+    $this->subtree= isset($_POST['SubSearch']);
 
     if((isset($_GET['search']))&&(!empty($_GET['search']))){
       $this->regex=$_GET['search']."*";
@@ -127,6 +129,7 @@ class selectUserToPrinterDialog extends plugin
     $smarty->assign("infoimage"           , get_template_path('images/info.png'));
     $smarty->assign("launchimage"         , get_template_path('images/small_filter.png'));
     $smarty->assign("deplist"             , $deps);
+    $smarty->assign("subtree", $this->subtree?"checked":"");
 
     $display.= $smarty->fetch(get_template_path('selectUserToPrinterDialog.tpl', TRUE,dirname(__FILE__)));
     return($display);
@@ -166,7 +169,11 @@ class selectUserToPrinterDialog extends plugin
     $attrs  = $this->searchAttrs;
     $cat    = $this->search_cat;
 
-    $res = get_list($filter,$cat,$base,$attrs);
+    if ($this->subtree){
+      $res= get_list($filter,$cat,$base,$attrs, GL_SUBSEARCH);
+    } else {
+      $res= get_list($filter,$cat,$base,$attrs);
+    }
     foreach($res as $printer){
       if(($detailed ==true)){
         if(isset($printer[$this->searchAppend])){
