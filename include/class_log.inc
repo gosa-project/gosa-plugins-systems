@@ -102,7 +102,7 @@ class log {
   #    $msgs[] = "Currently active user is empty.";
   #  }
 
-    if(!isset($entry['action']) || !in_array($entry['action'],array("modify","create","remove","copy","snapshot","view","security"))){
+    if(!isset($entry['action']) || !in_array($entry['action'],array("modify","create","remove","copy","snapshot","view","security","debug"))){
       $msgs[] = "Invalid option specified '".$entry['action']."'";
     }
 

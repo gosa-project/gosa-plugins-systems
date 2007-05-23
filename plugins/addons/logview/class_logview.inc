@@ -91,12 +91,14 @@ class logview extends plugin
       $link = @mysql_pconnect($cfg['SERVER'], $cfg['LOGIN'], $cfg['PASSWORD']);
       if ($link === FALSE){
         print_red(_("Can't connect to log database, no logs can be shown!"));
+        new log("debug","logview","",array(),@mysql_error());
         return ($smarty->fetch (get_template_path('contents.tpl', TRUE)));
       }
 
       /* check of log database is available */
       if (! @mysql_select_db("gomon")){
         print_red(_("Can't select log database for log generation!"));
+        new log("debug","logview","",array(),@mysql_error());
         return ($smarty->fetch (get_template_path('contents.tpl', TRUE)));
       }
 
@@ -109,6 +111,7 @@ class logview extends plugin
         $result = @mysql_query($query);
         if ($result === false){
           print_red(_("Query for log database failed!. Requesting host names failed."));
+          new log("debug","logview","",array(),@mysql_error());
           return ($smarty->fetch (get_template_path('contents.tpl', TRUE)));
         }
 
@@ -129,6 +132,7 @@ class logview extends plugin
         @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__, $query, "Database query");
         $result = @mysql_query($query);
         if ($result === false){
+          new log("debug","logview","",array(),@mysql_error());
           print_red(_("Query for log database failed!"));
           return ($smarty->fetch (get_template_path('contents.tpl', TRUE)));
         }
@@ -187,9 +191,11 @@ class logview extends plugin
     /* Test connection object && create up query string */
     if ($link === FALSE){
       print_red(_("Can't connect to log database, no logs can be shown!"));
+      new log("debug","logview","",array(),@mysql_error());
     } else {
       if (! @mysql_select_db("gomon")){
         print_red(_("Can't select log database for log generation!"));
+        new log("debug","logview","",array(),@mysql_error());
       } else {
 
         /* Assemble time query */
@@ -261,6 +267,9 @@ class logview extends plugin
         /* Get number of entries */
         $query= "SELECT COUNT(*)".$query_base.";";
         $result = @mysql_query($query);
+        if(!$result){
+          new log("debug","logview","",array(),@mysql_error());
+        }
         $line= mysql_fetch_array($result, MYSQL_ASSOC);
         $count= $line['COUNT(*)'];
         if ($count > 25){
@@ -273,7 +282,9 @@ class logview extends plugin
         $query= "SELECT *".$query_base." ORDER BY ".$this->fields[$this->sort]." $desc LIMIT ".$this->start.",".$this->range.";";
         @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__, $query, "Database query");
         $result = @mysql_query($query);
-
+        if(!$result){
+          new log("debug","logview","",array(),@mysql_error());
+        }
         /* Display results */
         $mod= 0;
 
