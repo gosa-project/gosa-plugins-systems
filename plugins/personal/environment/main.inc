@@ -67,7 +67,6 @@ if (!$remove_lock){
     /* No errors, save object */
     if (count ($message) == 0){
       $environment->save ();
-      gosa_log ("User/environment object '".$ui->dn."' has been saved");
       del_lock ($ui->dn);
       sess_del ('edit');
 

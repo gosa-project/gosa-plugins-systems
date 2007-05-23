@@ -65,7 +65,6 @@ if (!$remove_lock) {
     /* No errors, save object */
     if (count($message) == 0) {
       $netatalk->save();
-      gosa_log("User/netatalk object'".$ui->dn."' has been saved");
       del_lock($ui->dn);
       sess_del('edit');
 

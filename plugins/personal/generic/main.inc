@@ -94,7 +94,7 @@ if (!$remove_lock){
         return ($display);
       }
       change_password ($user->dn, $_POST['new_password'], 0, $user->pw_storage);
-      gosa_log ("Password for '".$user->dn."' has been changed");
+      @log::log("modify","users/".get_class($this),"",array(),"Password has been changed");
 
     } else {
 
@@ -114,7 +114,6 @@ if (!$remove_lock){
     /* No errors, save object */
     if (count ($message) == 0){
       $user->save ();
-      gosa_log ("User/generic object'".$ui->dn."' has been saved");
       del_lock ($ui->dn);
       sess_del ('edit');
 

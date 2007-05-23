@@ -69,7 +69,6 @@ if (!$remove_lock){
     /* No errors, save object */
     if (count ($message) == 0){
       $mailAccount->save ();
-      gosa_log ("User/mail object'".$ui->dn."' has been saved");
       del_lock ($ui->dn);
       sess_del ('edit');
 

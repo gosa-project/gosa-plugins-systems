@@ -70,7 +70,6 @@ if (!$remove_lock){
     /* No errors, save object */
     if (count ($message) == 0){
       $sambaAccount->save ();
-      gosa_log ("User/samba object'".$ui->dn."' has been saved");
       del_lock ($ui->dn);
       sess_del ('edit');
 

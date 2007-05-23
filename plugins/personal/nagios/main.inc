@@ -70,7 +70,6 @@ if (!$remove_lock){
     /* No errors, save object */
     if (count ($message) == 0){
       $nagiosAccount->save ();
-      gosa_log ("User/nagios object'".$ui->dn."' has been saved");
       del_lock ($ui->dn);
       sess_del ('edit');
 

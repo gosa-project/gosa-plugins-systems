@@ -71,7 +71,6 @@ if (!$remove_lock){
     /* No errors, save object */
     if (count ($message) == 0){
       $posixAccount->save ();
-      gosa_log ("User/posix object'".$ui->dn."' has been saved");
       del_lock ($ui->dn);
       sess_del ('edit');
 

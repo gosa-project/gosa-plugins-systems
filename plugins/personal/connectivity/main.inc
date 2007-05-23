@@ -74,7 +74,6 @@ if (!$remove_lock){
     /* No errors, save object */
     if (count ($message) == 0){
       $connectivity->save ();
-      gosa_log ("User/connectivity object'".$ui->dn."' has been saved");
       del_lock ($ui->dn);
       sess_del ('edit');
 

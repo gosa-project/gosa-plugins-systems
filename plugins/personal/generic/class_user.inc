@@ -881,22 +881,22 @@ class user extends plugin
 
         /* Load the new uploaded Photo */
         if(!$handle  =  imagick_blob2image($this->photoData))  {
-          gosa_log("Can't Load image");
+          @log::log("debug","users/".get_class($this),"",array(),"Could not access uploaded image");
         }
 
         /* Resizing image to 147x200 and blur */
         if(!imagick_resize($handle,147,200,IMAGICK_FILTER_GAUSSIAN,0)){
-          gosa_log("imagick_resize failed");
+          @log::log("debug","users/".get_class($this),"",array(),"Could not resize uploaded image");
         }
 
         /* Converting image to JPEG */
         if(!imagick_convert($handle,"JPEG")) {
-          gosa_log("Can't Convert to JPEG");
+          @log::log("debug","users/".get_class($this),"",array(),"Could not convert uploaded image to jepg");
         }
 
         /* Creating binary Code for the Image */
         if(!$dump = imagick_image2blob($handle)){
-          gosa_log("Can't create blob for image");
+          @log::log("debug","users/".get_class($this),"",array(),"Could not create new user image");
         }
 
         /* Sending Image */
