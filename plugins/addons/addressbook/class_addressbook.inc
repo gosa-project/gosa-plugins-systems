@@ -203,14 +203,14 @@ class addressbook extends plugin
         $ldap->rmdir ($this->dn);
         @log::log("remove","addressbook/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
         show_ldap_error($ldap->get_error(), sprintf(_("Removing of addressbook entry '%s' failed."),$this->dn));
-        gosa_log ("Address book object'".$this->dn."' has been removed");
-
+        @log::log("remove","addressbook/".get_class($this),$this->dn,array(),"Address book object'".$this->dn."' has been removed");
+  
       } else {
 
         /* Normally this shouldn't be reached, send some extra
            logs to notify the administrator */
         print_red (_("You are not allowed to delete this entry!"));
-        gosa_log ("Warning: '".$this->ui->uid."' tried to trick address book deletion.");
+        @log::log("remove","addressbook/".get_class($this),$this->dn,array(),"Warning: '".$this->ui->uid."' tried to trick address book deletion.");
       }
 
       /* Remove lock file after successfull deletion */
@@ -242,7 +242,6 @@ class addressbook extends plugin
       /* No errors, save object */
       if (count ($message) == 0){
         $this->save();
-        gosa_log ("Addressbook object '".$this->dn."' has been saved");
 
         /* Clean up */
         if (isset($_SESSION['saved_start'])){

@@ -462,7 +462,8 @@ class Step_Migrate extends setup_step
     $res = $ldap->add($testEntry);
     $ldap->cat($dn);
     if(!$ldap->count()){
-      gosa_log($ldap->get_error());
+      @log::log("view","setup/".get_class($this),$dn,array(),$ldap->get_error());
+
       $this->checks['permissions']['STATUS']    = FALSE;
       $this->checks['permissions']['STATUS_MSG']= _("Failed");
       $this->checks['permissions']['ERROR_MSG'] = 
@@ -475,7 +476,7 @@ class Step_Migrate extends setup_step
     $res = $ldap->rmDir($dn);
     $ldap->cat($dn);
     if($ldap->count()){
-      gosa_log($ldap->get_error());
+      @log::log("view","setup/".get_class($this),$dn,array(),$ldap->get_error());
       $this->checks['permissions']['STATUS']    = FALSE;
       $this->checks['permissions']['STATUS_MSG']= _("Failed");
       $this->checks['permissions']['ERROR_MSG'] = 

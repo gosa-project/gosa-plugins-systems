@@ -246,7 +246,6 @@ class aclManagement extends plugin
         /* Delete request is permitted, perform LDAP action */
         $this->acltabs= new aclroletab($this->config, NULL,$this->dn);
         $this->acltabs->delete();
-        gosa_log ("ACL role object '".$this->dn."' has been removed");
         unset ($this->acltabs);
         $this->acltabs= NULL;
       } else {
@@ -256,7 +255,7 @@ class aclManagement extends plugin
         print_red (_("You are not allowed to delete this acl role!"));
 
         if(isset($this->ui->uid)){
-          gosa_log ("Warning: '".$this->ui->uid."' tried to trick acl role deletion.");
+          @log::log("security","aclroles/".get_class($this),$this->dn,array(),"Warning: '".$this->ui->uid."' tried to trick acl role deletion.");
         }
       }
 
@@ -310,7 +309,6 @@ class aclManagement extends plugin
         /* Delete request is permitted, perform LDAP action */
         $this->acltabs= new acl($this->config, NULL,$this->dn);
         $this->acltabs->remove_from_parent();
-        gosa_log ("ACL object '".$this->dn."' has been removed");
         unset ($this->acltabs);
         $this->acltabs= NULL;
       } else {
@@ -320,7 +318,8 @@ class aclManagement extends plugin
         print_red (_("You are not allowed to delete this acl!"));
 
         if(isset($this->ui->uid)){
-          gosa_log ("Warning: '".$this->ui->uid."' tried to trick acl deletion.");
+          @log::log("security","aclroles/".get_class($this),$this->dn,array(),"Warning: '".$this->ui->uid."' tried to trick acl role      deletion.");
+          
         }
       }
 
@@ -357,10 +356,8 @@ class aclManagement extends plugin
 
         /* Save acl data to ldap */
         if($this->acltabs->save() == 1){
-          gosa_log ("ACL object '".$this->dn."' saving failed.");
           return;
         }
-        gosa_log ("ACL object '".$this->dn."' has been saved");
 
         if (!isset($_POST['edit_apply'])){
 
