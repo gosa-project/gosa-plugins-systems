@@ -234,14 +234,12 @@ class faiManagement extends plugin
           $this->dialog->set_acl_base($dn);
           $this->dialog->by_object[$type[1]]->remove_from_parent ();
           unset ($this->dialog);
-          gosa_log ("FAI class '".$dn."' has been tagged as removed");
           $this->dialog= NULL;
           $to_del = clean_up_releases($dn);
           save_release_changes_now();
 
           foreach($to_del as $dn){
             $ldap->rmdir_recursive($dn);
-            gosa_log(sprintf(_("Release cleanup : Removing object (tagged as remvoed) that is no longer in use '%s'."),$dn));
           }
 
         } else {
@@ -249,8 +247,7 @@ class faiManagement extends plugin
           /* Normally this shouldn't be reached, send some extra
              logs to notify the administrator */
           print_red (_("You are not allowed to delete this component!"));
-          gosa_log ("Warning: '".$this->ui->uid."' tried to trick system ".
-              "deletion.");
+          @log::log("security","fai/".get_class($this),$dn,array(),"Tried to trick deletion.");
         }
 
         /* Remove lock file after successfull deletion */
@@ -308,14 +305,12 @@ class faiManagement extends plugin
           $this->dialog->set_acl_base($this->dn);
           $this->dialog->by_object[$type[1]]->remove_from_parent ();
           unset ($this->dialog);
-          gosa_log ("FAI class '".$this->dn."' has been tagged as removed");
           $this->dialog= NULL;
           $to_del = clean_up_releases($this->dn);
           save_release_changes_now();
 
           foreach($to_del as $dn){
             $ldap->rmdir_recursive($dn);
-            gosa_log(sprintf(_("Release cleanup : Removing object (tagged as remvoed) that is no longer in use '%s'."),$dn));
           }
 
         } else {
@@ -323,8 +318,7 @@ class faiManagement extends plugin
           /* Normally this shouldn't be reached, send some extra
              logs to notify the administrator */
           print_red (_("You are not allowed to delete this component!"));
-          gosa_log ("Warning: '".$this->ui->uid."' tried to trick system ".
-              "deletion.");
+          @log::log("security","fai/".get_class($this),$dn,array(),"Tried to trick deletion.");
         }
 
       }else{
@@ -412,6 +406,8 @@ class faiManagement extends plugin
         $this->lock_name   = $name;
         $this->lock_dn     = $bb;
         $this->postremove();
+
+        @log::log("remove","fai/".get_class($this),$br[$bb],array(),"Release removed");
       }
     }
 
@@ -517,6 +513,7 @@ class faiManagement extends plugin
           <body style="background: none;margin:3px;color:black">
           ';
 
+        @log::log("create","fai/".get_class($this),$NewReleaseName,array(),"New $type created");
 
         /* Duplicate applications 
          */
