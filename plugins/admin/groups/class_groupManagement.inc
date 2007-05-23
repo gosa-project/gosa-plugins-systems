@@ -151,7 +151,7 @@ class groupManagement extends plugin
         /* Create new usertab object */
         $this->grouptab= new grouptabs($this->config, $this->config->data['TABS']['GROUPTABS'], $this->dn);
 
-        /* Set up the users ACL's for this 'dn' */
+        /* Set up the group ACL's for this 'dn' */
         $this->grouptab->set_acl_base($this->DivListGroup->selectedBase);
       }
     }
@@ -180,7 +180,7 @@ class groupManagement extends plugin
             del_lock ($this->dn);
           }
 
-          /* There's no page reload so we have to read new users at this point. */
+          /* There's no page reload so we have to read new groups at this point. */
           //$this->reload ();
           unset ($this->grouptab);
           $this->grouptab= NULL;
@@ -258,39 +258,7 @@ class groupManagement extends plugin
       Delete MULTIPLE entries confirmed
      ********************/
 
-      /* Confirmation for deletion has been passed. Users should be deleted. */
-      if (isset($_POST['delete_multiple_group_confirm'])){
-
-        /* Remove user by user and check acls before removeing them */
-        foreach($this->dns as $key => $dn){
-
-          $acl = $this->ui->get_permissions($dn, "users/user");
-          if (preg_match('/d/', $acl)){
-
-            /* Delete request is permitted, perform LDAP action */
-            $this->usertab= new usertabs($this->config, $this->config->data['TABS']['USERTABS'],$dn);
-            $this->usertab->set_acl_base();
-            $this->usertab->delete ();
-            unset ($this->usertab);
-            $this->usertab= NULL;
-          } else {
-            print_red (sprintf(_("You are not allowed to delete the user '%s'!"),$dn));
-            if(isset($this->ui->uid)){
-              @log::log("security","groups/".get_class($this),$dn,array(),"Tried to trick deletion.");
-            }
-          }
-          /* Remove lock file after successfull deletion */
-          del_lock ($dn);
-          unset($this->dns[$key]);
-      }
-    }
-
-
-    /********************
-      Delete MULTIPLE entries confirmed
-     ********************/
-
-      /* Confirmation for deletion has been passed. Users should be deleted. */
+      /* Confirmation for deletion has been passed. Groups should be deleted. */
       if (isset($_POST['delete_multiple_groups_confirm'])){
 
         /* Remove user by user and check acls before removeing them */
