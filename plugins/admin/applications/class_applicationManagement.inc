@@ -210,7 +210,6 @@ class applicationManagement extends plugin
         /* Save data data to ldap */
         $this->apptabs->set_release($this->DivListApplication->selectedRelease);
         $this->apptabs->save();
-        gosa_log ("Application object'".$this->dn."' has been saved");
 
         if (!isset($_POST['edit_apply'])){
           /* Application has been saved successfully, remove lock from
@@ -312,7 +311,6 @@ class applicationManagement extends plugin
           $this->apptabs= new apptabs($this->config, $this->config->data['TABS']['APPSTABS'], $dn,"application");
           $this->apptabs->set_acl_base($dn);
           $this->apptabs->delete ();
-          gosa_log ("Application object'".$dn."' has been removed");
           unset ($this->apptabs);
           $this->apptabs= NULL;
 
@@ -320,7 +318,7 @@ class applicationManagement extends plugin
           /* Normally this shouldn't be reached, send some extra
              logs to notify the administrator */
           print_red (_("You are not allowed to delete this application!"));
-          gosa_log ("Warning: '".$this->ui->uid."' tried to trick group deletion.");
+          @log::log("security","application/".get_class($this),$dn,array(),"Tried to trick deletion.");
         }
         /* Remove lock file after successfull deletion */
         del_lock ($dn);
@@ -396,7 +394,6 @@ class applicationManagement extends plugin
         $this->apptabs= new apptabs($this->config, $this->config->data['TABS']['APPSTABS'], $this->dn,"application");
         $this->apptabs->set_acl_base($this->dn);
         $this->apptabs->delete ();
-        gosa_log ("Application object'".$this->dn."' has been removed");
         unset ($this->apptabs);
         $this->apptabs= NULL;
 
@@ -405,7 +402,7 @@ class applicationManagement extends plugin
         /* Normally this shouldn't be reached, send some extra
            logs to notify the administrator */
         print_red (_("You are not allowed to delete this application!"));
-        gosa_log ("Warning: '".$this->ui->uid."' tried to trick group deletion.");
+        @log::log("security","application/".get_class($this),$dn,array(),"Tried to trick deletion.");
       }
 
       /* Remove lock file after successfull deletion */

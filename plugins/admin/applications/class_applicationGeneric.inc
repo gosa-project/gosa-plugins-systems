@@ -335,21 +335,21 @@ class application extends plugin
 
           /* Load the new uploaded Photo */
           if(!$handle  =  imagick_ReadImage($_FILES['picture_file']['tmp_name'])){
-            gosa_log("Can't Load image");
+            print_red(_("Can't access uploaded image."));
           }
 
           /* Resizing image to 147x200 and blur */
           if(!imagick_resize($handle,48,48,IMAGICK_FILTER_GAUSSIAN,0)){
-            gosa_log("imagick_resize failed");
+            print_red(_("Uploaded image could not be resized, possilby the image magick extension is missing."));
           }
 
           /* Converting image to JPEG */
           if(!imagick_convert($handle,"PNG")) {
-            gosa_log("Can't Convert to PNG");
+            print_red(_("Could not convert image to png, possilby the image magick extension is missing."));
           }
 
           if(imagick_writeimage($handle,$_FILES['picture_file']['tmp_name'])){
-            gosa_log("can't write to specified folder");
+            print_red(sprintf(_("Could not save uploaded image to %s."),$_FILES['picture_file']['tmp_name']));
           }
 
           imagick_free($handle);
