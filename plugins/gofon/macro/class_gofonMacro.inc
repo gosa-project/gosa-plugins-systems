@@ -100,7 +100,7 @@ class macro extends plugin
     /* Log view */
     if($this->is_account && !$this->view_logged){
       $this->view_logged = TRUE;
-      @log::log("view","gofonmacro/".get_class($this),$this->dn);
+      new log("view","gofonmacro/".get_class($this),$this->dn);
     }
 
     /* Variables */
@@ -200,13 +200,13 @@ class macro extends plugin
     foreach($this->goFonHomeServers as $goFonHomeServer => $cfg_Current){
       $r_current    =  @mysql_pconnect($cfg_Current['SERVER'],$cfg_Current['LOGIN'],$cfg_Current['PASSWORD']);
       if(!$r_current){
-        @log::log("debug","gofonmacro/".get_class($this),"",array(),@mysql_error($r_current));
+        new log("debug","gofonmacro/".get_class($this),"",array(),@mysql_error($r_current));
         return(sprintf(_("The MySQL home server '%s' isn't reachable as user '%s', check GOsa log for mysql error."),
               $cfg_Current['SERVER'],$cfg_Current['LOGIN']));
       }
       $db_current  =  @mysql_select_db($cfg_Current['DB'],$r_current);
       if(!$db_current){
-        @log::log("debug","gofonmacro/".get_class($this),"",array(),@mysql_error($r_current));
+        new log("debug","gofonmacro/".get_class($this),"",array(),@mysql_error($r_current));
         mysql_close($r_current);
         return( sprintf(_("Can't select database '%s' on home server '%s'."),$cfg_Current['DB'],$cfg_Current['SERVER']));
       }
@@ -237,7 +237,7 @@ class macro extends plugin
         $db_current =  @mysql_select_db($Server['DB'],$r_current);
         $res = @mysql_query($query,$r_current);
         if(!$res){
-          @log::log("debug","gofonmacro/".get_class($this),"",array(),@mysql_error($r_current));
+          new log("debug","gofonmacro/".get_class($this),"",array(),@mysql_error($r_current));
           return(sprintf(_("Removing macro from '%s' failed. Check GOsa log for mysql error."),$Server['SERVER']));
         }
         @mysql_close($r_current);
@@ -345,7 +345,7 @@ class macro extends plugin
         $query  = preg_replace("/%TABLENAME%/",$cfg['EXT_TABLE'],$sql);
         $res    = @mysql_query($query,$r_con);
         if(!$res){
-          @log::log("debug","gofonmacro/".get_class($this),"",array(),@mysql_error($r_con));
+          new log("debug","gofonmacro/".get_class($this),"",array(),@mysql_error($r_con));
           return(sprintf(_("Insert of new macro failed for server '%s'."),$cfg['SERVER']));
         }
         @mysql_close($r_con);
@@ -488,7 +488,7 @@ class macro extends plugin
 
     /* Remove phone macro */ 
     $ldap->rmDir($this->dn);
-    @log::log("remove","gofonmacro/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error()); 
+    new log("remove","gofonmacro/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error()); 
     show_ldap_error($ldap->get_error(), sprintf(_("Removing of goFonMacro/generic account with dn '%s' failed."),$this->dn));
 
     /* Delete references to object groups */
@@ -536,9 +536,9 @@ class macro extends plugin
 
       /* Log last action */
       if($this->initially_was_account){
-        @log::log("modify","gofonmacro/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+        new log("modify","gofonmacro/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
       }else{
-        @log::log("create","gofonmacro/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+        new log("create","gofonmacro/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
       }
     }
   }

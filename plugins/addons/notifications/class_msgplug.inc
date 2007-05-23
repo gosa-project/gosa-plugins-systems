@@ -85,7 +85,7 @@ class msgplug extends plugin
     /* Log view */
     if(!$this->view_logged){
       $this->view_logged = TRUE;
-      @log::log("view","msgplug/".get_class($this),$this->dn);
+      new log("view","msgplug/".get_class($this),$this->dn);
     }
 
     /* Send message? */

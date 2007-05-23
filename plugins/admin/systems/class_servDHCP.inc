@@ -25,7 +25,7 @@ class servdhcp extends plugin
 
     if($this->is_account && !$this->view_logged){
       $this->view_logged = TRUE;
-      @log::log("view","server/".get_class($this),$this->dn);
+      new log("view","server/".get_class($this),$this->dn);
     }
 
     /* Fill templating stuff */
@@ -54,7 +54,7 @@ class servdhcp extends plugin
   function remove_from_parent()
   {
     /* This cannot be removed... */
-    @log::log("remove","unknown/".get_class($this),$this->dn);
+    new log("remove","unknown/".get_class($this),$this->dn);
   }
 
 
@@ -79,7 +79,7 @@ class servdhcp extends plugin
   function save()
   {
     plugin::save();
-    @log::log("modfiy","unknown/".get_class($this),$this->dn);
+    new log("modfiy","unknown/".get_class($this),$this->dn);
 
     /* Optionally execute a command after we're done */
     #$this->handle_post_events($mode);

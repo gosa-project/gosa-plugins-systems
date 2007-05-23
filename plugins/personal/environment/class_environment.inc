@@ -260,9 +260,9 @@ class environment extends plugin
     if($this->is_account && !$this->view_logged){
       $this->view_logged = TRUE;
       if(in_array("gosaAccount",$this->attrs['objectClass'])){
-        @log::log("view","users/".get_class($this),$this->dn);
+        new log("view","users/".get_class($this),$this->dn);
       }else{
-        @log::log("view","groups/".get_class($this),$this->dn);
+        new log("view","groups/".get_class($this),$this->dn);
       }
     }
 
@@ -944,9 +944,9 @@ class environment extends plugin
     $ldap->modify ($this->attrs); 
 
     if($this->is_group){
-      @log::log("remove","groups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("remove","groups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }else{
-      @log::log("remove","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("remove","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }
 
     show_ldap_error($ldap->get_error(), sprintf(_("Removing of user/environment account with dn '%s' failed."),$this->dn));
@@ -1210,9 +1210,9 @@ class environment extends plugin
 
     /* Log last action */ 
     if($this->initially_was_account){
-      @log::log("modify",$cat."/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("modify",$cat."/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }else{
-      @log::log("create",$cat."/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("create",$cat."/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }
 
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of user/environment account with dn '%s' failed."),$this->dn));

@@ -151,7 +151,7 @@ class conference extends plugin
     /* Log last action */
     if($this->is_account && !$this->view_logged){
       $this->view_logged = TRUE;
-      @log::log("view","gofonconference/".get_class($this),$this->dn);
+      new log("view","gofonconference/".get_class($this),$this->dn);
     }
 
     $smarty= get_smarty();
@@ -256,7 +256,7 @@ class conference extends plugin
     $ldap->cd ($this->dn);
     $ldap->recursive_remove();
 
-    @log::log("remove","gofonconference/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    new log("remove","gofonconference/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
 
     /* Optionally execute a command after we're done */
     $this->handle_post_events('remove');
@@ -315,14 +315,14 @@ class conference extends plugin
     $cfg_Current  = $this->goFonHomeServers[$this->goFonHomeServer];
     $r_current    =  @mysql_pconnect($cfg_Current['SERVER'],$cfg_Current['LOGIN'],$cfg_Current['PASSWORD']);
     if(!$r_current){
-      @log::log("debug","gofonconference/".get_class($this),"",array(),@mysql_error($r_current));
+      new log("debug","gofonconference/".get_class($this),"",array(),@mysql_error($r_current));
 
       return(sprintf(_("The MySQL home server '%s' isn't reachable as user '%s', check GOsa log for mysql error."),
             $cfg_Current['SERVER'],$cfg_Current['LOGIN']));
     }
     $db_current  =  @mysql_select_db($cfg_Current['DB'],$r_current);
     if(!$db_current){
-      @log::log("debug","gofonconference/".get_class($this),"",array(),@mysql_error($r_current));
+      new log("debug","gofonconference/".get_class($this),"",array(),@mysql_error($r_current));
       mysql_close($r_current);
       return( sprintf(_("Can't select database '%s' on home server '%s'."),$cfg_Current['DB'],$cfg_Current['SERVER']));
     }
@@ -335,14 +335,14 @@ class conference extends plugin
       $cfg_Init  = $this->goFonHomeServers[$this->init_HomeServer] ;
       $r_init    =  @mysql_pconnect($cfg_Init['SERVER'],$cfg_Init['LOGIN'],$cfg_Init['PASSWORD']);
       if(!$r_init){
-        @log::log("debug","gofonconference/".get_class($this),"",array(),@mysql_error($r_init));
+        new log("debug","gofonconference/".get_class($this),"",array(),@mysql_error($r_init));
 
         return(sprintf(_("The MySQL initial home server '%s' isn't reachable as user '%s', check GOsa log for mysql error."),
               $cfg_Init['SERVER'],$cfg_Init['LOGIN']));
       }
       $db_init  =  @mysql_select_db($cfg_Init['DB'],$r_init);
       if(!$db_init){
-        @log::log("debug","gofonconference/".get_class($this),"",array(),@mysql_error($r_init));
+        new log("debug","gofonconference/".get_class($this),"",array(),@mysql_error($r_init));
         mysql_close($r_init);
         return( sprintf(_("Can't select database '%s' on initial home server '%s'."),$cfg_Init['DB'],$cfg_Init['SERVER']));
       }
@@ -431,7 +431,7 @@ class conference extends plugin
       $query = "SELECT id FROM ".$cfg_Current['EXT_TABLE']." WHERE exten='".$this->telephoneNumber."' OR '".$this->cn."';";
       $res = @mysql_query($query,$res_cur);
       if(!$res){
-        @log::log("debug","gofonconference/".get_class($this),"",array(),@mysql_error($res_cur));
+        new log("debug","gofonconference/".get_class($this),"",array(),@mysql_error($res_cur));
         return(_("Can not check if there are already some entries with given telephone number and/or cn in the destination home server.").
             "&nbsp;"._("Please have a look a the gosa logfiles."));
       }
@@ -443,7 +443,7 @@ class conference extends plugin
         /* Query and ensure that everything went fine */
         $res =  @mysql_query($SQL,$res_cur);
         if(!$res){
-          @log::log("debug","gofonconference/".get_class($this),"",array(),@mysql_error($res_cur));
+          new log("debug","gofonconference/".get_class($this),"",array(),@mysql_error($res_cur));
           return(_("Can not remove entries with some telephone number and/or cn from destination home server.").
               "&nbsp;"._("Please have a look a the gosa logfiles."));
         }
@@ -561,7 +561,7 @@ class conference extends plugin
     $query = "SELECT id FROM ".$cfg_Init['EXT_TABLE']." WHERE exten='".$this->old_tele_number."' OR '".$this->old_cn."';";
     $res = @mysql_query($query,$r_init);
     if(!$res){
-      @log::log("debug","gofonconference/".get_class($this),"",array(),@mysql_error($r_init));
+      new log("debug","gofonconference/".get_class($this),"",array(),@mysql_error($r_init));
       return(_("Can not check if entry exists in old database. Please have a look a the gosa logfiles."));
     }
    
@@ -574,7 +574,7 @@ class conference extends plugin
       /* Query and ensure that everything went fine */
       $res =  @mysql_query($SQL,$r_init);
       if(!$res){
-        @log::log("debug","gofonconference/".get_class($this),"",array(),@mysql_error($r_init));
+        new log("debug","gofonconference/".get_class($this),"",array(),@mysql_error($r_init));
         return(_("Can not remove old entries from initial home server. Please have a look a the gosa logfiles."));
       }
 
@@ -673,9 +673,9 @@ class conference extends plugin
 
     /* Log last action */
     if($this->initially_was_account){
-      @log::log("modify","gofonconference/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("modify","gofonconference/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }else{
-      @log::log("create","gofonconference/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("create","gofonconference/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }
 
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of goFonConference/generic with dn '%s' failed."),$this->dn));

@@ -326,7 +326,7 @@ class blocklist extends plugin
       /* Log view */
       if(!$this->view_logged){
         $this->view_logged = TRUE;
-        @log::log("view","users/".get_class($this),$this->dn);
+        new log("view","users/".get_class($this),$this->dn);
       }
  
       /* set Account states, this is nescessary for get_allowed_bases */
@@ -525,7 +525,7 @@ class blocklist extends plugin
     $ldap= $this->config->get_ldap_link();
     $ldap->rmDir($this->dn);
 
-    @log::log("remove","gofaxlist/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    new log("remove","gofaxlist/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
   
     show_ldap_error($ldap->get_error(), sprintf(_("Removing of blocklist with dn '%s' failed."),$this->dn));
     $this->clear_fields();
@@ -631,14 +631,14 @@ class blocklist extends plugin
       $ldap->cd($this->dn);
       $this->cleanup();
       $ldap->modify($this->attrs);
-      @log::log("modify","gofaxlist/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("modify","gofaxlist/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
       $this->handle_post_events("modify");
     } else {
       $ldap->cd($this->config->current['BASE']);
       $ldap->create_missing_trees(preg_replace('/^[^,]+,/', '', $this->dn));
       $ldap->cd($this->dn);
       $ldap->add($this->attrs);
-      @log::log("create","gofaxlist/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("create","gofaxlist/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
       $this->handle_post_events("add");
     }
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of blocklist with dn '%s' failed."),$this->dn));

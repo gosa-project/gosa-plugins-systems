@@ -64,7 +64,7 @@ class terminfo extends plugin
 
     if($this->is_account && !$this->view_logged){
       $this->view_logged = TRUE;
-      @log::log("view","terminal/".get_class($this),$this->dn);
+      new log("view","terminal/".get_class($this),$this->dn);
     }
 
     /* Do we represent a valid terminal? */

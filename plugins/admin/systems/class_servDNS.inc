@@ -63,7 +63,7 @@ class servdns extends goService
 
     if($this->is_account && !$this->view_logged){
       $this->view_logged = TRUE;
-      @log::log("view","server/".get_class($this),$this->dn);
+      new log("view","server/".get_class($this),$this->dn);
     }
 
     /* Fill templating stuff 
@@ -300,7 +300,7 @@ class servdns extends goService
       foreach($tmp['zoneUpdates'] as $dn => $attrs){
         $ldap->cd($dn);
         $ldap->modify($attrs);
-        @log::log("modfiy","unknown/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+        new log("modfiy","unknown/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
         show_ldap_error($ldap->get_error(), sprintf(_("Updating of system server/dns with dn '%s' failed."),$this->dn));
       }
     }
@@ -310,7 +310,7 @@ class servdns extends goService
     foreach($tmp['del'] as $dn => $del){
       $ldap->cd($dn);
       $ldap->rmdir_recursive($dn);
-      @log::log("remove","unknown/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("remove","unknown/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
       show_ldap_error($ldap->get_error(), sprintf(_("Removing of system server/dns with dn '%s' failed."),$this->dn));
     }
 

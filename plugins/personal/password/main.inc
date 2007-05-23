@@ -94,7 +94,7 @@ if (!$remove_lock){
           show_errors($message);
         } else {		
           change_password ($ui->dn, $_POST['new_password']);
-          @log::log("modify","users/".get_class($this),$ui->dn,array(),"User has been changed");
+          new log("modify","users/".get_class($this),$ui->dn,array(),"User has been changed");
           $ui->password= $_POST['new_password'];
           $_SESSION['ui']= $ui;
           $display= $smarty->fetch(get_template_path("changed.tpl", TRUE));

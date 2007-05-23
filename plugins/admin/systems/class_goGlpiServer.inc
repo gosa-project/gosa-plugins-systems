@@ -39,7 +39,7 @@ class goGlpiServer extends goService {
   { 
     if($this->is_account && !$this->view_logged){
       $this->view_logged = TRUE;
-      @log::log("view","server/".get_class($this),$this->dn);
+      new log("view","server/".get_class($this),$this->dn);
     }
 
     $smarty = get_smarty(); 

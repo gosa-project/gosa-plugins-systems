@@ -118,7 +118,7 @@ class application extends plugin
     /* Log view */
     if($this->is_account && !$this->view_logged){
       $this->view_logged = TRUE;
-      @log::log("view","application/".get_class($this),$this->dn);
+      new log("view","application/".get_class($this),$this->dn);
     }
 
     $smarty= get_smarty();
@@ -232,7 +232,7 @@ class application extends plugin
   {
     $ldap= $this->config->get_ldap_link();
     $ldap->rmDir($this->dn);
-    @log::log("remove","application/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    new log("remove","application/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     show_ldap_error($ldap->get_error(), sprintf(_("Removing of application with dn '%s' failed."),$this->dn));
 
     /* Optionally execute a command after we're done */
@@ -459,7 +459,7 @@ class application extends plugin
       $this->cleanup();
       $ldap->modify ($this->attrs); 
       $this->handle_post_events("modify");
-      @log::log("modify","application/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("modify","application/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     } else {
       
       /* Remove gotoLogonScript if it is empty */
@@ -471,7 +471,7 @@ class application extends plugin
       $ldap->create_missing_trees(preg_replace('/^[^,]+,/', '', $this->dn));
       $ldap->cd($this->dn);
       $ldap->add($this->attrs);
-      @log::log("create","application/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("create","application/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
       $this->handle_post_events("add");
     }
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of application with dn '%s' failed."),$this->dn));

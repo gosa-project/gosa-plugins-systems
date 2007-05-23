@@ -173,7 +173,7 @@ class faiPackage extends plugin
 
     if($this->is_account && !$this->view_logged){
       $this->view_logged = TRUE;
-      @log::log("view","fai/".get_class($this),$this->dn);
+      new log("view","fai/".get_class($this),$this->dn);
     }
 
     /* Fill templating stuff */
@@ -343,7 +343,7 @@ class faiPackage extends plugin
 
     prepare_to_save_FAI_object($use_dn,array(),true);
 
-    @log::log("remove","fai/".get_class($this),$use_dn,$this->attributes);
+    new log("remove","fai/".get_class($this),$use_dn,$this->attributes);
 
     foreach($this->ConfiguredPackages as $pkgname => $attrs){
       foreach($attrs as $name => $attr){
@@ -483,9 +483,9 @@ class faiPackage extends plugin
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of FAI/package list with dn '%s' failed."),$this->dn));
     
     if($this->initially_was_account){
-      @log::log("modify","fai/".get_class($this),$this->dn,$this->attributes);
+      new log("modify","fai/".get_class($this),$this->dn,$this->attributes);
     }else{
-      @log::log("create","fai/".get_class($this),$this->dn,$this->attributes);
+      new log("create","fai/".get_class($this),$this->dn,$this->attributes);
     }
 
     /* Do object tagging */

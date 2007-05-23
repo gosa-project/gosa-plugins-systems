@@ -490,7 +490,7 @@ class workstartup extends plugin
 
     if($this->is_account && !$this->view_logged){
       $this->view_logged = TRUE;
-      @log::log("view","workstation/".get_class($this),$this->dn);
+      new log("view","workstation/".get_class($this),$this->dn);
     }
 
     /* Do we need to flip is_account state? */
@@ -810,7 +810,7 @@ class workstartup extends plugin
   function remove_from_parent()
   {
     $this->handle_post_events("remove");
-    @log::log("remove","workstation/".get_class($this),$this->dn);
+    new log("remove","workstation/".get_class($this),$this->dn);
   }
 
   function generateDNSyn($release)
@@ -1092,7 +1092,7 @@ class workstartup extends plugin
 
     $this->cleanup();
     $ldap->modify ($this->attrs); 
-    @log::log("modify","workstation/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    new log("modify","workstation/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
 
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of system workstation/startup with dn '%s' failed."),$this->dn));
     $this->handle_post_events("modify");

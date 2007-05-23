@@ -87,7 +87,7 @@ class servkolab extends goService {
 
     if($this->is_account && !$this->view_logged){
       $this->view_logged = TRUE;
-      @log::log("view","server/".get_class($this),$this->dn);
+      new log("view","server/".get_class($this),$this->dn);
     }
 
     /***************  
@@ -214,7 +214,7 @@ class servkolab extends goService {
       show_ldap_error($ldap->get_error(), sprintf(_("Removing host entry from system server/kolab with dn '%s' failed."),$this->dn));
     }
 
-    @log::log("remove","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    new log("remove","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
 
     /* Optionally execute a command after we're done */
     $this->handle_post_events("remove");
@@ -351,9 +351,9 @@ class servkolab extends goService {
     $ldap->$mode($this->attrs);
 
     if($mode == "add"){
-      @log::log("create","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("create","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }else{
-      @log::log("modify","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("modify","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }
 
     show_ldap_error($ldap->get_error(), sprintf(_("Saving system server/kolab with dn '%s' failed."),$this->dn));

@@ -121,7 +121,7 @@ class glpiAccount extends plugin
 
     if($this->is_account && !$this->view_logged){
       $this->view_logged = TRUE;
-      @log::log("view","all/".get_class($this),$this->dn);
+      new log("view","all/".get_class($this),$this->dn);
     }
 
     /* Fill templating stuff */
@@ -673,11 +673,11 @@ class glpiAccount extends plugin
       $this->handle = new glpiDB($this->data['SERVER'],$this->data['LOGIN'],$this->data['PASSWORD'],$this->data['DB']);
       if($this->initially_was_account){
         $this->handle->removeComputerInformations($this->dn); 
-        @log::log("remove","undefined/".get_class($this),$this->dn);
+        new log("remove","undefined/".get_class($this),$this->dn);
       }
     }else{
       print_red(_("Can't remove glpi account, while mysql extension is missing."));
-      @log::log("remove","undefined/".get_class($this),$this->dn,array(),_("Can't remove glpi account, while mysql extension is missing."));
+      new log("remove","undefined/".get_class($this),$this->dn,array(),_("Can't remove glpi account, while mysql extension is missing."));
     }
   
   }
@@ -737,10 +737,10 @@ class glpiAccount extends plugin
       /* check if we have to update, add */
       if($this->initially_was_account&&$this->is_account){
         $this->handle->updateComputerInformations($attrs,$this->orig_dn);
-        @log::log("modify","undefined/".get_class($this),$this->dn);
+        new log("modify","undefined/".get_class($this),$this->dn);
       }elseif($this->is_account){
         $this->handle->addComputerInformations($attrs,$this->dn);
-        @log::log("create","undefined/".get_class($this),$this->dn);
+        new log("create","undefined/".get_class($this),$this->dn);
       }
       $tmp = $this->handle->getComputerInformations($this->dn);
       $this->handle->addDevicesToComputer($this->usedDevices,$tmp[0]['ID']);

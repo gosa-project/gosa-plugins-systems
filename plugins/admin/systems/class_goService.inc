@@ -32,7 +32,7 @@ class goService extends plugin{
   {
     if($this->is_account && !$this->view_logged){
       $this->view_logged = TRUE;
-      @log::log("view","server/".get_class($this),$this->dn);
+      new log("view","server/".get_class($this),$this->dn);
     }
 
     $str ="<div style='width:100%; text-align:right;'>".
@@ -97,7 +97,7 @@ class goService extends plugin{
       
     }
 
-    @log::log("remove","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    new log("remove","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
 
     show_ldap_error($ldap->get_error(), sprintf(_("Removing of server services/".get_class($this)." - (".$this->DisplayName.") with dn '%s' failed."),$this->dn));
     $this->handle_post_events("remove");
@@ -119,11 +119,11 @@ class goService extends plugin{
       $ldap->add($this->attrs);
     }
     if($this->initially_was_account){
-      @log::log("modify","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("modify","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
       $this->handle_post_events("modify");
     }else{
       $this->handle_post_events("add");
-      @log::log("create","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("create","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of server services/".get_class($this)." - (".$this->DisplayName.") with dn '%s' failed."),$this->dn));
   }

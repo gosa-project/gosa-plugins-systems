@@ -68,7 +68,7 @@ class faxreport extends plugin
     /* Log view */
     if(!$this->view_logged){
       $this->view_logged = TRUE;
-      @log::log("view","users/".get_class($this),$this->dn);
+      new log("view","users/".get_class($this),$this->dn);
     }
 
     /************ 

@@ -146,7 +146,7 @@ class termgeneric extends plugin
 
     if($this->is_account && !$this->view_logged){
       $this->view_logged = TRUE;
-      @log::log("view","terminal/".get_class($this),$this->dn);
+      new log("view","terminal/".get_class($this),$this->dn);
     }
 
     /* Do we need to flip is_account state? */
@@ -352,7 +352,7 @@ class termgeneric extends plugin
         $this->netConfigDNS->remove_from_parent();
         $ldap->rmDir($this->dn);
   
-        @log::log("remove","terminal/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+        new log("remove","terminal/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
   
         show_ldap_error($ldap->get_error(), sprintf(_("Removing of object system terminal/generic with dn '%s' failed."),$this->dn));
 
@@ -519,13 +519,13 @@ class termgeneric extends plugin
         unset($this->attrs['gotoNtpServer']);
       }
       $ldap->add($this->attrs);
-      @log::log("create","terminal/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("create","terminal/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
       $this->handle_post_events("add",array("macAddress" => $this->netConfigDNS->macAddress,"ipHostNumber" => $this->netConfigDNS->ipHostNumber));
     } else {
       $ldap->cd($this->dn);
       $this->cleanup();
       $ldap->modify ($this->attrs); 
-      @log::log("modify","terminal/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("modify","terminal/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
       $this->handle_post_events("modify",array("macAddress" => $this->netConfigDNS->macAddress,"ipHostNumber" => $this->netConfigDNS->ipHostNumber));
     }
     

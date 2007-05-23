@@ -57,7 +57,7 @@ function gosaRaiseError($errno, $errstr, $errfile, $errline)
     if((isset($config->data['MAIN']['DISPLAYERRORS']))&&(!preg_match("/^true$/i",$config->data['MAIN']['DISPLAYERRORS']))){
 
       /* Write to syslog */
-      @log::log("view","error","",array(),"PHP error: $errstr ($errfile, line $errline)");
+      new log("view","error","",array(),"PHP error: $errstr ($errfile, line $errline)");
       return;
     }
   }

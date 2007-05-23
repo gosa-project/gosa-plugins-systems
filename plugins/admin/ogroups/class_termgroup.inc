@@ -129,7 +129,7 @@ class termgroup extends plugin
     $ldap->cd($this->orig_dn);
     $ldap->modify($this->attrs);
     $this->handle_post_events("remove");
-    @log::log("remove","ogroups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    new log("remove","ogroups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
   }
 
 
@@ -177,7 +177,7 @@ class termgroup extends plugin
 
     if(!$this->view_logged){
       $this->view_logged = TRUE;
-      @log::log("view","ogroups/".get_class($this),$this->dn);
+      new log("view","ogroups/".get_class($this),$this->dn);
     }
 
     /*************** 
@@ -369,9 +369,9 @@ class termgroup extends plugin
     $ldap->modify ($this->attrs);
 
     if($this->initially_was_account){
-      @log::log("modify","ogroups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("modify","ogroups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }else{
-      @log::log("create","ogroups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("create","ogroups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }
 
     if(!$this->didAction){

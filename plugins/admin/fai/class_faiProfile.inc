@@ -208,7 +208,7 @@ class faiProfile extends plugin
 
     if($this->is_account && !$this->view_logged){
       $this->view_logged = TRUE;
-      @log::log("view","fai/".get_class($this),$this->dn);
+      new log("view","fai/".get_class($this),$this->dn);
     }
 
     /* Fill templating stuff */
@@ -376,7 +376,7 @@ class faiProfile extends plugin
       $use_dn = $this->dn;
     }
 
-    @log::log("remove","fai/".get_class($this),$use_dn,$this->attributes);
+    new log("remove","fai/".get_class($this),$use_dn,$this->attributes);
     prepare_to_save_FAI_object($use_dn,array(),true);
     $this->handle_post_events("remove");    
   }
@@ -437,9 +437,9 @@ class faiProfile extends plugin
     prepare_to_save_FAI_object($this->dn,$this->attrs);
    
     if($this->initially_was_account){
-      @log::log("modify","fai/".get_class($this),$this->dn,$this->attributes);
+      new log("modify","fai/".get_class($this),$this->dn,$this->attributes);
     }else{
-      @log::log("create","fai/".get_class($this),$this->dn,$this->attributes);
+      new log("create","fai/".get_class($this),$this->dn,$this->attributes);
     }
  
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of FAI/profile with dn '%s' failed."),$this->dn));

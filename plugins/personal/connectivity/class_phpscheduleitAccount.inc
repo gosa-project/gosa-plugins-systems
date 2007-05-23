@@ -43,7 +43,7 @@ class phpscheduleitAccount extends plugin
     /* Log view */
     if($this->is_account && !$this->view_logged){
       $this->view_logged = TRUE;
-      @log::log("view","users/".get_class($this),$this->dn);
+      new log("view","users/".get_class($this),$this->dn);
     }
 
     /* Show tab dialog headers */
@@ -85,7 +85,7 @@ class phpscheduleitAccount extends plugin
       show_ldap_error($ldap->get_error(), sprintf(_("Removing of user/PHPscheduleit account with dn '%s' failed."),$this->dn));
 
       if($this->is_account){
-        @log::log("remove","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+        new log("remove","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
       }
       /* Optionally execute a command after we're done */
       $this->handle_post_events('remove',array("uid" => $this->uid));
@@ -132,9 +132,9 @@ class phpscheduleitAccount extends plugin
     $ldap->modify ($this->attrs); 
 
     if($this->initially_was_account){
-      @log::log("modify","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("modify","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }else{
-      @log::log("create","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("create","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }
 
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of user/PHPscheduleit account with dn '%s' failed."),$this->dn));

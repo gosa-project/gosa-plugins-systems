@@ -318,7 +318,7 @@ class applicationManagement extends plugin
           /* Normally this shouldn't be reached, send some extra
              logs to notify the administrator */
           print_red (_("You are not allowed to delete this application!"));
-          @log::log("security","application/".get_class($this),$dn,array(),"Tried to trick deletion.");
+          new log("security","application/".get_class($this),$dn,array(),"Tried to trick deletion.");
         }
         /* Remove lock file after successfull deletion */
         del_lock ($dn);
@@ -402,7 +402,7 @@ class applicationManagement extends plugin
         /* Normally this shouldn't be reached, send some extra
            logs to notify the administrator */
         print_red (_("You are not allowed to delete this application!"));
-        @log::log("security","application/".get_class($this),$dn,array(),"Tried to trick deletion.");
+        new log("security","application/".get_class($this),$dn,array(),"Tried to trick deletion.");
       }
 
       /* Remove lock file after successfull deletion */

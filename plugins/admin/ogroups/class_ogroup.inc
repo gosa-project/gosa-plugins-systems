@@ -145,7 +145,7 @@ class ogroup extends plugin
 
     if(!$this->view_logged){
       $this->view_logged = TRUE;
-      @log::log("view","ogroups/".get_class($this),$this->dn);
+      new log("view","ogroups/".get_class($this),$this->dn);
     }
 
 
@@ -654,9 +654,9 @@ class ogroup extends plugin
     $ldap->$mode($this->attrs);
 
     if($mode == "add"){
-      @log::log("create","ogroups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("create","ogroups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }else{
-      @log::log("modify","ogroups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("modify","ogroups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }
 
     /* Trigger post signal */
@@ -678,7 +678,7 @@ class ogroup extends plugin
     $ldap->rmdir($this->dn);
     show_ldap_error($ldap->get_error(), sprintf(_("Removing of object group/generic with dn '%s' failed."),$this->dn));
 
-    @log::log("remove","ogroups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    new log("remove","ogroups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
 
     /* Trigger remove signal */
     $this->handle_post_events("remove");

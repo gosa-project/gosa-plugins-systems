@@ -136,7 +136,7 @@ class glpiPrinterAccount extends plugin
 
     if($this->is_account && !$this->view_logged){
       $this->view_logged = TRUE;
-      @log::log("view","printer/".get_class($this),$this->dn);
+      new log("view","printer/".get_class($this),$this->dn);
     }
 
     /* Fill templating stuff */
@@ -656,7 +656,7 @@ class glpiPrinterAccount extends plugin
     $this->handle = new glpiDB($this->data['SERVER'],$this->data['LOGIN'],$this->data['PASSWORD'],$this->data['DB']);
     if($this->initially_was_account){
       $this->handle->removePrinterInformations($this->dn);
-      @log::log("remove","printer/".get_class($this),$this->dn); 
+      new log("remove","printer/".get_class($this),$this->dn); 
     }
   }
 
@@ -717,10 +717,10 @@ class glpiPrinterAccount extends plugin
       $this->handle = new glpiDB($this->data['SERVER'],$this->data['LOGIN'],$this->data['PASSWORD'],$this->data['DB']);
       if($this->initially_was_account&&$this->is_account){
         $this->handle->updatePrinterInformations($attrs,$this->dn);
-        @log::log("modify","printer/".get_class($this),$this->dn); 
+        new log("modify","printer/".get_class($this),$this->dn); 
       }elseif($this->is_account){
         $this->handle->addPrinterInformations($attrs,$this->dn);
-        @log::log("create","printer/".get_class($this),$this->dn); 
+        new log("create","printer/".get_class($this),$this->dn); 
       }
       $tmp = $this->handle->getPrinterInformations($this->dn);
       $this->handle->addAttachmentsToPrinter($this->usedAttachments,$tmp[0]['ID']);

@@ -125,7 +125,7 @@ class opengwAccount extends plugin
     /* Log view */
     if($this->is_account && !$this->view_logged){
       $this->view_logged = TRUE;
-      @log::log("view","users/".get_class($this),$this->dn);
+      new log("view","users/".get_class($this),$this->dn);
     }
 
 		/* Show tab dialog headers */
@@ -244,7 +244,7 @@ class opengwAccount extends plugin
 			$this->handle->SetInfos($this->info);
 			$this->handle->Perform("REMOVE");
 
-      @log::log("remove","users/".get_class($this),$this->dn);
+      new log("remove","users/".get_class($this),$this->dn);
 		}
 	}
 
@@ -310,10 +310,10 @@ class opengwAccount extends plugin
 		$this->handle->checkInfos();
 		if($this->initialy_was_account){
 			$this->handle->Perform("EDIT");
-      @log::log("modify","users/".get_class($this),$this->dn);
+      new log("modify","users/".get_class($this),$this->dn);
 		}else{
 			$this->handle->Perform("ADD");
-      @log::log("create","users/".get_class($this),$this->dn);
+      new log("create","users/".get_class($this),$this->dn);
 		}
 	}
 

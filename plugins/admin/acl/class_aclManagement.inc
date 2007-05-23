@@ -255,7 +255,7 @@ class aclManagement extends plugin
         print_red (_("You are not allowed to delete this acl role!"));
 
         if(isset($this->ui->uid)){
-          @log::log("security","aclroles/".get_class($this),$this->dn,array(),"Warning: '".$this->ui->uid."' tried to trick acl role deletion.");
+          new log("security","aclroles/".get_class($this),$this->dn,array(),"Warning: '".$this->ui->uid."' tried to trick acl role deletion.");
         }
       }
 
@@ -318,7 +318,7 @@ class aclManagement extends plugin
         print_red (_("You are not allowed to delete this acl!"));
 
         if(isset($this->ui->uid)){
-          @log::log("security","aclroles/".get_class($this),$this->dn,array(),"Warning: '".$this->ui->uid."' tried to trick acl role      deletion.");
+          new log("security","aclroles/".get_class($this),$this->dn,array(),"Warning: '".$this->ui->uid."' tried to trick acl role      deletion.");
           
         }
       }

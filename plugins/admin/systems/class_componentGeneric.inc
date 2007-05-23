@@ -48,7 +48,7 @@ class componentGeneric extends plugin
 
     if($this->is_account && !$this->view_logged){
       $this->view_logged = TRUE;
-      @log::log("view","component/".get_class($this),$this->dn);
+      new log("view","component/".get_class($this),$this->dn);
     }
 
     /* Do we represent a valid phone? */
@@ -130,7 +130,7 @@ class componentGeneric extends plugin
     $this->netConfigDNS->remove_from_parent();
     $ldap->rmdir($this->dn);
     
-    @log::log("remove","component/".get_class($this),$this->dn,$this->attributes,$ldap->get_error());
+    new log("remove","component/".get_class($this),$this->dn,$this->attributes,$ldap->get_error());
 
     show_ldap_error($ldap->get_error(), sprintf(_("Removing of system component/generic with dn '%s' failed."),$this->dn));
     $this->handle_post_events(array("macAddress" => $this->netConfigDNS->macAddress,"ipHostNumber" => $this->netConfigDNS->ipHostNumber));
@@ -240,7 +240,7 @@ class componentGeneric extends plugin
       $ldap->create_missing_trees(preg_replace('/^[^,]+,/', '', $this->dn));
       $ldap->cd($this->dn);
       $ldap->add($this->attrs);
-      @log::log("create","component/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("create","component/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
       $this->handle_post_events("add",array("macAddress" => $this->netConfigDNS->macAddress,"ipHostNumber" => $this->netConfigDNS->ipHostNumber));
       
     } else {
@@ -251,7 +251,7 @@ class componentGeneric extends plugin
       $ldap->cd($this->dn);
       $this->cleanup();
       $ldap->modify ($this->attrs); 
-      @log::log("modify","component/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("modify","component/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
       $this->handle_post_events("modify",array("macAddress" => $this->netConfigDNS->macAddress,"ipHostNumber" => $this->netConfigDNS->ipHostNumber));
     }
 

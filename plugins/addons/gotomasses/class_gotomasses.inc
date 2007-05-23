@@ -58,7 +58,7 @@ class gotomasses extends plugin
     /* Log view */
     if(!$this->view_logged){
       $this->view_logged = TRUE;
-      @log::log("view","gotomasses/".get_class($this),$this->dn);
+      new log("view","gotomasses/".get_class($this),$this->dn);
     }
 
     if(isset($_POST['export_gotomass_csv']) && $this->acl_is_writeable("something")){

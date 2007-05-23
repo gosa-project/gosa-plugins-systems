@@ -42,7 +42,7 @@ class aclrole extends acl
       $this->base = $_SESSION['CurrentMainBase'];
     }else{
       $this->base = preg_replace("/^[^,]+,[^,]+,/","",$this->dn);
-      @log::log("view","aclroles/".get_class($this),$this->dn);
+      new log("view","aclroles/".get_class($this),$this->dn);
     }
    
     /* Load ACL's */
@@ -552,13 +552,13 @@ class aclrole extends acl
       $ldap->cd($this->dn);
       $this->cleanup();
       $ldap->modify ($this->attrs);
-      @log::log("modify","aclroles/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("modify","aclroles/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }else{
       $ldap->cd($this->config->current['BASE']);
       $ldap->create_missing_trees(preg_replace("/^[^,]+,/","",$this->dn));
       $ldap->cd($this->dn);
       $ldap->add($this->attrs);
-      @log::log("create","aclroles/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("create","aclroles/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }
 
     show_ldap_error($ldap->get_error(), sprintf(_("Saving ACLs with dn '%s' failed."),$this->dn));
@@ -598,7 +598,7 @@ class aclrole extends acl
     }
         
     $ldap->rmDir($this->dn);
-    @log::log("remove","aclroles/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    new log("remove","aclroles/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     show_ldap_error($ldap->get_error(), sprintf(_("Removing of aclRole with dn '%s' failed."),$this->dn));
 
     /* Optionally execute a command after we're done */

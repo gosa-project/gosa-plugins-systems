@@ -152,7 +152,7 @@ class mimetype extends plugin
 
     if(!$this->view_logged){
       $this->view_logged =TRUE;
-      @log::log("view","mimetypes/".get_class($this),$this->dn);
+      new log("view","mimetypes/".get_class($this),$this->dn);
     }
 
     $tmp = $this->plInfo();
@@ -460,12 +460,12 @@ class mimetype extends plugin
       $ldap->cd($this->dn);
       $this->cleanup();
       $ldap->modify($this->attrs);
-      @log::log("modify","mimetypes/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("modify","mimetypes/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }else{
       $ldap->create_missing_trees(preg_replace('/^[^,]+,/', '', $this->dn));
       $ldap->cd($this->dn);
       $ldap->add($this->attrs);
-      @log::log("create","mimetypes/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("create","mimetypes/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of mime type/generic with dn '%s' failed."),$this->dn));
   }
@@ -478,7 +478,7 @@ class mimetype extends plugin
     $ldap = $this->config->get_ldap_link();
     $ldap->rmDir($this->dn);
     show_ldap_error($ldap->get_error(), sprintf(_("Removing of mime type/generic with dn '%s' failed."),$this->dn));
-    @log::log("remove","mimetypes/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    new log("remove","mimetypes/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
 
     /* Optionally execute a command after we're done */
     $this->handle_post_events("remove");

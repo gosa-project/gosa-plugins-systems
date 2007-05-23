@@ -303,7 +303,7 @@ class mailgroup extends plugin
     /* Log view */
     if($this->is_account && !$this->view_logged){
       $this->view_logged = TRUE;
-      @log::log("view","groups/".get_class($this),$this->dn);
+      new log("view","groups/".get_class($this),$this->dn);
     }
 
     /* Load templating engine */
@@ -692,7 +692,7 @@ class mailgroup extends plugin
     show_ldap_error($ldap->get_error(), sprintf(_("Removing of groups/mail with dn '%s' failed."),$this->dn));
 
 
-    @log::log("remove","groups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    new log("remove","groups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
 
     /* Optionally execute a command after we're done */
     $this->handle_post_events("remove");
@@ -891,9 +891,9 @@ I: Only insider delivery */
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of groups/mail with dn '%s' failed."),$this->dn));
     
     if($this->initially_was_account){
-      @log::log("modify","groups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("modify","groups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }else{
-      @log::log("create","groups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());  
+      new log("create","groups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());  
     }
     
 

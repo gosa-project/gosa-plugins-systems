@@ -29,7 +29,7 @@ class ldifimport extends plugin
     /* Log view */
     if(!$this->view_logged){
       $this->view_logged = TRUE;
-      @log::log("view","all/".get_class($this),$this->dn);
+      new log("view","all/".get_class($this),$this->dn);
     }
 
     /* Set government mode */

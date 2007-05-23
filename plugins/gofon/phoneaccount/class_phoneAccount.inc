@@ -119,12 +119,12 @@ class phoneAccount extends plugin
         if(!$r_con){
           print_red( sprintf(_("The MySQL Server '%s' isn't reachable as user '%s', check GOsa log for mysql error."),
                 $cur_cfg['SERVER'],$cur_cfg['LOGIN']));
-          @log::log("debug","gofonreport/".get_class($this),"",array(),@mysql_error());
+          new log("debug","gofonreport/".get_class($this),"",array(),@mysql_error());
         }
         $db  =  @mysql_select_db($cur_cfg['DB'],$r_con);
         if(!$db){
           print_red(sprintf(_("Can't select database %s on %s."),$cur_cfg['DB'],$cur_cfg['SERVER']));
-          @log::log("debug","gofonreport/".get_class($this),"",array(),@mysql_error());
+          new log("debug","gofonreport/".get_class($this),"",array(),@mysql_error());
         }
 
         $first = false; 
@@ -436,7 +436,7 @@ class phoneAccount extends plugin
       $this->generate_error = sprintf(
           _("The MySQL Server '%s' isn't reachable as user '%s'. Abort saving entries to keep the database consistent, check GOsa log for mysql error."),
           $a_New['SERVER'],$a_New['LOGIN']);
-      @log::log("debug","gofonreport/".get_class($this),"",array(),@mysql_error($new_connection));
+      new log("debug","gofonreport/".get_class($this),"",array(),@mysql_error($new_connection));
       return false;
     }
     $new_database  =  @mysql_select_db($a_New['DB'],$new_connection);
@@ -444,7 +444,7 @@ class phoneAccount extends plugin
       $this->generate_error = sprintf(
           _("Can't select database %s on %s. Abort saving entries to keep the database consistent, check GOsa log for mysql error."),
           $a_New['DB'],$a_New['SERVER']);
-      @log::log("debug","gofonreport/".get_class($this),"",array(),@mysql_error($new_connection));
+      new log("debug","gofonreport/".get_class($this),"",array(),@mysql_error($new_connection));
       return false;
     }
 
@@ -463,7 +463,7 @@ class phoneAccount extends plugin
         $this->generate_error = sprintf(
             _("The old MySQL home server '%s' isn't reachable as user '%s'. Abort saving entries to keep the database consistent, check GOsa log for mysql error."),
             $a_Remove['SERVER'],$a_Remove['LOGIN']);
-        @log::log("debug","gofonreport/".get_class($this),"",array(),@mysql_error($old_connection));
+        new log("debug","gofonreport/".get_class($this),"",array(),@mysql_error($old_connection));
         return false;
       }
       $old_database  =  @mysql_select_db($a_Remove['DB'],$old_connection);
@@ -471,7 +471,7 @@ class phoneAccount extends plugin
         $this->generate_error = sprintf(
             _("Can't select database %s on %s. Abort saving entries to keep the database consistent, check GOsa log for mysql error."),
             $a_Remove['DB'],$a_Remove['SERVER']);
-        @log::log("debug","gofonreport/".get_class($this),"",array(),@mysql_error($old_connection));
+        new log("debug","gofonreport/".get_class($this),"",array(),@mysql_error($old_connection));
         return false;
       }
     }
@@ -793,7 +793,7 @@ class phoneAccount extends plugin
     /* Log view */
     if($this->is_account && !$this->view_logged){
       $this->view_logged = TRUE;
-      @log::log("view","users/".get_class($this),$this->dn);
+      new log("view","users/".get_class($this),$this->dn);
     }
 
     $display = "";
@@ -1238,9 +1238,9 @@ class phoneAccount extends plugin
 
     /* Log last action */
     if($this->initially_was_account){
-      @log::log("modify","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("modify","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }else{
-      @log::log("create","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("create","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }
 
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of user/phone account with dn '%s' failed."),$this->dn));
@@ -1295,7 +1295,7 @@ class phoneAccount extends plugin
       if(!$r_con){
         print_red(sprintf(_("The MySQL Server '%s' isn't reachable as user '%s', check GOsa log for mysql error."),
                     $a_SETUP['SERVER'],$a_SETUP['LOGIN']));
-        @log::log("debug","gofonreport/".get_class($this),"",array(),@mysql_error());
+        new log("debug","gofonreport/".get_class($this),"",array(),@mysql_error());
         return false;
       }
 
@@ -1305,7 +1305,7 @@ class phoneAccount extends plugin
       // Test if we have the database selected correctly
       if(!$db){
         print_red(sprintf(_("Can't select database %s on %s."),$a_SETUP['DB'],$a_SETUP['SERVER']));
-        @log::log("debug","gofonreport/".get_class($this),"",array(),@mysql_error());
+        new log("debug","gofonreport/".get_class($this),"",array(),@mysql_error());
         return false;
       }
 
@@ -1380,7 +1380,7 @@ class phoneAccount extends plugin
     $this->cleanup();
     $ldap->modify ($this->attrs); 
 
-    @log::log("remove","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    new log("remove","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     show_ldap_error($ldap->get_error(), sprintf(_("Removing of user/phone account with dn '%s' failed."),$this->dn));
 
     /* Optionally execute a command after we're done */

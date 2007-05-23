@@ -31,7 +31,7 @@ class mailogroup extends plugin
 
     if($this->is_account && !$this->view_logged){
       $this->view_logged = TRUE;
-      @log::log("view","ogroups/".get_class($this),$this->dn);
+      new log("view","ogroups/".get_class($this),$this->dn);
     }
 
 
@@ -110,9 +110,9 @@ class mailogroup extends plugin
     $ldap->modify ($this->attrs); 
 
     if($this->initially_was_account){
-      @log::log("modify","ogroups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("modify","ogroups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }else{
-      @log::log("create","ogroups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("create","ogroups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }
 
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of object group/mail with dn '%s' failed."),$this->dn));
@@ -148,7 +148,7 @@ class mailogroup extends plugin
     $this->cleanup();
     $ldap->modify ($this->attrs); 
 
-    @log::log("remove","ogroups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    new log("remove","ogroups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
 
     show_ldap_error($ldap->get_error(), sprintf(_("Removing of object group/mail with dn '%s' failed."),$this->dn));
   }

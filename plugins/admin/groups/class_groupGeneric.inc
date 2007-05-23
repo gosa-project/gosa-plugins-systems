@@ -184,7 +184,7 @@ class group extends plugin
     /* Log view */
     if($this->is_account && !$this->view_logged){
       $this->view_logged = TRUE;
-      @log::log("view","groups/".get_class($this),$this->dn);
+      new log("view","groups/".get_class($this),$this->dn);
     }
 
     /* Do we represent a valid group? */
@@ -520,7 +520,7 @@ class group extends plugin
     $ldap->rmdir($this->dn);
     show_ldap_error($ldap->get_error(), sprintf(_("Removing of groups/generic with dn '%s' failed."),$this->dn));
 
-    @log::log("remove","groups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    new log("remove","groups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
 
     /* Delete references to object groups */
     $ldap->cd ($this->config->current['BASE']);
@@ -747,9 +747,9 @@ class group extends plugin
     $ldap->$mode($this->attrs);
 
     if($this->initially_was_account){
-      @log::log("modify","groups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("modify","groups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }else{
-      @log::log("create","groups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("create","groups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }
 
     $ret= 0;

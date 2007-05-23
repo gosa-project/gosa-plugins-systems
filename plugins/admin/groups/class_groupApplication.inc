@@ -385,7 +385,7 @@ class appgroup extends plugin
     /* Log view */
     if($this->is_account && !$this->view_logged){
       $this->view_logged = TRUE;
-      @log::log("view","groups/".get_class($this),$this->dn);
+      new log("view","groups/".get_class($this),$this->dn);
     }
 
     /* Check if department was selected */ 
@@ -923,7 +923,7 @@ class appgroup extends plugin
     $this->cleanup();
     
     $ldap->modify ($this->attrs); 
-    @log::log("remove","group/".get_class($this),$use_dn,array_keys($this->attrs),$ldap->get_error());
+    new log("remove","group/".get_class($this),$use_dn,array_keys($this->attrs),$ldap->get_error());
     show_ldap_error($ldap->get_error(), sprintf(_("Removing of groups/applications with dn '%s' failed."),$this->dn));
 
     /* Optionally execute a command after we're done */
@@ -979,9 +979,9 @@ class appgroup extends plugin
     $ldap->modify ($this->attrs); 
 
     if($this->initially_was_account){
-      @log::log("modify","group/".get_class($this),$use_dn,array_keys($this->attrs),$ldap->get_error());
+      new log("modify","group/".get_class($this),$use_dn,array_keys($this->attrs),$ldap->get_error());
     }else{
-      @log::log("create","group/".get_class($this),$use_dn,array_keys($this->attrs),$ldap->get_error()); 
+      new log("create","group/".get_class($this),$use_dn,array_keys($this->attrs),$ldap->get_error()); 
     }   
 
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of groups/applications with dn '%s' failed."),$this->dn));

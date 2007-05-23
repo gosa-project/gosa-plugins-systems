@@ -1525,7 +1525,7 @@ class plugin
     /* Update userinfo if necessary */
     if($_SESSION['ui']->dn == $old_dn){
       $_SESSION['ui']->dn = $new_dn;
-      @log::log("view","acl/".get_class($this),$this->dn,array(),"Updated current user dn from '".$old_dn."' to '".$new_dn."'");
+      new log("view","acl/".get_class($this),$this->dn,array(),"Updated current user dn from '".$old_dn."' to '".$new_dn."'");
     }
 
     /* Object was moved, ensure that all acls will be moved too */

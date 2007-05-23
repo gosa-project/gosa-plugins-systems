@@ -51,7 +51,7 @@ class mailqueue extends plugin
     /* Log view */
     if(!$this->view_logged){
       $this->view_logged = TRUE;
-      @log::log("view","mailqueue/".get_class($this),$this->dn);
+      new log("view","mailqueue/".get_class($this),$this->dn);
     }
 
     if(isset($_POST['EntriesPerPage'])){

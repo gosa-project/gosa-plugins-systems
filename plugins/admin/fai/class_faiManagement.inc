@@ -247,7 +247,7 @@ class faiManagement extends plugin
           /* Normally this shouldn't be reached, send some extra
              logs to notify the administrator */
           print_red (_("You are not allowed to delete this component!"));
-          @log::log("security","fai/".get_class($this),$dn,array(),"Tried to trick deletion.");
+          new log("security","fai/".get_class($this),$dn,array(),"Tried to trick deletion.");
         }
 
         /* Remove lock file after successfull deletion */
@@ -318,7 +318,7 @@ class faiManagement extends plugin
           /* Normally this shouldn't be reached, send some extra
              logs to notify the administrator */
           print_red (_("You are not allowed to delete this component!"));
-          @log::log("security","fai/".get_class($this),$dn,array(),"Tried to trick deletion.");
+          new log("security","fai/".get_class($this),$dn,array(),"Tried to trick deletion.");
         }
 
       }else{
@@ -407,7 +407,7 @@ class faiManagement extends plugin
         $this->lock_dn     = $bb;
         $this->postremove();
 
-        @log::log("remove","fai/".get_class($this),$br[$bb],array(),"Release removed");
+        new log("remove","fai/".get_class($this),$br[$bb],array(),"Release removed");
       }
     }
 
@@ -513,7 +513,7 @@ class faiManagement extends plugin
           <body style="background: none;margin:3px;color:black">
           ';
 
-        @log::log("create","fai/".get_class($this),$NewReleaseName,array(),"New $type created");
+        new log("create","fai/".get_class($this),$NewReleaseName,array(),"New $type created");
 
         /* Duplicate applications 
          */

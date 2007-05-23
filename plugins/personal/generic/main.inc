@@ -94,7 +94,7 @@ if (!$remove_lock){
         return ($display);
       }
       change_password ($user->dn, $_POST['new_password'], 0, $user->pw_storage);
-      @log::log("modify","users/".get_class($this),"",array(),"Password has been changed");
+      new log("modify","users/".get_class($this),"",array(),"Password has been changed");
 
     } else {
 

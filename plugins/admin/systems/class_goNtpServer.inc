@@ -46,7 +46,7 @@ class goNtpServer extends goService{
 
     if($this->is_account && !$this->view_logged){
       $this->view_logged = TRUE;
-      @log::log("view","server/".get_class($this),$this->dn);
+      new log("view","server/".get_class($this),$this->dn);
     }
 
     /* Here we add a new entry  */
@@ -99,10 +99,10 @@ class goNtpServer extends goService{
     show_ldap_error($ldap->get_error(), sprintf(_("Saving server services/goNtpServer with dn '%s' failed."),$this->dn));
     if($this->initially_was_account){
       $this->handle_post_events("modify");
-      @log::log("modify","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("modify","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }else{
       $this->handle_post_events("add");
-      @log::log("create","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("create","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }
   }
 

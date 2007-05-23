@@ -258,7 +258,7 @@ class userManagement extends plugin
             if (isset($config->data['MAIN']['EXTERNALPWDHOOK'])){
               exec($config->data['MAIN']['EXTERNALPWDHOOK']." ".$username." ".$_POST['new_password'], $resarr);
             }
-            @log::log("modify","users/".get_class($this),$this->usertab->dn,array(),"Password has been changed");
+            new log("modify","users/".get_class($this),$this->usertab->dn,array(),"Password has been changed");
             unset($this->usertab);
             $this->usertab= NULL;
           }
@@ -268,7 +268,7 @@ class userManagement extends plugin
             exec($config->data['MAIN']['EXTERNALPWDHOOK']." ".$username." ".$_POST['new_password'], $resarr);
           }
 
-          @log::log("modify","users/".get_class($this),$this->dn,array(),"Password has been changed");
+          new log("modify","users/".get_class($this),$this->dn,array(),"Password has been changed");
         }
       } else {
 
@@ -345,7 +345,7 @@ class userManagement extends plugin
           } else {
             print_red (sprintf(_("You are not allowed to delete the user '%s'!"),$dn));
             if(isset($this->ui->uid)){
-              @log::log("security","users/".get_class($this),$dn,array(),"Tried to trick deletion.");
+              new log("security","users/".get_class($this),$dn,array(),"Tried to trick deletion.");
             }
           }
           /* Remove lock file after successfull deletion */
@@ -422,7 +422,7 @@ class userManagement extends plugin
         print_red (_("You are not allowed to delete this user!"));
 
         if(isset($this->ui->uid)){
-          @log::log("security","users/".get_class($this),$this->dn,array(),"Tried to trick deletion.");
+          new log("security","users/".get_class($this),$this->dn,array(),"Tried to trick deletion.");
         }
       }
 

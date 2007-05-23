@@ -97,7 +97,7 @@ class termDNS extends plugin
     $this->initially_was_account = $this->DNS_is_account;
 
     if($this->DNS_is_account){
-      @log::log("view","unknown/".get_class($this),$this->dn);
+      new log("view","unknown/".get_class($this),$this->dn);
     }
   }
 
@@ -271,7 +271,7 @@ class termDNS extends plugin
       foreach($tmp['del'] as $dn => $del){
         $ldap->cd($dn);
         $ldap->rmdir_recursive($dn);
-        @log::log("remove","unknown/".get_class($this),$dn);
+        new log("remove","unknown/".get_class($this),$dn);
       }
     }
   }
@@ -486,7 +486,7 @@ class termDNS extends plugin
         }
       }
 
-      @log::log("modify","unknown/".get_class($this),$dn,array_keys($attrs),$ldap->get_error());
+      new log("modify","unknown/".get_class($this),$dn,array_keys($attrs),$ldap->get_error());
 
       /* Display errors 
        */

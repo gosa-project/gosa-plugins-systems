@@ -47,7 +47,7 @@ class logview extends plugin
     /* Log view */
     if(!$this->view_logged){
       $this->view_logged = TRUE;
-      @log::log("view","logview/".get_class($this),$this->dn);
+      new log("view","logview/".get_class($this),$this->dn);
     }
 
     $logfilter= get_global("logfilter");

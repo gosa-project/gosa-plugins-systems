@@ -92,7 +92,7 @@ class servgeneric extends plugin
 
     if($this->is_account && !$this->view_logged){
       $this->view_logged = TRUE;
-      @log::log("view","server/".get_class($this),$this->dn);
+      new log("view","server/".get_class($this),$this->dn);
     }
 
     /* Do we represent a valid server? */
@@ -240,7 +240,7 @@ class servgeneric extends plugin
     $ldap= $this->config->get_ldap_link();
     $ldap->rmdir($this->dn);
 
-    @log::log("remove","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    new log("remove","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
 
     show_ldap_error($ldap->get_error(), sprintf(_("Removing of system server/generic with dn '%s' failed."),$this->dn)); 
 
@@ -334,7 +334,7 @@ class servgeneric extends plugin
       $ldap->create_missing_trees(preg_replace('/^[^,]+,/', '', $this->dn));
       $ldap->cd($this->dn);
       $ldap->add($this->attrs);
-      @log::log("create","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("create","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
       $mode= "add";
     } else {
    
@@ -354,7 +354,7 @@ class servgeneric extends plugin
       $ldap->cd($this->dn);
       $this->cleanup();
       $ldap->modify ($this->attrs); 
-      @log::log("modify","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("modify","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
 
       $mode= "modify";
     }

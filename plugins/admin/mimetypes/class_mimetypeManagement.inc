@@ -315,7 +315,7 @@ class mimetypeManagement extends plugin
           /* Normally this shouldn't be reached, send some extra
              logs to notify the administrator */
           print_red (_("You are not allowed to delete this mime type!"));
-          @log::log("security","mimetypes/".get_class($this),$dn,array(),"Tried to trick deletion.");
+          new log("security","mimetypes/".get_class($this),$dn,array(),"Tried to trick deletion.");
         }
         /* Remove lock file after successfull deletion */
         del_lock ($dn);
@@ -399,7 +399,7 @@ class mimetypeManagement extends plugin
         /* Normally this shouldn't be reached, send some extra
            logs to notify the administrator */
         print_red (_("You are not allowed to delete this mime type!"));
-        @log::log("security","mimetypes/".get_class($this),$dn,array(),"Tried to trick deletion.");
+        new log("security","mimetypes/".get_class($this),$dn,array(),"Tried to trick deletion.");
       }
 
       /* Remove lock file after successfull deletion */

@@ -201,16 +201,16 @@ class addressbook extends plugin
         /* Delete request is permitted, perform LDAP action */
         $ldap= $this->config->get_ldap_link();
         $ldap->rmdir ($this->dn);
-        @log::log("remove","addressbook/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+        new log("remove","addressbook/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
         show_ldap_error($ldap->get_error(), sprintf(_("Removing of addressbook entry '%s' failed."),$this->dn));
-        @log::log("remove","addressbook/".get_class($this),$this->dn,array(),"Address book object'".$this->dn."' has been removed");
+        new log("remove","addressbook/".get_class($this),$this->dn,array(),"Address book object'".$this->dn."' has been removed");
   
       } else {
 
         /* Normally this shouldn't be reached, send some extra
            logs to notify the administrator */
         print_red (_("You are not allowed to delete this entry!"));
-        @log::log("remove","addressbook/".get_class($this),$this->dn,array(),"Warning: '".$this->ui->uid."' tried to trick address book deletion.");
+        new log("remove","addressbook/".get_class($this),$this->dn,array(),"Warning: '".$this->ui->uid."' tried to trick address book deletion.");
       }
 
       /* Remove lock file after successfull deletion */
@@ -333,7 +333,7 @@ class addressbook extends plugin
       $this->view_logged =FALSE;
       if(!$this->view_logged){
         $this->view_logged = TRUE;
-        @log::log("view","addressbook/".get_class($this),$this->dn);
+        new log("view","addressbook/".get_class($this),$this->dn);
       }
       $_SESSION['show_info']= base64_decode($_GET['show']);
     }
@@ -762,9 +762,9 @@ class addressbook extends plugin
     }
 
     if($mode == "add"){
-      @log::log("create","addressbook/".get_class($this),$this->dn, array_keys($this->attrs),$ldap->get_error());
+      new log("create","addressbook/".get_class($this),$this->dn, array_keys($this->attrs),$ldap->get_error());
     }else{
-      @log::log("modify","addressbook/".get_class($this),$this->dn, array_keys($this->attrs),$ldap->get_error());
+      new log("modify","addressbook/".get_class($this),$this->dn, array_keys($this->attrs),$ldap->get_error());
     }
   }
 

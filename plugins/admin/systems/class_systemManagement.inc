@@ -405,7 +405,7 @@ class systems extends plugin
             $attrs['gotoRootPasswd']= crypt($_POST['new_password'],substr(session_id(),0,2));
           }
           $ldap->modify($attrs);
-          @log::log("security","systems/".get_class($this),$this->dn,array_keys($attrs),$ldap->get_error());
+          new log("security","systems/".get_class($this),$this->dn,array_keys($attrs),$ldap->get_error());
         }else{
           print_red(_("You are not allowed to change the password for this object."));
         }
@@ -519,7 +519,7 @@ class systems extends plugin
             /* Normally this shouldn't be reached, send some extra
                logs to notify the administrator */
             print_red (_("You are not allowed to delete this component!"));
-            @log::log("security","systems/".get_class($this),$dn,array(),"Tried to trick deletion.");
+            new log("security","systems/".get_class($this),$dn,array(),"Tried to trick deletion.");
           }
           /* Remove lock file after successfull deletion */
           del_lock ($dn);
@@ -653,7 +653,7 @@ class systems extends plugin
         /* Normally this shouldn't be reached, send some extra
            logs to notify the administrator */
         print_red (_("You are not allowed to delete this component!"));
-        @log::log("security","systems/".get_class($this),$dn,array(),"Tried to trick deletion.");
+        new log("security","systems/".get_class($this),$dn,array(),"Tried to trick deletion.");
       }
 
       /* Remove lock file after successfull deletion */

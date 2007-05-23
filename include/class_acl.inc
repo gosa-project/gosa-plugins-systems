@@ -1033,7 +1033,7 @@ class acl extends plugin
     $ldap->modify ($this->attrs);
 
     if(count($this->attrs)){
-      @log::log("modify","acls/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("modify","acls/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }
 
     show_ldap_error($ldap->get_error(), sprintf(_("Saving ACLs with dn '%s' failed."),$this->dn));
@@ -1056,7 +1056,7 @@ class acl extends plugin
     $this->cleanup();
     $ldap->modify ($this->attrs);
 
-    @log::log("remove","acls/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+    new log("remove","acls/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
 
     /* Optionally execute a command after we're done */
     $this->handle_post_events("remove",array("uid" => $this->uid));

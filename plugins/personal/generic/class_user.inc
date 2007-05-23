@@ -220,7 +220,7 @@ class user extends plugin
     /* Log view */
     if($this->is_account && !$this->view_logged){
       $this->view_logged = TRUE;
-      @log::log("view","users/".get_class($this),$this->dn);
+      new log("view","users/".get_class($this),$this->dn);
     }
 
     $smarty= get_smarty();
@@ -598,7 +598,7 @@ class user extends plugin
     $ldap->rmdir ($this->dn);
     show_ldap_error($ldap->get_error(), sprintf(_("Removing of user/generic account with dn '%s' failed."),$this->dn));
   
-    @log::log("remove","users/".get_class($this),$this->dn,$this->attributes,$ldap->get_error());
+    new log("remove","users/".get_class($this),$this->dn,$this->attributes,$ldap->get_error());
   
     /* Delete references to groups */
     $ldap->cd ($this->config->current['BASE']);
@@ -881,22 +881,22 @@ class user extends plugin
 
         /* Load the new uploaded Photo */
         if(!$handle  =  imagick_blob2image($this->photoData))  {
-          @log::log("debug","users/".get_class($this),"",array(),"Could not access uploaded image");
+          new log("debug","users/".get_class($this),"",array(),"Could not access uploaded image");
         }
 
         /* Resizing image to 147x200 and blur */
         if(!imagick_resize($handle,147,200,IMAGICK_FILTER_GAUSSIAN,0)){
-          @log::log("debug","users/".get_class($this),"",array(),"Could not resize uploaded image");
+          new log("debug","users/".get_class($this),"",array(),"Could not resize uploaded image");
         }
 
         /* Converting image to JPEG */
         if(!imagick_convert($handle,"JPEG")) {
-          @log::log("debug","users/".get_class($this),"",array(),"Could not convert uploaded image to jepg");
+          new log("debug","users/".get_class($this),"",array(),"Could not convert uploaded image to jepg");
         }
 
         /* Creating binary Code for the Image */
         if(!$dump = imagick_image2blob($handle)){
-          @log::log("debug","users/".get_class($this),"",array(),"Could not create new user image");
+          new log("debug","users/".get_class($this),"",array(),"Could not create new user image");
         }
 
         /* Sending Image */
@@ -950,9 +950,9 @@ class user extends plugin
     }
 
     if($mode == "modify"){
-      @log::log("modify","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("modify","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }else{
-      @log::log("create","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+      new log("create","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }
 
     /* Remove cert? 

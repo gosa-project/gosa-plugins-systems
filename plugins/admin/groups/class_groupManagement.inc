@@ -281,7 +281,7 @@ class groupManagement extends plugin
             /* Normally this shouldn't be reached, send some extra
                logs to notify the administrator */
             print_red (_("You are not allowed to delete this group!"));
-            @log::log("security","groups/".get_class($this),$dn,array(),"Tried to trick deletion.");
+            new log("security","groups/".get_class($this),$dn,array(),"Tried to trick deletion.");
           }
           /* Remove lock file after successfull deletion */
           del_lock ($dn);
@@ -365,7 +365,7 @@ class groupManagement extends plugin
         /* Normally this shouldn't be reached, send some extra
            logs to notify the administrator */
         print_red (_("You are not allowed to delete this group!"));
-        @log::log("security","groups/".get_class($this),$dn,array(),"Tried to trick deletion.");
+        new log("security","groups/".get_class($this),$dn,array(),"Tried to trick deletion.");
       }
 
       /* Remove lock file after successfull deletion */
