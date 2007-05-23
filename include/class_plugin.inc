@@ -222,8 +222,6 @@ class plugin
    */
   function execute()
   {
-    @log::log("view","acl/".get_class($this),$this->dn,array(),"ACL ".get_class($this)." - ".$this->acl_category." - ".$this->acl_base);
-
     /* This one is empty currently. Fabian - please fill in the docu code */
     $_SESSION['current_class_for_help'] = get_class($this);
 

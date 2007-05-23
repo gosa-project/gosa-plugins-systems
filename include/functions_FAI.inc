@@ -278,7 +278,7 @@ function save_release_changes_now()
     /* Check if this a leaf release or not */ 
     if(count($following_releases) == 0 ){
 
-      /* This is a leaf object. It isn't unherited by any other object */    
+      /* This is a leaf object. It isn't inherited by any other object */    
       if(DEBUG_FAI_FUNC) { 
         echo "<b>Saving directly, is a leaf object</b><br> ".$Current_DN;
         print_a($objectAttrs);
