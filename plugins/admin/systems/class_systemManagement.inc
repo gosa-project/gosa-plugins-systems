@@ -1179,12 +1179,9 @@ class systems extends plugin
                 $type= 'R'.$type;
                 break;
       case 'install':
-                $type= 'Y'.$type;
-                break;
       case 'sysinfo':
-                $type= 'Y'.$type;
-                break;
       case 'softupdate':
+      case 'update':
                 $type= 'Y'.$type;
                 break;
     }
