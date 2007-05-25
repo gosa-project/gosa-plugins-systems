@@ -12,19 +12,15 @@ class gosa_logview extends plugin
   var $objectclasses  = array();
 
   var $server         = "";
-
-
-
-
+  var $action         = "view";
+  var $time           = 2;
+  var $regex          = "*";
 
   var $start  = 0;
   var $sort   = 2;
 
   var $sort_direction= "down";
-  var $loglevellist= array();
-  var $tilist= array();
-  var $fields= array("objecttype", "host", "timestamp", "message");
-  var $last= array("objecttype", "host", "time", "regex");
+  var $fields= array("action","timestamp","user","result");//"id","timestamp","user","action","objecttype","object","changes","result");
   var $range = 25;
   var $view_logged = FALSE;
 
@@ -32,19 +28,9 @@ class gosa_logview extends plugin
   {
     /* Include config object */
     $this->config= $config;
-
-    /* Get global filter config */
-    if (1==1 || !is_global("gosa_log_filter")){
-      $gosa_log_filter= array(
-          "time" => "1",
-          "objecttype" => "!All",
-          "host" => "!All",
-          "regex" => "*");
-
-      register_global("gosa_log_filter", $gosa_log_filter);
-    }
-
     $this->ui = get_userinfo();
+  
+    $this->set_acl_category("logview");
   }
 
   function execute()
@@ -59,12 +45,22 @@ class gosa_logview extends plugin
     }
 
     /* Time interval */
-    $date_select = array("0" => _("one hour"), "1" => _("6 hours"),
+    $date_select = array(
+        "0" => _("one hour"), "1" => _("6 hours"),
         "2" => _("12 hours"), "3" => _("24 hours"),
-        "4" => _("2 days"), "5" => _("one week"),
-        "6" => _("2 weeks"), "7" => _("one month"));
+        "4" => _("2 days"),   "5" => _("one week"),
+        "6" => _("2 weeks"),  "7" => _("one month"));
 
-    $gosa_log_filter= get_global("gosa_log_filter");
+    $date_select_ = array(
+        "0" => time() - 3600, 
+        "1" => time() - 21600,
+        "2" => time() - 43200,
+        "3" => time() - 86400,
+        "4" => time() - 172800,
+        "5" => time() - 604800,
+        "6" => time() - 1209600,
+        "7" => time() - 2419200);
+
     $smarty= get_smarty();
     $smarty->assign("search_result", "");
     $smarty->assign("plug", "?plug=".validate($_GET['plug']));
@@ -74,7 +70,6 @@ class gosa_logview extends plugin
     $smarty->assign("log_image", get_template_path('images/log_warning.png'));
     $smarty->assign("ruleset_image", get_template_path('images/edit.png'));
     $smarty->assign("launchimage", get_template_path('images/launch.png'));
-    $smarty->assign("loglevellist", $this->loglevellist);
     $smarty->assign("date_select", $date_select);
     $smarty->assign("mode0", "");
     $smarty->assign("mode1", "");
@@ -82,8 +77,8 @@ class gosa_logview extends plugin
     $smarty->assign("mode3", "");
 
     /* Assign select option content */
-    foreach( array("host", "objecttype", "time", "regex") as $type){
-      $smarty->assign("$type", $gosa_log_filter[$type]);
+    foreach( array("server", "action", "time", "regex") as $type){
+      $smarty->assign("$type", $this->$type);
     }
 
     /**** 
@@ -132,16 +127,25 @@ class gosa_logview extends plugin
       return ($smarty->fetch (get_template_path('gosa_log_contents.tpl', TRUE)));
     }
 
-    $smarty->assign("regex", $gosa_log_filter['regex']);
-    $smarty->assign("servers",$servers);
-    $smarty->assign("server",$this->server);
-    $smarty->assign("date_select", $date_select);
+    
+    /****
+     * Get all action types 
+     ****/
+
+    $actions = array();
+    $query = "SELECT distinct(action) FROM gosa_log;";
+    $res = @mysql_query($query);
+    while($attrs = @mysql_fetch_assoc($res)){
+      $actions[$attrs['action']] = $attrs['action'];
+    } 
+
 
     /****
      * Check Acls 
      ****/
     $tmp_cat_bases = $this->ui->get_module_departments("logview");
     $all_acls = "";
+    print_a($tmp_cat_bases);
     foreach($tmp_cat_bases as $acl_base){
       $all_acls .= $this->ui->get_permissions($acl_base,"logview/logview");
     }
@@ -155,7 +159,7 @@ class gosa_logview extends plugin
       /* Show main page */
       $smarty->assign("range_selector", "");
       $smarty->assign("search_result", $res);
-      return ($smarty->fetch (get_template_path('gosa_log_contents.tpl', TRUE)));
+#      return ($smarty->fetch (get_template_path('gosa_log_contents.tpl', TRUE)));
     }
 
 
@@ -177,53 +181,9 @@ class gosa_logview extends plugin
         new log("debug","logview","",array(),@mysql_error());
       } else {
 
-        /* Assemble time query */
-        switch ($gosa_log_filter['time']){
-          case '0':
-            $start=  time() - 3600;
-            break;
-            ;;
-          case '1':
-            $start= time() - 21600;
-            break;
-            ;;
-          case '2':
-            $start= time() - 43200;
-            break;
-            ;;
-          case '3':
-            $start= time() - 86400;
-            break;
-            ;;
-          case '4':
-            $start= time() - 172800;
-            break;
-            ;;
-          case '5':
-            $start= time() - 604800;
-            break;
-            ;;
-          case '6':
-            $start= time() - 1209600;
-            break;
-            ;;
-          case '7':
-            $start= time() - 2419200;
-            break;
-            ;;
-        }
+        
 
-        /* Assemble log level query */
-        if ($gosa_log_filter['object'] == '!All'){
-          $ll= "";
-        } else {
-          $ll= "AND objecttype='".$gosa_log_filter['objecttype']."'";
-        }
-        if ($gosa_log_filter['host'] == '!All'){
-          $hf= "";
-        } else {
-          $hf= "AND host='".$gosa_log_filter['host']."'";
-        }
+        $start = $date_select_[$this->time];
 
         /* Order setting */
         if ($this->sort_direction == "down"){
@@ -237,10 +197,10 @@ class gosa_logview extends plugin
         $query_base= "  FROM 
           gosa_log 
           WHERE 
-          result like '".preg_replace("/\*/","%",$gosa_log_filter['regex'])."' 
-          $ll 
-          $hf 
-          AND 
+          result like '".preg_replace("/\*/","%",$this->regex)."' 
+          AND
+          action like '".$this->action."' 
+          AND  
           timestamp <= $end AND timestamp >= $start";
 
         /* Get number of entries */
@@ -279,30 +239,24 @@ class gosa_logview extends plugin
           }
 
           $res.=" <tr style=\"$col\">\n";
-          $res.="   <td style=\"text-align:center\">
-            <img alt=\"".$line['objecttype']."\" 
-            src=\"".get_template_path('images/log_'.strtolower($line['objecttype'])).".png\" 
-            title=\"Log level is '".$line['objecttype']."'\">
-            </td>";
-          $res.="   <td>".
-            $line['host']."
-            </td>"; 
-            $res.=" <td>".
-            $line['timestamp']."
-            </td>";
-          $res .= "<td width=\"100%\">".
-            $line['message']."
-            </td>";
+          $res.="   <td>".$line['action']."</td>";
+          $res.="   <td>".date("H:i:s d.m.Y",$line['timestamp'])."</td>";
+          $res.="   <td>".preg_replace("/,/",", ",$line['user'])."</td>"; 
+          $res.="   <td>".$line['result']."</td>";
           $res.=" </tr>\n";
         }
         mysql_close($link);
         $smarty->assign("mode".$this->sort, $sort_sign);
-        $smarty->assign("host", $gosa_log_filter['host']);
-        $smarty->assign("objecttype", $gosa_log_filter['objecttype']);
-
         $smarty->assign("search_result", $res);
       }
     }
+
+    $smarty->assign("regex", $this->regex);
+    $smarty->assign("server",$this->server);
+    $smarty->assign("servers",$servers);
+    $smarty->assign("action",$this->action);
+    $smarty->assign("actions",$actions);
+    $smarty->assign("date_select", $date_select);
 
     /* Show main page */
     return ($smarty->fetch (get_template_path('gosa_log_contents.tpl', TRUE)));
@@ -318,34 +272,21 @@ class gosa_logview extends plugin
       }
     }
 
-    /* Save data */
-    $gosa_log_filter= get_global("gosa_log_filter");
-
     /* Get actual select boxe values */
     $logfilter_changed = FALSE;
-    foreach( array("host", "time", "objecttype", "regex") as $type){
-    
-      /* Set new value and test if value has changed */
-      $last[$type] = $gosa_log_filter[$type];
-      if (isset($_POST[$type])){
-        $gosa_log_filter[$type]= $_POST[$type];
-      }
-  
-      if ($last[$type] != $gosa_log_filter[$type]){
-        $logfilter_changed = TRUE;
+    foreach( array("server", "action","time","regex") as $type){
+      if(isset($_POST[$type])){
+        $this->$type = $_POST[$type];   
       }
     }
 
     /* Filter regex values */
-    if ($gosa_log_filter['regex'] == ""){
-      $gosa_log_filter['regex']= '%';
+    if ($this->regex == ""){
+      $this->regex= '*';
     } else {
-      $new = preg_replace('/\*\**/', '*', $gosa_log_filter['regex']);
-      $gosa_log_filter['regex']= $new;
+      $new = preg_replace('/\*\**/', '*', $this->regex);
+      $this->regex= $new;
     }
-
-    /* Store filter values */
-    register_global("gosa_log_filter", $gosa_log_filter);
 
     /* Set start value */
     if (isset($_GET['start'])){
@@ -360,6 +301,7 @@ class gosa_logview extends plugin
     /* Adapt sorting */
     if (isset($_GET['sort'])){
       if ($this->sort == (int)$_GET['sort']){
+          echo $this->sort_direction."<br>";
         if ($this->sort_direction == "down"){
           $this->sort_direction= "up";
         } else {

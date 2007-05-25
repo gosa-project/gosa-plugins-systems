@@ -26,7 +26,7 @@ if (!$remove_lock){
 	$log_tabs= $_SESSION['log_tabs'];
 
 	/* Execute formular */
-	$display= $log_tabs->save_object();
+#	$display= $log_tabs->save_object();
 	$display= $log_tabs->execute ();
 	$display.= "<input type=\"hidden\" name=\"ignore\">\n";
 
