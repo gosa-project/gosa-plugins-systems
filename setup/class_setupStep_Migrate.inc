@@ -341,6 +341,21 @@ class Step_Migrate extends setup_step
 
     $group_ou = $cv['groupou'];
     $ldap->cd($cv['base']);
+
+    /***********
+     * Get all gosaDepartments to be able to
+     *  validate correct ldap tree position of every single user
+     ***********/
+    $valid_deps = array();
+    $valid_deps['/'] = $cv['base'];
+    $ldap->search("(&(objectClass=gosaDepartment)(ou=*))",array("dn","ou"));
+    while($attrs = $ldap->fetch()){
+      $valid_deps[$attrs['ou'][0]] = $attrs['dn'];
+    }
+
+    /***********
+     * Get all groups
+     ***********/
     $res = $ldap->search("(objectClass=posixGroup)",array("dn"));
     if(!$res){
       $this->checks['outside_groups']['STATUS']    = FALSE;
@@ -349,20 +364,25 @@ class Step_Migrate extends setup_step
       return(false);
     }
 
-
-    $this->outside_groups = array();
     while($attrs = $ldap->fetch()){
-      if((!preg_match("/^[^,]+,".normalizePreg($group_ou)."/",$attrs['dn'])) && !preg_match("/,dc=addressbook,/",$attrs['dn'])){
+      $group_db_base = preg_replace("/^[^,]+,".normalizePreg($group_ou)."/","",$attrs['dn']);
+
+      /* Check if entry is not an addressbook only user
+       *  and verify that he is in a valid department
+       */
+      if( !preg_match("/".normalizePreg("dc=addressbook,")."/",$group_db_base) &&
+          !in_array($group_db_base,$valid_deps)
+        ){
         $attrs['selected'] = FALSE;
         $attrs['ldif']     = "";
-        $this->outside_groups[base64_encode($attrs['dn'])] = $attrs;
+        $this->outside_users[base64_encode($attrs['dn'])] = $attrs;
       }
     }
 
     if(count($this->outside_groups)){
       $this->checks['outside_groups']['STATUS']    = FALSE;
       $this->checks['outside_groups']['STATUS_MSG']= "<font style='color:#F0A500'>"._("Warning")."</font>";
-      $this->checks['outside_groups']['ERROR_MSG'] = 
+      $this->checks['outside_groups']['ERROR_MSG'] =
         sprintf(_("Found %s groups outside the configured tree '%s'."),count($this->outside_groups),$group_ou);
       $this->checks['outside_groups']['ERROR_MSG'].= "&nbsp;<input type='submit' name='outside_groups_dialog' value='"._("Move")."...'>";
       return(false);
@@ -374,8 +394,7 @@ class Step_Migrate extends setup_step
     }
   }
 
-
-  /* Search for users outside the people ou 
+ /* Search for users outside the people ou
    */
   function search_outside_users()
   {
@@ -385,8 +404,24 @@ class Step_Migrate extends setup_step
         $cv['connection'],
         FALSE,
         $cv['tls']);
-    $people_ou = $cv['peopleou'];
+
     $ldap->cd($cv['base']);
+
+
+    /***********
+     * Get all gosaDepartments to be able to
+     *  validate correct ldap tree position of every single user
+     ***********/
+    $valid_deps = array();
+    $valid_deps['/'] = $cv['base'];
+    $ldap->search("(&(objectClass=gosaDepartment)(ou=*))",array("dn","ou"));
+    while($attrs = $ldap->fetch()){
+      $valid_deps[$attrs['ou'][0]] = $attrs['dn'];
+    }
+
+    /***********
+     * Search for all users
+     ***********/
     $res = $ldap->search("(&(objectClass=gosaAccount)(!(uid=*$)))",array("dn"));
     if(!$res){
       $this->checks['outside_users']['STATUS']    = FALSE;
@@ -395,10 +430,24 @@ class Step_Migrate extends setup_step
       return(false);
     }
 
-
+    /***********
+     * Check if returned users are within a valid GOsa deparmtment. (peopleou,gosaDepartment,base)
+     ***********/
     $this->outside_users = array();
+    $people_ou = trim($cv['peopleou']);
+    if(!empty($people_ou)){
+      $people_ou = $people_ou.",";
+    }
+
     while($attrs = $ldap->fetch()){
-      if((!preg_match("/^[^,]+,".normalizePreg($people_ou)."/",$attrs['dn'])  && !preg_match("/,dc=addressbook,/",$attrs['dn']))){
+      $people_db_base = preg_replace("/^[^,]+,".normalizePreg($people_ou)."/","",$attrs['dn']);
+
+      /* Check if entry is not an addressbook only user
+       *  and verify that he is in a valid department
+       */
+      if( !preg_match("/".normalizePreg("dc=addressbook,")."/",$people_db_base) &&
+          !in_array($people_db_base,$valid_deps)
+         ){
         $attrs['selected'] = FALSE;
         $attrs['ldif']     = "";
         $this->outside_users[base64_encode($attrs['dn'])] = $attrs;
@@ -408,7 +457,7 @@ class Step_Migrate extends setup_step
     if(count($this->outside_users)){
       $this->checks['outside_users']['STATUS']    = FALSE;
       $this->checks['outside_users']['STATUS_MSG']= "<font style='color:#F0A500'>"._("Warning")."</font>";
-      $this->checks['outside_users']['ERROR_MSG'] = 
+      $this->checks['outside_users']['ERROR_MSG'] =
         sprintf(_("Found %s user(s) outside the configured tree '%s'."),count($this->outside_users),$people_ou);
       $this->checks['outside_users']['ERROR_MSG'].= "<input type='submit' name='outside_users_dialog' value='"._("Move")."...'>";
       return(false);
@@ -623,11 +672,11 @@ class Step_Migrate extends setup_step
         $cv['tls']);
 
     /* Skip GOsa internal departments */
-    $skip_dns = array("/^ou=people,/","/^ou=groups,/","/(,|)ou=configs,/","/(,|)ou=systems,/",
+    $skip_dns = array("/".$cv['peopleou']."/","/".$cv['groupou']."/","/^ou=people,/","/^ou=groups,/",
+        "/(,|)ou=configs,/","/(,|)ou=systems,/",
         "/^ou=apps,/","/^ou=mime,/","/^ou=aclroles,/","/^ou=incoming,/",
         "/ou=snapshots,/","/(,|)dc=addressbook,/","/^(,|)ou=machineaccounts,/",
         "/(,|)ou=winstations,/");
-
 
     /* Get all invisible departments */
     $ldap->cd($cv['base']); 
@@ -938,10 +987,15 @@ class Step_Migrate extends setup_step
     /* Get current base attributes */
     $ldap->cd($cv['base']);
   
+    $people_ou = trim($cv['peopleou']);
+    if(!empty($people_ou)){
+      $people_ou = trim($people_ou).",";
+    }
+
     if($cv['peopledn'] == "cn"){
-      $dn = "cn=System Administrator,".$cv['peopleou'].",".$cv['base'];
+      $dn = "cn=System Administrator,".$people_ou.$cv['base'];
     }else{
-      $dn = "uid=".$uid.",".$cv['peopleou'].",".$cv['base'];
+      $dn = "uid=".$uid.",".$people_ou.$cv['base'];
     }
 
     $methods = @passwordMethod::get_available_methods_if_not_loaded();
@@ -1594,10 +1648,11 @@ class Step_Migrate extends setup_step
   }
 
 
-  function get_all_people_ous()
+ function get_all_people_ous()
   {
     /* Get collected configuration settings */
     $cv = $this->parent->captured_values;
+    $people_ou = trim($cv['peopleou']);
 
     /* Establish ldap connection */
     $ldap = new LDAP($cv['admin'],
@@ -1606,32 +1661,53 @@ class Step_Migrate extends setup_step
         FALSE,
         $cv['tls']);
 
-    $ldap->cd($cv['base']);
-    $ldap->search("(".$cv['peopleou'].")",array("dn"));
-  
-    if($ldap->count() == 0 ){
-      $add_dn = $cv['peopleou'].",".$cv['base'];
-      $naming_attr = preg_replace("/=.*$/","",$add_dn);
-      $naming_value = preg_replace("/^[^=]*+=([^,]*).*$/","\\1",$add_dn);
-      $add = array();
-      $add['objectClass'] = array("organizationalUnit");
-      $add[$naming_attr] = $naming_value;
 
+    /*****************
+     * If people ou is NOT empty
+     * search for for all objects matching the given container
+     *****************/
+    if(!empty($people_ou)){
+      $ldap->search("(".$people_ou.")",array("dn"));
+
+      /* Create people ou if there is currently none */
+      if($ldap->count() == 0 ){
+        $add_dn = $cv['peopleou'].",".$cv['base'];
+        $naming_attr = preg_replace("/=.*$/","",$add_dn);
+        $naming_value = preg_replace("/^[^=]*+=([^,]*).*$/","\\1",$add_dn);
+        $add = array();
+        $add['objectClass'] = array("organizationalUnit");
+        $add[$naming_attr] = $naming_value;
+        $ldap->cd($cv['base']);
+        $ldap->create_missing_trees(preg_replace("/^[^,]+,/","",$add_dn));
+        $ldap->cd($add_dn);
+        $ldap->add($add);
+      }
+
+      /* Create result */
+      $ldap->search("(".$cv['peopleou'].")",array("dn"));
+      $tmp = array();
+      while($attrs= $ldap->fetch()){
+        if(!preg_match("/ou=snapshots,/",$attrs['dn'])){
+          $tmp[base64_encode($attrs['dn'])] = $ldap->fix($attrs['dn']);
+        }
+      }
+    } else{
+
+      /************
+       * If people ou is empty
+       * Get all valid gosaDepartments
+       ************/
       $ldap->cd($cv['base']);
-      $ldap->create_missing_trees(preg_replace("/^[^,]+,/","",$add_dn));
-      $ldap->cd($add_dn);
-      $ldap->add($add);
-    }
-
-    $ldap->search("(".$cv['peopleou'].")",array("dn"));
-    $tmp = array();
-    while($attrs= $ldap->fetch()){
-      if(!preg_match("/ou=snapshots,/",$attrs['dn'])){
-        $tmp[base64_encode($attrs['dn'])] = $ldap->fix($attrs['dn']);
+      $tmp = array();
+      $ldap->search("(&(objectClass=gosaDepartment)(ou=*))",array("dn"));
+      $tmp['/'] = $cv['base'];
+      while($attrs = $ldap->fetch()){
+        $tmp[base64_encode($attrs['dn'])] = $ldap->fix($attrs['dn']);;
       }
     }
-    return($tmp); 
+    return($tmp);
   }
+
 
   function get_all_winstation_ous()
   {
@@ -1680,7 +1756,7 @@ class Step_Migrate extends setup_step
   }
 
 
-  function get_all_group_ous()
+ function get_all_group_ous()
   {
     /* Get collected configuration settings */
     $cv = $this->parent->captured_values;
@@ -1692,31 +1768,52 @@ class Step_Migrate extends setup_step
         FALSE,
         $cv['tls']);
 
-    $ldap->cd($cv['base']);
-    $ldap->search("(".$cv['groupou'].")",array("dn"));
-  
-    if($ldap->count() == 0 ){
-      $add_dn = $cv['groupou'].",".$cv['base'];
-      $naming_attr = preg_replace("/=.*$/","",$add_dn);
-      $naming_value = preg_replace("/^[^=]*+=([^,]*).*$/","\\1",$add_dn);
-      $add = array();
-      $add['objectClass'] = array("organizationalUnit");
-      $add[$naming_attr] = $naming_value;
-
-      $ldap->cd($cv['base']);
-      $ldap->create_missing_trees(preg_replace("/^[^,]+,/","",$add_dn));
-      $ldap->cd($add_dn);
-      $ldap->add($add);
+    $group_ou = trim($cv['groupou']);
+    if(!empty($group_ou)){
+      $group_ou = trim($group_ou);
     }
 
-    $ldap->search("(".$cv['groupou'].")",array("dn"));
-    $tmp = array();
-    while($attrs= $ldap->fetch()){
-      if(!preg_match("/ou=snapshots,/",$attrs['dn'])){
-        $tmp[base64_encode($attrs['dn'])] = $ldap->fix($attrs['dn']);
+    /************
+     * If group ou is NOT empty
+     * Get all valid group ous, create one if necessary
+     ************/
+    $ldap->cd($cv['base']);
+    if(!empty($group_ou)){
+      $ldap->search("(".$group_ou.")",array("dn"));
+      if($ldap->count() == 0 ){
+        $add_dn = $group_ou.$cv['base'];
+        $naming_attr = preg_replace("/=.*$/","",$add_dn);
+        $naming_value = preg_replace("/^[^=]*+=([^,]*).*$/","\\1",$add_dn);
+        $add = array();
+        $add['objectClass'] = array("organizationalUnit");
+        $add[$naming_attr] = $naming_value;
+
+        $ldap->cd($cv['base']);
+        $ldap->create_missing_trees(preg_replace("/^[^,]+,/","",$add_dn));
+        $ldap->cd($add_dn);
+        $ldap->add($add);
+      }
+      $ldap->search("(".$group_ou.")",array("dn"));
+      $tmp = array();
+      while($attrs= $ldap->fetch()){
+        if(!preg_match("/ou=snapshots,/",$attrs['dn'])){
+          $tmp[base64_encode($attrs['dn'])] = $ldap->fix($attrs['dn']);
+        }
+      }
+    }else{
+      /************
+       * If group ou is empty
+       * Get all valid gosaDepartments
+       ************/
+      $ldap->cd($cv['base']);
+      $tmp = array();
+      $ldap->search("(&(objectClass=gosaDepartment)(ou=*))",array("dn"));
+      $tmp['/'] = $cv['base'];
+      while($attrs = $ldap->fetch()){
+        $tmp[base64_encode($attrs['dn'])] = $ldap->fix($attrs['dn']);;
       }
     }
-    return($tmp); 
+    return($tmp);
   }
 
 
