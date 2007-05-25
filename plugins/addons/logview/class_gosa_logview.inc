@@ -19,19 +19,25 @@ class gosa_logview extends plugin
   var $start  = 0;
   var $sort   = 2;
 
-  var $sort_direction= "down";
-  var $fields= array("action","timestamp","user","result");//"id","timestamp","user","action","objecttype","object","changes","result");
-  var $range = 25;
-  var $view_logged = FALSE;
+  var $sort_direction = "down";
+  var $fields         = array("action","timestamp","user","result");
+  var $range          = 25;
+  var $view_logged    = FALSE;
 
   function gosa_logview ($config, $dn= NULL)
   {
     /* Include config object */
     $this->config= $config;
     $this->ui = get_userinfo();
-  
-    $this->set_acl_category("logview");
+
+    /* Restore last filter settings */
+    foreach(array("action","server","time","regex") as $attr){
+      if(isset($_SESSION['logview']['gosa_log'][$attr])){
+       $this->$attr = $_SESSION['logview']['gosa_log'][$attr];
+      }
+    }
   }
+
 
   function execute()
   {
@@ -71,6 +77,8 @@ class gosa_logview extends plugin
     $smarty->assign("ruleset_image", get_template_path('images/edit.png'));
     $smarty->assign("launchimage", get_template_path('images/launch.png'));
     $smarty->assign("date_select", $date_select);
+    $smarty->assign("servers", array());
+    $smarty->assign("actions", array());
     $smarty->assign("mode0", "");
     $smarty->assign("mode1", "");
     $smarty->assign("mode2", "");
@@ -143,13 +151,12 @@ class gosa_logview extends plugin
     /****
      * Check Acls 
      ****/
-    $tmp_cat_bases = $this->ui->get_module_departments("logview");
-    $all_acls = "";
-    print_a($tmp_cat_bases);
-    foreach($tmp_cat_bases as $acl_base){
-      $all_acls .= $this->ui->get_permissions($acl_base,"logview/logview");
-    }
-    if(count($tmp_cat_bases) == 0 || !preg_match("/r/",$all_acls)){
+
+    $ui = get_userinfo();
+    $dn = $list_of_servers[$this->server]['DN'];
+    $acls = $ui->get_permissions($dn,"users/user");
+    echo $acls;
+    if(!preg_match("/r/",$acls)){
       $res = "<tr>
         <td colspan=4>
         "._("You have insufficient permissions to view syslog entries.")."
@@ -159,7 +166,7 @@ class gosa_logview extends plugin
       /* Show main page */
       $smarty->assign("range_selector", "");
       $smarty->assign("search_result", $res);
-#      return ($smarty->fetch (get_template_path('gosa_log_contents.tpl', TRUE)));
+      return ($smarty->fetch (get_template_path('gosa_log_contents.tpl', TRUE)));
     }
 
 
@@ -301,7 +308,6 @@ class gosa_logview extends plugin
     /* Adapt sorting */
     if (isset($_GET['sort'])){
       if ($this->sort == (int)$_GET['sort']){
-          echo $this->sort_direction."<br>";
         if ($this->sort_direction == "down"){
           $this->sort_direction= "up";
         } else {
@@ -312,6 +318,12 @@ class gosa_logview extends plugin
       if ($this->sort < 0 || $this->sort > 3){
         $this->sort= 0;
       }
+    }
+
+    /* Save attributes in Sessiob, so we are able to recontruct filter on plugin reload */
+    $_SESSION['logview']['gosa_log'] = array();
+    foreach(array("action","server","time","regex") as $attr){
+      $_SESSION['logview']['gosa_log'][$attr] = $this->$attr;
     }
   }
 
