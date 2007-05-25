@@ -17,25 +17,23 @@
   along with this program; if not, write to the Free Software
   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
-
 if (!$remove_lock){
 
 	/* Create logview object on demand */
-	if (!isset($_SESSION['logview']) || (isset($_GET['reset']) && $_GET['reset'] == 1)){
-		$_SESSION['logview']= new logview ($config);
-		$_SESSION['logview']->set_acl_category("logview");
+	if (!isset($_SESSION['log_tabs']) || (isset($_GET['reset']) && $_GET['reset'] == 1)){
+		$_SESSION['log_tabs']= new log_tabs($config, $config->data['TABS']['LOGTABS'],"");
 	}
-	$logview= $_SESSION['logview'];
+	$log_tabs= $_SESSION['log_tabs'];
 
 	/* Execute formular */
-	$display= $logview->save_object();
-	$display= $logview->execute ();
+	$display= $log_tabs->save_object();
+	$display= $log_tabs->execute ();
 	$display.= "<input type=\"hidden\" name=\"ignore\">\n";
 
 	/* Page header*/
-	$display= print_header(get_template_path('images/logview.png'), _("System log view")).$display;
+	$display= print_header(get_template_path('images/log_tabs.png'), _("System log view")).$display;
 
 	/* Store changes  in session */
-	$_SESSION['logview']= $logview;
+	$_SESSION['log_tabs']= $log_tabs;
 }
 ?>

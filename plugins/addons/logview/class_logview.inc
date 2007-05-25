@@ -1,5 +1,6 @@
 <?php
 
+require_once("tabs_log.inc");
 class logview extends plugin
 {
   /* Definitions */
