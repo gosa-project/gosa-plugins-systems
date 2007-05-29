@@ -41,8 +41,18 @@ class ServerService extends plugin
       $name= $plug['CLASS'];
       $this->plugin_names[]= $name;
       $this->plugins[$name]= new $name($config, $dn);
+ 
+      /* Capture all service objectClases, necessary for acl handling */ 
+      if(isset($this->plugins[$name]->objectclasses)){
+        foreach($this->plugins[$name]->objectclasses as $oc){
+          $this->objectclasses[] = $oc;
+        }
+      }
     }
     $this->divList = new divListSystemService($config,$this);
+
+
+
 	}
 
   function set_acl_base($base)
