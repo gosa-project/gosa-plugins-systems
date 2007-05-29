@@ -22,6 +22,10 @@ function gosaRaiseError($errno, $errstr, $errfile, $errline)
 {
   global $error_collector,$config;
 
+  if(@class_exists("log")){
+    new log("debug","all",$errfile,array(),"Type:".$errno.", Message:".$errstr.", File:".$errfile.", Line: ".$errline);
+  }
+
   /* Return if error reporting is set to zero */
   if (error_reporting() == 0){
     return;

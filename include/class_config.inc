@@ -440,6 +440,7 @@ class config  {
       $attrs= $ldap->fetch();
       $this->data['SERVERS']['LOGGING'][$attrs['cn'][0]]= 
           array(
+          'DN'    => $attrs['dn'],
           'USER'  => $attrs['goLogDBUser'][0],
           'DB'    => $attrs['goLogDB'][0],
           'PWD'   => $attrs['goLogDBPassword'][0]);

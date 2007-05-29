@@ -45,8 +45,15 @@ class log {
    */
   function log($action,$objecttype,$object,$changes_array = array(),$result = TRUE)
   {
-    $this->config = $_SESSION['config'];
-    $ui   = get_userinfo(); 
+    $entry = array(); 
+    if(!isset($_SESSION['config'])){
+      $entry['user']= "unkown";
+    }else{
+
+      $this->config = $_SESSION['config'];
+      $ui           = get_userinfo(); 
+      $entry['user']= @$ui->dn;
+    }
 
     /* Create string out of changes */
     $changes  ="";
@@ -56,9 +63,7 @@ class log {
     $changes = preg_replace("/,$/","",$changes );
     
     /* Create data object */
-    $entry = array(); 
     $entry['timestamp'] = time();
-    $entry['user']      = @$ui->dn;
     $entry['action']    = $action;
     $entry['objecttype']= $objecttype;
     $entry['object']    = $object;
