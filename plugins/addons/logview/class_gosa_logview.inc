@@ -154,8 +154,8 @@ class gosa_logview extends plugin
 
     $ui = get_userinfo();
     $dn = $list_of_servers[$this->server]['DN'];
-    $acls = $ui->get_permissions($dn,"users/user");
-    echo $acls;
+    $acls = $ui->get_permissions($dn,"server/gosaLogServer","viewEntries");
+   
     if(!preg_match("/r/",$acls)){
       $res = "<tr>
         <td colspan=4>
@@ -329,7 +329,7 @@ class gosa_logview extends plugin
 
 
   /* Return plugin informations for acl handling
-     #FIXME You can only read attributes within this report plugin */
+     #FIXME You can only read attributes within this report plugin 
   function plInfo()
   {
     return (array(
@@ -344,6 +344,7 @@ class gosa_logview extends plugin
         "plProvidedAcls" => array()
         ));
   }
+  */
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
