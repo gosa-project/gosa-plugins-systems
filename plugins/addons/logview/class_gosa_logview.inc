@@ -255,9 +255,9 @@ class gosa_logview extends plugin
           }
 
           $res.=" <tr style=\"$col\">\n";
-          $res.="   <td>".$line['action']."</td>";
+          $res.="   <td title='".$line['objecttype']."'>".$line['action']."</td>";
           $res.="   <td>".date("H:i:s d.m.Y",$line['timestamp'])."</td>";
-          $res.="   <td>".preg_replace("/,/",", ",$line['user'])."</td>"; 
+          $res.="   <td title='".$line['object']."'>".preg_replace("/,/",", ",$line['user'])."</td>"; 
           $res.="   <td>".$line['result']."</td>";
           $res.=" </tr>\n";
         }
