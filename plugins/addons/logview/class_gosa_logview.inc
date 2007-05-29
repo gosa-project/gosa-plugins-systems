@@ -140,7 +140,7 @@ class gosa_logview extends plugin
      * Get all action types 
      ****/
 
-    $actions = array();
+    $actions = array("!ALL" => _("All"));
     $query = "SELECT distinct(action) FROM gosa_log;";
     $res = @mysql_query($query);
     while($attrs = @mysql_fetch_assoc($res)){
@@ -204,9 +204,17 @@ class gosa_logview extends plugin
         $query_base= "  FROM 
           gosa_log 
           WHERE 
-          result like '".preg_replace("/\*/","%",$this->regex)."' 
-          AND
-          action like '".$this->action."' 
+          result like '".preg_replace("/\*/","%",$this->regex)."' ";
+
+
+        if($this->action != "!ALL"){
+          $query_base .="
+            AND
+            action like '".$this->action."'
+            ";
+        } 
+
+        $query_base .="
           AND  
           timestamp <= $end AND timestamp >= $start";
 
@@ -314,6 +322,7 @@ class gosa_logview extends plugin
           $this->sort_direction= "down";
         }
       }
+      
       $this->sort= (int)$_GET['sort'];
       if ($this->sort < 0 || $this->sort > 3){
         $this->sort= 0;
