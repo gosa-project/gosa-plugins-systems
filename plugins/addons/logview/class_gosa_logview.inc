@@ -282,7 +282,6 @@ class gosa_logview extends plugin
 
   function save_object()
   {
-    $_SESSION['kekse'][] = get_class($this)."->save_object";
     /* Get submitted range */	
     if(isset($_POST['EntriesPerPage'])){
       if(is_numeric($_POST['EntriesPerPage'])){
