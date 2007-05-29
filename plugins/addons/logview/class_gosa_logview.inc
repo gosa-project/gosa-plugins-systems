@@ -273,6 +273,8 @@ class gosa_logview extends plugin
     $smarty->assign("actions",$actions);
     $smarty->assign("date_select", $date_select);
 
+    $smarty->assign("direction", $this->sort_direction);
+
     /* Show main page */
     return ($smarty->fetch (get_template_path('gosa_log_contents.tpl', TRUE)));
   }
@@ -280,6 +282,7 @@ class gosa_logview extends plugin
 
   function save_object()
   {
+    $_SESSION['kekse'][] = get_class($this)."->save_object";
     /* Get submitted range */	
     if(isset($_POST['EntriesPerPage'])){
       if(is_numeric($_POST['EntriesPerPage'])){
@@ -315,14 +318,13 @@ class gosa_logview extends plugin
 
     /* Adapt sorting */
     if (isset($_GET['sort'])){
-      if ($this->sort == (int)$_GET['sort']){
-        if ($this->sort_direction == "down"){
-          $this->sort_direction= "up";
-        } else {
-          $this->sort_direction= "down";
-        }
+
+      if($_GET['direction'] == "up"){
+        $this->sort_direction = "down";
+      }else{
+        $this->sort_direction = "up";
       }
-      
+
       $this->sort= (int)$_GET['sort'];
       if ($this->sort < 0 || $this->sort > 3){
         $this->sort= 0;
@@ -334,6 +336,8 @@ class gosa_logview extends plugin
     foreach(array("action","server","time","regex") as $attr){
       $_SESSION['logview']['gosa_log'][$attr] = $this->$attr;
     }
+
+
   }
 
 
