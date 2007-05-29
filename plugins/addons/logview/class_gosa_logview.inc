@@ -77,8 +77,8 @@ class gosa_logview extends plugin
     $smarty->assign("ruleset_image", get_template_path('images/edit.png'));
     $smarty->assign("launchimage", get_template_path('images/launch.png'));
     $smarty->assign("date_select", $date_select);
-    $smarty->assign("servers", array());
     $smarty->assign("actions", array());
+    $smarty->assign("direction", "up");
     $smarty->assign("mode0", "");
     $smarty->assign("mode1", "");
     $smarty->assign("mode2", "");
@@ -111,6 +111,7 @@ class gosa_logview extends plugin
     foreach($list_of_servers as $servername => $data){
       $servers[$servername] = $servername;
     }
+    $smarty->assign("servers", $servers);
     
     /* Set a default server, if there is currently no valid server selected */
     if(empty($this->server) || !in_array($this->server,$servers)){
@@ -155,7 +156,7 @@ class gosa_logview extends plugin
     $ui = get_userinfo();
     $dn = $list_of_servers[$this->server]['DN'];
     $acls = $ui->get_permissions($dn,"server/gosaLogServer","viewEntries");
-   
+    
     if(!preg_match("/r/",$acls)){
       $res = "<tr>
         <td colspan=4>
