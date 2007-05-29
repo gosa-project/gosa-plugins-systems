@@ -100,7 +100,8 @@ class gosaLogServer extends goService{
           "plProvidedAcls"=> array(
             "goLogDB"         => _("Database"),
             "goLogDBUser"     => _("User"),
-            "goLogDBPassword" => _("Password")) 
+            "goLogDBPassword" => _("Password"), 
+            "viewEntries"    => _("Allow view of entries on this server")) 
           ));
   }
 }
