@@ -112,10 +112,14 @@ class acl extends plugin
     /* Objects */
     $tmp= get_global('plist');
     $plist= $tmp->info;
+    $cats = array();
     if (isset($this->parent) && $this->parent != NULL){
       $oc= array();
       foreach ($this->parent->by_object as $key => $obj){
         $oc= array_merge($oc, $obj->objectclasses);
+        if(isset($obj->acl_category)){
+          $cats[preg_replace("/\//","",$obj->acl_category)] = preg_replace("/\//","",$obj->acl_category);
+        }
       }
       if (in_array_ics('organizationalUnit', $oc)){
         $this->isContainer= TRUE;
@@ -123,7 +127,6 @@ class acl extends plugin
     } else {
       $oc=  $this->attrs['objectClass'];
     }
-
 
     /* Extract available categories from plugin info list */
     foreach ($plist as $class => $acls){
@@ -139,6 +142,10 @@ class acl extends plugin
             if (!isset($this->ocMapping[$data])){
               $this->ocMapping[$data]= array();
               $this->ocMapping[$data][]= '0';
+            }
+
+            if(isset($cats[$data])){
+              $this->myAclObjects[$idx.'/'.$class]= $acls['plDescription'];
             }
             $this->ocMapping[$data][]= $class;
           } else {
