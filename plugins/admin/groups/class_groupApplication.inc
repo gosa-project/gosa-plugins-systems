@@ -1182,6 +1182,7 @@ class appgroup extends plugin
     $this->FAIrelease = $this->InitialFAIrelease = $source->FAIrelease;
     $this->gosaMemberApplication = $source->gosaMemberApplication;
     $this->appoption = $source->appoption;
+    $this->Categories = $source->Categories;
   }
 
 
