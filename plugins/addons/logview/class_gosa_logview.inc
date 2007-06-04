@@ -239,6 +239,8 @@ class gosa_logview extends plugin
         @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__, $query, "Database query");
         $result = @mysql_query($query);
 
+        echo $query;
+
         if(!$result){
           new log("debug","logview","",array(),@mysql_error());
         }
