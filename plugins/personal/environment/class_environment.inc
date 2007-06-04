@@ -715,9 +715,9 @@ class environment extends plugin
     }
 
     /* We have to delete the selected hotplug from the list*/
-    if((isset($_POST['gotoHotplugDeviceDel']))&&(isset($_POST['gotoHotplugDevice'])) && $this->acl_is_writeable("gotoHotplugDevice")){
+    if((isset($_POST['gotoHotplugDeviceDel']))&&(isset($_POST['gotoHotplugDevice_post'])) && $this->acl_is_writeable("gotoHotplugDevice")){
       if($this->acl_is_writeable("gotoHotplugDevice")){
-        foreach($_POST['gotoHotplugDevice'] as $name){
+        foreach($_POST['gotoHotplugDevice_post'] as $name){
           unset($this->gotoHotplugDevices[$name]);
         }
       }
@@ -1143,8 +1143,12 @@ class environment extends plugin
     /* Prepare HotPlug devices */
     $this->attrs['gotoHotplugDevice'] = array();
     foreach($this->gotoHotplugDevices as $name => $device){
-      $this->attrs['gotoHotplugDevice'][] = $device['name']."|".$device['description']."|".$device['id'].
-        "|".$device['produkt']."|".$device['vendor'];
+
+      $tmp= $device['name']."|".$device['description']."|".$device['id'];
+      if (isset($device['produkt']) && isset($device['vendor'])){
+        $tmp.= "|".$device['produkt']."|".$device['vendor'];
+      }
+      $this->attrs['gotoHotplugDevice'][]= $tmp;
     }
 
     /* Prepare LogonScripts */

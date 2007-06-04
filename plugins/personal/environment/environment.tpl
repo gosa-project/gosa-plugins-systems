@@ -200,13 +200,13 @@
   <td style="border-right:1px solid #B0B0B0; width:50%; vertical-align:top">
    <h2>
     <img alt="" src="images/hotplug.png" align="middle" class="center" />&nbsp;
-    <label for="gotoHotplugDevice">{t}Hotplug devices{/t}</label>
+    <label for="gotoHotplugDevice_post">{t}Hotplug devices{/t}</label>
    </h2> 
    <table style="width:100%" summary="{t}Hotplug device settings{/t}">
     <tr>
      <td>
 {render acl=$gotoHotplugDeviceACL}
-      <select name="gotoHotplugDevice[]" size=5  style="width:100%;" id="gotoHotplugDevice" multiple>
+      <select name="gotoHotplugDevice_post[]" size=5  style="width:100%;" id="gotoHotplugDevice_post" multiple>
        {html_options values=$gotoHotplugDeviceKeys output=$gotoHotplugDevices}
        <option disabled>&nbsp;</option>
       </select>
