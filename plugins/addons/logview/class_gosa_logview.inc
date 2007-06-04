@@ -17,12 +17,13 @@ class gosa_logview extends plugin
   var $regex          = "*";
 
   var $start  = 0;
-  var $sort   = 2;
+  var $sort   = 1;
 
   var $sort_direction = "down";
   var $fields         = array("action","timestamp","user","result","repeated");
   var $range          = 25;
   var $view_logged    = FALSE;
+
 
   function gosa_logview ($config, $dn= NULL)
   {
@@ -260,7 +261,11 @@ class gosa_logview extends plugin
           $res.="   <td>".date("H:i:s d.m.Y",$line['timestamp'])."</td>";
           $res.="   <td title='".$line['object']."'>".preg_replace("/,/",", ",$line['user'])."</td>"; 
           $res.="   <td>".$line['result']."</td>";
-          $res.="   <td>".$line['repeated']."</td>";
+          if($line['repeated'] == 1){
+            $res.="   <td>-</td>";
+          }else{
+            $res.="   <td>".($line['repeated']-1)."</td>";
+          }
           $res.=" </tr>\n";
         }
         mysql_close($link);
