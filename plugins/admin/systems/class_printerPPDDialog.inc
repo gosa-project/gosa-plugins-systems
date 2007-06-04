@@ -422,7 +422,13 @@ class printerPPDDialog extends plugin
           /* Prepare data */
           $values   = array();
           $name     = $settings['_name'];
-          $default  = $settings['_default'];
+
+          if (!isset($settings['_default'])){
+            $default  = "";
+          } else {
+            $default  = $settings['_default'];
+          }
+
           $type     = $settings['_type'];
 
           /* Add name to table */ 

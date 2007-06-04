@@ -22,6 +22,7 @@ class appgroup extends plugin
   var $curbase                = "";
   var $curCatDir                  ;
   var $curCatDepth              =0;         //
+  var $Categories;
 
   /* attribute list for save action */
   var $attributes               = array("gosaMemberApplication","gosaApplicationParameter");
