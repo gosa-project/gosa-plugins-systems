@@ -83,6 +83,7 @@
    <td><a href=main.php{$plug}&amp;sort=2&amp;direction={$direction}>{t}Date{/t} {$mode2}</a></td>
    <td><a href=main.php{$plug}&amp;sort=1&amp;direction={$direction}>{t}User{/t} {$mode1}</a></td>
    <td><a href=main.php{$plug}&amp;sort=3&amp;direction={$direction}>{t}Message{/t} {$mode3}</a></td>
+   <td><a href=main.php{$plug}&amp;sort=4&amp;direction={$direction}>{t}Repeated{/t} {$mode4}</a></td>
   </tr>
   {$search_result}
  </table>

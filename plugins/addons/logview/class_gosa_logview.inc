@@ -20,7 +20,7 @@ class gosa_logview extends plugin
   var $sort   = 2;
 
   var $sort_direction = "down";
-  var $fields         = array("action","timestamp","user","result");
+  var $fields         = array("action","timestamp","user","result","repeated");
   var $range          = 25;
   var $view_logged    = FALSE;
 
@@ -83,6 +83,7 @@ class gosa_logview extends plugin
     $smarty->assign("mode1", "");
     $smarty->assign("mode2", "");
     $smarty->assign("mode3", "");
+    $smarty->assign("mode4", "");
 
     /* Assign select option content */
     foreach( array("server", "action", "time", "regex") as $type){
@@ -234,7 +235,7 @@ class gosa_logview extends plugin
         }
 
         /* Query results */
-        $query= "SELECT *".$query_base." ORDER BY ".$this->fields[$this->sort]." $desc LIMIT ".$this->start.",".$this->range.";";
+        $query= "SELECT count(`action`) as 'repeated',`user`,`result`,`timestamp`,`action`,`action`,`objecttype`,`object`".$query_base." GROUP BY `action`,`result`,`timestamp` ORDER BY ".$this->fields[$this->sort]." $desc LIMIT ".$this->start.",".$this->range.";";
         @DEBUG (DEBUG_MYSQL, __LINE__, __FUNCTION__, __FILE__, $query, "Database query");
         $result = @mysql_query($query);
 
@@ -259,6 +260,7 @@ class gosa_logview extends plugin
           $res.="   <td>".date("H:i:s d.m.Y",$line['timestamp'])."</td>";
           $res.="   <td title='".$line['object']."'>".preg_replace("/,/",", ",$line['user'])."</td>"; 
           $res.="   <td>".$line['result']."</td>";
+          $res.="   <td>".$line['repeated']."</td>";
           $res.=" </tr>\n";
         }
         mysql_close($link);
@@ -326,7 +328,7 @@ class gosa_logview extends plugin
       }
 
       $this->sort= (int)$_GET['sort'];
-      if ($this->sort < 0 || $this->sort > 3){
+      if ($this->sort < 0 || $this->sort > 4){
         $this->sort= 0;
       }
     }
