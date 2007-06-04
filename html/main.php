@@ -144,6 +144,7 @@ if(!isset($_SESSION['CurrentMainBase'])){
 }
 
 $lang.=".UTF-8";
+
 putenv("LANGUAGE=");
 putenv("LANG=$lang");
 setlocale(LC_ALL, $lang);
