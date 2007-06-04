@@ -184,12 +184,27 @@ function array_diff_FAI($ar1,$ar2)
   }
   ksort($ar1);
   ksort($ar2);
-  if(count( array_diff($ar1,$ar2))){
+  if(count( array_diff($ar1,$ar2)) || arr_diff($ar1,$ar2)){
     return(true);
   }else{
     return(false);
   }
 }
+
+
+function arr_diff($ar1,$ar2)
+{
+  foreach($ar1 as $ak1 => $av1){
+    if(!isset($ar2[$ak1]) || (!($av1 === $ar2[$ak1]))){
+      return(true);
+    }elseif(is_array($av1)){
+      return(arr_diff($av1,$ar2[$ak1]));
+    }
+  }
+  return(FALSE);
+}
+
+
 
 
 /* check which objects must be saved, and save them */
