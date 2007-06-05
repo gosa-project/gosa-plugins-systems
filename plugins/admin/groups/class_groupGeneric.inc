@@ -540,7 +540,7 @@ class group extends plugin
       $acl = new acl($this->config,$this->parent,$attrs['dn']);
       foreach($acl->gosaAclEntry as $id => $entry){
         foreach($entry['members'] as $m_id => $member){
-          if($m_id == "G:".$this->dn){
+          if($m_id == "G:".$this->dn || $m_id == "U:".$this->dn){
             unset($acl->gosaAclEntry[$id]['members'][$m_id]);
             gosa_log("modify","groups/acl",$attrs['dn'],array(),sprintf("Removed acl for %s on object %s.",$this->dn,$attrs['dn']));
           }
