@@ -653,6 +653,23 @@ class user extends plugin
       kadm5_destroy($handle);
     }
 
+    /* Remove ACL dependencies too, 
+     */
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd($this->config->current['BASE']);
+    $ldap->search("(&(objectClass=gosaAcl)(gosaAclEntry=*".base64_encode($this->dn)."*))",array("gosaAclEntry","dn"));
+    while($attrs = $ldap->fetch()){
+      $acl = new acl($this->config,$this->parent,$attrs['dn']);
+      foreach($acl->gosaAclEntry as $id => $entry){
+        foreach($entry['members'] as $m_id => $member){
+          if($m_id == "U:".$this->dn){
+            unset($acl->gosaAclEntry[$id]['members'][$m_id]); 
+            gosa_log("modify","users/acl",$attrs['dn'],array(),sprintf("Removed acl for %s on object %s.",$this->dn,$attrs['dn'])); 
+          }
+        }
+      }  
+      $acl -> save();
+    }
 
     /* Optionally execute a command after we're done */
     $this->handle_post_events("remove",array("uid" => $this->uid));
