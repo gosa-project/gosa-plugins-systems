@@ -531,6 +531,24 @@ class group extends plugin
       $og->save ();
     }
 
+    /* Remove ACL dependencies too,
+     */
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd($this->config->current['BASE']);
+    $ldap->search("(&(objectClass=gosaAcl)(gosaAclEntry=*".base64_encode($this->dn)."*))",array("gosaAclEntry","dn"));
+    while($attrs = $ldap->fetch()){
+      $acl = new acl($this->config,$this->parent,$attrs['dn']);
+      foreach($acl->gosaAclEntry as $id => $entry){
+        foreach($entry['members'] as $m_id => $member){
+          if($m_id == "G:".$this->dn){
+            unset($acl->gosaAclEntry[$id]['members'][$m_id]);
+            gosa_log("modify","groups/acl",$attrs['dn'],array(),sprintf("Removed acl for %s on object %s.",$this->dn,$attrs['dn']));
+          }
+        }
+      }
+      $acl -> save();
+    }
+
     /* Send signal to the world that we've done */
     $this->handle_post_events("remove");
   }
