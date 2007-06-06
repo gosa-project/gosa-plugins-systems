@@ -363,8 +363,6 @@ class department extends plugin
 		$a= $ldap->fetch();
 		$ldap->cd($this->dn);
 
-      print_a(debug_backtrace());
-
 		if (count($a)){
 			$this->cleanup();
 			$ldap->modify ($this->attrs); 
