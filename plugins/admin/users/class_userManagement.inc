@@ -37,6 +37,8 @@ class userManagement extends plugin
   var $CPPasswordChange     = ""; // Contains the entry id which should get a new password
   var $DivListUsers;
 
+  var $start_pasting_copied_objects = FALSE;
+
   function userManagement($config, $ui)
   {
     /* Save configuration for internal use */
@@ -82,8 +84,11 @@ class userManagement extends plugin
                     "del_multiple" => "^remove_multiple_users",
                     "create_user_from_tpl"          => "userfrom_tpl",
                     "change_pw" => "user_chgpw", 
-                    "editPaste" => "editPaste",   "copy"      => "copy",
-                    "cut"       => "cut") as $act => $name){
+                    "editPaste" => "editPaste",  
+                    "copy_multiple" => "multiple_copy_users",
+                    "cut_multiple" => "multiple_cut_users",
+                    "copy"      => "^copy",
+                    "cut"       => "^cut") as $act => $name){
 
         if (preg_match("/".$name.".*/", $key)){
           $s_action= $act;
@@ -108,6 +113,13 @@ class userManagement extends plugin
     if(!search_config($this->config->data['TABS'], $s_tab , "CLASS")){
       $s_tab = "user";
     }
+
+
+    $ret = $this->copyPasteHandling_from_queue($s_action);
+    if($ret){
+      return($ret);
+    }
+
 
     /* Display the copy & paste dialog, if it is currently open */
     $ret = $this->copyPasteHandling($s_action,$s_entry);
@@ -867,85 +879,49 @@ class userManagement extends plugin
     }
   }
 
+
+  function copyPasteHandling_from_queue($s_action)
+  {
+    if($s_action == "copy_multiple" || $s_action == "cut_multiple"){
+
+      /* Cleanup object queue */
+      $this->CopyPasteHandler->cleanup_queue();
+
+      /* Add new entries to CP queue */
+      foreach($_POST as $name => $value){
+        if(preg_match("/^item_selected_[0-9]*$/",$name)){
+          $id = preg_replace("/^item_selected_/","",$name);
+          $dn = $this->list[$id]['dn'];
+
+          if($s_action == "copy_multiple"){
+            $this->CopyPasteHandler->add_to_queue($dn,"copy","usertabs","USERTABS");
+          }
+          if($s_action == "cut_multiple"){
+            $this->CopyPasteHandler->add_to_queue($dn,"cut","usertabs","USERTABS");
+          }
+        }
+      }
+    }
+    
+    if($s_action == "editPaste"){
+      $this->start_pasting_copied_objects = TRUE;
+    }
+
+    if($this->start_pasting_copied_objects && $this->CopyPasteHandler->entries_queued()){
+      return($this->CopyPasteHandler->paste_entries());
+    }
+    
+    $this->start_pasting_copied_objects = FALSE;
+  }
+
  
   /* Perform copy & paste requests
       If copy&paste is in progress this returns a dialog to fix required attributes 
    */ 
   function copyPasteHandling($s_action,$s_entry)
-  {
-    /* Only perform copy/paste if it is enabled */
-    if($this->CopyPasteHandler){
-
-      /* Prepare current object to be pasted */
-      if( $s_action == "editPaste" || $this->CopyPasteHandler->stillOpen()){
-
-        $this->CopyPasteHandler->save_object();
-        $this->CopyPasteHandler->SetVar("base", $this->DivListUsers->selectedBase);
-
-        /* Execute copy & paste dialog and display returned data, normaly a dialog which allows 
-            us to solve all attribute mismatches for this object.
-            If nothing is returned, copy & paste was succesfully or aborted */
-        if(($ret= $this->CopyPasteHandler->execute())){
-          return ($ret);
-        }
-
-        /* Use the last dn to search for it's ID in the newly generated list. */
-        $dn= $this->CopyPasteHandler->lastdn;
-
-        /* Get new user list */
-        $this->reload();
-        foreach($this->list as $id => $entry){
-          if($entry['dn'] == $dn){
-            $s_entry= $id;
-            break;
-          }
-        }
-       
-        /* Set CPPasswordChange to s_entry which indicates that this entry requires a new password. */
-        if(isset($_POST['passwordTodo']) && ($_POST['passwordTodo'] == "new")){
-          $this->CPPasswordChange = $s_entry;
-        }
-      }
-
-      /* Copy selected object 
-         Create a new empty object and the current selected object. 
-         Send both to copy&paste class*/
-      if($s_action == "copy"){
-        $this->CopyPasteHandler->Clear();
-        $dn= $this->list[trim($s_entry)]['dn'];
-
-        /* Check acl */
-        $ui = get_userinfo();
-        $acl_all  = $ui->has_complete_category_acls($this->DivListUsers->selectedBase,"users") ;
-        if(preg_match("/(c.*w|w.*c)/",$acl_all)){
-          $obj    = new usertabs($this->config, $this->config->data['TABS']['USERTABS'], $dn);
-          $obj->set_acl_base($dn);
-          $objNew = new usertabs($this->config, $this->config->data['TABS']['USERTABS'], "new");
-          $objNew->set_acl_base($dn);
-
-          $this->CopyPasteHandler->Copy($obj,$objNew);
-        }else{
-          print_red("You are not allowed to copy this entry.");
-        }
-      }
-
-      /* Cut selected object. 
-         Open user object and send it to the copy & paste handler */
-      if($s_action == "cut"){
-        $this->CopyPasteHandler->Clear();
-        $dn= $this->list[trim($s_entry)]['dn'];
-
-        /* Check acl */
-        $acl_all  = $ui->has_complete_category_acls($this->DivListUsers->selectedBase,"users") ;
-        if(preg_match("/(c.*w|w.*c)/",$acl_all)){
-          $obj= new usertabs($this->config, $this->config->data['TABS']['USERTABS'], $dn);
-          $obj->set_acl_base($dn);
-          $this->CopyPasteHandler->Cut($obj);
-        }else{
-          print_red("You are not allowed to cut this entry.");
-        }
-      }
-    }
+  { 
+    echo "replaced";
+    return;
   }
 
   function save_object()

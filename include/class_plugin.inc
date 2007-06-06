@@ -907,15 +907,29 @@ class plugin
   }
 
 
-  function PrepareForCopyPaste($source){
+  function PrepareForCopyPaste($source)
+  {
     $todo = $this->attributes;
     if(isset($this->CopyPasteVars)){
       $todo = array_merge($todo,$this->CopyPasteVars);
     }
     $todo[] = "is_account";
     foreach($todo as $var){
-      if (isset($source->$var)){
-        $this->$var= $source->$var;
+      if (isset($source[$var])){
+        if(isset($source[$var]['count'])){
+          if($source[$var]['count'] > 1){
+            $this->$var = array();
+            $tmp = array();
+            for($i = 0 ; $i < $source[$var]['count']; $i++){
+              $tmp = $source[$var][$i];
+            }
+            $this->$var = $tmp;
+          }else{
+            $this->$var = $source[$var][0];
+          }
+        }else{
+          $this->$var= $source[$var];
+        }
       }
     }
   }

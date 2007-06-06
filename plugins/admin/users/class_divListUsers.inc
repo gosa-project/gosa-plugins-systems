@@ -167,7 +167,11 @@ class divListUsers extends MultiSelectWindow
     /* Multiple options */ 
     $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/edittrash.png'
         title='"._("Remove selected user")."' alt='"._("Remove user")."' name='remove_multiple_users'>&nbsp;";
-    
+    $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/editcopy.png'
+        title='"._("Copy selected user")."' alt='"._("Copy users")."' name='multiple_copy_users'>&nbsp;";
+    $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/editcut.png'
+        title='"._("cut selected user")."' alt='"._("Cut users")."' name='multiple_cut_users'>&nbsp;";
+
     $listhead .="</div>";;
     $this->SetListHeader($listhead);
   }
