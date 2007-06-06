@@ -247,6 +247,7 @@ a.maintitlebar, div.maintitlebar {
 a.maintitlebar:hover {
 	text-decoration:none;
 	background-color:#B0D3A0;
+	cursor:pointer;
 }
 
 p.menuheader {
@@ -282,6 +283,7 @@ p.menuitem {
 
 p.menuitem:hover {
 	background-color:#F0F0F0;
+	cursor:pointer;
 }
 
 table.menuitem {
@@ -294,6 +296,7 @@ table.menuitem {
 
 table.menuitem:hover {
 	background-color:#F0F0F0;
+	cursor:pointer;
 }
 
 
@@ -363,6 +366,7 @@ a.iconmenu:link {
 
 td.iconmenu:hover {
 	background-color:#F0F0F0;
+	cursor:pointer;
 }
 
 a.iconmenu:visited {
