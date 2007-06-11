@@ -12,11 +12,12 @@ class CopyPasteHandler {
   var $dialogOpen  = false;
   var $objectdn    = false;
 
-  var $lastdn      = "";
   var $was_successfull = false;
 
   /* this array contains all dns of the currently copyied objects */
   var $queue       = array(); 
+  var $setvar_array= array();
+  var $lastdn      = "";
 
   /* Create CP handler  */
   function CopyPasteHandler($config)
@@ -24,6 +25,7 @@ class CopyPasteHandler {
     $this->config = $config;	
     $this->current= NULL;
     $this->queue  = array();
+    $this->setvar_array = array();
   }
 
 
@@ -71,6 +73,7 @@ class CopyPasteHandler {
   function cleanup_queue()
   {
     $this->current = FALSE;
+    $this->setvar_array = array();
 
     /* Remove all entries from queue */  
     foreach($this->queue as $key => $entry){
@@ -167,19 +170,30 @@ class CopyPasteHandler {
       $entry  = $this->queue[$key];
       $tab_c = $entry['tab_class'];
       $tab_o = $entry['tab_object'];
-      $entry['object']      = new $tab_c($this->config,$this->config->data['TABS'][$tab_o],"new");
+  
+      if($entry['method'] == "copy"){
+        $entry['object']      = new $tab_c($this->config,$this->config->data['TABS'][$tab_o],"new");
+      }else{
+        $entry['object']      = new $tab_c($this->config,$this->config->data['TABS'][$tab_o],$entry['dn'],"users");
+      }
+
+      
+
       $entry['source_data'] = $this->load_attributes_from_hdd($entry['file_name']);
 
-      /* Prepare each plugin of this tab object to be posted */
-      foreach($entry['object']->by_object as $name => $obj){
+      if($entry['method'] == "copy"){
 
-        /* Prepare every single class, to be copied  */
-        $entry['object']->by_object[$name]->PrepareForCopyPaste($entry['source_data']);
+        /* Prepare each plugin of this tab object to be posted */
+        foreach($entry['object']->by_object as $name => $obj){
 
-        /* handle some special vars */
-        foreach(array("is_account") as $attr){
-          if(isset($entry['source_data'][$attr])){
-            $entry['object']->by_object[$name]->$attr = $entry['source_data'][$attr];
+          /* Prepare every single class, to be copied  */
+          $entry['object']->by_object[$name]->PrepareForCopyPaste($entry['source_data']);
+
+          /* handle some special vars */
+          foreach(array("is_account") as $attr){
+            if(isset($entry['source_data'][$attr])){
+              $entry['object']->by_object[$name]->$attr = $entry['source_data'][$attr];
+            }
           }
         }
       }
@@ -217,6 +231,44 @@ class CopyPasteHandler {
   function execute()
   {
     $type = $this->current['method'];
+    if($type == "cut"){
+      if(isset($_POST['PerformCopyPaste'])){
+        while($this->entries_queued()){
+          $this->load_entry_from_queue();      
+          $this->_update_vars();
+
+           $msgs = $this->check();
+           if(count ($msgs) ){
+             foreach( $msgs as $msg){
+               print_red($msg);
+             }
+           }else{
+
+             /* Load next queue entry */
+             $this->lastdn = $this->current['object']->dn;
+             $this->current['object']->save();
+           }
+
+          $this->current =FALSE;
+        }
+      }
+      if($this->current){
+
+        $dns = $this->current['dn']."\n";
+        foreach($this->queue as $entry){
+          $dns .= $entry['dn']."\n";
+        }
+
+        $smarty = get_smarty();
+        $smarty->assign("type","cut");
+        $smarty->assign("Complete",false);
+        $smarty->assign("AttributesToFix","&nbsp;");
+        $smarty->assign("SubDialog",$this->current['object']->SubDialog);
+        $smarty->assign("objectDN"     ,$dns);
+        $smarty->assign("message", sprintf(_("You are going to paste the cutted entry '%s'."), "<pre>".$dns."</pre>"));
+        return($smarty->fetch(get_template_path("copyPasteDialog.tpl",FALSE)));
+      }
+    }
     if($type == "copy"){
       if(isset($_POST['PerformCopyPaste'])){
         $msgs = $this->check();
@@ -225,6 +277,7 @@ class CopyPasteHandler {
             print_red($msg);
           }
         }else{
+          $this->_update_vars();
           $this->current['object']->save();
           $this->lastdn = $this->current['object']->dn;
           $this->current =FALSE;
@@ -288,10 +341,30 @@ class CopyPasteHandler {
    *  example :   ("base", $newBase );    */
   function SetVar($name,$value)
   {
+    $this->setvar_array[$name]=$value; 
+  }
+
+  
+  /* Update current object attributes, collected via SetVar */
+  function _update_vars()
+  {
     if($this->current){
+
+      /* Update all attributes specified with SetVar */
+      foreach($this->setvar_array as $name => $value){
+        if(isset($this->current['object']->$name)){
+          $this->current['object']->$name = $value;
+        }
+      }
+      
+      /* Walk through tabs */
       foreach($this->current['object']->by_object as $key => $obj){
-        if(isset($this->current['object']->by_object[$key]->$name)){
-          $this->current['object']->by_object[$key]->$name = $value;
+
+        /* Update all attributes specified with SetVar */
+        foreach($this->setvar_array as $name => $value){
+          if(isset($this->current['object']->by_object[$key]->$name)){
+            $this->current['object']->by_object[$key]->$name = $value;
+          }
         }
       }
     }
@@ -369,8 +442,6 @@ class CopyPasteHandler {
      Create unique names, ids, or what ever */
   function execute_old()
   {
-    print_a($this->current);
-
     return;
     /* Cut & paste
      */

@@ -18,8 +18,10 @@
 	<div style='text-align:right;width:100%;'>
 		<input type='submit' name='PerformCopyPaste' value='{t}Save{/t}'>&nbsp;
 		<input type='submit' name='abort_current_cut-copy_operation' value='{t}Cancel{/t}'>
+	
+	{if $type == "copy"}
 		<input type='submit' name='abort_all_cut-copy_operations' value='{t}Cancel all{/t}'>
-		
+	{/if}
 	</div>
 	{/if}
 {else}
