@@ -114,15 +114,8 @@ class userManagement extends plugin
       $s_tab = "user";
     }
 
-
-    $ret = $this->copyPasteHandling_from_queue($s_action);
-    if($ret){
-      return($ret);
-    }
-
-
     /* Display the copy & paste dialog, if it is currently open */
-    $ret = $this->copyPasteHandling($s_action,$s_entry);
+    $ret = $this->copyPasteHandling_from_queue($s_action);
     if($ret){
       return($ret);
     }
@@ -888,17 +881,14 @@ class userManagement extends plugin
       $this->CopyPasteHandler->cleanup_queue();
 
       /* Add new entries to CP queue */
-      foreach($_POST as $name => $value){
-        if(preg_match("/^item_selected_[0-9]*$/",$name)){
-          $id = preg_replace("/^item_selected_/","",$name);
-          $dn = $this->list[$id]['dn'];
+      foreach($this->list_get_selected_items() as $id){
+        $dn = $this->list[$id]['dn'];
 
-          if($s_action == "copy_multiple"){
-            $this->CopyPasteHandler->add_to_queue($dn,"copy","usertabs","USERTABS");
-          }
-          if($s_action == "cut_multiple"){
-            $this->CopyPasteHandler->add_to_queue($dn,"cut","usertabs","USERTABS");
-          }
+        if($s_action == "copy_multiple"){
+          $this->CopyPasteHandler->add_to_queue($dn,"copy","usertabs","USERTABS");
+        }
+        if($s_action == "cut_multiple"){
+          $this->CopyPasteHandler->add_to_queue($dn,"cut","usertabs","USERTABS");
         }
       }
     }
@@ -907,22 +897,34 @@ class userManagement extends plugin
       $this->start_pasting_copied_objects = TRUE;
     }
 
-    if($this->start_pasting_copied_objects && $this->CopyPasteHandler->entries_queued()){
-      return($this->CopyPasteHandler->paste_entries());
+    /* Return C&P dialog */ 
+    if($this->start_pasting_copied_objects && 
+        ($this->CopyPasteHandler->entries_queued() || $this->CopyPasteHandler->current)){
+   
+      $this->CopyPasteHandler->SetVar("base",$this->DivListUsers->selectedBase); 
+      $data = $this->CopyPasteHandler->paste_entries();
+
+      /* Set CPPasswordChange to s_entry which indicates that this entry requires a new password. */
+      if(isset($_POST['passwordTodo']) && ($_POST['passwordTodo'] == "new")){
+        $s_entry = $this->CopyPasteHandler->last_entry();
+        $this->reload();
+        foreach($this->list as $key => $entry){
+          if($entry['dn'] == $s_entry){
+            $this->CPPasswordChange = $key;
+          }
+        }
+      }
+
+      /* Return dialog data */
+      if(!empty($data)){
+        return($data);
+      }
     }
-    
+  
     $this->start_pasting_copied_objects = FALSE;
+    return("");
   }
 
- 
-  /* Perform copy & paste requests
-      If copy&paste is in progress this returns a dialog to fix required attributes 
-   */ 
-  function copyPasteHandling($s_action,$s_entry)
-  { 
-    echo "replaced";
-    return;
-  }
 
   function save_object()
   {

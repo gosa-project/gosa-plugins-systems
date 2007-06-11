@@ -37,7 +37,20 @@ class CopyPasteHandler {
    */
   function add_to_queue($dn,$action,$tab_class,$tab_object)
   {
-    echo "validate given data here !!!!!!!";
+    if(!class_exists($tab_class)){
+      trigger_error(sprintf("Specified class object '%s' does not exists.",$tab_class));
+      return(FALSE);
+    }
+
+    if(!isset($this->config->data['TABS'][$tab_object])){
+      trigger_error(sprintf("Specified tab object '%s' does not exists.",$tab_object));
+      return(FALSE);
+    }
+ 
+    if(!in_array($action,array("cut","copy"))){
+      trigger_error(sprintf("Specified action '%s' does not exists for copy & paste.",$action));
+      return(FALSE);
+    } 
 
     if($file_name = $this->save_dn_attributes_to_hdd($dn)){
       $tmp = array();
@@ -233,6 +246,12 @@ class CopyPasteHandler {
   }
 
 
+  function last_entry()
+  {
+    return($this->lastdn);
+  }
+
+
   /* Save new values posted by copy & paste dialog */
   function save_object()
   {
@@ -268,10 +287,11 @@ class CopyPasteHandler {
    *  example :   ("base", $newBase );    */
   function SetVar($name,$value)
   {
-    echo $name.$value."<br>";
-    foreach($this->	current->by_object as $key => $obj){
-      if(isset($this->current->by_object[$key]->$name)){
-        $this->current->by_object[$key]->$name = $value;
+    if($this->current){
+      foreach($this->current['object']->by_object as $key => $obj){
+        if(isset($this->current['object']->by_object[$key]->$name)){
+          $this->current['object']->by_object[$key]->$name = $value;
+        }
       }
     }
   }

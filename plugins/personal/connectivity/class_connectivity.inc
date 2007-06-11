@@ -180,8 +180,8 @@ class connectivity extends plugin
     $tmp = $this->plugin;
     plugin::PrepareForCopyPaste($obj);
     $this->plugin = $tmp;
-    foreach($obj->plugin as $key => $plug){
-      $this->plugin[$key]->PrepareForCopyPaste($plug);
+    foreach( $this->plugin as $key => $plug){
+      $this->plugin[$key]->PrepareForCopyPaste($obj);
     }
   }
 }
