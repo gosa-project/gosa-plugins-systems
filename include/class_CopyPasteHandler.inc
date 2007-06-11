@@ -153,7 +153,7 @@ class CopyPasteHandler {
 
 
   /* Paste one entry from queue */
-  function paste_entries()
+  function load_entry_from_queue()
   {
 
     /* Save posted variables, handle dialog posts like 'cancel' */
@@ -188,8 +188,6 @@ class CopyPasteHandler {
       $this->current = $entry;
       unset($this->queue[$key]);
     }
-    
-    return($this->execute());
   }
 
   
@@ -230,6 +228,9 @@ class CopyPasteHandler {
           $this->current['object']->save();
           $this->lastdn = $this->current['object']->dn;
           $this->current =FALSE;
+  
+          /* Load next queue entry */
+          $this->load_entry_from_queue();
         }
       }
       if($this->current){

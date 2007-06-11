@@ -114,62 +114,17 @@ class userManagement extends plugin
       $s_tab = "user";
     }
 
+
+    /********************
+      Copy & Paste 
+     ********************/
+
     /* Display the copy & paste dialog, if it is currently open */
-    $ret = $this->copyPasteHandling_from_queue($s_action);
-    if($ret){
-      return($ret);
-    }
-
-
-    /********************
-      Edit existing entry 
-     ********************/
-
-    /* User wants to edit data? */
-    if (($s_action=="edit") && (!isset($this->usertab->config))){
-
-      /* Get 'dn' from posted 'uid', must be unique */
-      $this->dn= $this->list[trim($s_entry)]['dn'];
-
-      /* Check locking, save current plugin in 'back_plugin', so
-         the dialog knows where to return. */
-      if (($user= get_lock($this->dn)) != ""){
-        return(gen_locked_message ($user, $this->dn));
+    if($this->CPPasswordChange == ""){
+      $ret = $this->copyPasteHandling_from_queue($s_action);
+      if($ret){
+        return($ret);
       }
-
-      /* Lock the current entry, so everyone will get the
-         above dialog */
-      add_lock ($this->dn, $this->ui->dn);
-
-      /* Register usertab to trigger edit dialog */
-      $this->usertab= new usertabs($this->config, 
-          $this->config->data['TABS']['USERTABS'], $this->dn);
-
-      /* Switch tab, if it was requested by the user */
-      $this->usertab->current = $s_tab;
-
-      /* Set ACL and move DN to the headline */
-      $this->usertab->set_acl_base($this->dn);
-      $_SESSION['objectinfo']= $this->dn;
-    }
-
-
-    /********************
-      Edit canceled 
-     ********************/
-
-    /* Reset all relevant data, if we get a _cancel request */
-    if (isset($_POST['edit_cancel']) || isset($_POST['password_cancel'])){
-      if (isset($this->usertab)){
-        del_lock ($this->usertab->dn);
-        unset ($this->usertab);
-      }
-      $this->usertab= NULL;
-      $this->lognames= array();;
-      $this->sn= "";
-      $this->givenName= "";
-      $this->uid= "";
-      unset ($_SESSION['objectinfo']);
     }
 
 
@@ -272,7 +227,6 @@ class userManagement extends plugin
           if (isset($config->data['MAIN']['EXTERNALPWDHOOK'])){
             exec($config->data['MAIN']['EXTERNALPWDHOOK']." ".$username." ".$_POST['new_password'], $resarr);
           }
-
           new log("modify","users/".get_class($this),$this->dn,array(),"Password has been changed");
         }
       } else {
@@ -283,6 +237,58 @@ class userManagement extends plugin
       /* Clean session, delete lock */
       del_lock ($this->dn);
       unset ($this->usertab);
+      $this->usertab= NULL;
+      $this->lognames= array();;
+      $this->sn= "";
+      $this->givenName= "";
+      $this->uid= "";
+      unset ($_SESSION['objectinfo']);
+    }
+
+
+    /********************
+      Edit existing entry 
+     ********************/
+
+    /* User wants to edit data? */
+    if (($s_action=="edit") && (!isset($this->usertab->config))){
+
+      /* Get 'dn' from posted 'uid', must be unique */
+      $this->dn= $this->list[trim($s_entry)]['dn'];
+
+      /* Check locking, save current plugin in 'back_plugin', so
+         the dialog knows where to return. */
+      if (($user= get_lock($this->dn)) != ""){
+        return(gen_locked_message ($user, $this->dn));
+      }
+
+      /* Lock the current entry, so everyone will get the
+         above dialog */
+      add_lock ($this->dn, $this->ui->dn);
+
+      /* Register usertab to trigger edit dialog */
+      $this->usertab= new usertabs($this->config, 
+          $this->config->data['TABS']['USERTABS'], $this->dn);
+
+      /* Switch tab, if it was requested by the user */
+      $this->usertab->current = $s_tab;
+
+      /* Set ACL and move DN to the headline */
+      $this->usertab->set_acl_base($this->dn);
+      $_SESSION['objectinfo']= $this->dn;
+    }
+
+
+    /********************
+      Edit canceled 
+     ********************/
+
+    /* Reset all relevant data, if we get a _cancel request */
+    if (isset($_POST['edit_cancel']) || isset($_POST['password_cancel'])){
+      if (isset($this->usertab)){
+        del_lock ($this->usertab->dn);
+        unset ($this->usertab);
+      }
       $this->usertab= NULL;
       $this->lognames= array();;
       $this->sn= "";
@@ -875,6 +881,8 @@ class userManagement extends plugin
 
   function copyPasteHandling_from_queue($s_action)
   {
+
+    /* Add entries to queue */
     if($s_action == "copy_multiple" || $s_action == "cut_multiple"){
 
       /* Cleanup object queue */
@@ -893,16 +901,20 @@ class userManagement extends plugin
       }
     }
     
+    /* Start pasting entries */
     if($s_action == "editPaste"){
       $this->start_pasting_copied_objects = TRUE;
     }
 
     /* Return C&P dialog */ 
-    if($this->start_pasting_copied_objects && 
-        ($this->CopyPasteHandler->entries_queued() || $this->CopyPasteHandler->current)){
+    if($this->start_pasting_copied_objects && $this->CopyPasteHandler->entries_queued()){
    
+      /* Load entry from queue and set base */
+      $this->CopyPasteHandler->load_entry_from_queue();
       $this->CopyPasteHandler->SetVar("base",$this->DivListUsers->selectedBase); 
-      $data = $this->CopyPasteHandler->paste_entries();
+
+      /* Get dialog */
+      $data = $this->CopyPasteHandler->execute();
 
       /* Set CPPasswordChange to s_entry which indicates that this entry requires a new password. */
       if(isset($_POST['passwordTodo']) && ($_POST['passwordTodo'] == "new")){
@@ -916,12 +928,15 @@ class userManagement extends plugin
       }
 
       /* Return dialog data */
-      if(!empty($data)){
+      if(!empty($data) && $this->CPPasswordChange == ""){
         return($data);
       }
     }
-  
-    $this->start_pasting_copied_objects = FALSE;
+
+    /* Automatically disable status for pasting */ 
+    if(!$this->CopyPasteHandler->entries_queued()){
+      $this->start_pasting_copied_objects = FALSE;
+    }
     return("");
   }
 
