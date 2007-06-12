@@ -7,17 +7,15 @@ class CopyPasteHandler {
   var $config;
   var $current;
 
-  var $copyCurrent = false;
-  var $cutCurrent  = false;
-  var $dialogOpen  = false;
-  var $objectdn    = false;
-
-  var $was_successfull = false;
-
-  /* this array contains all dns of the currently copyied objects */
+  /* This array contains all dns of the currently copyied objects */
   var $queue       = array(); 
+
+  /* Attributes that should be overwritten */
   var $setvar_array= array();
+
+  /* The dn of the last edited object */
   var $lastdn      = "";
+
 
   /* Create CP handler  */
   function CopyPasteHandler($config)
@@ -48,7 +46,7 @@ class CopyPasteHandler {
       trigger_error(sprintf("Specified tab object '%s' does not exists.",$tab_object));
       return(FALSE);
     }
- 
+
     if(!in_array($action,array("cut","copy"))){
       trigger_error(sprintf("Specified action '%s' does not exists for copy & paste.",$action));
       return(FALSE);
@@ -65,7 +63,7 @@ class CopyPasteHandler {
     }
   }
 
-  
+
   /* This removes all objects from queue.
    * Remove hdd dumps of current entries too.
    * Remove entries older than 24 hours.
@@ -104,7 +102,7 @@ class CopyPasteHandler {
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
     $res  = $ldap->cat($dn);
- 
+
     /* Check if given dn is valid and ldap search was succesfull */ 
     if(!$res){
       print_red(sprintf(_("Specified object '%s' is not a valid ldap object, please check copy & paste  methods.")));
@@ -115,7 +113,7 @@ class CopyPasteHandler {
     /* Create data to save given ldap dump on the hdd */
     $filename = "gosa_copy-paste_dump_".preg_replace("/[^0-9]/","",microtime());
     $path     = LDAP_DUMP_PATH;
-  
+
     /* Create patch if it doesn't exists */
     if(!is_dir($path)){
       @mkdir($path);
@@ -125,7 +123,7 @@ class CopyPasteHandler {
     if(!is_writeable($path)){
       print_red(sprintf(_("We are not allowed to save ldap dump to '%s', please check permissions."),$path));
       new log("copy","all/all",$dn,array(), 
-        sprintf("We are not allowed to save ldap dump to '%s', please check permissions.",$path));
+          sprintf("We are not allowed to save ldap dump to '%s', please check permissions.",$path));
       return(FALSE);
     }  
 
@@ -134,14 +132,14 @@ class CopyPasteHandler {
     if(!$fp){
       print_red(sprintf(_("We are not allowed to save ldap dump to '%s/%s', please check permissions."),$path,$filename));
       new log("copy","all/all",$dn,array(), 
-        sprintf("We are not allowed to save ldap dump to '%s/%s', please check permissions.",$path,$filename));
+          sprintf("We are not allowed to save ldap dump to '%s/%s', please check permissions.",$path,$filename));
       return(FALSE);
     }    
 
     $data = serialize($ldap->fetch());
     fwrite($fp,$data,strlen($data));
     fclose($fp);
-    
+
     /* Only the webserver should be able to read those files */
     @chmod($path."/".$filename,0600); 
     return($path."/".$filename);
@@ -170,14 +168,12 @@ class CopyPasteHandler {
       $entry  = $this->queue[$key];
       $tab_c = $entry['tab_class'];
       $tab_o = $entry['tab_object'];
-  
+
       if($entry['method'] == "copy"){
         $entry['object']      = new $tab_c($this->config,$this->config->data['TABS'][$tab_o],"new");
       }else{
         $entry['object']      = new $tab_c($this->config,$this->config->data['TABS'][$tab_o],$entry['dn'],"users");
       }
-
-      
 
       $entry['source_data'] = $this->load_attributes_from_hdd($entry['file_name']);
 
@@ -204,7 +200,7 @@ class CopyPasteHandler {
     }
   }
 
-  
+
   /* Load dumped ldap entry specified by $filename and 
    *  return data an unserailized data array
    */
@@ -220,7 +216,7 @@ class CopyPasteHandler {
     }else{
       print_red(sprintf(_("Could not load dumped file '%s', from hard disk drive."),$filename));
       new log("copy","all/all",$dn,array(), 
-        sprintf(sprintf("Could not load dumped file '%s', from hard disk drive.",$filename)));
+          sprintf(sprintf("Could not load dumped file '%s', from hard disk drive.",$filename)));
       return(FALSE);
     }
   }
@@ -237,17 +233,17 @@ class CopyPasteHandler {
           $this->load_entry_from_queue();      
           $this->_update_vars();
 
-           $msgs = $this->check();
-           if(count ($msgs) ){
-             foreach( $msgs as $msg){
-               print_red($msg);
-             }
-           }else{
+          $msgs = $this->check();
+          if(count ($msgs) ){
+            foreach( $msgs as $msg){
+              print_red($msg);
+            }
+          }else{
 
-             /* Load next queue entry */
-             $this->lastdn = $this->current['object']->dn;
-             $this->current['object']->save();
-           }
+            /* Load next queue entry */
+            $this->lastdn = $this->current['object']->dn;
+            $this->current['object']->save();
+          }
 
           $this->current =FALSE;
         }
@@ -281,7 +277,7 @@ class CopyPasteHandler {
           $this->current['object']->save();
           $this->lastdn = $this->current['object']->dn;
           $this->current =FALSE;
-  
+
           /* Load next queue entry */
           $this->load_entry_from_queue();
         }
@@ -300,6 +296,7 @@ class CopyPasteHandler {
   }
 
 
+  /* Return the dn of the last edited entry */
   function last_entry()
   {
     return($this->lastdn);
@@ -317,7 +314,7 @@ class CopyPasteHandler {
       $this->cleanup_queue();
       $this->current = FALSE;
     }
-  
+
     /* Assign posted var to all tabs
      */
     if($this->current){
@@ -344,7 +341,7 @@ class CopyPasteHandler {
     $this->setvar_array[$name]=$value; 
   }
 
-  
+
   /* Update current object attributes, collected via SetVar */
   function _update_vars()
   {
@@ -356,7 +353,7 @@ class CopyPasteHandler {
           $this->current['object']->$name = $value;
         }
       }
-      
+
       /* Walk through tabs */
       foreach($this->current['object']->by_object as $key => $obj){
 
@@ -383,7 +380,7 @@ class CopyPasteHandler {
     return($ret);
   }
 
-  
+
   /* returns the paste icon for headpages */ 
   function generatePasteIcon()
   {
@@ -395,121 +392,8 @@ class CopyPasteHandler {
     }else{
       $Copy_Paste.= "<img class='center' src='images/cant_editpaste.png' alt=\""._("Can't paste")."\">&nbsp;";
     }
-
     return ($Copy_Paste);
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  /******** Functions below are unused and will be rewritten **********/
-
-
-
-
-
-  /* Add Object which should be cutted  */
-  function Cut_old($obj)
-  {
-    $this->cutCurrent = true;
-    $this->current 	  = $obj;
-    $this->objectdn    = $obj->dn;
-    if($this->isCurrentObjectPastAble()){
-      return(true);
-    }else{
-      $this->cutCurrent = $this->copyCurrent = false;
-      $this->obj = NULL;
-    }
-    return(false);
-  }
-
-
-  /* Displays a dialog which allows the user to fix all dependencies of this object.
-     Create unique names, ids, or what ever */
-  function execute_old()
-  {
-    return;
-    /* Cut & paste
-     */
-    if($this->cutCurrent){
-
-      if(isset($_POST['PerformCopyPaste'])){
-        $msgs = $this->check();	
-        if(count ($msgs) ){
-          foreach( $msgs as $msg){
-            print_red($msg);
-          }
-        }else{
-          $this->current->save();
-          $this->dialogOpen =false;
-          $this->Clear();
-        }
-      }
-      if($this->current){
-        $smarty = get_smarty();
-        $smarty->assign("type","cut");
-        $smarty->assign("Complete",false);
-        $smarty->assign("AttributesToFix","&nbsp;");
-        $smarty->assign("SubDialog",$this->current->SubDialog);
-        $smarty->assign("objectDN"     ,$this->objectdn);
-        $smarty->assign("message", sprintf(_("You are going to paste the cutted entry '%s'."), $this->objectdn));
-        return($smarty->fetch(get_template_path("copyPasteDialog.tpl",FALSE)));
-      }
-
-      /* Copy & paste
-       */
-    }else{
-      if(isset($_POST['PerformCopyPaste'])){
-        $msgs = $this->check();	
-        if(count ($msgs) ){
-          foreach( $msgs as $msg){
-            print_red($msg);
-          }
-        }else{
-          $this->current->save();
-          $this->lastdn = $this->current->dn;
-          $this->dialogOpen =false;
-          $this->Clear();
-        }
-      }
-      if($this->current){
-        $smarty = get_smarty();	
-        $smarty->assign("type","copy");
-        $smarty->assign("Complete",false);
-        $smarty->assign("AttributesToFix",$this->generateAttributesToFix());	
-        $smarty->assign("SubDialog",$this->current->SubDialog);
-        $smarty->assign("objectDN"		 ,$this->objectdn);	
-        $smarty->assign("message", sprintf(_("You are going to paste the copied entry '%s'."), $this->objectdn));	
-        return($smarty->fetch(get_template_path("copyPasteDialog.tpl",FALSE)));
-      }
-    }
-  }
-
-  /* Save new values posted by copy & paste dialog */
-  function save_object_2()
-  {
-    /* Assign posted var to all tabs
-     */
-    if($this->current){
-      $this->current->saveCopyDialog();
-    }
-  }
-
-
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
