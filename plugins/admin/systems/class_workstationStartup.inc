@@ -1159,6 +1159,23 @@ class workstartup extends plugin
   }
 
 
+  function PrepareForCopyPaste($source)
+  {
+      /* Get arrays */
+    foreach (array("gotoModules", "gotoAutoFs", "gotoFilesystem") as $val){
+      if (isset($source["$val"]["count"])){
+        for ($i= 0; $i<$source["count"]; $i++){
+          if (isset($source["$val"][$i])){
+            array_push($this->$val, $source["$val"][$i]);
+          }
+        }
+      }
+      sort ($this->$val);
+      $this->$val= array_unique($this->$val);
+    }
+
+  }
+
   /* Return plugin informations for acl handling */ 
   function plInfo()
   {

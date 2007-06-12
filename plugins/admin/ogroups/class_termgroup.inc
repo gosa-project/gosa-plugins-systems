@@ -399,8 +399,33 @@ class termgroup extends plugin
           ));
   }
 
+  function PrepareForCopyPaste($source)
+  {
+    /* Create used ntp server array */
+    $this->gotoNtpServer= array();
 
+    if(isset($source['gotoNtpServer'])){
+      $this->inheritTimeServer = false;
+      unset($source['gotoNtpServer']['count']);
+      foreach($source['gotoNtpServer'] as $server){
+        $this->gotoNtpServer[$server] = $server;
+      }
+    }
 
+    /* Set inherit checkbox state */
+    if(in_array("default",$this->gotoNtpServer)){
+      $this->inheritTimeServer = true;
+      $this->gotoNtpServer=array();
+    }
+
+    /* Create available ntp options */
+    $this->gotoNtpServers = $this->config->data['SERVERS']['NTP'];
+    foreach($this->gotoNtpServers as $key => $server){
+      if($server == "default"){
+        unset($this->gotoNtpServers[$key]);
+      }
+    }
+  }
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

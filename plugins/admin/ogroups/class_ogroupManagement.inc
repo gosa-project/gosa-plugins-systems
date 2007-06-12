@@ -33,6 +33,7 @@ class ogroupManagement extends plugin
 
   var $CopyPasteHandler = NULL;
   var $DivListOGroup    = NULL;
+  var $start_pasting_copied_objects = FALSE;
 
   function ogroupManagement ($config, $dn= NULL)
   {
@@ -88,6 +89,10 @@ class ogroupManagement extends plugin
         $s_entry  = preg_replace("/^cut_/i","",$key);
       }elseif(preg_match("/^remove_multiple_ogroups/",$key)){
         $s_action="del_multiple";
+      }elseif(preg_match("/^multiple_cut_ogroups/",$key)){
+        $s_action = "cut_multiple";
+      }elseif(preg_match("/^multiple_copy_ogroups/",$key)){
+        $s_action = "copy_multiple";
       }elseif(preg_match("/_group_edit_/",$key)){
         $type = preg_replace("/_group_edit_.*$/","",$key);
         $s_action="edit";
@@ -109,12 +114,13 @@ class ogroupManagement extends plugin
      ****************/
 
     /* Display the copy & paste dialog, if it is currently open */
-    $ret = $this->copyPasteHandling($s_action,$s_entry);
+    $ret = $this->copyPasteHandling_from_queue($s_action);
     if($ret){
       return($ret);
     }
 
-    /****************
+
+    /***************
       Create a new object group 
      ****************/
 
@@ -529,54 +535,53 @@ class ogroupManagement extends plugin
   }
 
 
-  function copyPasteHandling($s_action,$s_entry)
+  function copyPasteHandling_from_queue($s_action)
   {
-    if($this->CopyPasteHandler){
 
-      /* Paste copied/cutted object in here
-       */
-      if(($s_action == "editPaste") || ($this->CopyPasteHandler->stillOpen())){
-        $this->CopyPasteHandler->save_object();
-        $this->CopyPasteHandler->SetVar("base", $this->DivListOGroup->selectedBase);
-        return($this->CopyPasteHandler->execute());
-      }
+    /* Add entries to queue */
+    if($s_action == "copy_multiple" || $s_action == "cut_multiple"){
 
-      /* Copy current object to CopyHandler
-       */
-      if($s_action == "copy"){
-    
+      /* Cleanup object queue */
+      $this->CopyPasteHandler->cleanup_queue();
 
-        $this->CopyPasteHandler->Clear();
-        $dn       =   $this->ogrouplist[$s_entry]['dn'];
+      /* Add new entries to CP queue */
+      foreach($this->list_get_selected_items() as $id){
+        $dn = $this->ogrouplist[$id]['dn'];
 
-        /* Check acls */
-        $acl_all= $this->ui->has_complete_category_acls($dn,"ogroups");
-        if(preg_match("/(c.*w|w.*c)/",$acl_all)){
-          $obj      =   new ogrouptabs($this->config, $this->config->data['TABS']['OGROUPTABS'], $dn);
-          $objNew   =   new ogrouptabs($this->config, $this->config->data['TABS']['OGROUPTABS'], "new");
-
-          $types_of_tabs = $obj->by_object['ogroup']->gosaGroupObjects;
-          $objNew->by_object['ogroup']->gosaGroupObjects = $types_of_tabs;    
-          $objNew->reload($types_of_tabs);
-
-          $this->CopyPasteHandler->Copy($obj,$objNew);
+        if($s_action == "copy_multiple"){
+          $this->CopyPasteHandler->add_to_queue($dn,"copy","ogrouptabs","OGROUPTABS","ogroups");
         }
-      }
-
-      /* Copy current object to CopyHandler
-       */
-      if($s_action == "cut"){
-        $this->CopyPasteHandler->Clear();
-        $dn       =   $this->ogrouplist[$s_entry]['dn'];
-
-        /* Check acls */
-        $acl_all= $this->ui->has_complete_category_acls($dn,"ogroups");
-        if(preg_match("/(c.*w|w.*c)/",$acl_all)){
-          $obj      =   new ogrouptabs($this->config, $this->config->data['TABS']['OGROUPTABS'], $dn);
-          $this->CopyPasteHandler->Cut($obj);
+        if($s_action == "cut_multiple"){
+          $this->CopyPasteHandler->add_to_queue($dn,"cut","ogrouptabs","OGROUPTABS","ogroups");
         }
       }
     }
+
+    /* Start pasting entries */
+    if($s_action == "editPaste"){
+      $this->start_pasting_copied_objects = TRUE;
+    }
+
+    /* Return C&P dialog */
+    if($this->start_pasting_copied_objects && $this->CopyPasteHandler->entries_queued()){
+
+      /* Load entry from queue and set base */
+      $this->CopyPasteHandler->load_entry_from_queue();
+      $this->CopyPasteHandler->SetVar("base",$this->DivListOGroup->selectedBase);
+
+      /* Get dialog */
+      $data = $this->CopyPasteHandler->execute();
+
+      /* Return dialog data */
+      if(!empty($data)){
+        return($data);
+      }
+    }
+    /* Automatically disable status for pasting */
+    if(!$this->CopyPasteHandler->entries_queued()){
+      $this->start_pasting_copied_objects = FALSE;
+    }
+    return("");
   }
 
 

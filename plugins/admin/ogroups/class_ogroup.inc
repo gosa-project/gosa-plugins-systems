@@ -684,6 +684,36 @@ class ogroup extends plugin
     $this->handle_post_events("remove");
   }
 
+  
+  function PrepareForCopyPaste($source)
+  {
+    /* Update available object types */
+    if(isset($source['gosaGroupObjects'][0])){
+      $this->gosaGroupObjects =  $source['gosaGroupObjects'][0];
+    }
+
+    /* Reload tabs */
+    $this->parent->reload($this->gosaGroupObjects );
+   
+    /* Reload plugins */ 
+    foreach($this->parent->by_object as $name => $class ){
+      if(get_class($this) != $name) {
+        $this->parent->by_object[$name]->PrepareForCopyPaste($source);
+      }
+    }
+
+    /* Load member objects */
+    if (isset($source['member'])){
+      foreach ($source['member'] as $key => $value){
+        if ("$key" != "count"){
+          $value= @LDAP::convert($value);
+          $this->member["$value"]= "$value";
+        }
+      }
+    }
+
+  }
+
 
   function getCopyDialog()
   {
