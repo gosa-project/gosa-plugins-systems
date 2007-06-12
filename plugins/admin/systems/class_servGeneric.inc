@@ -369,6 +369,44 @@ class servgeneric extends plugin
   }
 
 
+  /* Display generic part for server copy & paste */
+  function getCopyDialog()
+  {
+    $vars = array("cn");
+
+    $smarty = get_smarty();
+    $smarty->assign("cn" ,$this->cn);
+    $smarty->assign("object","server");
+    $str = $smarty->fetch(get_template_path("paste_generic.tpl",TRUE));
+    $ret = array();
+    $ret['string'] = $str;
+    $ret['status'] = "";
+    return($ret);
+  }
+
+
+  function saveCopyDialog()
+  {
+    if(isset($_POST['cn'])){
+      $this->cn = $_POST['cn'];
+    }
+  }
+
+  
+  function PrepareForCopyPaste($source)  
+  {
+    plugin::PrepareForCopyPaste($source);
+    if(isset($source['macAddress'][0])){
+      $this->netConfigDNS->macAddress = $source['macAddress'][0];
+    }
+    if(isset($source['ipHostNumber'][0])){
+      $this->netConfigDNS->macAddress = $source['ipHostNumber'][0];
+    }
+
+  }
+  
+
+
   /* Return plugin informations for acl handling */ 
   function plInfo()
   {

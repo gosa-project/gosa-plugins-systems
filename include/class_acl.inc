@@ -961,6 +961,16 @@ class acl extends plugin
     return FALSE;
   }
 
+  
+  function PrepareForCopyPaste($source)
+  {
+    plugin::PrepareForCopyPaste($source);
+    
+    $dn = $source['dn'];
+    $acl_c = new acl($this->config, $this->parent,$dn);
+    $this->gosaAclEntry = $acl_c->gosaAclEntry;
+  }
+
 
   function save()
   {
