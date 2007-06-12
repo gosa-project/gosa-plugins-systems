@@ -151,7 +151,7 @@ class CopyPasteHandler {
   /* Check if there are still entries the object queue */
   function entries_queued()
   {
-    return( count($this->queue) >=1);
+    return( count($this->queue) >=1 || $this->current != FALSE);
   }
 
 
@@ -271,13 +271,13 @@ class CopyPasteHandler {
     }
     if($type == "copy"){
       if(isset($_POST['PerformCopyPaste'])){
+        $this->_update_vars();
         $msgs = $this->check();
         if(count ($msgs) ){
           foreach( $msgs as $msg){
             print_red($msg);
           }
         }else{
-          $this->_update_vars();
           $this->current['object']->save();
           $this->lastdn = $this->current['object']->dn;
           $this->current =FALSE;
