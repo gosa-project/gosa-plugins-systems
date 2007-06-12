@@ -32,6 +32,7 @@ class groupManagement extends plugin
   var $CopyPasteHandler   = NULL;
   var $DivListGroup       = NULL;
   var $ShowPrimaryCheckBox= false; 
+  var $start_pasting_copied_objects = FALSE;
 
   function groupManagement ($config, $ui)
   {
@@ -108,6 +109,10 @@ class groupManagement extends plugin
         $s_entry  = preg_replace("/^cut_/i","",$key);
       }elseif(preg_match("/^remove_multiple_groups/",$key)){
         $s_action="del_multiple";
+      }elseif(preg_match("/^multiple_copy_groups/",$key)){
+        $s_action = "copy_multiple";
+      }elseif(preg_match("/^multiple_cut_groups/",$key)){
+        $s_action = "cut_multiple";
       }
     }
     $s_entry  = preg_replace("/_.$/","",$s_entry); 
@@ -124,12 +129,10 @@ class groupManagement extends plugin
       Copy & Paste Handling  ...
      ********************/
 
-    /* Only perform copy&paste requests if it is enabled
-     */
-    if($this->CopyPasteHandler){
-      if($str = $this->copyPasteHandling($s_action,$s_entry)){
-        return $str;
-      }
+    /* Display the copy & paste dialog, if it is currently open */
+    $ret = $this->copyPasteHandling_from_queue($s_action);
+    if($ret){
+      return($ret);
     }
 
 
@@ -592,64 +595,58 @@ class groupManagement extends plugin
   }
 
 
-
-  /* Perform copy & paste requests
-     If copy&paste is in progress this returns a dialog to fix required attributes 
-   */ 
-  function copyPasteHandling($s_action,$s_entry)
+  function copyPasteHandling_from_queue($s_action)
   {
-    /* Paste copied/cutted object in here
-     */
-    if(($s_action == "editPaste") || ($this->CopyPasteHandler->stillOpen())){
-      $this->CopyPasteHandler->save_object();
+
+    /* Add entries to queue */
+    if($s_action == "copy_multiple" || $s_action == "cut_multiple"){
+
+      /* Cleanup object queue */
+      $this->CopyPasteHandler->cleanup_queue();
+
+      /* Add new entries to CP queue */
+      foreach($this->list_get_selected_items() as $id){
+        $dn = $this->grouplist[$id]['dn'];
+
+        if($s_action == "copy_multiple"){
+          $this->CopyPasteHandler->add_to_queue($dn,"copy","grouptabs","GROUPTABS","groups");
+        }
+        if($s_action == "cut_multiple"){
+          $this->CopyPasteHandler->add_to_queue($dn,"cut","grouptabs","GROUPTABS","groups");
+        }
+      }
+    }
+
+    /* Start pasting entries */
+    if($s_action == "editPaste"){
+      $this->start_pasting_copied_objects = TRUE;
+    }
+
+    /* Return C&P dialog */
+    if($this->start_pasting_copied_objects && $this->CopyPasteHandler->entries_queued()){
+
+      /* Load entry from queue and set base */
+      $this->CopyPasteHandler->load_entry_from_queue();
       $this->CopyPasteHandler->SetVar("base",$this->DivListGroup->selectedBase);
-      if($str = $this->CopyPasteHandler->execute()){
-        return( $str);
-      };
-      /* Ensure that the new object is shown in the list now */
-      $this->reload();
-    }
 
+      /* Get dialog */
+      $data = $this->CopyPasteHandler->execute();
 
-    /* Copy current object to CopyHandler
-     */
-    if($s_action == "copy"){
-
-      $dn  = $this->grouplist[trim($s_entry)]['dn'];
-      $ui = get_userinfo();
-      $acl_all  = $ui->has_complete_category_acls($this->DivListGroup->selectedBase,"groups") ;
-      if(preg_match("/(c.*w|w.*c)/",$acl_all)){
-
-        $this->CopyPasteHandler->Clear();
-        $obj    = new grouptabs($this->config,$this->config->data['TABS']['GROUPTABS'], $dn);
-        $obj->set_acl_base($dn);
-        $objNew = new grouptabs($this->config,$this->config->data['TABS']['GROUPTABS'], "new");
-        $objNew->set_acl_base($dn);
-
-        $this->CopyPasteHandler->Copy($obj,$objNew);
-      }else{
-        print_red("You are not allowed to copy this entry.");
+      /* Return dialog data */
+      if(!empty($data)){
+        return($data);
       }
     }
 
-
-    /* Copy current object to CopyHandler
-     */
-    if($s_action == "cut"){
-      
-      $dn = $this->grouplist[trim($s_entry)]['dn'];
-      $acl_all  = $ui->has_complete_category_acls($this->selectedBase,"groups") ;
-      if(preg_match("/(c.*w|w.*c)/",$acl_all)){
-
-        $this->CopyPasteHandler->Clear();
-        $obj= new grouptabs($this->config,$this->config->data['TABS']['GROUPTABS'], $dn);
-        $obj->set_acl_base($dn);
-        $this->CopyPasteHandler->Cut($obj);
-      }else{
-        print_red("You are not allowed to cut this entry.");
-      }
+    /* Automatically disable status for pasting */
+    if(!$this->CopyPasteHandler->entries_queued()){
+      $this->start_pasting_copied_objects = FALSE;
     }
+    return("");
   }
+
+
+
 
   /* Save data to object */
   function save_object()

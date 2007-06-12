@@ -1179,10 +1179,11 @@ class appgroup extends plugin
 
   function PrepareForCopyPaste($source)
   {
-    $this->FAIrelease = $this->InitialFAIrelease = $source->FAIrelease;
-    $this->gosaMemberApplication = $source->gosaMemberApplication;
-    $this->appoption = $source->appoption;
-    $this->Categories = $source->Categories;
+    $s = new appgroup($this->config,$source['dn']);
+    $this->FAIrelease = $this->InitialFAIrelease = $s->FAIrelease;
+    $this->gosaMemberApplication = $s->gosaMemberApplication;
+    $this->appoption = $s->appoption;
+    $this->Categories = $s->Categories;
   }
 
 
