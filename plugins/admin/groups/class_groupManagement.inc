@@ -655,8 +655,6 @@ class groupManagement extends plugin
   }
 
 
-
-
   /* Save data to object */
   function save_object()
   {

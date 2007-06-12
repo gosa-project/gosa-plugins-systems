@@ -38,6 +38,8 @@ class systems extends plugin
   var $terminals= array();
   var $ui       = NULL;
   var $DivListSystem;
+  var $start_pasting_copied_objects = FALSE;
+  var $CopyPasteHandler   = NULL;
 
   function systems ($config, $ui)
   {
@@ -47,7 +49,13 @@ class systems extends plugin
 
     /* Creat dialog object */
     $this->DivListSystem = new divListSystem($this->config,$this);
+
+    /* Copy & Paste enabled ?*/
+    if((isset($this->config->data['MAIN']['ENABLECOPYPASTE']))&&(preg_match("/true/i",$this->config->data['MAIN']['ENABLECOPYPASTE']))){
+      $this->CopyPasteHandler = new CopyPasteHandler($this->config);
+    }
   }
+
 
   function execute()
   {
@@ -90,9 +98,22 @@ class systems extends plugin
       }elseif(preg_match("/newsystem_.*/i",$key)){
         $s_action="newsystem";
         $s_entry  = preg_replace("/newsystem_/i","",$key);
+      }elseif(preg_match("/^multiple_copy_systems/",$key)){
+        $s_action = "copy_multiple";
+      }elseif(preg_match("/^multiple_cut_systems/",$key)){
+        $s_action = "cut_multiple";
+      }elseif(preg_match("/^editPaste.*/i",$key)){
+        $s_action="editPaste";
+      }elseif(preg_match("/^copy_.*/",$key)){
+        $s_action="copy";
+        $s_entry  = preg_replace("/^copy_/i","",$key);
+      }elseif(preg_match("/^cut_.*/",$key)){
+        $s_action="cut";
+        $s_entry  = preg_replace("/^cut_/i","",$key);
       }
     }
-
+    
+      
     /* Incoming handling  
      * If someone made a systemtype and ogroup selection 
      * Display the new requested entry type ... servtab  in case of server and so on.
@@ -123,6 +144,17 @@ class systems extends plugin
       return ($smarty->fetch(get_template_path('chooser.tpl', TRUE)));
     }
 
+
+    /********************
+      Copy & Paste Handling  ...
+     ********************/
+
+    /* Display the copy & paste dialog, if it is currently open */
+    $ret = $this->copyPasteHandling_from_queue($s_action,$s_entry);
+    if($ret){
+      return($ret);
+    }
+  
 
     /********************
       Create FAI CD ...   
@@ -1106,6 +1138,93 @@ class systems extends plugin
     if (isset($this->systab->dn)){
       del_lock ($this->systab->dn);
     }
+  }
+
+
+  function copyPasteHandling_from_queue($s_action,$s_entry)
+  {
+
+    $tabs = array(
+        "terminal"    => array( "CLASS"     =>"TERMTABS",     "TABNAME" =>"termgeneric",     
+          "TABCLASS"  =>"termtabs",     "ACL"     =>"terminal"),
+        "workstation" => array( "CLASS"     =>"WORKTABS",     "TABNAME" =>"workgeneric",     
+          "TABCLASS"  =>"worktabs",     "ACL"     =>"workstation"),
+        "server"      => array( "CLASS"     =>"SERVTABS",     "TABNAME" =>"servgeneric",     
+          "TABCLASS"  =>"servtabs",     "ACL"     =>"server"),
+        "printer"     => array( "CLASS"     =>"PRINTTABS",    "TABNAME" =>"printgeneric",    
+          "TABCLASS"  =>"printtabs",    "ACL"     =>"printer"),
+        "phone"       => array( "CLASS"     =>"PHONETABS",    "TABNAME" =>"phonegeneric",    
+          "TABCLASS"  =>"phonetabs",    "ACL"     =>"phone"),
+        "component"   => array( "CLASS"     =>"COMPONENTTABS","TABNAME" =>"componentgeneric",
+          "TABCLASS"  =>"componenttabs","ACL"     =>"component"));
+
+    /* Add a single entry to queue */
+    if($s_action == "cut" || $s_action == "copy"){
+
+      /* Cleanup object queue */
+      $this->CopyPasteHandler->cleanup_queue();
+      $dn     = $this->terminals[$s_entry]['dn'];
+      $oc     = $this->terminals[$s_entry]['objectClass'];
+      $type   = $this->get_system_type($oc);
+
+      $tab_o  = $tabs[$type]['CLASS'];
+      $tab_c  = $tabs[$type]['TABCLASS'];
+      $acl    = $tabs[$type]['ACL'];
+
+      $this->CopyPasteHandler->add_to_queue($dn,$s_action,$tab_c,$tab_o,$acl);
+    }
+
+    /* Add entries to queue */
+    if($s_action == "copy_multiple" || $s_action == "cut_multiple"){
+
+      /* Cleanup object queue */
+      $this->CopyPasteHandler->cleanup_queue();
+
+      /* Add new entries to CP queue */
+      foreach($this->list_get_selected_items() as $id){
+        $dn = $this->terminals[$id]['dn'];
+        $oc = $this->terminals[$id]['objectClass']; 
+        $type = $this->get_system_type($oc);
+
+        $tab_o  = $tabs[$type]['CLASS'];
+        $tab_c  = $tabs[$type]['TABCLASS'];
+        $acl    = $tabs[$type]['ACL'];
+          
+        if($s_action == "copy_multiple"){
+          $this->CopyPasteHandler->add_to_queue($dn,"copy",$tab_c,$tab_o,$acl);
+        }
+        if($s_action == "cut_multiple"){
+          $this->CopyPasteHandler->add_to_queue($dn,"cut",$tab_c,$tab_o,$acl);
+        }
+      }
+    }
+
+    /* Start pasting entries */
+    if($s_action == "editPaste"){
+      $this->start_pasting_copied_objects = TRUE;
+    }
+  
+    /* Return C&P dialog */
+    if($this->start_pasting_copied_objects && $this->CopyPasteHandler->entries_queued()){
+    
+      /* Load entry from queue and set base */
+      $this->CopyPasteHandler->load_entry_from_queue();
+      $this->CopyPasteHandler->SetVar("base",$this->DivListSystem->selectedBase);
+
+      /* Get dialog */
+      $data = $this->CopyPasteHandler->execute();
+
+      /* Return dialog data */
+      if(!empty($data)){
+        return($data);
+      }
+    }
+
+    /* Automatically disable status for pasting */
+    if(!$this->CopyPasteHandler->entries_queued()){
+      $this->start_pasting_copied_objects = FALSE;
+    }
+    return("");
   }
 
 

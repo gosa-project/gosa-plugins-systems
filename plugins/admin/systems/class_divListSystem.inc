@@ -53,7 +53,7 @@ class divListSystem extends MultiSelectWindow
     $this->EnableSaveButton (false);
 
     /* Dynamic action col, depending on snapshot icons */
-    $action_col_size = 70;
+    $action_col_size = 110;
     if($this->parent->snapshotEnabled()){
       $action_col_size += 38;
     }
@@ -161,7 +161,14 @@ class divListSystem extends MultiSelectWindow
 
     /* Must we add an additional seperator */
     $add_sep = false;
-    
+   
+    /* Get copy & paste icon */
+    $Copy_Paste ="";
+    if(preg_match("/(c.*w|w.*c)/",$all_module_acls) &&  $this->parent->CopyPasteHandler){
+      $Copy_Paste = $this->parent->CopyPasteHandler->generatePasteIcon();
+      $addsep = true;
+    }
+
     /* Add default header */
     $listhead = MultiSelectWindow::get_default_header();
 
@@ -170,6 +177,9 @@ class divListSystem extends MultiSelectWindow
       $listhead .= $this->get_snapshot_header($this->selectedBase);
       $add_sep = true;
     }
+
+    /* Assign copy & paste icons */
+    $listhead.=      $Copy_Paste;
 
     /* Handle create icons */ 
     if(preg_match("/c/",$ui->get_permissions($this->selectedBase,"terminal/termgeneric"))){
@@ -222,6 +232,11 @@ class divListSystem extends MultiSelectWindow
     $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/edittrash.png'
         title='"._("Remove selected systems")."' alt='"._("Remove systems")."' name='remove_multiple_systems'>&nbsp;";
 
+    $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/editcopy.png'
+      title='"._("Copy selected system")."' alt='"._("Copy systems")."' name='multiple_copy_systems'>&nbsp;";
+    $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/editcut.png'
+      title='"._("cut selected system")."' alt='"._("Cut systems")."' name='multiple_cut_systems'>&nbsp;";
+
     $listhead .="</div>";
 
     $this->SetListHeader($listhead);
@@ -250,7 +265,7 @@ class divListSystem extends MultiSelectWindow
     $empty    ="<img src='images/empty.png' style='width:16px ; height: 16px;' class='center' alt=''>";
 
     /* Dynamic action col, depending on snapshot icons */
-    $action_col_size = 70;
+    $action_col_size = 110;
     if($this->parent->snapshotEnabled()){
       $action_col_size += 38;
     }
@@ -295,13 +310,21 @@ class divListSystem extends MultiSelectWindow
       /* Get specific generic acls */
       $acl      = $ui->get_permissions($val['dn'],$tabs[$type]['ACL']);
 
-      $action= "<input class='center' type='image' src='images/edit.png' 
+      $action ="";
+      if(($this->parent->CopyPasteHandler) && preg_match("/(c.*w|w.*c)/",$acl_all)){
+        $action.= "<input class='center' type='image'
+          src='images/editcut.png' alt='"._("cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
+        $action.= "<input class='center' type='image'
+          src='images/editcopy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
+      }
+      $action.= "<input class='center' type='image' src='images/edit.png' 
                     alt='"._("edit")."'     name='system_edit_%KEY%' title='"._("Edit system")."'>";
       if(preg_match("/(c.*w|w.*c)/",$acl_all)){
         $action.= $this->GetSnapShotActions($val['dn']);
       }else{
         $action.= $empty."&nbsp;".$empty."&nbsp;";
       }
+
 
       if(preg_match("/d/",$acl)){
         $action.= "<input class='center' type='image' src='images/edittrash.png' 
