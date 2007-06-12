@@ -228,6 +228,7 @@ class CopyPasteHandler {
      Create unique names, ids, or what ever */
   function execute()
   {
+    $ui = get_userinfo();
     $type = $this->current['method'];
     if($type == "cut"){
       if(isset($_POST['PerformCopyPaste'])){
@@ -236,7 +237,12 @@ class CopyPasteHandler {
           $this->_update_vars();
 
           $msgs = $this->check();
-          if(count ($msgs) ){
+          $acl = $ui->get_category_permissions($this->current['dn'], $this->current['tab_acl_category']);
+ 
+          /* Check permissions */ 
+          if(!preg_match("/((c|w)|(w|c))/",$acl)){
+            print_red(sprintf(_("You are not allowed to cut and paste the following object '%s'."),$this->current['dn']));
+          }elseif(count ($msgs) ){
             foreach( $msgs as $msg){
               print_red($msg);
             }
@@ -271,7 +277,13 @@ class CopyPasteHandler {
       if(isset($_POST['PerformCopyPaste'])){
         $this->_update_vars();
         $msgs = $this->check();
-        if(count ($msgs) ){
+
+        $acl = $ui->get_category_permissions($this->current['dn'], $this->current['tab_acl_category']);
+ 
+        /* Check permissions */ 
+        if(!preg_match("/((c|w)|(w|c))/",$acl)){
+          print_red(sprintf(_("You are not allowed to copy and paste the following object '%s'."),$this->current['dn']));
+        }elseif(count ($msgs) ){
           foreach( $msgs as $msg){
             print_red($msg);
           }
