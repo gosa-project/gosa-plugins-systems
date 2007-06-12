@@ -913,7 +913,16 @@ class plugin
     if(isset($this->CopyPasteVars)){
       $todo = array_merge($todo,$this->CopyPasteVars);
     }
-    $todo[] = "is_account";
+
+    if(count($this->objectclasses)){
+      $this->is_account = TRUE;
+      foreach($this->objectclasses as $class){
+        if(!in_array($class,$source['objectClass'])){
+          $this->is_account = FALSE;
+        }
+      }
+    }
+
     foreach($todo as $var){
       if (isset($source[$var])){
         if(isset($source[$var]['count'])){
@@ -924,11 +933,14 @@ class plugin
               $tmp = $source[$var][$i];
             }
             $this->$var = $tmp;
+#            echo $var."=".$tmp."<br>";
           }else{
             $this->$var = $source[$var][0];
+#            echo $var."=".$source[$var][0]."<br>";
           }
         }else{
           $this->$var= $source[$var];
+#          echo $var."=".$source[$var]."<br>";
         }
       }
     }

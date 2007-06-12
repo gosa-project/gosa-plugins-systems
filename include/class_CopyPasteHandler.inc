@@ -172,7 +172,7 @@ class CopyPasteHandler {
       if($entry['method'] == "copy"){
         $entry['object']      = new $tab_c($this->config,$this->config->data['TABS'][$tab_o],"new");
       }else{
-        $entry['object']      = new $tab_c($this->config,$this->config->data['TABS'][$tab_o],$entry['dn'],"users");
+        $entry['object']      = new $tab_c($this->config,$this->config->data['TABS'][$tab_o],$entry['dn']);
       }
 
       $entry['source_data'] = $this->load_attributes_from_hdd($entry['file_name']);
