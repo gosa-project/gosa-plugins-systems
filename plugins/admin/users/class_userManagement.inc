@@ -121,7 +121,7 @@ class userManagement extends plugin
 
     /* Display the copy & paste dialog, if it is currently open */
     if($this->CPPasswordChange == ""){
-      $ret = $this->copyPasteHandling_from_queue($s_action);
+      $ret = $this->copyPasteHandling_from_queue($s_action,$s_entry);
       if($ret){
         return($ret);
       }
@@ -879,8 +879,15 @@ class userManagement extends plugin
   }
 
 
-  function copyPasteHandling_from_queue($s_action)
+  function copyPasteHandling_from_queue($s_action,$s_entry)
   {
+    /* Add a single entry to queue */
+    if($s_action == "cut" || $s_action == "copy"){
+      /* Cleanup object queue */
+      $this->CopyPasteHandler->cleanup_queue();
+      $dn = $this->list[$s_entry]['dn'];
+      $this->CopyPasteHandler->add_to_queue($dn,$s_action,"usertabs","USERTABS","users");
+    }
 
     /* Add entries to queue */
     if($s_action == "copy_multiple" || $s_action == "cut_multiple"){
