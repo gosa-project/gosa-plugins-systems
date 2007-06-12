@@ -35,7 +35,7 @@ class CopyPasteHandler {
    *  array['tab_class']  - Tab object that should be used to initialize the new object
    *  array['tab_object'] - Tab object name used to initialize correct object Type like USERTABS
    */
-  function add_to_queue($dn,$action,$tab_class,$tab_object)
+  function add_to_queue($dn,$action,$tab_class,$tab_object,$tab_acl_category)
   {
     if(!class_exists($tab_class)){
       trigger_error(sprintf("Specified class object '%s' does not exists.",$tab_class));
@@ -59,6 +59,7 @@ class CopyPasteHandler {
       $tmp['dn']        = $dn;
       $tmp['tab_class'] = $tab_class;
       $tmp['tab_object']= $tab_object;
+      $tmp['tab_acl_category']= $tab_acl_category;
       $this->queue[]    = $tmp; 
     }
   }
@@ -168,11 +169,12 @@ class CopyPasteHandler {
       $entry  = $this->queue[$key];
       $tab_c = $entry['tab_class'];
       $tab_o = $entry['tab_object'];
+      $tab_a = $entry['tab_acl_category'];
 
       if($entry['method'] == "copy"){
-        $entry['object']      = new $tab_c($this->config,$this->config->data['TABS'][$tab_o],"new");
+        $entry['object']      = new $tab_c($this->config,$this->config->data['TABS'][$tab_o],"new",$tab_a);
       }else{
-        $entry['object']      = new $tab_c($this->config,$this->config->data['TABS'][$tab_o],$entry['dn']);
+        $entry['object']      = new $tab_c($this->config,$this->config->data['TABS'][$tab_o],$entry['dn'],$tab_a);
       }
 
       $entry['source_data'] = $this->load_attributes_from_hdd($entry['file_name']);

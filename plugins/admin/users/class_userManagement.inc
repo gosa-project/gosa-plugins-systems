@@ -893,10 +893,10 @@ class userManagement extends plugin
         $dn = $this->list[$id]['dn'];
 
         if($s_action == "copy_multiple"){
-          $this->CopyPasteHandler->add_to_queue($dn,"copy","usertabs","USERTABS");
+          $this->CopyPasteHandler->add_to_queue($dn,"copy","usertabs","USERTABS","users");
         }
         if($s_action == "cut_multiple"){
-          $this->CopyPasteHandler->add_to_queue($dn,"cut","usertabs","USERTABS");
+          $this->CopyPasteHandler->add_to_queue($dn,"cut","usertabs","USERTABS","users");
         }
       }
     }
