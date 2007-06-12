@@ -179,6 +179,10 @@ class divListApplication extends MultiSelectWindow
         /* Multiple options */
     $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/edittrash.png'
         title='"._("Remove selected applications")."' alt='"._("Remove applications")."' name='remove_multiple_applications'>&nbsp;";
+    $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/editcopy.png'
+        title='"._("Copy selected group")."' alt='"._("Copy groups")."' name='multiple_copy_groups'>&nbsp;";
+    $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/editcut.png'
+        title='"._("cut selected group")."' alt='"._("Cut groups")."' name='multiple_cut_groups'>&nbsp;";
 
     $listhead .="</div>";
 
