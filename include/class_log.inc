@@ -145,7 +145,7 @@ class log {
       }else{
         $db = mysql_select_db($server['DB'],$con);
         if(!$db){
-          print_red(sprintf(_("Could not select database %s on server %s. Server ssys :%s"),$server['DB'],$server['SERVER'],mysql_error($con)));
+          @print_red(sprintf(_("Could not select database %s on server %s. Server says :%s"),$server['DB'],$server['SERVER'],mysql_error($con)));
         }else{
 
           /* Create mysql syntax */
