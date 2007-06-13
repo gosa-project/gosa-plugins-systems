@@ -185,10 +185,14 @@ class divListOGroup extends MultiSelectWindow
     /* Multiple options */
     $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/edittrash.png'
         title='"._("Remove selected object groups")."' alt='"._("Remove object groups")."' name='remove_multiple_ogroups'>&nbsp;";
-    $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/editcopy.png'
+
+    /* Add multiple copy & cut icons */
+    if(is_object($this->parent->CopyPasteHandler)){
+      $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/editcopy.png'
         title='"._("Copy selected object group")."' alt='"._("Copy object groups")."' name='multiple_copy_ogroups'>&nbsp;";
-    $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/editcut.png'
+      $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/editcut.png'
         title='"._("cut selected object group")."' alt='"._("Cut object groups")."' name='multiple_cut_ogroups'>&nbsp;";
+    }
     $listhead .="</div>";
 
     $this->SetListHeader($listhead);

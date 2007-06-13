@@ -881,6 +881,11 @@ class userManagement extends plugin
 
   function copyPasteHandling_from_queue($s_action,$s_entry)
   {
+    /* Check if Copy & Paste is disabled */
+    if(!is_object($this->CopyPasteHandler)){
+      return("");
+    }
+
     /* Add a single entry to queue */
     if($s_action == "cut" || $s_action == "copy"){
       /* Cleanup object queue */

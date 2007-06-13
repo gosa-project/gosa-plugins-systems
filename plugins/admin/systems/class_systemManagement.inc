@@ -1143,6 +1143,11 @@ class systems extends plugin
 
   function copyPasteHandling_from_queue($s_action,$s_entry)
   {
+    /* Check if Copy & Paste is disabled */
+    if(!is_object($this->CopyPasteHandler)){
+      return("");
+    }
+
 
     $tabs = array(
         "terminal"    => array( "CLASS"     =>"TERMTABS",     "TABNAME" =>"termgeneric",     

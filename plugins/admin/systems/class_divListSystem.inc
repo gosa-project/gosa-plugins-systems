@@ -232,11 +232,13 @@ class divListSystem extends MultiSelectWindow
     $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/edittrash.png'
         title='"._("Remove selected systems")."' alt='"._("Remove systems")."' name='remove_multiple_systems'>&nbsp;";
 
-    $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/editcopy.png'
-      title='"._("Copy selected system")."' alt='"._("Copy systems")."' name='multiple_copy_systems'>&nbsp;";
-    $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/editcut.png'
-      title='"._("cut selected system")."' alt='"._("Cut systems")."' name='multiple_cut_systems'>&nbsp;";
-
+    /* Add multiple copy & cut icons */
+    if(is_object($this->parent->CopyPasteHandler)){
+      $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/editcopy.png'
+        title='"._("Copy selected system")."' alt='"._("Copy systems")."' name='multiple_copy_systems'>&nbsp;";
+      $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/editcut.png'
+        title='"._("cut selected system")."' alt='"._("Cut systems")."' name='multiple_cut_systems'>&nbsp;";
+    }
     $listhead .="</div>";
 
     $this->SetListHeader($listhead);
