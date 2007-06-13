@@ -387,6 +387,12 @@ class conference extends plugin
       $message[] = $str;
     }
 
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd("ou=conferences,ou=asterisk,ou=configs,ou=systems,".$this->base);
+    $ldap->search("(&(objectClass=goFonConference)(cn=".$this->cn."))",array("cn"));
+    if($ldap->count()){
+      $message[] =_("There is already a conference with this name in the current tree.");
+    }
     return $message;
   }
 
@@ -683,6 +689,31 @@ class conference extends plugin
     /* Optionally execute a command after we're done */
     $this->postcreate();
   }
+
+
+  function getCopyDialog()
+  {
+    $smarty = get_smarty();
+    $smarty->assign("cn" ,$this->cn);
+    $smarty->assign("telephoneNumber" ,$this->telephoneNumber);
+    $str = $smarty->fetch(get_template_path("paste_generic.tpl",TRUE));
+    $ret = array();
+    $ret['string'] = $str;
+    $ret['status'] = "";
+    return($ret);
+  }
+
+
+  function saveCopyDialog()
+  {
+    if(isset($_POST['cn'])){
+      $this->cn = $_POST['cn'];
+    }
+    if(isset($_POST['telephoneNumber'])){
+      $this->telephoneNumber = $_POST['telephoneNumber'];
+    }
+  }
+
 
   /* Return plugin informations for acl handling */
   function plInfo()

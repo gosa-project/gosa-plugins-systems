@@ -42,7 +42,7 @@ class divListConference extends MultiSelectWindow
     $this->EnableSaveButton (false);
 
     /* Dynamic action col, depending on snapshot icons */
-    $action_col_size = 60;
+    $action_col_size = 100;
     if($this->parent->snapshotEnabled()){
       $action_col_size += 20;
     }
@@ -128,17 +128,26 @@ class divListConference extends MultiSelectWindow
     /* Add default header */
     $listhead = MultiSelectWindow::get_default_header();
 
+    /* Get copy & paste icon */
+    $Copy_Paste ="";
+    if(preg_match("/(c.*w|w.*c)/",$acls) &&  $this->parent->CopyPasteHandler){
+      $Copy_Paste = $this->parent->CopyPasteHandler->generatePasteIcon();
+      $addsep = true;
+    }
+
+
+    /* Only display snapshot settings if we are able to write && create new entries */
+    if(preg_match("/(c.*w|w.*c)/",$acl_all)){
+      $listhead .= $this->get_snapshot_header($this->selectedBase);
+    }
+    $listhead .= $Copy_Paste;
+
     /* Only display create new conference if we are allowed to create new confe... */
     if(preg_match("/c/",$acls)){
       $listhead .=" <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;".
         " <input class='center' type='image' align='middle' src='images/list_new_conference.png' 
         title='"._("Create new conference")."' alt='"._("New conference")."' name='conference_new'>&nbsp;".
         " <img class='center' src='images/list_seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;";
-    }
-
-    /* Only display snapshot settings if we are able to write && create new entries */
-    if(preg_match("/(c.*w|w.*c)/",$acl_all)){
-      $listhead .= $this->get_snapshot_header($this->selectedBase);
     }
   
     /* Add the rest (base select ....)*/
@@ -149,6 +158,15 @@ class divListConference extends MultiSelectWindow
     /* Multiple options */
     $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/edittrash.png'
       title='"._("Remove selected conferences")."' alt='"._("Remove conferences")."' name='remove_multiple_conferences'>&nbsp;";
+
+    /* Add multiple copy & cut icons */
+    if(is_object($this->parent->CopyPasteHandler)){
+      $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/editcopy.png'
+        title='"._("Copy selected objects")."' alt='"._("Copy objects")."' name='multiple_copy_objects'>&nbsp;";
+      $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/editcut.png'
+        title='"._("cut selected objects")."' alt='"._("Cut objects")."' name='multiple_cut_objects'>&nbsp;";
+      $listhead .= "</div>";
+    }
 
     $listhead .="</div>";
 
@@ -169,7 +187,7 @@ class divListConference extends MultiSelectWindow
     $editlink = "<a href='?plug=".$_GET['plug']."&amp;id=%s&amp;act=edit_entry'>%s</a>";
 
     /* Dynamic action col, depending on snapshot icons */
-    $action_col_size = 60;
+    $action_col_size = 100;
     if($this->parent->snapshotEnabled()){
       $action_col_size += 20;
     }
@@ -186,8 +204,16 @@ class divListConference extends MultiSelectWindow
         continue;
       }
 
+      $actions ="";
+      if(($this->parent->CopyPasteHandler) && preg_match("/(c.*w|w.*c)/",$acl_all)){
+        $actions.= "<input class='center' type='image'
+          src='images/editcut.png' alt='"._("cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
+        $actions.= "<input class='center' type='image'
+          src='images/editcopy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
+      }
+
       /* Add edit icon - This is allowed when we have at least read access. */
-      $actions= "<input class='center' type='image' src='images/edit.png'     
+      $actions.= "<input class='center' type='image' src='images/edit.png'     
                     alt='"._("edit")."'    name='conference_edit_%KEY%' title='"._("Edit this entry")."'>";
 
       /* Add snapshot icon - This is allowed when we have create and write access for the current entry */

@@ -39,6 +39,9 @@ class phoneConferenceManagment extends plugin
   var $ui                 = NULL;
   var $DivListConference  = NULL;
 
+  var $CopyPasteHandler = NULL;
+  var $start_pasting_copied_objects = FALSE;
+
   /* Initialise Class */
   function phoneConferenceManagment ($config, $ui)
   {
@@ -46,6 +49,11 @@ class phoneConferenceManagment extends plugin
     $this->dn			  = "";
     $this->config		= $config;
     $this->DivListConference = new divListConference($this->config,$this);
+
+    /* Copy & Paste enabled ?*/
+    if((isset($this->config->data['MAIN']['ENABLECOPYPASTE']))&&(preg_match("/true/i",$this->config->data['MAIN']['ENABLECOPYPASTE']))){
+      $this->CopyPasteHandler = new CopyPasteHandler($this->config);
+    }
   }
 
 
@@ -87,6 +95,20 @@ class phoneConferenceManagment extends plugin
         $s_entry  = preg_replace("/_.*$/","",$s_entry);
       }elseif(preg_match("/^remove_multiple_conferences/",$key)){
         $s_action="del_multiple";
+      }elseif(preg_match("/^editPaste.*/i",$key)){
+        $s_action="editPaste";
+      }elseif(preg_match("/^copy_.*/",$key)){
+        $s_action="copy";
+        $s_entry  = preg_replace("/^copy_/i","",$key);
+        $s_entry  = preg_replace("/_.$/","",$s_entry);
+      }elseif(preg_match("/^cut_.*/",$key)){
+        $s_action="cut";
+        $s_entry  = preg_replace("/^cut_/i","",$key);
+        $s_entry  = preg_replace("/_.$/","",$s_entry);
+      }elseif(preg_match("/^multiple_copy_objects/",$key)){
+        $s_action = "copy_multiple";
+      }elseif(preg_match("/^multiple_cut_objects/",$key)){
+        $s_action = "cut_multiple";
       } 
     }
 
@@ -113,6 +135,16 @@ class phoneConferenceManagment extends plugin
       unset ($_SESSION['objectinfo']);
     }
 
+
+    /********************
+      Copy & Paste Handling  ...
+     ********************/
+
+    /* Display the copy & paste dialog, if it is currently open */
+    $ret = $this->copyPasteHandling_from_queue($s_action,$s_entry);
+    if($ret){
+      return($ret);
+    }
 
 
     /********************
@@ -406,6 +438,70 @@ class phoneConferenceManagment extends plugin
     }
 
   }
+
+
+  function copyPasteHandling_from_queue($s_action,$s_entry)
+  {
+    /* Check if Copy & Paste is disabled */
+    if(!is_object($this->CopyPasteHandler)){
+      return("");
+    }
+
+    /* Add a single entry to queue */
+    if($s_action == "cut" || $s_action == "copy"){
+
+      /* Cleanup object queue */
+      $this->CopyPasteHandler->cleanup_queue();
+      $dn = $this->conferences[$s_entry]['dn'];
+      $this->CopyPasteHandler->add_to_queue($dn,$s_action,"conferencetabs","CONFERENCETABS","gofonconference");
+    }
+
+    /* Add entries to queue */
+    if($s_action == "copy_multiple" || $s_action == "cut_multiple"){
+
+      /* Cleanup object queue */
+      $this->CopyPasteHandler->cleanup_queue();
+
+      /* Add new entries to CP queue */
+      foreach($this->list_get_selected_items() as $id){
+        $dn = $this->conferences[$id]['dn'];
+
+        if($s_action == "copy_multiple"){
+          $this->CopyPasteHandler->add_to_queue($dn,"copy","conferencetabs","CONFERENCETABS","gofonconference");
+        }
+        if($s_action == "cut_multiple"){
+          $this->CopyPasteHandler->add_to_queue($dn,"cut","conferencetabs","CONFERENCETABS","gofonconference");
+        }
+      }
+    }
+
+    /* Start pasting entries */
+    if($s_action == "editPaste"){
+      $this->start_pasting_copied_objects = TRUE;
+    }
+    /* Return C&P dialog */
+    if($this->start_pasting_copied_objects && $this->CopyPasteHandler->entries_queued()){
+
+      /* Load entry from queue and set base */
+      $this->CopyPasteHandler->load_entry_from_queue();
+      $this->CopyPasteHandler->SetVar("base",$this->DivListConference->selectedBase);
+
+      /* Get dialog */
+      $data = $this->CopyPasteHandler->execute();
+
+      /* Return dialog data */
+      if(!empty($data)){
+        return($data);
+      }
+    }
+
+    /* Automatically disable status for pasting */
+    if(!$this->CopyPasteHandler->entries_queued()){
+      $this->start_pasting_copied_objects = FALSE;
+    }
+    return("");
+  }
+
 
   function save_object()
   {
