@@ -402,6 +402,13 @@ class macroParameter extends plugin
     show_ldap_error($ldap->get_error(), sprintf(_("Removing of goFonMacro/generic account with dn '%s' failed."),$this->dn));
   }
 
+  function PrepareForCopyPaste($source)
+  {
+    plugin::PrepareForCopyPaste($source);
+
+    $source_o = new macroParameter($this->config,$source['dn']);
+    $this->goFonMacroParameter = $source_o-> goFonMacroParameter;
+  }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

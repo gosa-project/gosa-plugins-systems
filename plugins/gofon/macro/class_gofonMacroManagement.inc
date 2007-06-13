@@ -31,6 +31,9 @@ class gofonMacro extends plugin
   var $ui				        = NULL;
   var $DivListMacro     = NULL;
 
+  var $CopyPasteHandler = NULL;
+  var $start_pasting_copied_objects = FALSE;
+
   function gofonMacro($config, $ui)
   {
     /* Save configuration for internal use */
@@ -38,6 +41,11 @@ class gofonMacro extends plugin
     $this->ui= $ui;
 
     $this->DivListMacro = new divListMacro($this->config,$this);
+
+    /* Copy & Paste enabled ?*/
+    if((isset($this->config->data['MAIN']['ENABLECOPYPASTE']))&&(preg_match("/true/i",$this->config->data['MAIN']['ENABLECOPYPASTE']))){
+      $this->CopyPasteHandler = new CopyPasteHandler($this->config);
+    }
   }
 
   function execute()
@@ -76,6 +84,18 @@ class gofonMacro extends plugin
         $s_action="new";
       }elseif(preg_match("/^remove_multiple_macros/",$key)){
         $s_action="del_multiple";
+      }elseif(preg_match("/^editPaste.*/i",$key)){
+        $s_action="editPaste";
+      }elseif(preg_match("/^copy_.*/",$key)){
+        $s_action="copy";
+        $s_entry  = preg_replace("/^copy_/i","",$key);
+      }elseif(preg_match("/^cut_.*/",$key)){
+        $s_action="cut";
+        $s_entry  = preg_replace("/^cut_/i","",$key);
+      }elseif(preg_match("/^multiple_copy_objects/",$key)){
+        $s_action = "copy_multiple";
+      }elseif(preg_match("/^multiple_cut_objects/",$key)){
+        $s_action = "cut_multiple";
       }
     }
     if((isset($_GET['act']))&&($_GET['act']=="edit_entry")){
@@ -83,6 +103,17 @@ class gofonMacro extends plugin
       $s_entry  = $_GET['id'];
     }
     $s_entry  = preg_replace("/_.$/","",$s_entry);
+
+
+    /********************
+      Copy & Paste Handling  ...
+     ********************/
+
+    /* Display the copy & paste dialog, if it is currently open */
+    $ret = $this->copyPasteHandling_from_queue($s_action,$s_entry);
+    if($ret){
+      return($ret);
+    }
 
 
     /*****************
@@ -368,6 +399,71 @@ class gofonMacro extends plugin
     $this->DivListMacro->setEntries($this->macros);
     return($this->DivListMacro->Draw());
   }
+
+
+  function copyPasteHandling_from_queue($s_action,$s_entry)
+  {
+    /* Check if Copy & Paste is disabled */
+    if(!is_object($this->CopyPasteHandler)){
+      return("");
+    }
+
+    /* Add a single entry to queue */
+    if($s_action == "cut" || $s_action == "copy"){
+
+      /* Cleanup object queue */
+      $this->CopyPasteHandler->cleanup_queue();
+      $dn = $this->macros[$s_entry]['dn'];
+      $this->CopyPasteHandler->add_to_queue($dn,$s_action,"macrotabs","MACROTABS","gofonmacro");
+    }
+
+    /* Add entries to queue */
+    if($s_action == "copy_multiple" || $s_action == "cut_multiple"){
+
+      /* Cleanup object queue */
+      $this->CopyPasteHandler->cleanup_queue();
+
+      /* Add new entries to CP queue */
+      foreach($this->list_get_selected_items() as $id){
+        $dn = $this->macros[$id]['dn'];
+
+        if($s_action == "copy_multiple"){
+          $this->CopyPasteHandler->add_to_queue($dn,"copy","macrotabs","MACROTABS","gofonmacro");
+        }
+        if($s_action == "cut_multiple"){
+          $this->CopyPasteHandler->add_to_queue($dn,"cut","macrotabs","MACROTABS","gofonmacro");
+        }
+      }
+    }
+
+    /* Start pasting entries */
+    if($s_action == "editPaste"){
+      $this->start_pasting_copied_objects = TRUE;
+    }
+
+    /* Return C&P dialog */
+    if($this->start_pasting_copied_objects && $this->CopyPasteHandler->entries_queued()){
+
+      /* Load entry from queue and set base */
+      $this->CopyPasteHandler->load_entry_from_queue();
+      $this->CopyPasteHandler->SetVar("base",$this->DivListMacro->selectedBase);
+
+      /* Get dialog */
+      $data = $this->CopyPasteHandler->execute();
+
+      /* Return dialog data */
+      if(!empty($data)){
+        return($data);
+      }
+    }
+
+    /* Automatically disable status for pasting */
+    if(!$this->CopyPasteHandler->entries_queued()){
+      $this->start_pasting_copied_objects = FALSE;
+    }
+    return("");
+  }
+
 
 
   /* Return departments, that will be included within snapshot detection */
