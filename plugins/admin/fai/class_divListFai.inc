@@ -211,6 +211,15 @@ class divListFai extends MultiSelectWindow
     $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/edittrash.png'
         title='"._("Remove selected fai objects")."' alt='"._("Remove fai objects")."' name='remove_multiple_fai_objects'>&nbsp;";
 
+    /* Add multiple copy & cut icons */
+    if(is_object($this->parent->CopyPasteHandler)){
+      $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/editcopy.png'
+        title='"._("Copy selected objects")."' alt='"._("Copy fai objects")."' name='multiple_copy_fai'>&nbsp;";
+      $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/editcut.png'
+        title='"._("cut selected objects")."' alt='"._("Cut fai objects")."' name='multiple_cut_fai'>&nbsp;";
+      $listhead .= "</div>";
+    }
+
     $listhead .="</div>";;
 
 

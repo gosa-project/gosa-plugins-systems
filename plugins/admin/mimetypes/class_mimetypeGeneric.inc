@@ -704,8 +704,15 @@ class mimetype extends plugin
   function PrepareForCopyPaste($source)
   {
     plugin::PrepareForCopyPaste($source);
-    $this->gotoMimeIcon       = $this->iconData;
-    $this->use_gotoMimeIcon   = $source->use_gotoMimeIcon;
+
+    $source_o = new mimetype($this->config,$source['dn'],$this->parent);
+
+    foreach(array("gotoMimeEmbeddedApplication","gotoMimeApplication","gotoMimeFilePattern","use_gotoMimeFilePattern") as $name){
+      $this->$name = $source_o->$name;
+    } 
+    foreach($this->attributes as $name){
+      $this->$name = $source_o->$name;
+    } 
   }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

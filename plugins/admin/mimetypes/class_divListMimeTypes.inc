@@ -190,6 +190,14 @@ class divListMimeTypes extends MultiSelectWindow
     $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/edittrash.png'
         title='"._("Remove selected mimetype")."' alt='"._("Remove mimetype")."' name='remove_multiple_mimetypes'>&nbsp;";
 
+    /* Add multiple copy & cut icons */
+    if(is_object($this->parent->CopyPasteHandler)){
+      $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/editcopy.png'
+        title='"._("Copy selected object")."' alt='"._("Copy object")."' name='multiple_copy_mimetypes'>&nbsp;";
+      $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/editcut.png'
+        title='"._("cut selected object")."' alt='"._("Cut object")."' name='multiple_cut_mimetypes'>&nbsp;";
+    }
+
     $listhead .="</div>";;
 
     $this->SetListHeader($listhead);

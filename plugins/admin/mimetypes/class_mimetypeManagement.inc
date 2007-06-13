@@ -33,6 +33,8 @@ class mimetypeManagement extends plugin
   var $mimetabs                       = NULL;
   var $snapDialog                     = NULL;
   var $CopyPasteHandler               = NULL;
+  var $start_pasting_copied_objects = FALSE;
+
 
   function mimetypeManagement ($config, $ui)
   {
@@ -131,6 +133,10 @@ class mimetypeManagement extends plugin
         $s_action="del_multiple";
       }elseif(preg_match("/^editPaste.*/i",$key)){
         $s_action="editPaste";
+      }elseif(preg_match("/^multiple_copy_mimetypes/",$key)){
+        $s_action = "copy_multiple";
+      }elseif(preg_match("/^multiple_cut_mimetypes/",$key)){
+        $s_action = "cut_multiple";
       }
     }
 
@@ -146,12 +152,10 @@ class mimetypeManagement extends plugin
       Copy & Paste handling  
      ****************/
 
-    /* Only perform copy / paste if it is enabled 
-     */
-    if($this->CopyPasteHandler){
-      if($str = $this->copyPasteHandling($s_action,$s_entry)){
-       return($str);
-      };
+    /* Display the copy & paste dialog, if it is currently open */
+    $ret = $this->copyPasteHandling_from_queue($s_action,$s_entry);
+    if($ret){
+      return($ret);
     }
 
 
@@ -518,50 +522,69 @@ class mimetypeManagement extends plugin
   }
 
 
-  function copyPasteHandling($s_action,$s_entry)
+  function copyPasteHandling_from_queue($s_action,$s_entry)
   {
-    /* Paste copied/cutted object in here
-     */
-    if(($s_action == "editPaste") || ($this->CopyPasteHandler->stillOpen())){
-      $this->CopyPasteHandler->save_object();
-      $this->CopyPasteHandler->SetVar("base", $this->DivListMimeTypes->selectedBase);
-
-      if($str = $this->CopyPasteHandler->execute()) {
-        return($str);
-      }
+    /* Check if Copy & Paste is disabled */
+    if(!is_object($this->CopyPasteHandler)){
+      return("");
     }
 
-    /* Copy current object to CopyHandler
-     */
-    if($s_action == "copy"){
-      $this->CopyPasteHandler->Clear();
+    /* Add a single entry to queue */
+    if($s_action == "cut" || $s_action == "copy"){
+
+      /* Cleanup object queue */
+      $this->CopyPasteHandler->cleanup_queue();
       $dn = $this->mimetypes[$s_entry]['dn'];
+      $this->CopyPasteHandler->add_to_queue($dn,$s_action,"mimetabs","MIMETABS","mimetypes");
+    }
 
-      /* Check acls */
-      $acl_all= $this->ui->has_complete_category_acls($dn,"mimetypes");
-      if(preg_match("/(c.*w|w.*c)/",$acl_all)){
-        $obj    = new mimetabs($this->config, $this->config->data['TABS']['MIMETABS'], $dn,"mimetypes");
-        $obj->set_acl_base($this->dn);
-        $objNew = new mimetabs($this->config, $this->config->data['TABS']['MIMETABS'], "new","mimetypes");
-        $objNew->set_acl_base($this->dn);
-        $this->CopyPasteHandler->Copy($obj,$objNew);
+    /* Add entries to queue */
+    if($s_action == "copy_multiple" || $s_action == "cut_multiple"){
+
+      /* Cleanup object queue */
+      $this->CopyPasteHandler->cleanup_queue();
+
+      /* Add new entries to CP queue */
+      foreach($this->list_get_selected_items() as $id){
+        $dn = $this->mimetypes[$id]['dn'];
+
+        if($s_action == "copy_multiple"){
+          $this->CopyPasteHandler->add_to_queue($dn,"copy","mimetabs","MIMETABS","mimetypes");
+        }
+        if($s_action == "cut_multiple"){
+          $this->CopyPasteHandler->add_to_queue($dn,"cut","mimetabs","MIMETABS","mimetypes");
+        }
       }
     }
 
-    /* Copy current object to CopyHandler
-     */
-    if($s_action == "cut"){
-      $this->CopyPasteHandler->Clear();
-      $dn = $this->mimetypes[$s_entry]['dn'];
+    /* Start pasting entries */
+    if($s_action == "editPaste"){
+      $this->start_pasting_copied_objects = TRUE;
+    }
 
-      /* Check acls */
-      $acl_all= $this->ui->has_complete_category_acls($dn,"mimetypes");
-      if(preg_match("/(c.*w|w.*c)/",$acl_all)){
-        $obj = new mimetabs($this->config, $this->config->data['TABS']['MIMETABS'], $dn);
-        $this->CopyPasteHandler->Cut($obj);
+    /* Return C&P dialog */
+    if($this->start_pasting_copied_objects && $this->CopyPasteHandler->entries_queued()){
+
+      /* Load entry from queue and set base */
+      $this->CopyPasteHandler->load_entry_from_queue();
+      $this->CopyPasteHandler->SetVar("base",$this->DivListMimeTypes->selectedBase);
+
+      /* Get dialog */
+      $data = $this->CopyPasteHandler->execute();
+
+      /* Return dialog data */
+      if(!empty($data)){
+        return($data);
       }
     }
+
+    /* Automatically disable status for pasting */
+    if(!$this->CopyPasteHandler->entries_queued()){
+      $this->start_pasting_copied_objects = FALSE;
+    }
+    return("");
   }
+
 
   /* Check if the release management is activated. */
   function IsReleaseManagementActivated()

@@ -56,6 +56,8 @@ class faiManagement extends plugin
   var $dispNewFreeze= false;
 
   var $DivListFai;
+  var $start_pasting_copied_objects = FALSE;
+  var $CopyPasteHandler = FALSE;
 
 	/* construction/reconstruction 
 	 */
@@ -100,7 +102,8 @@ class faiManagement extends plugin
                     "/create_variable/i"=>"new_variable",  "/create_template/i"=>"new_template",
                     "/create_package/i"=>"new_package",    "/create_profile/i"=>"new_profile",
                     "/edit_continue/"=>"select_class_name_finished",
-  
+                    "/^multiple_copy_fai/" => "copy_multiple", 
+                    "/^multiple_cut_fai/" => "cut_multiple", 
                     "/^remove_multiple_fai_objects/" => "del_multiple");
 
 		foreach($_POST as $name => $value){
