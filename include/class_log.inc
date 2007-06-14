@@ -45,6 +45,11 @@ class log {
    */
   function log($action,$objecttype,$object,$changes_array = array(),$result = TRUE)
   {
+    if(!is_array($changes_array)){
+      trigger_error("log(string,string,string,array(),bool). Forth parameter must be an array.");
+      $changes_array = array();
+    }
+
     $entry = array(); 
     if(!isset($_SESSION['config'])){
       $entry['user']= "unkown";
@@ -138,10 +143,10 @@ class log {
     }
 
     foreach($servers as $server_name => $server){
-  
-      $con = mysql_pconnect($server_name,$server['USER'],$server['PWD']);
+ 
+      $con = @mysql_pconnect($server_name,$server['USER'],$server['PWD']);
       if(!$con){
-        print_red(sprintf(_("Could not connect to logging server %s."),$server['SERVER']));
+        print_red(sprintf(_("Could not connect to logging server %s."),$server_name));
       }else{
         $db = mysql_select_db($server['DB'],$con);
         if(!$db){
@@ -168,6 +173,7 @@ class log {
             
           } 
         }
+        mysql_close($con);
       }
     }
   }

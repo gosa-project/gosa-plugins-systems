@@ -80,6 +80,19 @@ class CopyPasteHandler {
       unset($this->queue[$key]);
     }
 
+    /* Create patch if it doesn't exists */
+    if(!is_dir(LDAP_DUMP_PATH)){
+      @mkdir(LDAP_DUMP_PATH);
+    }    
+    
+    /* check if we are able to create a new file the given directory */
+    if(!is_writeable(LDAP_DUMP_PATH)){
+      print_red(sprintf(_("Could not cleanup copy & paste queue. We are not allowed to save ldap dump to '%s', please check permissions."),LDAP_DUMP_PATH));
+      new log("copy","all/all","copy & paste, event queue.",array(),
+          sprintf("Could not cleanup copy & paste queue. We are not allowed to save ldap dump to '%s', please check permissions.",LDAP_DUMP_PATH));
+      return(FALSE);
+    }
+
     /* Remove entries from hdd that are older than24 hours */
     $fp = opendir(LDAP_DUMP_PATH);
     while($file = readdir($fp)){
