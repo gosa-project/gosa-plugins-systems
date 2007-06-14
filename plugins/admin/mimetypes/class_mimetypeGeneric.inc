@@ -707,12 +707,20 @@ class mimetype extends plugin
 
     $source_o = new mimetype($this->config,$source['dn'],$this->parent);
 
-    foreach(array("gotoMimeEmbeddedApplication","gotoMimeApplication","gotoMimeFilePattern","use_gotoMimeFilePattern") as $name){
+    foreach(array("gotoMimeLeftClickAction_Q","gotoMimeEmbeddedApplication","gotoMimeApplication","gotoMimeFilePattern","gotoMimeIcon","iconData") as $name){
+      $use_attr     = "use_".$name;
+      if(isset($this->$use_attr)){
+        $this->$use_attr= $source_o->$use_attr;
+      }
       $this->$name = $source_o->$name;
     } 
     foreach($this->attributes as $name){
       $this->$name = $source_o->$name;
-    } 
+    }
+
+    if($this->iconData){
+      $this->use_gotoMimeIcon ="Not emtpy, causes icon to be written.";
+    }
   }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

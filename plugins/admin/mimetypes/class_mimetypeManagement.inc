@@ -498,6 +498,8 @@ class mimetypeManagement extends plugin
     /* In case of subsearch, add the subsearch flag */
     if($SubSearch){
       $Flags    |= GL_SUBSEARCH;  
+    }else{
+      $use_base ="ou=mime,".$use_base;
     }
   
     /* Get results and create index */ 
