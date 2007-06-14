@@ -153,8 +153,7 @@ class divListACL extends MultiSelectWindow
     $listhead .= $Copy_Paste. 
       _("Base")."&nbsp;<select name='CurrentMainBase' onChange='mainform.submit()' class='center'>$options</select>".
       " <input class='center' type='image' src='images/list_submit.png' align='middle' 
-      title='"._("Submit department")."' name='submit_department' alt='".  _("Submit")."'>&nbsp;".
-      "</div>";
+      title='"._("Submit department")."' name='submit_department' alt='".  _("Submit")."'>&nbsp;";
 
         /* Add multiple copy & cut icons */
     if(is_object($this->parent->CopyPasteHandler)){
@@ -165,6 +164,7 @@ class divListACL extends MultiSelectWindow
       $listhead .= "</div>";
     }
 
+    $listhead .= "</div>";
 
     $this->SetListHeader($listhead);
   }
