@@ -24,6 +24,7 @@ class conference extends plugin
   var $cn						  = "";
   var $description		= "";
   var $base 				  = "";
+  var $old_base 	    = "";
   var $ou 						= "";
   var $goFonPIN				= "";
   var $old_cn         = "";
@@ -140,6 +141,7 @@ class conference extends plugin
     }
     $this->old_dn = $this->dn;
     $this->old_cn = $this->cn;
+    $this->old_base = $this->base;
   }
 
 
@@ -387,11 +389,13 @@ class conference extends plugin
       $message[] = $str;
     }
 
-    $ldap = $this->config->get_ldap_link();
-    $ldap->cd("ou=conferences,ou=asterisk,ou=configs,ou=systems,".$this->base);
-    $ldap->search("(&(objectClass=goFonConference)(cn=".$this->cn."))",array("cn"));
-    if($ldap->count()){
-      $message[] =_("There is already a conference with this name in the current tree.");
+    if($this->old_cn != $this->cn || $this->base != $this->old_base){
+      $ldap = $this->config->get_ldap_link();
+      $ldap->cd("ou=conferences,ou=asterisk,ou=configs,ou=systems,".$this->base);
+      $ldap->search("(&(objectClass=goFonConference)(cn=".$this->cn."))",array("cn"));
+      if($ldap->count()){
+        $message[] =_("There is already a conference with this name in the current tree.");
+      }
     }
     return $message;
   }
@@ -711,6 +715,17 @@ class conference extends plugin
     }
     if(isset($_POST['telephoneNumber'])){
       $this->telephoneNumber = $_POST['telephoneNumber'];
+    }
+  }
+
+  function PrepareForCopyPaste($source)
+  {
+    plugin::PrepareForCopyPaste($source) ;
+
+    $source_o = new conference($this->config,$source['dn']);
+  
+    foreach($this->attributes as $attr){
+      $this->$attr = $source_o->$attr;
     }
   }
 
