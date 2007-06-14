@@ -685,6 +685,16 @@ class goMailServer extends goService{
   }
 
 
+  function PrepareForCopyPaste($source)
+  {
+    plugin::PrepareForCopyPaste($source);
+
+    $source_o = new goMailServer($this->config,$source['dn']);
+    foreach(array("postfixMyNetworks","postfixTransportTable","postfixSenderRestrictions","postfixRecipientRestrictions","postfixMyDestinations") as $attr){
+      $this->$attr = $source_o->$attr;
+    }
+  }
+
 
   /* Return plugin informations for acl handling */
   function plInfo()

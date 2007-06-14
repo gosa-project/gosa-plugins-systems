@@ -400,7 +400,7 @@ class servgeneric extends plugin
       $this->netConfigDNS->macAddress = $source['macAddress'][0];
     }
     if(isset($source['ipHostNumber'][0])){
-      $this->netConfigDNS->macAddress = $source['ipHostNumber'][0];
+      $this->netConfigDNS->ipHostNumber = $source['ipHostNumber'][0];
     }
 
   }

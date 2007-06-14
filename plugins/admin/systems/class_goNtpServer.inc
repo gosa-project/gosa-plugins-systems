@@ -124,6 +124,22 @@ class goNtpServer extends goService{
           ));
   }
 
+  
+  function PrepareForCopyPaste($source)
+  {
+    plugin::PrepareForCopyPaste($source);
+
+    /* Load arrays */
+    $tmp = array();
+    if (isset($source['goTimeSource'])){
+      for ($i= 0; $i<$source['goTimeSource']['count']; $i++){
+        $tmp[$source['goTimeSource'][$i]]= $source['goTimeSource'][$i];
+      }
+    }
+    $this->goTimeSource= $tmp;
+
+
+  }
 
   function check(){ return array();}
 

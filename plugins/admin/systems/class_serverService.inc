@@ -411,6 +411,16 @@ class ServerService extends plugin
     }
   }
 
+  
+  function PrepareForCopyPaste($source)
+  {
+    plugin::PrepareForCopyPaste($source);
+
+    foreach($this->plugins as $name => $plugin){
+      $this->plugins[$name]->PrepareForCopyPaste($source);
+    }
+  }
+
 
   /* Check if all plugins allow a remove ..  */
   function allow_remove()
