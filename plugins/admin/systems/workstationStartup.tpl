@@ -41,93 +41,101 @@
   
   <td style="vertical-align:top;">
 
-	{if $FAIdebianMirror == "inherited"}
+	{if $fai_activated}
 
-		<table>
-			<tr>
-				<td>
-					<h2><img class="center" alt="" align="middle" src="images/fai_profile.png">&nbsp;{t}FAI server{/t}
-					</h2>
-				</td>
-				<td>
-					<h2><img class="center" alt="" align="middle" src="images/fai_profile.png">&nbsp;{t}Release{/t}
-					</h2>
-				</td>
-			</tr>
-			<tr>
-				<td>
-{render acl=$FAIdebianMirrorACL}
-					<select name="FAIdebianMirror"   onchange='document.mainform.submit()'>
-						{html_options options=$FAIdebianMirrors output=$FAIdebianMirrors selected=$FAIdebianMirror}
-					</select>
-{/render}
-				</td>
-				<td>
-					<select name="FAIrelease"  disabled>
-					{html_options options=$InheritedFAIrelease output=$InheritedFAIrelease selected=$InheritedFAIrelease}
-					</select>
-				</td>
-			</tr>
-		</table>
-		<h2>
-			<img class="center" alt="" align="middle" src="images/fai_profile.png">&nbsp;{t}Assigned FAI classes{/t}
-		</h2>
-{render acl=$FAIclassACL}
-		{$FAIScriptlist}	
-{/render}
-	{else}
+		{if $FAIdebianMirror == "inherited"}
 
-		<table>
-			<tr>
-				<td>
-					<h2><img class="center" alt="" align="middle" src="images/fai_profile.png">&nbsp;{t}FAI server{/t}
-					</h2>
-				</td>
-				<td>
-					<h2><img class="center" alt="" align="middle" src="images/fai_profile.png">&nbsp;{t}Release{/t}
-					</h2>
-				</td>
-			</tr>
-			<tr>
-				<td>
-{render acl=$FAIdebianMirrorACL}
-					<select name="FAIdebianMirror" onchange='document.mainform.submit()'>
-						{html_options options=$FAIdebianMirrors output=$FAIdebianMirrors selected=$FAIdebianMirror}
-					</select>
-{/render}
-{if $javascript eq 'false'}
-{render acl=$FAIdebianMirrorACL}
-	<input type="submit" value="{t}set{/t}" name="refresh">
-{/render}
-{/if}
-				</td>
-				<td>
-{render acl=$FAIreleaseACL}
-					<select name="FAIrelease"  onchange='document.mainform.submit()'>
-					{html_options options=$FAIreleases output=$FAIreleases selected=$FAIrelease}
-					</select>
-{/render}
-				</td>
-			</tr>
-		</table>
-		<h2>
-			<img class="center" alt="" align="middle" src="images/fai_profile.png">&nbsp;{t}Assigned FAI classes{/t}
-		</h2>
-{render acl=$FAIclassACL}
-		{$FAIScriptlist}	
-{/render}
+			<table>
+				<tr>
+					<td>
+						<h2><img class="center" alt="" align="middle" src="images/fai_profile.png">&nbsp;{t}FAI server{/t}
+						</h2>
+					</td>
+					<td>
+						<h2><img class="center" alt="" align="middle" src="images/fai_profile.png">&nbsp;{t}Release{/t}
+						</h2>
+					</td>
+				</tr>
+				<tr>
+					<td>
+	{render acl=$FAIdebianMirrorACL}
+						<select name="FAIdebianMirror"   onchange='document.mainform.submit()'>
+							{html_options options=$FAIdebianMirrors output=$FAIdebianMirrors selected=$FAIdebianMirror}
+						</select>
+	{/render}
+					</td>
+					<td>
+						<select name="FAIrelease"  disabled>
+						{html_options options=$InheritedFAIrelease output=$InheritedFAIrelease selected=$InheritedFAIrelease}
+						</select>
+					</td>
+				</tr>
+			</table>
+			<h2>
+				<img class="center" alt="" align="middle" src="images/fai_profile.png">&nbsp;{t}Assigned FAI classes{/t}
+			</h2>
+	{render acl=$FAIclassACL}
+			{$FAIScriptlist}	
+	{/render}
+		{else}
 
-{render acl=$FAIclassACL}
-		<select name="FAIclassesSel">
-			{html_options values=$FAIclassesKeys output=$FAIclasses}
-			<option disabled>&nbsp;</option>
-		</select>	
-{/render}
-{render acl=$FAIclassACL}
-		<input name="AddClass" value="{t}Add{/t}" type="submit"> 
-{/render}
-<!--		<input name="DelClass" value="{t}Delete{/t}" type="submit"> -->
+			<table>
+				<tr>
+					<td>
+						<h2><img class="center" alt="" align="middle" src="images/fai_profile.png">&nbsp;{t}FAI server{/t}
+						</h2>
+					</td>
+					<td>
+						<h2><img class="center" alt="" align="middle" src="images/fai_profile.png">&nbsp;{t}Release{/t}
+						</h2>
+					</td>
+				</tr>
+				<tr>
+					<td>
+	{render acl=$FAIdebianMirrorACL}
+						<select name="FAIdebianMirror" onchange='document.mainform.submit()'>
+							{html_options options=$FAIdebianMirrors output=$FAIdebianMirrors selected=$FAIdebianMirror}
+						</select>
+	{/render}
+	{if $javascript eq 'false'}
+	{render acl=$FAIdebianMirrorACL}
+		<input type="submit" value="{t}set{/t}" name="refresh">
+	{/render}
 	{/if}
+					</td>
+					<td>
+	{render acl=$FAIreleaseACL}
+						<select name="FAIrelease"  onchange='document.mainform.submit()'>
+						{html_options options=$FAIreleases output=$FAIreleases selected=$FAIrelease}
+						</select>
+	{/render}
+					</td>
+				</tr>
+			</table>
+			<h2>
+				<img class="center" alt="" align="middle" src="images/fai_profile.png">&nbsp;{t}Assigned FAI classes{/t}
+			</h2>
+	{render acl=$FAIclassACL}
+			{$FAIScriptlist}	
+	{/render}
+
+	{render acl=$FAIclassACL}
+			<select name="FAIclassesSel">
+				{html_options values=$FAIclassesKeys output=$FAIclasses}
+				<option disabled>&nbsp;</option>
+			</select>	
+	{/render}
+	{render acl=$FAIclassACL}
+			<input name="AddClass" value="{t}Add{/t}" type="submit"> 
+	{/render}
+	<!--		<input name="DelClass" value="{t}Delete{/t}" type="submit"> -->
+		{/if}
+
+		{else}
+
+			<h2>{t}FAI Object assignment disabled. You can't use this feature until FAI is activated.{/t}</h2>			
+
+		{/if}
   		</td>
 	</tr>
 </table>
