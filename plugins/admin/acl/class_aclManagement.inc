@@ -34,6 +34,7 @@ class aclManagement extends plugin
   var $DivListACL           = NULL;
 
   var $CopyPasteHandler;
+  var $start_pasting_copied_objects = FALSE;
 
   function aclManagement($config, $ui)
   {
@@ -81,6 +82,8 @@ class aclManagement extends plugin
                     "edit_role" =>"^list_acl_role_edit",
                     "copy"      =>"^copy",
                     "cut"       =>"^cut",
+                    "copy_multiple"=> "^multiple_copy_objects",
+                    "cut_multiple" => "^multiple_cut_objects",
                     "editPaste" =>"^editPaste",
                     "addrole"   =>"^new_acl_role");
 
@@ -113,12 +116,10 @@ class aclManagement extends plugin
       Copy & Paste Handling  ...
      ********************/
 
-    /* Only perform copy&paste requests if it is enabled
-     */
-    if($this->CopyPasteHandler){
-      if($str = $this->copyPasteHandling($s_action,$s_entry)){
-        return $str;
-      }
+    /* Display the copy & paste dialog, if it is currently open */
+    $ret = $this->copyPasteHandling_from_queue($s_action,$s_entry);
+    if($ret){
+      return($ret);
     }
 
 
@@ -425,7 +426,7 @@ class aclManagement extends plugin
 
     /* Add departments if subsearch is disabled */
     if(!$this->DivListACL->SubSearch){
-      $this->DivListACL->AddDepartments($this->DivListACL->selectedBase,3);
+      $this->DivListACL->AddDepartments($this->DivListACL->selectedBase,3,1);
     }
     $this->reload();
     $this->DivListACL->setEntries($this->list);
@@ -514,61 +515,85 @@ class aclManagement extends plugin
   }
 
 
-  /* Perform copy & paste requests
-     If copy&paste is in progress this returns a dialog to fix required attributes
-   */
-  function copyPasteHandling($s_action,$s_entry)
+  function copyPasteHandling_from_queue($s_action,$s_entry)
   {
-    /* Paste copied/cutted object in here
-     */
-    $ui = get_userinfo();
-    if(($s_action == "editPaste") || ($this->CopyPasteHandler->stillOpen())){
-      $this->CopyPasteHandler->save_object();
-      $this->CopyPasteHandler->SetVar("base",$this->DivListGroup->selectedBase);
-      if($str = $this->CopyPasteHandler->execute()){
-        return( $str);
-      };
-      /* Ensure that the new object is shown in the list now */
-      $this->reload();
+    /* Check if Copy & Paste is disabled */
+    if(!is_object($this->CopyPasteHandler)){
+      return("");
     }
 
+    /* Add a single entry to queue */
+    if($s_action == "cut" || $s_action == "copy"){
 
-    /* Copy current object to CopyHandler
-     */
-    if($s_action == "copy"){
-
-      $dn  = $this->list[trim($s_entry)]['dn'];
-      $acl_all  = $ui->has_complete_category_acls($this->DivListACL->selectedBase,"acl") ;
-      if(preg_match("/(c.*w|w.*c)/",$acl_all)){
-
-        $this->CopyPasteHandler->Clear();
-        $obj    = new acl($this->config, NULL, $dn, TRUE);
-        $obj->set_acl_base($dn);
-        $objNew = new acl($this->config, NULL,"new", TRUE);
-        $objNew->set_acl_base($dn);
-
-        $this->CopyPasteHandler->Copy($obj,$objNew);
-      }else{
-        print_red("You are not allowed to copy this entry.");
+      /* Cleanup object queue */
+      $this->CopyPasteHandler->cleanup_queue();
+      $dn = $this->list[$s_entry]['dn'];
+  
+      if(isset($this->list[$s_entry]['objectClass']) && in_array("gosaRole",$this->list[$s_entry]['objectClass'])){
+        $this->CopyPasteHandler->add_to_queue($dn,$s_action,"aclroletab","ACLROLETAB","aclroles");
       }
     }
 
-    /* Copy current object to CopyHandler
-     */
-    if($s_action == "cut"){
+    /* Add entries to queue */
+    if($s_action == "copy_multiple" || $s_action == "cut_multiple"){
 
-      $dn = $this->list[trim($s_entry)]['dn'];
-      $acl_all  = $ui->has_complete_category_acls($this->DivListACL->selectedBase,"acl") ;
-      if(preg_match("/(c.*w|w.*c)/",$acl_all)){
+      /* Cleanup object queue */
+      $this->CopyPasteHandler->cleanup_queue();
 
-        $this->CopyPasteHandler->Clear();
-        $obj= new acl($this->config,NULL, $dn, TRUE);
-        $obj->set_acl_base($dn);
-        $this->CopyPasteHandler->Cut($obj);
-      }else{
-        print_red("You are not allowed to cut this entry.");
+      /* Add new entries to CP queue */
+      foreach($this->list_get_selected_items() as $id){
+        $dn = $this->list[$id]['dn'];
+
+        if(isset($this->list[$id]['objectClass']) && in_array("gosaRole",$this->list[$id]['objectClass'])){
+
+          if($s_action == "copy_multiple"){
+            $this->CopyPasteHandler->add_to_queue($dn,"copy","aclroletab","ACLROLETAB","aclroles");
+          }
+          if($s_action == "cut_multiple"){
+            $this->CopyPasteHandler->add_to_queue($dn,"cut","aclroletab","ACLROLETAB","aclroles");
+          }
+        }
       }
     }
+
+    /* Start pasting entries */
+    if($s_action == "editPaste"){
+      $this->start_pasting_copied_objects = TRUE;
+    }
+    /* Return C&P dialog */
+    if($this->start_pasting_copied_objects && $this->CopyPasteHandler->entries_queued()){
+
+      /* Load entry from queue and set base */
+      $this->CopyPasteHandler->load_entry_from_queue();
+      $this->CopyPasteHandler->SetVar("base",$this->DivListACL->selectedBase);
+
+      /* Get dialog */
+      $data = $this->CopyPasteHandler->execute();
+
+      /* Return dialog data */
+      if(!empty($data)){
+        return($data);
+      }
+    }
+
+    /* Automatically disable status for pasting */
+    if(!$this->CopyPasteHandler->entries_queued()){
+      $this->start_pasting_copied_objects = FALSE;
+    }
+    return("");
+  }
+
+
+  function list_get_selected_items()
+  {
+    $ids = array();
+    foreach($_POST as $name => $value){
+      if(preg_match("/^item_selected_[0-9]*$/",$name)){
+        $id   = preg_replace("/^item_selected_/","",$name);
+        $ids[$id] = $id;
+      }
+    }
+    return($ids);
   }
 
 

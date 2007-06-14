@@ -44,7 +44,12 @@ class divListACL extends MultiSelectWindow
     /* Dynamic action col */
     $this->action_col_size = 120;
 
+    /* Toggle all selected / deselected */
+    $chk = "<input type='checkbox' id='select_all' name='select_all'
+      onClick='toggle_all_(\"^item_selected_[0-9]*$\",\"select_all\");' >";
+
     /* set Page header */
+    $this->AddHeader(array("string"=> $chk,          "attach"=>"style='width:20px;'"));
     $this->AddHeader(array("string"=>"&nbsp;",          "attach"=>"style='width:20px;'"));
     $this->AddHeader(array("string"=>_("Summary")));
     $this->AddHeader(array("string"=>_("Actions"),      "attach" => "style='width:".$this->action_col_size."px;border-right:0px;text-align:right;'"));
@@ -151,6 +156,16 @@ class divListACL extends MultiSelectWindow
       title='"._("Submit department")."' name='submit_department' alt='".  _("Submit")."'>&nbsp;".
       "</div>";
 
+        /* Add multiple copy & cut icons */
+    if(is_object($this->parent->CopyPasteHandler)){
+      $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/editcopy.png'
+        title='"._("Copy selected objects")."' alt='"._("Copy objects")."' name='multiple_copy_objects'>&nbsp;";
+      $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/editcut.png'
+        title='"._("cut selected objects")."' alt='"._("Cut objects")."' name='multiple_cut_objects'>&nbsp;";
+      $listhead .= "</div>";
+    }
+
+
     $this->SetListHeader($listhead);
   }
 
@@ -223,10 +238,17 @@ class divListACL extends MultiSelectWindow
         }
       }
 
+      if(in_array("gosaRole",$acl_entry['objectClass'])){
+        $field0 = array("string" => "<input type='checkbox' id='item_selected_".$key."' name='item_selected_".$key."'>" ,
+            "attach" => "style='width:20px;'");
+      }else{
+        $field0 = array("string" => "", "attach" => "style='width:20px;'");
+      }
+  
       $field1 = array("string" => $list_left_icon, "attach"=> "style='text-align:center;width:20px;'");
       $field2 = array("string" => sprintf($editlink,$key,$cn)."&nbsp;","attach" => "");
       $field3 = array("string" => preg_replace("/%KEY%/",$key,$action), "attach"=> "style='text-align:right;width:".$this->action_col_size."px;border-right:0px;'");
-      $this->AddElement(array($field1,$field2,$field3));
+      $this->AddElement(array($field0,$field1,$field2,$field3));
     }
   }
 
