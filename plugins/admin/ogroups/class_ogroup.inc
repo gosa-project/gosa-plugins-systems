@@ -408,9 +408,16 @@ class ogroup extends plugin
     foreach($p_f as $post_name => $data){
 
       if($ogfilter[$post_name] == "checked"){
+
+        if($ogfilter['subtrees']){
+          $base =  $ogfilter['dselect'];
+        }else{
+          $base =  $data['DN'].$ogfilter['dselect'];
+        }
+    
         $filter = "(&(objectClass=".$data['CLASS'].")(|(uid=$regex)(cn=$regex)(ou=$regex)))";
-        $res    = get_list($filter, $data['ACL']  , $data['DN'].$ogfilter['dselect'], 
-                    array("description", "objectClass", "sn", "givenName", "uid","ou","cn"));
+        $res    = get_list($filter, $data['ACL']  , $base, 
+                    array("description", "objectClass", "sn", "givenName", "uid","ou","cn"),$Get_list_flags);
 
         /* fetch results and append them to the list */
         foreach($res as $attrs){
