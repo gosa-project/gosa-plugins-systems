@@ -44,7 +44,7 @@
 				  	<td><LABEL for="base">{t}Base{/t}{$must}</LABEL></td>
 				  	<td>
 	{render acl=$baseACL}
-		<select size="1" id="base" name="base" title="{t}Choose subtree to place application in{/t}"
+		<select size="1" id="base" name="base" title="{t}Choose subtree to place application in{/t}">
 			{html_options options=$bases selected=$base_select}
 		</select>
 	{/render}
