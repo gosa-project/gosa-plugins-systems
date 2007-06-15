@@ -981,9 +981,49 @@ class printgeneric extends plugin
     }
     return(TRUE);
   }
+
+
+   /* Display generic part for server copy & paste */
+  function getCopyDialog()
+  {
+    $vars = array("cn");
+    $smarty = get_smarty();
+    $smarty->assign("cn" ,$this->cn);
+    $smarty->assign("object","printer");
+    $str = $smarty->fetch(get_template_path("paste_generic.tpl",TRUE));
+    $ret = array();
+    $ret['string'] = $str;
+    $ret['status'] = "";
+    return($ret);
+  }
+
+
+  function saveCopyDialog()
+  {
+    if(isset($_POST['cn'])){
+      $this->cn = $_POST['cn'];
+    }
+  }
+
+  function PrepareForCopyPaste($source)
+  {
+    plugin::PrepareForCopyPaste($source);
+    if(isset($source['macAddress'][0])){
+      $this->netConfigDNS->macAddress = $source['macAddress'][0];
+    }
+    if(isset($source['ipHostNumber'][0])){
+      $this->netConfigDNS->ipHostNumber = $source['ipHostNumber'][0];
+    }
+
+    $source_o = new printgeneric($this->config,$source['dn'],NULL,$this->parent);
+    foreach($this->attributes as $attr){
+      $this->$attr = $source_o->$attr;
+    }
+    $this->member = $source_o -> member;
+
+    $this->gotoPrinterPPD = "";
+  }
 }
-
-
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
