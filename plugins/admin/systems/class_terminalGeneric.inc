@@ -471,9 +471,10 @@ class termgeneric extends plugin
 
     /* Strip out 'default' values */
     foreach (array("gotoTerminalPath", "gotoSwapServer", "gotoSyslogServer") as $val){
-
-      if ($this->attrs[$val] == "default"){
-        $this->attrs[$val]= array();
+      if(isset($this->attrs[$val])){
+        if ($this->attrs[$val] == "default"){
+          $this->attrs[$val]= array();
+        }
       }
     }
 
