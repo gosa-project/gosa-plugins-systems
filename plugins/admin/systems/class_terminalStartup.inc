@@ -349,7 +349,7 @@ class termstartup extends plugin
         }
       }
     }
-
+    
     /* Add semi automatic values */
     // FIXME: LDAP Server may not be set here...
     $this->gotoKernelParameters= "root=/dev/nfs nfsroot=".
@@ -447,6 +447,19 @@ class termstartup extends plugin
     }
     return($a_return);
   }
+
+
+  function PrepareForCopyPaste($source)
+  {
+    plugin::PrepareForCopyPaste($source);
+
+    $source_o = new termstartup ($this->config, $source['dn']);
+
+    foreach(array("gotoModules", "gotoKernelParameters","gotoShares","customParameters","bootmode","gotoTerminalPath","gotoShares","goLdapServerList","gotoBootKernel","gotoLdapServer","gotoBootKernels") as $attr){
+      $this->$attr = $source_o->$attr;
+    }
+  }
+
 
   /* Return plugin informations for acl handling */
   function plInfo()

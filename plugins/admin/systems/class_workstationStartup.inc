@@ -1163,34 +1163,13 @@ class workstartup extends plugin
   {
     plugin::PrepareForCopyPaste($source);    
 
-
-    /* Get arrays */
-    foreach (array("gotoModules", "gotoAutoFs", "gotoFilesystem","gotoKernelParameters") as $val){  
-      $this->$val = array();
-      if (isset($source["$val"]["count"])){
-        for ($i= 0; $i<$source["count"]; $i++){
-          if (isset($source["$val"][$i])){
-            array_push($this->$val, $source["$val"][$i]);
-          }
-        }
-      }
-      sort ($this->$val);
-      $this->$val= array_unique($this->$val);
-    }
-
-        /* Prepare Shares */
-    if((isset($source['gotoShare']))&&(is_array($source['gotoShare']))){
-      unset($source['gotoShare']['count']);
-      foreach($source['gotoShare'] as $share){
-        $tmp = $tmp2 = array();
-        $tmp = split("\|",$share);
-        $tmp2['server']      =$tmp[0];
-        $tmp2['name']        =$tmp[1];
-        $tmp2['mountPoint']  =$tmp[2];
-        $this->gotoShares[$tmp[1]."|".$tmp[0]]=$tmp2;
-      }
+    $source_o = new workstartup ($this->config, $source['dn']);
+    
+    foreach(array("gotoModules", "gotoAutoFs", "gotoFilesystem","gotoKernelParameters","gotoShares","customParameters") as $attr){
+      $this->$attr = $source_o->$attr;
     }
   }
+
 
   /* Return plugin informations for acl handling */ 
   function plInfo()
