@@ -529,6 +529,57 @@ class workgeneric extends plugin
   }
 
 
+  /* Display generic part for server copy & paste */
+  function getCopyDialog()
+  {
+    $vars = array("cn");
+    $smarty = get_smarty();
+    $smarty->assign("cn" ,$this->cn);
+    $smarty->assign("object","workstation");
+    $str = $smarty->fetch(get_template_path("paste_generic.tpl",TRUE));
+    $ret = array();
+    $ret['string'] = $str;
+    $ret['status'] = "";
+    return($ret);
+  }
+
+
+  function saveCopyDialog()
+  {
+    if(isset($_POST['cn'])){
+      $this->cn = $_POST['cn'];
+    }
+  }
+
+
+  function PrepareForCopyPaste($source)
+  {
+    plugin::PrepareForCopyPaste($source);
+    if(isset($source['macAddress'][0])){
+      $this->netConfigDNS->macAddress = $source['macAddress'][0];
+    }
+    if(isset($source['ipHostNumber'][0])){
+      $this->netConfigDNS->ipHostNumber = $source['ipHostNumber'][0];
+    }
+
+    /* Create used ntp server array */
+    $this->gotoNtpServer= array();
+    if(isset($source['gotoNtpServer'])){
+      $this->inheritTimeServer = false;
+      unset($source['gotoNtpServer']['count']);
+      foreach($source['gotoNtpServer'] as $server){
+        $this->gotoNtpServer[$server] = $server;
+      }
+    }
+
+    /* Set inherit checkbox state */
+    if((in_array("default",$this->gotoNtpServer)) || (count($this->gotoNtpServer)==0)){
+      $this->inheritTimeServer = true;
+      $this->gotoNtpServer=array();
+    }
+  }
+
+
   /* Return plugin informations for acl handling 
       #FIXME FAIscript seams to ununsed within this class... */ 
   function plInfo()
