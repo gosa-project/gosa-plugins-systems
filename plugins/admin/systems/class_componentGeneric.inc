@@ -280,7 +280,39 @@ class componentGeneric extends plugin
           ));
   }
 
+  /* Display generic part for server copy & paste */
+  function getCopyDialog()
+  {
+    $vars = array("cn");
+    $smarty = get_smarty();
+    $smarty->assign("cn" ,$this->cn);
+    $smarty->assign("object","component");
+    $str = $smarty->fetch(get_template_path("paste_generic.tpl",TRUE));
+    $ret = array();
+    $ret['string'] = $str;
+    $ret['status'] = "";
+    return($ret);
+  }
 
+
+  function saveCopyDialog()
+  {
+    if(isset($_POST['cn'])){
+      $this->cn = $_POST['cn'];
+    }
+  }
+
+
+  function PrepareForCopyPaste($source)
+  {
+    plugin::PrepareForCopyPaste($source);
+    if(isset($source['macAddress'][0])){
+      $this->netConfigDNS->macAddress = $source['macAddress'][0];
+    }
+    if(isset($source['ipHostNumber'][0])){
+      $this->netConfigDNS->ipHostNumber = $source['ipHostNumber'][0];
+    }
+  }
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

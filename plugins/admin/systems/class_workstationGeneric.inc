@@ -343,7 +343,7 @@ class workgeneric extends plugin
       show_ldap_error($ldap->get_error(), sprintf(_("Removing of system workstation/generic with dn '%s' failed."),$this->dn));
 
       /* Optionally execute a command after we're done */
-      $this->handle_post_events("remove", array("macAddress" => $this->netConfigDNS->macAddress,"ipHostNumber" => $this->netConfigDNS-ipHostNumber));
+      $this->handle_post_events("remove", array("macAddress" => $this->netConfigDNS->macAddress,"ipHostNumber" => $this->netConfigDNS->ipHostNumber));
 
       /* Delete references to object groups */
       $ldap->cd ($this->config->current['BASE']);

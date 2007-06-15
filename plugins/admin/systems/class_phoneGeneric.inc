@@ -362,7 +362,7 @@ class phoneGeneric extends plugin
    
    
     /* only to define which attrs to save*/ 
-    $mode = $this->attrs['selected_categorie'];
+    $mode = $this->selected_categorie;
 
     /* Remove all unwanted attrs */
     foreach($this->attributes as $att){
@@ -427,6 +427,44 @@ class phoneGeneric extends plugin
     $this->netConfigDNS->cn = $this->cn;    
     $this->netConfigDNS->save($this->dn);
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of system phone/generic with dn '%s' failed."),$this->dn));
+  }
+
+
+  /* Display generic part for server copy & paste */
+  function getCopyDialog()
+  {
+    $vars = array("cn");
+    $smarty = get_smarty();
+    $smarty->assign("cn" ,$this->cn);
+    $smarty->assign("object","phone");
+    $str = $smarty->fetch(get_template_path("paste_generic.tpl",TRUE));
+    $ret = array();
+    $ret['string'] = $str;
+    $ret['status'] = "";
+    return($ret);
+  }
+
+
+  function saveCopyDialog()
+  {
+    if(isset($_POST['cn'])){
+      $this->cn = $_POST['cn'];
+    }
+  }
+
+
+  function PrepareForCopyPaste($source)
+  {
+    plugin::PrepareForCopyPaste($source);
+    if(isset($source['macAddress'][0])){
+      $this->netConfigDNS->macAddress = $source['macAddress'][0];
+    }
+    if(isset($source['ipHostNumber'][0])){
+      $this->netConfigDNS->ipHostNumber = $source['ipHostNumber'][0];
+    }
+
+    $source_o = new phonegeneric($this->config, $source['dn']);
+    $this->selected_categorie = $source_o->selected_categorie;
   }
 
 
