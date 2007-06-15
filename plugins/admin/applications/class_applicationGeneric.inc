@@ -348,7 +348,7 @@ class application extends plugin
             print_red(_("Could not convert image to png, possilby the image magick extension is missing."));
           }
 
-          if(imagick_writeimage($handle,$_FILES['picture_file']['tmp_name'])){
+          if(!imagick_writeimage($handle,$_FILES['picture_file']['tmp_name'])){
             print_red(sprintf(_("Could not save uploaded image to %s."),$_FILES['picture_file']['tmp_name']));
           }
 
