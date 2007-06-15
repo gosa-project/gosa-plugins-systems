@@ -690,7 +690,7 @@ class goMailServer extends goService{
     plugin::PrepareForCopyPaste($source);
 
     $source_o = new goMailServer($this->config,$source['dn']);
-    foreach(array("postfixMyNetworks","postfixTransportTable","postfixSenderRestrictions","postfixRecipientRestrictions","postfixMyDestinations") as $attr){
+    foreach(array("postfixMyDomain","postfixMyhostname","postfixMyNetworks","postfixTransportTable","postfixSenderRestrictions","postfixRecipientRestrictions","postfixMyDestinations") as $attr){
       $this->$attr = $source_o->$attr;
     }
   }

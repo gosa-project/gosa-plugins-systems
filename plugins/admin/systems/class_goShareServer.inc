@@ -362,6 +362,24 @@ class goShareServer extends goService{
   }
 
 
+  function PrepareForCopyPaste($source)
+  {
+    plugin::PrepareForCopyPaste($source);
+
+    $tmp =array();
+    if(isset($source['goExportEntry'])){
+      if(isset($source['goExportEntry']['count'])){
+        for($i= 0; $i<$source['goExportEntry']['count']; $i++){
+          $entry= $source['goExportEntry'][$i];
+          $tmp[preg_replace('/\|.*$/', '', $entry)]= $entry;
+        }
+      }
+    }
+    $this->goExportEntryList = $tmp;
+    $this->goExportEntry = $tmp;
+  }
+
+
   /* Return plugin informations for acl handling */
   function plInfo()
   {

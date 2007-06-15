@@ -1161,8 +1161,12 @@ class workstartup extends plugin
 
   function PrepareForCopyPaste($source)
   {
-      /* Get arrays */
-    foreach (array("gotoModules", "gotoAutoFs", "gotoFilesystem") as $val){
+    plugin::PrepareForCopyPaste($source);    
+
+
+    /* Get arrays */
+    foreach (array("gotoModules", "gotoAutoFs", "gotoFilesystem","gotoKernelParameters") as $val){  
+      $this->$val = array();
       if (isset($source["$val"]["count"])){
         for ($i= 0; $i<$source["count"]; $i++){
           if (isset($source["$val"][$i])){
@@ -1174,6 +1178,18 @@ class workstartup extends plugin
       $this->$val= array_unique($this->$val);
     }
 
+        /* Prepare Shares */
+    if((isset($source['gotoShare']))&&(is_array($source['gotoShare']))){
+      unset($source['gotoShare']['count']);
+      foreach($source['gotoShare'] as $share){
+        $tmp = $tmp2 = array();
+        $tmp = split("\|",$share);
+        $tmp2['server']      =$tmp[0];
+        $tmp2['name']        =$tmp[1];
+        $tmp2['mountPoint']  =$tmp[2];
+        $this->gotoShares[$tmp[1]."|".$tmp[0]]=$tmp2;
+      }
+    }
   }
 
   /* Return plugin informations for acl handling */ 
