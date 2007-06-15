@@ -526,6 +526,14 @@ class application extends plugin
   }
 
 
+  function PrepareForCopyPaste($source)
+  {
+    plugin::PrepareForCopyPaste($source);
+    $source_o = new application($this->config,$source['dn']);
+    $this->gosaApplicationIcon = $source_o->gosaApplicationIcon;     
+  }
+
+
   /* Return plugin informations for acl handling
       #FIXME FAIscript seams to ununsed within this class... */
   function plInfo()
