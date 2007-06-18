@@ -1112,6 +1112,13 @@ class LDAP{
   */
   function import_single_entry($str_attr,$modify,$delete)
   {
+    global $config;
+
+    if(!$config){
+      trigger_error("Can't import ldif, can't read config object.");
+    }
+  
+
     if($this->reconnect) $this->connect();
 
     $ret = false;
@@ -1189,7 +1196,8 @@ class LDAP{
      
       /* Create missing trees */
       $this->cd ($this->basedn);
-      $this->create_missing_trees($data['dn']);
+      $this->cd($config->current['BASE']);
+      $this->create_missing_trees(preg_replace("/^[^,]+,/","",$data['dn']));
       $this->cd($data['dn']);
 
       $dn = $data['dn'];
