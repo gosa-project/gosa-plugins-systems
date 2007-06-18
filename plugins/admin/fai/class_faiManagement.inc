@@ -532,7 +532,7 @@ class faiManagement extends plugin
          */
         $ldap->cat($mimesrc,array("dn")) ;
         if($ldap->count()){
-          $ldap->cd ($appdst);
+          $ldap->cd ($mimedst);
           $ldap->recursive_remove();
           $ldap->cd ($this->config->current['BASE']);
           $ldap->copy_FAI_resource_recursive($mimesrc,$mimedst,$NewReleaseName,$type,true);
