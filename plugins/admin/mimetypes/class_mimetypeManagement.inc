@@ -499,7 +499,9 @@ class mimetypeManagement extends plugin
     if($SubSearch){
       $Flags    |= GL_SUBSEARCH;  
     }else{
-      $use_base ="ou=mime,".$use_base;
+      if(!$this->enableReleaseManagement){
+        $use_base ="ou=mime,".$use_base;
+      }
     }
   
     /* Get results and create index */ 
