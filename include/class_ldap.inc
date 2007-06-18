@@ -772,6 +772,7 @@ class LDAP{
         }
         $this->cd($cdn);
         $this->add($na);
+    
         show_ldap_error($this->get_error(), sprintf(_("Creating subtree '%s' failed."),$cdn));
         if (!preg_match('/success/i', $this->error)){
           return FALSE;
@@ -1253,7 +1254,15 @@ class LDAP{
   function get_objectclasses()
   {
     $objectclasses = array();
-  	
+    global $config;
+
+    /* Only read schema if it is allowed */
+    if(isset($config) && preg_match("/config/i",get_class($config))){
+      if(!isset($config->data['MAIN']['SCHEMA_CHECK']) || !preg_match("/true/i",$config->data['MAIN']['SCHEMA_CHECK'])){
+        return($objectclasses);
+      } 
+    }
+	
 	  # Get base to look for schema 
 	  $sr = @ldap_read ($this->cid, NULL, "objectClass=*", array("subschemaSubentry"));
     if(!$sr){
