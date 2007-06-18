@@ -503,7 +503,7 @@ class applicationManagement extends plugin
    
     $res= get_list($Filter, "application", $use_base, array("cn","description","dn","objectClass"), $Flags);
     foreach ($res as $val){
-      $tmp[strtolower($val['cn'][0]).$val['cn'][0]]=$val;
+      $tmp[strtolower($val['cn'][0]).$val['cn'][0].$val['dn']]=$val;
     }
 
     ksort($tmp);
