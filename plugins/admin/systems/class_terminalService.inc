@@ -494,8 +494,6 @@ class termservice extends plugin
             "gotoLpdServer"           => _("Spool server"),
             "gotoScannerEnable"       => _("Scanner enabled"),
             "gotoScannerModel"        => _("Scanner model"),
-            "gotoScannerClients"      => _("Haeh ? "),
-            "gotoScannerBackend"      => _("..."),
             "gotoXKbModel"            => _("Keyboard model"),
             "gotoXKbLayout"           => _("Keyboard layout"),
             "gotoXKbVariant"          => _("Keyboard variant"),
