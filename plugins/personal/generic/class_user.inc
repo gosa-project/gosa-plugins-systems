@@ -1403,7 +1403,7 @@ class user extends plugin
         "gouvernmentOrganizationalUnitDescription"  =>  _("Unit description"),
         "gouvernmentOrganizationalUnitSubjectArea"  =>  _("Subject area"),
         "functionalTitle"                           =>  _("Functional title"),
-        "certificateSerialNumber"                   =>  _(""),
+        "certificateSerialNumber"                   =>  _("Certificate serial number"),
         "publicVisible"                             =>  _("Public visible"),
         "street"                                    =>  _("Street"),
         "role"                                      =>  _("Role"),
