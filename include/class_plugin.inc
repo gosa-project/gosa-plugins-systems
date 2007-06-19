@@ -1093,7 +1093,7 @@ class plugin
       $server         = $tmp['SNAPSHOT_SERVER'];
       $user           = $tmp['SNAPSHOT_USER'];
       $password       = $tmp['SNAPSHOT_PASSWORD'];
-      $snapldapbase   = $tmp['SNAPSHOT_LDAP_BASE'];
+      $snapldapbase   = $tmp['SNAPSHOT_BASE'];
 
       $ldap_to        = new LDAP($user,$password, $server);
       $ldap_to -> cd($snapldapbase);
@@ -1179,7 +1179,7 @@ class plugin
 
           /* check if all required vars are available to create a new ldap connection */
           $missing = "";
-          foreach(array("SNAPSHOT_SERVER","SNAPSHOT_USER","SNAPSHOT_PASSWORD","SNAPSHOT_LDAP_BASE") as $var){
+          foreach(array("SNAPSHOT_SERVER","SNAPSHOT_USER","SNAPSHOT_PASSWORD","SNAPSHOT_BASE") as $var){
             if(!isset($tmp[$var])){
               $missing .= $var." ";
               print_red(sprintf(_("The snapshot functionality is enabled, but the required variable(s) '%s' is not configured in your gosa.conf."),$missing));
@@ -1211,7 +1211,7 @@ class plugin
       $server       = $tmp['SNAPSHOT_SERVER'];
       $user         = $tmp['SNAPSHOT_USER'];
       $password     = $tmp['SNAPSHOT_PASSWORD'];
-      $snapldapbase = $tmp['SNAPSHOT_LDAP_BASE'];
+      $snapldapbase = $tmp['SNAPSHOT_BASE'];
       $ldap_to      = new LDAP($user,$password, $server);
       $ldap_to -> cd ($snapldapbase);
       show_ldap_error($ldap->get_error(), sprintf(_("Method get available snapshots with dn '%s' failed."),$this->dn));
@@ -1267,7 +1267,7 @@ class plugin
       $server       = $tmp['SNAPSHOT_SERVER'];
       $user         = $tmp['SNAPSHOT_USER'];
       $password     = $tmp['SNAPSHOT_PASSWORD'];
-      $snapldapbase = $tmp['SNAPSHOT_LDAP_BASE'];
+      $snapldapbase = $tmp['SNAPSHOT_BASE'];
       $ldap_to      = new LDAP($user,$password, $server);
       $ldap_to->cd ($snapldapbase);
       show_ldap_error($ldap->get_error(), sprintf(_("Method get deleted snapshots with dn '%s' failed."),$this->dn));
@@ -1331,7 +1331,7 @@ class plugin
       $server       = $tmp['SNAPSHOT_SERVER'];
       $user         = $tmp['SNAPSHOT_USER'];
       $password     = $tmp['SNAPSHOT_PASSWORD'];
-      $snapldapbase = $tmp['SNAPSHOT_LDAP_BASE'];
+      $snapldapbase = $tmp['SNAPSHOT_BASE'];
       $ldap_to      = new LDAP($user,$password, $server);
       $ldap_to->cd ($snapldapbase);
       show_ldap_error($ldap->get_error(), sprintf(_("Restore snapshot with dn '%s' failed."),$snapldapbase));
