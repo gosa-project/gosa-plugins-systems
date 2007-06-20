@@ -151,47 +151,6 @@ class scalixAccount extends plugin
       $this->dialog= FALSE;
     }
 
-    /* Add email addresses */
-    if (isset($_POST['add_email'])){
-
-      /* Check write access */
-      if(!$this->acl_is_writeable("scalixEmailAddress")){
-        print_red(_("You are not allowed to modify alternate addresses"));
-      }else{
-
-        /* Check if given value is not empty */
-        if ($_POST['email_address'] != ""){
-          $valid= FALSE;
-
-          /* Valid mail address */
-          if( ($this->is_template && !is_email($_POST['email_address'], TRUE)) || 
-              (!$this->is_template && !is_email($_POST['email_address'])) ){
-            print_red (_("You're trying to add an invalid email address to the list of alternate addresses."));
-          }else{
-            $valid = TRUE;
-          }
-
-          /* Mail address already in use ? */
-          if ($valid && ($user= $this->addEmail ($_POST['email_address'])) != ""){
-            $ui= get_userinfo();
-            if ($user != $ui->username){
-              print_red (_("The address you're trying to add is already used by user")." '$user'.");
-            }
-          }
-        }
-      }
-    }
-
-    /* Delete email addresses */
-    if (isset($_POST['delete_email']) && isset ($_POST['emails_list'])){
-      if(!$this->acl_is_writeable("scalixEmailAddress")){
-        print_red(_("You are not allowed to modify alternate addresses"));
-      }else{
-        if (count($_POST['emails_list'])){
-          $this->delEmail ($_POST['emails_list']);
-        }
-      }
-    }
 
     $smarty->assign("mailboxClasses", $mailboxClasses);
     $smarty->assign("serverLanguages", $serverLanguages);
@@ -465,7 +424,91 @@ class scalixAccount extends plugin
             ));
   }
 
+
+  function saveCopyDialog()
+  {
+    if (isset($_POST['scalixTab'])){
+
+      /* Add email addresses */
+      if (isset($_POST['add_email'])){
+
+        /* Check write access */
+#        if(!$this->acl_is_writeable("scalixEmailAddress")){
+#          print_red(_("You are not allowed to modify alternate addresses"));
+#        }else{
+
+          /* Check if given value is not empty */
+          if ($_POST['email_address'] != ""){
+            $valid= FALSE;
+
+            /* Valid mail address */
+            if( ($this->is_template && !is_email($_POST['email_address'], TRUE)) || 
+                (!$this->is_template && !is_email($_POST['email_address'])) ){
+              print_red (_("You're trying to add an invalid email address to the list of alternate addresses."));
+            }else{
+              $valid = TRUE;
+            }
+
+            /* Mail address already in use ? */
+            if ($valid && ($user= $this->addEmail ($_POST['email_address'])) != ""){
+              $ui= get_userinfo();
+              if ($user != $ui->username){
+                print_red (_("The address you're trying to add is already used by user")." '$user'.");
+              }
+            }
+#          }
+        }
+      }
+  
+      /* Delete email addresses */
+      if (isset($_POST['delete_email']) && isset ($_POST['emails_list'])){
+#        if(!$this->acl_is_writeable("scalixEmailAddress")){
+#          print_red(_("You are not allowed to modify alternate addresses"));
+#        }else{
+          if (count($_POST['emails_list'])){
+            $this->delEmail ($_POST['emails_list']);
+#          }
+        }
+      }
+    }
+  }
+
+
+  function PrepareForCopyPaste($source)
+  {
+    plugin::PrepareForCopyPaste($source);
+    foreach ($this->fakeBooleanAttributes as $val){
+      if (isset($source["$val"][0])&&$source["$val"][0]=="TRUE"){
+        $this->$val = TRUE;
+      } else {
+        $this->$val = FALSE;
+      }
+    }
+
+    /* Load attributes containing arrays */
+    foreach (array("scalixEmailAddress") as $val){
+      if (isset($source["$val"]["count"])){
+        for ($i= 0; $i<$source["$val"]["count"]; $i++){
+          array_push($this->$val, $source["$val"][$i]);
+        }
+      }
+    }
+  }
+
+
+  /* Create the posix dialog part for copy & paste */
+  function getCopyDialog()
+  {
+    $smarty = get_smarty(); 
+    $smarty->assign("scalixEmailAddress",$this->scalixEmailAddress);
+    $str = $smarty->fetch(get_template_path("paste_generic.tpl",TRUE,dirname(__FILE__)));    
+    $ret = array();
+    $ret['string'] = $str;
+    $ret['status'] = "";
+    return($ret);
+ 
+  }
 }
 
-// vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
+// vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:rulere
 ?>

@@ -187,7 +187,7 @@ class divListGroup extends MultiSelectWindow
         title='"._("Remove selected groups")."' alt='"._("Remove groups")."' name='remove_multiple_groups'>&nbsp;";
   
     /* Add multiple copy & cut icons */
-    if(is_object($this->parent->CopyPasteHandler)){
+    if(is_object($this->parent->CopyPasteHandler) && preg_match("/(c.*w|w.*c)/",$acl_all)){
       $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/editcopy.png'
         title='"._("Copy selected group")."' alt='"._("Copy groups")."' name='multiple_copy_groups'>&nbsp;";
       $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/editcut.png'
