@@ -48,10 +48,10 @@ class Step_Config2 extends setup_step
                                   "samba_rid_active" => FALSE); 
 
   var $sambaDomain_found = FALSE;
+  var $use_netatalk = FALSE;
 
-  var $attributes = array("governmentmode","sambaidmapping","cyrusunixstyle","mail");
+  var $attributes = array("governmentmode","sambaidmapping","cyrusunixstyle","mail","use_netatalk");
   var $called = FALSE;
-
 
   function Step_Config2()
   {
@@ -105,7 +105,12 @@ class Step_Config2 extends setup_step
         $this->samba_settings['samba_sid_active'] = TRUE;
         $this->samba_settings['samba_rid_active'] = TRUE;
       }
-   
+  
+      /* Check if we can enable netatalk plugin */
+      $tmp = $ldap->get_objectclasses();
+      if(is_array($tmp) && isset($tmp['apple-user'])) {
+        $this->use_netatalk = TRUE;
+      }
       $this->called = TRUE;
     }
 
