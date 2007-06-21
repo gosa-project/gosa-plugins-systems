@@ -840,9 +840,9 @@ class appgroup extends plugin
     /* Show main page */
     if ($this->dialog){
       $smarty->assign("table", $this->table);
-      $display.= $smarty->fetch (get_template_path('application_options.tpl', TRUE));
+      $display.= $smarty->fetch (get_template_path('application_options.tpl', TRUE,dirname(__FILE__)));
     } else {
-      $display.= $smarty->fetch (get_template_path('application.tpl', TRUE));
+      $display.= $smarty->fetch (get_template_path('application.tpl', TRUE,dirname(__FILE__)));
     }
     
     return ($display);
@@ -858,8 +858,8 @@ class appgroup extends plugin
 
     $ret =array();
     foreach($res as $attrs){
-      if(preg_match("/ou=fai,/",$attrs['dn'])){
-        $bb     = preg_replace("/ou=fai,.*/","",$attrs['dn']);
+      if(preg_match("/ou=apps,/",$attrs['dn'])){
+        $bb     = preg_replace("/ou=apps,.*/","",$attrs['dn']);
         $parts  = array_reverse(split("ou=",$bb));
 
         $str ="";
@@ -980,9 +980,9 @@ class appgroup extends plugin
     $ldap->modify ($this->attrs); 
 
     if($this->initially_was_account){
-      new log("modify","group/".get_class($this),$use_dn,array_keys($this->attrs),$ldap->get_error());
+      new log("modify","group/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
     }else{
-      new log("create","group/".get_class($this),$use_dn,array_keys($this->attrs),$ldap->get_error()); 
+      new log("create","group/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error()); 
     }   
 
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of groups/applications with dn '%s' failed."),$this->dn));
