@@ -155,6 +155,7 @@ class faiScript extends plugin
       $this->dialog= new $this->subClassName($this->config,"new");
       $this->dialog->set_acl_base($this->acl_base);
       $this->dialog->set_acl_category("fai");
+      $this->dialog->parent = &$this;
       $this->is_dialog=true;
     }
 

@@ -124,6 +124,7 @@ class faiVariable extends plugin
       $this->dialog= new $this->subClassName($this->config,"new");
       $this->dialog->set_acl_base($this->acl_base_for_current_object($this->dn));
       $this->dialog->set_acl_category("fai");
+      $this->dialog->parent = &$this;
       $this->is_dialog=true;
     }
 
@@ -140,6 +141,7 @@ class faiVariable extends plugin
       $this->dialog= new $this->subClassName($this->config,$this->dn,$this->SubObjects[$var]);
       $this->dialog->set_acl_category("fai");
       $this->dialog->set_acl_base($c_dn);
+      $this->dialog->parent = &$this;
       $_SESSION['objectinfo'] = $this->SubObjects[$var]['dn'];
       $this->is_dialog=true;
     }
