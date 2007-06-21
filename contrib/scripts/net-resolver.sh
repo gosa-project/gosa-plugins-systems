@@ -17,6 +17,10 @@ done
 
 mac=""
 ip=$(LANG=C $host $1 | grep address | head -n1 | sed 's/^.*[^0-9]\([0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\).*$/\1/g')
+if [ -z "$ip" ]; then
+	echo ";"
+	exit 0
+fi
 if $fping -c1 -r3 -t500 $ip &> /dev/null; then
 	mac=$($arp -n | awk "/^$ip/ {print \$3}")
 fi
