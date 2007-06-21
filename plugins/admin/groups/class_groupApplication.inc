@@ -858,8 +858,8 @@ class appgroup extends plugin
 
     $ret =array();
     foreach($res as $attrs){
-      if(preg_match("/ou=apps,/",$attrs['dn'])){
-        $bb     = preg_replace("/ou=apps,.*/","",$attrs['dn']);
+      if(preg_match("/ou=fai,/",$attrs['dn'])){
+        $bb     = preg_replace("/ou=fai,.*/","",$attrs['dn']);
         $parts  = array_reverse(split("ou=",$bb));
 
         $str ="";
