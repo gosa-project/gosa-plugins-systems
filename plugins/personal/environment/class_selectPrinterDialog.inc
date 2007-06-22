@@ -17,6 +17,7 @@ class selectPrinterDialog extends plugin
   var $deplist              = array("/");
   var $module               = array("printer");
   var $ui                   = NULL;
+  var $subtreesearch        = FALSE;
 
   function selectPrinterDialog ($config, $dn= NULL,$alreadyused=array() )
   {
@@ -72,6 +73,12 @@ class selectPrinterDialog extends plugin
       }
     }
 
+    if(isset($_POST['subtrees'])){
+      $this->subtreesearch= TRUE;
+    } else {
+      $this->subtreesearch= FALSE;
+    }
+
     if((isset($_GET['search']))&&(!empty($_GET['search']))){
       $this->regex=$_GET['search']."*";
       $this->regex=preg_replace("/\*\*/","*",$this->regex);
@@ -84,6 +91,7 @@ class selectPrinterDialog extends plugin
     $smarty->assign("gotoPrinterKeys",array_flip($this->getPrinter()));
     $smarty->assign("apply", apply_filter());
     $smarty->assign("alphabet", generate_alphabet());
+    $smarty->assign("subtrees", $this->subtreesearch?"checked":"");
     $smarty->assign("search_image", get_template_path('images/search.png'));
     $smarty->assign("tree_image", get_template_path('images/tree.png'));
     $smarty->assign("infoimage", get_template_path('images/info.png'));
@@ -122,7 +130,12 @@ class selectPrinterDialog extends plugin
     $module = $this->module;
     $base   = $this->depselect;
     $attrs  = array("cn","description");
-    $res    = get_list($filter,$module,$base,$attrs);
+    if ($this->subtreesearch){
+      $res    = get_list($filter,$module,$base,$attrs, GL_SIZELIMIT, GL_SUBSEARCH);
+    } else {
+      $base= "ou=printers,ou=systems,".$base;
+      $res    = get_list($filter,$module,$base,$attrs, GL_SIZELIMIT);
+    }
 
     foreach($res as $printer)  {
 
