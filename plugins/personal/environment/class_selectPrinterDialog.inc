@@ -26,34 +26,34 @@ class selectPrinterDialog extends plugin
 
     /* Get all departments within this subtree */
     $base = $this->config->current['BASE'];
-    $deps= get_list("(&(|(ou=*)(description=*))(objectClass=gosaDepartment))", $this->module, $base,
-                    array("ou", "description"), GL_SIZELIMIT | GL_SUBSEARCH);
 
-    $tmp =array();
-    foreach($deps as $dep){
-      $tmp[$dep['dn']] = $dep;
+    /* Add base */
+    $tmp = array();
+    $tmp[] = array("dn"=>$this->config->current['BASE']);
+    $tmp=  array_merge($tmp,get_list("(&(|(ou=*)(description=*))(objectClass=gosaDepartment))", $this->module, $base,
+                    array("ou", "description"), GL_SIZELIMIT | GL_SUBSEARCH));
+
+    $deps = array();
+    foreach($tmp as $tm){
+      $deps[$tm['dn']] = $tm['dn'];
     }
-    $deps = $tmp;
+
 
     /* Load possible departments */
-    $this->ui= get_userinfo();
-    $department = array();
-    foreach($this->module as $module){
-
-      $d = $this->ui->get_module_departments($module);
-      foreach($d as $department){
-        $departments[$department] = $department;
-      }
-    }
+    $ui= get_userinfo();
+    $this->ui = $ui;
+    $tdeps= $ui->get_module_departments("users");
     $ids = $this->config->idepartments;
-    $this->deplist = array();
-    foreach($deps as $dep){
-      if(isset($ids[$dep['dn']]) && in_array_ics($dep['dn'], $departments)){
-        $this->deplist[$dep['dn']] =  $ids[$dep['dn']];
+    $first = "";
+    $found = FALSE;
+    $res = array();
+    foreach($ids as $dep => $name){
+      if(isset($deps[$dep]) && in_array_ics($dep, $tdeps)){
+        $res[$dep] = $ids[$dep]; //$tdeps[$dep];
       }
     }
-
-    $this->depselect = key($this->deplist);
+    $this->deplist = $res;
+    $this->depselect = key($res);
   }
 
   function execute()
