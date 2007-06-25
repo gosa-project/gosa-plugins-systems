@@ -1068,13 +1068,14 @@ function print_red()
           <div  id='e_layer2'
                 style='
                       position: absolute;
-                      background-color: #000000; 
                       left: 0px;
                       top: 0px;
                       right:0px;
                       bottom:0px; 
                       z-index:149;
-                      opacity: 0.75'>
+                      background-image: url(images/opacity_black_75.png);
+'
+>
           </div>
           <div style='margin-left:15%;margin-top:100px;".
             "background-color:white;padding:5px;border:5px solid red;width:55%;z-index:150;".
