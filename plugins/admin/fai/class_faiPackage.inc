@@ -258,7 +258,7 @@ class faiPackage extends plugin
     }
 
     /* Configuration dialog open*/
-    if((isset($_POST['Conpkg']))&&(isset($_POST['usedPackages']))&&(!empty($_POST['usedPackages'])) && $this->acl_is_writeable("FAIdebconfInfo")){
+    if((isset($_POST['Conpkg']))&&(isset($_POST['usedPackages']))&&(!empty($_POST['usedPackages'][0])) && $this->acl_is_writeable("FAIdebconfInfo")){
       $path = CONFIG_DIR."/fai/".$this->FAIdebianRelease."/debconf.d";
       $pkg_config = array();
       $pkg = $_POST['usedPackages'][0];

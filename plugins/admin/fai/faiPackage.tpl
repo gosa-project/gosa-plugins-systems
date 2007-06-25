@@ -72,6 +72,7 @@
 			<br>
 			<select id="usedPackages" name="usedPackages[]" title="{t}Choosen packages{/t}" multiple style="width:100%;height:300px;">
        			{html_options options=$usedPackages}
+				<option value="">&nbsp;</option>
       		</select>
 			<br>
 {render acl=$FAIpackageACL}
