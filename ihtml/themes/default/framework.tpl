@@ -53,4 +53,4 @@
      </table>
     </td>
   </tr>
-</table></form></body></html>
+</table>{$errors}{$focus}</form></body></html>

@@ -365,7 +365,6 @@ if (is_file("$plugin_dir/main.inc")){
 
 
 /* Print_out last ErrorMessage repeated string. */
-print_red(NULL);
 
 $smarty->assign("contents", $display);
 
@@ -378,6 +377,16 @@ if ($error_collector != ""){
 } else {
   $smarty->assign("php_errors", "");
 }
+
+/* Set focus to the error button if we've an error message */
+$focus= "";
+if (isset($_SESSION['errors']) && $_SESSION['errors'] != ""){
+  $focus= '<script language="JavaScript" type="text/javascript">';
+  $focus.= 'document.forms[0].error_accept.focus();';
+  $focus.= '</script>';
+}
+$smarty->assign("focus", $focus);
+
 $display= $header.$smarty->fetch(get_template_path('framework.tpl'));
 
 /* Show page... */
