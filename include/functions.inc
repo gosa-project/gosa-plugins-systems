@@ -1104,7 +1104,7 @@ function print_red()
                   right:0px;
                   bottom:0px;
                   z-index:0;
-                  background-image: url(images/opacity_black.png);\"
+                  background-image: url(images/opacity_black.png);\">
                </div>";
           }
 
