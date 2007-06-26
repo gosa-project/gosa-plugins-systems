@@ -1065,28 +1065,29 @@ function print_red()
       
         if(isset($_SESSION['errors']) && strlen($_SESSION['errors'])==0) {
           $_SESSION['errors'].= "
-          <div  id='e_layer2'
-                style='
-                      position: absolute;
-                      left: 0px;
-                      top: 0px;
-                      right:0px;
-                      bottom:0px; 
-                      z-index:149;
-                      background-image: url(images/opacity_black_75.png);
-'
->
-          </div>
-          <div style='margin-left:15%;margin-top:100px;".
-            "background-color:white;padding:5px;border:5px solid red;width:55%;z-index:150;".
-            "position:absolute' id='e_layer'><table style='width:100%' summary='' border=0>".
-            "<tr><td style='vertical-align:top;padding:10px'><img alt='' src='".
-            get_template_path($img)."'></td>".
-            "<td style='width:100%'><h1>"._("An error occurred while processing your request").
-            "</h1><b>$string</b><br><br>$addmsg</td></tr><tr><td colspan='2' align='center'><br><button ".
-            (($_SESSION['js']==FALSE)?"type='submit'":"type='button'").
-            " style='width:80px' onClick='hide(\"e_layer\");hide(\"e_layer2\");'>".
-            _("OK")."</button></td></tr></table></div>";
+            <div  id='e_layer2'
+            style='
+              position: absolute;
+              left: 0px;
+              top: 0px;
+              right:0px;
+              bottom:0px;
+              z-index:149;
+              width:100%;
+              height:100%;
+              background-image: url(images/opacity_black.png);'>
+         </div>
+         <div style='left:20%;right:20%;top:30%;".
+         "background-color:white;padding:5px;border:5px solid red;z-index:150;".
+         "position:absolute' id='e_layer'><table style='width:100%' summary='' border=0>".
+         "<tr><td style='vertical-align:top;padding:10px'><img alt='' src='".
+         get_template_path($img)."'></td>".
+         "<td style='width:100%'><h1>"._("An error occurred while processing your request").
+         "</h1><b>$string</b><br><br>$addmsg</td></tr><tr><td colspan='2' align='center'><br><button ".
+         (($_SESSION['js']==FALSE)?"type='submit'":"type='button' name='error_accept'").
+         " style='width:80px' onClick='hide(\"e_layer\");hide(\"e_layer2\");'>".
+         _("OK")."</button></td></tr></table></div>";
+
         }
 
       }else{
@@ -1291,9 +1292,9 @@ function print_header($image, $headline, $info= "")
     $display.= "&nbsp;";
     $display.= "</div>\n";
   }
-  if (isset($_SESSION['errors'])){
-    $display.= $_SESSION['errors'];
-  }
+#  if (isset($_SESSION['errors'])){
+#    $display.= $_SESSION['errors'];
+#  }
 
   return ($display);
 }
