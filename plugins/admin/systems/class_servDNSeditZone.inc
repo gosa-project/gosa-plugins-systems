@@ -77,7 +77,7 @@ class servdnseditZone extends plugin
       $this->sOAmail            = preg_replace("/\./","@",$this->sOAmail,1);
       $this->sOAmail            = preg_replace("/\.$/","",$this->sOAmail);
       $this->sOAprimary         = preg_replace("/\.$/","",$this->sOAprimary);
-      
+      $this->zoneName           = preg_replace("/\.$/","",$this->zoneName);
 
       if(isset($attrs['RECORDS'])){
         $this->Records = $attrs['RECORDS']; 
@@ -330,7 +330,7 @@ class servdnseditZone extends plugin
     $smarty->assign("Mxrecords",  $div->DrawList());
     $smarty->assign("records"  ,  $this->generateRecordsList());
     $smarty->assign("NetworkClass",  $this->NetworkClass);
-    $smarty->assign("NetworkClasses",  array("A"=>"A","B"=>"B","C"=>"C"));
+    $smarty->assign("NetworkClasses",  array("A"=>"255.0.0.0 (Class A)","B"=>"255.255.0.0 (Class B)","C"=>"255.255.255.0 (Class C)"));
 
     /* Display tempalte */
     $display.= $smarty->fetch(get_template_path('servdnseditzone.tpl', TRUE));
@@ -430,7 +430,7 @@ class servdnseditZone extends plugin
     if(!is_ip($addr)){
       $message[] = _("The given network address is not a valid, please specify a valid IP address.");
     }
-  
+ 
     /* Check if given address matches selected network class */
     switch($this->NetworkClass){
       case 'A': { 
@@ -506,8 +506,12 @@ class servdnseditZone extends plugin
     $ret['InitialzoneName']   =  $this->InitialzoneName;
 
     $ret['sOAmail']            = preg_replace("/\@/",".",$this->sOAmail);
-    $ret['sOAmail']            = $ret['sOAmail'].".";
-    $ret['sOAprimary']         = $ret['sOAprimary'].".";
+
+    foreach(array("sOAprimary","zoneName","sOAmail") as $attr){
+      if(!preg_match("/\.$/",$ret[$attr])){
+        $ret[$attr] = $ret[$attr].".";
+      }
+    }
 
     return($ret);
   }
