@@ -61,6 +61,7 @@ class servdnseditZone extends plugin
     }else{
       $this->ZoneObject         = $attrs;
 
+
       $this->OldZoneName        = $attrs['zoneName'];
       $this->OldReverseZone     = $attrs['ReverseZone'];
 
@@ -72,6 +73,12 @@ class servdnseditZone extends plugin
       foreach($this->attributes as $value){
         $this->$value = $attrs[$value];
       }
+
+      $this->sOAmail            = preg_replace("/\./","@",$this->sOAmail,1);
+      $this->sOAmail            = preg_replace("/\.$/","",$this->sOAmail);
+      $this->sOAprimary         = preg_replace("/\.$/","",$this->sOAprimary);
+      
+
       if(isset($attrs['RECORDS'])){
         $this->Records = $attrs['RECORDS']; 
 
@@ -385,22 +392,6 @@ class servdnseditZone extends plugin
       $message[] =sprintf(_("Please choose a valid reverse zone name."));
     }
 
-    if(!preg_match("/\.$/",$this->sOAprimary)){
-      $message[] = _("Primary dns server must end with '.' to be a valid entry.");
-    }
-
-    if(!preg_match("/\.$/",$this->sOAmail)){
-      $message[] = _("Your specified mail address must end with '.' to be a valid record.");
-    }
-
-    if(preg_match("/@/",$this->sOAmail)){
-      $message[] = _("Your mail address contains '@' replace this with '.' to enable GOsa to create a valid SOA record.");
-    }
-
-    if(preg_match("/@/",$this->sOAmail)){
-      $message[] = _("Your mail address contains '@' replace this with '.' to enable GOsa to create a valid SOA record.");
-    }
-
     if($this->zoneName != strtolower($this->zoneName)){
       $message[] = _("Only lowercase strings are allowed as zone name.");
     }
@@ -513,6 +504,10 @@ class servdnseditZone extends plugin
 
     $ret['InitialReverseZone']=  $this->InitialReverseZone;
     $ret['InitialzoneName']   =  $this->InitialzoneName;
+
+    $ret['sOAmail']            = preg_replace("/\@/",".",$this->sOAmail);
+    $ret['sOAmail']            = $ret['sOAmail'].".";
+    $ret['sOAprimary']         = $ret['sOAprimary'].".";
 
     return($ret);
   }
