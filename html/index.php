@@ -366,7 +366,7 @@ if (isset($_SESSION['errors'])){
   $smarty->assign("errors", $_SESSION['errors']);
 }
 if ($error_collector != ""){
-  $smarty->assign("php_errors", $error_collector."</div>");
+  $smarty->assign("php_errors", preg_replace("/%BUGBODY%/",$error_collector_mailto,$error_collector)."</div>");
 } else {
   $smarty->assign("php_errors", "");
 }

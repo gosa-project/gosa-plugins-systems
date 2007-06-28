@@ -20,7 +20,7 @@
 
 function gosaRaiseError($errno, $errstr, $errfile, $errline)
 {
-  global $error_collector,$config;
+  global $error_collector,$config, $error_collector_mailto;
 
   if(@class_exists("log")){
     new log("debug","all",$errfile,array(),"Type:".$errno.", Message:".$errstr.", File:".$errfile.", Line: ".$errline);
@@ -69,22 +69,67 @@ function gosaRaiseError($errno, $errstr, $errfile, $errline)
 
   /* Create header as needed */
   if ($error_collector == ""){
+
+    /* Mailto body header */
+    $error_collector_mailto .=prepare4mailbody(
+                                "Oups. Seems like you've catched some kind of bug inside GOsa/PHP. You may want to help ".
+                                "us to improve the software stability. If so, please provide some more information below.".
+                                "\n\n".
+                                "*** GOsa bug report ***".
+                                "\nGOsa Version: ".get_gosa_version().
+                                "\nDate: ".date("d.m.Y").
+                                "\nTime: ".date("H:i:s").
+                                "\n\n".
+                                "Please describe what you did to produce this error as detailed as possible. Can you ".
+                                "reproduce this bug using the demo on http://www.gosa-project.org ?".
+                                "\n\n".
+                                "*** PHP error information ***\n\n");
+
     if (isset($_SESSION['js']) && $_SESSION['js']==FALSE){
       $error_collector= "<div>";
     } else {
-      $error_collector= "<table summary=\"\" width=\"100%\" style='background-color:#E0E0E0;border-bottom:1px solid black;z-index:150;'><tr><td><img alt=\"\" align=\"middle\" src='".get_template_path('images/warning.png')."'>&nbsp;<font style='font-size:14px;font-weight:bold'>"._("Generating this page caused the PHP interpreter to raise some errors!")."</font></td><td align=right><button onClick='toggle(\"errorbox\")'>"._("Toggle information")."</button></td></tr></table><div id='errorbox' style='position:absolute; z-index:150; visibility: hidden'>";
+      $error_collector= "
+        <table summary=\"\" width=\"100%\" style='background-color:#E0E0E0;border-bottom:1px solid black;z-index:150;'>
+          <tr>
+            <td>
+              <img alt=\"\" align=\"middle\" src='".get_template_path('images/warning.png')."'>&nbsp;
+              <font style='font-size:14px;font-weight:bold'>".
+                _("Generating this page caused the PHP interpreter to raise some errors!")."
+              </font>
+            </td>
+            <td align=right>
+              <a href=\"mailto:gosa-bugs@oss.gonicus.de?subject=GOsa%20bugreport&amp;body=%BUGBODY%\">
+                <img border='0' src='images/mailto.png' title='"._("Send bug report to the GOsa Team")."' class='center' alt=''>&nbsp;"._("Send bugreport")."
+              </a>
+            </td>
+            <td align=right>
+              <button onClick='toggle(\"errorbox\")'>".
+                _("Toggle information")."
+              </button>
+            </td>
+          </tr>
+        </table>
+        <div id='errorbox' style='position:absolute; z-index:150; visibility: hidden'>";
     }
   }
  
   /* Create error header */
   $error_collector.= "<table summary=\"\" width=\"100%\" cellspacing=0 style='background-color:#402005;color:white;border:2px solid red'><tr><td colspan=3><h1 style='color:white'>"._("PHP error")." \"$errstr\"</h1></td></tr>";
+
+  $error_collector_mailto .= prepare4mailbody("=== Error === \n");
+  $error_collector_mailto .= prepare4mailbody("PHP error: $errstr ($errfile, line $errline)\n");
+  $error_collector_mailto .= prepare4mailbody("=== /Error === \n\n");
   
   /* Extract traceback data - if available */
   if (function_exists('debug_backtrace')){
     $trace= debug_backtrace();
 
+    $error_collector_mailto .= prepare4mailbody("=== Trace ===");
+
     /* Generate trace history */
     for ($index= 0; $index<count($trace); $index++){
+
+
       $ct= $trace[$index];
       $loc= "";
       if (isset($ct['class'])){
@@ -139,8 +184,20 @@ function gosaRaiseError($errno, $errstr, $errfile, $errline)
       $error_collector.= "<tr style='background-color:$color'><td style='padding-left:20px' width=\"30%\">"._("Trace")."[$index]: $loc</td>";
       $error_collector.= "<td>"._("File").": $file ("._('Line')." $line)</td><td width=\"10%\">"._("Type").": $type</td></tr>";
       $error_collector.= "<tr style='background-color:$color'><td colspan=3 style='padding-left:20px;'>"._("Arguments").": $args</td></tr>";
+
+      /* Add trace part to mailto body */
+      $error_collector_mailto .= prepare4mailbody(
+                                   "\nTrace[".$index."]:".$loc.
+                                   "\nFile : ".$file.
+                                   "\nLine : ".$line.
+                                   "\nType : ".$type.
+                                   "\n  ".$args.
+                                   "\n");
+
     }
   }
+
+  $error_collector_mailto .= prepare4mailbody("=== /Trace === \n");
 
   /* Close error table */
   $error_collector.= "</table>";
@@ -166,6 +223,7 @@ error_reporting (E_ALL);
 
 /* Register error handler */
 $error_collector= "";
+$error_collector_mailto= "";
 set_error_handler('gosaRaiseError');
 
 $variables_order= "ES";

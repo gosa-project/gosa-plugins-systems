@@ -2382,5 +2382,45 @@ function check_schema($cfg,$rfc2307bis = FALSE)
   return($checks);
 }
 
+
+function prepare4mailbody($string)
+{
+  $string = html_entity_decode($string);
+
+  $from = array(
+                "/%/",
+                "/ /",
+                "/\n/",
+                "/\r/",
+                "/!/",
+                "/#/",
+                "/\*/",
+                "/\//",
+                "/</",
+                "/>/",
+                "/\?/",
+                "/\"/");
+
+  $to = array(
+                "%25",
+                "%20",
+                "%0A",
+                "%0D",
+                "%21",
+                "%23",
+                "%2A",
+                "%2F",
+                "%3C",
+                "%3E",
+                "%3F",
+                "%22");
+
+  $string = preg_replace($from,$to,$string);
+
+  return($string);
+}
+
+
+
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
