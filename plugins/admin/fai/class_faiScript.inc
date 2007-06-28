@@ -141,8 +141,6 @@ class faiScript extends plugin
     /* Call parent execute */
     plugin::execute();
 
-    $a .= $b[cbh];
-
     if($this->is_account && !$this->view_logged){
       $this->view_logged = TRUE;
       new log("view","fai/".get_class($this),$this->dn);
