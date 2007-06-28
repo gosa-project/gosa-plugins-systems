@@ -3,7 +3,7 @@
 # Sample debian/rules that uses debhelper. GNU copyright 1997 by Joey Hess.
 # Some lines taken from debmake, by Cristoph Lameter.
 
-export DH_COMPAT=4
+SARGE_PACKAGE=`cat debian/changelog  | head -n1 | grep sarge`
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
@@ -39,6 +39,8 @@ install-stamp:
 	-gzip -c9 debian/changelog > debian/gosa/usr/share/doc/gosa/changelog.Debian.gz
 	-mkdir -p debian/gosa-schema/usr/share/doc/gosa-schema
 	-gzip -c9 debian/changelog > debian/gosa-schema/usr/share/doc/gosa-schema/changelog.Debian.gz
+	-mkdir -p debian/gosa-desktop/usr/share/doc/gosa-desktop
+	-gzip -c9 debian/changelog > debian/gosa-desktop/usr/share/doc/gosa-desktop/changelog.Debian.gz
 	-mkdir -p debian/gosa-help-de/usr/share/doc/gosa-help-de
 	-gzip -c9 debian/changelog > debian/gosa-help-de/usr/share/doc/gosa-help-de/changelog.Debian.gz
 	-mkdir -p debian/gosa-help-en/usr/share/doc/gosa-help-en
@@ -74,24 +76,31 @@ install-stamp:
 	-rm -rf debian/gosa/usr/share/gosa/doc/guide/user/*/lyx-source
 	-rm -rf debian/gosa/usr/share/gosa/doc/guide/admin
 	-rm -rf debian/gosa/usr/share/gosa/doc/guide/devel
-	-for lang in de fr nl; do mkdir -p debian/gosa-help-$$lang/usr/share/gosa/doc/guide/user/$$lang; done
-	-for lang in de fr nl; do mv debian/gosa/usr/share/gosa/doc/guide/user/$$lang/* debian/gosa-help-$$lang/usr/share/gosa/doc/guide/user/$$lang/; done
+	-for lang in en de fr nl; do mkdir -p debian/gosa-help-$$lang/usr/share/gosa/doc/guide/user/$$lang; done
+	-for lang in en de fr nl; do mv debian/gosa/usr/share/gosa/doc/guide/user/$$lang/* debian/gosa-help-$$lang/usr/share/gosa/doc/guide/user/$$lang/; done
 	-cp -R debian/gosa/usr/share/gosa/doc/* debian/gosa/usr/share/doc/gosa
+	-cp -R contrib/scripts/desktoprc debian/gosa-desktop/etc/gosa/desktoprc
+	-cp -R contrib/scripts/start-gosa.sh debian/gosa-desktop/usr/bin/gosa
+	-cp -R debian/gosa*.xpm debian/gosa-desktop/usr/share/pixmaps
 	-rm -rf debian/gosa/usr/share/gosa/contrib
 	-rm -rf debian/gosa/usr/share/gosa/locale/en
 	-rm -rf debian/gosa/usr/share/gosa/gen_locale.sh
-        -rm -rf debian/gosa/usr/share/gosa/gen_pdf_help.sh
-        -rm -rf debian/gosa/usr/share/gosa/patch-stamp
+	-rm -rf debian/gosa/usr/share/gosa/gen_pdf_help.sh
+	-rm -rf debian/gosa/usr/share/gosa/patch-stamp
 	-rm -rf debian/gosa/usr/share/gosa/gen_locale_mo.sh
 	-rm -rf debian/gosa/usr/share/gosa/gen_online_help.sh
 	-rm -rf debian/gosa/usr/share/gosa/gen_function_list.php
 	-rm -rf debian/gosa/usr/share/gosa/update.sh
 	-rm -rf debian/gosa/usr/share/doc/gosa/guide*
-	-rm -rf debian/gosa/usr/share/gosa/include/smarty
-	-sed 's%"CONFIG_TEMPLATE_DIR", "../contrib/"%"CONFIG_TEMPLATE_DIR", "/usr/share/doc/gosa/contrib/"%g' debian/gosa/usr/share/gosa/include/functions.inc > debian/gosa/usr/share/gosa/include/functions.inc.new
-	-mv debian/gosa/usr/share/gosa/include/functions.inc.new debian/gosa/usr/share/gosa/include/functions.inc
-	-sed 's%require("smarty/Smarty.class.php");%require("/usr/share/php/smarty/libs/Smarty.class.php");%g' debian/gosa/usr/share/gosa/include/php_setup.inc > debian/gosa/usr/share/gosa/include/php_setup.inc.new
-	-mv debian/gosa/usr/share/gosa/include/php_setup.inc.new debian/gosa/usr/share/gosa/include/php_setup.inc
+	-if [ -z "${SARGE_PACKAGE}" ]; then \
+		rm -rf debian/gosa/usr/share/gosa/include/smarty; \
+		sed 's%"CONFIG_TEMPLATE_DIR", "../contrib/"%"CONFIG_TEMPLATE_DIR", "/usr/share/doc/gosa/contrib/"%g' debian/gosa/usr/share/gosa/include/functions.inc > debian/gosa/usr/share/gosa/include/functions.inc.new; \
+		mv debian/gosa/usr/share/gosa/include/functions.inc.new debian/gosa/usr/share/gosa/include/functions.inc; \
+		sed 's%require("smarty/Smarty.class.php");%require("/usr/share/php/smarty/libs/Smarty.class.php");%g' debian/gosa/usr/share/gosa/include/php_setup.inc > debian/gosa/usr/share/gosa/include/php_setup.inc.new; \
+		mv debian/gosa/usr/share/gosa/include/php_setup.inc.new debian/gosa/usr/share/gosa/include/php_setup.inc; \
+	fi
+	install -D -m 644 debian/overrides-lintian debian/gosa/usr/share/lintian/overrides/gosa
+	install -D -m 644 debian/overrides-linda debian/gosa/usr/share/linda/overrides/gosa
 	touch install-stamp
 
 patch: patch-stamp
@@ -105,7 +114,10 @@ binary-indep: install
 	dh_installdocs 
 	dh_installcron
 	dh_installexamples
-	dh_installman debian/mkntpasswd.1
+	dh_installdebconf
+	dh_installmenu
+	dh_installman --package=gosa debian/mkntpasswd.1
+	dh_installman --package=gosa-desktop debian/gosa.1
 	dh_link
 	dh_strip
 	dh_compress --exclude=gosa.conf
@@ -117,7 +129,11 @@ binary-indep: install
 	cd debian/gosa && find ./etc -type f -print | sed -e 's#^./#/#' > DEBIAN/conffiles
 	chmod 644 debian/gosa/DEBIAN/conffiles
 
-	dh_gencontrol
+	-if [ -z "${SARGE_PACKAGE}" ]; then \
+		dh_gencontrol; \
+	else \
+		dh_gencontrol -- -cdebian/control.sarge; \
+	fi
 	dh_md5sums
 	dh_builddeb
 
