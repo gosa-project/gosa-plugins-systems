@@ -309,6 +309,6 @@ onclick="changeState('day'); changeState('month'); changeState('year'); changeSt
 	{/literal}
 
 <!-- // First input field on page
-  document.mainform.mail.focus();
+	focus_field('mail');
   -->
 </script>

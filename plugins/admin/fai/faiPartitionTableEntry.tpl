@@ -42,7 +42,7 @@
 <!-- Place cursor -->
 <script language="JavaScript" type="text/javascript">
   <!-- // First input field on page
-  document.mainform.DISKcn.focus();
+	focus_field('DISK_cn');
   -->
 </script>
 

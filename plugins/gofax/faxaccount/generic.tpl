@@ -140,6 +140,6 @@
 <!-- Place cursor -->
 <script language="JavaScript" type="text/javascript">
   <!-- // First input field on page
-  document.mainform.facsimileTelephoneNumber.focus();
+	focus_field('facsimileTelephoneNumber');
   -->
 </script>

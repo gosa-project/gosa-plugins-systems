@@ -11,7 +11,7 @@
 </table>
 <script language="JavaScript" type="text/javascript">
   <!-- // First input field on page
-  document.mainform.AddZone.focus();
+	focus_field('AddZone');
   -->
 </script>
 

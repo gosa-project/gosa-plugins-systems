@@ -127,6 +127,6 @@ Its functionality is disabled in class_departmentGeneric.inc
 <input type='hidden' name='dep_generic_posted' value='1'>
 <script language="JavaScript" type="text/javascript">
   <!-- // First input field on page
-  document.mainform.ou.focus();
+	focus_field('ou');
   -->
 </script>

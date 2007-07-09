@@ -89,7 +89,7 @@
 <script language="JavaScript" type="text/javascript">
   <!-- // First input field on page
   nextfield= "{$nextfield}";
-  document.mainform.{$nextfield}.focus();
+  focus_field({$nextfield});
   -->
 </script>
 

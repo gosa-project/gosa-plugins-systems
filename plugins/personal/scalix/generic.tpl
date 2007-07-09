@@ -122,6 +122,6 @@
 <!-- Place cursor -->
 <script language="JavaScript" type="text/javascript">
   <!-- // First input field on page
-  document.mainform.scalixMailnode.focus();
+	focus_field('scalixMailnode');
   -->
 </script>

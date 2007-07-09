@@ -58,8 +58,8 @@
 <input type="hidden" value="1" name="FAIscript_posted" >
 <!-- Place cursor -->
 <script language="JavaScript" type="text/javascript">
-  <!-- // First input field on page
-  document.mainform.description.focus();
-  -->
+<!--
+	focus_field("cn","description");
+-->
 </script>
 

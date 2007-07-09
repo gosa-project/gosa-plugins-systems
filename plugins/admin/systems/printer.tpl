@@ -145,6 +145,6 @@
 
   <!-- // First input field on page
   if(document.mainform.cn)
-	  document.mainform.cn.focus();		
+	focus_field('cn');
   -->
 </script>
