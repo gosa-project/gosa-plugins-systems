@@ -420,7 +420,6 @@ class faiManagement extends plugin
         new log("remove","fai/".get_class($this),$br[$bb],array(),"Release removed");
       }
     }
-  }
 
 
     /****************
