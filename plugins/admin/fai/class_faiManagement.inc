@@ -372,15 +372,19 @@ class faiManagement extends plugin
     if($s_action == "remove_branch"){
       $base= $this->DivListFai->selectedBranch;
 
-      /* Load permissions for selected 'dn' and check if
-         we're allowed to remove this 'dn' */
-      $this->set_acl_base($base);
-      if($this->acl_is_removeable()){
+      $r = "" != search_config($this->config->data,"faiManagement","POSTREMOVE");
+      if($r){
 
-        $smarty->assign("info", sprintf(_("You're about to delete a fai branch / freeze  '%s'."), $this->DivListFai->selectedBranch));
-        return($smarty->fetch(get_template_path('remove_branch.tpl',TRUE)));
-      } else {
-        print_red (_("You are not allowed to delete this release!"));
+        /* Load permissions for selected 'dn' and check if
+           we're allowed to remove this 'dn' */
+        $this->set_acl_base($base);
+        if($this->acl_is_removeable()){
+
+          $smarty->assign("info", sprintf(_("You're about to delete a fai branch / freeze  '%s'."), $this->DivListFai->selectedBranch));
+          return($smarty->fetch(get_template_path('remove_branch.tpl',TRUE)));
+        } else {
+          print_red (_("You are not allowed to delete this release!"));
+        }
       }
     }
 
@@ -390,6 +394,9 @@ class faiManagement extends plugin
      ****************/
 
     if(isset($_POST['delete_branch_confirm'])){
+
+      $r = "" != search_config($this->config->data,"faiManagement","POSTREMOVE");
+
       $bb =  $this->DivListFai->selectedBranch;
       if(!isset($ldap)){
         $ldap = $this->config->get_ldap_link();
@@ -413,6 +420,7 @@ class faiManagement extends plugin
         new log("remove","fai/".get_class($this),$br[$bb],array(),"Release removed");
       }
     }
+  }
 
 
     /****************
@@ -584,23 +592,29 @@ class faiManagement extends plugin
       Display dialog to enter new Branch name
      ****************/
 
-    if(($s_action == "branch_branch")||($this->dispNewBranch)){
-      $this->dispNewBranch=true;
-      $smarty->assign("iframe",false);
-		  $display 	.= $smarty->fetch(get_template_path('faiNewBranch.tpl', TRUE, dirname(__FILE__)));
-      return($display);
+    $r = "" != search_config($this->config->data,"faiManagement","POSTMODIFY");
+    if($r){
+      if(($s_action == "branch_branch")||($this->dispNewBranch)){
+        $this->dispNewBranch=true;
+        $smarty->assign("iframe",false);
+        $display 	.= $smarty->fetch(get_template_path('faiNewBranch.tpl', TRUE, dirname(__FILE__)));
+        return($display);
+      } 
     }
-   
+
  
     /****************
       Display dialog to enter new Freeze name
      ****************/
 
-    if(($s_action == "freeze_branch")||($this->dispNewFreeze)){
-      $this->dispNewFreeze = true;
-      $smarty->assign("iframe",false);
-		  $display 	.= $smarty->fetch(get_template_path('faiNewBranch.tpl', TRUE, dirname(__FILE__)));
-      return($display);
+    $r = "" != search_config($this->config->data,"faiManagement","POSTMODIFY");
+    if($r){
+      if(($s_action == "freeze_branch")||($this->dispNewFreeze)){
+        $this->dispNewFreeze = true;
+        $smarty->assign("iframe",false);
+        $display 	.= $smarty->fetch(get_template_path('faiNewBranch.tpl', TRUE, dirname(__FILE__)));
+        return($display);
+      }
     }
 
 
