@@ -18,109 +18,34 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-$display = "";
+/* Clear display */
+$display= "";
+
 if (!$remove_lock){
 
-  /* Assign headline image */
-  $smarty->assign ('headimage',"");
-  $display= "";
+  /* Reset requested? */
+  if (isset($_POST['edit_cancel']) ||
+      (isset($_GET['reset']) && $_GET['reset'] == 1)){
 
-  $password_ACLS = $ui->get_permissions($ui->dn,"users/password");
-  $smarty->assign("ChangeACL" ,  $password_ACLS);   
-  $smarty->assign("NotAllowed" , !preg_match("/w/i",$password_ACLS));   
-
-  /* Check for interaction */
-  if ($_SERVER["REQUEST_METHOD"] == "POST"){
-    if (isset($_POST['password_finish'])){
-      $message= array();
-
-      /* Is current password correct? */
-      if ($_POST['current_password'] != ""){
-        $tldap = new LDAP($ui->dn, $_POST['current_password'],
-            $config->current['SERVER'],
-            isset($config->current['RECURSIVE']) && $config->current['RECURSIVE'] == "true",
-            isset($config->current['TLS']) && $config->current['TLS'] == "true");
-        if ($tldap->error != "Success"){
-          $message[]= _("The password you've entered as your current password doesn't match the real one.");
-        }
-      } else {
-        $message[]= _("You need to specify your current password in order to proceed.");
-      }
-
-      /* Do new and repeated password fields match? */
-      if ($_POST['new_password'] != $_POST['repeated_password']){
-        $message[]= _("The passwords you've entered as 'New password' and 'Repeated new password' do not match.");
-      } else {
-        if ($_POST['new_password'] == ""){
-          $message[]= _("The password you've entered as 'New password' is empty.");
-        }
-      }
-
-      /* Password policy fulfilled? */
-      if (isset($config->data['MAIN']['PWDIFFER'])){
-        $l= $config->data['MAIN']['PWDIFFER'];
-        if (substr($_POST['current_password'], 0, $l) == substr($_POST['new_password'], 0, $l)){
-          $message[]= _("The password used as new and current are too similar.");
-        }
-      }
-      if (isset($config->data['MAIN']['PWMINLEN'])){
-        if (strlen($_POST['new_password']) < $config->data['MAIN']['PWMINLEN']){
-          $message[]= _("The password used as new is to short.");
-        }
-      }
-
-      if(!preg_match("/w/i",$password_ACLS)){
-        $message[]= _("You have no permissions to change your password.");
-      }
-
-      if (count ($message) != 0){
-
-        /* Show error message and continue editing */
-        show_errors($message);
-
-      } else {
-
-        /* Passed quality check, just try to change the password now */
-        $output= "";
-        if (isset($config->data['MAIN']['EXTERNALPWDHOOK'])){
-          exec($config->data['MAIN']['EXTERNALPWDHOOK']." ".$ui->username." ".
-               $_POST['current_password']." ".$_POST['new_password'], $resarr);
-          if(count($resarr) > 0) {
-            $output= join('\n', $resarr);
-          }
-        }
-        if ($output != ""){
-          $message[]= _("External password changer reported a problem: ".$output);
-          show_errors($message);
-        } else {		
-          change_password ($ui->dn, $_POST['new_password']);
-          new log("modify","users/".get_class($this),$ui->dn,array(),"User has been changed");
-          $ui->password= $_POST['new_password'];
-          $_SESSION['ui']= $ui;
-          $display= $smarty->fetch(get_template_path("changed.tpl", TRUE));
-        }
-      }
-    }
+    del_lock ($ui->dn);
+    sess_del ('edit');
+    sess_del ('password');
   }
 
-  if ($display == ""){
-    if((isset($config->data['MAIN']['ACCOUNT_EXPIRATION'])) &&
-      !preg_match('/true/i', $config->data['MAIN']['ACCOUNT_EXPIRATION'])){
-      $display= $smarty->fetch(get_template_path("password.tpl", TRUE));
-    }else{
-      $expired= ldap_expired_account($config, $ui->dn, $ui->username);
-     
-      if($expired == 4){
-        $display= $smarty->fetch(get_template_path("nochange.tpl", TRUE));
-      }else{
-        $display= $smarty->fetch(get_template_path("password.tpl", TRUE));
-      }
-    }
+  /* Create password object on demand */
+  if (!isset($_SESSION['password']) || (isset($_GET['reset']) && $_GET['reset'] == 1)){
+    $_SESSION['password']= new password ($config, $ui->dn);
   }
+  $password= $_SESSION['password'];
+
+  /* Execute formular */
+  $display.= $password->execute ();
+
+  /* Page header*/
+  $display= print_header(get_template_path('images/password.png'),
+                         _("Password settings"), "").$display;
+
 }
-
-$display = print_header(get_template_path('images/password.png'),_("Change password"), "").$display;
-
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

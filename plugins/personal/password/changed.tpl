@@ -1,3 +1,4 @@
+
 <p>
  <b>{t}You've successfully changed your password. Remember to change all programms configured to use it as well.{/t}</b>
 </p>
