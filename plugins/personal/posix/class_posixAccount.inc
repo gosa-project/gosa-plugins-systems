@@ -57,7 +57,7 @@ class posixAccount extends plugin
   var $secondaryGroups= array();
   var $primaryGroup= 0;
   var $was_trust_account= FALSE;
-
+  var $memberGroup = array();
   var $grouplist  = array();
   var $ui         = array();
 
@@ -925,8 +925,18 @@ class posixAccount extends plugin
     /* Include global link_info */
     $ldap= $this->config->get_ldap_link();
 
+    /* Append groups as memberGroup: to check hook 
+     */
+    $tmp_attributes  = $this->attributes;    
+    $this->attributes[] = "memberGroup";
+    $this->memberGroup = array();
+    foreach($this->groupMembership as $dn => $name){
+      $this->memberGroup[] = $name;
+    }
+
     /* Call common method to give check the hook */
     $message= plugin::check();
+    $this->attributes = $tmp_attributes;
 
     /* must: homeDirectory */
     if ($this->homeDirectory == ""){
