@@ -401,7 +401,10 @@ class workgeneric extends plugin
         $this->inheritTimeServer = false;
       }
     }
-
+    
+    if(isset($_POST["inheritAll"])){
+      $this->set_everything_to_inherited();
+    }
   }
 
 
