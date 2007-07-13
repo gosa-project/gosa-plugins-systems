@@ -64,6 +64,8 @@ class workgeneric extends plugin
   
   var $fai_activated = FALSE;
 
+  var $member_of_ogroup = FALSE;
+
   function workgeneric ($config, $dn= NULL, $parent= NULL)
   {
     $tmp = search_config($config->data,"faiManagement","CLASS");
@@ -72,6 +74,14 @@ class workgeneric extends plugin
     }
 
     plugin::plugin ($config, $dn, $parent);
+
+    if(!isset($this->parent->by_object['ogroup'])){
+      $ldap = $this->config->get_ldap_link();
+      $ldap->cd ($this->config->current['BASE']);
+      $ldap->search("(&(objectClass=gotoWorkstationTemplate)(member=".$this->dn."))",array("cn"));
+      $this->member_of_ogroup = $ldap->count() >= 1;
+    }
+
     $this->netConfigDNS = new termDNS($this->config,$this->dn,$this->objectclasses);
 
     /* Read arrays */
@@ -326,6 +336,7 @@ class workgeneric extends plugin
 
     /* tell smarty the inherit checkbox state */
     $smarty->assign("inheritTimeServer",$this->inheritTimeServer);
+    $smarty->assign("member_of_ogroup",$this->member_of_ogroup);
 
     /* Show main page */
     $smarty->assign("netconfig", $this->netConfigDNS->execute());
@@ -353,6 +364,10 @@ class workgeneric extends plugin
         unset($og->member[$this->dn]);
         $og->save ();
       }
+    }
+
+    if(isset($_POST["inheritAll"])){
+      $this->set_everything_to_inherited();
     }
   }
 
@@ -605,7 +620,26 @@ class workgeneric extends plugin
           ));
   }
 
-}
+  function set_everything_to_inherited()
+  {
+    $this->gotoSyslogServer  = "default";
+    $this->inheritTimeServer = TRUE;
 
-// vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
+    /* Set workstation service attributes to inherited */
+    if($this->member_of_ogroup && isset($this->parent->by_object['workservice'])){
+      foreach(array("gotoXKbLayout","gotoXKbModel","gotoXKbVariant",
+            "gotoXResolution","gotoXColordepth","gotoXMouseType","gotoXMouseType") as $name){
+        $this->parent->by_object['workservice']->$name = "default"; 
+      }
+    }
+
+    /* Set workstation startup attributes to inherited */
+    if($this->member_of_ogroup && isset($this->parent->by_object['workstartup'])){
+      $this->parent->by_object['workstartup']->gotoBootKernel = "default-inherited";
+      $this->parent->by_object['workstartup']->gotoLdapServer = "default-inherited";
+      $this->parent->by_object['workstartup']->FAIdebianMirror= "inherited";
+    }
+  }
+}
+  // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

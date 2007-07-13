@@ -58,6 +58,8 @@ class termgeneric extends plugin
   var $fai_activated = FALSE;
   var $view_logged = FALSE;
 
+  var $member_of_ogroup = FALSE;
+
   function termgeneric ($config, $dn= NULL, $parent= NULL)
   {
     /* Check if FAI is activated */
@@ -67,6 +69,14 @@ class termgeneric extends plugin
     }
 
     plugin::plugin ($config, $dn, $parent);
+
+    if(!isset($this->parent->by_object['ogroup'])){
+      $ldap = $this->config->get_ldap_link();
+      $ldap->cd ($this->config->current['BASE']);
+      $ldap->search("(&(objectClass=gotoWorkstationTemplate)(member=".$this->dn."))",array("cn"));
+      $this->member_of_ogroup = $ldap->count() >= 1;
+    }
+
     $this->netConfigDNS = new termDNS($this->config,$this->dn,$this->objectclasses);
     /* Read arrays */
     foreach (array("ghNetNic", "ghIdeDev", "ghScsiDev") as $val){
@@ -337,6 +347,8 @@ class termgeneric extends plugin
       $smarty->assign($val."_select", $this->$val);
     }
 
+    $smarty->assign("member_of_ogroup",$this->member_of_ogroup);
+
     /* Show main page */
     $smarty->assign("netconfig", $this->netConfigDNS->execute());
     return($smarty->fetch (get_template_path('terminal.tpl', TRUE)));
@@ -404,6 +416,11 @@ class termgeneric extends plugin
         $this->inheritTimeServer = false;
       }
     }  
+
+    if(isset($_POST["inheritAll"])){
+      $this->set_everything_to_inherited();
+    }
+
   }
 
 
@@ -618,6 +635,29 @@ class termgeneric extends plugin
             "gotoRootPasswd"      => _("Root password"),
             "FAIstate"            => _("Action flag"))
           ));
+  }
+
+
+  function set_everything_to_inherited()
+  {
+    $this->gotoTerminalPath  = "default";
+    $this->gotoSwapServer    = "default" ;
+    $this->gotoSyslogServer  = "default";
+    $this->inheritTimeServer = TRUE;
+
+    /* Set workstation service attributes to inherited */
+    if($this->member_of_ogroup && isset($this->parent->by_object['termservice'])){
+      foreach(array("gotoXKbLayout","gotoXKbModel","gotoXKbVariant",
+            "gotoXResolution","gotoXColordepth","gotoXMouseType","gotoXMouseType") as $name){
+        $this->parent->by_object['termservice']->$name = "default";
+      }
+    }
+
+    /* Set workstation startup attributes to inherited */
+    if($this->member_of_ogroup && isset($this->parent->by_object['termstartup'])){
+      $this->parent->by_object['termstartup']->gotoBootKernel = "default-inherited";
+      $this->parent->by_object['termstartup']->gotoLdapServer = "default-inherited";
+    }
   }
 }
 
