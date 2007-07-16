@@ -30,6 +30,7 @@ function get_default_timezone()
 		$zone = get_timezone($tz);
 		if(!count($zone)){
 			print_red(sprintf(_("The timezone you have configured in your gosa.conf (%s) is not valid."),$tz));
+			$zone = array("name" => "unconfigured", "value" => 0);
 		}
 	}
 	return($zone);
