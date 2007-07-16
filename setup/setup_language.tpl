@@ -10,20 +10,4 @@
 		{html_options options=$languages selected=$lang_selected}
 		</select>
 	</div>
-  	<div class='step4_container'>
-        <div class='step4_name'>
-            {t}Timezone{/t}
-        </div>
-        <div class='step4_value'>
-			<select name='timezone' title='{t}Please your preferred timezone here{/t}' style="width:100%">
-		{foreach from=$timezones item=val key=key}
-			{if $val.name == $timezone}
-			<option selected value="{$val.name}">{$val.name}</option>
-			{else}
-			<option value="{$val.name}">{$val.name}</option>
-			{/if}
-		{/foreach}
-			</select>
-        </div>
-    </div>
 </div>

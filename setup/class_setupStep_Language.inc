@@ -25,17 +25,14 @@ class Step_Language extends setup_step
   var $lang_selected  = "";       /* Language selected from select box  */
   var $lang           = "en_EN";  /* Detected language */
   var $languages      = array();
-  var $attributes     = array("lang","lang_selected","timezone");
+  var $attributes     = array("lang","lang_selected");
   var $header_image   = "images/locale.png";
-  var $timezone       = "Europe/Berlin";
-  var $timezones      = array();
 
   function Step_Language()
   {
     $this->lang           = get_browser_language();
     $this->lang_selected  = "";
     $this->update_strings(); 
-    $this->timezones = get_timezones_array();
   }
 
   function update_strings()
@@ -58,8 +55,6 @@ class Step_Language extends setup_step
     $smarty->assign("languages",    $this->languages);
     $smarty->assign("lang",         $this->lang);
     $smarty->assign("lang_selected",$this->lang_selected);
-    $smarty->assign("timezone"     ,$this->timezone);
-    $smarty->assign("timezones"    ,$this->timezones);
     return($smarty->fetch(get_template_path("setup_language.tpl",TRUE,dirname(__FILE__))));
   }
 
@@ -73,10 +68,6 @@ class Step_Language extends setup_step
         $_SESSION['lang'] = $this->lang_selected;
       }else{
         $_SESSION['lang'] = $this->lang;
-      }
-
-      if(isset($_POST['timezone']) && isset($this->timezones[$_POST['timezone']])){
-        $this->timezone = $_POST['timezone'];
       }
     }
   }

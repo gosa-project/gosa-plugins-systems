@@ -51,7 +51,10 @@ class Step_Config2 extends setup_step
   var $use_netatalk         = FALSE;
   var $enableFAI_management = FALSE;
 
-  var $attributes = array("governmentmode","sambaidmapping","cyrusunixstyle","mail","use_netatalk","enableFAI_management");
+  var $timezone       = "Europe/Berlin";
+  var $timezones      = array();
+
+  var $attributes = array("governmentmode","sambaidmapping","cyrusunixstyle","mail","use_netatalk","enableFAI_management","timezone");
   var $called = FALSE;
 
   function Step_Config2()
@@ -71,6 +74,7 @@ class Step_Config2 extends setup_step
       $pwdhash= 'perl -MCrypt::SmbHash -e "print join(q[:], ntlmgen \$ARGV[0]), $/;"';
     }
 
+    $this->timezones = get_timezones_array();
     $this->samba_settings['smbhash'] = $pwdhash;
   }
 
@@ -142,12 +146,18 @@ class Step_Config2 extends setup_step
         foreach($this->attributes as $attr){
       $smarty->assign($attr,$this->$attr);
     }
+    $smarty->assign("timezone"     ,$this->timezone);
+    $smarty->assign("timezones"    ,$this->timezones);
     return($smarty -> fetch (get_template_path("../setup/setup_config2.tpl")));
   }
 
   function save_object()
   {
     if(isset($_POST['step6_posted'])){
+
+      if(isset($_POST['timezone']) && isset($this->timezones[$_POST['timezone']])){
+        $this->timezone = $_POST['timezone'];
+      }
 
       /* Get attributes */
       foreach($this->attributes as $attr){
