@@ -67,6 +67,9 @@ class sambaLogonHours extends plugin
 
   function execute()
   {
+    print_a(get_timezone("Europe/Berlin"));
+    print_a(get_default_timezone());
+
     $week_days = array();
     $week_days[0]= _("Sunday");
     $week_days[1]= _("Monday");
