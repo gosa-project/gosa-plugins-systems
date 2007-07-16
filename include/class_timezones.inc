@@ -471,7 +471,7 @@ function _timezones_array($selected = NULL)
 			'Pacific/Wallis' => 43200,
 			'Pacific/Yap' => 36000 );          
 
-	$timezones_dst = array (  
+	$_unused_timezones = array (  
 			'America/Adak' => 1,
 			'America/Atka' => 1,
 			'America/Anchorage' => 1,
@@ -642,20 +642,12 @@ function _timezones_array($selected = NULL)
 	if($selected != NULL){
 		foreach($timezones as $timezone => $value) { 
 			if (preg_match("#".normalizePreg($timezone)."#i",$selected)){
-				return($tz_arr[$timezone] = array('name'=>$timezone,'value'=>$value)); 
+				return($tz_arr[$timezone] = array('name'=>$timezone,'value'=>$value / (60*60))); 
 			}
 		}  
-		foreach($timezones_dst as $timezone => $value){
-			if (preg_match("/".normalizePreg($timezone)."/i",$selected)){
-				return($tz_arr[$timezone] = array('name'=>$timezone,'value'=>$value));
-			}
-		}
 	}else{
 		foreach($timezones as $timezone => $value) {  
-			$tz_arr[$timezone] = array('name'=>$timezone,'value'=>$value); 
-		}
-		foreach($timezones_dst as $timezone => $value) {  
-			$tz_arr[$timezone] = array('name'=>$timezone,'value'=>$value); 
+			$tz_arr[$timezone] = array('name'=>$timezone,'value'=>($value / (60*60))); 
 		}
 	}
 	return $tz_arr;  
