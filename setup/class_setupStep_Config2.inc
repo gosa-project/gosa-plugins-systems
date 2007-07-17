@@ -74,7 +74,7 @@ class Step_Config2 extends setup_step
       $pwdhash= 'perl -MCrypt::SmbHash -e "print join(q[:], ntlmgen \$ARGV[0]), $/;"';
     }
 
-    $this->timezones = get_timezones_array();
+    $this->timezones = _get_tz_zones();
     $this->samba_settings['smbhash'] = $pwdhash;
   }
 
@@ -155,7 +155,7 @@ class Step_Config2 extends setup_step
   {
     if(isset($_POST['step6_posted'])){
 
-      if(isset($_POST['timezone']) && isset($this->timezones[$_POST['timezone']])){
+      if(isset($_POST['timezone']) && isset($this->timezones['TIMEZONES'][$_POST['timezone']])){
         $this->timezone = $_POST['timezone'];
       }
 
