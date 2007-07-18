@@ -56,6 +56,8 @@ class workstartup extends plugin
 
   var $fai_activated = FALSE;
 
+  var $member_of_ogroup   = FALSE;
+
   function workstartup ($config, $dn= NULL, $parent= NULL)
   {
     /* Check if FAI is active */
@@ -68,6 +70,13 @@ class workstartup extends plugin
     }
 
     plugin::plugin ($config, $dn, $parent);
+
+    if(!isset($this->parent->by_object['ogroup'])){
+      $ldap = $this->config->get_ldap_link();
+      $ldap->cd ($this->config->current['BASE']);
+      $ldap->search("(&(objectClass=gotoWorkstationTemplate)(member=".$this->dn."))",array("cn"));
+      $this->member_of_ogroup = $ldap->count() >= 1;
+    }
 
     /* Creating a list of valid Mirrors 
      * none will not be saved to ldap.
@@ -290,10 +299,11 @@ class workstartup extends plugin
     $this->gotoBootKernels= array("default-inherited" => '['._("inherited").']');
 
     /* Load hardware list */
-    $ldap= $this->config->get_ldap_link();
-    $ldap->cd($this->config->current['BASE']);
-    $ldap->search("(&(objectClass=gotoWorkstationTemplate)(member=".$this->dn."))");
-    if ($ldap->count() == 1){
+    if ($this->member_of_ogroup){
+
+      if(count($this->FAIclass)==0 && $this->FAIrelease == ""){
+        $this->FAIdebianMirror = "inherited";
+      }
 
       if($this->fai_activated){
         $map= array("gotoLdapServer","FAIclass","FAIdebianMirror");
@@ -357,10 +367,6 @@ class workstartup extends plugin
         }
         pclose($fh);
       }
-    }
-
-    if(count($this->FAIclass)==0 && $this->FAIrelease == ""){
-      $this->FAIdebianMirror = "inherited";
     }
 
     /* Turn to default, if we've nothing to inherit */
@@ -832,7 +838,13 @@ class workstartup extends plugin
   function getFAIdebianMirrors()
   {
     $ret = array();
-    $ret['inherited']="["._("inherited")."]";
+
+    /* Only add inherit option, if we are part in an object group 
+     */
+    if($this->member_of_ogroup)    {
+      $ret['inherited']="["._("inherited")."]";
+    }
+
     $ret['auto']=_("automatic");
     $secs  = array();
 

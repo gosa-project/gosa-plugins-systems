@@ -94,6 +94,7 @@
 	<table width="100%">
     <tr>
 	 <td colspan="2">
+{if $member_of_ogroup}
 {render acl=$gotoNtpServerACL}
 		<input type="checkbox" value="1" name="inheritTimeServer"
 			{if $inheritTimeServer } checked {/if} 
@@ -103,6 +104,9 @@
 					changeState('addNtpServer');
 					changeState('delNtpServer');">{t}Inherit time server attributes{/t}
 {/render}
+{else}
+	<input disabled type='checkbox' name='option_disabled'>{t}Inherit time server attributes{/t}
+{/if}
 	 </td>
 	</tr>
 	<tr>
