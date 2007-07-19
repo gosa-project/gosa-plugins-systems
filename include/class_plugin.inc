@@ -115,6 +115,9 @@ class plugin
   var $plHeadline= "";
   var $plDescription= "";
 
+  /* This can be set to render the tabulators in another stylesheet */
+  var $pl_notify= FALSE;
+
   /*! \brief plugin constructor
 
     If 'dn' is set, the node loads the given 'dn' from LDAP
@@ -1170,7 +1173,7 @@ class plugin
 
         /* Check if the snapshot_base is defined */
         if(!isset($tmp['SNAPSHOT_BASE'])){
-          print_red(sprintf(_("The snapshot functionality is enabled, but the required variable '%s' is not configured in your gosa.conf."),$missing));
+          print_red(sprintf(_("The snapshot functionality is enabled, but the required variable '%s' is not configured in your gosa.conf."),"SNAPSHOT_BASE"));
           return(FALSE);
         }
 

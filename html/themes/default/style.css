@@ -463,6 +463,13 @@ div.tab_active {
 	padding-right:8px;
 }
 
+div#notify {
+       background-image: url("../../images/lamp.png");
+       background-repeat:no-repeat;
+       background-position:1px 1px;
+       padding-left:18px;
+}
+
 div.tab_left {
 	text-align:center;
 	background-color:#D0D0D0;
@@ -526,7 +533,6 @@ a.tab_active, input.tab_active {
 	margin:0px;
 	height:22px;
 	font-family:arial,helvetica,sans-serif;
-	background-color:#f8f8f8;
 	text-decoration:none;
 	color:#00008F;
 	font-size:13px;
@@ -538,7 +544,6 @@ a.tab_right, input.tab_right {
 	border:0px;
 	margin:0px;
 	font-family:arial,helvetica,sans-serif;
-	background-color:#D0D0D0;
 	text-decoration:none;
 	color:#00008F;
 	font-size:13px;
@@ -550,7 +555,6 @@ a.tab_left, input.tab_left {
 	border:0px;
 	margin:0px;
 	font-family:arial,helvetica,sans-serif;
-	background-color:#D0D0D0;
 	text-decoration:none;
 	color:#00008F;
 	font-size:13px;

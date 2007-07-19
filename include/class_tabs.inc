@@ -163,11 +163,18 @@ class tabs
 		/* nobr causes w3c warnings so we use &nbsp; to keep the tab name in one line */
 		$title= preg_replace("/ /","&nbsp;",$title);
 
+    /* Take care about notifications */
+    if ($this->by_object[$class]->pl_notify){
+      $notify= "id=\"notify\"";
+    } else {
+      $notify= "";
+    }
+
 		if ($_SESSION['js']==FALSE){	
-			$display.= "<div class=\"$style[$index]\"><input type=\"submit\" name=\"$class\"".
+			$display.= "<div ".$notify." class=\"$style[$index]\"><input type=\"submit\" name=\"$class\"".
 		                   " class=\"$style[$index]\" value=\"$title\"";
 		} else {			 
-			$display.= "<div class=\"$style[$index]\"><a class=\"$style[$index]\" onclick=\"return true;\" href=\"javascript:document.mainform.arg.value='$class';document.mainform.submit();\">$title</a";
+			$display.= "<div ".$notify." class=\"$style[$index]\"><a class=\"$style[$index]\" onclick=\"return true;\" href=\"javascript:document.mainform.arg.value='$class';document.mainform.submit();\">$title</a";
 		}
 		$display.= "></div></td>";
 	}
