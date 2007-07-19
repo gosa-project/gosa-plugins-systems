@@ -95,6 +95,9 @@ function change_password ($dn, $password, $mode=0, $hash= "")
   global $config;
   $newpass= "";
 
+  /* Convert to lower. Methods are lowercase */
+  $hash= strtolower($hash);
+
   // Get all available encryption Methods 
 
   // NON STATIC CALL :)
