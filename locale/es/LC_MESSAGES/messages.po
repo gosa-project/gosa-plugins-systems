@@ -1,4 +1,4 @@
-# translation of samba.po to
+# translation of users.po to
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
@@ -6,10 +6,10 @@
 #: include/class_plugin.inc:115 include/class_plugin.inc:116
 msgid ""
 msgstr ""
-"Project-Id-Version: samba\n"
+"Project-Id-Version: users\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-06-18 14:55+0200\n"
-"PO-Revision-Date: 2007-07-18 01:46+0200\n"
+"PO-Revision-Date: 2007-07-19 02:50+0200\n"
 "Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
 "Language-Team:  <es@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -96,7 +96,7 @@ msgstr ""
 #: plugins/generic/references/class_reference.inc:20
 #: setup/setup_feedback.tpl:46
 msgid "Generic"
-msgstr "Genérico"
+msgstr ""
 
 #: contrib/gosa.conf:95
 msgid "Unix"
@@ -108,7 +108,7 @@ msgstr ""
 #: plugins/admin/groups/class_divListGroup.inc:233
 #: plugins/admin/users/class_divListUsers.inc:223
 msgid "Environment"
-msgstr ""
+msgstr "Entorno"
 
 #: contrib/gosa.conf:97 contrib/gosa.conf:116
 #: plugins/personal/mail/class_mailAccount.inc:22
@@ -123,7 +123,7 @@ msgstr ""
 #: plugins/admin/ogroups/class_mailogroup.inc:181
 #: plugins/generic/references/class_reference.inc:24
 msgid "Mail"
-msgstr ""
+msgstr "Correo Electrónico"
 
 #: contrib/gosa.conf:98 plugins/personal/samba/class_sambaAccount.inc:24
 #: plugins/personal/samba/class_sambaAccount.inc:1092
@@ -138,7 +138,7 @@ msgstr "Samba"
 #: plugins/personal/netatalk/class_netatalk.inc:370
 #: plugins/admin/users/class_divListUsers.inc:233
 msgid "Netatalk"
-msgstr ""
+msgstr "Netatalk"
 
 #: contrib/gosa.conf:100 plugins/personal/connectivity/main.inc:118
 #: plugins/personal/connectivity/class_oxchangeAccount.inc:723
@@ -146,7 +146,7 @@ msgstr ""
 #: plugins/personal/connectivity/class_oxchangeAccount.inc:731
 #: plugins/personal/connectivity/class_connectivity.inc:15
 msgid "Connectivity"
-msgstr ""
+msgstr "Conectividad"
 
 #: contrib/gosa.conf:101 plugins/personal/generic/generic.tpl:334
 #: plugins/personal/generic/generic.tpl:502
@@ -161,7 +161,7 @@ msgstr ""
 #: plugins/admin/systems/glpiManufacturerAdd.tpl:39 html/getxls.php:222
 #: html/getxls.php:297
 msgid "Fax"
-msgstr ""
+msgstr "Fax"
 
 #: contrib/gosa.conf:102 plugins/personal/generic/generic.tpl:309
 #: plugins/personal/generic/generic.tpl:490
@@ -181,12 +181,12 @@ msgstr ""
 #: plugins/gofon/phoneaccount/class_phoneAccount.inc:1469
 #: plugins/generic/references/class_reference.inc:40
 msgid "Phone"
-msgstr ""
+msgstr "Teléfono"
 
 #: contrib/gosa.conf:104 plugins/personal/nagios/class_nagiosAccount.inc:18
 #: plugins/personal/nagios/class_nagiosAccount.inc:275
 msgid "Nagios"
-msgstr ""
+msgstr "Nagios"
 
 #: contrib/gosa.conf:115 plugins/admin/groups/class_groupApplication.inc:1194
 #: plugins/admin/applications/class_applicationManagement.inc:25
@@ -358,7 +358,7 @@ msgstr ""
 #: contrib/gosa.conf:433 plugins/admin/ogroups/class_phonequeue.inc:270
 #: setup/class_setupStep_Language.inc:48
 msgid "German"
-msgstr "Alemán"
+msgstr ""
 
 #: contrib/gosa.conf:434 setup/class_setupStep_Language.inc:52
 msgid "Russian"
@@ -564,7 +564,7 @@ msgstr "Cancelar"
 #: plugins/gofon/phoneaccount/main.inc:112
 msgid "Click the 'Edit' button below to change informations in this dialog"
 msgstr ""
-"Pulse en el botón - Editar - para modificar la información en esta ventana"
+"Pulse en el botón - Editar - para cambiar la información en esta ventana"
 
 #: plugins/personal/nagios/main.inc:115 plugins/personal/mail/main.inc:115
 #: plugins/personal/posix/main.inc:118 plugins/personal/netatalk/main.inc:102
@@ -592,11 +592,11 @@ msgstr ""
 #: plugins/gofon/phoneaccount/main.inc:113
 #: include/sieve/templates/element_comment.tpl:8
 msgid "Edit"
-msgstr "Editar"
+msgstr ""
 
 #: plugins/personal/nagios/main.inc:123
 msgid "Nagios settings"
-msgstr ""
+msgstr "Parámetros de Nagios"
 
 #: plugins/personal/nagios/class_nagiosAccount.inc:19
 #: plugins/personal/mail/class_mailAccount.inc:23
@@ -647,59 +647,65 @@ msgstr ""
 
 #: plugins/personal/nagios/class_nagiosAccount.inc:110
 msgid "This account has no nagios extensions."
-msgstr ""
+msgstr "Esta cuenta no tiene extensión nagios."
 
 #: plugins/personal/nagios/class_nagiosAccount.inc:119
 msgid "Remove nagios account"
-msgstr ""
+msgstr "Eliminar cuenta Nagios"
 
 #: plugins/personal/nagios/class_nagiosAccount.inc:120
 msgid ""
 "This account has nagios features enabled. You can disable them by clicking "
 "below."
 msgstr ""
+"Esta cuenta tiene la extensión Nagios activa. Puede desactivarla pulsando a "
+"continuación."
 
 #: plugins/personal/nagios/class_nagiosAccount.inc:122
 msgid "Create nagios account"
-msgstr ""
+msgstr "Crear cuenta Nagios"
 
 #: plugins/personal/nagios/class_nagiosAccount.inc:122
 msgid ""
 "This account has nagios features disabled. You can enable them by clicking "
 "below."
 msgstr ""
+"Esta cuenta tiene la extensión Nagios desactivada.Puede activarla pulsando "
+"aqui."
 
 #: plugins/personal/nagios/class_nagiosAccount.inc:178
 #, php-format
 msgid "Saving of user/nagios account with dn '%s' failed."
-msgstr ""
+msgstr "Ha fallado al grabar la cuenta de usuario/Nagios con dn '%s'."
 
 #: plugins/personal/nagios/class_nagiosAccount.inc:198
 msgid "The required field 'NagiosAlias' is not set."
-msgstr ""
+msgstr "No se ha asignado ningún valor al campo requerido 'Alias de Nagios'."
 
 #: plugins/personal/nagios/class_nagiosAccount.inc:201
 msgid "The required field 'NagiosMail' is not set."
-msgstr ""
+msgstr "No se ha asignado ningún valor al campo requerido 'Correo de Nagios'."
 
 #: plugins/personal/nagios/class_nagiosAccount.inc:205
 #: plugins/personal/nagios/class_nagiosAccount.inc:209
 msgid "Please enter a valid email address in 'NagiosMail' field."
 msgstr ""
+"Por favor introduzca una dirección válida de correo electrónico en el campo "
+"'Cuenta Nagios'."
 
 #: plugins/personal/nagios/class_nagiosAccount.inc:261
 #, php-format
 msgid "Removing of user/nagios account with dn '%s' failed."
-msgstr ""
+msgstr "Ha fallado al eliminar la cuenta Nagios con dn '%s'."
 
 #: plugins/personal/nagios/class_nagiosAccount.inc:276
 msgid "Nagios account settings"
-msgstr ""
+msgstr "Parámetros de cuenta Nagios"
 
 #: plugins/personal/nagios/class_nagiosAccount.inc:286
 #: plugins/personal/nagios/nagios.tpl:8
 msgid "Alias"
-msgstr ""
+msgstr "Alias"
 
 #: plugins/personal/nagios/class_nagiosAccount.inc:287
 #: plugins/personal/generic/class_user.inc:1447
@@ -721,60 +727,60 @@ msgstr ""
 #: plugins/personal/nagios/class_nagiosAccount.inc:290
 #: plugins/personal/nagios/nagios.tpl:100
 msgid "Host notification commands"
-msgstr ""
+msgstr "Comandos de Notificación de máquina"
 
 #: plugins/personal/nagios/class_nagiosAccount.inc:291
 #: plugins/personal/nagios/nagios.tpl:66
 msgid "Host notification options"
-msgstr ""
+msgstr "Opciones de Notificación de máquina"
 
 #: plugins/personal/nagios/class_nagiosAccount.inc:292
 #: plugins/personal/nagios/nagios.tpl:27
 msgid "Host notification period"
-msgstr ""
+msgstr "Periodo de Notificación de máquina"
 
 #: plugins/personal/nagios/class_nagiosAccount.inc:294
 #: plugins/personal/nagios/nagios.tpl:90
 msgid "Service notification commands"
-msgstr ""
+msgstr "Comandos de Notificación de Servicio"
 
 #: plugins/personal/nagios/class_nagiosAccount.inc:295
 #: plugins/personal/nagios/nagios.tpl:53
 msgid "Service notification options"
-msgstr ""
+msgstr "Opciones de Notificación de Servicio"
 
 #: plugins/personal/nagios/class_nagiosAccount.inc:296
 #: plugins/personal/nagios/nagios.tpl:40
 msgid "Service notification period"
-msgstr ""
+msgstr "Periodo de Notificación de Servicio"
 
 #: plugins/personal/nagios/class_nagiosAccount.inc:298
 msgid "View all hosts"
-msgstr ""
+msgstr "Ver todas las máquinas"
 
 #: plugins/personal/nagios/class_nagiosAccount.inc:299
 msgid "View all services"
-msgstr ""
+msgstr "Ver todos los servicios"
 
 #: plugins/personal/nagios/class_nagiosAccount.inc:301
 msgid "Trigger system commands"
-msgstr ""
+msgstr "Activar comandos de sistema"
 
 #: plugins/personal/nagios/class_nagiosAccount.inc:302
 msgid "Trigger all host commands"
-msgstr ""
+msgstr "Activar todos los comandos de máquina"
 
 #: plugins/personal/nagios/class_nagiosAccount.inc:303
 msgid "Trigger all service commands"
-msgstr ""
+msgstr "Activar todos los comandos de servicio"
 
 #: plugins/personal/nagios/class_nagiosAccount.inc:305
 msgid "View configuration information"
-msgstr ""
+msgstr "Ver la información de configuración"
 
 #: plugins/personal/nagios/class_nagiosAccount.inc:306
 msgid "View system informations"
-msgstr ""
+msgstr "Ver la información de sistemas"
 
 #: plugins/personal/nagios/nagios.tpl:5
 msgid "Nagios Account"
@@ -1094,7 +1100,7 @@ msgstr ""
 #: plugins/personal/mail/generic.tpl:107
 #: plugins/personal/mail/class_mailAccount.inc:1170
 msgid "Use custom sieve script"
-msgstr ""
+msgstr "Usar 'script Sieve' propios"
 
 #: plugins/personal/mail/generic.tpl:107
 msgid "disables all Mail options!"
@@ -1165,7 +1171,7 @@ msgstr ""
 #: include/sieve/class_sieveManagement.inc:509
 #: include/sieve/class_sieveManagement.inc:728
 msgid "Vacation message"
-msgstr ""
+msgstr "Mensaje de ausencia"
 
 #: plugins/personal/mail/generic.tpl:244
 #: plugins/personal/mail/copypaste.tpl:13
@@ -1195,11 +1201,11 @@ msgstr ""
 #: plugins/personal/mail/class_mailAccount.inc:1139
 #: plugins/admin/groups/paste_mail.tpl:1 setup/setup_config2.tpl:95
 msgid "Mail settings"
-msgstr ""
+msgstr "Parámetros de correo"
 
 #: plugins/personal/mail/main.inc:124
 msgid "User mail settings"
-msgstr ""
+msgstr "Parametros del correo del usuario"
 
 #: plugins/personal/mail/class_mailAccount.inc:92
 #: plugins/admin/groups/class_groupMail.inc:80
@@ -1209,11 +1215,11 @@ msgstr ""
 
 #: plugins/personal/mail/class_mailAccount.inc:214
 msgid "No DESC tag in vacation file:"
-msgstr ""
+msgstr "En el archivo de ausencia no existe la etiqueta 'DESC':"
 
 #: plugins/personal/mail/class_mailAccount.inc:289
 msgid "This account has no mail extensions."
-msgstr ""
+msgstr "Esta cuenta no tiene la extensión de correo."
 
 #: plugins/personal/mail/class_mailAccount.inc:299
 #: plugins/personal/mail/class_mailAccount.inc:302
@@ -1227,6 +1233,8 @@ msgid ""
 "This account can't be removed while there are delegations configured. Remove "
 "those delegations first."
 msgstr ""
+"Esta cuenta no puede ser eliminada mientras haya delegaciones configuradas. "
+"Elimine primero las delegaciones."
 
 #: plugins/personal/mail/class_mailAccount.inc:303
 #: plugins/admin/groups/class_groupMail.inc:348
@@ -1252,6 +1260,8 @@ msgstr ""
 msgid ""
 "You're trying to add an invalid email address to the list of forwarders."
 msgstr ""
+"Esta intentando añadir una dirección de correo no valida a la lista de "
+"reenvío."
 
 #: plugins/personal/mail/class_mailAccount.inc:364
 #: plugins/admin/groups/class_groupMail.inc:427
@@ -1394,17 +1404,19 @@ msgstr "Diciembre"
 #: plugins/personal/mail/class_mailAccount.inc:688
 #, php-format
 msgid "Removing of user/mail account with dn '%s' failed."
-msgstr ""
+msgstr "No se ha podido borrar la cuenta de usuario/correo con dn '%s'."
 
 #: plugins/personal/mail/class_mailAccount.inc:842
 #, php-format
 msgid "Saving of user/mail account with dn '%s' failed."
-msgstr ""
+msgstr "No se ha podido guardar la cuenta de usuario/correo con dn '%s'."
 
 #: plugins/personal/mail/class_mailAccount.inc:903
 msgid ""
 "There is no valid mailserver specified, please add one in the system setup."
 msgstr ""
+"No se ha configurado ningún servidor de correo válido, por favor añada uno "
+"en la configuración de sistemas."
 
 #: plugins/personal/mail/class_mailAccount.inc:908
 #: plugins/admin/groups/class_groupMail.inc:924
@@ -1442,30 +1454,35 @@ msgstr ""
 #: plugins/personal/mail/class_mailAccount.inc:951
 msgid "You specified Spam settings, but there is no Folder specified."
 msgstr ""
+"Has seleccionado características antispam sin haber seleccionado ninguna "
+"carpeta."
 
 #: plugins/personal/mail/class_mailAccount.inc:955
 msgid "Time interval to show vacation message is not valid."
 msgstr ""
+"No es válido el intervalo de fechas para mostrar el mensaje de ausencia."
 
 #: plugins/personal/mail/class_mailAccount.inc:995
 #: plugins/personal/mail/class_mailAccount.inc:1007
 msgid "You are not allowed to write mail forwarding."
-msgstr ""
+msgstr "No tiene permisos para añadir una dirección de reenvío"
 
 #: plugins/personal/mail/class_mailAccount.inc:1040
 #: plugins/personal/mail/class_mailAccount.inc:1051
 msgid "You are not allowed to write mail alternate address."
-msgstr ""
+msgstr "No tiene permisos para añadir una dirección alternativa."
 
 #: plugins/personal/mail/class_mailAccount.inc:1116
 msgid "Waiting for kolab to remove mail properties."
-msgstr ""
+msgstr "Esperando que Kolab elimine las características de correo."
 
 #: plugins/personal/mail/class_mailAccount.inc:1118
 msgid ""
 "Please remove the mail account first, to allow kolab to call its remove "
 "methods."
 msgstr ""
+"Por favor elimine la cuenta de correo primero, para permitir que Kolab "
+"active su sistema de eliminación."
 
 #: plugins/personal/mail/class_mailAccount.inc:1149
 #: plugins/admin/groups/class_groupMail.inc:1122
@@ -1474,48 +1491,48 @@ msgstr ""
 
 #: plugins/personal/mail/class_mailAccount.inc:1152
 msgid "Add vacation information"
-msgstr ""
+msgstr "Añadir información de ausencia"
 
 #: plugins/personal/mail/class_mailAccount.inc:1155
 msgid "Use spam filter"
-msgstr ""
+msgstr "Usar filtro antispam"
 
 #: plugins/personal/mail/class_mailAccount.inc:1156
 msgid "Spam level"
-msgstr ""
+msgstr "Nivel de spam"
 
 #: plugins/personal/mail/class_mailAccount.inc:1157
 msgid "Spam mail box"
-msgstr ""
+msgstr "Tamaño de la carpeta de spam"
 
 #: plugins/personal/mail/class_mailAccount.inc:1159
 msgid "Sieve management"
-msgstr ""
+msgstr "Administración Sieve"
 
 #: plugins/personal/mail/class_mailAccount.inc:1161
 msgid "Reject due to mailsize"
-msgstr ""
+msgstr "rechazar correos mayores que"
 
 #: plugins/personal/mail/class_mailAccount.inc:1162
 msgid "Mail max size"
-msgstr ""
+msgstr "Tamaño máximo del mensaje"
 
 #: plugins/personal/mail/class_mailAccount.inc:1164
 #: plugins/personal/mail/class_mailAccount.inc:1169
 msgid "Forwarding address"
-msgstr ""
+msgstr "Direcciones de reenvío"
 
 #: plugins/personal/mail/class_mailAccount.inc:1165
 msgid "Local delivery"
-msgstr ""
+msgstr "Entrega local"
 
 #: plugins/personal/mail/class_mailAccount.inc:1166
 msgid "No delivery to own mailbox "
-msgstr ""
+msgstr "No recibir en su propia cuenta"
 
 #: plugins/personal/mail/class_mailAccount.inc:1167
 msgid "Mail alternative addresses"
-msgstr ""
+msgstr "Direcciones alternativas"
 
 #: plugins/personal/password/changed.tpl:2
 msgid ""
@@ -1541,7 +1558,7 @@ msgstr ""
 #: ihtml/themes/default/setup_step3.tpl:17
 #: ihtml/themes/default/setup_step4.tpl:114
 msgid "Back"
-msgstr "Atras"
+msgstr ""
 
 #: plugins/personal/password/class_password.inc:5
 #: plugins/personal/generic/paste_generic.tpl:20
@@ -1589,7 +1606,7 @@ msgstr ""
 #: plugins/personal/password/password.tpl:8
 #: plugins/personal/password/main.inc:73
 msgid "You have no permissions to change your password."
-msgstr ""
+msgstr "No tiene permisos para cambiar su contraseña."
 
 #: plugins/personal/password/password.tpl:10
 #: plugins/admin/users/password.tpl:6
@@ -1628,11 +1645,11 @@ msgstr ""
 msgid ""
 "The password you've entered as your current password doesn't match the real "
 "one."
-msgstr ""
+msgstr "La contraseña introducida como contraseña actual no es correcta."
 
 #: plugins/personal/password/main.inc:47
 msgid "You need to specify your current password in order to proceed."
-msgstr ""
+msgstr "Necesita introducir su contraseña actual para continuar."
 
 #: plugins/personal/password/main.inc:52 plugins/personal/generic/main.inc:79
 #: plugins/admin/users/class_userManagement.inc:183
@@ -1651,19 +1668,20 @@ msgstr "No se ha asignado ningún valor al campo 'Nueva contraseña'."
 #: plugins/personal/password/main.inc:63
 msgid "The password used as new and current are too similar."
 msgstr ""
+"La contraseña actual y la introducida como nueva son demasiado parecidas."
 
 #: plugins/personal/password/main.inc:68
 msgid "The password used as new is to short."
-msgstr ""
+msgstr "La nueva contraseña es demasiado corta."
 
 #: plugins/personal/password/main.inc:93
 msgid "External password changer reported a problem: "
-msgstr ""
+msgstr "El programa externo de cambio de contraseña informo de un problema: "
 
 #: plugins/personal/password/main.inc:122
 #: plugins/admin/users/class_divListUsers.inc:272
 msgid "Change password"
-msgstr ""
+msgstr "Cambiar contraseña"
 
 #: plugins/personal/posix/generic.tpl:7
 #: plugins/personal/posix/paste_generic.tpl:8
@@ -1690,7 +1708,7 @@ msgstr ""
 #: plugins/admin/systems/glpiAttachmentEdit.tpl:38
 #: plugins/gofon/fonreports/contents.tpl:35
 msgid "Status"
-msgstr ""
+msgstr "Estado"
 
 #: plugins/personal/posix/generic.tpl:47
 #: plugins/personal/posix/paste_generic.tpl:23
@@ -1844,7 +1862,7 @@ msgstr "Sin configurar"
 #: plugins/admin/systems/class_terminalService.inc:197
 #: plugins/gofon/phoneaccount/class_phoneAccount.inc:256
 msgid "automatic"
-msgstr "automático"
+msgstr ""
 
 #: plugins/personal/posix/class_posixAccount.inc:255
 msgid "This account has no unix extensions."
@@ -1911,7 +1929,7 @@ msgstr "Avisar al usuario %s días antes de que la contraseña expire"
 #: plugins/admin/systems/class_terminalGeneric.inc:105
 #: setup/setup_config2.tpl:103 ihtml/themes/default/setup_step4.tpl:91
 msgid "disabled"
-msgstr "desactivado"
+msgstr ""
 
 #: plugins/personal/posix/class_posixAccount.inc:575
 msgid "full access"
@@ -1955,12 +1973,12 @@ msgstr "El valor especificado como 'UID' es demasiado pequeño."
 #: plugins/personal/posix/class_posixAccount.inc:951
 #: plugins/admin/groups/class_groupGeneric.inc:847
 msgid "Value specified as 'GID' is not valid."
-msgstr "El valor especificado como 'GID' no es valido."
+msgstr ""
 
 #: plugins/personal/posix/class_posixAccount.inc:954
 #: plugins/admin/groups/class_groupGeneric.inc:850
 msgid "Value specified as 'GID' is too small."
-msgstr "El valor especificado como 'GID' es muy pequeño."
+msgstr ""
 
 #: plugins/personal/posix/class_posixAccount.inc:962
 msgid "Value specified as 'shadowMin' is not valid."
@@ -2004,7 +2022,7 @@ msgstr ""
 #: plugins/personal/posix/class_posixAccount.inc:1174
 #: plugins/admin/groups/class_groupGeneric.inc:892
 msgid "Too many users, can't allocate a free ID!"
-msgstr "¡Hay demasiados usuarios, no hay identificadores (ID) libres!"
+msgstr ""
 
 #: plugins/personal/posix/class_posixAccount.inc:1343
 msgid "POSIX account"
@@ -2051,7 +2069,7 @@ msgstr "Sistema de confianza"
 
 #: plugins/personal/netatalk/main.inc:111
 msgid "Netatalk settings"
-msgstr ""
+msgstr "Parámetros de Netatalk"
 
 #: plugins/personal/netatalk/class_netatalk.inc:37
 msgid "Manage netatalk account"
@@ -2059,51 +2077,56 @@ msgstr ""
 
 #: plugins/personal/netatalk/class_netatalk.inc:174
 msgid "This account has no netatalk extensions."
-msgstr ""
+msgstr "Esta cuenta no tiene extensión Netatalk"
 
 #: plugins/personal/netatalk/class_netatalk.inc:183
 msgid "Remove netatalk account"
-msgstr ""
+msgstr "Eliminar cuenta Netatalk"
 
 #: plugins/personal/netatalk/class_netatalk.inc:183
 msgid ""
 "This account has netatalk features enabled. You can disable them by clicking "
 "below."
 msgstr ""
+"Esta cuenta tiene la extensión Netatalk activa. Puede desactivarla pulsando "
+"a continuación."
 
 #: plugins/personal/netatalk/class_netatalk.inc:194
 #: plugins/personal/netatalk/class_netatalk.inc:196
 msgid "Create netatalk account"
-msgstr ""
+msgstr "Crear cuenta Netatalk"
 
 #: plugins/personal/netatalk/class_netatalk.inc:194
 msgid ""
 "This account has netatalk features disabled. You can enable them by clicking "
 "below."
 msgstr ""
+"Esta cuenta tiene la extensión Netatalk desactivada. Puede activarla "
+"pulsando aqui."
 
 #: plugins/personal/netatalk/class_netatalk.inc:229
 msgid "You must select a share to use."
-msgstr ""
+msgstr "Debe seleccionar la carpeta compartida que desea usar"
 
 #: plugins/personal/netatalk/class_netatalk.inc:294
 #, php-format
 msgid "Saving of user/netatalk account with dn '%s' failed."
-msgstr ""
+msgstr "Ha fallado la grabación de la cuenta de usuario/Netatalk con dn '%s'."
 
 #: plugins/personal/netatalk/class_netatalk.inc:356
 #, php-format
 msgid "Removing of user/netatalk account with dn '%s' failed."
 msgstr ""
+"Ha fallado la eliminación de la cuenta de usuario/Netatalk con dn '%s'."
 
 #: plugins/personal/netatalk/class_netatalk.inc:379
 msgid "User home path"
-msgstr ""
+msgstr "Ruta del directorio del usuario"
 
 #: plugins/personal/netatalk/class_netatalk.inc:380
 #: plugins/personal/netatalk/netatalk.tpl:4
 msgid "Share"
-msgstr ""
+msgstr "Recurso compartido"
 
 #: plugins/personal/netatalk/netatalk.tpl:16
 #: plugins/admin/systems/servnfs.tpl:29
@@ -2216,7 +2239,7 @@ msgstr ""
 #: ihtml/themes/default/acl.tpl:20 ihtml/themes/default/acl.tpl:75
 #: ihtml/themes/default/acl.tpl:89
 msgid "Apply"
-msgstr ""
+msgstr "Aplicar"
 
 #: plugins/personal/samba/samba3.tpl:27
 #: plugins/personal/samba/class_sambaAccount.inc:1121
@@ -2528,7 +2551,7 @@ msgstr ""
 #: plugins/personal/environment/environment.tpl:73
 #: plugins/personal/environment/class_environment.inc:1326
 msgid "Cache profile localy"
-msgstr ""
+msgstr "Cachear perfil localmente"
 
 #: plugins/personal/environment/environment.tpl:82
 msgid "Kiosk profile settings"
@@ -2537,7 +2560,7 @@ msgstr ""
 #: plugins/personal/environment/environment.tpl:85
 #: plugins/personal/environment/class_environment.inc:1332
 msgid "Kiosk profile"
-msgstr ""
+msgstr "Perfil Kiosk"
 
 #: plugins/personal/environment/environment.tpl:95
 msgid "Manage"
@@ -2546,14 +2569,14 @@ msgstr ""
 #: plugins/personal/environment/environment.tpl:105
 #: plugins/personal/environment/class_environment.inc:1325
 msgid "Resolution changeable during session"
-msgstr ""
+msgstr "Resolución modificable durante la sesión"
 
 #: plugins/personal/environment/environment.tpl:110
 #: plugins/personal/environment/class_environment.inc:1331
 #: plugins/admin/systems/workstationService.tpl:122
 #: plugins/admin/systems/terminalService.tpl:108
 msgid "Resolution"
-msgstr ""
+msgstr "Resolución"
 
 #: plugins/personal/environment/environment.tpl:133
 #: plugins/personal/environment/class_environment.inc:1337
@@ -2613,7 +2636,7 @@ msgstr ""
 #: plugins/personal/environment/environment.tpl:203
 #: plugins/personal/environment/class_environment.inc:1336
 msgid "Hotplug devices"
-msgstr ""
+msgstr "Dispositivos de conexión en caliente (HotPlug)"
 
 #: plugins/personal/environment/environment.tpl:205
 msgid "Hotplug device settings"
@@ -2643,35 +2666,41 @@ msgstr ""
 
 #: plugins/personal/environment/main.inc:119
 msgid "User environment settings"
-msgstr ""
+msgstr "Parámetros de entorno de usuario"
 
 #: plugins/personal/environment/class_hotplugDialog.inc:120
 msgid "Please specify a valid name. Only 0-9 a-Z is allowed."
-msgstr ""
+msgstr "Introduzca un nombre valido: Solo se permiten los caracteres 0-9 a-Z."
 
 #: plugins/personal/environment/class_hotplugDialog.inc:123
 msgid "Invalid character in description. Please specify a valid description."
 msgstr ""
+"Caracteres no validos en la descripción, por favor introduzca una "
+"descripción valida."
 
 #: plugins/personal/environment/class_hotplugDialog.inc:128
 msgid "Please specify a valid iSerial."
-msgstr ""
+msgstr "Por favor introduzca un iSerial valido."
 
 #: plugins/personal/environment/class_hotplugDialog.inc:132
 msgid "Please specify a valid vendor ID. (2 byte hex like '0xFFFF')"
 msgstr ""
+"Por favor introduzca un ID de proveedor valido (Ejemplo: 2 bytes hex: "
+"'0xFFFF') "
 
 #: plugins/personal/environment/class_hotplugDialog.inc:135
 msgid "Please specify a valid product ID. (2 byte hex like '0xFFFF')"
 msgstr ""
+"Por favor introduzca un ID de producto valido (Ejemplo: 2 bytes hex: "
+"'0xFFFF') "
 
 #: plugins/personal/environment/class_hotplugDialog.inc:141
 msgid "An Entry with this name already exists."
-msgstr ""
+msgstr "Ya existe una entrada con este 'Nombre'."
 
 #: plugins/personal/environment/class_hotplugDialog.inc:146
 msgid "Please select an entry or press cancel."
-msgstr ""
+msgstr "Por favor seleccione una entrada o presione cancelar."
 
 #: plugins/personal/environment/class_selectPrinterDialog.inc:102
 #: plugins/admin/systems/class_selectUserToPrinterDialog.inc:143
@@ -2702,7 +2731,7 @@ msgstr ""
 #: plugins/admin/systems/glpiSelectUser.tpl:35
 #: plugins/gofon/conference/headpage.tpl:35
 msgid "Display users matching"
-msgstr ""
+msgstr "Mostrar usuarios coincidentes"
 
 #: plugins/personal/environment/hotplugDialog.tpl:48
 msgid "Regular expression for        matching hotplugs"
@@ -2710,7 +2739,7 @@ msgstr ""
 
 #: plugins/personal/environment/class_environment.inc:209
 msgid "auto"
-msgstr ""
+msgstr "automático"
 
 #: plugins/personal/environment/class_environment.inc:231
 #: plugins/admin/systems/class_workstationService.inc:89
@@ -2727,6 +2756,8 @@ msgid ""
 "Your selected profile server '%s' is no longer available. Setting profile "
 "server to '%s'."
 msgstr ""
+"El servidor de perfiles seleccionado '%s' no es accesible. Configurando el "
+"servidor de perfiles a '%s'."
 
 #: plugins/personal/environment/class_environment.inc:286
 #, php-format
@@ -2734,28 +2765,32 @@ msgid ""
 "Your selected profile server '%s' is no longer available. Profile server "
 "configuration is resetted."
 msgstr ""
+"El servidor de perfiles seleccionado '%s' no es accesible. La configuración "
+"del servidor de perfiles se ha borrado."
 
 #: plugins/personal/environment/class_environment.inc:355
 #: plugins/personal/environment/class_environment.inc:393
 msgid "Remove environment extension"
-msgstr ""
+msgstr "Eliminar extensión de entorno"
 
 #: plugins/personal/environment/class_environment.inc:356
 #: plugins/personal/environment/class_environment.inc:394
 msgid "Environment extension enabled. You can disable it by clicking below."
 msgstr ""
+"La extensión de entorno está activada. Puede desactivarla pulsando aquí."
 
 #: plugins/personal/environment/class_environment.inc:365
 #: plugins/personal/environment/class_environment.inc:370
 #: plugins/personal/environment/class_environment.inc:399
 #: plugins/personal/environment/class_environment.inc:404
 msgid "Add environment extension"
-msgstr ""
+msgstr "Añadir extensión de entorno"
 
 #: plugins/personal/environment/class_environment.inc:366
 #: plugins/personal/environment/class_environment.inc:400
 msgid "Environment extension disabled. You can enable it by clicking below."
 msgstr ""
+"La extensión de entorno está desactivada. Puede activarla pulsando aquí."
 
 #: plugins/personal/environment/class_environment.inc:371
 #: plugins/personal/environment/class_environment.inc:405
@@ -2763,6 +2798,8 @@ msgid ""
 "Environment extension disabled. You have to setup a posix account before you "
 "can enable this feature."
 msgstr ""
+"La extensión de entorno está desactivada. Debe crear una cuenta Posix antes "
+"de poder activarla."
 
 #: plugins/personal/environment/class_environment.inc:508
 #: plugins/personal/environment/class_environment.inc:905
@@ -2772,7 +2809,7 @@ msgstr ""
 
 #: plugins/personal/environment/class_environment.inc:522
 msgid "You are not allowed to write Logon scripts."
-msgstr ""
+msgstr "No tiene permisos para escribir scripts de inicio de sesión."
 
 #: plugins/personal/environment/class_environment.inc:601
 #: plugins/personal/environment/class_environment.inc:614
@@ -2783,22 +2820,24 @@ msgstr ""
 
 #: plugins/personal/environment/class_environment.inc:603
 msgid "Spaces are not allowed in the mount path!"
-msgstr ""
+msgstr "¡Los espacios no son permitidos en la ruta de montaje!"
 
 #: plugins/personal/environment/class_environment.inc:682
 #: plugins/personal/environment/class_environment.inc:683
 #: plugins/personal/environment/class_environment.inc:691
 #: plugins/personal/environment/class_environment.inc:692
 msgid "Reset password hash"
-msgstr ""
+msgstr "Reiniciar hash de la contraseña"
 
 #: plugins/personal/environment/class_environment.inc:696
 msgid "Delete share entry"
-msgstr ""
+msgstr "Eliminar entrada compartida"
 
 #: plugins/personal/environment/class_environment.inc:885
 msgid "GOsa default printer flag is not allowed within groups."
 msgstr ""
+"El indicador de impresora por defecto de GOsa no está permitido dentro de "
+"los grupos."
 
 #: plugins/personal/environment/class_environment.inc:908
 #, php-format
@@ -2806,64 +2845,70 @@ msgid ""
 "The selected kiosk profile '%s' is no longer available, setting current "
 "profile to 'none'."
 msgstr ""
+"El perfil Kiosk seleccionado '%s' no es accesible, configurando el perfil "
+"actual a 'ninguno'."
 
 #: plugins/personal/environment/class_environment.inc:952
 #, php-format
 msgid "Removing of user/environment account with dn '%s' failed."
-msgstr ""
+msgstr "Ha fallado al eliminar la extensión de usuario/entorno con dn '%s'."
 
 #: plugins/personal/environment/class_environment.inc:1021
 msgid "Please set a valid profile quota size."
-msgstr ""
+msgstr "Por favor introduzca un tamaño de cuota del perfil valido"
 
 #: plugins/personal/environment/class_environment.inc:1028
 msgid ""
 "You need to setup a valid posix extension in order to enable evironment "
 "features."
 msgstr ""
+"Necesita configurar un extensión Posix válida para poder activar las "
+"características de entorno."
 
 #: plugins/personal/environment/class_environment.inc:1066
 msgid "Can't save new kiosk profiles, possibly permission denied for folder"
 msgstr ""
+"No se puede grabar los nuevos perfiles Kiosk, posiblemente porque no tiene "
+"permisos de acceso a la carpeta."
 
 #: plugins/personal/environment/class_environment.inc:1222
 #, php-format
 msgid "Saving of user/environment account with dn '%s' failed."
-msgstr ""
+msgstr "Ha fallado la grabación de la cuenta de usuario/entorno con dn '%s'."
 
 #: plugins/personal/environment/class_environment.inc:1235
 msgid "group share"
-msgstr ""
+msgstr "grupo compartido"
 
 #: plugins/personal/environment/class_environment.inc:1271
 msgid "Administrator"
-msgstr ""
+msgstr "Administrador"
 
 #: plugins/personal/environment/class_environment.inc:1276
 #: plugins/personal/environment/class_environment.inc:1334
 msgid "Default printer"
-msgstr ""
+msgstr "Impresora por defecto"
 
 #: plugins/personal/environment/class_environment.inc:1313
 msgid "Environment settings"
-msgstr ""
+msgstr "Parámetros de entorno"
 
 #: plugins/personal/environment/class_environment.inc:1321
 msgid "Command to extend the list of possible screen resolutions"
-msgstr ""
+msgstr "Comando para extender la lista de resoluciones de pantalla posibles"
 
 #: plugins/personal/environment/class_environment.inc:1328
 msgid "Profile quota"
-msgstr ""
+msgstr "Cuota del Perfil"
 
 #: plugins/personal/environment/class_environment.inc:1329
 msgid "Profile server"
-msgstr ""
+msgstr "Servidor de Perfil"
 
 #: plugins/personal/environment/class_environment.inc:1335
 #: plugins/personal/environment/logonManagement.tpl:56
 msgid "Logon script"
-msgstr ""
+msgstr "Script de inicio de sesión"
 
 #: plugins/personal/environment/selectPrinterDialog.tpl:1
 msgid "Add printer devcies"
@@ -2886,14 +2931,15 @@ msgstr ""
 #: plugins/personal/environment/class_logonManagementDialog.inc:108
 msgid "Specified name should only consist of upper-/lowercase characters."
 msgstr ""
+"El nombre introducido solo debe tener caracteres mayúsculas-/minúsculas."
 
 #: plugins/personal/environment/class_logonManagementDialog.inc:112
 msgid "Please specify a valid script name."
-msgstr ""
+msgstr "Por favor introduzca un nombre de script valido."
 
 #: plugins/personal/environment/class_logonManagementDialog.inc:116
 msgid "Specified description contains invalid characters."
-msgstr ""
+msgstr "!La descripción introducida contiene caracteres no validos!"
 
 #: plugins/personal/environment/logonManagement.tpl:8
 msgid "Logon script settings"
@@ -2983,23 +3029,25 @@ msgstr ""
 #: plugins/personal/environment/class_kioskManagementDialog.inc:88
 #, php-format
 msgid "Can't delete '%s'. Error was: permission denied."
-msgstr ""
+msgstr "No se puede eliminar '%s'. El error fue: permiso denegado."
 
 #: plugins/personal/environment/class_kioskManagementDialog.inc:72
 #: plugins/personal/environment/class_kioskManagementDialog.inc:91
 #, php-format
 msgid "Can't delete '%s'. Errow was: file doesn't exist."
-msgstr ""
+msgstr "No se puede eliminar '%s'. El error fue: el fichero no existe."
 
 #: plugins/personal/environment/class_kioskManagementDialog.inc:133
 msgid ""
 "There is no KIOSKPATH defined in your gosa.conf. Can't manage kiosk profiles!"
 msgstr ""
+"No hay KIOSKPATH definido en gosa.conf. ¡NO se pueden manejar perfiles Kiosk!"
 
 #: plugins/personal/environment/class_kioskManagementDialog.inc:139
 #, php-format
 msgid "Kiosk path '%s' is not accessible. Please check the permissions."
 msgstr ""
+"La ruta a Kiosk '%s' no es accesible. Por favor compruebe los permisos."
 
 #: plugins/personal/environment/hotplugDialogNew.tpl:1
 msgid "Create new hotplug entry"
@@ -3227,7 +3275,7 @@ msgstr "El campo 'Pagina web' contiene una URL no valida"
 #: plugins/addons/addressbook/class_addressbook.inc:697
 #: plugins/admin/departments/class_departmentGeneric.inc:276
 msgid "The field 'Name' contains invalid characters."
-msgstr "El campo 'Nombre' contiene caracteres no validos."
+msgstr ""
 
 #: plugins/personal/generic/class_user.inc:1144
 #: plugins/personal/generic/class_user.inc:1163
@@ -3241,13 +3289,13 @@ msgstr "El campo 'Nombre de pila' contiene caracteres no validos"
 #: plugins/addons/addressbook/class_addressbook.inc:680
 #: plugins/admin/departments/class_departmentGeneric.inc:279
 msgid "The field 'Phone' contains an invalid phone number."
-msgstr "El campo 'Teléfono' contiene un número de teléfono no valido."
+msgstr ""
 
 #: plugins/personal/generic/class_user.inc:1152
 #: plugins/addons/addressbook/class_addressbook.inc:683
 #: plugins/admin/departments/class_departmentGeneric.inc:282
 msgid "The field 'Fax' contains an invalid phone number."
-msgstr "El campo 'Fax' contiene un número de teléfono no valido."
+msgstr ""
 
 #: plugins/personal/generic/class_user.inc:1155
 #: plugins/addons/addressbook/class_addressbook.inc:686
@@ -3324,7 +3372,7 @@ msgstr "Calle"
 #: plugins/admin/acl/class_divListACL.inc:193
 #: plugins/admin/acl/class_aclRole.inc:668
 msgid "Role"
-msgstr "Papel desempeñado"
+msgstr ""
 
 #: plugins/personal/generic/class_user.inc:1410
 #: plugins/personal/generic/generic.tpl:459
@@ -3344,7 +3392,7 @@ msgstr "Parámetros genéricos del usuario"
 #: plugins/admin/systems/printer.tpl:91 include/class_acl.inc:196
 #: html/getxls.php:89 html/getxls.php:90 html/getxls.php:308
 msgid "Users"
-msgstr "Usuarios"
+msgstr ""
 
 #: plugins/personal/generic/class_user.inc:1423
 #: plugins/personal/generic/generic.tpl:143
@@ -3502,7 +3550,7 @@ msgstr "Funciones laborales"
 #: plugins/admin/systems/class_glpiPrinterAccount.inc:795
 #: plugins/admin/systems/class_glpiAccount.inc:792 html/getxls.php:224
 msgid "Location"
-msgstr "Localización"
+msgstr ""
 
 #: plugins/personal/generic/class_user.inc:1442
 #: plugins/personal/generic/generic.tpl:360
@@ -3511,7 +3559,7 @@ msgstr "Localización"
 #: plugins/admin/departments/class_departmentGeneric.inc:602
 #: html/getxls.php:228 html/getxls.php:301
 msgid "State"
-msgstr "Provincia"
+msgstr ""
 
 #: plugins/personal/generic/class_user.inc:1443
 #: plugins/personal/generic/paste_generic.tpl:47
@@ -3746,7 +3794,7 @@ msgstr ""
 #: plugins/personal/connectivity/proxy.tpl:23
 #: plugins/personal/connectivity/class_proxyAccount.inc:308
 msgid "Proxy account"
-msgstr ""
+msgstr "Cuenta Proxy"
 
 #: plugins/personal/connectivity/proxy.tpl:34
 msgid "Filter unwanted content (i.e. pornographic or violence related)"
@@ -3759,7 +3807,7 @@ msgstr ""
 #: plugins/personal/connectivity/proxy.tpl:84
 #: plugins/personal/connectivity/class_proxyAccount.inc:319
 msgid "Restrict proxy usage by quota"
-msgstr ""
+msgstr "Restringir el uso del proxy con cuotas"
 
 #: plugins/personal/connectivity/proxy.tpl:99
 msgid "per"
@@ -3768,7 +3816,7 @@ msgstr ""
 #: plugins/personal/connectivity/pptp.tpl:3
 #: plugins/personal/connectivity/class_pptpAccount.inc:174
 msgid "PPTP account"
-msgstr ""
+msgstr "Cuenta PPTP"
 
 #: plugins/personal/connectivity/pureftpd.tpl:4
 msgid "FTP account"
@@ -3833,22 +3881,22 @@ msgstr ""
 #: plugins/personal/connectivity/class_webdavAccount.inc:6
 #: plugins/personal/connectivity/class_webdavAccount.inc:156
 msgid "WebDAV"
-msgstr ""
+msgstr "WebDAV"
 
 #: plugins/personal/connectivity/class_webdavAccount.inc:84
 #, php-format
 msgid "Removing of user/webDAV account with dn '%s' failed."
-msgstr ""
+msgstr "Ha fallado al eliminar la cuenta usuario/WebDAV con dn '%s'."
 
 #: plugins/personal/connectivity/class_webdavAccount.inc:138
 #, php-format
 msgid "Saving of user/webDAV account with dn '%s' failed."
-msgstr ""
+msgstr "Ha fallado al guardar la cuenta de usuario/WebDAV con dn '%s'."
 
 #: plugins/personal/connectivity/class_webdavAccount.inc:157
 #: plugins/personal/connectivity/webdav.tpl:3
 msgid "WebDAV account"
-msgstr ""
+msgstr "Cuenta WebDAV"
 
 #: plugins/personal/connectivity/class_webdavAccount.inc:157
 #: plugins/personal/connectivity/class_proxyAccount.inc:308
@@ -3861,7 +3909,7 @@ msgstr ""
 #: plugins/personal/connectivity/class_opengwAccount.inc:332
 #: plugins/personal/connectivity/class_phpscheduleitAccount.inc:160
 msgid "Connectivity addon"
-msgstr ""
+msgstr "Conectividad adicional"
 
 #: plugins/personal/connectivity/kolab.tpl:3
 #: plugins/personal/connectivity/kolab.tpl:35
@@ -3877,7 +3925,7 @@ msgstr ""
 #: plugins/personal/connectivity/kolab.tpl:41
 #: plugins/personal/connectivity/class_kolabAccount.inc:479
 msgid "Delegations"
-msgstr ""
+msgstr "Delegaciones"
 
 #: plugins/personal/connectivity/kolab.tpl:59
 msgid "Mail size"
@@ -3910,7 +3958,7 @@ msgstr ""
 #: plugins/personal/connectivity/kolab.tpl:93
 #: plugins/personal/connectivity/class_kolabAccount.inc:480
 msgid "Invitation policy"
-msgstr ""
+msgstr "Política de invitación"
 
 #: plugins/personal/connectivity/oxchange.tpl:2
 msgid "Open-Xchange Account"
@@ -3954,76 +4002,76 @@ msgstr ""
 #: plugins/personal/connectivity/class_proxyAccount.inc:307
 #: plugins/generic/references/class_reference.inc:32
 msgid "Proxy"
-msgstr ""
+msgstr "Proxy"
 
 #: plugins/personal/connectivity/class_proxyAccount.inc:98
 #: plugins/admin/systems/goMailServer.tpl:21
 #: plugins/admin/systems/goMailServer.tpl:31
 #: plugins/admin/systems/goMailServer.tpl:40
 msgid "KB"
-msgstr ""
+msgstr "Kb"
 
 #: plugins/personal/connectivity/class_proxyAccount.inc:98
 msgid "GB"
-msgstr ""
+msgstr "Gb"
 
 #: plugins/personal/connectivity/class_proxyAccount.inc:99
 #: plugins/addons/mailqueue/class_mailqueue.inc:331
 msgid "hour"
-msgstr ""
+msgstr "hora"
 
 #: plugins/personal/connectivity/class_proxyAccount.inc:99
 msgid "day"
-msgstr ""
+msgstr "día"
 
 #: plugins/personal/connectivity/class_proxyAccount.inc:99
 msgid "week"
-msgstr ""
+msgstr "semana"
 
 #: plugins/personal/connectivity/class_proxyAccount.inc:99
 msgid "month"
-msgstr ""
+msgstr "mes"
 
 #: plugins/personal/connectivity/class_proxyAccount.inc:167
 #, php-format
 msgid "Removing of user/proxy account with dn '%s' failed."
-msgstr ""
+msgstr "Se ha fallado al eliminar la cuenta de usuario/Proxy con dn '%s'."
 
 #: plugins/personal/connectivity/class_proxyAccount.inc:185
 msgid "Numerical value for Quota Setting is empty."
-msgstr ""
+msgstr "El valor numérico para cuota esta vacío."
 
 #: plugins/personal/connectivity/class_proxyAccount.inc:187
 msgid "Numerical value for Quota Setting is not valid."
-msgstr ""
+msgstr "El valor numérico para cuota no es valido."
 
 #: plugins/personal/connectivity/class_proxyAccount.inc:289
 #, php-format
 msgid "Saving of user/proxy account with dn '%s' failed."
-msgstr ""
+msgstr "Ha fallado la grabación de la cuenta de usuario/proxy con dn '%s'."
 
 #: plugins/personal/connectivity/class_proxyAccount.inc:317
 msgid "Filter unwanted content"
-msgstr ""
+msgstr "Filtrar contenido no requerido"
 
 #: plugins/personal/connectivity/class_proxyAccount.inc:318
 msgid "Limit proxy access"
-msgstr ""
+msgstr "Limitar acceso al Proxy"
 
 #: plugins/personal/connectivity/opengw.tpl:1
 #: plugins/personal/connectivity/class_opengwAccount.inc:331
 msgid "Opengroupware"
-msgstr ""
+msgstr "Cuenta OpenGroupware"
 
 #: plugins/personal/connectivity/opengw.tpl:8
 #: plugins/personal/connectivity/class_opengwAccount.inc:341
 msgid "Location team"
-msgstr ""
+msgstr "Equipo de localización"
 
 #: plugins/personal/connectivity/opengw.tpl:21
 #: plugins/personal/connectivity/class_opengwAccount.inc:342
 msgid "Template user"
-msgstr ""
+msgstr "Plantilla de usuario"
 
 #: plugins/personal/connectivity/opengw.tpl:33
 #: plugins/personal/connectivity/class_opengwAccount.inc:343
@@ -4036,41 +4084,42 @@ msgstr ""
 #: plugins/personal/connectivity/opengw.tpl:48
 #: plugins/personal/connectivity/class_opengwAccount.inc:344
 msgid "Teams"
-msgstr ""
+msgstr "Equipos"
 
 #: plugins/personal/connectivity/class_pptpAccount.inc:26
 #: plugins/personal/connectivity/class_pptpAccount.inc:173
 msgid "PPTP"
-msgstr ""
+msgstr "PPTP"
 
 #: plugins/personal/connectivity/class_pptpAccount.inc:101
 #, php-format
 msgid "Removing of user/PPTP account with dn '%s' failed."
-msgstr ""
+msgstr "Ha fallado la eliminación de la cuenta de usuario/PPTP con dn '%s'."
 
 #: plugins/personal/connectivity/class_pptpAccount.inc:155
 #, php-format
 msgid "Saving of user/PPTP account with dn '%s' failed."
-msgstr ""
+msgstr "Ha fallado la grabación de la cuenta de usuario/PPTP con dn '%s'."
 
 #: plugins/personal/connectivity/class_intranetAccount.inc:16
 #: plugins/personal/connectivity/class_intranetAccount.inc:197
 msgid "Intranet"
-msgstr ""
+msgstr "intranet"
 
 #: plugins/personal/connectivity/class_intranetAccount.inc:121
 #, php-format
 msgid "Removing of user/intranet account with dn '%s' failed."
 msgstr ""
+"Ha fallado la eliminación de la cuenta de usuario/intranet con dn '%s'."
 
 #: plugins/personal/connectivity/class_intranetAccount.inc:186
 #, php-format
 msgid "Saving of user/intranet account with dn '%s' failed."
-msgstr ""
+msgstr "Ha fallado la grabación de la cuenta de usuario/intranet con dn '%s'."
 
 #: plugins/personal/connectivity/class_intranetAccount.inc:204
 msgid "Intranet account settings"
-msgstr ""
+msgstr "Configuración de la cuenta de intranet"
 
 #: plugins/personal/connectivity/class_phpgwAccount.inc:5
 msgid "PHPGroupware"
@@ -4079,20 +4128,20 @@ msgstr ""
 #: plugins/personal/connectivity/class_phpgwAccount.inc:85
 #, php-format
 msgid "Removing of user/PHPgw account with dn '%s' failed."
-msgstr ""
+msgstr "Ha fallado la eliminación de la cuenta de usuario/PHPgw con dn '%s'."
 
 #: plugins/personal/connectivity/class_phpgwAccount.inc:139
 #, php-format
 msgid "Saving of user/PHPgw account with dn '%s' failed."
-msgstr ""
+msgstr "Ha fallado la eliminación de la cuenta de usuario/PHPgw con dn '%s'."
 
 #: plugins/personal/connectivity/class_phpgwAccount.inc:157
 msgid "PHP GW"
-msgstr ""
+msgstr "PHP GW"
 
 #: plugins/personal/connectivity/class_phpgwAccount.inc:158
 msgid "PHP GW account settings"
-msgstr ""
+msgstr "Configuración de la cuenta PHP GW"
 
 #: plugins/personal/connectivity/phpscheduleit.tpl:3
 msgid "PHPscheduleit account"
@@ -4108,80 +4157,88 @@ msgstr ""
 msgid ""
 "You're trying to add an invalid email address to the list of delegations."
 msgstr ""
+"Esta intentando añadir una dirección de correo no valida a la lista de "
+"delegaciones."
 
 #: plugins/personal/connectivity/class_kolabAccount.inc:157
 msgid ""
 "The mail address you're trying to add is no primary mail address of an "
 "existing user."
 msgstr ""
+"La dirección de correo que esta intentando añadir no es la cuenta principal "
+"de ningún usuario."
 
 #: plugins/personal/connectivity/class_kolabAccount.inc:182
 msgid "Always accept"
-msgstr ""
+msgstr "Aceptar siempre"
 
 #: plugins/personal/connectivity/class_kolabAccount.inc:183
 msgid "Always reject"
-msgstr ""
+msgstr "Denegar siempre"
 
 #: plugins/personal/connectivity/class_kolabAccount.inc:184
 msgid "Reject if conflicts"
-msgstr ""
+msgstr "Denegar si hay conflictos"
 
 #: plugins/personal/connectivity/class_kolabAccount.inc:185
 msgid "Manual if conflicts"
-msgstr ""
+msgstr "Preguntar si hay conflictos"
 
 #: plugins/personal/connectivity/class_kolabAccount.inc:186
 msgid "Manual"
-msgstr ""
+msgstr "Manual"
 
 #: plugins/personal/connectivity/class_kolabAccount.inc:234
 msgid "Anonymous"
-msgstr ""
+msgstr "Anónimo"
 
 #: plugins/personal/connectivity/class_kolabAccount.inc:302
 #, php-format
 msgid "Removing of user/kolab account with dn '%s' failed."
-msgstr ""
+msgstr "Ha fallado al eliminar la cuenta usuario/Kolab con dn '%s'."
 
 #: plugins/personal/connectivity/class_kolabAccount.inc:313
 msgid "The value specified as Free Busy future needs to be an integer."
-msgstr ""
+msgstr "El valor especificado como disponibilidad futura debe ser un entero."
 
 #: plugins/personal/connectivity/class_kolabAccount.inc:318
 msgid "The value specified as Free Busy Information URL is invalid."
 msgstr ""
+"Ha introducido una URL no válida como valor información de disponibilidad."
 
 #: plugins/personal/connectivity/class_kolabAccount.inc:332
 #, php-format
 msgid "The invitation policy entry for address '%s' is not valid."
 msgstr ""
+"La entrada de política de invitación para la dirección '%s' no es valida."
 
 #: plugins/personal/connectivity/class_kolabAccount.inc:340
 #, php-format
 msgid "There's no mail user with address '%s' for your invitation policy!"
 msgstr ""
+"¡No hay ningún usuario con cuenta de correo '%s' para su política de "
+"invitación!"
 
 #: plugins/personal/connectivity/class_kolabAccount.inc:431
 #, php-format
 msgid "Saving of user/kolab account with dn '%s' failed."
-msgstr ""
+msgstr "Ha fallado la eliminación de la cuenta de usuario/Kolab con dn '%s'."
 
 #: plugins/personal/connectivity/class_kolabAccount.inc:467
 msgid "Kolab account settings"
-msgstr ""
+msgstr "Configuración cuenta Kolab"
 
 #: plugins/personal/connectivity/class_kolabAccount.inc:476
 msgid "Free busy future"
-msgstr ""
+msgstr "Disponibilidad futura"
 
 #: plugins/personal/connectivity/class_kolabAccount.inc:477
 msgid "Mail size restriction"
-msgstr ""
+msgstr "Restricciones al tamaño de mensaje"
 
 #: plugins/personal/connectivity/class_kolabAccount.inc:478
 msgid "Free busy information"
-msgstr ""
+msgstr "Información de disponibilidad"
 
 #: plugins/personal/connectivity/class_pureftpdAccount.inc:6
 #: plugins/generic/references/class_reference.inc:34
@@ -4192,67 +4249,69 @@ msgstr ""
 #, php-format
 msgid "Removing of user/pureftpd account with dn '%s' failed."
 msgstr ""
+"Ha fallado la eliminación de la cuenta de usuario/pureftpd con dn '%s'."
 
 #: plugins/personal/connectivity/class_pureftpdAccount.inc:166
 msgid "Value specified as 'Upload bandwidth' is not valid."
-msgstr ""
+msgstr "El valor especificado en 'Ancho de Banda de subida' no es válido."
 
 #: plugins/personal/connectivity/class_pureftpdAccount.inc:169
 msgid "Value specified as 'Download bandwidth' is not valid."
-msgstr ""
+msgstr "El valor especificado en 'Ancho de Banda de descarga' no es válido."
 
 #: plugins/personal/connectivity/class_pureftpdAccount.inc:173
 msgid "Value specified as 'Quota files' is not valid."
-msgstr ""
+msgstr "El valor especificado como 'Cuota de Archivos' no es válido."
 
 #: plugins/personal/connectivity/class_pureftpdAccount.inc:176
 msgid "Value specified as 'Quota size' is not valid."
-msgstr ""
+msgstr "El valor especificado como 'Cuota de Tamaño' no es válido."
 
 #: plugins/personal/connectivity/class_pureftpdAccount.inc:179
 msgid "Value specified as 'Upload ratio' is not valid."
-msgstr ""
+msgstr "El valor especificado en 'Relación de subida'no es válido."
 
 #: plugins/personal/connectivity/class_pureftpdAccount.inc:182
 msgid "Value specified as 'Download ratio' is not valid."
-msgstr ""
+msgstr "El valor especificado en 'Relación de descarga' no es válido."
 
 #: plugins/personal/connectivity/class_pureftpdAccount.inc:215
 #, php-format
 msgid "Saving of user/pureftpd account with dn '%s' failed."
 msgstr ""
+"Ha fallado la eliminación de la cuenta de usuario/pureftpd con dn '%s'."
 
 #: plugins/personal/connectivity/class_pureftpdAccount.inc:234
 msgid "Ftp"
-msgstr ""
+msgstr "Ftp"
 
 #: plugins/personal/connectivity/class_pureftpdAccount.inc:235
 msgid "Pure ftp account"
-msgstr ""
+msgstr "Cuenta Pure ftp"
 
 #: plugins/personal/connectivity/class_pureftpdAccount.inc:244
 msgid "Quota files"
-msgstr ""
+msgstr "Cuota de ficheros"
 
 #: plugins/personal/connectivity/class_pureftpdAccount.inc:245
 msgid "Upload ratio"
-msgstr ""
+msgstr "Relación de subida"
 
 #: plugins/personal/connectivity/class_pureftpdAccount.inc:246
 msgid "Quota MBytes"
-msgstr ""
+msgstr "Cuota en Mbytes"
 
 #: plugins/personal/connectivity/class_pureftpdAccount.inc:247
 msgid "Download ratio"
-msgstr ""
+msgstr "Relación de descarga"
 
 #: plugins/personal/connectivity/class_pureftpdAccount.inc:248
 msgid "Upload bandwith"
-msgstr ""
+msgstr "Ancho de banda de subida"
 
 #: plugins/personal/connectivity/class_pureftpdAccount.inc:249
 msgid "Download bandwith"
-msgstr ""
+msgstr "Ancho de banda de descarga"
 
 #: plugins/personal/connectivity/class_oxchangeAccount.inc:24
 msgid "Open-Xchange"
@@ -4262,70 +4321,78 @@ msgstr ""
 #: plugins/personal/connectivity/class_oxchangeAccount.inc:727
 #: plugins/personal/connectivity/class_oxchangeAccount.inc:731
 msgid "Openexchange"
-msgstr ""
+msgstr "Open-Xchange"
 
 #: plugins/personal/connectivity/class_oxchangeAccount.inc:723
 #: plugins/personal/connectivity/class_oxchangeAccount.inc:833
 msgid "Couldn't connect to postgresql database!"
-msgstr ""
+msgstr "¡No puedo conectar al servidor de base de datos postgresql!."
 
 #: plugins/personal/connectivity/class_oxchangeAccount.inc:727
 #: plugins/personal/connectivity/class_oxchangeAccount.inc:837
 msgid "Needed parameters for openexchange connectivity plugin are missing!"
-msgstr ""
+msgstr "¡Los parámetros necesarios para extensión Open-Xchange no existen!"
 
 #: plugins/personal/connectivity/class_oxchangeAccount.inc:731
 #: plugins/personal/connectivity/class_oxchangeAccount.inc:841
 msgid "PHP4 module for postgresql database is missing!"
-msgstr ""
+msgstr "¡El módulo de PHP para la base de datos Postgresql no está instalado!"
 
 #: plugins/personal/connectivity/class_oxchangeAccount.inc:740
 #: plugins/personal/connectivity/class_oxchangeAccount.inc:751
 #, php-format
 msgid "Removing of user/oxchange addressbook account with dn '%s' failed."
 msgstr ""
+"Ha fallado la eliminación de la cuenta de libreta de direcciones de usuario/"
+"open-xchange con dn '%s'."
 
 #: plugins/personal/connectivity/class_oxchangeAccount.inc:821
 msgid ""
 "The Open-Xchange accountname is empty and thus invalid! Check to make sure "
 "that you are not using any strange characters in the loginname."
 msgstr ""
+"No es válida una cuenta de Open-Xchange vacía. Compruebe que no está usando "
+"ningún carácter extraño en el nombre de inicio de sesión."
 
 #: plugins/personal/connectivity/class_oxchangeAccount.inc:860
 #, php-format
 msgid "Saving of user/oxchange account with dn '%s' failed."
 msgstr ""
+"Ha fallado la grabación de la cuenta de usuario/open-xchange con dn '%s'."
 
 #: plugins/personal/connectivity/class_oxchangeAccount.inc:867
 #, php-format
 msgid "Creating of user/oxchange account with dn '%s' failed."
 msgstr ""
+"Ha fallado la creación de la cuenta de usuario/open-xchange con dn '%s'."
 
 #: plugins/personal/connectivity/class_oxchangeAccount.inc:954
 msgid ""
 "Something went wrong while saving oxchange account. Please check the error "
 "log file."
 msgstr ""
+"Algo fue mal mientras grababa la cuenta de oxchange. Por favor compruebe el "
+"archivo de log."
 
 #: plugins/personal/connectivity/class_oxchangeAccount.inc:964
 msgid "Open xchange"
-msgstr ""
+msgstr "Open-Xchange"
 
 #: plugins/personal/connectivity/class_oxchangeAccount.inc:965
 msgid "Open xchange account settings"
-msgstr ""
+msgstr "Activar la configuración de cuenta de Open-Xchange"
 
 #: plugins/personal/connectivity/class_oxchangeAccount.inc:974
 msgid "OXAppointmentDays"
-msgstr ""
+msgstr "Días de recordatorio OX"
 
 #: plugins/personal/connectivity/class_oxchangeAccount.inc:975
 msgid "OXTaskDays"
-msgstr ""
+msgstr "Días para tareas OX"
 
 #: plugins/personal/connectivity/class_oxchangeAccount.inc:976
 msgid "OXTimeZone"
-msgstr ""
+msgstr "Zona de uso horario del usuario OX"
 
 #: plugins/personal/connectivity/class_opengwAccount.inc:6
 msgid "Opengroupware account"
@@ -4336,22 +4403,28 @@ msgid ""
 "OpenGroupware: Your configuration is missing a postgresql extension. Can't "
 "perform any database queries."
 msgstr ""
+"OpenGroupWare: No se encuentra en la configuración una extensión postgresql. "
+"No se podrá acceder a la base de datos."
 
 #: plugins/personal/connectivity/class_opengwAccount.inc:166
 msgid ""
 "OpenGroupware: Missing database configuration for opengroupware. Can't get "
 "or set any informations."
 msgstr ""
+"OpenGroupWare: No se encuentra en la configuración de base de datos para "
+"opengroupware. No se podrá acceder a la información."
 
 #: plugins/personal/connectivity/class_opengwAccount.inc:174
 msgid ""
 "OpenGroupware: Can't connect to specified database. Please check given "
 "configuration twice."
 msgstr ""
+"OpenGroupWare: No se puede conectar a la base de datos indicada. Por favor "
+"vuelva a comprobar la configuración."
 
 #: plugins/personal/connectivity/class_opengwAccount.inc:332
 msgid "Open groupware account settings"
-msgstr ""
+msgstr "Activar la configuración de la Cuenta OpenGroupware"
 
 #: plugins/personal/connectivity/class_phpscheduleitAccount.inc:27
 msgid "PHPscheduleit"
@@ -4361,23 +4434,25 @@ msgstr ""
 #, php-format
 msgid "Removing of user/PHPscheduleit account with dn '%s' failed."
 msgstr ""
+"Ha fallado la eliminación de la cuenta usuario/PHPscheduleit con dn '%s'."
 
 #: plugins/personal/connectivity/class_phpscheduleitAccount.inc:140
 #, php-format
 msgid "Saving of user/PHPscheduleit account with dn '%s' failed."
 msgstr ""
+"Ha fallado la grabación de la cuenta de usuario/PHPscheduleit con dn '%s'."
 
 #: plugins/personal/connectivity/class_phpscheduleitAccount.inc:159
 msgid "PHP Schedule it"
-msgstr ""
+msgstr "PHP Schedule it"
 
 #: plugins/personal/connectivity/class_phpscheduleitAccount.inc:160
 msgid "PHP Schedule it settings"
-msgstr ""
+msgstr "Configuración PHP Schedule it"
 
 #: plugins/personal/connectivity/class_connectivity.inc:69
 msgid "This account has no connectivity extensions."
-msgstr ""
+msgstr "Esta cuenta no tiene extensión de conectividad"
 
 #: plugins/gofax/blocklists/generic.tpl:8
 msgid "List name"
@@ -4602,7 +4677,7 @@ msgstr ""
 #: plugins/gofon/macro/class_divListMacros.inc:59
 #: plugins/gofon/conference/class_divListConferences.inc:60
 msgid "Actions"
-msgstr ""
+msgstr "Acciones"
 
 #: plugins/gofax/blocklists/class_divListBlocklists.inc:61
 msgid "Select to see send blocklists"
@@ -4634,7 +4709,7 @@ msgstr ""
 #: plugins/gofon/macro/class_divListMacros.inc:62
 #: plugins/gofon/conference/class_divListConferences.inc:63
 msgid "Select to search within subtrees"
-msgstr ""
+msgstr "Seleccione para buscar dentro de los subárboles"
 
 #: plugins/gofax/blocklists/class_divListBlocklists.inc:68
 msgid "Regular expression for matching list names"
@@ -4663,7 +4738,7 @@ msgstr ""
 #: plugins/gofon/macro/class_divListMacros.inc:149
 #: plugins/gofon/conference/class_divListConferences.inc:156
 msgid "Submit department"
-msgstr ""
+msgstr "Crear departamento"
 
 #: plugins/gofax/blocklists/class_divListBlocklists.inc:149
 #: plugins/addons/godfs/class_dfsManagment.inc:218
@@ -4683,7 +4758,7 @@ msgstr ""
 #: plugins/gofon/conference/class_divListConferences.inc:156
 #: include/class_MultiSelectWindow.inc:209
 msgid "Submit"
-msgstr ""
+msgstr "Crear"
 
 #: plugins/gofax/blocklists/class_divListBlocklists.inc:153
 msgid "Remove selected blocklists"
@@ -4722,12 +4797,12 @@ msgstr ""
 #: plugins/gofon/conference/class_divListConferences.inc:217
 #: include/class_acl.inc:409 include/class_acl.inc:454
 msgid "edit"
-msgstr ""
+msgstr "Editar"
 
 #: plugins/gofax/blocklists/class_divListBlocklists.inc:188
 #: plugins/admin/users/class_divListUsers.inc:267
 msgid "Edit user"
-msgstr ""
+msgstr "Editar usuario"
 
 #: plugins/gofax/blocklists/class_divListBlocklists.inc:198
 #: plugins/addons/mailqueue/contents.tpl:94
@@ -4751,12 +4826,12 @@ msgstr ""
 #: plugins/gofon/conference/class_divListConferences.inc:227
 #: include/class_acl.inc:410 include/class_acl.inc:455
 msgid "delete"
-msgstr ""
+msgstr "eliminar"
 
 #: plugins/gofax/blocklists/class_divListBlocklists.inc:198
 #: plugins/admin/users/class_divListUsers.inc:286
 msgid "Delete user"
-msgstr ""
+msgstr "Eliminar usuario"
 
 #: plugins/gofax/blocklists/remove.tpl:2
 #: plugins/addons/addressbook/remove.tpl:2 plugins/admin/acl/remove.tpl:2
@@ -5919,7 +5994,7 @@ msgstr ""
 #: ihtml/themes/default/setup_step3.tpl:18
 #: ihtml/themes/default/snapshotdialog.tpl:87
 msgid "Continue"
-msgstr "Continúe"
+msgstr ""
 
 #: plugins/addons/ldapmanager/main.inc:34
 #: plugins/addons/ldapmanager/class_ldif.inc:7
@@ -6477,7 +6552,7 @@ msgstr ""
 #: plugins/gofon/macro/class_divListMacros.inc:202
 #: plugins/gofon/conference/class_divListConferences.inc:210
 msgid "cut"
-msgstr ""
+msgstr "mover"
 
 #: plugins/admin/acl/class_divListACL.inc:203
 #: plugins/admin/groups/class_divListGroup.inc:253
@@ -6489,7 +6564,7 @@ msgstr ""
 #: plugins/gofon/macro/class_divListMacros.inc:202
 #: plugins/gofon/conference/class_divListConferences.inc:210
 msgid "Cut this entry"
-msgstr ""
+msgstr "mover esta entrada"
 
 #: plugins/admin/acl/class_divListACL.inc:205
 #: plugins/admin/groups/class_divListGroup.inc:255
@@ -6501,7 +6576,7 @@ msgstr ""
 #: plugins/gofon/macro/class_divListMacros.inc:204
 #: plugins/gofon/conference/class_divListConferences.inc:212
 msgid "copy"
-msgstr ""
+msgstr "copiar"
 
 #: plugins/admin/acl/class_divListACL.inc:205
 #: plugins/admin/groups/class_divListGroup.inc:255
@@ -6513,7 +6588,7 @@ msgstr ""
 #: plugins/gofon/macro/class_divListMacros.inc:204
 #: plugins/gofon/conference/class_divListConferences.inc:212
 msgid "Copy this entry"
-msgstr ""
+msgstr "Copiar esta entrada"
 
 #: plugins/admin/acl/class_divListACL.inc:211
 msgid "Edit acl role"
@@ -7039,7 +7114,7 @@ msgstr ""
 #: plugins/admin/ogroups/class_divListOGroup.inc:64
 #: plugins/gofon/conference/generic.tpl:5
 msgid "Properties"
-msgstr ""
+msgstr "Propiedades"
 
 #: plugins/admin/fai/faiScriptEntry.tpl:33
 #: plugins/admin/fai/faiScriptEntry.tpl:54
@@ -7474,7 +7549,7 @@ msgstr ""
 #: plugins/admin/fai/class_divListFai.inc:74
 #: plugins/admin/users/class_divListUsers.inc:65
 msgid "Show templates"
-msgstr ""
+msgstr "Mostrar plantillas"
 
 #: plugins/admin/fai/class_divListFai.inc:75
 msgid "Display FAI scripts"
@@ -8163,7 +8238,7 @@ msgstr ""
 #: plugins/admin/groups/class_divListGroup.inc:223
 #: plugins/admin/users/class_divListUsers.inc:221
 msgid "Posix"
-msgstr ""
+msgstr "Posix"
 
 #: plugins/admin/groups/class_divListGroup.inc:229
 #: plugins/admin/groups/class_groupApplication.inc:1202
@@ -8288,7 +8363,7 @@ msgstr ""
 #: plugins/admin/systems/class_glpiDeviceManagement.inc:393
 #: plugins/admin/ogroups/class_ogroup.inc:297
 msgid "none"
-msgstr ""
+msgstr "ninguno"
 
 #: plugins/admin/groups/class_groupMail.inc:339
 msgid "This 'dn' has no valid mail extensions."
@@ -8536,39 +8611,39 @@ msgstr ""
 #: plugins/admin/users/class_userManagement.inc:157
 #: plugins/admin/users/class_userManagement.inc:235
 msgid "You are not allowed to set this users password!"
-msgstr ""
+msgstr "¡No le estátá permitido cambiarle la contraseña de estos usuarios!"
 
 #: plugins/admin/users/class_userManagement.inc:327
 #, php-format
 msgid "You're about to delete the following entry: %s"
-msgstr ""
+msgstr "Has decidido eliminar la entrada %s"
 
 #: plugins/admin/users/class_userManagement.inc:329
 #, php-format
 msgid "You're about to delete the following entries: %s"
-msgstr ""
+msgstr "Has decidido eliminar las siguientes entradas: %s"
 
 #: plugins/admin/users/class_userManagement.inc:357
 #, php-format
 msgid "You are not allowed to delete the user '%s'!"
-msgstr ""
+msgstr "¡No le está permitido eliminar el usuario '%s'!"
 
 #: plugins/admin/users/class_userManagement.inc:403
 #, php-format
 msgid "You're about to delete the user %s."
-msgstr ""
+msgstr "Esta a punto de eliminar el usuario %s"
 
 #: plugins/admin/users/class_userManagement.inc:433
 msgid "You are not allowed to delete this user!"
-msgstr ""
+msgstr "¡No le está permitido eliminar este usuario!"
 
 #: plugins/admin/users/class_userManagement.inc:558
 msgid "Please select a valid template."
-msgstr ""
+msgstr "Por favor seleccione una plantilla válida."
 
 #: plugins/admin/users/class_userManagement.inc:651
 msgid "A person with the choosen name is already used in this tree."
-msgstr ""
+msgstr "Ya existe una persona con el nombre elegido en este árbol."
 
 #: plugins/admin/users/template.tpl:2
 msgid "Creating a new user using templates"
@@ -8583,13 +8658,13 @@ msgstr ""
 
 #: plugins/admin/users/main.inc:42 plugins/admin/users/main.inc:48
 msgid "User administration"
-msgstr ""
+msgstr "Administración de Usuario"
 
 #: plugins/admin/users/class_divListUsers.inc:35
 #: plugins/admin/users/class_divListUsers.inc:36
 #: plugins/admin/systems/glpiSelectUser.tpl:6
 msgid "List of users"
-msgstr ""
+msgstr "Lista de usuarios"
 
 #: plugins/admin/users/class_divListUsers.inc:40
 msgid ""
@@ -8597,152 +8672,155 @@ msgid ""
 "great number of users, you may want to use the range selectors on top of the "
 "user list."
 msgstr ""
+"Este menú permite crear, editar o eliminar los usuarios seleccionados. Si "
+"tiene un gran numero de usuarios puede usar los selectores de rangos en la "
+"parte superior del listado."
 
 #: plugins/admin/users/class_divListUsers.inc:61
 #: ihtml/themes/default/login.tpl:39 ihtml/themes/default/login.tpl:41
 #: ihtml/themes/default/setup_useradmin.tpl:22
 msgid "Username"
-msgstr ""
+msgstr "Nombre de Usuario"
 
 #: plugins/admin/users/class_divListUsers.inc:65
 msgid "Select to see template pseudo users"
-msgstr ""
+msgstr "Seleccione para mostrar las plantillas de usuarios"
 
 #: plugins/admin/users/class_divListUsers.inc:66
 msgid "Select to see users that have only a GOsa object"
-msgstr ""
+msgstr "Seleccione para ver los usuarios que solo tienen la extensión GOsa"
 
 #: plugins/admin/users/class_divListUsers.inc:66
 msgid "Show functional users"
-msgstr ""
+msgstr "Mostrar usuarios funcionales"
 
 #: plugins/admin/users/class_divListUsers.inc:67
 msgid "Select to see users that have posix settings"
-msgstr ""
+msgstr "Seleccione para ver los usuarios que tienen extensiones Posix"
 
 #: plugins/admin/users/class_divListUsers.inc:67
 msgid "Show unix users"
-msgstr ""
+msgstr "Mostrar los usuarios unix"
 
 #: plugins/admin/users/class_divListUsers.inc:68
 msgid "Select to see users that have mail settings"
-msgstr ""
+msgstr "Seleccione para ver los usuarios que tienen extensiones de correo"
 
 #: plugins/admin/users/class_divListUsers.inc:68
 msgid "Show mail users"
-msgstr ""
+msgstr "Mostrar los usuarios de correo"
 
 #: plugins/admin/users/class_divListUsers.inc:69
 msgid "Select to see users that have samba settings"
-msgstr ""
+msgstr "Seleccione para ver los usuarios que tienen extensiones samba"
 
 #: plugins/admin/users/class_divListUsers.inc:69
 msgid "Show samba users"
-msgstr ""
+msgstr "Mostrar usuarios samba"
 
 #: plugins/admin/users/class_divListUsers.inc:70
 msgid "Select to see users that have proxy settings"
-msgstr ""
+msgstr "Seleccione para ver los usuarios que tienen extensiones proxy"
 
 #: plugins/admin/users/class_divListUsers.inc:70
 msgid "Show proxy users"
-msgstr ""
+msgstr "Mostrar los usuarios de proxy"
 
 #: plugins/admin/users/class_divListUsers.inc:154
 msgid "Create new user"
-msgstr ""
+msgstr "Crear nuevo usuario"
 
 #: plugins/admin/users/class_divListUsers.inc:154
 msgid "New user"
-msgstr ""
+msgstr "Nuevo usuario"
 
 #: plugins/admin/users/class_divListUsers.inc:156
 msgid "Create new template"
-msgstr ""
+msgstr "Crear nueva plantilla"
 
 #: plugins/admin/users/class_divListUsers.inc:156
 msgid "New template"
-msgstr ""
+msgstr "Nueva plantilla"
 
 #: plugins/admin/users/class_divListUsers.inc:169
 msgid "Remove selected user"
-msgstr ""
+msgstr "Eliminar usuario seleccionado"
 
 #: plugins/admin/users/class_divListUsers.inc:169
 msgid "Remove user"
-msgstr ""
+msgstr "Eliminar usuario"
 
 #: plugins/admin/users/class_divListUsers.inc:174
 msgid "Copy selected user"
-msgstr ""
+msgstr "Copiar usuario seleccionado"
 
 #: plugins/admin/users/class_divListUsers.inc:174
 msgid "Copy users"
-msgstr ""
+msgstr "Copiar usuario"
 
 #: plugins/admin/users/class_divListUsers.inc:176
 msgid "cut selected user"
-msgstr ""
+msgstr "mover usuario seleccionado"
 
 #: plugins/admin/users/class_divListUsers.inc:176
 msgid "Cut users"
-msgstr ""
+msgstr "Mover usuarios"
 
 #: plugins/admin/users/class_divListUsers.inc:219
 msgid "GOsa"
-msgstr ""
+msgstr "GOsa"
 
 #: plugins/admin/users/class_divListUsers.inc:220
 msgid "Edit generic properties"
-msgstr ""
+msgstr "Editar características generales"
 
 #: plugins/admin/users/class_divListUsers.inc:222
 msgid "Edit UNIX properties"
-msgstr ""
+msgstr "Editar características UNIX"
 
 #: plugins/admin/users/class_divListUsers.inc:224
 msgid "Edit environment properties"
-msgstr ""
+msgstr "Editar características de entorno"
 
 #: plugins/admin/users/class_divListUsers.inc:226
 msgid "Edit mail properties"
-msgstr ""
+msgstr "Editar características de correo electrónico"
 
 #: plugins/admin/users/class_divListUsers.inc:228
 msgid "Edit phone properties"
-msgstr ""
+msgstr "Editar características telefónicas"
 
 #: plugins/admin/users/class_divListUsers.inc:230
 msgid "Edit fax properies"
-msgstr ""
+msgstr "Editar características de Fax"
 
 #: plugins/admin/users/class_divListUsers.inc:232
 msgid "Edit samba properties"
-msgstr ""
+msgstr "Editar características samba"
 
 #: plugins/admin/users/class_divListUsers.inc:234
 msgid "Edit netatalk properties"
-msgstr ""
+msgstr "Editar características netatalk"
 
 #: plugins/admin/users/class_divListUsers.inc:235
 msgid "Create user from template"
-msgstr ""
+msgstr "Crear usuario desde plantilla"
 
 #: plugins/admin/users/class_divListUsers.inc:236
 msgid "Create user with this template"
-msgstr ""
+msgstr "Crear usuario con esta plantilla"
 
 #: plugins/admin/users/class_divListUsers.inc:271
 msgid "password"
-msgstr ""
+msgstr "contraseña"
 
 #: plugins/admin/users/class_divListUsers.inc:275
 msgid "You are not allowed to change the password for this user."
-msgstr ""
+msgstr "¡No tiene permisos para cambiar la contraseña de este usuario!"
 
 #: plugins/admin/users/class_divListUsers.inc:289
 msgid "You are not allowed to remove this user."
-msgstr ""
+msgstr "No le está permitido eliminar este usuario."
 
 #: plugins/admin/applications/generic.tpl:7
 #: plugins/admin/applications/generic.tpl:10
@@ -17839,7 +17917,7 @@ msgstr ""
 
 #: setup/setup_config1.tpl:124
 msgid "Password settings"
-msgstr ""
+msgstr "Parámetros de Contraseña"
 
 #: setup/setup_config1.tpl:128
 msgid "Password encryption algorithm"
@@ -19290,3 +19368,79 @@ msgstr ""
 #: ihtml/themes/default/snapshotdialog.tpl:79
 msgid "Reason for generating this snapshot"
 msgstr ""
+
+msgid ""
+"Can't remove kioks profile, it is still in use by the following objects '%s'."
+msgstr ""
+"No se puede eliminar el perfil Kiosk, está todavía en uso por el objeto '%s'."
+
+msgid "Scalix settings"
+msgstr "Configuración de Scalix"
+
+msgid "This account has no scalix extensions."
+msgstr "Esta cuenta no tiene extensión Scalix."
+
+msgid "Remove scalix account"
+msgstr "Eliminar cuenta Scalix"
+
+msgid ""
+"This account has scalix synchronization enabled. You can disable it by "
+"clicking below."
+msgstr ""
+"Esta cuenta tiene sincronización con Scalix activada. Puede desactivarla "
+"pulsando aqui."
+
+msgid "Create scalix account"
+msgstr "Crear cuenta Scalix"
+
+msgid ""
+"This account has scalix synchronization disabled. You can enable it by "
+"clicking below."
+msgstr ""
+"Esta cuenta tiene sincronización con Scalix desactivada. Puede activarla "
+"pulsando aqui."
+
+msgid "There is no scalix mailnode specified."
+msgstr "No se ha introducido un nodo de correo Scalix."
+
+msgid "scalixScalixObject must be set!"
+msgstr "¡Debe introducir scalixScalixObject!"
+
+msgid "Value in 'Limit Mailbox size' is not valid."
+msgstr "El valor indicado en tamaño máximo del buzón de correo no es válido."
+
+msgid "Scalix account"
+msgstr "Cuenta Scalix"
+
+msgid "Scalix Mail node"
+msgstr "Nodo de correo Scalix"
+
+msgid "Mailbox class"
+msgstr "Tipo de buzón de correo"
+
+msgid "Server language"
+msgstr "Idioma del Servidor"
+
+msgid "Mailbox administrator"
+msgstr "Administrador del buzón de correo"
+
+msgid "Hide user entry in Scalix"
+msgstr "Ocultar las entradas de usuarios en Scalix"
+
+msgid "Mailbox size limitations"
+msgstr "Limitaciones de tamaño de los buzones de correo"
+
+msgid "Limit outbound"
+msgstr "Limitaciones de salida"
+
+msgid "Limit inbound"
+msgstr "Limitaciones de entrada"
+
+msgid "Notify user"
+msgstr "Notificar al usuario"
+
+msgid "Scalix email addresses"
+msgstr "Direcciones de correo electrónico de Scalix"
+
+#~ msgid "Search in subtrees"
+#~ msgstr "Buscar en subárboles"
