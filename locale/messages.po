@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-15 13:23+0200\n"
+"POT-Creation-Date: 2007-07-19 11:12+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -56,7 +56,7 @@ msgstr ""
 #: contrib/gosa.conf:146 contrib/gosa.conf:151 contrib/gosa.conf:155
 #: contrib/gosa.conf:160 contrib/gosa.conf:169 contrib/gosa.conf:182
 #: contrib/gosa.conf:196 contrib/gosa.conf:201 contrib/gosa.conf:206
-#: contrib/gosa.conf:211 contrib/gosa.conf:237 contrib/gosa.conf:241
+#: contrib/gosa.conf:211 contrib/gosa.conf:238 contrib/gosa.conf:242
 #: plugins/gofax/blocklists/generic.tpl:1
 #: plugins/gofax/faxaccount/paste_generic.tpl:4
 #: plugins/gofax/faxaccount/generic.tpl:6 plugins/admin/groups/mail.tpl:7
@@ -68,7 +68,7 @@ msgstr ""
 #: plugins/admin/systems/class_servGeneric.inc:414
 #: plugins/admin/systems/goMailServer.tpl:1
 #: plugins/admin/systems/servkolab.tpl:6
-#: plugins/admin/systems/class_workstationGeneric.inc:606
+#: plugins/admin/systems/class_workstationGeneric.inc:611
 #: plugins/admin/systems/glpiPrinterCartridgesEdit.tpl:4
 #: plugins/admin/systems/glpiPrinterCartridgesEdit.tpl:34
 #: plugins/admin/systems/glpi.tpl:6
@@ -221,7 +221,7 @@ msgstr ""
 
 #: contrib/gosa.conf:161 contrib/gosa.conf:170 contrib/gosa.conf:183
 #: plugins/admin/systems/class_terminalStartup.inc:468
-#: plugins/admin/systems/class_workstationStartup.inc:1178
+#: plugins/admin/systems/class_workstationStartup.inc:1190
 #: plugins/admin/ogroups/tabs_ogroups.inc:102
 msgid "Startup"
 msgstr ""
@@ -293,11 +293,11 @@ msgstr ""
 msgid "FAI summary"
 msgstr ""
 
-#: contrib/gosa.conf:254
+#: contrib/gosa.conf:255
 msgid "OGo"
 msgstr ""
 
-#: contrib/gosa.conf:266 plugins/addons/gotomasses/contents.tpl:11
+#: contrib/gosa.conf:267 plugins/addons/gotomasses/contents.tpl:11
 #: plugins/addons/gotomasses/contents.tpl:13
 #: plugins/addons/gotomasses/contents.tpl:15
 #: plugins/addons/ldapmanager/contentexportxls.tpl:19
@@ -310,11 +310,11 @@ msgstr ""
 msgid "Export"
 msgstr ""
 
-#: contrib/gosa.conf:267
+#: contrib/gosa.conf:268
 msgid "Excel Export"
 msgstr ""
 
-#: contrib/gosa.conf:268 plugins/addons/gotomasses/contents.tpl:21
+#: contrib/gosa.conf:269 plugins/addons/gotomasses/contents.tpl:21
 #: plugins/addons/gotomasses/contents.tpl:25
 #: plugins/addons/gotomasses/contents.tpl:28
 #: plugins/addons/notifications/contents.tpl:54
@@ -329,15 +329,15 @@ msgstr ""
 msgid "Import"
 msgstr ""
 
-#: contrib/gosa.conf:269
+#: contrib/gosa.conf:270
 msgid "CSV Import"
 msgstr ""
 
-#: contrib/gosa.conf:274 contrib/gosa.conf:304
+#: contrib/gosa.conf:275 contrib/gosa.conf:305
 msgid "Partitions"
 msgstr ""
 
-#: contrib/gosa.conf:278 contrib/gosa.conf:308
+#: contrib/gosa.conf:279 contrib/gosa.conf:309
 #: plugins/admin/applications/generic.tpl:130
 #: plugins/admin/fai/faiScriptEntry.tpl:56
 #: plugins/admin/fai/class_faiScript.inc:546
@@ -346,68 +346,78 @@ msgstr ""
 msgid "Script"
 msgstr ""
 
-#: contrib/gosa.conf:282 contrib/gosa.conf:312
+#: contrib/gosa.conf:283 contrib/gosa.conf:313
 #: plugins/admin/fai/class_faiSummaryTab.inc:45
 msgid "Hooks"
 msgstr ""
 
-#: contrib/gosa.conf:286 contrib/gosa.conf:316
+#: contrib/gosa.conf:287 contrib/gosa.conf:317
 #: plugins/admin/fai/class_faiSummaryTab.inc:46
 msgid "Variables"
 msgstr ""
 
-#: contrib/gosa.conf:290 contrib/gosa.conf:320
+#: contrib/gosa.conf:291 contrib/gosa.conf:321
 #: plugins/admin/fai/class_faiSummaryTab.inc:47
 msgid "Templates"
 msgstr ""
 
-#: contrib/gosa.conf:294 contrib/gosa.conf:324
+#: contrib/gosa.conf:295 contrib/gosa.conf:325
 #: plugins/admin/fai/class_faiSummaryTab.inc:50
 #: plugins/personal/environment/environment.tpl:11
 msgid "Profiles"
 msgstr ""
 
-#: contrib/gosa.conf:295 contrib/gosa.conf:325
+#: contrib/gosa.conf:296 contrib/gosa.conf:326
 #: plugins/admin/acl/class_divListACL.inc:54
 #: plugins/admin/ogroups/tabs_ogroups.inc:109
 msgid "Summary"
 msgstr ""
 
-#: contrib/gosa.conf:299 contrib/gosa.conf:329
+#: contrib/gosa.conf:300 contrib/gosa.conf:330
 #: plugins/admin/fai/class_faiPackage.inc:547
 msgid "Packages"
 msgstr ""
 
-#: contrib/gosa.conf:507 plugins/admin/ogroups/class_phonequeue.inc:270
+#: contrib/gosa.conf:336 plugins/addons/logview/class_logview.inc:7
+#: plugins/addons/logview/class_logview.inc:409
+#: plugins/addons/logview/class_gosa_logview.inc:7
+msgid "System logs"
+msgstr ""
+
+#: contrib/gosa.conf:337
+msgid "GOsa logs"
+msgstr ""
+
+#: contrib/gosa.conf:516 plugins/admin/ogroups/class_phonequeue.inc:270
 #: setup/class_setupStep_Language.inc:48
 msgid "German"
 msgstr ""
 
-#: contrib/gosa.conf:508 setup/class_setupStep_Language.inc:52
+#: contrib/gosa.conf:517 setup/class_setupStep_Language.inc:52
 msgid "Russian"
 msgstr ""
 
-#: contrib/gosa.conf:509
+#: contrib/gosa.conf:518
 msgid "Spanish"
 msgstr ""
 
-#: contrib/gosa.conf:510 setup/class_setupStep_Language.inc:49
+#: contrib/gosa.conf:519 setup/class_setupStep_Language.inc:49
 msgid "French"
 msgstr ""
 
-#: contrib/gosa.conf:511
+#: contrib/gosa.conf:520
 msgid "Dutch"
 msgstr ""
 
-#: contrib/gosa.conf:512 setup/class_setupStep_Language.inc:50
+#: contrib/gosa.conf:521 setup/class_setupStep_Language.inc:50
 msgid "English"
 msgstr ""
 
-#: contrib/gosa.conf:513
+#: contrib/gosa.conf:522
 msgid "Italian"
 msgstr ""
 
-#: contrib/gosa.conf:514
+#: contrib/gosa.conf:523
 msgid "Polish"
 msgstr ""
 
@@ -651,8 +661,8 @@ msgstr ""
 #: plugins/admin/systems/class_printGeneric.inc:868
 #: plugins/admin/systems/class_gosaLogServer.inc:102
 #: plugins/admin/ogroups/class_ogroupManagement.inc:428
-#: plugins/admin/fai/faiTemplateEntry.tpl:110 setup/setup_config2.tpl:195
-#: setup/setup_config2.tpl:240
+#: plugins/admin/fai/faiTemplateEntry.tpl:110 setup/setup_config2.tpl:212
+#: setup/setup_config2.tpl:257
 msgid "User"
 msgstr ""
 
@@ -776,10 +786,10 @@ msgstr ""
 #: plugins/admin/systems/class_servDNSeditZone.inc:316
 #: plugins/admin/systems/class_servDNSeditZone.inc:541
 #: plugins/admin/systems/glpi_edit_printer_type.tpl:9
-#: plugins/admin/systems/terminal.tpl:127
+#: plugins/admin/systems/terminal.tpl:131
 #: plugins/admin/systems/glpi_edit_type.tpl:10
 #: plugins/admin/systems/remove_ppd.tpl:12
-#: plugins/admin/systems/workstation.tpl:104
+#: plugins/admin/systems/workstation.tpl:108
 #: plugins/admin/systems/workstationStartup.tpl:131
 #: plugins/admin/systems/workstationStartup.tpl:165
 #: plugins/admin/applications/remove.tpl:14
@@ -902,9 +912,9 @@ msgstr ""
 #: plugins/admin/ogroups/class_ogroupManagement.inc:384
 #: plugins/admin/fai/faiPackageConfiguration.tpl:7
 #: plugins/admin/fai/remove.tpl:18 plugins/admin/fai/remove.tpl:22
-#: plugins/admin/fai/class_faiManagement.inc:749
-#: plugins/admin/fai/class_faiManagement.inc:754
-#: plugins/admin/fai/class_faiManagement.inc:760
+#: plugins/admin/fai/class_faiManagement.inc:759
+#: plugins/admin/fai/class_faiManagement.inc:764
+#: plugins/admin/fai/class_faiManagement.inc:770
 #: plugins/admin/fai/faiScriptEntry.tpl:83
 #: plugins/admin/fai/remove_branch.tpl:16
 #: plugins/admin/fai/faiPackageEntry.tpl:57
@@ -1084,9 +1094,9 @@ msgstr ""
 #: plugins/admin/systems/class_printGeneric.inc:890
 #: plugins/admin/systems/class_servGeneric.inc:426
 #: plugins/admin/systems/phone.tpl:17
-#: plugins/admin/systems/class_terminalGeneric.inc:633
+#: plugins/admin/systems/class_terminalGeneric.inc:640
 #: plugins/admin/systems/class_baseSelectDialog.inc:46
-#: plugins/admin/systems/class_workstationGeneric.inc:617
+#: plugins/admin/systems/class_workstationGeneric.inc:622
 #: plugins/admin/systems/server.tpl:22 plugins/admin/systems/terminal.tpl:19
 #: plugins/admin/systems/workstation.tpl:27
 #: plugins/admin/systems/class_divListSystem.inc:227
@@ -1106,7 +1116,7 @@ msgstr ""
 #: plugins/admin/ogroups/class_divListOGroup.inc:181
 #: plugins/admin/ogroups/class_ogroup.inc:757
 #: plugins/admin/ogroups/generic.tpl:26
-#: plugins/admin/fai/class_divListFai.inc:213
+#: plugins/admin/fai/class_divListFai.inc:216
 #: plugins/personal/generic/class_user.inc:1423
 #: plugins/personal/generic/generic.tpl:143
 #: plugins/gofon/macro/class_gofonMacro.inc:581
@@ -1129,7 +1139,7 @@ msgstr ""
 #: plugins/admin/acl/class_divListACL.inc:156
 #: plugins/admin/departments/class_divListDepartment.inc:135
 #: plugins/admin/ogroups/class_divListOGroup.inc:183
-#: plugins/admin/fai/class_divListFai.inc:215
+#: plugins/admin/fai/class_divListFai.inc:218
 #: plugins/gofon/macro/class_divListMacros.inc:149
 #: plugins/gofon/conference/class_divListConferences.inc:156
 msgid "Submit department"
@@ -1148,7 +1158,7 @@ msgstr ""
 #: plugins/admin/acl/class_divListACL.inc:156
 #: plugins/admin/departments/class_divListDepartment.inc:135
 #: plugins/admin/ogroups/class_divListOGroup.inc:183
-#: plugins/admin/fai/class_divListFai.inc:215
+#: plugins/admin/fai/class_divListFai.inc:218
 #: plugins/gofon/macro/class_divListMacros.inc:149
 #: plugins/gofon/conference/class_divListConferences.inc:156
 #: include/class_MultiSelectWindow.inc:209
@@ -1187,8 +1197,8 @@ msgstr ""
 #: plugins/admin/fai/class_faiHook.inc:302
 #: plugins/admin/fai/class_faiTemplate.inc:278
 #: plugins/admin/fai/class_faiTemplate.inc:280
-#: plugins/admin/fai/class_divListFai.inc:296
 #: plugins/admin/fai/class_divListFai.inc:299
+#: plugins/admin/fai/class_divListFai.inc:302
 #: plugins/gofon/macro/class_divListMacros.inc:207
 #: plugins/gofon/conference/class_divListConferences.inc:217
 #: include/class_acl.inc:409 include/class_acl.inc:454
@@ -1217,7 +1227,7 @@ msgstr ""
 #: plugins/admin/fai/class_faiScript.inc:306
 #: plugins/admin/fai/class_faiHook.inc:304
 #: plugins/admin/fai/class_faiTemplate.inc:282
-#: plugins/admin/fai/class_divListFai.inc:307
+#: plugins/admin/fai/class_divListFai.inc:310
 #: plugins/gofon/macro/class_divListMacros.inc:215
 #: plugins/gofon/conference/class_divListConferences.inc:227
 #: include/class_acl.inc:410 include/class_acl.inc:455
@@ -1391,9 +1401,9 @@ msgstr ""
 #: plugins/admin/systems/class_servDNSeditZone.inc:547
 #: plugins/admin/systems/glpi_edit_printer_type.tpl:7
 #: plugins/admin/systems/servRepositorySetup.tpl:47
-#: plugins/admin/systems/terminal.tpl:123
+#: plugins/admin/systems/terminal.tpl:127
 #: plugins/admin/systems/glpi_edit_type.tpl:8
-#: plugins/admin/systems/workstation.tpl:100
+#: plugins/admin/systems/workstation.tpl:104
 #: plugins/admin/systems/glpi.tpl:125
 #: plugins/admin/systems/servdnseditzone.tpl:115
 #: plugins/admin/systems/workstationStartup.tpl:129
@@ -1453,7 +1463,7 @@ msgstr ""
 #: plugins/admin/mimetypes/class_mimetypeManagement.inc:431
 #: plugins/admin/acl/tabs_acl.inc:61 plugins/admin/acl/tabs_acl_role.inc:51
 #: plugins/admin/ogroups/class_ogroupManagement.inc:378
-#: plugins/admin/fai/class_faiManagement.inc:743
+#: plugins/admin/fai/class_faiManagement.inc:753
 #: plugins/personal/mail/main.inc:102 plugins/personal/netatalk/main.inc:94
 #: plugins/personal/connectivity/main.inc:100
 #: plugins/personal/environment/main.inc:100
@@ -1491,7 +1501,7 @@ msgstr ""
 #: plugins/admin/acl/acl_role.tpl:73
 #: plugins/admin/ogroups/class_ogroupManagement.inc:381
 #: plugins/admin/fai/faiPackageConfiguration.tpl:6
-#: plugins/admin/fai/class_faiManagement.inc:746
+#: plugins/admin/fai/class_faiManagement.inc:756
 #: plugins/admin/fai/faiScriptEntry.tpl:82
 #: plugins/admin/fai/faiPackageEntry.tpl:56
 #: plugins/admin/fai/faiTemplateEntry.tpl:170
@@ -1601,7 +1611,7 @@ msgstr ""
 #: plugins/admin/systems/glpiManufacturerAdd.tpl:7
 #: plugins/admin/systems/servnfs.tpl:9
 #: plugins/admin/systems/class_glpiAttachmentPool.inc:201
-#: plugins/admin/systems/class_terminalGeneric.inc:634
+#: plugins/admin/systems/class_terminalGeneric.inc:641
 #: plugins/admin/systems/goSpamServerRule.tpl:6
 #: plugins/admin/systems/glpiAttachmentEdit.tpl:10
 #: plugins/admin/systems/class_servRepository.inc:386
@@ -1967,8 +1977,8 @@ msgstr ""
 #: plugins/addons/logview/gosa_log_contents.tpl:82
 #: plugins/admin/systems/class_glpiPrinterCartridges.inc:163
 #: plugins/admin/systems/class_baseSelectDialog.inc:47
-#: plugins/admin/systems/server.tpl:62 plugins/admin/systems/terminal.tpl:146
-#: plugins/admin/systems/workstation.tpl:121
+#: plugins/admin/systems/server.tpl:62 plugins/admin/systems/terminal.tpl:150
+#: plugins/admin/systems/workstation.tpl:125
 #: plugins/admin/ogroups/termgroup.tpl:88
 msgid "Action"
 msgstr ""
@@ -2084,9 +2094,9 @@ msgstr ""
 #: plugins/admin/users/template.tpl:48
 #: plugins/admin/departments/class_departmentGeneric.inc:477
 #: plugins/admin/departments/class_departmentGeneric.inc:572
-#: plugins/admin/fai/class_faiManagement.inc:569
-#: plugins/admin/fai/class_faiManagement.inc:753
-#: plugins/admin/fai/class_faiManagement.inc:759
+#: plugins/admin/fai/class_faiManagement.inc:575
+#: plugins/admin/fai/class_faiManagement.inc:763
+#: plugins/admin/fai/class_faiManagement.inc:769
 #: include/sieve/templates/select_test_type.tpl:11
 #: include/sieve/templates/add_element.tpl:11 setup/class_setup.inc:280
 #: ihtml/themes/default/snapshotdialog.tpl:87
@@ -2119,10 +2129,10 @@ msgstr ""
 
 #: plugins/addons/notifications/class_msgplug.inc:111
 #: plugins/admin/systems/class_servGeneric.inc:114
-#: plugins/admin/systems/class_terminalGeneric.inc:208
-#: plugins/admin/systems/class_terminalGeneric.inc:220
-#: plugins/admin/systems/class_terminalGeneric.inc:232
-#: plugins/admin/systems/class_workstationGeneric.inc:185
+#: plugins/admin/systems/class_terminalGeneric.inc:213
+#: plugins/admin/systems/class_terminalGeneric.inc:225
+#: plugins/admin/systems/class_terminalGeneric.inc:237
+#: plugins/admin/systems/class_workstationGeneric.inc:190
 #: plugins/admin/ogroups/class_termgroup.inc:208
 #, php-format
 msgid "Execution of '%s' failed!"
@@ -2220,7 +2230,7 @@ msgstr ""
 #: plugins/admin/ogroups/class_ogroupManagement.inc:432
 #: plugins/personal/mail/generic.tpl:16
 #: plugins/generic/references/class_reference.inc:44
-#: setup/setup_config2.tpl:186 setup/setup_config2.tpl:231
+#: setup/setup_config2.tpl:203 setup/setup_config2.tpl:248
 msgid "Server"
 msgstr ""
 
@@ -2422,12 +2432,6 @@ msgstr ""
 msgid "Repeated"
 msgstr ""
 
-#: plugins/addons/logview/class_logview.inc:7
-#: plugins/addons/logview/class_logview.inc:409
-#: plugins/addons/logview/class_gosa_logview.inc:7
-msgid "System logs"
-msgstr ""
-
 #: plugins/addons/logview/class_logview.inc:79
 msgid "No LOG servers defined!"
 msgstr ""
@@ -2626,7 +2630,7 @@ msgstr ""
 #: plugins/addons/godfs/generic.tpl:34
 #: plugins/addons/addressbook/class_addressbook.inc:816
 #: plugins/admin/systems/class_printGeneric.inc:892
-#: plugins/admin/systems/class_workstationGeneric.inc:616
+#: plugins/admin/systems/class_workstationGeneric.inc:621
 #: plugins/admin/systems/class_glpiPrinterAccount.inc:795
 #: plugins/admin/systems/workstation.tpl:19
 #: plugins/admin/systems/class_glpiAccount.inc:792
@@ -3573,7 +3577,7 @@ msgstr ""
 
 #: plugins/admin/groups/paste_mail.tpl:1 plugins/personal/mail/copypaste.tpl:1
 #: plugins/personal/mail/class_mailAccount.inc:1139
-#: setup/setup_config2.tpl:118
+#: setup/setup_config2.tpl:135
 msgid "Mail settings"
 msgstr ""
 
@@ -4533,8 +4537,8 @@ msgstr ""
 #: plugins/admin/systems/class_terminalInfo.inc:73
 #: plugins/admin/systems/class_terminalStartup.inc:168
 #: plugins/admin/systems/class_terminalService.inc:267
-#: plugins/admin/systems/class_workstationStartup.inc:508
-#: plugins/admin/systems/class_terminalGeneric.inc:272
+#: plugins/admin/systems/class_workstationStartup.inc:514
+#: plugins/admin/systems/class_terminalGeneric.inc:277
 msgid "This 'dn' has no terminal features."
 msgstr ""
 
@@ -4569,7 +4573,7 @@ msgstr ""
 
 #: plugins/admin/systems/class_SelectDeviceType.inc:34
 #: plugins/admin/systems/class_systemManagement.inc:1268
-#: plugins/admin/systems/class_workstationGeneric.inc:612
+#: plugins/admin/systems/class_workstationGeneric.inc:617
 #: plugins/admin/ogroups/class_ogroupManagement.inc:434
 #: plugins/generic/references/class_reference.inc:48
 msgid "Workstation"
@@ -4577,8 +4581,8 @@ msgstr ""
 
 #: plugins/admin/systems/class_SelectDeviceType.inc:34
 #: plugins/admin/systems/class_systemManagement.inc:1267
-#: plugins/admin/systems/class_terminalGeneric.inc:619
-#: plugins/admin/systems/class_terminalGeneric.inc:625
+#: plugins/admin/systems/class_terminalGeneric.inc:626
+#: plugins/admin/systems/class_terminalGeneric.inc:632
 #: plugins/admin/ogroups/class_ogroupManagement.inc:435
 msgid "Terminal"
 msgstr ""
@@ -4643,8 +4647,8 @@ msgstr ""
 #: plugins/admin/systems/goLogDBServer.tpl:12
 #: plugins/admin/systems/class_goFaxServer.inc:100
 #: plugins/personal/password/class_password.inc:24
-#: plugins/personal/generic/paste_generic.tpl:20 setup/setup_config2.tpl:204
-#: setup/setup_config2.tpl:249 setup/setup_migrate.tpl:225
+#: plugins/personal/generic/paste_generic.tpl:20 setup/setup_config2.tpl:221
+#: setup/setup_config2.tpl:266 setup/setup_migrate.tpl:225
 #: ihtml/themes/default/login.tpl:44 ihtml/themes/default/login.tpl:46
 #: ihtml/themes/default/password.tpl:38
 msgid "Password"
@@ -4707,8 +4711,8 @@ msgstr ""
 #: plugins/admin/systems/class_printGeneric.inc:683
 #: plugins/admin/systems/class_servGeneric.inc:301
 #: plugins/admin/systems/class_winGeneric.inc:215
-#: plugins/admin/systems/class_terminalGeneric.inc:461
-#: plugins/admin/systems/class_workstationGeneric.inc:443
+#: plugins/admin/systems/class_terminalGeneric.inc:468
+#: plugins/admin/systems/class_workstationGeneric.inc:448
 #, php-format
 msgid "There is already an entry '%s' in the base choosen by you"
 msgstr ""
@@ -4790,7 +4794,7 @@ msgid ""
 msgstr ""
 
 #: plugins/admin/systems/class_servRepositorySetup.inc:203
-#: plugins/admin/systems/class_workstationStartup.inc:1149
+#: plugins/admin/systems/class_workstationStartup.inc:1161
 #, php-format
 msgid ""
 "The specified REPOSITORY_HOOK '%s', specified in your gosa.conf, returns an "
@@ -4820,7 +4824,7 @@ msgid "refresh"
 msgstr ""
 
 #: plugins/admin/systems/phonesettings.tpl:25
-#: plugins/admin/systems/class_terminalGeneric.inc:628
+#: plugins/admin/systems/class_terminalGeneric.inc:635
 #: plugins/admin/systems/server.tpl:41 plugins/admin/systems/terminal.tpl:43
 #: plugins/admin/systems/workstation.tpl:50
 #: plugins/admin/ogroups/class_termgroup.inc:395
@@ -5228,7 +5232,7 @@ msgstr ""
 #: include/sieve/templates/element_header.tpl:41 setup/setup_feedback.tpl:53
 #: setup/setup_feedback.tpl:71 setup/class_setupStep_Config3.inc:76
 #: setup/class_setupStep_Ldap.inc:74 setup/class_setupStep_Schema.inc:63
-#: setup/class_setupStep_Config1.inc:87 setup/class_setupStep_Config2.inc:141
+#: setup/class_setupStep_Config1.inc:87 setup/class_setupStep_Config2.inc:145
 msgid "Yes"
 msgstr ""
 
@@ -5244,7 +5248,7 @@ msgstr ""
 #: include/sieve/templates/element_header.tpl:43 setup/setup_feedback.tpl:55
 #: setup/setup_feedback.tpl:73 setup/class_setupStep_Config3.inc:76
 #: setup/class_setupStep_Ldap.inc:74 setup/class_setupStep_Schema.inc:63
-#: setup/class_setupStep_Config1.inc:87 setup/class_setupStep_Config2.inc:141
+#: setup/class_setupStep_Config1.inc:87 setup/class_setupStep_Config2.inc:145
 msgid "No"
 msgstr ""
 
@@ -5487,8 +5491,8 @@ msgstr ""
 
 #: plugins/admin/systems/goImapServer.tpl:110
 #: plugins/admin/systems/goMailServer.tpl:215
-#: plugins/admin/systems/server.tpl:74 plugins/admin/systems/terminal.tpl:159
-#: plugins/admin/systems/workstation.tpl:133
+#: plugins/admin/systems/server.tpl:74 plugins/admin/systems/terminal.tpl:163
+#: plugins/admin/systems/workstation.tpl:137
 #: plugins/admin/applications/class_applicationGeneric.inc:554
 #: plugins/admin/applications/generic.tpl:24
 #: plugins/admin/ogroups/termgroup.tpl:101
@@ -5578,7 +5582,7 @@ msgstr ""
 
 #: plugins/admin/systems/terminalStartup.tpl:8
 #: plugins/admin/systems/class_terminalStartup.inc:480
-#: plugins/admin/systems/class_workstationStartup.inc:1188
+#: plugins/admin/systems/class_workstationStartup.inc:1200
 #: plugins/admin/systems/workstationStartup.tpl:8
 msgid "Boot kernel"
 msgstr ""
@@ -5637,7 +5641,7 @@ msgstr ""
 #: plugins/admin/systems/terminalStartup.tpl:87
 #: plugins/admin/systems/class_terminalStartup.inc:478
 #: plugins/admin/systems/goShareServer.tpl:1
-#: plugins/admin/systems/class_workstationStartup.inc:1192
+#: plugins/admin/systems/class_workstationStartup.inc:1204
 #: plugins/admin/systems/workstationStartup.tpl:170
 #: plugins/personal/environment/class_environment.inc:1337
 #: plugins/personal/environment/environment.tpl:133
@@ -5944,13 +5948,13 @@ msgid "Can't add '%s' to list of members, it is not reachable."
 msgstr ""
 
 #: plugins/admin/systems/class_servGeneric.inc:54
-#: plugins/admin/systems/class_workstationGeneric.inc:121
+#: plugins/admin/systems/class_workstationGeneric.inc:126
 #: plugins/admin/ogroups/class_termgroup.inc:42
 msgid "Activated"
 msgstr ""
 
 #: plugins/admin/systems/class_servGeneric.inc:55
-#: plugins/admin/systems/class_workstationGeneric.inc:122
+#: plugins/admin/systems/class_workstationGeneric.inc:127
 #: plugins/admin/ogroups/class_termgroup.inc:43
 #: plugins/personal/connectivity/opengw.tpl:33
 #: plugins/personal/connectivity/class_opengwAccount.inc:343
@@ -5962,7 +5966,7 @@ msgid "This 'dn' has no server features."
 msgstr ""
 
 #: plugins/admin/systems/class_servGeneric.inc:109
-#: plugins/admin/systems/class_workstationGeneric.inc:181
+#: plugins/admin/systems/class_workstationGeneric.inc:186
 #: plugins/admin/ogroups/class_termgroup.inc:204
 msgid "No ACTIONCMD definition found in your gosa.conf"
 msgstr ""
@@ -5973,77 +5977,77 @@ msgid "Saving of system server/generic (FAIstate) with dn '%s' failed."
 msgstr ""
 
 #: plugins/admin/systems/class_servGeneric.inc:207
-#: plugins/admin/systems/class_terminalGeneric.inc:310
-#: plugins/admin/systems/class_workstationGeneric.inc:302
+#: plugins/admin/systems/class_terminalGeneric.inc:315
+#: plugins/admin/systems/class_workstationGeneric.inc:307
 #: plugins/admin/ogroups/class_termgroup.inc:294
 msgid "Switch off"
 msgstr ""
 
 #: plugins/admin/systems/class_servGeneric.inc:207
-#: plugins/admin/systems/class_terminalGeneric.inc:311
-#: plugins/admin/systems/class_workstationGeneric.inc:302
+#: plugins/admin/systems/class_terminalGeneric.inc:316
+#: plugins/admin/systems/class_workstationGeneric.inc:307
 #: plugins/admin/ogroups/class_termgroup.inc:294
 msgid "Reboot"
 msgstr ""
 
 #: plugins/admin/systems/class_servGeneric.inc:208
-#: plugins/admin/systems/class_workstationGeneric.inc:303
+#: plugins/admin/systems/class_workstationGeneric.inc:308
 #: plugins/admin/ogroups/class_termgroup.inc:295
 msgid "Instant update"
 msgstr ""
 
 #: plugins/admin/systems/class_servGeneric.inc:209
 #: plugins/admin/systems/class_servGeneric.inc:218
-#: plugins/admin/systems/class_workstationGeneric.inc:304
-#: plugins/admin/systems/class_workstationGeneric.inc:313
+#: plugins/admin/systems/class_workstationGeneric.inc:309
+#: plugins/admin/systems/class_workstationGeneric.inc:318
 #: plugins/admin/ogroups/class_termgroup.inc:296
 msgid "Scheduled update"
 msgstr ""
 
 #: plugins/admin/systems/class_servGeneric.inc:210
 #: plugins/admin/systems/class_servGeneric.inc:217
-#: plugins/admin/systems/class_workstationGeneric.inc:305
-#: plugins/admin/systems/class_workstationGeneric.inc:312
+#: plugins/admin/systems/class_workstationGeneric.inc:310
+#: plugins/admin/systems/class_workstationGeneric.inc:317
 #: plugins/admin/ogroups/class_termgroup.inc:297
 msgid "Reinstall"
 msgstr ""
 
 #: plugins/admin/systems/class_servGeneric.inc:211
-#: plugins/admin/systems/class_workstationGeneric.inc:306
+#: plugins/admin/systems/class_workstationGeneric.inc:311
 #: plugins/admin/ogroups/class_termgroup.inc:298
 msgid "Rescan hardware"
 msgstr ""
 
 #: plugins/admin/systems/class_servGeneric.inc:212
 #: plugins/admin/systems/class_servGeneric.inc:219
-#: plugins/admin/systems/class_terminalGeneric.inc:312
-#: plugins/admin/systems/class_terminalGeneric.inc:316
-#: plugins/admin/systems/class_workstationGeneric.inc:307
-#: plugins/admin/systems/class_workstationGeneric.inc:314
+#: plugins/admin/systems/class_terminalGeneric.inc:317
+#: plugins/admin/systems/class_terminalGeneric.inc:321
+#: plugins/admin/systems/class_workstationGeneric.inc:312
+#: plugins/admin/systems/class_workstationGeneric.inc:319
 #: plugins/admin/ogroups/class_termgroup.inc:299
 msgid "Memory test"
 msgstr ""
 
 #: plugins/admin/systems/class_servGeneric.inc:213
 #: plugins/admin/systems/class_servGeneric.inc:220
-#: plugins/admin/systems/class_workstationGeneric.inc:308
-#: plugins/admin/systems/class_workstationGeneric.inc:315
+#: plugins/admin/systems/class_workstationGeneric.inc:313
+#: plugins/admin/systems/class_workstationGeneric.inc:320
 msgid "Force localboot"
 msgstr ""
 
 #: plugins/admin/systems/class_servGeneric.inc:214
 #: plugins/admin/systems/class_servGeneric.inc:221
-#: plugins/admin/systems/class_terminalGeneric.inc:313
-#: plugins/admin/systems/class_terminalGeneric.inc:317
-#: plugins/admin/systems/class_workstationGeneric.inc:309
-#: plugins/admin/systems/class_workstationGeneric.inc:316
+#: plugins/admin/systems/class_terminalGeneric.inc:318
+#: plugins/admin/systems/class_terminalGeneric.inc:322
+#: plugins/admin/systems/class_workstationGeneric.inc:314
+#: plugins/admin/systems/class_workstationGeneric.inc:321
 #: plugins/admin/ogroups/class_termgroup.inc:300
 msgid "System analysis"
 msgstr ""
 
 #: plugins/admin/systems/class_servGeneric.inc:216
-#: plugins/admin/systems/class_terminalGeneric.inc:315
-#: plugins/admin/systems/class_workstationGeneric.inc:311
+#: plugins/admin/systems/class_terminalGeneric.inc:320
+#: plugins/admin/systems/class_workstationGeneric.inc:316
 msgid "Wake up"
 msgstr ""
 
@@ -6066,13 +6070,13 @@ msgid "Server generic"
 msgstr ""
 
 #: plugins/admin/systems/class_servGeneric.inc:425
-#: plugins/admin/systems/class_workstationGeneric.inc:618
+#: plugins/admin/systems/class_workstationGeneric.inc:623
 msgid "Goto mode"
 msgstr ""
 
 #: plugins/admin/systems/class_servGeneric.inc:427
-#: plugins/admin/systems/class_terminalGeneric.inc:636
-#: plugins/admin/systems/class_workstationGeneric.inc:622
+#: plugins/admin/systems/class_terminalGeneric.inc:643
+#: plugins/admin/systems/class_workstationGeneric.inc:627
 #: plugins/admin/ogroups/class_termgroup.inc:397
 msgid "Action flag"
 msgstr ""
@@ -6192,10 +6196,10 @@ msgstr ""
 #: plugins/admin/systems/class_terminalService.inc:231
 #: plugins/admin/systems/class_terminalService.inc:234
 #: plugins/admin/systems/class_terminalService.inc:237
-#: plugins/admin/systems/class_workstationStartup.inc:290
-#: plugins/admin/systems/class_workstationStartup.inc:312
-#: plugins/admin/systems/class_workstationStartup.inc:316
-#: plugins/admin/systems/class_workstationStartup.inc:835
+#: plugins/admin/systems/class_workstationStartup.inc:299
+#: plugins/admin/systems/class_workstationStartup.inc:322
+#: plugins/admin/systems/class_workstationStartup.inc:326
+#: plugins/admin/systems/class_workstationStartup.inc:845
 #: plugins/admin/systems/class_workstationService.inc:202
 #: plugins/admin/systems/class_workstationService.inc:205
 #: plugins/admin/systems/class_workstationService.inc:208
@@ -6210,14 +6214,14 @@ msgstr ""
 #: plugins/admin/systems/class_workstationService.inc:234
 #: plugins/admin/systems/class_workstationService.inc:235
 #: plugins/admin/systems/class_workstationService.inc:236
-#: plugins/admin/systems/class_terminalGeneric.inc:132
-#: plugins/admin/systems/class_terminalGeneric.inc:328
-#: plugins/admin/systems/class_workstationGeneric.inc:137
+#: plugins/admin/systems/class_terminalGeneric.inc:137
+#: plugins/admin/systems/class_terminalGeneric.inc:334
+#: plugins/admin/systems/class_workstationGeneric.inc:142
 msgid "inherited"
 msgstr ""
 
 #: plugins/admin/systems/class_terminalStartup.inc:95
-#: plugins/admin/systems/class_workstationStartup.inc:337
+#: plugins/admin/systems/class_workstationStartup.inc:347
 #, php-format
 msgid ""
 "Command '%s', specified as KERNELS hook for plugin '%s' doesn't seem to "
@@ -6225,7 +6229,7 @@ msgid ""
 msgstr ""
 
 #: plugins/admin/systems/class_terminalStartup.inc:210
-#: plugins/admin/systems/class_workstationStartup.inc:655
+#: plugins/admin/systems/class_workstationStartup.inc:661
 #: plugins/personal/environment/class_environment.inc:601
 #: plugins/personal/environment/class_environment.inc:614
 msgid "You must specify a valid mount point."
@@ -6241,17 +6245,17 @@ msgid "Terminal startup"
 msgstr ""
 
 #: plugins/admin/systems/class_terminalStartup.inc:477
-#: plugins/admin/systems/class_workstationStartup.inc:1187
+#: plugins/admin/systems/class_workstationStartup.inc:1199
 msgid "Ldap server"
 msgstr ""
 
 #: plugins/admin/systems/class_terminalStartup.inc:479
-#: plugins/admin/systems/class_workstationStartup.inc:1191
+#: plugins/admin/systems/class_workstationStartup.inc:1203
 msgid "Kernel modules"
 msgstr ""
 
 #: plugins/admin/systems/class_terminalStartup.inc:481
-#: plugins/admin/systems/class_workstationStartup.inc:1189
+#: plugins/admin/systems/class_workstationStartup.inc:1201
 msgid "Kernel parameter"
 msgstr ""
 
@@ -6576,7 +6580,7 @@ msgid "Win workstation"
 msgstr ""
 
 #: plugins/admin/systems/class_winGeneric.inc:290
-#: plugins/admin/systems/class_workstationGeneric.inc:615
+#: plugins/admin/systems/class_workstationGeneric.inc:620
 #: plugins/admin/systems/workstation.tpl:10
 msgid "Workstation name"
 msgstr ""
@@ -6831,7 +6835,7 @@ msgstr ""
 
 #: plugins/admin/systems/class_glpiAttachmentPool.inc:351
 #: plugins/admin/systems/class_servRepository.inc:218
-#: plugins/admin/fai/class_faiManagement.inc:456
+#: plugins/admin/fai/class_faiManagement.inc:462
 msgid "This name is already in use."
 msgstr ""
 
@@ -6969,7 +6973,7 @@ msgid "ICA client"
 msgstr ""
 
 #: plugins/admin/systems/class_terminalService.inc:197
-#: plugins/admin/systems/class_workstationStartup.inc:836
+#: plugins/admin/systems/class_workstationStartup.inc:848
 #: plugins/admin/systems/class_workstationService.inc:183
 #: plugins/personal/posix/class_posixAccount.inc:203
 #: plugins/gofon/phoneaccount/class_phoneAccount.inc:256
@@ -7140,7 +7144,7 @@ msgid "New processor"
 msgstr ""
 
 #: plugins/admin/systems/class_glpiDeviceManagement.inc:229
-#: plugins/admin/fai/class_divListFai.inc:177
+#: plugins/admin/fai/class_divListFai.inc:180
 msgid "P"
 msgstr ""
 
@@ -7297,34 +7301,34 @@ msgstr ""
 msgid "Local dial prefix"
 msgstr ""
 
-#: plugins/admin/systems/class_workstationStartup.inc:434
+#: plugins/admin/systems/class_workstationStartup.inc:440
 msgid ""
 "There are packages in your configuration, which can't be resolved with "
 "current server/release settings."
 msgstr ""
 
-#: plugins/admin/systems/class_workstationStartup.inc:479
+#: plugins/admin/systems/class_workstationStartup.inc:485
 msgid "Please select a 'FAI server' or remove the 'FAI classes'."
 msgstr ""
 
-#: plugins/admin/systems/class_workstationStartup.inc:547
+#: plugins/admin/systems/class_workstationStartup.inc:553
 msgid ""
 "There is already a profile in your selection that contain partition table "
 "configurations."
 msgstr ""
 
-#: plugins/admin/systems/class_workstationStartup.inc:764
+#: plugins/admin/systems/class_workstationStartup.inc:770
 msgid "Not available in current setup"
 msgstr ""
 
-#: plugins/admin/systems/class_workstationStartup.inc:908
+#: plugins/admin/systems/class_workstationStartup.inc:920
 #, php-format
 msgid ""
 "Can't resolve one or more of the given FAIclass(es) [%s] in FAI server '%s'. "
 "Server was reset to 'auto'."
 msgstr ""
 
-#: plugins/admin/systems/class_workstationStartup.inc:924
+#: plugins/admin/systems/class_workstationStartup.inc:936
 #, php-format
 msgid ""
 "Can't resolve the given FAIclass(es) [%s] anyway, please check your FAI "
@@ -7332,36 +7336,36 @@ msgid ""
 "reset to 'auto'."
 msgstr ""
 
-#: plugins/admin/systems/class_workstationStartup.inc:1097
+#: plugins/admin/systems/class_workstationStartup.inc:1109
 #, php-format
 msgid "Saving of system workstation/startup with dn '%s' failed."
 msgstr ""
 
-#: plugins/admin/systems/class_workstationStartup.inc:1147
+#: plugins/admin/systems/class_workstationStartup.inc:1159
 #, php-format
 msgid ""
 "Can't execute specified REPOSITORY_HOOK '%s' please check your gosa.conf."
 msgstr ""
 
-#: plugins/admin/systems/class_workstationStartup.inc:1179
+#: plugins/admin/systems/class_workstationStartup.inc:1191
 msgid "System startup"
 msgstr ""
 
-#: plugins/admin/systems/class_workstationStartup.inc:1194
+#: plugins/admin/systems/class_workstationStartup.inc:1206
 #: plugins/admin/fai/faiProfile.tpl:36
 #: plugins/admin/fai/class_faiProfile.inc:467
 msgid "FAI classes"
 msgstr ""
 
-#: plugins/admin/systems/class_workstationStartup.inc:1195
+#: plugins/admin/systems/class_workstationStartup.inc:1207
 msgid "Debian mirror"
 msgstr ""
 
-#: plugins/admin/systems/class_workstationStartup.inc:1196
+#: plugins/admin/systems/class_workstationStartup.inc:1208
 msgid "Debian release"
 msgstr ""
 
-#: plugins/admin/systems/class_workstationStartup.inc:1198
+#: plugins/admin/systems/class_workstationStartup.inc:1210
 msgid "FAI status flag"
 msgstr ""
 
@@ -7774,83 +7778,83 @@ msgstr ""
 msgid "All available services are already in use."
 msgstr ""
 
-#: plugins/admin/systems/class_terminalGeneric.inc:115
+#: plugins/admin/systems/class_terminalGeneric.inc:120
 #: plugins/personal/posix/class_posixAccount.inc:575
 #: plugins/personal/samba/class_sambaAccount.inc:501
-#: setup/setup_config2.tpl:126
+#: setup/setup_config2.tpl:143
 msgid "disabled"
 msgstr ""
 
-#: plugins/admin/systems/class_terminalGeneric.inc:116
+#: plugins/admin/systems/class_terminalGeneric.inc:121
 msgid "text"
 msgstr ""
 
-#: plugins/admin/systems/class_terminalGeneric.inc:117
+#: plugins/admin/systems/class_terminalGeneric.inc:122
 msgid "graphic"
 msgstr ""
 
-#: plugins/admin/systems/class_terminalGeneric.inc:197
+#: plugins/admin/systems/class_terminalGeneric.inc:202
 #, php-format
 msgid "Saving of system terminal/generic (FAIstate) with dn '%s' failed."
 msgstr ""
 
-#: plugins/admin/systems/class_terminalGeneric.inc:204
+#: plugins/admin/systems/class_terminalGeneric.inc:209
 msgid "No WAKECMD definition found in your gosa.conf"
 msgstr ""
 
-#: plugins/admin/systems/class_terminalGeneric.inc:216
+#: plugins/admin/systems/class_terminalGeneric.inc:221
 msgid "No REBOOTCMD definition found in your gosa.conf"
 msgstr ""
 
-#: plugins/admin/systems/class_terminalGeneric.inc:228
+#: plugins/admin/systems/class_terminalGeneric.inc:233
 msgid "No HALTCMD definition found in your gosa.conf"
 msgstr ""
 
-#: plugins/admin/systems/class_terminalGeneric.inc:369
+#: plugins/admin/systems/class_terminalGeneric.inc:376
 #, php-format
 msgid "Removing of object system terminal/generic with dn '%s' failed."
 msgstr ""
 
-#: plugins/admin/systems/class_terminalGeneric.inc:442
+#: plugins/admin/systems/class_terminalGeneric.inc:449
 msgid "The required field 'Terminal name' is not set."
 msgstr ""
 
-#: plugins/admin/systems/class_terminalGeneric.inc:471
-#: plugins/admin/systems/class_workstationGeneric.inc:453
+#: plugins/admin/systems/class_terminalGeneric.inc:478
+#: plugins/admin/systems/class_workstationGeneric.inc:458
 msgid ""
 "There must be at least one NTP server selected, or the inherit mode "
 "activated."
 msgstr ""
 
-#: plugins/admin/systems/class_terminalGeneric.inc:557
+#: plugins/admin/systems/class_terminalGeneric.inc:564
 #, php-format
 msgid "Saving of object system terminal/generic with dn '%s' failed."
 msgstr ""
 
-#: plugins/admin/systems/class_terminalGeneric.inc:620
+#: plugins/admin/systems/class_terminalGeneric.inc:627
 msgid "Terminal generic"
 msgstr ""
 
-#: plugins/admin/systems/class_terminalGeneric.inc:629
+#: plugins/admin/systems/class_terminalGeneric.inc:636
 #: plugins/admin/systems/terminal.tpl:72
 msgid "Root server"
 msgstr ""
 
-#: plugins/admin/systems/class_terminalGeneric.inc:630
+#: plugins/admin/systems/class_terminalGeneric.inc:637
 #: plugins/admin/systems/terminal.tpl:82
 msgid "Swap server"
 msgstr ""
 
-#: plugins/admin/systems/class_terminalGeneric.inc:631
+#: plugins/admin/systems/class_terminalGeneric.inc:638
 msgid "Syslog server enabled"
 msgstr ""
 
-#: plugins/admin/systems/class_terminalGeneric.inc:632
+#: plugins/admin/systems/class_terminalGeneric.inc:639
 msgid "Ntp server settings"
 msgstr ""
 
-#: plugins/admin/systems/class_terminalGeneric.inc:635
-#: plugins/admin/systems/class_workstationGeneric.inc:621
+#: plugins/admin/systems/class_terminalGeneric.inc:642
+#: plugins/admin/systems/class_workstationGeneric.inc:626
 msgid "Root password"
 msgstr ""
 
@@ -8079,36 +8083,36 @@ msgstr ""
 msgid "Anti virus user"
 msgstr ""
 
-#: plugins/admin/systems/class_workstationGeneric.inc:216
+#: plugins/admin/systems/class_workstationGeneric.inc:221
 #: plugins/admin/ogroups/class_termgroup.inc:247
 #, php-format
 msgid "Saving of system workstation/generic (FAIstate) with dn '%s' failed."
 msgstr ""
 
-#: plugins/admin/systems/class_workstationGeneric.inc:227
+#: plugins/admin/systems/class_workstationGeneric.inc:232
 msgid "This 'dn' has no workstation features."
 msgstr ""
 
-#: plugins/admin/systems/class_workstationGeneric.inc:354
+#: plugins/admin/systems/class_workstationGeneric.inc:359
 #, php-format
 msgid "Removing of system workstation/generic with dn '%s' failed."
 msgstr ""
 
-#: plugins/admin/systems/class_workstationGeneric.inc:425
+#: plugins/admin/systems/class_workstationGeneric.inc:430
 msgid "The required field 'Workstation name' is not set."
 msgstr ""
 
-#: plugins/admin/systems/class_workstationGeneric.inc:521
-#: plugins/admin/systems/class_workstationGeneric.inc:546
+#: plugins/admin/systems/class_workstationGeneric.inc:526
+#: plugins/admin/systems/class_workstationGeneric.inc:551
 #, php-format
 msgid "Saving of system workstation/generic with dn '%s' failed."
 msgstr ""
 
-#: plugins/admin/systems/class_workstationGeneric.inc:607
+#: plugins/admin/systems/class_workstationGeneric.inc:612
 msgid "Workstation generic"
 msgstr ""
 
-#: plugins/admin/systems/class_workstationGeneric.inc:619
+#: plugins/admin/systems/class_workstationGeneric.inc:624
 #: plugins/admin/systems/terminal.tpl:53
 #: plugins/admin/systems/workstation.tpl:60
 #: plugins/admin/ogroups/class_termgroup.inc:396
@@ -8116,7 +8120,7 @@ msgstr ""
 msgid "Syslog server"
 msgstr ""
 
-#: plugins/admin/systems/class_workstationGeneric.inc:620
+#: plugins/admin/systems/class_workstationGeneric.inc:625
 #: plugins/admin/ogroups/class_termgroup.inc:398
 msgid "Ntp server"
 msgstr ""
@@ -8438,25 +8442,27 @@ msgstr ""
 msgid "Choose NFS filesystem to place swap files on"
 msgstr ""
 
-#: plugins/admin/systems/terminal.tpl:104
-#: plugins/admin/systems/workstation.tpl:81
+#: plugins/admin/systems/terminal.tpl:105
+#: plugins/admin/systems/terminal.tpl:108
+#: plugins/admin/systems/workstation.tpl:82
+#: plugins/admin/systems/workstation.tpl:85
 msgid "Inherit time server attributes"
 msgstr ""
 
-#: plugins/admin/systems/terminal.tpl:109
-#: plugins/admin/systems/workstation.tpl:86
+#: plugins/admin/systems/terminal.tpl:113
+#: plugins/admin/systems/workstation.tpl:90
 #: plugins/admin/ogroups/termgroup.tpl:14
 msgid "NTP server"
 msgstr ""
 
-#: plugins/admin/systems/terminal.tpl:112
-#: plugins/admin/systems/workstation.tpl:89
+#: plugins/admin/systems/terminal.tpl:116
+#: plugins/admin/systems/workstation.tpl:93
 #: plugins/admin/ogroups/termgroup.tpl:17
 msgid "Choose server to use for synchronizing time"
 msgstr ""
 
-#: plugins/admin/systems/terminal.tpl:151
-#: plugins/admin/systems/workstation.tpl:126
+#: plugins/admin/systems/terminal.tpl:155
+#: plugins/admin/systems/workstation.tpl:130
 #: plugins/admin/ogroups/termgroup.tpl:93
 msgid "Select action to execute for this terminal"
 msgstr ""
@@ -10195,7 +10201,7 @@ msgid "New acl role"
 msgstr ""
 
 #: plugins/admin/acl/class_divListACL.inc:161
-#: plugins/admin/fai/class_divListFai.inc:224
+#: plugins/admin/fai/class_divListFai.inc:227
 #: plugins/gofon/macro/class_divListMacros.inc:158
 #: plugins/gofon/conference/class_divListConferences.inc:165
 msgid "Copy selected objects"
@@ -10208,7 +10214,7 @@ msgid "Copy objects"
 msgstr ""
 
 #: plugins/admin/acl/class_divListACL.inc:163
-#: plugins/admin/fai/class_divListFai.inc:226
+#: plugins/admin/fai/class_divListFai.inc:229
 #: plugins/gofon/macro/class_divListMacros.inc:160
 #: plugins/gofon/conference/class_divListConferences.inc:167
 msgid "cut selected objects"
@@ -11435,7 +11441,7 @@ msgid "Toggle remove flag"
 msgstr ""
 
 #: plugins/admin/fai/class_faiManagement.inc:33
-#: plugins/admin/fai/class_faiManagement.inc:995
+#: plugins/admin/fai/class_faiManagement.inc:1005
 msgid "FAI"
 msgstr ""
 
@@ -11453,38 +11459,38 @@ msgstr ""
 msgid "Object could not be deleted '%s', object does not exist."
 msgstr ""
 
-#: plugins/admin/fai/class_faiManagement.inc:383
+#: plugins/admin/fai/class_faiManagement.inc:385
 #, php-format
 msgid "You're about to delete a fai branch / freeze  '%s'."
 msgstr ""
 
-#: plugins/admin/fai/class_faiManagement.inc:386
+#: plugins/admin/fai/class_faiManagement.inc:388
 msgid "You are not allowed to delete this release!"
 msgstr ""
 
-#: plugins/admin/fai/class_faiManagement.inc:447
+#: plugins/admin/fai/class_faiManagement.inc:453
 msgid "Specified branch name is invalid."
 msgstr ""
 
-#: plugins/admin/fai/class_faiManagement.inc:449
+#: plugins/admin/fai/class_faiManagement.inc:455
 msgid "Specified freeze name is invalid."
 msgstr ""
 
-#: plugins/admin/fai/class_faiManagement.inc:478
+#: plugins/admin/fai/class_faiManagement.inc:484
 msgid "You are not allowed to create a new branch."
 msgstr ""
 
-#: plugins/admin/fai/class_faiManagement.inc:636
-#: plugins/admin/fai/class_faiManagement.inc:652
+#: plugins/admin/fai/class_faiManagement.inc:646
+#: plugins/admin/fai/class_faiManagement.inc:662
 #, php-format
 msgid "You are not allowed to create a new '%s' object."
 msgstr ""
 
-#: plugins/admin/fai/class_faiManagement.inc:989
+#: plugins/admin/fai/class_faiManagement.inc:999
 msgid "FAI releases"
 msgstr ""
 
-#: plugins/admin/fai/class_faiManagement.inc:990
+#: plugins/admin/fai/class_faiManagement.inc:1000
 msgid "FAI release management"
 msgstr ""
 
@@ -12187,80 +12193,80 @@ msgstr ""
 msgid "Show partitions"
 msgstr ""
 
-#: plugins/admin/fai/class_divListFai.inc:177
+#: plugins/admin/fai/class_divListFai.inc:180
 msgid "New profile"
 msgstr ""
 
-#: plugins/admin/fai/class_divListFai.inc:193
+#: plugins/admin/fai/class_divListFai.inc:196
 msgid "New partition table"
 msgstr ""
 
-#: plugins/admin/fai/class_divListFai.inc:193
+#: plugins/admin/fai/class_divListFai.inc:196
 msgid "PT"
 msgstr ""
 
-#: plugins/admin/fai/class_divListFai.inc:194
+#: plugins/admin/fai/class_divListFai.inc:197
 msgid "New scripts"
 msgstr ""
 
-#: plugins/admin/fai/class_divListFai.inc:194
+#: plugins/admin/fai/class_divListFai.inc:197
 msgid "S"
 msgstr ""
 
-#: plugins/admin/fai/class_divListFai.inc:195
+#: plugins/admin/fai/class_divListFai.inc:198
 msgid "New hooks"
 msgstr ""
 
-#: plugins/admin/fai/class_divListFai.inc:195
+#: plugins/admin/fai/class_divListFai.inc:198
 msgid "H"
 msgstr ""
 
-#: plugins/admin/fai/class_divListFai.inc:196
+#: plugins/admin/fai/class_divListFai.inc:199
 msgid "New variables"
 msgstr ""
 
-#: plugins/admin/fai/class_divListFai.inc:196
+#: plugins/admin/fai/class_divListFai.inc:199
 msgid "V"
 msgstr ""
 
-#: plugins/admin/fai/class_divListFai.inc:197
+#: plugins/admin/fai/class_divListFai.inc:200
 msgid "New templates "
 msgstr ""
 
-#: plugins/admin/fai/class_divListFai.inc:197
+#: plugins/admin/fai/class_divListFai.inc:200
 msgid "I"
 msgstr ""
 
-#: plugins/admin/fai/class_divListFai.inc:198
+#: plugins/admin/fai/class_divListFai.inc:201
 msgid "New package list"
 msgstr ""
 
-#: plugins/admin/fai/class_divListFai.inc:198
+#: plugins/admin/fai/class_divListFai.inc:201
 msgid "PK"
 msgstr ""
 
-#: plugins/admin/fai/class_divListFai.inc:219
+#: plugins/admin/fai/class_divListFai.inc:222
 msgid "Remove selected fai objects"
 msgstr ""
 
-#: plugins/admin/fai/class_divListFai.inc:219
+#: plugins/admin/fai/class_divListFai.inc:222
 msgid "Remove fai objects"
 msgstr ""
 
-#: plugins/admin/fai/class_divListFai.inc:224
+#: plugins/admin/fai/class_divListFai.inc:227
 msgid "Copy fai objects"
 msgstr ""
 
-#: plugins/admin/fai/class_divListFai.inc:226
+#: plugins/admin/fai/class_divListFai.inc:229
 msgid "Cut fai objects"
 msgstr ""
 
-#: plugins/admin/fai/class_divListFai.inc:297
 #: plugins/admin/fai/class_divListFai.inc:300
+#: plugins/admin/fai/class_divListFai.inc:303
 msgid "Edit class"
 msgstr ""
 
-#: plugins/admin/fai/class_divListFai.inc:308
+#: plugins/admin/fai/class_divListFai.inc:311
 msgid "Delete class"
 msgstr ""
 
@@ -14316,36 +14322,31 @@ msgstr ""
 msgid "Display groups of user"
 msgstr ""
 
-#: plugins/personal/samba/class_sambaLogonHours.inc:26
-#, php-format
-msgid "The configured timezone '%s' seems not to valid."
-msgstr ""
-
-#: plugins/personal/samba/class_sambaLogonHours.inc:73
+#: plugins/personal/samba/class_sambaLogonHours.inc:62
 msgid "Sunday"
 msgstr ""
 
-#: plugins/personal/samba/class_sambaLogonHours.inc:74
+#: plugins/personal/samba/class_sambaLogonHours.inc:63
 msgid "Monday"
 msgstr ""
 
-#: plugins/personal/samba/class_sambaLogonHours.inc:75
+#: plugins/personal/samba/class_sambaLogonHours.inc:64
 msgid "Tuesday"
 msgstr ""
 
-#: plugins/personal/samba/class_sambaLogonHours.inc:76
+#: plugins/personal/samba/class_sambaLogonHours.inc:65
 msgid "Wednesday"
 msgstr ""
 
-#: plugins/personal/samba/class_sambaLogonHours.inc:77
+#: plugins/personal/samba/class_sambaLogonHours.inc:66
 msgid "Thursday"
 msgstr ""
 
-#: plugins/personal/samba/class_sambaLogonHours.inc:78
+#: plugins/personal/samba/class_sambaLogonHours.inc:67
 msgid "Friday"
 msgstr ""
 
-#: plugins/personal/samba/class_sambaLogonHours.inc:79
+#: plugins/personal/samba/class_sambaLogonHours.inc:68
 msgid "Saturday"
 msgstr ""
 
@@ -16760,6 +16761,11 @@ msgstr ""
 msgid "Ldap import with dn '%s' failed."
 msgstr ""
 
+#: include/class_timezones.inc:53 include/class_timezones.inc:83
+#, php-format
+msgid "The timezone setting \""
+msgstr ""
+
 #: include/class_config.inc:71
 #, php-format
 msgid "XML error in gosa.conf: %s at line %d"
@@ -17362,47 +17368,55 @@ msgstr ""
 msgid "Samba SID mapping"
 msgstr ""
 
-#: setup/setup_config2.tpl:70
-msgid "Additional GOsa settings"
+#: setup/setup_config2.tpl:71
+msgid "Timezone"
 msgstr ""
 
 #: setup/setup_config2.tpl:74
+msgid "Please your preferred timezone here"
+msgstr ""
+
+#: setup/setup_config2.tpl:87
+msgid "Additional GOsa settings"
+msgstr ""
+
+#: setup/setup_config2.tpl:91
 msgid "Enable Copy & Paste"
 msgstr ""
 
-#: setup/setup_config2.tpl:86
+#: setup/setup_config2.tpl:103
 msgid "Enable FAI release management"
 msgstr ""
 
-#: setup/setup_config2.tpl:98
+#: setup/setup_config2.tpl:115
 msgid "Enable user netatalk plugin"
 msgstr ""
 
-#: setup/setup_config2.tpl:109
+#: setup/setup_config2.tpl:126
 msgid "Government mode"
 msgstr ""
 
-#: setup/setup_config2.tpl:122
+#: setup/setup_config2.tpl:139
 msgid "Mail method"
 msgstr ""
 
-#: setup/setup_config2.tpl:136
+#: setup/setup_config2.tpl:153
 msgid "Vacation templates"
 msgstr ""
 
-#: setup/setup_config2.tpl:152
+#: setup/setup_config2.tpl:169
 msgid "Use Cyrus UNIX style"
 msgstr ""
 
-#: setup/setup_config2.tpl:162
+#: setup/setup_config2.tpl:179
 msgid "Snapshots / Undo"
 msgstr ""
 
-#: setup/setup_config2.tpl:171 setup/setup_config2.tpl:216
+#: setup/setup_config2.tpl:188 setup/setup_config2.tpl:233
 msgid "Enable snapshots"
 msgstr ""
 
-#: setup/setup_config2.tpl:177 setup/setup_config2.tpl:222
+#: setup/setup_config2.tpl:194 setup/setup_config2.tpl:239
 msgid "Snapshot base"
 msgstr ""
 
@@ -17839,11 +17853,11 @@ msgid ""
 "write the configuration directly if it is writeable."
 msgstr ""
 
-#: setup/class_setupStep_License.inc:53 setup/class_setupStep_License.inc:54
+#: setup/class_setupStep_License.inc:56 setup/class_setupStep_License.inc:57
 msgid "License"
 msgstr ""
 
-#: setup/class_setupStep_License.inc:55
+#: setup/class_setupStep_License.inc:58
 msgid "Terms and conditions for usage"
 msgstr ""
 
@@ -18643,11 +18657,11 @@ msgstr ""
 msgid "Schema check failed"
 msgstr ""
 
-#: setup/class_setupStep_Config2.inc:80 setup/class_setupStep_Config2.inc:81
+#: setup/class_setupStep_Config2.inc:84 setup/class_setupStep_Config2.inc:85
 msgid "GOsa settings 2/3"
 msgstr ""
 
-#: setup/class_setupStep_Config2.inc:82
+#: setup/class_setupStep_Config2.inc:86
 msgid "Customize special parameters"
 msgstr ""
 
@@ -18749,6 +18763,10 @@ msgid ""
 "GOsa has modular support for several mail methods. These methods provide "
 "interfaces to users mailboxes and general handling    for quotas. You can "
 "choose the dummy plugin to leave all your mail settings untouched."
+msgstr ""
+
+#: setup/setup_license.tpl:8
+msgid "I have read the license and accept it"
 msgstr ""
 
 #: ihtml/themes/default/framework.tpl:8 ihtml/themes/default/framework.tpl:12
