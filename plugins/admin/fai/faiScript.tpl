@@ -38,7 +38,7 @@
 				<h2><img class="center" alt="" src="images/fai_script.png" align="middle" title="{t}Objects{/t}">&nbsp;
 						{t}List of scripts{/t}
 				</h2>
-				<table width="100%" summary="">
+				<table width="100%" summary="" style="border:1px solid #B0B0B0; " cellspacing=0 cellpadding=0>
 				<tr>
 					<td>
 						{$Entry_divlist}
