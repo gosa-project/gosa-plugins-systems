@@ -233,6 +233,16 @@ class divListMacro extends MultiSelectWindow
         $display .= "&nbsp;[".$desc."]";
       }
 
+      /* Cutted objects should be displayed in light grey */
+      if($this->parent->CopyPasteHandler){
+        foreach($this->parent->CopyPasteHandler->queue as $queue_key => $queue_data){
+          if($queue_data['dn'] == $val['dn']) {
+            $display = "<font color='#999999'>".$display."</font>";
+            break;
+          }
+        }
+      }
+
       /* Create each field */
       $field0 = array("string" => "<input type='checkbox' id='item_selected_".$key."' name='item_selected_".$key."'>" ,
                       "attach" => "style='width:20px;'");

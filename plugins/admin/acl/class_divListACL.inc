@@ -244,9 +244,20 @@ class divListACL extends MultiSelectWindow
       }else{
         $field0 = array("string" => "", "attach" => "style='width:20px;'");
       }
+
+      /* Cutted objects should be displayed in light grey */
+      $display = $cn;
+      if($this->parent->CopyPasteHandler){
+        foreach($this->parent->CopyPasteHandler->queue as $queue_key => $queue_data){
+          if($queue_data['dn'] == $acl_entry['dn']) {
+            $display = "<font color='#999999'>".$display."</font>";
+            break;
+          }
+        }
+      }
   
       $field1 = array("string" => $list_left_icon, "attach"=> "style='text-align:center;width:20px;'");
-      $field2 = array("string" => sprintf($editlink,$key,$cn)."&nbsp;","attach" => "");
+      $field2 = array("string" => sprintf($editlink,$key,$display)."&nbsp;","attach" => "");
       $field3 = array("string" => preg_replace("/%KEY%/",$key,$action), "attach"=> "style='text-align:right;width:".$this->action_col_size."px;border-right:0px;'");
       $this->AddElement(array($field0,$field1,$field2,$field3));
     }

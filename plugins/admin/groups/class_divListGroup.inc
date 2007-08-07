@@ -297,8 +297,19 @@ class divListGroup extends MultiSelectWindow
       $field0 = array("string" => "<input type='checkbox' id='item_selected_".$key."' name='item_selected_".$key."'>" ,
           "attach" => "style='width:20px;'");
 
+      /* Cutted objects should be displayed in light grey */
+      $display = $val['cn'][0].$desc;
+      if($this->parent->CopyPasteHandler){
+        foreach($this->parent->CopyPasteHandler->queue as $queue_key => $queue_data){
+          if($queue_data['dn'] == $val['dn']) {
+            $display = "<font color='#999999'>".$display."</font>";
+            break;
+          }
+        }
+      }
+
       $field1 = array("string" => sprintf($userimg,$val['dn']), "attach" => "style='text-align:center;width:20px;'");
-      $field2 = array("string" => sprintf($editlink,$key,($val['cn']['0'].$desc)), "attach" => "style='' ".$title);
+      $field2 = array("string" => sprintf($editlink,$key,$display), "attach" => "style='' ".$title);
       $field3 = array("string" => preg_replace("/%KEY%/", $key, $posix."&nbsp;".$enviro."&nbsp;".$mail."&nbsp;".$samba."&nbsp;".$appl."&nbsp;".$phone),     "attach" => "style='width:136px;'");
       $field4 = array("string" => preg_replace("/%KEY%/", $key, $actions), "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'");
 

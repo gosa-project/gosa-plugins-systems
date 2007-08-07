@@ -257,11 +257,22 @@ class divListConference extends MultiSelectWindow
       /* Create title */
       $title = " title='".preg_replace("/ /","&nbsp;",@LDAP::fix($data['dn']))."' ";
 
+      /* Cutted objects should be displayed in light grey */
+      $display = $conference['cn'][0].$number;
+      if($this->parent->CopyPasteHandler){
+        foreach($this->parent->CopyPasteHandler->queue as $queue_key => $queue_data){
+          if($queue_data['dn'] == $conference['dn']) {
+            $display = "<font color='#999999'>".$display."</font>";
+            break;
+          }
+        }
+      }
+
       /* Create each field */
       $field0 = array("string" => "<input type='checkbox' id='item_selected_".$conferencekey."' name='item_selected_".$conferencekey."'>" ,
           "attach" => "style='width:20px;'");
       $a_field1 = array("string"=>sprintf($userimg,_("Conference")), "attach" => $title." style='text-align:center;width:20px;'");
-      $a_field2 = array("string"=>sprintf($editlink,$conferencekey,$conference['cn'][0].$number), "attach" => $title." style=''");
+      $a_field2 = array("string"=>sprintf($editlink,$conferencekey,$display), "attach" => $title." style=''");
       $a_field3 = array("string"=> $cn , "attach" =>  $title." style='width:200px;'");
       $a_field4 = array("string"=> $pin, "attach" =>  $title." style='width:50px;'");
       $a_field5 = array("string"=> preg_replace("/%KEY%/",$conferencekey,$actions), 

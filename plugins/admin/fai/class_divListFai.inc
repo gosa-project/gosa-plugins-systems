@@ -315,11 +315,22 @@ class divListFai extends MultiSelectWindow
        $edi = $editlink;
        $acti = $action;
 
+       /* Cutted objects should be displayed in light grey */
+       $display = $value['cn'].$desc;
+       if($this->parent->CopyPasteHandler){
+         foreach($this->parent->CopyPasteHandler->queue as $queue_key => $queue_data){
+           if($queue_data['dn'] == $value['dn']) {
+             $display = "<font color='#999999'>".$display."</font>";
+             break;
+           }
+         }
+       }
+
        /* Create each field */
        $field0 = array("string" => "<input type='checkbox' id='item_selected_".$key."' name='item_selected_".$key."'>" ,
            "attach" => "style='width:20px;'");
        $field1 = array("string" => $img , "attach" => "style='text-align:center;width:20px;'");
-       $field2 = array("string" => preg_replace(array("/%KEY%/","/%NAME%/","/%TITLE%/"),array($key,$value['cn'].$desc,preg_replace('/ /', '&nbsp;', @LDAP::fix($value['dn']))),$edi) , "attach" => "style=''");
+       $field2 = array("string" => preg_replace(array("/%KEY%/","/%NAME%/","/%TITLE%/"),array($key,$display,preg_replace('/ /', '&nbsp;', @LDAP::fix($value['dn']))),$edi) , "attach" => "style=''");
        $field3 = array("string" => $info, "attach" => "style='width:200px;'");
        $field4 = array("string" => preg_replace("/%KEY%/",$key,$acti) , "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'");
        $this->AddElement(array($field0,$field1,$field2,$field3,$field4));

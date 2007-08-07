@@ -22,6 +22,7 @@ class blocklist extends plugin
   var $objectclasses    = array();
   var $DivListBlocklist = NULL;
   var $view_logged = FALSE;
+  var $CopyPasteHandler = NULL;
 
   function blocklist ($config, $ui)
   {
