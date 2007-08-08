@@ -192,6 +192,9 @@ class divListUsers extends MultiSelectWindow
     /********************
       Variable init
      ********************/
+    
+    $num_users      = 0;
+    $num_templates  = 0;
 
     /* Variable initialation */
     $enviro     = $posix = $maila = $faxac = $samba = $netatalk = "";
@@ -314,9 +317,11 @@ class divListUsers extends MultiSelectWindow
       if(in_array("gosaUserTemplate",$val['objectClass'])){
         $tpl                          = preg_replace("/%KEY%/", "$key", $tplimg);
         $s_img_create_from_template   = preg_replace("/%KEY%/", "$key", $tplcreateuserimg);
+        $num_templates ++;
       }else{
         $s_img_create_from_template   = "";
         $tpl                          = $userimg;
+        $num_users ++;
       }
 
       /* Insert key into userimg */
@@ -361,7 +366,19 @@ class divListUsers extends MultiSelectWindow
         $users[strtolower( $val['sn']['0'].$val['uid']['0'])]=$add;
       }
     }
-    
+ 
+    /* Create summary string for list footer */ 
+    $num_deps=0;
+    if(!$this->SubSearch){ 
+      $num_deps = count($this->Added_Departments);
+    }
+    $str = $num_users." ";
+    $num_users      != 1  ? $str.=_("Users").", "     : $str .= _("User").", ";
+    $str.= $num_templates." ";
+    $num_templates  != 1  ? $str.=_("Templates").", " : $str .= _("Template").", ";
+    $str.= $num_deps." ";
+    $num_deps       != 1  ? $str.=_("Departments")    : $str .= _("Department"); 
+    $this->set_List_Bottom_Info($str);
   }
 
   function Save()

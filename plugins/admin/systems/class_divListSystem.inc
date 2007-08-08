@@ -288,6 +288,10 @@ class divListSystem extends MultiSelectWindow
           "component"   => array("CLASS"=>"COMPONENTTABS","TABCLASS" =>"componenttabs", "ACL"=> "component/componentGeneric"));
 
 
+    $cnts = array("component" => 0 , "terminal" => 0 , "workstation" => 0 , 
+                  "printer" => 0 , "phone" => 0 , "server" => 0,
+                  "NewDevice" => 0, "winstation"=> 0);
+
     // Test Every Entry and generate divlist Array
     foreach($terminals as $key => $val){
 
@@ -402,6 +406,10 @@ class divListSystem extends MultiSelectWindow
         }
       }
 
+      $type = $this->parent->get_system_type($val['objectClass']);
+      $cnts[$type] ++;
+
+
       /* Create each field */
       $field0 = array("string" => "<input type='checkbox' id='item_selected_".$key."' name='item_selected_".$key."'>" ,
                       "attach" => "style='width:20px;'");
@@ -411,6 +419,52 @@ class divListSystem extends MultiSelectWindow
       $field3 = array("string" => preg_replace("/%KEY%/", "$key", $action2.$action), "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'");
       $this->AddElement( array($field0,$field1,$field2,$field3));
     }
+
+    /* Create summary string for list footer */
+    $num_deps=0;
+    if(!$this->SubSearch){
+      $num_deps = count($this->Added_Departments);
+    }
+
+    $str ="";
+
+    /* Servers  */
+    $str.= $cnts['server']." ";
+    $cnts['server']            != 1  ? $str.=_("Servers").", "     : $str .= _("Server").", ";
+
+    /* Workstations */
+    $str.= $cnts['workstation']." ";
+    $cnts['workstation']       != 1  ? $str.=_("Workstations").", ": $str .= _("Workstation").", ";
+
+    /* Terminals */
+    $str.= $cnts['terminal']." ";
+    $cnts['terminal']          != 1  ? $str.=_("Terminals").", "   : $str .= _("Terminal").", ";
+
+    /* Phones */
+    $str.= $cnts['phone']." ";
+    $cnts['phone']             != 1  ? $str.=_("Phones").", "      : $str .= _("Phone").", ";
+
+    /* Printer */
+    $str.= $cnts['printer']." ";
+    $cnts['printer']           != 1  ? $str.=_("Printers").", "    : $str .= _("Printer").", ";
+
+    /* Components */
+    $str.= $cnts['component']." ";
+    $cnts['component']         != 1  ? $str.=_("Components").", "  : $str .= _("Component").", ";
+
+    /* New devices */
+    $str.= $cnts['NewDevice']." ";
+    $cnts['NewDevice']         != 1  ? $str.=_("New devices").", " : $str .= _("New device").", ";
+
+    /* Windows workstations  */
+    $str.= $cnts['winstation']." ";
+    $cnts['winstation']        != 1  ? $str.=_("Windows workstations").", "    : $str .= _("Windows workstation").", ";
+
+    $str.= $num_deps." ";
+    $num_deps       != 1  ? $str.=_("Departments")    : $str .= _("Department");
+    $this->set_List_Bottom_Info($str);
+
+
 
   }
 
