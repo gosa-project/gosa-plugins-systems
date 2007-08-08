@@ -24,7 +24,7 @@
 {render acl=$goFaxLanguageACL}
            <select size="1" name="goFaxLanguage" id="goFaxLanguage" 
 		title="{t}Specify the GOfax communication language for fax to mail gateway{/t}">
-	    {html_options values=$languages output=$languages selected=$goFaxLanguage}
+			{html_options options=$languages selected=$goFaxLanguage}
            </select>
 {/render}
 
