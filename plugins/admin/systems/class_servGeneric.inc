@@ -297,7 +297,7 @@ class servgeneric extends plugin
       if ($ldap->count() != 0){
         while ($attrs= $ldap->fetch()){
           if ($attrs['dn'] != $this->orig_dn){
-            if(!preg_match("/,ou=incoming,/",$attrs['dn'])){
+            if(!preg_match("/,ou=incoming,/",$attrs['dn']) && preg_match("/,ou=servers,ou=systems,/",$attrs['dn'])){
               $message[]= sprintf (_("There is already an entry '%s' in the base choosen by you"), $this->cn);
               break;
             }
@@ -341,12 +341,12 @@ class servgeneric extends plugin
       /* cn is not case sensitive for ldap, but for php it is!! */ 
       if($this->config->current['DNMODE'] == "cn"){
         if (strtolower($this->orig_dn) != (strtolower($this->dn))){
-          $this->move($this->orig_dn, $this->dn);
+          $this->recursive_move($this->orig_dn, $this->dn);
           plugin::save();
         }
       }else{
         if ($this->orig_dn != $this->dn){
-          $this->move($this->orig_dn, $this->dn);
+          $this->recursive_move($this->orig_dn, $this->dn);
           plugin::save();
         }
       }

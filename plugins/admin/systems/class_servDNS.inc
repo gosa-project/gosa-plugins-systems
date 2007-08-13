@@ -293,6 +293,17 @@ class servdns extends goService
 
     $tmp = getDNSZoneEntriesDiff($this->config,$this->Zones,$old_dn);
 
+    /* Update dns to current object dn */ 
+    $tmp = getDNSZoneEntriesDiff($this->config,$this->Zones,$old_dn);
+    $tmp2 = array();
+    foreach($tmp as $key1 => $data1){
+      $tmp2[$key1] = array();
+      foreach($data1 as $key2 => $data2){
+        $tmp2[$key1][preg_replace("/".normalizePreg($old_dn)."$/",$this->dn,$key2)] = $data2;
+      }
+    }
+    $tmp = $tmp2;
+
     /* Updated zone entries if reverser or forward name has changed  
      * Must be done before moving entries, else the given dn is invalid
      */
@@ -325,14 +336,15 @@ class servdns extends goService
     foreach($tmp['add'] as $dn => $attrs){
       $ldap->cd($dn);
       $ldap->cat($dn, array('dn'));
-      if(count($ldap->fetch())){
+      if($ldap->fetch()){
         $ldap->cd($dn);
         $ldap->modify ($attrs);
+        show_ldap_error($ldap->get_error(), sprintf(_("Saving of system server/dns with dn '%s' failed."),$this->dn));
       }else{
         $ldap->cd($dn);
         $ldap->add($attrs);
+        show_ldap_error($ldap->get_error(), sprintf(_("Saving of system server/dns with dn '%s' failed."),$this->dn));
       }
-      show_ldap_error($ldap->get_error(), sprintf(_("Saving of system server/dns with dn '%s' failed."),$this->dn));
     }
   }
 
