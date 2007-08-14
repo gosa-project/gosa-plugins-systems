@@ -88,6 +88,7 @@ class userManagement extends plugin
                     "copy_multiple" => "multiple_copy_users",
                     "cut_multiple" => "multiple_cut_users",
                     "copy"      => "^copy",
+                    "toggle_lock_status" => "toggle_lock_status",
                     "cut"       => "^cut") as $act => $name){
 
         if (preg_match("/".$name.".*/", $key)){
@@ -378,6 +379,46 @@ class userManagement extends plugin
       }
     }
   
+  
+    /********************
+      Toggle lock status for user
+     ********************/
+  
+    if($s_action == "toggle_lock_status" && isset($this->list[$s_entry])){
+
+      /* Get entry check current status */
+      $val = $this->list[$s_entry];
+      $pwd = $val['userPassword'][0];
+
+      if(!preg_match("/^\{[^\}]/",$pwd)){
+        trigger_error("Can not deactivate user which is using clear password encryption.");
+      }else{
+
+        $locked = false;
+        if(preg_match("/^[^\}]*+\}!/",$pwd)){
+          $locked = true;
+        }
+
+        /* Create ldap array to update status */
+        $attrs = array("userPassword" => $pwd);
+        if($locked){
+          $attrs['userPassword'] = preg_replace("/(^[^\}]+\})!(.*$)/","\\1\\2",$attrs['userPassword']);
+        }else{
+          $attrs['userPassword'] = preg_replace("/(^[^\}]+\})(.*$)/","\\1!\\2",$attrs['userPassword']);
+        }
+
+        /* Write new status back to ldap */
+        $ldap = $this->config->get_ldap_link();
+        $ldap->cd($val['dn']);
+        $ldap->modify($attrs);
+        if($locked){
+          show_ldap_error($ldap->get_error(),_("Could not set user status from locked to unlocked."));
+        }else{
+          show_ldap_error($ldap->get_error(),_("Could not set user status from unlocked to locked."));
+        }
+      }
+    }
+
 
     /********************
       Delete entry requested, display confirm dialog
@@ -832,11 +873,11 @@ class userManagement extends plugin
 
     if ($SubSearch){
       $ListTemp =  get_list($filter, "users", $base,
-                            array("uid", "givenName", "sn", "objectClass"), GL_SUBSEARCH | GL_SIZELIMIT);
+                            array("uid", "givenName", "sn", "objectClass","userPassword"), GL_SUBSEARCH | GL_SIZELIMIT);
     } else {
       $base= get_people_ou().$base;
       $ListTemp = get_list($filter, "users", $base, 
-                            array("uid", "givenName", "sn", "objectClass"), GL_SIZELIMIT);
+                            array("uid", "givenName", "sn", "objectClass","userPassword"), GL_SIZELIMIT);
     }
     $SortTemp = array();
     $List = array();

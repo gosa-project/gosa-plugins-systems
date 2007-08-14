@@ -46,7 +46,7 @@ class divListUsers extends MultiSelectWindow
     $this->EnableSaveButton (false);
 
     /* Dynamic action col, depending on snapshot icons */
-    $action_col_size = 104;
+    $action_col_size = 122;
     if($this->parent->snapshotEnabled()){
       $action_col_size += 38;
     }
@@ -163,7 +163,6 @@ class divListUsers extends MultiSelectWindow
       " <input class='center' type='image' src='images/list_submit.png' align='middle' 
       title='"._("Submit department")."' name='submit_department' alt='".  _("Submit")."'>&nbsp;";
 
-  
     /* Multiple options */ 
     $listhead .= "&nbsp;<input class='center' type='image' align='middle' src='images/edittrash.png'
         title='"._("Remove selected user")."' alt='"._("Remove user")."' name='remove_multiple_users'>&nbsp;";
@@ -204,7 +203,7 @@ class divListUsers extends MultiSelectWindow
     $editlink   = "<a href='?plug=".validate($_GET['plug'])."&amp;id=%s&amp;act=edit_entry'>%s</a>";
 
     /* Dynamic action col, depending on snapshot icons */
-    $action_col_size = 104;
+    $action_col_size = 122;
     if($this->parent->snapshotEnabled()){
       $action_col_size += 38;
     }
@@ -251,7 +250,7 @@ class divListUsers extends MultiSelectWindow
   
     // Test Every Entry and generate divlist Array
     foreach($list as $key => $val){
-
+  
       /* Create action icons */
       $action= "";
 
@@ -265,9 +264,29 @@ class divListUsers extends MultiSelectWindow
           src='images/editcopy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
       }
 
+      /* Add deactivate status */
+      $lock_status = "";
+
+      if(isset($val['userPassword'][0]) && preg_match("/^\{[^\}]/",$val['userPassword'][0])){
+        if(preg_match("/^[^\}]*+\}!/",$val['userPassword'][0])){
+          $lock_status = "<input class='center' type='image' src='images/closedlock.png'
+            alt='"._("Deactivated")."' name='toggle_lock_status_%KEY%'>";
+        }else{
+          $lock_status = "<input class='center' type='image' src='images/openlock.png'
+            alt='"._("Active")."' name='toggle_lock_status_%KEY%'>";
+        }
+      }else{
+        $lock_status = "<img src='images/empty.png' alt=' ' class='center'>";
+      }
+
       /* Generate edit icon */
       $action.= "<input class='center' type='image' src='images/edit.png' alt='"._("edit")."'
         name='user_edit_%KEY%' title='"._("Edit user")."'>";
+
+      /* Add deactivate status if we are allowed to */
+      if (preg_match("/w/",$acl_all)){
+        $action.= $lock_status;
+      }
 
       /* Add Password change icon, if we are able to write users/password */
       if(!in_array_ics("gosaUserTemplate",$val['objectClass']) && preg_match("/w/",$ui->get_permissions($val['dn'],"users/password"))) {
