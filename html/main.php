@@ -143,8 +143,6 @@ if(!isset($_SESSION['CurrentMainBase'])){
   $_SESSION['CurrentMainBase']= get_base_from_people($ui->dn);
 }
 
-$lang.=".UTF-8";
-
 putenv("LANGUAGE=");
 putenv("LANG=$lang");
 setlocale(LC_ALL, $lang);
