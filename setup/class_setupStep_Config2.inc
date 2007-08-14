@@ -33,6 +33,8 @@ class Step_Config2 extends setup_step
                              "vacationdir_active" => FALSE);
 
   var $generic_settings  = array( "enableCopyPaste" => false,
+                                  "enableDNS"      => false,
+                                  "enableDHCP"      => false,
                                   "wws_ou"        => "ou=winstations",
                                   "wws_ou_active" => FALSE,
                                   "snapshot_active"     => FALSE,
@@ -122,6 +124,14 @@ class Step_Config2 extends setup_step
 #        $this->enableFAI_management = TRUE;
       }
 
+      if(is_array($tmp) && isset($tmp['dhcpClass'])){
+        $this->generic_settings['enableDHCP'] = TRUE;
+      }
+
+      if(is_array($tmp) && isset($tmp['dNSZone'])){
+        $this->generic_settings['enableDNS'] = TRUE;
+      }
+
       $this->called = TRUE;
     }
 
@@ -178,6 +188,12 @@ class Step_Config2 extends setup_step
 
       if(isset($_POST['enableCopyPaste'])){
         $this->generic_settings['enableCopyPaste'] = get_post('enableCopyPaste');
+      }
+      if(isset($_POST['enableDNS'])){
+        $this->generic_settings['enableDNS'] = get_post('enableDNS');
+      }
+      if(isset($_POST['enableDHCP'])){
+        $this->generic_settings['enableDHCP'] = get_post('enableDHCP');
       }
 
       if(isset($_POST['wws_ou_active'])){
