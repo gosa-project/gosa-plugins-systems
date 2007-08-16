@@ -106,17 +106,12 @@
 	</table>
 <div class="contentboxb" style="border-top: 1px solid #B0B0B0; padding:0px; margin-top:10px;">
  <p class="contentboxb" style='text-align:right'>
-{if $contents_modified}
 	{if $is_writeable}
 		<input type='submit' name='save_gotomass_changes' value='{t}Apply{/t}'>
 	{else}
 		<input type='submit' name='save_gotomass_changes' value='{t}Apply{/t}' disabled>
 	{/if}
 	<input type='submit' name='reload_gotomass_data' value='{t}Cancel{/t}'>
-{else}
-	<input type='button' name='empty_3' value='{t}Apply{/t}' disabled>
-	<input type='button' name='empty_4' value='{t}Cancel{/t}' disabled>
-{/if}
  </p>
 </div>
 <input type='hidden' name='gotomasses' value='1'>
@@ -125,10 +120,3 @@
 {if !$contents_modified}
 	<input type='hidden' name='ignore' value='1'>
 {/if}
-
-
-
-
-
-
-

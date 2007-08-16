@@ -17,7 +17,7 @@ class gotomasses extends plugin
   var $contents         = array();
 
   /* Used to detect changes made on the csv content.
-   *  Buttons will be disabled and js warnings will be 
+   *  js warnings will be 
    *  shown if the content wasn't saved or discarded
    */
   var $contents_backup  = array();
