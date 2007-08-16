@@ -37,6 +37,8 @@ class userManagement extends plugin
   var $CPPasswordChange     = ""; // Contains the entry id which should get a new password
   var $DivListUsers;
 
+  var $pwd_change_queue     = array();
+
   var $start_pasting_copied_objects = FALSE;
 
   function userManagement($config, $ui)
@@ -87,6 +89,7 @@ class userManagement extends plugin
                     "editPaste" => "editPaste",  
                     "copy_multiple" => "multiple_copy_users",
                     "cut_multiple" => "multiple_cut_users",
+                    "multiple_password_change" => "multiple_password_change",
                     "copy"      => "^copy",
                     "toggle_lock_status" => "toggle_lock_status",
                     "cut"       => "^cut") as $act => $name){
@@ -125,37 +128,6 @@ class userManagement extends plugin
       $ret = $this->copyPasteHandling_from_queue($s_action,$s_entry);
       if($ret){
         return($ret);
-      }
-    }
-
-
-    /********************
-      Change password requested  
-     ********************/
-
-    /* Password change requested */
-    if (($s_action == "change_pw") || (!empty($this->CPPasswordChange))){
-
-      if(!empty($this->CPPasswordChange)){
-        $s_entry = $this->CPPasswordChange;
-        $this->CPPasswordChange = "";
-      }
-
-      /* Get 'dn' from posted 'uid' */
-      $this->dn= $this->list[trim($s_entry)]['dn'];
-
-      /* Load permissions for selected 'dn' and check if
-         we're allowed to remove this 'dn' */
-      if (preg_match("/w/",$this->ui->get_permissions($this->dn,"users/password"))){
-
-        /* User is allowed to change passwords, save 'dn' and 'acl' for next
-           dialog. */
-        $_SESSION['objectinfo']= $this->dn;
-        return ($smarty->fetch(get_template_path('password.tpl', TRUE)));
-
-      } else {
-        /* User is not allowed. Show message and cancel. */
-        print_red (_("You are not allowed to set this users password!"));
       }
     }
 
@@ -245,6 +217,53 @@ class userManagement extends plugin
       $this->uid= "";
       unset ($_SESSION['objectinfo']);
     }
+
+
+    /********************
+     Change multiple passwords requested 
+     ********************/
+  
+    if($s_action == "multiple_password_change"){
+      $this->pwd_change_queue = $this->list_get_selected_items();
+    }    
+
+
+    /********************
+      Change password requested  
+     ********************/
+
+    /* Password change requested */
+    if (($s_action == "change_pw") || (!empty($this->CPPasswordChange)) || count($this->pwd_change_queue)){
+
+      /* Get users whose passwords should be changed. */
+      if(count($this->pwd_change_queue)){
+        $s_entry= array_pop($this->pwd_change_queue);
+      }
+
+      if(!empty($this->CPPasswordChange)){
+        $s_entry = $this->CPPasswordChange;
+        $this->CPPasswordChange = "";
+      }
+
+      /* Get 'dn' from posted 'uid' */
+      $this->dn= $this->list[trim($s_entry)]['dn'];
+
+      /* Load permissions for selected 'dn' and check if
+         we're allowed to remove this 'dn' */
+      if (preg_match("/w/",$this->ui->get_permissions($this->dn,"users/password"))){
+
+        /* User is allowed to change passwords, save 'dn' and 'acl' for next
+           dialog. */
+        $_SESSION['objectinfo']= $this->dn;
+        return ($smarty->fetch(get_template_path('password.tpl', TRUE)));
+
+      } else {
+        /* User is not allowed. Show message and cancel. */
+        print_red (_("You are not allowed to set this users password!"));
+      }
+    }
+
+
 
 
     /********************
