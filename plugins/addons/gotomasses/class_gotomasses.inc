@@ -52,7 +52,7 @@ class gotomasses extends plugin
     /* Edit selected entry */
     if($s_action == "edit" && isset($this->tasks[$s_entry])){
       $entry = $this->tasks[$s_entry];
-      $this->dialog = new goto_task($this->config,$entry);
+      $this->dialog = new goto_task($this->config,$this,$entry);
     }
   
     /* Close dialog */
@@ -61,7 +61,8 @@ class gotomasses extends plugin
     }
 
     /* Close dialog */
-    if(isset($_POST['close_goto_task'])){
+    if(isset($_POST['save_goto_task'])){
+      $this->dialog->save_object();
       $this->dialog = NULL;
     }
  
@@ -139,12 +140,7 @@ class gotomasses extends plugin
   {
     $ui = get_userinfo();
 
-    if(!$this->acl_is_readable("ACL missing")){
-      $this->tasks =array(); 
-      print_red(_("Your are not allowed to view contents of this plugin."));
-      return(FALSE);
-    }
-
+    
     if(!file_exists($this->file_to_read) || !is_readable($this->file_to_read)){
       print_red(sprintf(_("Can't locate or read csv storage file '%s'."),$this->file_to_read));
       return(FALSE);
@@ -232,6 +228,20 @@ class gotomasses extends plugin
   }
 
 
+  function get_actions()
+  {
+    /* Prepare list of available actions */
+    $actions = array( "reboot"          => _("Reboot"),
+                            "localboot"       => _("Localboot"),
+                            "halt"            => _("Halt system"),
+                            "update"          => _("Update"),
+                            "reinstall"       => _("(Re)Install"),
+                            "rescan"          => _("Rescan"),
+                            "memcheck"        => _("Memory check"));
+    return($actions);
+  }
+
+
   function plInfo()
   {
     return (array(
@@ -242,7 +252,14 @@ class gotomasses extends plugin
         "plPriority"    => 0,
         "plSection"     => array("addon"),
         "plCategory"    => array("gotomasses" => array("objectClass" => "none", "description" => _("System mass deployment"))),
-        "plProvidedAcls" => array()
+        "plProvidedAcls" => array("Comment"   => _("Description"), 
+                                  "Action"    => _("Action"),
+                                  "Day"       => _("Day"),
+                                  "Minute"    => _("Minute"),
+                                  "Hour"      => _("Hour"),
+                                  "Month"     => _("Month"),
+                                  "Weekday"   => _("Week day"),
+                                  "Target"    => _("Target"))
         ));
   }
 }
