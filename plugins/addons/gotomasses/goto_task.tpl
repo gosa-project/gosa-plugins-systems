@@ -38,6 +38,25 @@
 		</td>
 	</tr>
 	<tr>
+		<td>
+			<table>
+				<tr>
+					<td>
+						{t}Object group membership{/t}
+					</td>
+					<td>
+						{render acl=$OGroupACL}
+						<select name="OGroup">
+							{html_options options=$OGroups selected=$OGroup}
+						</select>
+						{/render}
+					</td>
+				</tr>
+			</table>
+
+		</td>
+	</tr>
+	<tr>
 		<td colspan="2">
 			<h2>{t}Target systems{/t}</h2>
 		</td>

@@ -15,7 +15,7 @@ class gotomasses extends plugin
 
   /* Queue tasks */
   var $tasks = array();
-
+  var $current =false;
   var $dialog = NULL;
 
   function gotomasses($config, $dn= NULL)
@@ -25,13 +25,18 @@ class gotomasses extends plugin
   
     /* Include config object */
     $this->config= $config;
+
+    $this->load_csv_data();
   }
 
 
 
   function execute()
   {
-    /* Check posts */
+    /************
+     * Handle posts 
+     ************/
+
     $s_entry = $s_action = "";
     $arr = array("/^edit_/"=>"edit","/^remove_/"=>"remove");
     foreach($arr as $regex => $action){
@@ -44,6 +49,10 @@ class gotomasses extends plugin
       }
     }
 
+    /************
+     * List posts 
+     ************/
+
     /* Remove entry from list */
     if($s_action == "remove" && isset($this->tasks[$s_entry])){
       unset($this->tasks[$s_entry]);
@@ -53,6 +62,7 @@ class gotomasses extends plugin
     if($s_action == "edit" && isset($this->tasks[$s_entry])){
       $entry = $this->tasks[$s_entry];
       $this->dialog = new goto_task($this->config,$this,$entry);
+      $this->current = $s_entry;
     }
   
     /* Close dialog */
@@ -63,7 +73,15 @@ class gotomasses extends plugin
     /* Close dialog */
     if(isset($_POST['save_goto_task'])){
       $this->dialog->save_object();
-      $this->dialog = NULL;
+      $msgs = $this->dialog->check();
+      if(count($msgs)){
+        foreach($msgs as $msg){
+          print_red($msg);  
+        }
+      }else{
+        $this->tasks[$this->current] = $this->dialog->save();
+        $this->dialog = NULL;
+      }
     }
  
     /* Display dialogs if currently opened */
@@ -73,7 +91,10 @@ class gotomasses extends plugin
     }
 
 
-    $this->load_csv_data();
+    /************
+     * Handle Divlist 
+     ************/
+
     $smarty = get_smarty();
     $plug = $_GET['plug'];
     $divlist = new divlist("gotomasses");
@@ -183,7 +204,7 @@ class gotomasses extends plugin
       $row    = preg_replace('/  */umi'," ",$row);
       $parts  = split(" ",$row);
 
-      if(count($parts) != 7){
+      if(count($parts) != 8){
         print_red(_("Entry broken, skipped."));
       }else{
 
@@ -194,7 +215,8 @@ class gotomasses extends plugin
         $entry['Month']   = $parts[3];  
         $entry['Weekday'] = $parts[4];  
         $entry['Action']  = $parts[5];  
-        $entry['Target']  = split(",",$parts[6]);  
+        $entry['OGroup']  = $parts[6];  
+        $entry['Target']  = split(",",$parts[7]);  
         $entry['Comment'] = $comment;  
         $this->tasks []   = $entry;
       }

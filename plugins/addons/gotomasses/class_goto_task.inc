@@ -19,8 +19,9 @@ class goto_task extends plugin
   var $Taret    = array();
 
   var $Actions  = array();
-
-  var $attributes     = array("Minute","Hour","Day","Month","Weekday","Action","Comment","Target");
+  var $OGroup   = "";
+  var $OGroups  = array();
+  var $attributes     = array("OGroup","Minute","Hour","Day","Month","Weekday","Action","Comment","Target");
 
 
   function goto_task($config,$parent,$data = array())
@@ -46,6 +47,11 @@ class goto_task extends plugin
         }
       }
     }
+
+    /* Create ogroup select list */
+    $this->OGroups = array("keep_current"     => "["._("Keep current")."]",
+                           "unset_membership" => "["._("Quit group membership")."]");
+    $this->OGroups = array_merge($this->OGroups,$this->parent->get_object_groups());
 
     /* Prepare list of available actions */
     $this->Actions = $this->parent->get_actions();
@@ -150,6 +156,7 @@ class goto_task extends plugin
     $smarty->assign("Months"  , $tmp['Month']);
     $smarty->assign("Weekdays", $tmp['Weekday']);
 
+    $smarty->assign("OGroups"  , $this->OGroups);
     $smarty->assign("Expert"  , $this->Expert);
 
     $smarty->assign("Actions"     , $this->Actions);
@@ -192,6 +199,15 @@ class goto_task extends plugin
         return(TRUE);
       }
     }
+  }
+
+  function save()
+  {
+    $tmp = array();
+    foreach($this->attributes as $attr){
+      $tmp[$attr] = $this->$attr;
+    }
+    return($tmp);
   }
 
 

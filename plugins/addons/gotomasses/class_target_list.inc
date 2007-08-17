@@ -23,12 +23,13 @@ class target_list extends MultiSelectWindow
   var $SubSearch          ;
   var $parent             ;
   var $ui                 ;
-
-
-  
+ 
+ 
   function target_list($config,$Targets_used)
   {
     MultiSelectWindow::MultiSelectWindow($config, "Targetselection", array("ogroup","gotomasses"));
+
+    $this->Targets_used = $Targets_used;
     
     $this->SetInformation(  _("Select the target objects for your scheduled action."));
     $this->SetTitle(        _("Available targets"));
@@ -155,6 +156,9 @@ class target_list extends MultiSelectWindow
     // Assigning ogroups
     foreach($list as $key => $val){
 
+      if(in_array($val['cn'][0],$this->Targets_used) || 
+         isset($val['macAddress'][0]) && in_array($val['macAddress'][0],$this->Targets_used)) continue;
+
       $title = "title='".preg_replace('/ /', '&nbsp;', @LDAP::fix($val['dn']))."'";
       if(!isset($val['description'][0])){
         $desc = "";
@@ -210,7 +214,7 @@ class target_list extends MultiSelectWindow
     $Regex    = $this->Regex;
 
     $chk = array(
-        "ogroups"       => "(objectClass=gosaGroupOfNames)" ,
+        "ogroups"       => "(&(objectClass=gosaGroupOfNames)(|(gosaGroupObjects=*S*)(gosaGroupObjects=*W*)))" ,
         "servers"       => "(objectClass=goServer)" ,
         "workstations"  => "(objectClass=gotoWorkstation)");
 
