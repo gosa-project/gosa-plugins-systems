@@ -2439,5 +2439,21 @@ function get_languages($languages_in_own_language = FALSE,$strip_region_tag = FA
   return($ret);
 }
 
+
+/* Returns contents of the given POST variable and check magic quotes settings */
+function get_post($name)
+{
+  if(!isset($_POST[$name])){
+    trigger_error("Requested POST value (".$name.") does not exists, you should add a check to prevent this message.");
+    return(FALSE);
+  }
+  if(get_magic_quotes_gpc()){
+    return(stripcslashes($_POST[$name]));
+  }else{
+    return($_POST[$name]);
+  }
+}
+
+
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
