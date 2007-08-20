@@ -33,6 +33,7 @@ class gotomasses extends plugin
 
   function execute()
   {
+    $smarty = get_smarty();
     /************
      * Handle posts 
      ************/
@@ -55,7 +56,16 @@ class gotomasses extends plugin
 
     /* Remove entry from list */
     if($s_action == "remove" && isset($this->tasks[$s_entry])){
-      unset($this->tasks[$s_entry]);
+      $smarty->assign("info",_("Your are about to delete a gotomasses task."));
+      $this->current = $s_entry;
+      return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
+    }
+
+    /* Remove entry, remove is confirmed */
+    if($this->current != -1 && isset($_POST['delete_confirm'])){
+      unset($this->tasks[$this->current]);
+      $this->current = -1;
+      $this->save();
     }
 
     /* Edit selected entry */
@@ -93,6 +103,7 @@ class gotomasses extends plugin
         }
         $this->dialog = FALSE;
         $this->current = -1;
+        $this->save();
       }
     }
  
@@ -107,7 +118,6 @@ class gotomasses extends plugin
      * Handle Divlist 
      ************/
 
-    $smarty = get_smarty();
     $plug = $_GET['plug'];
     $divlist = new MultiSelectWindow($this->config,"GotoMasses","gotomassses");
     $divlist->SetSummary(_("Gotomasses tasks"));
