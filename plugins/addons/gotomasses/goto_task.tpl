@@ -1,11 +1,11 @@
-<table style='width:100%;'>
+<table style='width:100%;border-bottom: 1px solid rgb(160, 160, 160);padding-top:10px;'>
 	<tr>
 		<td colspan="2">
 			<h2>{t}Generic{/t}</h2>
 		</td>
 	</tr>
 	<tr>
-		<td style='width:50%;'>
+		<td style='width:50%;border-right: 1px solid rgb(160, 160, 160);'>
 			<table>
 				<tr>
 					<td>
@@ -14,6 +14,18 @@
 					<td>
 						{render acl=$CommentACL}
 						<input type="text" name="Comment" value="{$Comment}">
+						{/render}
+					</td>
+				</tr>
+				<tr>
+					<td>
+						{t}Object group membership{/t}
+					</td>
+					<td>
+						{render acl=$OGroupACL}
+						<select name="OGroup">
+							{html_options options=$OGroups selected=$OGroup}
+						</select>
 						{/render}
 					</td>
 				</tr>
@@ -37,27 +49,10 @@
 
 		</td>
 	</tr>
+</table>
+<table style='width:100%;border-bottom: 1px solid rgb(160, 160, 160);padding-top:10px;'>
 	<tr>
-		<td>
-			<table>
-				<tr>
-					<td>
-						{t}Object group membership{/t}
-					</td>
-					<td>
-						{render acl=$OGroupACL}
-						<select name="OGroup">
-							{html_options options=$OGroups selected=$OGroup}
-						</select>
-						{/render}
-					</td>
-				</tr>
-			</table>
-
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2">
+		<td colspan="2" style='padding-top:5px;'>
 			<h2>{t}Target systems{/t}</h2>
 		</td>
 	</tr>
@@ -86,6 +81,8 @@
 
 		</td>
 	</tr>
+</table>
+<table style='width:100%;'>
 	<tr>
 		<td colspan="2">
 			<h2>{t}Schedule{/t}</h2>
