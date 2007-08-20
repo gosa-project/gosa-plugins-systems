@@ -164,6 +164,26 @@ class goto_task extends plugin
     return ($smarty->fetch (get_template_path('goto_task.tpl', TRUE)));
   }
 
+  
+  /* check given values */
+  function check()
+  {
+    $message = plugin::check();
+    $tmp = array(
+      "OGroup" => _("Object group") ,"Minute" => _("Minute"),
+      "Hour"   => _("Hour")         ,"Day"    => _("Day"),
+      "Month"  => _("Month")        ,"Weekday"=> _("Week day"),
+      "Action" => _("Action")       ,"Comment"=> _("Description"),
+      "Target" => _("Target objects")); 
+    
+    foreach($tmp as $name => $desc){
+      if(empty($this->$name)){
+        $message[] = sprintf(_("The given value for attribute '%s' is invalid."),$desc);
+      }
+    }
+    return($message);
+  }
+  
 
   /* Map acl function, to be able to use plugin::save_object() */
   function acl_is_writeable($str)
