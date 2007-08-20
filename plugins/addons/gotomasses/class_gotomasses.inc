@@ -56,9 +56,14 @@ class gotomasses extends plugin
 
     /* Remove entry from list */
     if($s_action == "remove" && isset($this->tasks[$s_entry])){
-      $smarty->assign("info",_("Your are about to delete a gotomasses task."));
-      $this->current = $s_entry;
-      return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
+
+      if(!$this->acl_is_removeable()){
+        print_red(_("You are not allowed to remove a task."));
+      }else{
+        $smarty->assign("info",_("Your are about to delete a gotomasses task."));
+        $this->current = $s_entry;
+        return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
+      }
     }
 
     /* Remove entry, remove is confirmed */
@@ -76,7 +81,7 @@ class gotomasses extends plugin
     }
 
     /* New entry */
-    if($s_action== "new_task"){
+    if($s_action== "new_task" && $this->acl_is_createable()){
       $this->dialog = new goto_task($this->config,$this);
       $this->current = -1;
     }
@@ -127,11 +132,24 @@ class gotomasses extends plugin
     $divlist->EnableCloseButton(FALSE);
     $divlist->EnableSaveButton(FALSE);
     $divlist->SetInformation(_("This menu allows you to add, remove and change the properties of gotomasses tasks."));
-    
-    $header = "<div style='padding:5px'>
-                <input type='image' src='images/gotomasses_new_task.png' name='new_task' class='center'>
-               </div>";
-  
+ 
+    /* Display add button if allowed */ 
+    if($this->acl_is_createable()){ 
+      $header = "<div style='padding:5px'>
+        <input type='image' src='images/gotomasses_new_task.png' name='new_task' class='center'>
+        </div>";
+    }else{
+      $header = "";
+    }
+
+    /* Get Permissions */ 
+    $ui = get_userinfo();
+    $acls = $this->getacl("");
+    foreach($ui->get_module_departments("gotomasses") as $dep){
+      $acls .= $ui->get_category_permissions($dep,"gotomasses");
+    }
+ 
+    /* Create divlist */
     $divlist->SetListHeader($header);
     $divlist->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=object'>"._("Target")."</a>"));
     $divlist->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=schedule'>"._("Schedule")."</a>",
@@ -140,18 +158,19 @@ class gotomasses extends plugin
                                       "attach"=>"style='width:60px;'"));
     $divlist->AddHeader(array("string"=>_("Action"),
                                       "attach"=>"style='border-right:0px;width:40px;'"));
-    foreach($this->tasks as $key => $task){
-  
-      $action = "<input type='image' src='images/edit.png' name='edit_task_".$key."' class='center' alt='"._("Edit")."'>";
-      $action.= "<input type='image' src='images/edittrash.png' name='remove_task_".$key."' class='center' alt='"._("Reomve")."'>";
 
-      $field1 = array("string" => "<div style='width:100%;overflow:hidden;'><nobr>".$this->target_to_string($task)."</nobr></div>");
-      $field2 = array("string" => $this->time_to_string($task),"attach" => "style='width:100px;'");
-      $field3 = array("string" => $this->action_to_string($task),"attach" => "style='width:60px;'");
-      $field4 = array("string" => $action,"attach" => "style='width:40px;border-right:0px;'");
-      
- 
-      $divlist->AddElement(array($field1,$field2,$field3,$field4));
+    if(!empty($acls)){
+      foreach($this->tasks as $key => $task){
+        $action = "<input type='image' src='images/edit.png' name='edit_task_".$key."' class='center' alt='"._("Edit")."'>";
+        if($this->acl_is_removeable()){
+          $action.= "<input type='image' src='images/edittrash.png' name='remove_task_".$key."' class='center' alt='"._("Reomve")."'>";
+        }
+        $field1 = array("string" => "<div style='width:100%;overflow:hidden;'><nobr>".$this->target_to_string($task)."</nobr></div>");
+        $field2 = array("string" => $this->time_to_string($task),"attach" => "style='width:100px;'");
+        $field3 = array("string" => $this->action_to_string($task),"attach" => "style='width:60px;'");
+        $field4 = array("string" => $action,"attach" => "style='text-align:right;width:40px;border-right:0px;'");
+        $divlist->AddElement(array($field1,$field2,$field3,$field4));
+      }
     }
  
     return($divlist->Draw());
