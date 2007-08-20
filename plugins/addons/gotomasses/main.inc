@@ -21,7 +21,7 @@
 if (!$remove_lock){
 
 	/* Create gotomasses object on demand */
-	if (!isset($_SESSION['gotomasses']) || (isset($_GET['reset']) && $_GET['reset'] == 1)){
+	if (!isset($_SESSION['gotomasses']) || (isset($_GET['reset']) && $_GET['reset'] == 1) || isset($_POST['reload_gotomass_data'])){
 		$_SESSION['gotomasses']= new gotomasses ($config);
 		$_SESSION['gotomasses']->set_acl_category("gotomasses");
 
@@ -42,10 +42,10 @@ if (!$remove_lock){
 
 	/* Execute formular */
 	$display= $gotomasses->save_object();
+	if(isset($_POST['save_gotomass_changes'])){
+		$gotomasses->save();
+	}
 	$display= $gotomasses->execute ();
-
-/* Ignore plugin changes is handled by the gotomasses class itself */
-#	$display.= "<input type=\"hidden\" name=\"ignore\">\n";
 
 	/* Page header*/
 	$display= print_header(get_template_path('images/system.png'), _("System mass deployment")).$display;

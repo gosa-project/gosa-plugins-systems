@@ -16,7 +16,7 @@ class goto_task extends plugin
   var $Weekday  = "*";
   var $Action   = "install";
   var $Comment  = "";
-  var $Taret    = array();
+  var $Target   = array();
 
   var $Actions  = array();
   var $OGroup   = "";

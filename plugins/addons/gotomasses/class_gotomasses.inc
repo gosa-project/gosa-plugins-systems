@@ -10,23 +10,23 @@ class gotomasses extends plugin
   var $attributes= array();
   var $objectclasses= array();
 
-  /* Source file that contains the csv data */
-  var $file_to_read = "Undefined"; #Set in constructor 
+  /* Source file that contains the gotomasses data */
+  var $data_file = "Undefined"; #Set in constructor 
 
   /* Queue tasks */
   var $tasks = array();
   var $current =false;
-  var $dialog = NULL;
+  var $dialog = FALSE;
 
   function gotomasses($config, $dn= NULL)
   {
     /* Define source file */
-    $this->file_to_read = CONFIG_DIR."/gotomasses_machines";
+    $this->data_file = CONFIG_DIR."/gotomasses_machines";
   
     /* Include config object */
     $this->config= $config;
 
-    $this->load_csv_data();
+    $this->load_gotomasses_data();
   }
 
 
@@ -38,7 +38,7 @@ class gotomasses extends plugin
      ************/
 
     $s_entry = $s_action = "";
-    $arr = array("/^edit_/"=>"edit","/^remove_/"=>"remove");
+    $arr = array("/^edit_task_/"=>"edit","/^remove_task_/"=>"remove","/^new_task_/"=>"new_task");
     foreach($arr as $regex => $action){
       foreach($_POST as $name => $value){
         if(preg_match($regex,$name)){
@@ -64,14 +64,21 @@ class gotomasses extends plugin
       $this->dialog = new goto_task($this->config,$this,$entry);
       $this->current = $s_entry;
     }
+
+    /* New entry */
+    if($s_action== "new_task"){
+      $this->dialog = new goto_task($this->config,$this);
+      $this->current = -1;
+    }
   
     /* Close dialog */
     if(isset($_POST['close_goto_task'])){
-      $this->dialog = NULL;
+      $this->dialog = FALSE;
+      $this->current = -1;
     }
 
     /* Close dialog */
-    if(isset($_POST['save_goto_task'])){
+    if(isset($_POST['save_goto_task']) && is_object($this->dialog)){
       $this->dialog->save_object();
       $msgs = $this->dialog->check();
       if(count($msgs)){
@@ -79,8 +86,13 @@ class gotomasses extends plugin
           print_red($msg);  
         }
       }else{
-        $this->tasks[$this->current] = $this->dialog->save();
-        $this->dialog = NULL;
+        if(isset($this->tasks[$this->current]) && $this->current != -1){
+          $this->tasks[$this->current] = $this->dialog->save();
+        }else{
+          $this->tasks[] = $this->dialog->save();
+        }
+        $this->dialog = FALSE;
+        $this->current = -1;
       }
     }
  
@@ -97,34 +109,40 @@ class gotomasses extends plugin
 
     $smarty = get_smarty();
     $plug = $_GET['plug'];
-    $divlist = new divlist("gotomasses");
-    $divlist->SetWidth("100%");
-    $divlist->SetHeader(array(  array("string"=>"<a href='?plug=".$plug."&amp;sort=object'>"._("Target")."</a>"),
-                                array("string"=>"<a href='?plug=".$plug."&amp;sort=schedule'>"._("Schedule")."</a>",
-                                      "attach"=>"style='width:150px;'"),
-                                array("string"=>"<a href='?plug=".$plug."&amp;sort=action'>"._("Type")."</a>",
-                                      "attach"=>"style='width:50px;'"),
-                                array("string"=>_("Action"),
-                                      "attach"=>"style='border-right:0px;width:50px;'")));
-
-   
+    $divlist = new MultiSelectWindow($this->config,"GotoMasses","gotomassses");
+    $divlist->SetSummary(_("Gotomasses tasks"));
+    $divlist->SetHeadpageMode();
+    $divlist->EnableCloseButton(FALSE);
+    $divlist->EnableSaveButton(FALSE);
+    $divlist->SetInformation(_("This menu allows you to add, remove and change the properties of gotomasses tasks."));
+    
+    $header = "<div style='padding:5px'>
+                <input type='image' src='images/gotomasses_new_task.png' name='new_task' class='center'>
+               </div>";
+  
+    $divlist->SetListHeader($header);
+    $divlist->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=object'>"._("Target")."</a>"));
+    $divlist->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=schedule'>"._("Schedule")."</a>",
+                                      "attach"=>"style='width:100px;'"));
+    $divlist->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=action'>"._("Type")."</a>",
+                                      "attach"=>"style='width:60px;'"));
+    $divlist->AddHeader(array("string"=>_("Action"),
+                                      "attach"=>"style='border-right:0px;width:40px;'"));
     foreach($this->tasks as $key => $task){
   
-      $action = "<input type='image' src='images/edit.png' name='edit_".$key."' class='center' alt='"._("Edit")."'>";
-      $action.= "<input type='image' src='images/edittrash.png' name='remove_".$key."' class='center' alt='"._("Reomve")."'>";
+      $action = "<input type='image' src='images/edit.png' name='edit_task_".$key."' class='center' alt='"._("Edit")."'>";
+      $action.= "<input type='image' src='images/edittrash.png' name='remove_task_".$key."' class='center' alt='"._("Reomve")."'>";
 
-      $field1 = array("string" => $this->target_to_string($task));
-      $field2 = array("string" => $this->time_to_string($task));
-      $field3 = array("string" => $this->action_to_string($task));
-      $field4 = array("string" => $action,"attach" => "style='border-right:0px;'");
+      $field1 = array("string" => "<div style='width:100%;overflow:hidden;'><nobr>".$this->target_to_string($task)."</nobr></div>");
+      $field2 = array("string" => $this->time_to_string($task),"attach" => "style='width:100px;'");
+      $field3 = array("string" => $this->action_to_string($task),"attach" => "style='width:60px;'");
+      $field4 = array("string" => $action,"attach" => "style='width:40px;border-right:0px;'");
       
  
-      $divlist->AddEntry(array($field1,$field2,$field3,$field4));
+      $divlist->AddElement(array($field1,$field2,$field3,$field4));
     }
  
-    $smarty->assign("divlist" , $divlist->DrawList());
-    $smarty->assign("contents_modified" , TRUE );
-    return ($smarty->fetch (get_template_path('contents.tpl', TRUE)));
+    return($divlist->Draw());
   }
 
   
@@ -157,19 +175,19 @@ class gotomasses extends plugin
   }
 
   
-  function load_csv_data()
+  function load_gotomasses_data()
   {
     $ui = get_userinfo();
 
     
-    if(!file_exists($this->file_to_read) || !is_readable($this->file_to_read)){
-      print_red(sprintf(_("Can't locate or read csv storage file '%s'."),$this->file_to_read));
+    if(!file_exists($this->data_file) || !is_readable($this->data_file)){
+      print_red(sprintf(_("Can't locate or read gotomasses storage file '%s'."),$this->data_file));
       return(FALSE);
     }
 
-    $fp = @fopen($this->file_to_read,"r");
+    $fp = @fopen($this->data_file,"r");
     if(!$fp){
-      print_red(sprintf(_("Can't read csv storage file '%s'."),$this->file_to_read));
+      print_red(sprintf(_("Can't read gotomasses storage file '%s'."),$this->data_file));
       return(FALSE);
     }
 
@@ -224,8 +242,44 @@ class gotomasses extends plugin
   }
 
 
-  function save_csv_data()
+  function save_gotomasses_data()
   {
+    $str = "#GOsa generated file, please just modify if you realy know what you do.";
+  
+    foreach($this->tasks as $task){
+      $str .= "\n#".trim($task['Comment']);
+
+      $str .= "\n";
+      $str .= str_pad($task['Minute'] ,5," ")." ";
+      $str .= str_pad($task['Hour']   ,5," ")." ";
+      $str .= str_pad($task['Day']    ,5," ")." ";
+      $str .= str_pad($task['Month']  ,5," ")." ";
+      $str .= str_pad($task['Weekday'],5," ")." ";
+      $str .= str_pad($task['Action'] ,5," ")." ";
+      $str .= str_pad($task['OGroup'] ,5," ")." ";
+    
+      foreach($task['Target'] as $target){
+        $str .= $target.",";
+      }
+      $str = preg_replace("/,$/","",$str);
+    }
+
+    $ui = get_userinfo();
+
+    if(!file_exists($this->data_file) || !is_writeable($this->data_file)){
+      print_red(sprintf(_("Can't locate or write gotomasses storage file '%s'."),$this->data_file));
+      return(FALSE);
+    }
+
+    $fp = @fopen($this->data_file,"w");
+    if(!$fp){
+      print_red(sprintf(_("Can't read gotomasses storage file '%s'."),$this->data_file));
+      return(FALSE);
+    }
+
+    $str .= "\n";
+    fwrite($fp,$str);
+    fclose($fp);
   }
 
 
@@ -247,6 +301,12 @@ class gotomasses extends plugin
       $ret[$attrs['cn'][0]] = $attrs['cn'][0];
     }
     return($ret); 
+  }
+
+  
+  function save()
+  {
+    $this->save_gotomasses_data();
   }
 
 
