@@ -88,7 +88,7 @@ class gotomasses extends plugin
     }
 
     /* Close dialog */
-    if(isset($_POST['save_goto_task']) && is_object($this->dialog)){
+    if((isset($_POST['save_goto_task']) || isset($_POST['apply_goto_task'])) && is_object($this->dialog) ){
       $this->dialog->save_object();
       $msgs = $this->dialog->check();
       if(count($msgs)){
@@ -101,12 +101,14 @@ class gotomasses extends plugin
         }else{
           $this->tasks[] = $this->dialog->save();
         }
-        $this->dialog = FALSE;
-        $this->current = -1;
+        if(!isset($_POST['apply_goto_task']) && $this->current != -1){
+          $this->dialog = FALSE;
+          $this->current = -1;
+        }
         $this->save();
       }
     }
- 
+
     /* Display dialogs if currently opened */
     if(is_object($this->dialog)){
       $this->dialog->save_object();

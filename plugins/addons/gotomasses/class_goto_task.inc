@@ -21,6 +21,7 @@ class goto_task extends plugin
   var $Actions  = array();
   var $OGroup   = "";
   var $OGroups  = array();
+  var $new      = FALSE;
   var $attributes     = array("OGroup","Minute","Hour","Day","Month","Weekday","Action","Comment","Target");
 
 
@@ -46,6 +47,8 @@ class goto_task extends plugin
           }
         }
       }
+    }else{
+      $this->new = TRUE;
     }
 
     /* Create ogroup select list */
@@ -161,6 +164,7 @@ class goto_task extends plugin
 
     $smarty->assign("Actions"     , $this->Actions);
     $smarty->assign("Target_list" , $divlist->DrawList());
+    $smarty->assign("new"      , $this->new);
     return ($smarty->fetch (get_template_path('goto_task.tpl', TRUE)));
   }
 

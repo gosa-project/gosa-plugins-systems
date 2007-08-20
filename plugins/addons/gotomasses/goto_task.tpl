@@ -188,6 +188,9 @@
 </table>
 <input type='hidden' name='goto_task_posted' value='1'>
 <p style="text-align:right">
-	<input type='submit' name='close_goto_task' value='{t}Cancel{/t}'>
-	<input type='submit' name='save_goto_task' value='{t}Apply{/t}'>
+	<input type='submit' name='save_goto_task' value='{t}Ok{/t}'>
+{if !$new}
+	<input type='submit' name='apply_goto_task' value='{t}Apply{/t}'>
+{/if}
+	<input type='submit' name='close_goto_task' value='{t}Abort{/t}'>
 </p>
