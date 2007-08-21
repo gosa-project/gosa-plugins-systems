@@ -119,17 +119,17 @@ class goto_task extends plugin
 
     $divlist->SetHeader(array(
                             array("string" => "Target"),
-                            array("string" => "Actions" , "attach" => "style='width:40px;border-right:0px;'")));
+                            array("string" => "Actions" , "attach" => "style='width:44px;border-right:0px;'")));
 
     $acl_target = $this->parent->getacl("Target");
     foreach($this->Target as $key => $target){
       $field1 = array("string" => $target);
       if(preg_match("/w/i",$acl_target)){
         $field2 = array("string" => "<input type='image' src='images/edittrash.png' name='remove_".$key."'>" , 
-                                    "attach" => "style='width:40px;border-right:0px;'");
+                                    "attach" => "style='width:44px;border-right:0px;'");
       }else{
         $field2 = array("string" => "",
-                                    "attach" => "style='width:40px;border-right:0px;'");
+                                    "attach" => "style='width:44px;border-right:0px;'");
       }
       $divlist->AddEntry(array($field1,$field2));
     } 
