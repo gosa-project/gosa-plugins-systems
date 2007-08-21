@@ -106,7 +106,7 @@ class gotomasses extends plugin
         }else{
           $this->tasks[] = $this->dialog->save();
         }
-        if(!isset($_POST['apply_goto_task']) && $this->current != -1){
+        if(!isset($_POST['apply_goto_task'])){
           $this->dialog = FALSE;
           $this->current = -1;
         }
