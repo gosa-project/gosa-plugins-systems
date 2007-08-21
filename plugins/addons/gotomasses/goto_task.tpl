@@ -1,7 +1,7 @@
-<table style='width:100%;border-bottom: 1px solid rgb(160, 160, 160);padding-top:10px;'>
+<table style='width:100%'>
 	<tr>
 		<td colspan="2">
-			<h2>{t}Generic{/t}</h2>
+			<h2><img alt="" src="images/head.png" class="center" align="middle"> {t}Generic{/t}</h2>
 		</td>
 	</tr>
 	<tr>
@@ -50,42 +50,11 @@
 		</td>
 	</tr>
 </table>
-<table style='width:100%;border-bottom: 1px solid rgb(160, 160, 160);padding-top:10px;'>
-	<tr>
-		<td colspan="2" style='padding-top:5px;'>
-			<h2>{t}Target systems{/t}</h2>
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2">
-            <table  summary="" style="border:1px solid #B0B0B0; " cellspacing=0 cellpadding=0>
-                <tr>
-                    <td>
-						<div style='border-bottom: 1px solid #B0B0B0;'>
-						{render acl=$TargetACL}
-						{$Target_list}	
-						{/render}
-						</div>
-						{render acl=$TargetACL}
-						<input type="text" name="target_text" value="">
-						{/render}
-						{render acl=$TargetACL}
-						<input type="submit" name="add_target" value="{t}Add{/t}">
-						{/render}
-						{render acl=$TargetACL}
-						<input type="submit" name="add_from_list" value="{t}Add from list{/t}">
-						{/render}
-					</td>
-				</tr>
-			</table>
-
-		</td>
-	</tr>
-</table>
+<p class='seperator'>&nbsp;</p>
 <table style='width:100%;'>
 	<tr>
 		<td colspan="2">
-			<h2>{t}Schedule{/t}</h2>
+			<h2><img alt="" src="images/time.png" class="center" align="middle"> {t}Schedule{/t}</h2>
 		</td>
 	</tr>
 	<tr>
@@ -180,6 +149,37 @@
 			</table>
 			{/if}
 	
+		</td>
+	</tr>
+</table>
+<p class='seperator'>&nbsp;</p>
+<table style='width:100%;'>
+	<tr>
+		<td colspan="2" style='padding-top:5px;'>
+			<h2><img alt="" src="images/select_workstation.png" class="center" align="middle"> {t}Target systems{/t}</h2>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+            <table  summary="" style="border:1px solid #B0B0B0; " cellspacing=0 cellpadding=0>
+                <tr>
+                    <td>
+						{render acl=$TargetACL}
+						{$Target_list}	
+						{/render}
+					</td>
+				</tr>
+			</table>
+						{render acl=$TargetACL}
+						<input type="text" name="target_text" value="">
+						{/render}
+						{render acl=$TargetACL}
+						<input type="submit" name="add_target" value="{t}Add{/t}">
+						{/render}
+						{render acl=$TargetACL}
+						<input type="submit" name="add_from_list" value="{t}Add from list{/t}">
+						{/render}
+
 		</td>
 	</tr>
 </table>
