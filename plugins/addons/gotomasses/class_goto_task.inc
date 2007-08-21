@@ -112,7 +112,7 @@ class goto_task extends plugin
      ********/
 
     $divlist = new divlist("goto_task");
-    $divlist->SetWidth("100%");
+    $divlist->SetWidth("600");
     $divlist->SetHeight("160");
     $divlist->SetEntriesPerPage(0);
 
@@ -122,7 +122,7 @@ class goto_task extends plugin
 
     $acl_target = $this->parent->getacl("Target");
     foreach($this->Target as $key => $target){
-      $field1 = array("string" => $target);
+      $field1 = array("string" => $target, "attach" => "style:''");
       if(preg_match("/w/i",$acl_target)){
         $field2 = array("string" => "<input type='image' src='images/edittrash.png' name='remove_".$key."'>" , 
                                     "attach" => "style='width:44px;border-right:0px;'");
