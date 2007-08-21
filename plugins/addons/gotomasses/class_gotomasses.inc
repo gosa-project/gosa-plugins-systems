@@ -56,7 +56,6 @@ class gotomasses extends plugin
 
     /* Remove entry from list */
     if($s_action == "remove" && isset($this->tasks[$s_entry])){
-
       if(!$this->acl_is_removeable()){
         print_red(_("You are not allowed to remove a task."));
       }else{
@@ -181,7 +180,7 @@ class gotomasses extends plugin
   {
     $ret = "";
     foreach($data['Target'] as $target){
-      $ret .= preg_replace("/^[^:]+:/i","",$target).", ";
+      $ret .= $target.", ";
     } 
     return(preg_replace("/, $/","",$ret));
   }
@@ -210,12 +209,13 @@ class gotomasses extends plugin
   {
     $ui = get_userinfo();
 
-    
+    /* Check file existence */
     if(!file_exists($this->data_file) || !is_readable($this->data_file)){
       print_red(sprintf(_("Can't locate or read gotomasses storage file '%s'."),$this->data_file));
       return(FALSE);
     }
 
+    /* check if file is readable */
     $fp = @fopen($this->data_file,"r");
     if(!$fp){
       print_red(sprintf(_("Can't read gotomasses storage file '%s'."),$this->data_file));
@@ -276,10 +276,8 @@ class gotomasses extends plugin
   function save_gotomasses_data()
   {
     $str = "#GOsa generated file, please just modify if you realy know what you do.";
-  
     foreach($this->tasks as $task){
       $str .= "\n#".trim($task['Comment']);
-
       $str .= "\n";
       $str .= str_pad($task['Minute'] ,5," ")." ";
       $str .= str_pad($task['Hour']   ,5," ")." ";
@@ -288,26 +286,27 @@ class gotomasses extends plugin
       $str .= str_pad($task['Weekday'],5," ")." ";
       $str .= str_pad($task['Action'] ,5," ")." ";
       $str .= str_pad($task['OGroup'] ,5," ")." ";
-    
       foreach($task['Target'] as $target){
         $str .= $target.",";
       }
       $str = preg_replace("/,$/","",$str);
     }
 
+    /* check file existence*/
     $ui = get_userinfo();
-
     if(!file_exists($this->data_file) || !is_writeable($this->data_file)){
       print_red(sprintf(_("Can't locate or write gotomasses storage file '%s'."),$this->data_file));
       return(FALSE);
     }
 
+    /* check permissions */
     $fp = @fopen($this->data_file,"w");
     if(!$fp){
       print_red(sprintf(_("Can't read gotomasses storage file '%s'."),$this->data_file));
       return(FALSE);
     }
 
+    /* Write contents */
     $str .= "\n";
     fwrite($fp,$str);
     fclose($fp);
@@ -316,8 +315,6 @@ class gotomasses extends plugin
 
   function save_object()
   {
-    if(isset($_POST['gotomasses'])){
-    }
   }
 
 

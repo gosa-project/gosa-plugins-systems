@@ -16,11 +16,10 @@ class goto_task extends plugin
   var $Weekday  = "*";
   var $Action   = "install";
   var $Comment  = "";
-  var $Target   = array();
-
-  var $Actions  = array();
-  var $OGroup   = "";
+  var $OGroup   = "keep_current";
   var $OGroups  = array();
+  var $Target   = array();
+  var $Actions  = array();
   var $new      = FALSE;
   var $attributes     = array("OGroup","Minute","Hour","Day","Month","Weekday","Action","Comment","Target");
 
@@ -85,7 +84,6 @@ class goto_task extends plugin
       }
     }
  
- 
     /********
      * Add target from list 
      ********/
@@ -116,7 +114,6 @@ class goto_task extends plugin
       return($this->dialog->execute());
     }
 
-
     /********
      * Display this plugin  
      ********/
@@ -132,7 +129,6 @@ class goto_task extends plugin
 
     $acl_target = $this->parent->getacl("Target");
     foreach($this->Target as $key => $target){
-
       $field1 = array("string" => $target);
       if(preg_match("/w/i",$acl_target)){
         $field2 = array("string" => "<input type='image' src='images/edittrash.png' name='remove_".$key."'>" , 
@@ -141,12 +137,10 @@ class goto_task extends plugin
         $field2 = array("string" => "",
                                     "attach" => "style='width:40px;border-right:0px;'");
       }
-
       $divlist->AddEntry(array($field1,$field2));
     } 
 
     $smarty = get_smarty();
-
     foreach($this->attributes as $attr){
       $smarty->assign($attr."ACL", $this->parent->getacl($attr));
       $smarty->assign($attr,$this->$attr);
@@ -158,10 +152,8 @@ class goto_task extends plugin
     $smarty->assign("Days"    , $tmp['Day']);
     $smarty->assign("Months"  , $tmp['Month']);
     $smarty->assign("Weekdays", $tmp['Weekday']);
-
-    $smarty->assign("OGroups"  , $this->OGroups);
+    $smarty->assign("OGroups" , $this->OGroups);
     $smarty->assign("Expert"  , $this->Expert);
-
     $smarty->assign("Actions"     , $this->Actions);
     $smarty->assign("Target_list" , $divlist->DrawList());
     $smarty->assign("new"      , $this->new);
