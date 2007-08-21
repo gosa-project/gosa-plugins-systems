@@ -48,7 +48,7 @@ if (!$remove_lock){
 	$display= $gotomasses->execute ();
 
 	/* Page header*/
-	$display= print_header(get_template_path('images/system.png'), _("System mass deployment")).$display;
+	$display= print_header(get_template_path('images/system.png'), _("System deployment")).$display;
 
 	/* Store changes  in session */
 	$_SESSION['gotomasses']= $gotomasses;
