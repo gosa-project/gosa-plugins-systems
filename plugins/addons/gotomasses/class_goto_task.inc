@@ -45,8 +45,7 @@ class goto_task extends plugin
     }
 
     /* Create ogroup select list */
-    $this->OGroups = array("keep_current"     => "["._("Keep current")."]",
-                           "unset_membership" => "["._("Quit group membership")."]");
+    $this->OGroups = array("\"\""     => "["._("Keep current")."]");
     $this->OGroups = array_merge($this->OGroups,$this->parent->get_object_groups());
 
     /* Prepare list of available actions */
