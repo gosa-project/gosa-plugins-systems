@@ -112,13 +112,13 @@ class goto_task extends plugin
      ********/
 
     $divlist = new divlist("goto_task");
-    $divlist->SetWidth("600");
+    //$divlist->SetWidth("600");
     $divlist->SetHeight("160");
     $divlist->SetEntriesPerPage(0);
 
     $divlist->SetHeader(array(
-                            array("string" => "Target"),
-                            array("string" => "Actions" , "attach" => "style='width:44px;border-right:0px;'")));
+                            array("string" => "Target", "attach" => "style=''"),
+                            array("string" => "Actions" , "attach" => "style='width:44px;border-right:0px;text-align:right;'")));
 
     $acl_target = $this->parent->getacl("Target");
     foreach($this->Target as $key => $target){
