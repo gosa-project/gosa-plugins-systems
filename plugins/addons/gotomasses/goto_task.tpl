@@ -59,96 +59,36 @@
 	</tr>
 	<tr>
 		<td colspan="2">
-			{if $Expert}
-			<input type='submit' name='ToggleExpertMode' value="{t}Normal mode{/t}">
-			<table>
-				<tr>
-					<td style='width:20%;'>
-						{t}Minute{/t}&nbsp;
-						{render acl=$MinuteACL}
-						<input type='text' name='Minute' value="{$Minute}" style='width:50px;'>
-						{/render}
-					</td>
-					<td style='width:20%;'>
-						{render acl=$HourACL}
-						{t}Hour{/t}&nbsp;
-						<input type='text' name='Hour' value="{$Hour}" style='width:50px;'>
-						{/render}
-					</td>
-					<td style='width:20%;'>
-						{t}Day{/t}&nbsp;
-						{render acl=$DayACL}
-						<input type='text' name='Day' value="{$Day}" style='width:50px;'>
-						{/render}
-					</td>
-					<td style='width:20%;'>
-						{t}Month{/t}&nbsp;
-						{render acl=$MonthACL}
-						<input type='text' name='Month' value="{$Month}" style='width:50px;'>
-						{/render}
-					</td>
-					<td style='width:20%;'>
-						{t}Week day{/t}&nbsp;
-						{render acl=$WeekdayACL}
-						<input type='text' name='Weekday' value="{$Weekday}" style='width:50px;'>
-						{/render}
-					</td>
-				</tr>
-			</table>
-			{else}
-
-			<input type='submit' name='ToggleExpertMode' value="{t}Expert mode{/t}">
-			<table>
-				<tr>
-					<td>{t}Minute{/t}
-					</td>
-					<td>
-						{render acl=$MinuteACL}
-						<select name='Minute'>
-							{html_options options=$Minutes selected=$Minute}
-						</select>
-						{/render}
-					</td>
-					<td>{t}Hour{/t}
-					</td>
-					<td>
-						{render acl=$HourACL}
-						<select name='Hour'>
-							{html_options options=$Hours selected=$Hour}
-						</select>
-						{/render}
-					</td>
-					<td>{t}Day{/t}
-					</td>
-					<td>
-						{render acl=$DayACL}
-						<select name='Day'>
-							{html_options options=$Days selected=$Day}
-						</select>
-						{/render}
-					</td>
-					<td>{t}Month{/t}
-					</td>
-					<td>
-						{render acl=$MonthACL}
-						<select name='Month'>
-							{html_options options=$Months selected=$Month}
-						</select>
-						{/render}
-					</td>
-					<td>{t}Week day{/t}
-					</td>
-					<td>
-						{render acl=$WeekdayACL}
-						<select name='Weekday'>
-							{html_options options=$Weekdays selected=$Weekday}
-						</select>
-						{/render}
-					</td>
-				</tr>
-			</table>
-			{/if}
-	
+			{t}Minute{/t}
+			{render acl=$MinuteACL}
+				<select name='Minute'>
+				{html_options options=$Minutes selected=$Minute}
+				</select>
+			{/render}
+			{t}Hour{/t}
+			{render acl=$HourACL}
+				<select name='Hour'>
+				{html_options options=$Hours selected=$Hour}
+				</select>
+			{/render}
+			{t}Day{/t}
+			{render acl=$DayACL}
+				<select name='Day'>
+				{html_options options=$Days selected=$Day}
+				</select>
+			{/render}
+			{t}Month{/t}
+			{render acl=$MonthACL}
+				<select name='Month'>
+				{html_options options=$Months selected=$Month}
+				</select>
+			{/render}
+			{t}Week day{/t}
+			{render acl=$WeekdayACL}
+				<select name='Weekday'>
+				{html_options options=$Weekdays selected=$Weekday}
+				</select>
+			{/render}
 		</td>
 	</tr>
 </table>

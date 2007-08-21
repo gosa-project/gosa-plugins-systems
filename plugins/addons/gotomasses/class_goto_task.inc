@@ -7,7 +7,6 @@ class goto_task extends plugin
   var $plDescription  = "This does something";
  
   var $parent   = NULL;
-  var $Expert   = FALSE;
  
   var $Minute   = "*";
   var $Hour     = "*";
@@ -39,11 +38,6 @@ class goto_task extends plugin
           trigger_error("Missing parameter: '".$attr."' for goto_task contruction.");
         }else{
           $this->$attr = $data[$attr];
-  
-          /* Check if given value will be selectable via dropdown menus, else enable expert mode */
-          if(in_array($attr, array("Minute","Hour","Day","Month","Weekday")) && !isset($tmp[$attr][$data[$attr]])){
-            $this->Expert = TRUE;
-          }
         }
       }
     }else{
@@ -153,7 +147,6 @@ class goto_task extends plugin
     $smarty->assign("Months"  , $tmp['Month']);
     $smarty->assign("Weekdays", $tmp['Weekday']);
     $smarty->assign("OGroups" , $this->OGroups);
-    $smarty->assign("Expert"  , $this->Expert);
     $smarty->assign("Actions"     , $this->Actions);
     $smarty->assign("Target_list" , $divlist->DrawList());
     $smarty->assign("new"      , $this->new);
@@ -192,10 +185,6 @@ class goto_task extends plugin
   {
     if(isset($_POST['goto_task_posted'])){
       plugin::save_object();
-
-      if(isset($_POST['ToggleExpertMode'])){
-        $this->Expert = !$this->Expert;
-      }
     }
   }  
 
