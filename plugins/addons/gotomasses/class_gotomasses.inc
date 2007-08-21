@@ -3,7 +3,7 @@
 class gotomasses extends plugin
 {
   /* Definitions */
-  var $plHeadline     = "System mass deployment";
+  var $plHeadline     = "System deployment";
   var $plDescription  = "This does something";
 
   /* attribute list for save action */
