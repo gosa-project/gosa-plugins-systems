@@ -67,9 +67,13 @@ class gotomasses extends plugin
       }else{
         $this->ids_to_remove = $this->list_get_selected_items();
         $tmp = "";
-        foreach($this->ids_to_remove as $id){
-          $task = $this->tasks[$id];
-          $tmp.= "\n".$this->target_to_string($task);
+        foreach($this->ids_to_remove as $key => $id){
+          if(isset($this->tasks[$id])){
+            $task = $this->tasks[$id];
+            $tmp.= "\n".$this->target_to_string($task);
+          }else{
+            unset($this->ids_to_remove[$key]);
+          }
         }
         $smarty->assign("multiple", TRUE); 
         $smarty->assign("info",sprintf(_("Your are about to delete the following tasks: %s"),"<pre>".$tmp."</pre>"));
