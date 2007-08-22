@@ -31,7 +31,7 @@
 				</tr>
 			</table>
 		</td>
-		<td>
+		<td style='vertical-align:top'>
 			<table>
 				<tr>
 					<td>
@@ -78,7 +78,7 @@
 		<td style="width:50%; border-right: 1px solid #A0A0A0;">
 			<table>
 				<tr>
-					<td>{t}MAC address{/t}*
+					<td>{t}MAC address{/t}{$must}
 					</td>
 					<td><input type="text" name="task_MAC" value="">	
 					</td>
@@ -102,17 +102,18 @@
 		</td>
 		<td>
 			<table>
+				<tr><td>{t}CVS import from file{/t}</td></tr>
+				<tr>
+					<td>
+            &nbsp;
+					</td>
+				</tr>
 				<tr>
 					<td>
 						<input type="hidden" name="MAX_FILE_SIZE" value="2000000">
 			            <input name="import_file" type="file" size="20" maxlength="255" accept="*.csv">
-					</td>
-				</tr>
-				<tr><td>&nbsp;</td></tr>
-				<tr>
-					<td>
 						{render acl=$TargetACL}
-						<input type="submit" name="add_import" value="{t}Add{/t}">
+						<input type="submit" name="add_import" value="{t}Import{/t}">
 						{/render}
 					</td>
 				</tr>
@@ -196,6 +197,7 @@
 	</tr>
 </table>
 {/if}
+<p class='seperator'>&nbsp;</p>
 <input type='hidden' name='goto_task_posted' value='1'>
 <p style="text-align:right">
 	<input type='submit' name='save_goto_task' value='{t}Ok{/t}'>
