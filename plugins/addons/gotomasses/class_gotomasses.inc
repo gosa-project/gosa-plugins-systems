@@ -50,6 +50,12 @@ class gotomasses extends plugin
       }
     }
 
+    /* Edit posted from list link */
+    if(isset($_GET['act']) && $_GET['act'] == "edit" && isset($_GET['id']) && isset($this->tasks[$_GET['id']])){
+      $s_action = "edit";
+      $s_entry = $_GET['id'];
+    }
+
     /************
      * List posts 
      ************/
@@ -79,6 +85,7 @@ class gotomasses extends plugin
           unset($this->tasks[$id]);
         }
       }
+      $this->save();
     }
 
     /* Remove entry from list */
@@ -203,6 +210,9 @@ class gotomasses extends plugin
     $divlist->AddHeader(array("string"=>_("Action"),
                                       "attach"=>"style='border-right:0px;width:40px;'"));
 
+    /* Create edit link */
+    $edit_link = "<div style='width:100%;overflow:hidden;'><nobr><a href='?plug=".$_GET['plug']."&act=edit&id=%key%'>%str%</nobr></div>";
+  
     if(!empty($acls)){
       foreach($this->tasks as $key => $task){
         $action = "<input type='image' src='images/edit.png' name='edit_task_".$key."' class='center' alt='"._("Edit")."'>";
@@ -213,7 +223,7 @@ class gotomasses extends plugin
         $field0 = array("string" => "<input type='checkbox' id='item_selected_".$key."' name='item_selected_".$key."'>" ,
                         "attach" => "style='width:20px;'");
 
-        $field1 = array("string" => "<div style='width:100%;overflow:hidden;'><nobr>".$this->target_to_string($task)."</nobr></div>");
+        $field1 = array("string" => preg_replace(array("/%key%/","/%str%/"),array($key,$this->target_to_string($task)),$edit_link));
         $field2 = array("string" => $this->time_to_string($task),"attach" => "style='width:100px;'");
         $field3 = array("string" => $this->action_to_string($task),"attach" => "style='width:80px;'");
         $field4 = array("string" => $action,"attach" => "style='text-align:right;width:40px;border-right:0px;'");
