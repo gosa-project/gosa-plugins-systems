@@ -76,7 +76,7 @@ class gotomasses extends plugin
     if(count($this->ids_to_remove) && isset($_POST['delete_multiple_confirm'])){
       foreach($this->ids_to_remove as $id){
         if(isset($this->tasks[$id])){
-          unset($this->tasks);
+          unset($this->tasks[$id]);
         }
       }
     }
