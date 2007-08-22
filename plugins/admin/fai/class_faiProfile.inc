@@ -412,8 +412,8 @@ class faiProfile extends plugin
       $ldap->search("(&(objectClass=FAIprofile)(cn=".$this->cn.")(!cn=".$this->old_cn."))",array("*"));
     }
 
-    if($ldap->count()){
-      $message[]=_("There is already a profile with this class name defined.");
+    if($ldap->count() || isset($this->FAIAllclasses[$this->cn])){
+      $message[]=_("There is already a FAI object with this class name defined.");
     }
 
     return ($message);

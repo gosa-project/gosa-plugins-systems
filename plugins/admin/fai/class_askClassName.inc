@@ -62,7 +62,7 @@ class askClassName extends plugin
       foreach($res2 as $object){
 
         /* skip class names with this name */ 
-        if(in_array($this->objectClass,$object['objectClass'])){
+        if(in_array($this->objectClass,$object['objectClass']) || in_array("FAIprofile",$object['objectClass'])){
           if(isset($object['FAIstate'][0]) && preg_match("/removed$/",$object['FAIstate'][0])){
             continue;
           }
