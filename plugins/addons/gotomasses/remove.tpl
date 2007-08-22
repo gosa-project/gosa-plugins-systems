@@ -11,7 +11,11 @@
 </p>
 
 <p class="plugbottom">
+{if $multiple}
+  <input type=submit name="delete_multiple_confirm" value="{t}Delete{/t}">
+{else}
   <input type=submit name="delete_confirm" value="{t}Delete{/t}">
+{/if}
   <input type=submit name="delete_cancel" value="{t}Cancel{/t}">
 </p>
 

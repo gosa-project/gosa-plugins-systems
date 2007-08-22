@@ -17,6 +17,7 @@ class gotomasses extends plugin
   var $tasks = array();
   var $current =false;
   var $dialog = FALSE;
+  var $ids_to_remove = array();
 
   function gotomasses($config, $dn= NULL)
   {
@@ -37,7 +38,8 @@ class gotomasses extends plugin
      ************/
 
     $s_entry = $s_action = "";
-    $arr = array("/^edit_task_/"=>"edit","/^remove_task_/"=>"remove","/^new_task_/"=>"new_task");
+    $arr = array( "/^edit_task_/"=>"edit","/^remove_task_/"=>"remove",
+                  "/^new_task_/"=>"new_task","/^remove_multiple_task_/" => "remove_multiple");
     foreach($arr as $regex => $action){
       foreach($_POST as $name => $value){
         if(preg_match($regex,$name)){
@@ -52,13 +54,43 @@ class gotomasses extends plugin
      * List posts 
      ************/
 
+    /* Remove multiple */
+    if($s_action == "remove_multiple"){
+      if(!$this->acl_is_removeable()){
+        print_red(_("You are not allowed to remove a task."));
+      }else{
+        $this->ids_to_remove = $this->list_get_selected_items();
+        $tmp = "";
+        foreach($this->ids_to_remove as $id){
+          $task = $this->tasks[$id];
+          $tmp.= "\n".$this->target_to_string($task);
+        }
+        $smarty->assign("multiple", TRUE); 
+        $smarty->assign("info",sprintf(_("Your are about to delete the following tasks: %s"),"<pre>".$tmp."</pre>"));
+        $this->current = $s_entry;
+        return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
+      }
+    }
+
+    /* Remove specified tasks */
+    if(count($this->ids_to_remove) && isset($_POST['delete_multiple_confirm'])){
+      foreach($this->ids_to_remove as $id){
+        if(isset($this->tasks[$id])){
+          unset($this->tasks);
+        }
+      }
+    }
+
     /* Remove entry from list */
     if($s_action == "remove" && isset($this->tasks[$s_entry])){
       if(!$this->acl_is_removeable()){
         print_red(_("You are not allowed to remove a task."));
       }else{
-        $smarty->assign("info",_("Your are about to delete a gotomasses task."));
+        $entry = $this->tasks[$s_entry];
         $this->current = $s_entry;
+        $smarty->assign("info",sprintf(_("Your are about to delete the following tasks: %s"),
+                                    "<pre>".$this->target_to_string($entry)."</pre>"));
+        $smarty->assign("multiple", FALSE); 
         return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
       }
     }
@@ -68,6 +100,11 @@ class gotomasses extends plugin
       unset($this->tasks[$this->current]);
       $this->current = -1;
       $this->save();
+    }
+
+    /* Remove aborted */
+    if(isset($_POST['delete_cancel'])){
+      $this->ids_to_remove = array();;
     }
 
     /* Edit selected entry */
@@ -131,13 +168,16 @@ class gotomasses extends plugin
     $divlist->SetInformation(_("This menu allows you to add, remove and change the properties of gotomasses tasks."));
  
     /* Display add button if allowed */ 
+    $header = "<div style='padding:5px'>";
     if($this->acl_is_createable()){ 
-      $header = "<div style='padding:5px'>
-        <input type='image' src='images/gotomasses_new_task.png' name='new_task' class='center'>
-        </div>";
-    }else{
-      $header = "";
+      $header .= "<input type='image' src='images/gotomasses_new_task.png' name='new_task' class='center'>&nbsp;";
     }
+
+    /* Display add button if allowed */ 
+    if($this->acl_is_removeable()){ 
+      $header .= "<input type='image' src='images/edittrash.png' name='remove_multiple_task' class='center'>&nbsp;";
+    }
+    $header .= "</div>";
 
     /* Get Permissions */ 
     $ui = get_userinfo();
@@ -148,6 +188,13 @@ class gotomasses extends plugin
  
     /* Create divlist */
     $divlist->SetListHeader($header);
+ /* Toggle all selected / deselected */
+    $chk = "<input type='checkbox' id='select_all' name='select_all'
+               onClick='toggle_all_(\"^item_selected_[0-9]*$\",\"select_all\");' >";
+
+    /* set Page header */
+    $divlist->AddHeader(array("string"=> $chk,          "attach"=>"style='width:20px;'"));
+
     $divlist->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=object'>"._("Target")."</a>"));
     $divlist->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=schedule'>"._("Schedule")."</a>",
                                       "attach"=>"style='width:100px;'"));
@@ -162,11 +209,15 @@ class gotomasses extends plugin
         if($this->acl_is_removeable()){
           $action.= "<input type='image' src='images/edittrash.png' name='remove_task_".$key."' class='center' alt='"._("Reomve")."'>";
         }
+        /* Create each field */
+        $field0 = array("string" => "<input type='checkbox' id='item_selected_".$key."' name='item_selected_".$key."'>" ,
+                        "attach" => "style='width:20px;'");
+
         $field1 = array("string" => "<div style='width:100%;overflow:hidden;'><nobr>".$this->target_to_string($task)."</nobr></div>");
         $field2 = array("string" => $this->time_to_string($task),"attach" => "style='width:100px;'");
         $field3 = array("string" => $this->action_to_string($task),"attach" => "style='width:80px;'");
         $field4 = array("string" => $action,"attach" => "style='text-align:right;width:40px;border-right:0px;'");
-        $divlist->AddElement(array($field1,$field2,$field3,$field4));
+        $divlist->AddElement(array($field0,$field1,$field2,$field3,$field4));
       }
     }
  
@@ -357,6 +408,19 @@ class gotomasses extends plugin
   function save()
   {
     $this->save_gotomasses_data();
+  }
+
+
+  function list_get_selected_items()
+  {
+    $ids = array();
+    foreach($_POST as $name => $value){
+      if(preg_match("/^item_selected_[0-9]*$/",$name)){
+        $id   = preg_replace("/^item_selected_/","",$name);
+        $ids[$id] = $id;
+      }
+    }
+    return($ids);
   }
 
 
