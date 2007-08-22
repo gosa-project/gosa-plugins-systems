@@ -18,9 +18,10 @@ class goto_task extends plugin
   var $OGroup   = "keep_current";
   var $OGroups  = array();
   var $Target   = array();
+  var $Initial_Target   = array();
   var $Actions  = array();
   var $new      = FALSE;
-  var $attributes     = array("OGroup","Minute","Hour","Day","Month","Weekday","Action","Comment","Target");
+  var $attributes     = array("OGroup","Minute","Hour","Day","Month","Weekday","Action","Comment","Target","Initial_Target");
 
 
   function goto_task($config,$parent,$data = array())
@@ -69,14 +70,61 @@ class goto_task extends plugin
       }
     }
 
-    /* Add target */
-    if(isset($_POST['add_target']) && !empty($_POST['target_text'])){
-      $target = get_post("target_text");
-      if($this->is_valid_target($target) && !in_array($target,$this->Target)){
-        $this->Target[] = $target;
+    if($this->Action != "initial_install"){
+      
+      /* Add target */
+      if(isset($_POST['add_target']) && !empty($_POST['target_text'])){
+        $target = get_post("target_text");
+        if($this->is_valid_target($target) && !in_array($target,$this->Target)){
+          $this->Target[] = $target;
+        }
+      }
+    }else{
+
+      /* Add target */
+      if(isset($_POST['add_target']) && !empty($_POST['task_MAC'])){
+        $MAC = $_POST['task_MAC'];
+        $NAME= "";
+        $IP  = "";
+        if(isset($_POST['task_Name'])){
+          $NAME = $_POST['task_Name'];
+        }
+        if(isset($_POST['task_IP']) && is_ip($_POST['task_IP'])){
+          $IP = $_POST['task_IP'];
+        }
+        if(is_mac($MAC)){
+          $this->Initial_Target[] = array("MAC"=>$MAC,"IP"=>$IP,"NAME"=>$NAME);
+        }
       }
     }
- 
+
+    /* Add via csv */
+    if(isset($_FILES['import_file'])){
+      $file = $_FILES['import_file']['tmp_name'];
+      if(file_exists($file) && is_readable($file)){
+        $str ="";
+        $fp = fopen($file,"r");
+        while(!feof($fp)){
+          $line = fgets($fp,512);
+          $tmp = preg_split("/(,|;)/",$line);
+
+          $MAC = $IP = $NAME = "";
+          if(isset($tmp[0])){
+            $MAC = $tmp[0];
+          }
+          if(isset($tmp[1])){
+            $IP = $tmp[1];
+          }
+          if(isset($tmp[2])){
+            $NAME = $tmp[2];
+          }
+          if(is_mac($MAC)){
+            $this->Initial_Target[] = array("MAC"=>$MAC,"IP"=>$IP,"NAME"=>$NAME);
+          }
+        }
+      }
+    }
+  
     /********
      * Add target from list 
      ********/
@@ -112,26 +160,40 @@ class goto_task extends plugin
      ********/
 
     $divlist = new divlist("goto_task");
-    //$divlist->SetWidth("600");
     $divlist->SetHeight("160");
     $divlist->SetEntriesPerPage(0);
 
-    $divlist->SetHeader(array(
+    $acl_target = $this->parent->getacl("Target");
+    if(preg_match("/w/i",$acl_target)){
+      $field_del = array("string" => "<input type='image' src='images/edittrash.png' name='remove_%KEY%'>" , 
+          "attach" => "style='width:44px;border-right:0px;'");
+    }else{
+      $field_del = array("string" => "",
+          "attach" => "style='width:44px;border-right:0px;'");
+    }
+
+    /* Add entries to divlist */
+    if($this->Action == "initial_install"){
+      $divlist->SetHeader(array(
+                            array("string" => "Target"),
+                            array("string" => "IP"      , "attach" => "style='width:90px;'"),
+                            array("string" => "Name"    , "attach" => "style='width:150px;'"),
+                            array("string" => "Actions" , "attach" => "style='width:44px;border-right:0px;text-align:right;'")));
+      foreach($this->Initial_Target as $key => $target){
+        $field1 = array("string" => $target['MAC']  );
+        $field2 = array("string" => $target['IP']   ,"attach" => "style='width:90px;'");
+        $field3 = array("string" => $target['NAME'] ,"attach" => "style='width:150px;'");
+        $divlist->AddEntry(array($field1,$field2,$field3,preg_replace("/%KEY%/",$key,$field_del)));
+      } 
+    }else{
+      $divlist->SetHeader(array(
                             array("string" => "Target", "attach" => "style=''"),
                             array("string" => "Actions" , "attach" => "style='width:44px;border-right:0px;text-align:right;'")));
-
-    $acl_target = $this->parent->getacl("Target");
-    foreach($this->Target as $key => $target){
-      $field1 = array("string" => $target, "attach" => "style:''");
-      if(preg_match("/w/i",$acl_target)){
-        $field2 = array("string" => "<input type='image' src='images/edittrash.png' name='remove_".$key."'>" , 
-                                    "attach" => "style='width:44px;border-right:0px;'");
-      }else{
-        $field2 = array("string" => "",
-                                    "attach" => "style='width:44px;border-right:0px;'");
-      }
-      $divlist->AddEntry(array($field1,$field2));
-    } 
+      foreach($this->Target as $key => $target){
+        $field1 = array("string" => $target);
+        $divlist->AddEntry(array($field1,preg_replace("/%KEY%/",$key,$field_del)));
+      } 
+    }
 
     $smarty = get_smarty();
     foreach($this->attributes as $attr){
@@ -140,6 +202,7 @@ class goto_task extends plugin
     }
 
     $tmp = $this->get_array_values();
+    $smarty->assign("JS"      , $_SESSION['js']);
     $smarty->assign("Minutes" , $tmp['Minute']);
     $smarty->assign("Hours"   , $tmp['Hour']);
     $smarty->assign("Days"    , $tmp['Day']);
@@ -161,13 +224,18 @@ class goto_task extends plugin
       "OGroup" => _("Object group") ,"Minute" => _("Minute"),
       "Hour"   => _("Hour")         ,"Day"    => _("Day"),
       "Month"  => _("Month")        ,"Weekday"=> _("Week day"),
-      "Action" => _("Action")       ,"Comment"=> _("Description"),
-      "Target" => _("Target objects")); 
+      "Action" => _("Action")       ,"Comment"=> _("Description"));
     
     foreach($tmp as $name => $desc){
       if(empty($this->$name)){
         $message[] = sprintf(_("The given value for attribute '%s' is invalid."),$desc);
       }
+    }
+    if(count($this->Target) == 0 && $this->Action != "initial_install"){
+      $message[] = sprintf(_("You must specify at least one traget"));
+    }
+    if(count($this->Initial_Target) == 0 && $this->Action == "initial_install"){
+      $message[] = sprintf(_("You must specify at least one traget"));
     }
     return($message);
   }

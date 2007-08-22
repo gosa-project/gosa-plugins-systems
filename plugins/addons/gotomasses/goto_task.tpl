@@ -39,10 +39,13 @@
 					</td>
 					<td>
 						{render acl=$ActionACL}
-						<select name="Action">
+						<select name="Action" onChange="document.mainform.submit();">
 							{html_options options=$Actions selected=$Action}
 						</select>
 						{/render}
+						{if !$JS}
+							<input type='image' src='images/list_reload.png' class='center'>
+						{/if}
 					</td>
 				</tr>
 			</table>
@@ -50,6 +53,75 @@
 		</td>
 	</tr>
 </table>
+{if $Action == "initial_install"}
+<p class='seperator'>&nbsp;</p>
+<table style='width:100%;'>
+	<tr>
+		<td colspan="2" style='padding-top:5px;'>
+			<h2><img alt="" src="images/select_workstation.png" class="center" align="middle"> {t}Target systems{/t}</h2>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+            <table  summary="" style="border:1px solid #B0B0B0;width:100%; " id="t_test_scrolltable" cellspacing=0 cellpadding=0>
+                <tr>
+                    <td>
+						{render acl=$TargetACL}
+						{$Target_list}	
+						{/render}
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td style="width:50%; border-right: 1px solid #A0A0A0;">
+			<table>
+				<tr>
+					<td>{t}MAC address{/t}*
+					</td>
+					<td><input type="text" name="task_MAC" value="">	
+					</td>
+				</tr>
+				<tr>
+					<td>{t}Name{/t}
+					</td>
+					<td><input type="text" name="task_Name" value="">	
+					</td>
+				</tr>
+				<tr>
+					<td>{t}IP address{/t}
+					</td>
+					<td><input type="text" name="task_IP" value="">	
+						{render acl=$TargetACL}
+						<input type="submit" name="add_target" value="{t}Add{/t}">
+						{/render}
+					</td>
+				</tr>
+			</table>
+		</td>
+		<td>
+			<table>
+				<tr>
+					<td>
+						<input type="hidden" name="MAX_FILE_SIZE" value="2000000">
+			            <input name="import_file" type="file" size="20" maxlength="255" accept="*.csv">
+					</td>
+				</tr>
+				<tr><td>&nbsp;</td></tr>
+				<tr>
+					<td>
+						{render acl=$TargetACL}
+						<input type="submit" name="add_import" value="{t}Add{/t}">
+						{/render}
+					</td>
+				</tr>
+			</table>
+		</tr>
+	</tr>
+</table>
+
+{else}
 <p class='seperator'>&nbsp;</p>
 <table style='width:100%;'>
 	<tr>
@@ -123,6 +195,7 @@
 		</td>
 	</tr>
 </table>
+{/if}
 <input type='hidden' name='goto_task_posted' value='1'>
 <p style="text-align:right">
 	<input type='submit' name='save_goto_task' value='{t}Ok{/t}'>

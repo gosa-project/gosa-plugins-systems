@@ -154,7 +154,7 @@ class gotomasses extends plugin
     $divlist->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=schedule'>"._("Schedule")."</a>",
                                       "attach"=>"style='width:100px;'"));
     $divlist->AddHeader(array("string"=>"<a href='?plug=".$plug."&amp;sort=action'>"._("Type")."</a>",
-                                      "attach"=>"style='width:60px;'"));
+                                      "attach"=>"style='width:80px;'"));
     $divlist->AddHeader(array("string"=>_("Action"),
                                       "attach"=>"style='border-right:0px;width:40px;'"));
 
@@ -166,7 +166,7 @@ class gotomasses extends plugin
         }
         $field1 = array("string" => "<div style='width:100%;overflow:hidden;'><nobr>".$this->target_to_string($task)."</nobr></div>");
         $field2 = array("string" => $this->time_to_string($task),"attach" => "style='width:100px;'");
-        $field3 = array("string" => $this->action_to_string($task),"attach" => "style='width:60px;'");
+        $field3 = array("string" => $this->action_to_string($task),"attach" => "style='width:80px;'");
         $field4 = array("string" => $action,"attach" => "style='text-align:right;width:40px;border-right:0px;'");
         $divlist->AddElement(array($field1,$field2,$field3,$field4));
       }
@@ -179,9 +179,15 @@ class gotomasses extends plugin
   function target_to_string($data)
   {
     $ret = "";
-    foreach($data['Target'] as $target){
-      $ret .= $target.", ";
-    } 
+    if($data['Action'] == "initial_install"){
+      foreach($data['Initial_Target'] as $target){
+        $ret .= $target['MAC'].", ";
+      } 
+    }else{
+      foreach($data['Target'] as $target){
+        $ret .= $target.", ";
+      } 
+    }
     return(preg_replace("/, $/","",$ret));
   }
 
@@ -194,13 +200,11 @@ class gotomasses extends plugin
   
   function action_to_string($data)
   {
-    switch($data['Action']){
-
-      case 'reinstall' : return("Reinstall");break;
-      case 'install' : return("Install");break;
-      case 'reboot' : return("Restart");break;
-      case 'update' : return("Update");break;
-      default : return("Unknown");
+    $tmp = $this->get_actions();
+    if(isset($tmp[$data['Action']])){
+      return($tmp[$data['Action']]);
+    }else{
+      return(_("Unknown"));
     }
   }
 
@@ -265,7 +269,17 @@ class gotomasses extends plugin
         $entry['Weekday'] = $parts[4];  
         $entry['Action']  = $parts[5];  
         $entry['OGroup']  = $parts[6];  
-        $entry['Target']  = split(",",$parts[7]);  
+        if($entry['Action'] == "initial_install"){
+          $tmp2 = split(";",$parts[7]);
+          foreach($tmp2 as $target){
+            $tmp = split(",",$target);
+            $entry['Initial_Target'][]  = array("MAC" => $tmp[0],"IP"=>$tmp[1],"NAME" => $tmp[2]);
+          }
+          $entry['Target']  = array();
+        }else{
+          $entry['Initial_Target']  = array();
+          $entry['Target']  = split(";",$parts[7]);
+        }
         $entry['Comment'] = $comment;  
         $this->tasks []   = $entry;
       }
@@ -286,10 +300,16 @@ class gotomasses extends plugin
       $str .= str_pad($task['Weekday'],5," ")." ";
       $str .= str_pad($task['Action'] ,5," ")." ";
       $str .= str_pad($task['OGroup'] ,5," ")." ";
-      foreach($task['Target'] as $target){
-        $str .= $target.",";
+      if($task['Action'] == "initial_install"){
+        foreach($task['Initial_Target'] as $target){
+          $str .= $target['MAC'].",".$target['IP'].",".$target['NAME'].";";
+        }
+      }else{
+        foreach($task['Target'] as $target){
+          $str .= $target.";";
+        }
       }
-      $str = preg_replace("/,$/","",$str);
+      $str = preg_replace("/;$/","",$str);
     }
 
     /* check file existence*/
@@ -341,9 +361,10 @@ class gotomasses extends plugin
   function get_actions()
   {
     /* Prepare list of available actions */
-    $actions = array( "reboot"          => _("Reboot"),
+    $actions = array(       "reboot"          => _("Reboot"),
                             "localboot"       => _("Localboot"),
                             "halt"            => _("Halt system"),
+                            "initial_install" => _("Initial installation"),
                             "update"          => _("Update"),
                             "reinstall"       => _("(Re)Install"),
                             "rescan"          => _("Rescan"),
