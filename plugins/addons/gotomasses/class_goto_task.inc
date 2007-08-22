@@ -64,8 +64,10 @@ class goto_task extends plugin
     foreach($_POST as $name => $value){
       if(preg_match("/^remove_/",$name)){
         $value = preg_replace("/^remove_([0-9]*)_(x|y)$/i","\\1",$name);
-        if(isset($this->Target[$value])){
+        if(isset($this->Target[$value]) && $this->Action != "initial_install"){
           unset($this->Target[$value]);
+        }elseif(isset($this->Initial_Target[$value]) && $this->Action == "initial_install"){
+          unset($this->Initial_Target[$value]);
         }
       }
     }

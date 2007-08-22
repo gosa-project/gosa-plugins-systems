@@ -25,10 +25,8 @@ class gotomasses extends plugin
   
     /* Include config object */
     $this->config= $config;
-
     $this->load_gotomasses_data();
   }
-
 
 
   function execute()
@@ -293,11 +291,15 @@ class gotomasses extends plugin
     foreach($this->tasks as $task){
       $str .= "\n#".trim($task['Comment']);
       $str .= "\n";
-      $str .= str_pad($task['Minute'] ,5," ")." ";
-      $str .= str_pad($task['Hour']   ,5," ")." ";
-      $str .= str_pad($task['Day']    ,5," ")." ";
-      $str .= str_pad($task['Month']  ,5," ")." ";
-      $str .= str_pad($task['Weekday'],5," ")." ";
+      if($task['Action'] == "initial_install"){
+        $str .= "*     *     *     *     *     ";
+      }else{
+        $str .= str_pad($task['Minute'] ,5," ")." ";
+        $str .= str_pad($task['Hour']   ,5," ")." ";
+        $str .= str_pad($task['Day']    ,5," ")." ";
+        $str .= str_pad($task['Month']  ,5," ")." ";
+        $str .= str_pad($task['Weekday'],5," ")." ";
+      }
       $str .= str_pad($task['Action'] ,5," ")." ";
       $str .= str_pad($task['OGroup'] ,5," ")." ";
       if($task['Action'] == "initial_install"){
@@ -368,6 +370,7 @@ class gotomasses extends plugin
                             "update"          => _("Update"),
                             "reinstall"       => _("(Re)Install"),
                             "rescan"          => _("Rescan"),
+                            "wake"            => _("Wake"),
                             "memcheck"        => _("Memory check"));
     return($actions);
   }
