@@ -117,7 +117,7 @@
 					</td>
 				</tr>
 			</table>
-		</tr>
+		</td>
 	</tr>
 </table>
 
@@ -173,7 +173,7 @@
 	</tr>
 	<tr>
 		<td colspan="2">
-            <table  summary="" style="border:1px solid #B0B0B0;width:600px; " id="t_scrolltable_onlywidth" cellspacing=0 cellpadding=0>
+            <table  summary="" style="border:1px solid #B0B0B0;width:600px; " cellspacing=0 cellpadding=0>
                 <tr>
                     <td>
 						{render acl=$TargetACL}
