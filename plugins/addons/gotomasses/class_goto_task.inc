@@ -177,10 +177,10 @@ class goto_task extends plugin
     /* Add entries to divlist */
     if($this->Action == "initial_install"){
       $divlist->SetHeader(array(
-                            array("string" => "Target"),
-                            array("string" => "IP"      , "attach" => "style='width:90px;'"),
-                            array("string" => "Name"    , "attach" => "style='width:150px;'"),
-                            array("string" => "Actions" , "attach" => "style='width:44px;border-right:0px;text-align:right;'")));
+                            array("string" => _("Target systems")),
+                            array("string" => _("IP")      , "attach" => "style='width:90px;'"),
+                            array("string" => _("Name")    , "attach" => "style='width:150px;'"),
+                            array("string" => _("Actions") , "attach" => "style='width:44px;border-right:0px;text-align:right;'")));
       foreach($this->Initial_Target as $key => $target){
         $field1 = array("string" => $target['MAC']  );
         $field2 = array("string" => $target['IP']   ,"attach" => "style='width:90px;'");

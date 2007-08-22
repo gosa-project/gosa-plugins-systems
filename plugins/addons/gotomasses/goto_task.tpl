@@ -58,7 +58,7 @@
 <table style='width:100%;'>
 	<tr>
 		<td colspan="2" style='padding-top:5px;'>
-			<h2><img alt="" src="images/select_workstation.png" class="center" align="middle"> {t}Target systems{/t}</h2>
+			<h2><img alt="" src="images/select_workstation.png" class="center" align="middle"> {t}Systems{/t}</h2>
 		</td>
 	</tr>
 	<tr>

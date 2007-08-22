@@ -168,11 +168,11 @@ class gotomasses extends plugin
 
     $plug = $_GET['plug'];
     $divlist = new MultiSelectWindow($this->config,"GotoMasses","gotomassses");
-    $divlist->SetSummary(_("Gotomasses tasks"));
+    $divlist->SetSummary(_("List of system deployment tasks"));
     $divlist->SetHeadpageMode();
     $divlist->EnableCloseButton(FALSE);
     $divlist->EnableSaveButton(FALSE);
-    $divlist->SetInformation(_("This menu allows you to add, remove and change the properties of gotomasses tasks."));
+    $divlist->SetInformation(_("This menu allows you to add, remove and change the properties of system deployment tasks."));
  
     /* Display add button if allowed */ 
     $header = "<div style='padding:5px'>";
