@@ -369,7 +369,7 @@ class gotomasses extends plugin
       $str .= str_pad($task['OGroup'] ,5," ")." ";
       if($task['Action'] == "initial_install"){
         foreach($task['Initial_Target'] as $target){
-          $str .= $target['MAC'].",".$target['IP'].",".$target['NAME'].";";
+          $str .= trim($target['MAC']).",".trim($target['IP']).",".trim($target['NAME']).";";
         }
       }else{
         foreach($task['Target'] as $target){
