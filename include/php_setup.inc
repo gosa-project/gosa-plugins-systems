@@ -26,6 +26,10 @@ function gosaRaiseError($errno, $errstr, $errfile, $errline)
     new log("debug","all",$errfile,array(),"Type:".$errno.", Message:".$errstr.", File:".$errfile.", Line: ".$errline);
   }
 
+  if(function_exists("gosa_log")){
+    gosa_log($errno." ".$errstr." ".$errfile." ".$errline);
+  }
+
   /* Return if error reporting is set to zero */
   if (error_reporting() == 0){
     return;
@@ -71,7 +75,8 @@ function gosaRaiseError($errno, $errstr, $errfile, $errline)
   if ($error_collector == ""){
 
     /* Mailto body header */
-    $error_collector_mailto .=prepare4mailbody(
+    if(function_exists("prepare4mailbody")){
+      $error_collector_mailto .=prepare4mailbody(
                                 "Oups. Seems like you've catched some kind of bug inside GOsa/PHP. You may want to help ".
                                 "us to improve the software stability. If so, please provide some more information below.".
                                 "\n\n".
@@ -84,7 +89,8 @@ function gosaRaiseError($errno, $errstr, $errfile, $errline)
                                 "reproduce this bug using the demo on http://www.gosa-project.org ?".
                                 "\n\n".
                                 "*** PHP error information ***\n\n");
-
+      }
+    
     if (isset($_SESSION['js']) && $_SESSION['js']==FALSE){
       $error_collector= "<div>";
     } else {
