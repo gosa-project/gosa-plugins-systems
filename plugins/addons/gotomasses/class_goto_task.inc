@@ -348,7 +348,6 @@ class goto_task extends plugin
   function save_object()
   {
     if(isset($_POST['goto_task_posted'])){
-      plugin::save_object();
 
       if(isset($_POST['configure_dns'])){
         $this->configure_dns = TRUE;
@@ -369,6 +368,7 @@ class goto_task extends plugin
         $this->configure_dhcp = FALSE;
         $this->Section = "\"\"";
       }
+      plugin::save_object();
     }
   }  
 
