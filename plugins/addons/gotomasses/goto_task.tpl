@@ -29,6 +29,7 @@
 						{/render}
 					</td>
 				</tr>
+				{if $Action == "initial_install"}
 				<tr>
 					<td><input class='center' {if $configure_dns} checked {/if} id='configure_dns'
 						type='checkbox' name='configure_dns' value='1' onClick="changeState('Zone');">
@@ -51,6 +52,7 @@
 						</select>
 					</td>
 				</tr>
+				{/if}
 			</table>
 		</td>
 		<td style='vertical-align:top'>
