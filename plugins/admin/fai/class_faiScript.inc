@@ -166,57 +166,67 @@ class faiScript extends plugin
     }
 
     /* Handle posts */
-    $once = true;
+    $s_action = $s_entry = "";
     foreach($_POST as $name => $value){
 
       /* Edit script posted */
-      if(preg_match("/^editscript_/",$name)&&($once)){
-
-        /* Get posted entry id */
-        $once = false;
-        $entry = preg_replace("/^editscript_/","",$name);
-        $entry = base64_decode(preg_replace("/_.*/","",$entry));
-
-        /* Get object, and load missing entry values */
-        $obj  = $this->SubObjects[$entry];
-        if($obj['status'] == "FreshLoaded"){
-          $obj  = $this->get_object_attributes($obj,$this->sub_Load_Later);
-        }
-
-        /* Create new dialog and set acl attributes  */
-        $this->dialog= new $this->subClassName($this->config,$this->dn,$obj);
-        $this->dialog->set_acl_base($this->acl_base_for_current_object($obj['dn']));
-        $this->dialog->set_acl_category("fai");
-
-        /* Assign some additional dialog informations like headline and parent  */
-        $_SESSION['objectinfo'] = $obj['dn'];
-        $this->dialog->parent = &$this;
-        $this->is_dialog=true;
+      if(preg_match("/^editscript_/",$name)){
+        $s_action = "edit";
+        $s_entry = preg_replace("/^editscript_/","",$name);
+        $s_entry = base64_decode(preg_replace("/_.*/","",$s_entry));
+        break;
       }
 
       /* Delete script requested */
-      if(preg_match("/^deletescript_/",$name)&&($once)){
+      if(preg_match("/^deletescript_/",$name)){
+        $s_action = "remove";
+        $s_entry = preg_replace("/^deletescript_/","",$name);
+        $s_entry = base64_decode(preg_replace("/_.*/","",$s_entry));
+        break;
+      }
+    }
 
-        /* Parse out posted entry id */
-        $once = false;
-        $entry = preg_replace("/^deletescript_/","",$name);
-        $entry = base64_decode(preg_replace("/_.*/","",$entry));
+    if(isset($_GET['act']) && $_GET['act'] == "edit" && isset($_GET['id'])){
+      $s_entry = $_GET['id'];
+      if(isset($this->SubObjects[$s_entry])){
+        $s_action = "edit";
+      }
+    }
 
-        /* Check acls, are we allowed to delete an entry */
-        $acl = $this->ui->get_permissions($this->acl_base_for_current_object($this->SubObjects[$entry]['dn']),"fai/faiScriptEntry")  ;
-        if(preg_match("/d/",$acl)){
-          $status = $this->SubObjects[$entry]['status'];
-          if($status == "edited" || $status == "FreshLoaded"){
-            $this->SubObjects[$entry]['status']= "delete";
-          }else{
-             unset($this->SubObjects[$entry]);
-          }
+    if($s_action =="edit" && isset($this->SubObjects[$s_entry])){
+
+      /* Get object, and load missing entry values */
+      $obj  = $this->SubObjects[$s_entry];
+      if($obj['status'] == "FreshLoaded"){
+        $obj  = $this->get_object_attributes($obj,$this->sub_Load_Later);
+      }
+
+      /* Create new dialog and set acl attributes  */
+      $this->dialog= new $this->subClassName($this->config,$this->dn,$obj);
+      $this->dialog->set_acl_base($this->acl_base_for_current_object($obj['dn']));
+      $this->dialog->set_acl_category("fai");
+
+      /* Assign some additional dialog informations like headline and parent  */
+      $_SESSION['objectinfo'] = $obj['dn'];
+      $this->dialog->parent = &$this;
+      $this->is_dialog=true;
+    }
+
+    /* Check acls, are we allowed to delete an entry */
+    if($s_action == "remove" && isset($this->SubObjects[$s_entry])){
+      $entry = $this->SubObjects[$s_entry];  
+      $acl = $this->ui->get_permissions($this->acl_base_for_current_object($entry['dn']),"fai/faiScriptEntry")  ;
+      if(preg_match("/d/",$acl)){
+        $status = $entry['status'];
+        if($status == "edited" || $status == "FreshLoaded"){
+          $this->SubObjects[$s_entry]['status']= "delete";
+        }else{
+          unset($this->SubObjects[$s_entry]);
         }
       }
     }
 
-
-    /* Save the edited entry */
+      /* Save the edited entry */
     if(isset($_POST['SaveSubObject'])){
 
       /* Check if there are still errors remaining that must be fixed before saving */
@@ -356,7 +366,7 @@ class faiScript extends plugin
       /* Check if we are allowed to view this object */
       $s_acl = $this->ui->get_permissions($dn,"fai/faiScriptEntry","cn")  ;
       if(preg_match("/r/",$s_acl)){
-        $divlist->AddEntry(array( array("string"=>$name['name']),
+        $divlist->AddEntry(array( array("string"=>"<a href='?plug=".$_GET['plug']."&act=edit&id=".$key."'>".$name['name']."</a>"),
               array("string"=>$name['FAIpriority'] , "attach" => "style='width:20px;'"),
               array("string"=>$down , "attach" => "style='width:20px;'"),
               array("string"=>str_replace("%s",base64_encode($key),$act),
