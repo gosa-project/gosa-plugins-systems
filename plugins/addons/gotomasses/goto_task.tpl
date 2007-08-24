@@ -29,6 +29,50 @@
 						{/render}
 					</td>
 				</tr>
+				<tr>
+					<td><input class='center' {if $configure_dns} checked {/if} id='configure_dns'
+						type='checkbox' name='configure_dns' value='1' onClick="changeState('Zone');">
+						<label for='configure_dns'>{t}Configure DNS{/t}</label>
+					</td>
+					<td>
+						<select name="Zone" id="Zone" {if !$configure_dns} disabled {/if}>
+							{html_options options=$Zones selected=$Zone}
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td><input class='center' {if $configure_dhcp} checked {/if} id='configure_dhcp' 
+							type='checkbox' name='configure_dhcp' value='1' onClick="changeState('Section');">
+						<label for='configure_dhcp'>{t}Configure DHCP{/t}</label>
+					</td>
+					<td>
+						<select name="Section" id="Section" {if !$configure_dhcp} disabled {/if}>
+							{html_options options=$Sections selected=$Section}
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td><input class='center' {if $configure_dns} checked {/if} id='configure_dns'
+						type='checkbox' name='configure_dns' value='1' onClick="changeState('Zone');">
+						<label for='configure_dns'>{t}Configure DNS{/t}</label>
+					</td>
+					<td>
+						<select name="Zone" id="Zone" {if !$configure_dns} disabled {/if}>
+							{html_options options=$Zones selected=$Zone}
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td><input class='center' {if $configure_dhcp} checked {/if} id='configure_dhcp' 
+							type='checkbox' name='configure_dhcp' value='1' onClick="changeState('Section');">
+						<label for='configure_dhcp'>{t}Configure DHCP{/t}</label>
+					</td>
+					<td>
+						<select name="Section" id="Section" {if !$configure_dhcp} disabled {/if}>
+							{html_options options=$Sections selected=$Section}
+						</select>
+					</td>
+				</tr>
 			</table>
 		</td>
 		<td style='vertical-align:top'>
@@ -63,7 +107,7 @@
 	</tr>
 	<tr>
 		<td colspan="2">
-            <table  summary="" style="border:1px solid #B0B0B0;width:100%; " id="t_test_scrolltable" cellspacing=0 cellpadding=0>
+            <table  summary="" style="border:1px solid #B0B0B0;width:100%; " cellspacing=0 cellpadding=0>
                 <tr>
                     <td>
 						{render acl=$TargetACL}
@@ -100,7 +144,7 @@
 				</tr>
 			</table>
 		</td>
-		<td>
+		<td style='vertical-align:top'>
 			<table>
 				<tr><td>{t}CVS import from file{/t}</td></tr>
 				<tr>
