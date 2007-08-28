@@ -91,6 +91,9 @@ class servdnseditZone extends plugin
             $tmp2[$tmp[0]] = $rec;
             unset($this->Records[$key]);
           }
+          if($rec['type'] == "nSRecord"){
+            unset($this->Records[$key]);
+          }
         }
         if(count($tmp2) != 0){
           reset($tmp2);
@@ -424,8 +427,8 @@ class servdnseditZone extends plugin
     }
 
     /* Check class for given Zone Address */
-    $addr = preg_replace("/^[^\/]+\//","",$this->ReverseZone);
-
+    $addr = preg_replace("/^[^\/]*+\//","",$this->ReverseZone);
+  
     /* Check for valid&complete IP address */
     if(!is_ip($addr)){
       $message[] = _("The given network address is not a valid, please specify a valid IP address.");
@@ -509,10 +512,13 @@ class servdnseditZone extends plugin
 
     foreach(array("sOAprimary","zoneName","sOAmail") as $attr){
       if(!preg_match("/\.$/",$ret[$attr])){
-        $ret[$attr] = $ret[$attr].".";
+        if(!is_ip($ret[$attr])){
+          $ret[$attr] = $ret[$attr].".";
+        }
       }
     }
 
+    $ret['RECORDS'][] = array("type" => "nSRecord","value" => $ret['sOAprimary']) ;
     return($ret);
   }
 

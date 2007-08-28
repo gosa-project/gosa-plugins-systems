@@ -157,6 +157,13 @@ class servdns extends goService
       }
     }
 
+    if(isset($_GET['act']) && $_GET['act'] == "edit" && isset($_GET['id'])){
+      $id = base64_decode($_GET['id']);
+      if(isset($this->Zones[$id])){
+         $this->dialog= new servdnseditZone($this->config,$this->dn,$this->Zones[$id]);
+      }
+    }
+
     /* Show dialog 
      */
     if($this->dialog!= NULL){
@@ -177,10 +184,9 @@ class servdns extends goService
 
     $link = "<a href='?plug=".$_GET['plug']."&act=edit&id=%s'>%s</a>";
     foreach($this->Zones as $zone => $values ){
-
       $ZoneList->AddEntry(array(
-            array("string" => sprintf($link,base64_encode($zone),$zone)),
-            array("string" => sprintf($link,base64_encode($zone),_("Reverse zone")." : ".$values['ReverseZone'])),
+            array("string" => sprintf($link,base64_encode($zone),($zone))),
+            array("string" => sprintf($link,base64_encode($zone),_("Reverse zone")." : ".($values['ReverseZone']))),
             array("string" => _("TTL")." : ".$values['sOAttl']),
             array("string" => _("Class")." : ".$values['dNSClass']),
             array("string" =>str_replace("%s",base64_encode($zone),$editImg))

@@ -247,6 +247,7 @@ function getDNSZoneEntriesDiff($config,$newZones,$HostDn)
       $soa.=" ".$zone[$attr];
     }  
     $obj['sOARecord'] = trim($soa);
+    $obj['nSRecord'] = $zone['sOAprimary'];
 
     /* If reverse zone was renamed, move entry 
      */
@@ -273,6 +274,9 @@ function getDNSZoneEntriesDiff($config,$newZones,$HostDn)
     /* Add new Records 
      */
     foreach($zone['RECORDS'] as $rec){
+      if(!isset($obj[$rec['type']])||!is_array($obj[$rec['type']])){
+        $obj[$rec['type']] = array();
+      }
       $obj[$rec['type']][] = $rec['value'];
     }
 
@@ -567,7 +571,7 @@ function getDNSHostEntriesDiff($config,$oldName,$newEntry,$newName)
       $ptrObj = $baseObj;
       $reverseName = getNameFromMix($reverseNameMix);
       $ptrObj['zoneName']           = $reverseName;
-      $ptrObj['pTRRecord']          = $newName.".".$zoneName.".";
+      $ptrObj['pTRRecord']          = preg_replace("/\.\.$/",".",$newName.".".$zoneName.".");
       $ptrObj['relativeDomainName'] = $rec['value'];
     
       $add[$PTRdn] = $ptrObj;
