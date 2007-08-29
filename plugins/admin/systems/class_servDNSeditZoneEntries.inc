@@ -32,6 +32,11 @@ class servDNSeditZoneEntries extends plugin
     $this->zoneName     = $zoneObject['InitialzoneName'];
     $this->reverseName  = $zoneObject['InitialReverseZone'];
 
+    /* Remove nSRecord from listed types */
+    if(isset($this->RecordTypes['nSRecord'])){
+      unset($this->RecordTypes['nSRecord']);
+    }
+
     /* Get ldap connection 
      */
     $ldap = $this->config->get_ldap_link();
