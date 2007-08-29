@@ -48,7 +48,6 @@ class servdhcp extends plugin
     if (!count($this->dhcpSections)){
       $this->is_account= FALSE;
     }
-		
   }
 
 
@@ -56,6 +55,8 @@ class servdhcp extends plugin
   {
     /* Call parent execute */
     plugin::execute();
+
+    $this->reload();
 
     /* Fill templating stuff */
     $smarty= get_smarty();
@@ -151,7 +152,7 @@ class servdhcp extends plugin
 
     /* Remove section? */
     if (isset($_POST['delete_dhcp_confirm'])){
-      if (chkacl($this->acl, "delete") == ""){
+      if ($this->acl_is_removeable()){
         unset($this->dhcpSections[$this->current_object]);
         unset($this->dhcpObjectCache[$this->current_object]);
         $this->dhcpObjectCache[$this->current_object]= array();
@@ -211,8 +212,8 @@ class servdhcp extends plugin
 
     /* Show tab dialog headers */
     if ($this->is_account){
-      $display= $this->show_header(_("Remove DHCP service"),
-          _("This server has DHCP features enabled. You can disable them by clicking below."));
+#      $display= $this->show_header(_("Remove DHCP service"),
+#          _("This server has DHCP features enabled. You can disable them by clicking below."));
 
       if (!count($this->dhcpObjectCache)){
         $attrs= array();
@@ -230,8 +231,9 @@ class servdhcp extends plugin
       }
 
     } else {
-      $display= $this->show_header(_("Add DHCP service"),
-          _("This server has DHCP features disabled. You can enable them by clicking below."));
+#      $display= $this->show_header(_("Add DHCP service"),
+
+#          _("This server has DHCP features disabled. You can enable them by clicking below."));
       return ($display);
     }
 
@@ -281,8 +283,6 @@ class servdhcp extends plugin
               ));
       }
     }
-
-    $smarty->assign("dhcpACL",chkacl($this->acl,"servdhcp"));
 
     /* Display tempalte */
     $smarty->assign("DhcpList",$DhcpList->DrawList());
@@ -452,8 +452,11 @@ class servdhcp extends plugin
     $ui= get_userinfo();
     $me= $this->dn;
 
-    $list= get_list("(&(objectClass=dhcpService)(|(dhcpPrimaryDN=$me)(dhcpSecondaryDN=$me)(dhcpServerDN=$me)(dhcpFailOverPeerDN=$me)))", $ui->subtreeACL, $this->config->current['BASE'], array("cn"));
+    $filter = "(&(objectClass=dhcpService)(|(dhcpPrimaryDN=$me)(dhcpSecondaryDN=$me)(dhcpServerDN=$me)(dhcpFailOverPeerDN=$me)))";
+
+    $list= get_list($filter, array("server"), $this->config->current['BASE'], array("cn"),GL_SIZELIMIT | GL_SUBSEARCH);
     $final= array();
+
     foreach ($list as $value){
 
       /* Set header */
@@ -542,6 +545,29 @@ class servdhcp extends plugin
     }
     
     return ($type);
+  }
+
+
+  /* Return plugin informations for acl handling */
+  function plInfo()
+  {
+    return (array(
+          "plShortName"   => _("DHCP service"),
+          "plDescription" => _("DHCP service")." ("._("Services").")",
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 84,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("server"),
+
+          "plProvidedAcls"=> array(
+            "cn"                => _("Blalalasasd"),
+            "dhcpPrimaryDN"     => _("KEkse"),
+            "dhcpSecondaryDN"   => _("KEkse2"),
+            "dhcpServerDN"      => _("KEkse3"),
+            "dhcpFailOverPeerDN"=> _("KEkse4"),
+            "dhcpOptions"       => _("blabla"))
+    ));
   }
 
 }

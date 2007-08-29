@@ -3,7 +3,7 @@
 <tr>
 	<td style="width:100%;vertical-align:top;">
 		{$DhcpList}
-<!--		<input type="submit" name="takeOver" value="{t}Take over{/t}" {$dhcpACL}>-->
+<!--		<input type="submit" name="takeOver" value="{t}Take over{/t}" >-->
 	</td>
 </tr>
 </table>
