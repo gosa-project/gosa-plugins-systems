@@ -50,9 +50,6 @@ class ServerService extends plugin
       }
     }
     $this->divList = new divListSystemService($config,$this);
-
-
-
 	}
 
   function set_acl_base($base)
@@ -234,7 +231,7 @@ class ServerService extends plugin
       }
     }
     $this->divList -> setEntries($list);
-    return($this->divList->Draw());
+    return("<table style='width:100%;'><tr><td>".$this->divList->Draw()."</td></tr></table>");
   }
 
 

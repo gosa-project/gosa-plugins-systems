@@ -1,11 +1,11 @@
 <?php
 
-class servdhcp extends plugin
+class servdhcp extends goService
 {
   /* attribute list for save action */
   var $attributes= array("dhcpServiceDN");
   var $objectclasses= array("dhcpServer");
-
+  var $conflicts        = array("servdhcp");
   var $dhcpServiceDN= "";
 
   /* Section storage */
@@ -25,6 +25,8 @@ class servdhcp extends plugin
 
     $this->serviceDN = "cn=dhcp,".$dn;
     $this->orig_dn = $dn;
+
+    $this->DisplayName = _("DHCP service");
 
     $this->types= array(  "dhcpLog" => _("Logging"),
             "dhcpService" => _("Global options"),
@@ -568,6 +570,14 @@ class servdhcp extends plugin
             "dhcpFailOverPeerDN"=> _("KEkse4"),
             "dhcpOptions"       => _("blabla"))
     ));
+  }
+
+  function getListEntry()
+  {
+    $fields               = goService::getListEntry();
+    $fields['Message']    = _("DHCP service");
+    $fields['AllowEdit']  = true;
+    return($fields);
   }
 
 }

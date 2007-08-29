@@ -346,17 +346,25 @@ function absTop(e) {
 }
 
 // Automatic resize (width) of divlists
-function adjust_width(e) {
-	if (!e) e=window.event;
+function adjust_width(e) 
+{
+	
+	/* Get event ... it seems to be unused here ...*/
+	if (!e) {
+		e=window.event;
+	}
 
 	// Known to not work with IE
 	if(document.defaultView && document.getElementById("t_scrolltable")) {
-		// Resize the div
-		var div_width=parseInt(document.defaultView.getComputedStyle(document.getElementById("t_scrolltable"),"").getPropertyValue('width'));
+
+		// Get current width of divlist 
+		var div_width	=	parseInt(document.defaultView.getComputedStyle(document.getElementById("t_scrolltable"),"").getPropertyValue('width'));
+	
+		// Get window width
 		var width= parseInt(window.innerWidth);
 
-		// Resize the body cells
-		var diff= width-div_width-470;
+		// Resize the body cells, 470 represents the info box and the navigation part 
+		var diff= width	-	div_width	-	470;
 		
 		// window has been upscaled
 		if(div_width+diff>=600) {
