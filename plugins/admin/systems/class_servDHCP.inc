@@ -563,12 +563,8 @@ class servdhcp extends goService
           "plCategory"    => array("server"),
 
           "plProvidedAcls"=> array(
-            "cn"                => _("Blalalasasd"),
-            "dhcpPrimaryDN"     => _("KEkse"),
-            "dhcpSecondaryDN"   => _("KEkse2"),
-            "dhcpServerDN"      => _("KEkse3"),
-            "dhcpFailOverPeerDN"=> _("KEkse4"),
-            "dhcpOptions"       => _("blabla"))
+            
+          )     
     ));
   }
 
