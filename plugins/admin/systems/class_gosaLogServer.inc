@@ -5,7 +5,7 @@ class gosaLogServer extends goService{
 	
   /* This plugin only writes its objectClass */
   var $objectclasses    = array("gosaLogServer");
-  var $attributes       = array("cn","goLogDB","goLogDBUser","goLogDBPassword");
+  var $attributes       = array("goLogDB","goLogDBUser","goLogDBPassword");
   var $StatusFlag       = "";
 
   /* This class can't be assigned twice so it conflicts with itsself */
