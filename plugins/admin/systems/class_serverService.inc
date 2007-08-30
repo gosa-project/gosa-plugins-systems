@@ -167,7 +167,7 @@ class ServerService extends plugin
  
     /* Abort dialog 
        Restore vars with values before editing */
-    if(isset($_POST['CancelService'])){
+    if(isset($_POST['CancelService']) && !empty($this->current)){
       if($this->backup == NULL){
         $this->plugins[$this->current] = new $this->current($this->config,$this->dn);
         $this->plugins[$this->current]-> set_acl_base($this->acl_base);
