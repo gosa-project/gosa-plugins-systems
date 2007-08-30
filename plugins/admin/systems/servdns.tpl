@@ -3,9 +3,11 @@
 <tr>
 	<td style="width:100%;vertical-align:top;">
 		{$ZoneList}
+		{if $is_createable}
 		<input type="submit" name="AddZone" value="{t}Add{/t}">
-		<input type="submit" name="EditZone" value="{t}Edit{/t}">
-		<input type="submit" name="RemoveZone" value="{t}Remove{/t}">
+		{else}
+		<input type="button" value="{t}Add{/t}" disabled>
+		{/if}
 	</td>
 </tr>
 </table>
