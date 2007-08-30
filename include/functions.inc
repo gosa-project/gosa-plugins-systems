@@ -2455,5 +2455,45 @@ function get_post($name)
 }
 
 
+/* Check if $ip1 and $ip2 represents a valid IP range 
+ *  returns TRUE in case of a valid range, FALSE in case of an error. 
+ */
+function is_ip_range($ip1,$ip2)
+{
+  if(!is_ip($ip1) || !is_ip($ip2)){
+    return(FALSE);
+  }else{
+    $ar1 = split("\.",$ip1);
+    $var1 = $ar1[0] * (16777216) + $ar1[1] * (65536) + $ar1[2] * (256) + $ar1[3];
+
+    $ar2 = split("\.",$ip2);
+    $var2 = $ar2[0] * (16777216) + $ar2[1] * (65536) + $ar2[2] * (256) + $ar2[3];
+    return($var1 < $var2);
+  }
+}
+
+
+/* Check if the specified IP address $address is inside the given network */
+function is_in_network($network, $netmask, $address)
+{
+  $nw= split('\.', $network);
+  $nm= split('\.', $netmask);
+  $ad= split('\.', $address);
+
+  /* Generate inverted netmask */
+  for ($i= 0; $i<4; $i++){
+    $ni[$i]= 255-$nm[$i];
+    $la[$i]= $nw[$i] | $ni[$i];
+  }
+
+  /* Transform to integer */
+  $first= $nw[0] * (16777216) + $nw[1] * (65536) + $nw[2] * (256) + $nw[3];
+  $curr=  $ad[0] * (16777216) + $ad[1] * (65536) + $ad[2] * (256) + $ad[3];
+  $last=  $la[0] * (16777216) + $la[1] * (65536) + $la[2] * (256) + $la[3];
+
+  return ($first < $curr&& $last > $curr);
+}
+
+
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
