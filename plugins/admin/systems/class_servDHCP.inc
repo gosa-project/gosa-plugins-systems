@@ -58,8 +58,6 @@ class servdhcp extends goService
     /* Call parent execute */
     plugin::execute();
 
-    $this->reload();
-
     /* Fill templating stuff */
     $smarty= get_smarty();
     $display= "";

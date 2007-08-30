@@ -7,7 +7,7 @@
 </p>
 <br>
 {t}Section{/t}&nbsp;
-<select size="1" id="section" name="section" title="{t}Choose section type to create{/t}" {$dhcpSectionACL}>
+<select size="1" id="section" name="section" title="{t}Choose section type to create{/t}">
   {html_options options=$sections}
 </select>
 

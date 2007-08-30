@@ -47,8 +47,8 @@ class dhcpNewSectionDialog extends plugin
       $t_sections[$section]= $this->types[$section]; 
     }
     asort($t_sections);
+    $ui = get_userinfo();
     $smarty->assign("sections", $t_sections);
-    $smarty->assign("dhcpSectionACL", chkacl($this->acl,"DHCP"));
     $display.= $smarty->fetch(get_template_path('dhcpNewSection.tpl', TRUE));
     return($display);
   }
