@@ -681,7 +681,7 @@ class termDNS extends plugin
     
     if(!$this->DNS_is_account) {
       $str = "<input type='submit' value='"._("Add")."' name='AddNewRecord' id='AddNewRecord' disabled='disabled'>";
-      return $str;
+      return(array("str" => $str, "changeStateForRecords"=> ""));
     }
  
     $str = "<table summary='' width='100%'>";
