@@ -152,6 +152,7 @@ function DEBUG($level, $line, $function, $file, $data, $info="")
 function get_browser_language()
 {
   /* Try to use users primary language */
+  global $config;
   $ui= get_userinfo();
   if ($ui != NULL){
     if ($ui->language != ""){
@@ -159,6 +160,15 @@ function get_browser_language()
     }
   }
 
+  /* Check for global language settings in gosa.conf */
+  if(isset($config->data['MAIN']['LANG']) && !empty($config->data['MAIN']['LANG'])) {
+    $lang = $config->data['MAIN']['LANG'];
+    if(!preg_match("/utf/i",$lang)){
+      $lang .= ".UTF-8";
+    }
+    return($lang);
+  }
+ 
   /* Load supported languages */
   $gosa_languages= get_languages();
 
