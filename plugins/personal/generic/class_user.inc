@@ -957,6 +957,12 @@ class user extends plugin
 
     /* Finally write data with selected 'mode' */
     $this->cleanup();
+
+    if(isset($this->attrs['preferredLanguage'])){
+      $_SESSION['ui']->language = $this->preferredLanguage;
+      $_SESSION['Last_init_lang'] = "update";
+    }
+
     $ldap->cd ($this->dn);
     $ldap->$mode ($this->attrs);
     if (show_ldap_error($ldap->get_error(), sprintf(_("Saving of user/generic account with dn '%s' failed."),$this->dn))){
