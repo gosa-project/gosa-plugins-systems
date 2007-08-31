@@ -745,7 +745,6 @@ class termDNS extends plugin
 
     /* Hide all dns specific code, if dns is not available
      */
-    $DNSenabled = false;
     foreach($_SESSION['config']->data['TABS']['SERVERSERVICE'] as $tab){
       if(preg_match("/^servdns$/",$tab['CLASS'])){
         $tmp['plProvidedAcls']["Records"]        = _("DNS records");

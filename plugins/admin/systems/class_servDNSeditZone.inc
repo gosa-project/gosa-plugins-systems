@@ -205,7 +205,8 @@ class servdnseditZone extends plugin
     /* Fill templating stuff */
     $smarty= get_smarty();
     $ui = get_userinfo();
-    $smarty->assign("ACLs",$ui->get_permissions($this->dn,"server/servdns"));
+
+    $smarty->assign("ACLs",$this->parent->getacl(""));
     $display= "";
 
     /* Open Zone Entry Edit Dialog
