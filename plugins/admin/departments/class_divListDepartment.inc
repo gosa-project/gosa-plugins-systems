@@ -173,10 +173,13 @@ class divListDepartment extends MultiSelectWindow
         $this->config->departments[trim($key)]="";
       }
 
+      /* check if this department contains sub-departments
+         Display different image in this case
+       */
       $non_empty="";
-      $keys= str_replace("/","\/",$key);
+      $nkey= normalizePreg($key);
       foreach($this->config->departments as $keyd=>$vald ){
-        if(preg_match("/".$keys."\/.*/",$keyd)){
+        if(preg_match('/$nkey\/.*/',$keyd)){
           $non_empty="full";
         }
       }
