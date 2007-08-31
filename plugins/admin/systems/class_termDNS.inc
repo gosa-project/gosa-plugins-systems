@@ -644,6 +644,7 @@ class termDNS extends plugin
       foreach($tmp['del'] as $dn => $del){
         $ldap->cd($dn);
         $ldap->rmdir_recursive($dn);
+        new log("modify","unknown/".get_class($this),$dn,array("*"),$ldap->get_error());
       }
 
       /* Add || Update new DNS entries 
@@ -658,9 +659,9 @@ class termDNS extends plugin
           $ldap->cd($dn);
           $ldap->add($attrs);
         }
+        new log("modify","unknown/".get_class($this),$dn,array_keys($attrs),$ldap->get_error());
       }
 
-      new log("modify","unknown/".get_class($this),$dn,array_keys($attrs),$ldap->get_error());
 
       /* Display errors 
        */
