@@ -40,7 +40,7 @@ class divListDepartment extends MultiSelectWindow
 
    /* Toggle all selected / deselected */
     $chk = "<input type='checkbox' id='select_all' name='select_all'
-               onClick='toggle_all_(\"^item_selected_[a-zA-Z0-9\=]*$\",\"select_all\");' >";
+               onClick='toggle_all_(\"^item_selected_[a-zA-Z0-9\\/\=]*$\",\"select_all\");' >";
 
     /* set Page header */
     $this->AddHeader(array("string"=> $chk,          "attach"=>"style='width:20px;'"));

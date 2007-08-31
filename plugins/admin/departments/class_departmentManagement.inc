@@ -492,7 +492,7 @@ class departmentManagement extends plugin
   {
     $ids = array();
     foreach($_POST as $name => $value){
-      if(preg_match("/^item_selected_[a-z0-9\=]*$/i",$name)){
+      if(preg_match("/^item_selected_[a-z0-9\\/\=]*$/i",$name)){
         $id   = preg_replace("/^item_selected_/","",$name);
         $ids[$id] = $id;
       }
