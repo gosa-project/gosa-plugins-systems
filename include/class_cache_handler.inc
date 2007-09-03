@@ -55,12 +55,12 @@ class gosa_cache
     }
   }
 
-  function get_server_status()
+  function status()
   {
     if($this->b_connected){ 
       return($this->c_memcache->getStats());
     }else{
-      return(FALSE);
+      return("");
     }
   }
 }
