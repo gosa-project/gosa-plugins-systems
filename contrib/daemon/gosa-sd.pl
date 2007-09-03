@@ -18,20 +18,9 @@
 #     REVISION:  ---
 #===============================================================================
 
- # :TODO:31.08.2007:: was hat es mit dem "gotoSysStatus: $1" auf sich, was ist 
- # das und wie muss ich es einbauen? Siehe Skript gosa-dhcp-monitor Zeile 131. 
- # Dort hat es den Wert der IP-Adresse, in meinem Test-LDAP finde ich aber
- # gotoSysStatus nicht
-
- # :TODO:31.08.2007:: zu welchem Attribut im LDAP entry soll das Interface 
- # geschrieben werden? Siehe Funktion add_ldap_entry
-
  # :TODO:31.08.2007:: basename beim erzeugen von neuen entries noch 
  # base64-codieren, bei add_ldap_entry und change_ldap_entry, klären mit cajus
  # ist das überhaupt notwendig???
-
- # :TODO:31.08.2007:: könnte es sein, dass das Interface gar kein eigener Wert
- # ist, sondern zur description gehört???
 
  # :TODO:03.09.2007:: bei SIGHUP muss das logfile neu angelegt werden, nicht
  # einfach in dem alten weiterschreiben
@@ -210,7 +199,9 @@ sub read_configfile {
             ${@$pinfo[ 0 ]} = $cfg->val( $section, $param, @$pinfo[ 1 ] );
         }
     }
-    #daemon_log("$log_time: config file read\n");
+
+    if(-e $log_file ) { unlink $log_file }
+    daemon_log("$log_time: config file read\n");
 }
 
 #===  FUNCTION  ================================================================
