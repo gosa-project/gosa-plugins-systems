@@ -18,13 +18,6 @@
 #     REVISION:  ---
 #===============================================================================
 
- # :TODO:31.08.2007:: basename beim erzeugen von neuen entries noch 
- # base64-codieren, bei add_ldap_entry und change_ldap_entry, klären mit cajus
- # ist das überhaupt notwendig???
-
- # :TODO:03.09.2007:: bei SIGHUP muss das logfile neu angelegt werden, nicht
- # einfach in dem alten weiterschreiben
-
 use strict;
 use warnings;
 use Getopt::Long;
