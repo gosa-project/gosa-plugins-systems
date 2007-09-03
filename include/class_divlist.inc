@@ -18,6 +18,7 @@ class divlist {
 
   var $force_height = false;
   var $list_footer = "";
+  var $fix_list_for_plugins = FALSE;
   
 	// Added php 4 constructor
 	function divlist($pageid){
@@ -37,6 +38,11 @@ class divlist {
 	function __destruct(){
 	
 	}
+
+  function SetPluginMode($val = TRUE)
+  {
+    $this->fix_list_for_plugins = $val;
+  }
 
   function SetFooter($str)
   {
@@ -184,7 +190,7 @@ class divlist {
    
     if($this->i_entriesPerPage == 0) {
       // We need to construct a "body"-table that is width-of-scrollbar thinner than the "head"-table.
-      if(!$this->force_height) {
+      if(!$this->force_height || $this->fix_list_for_plugins) {
         $s_return .= "\n<tr><td colspan='".$this->cols."' class='scrollbody'><div style='width:".$this->s_width.";height:".($this->s_height-20)."px;' id='d_scrollbody' class='scrollbody'>";
         $s_return .= "<table summary='' style='height:100%;width:581px;' cellspacing='0' id='t_scrollbody'>";
       } else {
