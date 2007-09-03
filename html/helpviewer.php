@@ -23,7 +23,7 @@
 @require_once ("functions.inc");
 @require_once ("functions_helpviewer.inc");
 
-error_reporting(E_ALL);
+error_reporting(E_ALL | E_STRICT);
 restore_error_handler();
 header("Content-type: text/html; charset=UTF-8");
 

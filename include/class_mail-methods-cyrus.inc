@@ -98,7 +98,7 @@ var $uattrib= "uid";
       return(array("quotaUsage"=>"","gosaMailQuota"=>""));
     }
  
-    error_reporting (E_ALL);
+    error_reporting (E_ALL | E_STRICT);
     return ($result);
   }
 

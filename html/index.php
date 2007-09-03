@@ -27,7 +27,7 @@ header("Content-type: text/html; charset=UTF-8");
 function displayLogin()
 {
   global $smarty,$message,$config,$ssl,$error_collector;
-  error_reporting(E_ALL);
+  error_reporting(E_ALL | E_STRICT);
     /* Fill template with required values */
     $username = "";
     if(isset($_POST["username"])){

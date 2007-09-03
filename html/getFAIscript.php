@@ -62,7 +62,7 @@ restore_error_handler();
 /* Basic setup, remove eventually registered sessions */
 @require_once ("../include/php_setup.inc");
 @require_once ("functions.inc");
-error_reporting (E_ALL);
+error_reporting (E_ALL | E_STRICT);
 session_start ();
 
 /* Logged in? Simple security check */

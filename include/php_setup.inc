@@ -225,7 +225,7 @@ function dummy_error_handler()
 /* Get base dir for reference */
 $BASE_DIR= dirname(dirname(__FILE__));
 $ROOT_DIR= $BASE_DIR."/html";
-error_reporting (E_ALL);
+error_reporting (E_ALL | E_STRICT);
 
 /* Register error handler */
 $error_collector= "";

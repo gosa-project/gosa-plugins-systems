@@ -186,7 +186,7 @@ class plugin
           break;
         }
       }
-      error_reporting(E_ALL);
+      error_reporting(E_ALL | E_STRICT);
       if ($found){
         $this->is_account= TRUE;
         @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
@@ -784,7 +784,7 @@ class plugin
     }
 
     /* close conncetion */
-    error_reporting (E_ALL);
+    error_reporting (E_ALL | E_STRICT);
     ldap_unbind($ds);
 
     /* Adapt naming attribute */

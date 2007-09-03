@@ -445,7 +445,7 @@ class LDAP{
   */
   function copy_FAI_resource_recursive($sourcedn,$destinationdn,$destinationName,$type="branch",$is_first = true,$depth=0)
   {
-    error_reporting(E_ALL);
+    error_reporting(E_ALL | E_STRICT);
     
     if($is_first){
       echo "<h2>".sprintf(_("Creating copy of %s"),"<i>".@LDAP::fix($sourcedn)."</i>")."</h2>";

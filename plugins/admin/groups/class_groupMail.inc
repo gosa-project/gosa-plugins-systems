@@ -525,7 +525,7 @@ class mailgroup extends plugin
         $mailusers[$attrs['mail'][0]]= $name."&lt;".
           $attrs['mail'][0]."&gt;";
       }
-      error_reporting (E_ALL);
+      error_reporting (E_ALL | E_STRICT);
       natcasesort ($mailusers);
       reset ($mailusers);
 

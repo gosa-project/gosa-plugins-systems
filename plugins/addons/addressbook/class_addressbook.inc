@@ -465,7 +465,7 @@ class addressbook extends plugin
           $this->telephone_list[$attrs['sn'][0].$attrs['dn']].= "</td>";
         }
       }
-      error_reporting(E_ALL);
+      error_reporting(E_ALL | E_STRICT);
     }
 
     /* Sort up list */
@@ -560,7 +560,7 @@ class addressbook extends plugin
           } else {
             $smarty->assign("info_$name", preg_replace("/\n/", "<br>", $info["$name"][0]));
           }
-          error_reporting(E_ALL);
+          error_reporting(E_ALL | E_STRICT);
         } elseif ($_SESSION['show_info'] == "ADD" && isset($this->$name)) {
           $smarty->assign("info_$name", $this->$name);
         } else {

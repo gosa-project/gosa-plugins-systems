@@ -1027,7 +1027,7 @@ class posixAccount extends plugin
           $dsc= preg_replace ('/^Group of user/', _("Group of user"), $attrs["description"][0]);
           $entry= $attrs["cn"][0]." [$dsc]";
         }
-        error_reporting (E_ALL);
+        error_reporting (E_ALL | E_STRICT);
 
         if(obj_is_writable($attrs['dn'],"groups/group","memberUid")){
           $this->groupMembership[$attrs['dn']]= $entry;

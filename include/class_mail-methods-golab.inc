@@ -73,7 +73,7 @@ class mailMethodGolab extends mailMethodCyrus
       return(false);
     }
 
-    error_reporting(E_ALL); 
+    error_reporting(E_ALL | E_STRICT); 
  
     return ($result);
   }

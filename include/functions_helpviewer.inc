@@ -274,7 +274,7 @@ function search($arr,$word)
   unset($_SESSION['parsed_search_keyword']);
   $_SESSION['parsed_search_keyword']="";
 
-  error_reporting(E_ALL);
+  error_reporting(E_ALL | E_STRICT);
 
   /* prepare searchwords */
   $word   = trim($word);

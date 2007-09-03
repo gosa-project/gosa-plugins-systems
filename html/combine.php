@@ -60,7 +60,7 @@ imagecopy ($pic, $image1, 0, 0, 0, 0, imagesx($image1), imagesy($image1));
 imagecopy ($pic, $image2, imagesx($image1), 0, 0, 0, imagesx($image2), imagesy($image2));
 imagePng($pic); 
 
-error_reporting (E_ALL);
+error_reporting (E_ALL | E_STRICT);
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

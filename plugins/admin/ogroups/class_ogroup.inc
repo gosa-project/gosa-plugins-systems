@@ -317,7 +317,7 @@ class ogroup extends plugin
       } else {
         $smarty->assign("combinedObjects", "$p1");
       }
-      error_reporting(E_ALL);
+      error_reporting(E_ALL | E_STRICT);
     }
 
     /* Assign variables */

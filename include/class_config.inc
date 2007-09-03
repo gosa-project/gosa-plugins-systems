@@ -327,7 +327,7 @@ class config  {
           "sieve_server" => $attrs['goImapSieveServer'][0],
           "sieve_port" => $attrs['goImapSievePort'][0]);
     }
-    error_reporting(E_ALL);
+    error_reporting(E_ALL | E_STRICT);
 
     /* Get kerberos server. FIXME: only one is supported currently */
     $ldap->cd ($this->current['BASE']);
