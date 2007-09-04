@@ -330,6 +330,7 @@ class servdns extends goService
       foreach($tmp['zoneUpdates'] as $dn => $attrs){
         $ldap->cd($dn);
         $ldap->modify($attrs);
+        $this->handle_post_events("modify",array("dn" => $dn));
         new log("modfiy","unknown/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
         show_ldap_error($ldap->get_error(), sprintf(_("Updating of system server/dns with dn '%s' failed."),$this->dn));
       }
@@ -340,6 +341,7 @@ class servdns extends goService
     foreach($tmp['del'] as $dn => $del){
       $ldap->cd($dn);
       $ldap->rmdir_recursive($dn);
+      $this->handle_post_events("remove",array("dn" => $dn));
       new log("remove","unknown/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
       show_ldap_error($ldap->get_error(), sprintf(_("Removing of system server/dns with dn '%s' failed."),$this->dn));
     }
@@ -358,10 +360,12 @@ class servdns extends goService
       if($ldap->fetch()){
         $ldap->cd($dn);
         $ldap->modify ($attrs);
+        $this->handle_post_events("modify",array("dn" => $dn));
         show_ldap_error($ldap->get_error(), sprintf(_("Saving of system server/dns with dn '%s' failed."),$this->dn));
       }else{
         $ldap->cd($dn);
         $ldap->add($attrs);
+        $this->handle_post_events("create",array("dn" => $dn));
         show_ldap_error($ldap->get_error(), sprintf(_("Saving of system server/dns with dn '%s' failed."),$this->dn));
       }
     }

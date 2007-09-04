@@ -299,6 +299,7 @@ class servDNSeditZoneEntries extends plugin
 
     $todo = array(); 
 
+
     /* Create todolist
      */
     foreach($this->Devices as $name => $dev){

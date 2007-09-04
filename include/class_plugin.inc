@@ -586,6 +586,12 @@ class plugin
     }
 
     if ($command != ""){
+
+      /* Additional attributes */
+      foreach ($add_attrs as $name => $value){
+        $command= preg_replace("/%$name/", $value, $command);
+      }
+
       /* Walk through attribute list */
       foreach ($this->attributes as $attr){
         if (!is_array($this->$attr)){
@@ -593,11 +599,6 @@ class plugin
         }
       }
       $command= preg_replace("/%dn/", $this->dn, $command);
-
-      /* Additional attributes */
-      foreach ($add_attrs as $name => $value){
-        $command= preg_replace("/%$name/", $value, $command);
-      }
 
       if (check_command($command)){
         @DEBUG (DEBUG_SHELL, __LINE__, __FUNCTION__, __FILE__,
@@ -620,6 +621,12 @@ class plugin
     }
 
     if ($command != ""){
+
+      /* Additional attributes */
+      foreach ($add_attrs as $name => $value){
+        $command= preg_replace("/%$name/", $value, $command);
+      }
+
       /* Walk through attribute list */
       foreach ($this->attributes as $attr){
         if (!is_array($this->$attr)){
@@ -627,11 +634,6 @@ class plugin
         }
       }
       $command= preg_replace("/%dn/", $this->dn, $command);
-
-      /* Additional attributes */
-      foreach ($add_attrs as $name => $value){
-        $command= preg_replace("/%$name/", $value, $command);
-      }
 
       if (check_command($command)){
         @DEBUG (DEBUG_SHELL, __LINE__, __FUNCTION__, __FILE__,
@@ -654,6 +656,12 @@ class plugin
     }
 
     if ($command != ""){
+
+      /* Additional attributes */
+      foreach ($add_attrs as $name => $value){
+        $command= preg_replace("/%$name/", $value, $command);
+      }
+
       /* Walk through attribute list */
       foreach ($this->attributes as $attr){
         if (!is_array($this->$attr)){
