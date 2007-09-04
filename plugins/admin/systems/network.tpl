@@ -71,6 +71,8 @@
     </td>
     {if $DNS_is_account==true}
 		<td	style="width:50%;vertical-align:top;border-left:1px solid #b0b0b0;" valign="top">
+
+    {if $ZoneCnt}
       {if $DNSAccount == true}
       <input type="checkbox" name="DNS_is_account" value="1"  
         checked="checked"
