@@ -256,6 +256,8 @@ class termDNS extends plugin
     $smarty->assign("dhcp_is_Account",$this->dhcp_is_Account);
     $smarty->assign("dhcpParentNode", $this->dhcpParentNode);
     $smarty->assign("dhcpParentNodes",$this->dhcpParentNodes);
+    $smarty->assign("dhcpParentNodeCnt",count($this->dhcpParentNodes));
+
 
     /* There is no dns available
      */
@@ -313,6 +315,7 @@ class termDNS extends plugin
       /* Assign all needed vars */
       $smarty->assign("DNSAccount",$this->DNS_is_account);
       $smarty->assign("Zones",$this->Zones);
+      $smarty->assign("ZoneCnt",count($this->Zones));
       $smarty->assign("ZoneKeys",($this->Zones));
       $smarty->assign("IPisMust",(($this->IPisMust)||($this->DNS_is_account)));
 

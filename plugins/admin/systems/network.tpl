@@ -29,6 +29,7 @@
         <tr>
           <td colspan=2 style='padding-top:12px;'>
             <table>
+              {if $dhcpParentNodeCnt}
               <tr>
                 <td>
                   <input onClick='document.mainform.submit();'
@@ -39,6 +40,16 @@
                   <input type='image' src='images/list_reload.png' class='center'>
                 </td>
               </tr>
+              {else}
+              <tr>
+                <td>
+                  <input type='checkbox' name='dummy' class='center' disabled>
+                  {t}Enable DHCP for this device{/t}
+                  <input type='image' src='images/list_reload.png' class='center'><br>
+                  <i>{t}No dhcp service present in your ldap database, you will have to setup the dhcp service first.{/t}</i>
+                </td>
+              </tr>
+              {/if}
               {if $dhcp_is_Account}
               <tr>
                 <td>&nbsp;</td>
@@ -114,6 +125,13 @@
 				</tr>
 			</table>
       </div>
+    {else}        
+      <input type="checkbox" name="dummy" value="1" disabled class='center'>
+      {t}Enable DNS for this device{/t}
+      <input type='image' src='images/list_reload.png' class='center'><br>
+      <i>{t}No dns service present in your ldap database, you will have to setup the dns service first.{/t}</i>
+    {/if}
+
 		</td>
     {/if}
     
