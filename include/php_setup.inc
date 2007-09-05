@@ -45,7 +45,7 @@ function gosaRaiseError($errno, $errstr, $errfile, $errline)
      var declarations. For now I can't workaround this - let's ignore
      the messages till the next major release which may drop support
      for PHP4. */
-  if (preg_match('/var: Deprecated./', $errstr)){
+  if (preg_match('/var: Deprecated./', $errstr) || preg_match("/Declaration of.*should be compatible/",$errstr)){
     return;
   }
 
