@@ -93,6 +93,10 @@ if(isset($_POST['lang_selected'])){
 }
 
 $lang = $_SESSION['lang'];
+/* Append .UTF-8 to language string if necessary */
+if(!preg_match("/utf(-)8$/i",$lang)){
+  $lang .= ".UTF-8";
+}
 putenv("LANGUAGE=");
 putenv("LANG=$lang");
 setlocale(LC_ALL, $lang);
