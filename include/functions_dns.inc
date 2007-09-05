@@ -307,7 +307,7 @@ function getDNSZoneEntriesDiff($config,$newZones,$HostDn)
    */
   foreach($oldZones as $zone)  {
     $oldDn = "zoneName=".$zone['InitialzoneName'].",".$HostDn;
-    $del[$oldDn] = "";
+    $del[$oldDn] = $zone;
   }
 
   /* Check for entries which must be updated 

@@ -285,6 +285,7 @@ class servdns extends goService
   {
     if($this->initially_was_account){
       $bool = true;
+      $this->is_account = FALSE;
       foreach($this->Zones as $key => $zone){
         $bool= $bool & $this->RemoveZone($key);
       }
@@ -330,7 +331,6 @@ class servdns extends goService
       foreach($tmp['zoneUpdates'] as $dn => $attrs){
         $ldap->cd($dn);
         $ldap->modify($attrs);
-        $this->handle_post_events("modify",array("dn" => $dn));
         new log("modfiy","unknown/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
         show_ldap_error($ldap->get_error(), sprintf(_("Updating of system server/dns with dn '%s' failed."),$this->dn));
       }
@@ -339,11 +339,20 @@ class servdns extends goService
     /* Delete dns 
      */
     foreach($tmp['del'] as $dn => $del){
+
+      $for = getNameFromMix($del['InitialzoneName']);
+      $rev = FlipIp(getNameFromMix($del['InitialReverseZone'])).".in-addr.arpa";
+
       $ldap->cd($dn);
       $ldap->rmdir_recursive($dn);
-      $this->handle_post_events("remove",array("dn" => $dn));
       new log("remove","unknown/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
       show_ldap_error($ldap->get_error(), sprintf(_("Removing of system server/dns with dn '%s' failed."),$this->dn));
+
+      /* Handle Post events */
+      if(preg_match("/^zoneName=/",$dn)){
+        $this->handle_post_events("remove",array("dn" => $dn,"zoneName" => $for));
+        $this->handle_post_events("remove",array("dn" => $dn,"zoneName" => $rev));
+      }
     }
 
     /* move follwoing entries
@@ -360,13 +369,21 @@ class servdns extends goService
       if($ldap->fetch()){
         $ldap->cd($dn);
         $ldap->modify ($attrs);
-        $this->handle_post_events("modify",array("dn" => $dn));
         show_ldap_error($ldap->get_error(), sprintf(_("Saving of system server/dns with dn '%s' failed."),$this->dn));
+
+        /* Handle Post events */
+        if(preg_match("/^zoneName=/",$dn)){
+          $this->handle_post_events("modify",array("dn" => $dn,"zoneName" => $attrs['zoneName']));
+        }
       }else{
         $ldap->cd($dn);
         $ldap->add($attrs);
-        $this->handle_post_events("create",array("dn" => $dn));
         show_ldap_error($ldap->get_error(), sprintf(_("Saving of system server/dns with dn '%s' failed."),$this->dn));
+
+        /* Handle Post events */
+        if(preg_match("/^zoneName=/",$dn)){
+          $this->handle_post_events("add",array("dn" => $dn,"zoneName" => $attrs['zoneName']));
+        }
       }
     }
   }
