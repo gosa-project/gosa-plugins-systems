@@ -340,8 +340,8 @@ class servdns extends goService
      */
     foreach($tmp['del'] as $dn => $del){
 
-      $for = getNameFromMix($del['InitialzoneName']);
-      $rev = FlipIp(getNameFromMix($del['InitialReverseZone'])).".in-addr.arpa";
+      $for = $del['InitialzoneName'];
+      $rev = FlipIp($del['InitialReverseZone']).".in-addr.arpa";
 
       $ldap->cd($dn);
       $ldap->rmdir_recursive($dn);
