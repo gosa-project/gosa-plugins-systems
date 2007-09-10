@@ -4,7 +4,7 @@ class gosa_cache
 {
   var $c_memcache = NULL;
   var $b_connected= FALSE; 
-  
+
   function __construct()
   {
     $this->connect();
@@ -16,7 +16,7 @@ class gosa_cache
     $this->close();
     if(class_exists("Memcache")){
       $this->c_memcache = new Memcache;
-      $res = $this->c_memcache->connect("localhost",11211);
+      $res = $this->c_memcache->pconnect("localhost",11211);
       if(!$res){
         $this->b_connected = FALSE;
         $this->c_memcache  = NULL;
