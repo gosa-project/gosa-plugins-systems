@@ -1035,8 +1035,21 @@ class sambaAccount extends plugin
     } else {
       $this->handle_post_events("add", array("uid" => $this->uid));
     }
-
   }
+
+
+  /* Force password set, if this account doesn't have any samba passwords  */
+  function password_change_needed()
+  {
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cat($this->dn,array("sambaLMPassword","sambaNTPassword"));
+    $attrs = $ldap->fetch();
+    if(!isset($attrs['sambaLMPassword']) || !isset($attrs['sambaNTPassword'])){
+      return(TRUE);
+    }
+    return(FALSE);
+  }
+
 
   function adapt_from_template($dn)
   {
