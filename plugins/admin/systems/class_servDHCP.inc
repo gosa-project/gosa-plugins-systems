@@ -255,6 +255,16 @@ class servdhcp extends goService
 
     }
 
+    if(isset($_GET['act']) && $_GET['act']=="edit" && isset($_GET['id'])){
+      $dn = base64_decode($_GET['id']);
+      if (isset($this->dhcpObjectCache[$dn])){
+        $section= $this->objectType($dn);
+        $this->current_object= $dn;
+        $this->dialog= new $section($this->dhcpObjectCache[$dn]);
+      }
+    }
+    
+
     /* Do we need to flip is_account state? */
     if (isset($_POST['modify_state'])){
       $this->is_account= !$this->is_account;
@@ -313,7 +323,9 @@ class servdhcp extends goService
       	
     $tmp = new dhcpNewSectionDialog(NULL);
     foreach($this->dhcpSections as $section => $values ){
-    	
+    
+      $values = "<a href='?plug=".$_GET['plug']."&act=edit&id=".base64_encode($section)."'>".$values."</a>";
+	
       if (count($tmp->sectionMap[$this->objectType($section)])){
         if ($this->objectType($section) == "dhcpService"){
           $DhcpList->AddEntry(array(
