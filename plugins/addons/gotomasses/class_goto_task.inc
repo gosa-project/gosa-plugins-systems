@@ -192,6 +192,7 @@ class goto_task extends plugin
      ********/
 
     $divlist = new divlist("goto_task");
+    $divlist->SetPluginMode(); 
     $divlist->SetHeight("160");
     $divlist->SetEntriesPerPage(0);
 
