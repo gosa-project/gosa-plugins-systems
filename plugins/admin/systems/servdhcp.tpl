@@ -2,20 +2,7 @@
 <table summary="" width="100%">
     <tr>
         <td style="width:100%;vertical-align:top;">
-            <h2>{t}DHCP take over initiated{/t}</h2>
-            {$warning}
-            {t}This includes 'all' DHCP subsections that are located within this server. Please double check if your really want to do this.{/t}
-            <p>
-            {$warning2}
-            <br>
-            <input type='submit' name='cancel_take_over' value='{t}Cancel{/t}'>
-            </p>
-            <p>
-            {t}Following objects will be taken over{/t}&nbsp;:
-            </p>
-            <p>
-            <pre>{$info}</pre>
-            </p>
+			<h2>{t}DHCP take over will take place when saving this entry. Choose 'Cancel' to abort.{/t}</h2>
         </td>
     </tr>
 </table>

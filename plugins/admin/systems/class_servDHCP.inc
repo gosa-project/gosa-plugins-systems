@@ -21,6 +21,7 @@ class servdhcp extends goService
 
   var $dhcp_server_list   = array("ENTRIES"=> array(),"FOR_LIST"=> array());
   var $take_over_id       = -1;
+  var $display_warning  = TRUE;
 
   function servdhcp ($config, $dn= NULL, $parent= NULL)
   {
@@ -95,15 +96,18 @@ class servdhcp extends goService
      *  and hide default dhcp output
      */
     if($this->take_over_id != -1){
+
       $this->dialog = FALSE;
       $id = $this->take_over_id;
-      $info = $this->get_dhcp_info_string($id);
       $smarty->assign("dns_take_over",TRUE);
-      $smarty->assign("info",$info);
-      $warning = sprintf(_("You are going to take over the dhcp setup from server '%s'."),$this->dhcp_server_list['ENTRIES'][$id]['cn'][0]);
-      $warning2 = _("The take over will be startet when you save this system. To abort this action, use the cancel button below."); 
-      $smarty->assign("warning",$warning);
-      $smarty->assign("warning2",$warning2);
+      $warning = sprintf(_("You are going to migrate the DHCP setup from server '%s'."),
+        $this->dhcp_server_list['ENTRIES'][$id]['cn'][0]);
+      $warning.= "&nbsp;"._("The migration will be started when you save this system. To cancel this action, use the cancel button below.");
+
+      if($this->display_warning){
+        print_red($warning);
+        $this->display_warning = FALSE;
+      }
       return($smarty->fetch(get_template_path('servdhcp.tpl', TRUE)));
     }
 
@@ -254,6 +258,16 @@ class servdhcp extends goService
       }
 
     }
+
+    if(isset($_GET['act']) && $_GET['act']=="edit" && isset($_GET['id'])){
+      $dn = base64_decode($_GET['id']);
+      if (isset($this->dhcpObjectCache[$dn])){
+        $section= $this->objectType($dn);
+        $this->current_object= $dn;
+        $this->dialog= new $section($this->dhcpObjectCache[$dn]);
+      }
+    }
+    
 
     if(isset($_GET['act']) && $_GET['act']=="edit" && isset($_GET['id'])){
       $dn = base64_decode($_GET['id']);
@@ -679,20 +693,6 @@ class servdhcp extends goService
     }
     foreach($ret['ENTRIES'] as $key => $data){
       $ret['FOR_LIST'][$key] = $data['cn'][0];
-    }
-    return($ret);
-  }
-
-
-  function get_dhcp_info_string($id)
-  {
-    $ret = "";
-    $ldap = $this->config->get_ldap_link();
-    $ldap->cd("cn=dhcp,".$this->dhcp_server_list['ENTRIES'][$id]['dn']);
-    $ldap->search("(|(objectClass=dhcpSharedNetwork)(objectClass=dhcpSubnet)(objectClass=dhcpPool)(objectClass=dhcpGroup)(objectClass=dhcpHost))",array("dn","cn"));
-    $ldap->search("(objectClass=*)",array("dn","cn"));
-    while($attrs = $ldap->fetch()){
-      $ret .= $attrs['dn']."\n";
     }
     return($ret);
   }
