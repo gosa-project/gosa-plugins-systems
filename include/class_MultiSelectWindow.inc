@@ -81,7 +81,7 @@ class MultiSelectWindow{
 		$this->SaveButtonString		= _("Save");
 		$this->CloseButtonString	= _("Close");
 		$this->filterName			= $filterName;
-
+    $this->ui = get_userinfo();
 		$this->selectedBase = $_SESSION['CurrentMainBase'];
 
     /* Check default values for SaveAdditionalVars */
@@ -470,7 +470,9 @@ class MultiSelectWindow{
     if($s_action=="root"){
       $this->selectedBase=($this->config->current['BASE']);
       $dep_id = $this->ui->get_module_departments($this->module);
-      $this->selectedBase = $dep_id[key($dep_id)];
+      if(isset($dep_id[key($dep_id)])){
+        $this->selectedBase = $dep_id[key($dep_id)];
+      }
     }
 
 
