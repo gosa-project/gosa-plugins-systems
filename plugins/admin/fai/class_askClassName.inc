@@ -17,7 +17,7 @@ class askClassName extends plugin
   var $ClassName          = "";  
   var $ClassAlreadyExists = false;
 
-  function askClassName (&$config, $dn= NULL,$ui = false, $objectClass)
+  function askClassName (&$config,$dn,$ui,$objectClass)
   {
     $this->ui = $ui;
     $this->objectClass = $objectClass;
