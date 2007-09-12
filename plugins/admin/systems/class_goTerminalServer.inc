@@ -26,7 +26,7 @@ class goTerminalServer extends goService{
   var $view_logged  =FALSE;
 
 
-  function goTerminalServer($config,$dn)
+  function goTerminalServer(&$config,$dn)
   {
     goService::goService($config,$dn);
     $this->DisplayName = _("Terminal service");

@@ -12,7 +12,7 @@ class mailogroup extends plugin
   var $members= array();
   var $view_logged = FALSE;
 
-  function mailogroup ($config, $dn= NULL, $parent= NULL)
+  function mailogroup (&$config, $dn= NULL, $parent= NULL)
   {
     plugin::plugin($config, $dn, $parent);
 

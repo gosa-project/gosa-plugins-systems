@@ -17,7 +17,7 @@ class printerPPDSelectionDialog extends plugin
   var $current_del_id       = "";
   var $Vendor               = "";
 
-  function printerPPDSelectionDialog ($config, $dn= NULL,$list=false,$headers=false,$ppd=false)
+  function printerPPDSelectionDialog (&$config, $dn= NULL,$list=false,$headers=false,$ppd=false)
   {
     plugin::plugin ($config, $dn);
     $this->list       = $list;

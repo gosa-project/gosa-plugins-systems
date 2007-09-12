@@ -24,7 +24,7 @@ class faiPartitionTableEntry extends plugin
 
   var $FAIstate             = "";
 
-  function faiPartitionTableEntry ($config, $dn= NULL,$usedDiskNames=array(),$disk=false)
+  function faiPartitionTableEntry (&$config, $dn= NULL,$usedDiskNames=array(),$disk=false)
   {
     plugin::plugin ($config, $dn);
     $this->UsedAttrs  = array("cn","description","FAIpartitionType","FAIpartitionNr","FAIfsType","FAImountPoint","FAIpartitionSize",

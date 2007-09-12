@@ -24,12 +24,12 @@ class blocklist extends plugin
   var $view_logged = FALSE;
   var $CopyPasteHandler = NULL;
 
-  function blocklist ($config, $ui)
+  function blocklist (&$config, $ui)
   {
     /* Init class */
     $this->ui     = $ui;
     $this->dn     = "";
-    $this->config = $config;
+    $this->config = &$config;
     $this->base = $_SESSION['CurrentMainBase']; 
     $this->DivListBlocklist = new divListBlocklist($this->config,$this);
     $this->set_acl_category("gofaxlist");

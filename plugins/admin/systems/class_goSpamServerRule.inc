@@ -8,7 +8,7 @@ class goSpamServerRule extends plugin {
 	var $orig_name = "";
   var $view_logged  =FALSE;
 	
-	function goSpamServerRule($config,$dn,$name = "",$rule ="")
+	function goSpamServerRule(&$config,$dn,$name = "",$rule ="")
 	{
 		plugin::plugin($config,$dn);
 		$this->name = $this->orig_name= $name;

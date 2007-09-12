@@ -56,7 +56,7 @@ class mimetype extends plugin
   /* Orig_Dn is used to verify if this object is new or only edited */		
   var $orig_dn			= "";
 
-  function mimetype($config,$dn= NULL)
+  function mimetype(&$config,$dn= NULL)
   {
     plugin::plugin ($config, $dn);
 

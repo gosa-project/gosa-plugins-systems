@@ -26,7 +26,7 @@ class divListFai extends MultiSelectWindow
 
   var $SaveAdditionalVars = array("selectedBranch");
 
-  function divListFai ($config,$parent)
+  function divListFai (&$config,$parent)
   {
     MultiSelectWindow::MultiSelectWindow($config, "Fai", "fai");
     

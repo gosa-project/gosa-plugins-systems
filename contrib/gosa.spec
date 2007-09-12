@@ -21,7 +21,7 @@ Vendor:			GONICUS GmbH
 Packager:		Lars Scheiter <lars.scheiter@GONICUS.de>
 Buildarch: 		noarch
 %if %{suse}
-Requires:		apache2,apache2-mod_php4,php4,php4-gd,php4-ldap,php4-mcrypt,php4-mysql,php4-imap,php4-iconv,php4-mbstring,php4-gettext,php4-session,ImageMagick
+Requires:		apache2,apache2-mod_php5,php5,php5-gd,php5-ldap,php5-mcrypt,php5-mysql,php5-imap,php5-iconv,php5-mbstring,php5-gettext,php5-session,ImageMagick
 %else
 Requires: 		httpd,php,php-ldap,php-imap,php-snmp,php-mysql,php-mbstring,ImageMagick
 %endif

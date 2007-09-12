@@ -24,7 +24,7 @@ class divListUsers extends MultiSelectWindow
   var $parent             ;
   var $ui                 ;
 
-  function divListUsers ($config,$parent)
+  function divListUsers (&$config,$parent)
   {
     MultiSelectWindow::MultiSelectWindow($config, "Users", "users");
     

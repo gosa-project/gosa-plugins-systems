@@ -31,7 +31,7 @@ class acl extends plugin
   var $savedAclContents= array();
   var $myAclObjects = array();
 
-  function acl ($config, $parent, $dn= NULL)
+  function acl (&$config, $parent, $dn= NULL)
   {
     /* Include config object */
     plugin::plugin($config, $dn);
@@ -47,7 +47,7 @@ class acl extends plugin
     ksort($this->gosaAclEntry);
 
     /* Save parent - we've to know more about it than other plugins... */
-    $this->parent= $parent;
+    $this->parent= &$parent;
 
     /* Container? */
     if (preg_match('/^(o|ou|c|l|dc)=/i', $dn)){

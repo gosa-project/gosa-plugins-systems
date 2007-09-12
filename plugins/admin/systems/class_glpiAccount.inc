@@ -65,7 +65,7 @@ class glpiAccount extends plugin
   /* Contructor 
      Sets default values and checks if we already have an existing glpi account
    */
-  function glpiAccount ($config, $dn= NULL, $parent= NULL)
+  function glpiAccount (&$config, $dn= NULL, $parent= NULL)
   {
     plugin::plugin ($config, $dn, $parent);
     $this->ui= get_userinfo();

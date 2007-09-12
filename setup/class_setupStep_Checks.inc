@@ -62,7 +62,7 @@ class Step_Checks extends setup_step
  
     /* PHP version check */
     $N = _("Checking PHP version"); 
-    $D = sprintf(_("PHP must be of version %s / %s or above."),"4.3.10","5.2.0");
+    $D = sprintf(_("PHP must be of version %s or above."), "5.2.0");
     $S = _("GOsa requires functionality that is not available (or buggy) in older PHP versions. Please update to a supported version.");
     $R = $this->check_php_version();
     $M = TRUE;
@@ -71,7 +71,7 @@ class Step_Checks extends setup_step
     /* Checking imap extension */
     $N = _("Checking for LDAP support");
     $D = _("This is the main extension used by GOsa and therefore really required.");
-    $S = _("The ldap extension (php4-ldap/php5-ldap) is required to communicate with your LDAP server.");
+    $S = _("The ldap extension (php5-ldap) is required to communicate with your LDAP server.");
     $R = is_callable("ldap_bind");
     $M = TRUE;
     $this->basic_checks[] = array("NAME" => $N , "DESC" => $D , "RESULT" => $R , "SOLUTION" => $S , "MUST" => $M );
@@ -95,7 +95,7 @@ class Step_Checks extends setup_step
     /* Check for installed mhash module */
     $N = _("Checking for mhash support");
     $D = _("You'll need this module to make use of SSHA encryption");
-    $S = _("The mhash module for PHP 4/5 is not available.Please install php4-mhash/php5-mhash.");
+    $S = _("The mhash module for PHP 5 is not available.Please install php5-mhash.");
     $R = is_callable("mhash");
     $M = FALSE;
     $this->basic_checks[] = array("NAME" => $N , "DESC" => $D , "RESULT" => $R , "SOLUTION" => $S , "MUST" => $M );
@@ -103,7 +103,7 @@ class Step_Checks extends setup_step
     /* Is imap module available */
     $N = _("Checking for IMAP support");
     $D = _("The IMAP module is needed to communicate with the IMAP server. GOsa retrieves status information, creates and deletes mail users, etc.");
-    $S = _("This module is used to communicate with your mail server. Please install php4-imap/php5-imap.");
+    $S = _("This module is used to communicate with your mail server. Please install php5-imap.");
     $R = is_callable("imap_open");
     $M = TRUE;
     $this->basic_checks[] = array("NAME" => $N , "DESC" => $D , "RESULT" => $R , "SOLUTION" => $S , "MUST" => $M );
@@ -119,7 +119,7 @@ class Step_Checks extends setup_step
     /* Mysql module loaded ? */
     $N = _("Checking for MySQL support");
     $D = _("MySQL support is needed to communicate with several supported databases.");
-    $S = _("This module is required to communicate with database servers (GOfax, asterisk, GLPI, etc.). Please install php4-mysql/php5-mysql");
+    $S = _("This module is required to communicate with database servers (GOfax, asterisk, GLPI, etc.). Please install php5-mysql");
     $R = is_callable("mysql_query");
     $M = TRUE;
     $this->basic_checks[] = array("NAME" => $N , "DESC" => $D , "RESULT" => $R , "SOLUTION" => $S , "MUST" => $M );
@@ -135,7 +135,7 @@ class Step_Checks extends setup_step
     /* Snmp module available ? */
     $N = _("Checking for SNMP support");
     $D = _("The simple network management protocol is needed to get status information from clients.");
-    $S = _("This module is required for client monitoring. Please install php4-snmp/php5-snmp.");
+    $S = _("This module is required for client monitoring. Please install php5-snmp.");
     $R = is_callable("snmpget");
     $M = FALSE;
     $this->basic_checks[] = array("NAME" => $N , "DESC" => $D , "RESULT" => $R , "SOLUTION" => $S , "MUST" => $M );
@@ -247,14 +247,12 @@ class Step_Checks extends setup_step
     $this->config_checks[] = array("NAME" => $N , "DESC" => $D , "RESULT" => $R , "SOLUTION" => $S , "MUST" => $M );
 
     /* Emulating old stuff? */
-    if (!preg_match('/^4/', phpversion())){
-      $N = "zend.ze1_compatibility_mode = <b>"._("Off")."</b>";
-      $D = _("Increase your server performance by setting magic_quotes_gpc to 'off'."); 
-      $S = _("Search for 'zend.ze1_compatibility_mode' in your php.ini and set it to 'Off'."); 
-      $R = !ini_get('zend.ze1_compatibility_mode'); 
-      $M = FALSE;
-      $this->config_checks[] = array("NAME" => $N , "DESC" => $D , "RESULT" => $R , "SOLUTION" => $S , "MUST" => $M );
-    }
+    $N = "zend.ze1_compatibility_mode = <b>"._("Off")."</b>";
+    $D = _("Increase your server performance by setting magic_quotes_gpc to 'off'."); 
+    $S = _("Search for 'zend.ze1_compatibility_mode' in your php.ini and set it to 'Off'."); 
+    $R = !ini_get('zend.ze1_compatibility_mode'); 
+    $M = FALSE;
+    $this->config_checks[] = array("NAME" => $N , "DESC" => $D , "RESULT" => $R , "SOLUTION" => $S , "MUST" => $M );
 
 
     /* Configuration file  
@@ -306,11 +304,7 @@ class Step_Checks extends setup_step
       with the current version of GOsa */
   function check_php_version()
   {
-    if(preg_match("/^5/",phpversion())){
-      return(version_compare(phpversion(),"5.2.0",">=")); 
-    }else{
-      return(version_compare(phpversion(),"4.3.10",">="));
-    }
+    return(version_compare(phpversion(),"5.2.0",">=")); 
   }
 }
 

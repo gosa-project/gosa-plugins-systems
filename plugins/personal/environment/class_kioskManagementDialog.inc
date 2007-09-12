@@ -16,7 +16,7 @@ class kioskManagementDialog extends plugin
 
   var $baseDir              = "../kiosk/";
 
-  function kioskManagementDialog ($config, $dn= NULL,$attach=false )
+  function kioskManagementDialog (&$config, $dn= NULL,$attach=false )
   {
     $this->config= $config;
     $this->dn= $dn;

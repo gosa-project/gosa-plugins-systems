@@ -59,7 +59,7 @@ class mailgroup extends plugin
   var $objectclasses= array("gosaMailAccount");
   var $CopyPasteVars          = array("quotaUsage","imapacl");
 
-  function mailgroup ($config, $dn= NULL, $ui= NULL)
+  function mailgroup (&$config, $dn= NULL, $ui= NULL)
   {
     /* Initialise all available attributes ... if possible
      */

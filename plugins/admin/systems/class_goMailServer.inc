@@ -41,7 +41,7 @@ class goMailServer extends goService{
   var $conflicts                        = array("goMailServer","kolab");
   var $view_logged  =FALSE;
 
-  function goMailServer($config,$dn)
+  function goMailServer(&$config,$dn)
   {
     goService::goService($config,$dn);
     $this->DisplayName = _("Mail smtp service (Postfix)");

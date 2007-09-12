@@ -23,7 +23,7 @@ class faiScriptEntry extends plugin
   var $parent        = NULL;
   var $FAIstate      = "";
   
-  function faiScriptEntry ($config, $dn= NULL,$object=false)
+  function faiScriptEntry (&$config, $dn= NULL,$object=false)
   {
     plugin::plugin ($config, $dn);
     if($dn != "new"){

@@ -20,10 +20,10 @@ class SnapShotDialog extends plugin
   var $last_list = array();
 
 	
-	function SnapShotDialog($config,$dn,$parent)
+	function SnapShotDialog(&$config, $dn, &$parent)
 	{
     plugin::plugin($config,$dn);
-    $this->parent 	= $parent;
+    $this->parent 	= &$parent;
 		$this->ui 		  = get_userinfo();
 	}
 

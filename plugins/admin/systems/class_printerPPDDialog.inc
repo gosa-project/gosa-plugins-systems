@@ -27,7 +27,7 @@ class printerPPDDialog extends plugin
   var $cn                   = "" ;          // Used to tag the ppds modified by the printer object, 
   var $dialog               = NULL;         // Contains sub dialogs 
 
-  function printerPPDDialog ($config, $dn= NULL,$ppdfile=NULL )
+  function printerPPDDialog (&$config, $dn= NULL, $ppdfile=NULL )
   {
     plugin::plugin ($config, $dn);
     $this->depselect = $this->config->current['BASE'];

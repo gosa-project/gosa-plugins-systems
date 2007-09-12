@@ -27,7 +27,7 @@ class fonreport extends plugin
   var $view_logged = FALSE;
   
   /* Construct class */
-  function fonreport ($config, $ui)
+  function fonreport (&$config, $ui)
   {
     /* Include config object */
     $this->config			= $config;

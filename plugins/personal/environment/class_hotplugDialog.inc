@@ -26,7 +26,7 @@ class hotplugDialog extends plugin
   var $deplist                  = "/";
   var $skipThese                = array();
 
-  function hotplugDialog ($config, $dn= NULL,$use_existing=false ,$skipThese = array())
+  function hotplugDialog (&$config, $dn= NULL,$use_existing=false ,$skipThese = array())
   {
     $this->use_existing = $use_existing;
     $this->skipThese    = $skipThese;

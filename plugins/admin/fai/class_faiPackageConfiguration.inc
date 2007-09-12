@@ -16,7 +16,7 @@ class faiPackageConfiguration extends plugin
   var $pkg_config ;
   var $obj;
 
-  function faiPackageConfiguration ($config, $dn= NULL,$obj,$path,$pkg_config)
+  function faiPackageConfiguration (&$config, $dn= NULL,$obj,$path,$pkg_config)
   {
     plugin::plugin ($config, $dn);
     $this->obj = $obj;

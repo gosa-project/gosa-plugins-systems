@@ -44,11 +44,11 @@ class applicationManagement extends plugin
     return(false);
   }
 
-  function applicationManagement ($config, $ui)
+  function applicationManagement (&$config, &$ui)
   {
     /* Save configuration for internal use */
-    $this->config   = $config;
-    $this->ui       = $ui;
+    $this->config   = &$config;
+    $this->ui       = &$ui;
 
     /* Check if copy & paste is activated */
     if($this->config->boolValueIsTrue("MAIN","ENABLECOPYPASTE")){

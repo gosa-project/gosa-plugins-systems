@@ -52,9 +52,9 @@ class printgeneric extends plugin
   var $view_logged    = FALSE;
   var $parent;
 
-  function printgeneric ($config, $dn,$parent_init,$parent)
+  function printgeneric (&$config, $dn,$parent_init,$parent)
   {
-    $this->config = $config;
+    $this->config = &$config;
     $this->dn = $dn; 
  
     /* If parent was posted(the tabs object) we can detect the printer type. */

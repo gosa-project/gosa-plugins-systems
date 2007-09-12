@@ -29,7 +29,7 @@ class goFonServer extends goService{
   var $view_logged  =FALSE;
    
  
-  function goFonServer($config,$dn)
+  function goFonServer(&$config,$dn)
   {
     goService::goService($config,$dn);
     $this->DisplayName = _("VoIP service");

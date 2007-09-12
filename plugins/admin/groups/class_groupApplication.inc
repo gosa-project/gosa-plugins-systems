@@ -41,7 +41,7 @@ class appgroup extends plugin
   var $ui                       = NULL;
   var $no_release_acls          = false;
 
-  function appgroup ($config, $dn= NULL, $parent= NULL)
+  function appgroup (&$config, $dn= NULL, $parent= NULL)
   {
    
     /* Check if we have relase mangement enabled and prepare group application for release management */ 

@@ -39,7 +39,7 @@ class faiHook extends plugin
   var $FAIstate         = "";  
   var $ui;
 
-  function faiHook ($config, $dn= NULL)
+  function faiHook (&$config, $dn= NULL)
   {
     /* Load Attributes */
     plugin::plugin ($config, $dn);

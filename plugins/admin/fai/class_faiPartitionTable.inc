@@ -24,7 +24,7 @@ class faiPartitionTable extends plugin
 
   var $view_logged      = FALSE;
 
-  function faiPartitionTable ($config, $dn= NULL)
+  function faiPartitionTable (&$config, $dn= NULL)
   {
     /* Load Attributes */
     plugin::plugin ($config, $dn);

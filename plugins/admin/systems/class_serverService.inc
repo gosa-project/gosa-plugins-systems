@@ -33,7 +33,7 @@ class ServerService extends plugin
   var $acl              ;
   var $cn;
 
-  function ServerService ($config, $dn)
+  function ServerService (&$config, $dn)
   {
     plugin::plugin($config);
     $this->dn= $dn;

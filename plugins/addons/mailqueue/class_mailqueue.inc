@@ -21,9 +21,9 @@ class mailqueue extends plugin
   var $range          = 20;   
   var $view_logged = FALSE;
 
-  function mailqueue($config, $dn= NULL)
+  function mailqueue(&$config, $dn= NULL)
   {
-    $this->config           = $config;
+    $this->config           = &$config;
     if (isset($this->config->current['MAILQUEUESCRIPTPATH'])){
       $this->mailQueueScript  = $this->config->current['MAILQUEUESCRIPTPATH'];    
     }

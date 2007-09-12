@@ -36,7 +36,7 @@ class terminfo extends plugin
       "ghGfxAdapter", "ghSoundAdapter", "gotoLastUser");
   var $objectclasses= array("GOhard");
 
-  function terminfo ($config, $dn= NULL, $parent= NULL)
+  function terminfo (&$config, $dn= NULL, $parent= NULL)
   {
     plugin::plugin ($config,$dn);
 

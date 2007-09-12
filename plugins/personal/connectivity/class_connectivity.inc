@@ -25,7 +25,7 @@ class connectivity extends plugin
   var $CopyPasteVars = array("plugin","plugin_name");
 
 
-  function connectivity ($config, $dn= NULL,$parent =NULL)
+  function connectivity (&$config, $dn= NULL,$parent =NULL)
   {
     /* Preseed permissions */
     $this->dn= $dn;

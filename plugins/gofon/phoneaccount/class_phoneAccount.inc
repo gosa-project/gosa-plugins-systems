@@ -48,7 +48,7 @@ class phoneAccount extends plugin
 
   var $view_logged = FALSE;
 
-  function phoneAccount ($config, $dn= NULL, $parent= NULL)
+  function phoneAccount (&$config, $dn= NULL, $parent= NULL)
   {
     plugin::plugin ($config, $dn, $parent);
 

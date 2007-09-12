@@ -42,7 +42,7 @@ class termDNS extends plugin
 
   /*  Terminal dns 
    */
-  function termDNS ($config, $dn,$objectClasses,$IPisMust = false)
+  function termDNS (&$config, $dn,$objectClasses,$IPisMust = false)
   {
     /* We need to know which objectClasses are used, to store the ip/mac
      * Because of different type of devices   

@@ -74,9 +74,9 @@ class MultiSelectWindow{
 	}
 
 	/* Contrucktion */
-	function MultiSelectWindow($config, $filterName, $module)
+	function MultiSelectWindow(&$config, $filterName, $module)
 	{
-		$this->config = $config;
+		$this->config = &$config;
 		$this->module = $module;
 		$this->SaveButtonString		= _("Save");
 		$this->CloseButtonString	= _("Close");

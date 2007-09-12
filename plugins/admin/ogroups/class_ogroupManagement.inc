@@ -35,10 +35,10 @@ class ogroupManagement extends plugin
   var $DivListOGroup    = NULL;
   var $start_pasting_copied_objects = FALSE;
 
-  function ogroupManagement ($config, $dn= NULL)
+  function ogroupManagement (&$config, $dn= NULL)
   {
     /* Include config object */
-    $this->config= $config;
+    $this->config= &$config;
     $this->ui= get_userinfo();
 
     /* Copy & Paste enabled ?

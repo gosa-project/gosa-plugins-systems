@@ -46,7 +46,7 @@ class wingeneric extends plugin
 
   var $view_logged = FALSE;
 
-  function wingeneric ($config, $dn= NULL, $parent= NULL)
+  function wingeneric (&$config, $dn= NULL, $parent= NULL)
   {
     plugin::plugin ($config, $dn, $parent);
     $this->netConfigDNS = new termDNS($this->config,$this->dn,$this->objectclasses);

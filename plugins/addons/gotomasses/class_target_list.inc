@@ -25,7 +25,7 @@ class target_list extends MultiSelectWindow
   var $ui                 ;
  
  
-  function target_list($config,$Targets_used)
+  function target_list(&$config,$Targets_used)
   {
     MultiSelectWindow::MultiSelectWindow($config, "Targetselection", array("ogroup","gotomasses"));
 

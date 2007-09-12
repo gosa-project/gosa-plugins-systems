@@ -21,7 +21,7 @@ class faiPackageEntry extends plugin
   /* Array with available class names */
   var $FAIAllclasses        = array();
 
-  function faiPackageEntry ($config, $dn= NULL,$pkgs,$selected=array())
+  function faiPackageEntry (&$config, $dn= NULL,$pkgs,$selected=array())
   {
     plugin::plugin ($config, $dn);
     

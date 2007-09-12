@@ -45,11 +45,11 @@ class departmentManagement extends plugin
   var $ObjectTaggingRequested   = false;    // Object must be tagged, an iframe will be shown. 
   var $RecursiveRemoveRequested = false;    // Is true, if this object must be moved, an iframe will be displayed in this case
 
-  function departmentManagement ($config, $ui)
+  function departmentManagement (&$config, &$ui)
   {
-    $this->ui= $ui;
+    $this->ui= &$ui;
     $this->dn= "";
-    $this->config= $config;
+    $this->config= &$config;
     $this->DivListDepartment = new divListDepartment($this->config,$this);
   }
 

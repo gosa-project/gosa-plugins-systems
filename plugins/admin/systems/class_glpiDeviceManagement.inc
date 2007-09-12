@@ -26,7 +26,7 @@ class glpiDeviceManagement extends plugin
 
   var $delete = array();
 
-  function glpiDeviceManagement ($config, $dn= NULL,$used=NULL)
+  function glpiDeviceManagement (&$config, $dn= NULL,$used=NULL)
   {
     plugin::plugin ($config, $dn);
 

@@ -25,10 +25,10 @@ class msgplug extends plugin
   var $module = "msgplug";
   var $view_logged = FALSE;
 
-  function msgplug ($config, $dn= NULL)
+  function msgplug (&$config, $dn= NULL)
   {
     /* Include config object */
-    $this->config= $config;
+    $this->config= &$config;
     $ui= get_userinfo();
     $tag= $ui->gosaUnitTag;
 

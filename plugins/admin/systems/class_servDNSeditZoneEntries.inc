@@ -21,7 +21,7 @@ class servDNSeditZoneEntries extends plugin
 
   var $disableDialog      = false; // Dialog will be disabled, if this zone is new 
 
-  function servDNSeditZoneEntries ($config,$dn, $zoneObject)
+  function servDNSeditZoneEntries (&$config,$dn, &$zoneObject)
   {
     plugin::plugin ($config, $dn);
 

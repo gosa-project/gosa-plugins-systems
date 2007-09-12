@@ -26,7 +26,7 @@ class goShareServer extends goService{
   var $mounts_to_add        = array();
   var $view_logged  =FALSE;
 
-  function goShareServer($config,$dn)
+  function goShareServer(&$config,$dn)
   {
     goService::goService($config,$dn);
 

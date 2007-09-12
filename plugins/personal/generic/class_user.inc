@@ -107,7 +107,7 @@ class user extends plugin
 
   /* constructor, if 'dn' is set, the node loads the given
      'dn' from LDAP */
-  function user ($config, $dn= NULL)
+  function user (&$config, $dn= NULL)
   {
     $this->config= $config;
     /* Configuration is fine, allways */
@@ -519,7 +519,7 @@ class user extends plugin
       $this->pw_storage= $this->config->current['HASH'];
     }
 
-    $temp   = @passwordMethod::get_available_methods();
+    $temp= passwordMethod::get_available_methods();
     $hashes = $temp['name'];
     
     /* Load attributes and acl's */

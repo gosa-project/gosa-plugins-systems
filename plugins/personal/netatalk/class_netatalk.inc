@@ -74,7 +74,7 @@ class netatalk extends plugin {
   var $uid ="";  
 
   /* The constructor just saves a copy of the config. You may add what ever you need. */
-  function netatalk($config, $dn = NULL) {
+  function netatalk(&$config, $dn = NULL) {
 
     /* Include config object */
     $this->config = $config;

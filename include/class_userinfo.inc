@@ -37,8 +37,8 @@ class userinfo
 
   /* get acl's an put them into the userinfo object
      attr subtreeACL (userdn:components, userdn:component1#sub1#sub2,component2,...) */
-  function userinfo($config, $userdn){
-    $this->config= $config;
+  function userinfo(&$config, $userdn){
+    $this->config= &$config;
     $ldap= $this->config->get_ldap_link();
     $ldap->cat($userdn,array('sn', 'givenName', 'uid', 'gidNumber', 'preferredLanguage', 'gosaUnitTag'));
     $attrs= $ldap->fetch();
@@ -284,11 +284,6 @@ class userinfo
           }
         }
       }
-    }
-
-    /* Load departments here, if we are using php4 */
-    if(is_php4() && !count($this->config->departments)){
-      $this->config->get_departments();
     }
 
     /* For all gosaDepartments */

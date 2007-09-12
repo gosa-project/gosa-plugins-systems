@@ -10,10 +10,10 @@ class reference extends plugin
   var $fold= array();
   var $objectCache= array();
 
-  function reference ($config, $dn= NULL)
+  function reference (&$config, $dn= NULL)
   {
 	/* Include config object */
-	$this->config= $config;
+	$this->config= &$config;
 	$this->dn= $dn;
 
         /* Fill translation array */

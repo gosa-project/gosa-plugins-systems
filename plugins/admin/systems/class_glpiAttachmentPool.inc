@@ -25,7 +25,7 @@ class glpiAttachmentPool extends plugin
 
   var $delAttach= "";
 
-  function glpiAttachmentPool ($config, $dn= NULL,$used=NULL)
+  function glpiAttachmentPool (&$config, $dn= NULL,$used=NULL)
   {
     plugin::plugin ($config, $dn);
     if(!isset($_SESSION['GlpiAttachmentFilter'])){

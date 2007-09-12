@@ -14,10 +14,10 @@ class xlsexport extends plugin
   var $ui;
   var $view_logged = FALSE;
 
-  function xlsexport ($config, $dn= NULL)
+  function xlsexport (&$config, $dn= NULL)
   {
     /* Include config object */
-    $this->config= $config;
+    $this->config= &$config;
 
     $this->ui = get_userinfo();
   }

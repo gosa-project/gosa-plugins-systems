@@ -79,7 +79,7 @@ class environment extends plugin
   var $OrigCn;
   var $add_del_printer_member_was_called = false;
 
-  function environment ($config, $dn= NULL)
+  function environment (&$config, $dn= NULL)
   {
     plugin::plugin ($config, $dn);
 

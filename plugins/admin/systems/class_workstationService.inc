@@ -59,7 +59,7 @@ class workservice extends plugin
   var $XKbLayouts       =array();
   var $XKbVariants      =array();
 
-  function workservice ($config, $dn= NULL, $parent= NULL)
+  function workservice (&$config, $dn= NULL, $parent= NULL)
   {
     plugin::plugin ($config, $dn, $parent);
 

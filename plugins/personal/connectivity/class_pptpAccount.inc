@@ -34,7 +34,7 @@ class pptpAccount extends plugin
   var $view_logged = FALSE;
   var $uid ="";
 
-  function pptpAccount ($config, $dn= NULL)
+  function pptpAccount (&$config, $dn= NULL)
   {
     plugin::plugin ($config, $dn);
     

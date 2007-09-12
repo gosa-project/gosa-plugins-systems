@@ -33,13 +33,13 @@ class goto_task extends plugin
   var $configure_dhcp = FALSE;
   var $configure_dns = FALSE;
 
-  function goto_task($config,$parent,$data = array())
+  function goto_task(&$config, &$parent, $data = array())
   {
     /* Set parent object */
-    $this->parent = $parent;
+    $this->parent = &$parent;
 
     /* Intialize plugin */
-    $this->config = $config;
+    $this->config = &$config;
     if(count($data)){
       $tmp = $this->get_array_values();
       foreach($this->attributes as $attr){

@@ -20,14 +20,14 @@ class divListMimeTypes extends MultiSelectWindow
   var $SaveAdditionalVars = array("selectedRelease");
 
 
-  function divListMimeTypes ($config,$parent)
+  function divListMimeTypes (&$config, &$parent)
   {
     /* Create divlist and setup */
     MultiSelectWindow::MultiSelectWindow($config, "Mimetypes", "mimetypes");
   
     /* initialize required attributes */ 
     $this->selectedRelease  = "ou=mime,".$_SESSION['CurrentMainBase'];
-    $this->parent           = $parent;
+    $this->parent           = &$parent;
     $this->ui               = get_userinfo();
     $this->AvailableReleases= $this->parent->getReleases($this->selectedBase);
 

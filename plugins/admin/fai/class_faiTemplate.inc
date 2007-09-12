@@ -40,7 +40,7 @@ class faiTemplate extends plugin
   var $ui;
   var $view_logged      = FALSE;
 
-  function faiTemplate ($config, $dn= NULL)
+  function faiTemplate (&$config, $dn= NULL)
   {
     /* Load Attributes */
     plugin::plugin ($config, $dn);

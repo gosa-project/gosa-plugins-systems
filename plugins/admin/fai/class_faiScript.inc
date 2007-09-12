@@ -43,7 +43,7 @@ class faiScript extends plugin
   var $view_logged = FALSE;
   var $ui;
 
-  function faiScript ($config, $dn= NULL)
+  function faiScript (&$config, $dn= NULL)
   {
     /* Load Attributes */
     plugin::plugin ($config, $dn);

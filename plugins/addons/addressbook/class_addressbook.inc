@@ -56,10 +56,10 @@ class addressbook extends plugin
 
 	var $abobjectclass= "dc=addressbook";
 
-  function addressbook ($config, $dn= NULL)
+  function addressbook (&$config, $dn= NULL)
   {
     /* Include config object */
-    $this->config= $config;
+    $this->config= &$config;
 
     /* Check if there is a special ldap-sub-tree specified, instead of dc=addressbook, */
     $aoc = search_config($this->config->data['MENU'], "addressbook", "LDAP_OBJECT_CLASS");

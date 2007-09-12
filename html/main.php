@@ -391,7 +391,7 @@ $_SESSION['plist']= $plist;
 $_SESSION['config']= $config;
 
 /* Echo compilation time */
-//echo "<p align='right'>".get_MicroTimeDiff($start,microtime())."</p>";
+#echo "<p align='right'>".get_MicroTimeDiff($start,microtime())."</p>";
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

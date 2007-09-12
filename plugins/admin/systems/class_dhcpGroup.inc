@@ -23,7 +23,7 @@ class dhcpGroup extends dhcpPlugin
   /* attribute list for save action */
   var $objectclasses= array('top', 'dhcpGroup', 'dhcpOptions');
 
-  function dhcpGroup($attrs)
+  function dhcpGroup(&$attrs)
   {
     /* Load statements / options */
     dhcpPlugin::dhcpPlugin($attrs);

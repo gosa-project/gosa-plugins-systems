@@ -35,7 +35,7 @@ class opengwAccount extends plugin
   var $view_logged = FALSE;  
   var $uid = "";
 
-	function opengwAccount ($config, $dn= NULL)
+	function opengwAccount (&$config, $dn= NULL)
 	{
 		plugin::plugin ($config, $dn);
 

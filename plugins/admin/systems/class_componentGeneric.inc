@@ -23,7 +23,7 @@ class componentGeneric extends plugin
   var $netConfigDNS;
   var $view_logged  = FALSE;
 
-  function componentgeneric ($config, $dn= NULL, $parent= NULL)
+  function componentgeneric (&$config, $dn= NULL, $parent= NULL)
   {
     plugin::plugin ($config, $dn, $parent);
 

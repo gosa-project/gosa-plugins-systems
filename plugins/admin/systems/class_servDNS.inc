@@ -32,7 +32,7 @@ class servdns extends goService
   var $take_over_id       = -1;
 
 
-  function servdns ($config, $dn= NULL, $parent= NULL)
+  function servdns (&$config, $dn= NULL, $parent= NULL)
   {
     plugin::plugin ($config, $dn, $parent);
 

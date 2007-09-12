@@ -18,9 +18,9 @@ class CopyPasteHandler {
 
 
   /* Create CP handler  */
-  function CopyPasteHandler($config)
+  function CopyPasteHandler(&$config)
   {
-    $this->config = $config;	
+    $this->config = &$config;	
     $this->current= NULL;
     $this->queue  = array();
     $this->setvar_array = array();

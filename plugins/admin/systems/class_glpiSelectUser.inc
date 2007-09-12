@@ -19,7 +19,7 @@ class glpiSelectUser extends plugin
 
   var $PostVarName      = "";
 
-  function glpiSelectUser ($config, $dn= NULL,$postvar)
+  function glpiSelectUser (&$config, $dn= NULL,$postvar)
   {
     plugin::plugin ($config, $dn);
 

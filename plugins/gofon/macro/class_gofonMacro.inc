@@ -51,7 +51,7 @@ class macro extends plugin
 
   //! The Konstructor   
   /*!  Konstructor, load class with  attributes of the given dn*/
-  function macro ($config, $dn= NULL, $parent= NULL)
+  function macro (&$config, $dn= NULL, $parent= NULL)
   {
     plugin::plugin ($config, $dn, $parent);
 

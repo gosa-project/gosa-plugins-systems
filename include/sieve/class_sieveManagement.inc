@@ -58,7 +58,7 @@ class sieveManagement extends plugin
   /* Initialize the class and load all sieve scripts 
    *  try to parse them and display errors 
    */ 
-  function sieveManagement($config,$dn,$parent,$uattrib)
+  function sieveManagement(&$config,$dn,&$parent,$uattrib)
   {
     /* Check given parameter */
     if(!isset($parent->$uattrib)){
@@ -66,7 +66,7 @@ class sieveManagement extends plugin
     }
 
     $this->uattrib = $uattrib;
-    $this->parent = $parent;
+    $this->parent = &$parent;
     plugin::plugin($config,$dn);
 
     /* Get sieve, if this fail abort class initialization */

@@ -34,7 +34,7 @@ class gofonMacro extends plugin
   var $CopyPasteHandler = NULL;
   var $start_pasting_copied_objects = FALSE;
 
-  function gofonMacro($config, $ui)
+  function gofonMacro(&$config, $ui)
   {
     /* Save configuration for internal use */
     $this->config= $config;

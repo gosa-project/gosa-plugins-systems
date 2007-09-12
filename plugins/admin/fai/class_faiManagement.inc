@@ -61,7 +61,7 @@ class faiManagement extends plugin
 
 	/* construction/reconstruction 
 	 */
-	function faiManagement ($config, $ui)
+	function faiManagement (&$config, $ui)
 	{
 		/* Set defaults */
 		$this->dn			= "";

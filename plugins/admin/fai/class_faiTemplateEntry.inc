@@ -28,7 +28,7 @@ class faiTemplateEntry extends plugin
   var $parent        = NULL;
   var $FAIstate      = "";
   
-  function faiTemplateEntry ($config, $dn= NULL,$object=false)
+  function faiTemplateEntry (&$config, $dn= NULL,$object=false)
   {
     plugin::plugin ($config, $dn);
 

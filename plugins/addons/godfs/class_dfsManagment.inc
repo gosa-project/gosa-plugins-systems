@@ -17,10 +17,10 @@ class dfsManagment extends plugin {
   var $dfstab = NULL;
 
   /* The constructor just saves a copy of the config. You may add what ever you need. */
-  function dfsManagment ($config, $ui) {
+  function dfsManagment (&$config, &$ui) {
     /* save config for later use */
-    $this->config = $config;
-    $this->ui = $ui;
+    $this->config = &$config;
+    $this->ui = &$ui;
     
   }
 

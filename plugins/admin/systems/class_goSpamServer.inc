@@ -43,7 +43,7 @@ class gospamserver extends goService{
   var $acl              = NULL;
   var $view_logged  =FALSE;
 
-  function gospamserver($config,$dn, $parent= NULL)
+  function gospamserver(&$config,$dn, $parent= NULL)
   {
     /* Init class */
     goService::goService($config,$dn, $parent);

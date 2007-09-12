@@ -22,7 +22,7 @@ class gosaLogServer extends goService{
   var $view_logged  =FALSE;
 
 
-  function gosaLogServer($config,$dn)
+  function gosaLogServer(&$config,$dn)
   {
     goService::goService($config,$dn);
     $this->DisplayName = _("GOsa logging service");

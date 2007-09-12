@@ -20,10 +20,10 @@ class gotomasses extends plugin
   var $ids_to_remove = array();
 
 
-  function gotomasses($config, $dn= NULL)
+  function gotomasses(&$config, $dn= NULL)
   {
     /* Include config object */
-    $this->config= $config;
+    $this->config= &$config;
 
     /* Define source file */
     $this->data_file = CONFIG_DIR."/gotomasses_machines";

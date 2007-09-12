@@ -21,7 +21,7 @@ class faiVariableEntry extends plugin
   var $parent        = NULL;
   var $FAIstate      = "";
   
-  function faiVariableEntry ($config, $dn= NULL,$object=false)
+  function faiVariableEntry (&$config, $dn= NULL,$object=false)
   {
     plugin::plugin ($config, $dn);
     if((isset($object['cn'])) && (!empty($object['cn']))){

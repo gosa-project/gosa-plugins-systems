@@ -27,7 +27,7 @@ class divListOGroup extends MultiSelectWindow
   var $parent             ;
   var $ui                 ;
 
-  function divListOGroup ($config,$parent)
+  function divListOGroup (&$config,$parent)
   {
     MultiSelectWindow::MultiSelectWindow($config, "OGroups", "ogroups");
     

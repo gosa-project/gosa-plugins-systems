@@ -43,7 +43,7 @@ class phoneConferenceManagment extends plugin
   var $start_pasting_copied_objects = FALSE;
 
   /* Initialise Class */
-  function phoneConferenceManagment ($config, $ui)
+  function phoneConferenceManagment (&$config, $ui)
   {
     $this->ui			  = $ui;
     $this->dn			  = "";

@@ -20,7 +20,7 @@ class divListMacro extends MultiSelectWindow
   var $parent             ;
   var $ui                 ;
 
-  function divListMacro ($config,$parent)
+  function divListMacro (&$config,$parent)
   {
     MultiSelectWindow::MultiSelectWindow($config,"Macros", "gofonmacro");
     

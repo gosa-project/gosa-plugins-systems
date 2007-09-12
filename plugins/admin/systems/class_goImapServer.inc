@@ -44,7 +44,7 @@ class goImapServer extends goService {
   var $Actions              = array();  
   var $conflicts            = array("goImapServer","kolab");
  
-  function goImapServer($config,$dn)
+  function goImapServer(&$config,$dn)
   {
     goService::goService($config,$dn);
   

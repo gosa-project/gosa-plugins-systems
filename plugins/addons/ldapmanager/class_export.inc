@@ -11,10 +11,10 @@ class ldifexport extends plugin
   var $objectclasses= array();
   var $view_logged = FALSE;
 
-  function ldifexport ($config, $dn= NULL)
+  function ldifexport (&$config, $dn= NULL)
   {
     /* Include config object */
-    $this->config= $config;
+    $this->config= &$config;
     $this->ui = get_userinfo();
   }
 

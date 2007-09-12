@@ -20,7 +20,7 @@ class divListBlocklist extends MultiSelectWindow
   var $parent             ;
   var $ui                 ;
 
-  function divListBlocklist ($config,$parent)
+  function divListBlocklist (&$config, &$parent)
   {
     MultiSelectWindow::MultiSelectWindow($config, "Blocklists", "gofaxlist");
     

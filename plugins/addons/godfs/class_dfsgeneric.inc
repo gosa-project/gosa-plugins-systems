@@ -14,9 +14,8 @@
     var $attributes     = array();
     var $objectclasses  = array();
 
-    function dfsgeneric($config, $dn) {
+    function dfsgeneric(&$config, $dn) {
       plugin::plugin($config, $dn);
-      $this->config = $config;
       $this->dn = $dn;
       $this->orig_dn = $dn;
     }

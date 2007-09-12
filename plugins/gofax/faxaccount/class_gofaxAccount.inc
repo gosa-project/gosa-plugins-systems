@@ -49,7 +49,7 @@ class gofaxAccount extends plugin
 
   var $objectclasses= array("goFaxAccount");
 
-  function gofaxAccount ($config, $dn= NULL)
+  function gofaxAccount (&$config, $dn= NULL)
   {
     /* General initialization */
     plugin::plugin ($config, $dn);

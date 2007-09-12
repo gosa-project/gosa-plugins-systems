@@ -33,7 +33,7 @@ class phpscheduleitAccount extends plugin
   var $ReadOnly =false;
   var $view_logged = FALSE;
 
-  function phpscheduleitAccount ($config, $dn= NULL)
+  function phpscheduleitAccount (&$config, $dn= NULL)
   {
     plugin::plugin ($config, $dn);
   }

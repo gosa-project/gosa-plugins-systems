@@ -15,10 +15,10 @@ class csvimport extends plugin
   var $objectclasses= array();
   var $view_logged = FALSE;
 
-  function csvimport ($config, $dn= NULL)
+  function csvimport (&$config, $dn= NULL)
   {
     /* Include config object */
-    $this->config= $config;
+    $this->config= &$config;
 
     $this->ui = get_userinfo();
   }

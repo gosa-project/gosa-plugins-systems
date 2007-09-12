@@ -55,7 +55,7 @@ class log {
       $entry['user']= "unkown";
     }else{
 
-      $this->config = $_SESSION['config'];
+      $this->config = &$_SESSION['config'];
       $ui           = get_userinfo(); 
       $entry['user']= @$ui->dn;
     }

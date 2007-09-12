@@ -49,7 +49,7 @@ class group extends plugin
 
   var $CopyPasteVars  = array("force_gid","fon_group","smbgroup","groupType","sambaSID","sambaDomainName","SID","nagios_group","sambaGroupType");
 
-  function group ($config, $dn= NULL)
+  function group (&$config, $dn= NULL)
   {
      /* Set rfc2307bis flag */
      if (isset($config->current['RFC2307BIS']) && ($config->current['RFC2307BIS']== "true")){

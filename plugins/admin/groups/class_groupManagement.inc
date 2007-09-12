@@ -34,11 +34,11 @@ class groupManagement extends plugin
   var $ShowPrimaryCheckBox= false; 
   var $start_pasting_copied_objects = FALSE;
 
-  function groupManagement ($config, $ui)
+  function groupManagement (&$config, &$ui)
   {
     /* Save configuration for internal use */
-    $this->config = $config;
-    $this->ui     = $ui;
+    $this->config = &$config;
+    $this->ui     = &$ui;
 
     /* Copy & Paste enabled ?*/
     if((isset($this->config->data['MAIN']['ENABLECOPYPASTE']))&&(preg_match("/true/i",$this->config->data['MAIN']['ENABLECOPYPASTE']))){

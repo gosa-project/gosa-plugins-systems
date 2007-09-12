@@ -63,7 +63,7 @@ class faiPackage extends plugin
       "pending", "dpkgc" );
 
 
-  function faiPackage ($config, $dn= NULL)
+  function faiPackage (&$config, $dn= NULL)
   {
     /* Load Attributes */
     plugin::plugin ($config, $dn);

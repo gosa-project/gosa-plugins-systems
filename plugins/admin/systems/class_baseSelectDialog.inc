@@ -10,7 +10,7 @@ class baseSelectDialog extends MultiSelectWindow
   var $allowedBases         = array();
   var $parent               = NULL;
  
-  function baseSelectDialog ($config,$parent,$onlyAllowThisBases = array())
+  function baseSelectDialog (&$config,$parent,$onlyAllowThisBases = array())
   {
     echo "Need to pass module via parameter!<br>";
     $module= "all";

@@ -64,7 +64,7 @@ class passwordMethod
 
 
   // this function returns all loaded classes for password encryption
-  function get_available_methods()
+  static function get_available_methods()
   {
     $ret =false;
     $all = get_declared_classes();

@@ -41,11 +41,11 @@ class userManagement extends plugin
 
   var $start_pasting_copied_objects = FALSE;
 
-  function userManagement($config, $ui)
+  function userManagement(&$config, $ui)
   {
     /* Save configuration for internal use */
-    $this->config= $config;
-    $this->ui= $ui;
+    $this->config= &$config;
+    $this->ui= &$ui;
 
     /* Copy & Paste handler */
     if ($this->config->boolValueIsTrue("main", "enableCopyPaste")){

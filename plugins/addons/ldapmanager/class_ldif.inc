@@ -12,7 +12,7 @@ class ldif extends plugin
   var $objectclasses= array();
   var $ldif;
 
-  function ldif ($config)
+  function ldif (&$config)
   {
     /* Include config object */
     $this->ldif= new ldiftab($config, $config->data['TABS']['LDIFTAB'], "");

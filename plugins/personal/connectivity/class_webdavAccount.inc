@@ -13,7 +13,7 @@ class webdavAccount extends plugin
   var $view_logged = FALSE;
   var $uid ="";
 
-  function webdavAccount ($config, $dn= NULL)
+  function webdavAccount (&$config, $dn= NULL)
   {
     plugin::plugin ($config, $dn);
     

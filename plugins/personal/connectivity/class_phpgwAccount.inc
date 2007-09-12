@@ -18,7 +18,7 @@ class phpgwAccount extends plugin
   var $uid  = "";
   var $view_logged = FALSE;
 
-  function phpgwAccount ($config, $dn= NULL)
+  function phpgwAccount (&$config, $dn= NULL)
   {
     plugin::plugin ($config, $dn);
 

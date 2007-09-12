@@ -60,7 +60,7 @@ class termgeneric extends plugin
 
   var $member_of_ogroup = FALSE;
 
-  function termgeneric ($config, $dn= NULL, $parent= NULL)
+  function termgeneric (&$config, $dn= NULL, $parent= NULL)
   {
     /* Check if FAI is activated */
     $tmp = search_config($config->data,"faiManagement","CLASS");

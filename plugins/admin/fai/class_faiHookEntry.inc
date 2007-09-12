@@ -25,7 +25,7 @@ class faiHookEntry extends plugin
   var $parent        = NULL;
   var $FAIstate      = "";
   
-  function faiHookEntry ($config, $dn= NULL,$object=false)
+  function faiHookEntry (&$config, $dn= NULL,$object=false)
   {
     plugin::plugin ($config, $dn);
     if($dn != "new"){

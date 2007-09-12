@@ -66,7 +66,7 @@ class workgeneric extends plugin
 
   var $member_of_ogroup = FALSE;
 
-  function workgeneric ($config, $dn= NULL, $parent= NULL)
+  function workgeneric (&$config, $dn= NULL, $parent= NULL)
   {
     $tmp = search_config($config->data,"faiManagement","CLASS");
     if(!empty($tmp)){

@@ -36,7 +36,7 @@ class ogroup extends plugin
   var $attributes= array("cn", "description", "gosaGroupObjects","member");
   var $objectclasses= array("top", "gosaGroupOfNames");
 
-  function ogroup ($config, $dn= NULL)
+  function ogroup (&$config, $dn= NULL)
   {
     plugin::plugin ($config, $dn);
     $this->orig_dn= $dn;

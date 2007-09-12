@@ -3,7 +3,6 @@
 # Sample debian/rules that uses debhelper. GNU copyright 1997 by Joey Hess.
 # Some lines taken from debmake, by Cristoph Lameter.
 
-SARGE_PACKAGE=`cat debian/changelog  | head -n1 | grep sarge`
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
@@ -97,11 +96,9 @@ install-stamp:
 	-rm -rf debian/gosa/usr/share/doc/gosa/guide*
 	sed 's%"CONFIG_TEMPLATE_DIR", "../contrib/"%"CONFIG_TEMPLATE_DIR", "/usr/share/doc/gosa/contrib/"%g' debian/gosa/usr/share/gosa/include/functions.inc > debian/gosa/usr/share/gosa/include/functions.inc.new; \
 	mv debian/gosa/usr/share/gosa/include/functions.inc.new debian/gosa/usr/share/gosa/include/functions.inc;
-	-if [ -z "${SARGE_PACKAGE}" ]; then \
-		rm -rf debian/gosa/usr/share/gosa/include/smarty; \
-		sed 's%require("smarty/Smarty.class.php");%require("/usr/share/php/smarty/libs/Smarty.class.php");%g' debian/gosa/usr/share/gosa/include/php_setup.inc > debian/gosa/usr/share/gosa/include/php_setup.inc.new; \
-		mv debian/gosa/usr/share/gosa/include/php_setup.inc.new debian/gosa/usr/share/gosa/include/php_setup.inc; \
-	fi
+	rm -rf debian/gosa/usr/share/gosa/include/smarty; \
+	sed 's%require("smarty/Smarty.class.php");%require("/usr/share/php/smarty/libs/Smarty.class.php");%g' debian/gosa/usr/share/gosa/include/php_setup.inc > debian/gosa/usr/share/gosa/include/php_setup.inc.new; \
+	mv debian/gosa/usr/share/gosa/include/php_setup.inc.new debian/gosa/usr/share/gosa/include/php_setup.inc; \
 	install -D -m 644 debian/overrides-lintian debian/gosa/usr/share/lintian/overrides/gosa
 	install -D -m 644 debian/overrides-linda debian/gosa/usr/share/linda/overrides/gosa
 	touch install-stamp
@@ -132,11 +129,7 @@ binary-indep: install
 	cd debian/gosa && find ./etc -type f -print | sed -e 's#^./#/#' > DEBIAN/conffiles
 	chmod 644 debian/gosa/DEBIAN/conffiles
 
-	-if [ -z "${SARGE_PACKAGE}" ]; then \
-		dh_gencontrol; \
-	else \
-		dh_gencontrol -- -cdebian/control.sarge; \
-	fi
+	dh_gencontrol
 	dh_md5sums
 	dh_builddeb
 

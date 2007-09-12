@@ -125,10 +125,10 @@ class plugin
     \param dn Distinguished name to initialize plugin from
     \sa plugin()
    */
-  function plugin ($config, $dn= NULL, $parent= NULL)
+  function plugin (&$config, $dn= NULL, $parent= NULL)
   {
     /* Configuration is fine, allways */
-    $this->config= $config;	
+    $this->config= &$config;	
     $this->dn= $dn;
 
     /* Handle new accounts, don't read information from LDAP */
@@ -1220,14 +1220,14 @@ class plugin
        points to our ldap snapshot server */
     $ldap= $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
-    $tmp = $this->config->current;
+    $cfg= &$this->config->current;
 
     /* check if there are special server configurations for snapshots */
-    if(isset($tmp['SNAPSHOT_SERVER'])){
-      $server       = $tmp['SNAPSHOT_SERVER'];
-      $user         = $tmp['SNAPSHOT_USER'];
-      $password     = $tmp['SNAPSHOT_PASSWORD'];
-      $snapldapbase = $tmp['SNAPSHOT_BASE'];
+    if(isset($cfg['SNAPSHOT_SERVER'])){
+      $server       = $cfg['SNAPSHOT_SERVER'];
+      $user         = $cfg['SNAPSHOT_USER'];
+      $password     = $cfg['SNAPSHOT_PASSWORD'];
+      $snapldapbase = $cfg['SNAPSHOT_BASE'];
       $ldap_to      = new LDAP($user,$password, $server);
       $ldap_to -> cd ($snapldapbase);
       show_ldap_error($ldap->get_error(), sprintf(_("Method get available snapshots with dn '%s' failed."),$this->dn));
@@ -1237,7 +1237,7 @@ class plugin
 
     /* Prepare bases and some other infos */
     $base           = $this->config->current['BASE'];
-    $snap_base      = $tmp['SNAPSHOT_BASE'];
+    $snap_base      = $cfg['SNAPSHOT_BASE'];
     $base_of_object = preg_replace ('/^[^,]+,/i', '', $dn);
     $new_base       = preg_replace("/".normalizePreg($base)."$/","",$base_of_object).$snap_base;
     $tmp            = array(); 
@@ -1276,14 +1276,14 @@ class plugin
        points to our ldap snapshot server */
     $ldap= $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
-    $tmp = $this->config->current;
+    $cfg= &$this->config->current;
 
     /* check if there are special server configurations for snapshots */
-    if(isset($tmp['SNAPSHOT_SERVER'])){
-      $server       = $tmp['SNAPSHOT_SERVER'];
-      $user         = $tmp['SNAPSHOT_USER'];
-      $password     = $tmp['SNAPSHOT_PASSWORD'];
-      $snapldapbase = $tmp['SNAPSHOT_BASE'];
+    if(isset($cfg['SNAPSHOT_SERVER'])){
+      $server       = $cfg['SNAPSHOT_SERVER'];
+      $user         = $cfg['SNAPSHOT_USER'];
+      $password     = $cfg['SNAPSHOT_PASSWORD'];
+      $snapldapbase = $cfg['SNAPSHOT_BASE'];
       $ldap_to      = new LDAP($user,$password, $server);
       $ldap_to->cd ($snapldapbase);
       show_ldap_error($ldap->get_error(), sprintf(_("Method get deleted snapshots with dn '%s' failed."),$this->dn));
@@ -1293,7 +1293,7 @@ class plugin
 
     /* Prepare bases */ 
     $base           = $this->config->current['BASE'];
-    $snap_base      = $tmp['SNAPSHOT_BASE'];
+    $snap_base      = $cfg['SNAPSHOT_BASE'];
     $new_base       = preg_replace("/".normalizePreg($base)."$/","",$base_of_object).$snap_base;
 
     /* Fetch all objects and check if they do not exist anymore */
@@ -1340,14 +1340,14 @@ class plugin
 
     $ldap= $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
-    $tmp = $this->config->current;
+    $cfg= &$this->config->current;
 
     /* check if there are special server configurations for snapshots */
-    if(isset($tmp['SNAPSHOT_SERVER'])){
-      $server       = $tmp['SNAPSHOT_SERVER'];
-      $user         = $tmp['SNAPSHOT_USER'];
-      $password     = $tmp['SNAPSHOT_PASSWORD'];
-      $snapldapbase = $tmp['SNAPSHOT_BASE'];
+    if(isset($cfg['SNAPSHOT_SERVER'])){
+      $server       = $cfg['SNAPSHOT_SERVER'];
+      $user         = $cfg['SNAPSHOT_USER'];
+      $password     = $cfg['SNAPSHOT_PASSWORD'];
+      $snapldapbase = $cfg['SNAPSHOT_BASE'];
       $ldap_to      = new LDAP($user,$password, $server);
       $ldap_to->cd ($snapldapbase);
       show_ldap_error($ldap->get_error(), sprintf(_("Restore snapshot with dn '%s' failed."),$snapldapbase));
@@ -1556,8 +1556,6 @@ class plugin
    */
   function update_acls($old_dn,$new_dn,$output_changes = FALSE)
   {
-    global $config;
-
     /* Check if old_dn is empty. This should never happen */
     if(empty($old_dn) || empty($new_dn)){
       trigger_error("Failed to check acl dependencies, wrong dn given.");
@@ -1575,8 +1573,8 @@ class plugin
 
       /* get_ldap configuration */
       $update = array();
-      $ldap = $config->get_ldap_link();
-      $ldap->cd ($config->current['BASE']);
+      $ldap = $this->config->get_ldap_link();
+      $ldap->cd ($this->config->current['BASE']);
       $ldap->search("(&(objectClass=gosaAcl)(gosaAclEntry=*))",array("cn","gosaAclEntry"));
       while($attrs = $ldap->fetch()){
 

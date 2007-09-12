@@ -24,11 +24,11 @@ class divListGroup extends MultiSelectWindow
   var $parent             ;
   var $ui                 ;
 
-  function divListGroup ($config,$parent)
+  function divListGroup (&$config, &$parent)
   {
     MultiSelectWindow::MultiSelectWindow($config, "Groups", "groups");
     
-    $this->parent       = $parent;
+    $this->parent       = &$parent;
     $this->ui           = get_userinfo();
 
     /* Set list strings */

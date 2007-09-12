@@ -26,7 +26,7 @@ class pureftpdAccount extends plugin
   var $ReadOnly;
   var $view_logged = FALSE;
 
-  function pureftpdAccount ($config, $dn= NULL, $parent= NULL)
+  function pureftpdAccount (&$config, $dn= NULL, $parent= NULL)
   {
     plugin::plugin ($config, $dn, $parent);
     

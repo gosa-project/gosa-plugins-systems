@@ -28,7 +28,7 @@ class termgroup extends plugin
   var $view_logged    = FALSE;
 
 
-  function termgroup ($config, $dn= NULL, $parent= NULL)
+  function termgroup (&$config, $dn= NULL, $parent= NULL)
   {
     /***************
       Some  initialisations

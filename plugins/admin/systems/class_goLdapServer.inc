@@ -23,7 +23,7 @@ class goLdapServer extends goService{
   var $goLdapBase          = ""; 
   var $view_logged  =FALSE;
 
-  function goLdapServer($config,$dn)
+  function goLdapServer(&$config,$dn)
   {
     goService::goService($config,$dn);
     $this->DisplayName = _("LDAP service");

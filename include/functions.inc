@@ -745,7 +745,7 @@ function get_module_permission()
 }
 
 
-function get_userinfo()
+function &get_userinfo()
 {
   global $ui;
 
@@ -753,7 +753,7 @@ function get_userinfo()
 }
 
 
-function get_smarty()
+function &get_smarty()
 {
   global $smarty;
 
@@ -1335,7 +1335,7 @@ function is_global($name)
 }
 
 
-function get_global($name)
+function &get_global($name)
 {
   return $_SESSION[$name];
 }
@@ -1966,7 +1966,7 @@ function array_key_ics($ikey, $items)
 }
 
 
-function search_config($arr, $name, $return)
+function search_config(&$arr, $name, $return)
 {
   if (is_array($arr)){
     foreach ($arr as $a){
@@ -2168,14 +2168,6 @@ function gosa_ldap_explode_dn($dn,$config = NULL,$verify_in_ldap=false)
   $ret['count'] = count($ret) - 1;
 
   return($ret);
-}
-
-function is_php4()
-{
-  if (isset($_SESSION['PHP4COMPATIBLE'])){
-    return true;
-  }
-  return (preg_match('/^4/', phpversion()));
 }
 
 /* Add "str_split" if this function is missing.

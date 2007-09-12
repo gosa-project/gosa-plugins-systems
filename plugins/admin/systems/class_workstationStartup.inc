@@ -58,7 +58,7 @@ class workstartup extends plugin
 
   var $member_of_ogroup   = FALSE;
 
-  function workstartup ($config, $dn= NULL, $parent= NULL)
+  function workstartup (&$config, $dn= NULL, $parent= NULL)
   {
     /* Check if FAI is active */
     $tmp = search_config($config->data,"faiManagement","CLASS");

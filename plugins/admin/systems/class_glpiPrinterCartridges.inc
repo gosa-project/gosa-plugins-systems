@@ -23,7 +23,7 @@ class glpiPrinterCartridges extends plugin
   var $del              = 0;
 
 
-  function glpiPrinterCartridges ($config,$dn,$type)
+  function glpiPrinterCartridges (&$config,$dn,$type)
   {
     plugin::plugin ($config, $dn);
 

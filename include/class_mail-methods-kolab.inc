@@ -30,7 +30,7 @@ class mailMethodKolab extends mailMethodCyrus
                             "gosaMailQuota"             =>  "cyrus-userquota",
                             "gosaMailServer"            =>  "kolabHomeServer");
 
-  function mailMethodKolab($config)
+  function mailMethodKolab(&$config)
   {
     $this->config= $config->data['SERVERS']['IMAP'];
   }

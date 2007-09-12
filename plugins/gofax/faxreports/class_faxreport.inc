@@ -33,11 +33,11 @@ class faxreport extends plugin
 
 
   /* Create class */
-  function faxreport ($config, $ui)
+  function faxreport (&$config, &$ui)
   {
     /* Include config object */
     $this->config       = $config;
-    $this->ui           = $ui;
+    $this->ui           = &$ui;
     $this->search_base  = get_base_from_people($ui->dn);
     $this->year         = date("Y");
     $this->month        = date("m");

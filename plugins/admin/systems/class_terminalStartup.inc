@@ -33,7 +33,7 @@ class termstartup extends plugin
   var $orig_dn= "";
   var $ignore_account= TRUE;
 
-  function termstartup ($config, $dn= NULL, $parent= NULL)
+  function termstartup (&$config, $dn= NULL, $parent= NULL)
   {
     plugin::plugin ($config, $dn, $parent);
 

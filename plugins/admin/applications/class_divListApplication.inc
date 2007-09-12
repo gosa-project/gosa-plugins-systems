@@ -18,13 +18,13 @@ class divListApplication extends MultiSelectWindow
 
   var $SaveAdditionalVars = array("selectedRelease");
 
-  function divListApplication ($config,$parent)
+  function divListApplication (&$config,&$parent)
   {
     MultiSelectWindow::MultiSelectWindow($config,"Application", "application");
    
     $this->selectedRelease = "ou=apps,".$_SESSION['CurrentMainBase'];
  
-    $this->parent       = $parent;
+    $this->parent       = &$parent;
     $this->ui           = get_userinfo();
 
     /* Set list strings */

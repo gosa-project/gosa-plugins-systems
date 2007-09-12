@@ -31,10 +31,10 @@ class pluglist {
 	var $info= array();
 	var $headlines = array();
 
-	function pluglist($config, $ui)
+	function pluglist(&$config, &$ui)
 	{
-		$this->ui= $ui;
-		$this->config= $config;
+		$this->ui= &$ui;
+		$this->config= &$config;
 
 		/* Create dirlist for all plugins */
 		$this->dirlist= $this->get_plugins ($this->dirlist, $this->config->data);
@@ -56,7 +56,7 @@ class pluglist {
 		$this->info['all']['plSelfModify']= FALSE;
 	}
 
-	function get_plugins($list, $config)
+	function get_plugins($list, &$config)
 	{
 		/* Error reporting, because I'm getting strange messages in PHP 4.2.x */
 		if (!isset($config['PATH']) && !isset($config['CLASS'])){

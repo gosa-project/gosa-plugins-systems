@@ -23,7 +23,7 @@ class servdhcp extends goService
   var $take_over_id       = -1;
   var $display_warning  = TRUE;
 
-  function servdhcp ($config, $dn= NULL, $parent= NULL)
+  function servdhcp (&$config, $dn= NULL, $parent= NULL)
   {
     plugin::plugin ($config, $dn, $parent);
 

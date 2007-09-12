@@ -13,10 +13,10 @@ class ldifimport extends plugin
   var $ui;
   var $view_logged = FALSE;
 
-  function ldifimport ($config, $dn= NULL)
+  function ldifimport (&$config, $dn= NULL)
   {
     /* Include config object */
-    $this->config= $config;
+    $this->config= &$config;
 
     $this->ui = get_userinfo();
   }

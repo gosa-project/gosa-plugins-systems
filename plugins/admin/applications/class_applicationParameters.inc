@@ -16,7 +16,7 @@ class applicationParameters extends plugin
 
   var $CopyPasteVars = array("option_name","option_value");
 
-  function applicationParameters ($config, $dn= NULL, $parent= NULL)
+  function applicationParameters (&$config, $dn= NULL, $parent= NULL)
   {
     plugin::plugin ($config, $dn, $parent);
 

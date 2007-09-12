@@ -33,7 +33,7 @@ class aclrole extends acl
   var $orig_dn;
   var $base ="";
 
-  function aclrole ($config,  $dn= NULL)
+  function aclrole (&$config,  $dn= NULL)
   {
     /* Include config object */
     plugin::plugin($config, $dn);

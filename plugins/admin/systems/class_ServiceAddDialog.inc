@@ -10,7 +10,7 @@ class ServiceAddDialog extends plugin{
   var $objectclasses    = array();
   var $parent           = NULL;
 
-  function ServiceAddDialog($config,$dn,$parent)
+  function ServiceAddDialog(&$config,$dn,$parent)
   {
     plugin::plugin($config);
     $this->parent = $parent;

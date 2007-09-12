@@ -65,7 +65,7 @@ class termservice extends plugin
   var $objectclasses= array("GOhard");
 
 
-  function termservice ($config, $dn= NULL, $parent= NULL)
+  function termservice (&$config, $dn= NULL, $parent= NULL)
   {
     plugin::plugin ($config, $dn, $parent);
     

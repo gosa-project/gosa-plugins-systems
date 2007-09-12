@@ -20,7 +20,7 @@ class goService extends plugin{
 
    
   /* Construcktion */ 
-  function goService($config,$dn)
+  function goService(&$config,$dn)
   {
     plugin::plugin($config,$dn);
     $this->DisplayName = _("Empty service");

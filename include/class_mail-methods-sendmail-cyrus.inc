@@ -22,7 +22,7 @@ require_once("class_mail-methods-cyrus.inc");
 class mailMethodSendmailCyrus extends mailMethodCyrus
 {
 
-  function mailMethodSendmailCyrus($config)
+  function mailMethodSendmailCyrus(&$config)
   {
     $this->config= $config->data['SERVERS']['IMAP'];
   }

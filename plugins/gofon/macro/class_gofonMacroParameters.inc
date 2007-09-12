@@ -43,7 +43,7 @@ class macroParameter extends plugin
      - Set attributes from openldap (edit)
      - Set attributes from default (new)
   */
-  function macroParameter ($config, $dn= NULL, $parent= NULL)
+  function macroParameter (&$config, $dn= NULL, $parent= NULL)
   {
     plugin::plugin ($config, $dn, $parent);
 

@@ -8,7 +8,7 @@ class sambaLogonHours extends plugin
   var $timezone        = 0; 
   var $config;
 
-  function sambaLogonHours ($config, $dn, $slh)
+  function sambaLogonHours (&$config, $dn, $slh)
   {
     plugin::plugin($config,$dn);
     $this->sambaLogonHours = $slh;

@@ -41,7 +41,7 @@ class systems extends plugin
   var $start_pasting_copied_objects = FALSE;
   var $CopyPasteHandler   = NULL;
 
-  function systems ($config, $ui)
+  function systems (&$config, $ui)
   {
     /* Save configuration for internal use */
     $this->config= $config;

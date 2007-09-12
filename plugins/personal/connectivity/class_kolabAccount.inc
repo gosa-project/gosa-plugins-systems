@@ -23,7 +23,7 @@ class kolabAccount extends plugin
   var $view_logged = FALSE;
   var $uid = "";
 
-  function kolabAccount ($config, $dn= NULL,$parent = NULL)
+  function kolabAccount (&$config, $dn= NULL,$parent = NULL)
   {
     plugin::plugin ($config, $dn, $parent);
 

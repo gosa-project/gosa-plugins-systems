@@ -30,7 +30,7 @@ class servnfs extends plugin
   var $parent       = NULL;
   var $view_logged  = FALSE;
 
-  function servnfs ($config, $parent,$entry= false,$mount =false)
+  function servnfs (&$config, $parent,$entry= false,$mount =false)
   {
     $this->parent = $parent;
     $dn = $parent->dn;

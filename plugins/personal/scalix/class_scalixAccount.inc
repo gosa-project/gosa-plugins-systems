@@ -55,7 +55,7 @@ class scalixAccount extends plugin
 
   /* constructor, if 'dn' is set, the node loads the given
      'dn' from LDAP */
-  function scalixAccount ($config, $dn= NULL)
+  function scalixAccount (&$config, $dn= NULL)
   {
     /* dn shouldn't be NULL */
     if($dn == NULL){

@@ -34,7 +34,7 @@ class glpiPrinterCartridgesEdit extends plugin
   var $edit_type          =false;
 
 
-  function glpiPrinterCartridgesEdit ($config, $dn,$printer_type,$values = NULL )
+  function glpiPrinterCartridgesEdit (&$config, $dn,$printer_type,$values = NULL )
   {
     plugin::plugin ($config, $dn);
     foreach($this->attributes as $val){

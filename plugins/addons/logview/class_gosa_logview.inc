@@ -25,10 +25,10 @@ class gosa_logview extends plugin
   var $view_logged    = FALSE;
 
 
-  function gosa_logview ($config, $dn= NULL)
+  function gosa_logview (&$config, $dn= NULL)
   {
     /* Include config object */
-    $this->config= $config;
+    $this->config= &$config;
     $this->ui = get_userinfo();
 
     /* Restore last filter settings */

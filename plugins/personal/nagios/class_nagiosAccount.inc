@@ -64,7 +64,7 @@ class nagiosAccount extends plugin
 
   /* constructor, if 'dn' is set, the node loads the given
      'dn' from LDAP */
-  function nagiosAccount ($config, $dn= NULL)
+  function nagiosAccount (&$config, $dn= NULL)
   {
     /* Configuration is fine, allways */
     $this->config= $config;

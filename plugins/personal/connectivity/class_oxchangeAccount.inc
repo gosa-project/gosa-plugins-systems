@@ -580,7 +580,7 @@ class oxchangeAccount extends plugin
   var $dnmode= "";
   var $uid ="";
 
-  function oxchangeAccount ($config, $dn= NULL)
+  function oxchangeAccount (&$config, $dn= NULL)
   {
     plugin::plugin ($config, $dn);
     for ($i=0;$i<count($this->config->data['TABS']['CONNECTIVITY']);$i++){

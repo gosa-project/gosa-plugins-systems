@@ -41,7 +41,7 @@ class govirusserver extends goService{
   var $avDatabaseMirror             = "";
   var $view_logged  =FALSE;
 
-  function govirusserver($config,$dn, $parent= NULL)
+  function govirusserver(&$config,$dn, $parent= NULL)
   {
     /* Init class */
     goService::goService($config,$dn, $parent);

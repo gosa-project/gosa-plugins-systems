@@ -40,7 +40,7 @@ class servgeneric extends plugin
   var $fai_activated  =FALSE;
   var $view_logged = FALSE;
 
-  function servgeneric ($config, $dn= NULL, $parent= NULL)
+  function servgeneric (&$config, $dn= NULL, $parent= NULL)
   {
     /* Check if FAI is activated */
     $tmp = search_config($config->data,"faiManagement","CLASS");

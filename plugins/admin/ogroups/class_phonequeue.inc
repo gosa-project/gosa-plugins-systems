@@ -63,7 +63,7 @@ class phonequeue extends plugin
    * - Parse phone options flags
    * - Get phone numbers 
    */
-  function phonequeue ($config, $dn= NULL)
+  function phonequeue (&$config, $dn= NULL)
   {
     plugin::plugin($config, $dn);
 

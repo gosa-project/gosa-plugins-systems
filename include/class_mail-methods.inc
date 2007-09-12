@@ -23,7 +23,7 @@ class mailMethod
 {
   var $uattrib= "uid";
   
-  function mailMethod($config)
+  function mailMethod(&$config)
   {
   }
 

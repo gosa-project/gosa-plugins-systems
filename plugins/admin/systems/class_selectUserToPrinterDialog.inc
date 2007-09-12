@@ -23,7 +23,7 @@ class selectUserToPrinterDialog extends plugin
   var $type                 = "";
   var $search_cat           = ""; 
  
-  function selectUserToPrinterDialog ($config, $dn= NULL,$type=false )
+  function selectUserToPrinterDialog (&$config, $dn= NULL,$type=false )
   {
     plugin::plugin ($config, $dn);
     $this->depselect = $this->config->current['BASE'];

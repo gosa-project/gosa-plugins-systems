@@ -30,7 +30,7 @@ class servrepository extends goService
   var $view_logged            = FALSE;
   var $fai_activated          = FALSE;
 
-  function servrepository ($config, $dn= NULL, $parent= NULL)
+  function servrepository (&$config, $dn= NULL, $parent= NULL)
   {
     plugin::plugin ($config, $dn, $parent);
 

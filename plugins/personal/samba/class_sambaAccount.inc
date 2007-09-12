@@ -92,7 +92,7 @@ class sambaAccount extends plugin
   var $dialog = NULL;
   var $CopyPasteVars = array("kickoff_time_set","logoff_time_set","logon_time_set","mungedObject","orig_sambaDomainName");
 
-  function sambaAccount ($config, $dn= NULL)
+  function sambaAccount (&$config, $dn= NULL)
   {
     /* Load attributes depending on the samba version */
     $this->samba3= ($config->current['SAMBAVERSION'] == 3);

@@ -29,7 +29,7 @@ class faiProfile extends plugin
   var $FAIstate      = "";
   var $view_logged      = FALSE;
 
-  function faiProfile($config, $dn= NULL)
+  function faiProfile(&$config, $dn= NULL)
   {
     /* Load Attributes */
     plugin::plugin ($config, $dn);

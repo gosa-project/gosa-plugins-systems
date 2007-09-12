@@ -23,9 +23,9 @@ class mailMethodCyrus extends mailMethod
   var $mbox= "-";
   var $config;
   var $gosaMailServer= "";
-var $uattrib= "uid";
+  var $uattrib= "uid";
 
-  function mailMethodCyrus($config)
+  function mailMethodCyrus(&$config)
   {
     $this->config= $config->data['SERVERS']['IMAP'];
   }

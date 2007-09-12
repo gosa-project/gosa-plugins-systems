@@ -36,11 +36,11 @@ class aclManagement extends plugin
   var $CopyPasteHandler;
   var $start_pasting_copied_objects = FALSE;
 
-  function aclManagement($config, $ui)
+  function aclManagement(&$config, &$ui)
   {
     /* Save configuration for internal use */
-    $this->config = $config;
-    $this->ui     = $ui;
+    $this->config = &$config;
+    $this->ui     = &$ui;
 
     /* Copy & Paste enabled ?*/
     if((isset($this->config->data['MAIN']['ENABLECOPYPASTE']))&&(preg_match("/true/i",$this->config->data['MAIN']['ENABLECOPYPASTE']))){

@@ -28,7 +28,7 @@ class goGlpiServer extends goService {
   var $view_logged  =FALSE;
  
  
-  function goGlpiServer($config,$dn)
+  function goGlpiServer(&$config,$dn)
   {
     goService::goService($config,$dn);
     $this->DisplayName = _("Inventory database");

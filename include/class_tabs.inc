@@ -33,155 +33,145 @@ class tabs
   var $by_object= array();
   var $SubDialog = false;
 
-  function tabs($config, $data, $dn, $acl_category= "")
+  function tabs(&$config, $data, $dn, $acl_category= "")
   {
-	/* Save dn */
-	$this->dn= $dn;
-	$this->config= $config;
-	
-	$baseobject= NULL;
+    /* Save dn */
+    $this->dn= $dn;
+    $this->config= &$config;
 
-	foreach ($data as $tab){
-		$this->by_name[$tab['CLASS']]= $tab['NAME'];
+    $baseobject= NULL;
 
-		if ($baseobject == NULL){
-			$baseobject= new $tab['CLASS']($this->config, $this->dn);
-			$this->by_object[$tab['CLASS']]= $baseobject;
-		} else {
-			$this->by_object[$tab['CLASS']]= new $tab['CLASS']($this->config, $this->dn, $baseobject);
-		}
+    foreach ($data as &$tab){
+      $this->by_name[$tab['CLASS']]= $tab['NAME'];
 
-		$this->by_object[$tab['CLASS']]->parent= &$this;
-		$this->by_object[$tab['CLASS']]->set_acl_category($acl_category);
+      if ($baseobject == NULL){
+        $baseobject= new $tab['CLASS']($this->config, $this->dn);
+        $this->by_object[$tab['CLASS']]= $baseobject;
+      } else {
+        $this->by_object[$tab['CLASS']]= new $tab['CLASS']($this->config, $this->dn, $baseobject);
+      }
 
-		/* Initialize current */
-		if ($this->current == ""){
-			$this->current= $tab['CLASS'];
-		}
-	}
+      $this->by_object[$tab['CLASS']]->parent= &$this;
+      $this->by_object[$tab['CLASS']]->set_acl_category($acl_category);
+
+      /* Initialize current */
+      if ($this->current == ""){
+        $this->current= $tab['CLASS'];
+      }
+    }
   }
 
   function execute()
   {
-	/* Rotate current to last */
-	$this->last= $this->current;
+    /* Rotate current to last */
+    $this->last= $this->current;
 
-	/* Look for pressed tab button */
-	foreach ($this->by_object as $class => $obj){
-		if (isset($_POST[$class]) || (isset($_POST['arg']) && $_POST['arg'] == "$class")){
-			$this->current= $class;
-			break;
-		}
-	}
+    /* Look for pressed tab button */
+    foreach ($this->by_object as $class => &$obj){
+      if (isset($_POST[$class]) || (isset($_POST['arg']) && $_POST['arg'] == "$class")){
+        $this->current= $class;
+        break;
+      }
+    }
 
-	/* Save last tab object */
-	if ($this->last == $this->current){
-		$this->save_object(TRUE);
-	} else {
-		$this->save_object(FALSE);
-	}
+    /* Save last tab object */
+    if ($this->last == $this->current){
+      $this->save_object(TRUE);
+    } else {
+      $this->save_object(FALSE);
+    }
 
-	/* Build tab line */
-	$display= $this->gen_tabs();
+    /* Build tab line */
+    $display= $this->gen_tabs();
 
-	/* Show object */
-	$display.= "<table summary=\"\" cellpadding=4 cellspacing=0 border=0 style=\"width:100%; background-color:#F8F8F8; border-style:solid; border-color:#AAA; border-top-width:0px; border-bottom-width:1px; border-left-width:1px; border-right-width:1px;\">\n";
-	$display.= "<tr><td>\n";
+    /* Show object */
+    $display.= "<table summary=\"\" cellpadding=4 cellspacing=0 border=0 style=\"width:100%; background-color:#F8F8F8; border-style:solid; border-color:#AAA; border-top-width:0px; border-bottom-width:1px; border-left-width:1px; border-right-width:1px;\">\n";
+    $display.= "<tr><td>\n";
 
-	$obj= $this->by_object[$this->current];
-	$display.= $obj->execute();
-  if (is_php4()){
-    $this->by_object[$this->current]= $obj;
-  }
+    $display.= $this->by_object[$this->current]->execute();
 
-	/* Footer for tabbed dialog */
-	$display.= "</td></tr></table>";
-	return ($display);
+    /* Footer for tabbed dialog */
+    $display.= "</td></tr></table>";
+
+    return ($display);
   }
 
   function save_object($save_current= FALSE)
   {
-	/* Save last tab */
-	if ($this->last != ""){
-        	@DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
-        	        $this->last, "Saving");
+    /* Save last tab */
+    if ($this->last != ""){
+      @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
+          $this->last, "Saving");
 
-		$obj= $this->by_object[$this->last];
-		$obj->save_object ();
-    if (is_php4()){
-      $this->by_object[$this->last]= $obj;
+      $this->by_object[$this->last]->save_object ();
     }
-	}
 
-	/* Skip if curent and last are the same object */
-	if ($this->last == $this->current){
-		return;
-	}
-
-	$obj= $this->by_object[$this->current];
-	$this->disabled= $obj->parent->disabled;
-
-	if ($save_current){
-        	@DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
-        	        $this->current, "Saving (current)");
-
-		$obj->save_object ();
-    if (is_php4()){
-      $this->by_object[$this->current]= $obj;
+    /* Skip if curent and last are the same object */
+    if ($this->last == $this->current){
+      return;
     }
-	}
+
+    $obj= @$this->by_object[$this->current];
+    $this->disabled= $obj->parent->disabled;
+
+    if ($save_current){
+      @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
+          $this->current, "Saving (current)");
+
+      $obj->save_object ();
+    }
   }
 
   function gen_tabs()
   {
-  	$display= "<input type=\"hidden\" name=\"arg\" value=\"\">";
-	$display.= "<table summary=\"\" cellpadding=0 cellspacing=0 border=0 style=\"width:100%;\"><tr>";
-	$index= 0;
-	$style= array("tab_left", "tab_active", "tab_near_active", "tab_right");
-	foreach ($this->by_name as $class => $name){
+    $display= "<input type=\"hidden\" name=\"arg\" value=\"\">";
+    $display.= "<table summary=\"\" cellpadding=0 cellspacing=0 border=0 style=\"width:100%;\"><tr>";
+    $index= 0;
+    $style= array("tab_left", "tab_active", "tab_near_active", "tab_right");
+    foreach ($this->by_name as $class => $name){
 
-		/* Activate right tabs with style "tab_right"
-		   Activate near current with style "tab_near_active" */
-		if ($index == 2 || $index == 1){
-			$index++;
-		}
+      /* Activate right tabs with style "tab_right"
+         Activate near current with style "tab_near_active" */
+      if ($index == 2 || $index == 1){
+        $index++;
+      }
 
-		/* Activate current tab with style "tab_active " */
-		if ($class == $this->current){
-			$index++;
-		}
+      /* Activate current tab with style "tab_active " */
+      if ($class == $this->current){
+        $index++;
+      }
 
-		/* Paint tab */
-		$display.= "<td style=\"vertical-align:bottom;width:1px;white-space:nowrap;\">";
+      /* Paint tab */
+      $display.= "<td style=\"vertical-align:bottom;width:1px;white-space:nowrap;\">";
 
-		/* Shorten string if its too long for the tab headers*/
-		$title= _($name);
-		if (mb_strlen($title, 'UTF-8') > 28){
-			$title= mb_substr($title,0, 25, 'UTF-8')."...";
-		}
-			
-		/* nobr causes w3c warnings so we use &nbsp; to keep the tab name in one line */
-		$title= preg_replace("/ /","&nbsp;",$title);
+      /* Shorten string if its too long for the tab headers*/
+      $title= _($name);
+      if (mb_strlen($title, 'UTF-8') > 28){
+        $title= mb_substr($title,0, 25, 'UTF-8')."...";
+      }
 
-    /* Take care about notifications */
-    if ($this->by_object[$class]->pl_notify){
-      $notify= "id=\"notify\"";
-    } else {
-      $notify= "";
+      /* nobr causes w3c warnings so we use &nbsp; to keep the tab name in one line */
+      $title= preg_replace("/ /","&nbsp;",$title);
+
+      /* Take care about notifications */
+      if ($this->by_object[$class]->pl_notify){
+        $notify= "id=\"notify\"";
+      } else {
+        $notify= "";
+      }
+
+      if ($_SESSION['js']==FALSE){	
+        $display.= "<div ".$notify." class=\"$style[$index]\"><input type=\"submit\" name=\"$class\"".
+          " class=\"$style[$index]\" value=\"$title\"";
+      } else {			 
+        $display.= "<div ".$notify." class=\"$style[$index]\"><a class=\"$style[$index]\" onclick=\"return true;\" href=\"javascript:document.mainform.arg.value='$class';document.mainform.submit();\">$title</a";
+      }
+      $display.= "></div></td>";
     }
+    $display.= "<td style=\"vertical-align:bottom;\">\n";
+    $display.= "<div class=\"tab_border\">&nbsp;</div></td></tr></table>";
 
-		if ($_SESSION['js']==FALSE){	
-			$display.= "<div ".$notify." class=\"$style[$index]\"><input type=\"submit\" name=\"$class\"".
-		                   " class=\"$style[$index]\" value=\"$title\"";
-		} else {			 
-			$display.= "<div ".$notify." class=\"$style[$index]\"><a class=\"$style[$index]\" onclick=\"return true;\" href=\"javascript:document.mainform.arg.value='$class';document.mainform.submit();\">$title</a";
-		}
-		$display.= "></div></td>";
-	}
-	$display.= "<td style=\"vertical-align:bottom;\">\n";
-	$display.= "<div class=\"tab_border\">&nbsp;</div></td></tr></table>";
-
-	return($display);
+    return($display);
   }
 
 
@@ -193,31 +183,33 @@ class tabs
 
   function delete()
   {
-	/* Check if all plugins will ACK for deletion */
-	foreach (array_reverse($this->by_object) as $key => $obj){
-		$reason= $obj->allow_remove();
-		if ($reason != ""){
-			print_red(sprintf(_("Delete process has been canceled by plugin '%s': %s"), $key, $reason));
-			return;
-		}
-	}
+    /* Check if all plugins will ACK for deletion */
+echo "F";
+    foreach (array_reverse($this->by_object) as $key => $obj){
+      $reason= $obj->allow_remove();
+      if ($reason != ""){
+        print_red(sprintf(_("Delete process has been canceled by plugin '%s': %s"), $key, $reason));
+        return;
+      }
+    }
 
-	/* Delete for all plugins */
-	foreach (array_reverse($this->by_object) as $key => $obj){
-		$obj->remove_from_parent();
-	}
+    /* Delete for all plugins */
+echo "F";
+    foreach (array_reverse($this->by_object) as $obj){
+      $obj->remove_from_parent();
+    }
   }
 
   function password_change_needed()
   {
-	/* Ask all plugins for needed password changes */
-	foreach ($this->by_object as $key => $obj){
-		if ($obj->password_change_needed()){
-			return TRUE;
-		}
-	}
+    /* Ask all plugins for needed password changes */
+    foreach ($this->by_object as &$obj){
+      if ($obj->password_change_needed()){
+        return TRUE;
+      }
+    }
 
-	return FALSE;
+    return FALSE;
   }
 
   function check($ignore_account= FALSE)
@@ -228,27 +220,24 @@ class tabs
     $current_set = FALSE;
 
     /* Check all plugins */
-    foreach ($this->by_object as $key => $obj){
+    foreach ($this->by_object as $key => &$obj){
       if ($obj->is_account || $ignore_account || $obj->ignore_account){
         @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,$key, "Checking");
 
         $msg = $obj->check();
 
-        if (is_php4()){
-          $this->by_object[$key]= $obj;
-        }
         if (count($msg)){
-          $this->by_object[$key]->pl_notify= TRUE;
+          $obj->pl_notify= TRUE;
           if(!$current_set){
             $current_set = TRUE;
             $this->current= $key;
             $messages = $msg;
           }
         }else{
-          $this->by_object[$key]->pl_notify= FALSE;
+          $obj->pl_notify= FALSE;
         }
       }else{
-        $this->by_object[$key]->pl_notify= FALSE;
+        $obj->pl_notify= FALSE;
       }
     }
     return ($messages);
@@ -256,35 +245,32 @@ class tabs
 
   function save($ignore_account= FALSE)
   {
-	/* Save all plugins */
-	foreach ($this->by_object as $key => $obj){
-	        @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
-        	        $key, "Saving");
+    /* Save all plugins */
+    foreach ($this->by_object as $key => &$obj){
+      @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
+          $key, "Saving");
 
-		$obj->dn= $this->dn;
-		
-		if ($obj->is_account || $ignore_account || $obj->ignore_account){
-			if ($obj->save() == 1){
-				return (1);
-			}
-		} else {
-			$obj->remove_from_parent();
-		}
-	}
-	return (0);
+      $obj->dn= $this->dn;
+
+      if ($obj->is_account || $ignore_account || $obj->ignore_account){
+        if ($obj->save() == 1){
+          return (1);
+        }
+      } else {
+        $obj->remove_from_parent();
+      }
+    }
+    return (0);
   }
 
   function adapt_from_template($dn)
   {
-	  foreach ($this->by_object as $key => $obj){
-		  @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
-				  $key, "Adapting");
-		  $obj->parent= &$this;
-		  $obj->adapt_from_template($dn);
-      if (is_php4()){
-        $this->by_object[$key]= $obj;
-      }
-	  }
+    foreach ($this->by_object as $key => &$obj){
+      @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
+          $key, "Adapting");
+      $obj->parent= &$this;
+      $obj->adapt_from_template($dn);
+    }
   }
 
 	
@@ -292,9 +278,9 @@ class tabs
    */
   function saveCopyDialog()
   {
-	  foreach ($this->by_object as $key => $obj){
+	  foreach ($this->by_object as &$obj){
 		  if($obj->is_account){
-			  $this->by_object[$key]->saveCopyDialog();
+			  $obj->saveCopyDialog();
 		  }
 	  }
   }
@@ -306,9 +292,9 @@ class tabs
   {
     $ret = "";
     $this->SubDialog = false;
-    foreach ($this->by_object as $key => $obj){
+    foreach ($this->by_object as &$obj){
       if($obj->is_account){
-        $tmp = $this->by_object[$key]->getCopyDialog();
+        $tmp = $obj->getCopyDialog();
         if($tmp['status'] == "SubDialog"){
           $this->SubDialog = true;
           return($tmp['string']);
@@ -326,28 +312,27 @@ class tabs
 
   function addSpecialTabs()
   {
-	$this->by_name['acl']= _("ACL");
-	$this->by_object['acl']= new acl($this->config, $this, $this->dn);
-	$this->by_object['acl']->parent= &$this;
-	$this->by_name['reference']= _("References");
-	$this->by_object['reference']= new reference($this->config, $this->dn);
-	$this->by_object['reference']->parent= &$this;
+    $this->by_name['acl']= _("ACL");
+    $this->by_object['acl']= new acl($this->config, $this, $this->dn);
+    $this->by_object['acl']->parent= &$this;
+    $this->by_name['reference']= _("References");
+    $this->by_object['reference']= new reference($this->config, $this->dn);
+    $this->by_object['reference']->parent= &$this;
   }
 
 
   function set_acl_base($base= "")
   {
-	/* Update reference, transfer variables */
-	$first= ($base == "");
-	foreach ($this->by_object as $name => $obj){
-		if ($first){
-			$first= FALSE;
-			$base= $obj->acl_base;
-		} else {
-			$obj->set_acl_base($base);
-			$this->by_object[$name]= $obj;
-		}
-	}
+    /* Update reference, transfer variables */
+    $first= ($base == "");
+    foreach ($this->by_object as &$obj){
+      if ($first){
+        $first= FALSE;
+        $base= $obj->acl_base;
+      } else {
+        $obj->set_acl_base($base);
+      }
+    }
   }
 
 }

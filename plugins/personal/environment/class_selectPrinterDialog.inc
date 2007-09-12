@@ -19,7 +19,7 @@ class selectPrinterDialog extends plugin
   var $ui                   = NULL;
   var $subtreesearch        = FALSE;
 
-  function selectPrinterDialog ($config, $dn= NULL,$alreadyused=array() )
+  function selectPrinterDialog (&$config, $dn= NULL,$alreadyused=array() )
   {
     $this->AlreadyAssigned = $alreadyused;
     plugin::plugin ($config, $dn);

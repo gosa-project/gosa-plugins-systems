@@ -18,7 +18,7 @@ class SelectDeviceType extends plugin
   var $ObjectGroup    = "";
   var $SystemType        = "";
 
-  function SelectDeviceType  ($config, $dn= NULL)
+  function SelectDeviceType  (&$config, $dn= NULL)
   {
     plugin::plugin ($config, $dn);
 

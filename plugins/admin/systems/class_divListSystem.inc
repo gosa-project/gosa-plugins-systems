@@ -26,7 +26,7 @@ class divListSystem extends MultiSelectWindow
   var $parent             ;
   var $ui                 ;
 
-  function divListSystem ($config,$parent)
+  function divListSystem (&$config,$parent)
   {
     MultiSelectWindow::MultiSelectWindow($config, "System", array("server",
                                                                   "workstation",

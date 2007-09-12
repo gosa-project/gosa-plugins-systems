@@ -16,7 +16,7 @@ class faiProfileEntry extends plugin
   var $FAIAllclasses        = array();
   var $ui;
 
-  function faiProfileEntry ($config, $dn= NULL,$used=array(),$objects=false)
+  function faiProfileEntry (&$config, $dn= NULL,$used=array(),$objects=false)
   {
     plugin::plugin ($config, $dn);
 

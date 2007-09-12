@@ -28,7 +28,7 @@ class glpiManufacturer extends plugin
   var $email      ="";
   var $ID         =-1;
 
-  function glpiManufacturer($config, $dn= NULL, $parent= NULL)
+  function glpiManufacturer(&$config, $dn= NULL, $parent= NULL)
   {
     plugin::plugin ($config, $dn, $parent);
     $this->ui = get_userinfo();  

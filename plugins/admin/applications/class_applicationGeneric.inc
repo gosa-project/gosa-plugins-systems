@@ -29,7 +29,7 @@ class application extends plugin
 
   var $isReleaseApplikation = false;
 
-  function application ($config, $dn= NULL, $parent= NULL)
+  function application (&$config, $dn= NULL, $parent= NULL)
   {
     plugin::plugin ($config, $dn, $parent);
 

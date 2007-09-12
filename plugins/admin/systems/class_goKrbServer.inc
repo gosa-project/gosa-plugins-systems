@@ -25,7 +25,7 @@ class goKrbServer extends goService{
   var $goKrbPassword  ="";  
   var $view_logged  =FALSE;
  
-  function goKrbServer($config,$dn)
+  function goKrbServer(&$config,$dn)
   {
     goService::goService($config,$dn);
     $this->DisplayName = _("Kerberos service");

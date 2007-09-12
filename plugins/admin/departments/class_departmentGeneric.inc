@@ -60,7 +60,7 @@ class department extends plugin
   var $orig_base = "";
   var $orig_ou = "";
 
-	function department ($config, $dn)
+	function department (&$config, $dn)
 	{
 
 		plugin::plugin($config, $dn);

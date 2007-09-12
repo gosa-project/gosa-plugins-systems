@@ -21,10 +21,10 @@ class logview extends plugin
   var $range = 25;
   var $view_logged = FALSE;
 
-  function logview ($config, $dn= NULL)
+  function logview (&$config, $dn= NULL)
   {
     /* Include config object */
-    $this->config= $config;
+    $this->config= &$config;
 
     /* Get global filter config */
     if (!is_global("logfilter")){

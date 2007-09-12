@@ -16,11 +16,11 @@ class divListDepartment extends MultiSelectWindow
   var $parent             ;
   var $ui                 ;
 
-  function divListDepartment ($config,$parent)
+  function divListDepartment (&$config, &$parent)
   {
     MultiSelectWindow::MultiSelectWindow($config, "Department", "department");
     
-    $this->parent       = $parent;
+    $this->parent       = &$parent;
     $this->ui           = get_userinfo();
 
     /* Set list strings */

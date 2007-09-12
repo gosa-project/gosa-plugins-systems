@@ -23,7 +23,7 @@ class proxyAccount extends plugin
   var $uid = "";
   var $view_logged = FALSE;
 
-  function proxyAccount ($config, $dn= NULL)
+  function proxyAccount (&$config, $dn= NULL)
   {
     plugin::plugin ($config, $dn);
     
