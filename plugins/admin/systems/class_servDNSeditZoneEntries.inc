@@ -36,6 +36,10 @@ class servDNSeditZoneEntries extends plugin
     if(isset($this->RecordTypes['nSRecord'])){
       unset($this->RecordTypes['nSRecord']);
     }
+    /* Remove nSRecord from listed types */
+    if(isset($this->RecordTypes['pTRRecord'])){
+      unset($this->RecordTypes['pTRRecord']);
+    }
 
     /* Get ldap connection 
      */
@@ -63,8 +67,6 @@ class servDNSeditZoneEntries extends plugin
   {
     plugin::execute();
 
-
-
     /* Fill templating stuff */
     $smarty= get_smarty();
     $display= "";
@@ -86,6 +88,7 @@ class servDNSeditZoneEntries extends plugin
     /* Check posts for operations ...  
      */
     $once = true;
+    $ptr_updates = array();
     foreach($_POST as $name => $value){
 
       /* Add a new Record in given object  
@@ -125,22 +128,6 @@ class servDNSeditZoneEntries extends plugin
           unset($this->Devices[$Name]['RECORDS'][$RecordID]);
         }
       }
-
-      /* Add PTR record 
-       */
-      if((preg_match("/^AddPtr_/",$name)) && ($once)){
-        $once   = false;
-        if(isset($this->Devices[$Name]['RECORDS'][$RecordID])){
-          $tmp = $this->Devices[$Name]['RECORDS'][$RecordID];
-          $ip = $tmp['value'];
-          $match = preg_replace("/^[^\/]*+\//","",$this->reverseName);
-          $ip = preg_replace("/^".normalizePreg($match)."/","",$ip);
-          $ip = preg_replace("/^\./","",$ip);
-          $tmp['type'] = "pTRRecord";
-          $tmp['value'] = $ip;
-          $this->Devices[$Name]['RECORDS'][] = $tmp;
-        }
-      }
     }
 
     /* Possible attributes posted 
@@ -161,7 +148,33 @@ class servDNSeditZoneEntries extends plugin
        */          
       if(preg_match("/ValueSelection_/",$name)){
         if(isset($this->Devices[$Name]['RECORDS'][$RecordID])){
+         
+          /* Update value */ 
+          $old = $this->Devices[$Name]['RECORDS'][$RecordID]['value'];
           $this->Devices[$Name]['RECORDS'][$RecordID]['value'] = $value;
+
+          /* Handle pTRRecord */
+          if(!isset($ptr_updates[$Name]) && $this->Devices[$Name]['RECORDS'][$RecordID]['type'] == "aRecord"){
+    
+            $found = false;
+            $ip = $value;
+            $match = preg_replace("/^[^\/]*+\//","",$this->reverseName);
+            $ip = preg_replace("/^".normalizePreg($match)."/","",$ip);
+            $ip = preg_replace("/^\./","",$ip);
+
+            foreach($this->Devices[$Name]['RECORDS'] as $key => $dev){
+              if($dev['type'] == "pTRRecord"){
+                $ptr_updates[$Name] = $Name;
+                $this->Devices[$Name]['RECORDS'][$key]['value'] = $ip;
+                $found = true;
+                break;
+              }
+            }
+            if(!$found){
+              $dev = array('type'=> 'pTRRecord', 'value' => $ip);
+              $this->Devices[$Name]['RECORDS'][] = $dev;
+            }
+          }
         }
       }
 
@@ -396,6 +409,11 @@ class servDNSeditZoneEntries extends plugin
     $str.= "<table cellspacing='0' cellpadding='0'>";
     foreach($obj['RECORDS'] as $id => $record){
 
+      /* Skip not selectable entries */
+      if(!isset($this->RecordTypes [$record['type']])) {
+        continue;
+      }
+
       /* Create unique post name
        */
       $name = base64_encode($objKey)."|".$id;
@@ -424,12 +442,12 @@ class servDNSeditZoneEntries extends plugin
           <input type='image' name='RemoveRecord_".$name."' src='images/edittrash.png'      alt='"._("Remove")."' title='"._("Remove")."'>
         ";
 
-        if($record['type'] == "aRecord"){
-          $str .="<input type='image' name='AddPtr_".$name."' src='images/network.png' 
-                    alt='"._("Add PTR")."' title='"._("Add PTR record")."'>";
-        }else{
-          $str .= "<img src='images/empty.png' alt=''>";
-        }
+#        if($record['type'] == "aRecord"){
+#          $str .="<input type='image' name='AddPtr_".$name."' src='images/network.png' 
+#                    alt='"._("Add PTR")."' title='"._("Add PTR record")."'>";
+#        }else{
+#          $str .= "<img src='images/empty.png' alt=''>";
+#        }
 
       $str.=
         "</td>
