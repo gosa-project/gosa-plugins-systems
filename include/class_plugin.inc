@@ -243,21 +243,16 @@ class plugin
     /* Get current objectClasses in order to add the required ones */
     $ldap->cat($this->dn);
     $tmp= $ldap->fetch ();
+      $oc= array();
     if (isset($tmp['objectClass'])){
       $oc= $tmp['objectClass'];
-    } else {
-      $oc= array("count" => 0);
+      unset($oc['count']);
     }
 
     /* Remove objectClasses from entry */
     $ldap->cd($this->dn);
     $this->attrs= array();
-    $this->attrs['objectClass']= array();
-    for ($i= 0; $i<$oc["count"]; $i++){
-      if (!in_array_ics($oc[$i], $this->objectclasses)){
-        $this->attrs['objectClass'][]= $oc[$i];
-      }
-    }
+    $this->attrs['objectClass']= array_remove_entries($this->objectclasses,$oc);
 
     /* Unset attributes from entry */
     foreach ($this->attributes as $val){

@@ -1075,12 +1075,7 @@ class environment extends plugin
     $ocs        = $this->attrs['objectClass'];
     unset($ocs['count']);
     $this->attrs = array();
-    $this->attrs['objectClass']= $ocs;
-    foreach($this->objectclasses as $objc){
-      if(!in_array($objc,$this->attrs['objectClass'])){
-        $this->attrs['objectClass'][]=$objc;
-      }
-    }
+    $this->attrs['objectClass']= gosa_array_merge($ocs,$this->objectclasses);
 
     /* 1. Search all printers that have our uid/cn as member 
      * 2. Delete this uid/cn from every single entry and save it again.

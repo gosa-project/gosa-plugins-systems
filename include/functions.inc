@@ -261,6 +261,17 @@ function array_remove_entries($needles, $haystack)
 }
 
 
+function gosa_array_merge($ar1,$ar2)
+{
+  if(!is_array($ar1) || !is_array($ar2)){
+    trigger_error("Specified parameter(s) are not valid arrays.");
+  }else{
+    return(array_values(array_unique(array_merge($ar1,$ar2))));
+  }
+}
+
+
+
 function gosa_log ($message)
 {
   global $ui;
