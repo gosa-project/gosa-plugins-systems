@@ -1673,28 +1673,6 @@ return(array_unique($ret));
 }
 
 
-function array_search_r($needle, $key, $haystack){
-
-  foreach($haystack as $index => $value){
-    $match= 0;
-
-    if (is_array($value)){
-      $match= array_search_r($needle, $key, $value);
-    }
-
-    if ($index==$key && !is_array($value) && preg_match("/$needle/i", $value)){
-      $match=1;
-    }
-
-    if ($match){
-      return 1;
-    }
-  }
-
-  return 0;
-} 
-
-
 /* Sadly values like memory_limit are perpended by K, M, G, etc.
    Need to convert... */
 function to_byte($value) {

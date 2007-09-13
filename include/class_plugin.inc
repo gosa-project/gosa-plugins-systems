@@ -175,7 +175,6 @@ class plugin
       }
 
       /* Is Account? */
-      error_reporting(0);
       $found= TRUE;
       foreach ($this->objectclasses as $obj){
         if (preg_match('/top/i', $obj)){
@@ -186,7 +185,6 @@ class plugin
           break;
         }
       }
-      error_reporting(E_ALL | E_STRICT);
       if ($found){
         $this->is_account= TRUE;
         @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
@@ -760,7 +758,6 @@ class plugin
     }
 
     $r=ldap_bind($ds,$this->config->current['ADMIN'], $this->config->current['PASSWORD']);
-    error_reporting (0);
     $sr=ldap_read($ds, @LDAP::fix($src_dn), "objectClass=*");
 
     /* Fill data from LDAP */
@@ -783,7 +780,6 @@ class plugin
     }
 
     /* close conncetion */
-    error_reporting (E_ALL | E_STRICT);
     ldap_unbind($ds);
 
     /* Adapt naming attribute */
