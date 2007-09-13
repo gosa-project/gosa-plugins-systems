@@ -243,7 +243,7 @@ class plugin
     /* Get current objectClasses in order to add the required ones */
     $ldap->cat($this->dn);
     $tmp= $ldap->fetch ();
-      $oc= array();
+    $oc= array();
     if (isset($tmp['objectClass'])){
       $oc= $tmp['objectClass'];
       unset($oc['count']);
@@ -319,22 +319,18 @@ class plugin
     $ldap->cat($this->dn);
     
     $tmp= $ldap->fetch ();
-    
+
+    $oc= array();
     if (isset($tmp['objectClass'])){
       $oc= $tmp["objectClass"];
       $this->is_new= FALSE;
+      unset($oc['count']);
     } else {
-      $oc= array("count" => 0);
       $this->is_new= TRUE;
     }
 
     /* Load (minimum) attributes, add missing ones */
-    $this->attrs['objectClass']= $this->objectclasses;
-    for ($i= 0; $i<$oc["count"]; $i++){
-      if (!in_array_ics($oc[$i], $this->objectclasses)){
-        $this->attrs['objectClass'][]= $oc[$i];
-      }
-    }
+    $this->attrs['objectClass']= gosa_array_merge($oc,$this->objectclasses);
 
     /* Copy standard attributes */
     foreach ($this->attributes as $val){
