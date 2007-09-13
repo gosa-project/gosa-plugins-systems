@@ -5,12 +5,10 @@
 <div class='setup_header'>
   <div style="float:left;"><img src='themes/default/images/go_logo.png' class='center' alt='GOsa'>
    {if !$javascript}
-    <a class="maintitlebar" href='main.php?reset=1' onClick='return question("{t}You are currently editing a database entry.
- Do you want to dismiss the changes?{/t}", "main.php?reset=1");' ><img src='{$go_home}' class='center' border="0" alt="Main">&nbsp;{t}Main{/t}
+    <a class="maintitlebar" href='main.php?reset=1' onClick='return question("{t}You are currently editing a database entry. Do you want to dismiss the changes?{/t}", "main.php?reset=1");' ><img src='{$go_home}' class='center' border="0" alt="Main">&nbsp;{t}Main{/t}
     </a>
    {else}
-    <a class="maintitlebar" onClick='return question("{t}You are currently editing a database entry.
- Do you want to dismiss the changes?{/t}", "main.php?reset=1");' ><img src='{$go_home}' class='center' border="0" alt="Main">&nbsp;{t}Main{/t}
+    <a class="maintitlebar" onClick='return question("{t}You are currently editing a database entry. Do you want to dismiss the changes?{/t}", "main.php?reset=1");' ><img src='{$go_home}' class='center' border="0" alt="Main">&nbsp;{t}Main{/t}
     </a>
    {/if}
     &nbsp;
