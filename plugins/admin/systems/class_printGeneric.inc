@@ -264,7 +264,7 @@ class printgeneric extends plugin
      */
     if(preg_match("/unknown/i",$this->BelongsTo)){
       $display= $this->show_enable_header(_("Add printer extension"),
-          _("Could not intialize printer tab, parameter parent was missing while construction."),TRUE,TRUE);
+          _("Could not initialize printer tab, parameter parent was missing while construction."),TRUE,TRUE);
       return($display);
     }
 
@@ -520,10 +520,10 @@ class printgeneric extends plugin
           $smarty->assign("driverInfo", $ppdManager->loadDescription($path.$this->gotoPrinterPPD));
         }
       }else{
-        $smarty->assign("driverInfo", _("not defined"));
+        $smarty->assign("driverInfo", _("Not defined"));
       }
     }else{
-      $smarty->assign("driverInfo",_("can't get ppd informations."));
+      $smarty->assign("driverInfo",_("Can't get ppd informations."));
     }
 
     /* Create user & admin user list */

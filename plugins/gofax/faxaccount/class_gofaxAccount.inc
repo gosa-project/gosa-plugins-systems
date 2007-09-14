@@ -570,7 +570,8 @@ class gofaxAccount extends plugin
 
 
     /* Show main page */
-    $smarty->assign("languages", get_languages());
+    $smarty->assign("languages", get_languages(TRUE));
+
     $smarty->assign("formats", $this->config->data['MAIN']['FAXFORMATS']);
     $smarty->assign("printers", $this->printerList);
 

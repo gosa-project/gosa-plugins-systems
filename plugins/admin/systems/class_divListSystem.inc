@@ -377,7 +377,7 @@ class divListSystem extends MultiSelectWindow
         $pwd_acl = $ui->get_permissions($val['dn'],"terminal/termgeneric","gotoRootPasswd");
       }    
       if(preg_match("/w/",$pwd_acl)){
-        $action2 = "<input class='center' type='image' src='images/certs.png' alt='"._("Password")."'   name='system_setpwd_%KEY%' title='"._("Set root       password")."'>";
+        $action2 = "<input class='center' type='image' src='images/certs.png' alt='"._("Password")."'   name='system_setpwd_%KEY%' title='"._("Set root password")."'>";
       }else{
         $action2 = $empty;
       }

@@ -273,7 +273,7 @@ class user extends plugin
     $sex= array(0 => "&nbsp;", "F" => _("female"), "M" => _("male"));
     $smarty->assign("gender_list", $sex);
 
-    $language= array_merge(array(0 => "&nbsp;") ,get_languages());
+    $language= array_merge(array(0 => "&nbsp;") ,get_languages(TRUE));
     $smarty->assign("preferredLanguage_list", $language);
 
     /* Get random number for pictures */
