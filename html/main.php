@@ -79,6 +79,12 @@ if ($_SERVER['REMOTE_ADDR'] != $ui->ip){
 }
 $config= $_SESSION['config'];
 
+/* Check if there is a timezone record available */
+$tmp = get_default_timezone();
+if($tmp['name'] == "unconfigured"){
+  print_red(_("Please add a timezone record into the main section of yout your gosa.conf."));
+}
+
 /* Check for invalid sessions */
 if(empty($_SESSION['_LAST_PAGE_REQUEST'])){
   $_SESSION['_LAST_PAGE_REQUEST']= time();
