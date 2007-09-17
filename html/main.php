@@ -390,7 +390,7 @@ if(isset($config->data['MAIN']['SAVE_FILTER']) && preg_match("/true/",$config->d
   $cookie_vars = array("MultiDialogFilters","CurrentMainBase");
   foreach($cookie_vars as $var){
     if(isset($_SESSION[$var])){
-      setcookie($var,base64_encode(serialize($_SESSION[$var])),time()+ 60*60*24*30);
+      @setcookie($var,base64_encode(serialize($_SESSION[$var])),time()+ 60*60*24*30);
     }
   }
 }
