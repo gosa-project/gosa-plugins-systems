@@ -78,6 +78,7 @@ class user extends plugin
   var $role= "";
   var $publicVisible= "";
 
+  var $orig_dn;
   var $dialog;
 
   /* variables to trigger password changes */
@@ -117,6 +118,8 @@ class user extends plugin
 
     /* Load base attributes */
     plugin::plugin ($config, $dn);
+
+    $this->orig_dn = $this->dn;
 
     if ($this->config->current['GOVERNMENTMODE']){
       /* Fix public visible attribute if unset */
@@ -651,21 +654,8 @@ class user extends plugin
 
     /* Remove ACL dependencies too, 
      */
-    $ldap = $this->config->get_ldap_link();
-    $ldap->cd($this->config->current['BASE']);
-    $ldap->search("(&(objectClass=gosaAcl)(gosaAclEntry=*".base64_encode($this->dn)."*))",array("gosaAclEntry","dn"));
-    while($attrs = $ldap->fetch()){
-      $acl = new acl($this->config,$this->parent,$attrs['dn']);
-      foreach($acl->gosaAclEntry as $id => $entry){
-        foreach($entry['members'] as $m_id => $member){
-          if($m_id == "U:".$this->dn){
-            unset($acl->gosaAclEntry[$id]['members'][$m_id]); 
-            gosa_log("modify","users/acl",$attrs['dn'],array(),sprintf("Removed acl for %s on object %s.",$this->dn,$attrs['dn'])); 
-          }
-        }
-      }  
-      $acl -> save();
-    }
+    $tmp = new acl($this->config,$this->parent,$this->dn);
+    $tmp->remove_acl();
 
     /* Optionally execute a command after we're done */
     $this->handle_post_events("remove",array("uid" => $this->uid));
@@ -968,6 +958,12 @@ class user extends plugin
     if (show_ldap_error($ldap->get_error(), sprintf(_("Saving of user/generic account with dn '%s' failed."),$this->dn))){
       return (1);
     }
+
+
+    /* Remove ACL dependencies too, 
+     */
+    $tmp = new acl($this->config,$this->parent,$this->dn);
+    $tmp->update_acl_membership($this->orig_dn,$this->dn);
 
     if($mode == "modify"){
       new log("modify","users/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());

@@ -766,7 +766,7 @@ class plugin
       $ei=ldap_first_entry($ds, $sr);
       if ($ei) {
         foreach($attrs as $attr => $val){
-          if ($info = ldap_get_values_len($ds, $ei, $attr)){
+          if ($info = @ldap_get_values_len($ds, $ei, $attr)){
             for ($i= 0; $i<$info['count']; $i++){
               if ($info['count'] == 1){
                 $new[$attr]= $info[$i];

@@ -1079,6 +1079,87 @@ class acl extends plugin
     $this->handle_post_events("remove",array("uid" => $this->uid));
   }
 
+  
+  /* Return plugin informations for acl handling */
+  function plInfo()
+  {
+    return (array(
+          "plShortName"   => _("ACL"),
+          "plDescription" => _("ACL")._("Access control list").")",
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 0,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("acl" => array("description"  => _("ACL")."&nbsp;&amp;&nbsp;"._("ACL roles"),
+                                                          "objectClass"  => array("gosaAcl","gosaRole"))),
+          "plProvidedAcls"=> array(
+            "cn"          => _("Role name"),
+            "description" => _("Role description"))
+
+          ));
+  }
+
+
+  /* Remove acls defined for $src */
+  function remove_acl()
+  {
+    $this->remove_acl_for_dn($this->dn);
+  }
+
+
+  /* Remove acls defined for $src */
+  function remove_acl_for_dn($src = "")
+  {
+    if($src == ""){
+      $src = $this->dn;
+    }
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd($this->config->current['BASE']);
+    $ldap->search("(&(objectClass=gosaAcl)(gosaAclEntry=*".base64_encode($src)."*))",array("gosaAclEntry","dn"));
+    while($attrs = $ldap->fetch()){
+      $acl = new acl($this->config,$this->parent,$attrs['dn']);
+      foreach($acl->gosaAclEntry as $id => $entry){
+        foreach($entry['members'] as $m_id => $member){
+          if($m_id == "U:".$src){
+            unset($acl->gosaAclEntry[$id]['members'][$m_id]);
+            gosa_log("modify","users/acl",$attrs['dn'],array(),sprintf("Removed acl for user %s on object %s.",$src,$attrs['dn']));
+          }
+          if($m_id == "G:".$src){
+            unset($acl->gosaAclEntry[$id]['members'][$m_id]);
+            gosa_log("modify","groups/acl",$attrs['dn'],array(),sprintf("Removed acl for group %s on object %s.",$src,$attrs['dn']));
+          }
+        }
+      }
+      $acl -> save();
+    }
+  }
+
+  function update_acl_membership($src,$dst)
+  {
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd($this->config->current['BASE']);
+    $ldap->search("(&(objectClass=gosaAcl)(gosaAclEntry=*".base64_encode($src)."*))",array("gosaAclEntry","dn"));
+    while($attrs = $ldap->fetch()){
+      $acl = new acl($this->config,$this->parent,$attrs['dn']);
+      foreach($acl->gosaAclEntry as $id => $entry){
+        foreach($entry['members'] as $m_id => $member){
+          if($m_id == "U:".$src){
+            unset($acl->gosaAclEntry[$id]['members'][$m_id]);
+            $new = "U:".$dst;
+            $acl->gosaAclEntry[$id]['members'][$new] = $new;
+            gosa_log("modify","users/acl",$attrs['dn'],array(),sprintf("Updated acl for user %s on object %s.",$src,$attrs['dn']));
+          }
+          if($m_id == "G:".$src){
+            unset($acl->gosaAclEntry[$id]['members'][$m_id]);
+            $new = "G:".$dst;
+            $acl->gosaAclEntry[$id]['members'][$new] = $new;
+            gosa_log("modify","groups/acl",$attrs['dn'],array(),sprintf("Updated acl for group %s on object %s.",$src,$attrs['dn']));
+          }
+        }
+      }
+      $acl -> save();
+    }
+  }
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

@@ -286,26 +286,6 @@ class divListACL extends MultiSelectWindow
     return(array("gosaAccount","gosaDepartment"));
   }
 
-  
-  /* Return plugin informations for acl handling */
-  function plInfo()
-  {
-    return (array(
-          "plShortName"   => _("ACL"),
-          "plDescription" => _("ACL")._("Access control list").")",
-          "plSelfModify"  => FALSE,
-          "plDepends"     => array(),
-          "plPriority"    => 0,
-          "plSection"     => array("administration"),
-          "plCategory"    => array("acl" => array("description"  => _("ACL")."&nbsp;&amp;&nbsp;"._("ACL roles"),
-                                                          "objectClass"  => array("gosaAcl","gosaRole"))),
-          "plProvidedAcls"=> array(
-            "cn"          => _("Role name"),
-            "description" => _("Role description"))
-
-          ));
-  }
-
 
 
 }
