@@ -549,6 +549,11 @@ class group extends plugin
       $acl -> save();
     }
 
+    /* Remove ACL dependencies too,
+     */
+    $tmp = new acl($this->config,$this->parent,$this->dn);
+    $tmp->remove_acl();
+
     /* Send signal to the world that we've done */
     $this->handle_post_events("remove");
   }
@@ -763,6 +768,13 @@ class group extends plugin
     $ldap->cd($this->dn);
     $this->cleanup();
     $ldap->$mode($this->attrs);
+
+    /* Remove ACL dependencies too,
+     */
+    if($this->dn != $this->orig_dn && $this->orig_dn != "new"){
+      $tmp = new acl($this->config,$this->parent,$this->dn);
+      $tmp->update_acl_membership($this->orig_dn,$this->dn);
+    }
 
     if($this->initially_was_account){
       new log("modify","groups/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
