@@ -33,6 +33,7 @@ class Step_Config3 extends setup_step
               "forcessl" => false,
               "ldapstats" => false,
               "warnssl" => true,
+              "user_filter_cookie" => true,
               "ppd_path" => "/var/spool/ppd/",
               "ppd_path_active" => FALSE,
               "compile" =>  "/var/spool/gosa",
@@ -97,7 +98,7 @@ class Step_Config3 extends setup_step
         }
       }
       
-      foreach(array("list_summary","strict_units","noprimarygroup","forceglobals","forcessl","ldapstats","warnssl","compile","debuglevel","session_lifetime") as $name){
+      foreach(array("list_summary","strict_units","noprimarygroup","forceglobals","forcessl","ldapstats","user_filter_cookie","warnssl","compile","debuglevel","session_lifetime") as $name){
         if(isset($_POST[$name])){
           $this->optional[$name] = get_post($name);
         }

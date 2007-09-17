@@ -282,12 +282,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])){
 
       /* Restore filter settings from cookie, if available 
        */
-      $cookie_vars= array("MultiDialogFilters","CurrentMainBase");
-      foreach($cookie_vars as $var){
-        if(isset($_COOKIE[$var])){
-          $_SESSION[$var] = unserialize(base64_decode($_COOKIE[$var]));
-        }elseif(isset($HTTP_COOKIE_VARS[$var])){
-          $_SESSION[$var] = unserialize(base64_decode($HTTP_COOKIE_VARS[$var]));
+      if(isset($config->data['MAIN']['SAVE_FILTER']) && preg_match("/true/",$config->data['MAIN']['SAVE_FILTER'])){
+        $cookie_vars= array("MultiDialogFilters","CurrentMainBase");
+        foreach($cookie_vars as $var){
+          if(isset($_COOKIE[$var])){
+            $_SESSION[$var] = unserialize(base64_decode($_COOKIE[$var]));
+          }elseif(isset($HTTP_COOKIE_VARS[$var])){
+            $_SESSION[$var] = unserialize(base64_decode($HTTP_COOKIE_VARS[$var]));
+          }
         }
       }
 

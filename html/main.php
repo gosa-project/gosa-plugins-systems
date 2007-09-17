@@ -386,10 +386,12 @@ $display= $header.$smarty->fetch(get_template_path('framework.tpl'));
 /* Save dialog filters and selected base in a cookie. 
    So we may be able to restore the filter an base settings on reload.
 */
-$cookie_vars = array("MultiDialogFilters","CurrentMainBase");
-foreach($cookie_vars as $var){
-  if(isset($_SESSION[$var])){
-    setcookie($var,base64_encode(serialize($_SESSION[$var])),time()+ 60*60*24*30);
+if(isset($config->data['MAIN']['SAVE_FILTER']) && preg_match("/true/",$config->data['MAIN']['SAVE_FILTER'])){
+  $cookie_vars = array("MultiDialogFilters","CurrentMainBase");
+  foreach($cookie_vars as $var){
+    if(isset($_SESSION[$var])){
+      setcookie($var,base64_encode(serialize($_SESSION[$var])),time()+ 60*60*24*30);
+    }
   }
 }
 
