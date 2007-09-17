@@ -177,6 +177,21 @@ class faiTemplate extends plugin
       }
     }
 
+    /* Edit entries via GET */
+    if(isset($_GET['act']) && isset($_GET['id'])){
+      if($_GET['act'] == "edit" && isset($this->SubObjects[$_GET['id']])){
+        $obj = $this->SubObjects[$_GET['id']];
+          if($obj['status'] == "FreshLoaded"){
+          $obj  = $this->get_object_attributes($obj,$this->sub_Load_Later);
+        }
+        $this->dialog= new $this->subClassName($this->config,$this->dn,$obj);
+        $this->dialog->acl = $this->acl;
+        $_SESSION['objectinfo'] = $obj['dn'];
+        $this->dialog->parent = &$this;
+        $this->is_dialog=true;
+      }
+    }
+
     /* Add new sub object */
     if(isset($_POST['AddSubObject'])){
       $acl_dn = "cn=dummy,".$this->acl_base_for_current_object($this->dn);
@@ -296,7 +311,9 @@ class faiTemplate extends plugin
       /* Check if we are allowed to view this object */
       $s_acl = $this->ui->get_permissions($dn,"fai/faiTemplateEntry","cn")  ;
       if(preg_match("/r/",$s_acl)){
-        $divlist->AddEntry(array( array("string"=> $tmp[$key] ),
+
+        $edit_link = "<a href='?plug=".$_GET['plug']."&act=edit&id=".$key."'>".$tmp[$key]."</a>";
+        $divlist->AddEntry(array( array("string"=> $edit_link), 
               array("string"=>$down , "attach" => "style='width:20px;'"),
               array("string"=>str_replace("%s",base64_encode($key),$act),
                 "attach"=>"style='border-right: 0px;width:50px;text-align:right;'")));
