@@ -291,8 +291,8 @@ class divListACL extends MultiSelectWindow
   function plInfo()
   {
     return (array(
-          "plShortName"   => _("ACL")."&nbsp;&amp;&nbsp;"._("ACL roles"),
-          "plDescription" => _("ACL")."&nbsp;&amp;&nbsp;"._("ACL roles")."&nbsp;-&nbsp;("._("Access control list").")",
+          "plShortName"   => _("ACL"),
+          "plDescription" => _("ACL")._("Access control list").")",
           "plSelfModify"  => FALSE,
           "plDepends"     => array(),
           "plPriority"    => 0,
