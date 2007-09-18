@@ -403,20 +403,20 @@ class userinfo
 
   function cleanACL($acl, $reset= FALSE)
   {
-    foreach ($acl as $key => $value){
+    foreach ($acl as &$value){
 
       /* Reset removes everything but 'p' */
       if ($reset && $value != 'p'){
-        $acl[$key]= "";
+        $value= "";
         continue;
       }
 
       /* Decrease tree level */
-      if (preg_match('/^[0-9]+$/', $value)){
-        if ($value > 0){
-          $acl[$key]= $value - 1;
+      if (is_int($value)){
+        if ($value){
+          $value--;
         } else {
-          $acl[$key]= "";
+          $value= "";
         }
       }
     }
