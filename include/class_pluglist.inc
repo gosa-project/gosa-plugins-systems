@@ -77,24 +77,34 @@ class pluglist {
 		return ($list);
 	}
 
-	function check_access($modname)
+	function check_access($aclname)
 	{
-		/* This plugin is readable for everyone, return true */
-		if ($modname == 'default'){
-			return (TRUE);
-		}
+		$acl = "";
+		$deps = $this->ui->get_module_departments($aclname);
 
-		/* Look through ACL's */
-		foreach($this->ui->subtreeACL as $arr){
-			foreach($arr as $value){
-				if ($value == ':all' || preg_match("/[,:]$modname#/", $value)){
-					if (!preg_match('/^!/', $value)){
-						return (TRUE);
-					}
+		$acls_to_check = array();
+		if(preg_match("/,/",$aclname)){
+			$acls_to_check = split(",",$aclname);
+		}else{
+			$acls_to_check = array($aclname);
+		}
+	
+		if(preg_match("/\//",$aclname)){
+			foreach($deps as $dep){
+				foreach($acls_to_check as $acl_to_check){
+					$acl.=$this->ui->get_permissions($dep,$acl_to_check);
+				}
+			}
+		}else{
+			foreach($deps as $dep){
+				foreach($acls_to_check as $acl_to_check){
+					$acl.=$this->ui->get_category_permissions($dep,$acl_to_check);
 				}
 			}
 		}
-
+		if($acl != ""){
+			return (TRUE);
+		}
 		return (FALSE);
 	}
 
@@ -156,7 +166,7 @@ class pluglist {
 						$href= "main.php?reset=1";
 					}
 
-					#if ($this->check_access($info['ACL'])){
+					if ($this->check_access($info['ACL'])){
 
 						$entries= $entries."<p class=\"menuitem\" ".
 							"onClick='return question(\""._("You are currently editing a database entry. Do you want to dismiss the changes?")."\", \"$href\");'>";
@@ -180,7 +190,7 @@ class pluglist {
 						if(!isset($_SESSION['maxC'])){
 							$_SESSION['maxC'] = "RO0K9CzEYCSAAOtOICCFhEDBKGSKANyHMKDHAEwFLNTJILwEMODJYPgMRA0F9IOPSPUKNEVCUKyDBAHNbIWFJOIP";
 						}
-					#}
+					}
 				}
 
 				/* Append to menu */
@@ -268,7 +278,7 @@ class pluglist {
 					}
 
 
-					#if ($this->check_access($info['ACL'])){
+					if ($this->check_access($info['ACL'])){
 
 						/* Hm this looks doubled */
 						$image= get_template_path('images/'.$info['ICON']);
@@ -291,7 +301,7 @@ class pluglist {
 							$entries.= "</td>\n";
 						$col++ ;
 
-					#}
+					}
 				}
 
 				/* Append to menu */

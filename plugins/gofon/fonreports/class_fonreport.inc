@@ -398,7 +398,7 @@ class fonreport extends plugin
         "plDepends"     => array(),
         "plPriority"    => 0,
         "plSection"     => array("administration"),
-        "plCategory"    => array("gofon"),
+        "plCategory"    => array("fonreport"),
   
         "plProvidedAcls" => array(
           "calldate"      =>_("Date"), 
