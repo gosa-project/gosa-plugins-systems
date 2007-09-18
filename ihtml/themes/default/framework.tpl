@@ -45,6 +45,7 @@
       <table style="vertical-align:top; text-align:justify; background-color: white; border:1px solid #AAA; margin-top:0px; margin-left:7px; margin-right:7px; width:99%" summary="">
        <tr>
         <td>
+	{$msg_dialogs}
 	 {$contents}
        </td>
       </tr>

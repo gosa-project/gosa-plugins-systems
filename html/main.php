@@ -359,7 +359,12 @@ if (is_file("$plugin_dir/main.inc")){
 
 
 /* Print_out last ErrorMessage repeated string. */
+#msg_dialog::display("Error"   ,"Kann datei nicht schreiben, bla",ERROR_DIALOG);
+#msg_dialog::display("Warning" ,"Kann datei nicht schreiben, bla",WARNING_DIALOG);
+#msg_dialog::display("Info"    ,"Kann datei nicht schreiben, bla",INFO_DIALOG);
+#msg_dialog::display("Confirm" ,"Kann datei nicht schreiben, bla",CONFIRM_DIALOG);
 
+$smarty->assign("msg_dialogs", msg_dialog::get_dialogs());
 $smarty->assign("contents", $display);
 
 /* Assign erros to smarty */
