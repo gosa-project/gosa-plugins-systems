@@ -79,7 +79,6 @@ class pluglist {
 
 	function check_access($aclname)
 	{
-		$acl = "";
 		$deps = $this->ui->get_module_departments($aclname);
 
 		$acls_to_check = array();
@@ -92,18 +91,19 @@ class pluglist {
 		if(preg_match("/\//",$aclname)){
 			foreach($deps as $dep){
 				foreach($acls_to_check as $acl_to_check){
-					$acl.=$this->ui->get_permissions($dep,$acl_to_check);
+					if($this->ui->get_permissions($dep,$acl_to_check) != ""){
+						return(TRUE);
+					}
 				}
 			}
 		}else{
 			foreach($deps as $dep){
 				foreach($acls_to_check as $acl_to_check){
-					$acl.=$this->ui->get_category_permissions($dep,$acl_to_check);
+					if($this->ui->get_category_permissions($dep,$acl_to_check) != ""){
+						return(TRUE);
+					}
 				}
 			}
-		}
-		if($acl != ""){
-			return (TRUE);
 		}
 		return (FALSE);
 	}
