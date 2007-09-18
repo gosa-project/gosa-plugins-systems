@@ -10,7 +10,6 @@
 {render acl=$gotoBootKernelACL}
         <select id="gotoBootKernel" name="gotoBootKernel">
          {html_options options=$gotoBootKernels selected=$gotoBootKernel}
-         <option disabled>&nbsp;</option>
 	</select>
 {/render}
       </td>
