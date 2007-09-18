@@ -91,7 +91,6 @@ install-stamp:
 	-rm -rf debian/gosa/usr/share/gosa/gen_pdf_help.sh
 	-rm -rf debian/gosa/usr/share/gosa/patch-stamp
 	-rm -rf debian/gosa/usr/share/gosa/gen_online_help.sh
-	-rm -rf debian/gosa/usr/share/gosa/gen_function_list.php
 	-rm -rf debian/gosa/usr/share/gosa/update.sh
 	-rm -rf debian/gosa/usr/share/doc/gosa/guide*
 	sed 's%"CONFIG_TEMPLATE_DIR", "../contrib/"%"CONFIG_TEMPLATE_DIR", "/usr/share/doc/gosa/contrib/"%g' debian/gosa/usr/share/gosa/include/functions.inc > debian/gosa/usr/share/gosa/include/functions.inc.new; \
