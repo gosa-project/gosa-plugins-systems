@@ -1,0 +1,50 @@
+#!/usr/bin/php5
+<?php
+
+/* Function to include all class_ files starting at a given directory base */
+function get_classes($folder= ".")
+{
+  static $result= array();
+
+  $currdir=getcwd();
+  if ($folder){
+    chdir("$folder");
+  }
+
+  $dh = opendir(".");
+  while(false !== ($file = readdir($dh))){
+
+    if (preg_match("/.*\.svn.*/", $file) ||
+        preg_match("/.*smarty.*/i",$file) ||
+        preg_match("/.*\.tpl.*/",$file) ||
+        ($file==".") ||($file =="..")){
+      continue;
+    }
+
+    /* Recurse through all "common" directories */
+    if (is_dir($file)){
+      get_classes($file);
+      continue;
+    }
+
+    /* Include existing class_ files */
+    if (preg_match("/^class_.*\.inc$/", $file)) {
+      
+      $result[]= "$currdir/$folder/$file";
+    }
+  }
+
+  closedir($dh);
+  chdir($currdir);
+
+  return ($result);
+}
+
+print_r(get_declared_classes());
+exit (0);
+$class_mapping= get_classes();
+foreach ($class_mapping as $key => $value){
+  echo "$key located in $value\n";
+}
+
+?>
