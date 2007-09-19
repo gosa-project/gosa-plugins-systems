@@ -144,7 +144,7 @@ class plugin
     if ($dn != NULL){
 
       /* Load data to 'attrs' and save 'dn' */
-      if ($parent != NULL){
+      if ($parent !== NULL){
         $this->attrs= $parent->attrs;
       } else {
         $ldap->cat ($dn);

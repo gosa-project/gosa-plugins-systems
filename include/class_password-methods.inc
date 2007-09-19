@@ -246,9 +246,6 @@ function generate_smb_nt_hash($password)
 
 function crypt_single($string,$enc_type )
 {
-  if(!class_exists("passwordMethod")){
-    require_once("class_password-methods.inc");
-  }
   return( passwordMethod::crypt_single_str($string,$enc_type));
 }
 

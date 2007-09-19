@@ -22,7 +22,6 @@
 require_once ("../include/php_setup.inc");
 require_once ("functions.inc");
 header("Content-type: text/html; charset=UTF-8");
-get_dir_list("$BASE_DIR/plugins");
 
 /* try to start session, so we can remove userlocks, 
   if the old session is still available */

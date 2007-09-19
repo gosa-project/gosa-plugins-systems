@@ -9,10 +9,6 @@
   and displays the formulars required.
  */
 
-/* Load mail methods */
-global $BASE_DIR;
-get_dir_list("$BASE_DIR/include");
-
 class mailAccount extends plugin
 {
   /* Definitions */
@@ -83,6 +79,7 @@ class mailAccount extends plugin
     /*  Set mailMethod to the one defined in gosa.conf */
     if (isset($this->config->current['MAILMETHOD'])){
       $method= $this->config->current['MAILMETHOD'];
+      __autoload("mailMethod$method");
       if (class_exists("mailMethod$method")){
         $this->method= "mailMethod$method";
       } else {
@@ -103,7 +100,7 @@ class mailAccount extends plugin
     }
     
     /* This is not a new account, parse additional attributes */
-    if (($dn != NULL) && ($dn != "new") && $this->is_account){
+    if (($dn !== NULL) && ($dn != "new") && $this->is_account){
 
       /* Load attributes containing arrays */
       foreach (array("gosaMailAlternateAddress", "gosaMailForwardingAddress") as $val){
@@ -281,7 +278,7 @@ class mailAccount extends plugin
     }
 
     /* Do we represent a valid account? */
-    if (!$this->is_account && $this->parent == NULL){
+    if (!$this->is_account && $this->parent === NULL){
       $display= "<img alt=\"\" src=\"images/stop.png\" align=\"middle\">&nbsp;<b>".
         _("This account has no mail extensions.")."</b>";
 
@@ -290,7 +287,7 @@ class mailAccount extends plugin
     }
 
     /* Show tab dialog headers */
-    if ($this->parent != NULL){
+    if ($this->parent !== NULL){
       if ($this->is_account){
         if($this->accountDelegationsConfigured()){
           $display= $this->show_disable_header(_("Remove mail account"),
