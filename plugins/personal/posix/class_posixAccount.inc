@@ -97,7 +97,7 @@ class posixAccount extends plugin
 
     $ldap= $this->config->get_ldap_link();
 
-    if ($dn != NULL){
+    if ($dn !== NULL){
 
       /* Correct is_account. shadowAccount is not required. */
       if (isset($this->attrs['objectClass']) &&
@@ -249,7 +249,7 @@ class posixAccount extends plugin
       }
 
       /* Do we represent a valid posixAccount? */
-      if (!$this->is_account && $this->parent == NULL ){
+      if (!$this->is_account && $this->parent === NULL ){
         $display= "<img alt=\"\" src=\"images/stop.png\" align=\"middle\">&nbsp;<b>".
           _("This account has no unix extensions.")."</b>";
         $display.= back_to_main();
@@ -258,7 +258,7 @@ class posixAccount extends plugin
 
 
       /* Show tab dialog headers */
-      if ($this->parent != NULL){
+      if ($this->parent !== NULL){
         if ($this->is_account){
           if (isset($this->parent->by_object['sambaAccount'])){
             $obj= $this->parent->by_object['sambaAccount'];
@@ -807,7 +807,7 @@ class posixAccount extends plugin
     }
 
     /* Fill gecos */
-    if (isset($this->parent) && $this->parent != NULL){
+    if (isset($this->parent) && $this->parent !== NULL){
       $this->gecos= rewrite($this->parent->by_object['user']->cn);
       if (!preg_match('/^[a-z0-9 -]+$/i', $this->gecos)){
         $this->gecos= "";

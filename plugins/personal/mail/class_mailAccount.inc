@@ -61,6 +61,8 @@ class mailAccount extends plugin
      'dn' from LDAP */
   function mailAccount (&$config, $dn= NULL)
   {
+    global $class_mapping;
+
     /* Load bases attributes */
     plugin::plugin($config, $dn);
 
@@ -79,8 +81,7 @@ class mailAccount extends plugin
     /*  Set mailMethod to the one defined in gosa.conf */
     if (isset($this->config->current['MAILMETHOD'])){
       $method= $this->config->current['MAILMETHOD'];
-      __autoload("mailMethod$method");
-      if (class_exists("mailMethod$method")){
+      if (isset($class_mapping["mailMethod$method"])){
         $this->method= "mailMethod$method";
       } else {
         print_red(sprintf(_("There is no mail method '%s' specified in your gosa.conf available."), $method));
