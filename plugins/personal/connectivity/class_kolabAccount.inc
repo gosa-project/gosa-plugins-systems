@@ -60,7 +60,7 @@ class kolabAccount extends plugin
     } 
 
     /* Transfer account states for this union */
-    if (isset($this->parent) && $this->parent->by_object['mailAccount']->is_account){
+    if (isset($this->parent->by_object['mailAccount']) && $this->parent->by_object['mailAccount']->is_account){
       $this->mail_Account = true;
      }elseif( isset($this->attrs) && isset($this->attrs['kolabHomeServer'])){
        $this->mail_Account= true;

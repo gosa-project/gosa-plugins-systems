@@ -206,7 +206,7 @@ class divListBlocklist extends MultiSelectWindow
       }
 
       /* Cutted objects should be displayed in light grey */
-      if($this->parent->CopyPasteHandler){
+      if(isset($this->parent->CopyPasteHandler->queue) && is_array($this->parent->CopyPasteHandler->queue)){
         foreach($this->parent->CopyPasteHandler->queue as $queue_key => $queue_data){
           if($queue_data['dn'] == $acl_entry['dn']) {
             $display = "<font color='#999999'>".$display."</font>";
