@@ -27,7 +27,9 @@
 			height:100%;
 			filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=scale, src='images/opacity_black.png'); ">
 {else}
-	<div  id='e_layer2{$i_ID}'>
+	<div  id='e_layer2{$i_ID}'
+			style='display:none;'
+			>
 <!--		style="
 			position: absolute;
 			left: 0px;
@@ -58,7 +60,6 @@
 {elseif $i_Type == INFO_DIALOG}
 					<img src='images/info.png' alt='{t}Information{/t}'>
 {/if}
-				<img alt='' src=''>
 				</td>
 				<td style='width:100%'>
 					<h1>{$s_Title}</h1>
@@ -70,13 +71,10 @@
 			<tr>
 				<td colspan='2' align='center'>
 {if $i_Type == ERROR_DIALOG || $i_Type == WARNING_DIALOG || $i_Type == INFO_DIALOG}
-					<button type='button' name='MSG_OK{$i_ID}' 
-						onClick='hide("e_layer{$i_ID}");hide("e_layer2{$i_ID}");'>{t}Ok{/t}</button>
+					<button type='button' name='MSG_OK{$i_ID}' onClick='next_msg_dialog();'>{t}Ok{/t}</button>
 {elseif $i_Type == CONFIRM_DIALOG}
-					<button type='submit' name='MSG_OK{$i_ID}'  	
-						onClick='hide("e_layer{$i_ID}");hide("e_layer2{$i_ID}");'>{t}Ok{/t}</button>
-					<button type='button' name='MSG_CANCEL{$i_ID}' 
-						onClick='hide("e_layer{$i_ID}");hide("e_layer2{$i_ID}");'>{t}Cancel{/t}</button>
+					<button type='submit' name='MSG_OK{$i_ID}' onClick='next_msg_dialog();'>{t}Ok{/t}</button>
+					<button type='button' name='MSG_CANCEL{$i_ID}' onClick='next_msg_dialog();'>{t}Cancel{/t}</button>
 {/if}
 				</td>
 			</tr>

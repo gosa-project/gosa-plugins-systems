@@ -448,4 +448,60 @@ function focus_field()
 }
 
 
+
+function next_msg_dialog()
+{
+	var s_pending = "";
+	var a_pending = new Array();
+	var i_id			= 0;
+	var i					= 0;
+	var tmp				= "";
+
+	if(document.getElementById('current_msg_dialogs')){
+		var cur_id = document.getElementById('current_msg_dialogs').value;
+		if(cur_id != ""){
+			hide('e_layer2' + cur_id); 	
+		}
+	}
+
+	if(document.getElementById('pending_msg_dialogs')){
+		s_pending = document.getElementById('pending_msg_dialogs').value;
+		a_pending = s_pending.split(",");
+		if(a_pending.length){
+				i_id = a_pending.pop();
+				for (i = 0 ; i < a_pending.length; ++i){
+						tmp = tmp + a_pending[i] + ',';
+				}
+				tmp = tmp.replace(/,$/g,"");
+				if(i_id != ""){
+						var ele = document.getElementById('e_layer2' + i_id);
+						ele.style.display= 'block'	;
+						document.getElementById('pending_msg_dialogs').value= tmp;
+						document.getElementById('current_msg_dialogs').value= i_id;
+				}
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // vim:ts=2:syntax
