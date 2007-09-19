@@ -39,7 +39,6 @@
 -->
 {/if}
 
-{if $i_Type == ERROR_DIALOG}
 	<div id='e_layer{$i_ID}'
 			style='left:20%;
 				right:20%;
@@ -52,7 +51,13 @@
 		<table style='width:100%' summary='' border=0>
 			<tr>
 				<td style='vertical-align:top;padding:10px'>
+{if $i_Type == ERROR_DIALOG}
 					<img src='images/error.png' alt='{t}Error{/t}'>
+{elseif $i_Type == WARNING_DIALOG}
+					<img src='images/warning.png'  alt='{t}Warning{/t}'>
+{elseif $i_Type == INFO_DIALOG}
+					<img src='images/info.png' alt='{t}Information{/t}'>
+{/if}
 				<img alt='' src=''>
 				</td>
 				<td style='width:100%'>
@@ -64,97 +69,17 @@
 			</tr>
 			<tr>
 				<td colspan='2' align='center'>
-					<button type='button' name='MSG_OK{$i_ID}' onClick='hide("e_layer{$i_ID}");hide("e_layer2{$i_ID}");'>{t}Ok{/t}</button>
-				</td>
-			</tr>
-		</table>
-	</div>
-</div>
-{elseif $i_Type == WARNING_DIALOG}
-	<div id='e_layer{$i_ID}'
-			style='left:20%;
-				right:20%;
-				top:30%;
-				background-color:white;
-				padding:5px;
-				border:5px solid yellow;
-				z-index:150;
-				position:absolute;'>
-		<table style='width:100%' summary='' border=0>
-			<tr>
-				<td style='vertical-align:top;padding:10px'>
-					<img src='images/warning.png'  alt='{t}Warning{/t}'>
-				</td>
-				<td style='width:100%'>
-					<h1>{$s_Title}</h1>
-					<b>{$s_Message}</b>
-					<br>
-					<br>
-				</td>
-			</tr>
-			<tr>
-				<td colspan='2' align='center'>
-					<button type='button' name='MSG_OK{$i_ID}' onClick='hide("e_layer{$i_ID}");hide("e_layer2{$i_ID}");'>{t}Ok{/t}</button>
-				</td>
-			</tr>
-		</table>
-	</div>
-</div>
-{elseif $i_Type == INFO_DIALOG}
-	<div id='e_layer{$i_ID}'
-			style='left:20%;
-				right:20%;
-				top:30%;
-				background-color:white;
-				padding:5px;
-				border:5px solid green;
-				z-index:150;
-				position:absolute;'>
-		<table style='width:100%' summary='' border=0>
-			<tr>
-				<td style='vertical-align:top;padding:10px'>
-					<img src='images/info.png' alt='{t}Information{/t}'>
-				</td>
-				<td style='width:100%'>
-					<h1>{$s_Title}</h1>
-					<b>{$s_Message}</b>
-				</td>
-			</tr>
-			<tr>
-				<td colspan='2' align='center'>
-						<button type='button' name='MSG_OK{$i_ID}' onClick='hide("e_layer{$i_ID}");hide("e_layer2{$i_ID}");'>{t}Ok{/t}</button>
-				</td>
-			</tr>
-		</table>
-	</div>
-</div>
+{if $i_Type == ERROR_DIALOG || $i_Type == WARNING_DIALOG || $i_Type == INFO_DIALOG}
+					<button type='button' name='MSG_OK{$i_ID}' 
+						onClick='hide("e_layer{$i_ID}");hide("e_layer2{$i_ID}");'>{t}Ok{/t}</button>
 {elseif $i_Type == CONFIRM_DIALOG}
-	<div id='e_layer{$i_ID}'
-			style='left:20%;
-				right:20%;
-				top:30%;
-				background-color:white;
-				padding:5px;
-				border:5px solid green;
-				z-index:150;
-				position:absolute;'>
-		<table style='width:100%' summary='' border=0>
-			<tr>
-				<td style='vertical-align:top;padding:10px'>
-					<img src='images/info.png' alt='{t}Information{/t}'>
-				</td>
-				<td style='width:100%'>
-					<h1>{$s_Title}</h1>
-					<b>{$s_Message}</b>
-				</td>
-			</tr>
-			<tr>
-				<td colspan='2' align='center'>
-					<button type='submit' name='MSG_OK{$i_ID}'  	onClick='hide("e_layer{$i_ID}");hide("e_layer2{$i_ID}");'>{t}Ok{/t}</button>
-					<button type='button' name='MSG_CANCEL{$i_ID}' onClick='hide("e_layer{$i_ID}");hide("e_layer2{$i_ID}");'>{t}Cancel{/t}</button>
+					<button type='submit' name='MSG_OK{$i_ID}'  	
+						onClick='hide("e_layer{$i_ID}");hide("e_layer2{$i_ID}");'>{t}Ok{/t}</button>
+					<button type='button' name='MSG_CANCEL{$i_ID}' 
+						onClick='hide("e_layer{$i_ID}");hide("e_layer2{$i_ID}");'>{t}Cancel{/t}</button>
+{/if}
 				</td>
 			</tr>
 		</table>
 	</div>
 </div>
-{/if}
