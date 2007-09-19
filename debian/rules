@@ -87,11 +87,10 @@ install-stamp:
 	-cp -R debian/gosa-desktop.desktop debian/gosa-desktop/usr/share/applications/gosa.desktop
 	-rm -rf debian/gosa/usr/share/gosa/contrib
 	-rm -rf debian/gosa/usr/share/gosa/locale/en
-	-rm -rf debian/gosa/usr/share/gosa/gen_locale.sh
-	-rm -rf debian/gosa/usr/share/gosa/gen_pdf_help.sh
+	-rm -rf debian/gosa/usr/share/gosa/update-locale
+	-rm -rf debian/gosa/usr/share/gosa/update-pdf-help
 	-rm -rf debian/gosa/usr/share/gosa/patch-stamp
-	-rm -rf debian/gosa/usr/share/gosa/gen_online_help.sh
-	-rm -rf debian/gosa/usr/share/gosa/update.sh
+	-rm -rf debian/gosa/usr/share/gosa/update-online-help
 	-rm -rf debian/gosa/usr/share/doc/gosa/guide*
 	sed 's%"CONFIG_TEMPLATE_DIR", "../contrib/"%"CONFIG_TEMPLATE_DIR", "/usr/share/doc/gosa/contrib/"%g' debian/gosa/usr/share/gosa/include/functions.inc > debian/gosa/usr/share/gosa/include/functions.inc.new; \
 	mv debian/gosa/usr/share/gosa/include/functions.inc.new debian/gosa/usr/share/gosa/include/functions.inc;
