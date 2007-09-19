@@ -68,7 +68,7 @@ class msg_dialog
 
 		$seen = "";
 		if(isset($_POST['closed_msg_dialogs'])){
-			$seen = $_POST['closed_msg_dialogs'];
+#			$seen = $_POST['closed_msg_dialogs'];
 		}
 
 		if(isset($_SESSION['msg_dialogs']) && is_array($_SESSION['msg_dialogs'])){
@@ -81,6 +81,7 @@ class msg_dialog
 					$return.= $dialog->execute();
 					$dialog_ids= $dialog->get_ID().",".$dialog_ids;
 				}
+				unset($_SESSION['msg_dialogs'][$key]);
 			}
 		}
 		$dialog_ids = preg_replace("/,$/","",$dialog_ids);
