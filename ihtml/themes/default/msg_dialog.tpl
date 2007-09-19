@@ -57,7 +57,7 @@
 					<img src='images/error.png' alt='{t}Error{/t}'>
 {elseif $i_Type == WARNING_DIALOG}
 					<img src='images/warning.png'  alt='{t}Warning{/t}'>
-{elseif $i_Type == INFO_DIALOG}
+{elseif $i_Type == INFO_DIALOG || $i_Type == CONFIRM_DIALOG}
 					<img src='images/info.png' alt='{t}Information{/t}'>
 {/if}
 				</td>

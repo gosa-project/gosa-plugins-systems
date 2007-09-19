@@ -56,18 +56,30 @@ class msg_dialog
 	public static function get_dialogs()
 	{
 		$return  ="";
-		$dialog_ids= "";	
+		$dialog_ids= "";
+
+		$seen = "";
+		if(isset($_POST['closed_msg_dialogs'])){
+			$seen = $_POST['closed_msg_dialogs'];
+		}
+
 		if(isset($_SESSION['msg_dialogs']) && is_array($_SESSION['msg_dialogs'])){
+
 			foreach($_SESSION['msg_dialogs'] as $key => $dialog){
-				$return.= $dialog->execute();
-				$dialog_ids= $dialog->get_ID().",".$dialog_ids;
+
+				if(preg_match("/".$dialog->get_ID()."/",$seen)){
+					unset($_SESSION['msg_dialogs'][$key]);
+				}else{
+					$return.= $dialog->execute();
+					$dialog_ids= $dialog->get_ID().",".$dialog_ids;
+				}
 			}
 		}
-		unset($_SESSION['msg_dialogs']);
 		$dialog_ids = preg_replace("/,$/","",$dialog_ids);
 		
-		$return .="<input type='text' style='width:400px;' name='pending_msg_dialogs' id='pending_msg_dialogs' value='".$dialog_ids."'>";
-		$return .="<input type='text' style='width:400px;' name='current_msg_dialogs' id='current_msg_dialogs' value=''>";
+		$return .="<input type='hidden' style='width:400px;' name='pending_msg_dialogs' id='pending_msg_dialogs' value='".$dialog_ids."'>";
+		$return .="<input type='hidden' style='width:400px;' name='closed_msg_dialogs' id='closed_msg_dialogs' value=''>";
+		$return .="<input type='hidden' style='width:400px;' name='current_msg_dialogs' id='current_msg_dialogs' value=''>";
 		return($return);
 	}
 }

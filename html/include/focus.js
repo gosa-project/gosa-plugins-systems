@@ -461,6 +461,8 @@ function next_msg_dialog()
 		var cur_id = document.getElementById('current_msg_dialogs').value;
 		if(cur_id != ""){
 			hide('e_layer2' + cur_id); 	
+			document.getElementById('closed_msg_dialogs').value += "," + cur_id;
+			document.getElementById('current_msg_dialogs').value= ""; 
 		}
 	}
 
@@ -478,6 +480,7 @@ function next_msg_dialog()
 						ele.style.display= 'block'	;
 						document.getElementById('pending_msg_dialogs').value= tmp;
 						document.getElementById('current_msg_dialogs').value= i_id;
+
 				}
 		}
 	}

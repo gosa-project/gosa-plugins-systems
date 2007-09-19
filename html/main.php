@@ -359,10 +359,12 @@ if (is_file("$plugin_dir/main.inc")){
 
 
 /* Print_out last ErrorMessage repeated string. */
-#msg_dialog::display("Error"   ,"Kann datei nicht schreiben, bla",ERROR_DIALOG);
-#msg_dialog::display("Warning" ,"Kann datei nicht schreiben, bla",WARNING_DIALOG);
-#msg_dialog::display("Info"    ,"Kann datei nicht schreiben, bla",INFO_DIALOG);
-#msg_dialog::display("Confirm" ,"Kann datei nicht schreiben, bla",CONFIRM_DIALOG);
+if(isset($_GET['add'])){
+msg_dialog::display("Error"   ,"Kann datei nicht schreiben, bla",ERROR_DIALOG);
+msg_dialog::display("Warning" ,"Kann datei nicht schreiben, bla",WARNING_DIALOG);
+msg_dialog::display("Info"    ,"Kann datei nicht schreiben, bla",INFO_DIALOG);
+msg_dialog::display("Confirm" ,"Kann datei nicht schreiben, bla",CONFIRM_DIALOG);
+}
 
 $smarty->assign("msg_dialogs", msg_dialog::get_dialogs());
 $smarty->assign("contents", $display);
@@ -384,6 +386,12 @@ if (isset($_SESSION['errors']) && $_SESSION['errors'] != ""){
   $focus.= 'document.forms[0].error_accept.focus();';
   $focus.= '</script>';
 }
+
+ $focus= '<script language="JavaScript" type="text/javascript">';
+  $focus.= 'next_msg_dialog();';
+  $focus.= '</script>';
+
+
 $smarty->assign("focus", $focus);
 
 $display= $header.$smarty->fetch(get_template_path('framework.tpl'));
