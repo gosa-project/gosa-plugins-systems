@@ -100,7 +100,7 @@ function get_dir_list($folder= ".")
     // Skip . / ..
 
     // Result  : from 1023 ms to 490 ms   i think thats great...
-    if(preg_match("/.*\.svn.*/i",$file)||preg_match("/.*smarty.*/i",$file)||preg_match("/.*\.tpl.*/",$file)||($file==".")||($file==".."))
+    if(preg_match("/.*\.svn.*/",$file)||preg_match("/.*smarty.*/i",$file)||preg_match("/.*\.tpl.*/",$file)||($file==".")||($file==".."))
       continue;
 
 
@@ -111,7 +111,7 @@ function get_dir_list($folder= ".")
     }
 
     /* Include existing class_ files */
-    if (!is_dir($file) && preg_match("/^class_.*\.inc$/", $file)) {
+    if (preg_match("/^class_.*\.inc$/", $file)) {
       require_once($file);
     }
   }
