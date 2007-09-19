@@ -319,7 +319,7 @@ class servdnseditZone extends plugin
     }
 
 
-    $div = new DivSelectBox("MxRecords");
+    $div = new divSelectBox("MxRecords");
     $div->setHeight(120);
     $recs = $this->mXRecords;
 

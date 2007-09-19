@@ -397,7 +397,7 @@ class acl extends plugin
 
     if ($this->dialogState == 'head'){
       /* Draw list */
-      $aclList= new DivSelectBox("aclList");
+      $aclList= new divSelectBox("aclList");
       $aclList->SetHeight(450);
       
       /* Fill in entries */
@@ -418,7 +418,7 @@ class acl extends plugin
 
     if ($this->dialogState == 'create'){
       /* Draw list */
-      $aclList= new DivSelectBox("aclList");
+      $aclList= new divSelectBox("aclList");
       $aclList->SetHeight(150);
 
       /* Add settings for all categories to the (permanent) list */
@@ -554,7 +554,7 @@ class acl extends plugin
 
   function buildRoleSelector($list)
   {
-    $D_List =new DivSelectBox("Acl_Roles");
+    $D_List =new divSelectBox("Acl_Roles");
  
     $selected = $this->aclContents;
     if(!is_string($this->aclContents) || !isset($list[$this->aclContents])){

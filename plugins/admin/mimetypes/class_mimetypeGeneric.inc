@@ -268,9 +268,9 @@ class mimetype extends plugin
     }	
 
     /* Create divlists */
-    $DivPatterns 	= new DivSelectBox("gotoMimePatterns");
-    $DivApps 		= new DivSelectBox("gotoMimeApplications");
-    $DivEApps 		= new DivSelectBox("gotoMimeEmbeddedApplications");
+    $DivPatterns 	= new divSelectBox("gotoMimePatterns");
+    $DivApps 		= new divSelectBox("gotoMimeApplications");
+    $DivEApps 		= new divSelectBox("gotoMimeEmbeddedApplications");
     $DivPatterns	-> SetHeight(100);
     $DivApps		-> SetHeight(100);
     $DivEApps		-> SetHeight(100);

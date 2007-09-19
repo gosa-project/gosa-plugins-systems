@@ -91,7 +91,7 @@ class SnapShotDialog extends plugin
 				$tmp = $this->Available_SnapsShots($this->dn,true);
 			}
 
-			$DivListSnapShots = new DivSelectBox("SnapShotRestore");
+			$DivListSnapShots = new divSelectBox("SnapShotRestore");
 			$DivListSnapShots->SetHeight(180);
 
 			$list_of_elements = array();			

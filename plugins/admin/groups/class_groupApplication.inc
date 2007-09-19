@@ -652,7 +652,7 @@ class appgroup extends plugin
 
 
     /* Create application list */
-    $div = new DivSelectBox("appgroup");    
+    $div = new divSelectBox("appgroup");    
     $div->SetHeight(300);
     $departments = array();
     $res = get_list("(objectClass=gosaDepartment)", "application", $this->curbase,array("description","cn","ou"),GL_SIZELIMIT);
@@ -702,7 +702,7 @@ class appgroup extends plugin
     }
 
     /* Create list of used/assigned applications */
-    $div2 = new DivSelectBox("appgroup");
+    $div2 = new divSelectBox("appgroup");
     $div2->SetHeight(300);
 
     /* Check acls to create "edit/remove" category links */

@@ -328,7 +328,7 @@ class aclrole extends acl
 
     if ($this->dialogState == 'head'){
       /* Draw list */
-      $aclList= new DivSelectBox("aclList");
+      $aclList= new divSelectBox("aclList");
       $aclList->SetHeight(350);
       
       /* Fill in entries */
@@ -349,7 +349,7 @@ class aclrole extends acl
 
     if ($this->dialogState == 'create'){
       /* Draw list */
-      $aclList= new DivSelectBox("aclList");
+      $aclList= new divSelectBox("aclList");
       $aclList->SetHeight(450);
 
       /* Add settings for all categories to the (permanent) list */
