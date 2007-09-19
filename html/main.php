@@ -29,9 +29,6 @@ require_once ("functions_FAI.inc");
 /* Set header */
 header("Content-type: text/html; charset=UTF-8");
 
-/* Find all class files and include them */
-get_dir_list("$BASE_DIR/plugins");
-
 /* Set the text domain as 'messages' */
 $domain = 'messages';
 bindtextdomain($domain, "$BASE_DIR/locale");
@@ -153,8 +150,16 @@ textdomain($domain);
 
 /* Prepare plugin list */
 if (!isset($_SESSION['plist'])){
-  $_SESSION['plist']= new pluglist($config, $ui);
+  /* Initially load all classes */
+  $class_list= get_declared_classes();
+  foreach ($class_mapping as $class => $path){
+    if (!in_array($class, $class_list)){
+        require_once("$BASE_DIR/$path");
+    }
+  }
   
+  $_SESSION['plist']= new pluglist($config, $ui);
+
   /* Load ocMapping into userinfo */
   $tmp= new acl($config, NULL, $ui->dn);
   $ui->ocMapping= $tmp->ocMapping;

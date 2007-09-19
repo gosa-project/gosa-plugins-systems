@@ -8,15 +8,9 @@
  * did not receive this file, see http://www.fsf.org/copyleft/gpl.html.
  */
 
-define(DES_CBC_CRC,1);
-define(DES_CBC_MD4,2);
-define(DES_CBC_MD5,3);
-define(DES3_CBC_MD5,5);
-define(DES3_CBC_SHA1,16);
-
-include("deslib.php");
-include("mkey.php");
-include("asnencode.php");
+require_once("deslib.php");
+require_once("mkey.php");
+require_once("asnencode.php");
 
 class genkey{
 

@@ -1,7 +1,5 @@
 <?php
 
-require_once("class_goService.inc");
-
 class govirusserver extends goService{
 	
   /* This plugin only writes its objectClass */

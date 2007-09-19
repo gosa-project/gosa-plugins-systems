@@ -4,7 +4,12 @@
 /* Function to include all class_ files starting at a given directory base */
 function get_classes($folder= ".")
 {
+  static $base_dir= "";
   static $result= array();
+
+  if ($base_dir == ""){
+    $base_dir= getcwd();
+  }
 
   $currdir=getcwd();
   if ($folder){
@@ -27,10 +32,19 @@ function get_classes($folder= ".")
       continue;
     }
 
+    /* Only take care about .inc and .php files... */
+    if (!(preg_match('/\.php$/', $file) || preg_match('/\.inc$/', $file))){
+      continue;
+    }
+
     /* Include existing class_ files */
-    if (preg_match("/^class_.*\.inc$/", $file)) {
-      
-      $result[]= "$currdir/$folder/$file";
+    $contents= file($file);
+    foreach($contents as $line){
+      $line= chop($line);
+      if (preg_match('/^\s*class\s*\w.*$/', $line)){
+        $class= preg_replace('/^\s*class\s*(\w+).*$/', '\1', $line);
+        $result[$class]= preg_replace("%$base_dir/%", "", "$currdir/$folder/$file");
+      }
     }
   }
 
@@ -40,11 +54,28 @@ function get_classes($folder= ".")
   return ($result);
 }
 
-print_r(get_declared_classes());
-exit (0);
 $class_mapping= get_classes();
-foreach ($class_mapping as $key => $value){
-  echo "$key located in $value\n";
+$filename= "include/class_location.inc";
+
+/* Sanity checks */
+if (is_writable($filename)) {
+
+    if (!$handle= fopen($filename, 'w')) {
+         echo "Cannot open file \"$filename\" - aborted\n";
+         exit (1);
+    }
+
+} else {
+    echo "File \"$filename\" is not writable - aborted\n";
+    exit (2);
 }
+
+fwrite ($handle, "<?php\n\$class_mapping= array(\n");
+foreach ($class_mapping as $key => $value){
+  fwrite ($handle, "                \"$key\" => \"$value\",\n");
+}
+fwrite ($handle, " );\n?>");
+
+fclose($handle);
 
 ?>

@@ -1,7 +1,5 @@
 <?php
 
-require_once("class_goService.inc");
-
 class servdns extends goService
 {
   /* CLI vars */

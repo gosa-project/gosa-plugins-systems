@@ -9,9 +9,6 @@
   and displays the formulars required.
  */
 
-/* Load sieve support */
-require_once ("sieve/libsieve.inc");
-
 /* Load mail methods */
 global $BASE_DIR;
 get_dir_list("$BASE_DIR/include");

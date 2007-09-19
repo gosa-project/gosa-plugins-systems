@@ -1,7 +1,5 @@
 <?php
 
-require_once("class_goService.inc");
-
 class servkolab extends goService {
   /* CLI vars */
   var $cli_summary = "Manage server basic objects";

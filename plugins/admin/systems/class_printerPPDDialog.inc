@@ -47,7 +47,6 @@ class printerPPDDialog extends plugin
     if(!((!is_dir($this->pathToPPD))||(empty($this->pathToPPD)))){ 
 
       /* Load all available PPD files and sort them into an array */
-      require_once ("class_ppdManager.inc");
       $this->ppdManager= new ppdManager($this->pathToPPD);
       $this->getPrinterReload ();
 

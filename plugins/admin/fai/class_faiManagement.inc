@@ -18,15 +18,6 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-require "tabsPartition.inc";
-require "tabsVariable.inc";
-require "tabsHook.inc";
-require "tabsTemplate.inc";
-require "tabsScript.inc";
-require "tabsProfile.inc";
-require "tabsPackage.inc";
-
-
 class faiManagement extends plugin
 {
 	/* Definitions */

@@ -1,7 +1,5 @@
 <?php
 
-require_once("class_goService.inc");
-
 class goMailServer extends goService{
 	
   var $cli_summary      = "This pluign is used within the ServerService Pluign \nand indicates that this server supports mailqueue listings and so on.";

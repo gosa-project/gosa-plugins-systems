@@ -1,5 +1,4 @@
 <?php
-require_once("tabs_ldif.inc");
 
 class ldif extends plugin
 {

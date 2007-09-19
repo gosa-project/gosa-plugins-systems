@@ -17,14 +17,6 @@
    along with this program; if not, write to the Free Software
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-require "tabs_terminal.inc";
-require "tabs_workstation.inc";
-require "tabs_printers.inc";
-require "tabs_phone.inc";
-require "tabs_server.inc";
-require "tabs_component.inc";
-require "tabs_winstation.inc";
-
 
 class systems extends plugin
 {

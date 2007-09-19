@@ -79,7 +79,7 @@ class pluglist {
 
 	function check_access($aclname)
 	{
-		$deps = $this->ui->get_module_departments($aclname);
+		$deps= $this->ui->get_module_departments($aclname);
 
 		$acls_to_check = array();
 		if(preg_match("/,/",$aclname)){

@@ -170,12 +170,6 @@ class userinfo
       foreach($this->ocMapping[$category] as $oc){
         $acl.= $this->get_permissions($dn, $category."/".$oc);
       }
-    } else {
-      if (isset($this->ocMapping['all'])){
-        foreach($this->ocMapping['all'] as $oc){
-          $acl.= $this->get_permissions($dn, $category."/".$oc);
-        }
-      }
     }
 
     return ($acl);

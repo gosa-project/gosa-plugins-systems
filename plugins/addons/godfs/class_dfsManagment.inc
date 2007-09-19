@@ -1,7 +1,5 @@
 <?php
 
-require "tabs_dfs.inc";
-
 /* Create a class (name must be unique inside GOsa) which extends plugin. The plugin base
     class contains all methods that are used by GOsa and it provides the mechanism to load data
     from LDAP to local variables and prepare the save to ldap routine for you. */
@@ -27,9 +25,7 @@ class dfsManagment extends plugin {
   /* Execute is the function all plugins need. It fills the plugin with life and produces the output. */
   function execute() {
 	
-    require_once('TreeMenu.inc');
     /* Normally you would react to user input here. */
-
     plugin::execute();    
 
     $action = "";

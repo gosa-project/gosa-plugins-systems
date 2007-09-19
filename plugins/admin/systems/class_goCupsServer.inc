@@ -1,7 +1,5 @@
 <?php
 
-require_once("class_goService.inc");
-
 class goCupsServer extends goService{
 	
   var $cli_summary      = "This plugin is used within the ServerService Pluign \nand indicates that this server supports cups management.";

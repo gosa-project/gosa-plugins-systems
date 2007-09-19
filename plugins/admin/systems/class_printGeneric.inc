@@ -504,7 +504,6 @@ class printgeneric extends plugin
     }
 
     /* Parse selected ppd file */
-    require_once ("class_ppdManager.inc");
     if((isset($_SESSION['config']->data['MAIN']['PPD_PATH']))&&(is_dir($_SESSION['config']->data['MAIN']['PPD_PATH']))){
 
       $path = $_SESSION['config']->data['MAIN']['PPD_PATH'];

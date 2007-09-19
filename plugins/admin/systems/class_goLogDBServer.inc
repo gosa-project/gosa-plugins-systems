@@ -1,5 +1,4 @@
 <?php
-require_once("class_goService.inc");
 
 class goLogDBServer extends goService{
 	

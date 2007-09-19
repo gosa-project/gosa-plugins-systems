@@ -9,9 +9,6 @@
  */
 
 
-define(DEBUG,false);
-define(HDB_KU_MKEY,0x484442);
-
 class Des{
 
 	var $in;
@@ -674,7 +671,6 @@ class Des{
 			| ($PC1_DR[($tmp >>  9) & 0x7] << 2)
 			| ($PC1_DR[($tmp >>  1) & 0x7] << 3);
 		
-			define(TWO_BIT_SHIFTS,0x7efc);
 			$two_bit_shifts = TWO_BIT_SHIFTS;
 			$lix=0;
 			for ($i = 16; $i > 0; $i--) {

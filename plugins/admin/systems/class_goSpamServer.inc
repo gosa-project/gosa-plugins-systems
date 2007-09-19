@@ -1,7 +1,5 @@
 <?php
 
-require_once("class_goService.inc");
-
 class gospamserver extends goService{
 
   /* CLI vars */

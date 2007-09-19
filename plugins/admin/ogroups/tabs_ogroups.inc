@@ -65,7 +65,6 @@ class ogrouptabs extends tabs
   
         if(isset($obj['objectClass'])){
           if(in_array("goFonAccount",$obj['objectClass'])){
-            require_once("class_phonequeue.inc");
             $this->by_name['phonequeue']= _("Phone queue");
             $this->by_object['phonequeue']= new phonequeue($this->config, $this->dn);
             $this->by_object['phonequeue']->parent= &$this;
@@ -79,7 +78,6 @@ class ogrouptabs extends tabs
     if((preg_match("/U/",$objects))&&(!isset($this->by_object['mailogroup']))){
       if(isset($this->config->current['MAILMETHOD'])){
         if (preg_match('/kolab/i', $this->config->current['MAILMETHOD'])){
-          require_once("class_mailogroup.inc");
           $this->by_name['mailogroup']= _("Mail");
           $this->by_object['mailogroup']= new mailogroup($this->config, $this->dn);
           $this->by_object['mailogroup']->parent= &$this;
@@ -89,7 +87,6 @@ class ogrouptabs extends tabs
 
     /* Add Terminal tab */
     if(((preg_match("/T/",$objects)) || (preg_match("/W/",$objects)))&&(!isset($this->by_object['termgroup']))){
-      require_once("class_termgroup.inc");
       if(!isset($this->by_object['termgroup'])){
         $this->by_name['termgroup']= _("System");
         $this->by_object['termgroup']= new termgroup($this->config, $this->dn);
@@ -187,7 +184,6 @@ class ogrouptabs extends tabs
       switch ($objects[$n]){
         case "T":
           /* Add a terminal tab */
-          require_once("class_termgroup.inc");
           $this->by_name['termgroup']= _("Terminals");
           $this->by_object['termgroup']= new termgroup($this->config, $this->dn);
           $this->by_object['termgroup']->parent= &$this;
@@ -210,7 +206,6 @@ class ogrouptabs extends tabs
 
           /* We found goFonAccount in users objectClasses*/
           if($use){
-            require_once("class_phonequeue.inc");
             $this->by_name['phonequeue']= _("Phone queue");
             $this->by_object['phonequeue']= new phonequeue($this->config, $this->dn);
             $this->by_object['phonequeue']->parent= &$this;
@@ -219,7 +214,6 @@ class ogrouptabs extends tabs
           /* Add a user tab used for mail distribution lists */
           if(isset($this->config->current['MAILMETHOD'])){
             if (preg_match('/kolab/i', $this->config->current['MAILMETHOD'])){
-              require_once("class_mailogroup.inc");
               $this->by_name['mailogroup']= _("Mail");
               $this->by_object['mailogroup']= new mailogroup($this->config, $this->dn);
               $this->by_object['mailogroup']->parent= &$this;

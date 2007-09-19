@@ -18,9 +18,6 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-require_once("tabs_acl_role.inc");
-require_once("tabs_acl.inc");
-
 class aclManagement extends plugin
 {
   /* Plugin definitions */

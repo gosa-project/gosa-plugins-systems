@@ -30,24 +30,34 @@ define("GL_SUBSEARCH", 1);
 define("GL_SIZELIMIT", 2);
 define("GL_CONVERT"  , 4);
 
+/* Heimdal stuff */
+define('UNIVERSAL',0x00);
+define('INTEGER',0x02);
+define('OCTET_STRING',0x04);
+define('NULL',0x05);
+define('OBJECT_IDENTIFIER ',0x06);
+define('SEQUENCE',0x10);
+define('SEQUENCE_OF',0x10);
+define('SET',0x11);
+define('SET_OF',0x11);
+define('DEBUG',false);
+define('HDB_KU_MKEY',0x484442);
+define('TWO_BIT_SHIFTS',0x7efc);
+define('DES_CBC_CRC',1);
+define('DES_CBC_MD4',2);
+define('DES_CBC_MD5',3);
+define('DES3_CBC_MD5',5);
+define('DES3_CBC_SHA1',16);
+
 /* Define globals for revision comparing */
 $svn_path = '$HeadURL$';
 $svn_revision = '$Revision$';
 
 /* Include required files */
-require_once ("class_ldap.inc");
-require_once ("class_config.inc");
-require_once ("class_plugin.inc");
-require_once ("class_acl.inc");
-require_once ("class_pluglist.inc");
-require_once ("class_userinfo.inc");
-require_once ("class_tabs.inc");
-require_once ("class_mail-methods.inc");
-require_once ("class_password-methods.inc");
+require_once("class_location.inc");
 require_once ("functions_debug.inc");
 require_once ("functions_dns.inc");
 require_once ("accept-to-gettext.inc");
-require_once ("class_MultiSelectWindow.inc");
 
 /* Define constants for debugging */
 define ("DEBUG_TRACE",   1);
@@ -80,6 +90,17 @@ $REWRITE= array( "ä" => "ae",
     "Ú" => "U",
     "ñ" => "ny",
     "Ñ" => "Ny" );
+
+
+/* Class autoloader */
+function __autoload($class_name) {
+    global $class_mapping, $BASE_DIR;
+    if (isset($class_mapping[$class_name])){
+      require_once($BASE_DIR."/".$class_mapping[$class_name]);
+    } else {
+      echo _("Fatal: cannot load class \"$class_name\" - execution aborted");
+    }
+}
 
 
 /* Function to include all class_ files starting at a

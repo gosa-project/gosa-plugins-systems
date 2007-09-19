@@ -1,6 +1,5 @@
 <?php
 
-require_once("tabs_log.inc");
 class gosa_logview extends plugin
 {
   /* Definitions */
