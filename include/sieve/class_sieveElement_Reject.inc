@@ -33,7 +33,7 @@ class sieve_reject
      *  (This is the case when we add new elements in the ui) 
      * Set a default text. 
      */
-    if($data == NULL){
+    if($data === NULL){
       $this->data = _("Your reject text here");
     }else{
 

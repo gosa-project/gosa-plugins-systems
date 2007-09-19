@@ -95,7 +95,7 @@ class mailgroup extends plugin
 
     /* If this ins't new mailgroup, read all required data from ldap
      */
-    if (($dn != "new")&&($dn != NULL)){
+    if (($dn != "new")&&($dn !== NULL)){
 
       /* Load attributes which represent multiple entries  
        */
@@ -333,7 +333,7 @@ class mailgroup extends plugin
     $display = "";
 
     /* Do we represent a valid account? */
-    if (!$this->is_account && $this->parent == NULL){
+    if (!$this->is_account && $this->parent === NULL){
 
       $display.= "<img alt=\"\" src=\"images/stop.png\" align=middle>&nbsp;<b>".
         _("This 'dn' has no valid mail extensions.")."</b>";
@@ -342,7 +342,7 @@ class mailgroup extends plugin
 
     /* Show tab dialog headers */
     $display= "";
-    if ($this->parent != NULL){
+    if ($this->parent !== NULL){
       if ($this->is_account){
         $display.= $this->show_disable_header(_("Remove mail account"),
             _("This account has mail features enabled. You can disable them by clicking below."));

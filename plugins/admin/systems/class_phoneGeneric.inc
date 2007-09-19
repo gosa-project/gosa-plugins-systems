@@ -119,7 +119,7 @@ class phoneGeneric extends plugin
     }
 
     /* Do we represent a valid phone? */
-    if (!$this->is_account && $this->parent == NULL){
+    if (!$this->is_account && $this->parent === NULL){
       $display= "<img alt=\"\" src=\"images/stop.png\" align=middle>&nbsp;<b>".
         _("This 'dn' has no phone features.")."</b>";
       return($display);

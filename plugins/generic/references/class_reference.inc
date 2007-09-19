@@ -106,7 +106,7 @@ class reference extends plugin
 			}
 			foreach ($attrs[$memberattr] as $uid){
 				$content= $this->getCacheObject($uid);
-				if ($content == NULL) {
+				if ($content === NULL) {
 					continue;
 				}
 				$addon.= '<tr style="background-color:'.$cycle[$id&1].';"><td title="'.$attrs['cn'][0].'">&nbsp;&nbsp;&nbsp;'.$content['name'].'</td><td>'.$content['description'].'</td><td>'.$content['type'].'</td> </tr>';

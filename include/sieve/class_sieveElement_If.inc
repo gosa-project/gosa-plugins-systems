@@ -53,7 +53,7 @@ class sieve_if
         "ne"  => _("not equal"));
 
     /* Skip parsing if this element is new */
-    if($elements != NULL){
+    if($elements !== NULL){
 
       /* Remove comments from tests */  
       $tmp = array();
@@ -64,7 +64,7 @@ class sieve_if
       }
       $elements['ELEMENTS'] = $tmp;
 
-      if($elements!=NULL){
+      if($elements!==NULL){
         $this->elements = $elements;
         $this->_parsed  = $this->_parse($elements['ELEMENTS'],1);
       }
@@ -94,11 +94,11 @@ class sieve_if
   function check_recursive($parsed = NULL,$id = 1,$obj_id=1)
   {
     $ret = array();
-    if($parsed == NULL){
+    if($parsed === NULL){
       $parsed = $this->_parsed;
     }
 
-    if($parsed == NULL) {
+    if($parsed === NULL) {
         return(array(_("Can't save empty tests.")));
     }
 
@@ -162,7 +162,7 @@ class sieve_if
   function get_sieve_script_part_recursive($parsed = NULL,$id = 1,$obj_id=1)
   {
     $script ="";
-    if($parsed == NULL){
+    if($parsed === NULL){
       $parsed = $this->_parsed;
     }
 
@@ -525,7 +525,7 @@ class sieve_if
   {
     /* Variable initialization */ 
     $ret ="";
-    if($parsed == NULL){
+    if($parsed === NULL){
       $parsed = $this->_parsed;
     }
 
@@ -863,7 +863,7 @@ class sieve_if
   function get_as_html($parsed = NULL,$id = 1,$obj_id=1)
   {
     $ret ="";
-    if($parsed == NULL){
+    if($parsed === NULL){
       $parsed = $this->_parsed;
     }
 

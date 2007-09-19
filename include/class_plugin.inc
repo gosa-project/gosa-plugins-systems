@@ -141,7 +141,7 @@ class plugin
 
     /* Get LDAP descriptor */
     $ldap= $this->config->get_ldap_link();
-    if ($dn != NULL){
+    if ($dn !== NULL){
 
       /* Load data to 'attrs' and save 'dn' */
       if ($parent !== NULL){

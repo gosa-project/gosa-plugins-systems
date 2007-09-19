@@ -215,7 +215,7 @@ class ServerService extends plugin
 
 
     /* There is currently a subdialog open, display this dialog */
-    if($this->dialog != NULL){
+    if($this->dialog !== NULL){
       $this->dialog->save_object();
       return($this->dialog->execute());
     }

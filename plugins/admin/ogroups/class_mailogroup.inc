@@ -45,7 +45,7 @@ class mailogroup extends plugin
     }
 
     /* Show tab dialog headers */
-    if ($this->parent != NULL){
+    if ($this->parent !== NULL){
       if ($this->is_account){
         $display= $this->show_disable_header(_("Remove mail account"),
             _("This group has mail features enabled. You can disable them by clicking below."));

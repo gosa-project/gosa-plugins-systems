@@ -316,7 +316,7 @@ class printgeneric extends plugin
     }
 
     /* Do we represent a valid printer? */
-    if (!$this->is_account && $this->parent == NULL){
+    if (!$this->is_account && $this->parent === NULL){
       $display= "<img alt=\"\" src=\"images/stop.png\" align=middle>&nbsp;<b>".
         _("This 'dn' has no printer features.")."</b>";
       return($display);
@@ -497,7 +497,7 @@ class printgeneric extends plugin
     }
 
     /* Display dialog, if there is currently one open*/
-    if($this->dialog != NULL){
+    if($this->dialog !== NULL){
       $this->dialog->save_object();
       $display = $this->dialog->execute();
       return $display;

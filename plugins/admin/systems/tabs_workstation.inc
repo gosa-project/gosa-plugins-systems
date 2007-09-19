@@ -15,7 +15,7 @@ class worktabs extends tabs
     foreach ($data as $tab){
       $this->by_name[$tab['CLASS']]= $tab['NAME'];
 
-      if ($baseobject == NULL){
+      if ($baseobject === NULL){
         $baseobject= new $tab['CLASS']($this->config, $this->dn,NULL,$this);
         $this->by_object[$tab['CLASS']]= $baseobject;
       } else {

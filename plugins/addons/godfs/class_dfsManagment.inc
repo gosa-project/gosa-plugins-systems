@@ -199,7 +199,7 @@ class dfsManagment extends plugin {
     $treeMenu = new HTML_TreeMenu_DHTML($tree, array('images' => 'images', 'defaultClass' => 'treeMenuDefault'));
     $tree_html = $treeMenu->toHTML();
     
-    if ($this->dfstab == NULL) {
+    if ($this->dfstab === NULL) {
 
       if (($message = check_sizelimit()) != "") {
         return ($message);

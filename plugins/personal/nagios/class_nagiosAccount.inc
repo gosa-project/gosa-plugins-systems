@@ -105,7 +105,7 @@ class nagiosAccount extends plugin
     }    
 
     /* Do we represent a valid account? */
-    if (!$this->is_account && $this->parent == NULL){
+    if (!$this->is_account && $this->parent === NULL){
       $display= "<img alt=\"\"src=\"images/stop.png\" align=\"middle\">&nbsp;<b>".
         _("This account has no nagios extensions.")."</b>";
 
@@ -114,7 +114,7 @@ class nagiosAccount extends plugin
     }
 
     /* Show tab dialog headers */
-    if ($this->parent != NULL){
+    if ($this->parent !== NULL){
       if ($this->is_account){
         $display= $this->show_disable_header(_("Remove nagios account"),
             _("This account has nagios features enabled. You can disable them by clicking below."));

@@ -11,7 +11,7 @@ class sieve_require
   {
     $this->parent = $parent;
     $this->object_id = $object_id;
-    if($data != NULL){
+    if($data !== NULL){
 
       for($i = 0 ; $i < count($data['ELEMENTS']) ; $i++){
         $tmp = sieve_get_strings($data['ELEMENTS'],$i);

@@ -239,7 +239,7 @@ class servrepository extends goService
       $this->is_dialog = false;
     }
    
-    if($this->dialog != NULL){
+    if($this->dialog !== NULL){
       $this->dialog->save_object();
       $this->is_dialog = true;
       return($this->dialog->execute());

@@ -257,7 +257,7 @@ class servdns extends goService
 
     /* Show dialog 
      */
-    if($this->dialog!= NULL){
+    if($this->dialog!== NULL){
       $this->dialog->save_object();
       $this->dialog->parent = $this;
       return($this->dialog->execute());

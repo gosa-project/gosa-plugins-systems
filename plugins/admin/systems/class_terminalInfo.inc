@@ -68,7 +68,7 @@ class terminfo extends plugin
     }
 
     /* Do we represent a valid terminal? */
-    if (!$this->is_account && $this->parent == NULL){
+    if (!$this->is_account && $this->parent === NULL){
       echo "<img alt=\"\" src=\"images/stop.png\" align=middle>&nbsp;<b>".
         _("This 'dn' has no terminal features.")."</b>";
       return;

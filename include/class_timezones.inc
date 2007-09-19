@@ -33,7 +33,7 @@ function get_default_timezone($stamp = NULL)
   $zone = array("name" => "unconfigured", "value" => 0);
 
   /* Use current timestamp if $stamp is not set */
-  if($stamp == NULL){
+  if($stamp === NULL){
     $stamp = time();
   }
 

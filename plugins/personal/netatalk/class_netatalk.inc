@@ -114,7 +114,7 @@ class netatalk extends plugin {
     $this->shares = array();
     $ldap = $this->config->get_ldap_link();
 
-    if($this->dn === "new" || $this->dn == NULL) {
+    if($this->dn === "new" || $this->dn === NULL) {
       $base = $_SESSION['CurrentMainBase'];
     } else {
       $base = preg_replace("/^[^,]+,".normalizePreg(get_people_ou())."/","",$this->dn);
@@ -170,7 +170,7 @@ class netatalk extends plugin {
     }
 
     /* Do we represent a valid account? */
-    if (!$this->is_account && $this->parent == NULL) {
+    if (!$this->is_account && $this->parent === NULL) {
       $display = "<img alt=\"\"src=\"images/stop.png\" align=\"middle\">&nbsp;<b>"._("This account has no netatalk extensions.")."</b>";
 
       $display .= back_to_main();
@@ -178,7 +178,7 @@ class netatalk extends plugin {
     }
 
     /* Show tab dialog headers */
-    if ($this->parent != NULL) {
+    if ($this->parent !== NULL) {
       if ($this->is_account) {
         $display = $this->show_disable_header(_("Remove netatalk account"), _("This account has netatalk features enabled. You can disable them by clicking below."));
       } else {

@@ -42,7 +42,7 @@ class sieve_fileinto
     $mbs = $this->get_mail_boxes();
       
     /* Set the default mailbox */
-    if($data == NULL){
+    if($data === NULL){
       $data = array('ELEMENTS' => array(array('class' => "quoted-string" ,"text" => $mbs[key($mbs)])));
     }
 

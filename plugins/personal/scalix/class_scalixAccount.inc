@@ -58,7 +58,7 @@ class scalixAccount extends plugin
   function scalixAccount (&$config, $dn= NULL)
   {
     /* dn shouldn't be NULL */
-    if($dn == NULL){
+    if($dn === NULL){
       trigger_error("Initialising scalixAccount without valid dn.");
     }
 
@@ -115,7 +115,7 @@ class scalixAccount extends plugin
     $serverLanguages= array("", "GERMAN", "ENGLISH");
 
     /* Do we represent a valid account? */
-    if (!$this->is_account && $this->parent == NULL){
+    if (!$this->is_account && $this->parent === NULL){
       $display= "<img alt=\"\" src=\"images/stop.png\" align=\"middle\">&nbsp;<b>".
         _("This account has no scalix extensions.")."</b>";
 
@@ -124,7 +124,7 @@ class scalixAccount extends plugin
     }
 
     /* Show tab dialog headers */
-    if ($this->parent != NULL){
+    if ($this->parent !== NULL){
       if ($this->is_account){
         $display= $this->show_disable_header(_("Remove scalix account"),
             _("This account has scalix synchronization enabled. You can disable it by clicking below."));

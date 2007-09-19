@@ -730,7 +730,7 @@ class faiManagement extends plugin
 		 *  Here we need both, save and cancel
 		 */ 
 
-		if(($this->dialog != NULL) && (isset($this->dialog->config))){
+		if(($this->dialog !== NULL) && (isset($this->dialog->config))){
 			$display .= $this->dialog->execute();
 			/* Don't show buttons if tab dialog requests this */
 

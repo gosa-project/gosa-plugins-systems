@@ -17,7 +17,7 @@ class sieve_comment
   {
     $this->object_id = $object_id;
 
-    if($data == NULL){
+    if($data === NULL){
       $data = array('ELEMENTS' => array(array('class' => "quoted-string" ,"text" => "/*"._("Your comment here")."*/")));
     }
 

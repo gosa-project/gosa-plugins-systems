@@ -210,7 +210,7 @@ class phonequeue extends plugin
     }
 
     /* Show tab dialog headers */
-    if ($this->parent != NULL){
+    if ($this->parent !== NULL){
       if ($this->is_account){
         $display= $this->show_disable_header(_("Remove the phone queue from this Account"),
             _("Phone queue is enabled for this group. You can disable it by clicking below."));

@@ -410,7 +410,7 @@ class appgroup extends plugin
     }
 
     /* Do we represent a valid group? */
-    if (!$this->is_account && $this->parent == NULL){
+    if (!$this->is_account && $this->parent === NULL){
       $display= "<img alt=\"\" src=\"images/stop.png\" align=\"middle\">&nbsp;<b>".
         _("This 'dn' is no appgroup.")."</b>";
       return ($display);
@@ -418,7 +418,7 @@ class appgroup extends plugin
 
     /* Show tab dialog headers */
     $display= "";
-    if ($this->parent != NULL){
+    if ($this->parent !== NULL){
       if ($this->is_account){
         $display= $this->show_disable_header(_("Remove applications"),
             _("This group has application features enabled. You can disable them by clicking below."));

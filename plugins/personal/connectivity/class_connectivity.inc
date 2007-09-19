@@ -56,7 +56,7 @@ class connectivity extends plugin
     $smarty= get_smarty();
 
     /* Do we represent a valid account? */
-    if ($this->parent == NULL){
+    if ($this->parent === NULL){
       $enabled= true;
       foreach ($this->plugin_name as $name){
         if ($this->plugin[$name]->is_account){
@@ -73,7 +73,7 @@ class connectivity extends plugin
     }
 
     /* Remove checkboxes in single edit mode */
-    if ($this->parent != NULL){
+    if ($this->parent !== NULL){
       foreach ($this->plugin_name as $name){
         $this->plugin[$name]->parent= $this->parent;
       }

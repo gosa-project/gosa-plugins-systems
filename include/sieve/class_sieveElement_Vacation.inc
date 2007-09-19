@@ -27,7 +27,7 @@ class sieve_vacation
     $known_attrs = array(":days",":subject",":from",":mime",":handle");
 
     /* skip if empty */
-    if(($data == NULL) || !is_array($data)) return;
+    if(($data === NULL) || !is_array($data)) return;
 
     /* Walk through elements */
     $p= count($data['ELEMENTS']);

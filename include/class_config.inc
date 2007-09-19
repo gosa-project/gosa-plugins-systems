@@ -308,7 +308,7 @@ class config  {
   function load_servers ()
   {
     /* Only perform actions if current is set */
-    if ($this->current == NULL){
+    if ($this->current === NULL){
       return;
     }
 

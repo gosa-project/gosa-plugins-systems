@@ -385,7 +385,7 @@ class departmentManagement extends plugin
     }
 
     /* Headpage or normal plugin screen? */
-    if ($this->deptabs != NULL){
+    if ($this->deptabs !== NULL){
 
       /* Show main page (tabs) */
       $display= $this->deptabs->execute();

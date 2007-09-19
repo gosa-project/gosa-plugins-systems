@@ -429,7 +429,7 @@ class faiPackage extends plugin
     /* Generate a list off available packages for this mirror, section and release
      */
     /* Only read this file if it wasn't read before */
-    if($this->buffer==NULL){
+    if($this->buffer === NULL){
       $this->buffer=array();
       $a_ret = array();
       foreach($this->FAIdebianSection as $sec){

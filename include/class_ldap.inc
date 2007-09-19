@@ -857,7 +857,7 @@ class LDAP{
     $url= preg_replace('!\?\?.*$!', '', $url);
     $server= preg_replace('!^([^:]+://[^/]+)/.*$!', '\\1', $url);
 
-    if ($referrals == NULL){
+    if ($referrals === NULL){
       $referrals= $this->referrals;
     }
 

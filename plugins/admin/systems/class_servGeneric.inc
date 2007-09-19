@@ -96,7 +96,7 @@ class servgeneric extends plugin
     }
 
     /* Do we represent a valid server? */
-    if (!$this->is_account && $this->parent == NULL){
+    if (!$this->is_account && $this->parent === NULL){
       $display= "<img alt=\"\" src=\"images/stop.png\" align=middle>&nbsp;<b>".
         _("This 'dn' has no server features.")."</b>";
       return($display);

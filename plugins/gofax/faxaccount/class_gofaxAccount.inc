@@ -156,7 +156,7 @@ class gofaxAccount extends plugin
     }
 
     /* Do we represent a valid account? */
-    if (!$this->is_account && $this->parent == NULL){
+    if (!$this->is_account && $this->parent === NULL){
       $display= "<img alt=\"\" src=\"images/stop.png\" align=\"middle\">&nbsp;<b>".
         _("This account has no fax extensions.")."</b>";
       $display.= back_to_main();
@@ -165,7 +165,7 @@ class gofaxAccount extends plugin
 
     /* Show tab dialog headers */
     $display= "";
-    if ($this->parent != NULL){
+    if ($this->parent !== NULL){
       if ($this->is_account){
         $display= $this->show_disable_header(_("Remove fax account"),
             _("This account has fax features enabled. You can disable them by clicking below."));

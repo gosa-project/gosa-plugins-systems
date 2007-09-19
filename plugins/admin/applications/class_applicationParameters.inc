@@ -49,7 +49,7 @@ class applicationParameters extends plugin
 
     /* Show tab dialog headers */
     $display= "";
-    if ($this->parent != NULL){
+    if ($this->parent !== NULL){
       if ($this->is_account){
         $display= $this->show_disable_header(_("Remove options"),
             _("This application has options. You can disable them by clicking below."));

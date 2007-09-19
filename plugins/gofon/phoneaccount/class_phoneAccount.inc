@@ -593,7 +593,7 @@ class phoneAccount extends plugin
          * We should create one i
          */
         foreach($sip_data_array as $s_sip_key=>$s_sip_val){
-          if($s_sip_val == NULL) continue;
+          if($s_sip_val === NULL) continue;
           $s_sip_values.="'".$s_sip_val."',";
           $s_sip_keys  .="`".$s_sip_key."`,";
         }
@@ -660,7 +660,7 @@ class phoneAccount extends plugin
          */
         $s_voi_values = $s_voi_keys = "";
         foreach($voice_data_array as $s_voi_key=>$s_voi_val){
-          if($s_voi_val == NULL) continue;
+          if($s_voi_val === NULL) continue;
           $s_voi_values.="'".$s_voi_val."',";
           $s_voi_keys  .="`".$s_voi_key."`,";
         }
@@ -830,7 +830,7 @@ class phoneAccount extends plugin
     }
     
     /* Do we represent a valid account? */
-    if (!$this->is_account && $this->parent == NULL){
+    if (!$this->is_account && $this->parent === NULL){
       $display= "<img alt=\"\" src=\"images/stop.png\" align=\"middle\">&nbsp;<b>".
         _("This account has no phone extensions.")."</b>";
       $display.= back_to_main();
@@ -960,7 +960,7 @@ class phoneAccount extends plugin
 
 
     /* Do we represent a valid account? */
-    if (!$this->is_account && $this->parent == NULL){
+    if (!$this->is_account && $this->parent === NULL){
       $display= "<img alt=\"\" src=\"images/stop.png\" align=\"middle\">&nbsp;<b>".
         _("This account has no phone extensions.")."</b>";
       $display.= back_to_main();
@@ -969,7 +969,7 @@ class phoneAccount extends plugin
 
     $display= "";
  /* Show tab dialog headers */
-    if ($this->parent != NULL){
+    if ($this->parent !== NULL){
       if ($this->is_account){
         $display= $this->show_disable_header(_("Remove phone account"),
             _("This account has phone features enabled. You can disable them by clicking below."));

@@ -33,7 +33,7 @@ class glpiAttachmentPool extends plugin
     }
 
     /* Assign used attributes */
-    if($used != NULL){
+    if($used !== NULL){
       $this->Selected = $used;
     }
   }

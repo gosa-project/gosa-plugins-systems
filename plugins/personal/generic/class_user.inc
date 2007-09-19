@@ -151,7 +151,7 @@ class user extends plugin
     }
 
     /* Load data from LDAP? */
-    if ($dn != NULL){
+    if ($dn !== NULL){
 
       /* Do base conversation */
       if ($this->dn == "new"){
@@ -1299,7 +1299,7 @@ class user extends plugin
     }
 
     /* Get back uid/sn/givenName */
-    if ($this->parent != NULL){
+    if ($this->parent !== NULL){
       $this->uid= $this->parent->uid;
       $this->sn= $this->parent->sn;
       $this->givenName= $this->parent->givenName;

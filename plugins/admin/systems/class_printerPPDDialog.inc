@@ -55,7 +55,7 @@ class printerPPDDialog extends plugin
        * and set it as selected. 
        * The ppdpath ['link'] should be relative from .../ppd/modified/ 
        *     e.g. "/Compaq/Compaq-J1200.ppd" */
-      if(($ppdfile!= NULL)&&(strlen($ppdfile)>0)){
+      if(($ppdfile!== NULL)&&(strlen($ppdfile)>0)){
         $ppdfile = preg_replace("#".$this->pathToModified."#","",$ppdfile);
         if(!file_exists($this->pathToPPD.$this->pathToModified.$ppdfile)){
           print_red(sprintf(_("Can't open '%s', ppd settings resetted."),$ppdfile));
@@ -136,7 +136,7 @@ class printerPPDDialog extends plugin
     }
 
     /* if a dialog is open, print the dialog instead of this class */
-    if($this->dialog!=NULL){
+    if($this->dialog!==NULL){
       $display = $this->dialog->execute();
       return($display);
     }

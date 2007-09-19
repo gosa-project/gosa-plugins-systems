@@ -31,7 +31,7 @@ class sieve_redirect
   {
     $this->object_id = $object_id;
 
-    if($data == NULL){
+    if($data === NULL){
       $data = array('ELEMENTS' => array(array('class' => "quoted-string" ,"text" => _("Place a mail address here"))));
     }
 

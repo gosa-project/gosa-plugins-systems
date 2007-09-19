@@ -17,7 +17,7 @@ class acltab extends tabs
       $this->by_name[$tab['CLASS']]= $tab['NAME'];
 
       
-      if ($baseobject == NULL){
+      if ($baseobject === NULL){
         if($tab['CLASS'] == "acl"){
           $baseobject= new $tab['CLASS']($this->config, $this, $this->dn);
         }else{

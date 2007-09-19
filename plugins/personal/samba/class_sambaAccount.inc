@@ -207,7 +207,7 @@ class sambaAccount extends plugin
       $this->is_account= !$this->is_account;
     }
     /* Do we represent a valid account? */
-    if (!$this->is_account && $this->parent == NULL){
+    if (!$this->is_account && $this->parent === NULL){
       $display= "<img alt=\"\"src=\"images/stop.png\" align=\"middle\">&nbsp;<b>".
         _("This account has no samba extensions.")."</b>";
       $display.= back_to_main();
@@ -216,7 +216,7 @@ class sambaAccount extends plugin
 
     /* Show tab dialog headers */
     $display= "";
-    if ($this->parent != NULL){
+    if ($this->parent !== NULL){
       if ($this->is_account){
         $display= $this->show_disable_header(_("Remove samba account"),
             _("This account has samba features enabled. You can disable them by clicking below."));

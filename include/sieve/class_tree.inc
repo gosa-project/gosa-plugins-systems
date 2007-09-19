@@ -101,7 +101,7 @@ class Tree
 
 	function setDumpFunc($callback)
 	{
-		if ($callback == NULL || is_callable($callback))
+		if ($callback === NULL || is_callable($callback))
 		{
 			$this->dumpFn_ = $callback;
 		}
@@ -128,7 +128,7 @@ class Tree
 		}
 
 		$node = $this->nodes_[$node_id];
-		if ($this->dumpFn_ != NULL)
+		if ($this->dumpFn_ !== NULL)
 		{
 			$this->dump_ .= $prefix . $infix . call_user_func($this->dumpFn_, $node) . "\n";
 		}

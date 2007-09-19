@@ -650,7 +650,7 @@ class oxchangeAccount extends plugin
     $smarty->assign("timezones", $this->timezones);
 
 
-    if ($this->parent != NULL){
+    if ($this->parent !== NULL){
       $smarty->assign("tabbed", 1);
     }else{
       $smarty->assign("tabbed", 0);

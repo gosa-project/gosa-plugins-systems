@@ -135,7 +135,7 @@ function get_browser_language()
   /* Try to use users primary language */
   global $config;
   $ui= get_userinfo();
-  if ($ui != NULL){
+  if ($ui !== NULL){
     if ($ui->language != ""){
       return ($ui->language.".UTF-8");
     }
@@ -1029,7 +1029,7 @@ function print_red()
       $_SESSION['errorsAlreadyPosted'][$string]++;
 
     }else{
-      if($string != NULL){
+      if($string !== NULL){
         if (preg_match("/"._("LDAP error:")."/", $string)){
           $addmsg= _("Problems with the LDAP server mean that you probably lost the last changes. Please check your LDAP setup for possible errors and try again.");
           $img= "images/error.png";
@@ -2092,7 +2092,7 @@ function gosa_ldap_explode_dn($dn,$config = NULL,$verify_in_ldap=false)
   $keep = "";                   // save last failed parse string
 
   /* Check each parsed dn in ldap ? */
-  if($config!=NULL && $verify_in_ldap){
+  if($config!==NULL && $verify_in_ldap){
     $ldap = $config->get_ldap_link();
   }
 
@@ -2110,7 +2110,7 @@ function gosa_ldap_explode_dn($dn,$config = NULL,$verify_in_ldap=false)
     $called = true;
 
     /* Check if current dn is valid */
-    if($ldap!=NULL){
+    if($ldap!==NULL){
       $ldap->cd($dn);
       $ldap->cat($dn,array("dn"));
       if($ldap->count()){

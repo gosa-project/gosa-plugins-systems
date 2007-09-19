@@ -79,7 +79,7 @@ class intranetAccount extends plugin
     }
 
     //! Ever assign vars to smarty in both cases, to avoid php errors (missing variable aso. ) 
-    if ($this->parent != NULL){
+    if ($this->parent !== NULL){
       $smarty->assign("tabbed", 1);
     }else{
       $smarty->assign("tabbed", 0);	

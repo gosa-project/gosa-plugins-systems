@@ -218,7 +218,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['apply'])){
     /* Do we have the selected user somewhere? */
     $ui= ldap_login_user ($uid, $current_password);
 
-    if ($ui == NULL){
+    if ($ui === NULL){
       $message[]= _("Please check the username/password combination.");
     } else {
       $acls = $ui->get_permissions($ui->dn,"users/password");

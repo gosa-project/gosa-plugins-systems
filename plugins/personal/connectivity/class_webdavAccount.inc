@@ -47,7 +47,7 @@ class webdavAccount extends plugin
       $smarty->assign("wstate", "disabled");
     }
 
-    if ($this->parent != NULL){
+    if ($this->parent !== NULL){
       $smarty->assign("tabbed", 1);
     }
 

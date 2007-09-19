@@ -211,7 +211,7 @@ class mailqueue extends plugin
             if($str = @$this->pass_cmd ($q_cmd)){
 
               /* If there is no parser available, create one  */
-              if($mailQueueParser == NULL){
+              if($mailQueueParser === NULL){
                 $mailQueueParser = new parseMailQueue($str,$ServerID);
               }else{
                 $mailQueueParser->parseAdditionalQueue($str,$ServerID);

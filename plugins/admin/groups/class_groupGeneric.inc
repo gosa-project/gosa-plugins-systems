@@ -82,7 +82,7 @@ class group extends plugin
 
     /* Is a samba group? */
     if (isset($this->attrs['objectClass'])){
-      if (array_search ('sambaGroupMapping', $this->attrs['objectClass']) == NULL ){
+      if (array_search ('sambaGroupMapping', $this->attrs['objectClass']) === NULL ){
         $this->smbgroup= FALSE;
       } else {
         $this->smbgroup= TRUE;
@@ -90,12 +90,12 @@ class group extends plugin
           $this->sambaSID= $this->attrs['sambaSID'][0];
         }
       }
-      if (array_search ('goFonPickupGroup', $this->attrs['objectClass']) == NULL ){
+      if (array_search ('goFonPickupGroup', $this->attrs['objectClass']) === NULL ){
         $this->fon_group= FALSE;
       } else {
         $this->fon_group= TRUE;
       }
-      if (array_search ('nagiosContactGroup', $this->attrs['objectClass']) == NULL ){
+      if (array_search ('nagiosContactGroup', $this->attrs['objectClass']) === NULL ){
         $this->nagios_group= FALSE;
       } else {
         $this->nagios_group= TRUE;
@@ -188,7 +188,7 @@ class group extends plugin
     }
 
     /* Do we represent a valid group? */
-    if (!$this->is_account && $this->parent == NULL){
+    if (!$this->is_account && $this->parent === NULL){
       $display= "<img alt=\"\" src=\"images/stop.png\" align=\"middle\">&nbsp;<b>".
         _("This 'dn' is no group.")."</b>";
       return ($display);
