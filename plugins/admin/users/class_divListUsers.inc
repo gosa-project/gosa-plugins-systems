@@ -136,7 +136,7 @@ class divListUsers extends MultiSelectWindow
     /* Get copy & paste icon */
     $acl_all  = $ui->has_complete_category_acls($this->selectedBase,"users") ;
     $acl      = $ui->get_permissions($this->selectedBase,"users/user");
-    if(preg_match("/(c.*w|w.*c)/",$acl_all) &&  $this->parent->CopyPasteHandler){
+    if(preg_match("/(c.*w|w.*c)/",$acl_all) && is_object($this->parent->CopyPasteHandler)){
       $Copy_Paste = $this->parent->CopyPasteHandler->generatePasteIcon();
     }else{
       $Copy_Paste ="";
