@@ -184,7 +184,6 @@ class tabs
   function delete()
   {
     /* Check if all plugins will ACK for deletion */
-echo "F";
     foreach (array_reverse($this->by_object) as $key => $obj){
       $reason= $obj->allow_remove();
       if ($reason != ""){
@@ -194,7 +193,6 @@ echo "F";
     }
 
     /* Delete for all plugins */
-echo "F";
     foreach (array_reverse($this->by_object) as $obj){
       $obj->remove_from_parent();
     }
