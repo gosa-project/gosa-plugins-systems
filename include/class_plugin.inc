@@ -1422,7 +1422,7 @@ class plugin
       $this->snapDialog = NULL;
     }
 
-    if($this->snapDialog){
+    if(is_object($this->snapDialog )){
       $this->snapDialog->save_object();
       return($this->snapDialog->execute());
     }
