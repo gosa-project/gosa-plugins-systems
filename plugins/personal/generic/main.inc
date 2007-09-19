@@ -22,7 +22,6 @@
 /* Preset display */
 $display  = "";
 $lock_msg = "";
-$cca ++;
 if (!$remove_lock){
   /* Reset requested? */
   if (isset($_POST['edit_cancel']) || isset($_POST['password_cancel']) || 
