@@ -14,6 +14,11 @@ class msg_dialog
 
 	public function __construct($s_title,$s_message,$i_type)
 	{
+		if(!in_array($i_type,array(INFO_DIALOG,WARNING_DIALOG,ERROR_DIALOG,CONFIRM_DIALOG))){
+			trigger_error("Invalid msg_dialog type.");
+			$i_type = INFO_DIALOG;
+		}
+
 		$this->i_ID 	 = preg_replace("/[^0-9]*/","",microtime()); 
 		$this->s_Title	 = $s_title;
 		$this->s_Message = $s_message;
@@ -27,13 +32,6 @@ class msg_dialog
 	public static function display($s_title,$s_message,$i_type = INFO_DIALOG)
 	{
 		$box = new msg_dialog($s_title,$s_message,$i_type);	
-	}
-
-	public function is_confirmed()
-	{
-		if($this->i_Type == CONFIRM_DIALOG && isset($_POST['MSG_OK'])){
-			return(TRUE);
-		}
 	}
 
 	public function get_ID()
@@ -50,6 +48,16 @@ class msg_dialog
 		$smarty->assign("i_ID",$this->i_ID);
 		$smarty->assign("IE",preg_match("/MSIE/", $_SERVER['HTTP_USER_AGENT']));
 		return($smarty->fetch(get_template_path('msg_dialog.tpl')));
+	}
+
+	
+	public function is_confirmed()
+	{
+		if(isset($_POST['MSG_OK'.$this->i_ID])){
+			return(TRUE);
+		}else{
+			return(FALSE);
+		}
 	}
 	
 

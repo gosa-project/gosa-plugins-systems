@@ -41,6 +41,8 @@ class userManagement extends plugin
 
   var $start_pasting_copied_objects = FALSE;
 
+  var $msg_dialog= NULL;
+  
   function userManagement(&$config, $ui)
   {
     /* Save configuration for internal use */
@@ -458,11 +460,13 @@ class userManagement extends plugin
         return(gen_locked_message ($user, $this->dn));
       }
 
+  
       /* Lock the current entry, so nobody will edit it during deletion */
-      add_lock ($this->dn, $this->ui->dn);
-      $smarty->assign("info", sprintf(_("You're about to delete the user %s."), @LDAP::fix($this->dn)));
-      $smarty->assign("multiple", false);
-      return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
+#      add_lock ($this->dn, $this->ui->dn);
+#      $smarty->assign("info", sprintf(_("You're about to delete the user %s."), @LDAP::fix($this->dn)));
+#      $smarty->assign("multiple", false);
+#      return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
+      $this->msg_dialog = new msg_dialog(_("Delete user"),sprintf(_("You're about to delete the user %s."), @LDAP::fix($this->dn)),CONFIRM_DIALOG);
     }
 
 
@@ -471,7 +475,7 @@ class userManagement extends plugin
      ********************/
 
     /* Confirmation for deletion has been passed. User should be deleted. */
-    if (isset($_POST['delete_user_confirm'])){
+    if (is_object($this->msg_dialog) && $this->msg_dialog->is_confirmed()){
 
       /* Some nice guy may send this as POST, so we've to check
          for the permissions again. */
