@@ -49,11 +49,6 @@ function gosaRaiseError($errno, $errstr, $errfile, $errline)
     return;
   }
 
-  /* FIXME: Same as above. Compatibility does error flooding.*/
-  if (preg_match('/zend.ze1_compatibility_mode/', $errstr)){
-    return;
-  }
-
   /* Hide ldap size limit messages */
   if (preg_match('/ldap_error/', $errstr)){
     if (preg_match('/sizelimit/', $errstr)){
@@ -82,8 +77,6 @@ function gosaRaiseError($errno, $errstr, $errfile, $errline)
                                 "\n\n".
                                 "*** GOsa bug report ***".
                                 "\nGOsa Version: ".get_gosa_version().
-                                "\nDate: ".date("d.m.Y").
-                                "\nTime: ".date("H:i:s").
                                 "\n\n".
                                 "Please describe what you did to produce this error as detailed as possible. Can you ".
                                 "reproduce this bug using the demo on http://www.gosa-project.org ?".
@@ -247,9 +240,7 @@ $smarty->caching= false;
 $smarty->php_handling= SMARTY_PHP_REMOVE;
 
 /* Set timezone */
-if (function_exists("date_default_timezone_set")){
-  date_default_timezone_set("GMT");
-}
+date_default_timezone_set("GMT");
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

@@ -2679,43 +2679,13 @@ function get_default_timezone($stamp = NULL)
       $tz = $config->data['MAIN']['TIMEZONE'];
     }
 
-    /* Check if we could use the PHP5 default timezone functions */
-    if(function_exists("date_default_timezone_set")){
-      if(!@date_default_timezone_set($tz)){
-        print_red(sprintf(_("The timezone setting \"".$tz."\" in your gosa.conf is not valid. Can not calculate correct timezone offest."),$tz));
-      }
-      $tz_delta = date("Z", $stamp);
-      $tz_delta = $tz_delta / 3600 ;
-      return(array("name" => $tz, "value" => $tz_delta));
-
-    }else{
-
-      /* We can't use the PHP integrated functions
-       *  so we use the zone informations returned by _get_tz_zones 
-       *  and calculate the the zone offset.
-       */
-      $tmp        = _get_tz_zones();
-      $zones      = $tmp['TIMEZONES'];
-      $dst_zones  = $tmp['DST_ZONES'];
-
-      /* Detect zone and calculate offset */
-      $found = FALSE;
-      foreach($zones as $name => $value){
-        if(preg_match("#".normalizePreg($name)."#i",$tz)){
-          $offset = $value / 3600 ;
-          if(isset($dst_zones[$name]) && (date("I",$stamp) == 1)){
-            $offset ++;
-          }
-          $zone = array("name" => $name, "value" => $offset);
-          $found = TRUE;
-          break;
-        }
-      }
-      if(!$found){
-        print_red(sprintf(_("The timezone setting \"".$tz."\" in your gosa.conf is not valid. Can not calculate correct timezone offest."),
-$tz));
-      }
+    if(!@date_default_timezone_set($tz)){
+      print_red(sprintf(_("The timezone setting \"".$tz."\" in your gosa.conf is not valid. Can not calculate correct timezone offest."),$tz));
     }
+    $tz_delta = date("Z", $stamp);
+    $tz_delta = $tz_delta / 3600 ;
+    return(array("name" => $tz, "value" => $tz_delta));
+
   }
   return($zone);
 }
