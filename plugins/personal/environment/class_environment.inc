@@ -499,7 +499,6 @@ class environment extends plugin
       $this->kioskProfileList = array_reverse($list);
 
       unset($this->dialog);
-      $this->dialog=NULL;
       $this->is_dialog = false;
     }
 
@@ -602,8 +601,11 @@ class environment extends plugin
      * This entry will be, a combination of mountPoint and sharedefinitions 
      */
     if(isset($_POST['gotoShareAdd']) && $this->acl_is_writeable("gotoShare")){
+
       /* We assign a share to this user, if we don't know where to mount the share */
-      if((!isset($_POST['gotoShareMountPoint']))||(empty($_POST['gotoShareMountPoint']))||(preg_match("/[\|]/i",$_POST['gotoShareMountPoint']))){
+      if(!isset($_POST['gotoShareSelection']) || get_post('gotoShareSelection') == ""){
+        print_red(_("You must select a valid share."));
+      }elseif((!isset($_POST['gotoShareMountPoint']))||(empty($_POST['gotoShareMountPoint']))||(preg_match("/[\|]/i",$_POST['gotoShareMountPoint']))){
         print_red(_("You must specify a valid mount point."));
       }elseif(preg_match('/ /', $_POST['gotoShareMountPoint'])){
         print_red(_("Spaces are not allowed in the mount path!"));
