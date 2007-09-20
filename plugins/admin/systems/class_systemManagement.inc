@@ -811,7 +811,16 @@ class systems extends plugin
       $display= $this->systab->execute();
 
       /* Don't show buttons if tab dialog requests this */
-      if ((isset($this->systab->by_object))&&(!$this->systab->by_object[$this->systab->current]->dialog)){
+
+      $dialog = FALSE;
+      if(isset($this->systab->by_object[$this->systab->current]->dialog)){
+        $dia = $this->systab->by_object[$this->systab->current]->dialog;
+        if($dia === TRUE || is_object($dia)){
+          $dialog = TRUE;
+        }  
+      }
+
+      if (!$dialog){
         $display.= "<p style=\"text-align:right\">\n";
         $display.= "<input type=\"submit\" name=\"edit_finish\" style=\"width:80px\" value=\""._("Ok")."\">\n";
         $display.= "&nbsp;\n";

@@ -314,7 +314,7 @@ class servdhcp extends goService
 
     /* Show dialog
      */
-    if($this->dialog !== NULL && !is_int($this->dialog)){
+    if($this->dialog !== NULL && !is_int($this->dialog) && is_object($this->dialog)){
       $this->dialog->save_object();
       $this->dialog->parent = $this;
       return($this->dialog->execute());
