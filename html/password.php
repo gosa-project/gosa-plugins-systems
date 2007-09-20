@@ -101,13 +101,17 @@ textdomain($domain);
 
 /* Generate server list */
 $servers= array();
+foreach ($config->data['LOCATIONS'] as $key => $ignored){
+	$servers[$key]= $key;
+}
 if (isset($_POST['server'])){
 	$directory= validate($_POST['server']);
 } else {
 	$directory= $config->data['MAIN']['DEFAULT'];
-}
-foreach ($config->data['LOCATIONS'] as $key => $ignored){
-	$servers[$key]= $key;
+
+  if(!isset($servers[$directory])){
+    $directory = key($servers);
+  }
 }
 if (isset($_GET['directory']) && isset($servers[$_GET['directory']])){
 	$smarty->assign ("show_directory_chooser", false);
