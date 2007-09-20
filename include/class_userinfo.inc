@@ -64,6 +64,9 @@ class userinfo
     $this->dn= $userdn;
     $this->uid= $attrs['uid'][0];
     $this->ip= $_SERVER['REMOTE_ADDR'];
+
+    /* Initialize ACL_CACHE */
+    $_SESSION['ACL_CACHE']= array();
   }
 
 
@@ -178,6 +181,11 @@ class userinfo
 
   function get_permissions($dn, $object, $attribute= "", $skip_write= FALSE)
   {
+    /* Push cache answer? */
+    if (isset($_SESSION['ACL_CACHE']["$dn+$object+$attribute"])){
+      return ($_SESSION['ACL_CACHE']["$dn+$object+$attribute"]);
+    }
+
     $acl= array("r" => "", "w" => "", "c" => "", "d" => "", "m" => "", "a" => "");
 
     /* Build dn array */
@@ -255,6 +263,7 @@ class userinfo
       $ret= preg_replace('/w/', '', $ret);
     }
 
+    $_SESSION['ACL_CACHE']["$dn+$object+$attribute"]= $ret;
     return ($ret);
   }
 
