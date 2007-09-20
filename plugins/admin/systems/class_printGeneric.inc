@@ -723,7 +723,7 @@ class printgeneric extends plugin
     }
 
     /* save ppd configuration */
-    if($this->PPDdialogToSave){
+    if($this->PPDdialogToSave && is_object($this->PPDdialogToSave)){
       $this->PPDdialogToSave->save_ppd();
     }
 
