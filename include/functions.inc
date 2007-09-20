@@ -2479,6 +2479,21 @@ function is_in_network($network, $netmask, $address)
   return ($first < $curr&& $last > $curr);
 }
 
+/* Return class name in correct case 
+ *  mailMethodkolab =>  mailMethodKolab  ( k => K )
+ */
+function get_correct_class_name($cls)
+{
+  global $class_mapping;
+  if(isset($class_mapping) && is_array($class_mapping)){
+    foreach($class_mapping as $class => $file){
+      if(preg_match("/^".$cls."$/i",$class)){
+        return($class);
+      }
+    }
+  }
+  return(FALSE);
+}
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

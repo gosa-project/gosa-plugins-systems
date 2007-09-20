@@ -74,8 +74,9 @@ class mailgroup extends plugin
 
     /* Check if selected mail method exists 
      */
-    if (class_exists("mailMethod$this->mmethod")){
-      $this->method= "mailMethod$this->mmethod";
+    $cls = get_correct_class_name("mailMethod$this->mmethod");
+    if ($cls && class_exists($cls)){
+      $this->method= $cls;
     } else {
       print_red(sprintf(_("There is no mail method '%s' specified in your gosa.conf available."), $this->mmethod));
     }
