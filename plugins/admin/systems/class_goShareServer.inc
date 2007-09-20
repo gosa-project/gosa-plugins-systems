@@ -92,7 +92,7 @@ class goShareServer extends goService{
     }
 
     /* Save NFS setup */
-    if(isset($_POST['NFSsave'])){
+    if(isset($_POST['NFSsave']) && isset($this->o_subWindow) && is_object($this->o_subWindow)){
       if(count($this->o_subWindow->check())>0){
         foreach($this->o_subWindow->check() as $msg) {
           print_red($msg);
@@ -103,7 +103,7 @@ class goShareServer extends goService{
 
         $this->addToList($newone);
         if($this->allow_mounts){
-          if($this->oldone) {
+          if($this->oldone != NULL) {
             $this->deleteFromMountList($this->oldone);
           }
           if ($this->o_subWindow->should_create_mount()) {
