@@ -534,7 +534,7 @@ class glpiPrinterAccount extends plugin
     /* if( cur_dialog != false || cur_dialog != NULL) 
      * There is a dialog which wants to be displayed 
      */
-    if($this->cur_dialog){
+    if($this->cur_dialog && is_object($this->cur_dialog)){
       $this->cur_dialog->save_object();
       $this->dialog=true;
       $this->cur_dialog->parent = &$this;

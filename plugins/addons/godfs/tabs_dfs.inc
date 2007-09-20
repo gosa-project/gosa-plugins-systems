@@ -24,6 +24,7 @@ class dfstabs extends tabs {
   }
 
   function save($ignore_account= FALSE)
+  {
     $baseobject = $this->by_object['dfsManagment'];
     return tabs::save(TRUE);
   }

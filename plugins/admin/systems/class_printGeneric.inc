@@ -411,7 +411,7 @@ class printgeneric extends plugin
 
     /* Display ppd configure/select dialog      */
     if(isset($_POST['EditDriver'])){
-      if($this->PPDdialogToSave){
+      if($this->PPDdialogToSave && is_object($this->PPDdialogToSave)){
         $this->dialog = $this->PPDdialogToSave;
       }else{
         $this->dialog = new printerPPDDialog($this->config, $this->dn,$this->gotoPrinterPPD);
