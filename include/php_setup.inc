@@ -215,6 +215,9 @@ function dummy_error_handler()
 }
 
 
+/* Set timezone */
+date_default_timezone_set("GMT");
+
 /* Get base dir for reference */
 $BASE_DIR= dirname(dirname(__FILE__));
 $ROOT_DIR= $BASE_DIR."/html";
@@ -238,9 +241,6 @@ $smarty = new Smarty;
 $smarty->template_dir = $BASE_DIR.'/ihtml/';
 $smarty->caching= false;
 $smarty->php_handling= SMARTY_PHP_REMOVE;
-
-/* Set timezone */
-date_default_timezone_set("GMT");
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
