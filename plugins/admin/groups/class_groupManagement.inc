@@ -268,12 +268,12 @@ class groupManagement extends plugin
 
           /* Load permissions for selected 'dn' and check if
              we're allowed to remove this 'dn' */
-          $acl = $this->ui->get_permissions($this->dn,"groups/group");
+          $acl = $this->ui->get_permissions($dn,"groups/group");
           if(preg_match("/d/",$acl)){
 
             /* Delete request is permitted, perform LDAP action */
-            $this->grouptab= new grouptabs($this->config,$this->config->data['TABS']['GROUPTABS'], $this->dn);
-            $this->grouptab->set_acl_base($this->dn);
+            $this->grouptab= new grouptabs($this->config,$this->config->data['TABS']['GROUPTABS'], $dn);
+            $this->grouptab->set_acl_base($dn);
             $this->grouptab->delete ();
             unset ($this->grouptab);
             $this->grouptab= NULL;
