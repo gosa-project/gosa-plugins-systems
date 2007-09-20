@@ -84,7 +84,7 @@ class mailAccount extends plugin
 
       $cls = get_correct_class_name("mailMethod$method");
       if ($cls && class_exists($cls)){
-        $this->method= "mailMethod$method";
+        $this->method= $cls;
       } else {
         print_red(sprintf(_("There is no mail method '%s' specified in your gosa.conf available."), $method));
       }
