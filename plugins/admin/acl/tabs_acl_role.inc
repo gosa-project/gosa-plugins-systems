@@ -9,7 +9,7 @@ class aclroletab extends tabs
     tabs::tabs($config, $data, $dn,"acl");
   }
 
-  function save()
+  function save($ignore_account= FALSE)
   {
     $baseobject= $this->by_object['aclrole'];
 

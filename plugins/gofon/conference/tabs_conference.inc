@@ -19,7 +19,7 @@ class conferencetabs extends tabs
   }
   
 
-  function save()
+  function save($ignore_account= FALSE)
   {
   	$baseobject= $this->by_object['conference'];
 	$new_dn= 'cn='.$baseobject->cn.',ou=conferences,ou=asterisk,ou=configs,ou=systems,'.$baseobject->base;

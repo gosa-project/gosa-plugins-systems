@@ -19,13 +19,13 @@ class deptabs extends tabs
   }
 
 
-  function save($justsave = false)
+  function save($ignore_account= FALSE)
   {
     $baseobject= $this->by_object['department'];
     $ou= preg_replace('/,/', '\,', $baseobject->ou);
     $new_dn= @LDAP::convert('ou='.$ou.','.$baseobject->base);
     
-    if($justsave){
+    if($ignore_account){
       if ($this->dn != $new_dn && $this->dn != "new"){
         /* if( new_dn is subtree of this->dn ) */
         $cnt1 = count(split(",",$this->dn));

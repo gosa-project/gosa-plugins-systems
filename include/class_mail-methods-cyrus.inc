@@ -104,7 +104,7 @@ class mailMethodCyrus extends mailMethod
 
 
   /* return all folders of the users mailbox*/
-  function getMailboxList($folder, $uid= "")
+  function getMailboxList($folder, $uid)
   {
     global $config;
     $result = array();

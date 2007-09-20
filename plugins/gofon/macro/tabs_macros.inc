@@ -11,7 +11,7 @@ class macrotabs extends tabs
 	  $this->addSpecialTabs();
   }
 
-  function save()
+  function save($ignore_account= FALSE)
   {
 	$baseobject= $this->by_object['macro'];
 

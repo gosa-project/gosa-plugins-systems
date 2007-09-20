@@ -20,7 +20,7 @@ class mimetabs extends tabs
     }
   }
 
-  function save()
+  function save($ignore_account= FALSE)
   {
     $baseobject= $this->by_object['mimetype'];
 

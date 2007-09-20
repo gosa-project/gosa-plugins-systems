@@ -42,7 +42,7 @@ class acltab extends tabs
     }
   }
 
-  function save()
+  function save($ignore_account= FALSE)
   {
     $ret= tabs::save();
     return $ret;

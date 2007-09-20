@@ -23,16 +23,14 @@ class dfstabs extends tabs {
     return (tabs::check(TRUE));
   }
 
-  function save() {
+  function save($ignore_account= FALSE)
     $baseobject = $this->by_object['dfsManagment'];
-    #$this->dn = $new_dn;
     return tabs::save(TRUE);
   }
 
   function del() {
     $baseobject = $this->by_object['dfsManagment'];
     return tabs::delete(TRUE); 
-    #tabs::del();
   }
 
 }

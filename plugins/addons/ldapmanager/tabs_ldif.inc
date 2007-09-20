@@ -14,7 +14,7 @@ class ldiftab extends tabs
   }
 
 
-  function save()
+  function save($ignore_account= FALSE)
   {
   }
 

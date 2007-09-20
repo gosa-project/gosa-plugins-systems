@@ -14,7 +14,7 @@ class log_tabs extends tabs
   }
 
 
-  function save()
+  function save($ignore_account= FALSE)
   {
   }
 

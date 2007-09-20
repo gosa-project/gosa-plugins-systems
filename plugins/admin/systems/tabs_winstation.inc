@@ -17,7 +17,7 @@ class wintabs extends tabs
   }
 
 
-  function save()
+  function save($ignore_account= FALSE)
   {
     /* Check for new 'dn', in order to propagate the
        'dn' to all plugins */

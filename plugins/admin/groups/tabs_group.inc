@@ -35,7 +35,7 @@ class grouptabs extends tabs
 		tabs::delete();
 	}
 
-	function save()
+  function save($ignore_account= FALSE)
 	{
 		$baseobject= $this->by_object['group'];
 
