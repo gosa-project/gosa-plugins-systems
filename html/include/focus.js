@@ -460,6 +460,8 @@ function next_msg_dialog()
 	if(document.getElementById('current_msg_dialogs')){
 		var cur_id = document.getElementById('current_msg_dialogs').value;
 		if(cur_id != ""){
+			var ele = document.getElementById('e_layer2' + cur_id);
+			ele.onmousemove = "";
 			hide('e_layer2' + cur_id); 	
 			document.getElementById('closed_msg_dialogs').value += "," + cur_id;
 			document.getElementById('current_msg_dialogs').value= ""; 
@@ -480,31 +482,38 @@ function next_msg_dialog()
 						ele.style.display= 'block'	;
 						document.getElementById('pending_msg_dialogs').value= tmp;
 						document.getElementById('current_msg_dialogs').value= i_id;
-
+						ele.onmousedown = start_move_div_by_cursor;
+						ele.onmouseup 	= stop_move_div_by_cursor;
+						ele.onmousemove = move_div_by_cursor;
 				}
 		}
 	}
 }
 
+var enable_move_div_by_cursor = false;
+function start_move_div_by_cursor()
+{
+	enable_move_div_by_cursor = true;
+}
 
+function stop_move_div_by_cursor()
+{
+	enable_move_div_by_cursor = false;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+function move_div_by_cursor(e)
+{
+		if(enable_move_div_by_cursor){
+				if(document.getElementById('current_msg_dialogs')){
+						var cur_id = document.getElementById('current_msg_dialogs').value;
+						if(cur_id != ""){
+								var ele = document.getElementById('e_layer2' + cur_id);
+								ele.style.position = "absolute";
+								ele.style.top = (e.screenY - 100) + "px";
+								ele.style.left = (e.screenX -50)+ "px";
+						}
+				}
+		}
+}
 
 // vim:ts=2:syntax

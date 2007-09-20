@@ -29,6 +29,7 @@
 {else}
 	<div  id='e_layer2{$i_ID}'
 			style='display:none;'
+			onClick="move_div_by_cursor('e_layer2{$i_ID}');"
 			>
 <!--		style="
 			position: absolute;

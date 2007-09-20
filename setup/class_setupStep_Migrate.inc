@@ -999,7 +999,7 @@ class Step_Migrate extends setup_step
       $dn = "uid=".$uid.",".$people_ou.$cv['base'];
     }
 
-    $methods = @passwordMethod::get_available_methods_if_not_loaded();
+    $methods = @passwordMethod::get_available_methods();
     $p_m = $methods[$cv['encryption']];
     $p_c = new $p_m(array());
     $hash = $p_c->generate_hash($pw2);

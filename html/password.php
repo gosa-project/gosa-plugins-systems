@@ -152,7 +152,7 @@ $method= $config->current['HASH'];
 if (isset($_GET['method'])){
 	$method= validate($_GET['method']);
 	$tmp = new passwordMethod($config);
-	$available = $tmp->get_available_methods_if_not_loaded();
+	$available = $tmp->get_available_methods();
 	if (!isset($available[$method])){
 		echo _("Error: Password method not available!");
 		exit;

@@ -53,7 +53,7 @@ class mailAccount extends plugin
       "gosaMailDeliveryMode", "gosaSpamSortLevel", "gosaSpamMailbox","gosaMailAlternateAddress","gosaVacationStart","gosaVacationStop",
       "gosaVacationMessage", "gosaMailAlternateAddress", "gosaMailForwardingAddress");
   var $objectclasses= array("gosaMailAccount");
-  var $uid;
+  var $uid              = "";
 
   var $sieve_management = NULL;
 
@@ -81,7 +81,9 @@ class mailAccount extends plugin
     /*  Set mailMethod to the one defined in gosa.conf */
     if (isset($this->config->current['MAILMETHOD'])){
       $method= $this->config->current['MAILMETHOD'];
-      if (isset($class_mapping["mailMethod$method"])){
+
+      $cls = get_correct_class_name("mailMethod$method");
+      if ($cls && class_exists($cls)){
         $this->method= "mailMethod$method";
       } else {
         print_red(sprintf(_("There is no mail method '%s' specified in your gosa.conf available."), $method));

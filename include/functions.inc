@@ -2495,5 +2495,161 @@ function get_correct_class_name($cls)
   return(FALSE);
 }
 
+// change_password, changes the Password, of the given dn
+function change_password ($dn, $password, $mode=0, $hash= "")
+{
+  global $config;
+  $newpass= "";
+
+  /* Convert to lower. Methods are lowercase */
+  $hash= strtolower($hash);
+
+  // Get all available encryption Methods
+
+  // NON STATIC CALL :)
+  $tmp = new passwordMethod($_SESSION['config']);
+  $available = $tmp->get_available_methods();
+
+  // read current password entry for $dn, to detect the encryption Method
+  $ldap       = $config->get_ldap_link();
+  $ldap->cat ($dn, array("shadowLastChange", "userPassword", "uid"));
+  $attrs      = $ldap->fetch ();
+
+  // Check if user account was deactivated, indicated by ! after } ... {crypt}!###
+  if(isset($attrs['userPassword'][0]) && preg_match("/^[^\}]*+\}!/",$attrs['userPassword'][0])){
+    $deactivated = TRUE;
+  }else{
+    $deactivated = FALSE;
+  }
+
+#  // Get current password hash method if available
+#  if($hash == "" && isset($attrs['userPassword'][0]) && preg_match("/[\{\}]/",$attrs['userPassword'][0])){
+#    $hash = preg_replace("/^[^\{]*+\{([^\}]*).*$/","\\1",$attrs['userPassword'][0]);
+#    $hash = strtolower($hash);
+#  }
+
+#  // Set encryption type to clear if required
+#  if (!isset($attrs['userPassword'][0]) || $hash == ""){
+#    $hash= "clear";
+#  }
+ // Detect the encryption Method
+  if ( (isset($attrs['userPassword'][0]) &&  preg_match ("/^{([^}]+)}(.+)/", $attrs['userPassword'][0], $matches)) ||  $hash != ""){
+
+    /* Check for supported algorithm */
+    mt_srand((double) microtime()*1000000);
+
+    /* Extract used hash */
+    if ($hash == ""){
+      $hash= strtolower($matches[1]);
+    }
+
+    $test = new  $available[$hash]($config);
+    $test->attrs= $attrs;
+    $newpass =  $test->generate_hash($password);
+
+  } else {
+    // Crypt it by default
+    $test = new  $available['md5']($config);
+    $newpass =  $test->generate_hash($password);
+  }
+
+  // Update shadow timestamp?
+  if (isset($attrs["shadowLastChange"][0])){
+    $shadow= (int)(date("U") / 86400);
+  } else {
+    $shadow= 0;
+  }
+
+  // Write back modified entry
+  $ldap->cd($dn);
+  $attrs= array();
+
+  // Not for groups
+  if ($mode == 0){
+
+    if ($shadow != 0){
+      $attrs['shadowLastChange']= $shadow;
+    }
+
+    // Create SMB Password
+    $attrs= generate_smb_nt_hash($password);
+  }
+
+ /* Readd ! if user was deactivated */
+  if($deactivated){
+    $newpass = preg_replace("/(^[^\}]+\})(.*$)/","\\1!\\2",$newpass);
+  }
+
+  $attrs['userPassword']= array();
+  $attrs['userPassword']= $newpass;
+
+  $ldap->modify($attrs);
+
+  new log("modify","users/passwordMethod",$dn,array_keys($attrs),$ldap->get_error());
+
+  if ($ldap->error != 'Success') {
+    print_red(sprintf(_("Setting the password failed. LDAP server says '%s'."),
+          $ldap->get_error()));
+  } else {
+
+    /* Find postmodify entries for this class */
+    $command= search_config($config->data['MENU'], "password", "POSTMODIFY");
+
+    if ($command != ""){
+      /* Walk through attribute list */
+      $command= preg_replace("/%userPassword/", $password, $command);
+      $command= preg_replace("/%dn/", $dn, $command);
+
+      if (check_command($command)){
+        @DEBUG (DEBUG_SHELL, __LINE__, __FUNCTION__, __FILE__, $command, "Execute");
+        exec($command);
+      } else {
+        $message= sprintf(_("Command '%s', specified as POSTMODIFY for plugin '%s' doesn't seem to exist."), $command, "password");
+        print_red ($message);
+      }
+    }
+  }
+}
+// Return something like array['sambaLMPassword']= "lalla..."
+function generate_smb_nt_hash($password)
+{
+  global $config;
+  $tmp= $config->data['MAIN']['SMBHASH']." ".escapeshellarg($password);
+  @DEBUG (DEBUG_LDAP, __LINE__, __FUNCTION__, __FILE__, $tmp, "Execute");
+
+  exec($tmp, $ar);
+  flush();
+  reset($ar);
+  $hash= current($ar);
+  if ($hash == "")
+  {
+    print_red (_("Setting for SMBHASH in gosa.conf is incorrect! Can't change Samba password."));
+  }
+  else
+  {
+    list($lm,$nt)= split (":", trim($hash));
+
+    if ($config->current['SAMBAVERSION'] == 3)
+    {
+      $attrs['sambaLMPassword']= $lm;
+      $attrs['sambaNTPassword']= $nt;
+      $attrs['sambaPwdLastSet']= date('U');
+      $attrs['sambaBadPasswordCount']= "0";
+      $attrs['sambaBadPasswordTime']= "0";
+    } else {
+      $attrs['lmPassword']= $lm;
+      $attrs['ntPassword']= $nt;
+      $attrs['pwdLastSet']= date('U');
+    }
+    return($attrs);
+  }
+}
+
+function crypt_single($string,$enc_type )
+{
+  return( passwordMethod::crypt_single_str($string,$enc_type));
+}
+
+
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
