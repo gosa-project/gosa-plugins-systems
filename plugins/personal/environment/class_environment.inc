@@ -499,6 +499,7 @@ class environment extends plugin
       $this->kioskProfileList = array_reverse($list);
 
       unset($this->dialog);
+      $this->dialog = false;
       $this->is_dialog = false;
     }
 
