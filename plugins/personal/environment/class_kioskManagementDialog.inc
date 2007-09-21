@@ -24,7 +24,7 @@ class kioskManagementDialog extends plugin
     if($attach){
       $this->filesToAttach = $attach;
     }
-    $this->baseDir = search_config($this->config->data,"environment", "KIOSKPATH");
+    $this->baseDir = $this->config->search('environment', 'kioskpath');
   }
 
   function execute()

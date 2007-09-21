@@ -112,10 +112,9 @@ class userManagement extends plugin
       $s_tab= "user";
     }
 
-    if(!search_config($this->config->data['TABS'], $s_tab , "CLASS")){
+    if(!$this->config->search($s_tab, 'class',array('tabs'))){
       $s_tab = "user";
     }
-
 
     /********************
       Copy & Paste 

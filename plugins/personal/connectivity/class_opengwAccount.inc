@@ -50,20 +50,23 @@ class opengwAccount extends plugin
 		$this->initialy_was_account = false;
 		$this->is_account           = false;
 
-		/* check if datebase funktions are available, and if database configurations are available */ 
-		if(is_callable("pg_connect")){
+		/* Get configurations */
+    if($this->config->search("opengwAccount", 'USERNAME',array('data'))){
+      $atr = array();
+      $atr['LOGIN']	=	  $this->config->search("opengwAccount", 'USERNAME',array('data'));
+      $atr['PASSWORD']=	$this->config->search("opengwAccount", 'PASSWORD',array('data'));
+      $atr['SERVER']	=	$this->config->search("opengwAccount", 'DATAHOST',array('data'));
+      $atr['DB']		=	  $this->config->search("opengwAccount", 'DATABASE',array('data'));
+      $this->serverCon = $atr;
+    }elseif(isset($this->config->data['SERVERS']['OPENGROUPWARE'])){
+      $this->serverCon  = $this->config->data['SERVERS']['OPENGROUPWARE'];
+    }else{
+      $this->serverCon = array();
+    }
 
-			/* Get configurations */
-			if(search_config($this->config->data,"opengwAccount","USERNAME")){
-				$atr = array();
-				$atr['LOGIN']	=	search_config($this->config->data,"opengwAccount","USERNAME");
-				$atr['PASSWORD']=	search_config($this->config->data,"opengwAccount","PASSWORD");
-				$atr['SERVER']	=	search_config($this->config->data,"opengwAccount","DATAHOST");
-				$atr['DB']		=	search_config($this->config->data,"opengwAccount","DATABASE");
-				$this->serverCon = $atr;
-			}else{
-				$this->serverCon  = $this->config->data['SERVERS']['OPENGROUPWARE'];
-			}
+    /* check if datebase funktions are available, and if database configurations are available */ 
+		if(is_callable("pg_connect") && count($this->serverCon)){
+
 			$this->handle     = new ogw($this->serverCon['LOGIN'],$this->serverCon['PASSWORD'],$this->serverCon['SERVER'],$this->serverCon['DB']);
 
 			/* Check if current configuration allows database connection */
