@@ -1075,7 +1075,7 @@ class environment extends plugin
 
     $realyUsedAttrs= array();
 
-    $path = search_config($this->config->data,"environment", "KIOSKPATH"); 
+    $tmp = $this->config->search("environment", "KIOSKPATH",array('tabs'));
     /* Creating Kiosk Profiles */
     foreach($this->newKioskProfiles as $file){
       $contents = $file['contents'];

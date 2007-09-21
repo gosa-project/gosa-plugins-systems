@@ -405,9 +405,9 @@ class plugin
     }
 
     /* Find hooks entries for this class */
-    $command= search_config($this->config->data['MENU'], get_class($this), "CHECK");
+    $command= $this->config->search(get_class($this), "CHECK",array('menu'));
     if ($command == "" && isset($this->config->data['TABS'])){
-      $command= search_config($this->config->data['TABS'], get_class($this), "CHECK");
+      $command= $this->config->search(get_class($this), "CHECK",array('tabs'));
     }
 
     if ($command != ""){
@@ -569,9 +569,9 @@ class plugin
   function postcreate($add_attrs= array())
   {
     /* Find postcreate entries for this class */
-    $command= search_config($this->config->data['MENU'], get_class($this), "POSTCREATE");
+    $command= $this->config->search(get_class($this), "POSTCREATE",array('menu'));
     if ($command == "" && isset($this->config->data['TABS'])){
-      $command= search_config($this->config->data['TABS'], get_class($this), "POSTCREATE");
+      $command= $this->config->search(get_class($this), "POSTCREATE",array('tabs'));
     }
 
     if ($command != ""){
@@ -604,9 +604,9 @@ class plugin
   function postmodify($add_attrs= array())
   {
     /* Find postcreate entries for this class */
-    $command= search_config($this->config->data['MENU'], get_class($this), "POSTMODIFY");
+    $command= $this->config->search(get_class($this), "POSTMODIFY",array('menu'));
     if ($command == "" && isset($this->config->data['TABS'])){
-      $command= search_config($this->config->data['TABS'], get_class($this), "POSTMODIFY");
+      $command= $this->config->search(get_class($this), "POSTMODIFY",array('tabs'));
     }
 
     if ($command != ""){
@@ -639,9 +639,9 @@ class plugin
   function postremove($add_attrs= array())
   {
     /* Find postremove entries for this class */
-    $command= search_config($this->config->data['MENU'], get_class($this), "POSTREMOVE");
+    $command= $this->config->search(get_class($this), "POSTREMOVE",array('menu'));
     if ($command == "" && isset($this->config->data['TABS'])){
-      $command= search_config($this->config->data['TABS'], get_class($this), "POSTREMOVE");
+      $command= $this->config->search(get_class($this), "POSTREMOVE",array('tabs'));
     }
 
     if ($command != ""){

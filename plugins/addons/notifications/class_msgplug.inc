@@ -98,7 +98,7 @@ class msgplug extends plugin
         if (!$this->acl_is_writeable('notify')){
           print_red(_("You have no permissions to send a message!"));
         } else {
-          $cmd= search_config($this->config->data['MENU'], "msgplug", "NOTIFY_COMMAND");
+          $cmd= $this->config->search("msgplug", "NOTIFY_COMMAND",array('menu'));
           if ($cmd == ""){
             print_red(_("No NOTIFY_COMMAND definition found in your gosa.conf"));
           } else {

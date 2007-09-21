@@ -27,7 +27,7 @@ class gotomasses extends plugin
 
     /* Define source file */
     $this->data_file = CONFIG_DIR."/gotomasses_machines";
-    $file = search_config($this->config->data['MENU'], "gotomasses", "STORAGE_FILE");
+    $file = $this->config->search("gotomasses", "STORAGE_FILE",array('menu'));
     if(!empty($file)){
       $this->data_file = $file;
     }
