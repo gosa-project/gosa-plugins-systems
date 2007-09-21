@@ -198,7 +198,7 @@ class termgroup extends plugin
         /* Update members fai state */
         $this->update_term_member_FAIstate(trim($_POST['saction']));
 
-        $cmd= search_config($this->config->data['TABS'], "workgeneric", "ACTIONCMD");
+        $cmd = $this->config->search("workgeneric", "ACTIONCMD",array('tabs'));
 
         if ($cmd == ""){
           print_red(_("No ACTIONCMD definition found in your gosa.conf"));

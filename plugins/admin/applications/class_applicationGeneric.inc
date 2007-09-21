@@ -33,7 +33,7 @@ class application extends plugin
   {
     plugin::plugin ($config, $dn, $parent);
 
-    $tmp = search_config($this->config->data,"faiManagement","CLASS");
+    $tmp = $this->config->search("faiManagement", "CLASS");
     if(!empty($tmp)) {
       if(!preg_match("/^ou=apps,/",$_SESSION['appfilter']['release'])){
         $this->isReleaseApplikation = true;  
@@ -410,7 +410,7 @@ class application extends plugin
     $ldap= $this->config->get_ldap_link();
     $ldap->cd($this->config->current["BASE"]);
 
-    $tmp = search_config($this->config->data,"faiManagement","CLASS");
+    $tmp = $this->config->search("faiManagement", "CLASS");
     if((!empty($tmp)) && (isset($_SESSION['appfilter']['release']))){
       $baseDn = str_replace($this->config->current['BASE'],$this->base,$_SESSION['appfilter']['release']);
       $baseDn = preg_replace("/ou=apps,.*/","ou=apps,".$this->base,$_SESSION['appfilter']['release']);
