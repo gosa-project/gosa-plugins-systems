@@ -1936,30 +1936,6 @@ function array_key_ics($ikey, $items)
 }
 
 
-function search_config(&$arr, $name, $return)
-{
-  $lname= strtolower($name);
-  if (is_array($arr)){
-    foreach ($arr as $a){
-      if (isset($a['CLASS']) && strtolower($a['CLASS']) == $lname){
-
-        if (isset($a[$return])){
-          return ($a[$return]);
-        } else {
-          return ("");
-        }
-      } else {
-        $res= search_config ($a, $name, $return);
-        if ($res != ""){
-          return $res;
-        }
-      }
-    }
-  }
-  return ("");
-}
-
-
 function array_differs($src, $dst)
 {
   /* If the count is differing, the arrays differ */

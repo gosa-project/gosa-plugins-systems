@@ -751,6 +751,46 @@ class config  {
     return FALSE;
   }
 
+
+  function __search(&$arr, $name, $return)
+  {
+    $return= strtoupper($return);
+    if (is_array($arr)){
+      foreach ($arr as &$a){
+        if (isset($a['CLASS']) && preg_match("/^$name$/i", $a['CLASS'])){
+          return(isset($a[$return])?$a[$return]:"");
+        } else {
+          $res= $this->__search ($a, $name, $return);
+          if ($res != ""){
+            return $res;
+          }
+        }
+      }
+    }
+    return ("");
+  }
+
+
+  function search($class, $value, $categories= "")
+  {
+    if (is_array($categories)){
+      foreach ($categories as $category){
+        $res= $this->__search($this->data[strtoupper($category)], $class, $value);
+        if ($res != ""){
+          return $res;
+        }
+      }
+    } else {
+      if ($categories == "") {
+        return $this->__search($this->data, $class, $value);
+      } else {
+        return $this->__search($this->data[strtoupper($categories)], $class, $value);
+      }
+    } 
+
+    return ("");
+  }
+
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
