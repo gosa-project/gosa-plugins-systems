@@ -38,7 +38,7 @@ class aclroletab extends tabs
     return $ret;
   }
 
-  function save_object()
+  function save_object($ignore_account= FALSE)
   {
     tabs::save_object();
   }

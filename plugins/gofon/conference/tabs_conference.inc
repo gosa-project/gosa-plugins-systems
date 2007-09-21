@@ -13,7 +13,7 @@ class conferencetabs extends tabs
     $this->addSpecialTabs();
   }
 
-  function check()
+  function check($ignore_account= FALSE)
   {
 	return (tabs::check(TRUE));
   }

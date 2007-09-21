@@ -76,7 +76,8 @@
       #, dirname(__FILE__))));
     }
 
-    function check() {
+    function check() 
+	{
       plugin::check(); 
       $message = array();
 

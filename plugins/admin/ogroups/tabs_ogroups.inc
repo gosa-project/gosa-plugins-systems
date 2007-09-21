@@ -230,7 +230,7 @@ class ogrouptabs extends tabs
   }
 
 
-  function check()
+  function check($ignore_account= FALSE)
   {
     return (tabs::check(FALSE));
   }

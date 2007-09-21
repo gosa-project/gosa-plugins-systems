@@ -278,7 +278,7 @@ class glpiPrinterCartridges extends plugin
   /* This function cehck all created devices if you wan't to create device specific check 
       use >>if($attr['device_type']=="moboard")<< to create a device type depending check
    */
-  function check($attr)
+  function check()
   {
     /* Call common method to give check the hook */
     $message= plugin::check();

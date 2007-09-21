@@ -340,9 +340,9 @@ class goto_task extends plugin
   
 
   /* Map acl function, to be able to use plugin::save_object() */
-  function acl_is_writeable($str)
+  function acl_is_writeable($attribute,$skip_write = FALSE)
   {
-    return($this->parent->acl_is_writeable($str));
+    return($this->parent->acl_is_writeable($attribute,$skip_write));
   }
 
 
