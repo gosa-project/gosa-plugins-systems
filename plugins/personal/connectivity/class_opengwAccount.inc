@@ -53,10 +53,10 @@ class opengwAccount extends plugin
 		/* Get configurations */
     if($this->config->search("opengwAccount", 'USERNAME',array('data'))){
       $atr = array();
-      $atr['LOGIN']	=	  $this->config->search("opengwAccount", 'USERNAME',array('data'));
-      $atr['PASSWORD']=	$this->config->search("opengwAccount", 'PASSWORD',array('data'));
-      $atr['SERVER']	=	$this->config->search("opengwAccount", 'DATAHOST',array('data'));
-      $atr['DB']		=	  $this->config->search("opengwAccount", 'DATABASE',array('data'));
+      $atr['LOGIN']	=	  $this->config->search("opengwAccount", 'USERNAME',array('tabs'));
+      $atr['PASSWORD']=	$this->config->search("opengwAccount", 'PASSWORD',array('tabs'));
+      $atr['SERVER']	=	$this->config->search("opengwAccount", 'DATAHOST',array('tabs'));
+      $atr['DB']		=	  $this->config->search("opengwAccount", 'DATABASE',array('tabs'));
       $this->serverCon = $atr;
     }elseif(isset($this->config->data['SERVERS']['OPENGROUPWARE'])){
       $this->serverCon  = $this->config->data['SERVERS']['OPENGROUPWARE'];
@@ -135,6 +135,7 @@ class opengwAccount extends plugin
 		$display= "";
 		$smarty= get_smarty();
 
+    $smarty->assign("serverCon",count($this->serverCon));
     $smarty->assign("validTeams","");
     $smarty->assign("is_account", " ");
     $smarty->assign("OGWstate"," disabled ");
@@ -159,13 +160,15 @@ class opengwAccount extends plugin
       $smarty->assign('opengwAccountACL', " disabled ");
     }
 
+    if(count($this->serverCon))
+
 		/* Check database extension */    
-		if(!is_callable("pg_connect")){
+		if(!is_callable("pg_connect") && count($this->serverCon)){
 			print_red(_("OpenGroupware: Your configuration is missing a postgresql extension. Can't perform any database queries."));
-		}else
+		}elseif(count($this->serverCon)){
 
 			/* Check if config exists */
-			if(search_config($this->config->data,"opengwAccount","DATABASE")==""){
+			if($this->config->search("opengwAccount", 'DATABASE',array('tabs'))){
 				print_red(_("OpenGroupware: Missing database configuration for opengroupware. Can't get or set any informations."));
 			}else{
 
@@ -235,6 +238,7 @@ class opengwAccount extends plugin
 
 				} 
 			}
+    }
 		$display.= $smarty->fetch (get_template_path('opengw.tpl', TRUE, dirname(__FILE__)));
 		return ($display);
 	}
