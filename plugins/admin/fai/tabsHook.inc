@@ -11,13 +11,13 @@ class tabsHook extends tabs
 	$this->addSpecialTabs();
   }
 
-  function check()
+  function check($ignore_account= FALSE)
   {
 	return (tabs::check(TRUE));
   }
   
 
-  function save()
+  function save($ignore_account= FALSE)
   {
   	$baseobject= $this->by_object['faiHook'];
 
