@@ -91,7 +91,7 @@ class printgeneric extends plugin
     }
     
     /* create dns object */
-    $this->netConfigDNS = new termDNS($this->config, $this->dn,$this->objectclasses);
+    $this->netConfigDNS = new termDNS($this->config, $this,$this->objectclasses);
 
     /* Set base */
     if ($this->dn == "new"){
@@ -847,7 +847,7 @@ class printgeneric extends plugin
     if(preg_match("/printer/i",$this->BelongsTo)){
       $this->netConfigDNS->cn = $this->cn;
       $this->netConfigDNS->dn = $this->dn;
-      $this->netConfigDNS->save($this->dn);
+      $this->netConfigDNS->save();
     }
 
     /* This is a multi object. Handle tagging here... */

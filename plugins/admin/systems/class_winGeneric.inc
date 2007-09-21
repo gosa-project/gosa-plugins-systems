@@ -49,7 +49,7 @@ class wingeneric extends plugin
   function wingeneric (&$config, $dn= NULL, $parent= NULL)
   {
     plugin::plugin ($config, $dn, $parent);
-    $this->netConfigDNS = new termDNS($this->config,$this->dn,$this->objectclasses);
+    $this->netConfigDNS = new termDNS($this->config,$this,$this->objectclasses);
     /* Set base */
     if ($this->dn == "new"){
       $ui= get_userinfo();
@@ -269,7 +269,7 @@ class wingeneric extends plugin
     }
 
     $this->netConfigDNS->cn =  preg_replace("/\\\$\$/","",$this->cn);
-    $this->netConfigDNS->save($this->dn);
+    $this->netConfigDNS->save();
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of system wingeneric/generic with dn '%s' failed."),$this->dn));
 
     /* Optionally execute a command after we're done */

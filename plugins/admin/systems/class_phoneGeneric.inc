@@ -57,7 +57,7 @@ class phoneGeneric extends plugin
   function phonegeneric (&$config, $dn= NULL, $parent= NULL)
   {
     plugin::plugin ($config, $dn, $parent);
-    $this->netConfigDNS = new termDNS($this->config,$this->dn,$this->objectclasses, true);
+    $this->netConfigDNS = new termDNS($this->config,$this,$this->objectclasses, true);
 
     /* Set base */
     if ($this->dn == "new"){
@@ -430,7 +430,7 @@ class phoneGeneric extends plugin
       $this->handle_post_events("modify",array("macAddress" => $this->netConfigDNS->macAddress,"ipHostNumber" => $this->netConfigDNS->ipHostNumber));
     }
     $this->netConfigDNS->cn = $this->cn;    
-    $this->netConfigDNS->save($this->dn);
+    $this->netConfigDNS->save();
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of system phone/generic with dn '%s' failed."),$this->dn));
   }
 

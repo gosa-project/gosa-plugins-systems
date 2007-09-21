@@ -42,15 +42,16 @@ class termDNS extends plugin
 
   /*  Terminal dns 
    */
-  function termDNS (&$config, $dn,$objectClasses,$IPisMust = false)
+  function termDNS (&$config, $parent,$objectClasses,$IPisMust = false)
   {
     /* We need to know which objectClasses are used, to store the ip/mac
      * Because of different type of devices   
-     */
+     */ 
+    $this->parent         = $parent;
     $this->objectclasses  =  $objectClasses;
     $this->IPisMust       = $IPisMust;
 
-    plugin::plugin ($config, $dn);
+    plugin::plugin ($config, $parent->dn);
 
     if(isset($this->attrs['cn'][0])){
       $this->OrigCn = preg_replace("/\\\$\$/","",$this->attrs['cn'][0]);
@@ -521,10 +522,12 @@ class termDNS extends plugin
 
 
   /* Save to LDAP */
-  function save($dn)
+  function save()
   {
     $ldap= $this->config->get_ldap_link();
-   
+  
+    $dn = $this->parent->dn;
+ 
     /*******************/ 
     /* IP-MAC HANDLING */
     /*******************/ 

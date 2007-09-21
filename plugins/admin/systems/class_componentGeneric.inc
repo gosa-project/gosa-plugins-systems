@@ -35,7 +35,7 @@ class componentGeneric extends plugin
     } else {
       $this->base= preg_replace ("/^[^,]+,[^,]+,[^,]+,/", "", $this->dn);
     }
-    $this->netConfigDNS = new termDNS($this->config,$this->dn,$this->objectclasses, true);
+    $this->netConfigDNS = new termDNS($this->config,$this,$this->objectclasses, true);
     /* Save dn for later references */
     $this->orig_dn= $this->dn;
   }
@@ -259,7 +259,7 @@ class componentGeneric extends plugin
     }
 
     $this->netConfigDNS->cn = $this->cn;
-    $this->netConfigDNS->save($this->dn);
+    $this->netConfigDNS->save();
 
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of system component/generic with dn '%s' failed."),$this->dn));
   }

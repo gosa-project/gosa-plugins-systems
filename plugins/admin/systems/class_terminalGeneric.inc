@@ -77,7 +77,7 @@ class termgeneric extends plugin
       $this->member_of_ogroup = $ldap->count() >= 1;
     }
 
-    $this->netConfigDNS = new termDNS($this->config,$this->dn,$this->objectclasses);
+    $this->netConfigDNS = new termDNS($this->config,$this,$this->objectclasses);
     /* Read arrays */
     foreach (array("ghNetNic", "ghIdeDev", "ghScsiDev") as $val){
       if (!isset($this->attrs[$val])){
@@ -560,7 +560,7 @@ class termgeneric extends plugin
     }
 
     $this->netConfigDNS->cn = $this->cn;
-    $this->netConfigDNS->save($this->dn);
+    $this->netConfigDNS->save();
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of object system terminal/generic with dn '%s' failed."),$this->dn));
   }
 

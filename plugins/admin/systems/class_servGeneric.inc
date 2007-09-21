@@ -62,7 +62,7 @@ class servgeneric extends plugin
     } else {
       $this->base= preg_replace ("/^[^,]+,[^,]+,[^,]+,/", "", $this->dn);
     }
-    $this->netConfigDNS = new termDNS($this->config,$this->dn,$this->objectclasses);
+    $this->netConfigDNS = new termDNS($this->config,$this,$this->objectclasses);
     $this->netConfigDNS->set_acl_category("server");
     $this->netConfigDNS->set_acl_base($this->base);
        
@@ -360,7 +360,7 @@ class servgeneric extends plugin
     }
     show_ldap_error($ldap->get_error(), sprintf(_("Saving of system server/generic with dn '%s' failed."),$this->dn)); 
     $this->netConfigDNS->cn = $this->cn;
-    $this->netConfigDNS->save($this->dn);
+    $this->netConfigDNS->save();
 
     /* Optionally execute a command after we're done */
     if(!$this->didAction){
