@@ -159,12 +159,12 @@ class glpiDeviceManagement extends plugin
     if(isset($_POST['SaveDeviceChanges'])){
     
       /* First check if all changes made are allowed */
-      if(count($this->check($this->EditEntry))==0){
-        $this->save($this->EditEntry);
+      if(count($this->check())==0){
+        $this->save();
         $this->editMode = false;
         $this->reload();
       }else{
-        foreach($this->check($this->EditEntry) as $msg){
+        foreach($this->check() as $msg){
           print_red($msg);
         }
       }
@@ -331,13 +331,16 @@ class glpiDeviceManagement extends plugin
     return($this->Selected); 
   }
 
-  /* This function cehck all created devices if you wan't to create device specific check 
-      use >>if($attr['device_type']=="moboard")<< to create a device type depending check
+  /* This function checks all created devices.
+     If you wan't to use device specific checks, 
+        use >>if($attr['device_type']=="moboard")<< to create a device type depending check
    */
-  function check($attr)
+  function check()
   {
     /* Call common method to give check the hook */
     $message= plugin::check();
+
+    $attr = $this->EditEntry;
 
     if(isset($attr['designation'])){
       $str2 = "designation";
