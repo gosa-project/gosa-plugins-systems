@@ -63,7 +63,7 @@ class termgeneric extends plugin
   function termgeneric (&$config, $dn= NULL, $parent= NULL)
   {
     /* Check if FAI is activated */
-    $tmp = search_config($config->data,"faiManagement","CLASS");
+    $tmp= $config->search("faiManagement", "CLASS");
     if(!empty($tmp)){
       $this->fai_activated = TRUE;
     }
@@ -204,7 +204,8 @@ class termgeneric extends plugin
 
       switch($_POST['saction']){
         case 'wake':
-          $cmd= search_config($this->config->data['TABS'], "termgeneric", "WAKECMD");
+          $cmd= $this->config->search("termgeneric", "WAKECMD",array('tabs'));
+
           if ($cmd == ""){
             print_red(_("No WAKECMD definition found in your gosa.conf"));
           } else {
@@ -216,7 +217,7 @@ class termgeneric extends plugin
           break;
 
         case 'reboot':
-          $cmd= search_config($this->config->data['TABS'], "termgeneric", "REBOOTCMD");
+          $cmd= $this->config->search("termgeneric", "REBOOTCMD",array('tabs'));
           if ($cmd == ""){
             print_red(_("No REBOOTCMD definition found in your gosa.conf"));
           } else {
@@ -228,7 +229,7 @@ class termgeneric extends plugin
           break;
 
         case 'halt':
-          $cmd= search_config($this->config->data['TABS'], "termgeneric", "HALTCMD");
+          $cmd= $this->config->search("termgeneric", "HALTCMD",array('tabs'));
           if ($cmd == ""){
             print_red(_("No HALTCMD definition found in your gosa.conf"));
           } else {

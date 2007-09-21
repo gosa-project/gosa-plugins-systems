@@ -68,7 +68,7 @@ class workgeneric extends plugin
 
   function workgeneric (&$config, $dn= NULL, $parent= NULL)
   {
-    $tmp = search_config($config->data,"faiManagement","CLASS");
+    $tmp= $config->search("faiManagement", "CLASS");
     if(!empty($tmp)){
       $this->fai_activated = TRUE;
     }
@@ -181,7 +181,7 @@ class workgeneric extends plugin
     }
 
     if ((isset($_POST['action'])) && ($this->acl_is_writeable("FAIstate"))){
-      $cmd= search_config($this->config->data['TABS'], "workgeneric", "ACTIONCMD");
+      $cmd= $this->config->search("workgeneric", "ACTIONCMD",array('tabs'));
       if ($cmd == ""){
         print_red(_("No ACTIONCMD definition found in your gosa.conf"));
       } else {

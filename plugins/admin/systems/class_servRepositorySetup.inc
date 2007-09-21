@@ -193,7 +193,7 @@ class servRepositorySetup  extends plugin
   function GetHookElements()
   {
     $ret = array();
-    $cmd= search_config($this->config->data['TABS'], "servrepository", "REPOSITORY_HOOK");
+    $cmd = $this->config->search("servrepository", "REPOSITORY_HOOK",array('tabs'));
     if(!empty($cmd)){
       $res = shell_exec($cmd);
       $res2 = trim($res);

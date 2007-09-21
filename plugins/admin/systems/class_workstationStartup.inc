@@ -61,7 +61,7 @@ class workstartup extends plugin
   function workstartup (&$config, $dn= NULL, $parent= NULL)
   {
     /* Check if FAI is active */
-    $tmp = search_config($config->data,"faiManagement","CLASS");
+    $tmp= $config->search("faiManagement", "CLASS");
     if(!empty($tmp)){
       $this->fai_activated = TRUE;
     }else{
@@ -341,7 +341,7 @@ class workstartup extends plugin
 
     /* Get list of boot kernels */
     if (isset($this->config->data['TABS'])){
-      $command= search_config($this->config->data['TABS'], get_class($this), "KERNELS");
+      $command= $this->config->search(get_class($this), "KERNELS",array('tabs'));
 
       if (!check_command($command)){
         $message[]= sprintf(_("Command '%s', specified as KERNELS hook for plugin '%s' doesn't seem to exist."), $command,
@@ -1151,7 +1151,7 @@ class workstartup extends plugin
   function GetHookElements()
   {
     $ret = array();
-    $cmd= search_config($this->config->data['TABS'], "servrepository", "REPOSITORY_HOOK");
+    $cmd= $this->config->search("servrepository", "REPOSITORY_HOOK",array('tabs'));
     if(!empty($cmd)){
       $res = shell_exec($cmd);
       $res2 = trim($res);

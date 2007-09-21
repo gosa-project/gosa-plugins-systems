@@ -33,7 +33,7 @@ class servrepository extends goService
     plugin::plugin ($config, $dn, $parent);
 
     /* Skip this if fai is deactivated */
-    $tmp = search_config($this->config->data,"faiManagement","CLASS");
+    $tmp= $this->config->search("faiManagement", "CLASS");
     if(!empty($tmp)){
       $this->fai_activated = TRUE;    
     }else{

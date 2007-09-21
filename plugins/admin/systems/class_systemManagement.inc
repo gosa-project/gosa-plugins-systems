@@ -175,7 +175,8 @@ class systems extends plugin
       $dsc             = array(0 => array("pipe", "r"), 1 => array("pipe", "w"), 2 => array("pipe", "w"));
 
       /* Get and check command */
-      $command= search_config($this->config->data['TABS'], "workgeneric", "ISOCMD");
+      $command= $this->config->search("workgeneric", "ISOCMD",array('tabs'));
+      
       if (check_command($command)){
         @DEBUG (DEBUG_SHELL, __LINE__, __FUNCTION__, __FILE__, $command, "Execute");
 
@@ -956,7 +957,7 @@ class systems extends plugin
     $sys_categories   = array("terminal", "workstation", "server", "phone" ,"printer");
 
     /* Add FAIstate to attributes if FAI is activated */
-    $tmp = search_config($this->config->data,"faiManagement","CLASS");
+    $tmp = $this->config->search("faiManagement", "CLASS");
     if(!empty($tmp)){
       $sys_attrs[] = "FAIstate";
     }    

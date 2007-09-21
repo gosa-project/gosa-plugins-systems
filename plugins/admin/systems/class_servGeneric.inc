@@ -43,7 +43,8 @@ class servgeneric extends plugin
   function servgeneric (&$config, $dn= NULL, $parent= NULL)
   {
     /* Check if FAI is activated */
-    $tmp = search_config($config->data,"faiManagement","CLASS");
+    $tmp = $config->search("faiManagement", "CLASS",array('tabs'));
+    
     if(!empty($tmp)){
       $this->fai_activated = TRUE;
     }
@@ -104,7 +105,7 @@ class servgeneric extends plugin
 
     /* Check for action */
     if (isset($_POST['action']) && $this->acl_is_writeable("FAIstate")){
-      $cmd= search_config($this->config->data['TABS'], "workgeneric", "ACTIONCMD");
+      $cmd = $this->config->search("workgeneric", "ACTIONCMD",array('tabs'));
       if ($cmd == ""){
         print_red(_("No ACTIONCMD definition found in your gosa.conf"));
       } else {
