@@ -123,10 +123,12 @@ class dhcpHost extends dhcpPlugin
 
 
   /* Check values */
-  function check($cache)
+  function check()
   {
     $message= array();
 
+    $cache = $this->parent->dhcpObjectCache;
+  
     /* All required fields are set? */
     if ($this->cn == ""){
       $message[]= _("Required field 'Name' is not filled.");

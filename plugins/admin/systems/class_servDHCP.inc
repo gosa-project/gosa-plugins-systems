@@ -136,7 +136,7 @@ class servdhcp extends goService
     /* Save changes */
     if (isset($_POST['save_dhcp'])){
       $this->dialog->save_object();
-      $messages= $this->dialog->check($this->dhcpObjectCache);
+      $messages= $this->dialog->check();
       if (count($messages)){
         show_errors($messages);
       } else {

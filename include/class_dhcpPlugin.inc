@@ -120,7 +120,7 @@ class dhcpPlugin extends plugin
 
 
   /* Check values */
-  function check($cache)
+  function check()
   {
     $message= array();
     return $message;
