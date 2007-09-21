@@ -366,7 +366,7 @@ class faiManagement extends plugin
       /* Check if we have a post remove method configured
        *  else skip this operation. (Skip:Button in the ui should be disabled in this case too)
        */
-      if("" != search_config($this->config->data,"faiManagement","POSTREMOVE")){
+      if("" != $this->config->search("faiManagement", "POSTREMOVE",array('tabs'))){
 
         /* Load permissions for selected 'dn' and check if
            we're allowed to remove this 'dn' */
@@ -391,7 +391,7 @@ class faiManagement extends plugin
       /* Check if we have a post remove method configured
        *  else skip this operation. (Skip:Button in the ui should be disabled in this case too)
        */
-      if("" != search_config($this->config->data,"faiManagement","POSTREMOVE")){
+      if("" != $this->config->search("faiManagement", "POSTREMOVE",array('tabs'))){
 
         $bb =  $this->DivListFai->selectedBranch;
         if(!isset($ldap)){
@@ -591,7 +591,7 @@ class faiManagement extends plugin
     /* Check if we have a post create method configured
      *  else skip this operation. (Skip:Button in the ui should be disabled in this case too)
      */
-    if("" != search_config($this->config->data,"faiManagement","POSTCREATE")){
+    if("" != $this->config->search("faiManagement", "POSTCREATE",array('tabs'))){
       if(($s_action == "branch_branch")||($this->dispNewBranch)){
         $this->dispNewBranch=true;
         $smarty->assign("iframe",false);
@@ -608,7 +608,7 @@ class faiManagement extends plugin
     /* Check if we have a post create method configured
      *  else skip this operation. (Skip:Button in the ui should be disabled in this case too)
      */
-    if("" != search_config($this->config->data,"faiManagement","POSTCREATE")){
+    if("" != $this->config->search("faiManagement", "POSTCREATE",array('tabs'))){
       if(($s_action == "freeze_branch")||($this->dispNewFreeze)){
         $this->dispNewFreeze = true;
         $smarty->assign("iframe",false);

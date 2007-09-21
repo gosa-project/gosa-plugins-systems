@@ -264,13 +264,13 @@ class group extends plugin
       $smarty->assign("samba3", "");
     }
 
-    if(search_config($this->config->data['MENU'], "nagiosaccount", "CLASS")){
+    if($this->config->search("nagiosaccount", "CLASS",array('menu'))){
       $smarty->assign("nagios",true);
     }else{
       $smarty->assign("nagios",false);
     }
     
-    if(search_config($this->config->data['MENU'], "phoneAccount", "CLASS")){
+    if($this->config->search("phoneAccount", "CLASS",array('menu'))){
       $smarty->assign("pickupGroup",true);
     }else{
       $smarty->assign("pickupGroup",false);
