@@ -69,7 +69,7 @@ if(!preg_match("/r/",$acl)){
   header ("Location: index.php");
   exit;
 }
-$dir = search_config($config->data,"environment", "KIOSKPATH");
+$dir= $config->search('environment', 'kioskpath', array('main','tabs'));
 getkiosk($dir."/".$_GET['id']);
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
