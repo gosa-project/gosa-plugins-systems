@@ -757,7 +757,7 @@ class config  {
     $return= strtoupper($return);
     if (is_array($arr)){
       foreach ($arr as &$a){
-        if (isset($a['CLASS']) && strcasecmp($name, $a['CLASS'])){
+        if (isset($a['CLASS']) && strcasecmp($name, $a['CLASS']) == 0){
           return(isset($a[$return])?$a[$return]:"");
         } else {
           $res= $this->__search ($a, $name, $return);

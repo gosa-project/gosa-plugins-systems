@@ -1687,7 +1687,7 @@ function in_array_ics($value, $items)
   }
 
   foreach ($items as $item){
-    if (strcasecmp($item, $value)) {
+    if (strcasecmp($item, $value) == 0) {
       return (TRUE);
     }
   }
