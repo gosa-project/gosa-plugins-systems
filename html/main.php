@@ -76,6 +76,11 @@ if ($_SERVER['REMOTE_ADDR'] != $ui->ip){
 }
 $config= $_SESSION['config'];
 
+/* Enable compressed output */
+if (isset($config->data['MAIN']['COMPRESSED']) && preg_match('/^(true|on)$/i', $config->data['MAIN']['COMPRESSED'])){
+  ob_start("ob_gzhandler");
+}
+
 /* Check for invalid sessions */
 if(empty($_SESSION['_LAST_PAGE_REQUEST'])){
   $_SESSION['_LAST_PAGE_REQUEST']= time();

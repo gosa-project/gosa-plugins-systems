@@ -130,6 +130,11 @@ if ($_SERVER["REQUEST_METHOD"] != "POST"){
   @DEBUG (DEBUG_CONFIG, __LINE__, __FUNCTION__, __FILE__, $config->data, "config");
 }
 
+/* Enable compressed output */
+if (isset($config->data['MAIN']['COMPRESSED']) && preg_match('/^(true|on)$/i', $config->data['MAIN']['COMPRESSED'])){
+  ob_start("ob_gzhandler");
+}
+
 /* Set template compile directory */
 if (isset ($config->data['MAIN']['COMPILE'])){
   $smarty->compile_dir= $config->data['MAIN']['COMPILE'];

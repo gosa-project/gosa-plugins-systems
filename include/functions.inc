@@ -135,7 +135,7 @@ function get_browser_language()
   /* Try to use users primary language */
   global $config;
   $ui= get_userinfo();
-  if ($ui !== NULL){
+  if (isset($ui) && $ui !== NULL){
     if ($ui->language != ""){
       return ($ui->language.".UTF-8");
     }
