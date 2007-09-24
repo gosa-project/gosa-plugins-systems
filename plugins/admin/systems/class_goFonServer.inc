@@ -25,12 +25,15 @@ class goFonServer extends goService{
   var $goFonAreaCode      = "";
   var $goFonCountryCode   = "";
   var $view_logged  =FALSE;
-   
+
+  var $orig_dn            = "";   
  
   function goFonServer(&$config,$dn)
   {
     goService::goService($config,$dn);
     $this->DisplayName = _("VoIP service");
+
+    $this->orig_dn = $dn;
   }
 
 
@@ -115,6 +118,31 @@ class goFonServer extends goService{
         /* Some entries found */
         if($i != 3){
           return(sprintf(_("You can't remove the asterisk database extension, it is still in use by these objects '%s'."),trim($str)));
+        }
+      }
+    }
+  }
+
+  
+  function save()
+  {
+    goService::save();
+    /* Update goFonAccounts if server was is renamed.
+       Set attribute goFonHomeServer to current dn
+     */
+    if(in_array("goFonServer",$this->objectclasses)){
+      if($this->orig_dn != "new" && $this->orig_dn != $this->dn){
+        $ldap = $this->config->get_ldap_link();
+        $ldap->cd($this->config->current['BASE']);
+        $ldap->search("(&(goFonHomeServer=*)(|(objectClass=goFonAccount)(objectClass=goFonConference)))",array("goFonHomeServer"));
+        $dns = array();
+        while($attrs = $ldap->fetch()){
+          $dns[] = $attrs['dn'];
+        }
+        foreach($dns as $dn){
+          $ldap->cd($dn);
+          $ldap->modify(array("goFonHomeServer" => $this->dn));
+          show_ldap_error($ldap->get_error(),sprintf(_("Updating gofon home server failed for '%s'."),$dn));
         }
       }
     }
