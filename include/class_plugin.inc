@@ -400,7 +400,7 @@ class plugin
     $message= array();
 
     /* Skip if we've no config object */
-    if (!isset($this->config)){
+    if (!isset($this->config) || !is_object($this->config)){
       return $message;
     }
 
