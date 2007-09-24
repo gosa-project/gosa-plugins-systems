@@ -405,10 +405,7 @@ class plugin
     }
 
     /* Find hooks entries for this class */
-    $command= $this->config->search(get_class($this), "CHECK",array('menu'));
-    if ($command == "" && isset($this->config->data['TABS'])){
-      $command= $this->config->search(get_class($this), "CHECK",array('tabs'));
-    }
+    $command= $this->config->search(get_class($this), "CHECK", array('menu', 'tabs'));
 
     if ($command != ""){
 
@@ -569,10 +566,7 @@ class plugin
   function postcreate($add_attrs= array())
   {
     /* Find postcreate entries for this class */
-    $command= $this->config->search(get_class($this), "POSTCREATE",array('menu'));
-    if ($command == "" && isset($this->config->data['TABS'])){
-      $command= $this->config->search(get_class($this), "POSTCREATE",array('tabs'));
-    }
+    $command= $this->config->search(get_class($this), "POSTCREATE",array('menu', 'tabs'));
 
     if ($command != ""){
 
