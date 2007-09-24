@@ -1,9 +1,73 @@
 GOsa2 changelog
 ===============
 
+* gosa 2.6beta1
+
+* gosa 2.5.13
+  - Re-added ISC DHCP support
+  - Fixes for the mail based bugtracker
+  - Fixed autouid problem with slashes
+  - Added list sorting for FAI script lists
+  - Added copy'n paste for mimetypes
+  - Cut'n paste objects are now greyed out
+  - Added swedish locale
+  - Improved language detection
+  - Added a statistic footer to lists
+  - Added the ssh plugin
+  - Layout fixes
+
+* gosa 2.5.12
+  - Fixed problems with automatic reverse zones
+  - Fixed several IE6 related Java-Script problems
+  - Removed png.js by default. Looks ugly, but performs. Take
+    a look at the FAQ on how to re-enable it for IE.
+  - Added non-login password change dialog
+  - Various spelling fixes
+  - Added some extra robustness to the PPD reader code
+  - FAI partition ordering fixed, partition sizes fixed
+  - FAI release management updates
+  - Fixed installations that fail the schema check
+  - Updated error messages to fade out the interface
+  - Repository cleanup
+  - Added feedback link to easily report PHP errors
+  - Added more content sorting where needed
+  - Made gidNumber be the current in posix check hook
+  - Removed inconsistency in gosa/gosa+samba3 schema
+  - Fixed multiple saving of "My account" data
+  - Don't allow moving of objects from administrative units to other
+    administrative units where ACL's permit it. Objects "seemed" to
+    disapear because the tagging changes.
+  - Added gosa-desktop package to be able to start it by link
+  - Added method to highlight tabs
+  - Generel translation update for de, es, fr, it, nl, pl, ru, zh
+
+* gosa 2.5.11a
+  - Added chinese translation
+  - Fixed language detection and removed line wraps in tab headers
+  - Fixed french translation
+
+* gosa 2.5.11
+  - Add workaround for failing is_php4() when using PHP5
+    with "zend.ze1_compatibility_mode" set to "On"
+  - Backported new sieve filter editor from trunk
+  - Backported new setup from trunk
+  - Fixed double loaded pages in gecko based browsers when js
+    is activated
+  - Replaced a set of PHP <? short tag occurences
+  - Updated locales (de/fr)
+
 * gosa 2.5.10
   - Included hook to make use of dynamic uid-bases
-  - Dummy entry
+  - Included vacation date range specification
+  - Fixed non-saved Samba-Domain changes in groups
+  - Freezed application parameters are not editable anymore
+  - Fixed problem with removing commata based DN's
+  - Corrected setup generated perl mkntpasswd string
+  - Fixed month listing in fax reports - february was march
+  - Enabled 9 digits for gid-/uidNumbers
+  - Fixed acl's for saving printers
+  - Fixed saving of disabled samba acl's
+  - Added support for rfc2307bis compliant groups
 
 * gosa 2.5.9
   - Fixed ldap tls connections when schema check was being used
