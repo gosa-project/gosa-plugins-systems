@@ -51,7 +51,7 @@ class opengwAccount extends plugin
 		$this->is_account           = false;
 
 		/* Get configurations */
-    if($this->config->search("opengwAccount", 'USERNAME',array('data'))){
+    if($this->config->search("opengwAccount", 'USERNAME',array('tabs'))){
       $atr = array();
       $atr['LOGIN']	=	  $this->config->search("opengwAccount", 'USERNAME',array('tabs'));
       $atr['PASSWORD']=	$this->config->search("opengwAccount", 'PASSWORD',array('tabs'));

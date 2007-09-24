@@ -94,8 +94,8 @@ class divListFai extends MultiSelectWindow
       /* Check if there are post commands available for fai management.
        * If not, grey out freeze/branch and release remove buttons.
        */
-      $r = $this->config->search("faiManagement", "POSTREMOVE");
-      $c = $this->config->search("faiManagement", "POSTCREATE");
+      $r = $this->config->search("faiManagement", "POSTREMOVE",array('tabs'));
+      $c = $this->config->search("faiManagement", "POSTCREATE",array('tabs'));
 
       $smarty = get_smarty();
       $smarty->assign("allow_create", $c);

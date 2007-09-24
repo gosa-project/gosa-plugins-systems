@@ -957,7 +957,7 @@ class systems extends plugin
     $sys_categories   = array("terminal", "workstation", "server", "phone" ,"printer");
 
     /* Add FAIstate to attributes if FAI is activated */
-    $tmp = $this->config->search("faiManagement", "CLASS");
+    $tmp = $this->config->search("faiManagement", "CLASS",array('tabs'));
     if(!empty($tmp)){
       $sys_attrs[] = "FAIstate";
     }    

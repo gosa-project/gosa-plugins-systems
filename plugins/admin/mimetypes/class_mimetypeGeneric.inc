@@ -115,7 +115,7 @@ class mimetype extends plugin
     }
 
     /* Check if release Management is enabled */
-    $tmp = $this->config->search("faiManagement", "CLASS");
+    $tmp = $this->config->search("faiManagement", "CLASS",array('tabs'));
     if(!empty($tmp)) {
       $this->isReleaseMimeType= true;
     }

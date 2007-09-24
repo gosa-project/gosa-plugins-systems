@@ -26,7 +26,7 @@ class mimetabs extends tabs
 
     /* Check for new 'dn', in order to propagate the
        'dn' to all plugins */
-    $tmp = $this->config->search("faiManagement", "CLASS");
+    $tmp = $this->config->search("faiManagement", "CLASS",array('tabs'));
 
     if((!empty($tmp)) && (isset($_SESSION['mimefilter']['release']))){
       if(!$baseobject->isReleaseMimeType){

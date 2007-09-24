@@ -239,7 +239,7 @@ class environment extends plugin
     $this->gotoAvailableShares= $config->getShareList(false);  
 
 
-    if($this->config->search('environment', 'kioskpath') != ""){
+    if($this->config->search('environment', 'kioskpath',array('tabs')) != ""){
       $tmp = new kioskManagementDialog($this->config,$this->dn);
       $list = $tmp->getKioskProfiles($this->newKioskProfiles);
       $list['none']=_("None");
