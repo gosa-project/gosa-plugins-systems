@@ -45,7 +45,7 @@ class appgroup extends plugin
   {
    
     /* Check if we have relase mangement enabled and prepare group application for release management */ 
-    $tmp = $this->config->search("faiManagement", "CLASS");
+    $tmp = $config->search("faiManagement", "CLASS");
     if(!empty($tmp)){
       $this->enableReleaseManagement = true;
       $this->objectclasses  [] = "FAIreleaseTag";

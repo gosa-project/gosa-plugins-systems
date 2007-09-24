@@ -2569,7 +2569,7 @@ function change_password ($dn, $password, $mode=0, $hash= "")
   } else {
 
     /* Find postmodify entries for this class */
-    $command= $this->config->search("password", "POSTMODIFY",array('menu'));
+    $command= $config->search("password", "POSTMODIFY",array('menu'));
 
     if ($command != ""){
       /* Walk through attribute list */
