@@ -39,8 +39,6 @@ Target for 2.6:
 Target for 3.0:
 ===============
 
-* Complete PHP5 compliance and optimization
-
 * Simplify plugins by providing a schema parser
 
 * Replace PHP IMAP module by self made module
