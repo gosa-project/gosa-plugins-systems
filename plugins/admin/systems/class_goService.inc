@@ -178,11 +178,7 @@ class goService extends plugin{
   function action_hook($add_attrs= array())
   {
     /* Find postcreate entries for this class */
-    $command= $this->config->search(get_class($this), "ACTION_HOOK",array('menu'));
-    if ($command == "" && isset($this->config->data['TABS'])){
-      $command= $this->config->search(get_class($this), "ACTION_HOOK",array('tabs'));
-    }
-
+    $command= $this->config->search(get_class($this), "ACTION_HOOK",array('menu','tabs'));
     if ($command != ""){
 
       /* Walk through attribute list */

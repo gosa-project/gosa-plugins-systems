@@ -598,10 +598,7 @@ class plugin
   function postmodify($add_attrs= array())
   {
     /* Find postcreate entries for this class */
-    $command= $this->config->search(get_class($this), "POSTMODIFY",array('menu'));
-    if ($command == "" && isset($this->config->data['TABS'])){
-      $command= $this->config->search(get_class($this), "POSTMODIFY",array('tabs'));
-    }
+    $command= $this->config->search(get_class($this), "POSTMODIFY",array('menu','tabs'));
 
     if ($command != ""){
 
@@ -633,11 +630,7 @@ class plugin
   function postremove($add_attrs= array())
   {
     /* Find postremove entries for this class */
-    $command= $this->config->search(get_class($this), "POSTREMOVE",array('menu'));
-    if ($command == "" && isset($this->config->data['TABS'])){
-      $command= $this->config->search(get_class($this), "POSTREMOVE",array('tabs'));
-    }
-
+    $command= $this->config->search(get_class($this), "POSTREMOVE",array('menu','tabs'));
     if ($command != ""){
 
       /* Additional attributes */
