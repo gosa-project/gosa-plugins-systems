@@ -262,7 +262,7 @@ class faiPartitionTable extends plugin
 
     /* Display dialog if one is defined
      */
-    if(isset($this->dialog)){
+    if(is_object($this->dialog)){
       $this->dialog->save_object();
       return($this->dialog->execute());
     }

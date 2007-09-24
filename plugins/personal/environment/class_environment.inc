@@ -914,7 +914,7 @@ class environment extends plugin
     $smarty->assign("gotoPrinterKeys",array_flip($this->printOutPrinterDevices()));
 
     /* General behavior */
-    if((isset($this->dialog))&&($this->dialog!==NULL)&&(!empty($this->dialog))){
+    if(is_object($this->dialog)){
       $this->dialog->save_object();
       $disp =$this->dialog->execute();
 

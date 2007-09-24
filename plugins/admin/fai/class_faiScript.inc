@@ -305,7 +305,7 @@ class faiScript extends plugin
     }
 
     /* Print dialog if $this->dialog is set */
-    if($this->dialog){
+    if(is_object($this->dialog)){
       $this->dialog->save_object();
       $display = $this->dialog->execute();
       return($display);

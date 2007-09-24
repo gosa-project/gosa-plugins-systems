@@ -840,7 +840,7 @@ class appgroup extends plugin
     }
 
     /* Show main page */
-    if ($this->dialog){
+    if (is_object($this->dialog)){
       $smarty->assign("table", $this->table);
       $display.= $smarty->fetch (get_template_path('application_options.tpl', TRUE,dirname(__FILE__)));
     } else {

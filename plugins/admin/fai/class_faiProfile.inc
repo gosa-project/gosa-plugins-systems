@@ -288,7 +288,7 @@ class faiProfile extends plugin
       $this->dialog=NULL;
     }
 
-    if(isset($this->dialog)){
+    if(is_object($this->dialog)){
       $this->dialog->save_object();
       return($this->dialog->execute());
     }

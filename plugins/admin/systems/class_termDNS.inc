@@ -248,7 +248,7 @@ class termDNS extends plugin
       }
     }
 
-    if(isset($this->dialog) && $this->dialog != FALSE){
+    if(is_object($this->dialog)){
       $this->dialog->save_object();
       return($this->dialog->execute());
     }

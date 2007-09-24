@@ -249,7 +249,7 @@ class servdnseditZone extends plugin
 
     /* Display any type of open dialogs 
      */
-    if($this->dialog){
+    if(is_object($this->dialog)){
       $this->dialog->save_object();
       return($this->dialog->execute());
     }

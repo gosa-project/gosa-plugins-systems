@@ -182,7 +182,7 @@ class goto_task extends plugin
     }
 
     /* Display object Listing */
-    if($this->dialog){
+    if(is_object($this->dialog)){
       $this->dialog->save_object();
       return($this->dialog->execute());
     }
