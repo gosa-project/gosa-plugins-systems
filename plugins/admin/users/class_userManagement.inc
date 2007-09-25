@@ -796,7 +796,13 @@ class userManagement extends plugin
 
       /* Don't show buttons if tab dialog requests this */
       if(isset($this->usertab->by_object)){
-        if (!$this->usertab->by_object[$this->usertab->current]->dialog){
+      
+        $dia = FALSE;
+        if(isset($this->usertab->by_object[$this->usertab->current]->dialog)){
+          $dia = $this->usertab->by_object[$this->usertab->current]->dialog;
+        }
+
+        if(!is_object($dia) && $dia != TRUE){
           $display.= "<p style=\"text-align:right\">\n";
           $display.= "<input type=submit name=\"edit_finish\" style=\"width:80px\" value=\""._("Ok")."\">\n";
           $display.= "&nbsp;\n";
