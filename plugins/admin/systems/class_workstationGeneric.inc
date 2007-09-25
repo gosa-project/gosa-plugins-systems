@@ -68,7 +68,7 @@ class workgeneric extends plugin
 
   function workgeneric (&$config, $dn= NULL, $parent= NULL)
   {
-    $tmp= $config->search("faiManagement", "CLASS",array('tabs'));
+    $tmp= $config->search("faiManagement", "CLASS",array('menu','tabs'));
     if(!empty($tmp)){
       $this->fai_activated = TRUE;
     }

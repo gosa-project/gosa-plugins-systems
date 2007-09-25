@@ -61,7 +61,7 @@ class workstartup extends plugin
   function workstartup (&$config, $dn= NULL, $parent= NULL)
   {
     /* Check if FAI is active */
-    $tmp= $config->search("faiManagement", "CLASS",array('tabs'));
+    $tmp= $config->search("faiManagement", "CLASS",array('menu','tabs'));
     if(!empty($tmp)){
       $this->fai_activated = TRUE;
     }else{

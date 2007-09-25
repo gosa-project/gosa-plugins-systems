@@ -32,15 +32,15 @@ class servrepository extends goService
   {
     plugin::plugin ($config, $dn, $parent);
 
+    $this->DisplayName = _("Repository service");
+
     /* Skip this if fai is deactivated */
-    $tmp= $this->config->search("faiManagement", "CLASS",array('tabs'));
+    $tmp= $this->config->search("faiManagement", "CLASS",array('menu','tabs'));
     if(!empty($tmp)){
       $this->fai_activated = TRUE;    
     }else{
       return;
     }
-
-    $this->DisplayName = _("Repository service");
 
     $this->repositories = array();
     if(isset($this->attrs['FAIrepository'])){
@@ -249,7 +249,7 @@ class servrepository extends goService
       Repository setup dialog handling /END
     */
 
-    $divlist = new divList("repositories");
+    $divlist = new divlist("repositories");
     $divlist->SetEntriesPerPage(0);
     $divlist->setHeight(400);
     $divlist->SetPluginMode();

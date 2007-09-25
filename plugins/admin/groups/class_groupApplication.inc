@@ -45,7 +45,7 @@ class appgroup extends plugin
   {
    
     /* Check if we have relase mangement enabled and prepare group application for release management */ 
-    $tmp = $config->search("faiManagement", "CLASS",array('tabs'));
+    $tmp = $config->search("faiManagement", "CLASS",array('menu','tabs'));
     if(!empty($tmp)){
       $this->enableReleaseManagement = true;
       $this->objectclasses  [] = "FAIreleaseTag";
@@ -539,7 +539,7 @@ class appgroup extends plugin
           $ldap= $this->config->get_ldap_link();
 
           /* Check if we have release management enabled */
-          $tmp = $this->config->search("faiManagement", "CLASS",array('tabs'));
+          $tmp = $this->config->search("faiManagement", "CLASS",array('menu','tabs'));
           if(!empty($tmp)){
     
             /* Get application parameter from ldap */
@@ -1015,7 +1015,7 @@ class appgroup extends plugin
     $this->apps= array();
 
     /* Special handling for release managed apps */
-    $tmp = $this->config->search("faiManagement", "CLASS",array('tabs'));
+    $tmp = $this->config->search("faiManagement", "CLASS",array('menu','tabs'));
     if(!empty($tmp) && count($this->Releases)){
       $this->enableReleaseManagement = true;
 
@@ -1071,7 +1071,7 @@ class appgroup extends plugin
 
     /* Get all apps ... */
     $res = get_list("objectClass=gosaApplication","application",$this->config->current['BASE'],array("gosaApplicationParameter","cn"),GL_SUBSEARCH); 
-    $tmp = $this->config->search("faiManagement", "CLASS",array('tabs'));
+    $tmp = $this->config->search("faiManagement", "CLASS",array('menu','tabs'));
     $this->AllAppsForRelease = array();
     if(!empty($tmp)){
       $tmp = array_flip($this->Releases);

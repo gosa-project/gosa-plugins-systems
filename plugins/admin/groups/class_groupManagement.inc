@@ -561,7 +561,7 @@ class groupManagement extends plugin
     $attrs = array("cn", "description", "gidNumber", "objectClass");
  
     /* If subsearch is activated search for subobjects too */
-    $tmp = $this->config->search("faiManagement", "CLASS",array('tabs'));
+    $tmp = $this->config->search("faiManagement", "CLASS",array('menu','tabs'));
     if(!empty($tmp)){
       $attrs [] = "FAIrelease";
     }
