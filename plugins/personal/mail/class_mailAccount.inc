@@ -255,13 +255,13 @@ class mailAccount extends plugin
    
     /* Cancel sieve edit */
     if(isset($_POST['sieve_cancel'])){
-      $this->dialog = NULL;
+      $this->dialog = FALSE;
     }
  
     /* Save sieve changes */
     if(isset($_POST['sieve_finish'])){
       $this->sieve_management = $this->dialog;
-      $this->dialog = NULL;
+      $this->dialog = FALSE;
     }
  
     if(is_object($this->dialog)){

@@ -14,7 +14,6 @@ class servdns extends goService
 
   var $RecordTypes      = array();
   var $Zones            = array();
-  var $dialog           = NULL;
 
   var $orig_dn          = "";
 
@@ -197,14 +196,14 @@ class servdns extends goService
           unset($this->Zones[$this->dialog->OldZoneName]);
         }
         $this->Zones[$ret['zoneName']] = $ret;
-        $this->dialog = NULL;
+        $this->dialog = FALSE;
       }
     }
 
     /* Cancel zone edit / new 
      */
     if(isset($_POST['CancelZoneChanges'])){
-      $this->dialog = NULL;
+      $this->dialog = FALSE;
     }
 
     /* Add empty new zone 
@@ -257,7 +256,7 @@ class servdns extends goService
 
     /* Show dialog 
      */
-    if($this->dialog!== NULL){
+    if(is_object($this->dialog)){
       $this->dialog->save_object();
       $this->dialog->parent = $this;
       return($this->dialog->execute());

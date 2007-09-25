@@ -173,12 +173,12 @@ class goto_task extends plugin
       foreach($ret as $entry){
         $this->Target[] = $entry['cn'][0];
       }
-      $this->dialog = NULL;
+      $this->dialog = FALSE;
     }
 
     /* Cancel object listing */
     if(isset($_POST['CloseMultiSelectWindow'])){
-      $this->dialog = NULL;
+      $this->dialog = FALSE;
     }
 
     /* Display object Listing */

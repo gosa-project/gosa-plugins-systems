@@ -124,13 +124,13 @@ class servdhcp extends goService
         $this->dialog= new $section($this->current_object);
         $this->current_object= "";
       } else {
-        $this->dialog= NULL;
+        $this->dialog= FALSE;
       }
     }
 
     /* Cancel section creation? */
     if (isset($_POST['cancel_section']) || isset($_POST['cancel_dhcp'])){
-      $this->dialog= NULL;
+      $this->dialog= FALSE;
     }
 
     /* Save changes */
@@ -200,7 +200,7 @@ class servdhcp extends goService
             $this->dhcpObjectCache[$data['dn']]= $data;
           }
         }
-        $this->dialog= NULL;
+        $this->dialog= FALSE;
       }
     }
 
@@ -220,7 +220,7 @@ class servdhcp extends goService
       } else {
         print_red(_("You're not allowed to remove DHCP sections!"));
       }
-      $this->dialog= NULL;
+      $this->dialog= FALSE;
     }
 
     /* Look for post entries */
@@ -314,7 +314,7 @@ class servdhcp extends goService
 
     /* Show dialog
      */
-    if($this->dialog !== NULL && !is_int($this->dialog) && is_object($this->dialog)){
+    if(isset($this->dialog) && is_object($this->dialog)){
       $this->dialog->save_object();
       $this->dialog->parent = $this;
       return($this->dialog->execute());

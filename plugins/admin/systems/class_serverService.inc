@@ -23,7 +23,6 @@ class ServerService extends plugin
   var $objectclasses    = array();
 
   var $divList          = NULL;
-  var $dialog           = NULL;       // Contains dialog object if a dialog is opened 
 
   var $plugins          = array();
   var $pluign_names     = array();
@@ -159,7 +158,7 @@ class ServerService extends plugin
    
     /* Abort service add */
     if(isset($_POST['CancelServiceAdd'])){
-      $this->dialog   = NULL;
+      $this->dialog   = FALSE;
       $this->backup   = NULL;
       $this->current  = "";
     }
@@ -178,7 +177,7 @@ class ServerService extends plugin
           $this->plugins[$this->current]->$name = $value;
         }
       }
-      $this->dialog   = NULL;
+      $this->dialog   = FALSE;
       $this->backup   = NULL;
       $this->current  = ""; 
     }
@@ -199,7 +198,7 @@ class ServerService extends plugin
           $this->plugins[$this->current]->$name = $value;
         }
         $this->current = "";
-        $this->dialog = NULL;
+        $this->dialog = FALSE;
         $this->backup = NULL;
       }
     }
@@ -215,7 +214,7 @@ class ServerService extends plugin
 
 
     /* There is currently a subdialog open, display this dialog */
-    if($this->dialog !== NULL){
+    if(is_object($this->dialog)){
       $this->dialog->save_object();
       return($this->dialog->execute());
     }

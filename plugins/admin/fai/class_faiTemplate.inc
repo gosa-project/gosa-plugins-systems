@@ -33,7 +33,6 @@ class faiTemplate extends plugin
   var $cn               = "";       // The class name for this object
   var $description      = "";       // The description for this set of partitions
   var $is_dialog        = false;    // specifies which buttons will be shown to save or abort
-  var $dialog           = NULL;     // a dialog, e.g. new disk dialog
   var $SubObjects       = array();  // All leafobjects of this object
 
   var $FAIstate         = "";
@@ -242,7 +241,7 @@ class faiTemplate extends plugin
         }
         $this->is_dialog=false;
         unset($this->dialog);
-        $this->dialog=NULL;
+        $this->dialog=FALSE;
       }
     }
 
@@ -261,7 +260,7 @@ class faiTemplate extends plugin
     if(isset($_POST['CancelSubObject'])){
       $this->is_dialog=false; 
       unset($this->dialog);
-      $this->dialog=NULL;
+      $this->dialog=FALSE;
     }
 
     /* Print dialog if $this->dialog is set */

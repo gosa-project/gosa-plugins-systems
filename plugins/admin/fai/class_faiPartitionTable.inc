@@ -17,7 +17,6 @@ class faiPartitionTable extends plugin
   var $description      = "";       // The description for this set of partitions
   var $disks            = array();  // All defined Disks 
   var $is_dialog        = false;    // specifies which buttons will be shown to save or abort
-  var $dialog           = NULL;     // a dialog, e.g. new disk dialog
 
   var $FAIstate         = "";
   var $ui;
@@ -189,7 +188,7 @@ class faiPartitionTable extends plugin
      */
     if(isset($_POST['CancelDisk'])){
       unset($this->dialog);
-      $this->dialog = NULL;
+      $this->dialog = FALSE;
       $this->is_dialog=false;
     }
 
@@ -225,12 +224,12 @@ class faiPartitionTable extends plugin
 
           $this->disks[$disk['cn']]=$disk; 
           unset($this->dialog);
-          $this->dialog = NULL;
+          $this->dialog = FALSE;
           $this->is_dialog=false;
           ksort($this->disks);
         }
       }else{
-        $this->dialog = NULL;
+        $this->dialog = FALSE;
         $this->is_dialog=false;
       }
     }

@@ -41,7 +41,6 @@ class mimetype extends plugin
 
   /* Mime type release mode */
   var $isReleaseMimeType 					      = false;
-  var $dialog								            = NULL;
 
   /* These vars will be copied too, if you use copy&paste mode */
   var $CopyPasteVars        = array("use_gotoMimeFilePattern","use_gotoMimeApplication","use_gotoMimeEmbeddedApplication","iconData",

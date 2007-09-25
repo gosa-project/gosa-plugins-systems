@@ -34,8 +34,6 @@ class printgeneric extends plugin
 
   var $member           =array();
   var $strings          = "";
-  var $dialog           =NULL;
-
   var $netConfigDNS;
   var $baseSelection    = false;
   var $macAddress       = "";
@@ -428,7 +426,7 @@ class printgeneric extends plugin
     /* Close ppd dialog */
     if(isset($_POST['ClosePPD'])){
       unset($this->dialog);
-      $this->dialog=NULL;
+      $this->dialog=FALSE;
     }
 
     /* Save selected ppd */
@@ -443,7 +441,7 @@ class printgeneric extends plugin
         $this->gotoPrinterPPD = $this->dialog->save();
         $this->PPDdialogToSave = $this->dialog;
         unset($this->dialog);
-        $this->dialog=NULL;
+        $this->dialog=FALSE;
       }
     }
 
@@ -475,7 +473,7 @@ class printgeneric extends plugin
     /* Abort user / group adding dialog */
     if(isset($_POST['PrinterCancel'])){
       unset($this->dialog);
-      $this->dialog= NULL;
+      $this->dialog= FALSE;
     }
 
     /* Save selected users / groups */
@@ -492,12 +490,12 @@ class printgeneric extends plugin
           $this->AddMember($new['type'], $mem['dn']);
         }
         unset($this->dialog);
-        $this->dialog=NULL;
+        $this->dialog=FALSE;
       }
     }
 
     /* Display dialog, if there is currently one open*/
-    if($this->dialog !== NULL){
+    if(is_object($this->dialog)){
       $this->dialog->save_object();
       $display = $this->dialog->execute();
       return $display;

@@ -89,7 +89,6 @@ class sambaAccount extends plugin
   var $objectclasses= array();
   
   var $uid= "";
-  var $dialog = NULL;
   var $CopyPasteVars = array("kickoff_time_set","logoff_time_set","logon_time_set","mungedObject","orig_sambaDomainName");
 
   function sambaAccount (&$config, $dn= NULL)
@@ -248,7 +247,7 @@ class sambaAccount extends plugin
 
     /* Cancel dialog */
     if(isset($_POST['cancel_logonHours'])){
-      $this->dialog = NULL;
+      $this->dialog = FALSE;
     }
 
     /* Save selected logon hours */
@@ -257,7 +256,7 @@ class sambaAccount extends plugin
       if($this->acl_is_writeable("sambaLogonHours")){
         $this->sambaLogonHours = $this->dialog->save();
       }
-      $this->dialog = NULL;
+      $this->dialog = FALSE;
     }
 
     /* Display dialog */

@@ -536,7 +536,7 @@ class environment extends plugin
       if(!$this->acl_is_writeable("gotoLogonScript")){
         print_red(_("You are not allowed to write Logon scripts."));
         unset($this->dialog);
-        $this->dialog=NULL;
+        $this->dialog=FALSE;
         $this->is_dialog=false;
       }else{
         $this->dialog->save_object();
@@ -547,7 +547,7 @@ class environment extends plugin
         }else{
           $tmp = $this->dialog->save();
           unset($this->dialog);
-          $this->dialog=NULL;
+          $this->dialog=FALSE;
           $this->is_dialog=false;
           $this->gotoLogonScripts[$tmp['LogonName']]=$tmp; 
         }
@@ -559,7 +559,7 @@ class environment extends plugin
     if(isset($_POST['LogonCancel'])){
       $this->is_dialog= false;
       unset($this->dialog);
-      $this->dialog= NULL;
+      $this->dialog= FALSE;
     }
 
     /* Check Edit Del New Posts for a selected LogonScript */ 
@@ -754,7 +754,7 @@ class environment extends plugin
     /* Dialog Aborted */
     if(isset($_POST['HotPlugCancel'])){
       unset($this->dialog);
-      $this->dialog= NULL;
+      $this->dialog= FALSE;
       $this->is_dialog = false;
     }
 
@@ -776,7 +776,7 @@ class environment extends plugin
           }
         }
         unset($this->dialog);
-        $this->dialog= NULL;
+        $this->dialog= FALSE;
         $this->is_dialog = false;
       }
     }
@@ -800,7 +800,7 @@ class environment extends plugin
     if(isset($_POST['PrinterCancel'])){
       $this->is_dialog=false;
       unset($this->dialog);
-      $this->dialog=NULL;
+      $this->dialog=FALSE;
     }
 
     if(isset($_POST['PrinterSave'])){
@@ -849,7 +849,7 @@ class environment extends plugin
 
         $this->is_dialog=false;
         unset($this->dialog);
-        $this->dialog   =NULL;
+        $this->dialog   =FALSE;
       }
     }
 

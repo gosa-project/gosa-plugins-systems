@@ -21,7 +21,6 @@ class faiProfile extends plugin
   var $cn               = "";       // The class name for this object
   var $description      = "";       // The description for this set of partitions
   var $is_dialog        = false;    // specifies which buttons will be shown to save or abort
-  var $dialog           = NULL;     // a dialog, e.g. new disk dialog
   var $FAIclass         = "";       // Classnames used for this profile
   var $FAIclasses       = array();  // Contains classname seperated in an array
   var $FAIAllclasses    = array();  // Contains all possible Classnames
@@ -276,7 +275,7 @@ class faiProfile extends plugin
         }
         $this->is_dialog=false;
         unset($this->dialog);
-        $this->dialog=NULL;
+        $this->dialog=FALSE;
         //ksort($this->FAIclasses);
       }
     }
@@ -285,7 +284,7 @@ class faiProfile extends plugin
     if(isset($_POST['CancelSubObject'])){
       $this->is_dialog=false;
       unset($this->dialog);
-      $this->dialog=NULL;
+      $this->dialog=FALSE;
     }
 
     if(is_object($this->dialog)){

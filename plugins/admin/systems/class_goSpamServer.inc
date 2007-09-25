@@ -36,7 +36,6 @@ class gospamserver extends goService{
   var $saFlagsD         = false;
   var $saFlagsP         = false;
  
-  var $dialog           = NULL;
   var $ui               = NULL;
   var $acl              = NULL;
   var $view_logged  =FALSE;
@@ -118,7 +117,7 @@ class gospamserver extends goService{
   
     /* Cancel adding/editing specified rule */
     if(isset($_POST['CancelRule'])){
-      $this->dialog = NULL;
+      $this->dialog = FALSE;
     }
 
     /* Handle post to delete rules */
@@ -154,7 +153,7 @@ class gospamserver extends goService{
           unset($this->Rules[$ret['orig_name']]);
         }
         $this->Rules[$ret['name']] = $ret['rule'];
-        $this->dialog = NULL;
+        $this->dialog = FALSE;
       }
     }
    

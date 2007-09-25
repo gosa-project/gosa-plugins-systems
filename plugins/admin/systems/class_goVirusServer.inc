@@ -16,7 +16,6 @@ class govirusserver extends goService{
   var $cn               = "";
   var $avStatus         = "";
 
-  var $dialog           = NULL;
   var $ui               = NULL;
 
   var $Flags            = array("D","S","A","E");

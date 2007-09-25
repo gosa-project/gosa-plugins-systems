@@ -15,9 +15,6 @@ class servrepository extends goService
   /* Search filter */
   var $regex                  = "*";
 
-  /* Configurationdialog for repositories */
-  var $dialog                 = NULL;
-
   /* Repositories */
   var $repositories          = array();
   var $FAIrepository         = array();
@@ -229,17 +226,17 @@ class servrepository extends goService
         }else{ 
           $this->repositories[$obj['Release']]=$obj;        
         }
-        $this->dialog = NULL;
+        $this->dialog = FALSE;
         $this->is_dialog= false;
       }
     }
 
     if(isset($_POST['repository_setup_cancel'])){
-      $this->dialog=NULL;
+      $this->dialog=FALSE;
       $this->is_dialog = false;
     }
    
-    if($this->dialog !== NULL){
+    if(is_object($this->dialog)){
       $this->dialog->save_object();
       $this->is_dialog = true;
       return($this->dialog->execute());

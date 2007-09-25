@@ -228,7 +228,7 @@ class faiManagement extends plugin
           $this->dialog->set_acl_base($dn);
           $this->dialog->by_object[$type[1]]->remove_from_parent ();
           unset ($this->dialog);
-          $this->dialog= NULL;
+          $this->dialog= FALSE;
           $to_del = clean_up_releases($dn);
           save_release_changes_now();
 
@@ -299,7 +299,7 @@ class faiManagement extends plugin
           $this->dialog->set_acl_base($this->dn);
           $this->dialog->by_object[$type[1]]->remove_from_parent ();
           unset ($this->dialog);
-          $this->dialog= NULL;
+          $this->dialog= FALSE;
           $to_del = clean_up_releases($this->dn);
           save_release_changes_now();
 
@@ -684,7 +684,7 @@ class faiManagement extends plugin
 
 		if(isset($_POST['edit_cancel'])){
 			unset($this->dialog);
-			$this->dialog=NULL;
+			$this->dialog=FALSE;
 			$this->is_dialog = false;
 			unset($_SESSION['objectinfo']);
 			del_lock ($this->dn);
@@ -712,7 +712,7 @@ class faiManagement extends plugin
         if (!isset($_POST['edit_apply'])){
           del_lock ($this->dn);
           unset($this->dialog);
-          $this->dialog=NULL;
+          $this->dialog=FALSE;
           $this->is_dialog=false;
           unset($_SESSION['objectinfo']);
         }
@@ -730,7 +730,7 @@ class faiManagement extends plugin
 		 *  Here we need both, save and cancel
 		 */ 
 
-		if(($this->dialog !== NULL) && (isset($this->dialog->config))){
+		if(is_object($this->dialog)){
 			$display .= $this->dialog->execute();
 			/* Don't show buttons if tab dialog requests this */
 

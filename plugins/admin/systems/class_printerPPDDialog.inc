@@ -25,7 +25,6 @@ class printerPPDDialog extends plugin
       
   /* Object Info */
   var $cn                   = "" ;          // Used to tag the ppds modified by the printer object, 
-  var $dialog               = NULL;         // Contains sub dialogs 
 
   function printerPPDDialog (&$config, $dn= NULL, $ppdfile=NULL )
   {
@@ -124,19 +123,19 @@ class printerPPDDialog extends plugin
     /* The selection dialog fpr PPDs is canceled */
     if(isset($_POST['ClosePPDSelection'])){
       unset($this->dialog);
-      $this->dialog=NULL;
+      $this->dialog=FALSE;
     }
 
     /* Div Selection */ 
     if((isset($_GET['act']))&&($_GET['act']=="use")){
       $this->SelectPPD(base64_decode($_GET['id']));
       unset($this->dialog);
-      $this->dialog=NULL;
+      $this->dialog=FALSE;
 
     }
 
     /* if a dialog is open, print the dialog instead of this class */
-    if($this->dialog!==NULL){
+    if(is_object($this->dialog)){
       $display = $this->dialog->execute();
       return($display);
     }
