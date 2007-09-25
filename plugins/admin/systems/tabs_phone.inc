@@ -21,7 +21,7 @@ class phonetabs extends tabs
   {
     /* Check for new 'dn', in order to propagate the
        'dn' to all plugins */
-    $baseobject= $this->by_object['phonegeneric'];
+    $baseobject= $this->by_object['phoneGeneric'];
     $this->dn= "cn=$baseobject->cn,ou=phones,ou=systems,".$baseobject->base;
     $baseobject->dn= $this->dn;
 

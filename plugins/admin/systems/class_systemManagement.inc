@@ -268,7 +268,7 @@ class systems extends plugin
           "workstation" => array("CLASS"=>"WORKTABS",     "TABNAME"=>"workgeneric",     "TABCLASS" =>"worktabs",      "ACL"=> "workstation"),
           "server"      => array("CLASS"=>"SERVTABS",     "TABNAME"=>"servgeneric",     "TABCLASS" =>"servtabs",      "ACL"=> "server"),
           "printer"     => array("CLASS"=>"PRINTTABS",    "TABNAME"=>"printgeneric",    "TABCLASS" =>"printtabs",     "ACL"=> "printer"),
-          "phone"       => array("CLASS"=>"PHONETABS",    "TABNAME"=>"phonegeneric",    "TABCLASS" =>"phonetabs",     "ACL"=> "phone"),
+          "phone"       => array("CLASS"=>"PHONETABS",    "TABNAME"=>"phoneGeneric",    "TABCLASS" =>"phonetabs",     "ACL"=> "phone"),
           "component"   => array("CLASS"=>"COMPONENTTABS","TABNAME"=>"componentgeneric","TABCLASS" =>"componenttabs", "ACL"=> "component"));
 
       if(isset($tabs[$sw])){
@@ -531,7 +531,7 @@ class systems extends plugin
             if($tabtype=="phonetabs"){
               $this->systab= new $tabtype($this->config, $this->config->data['TABS'][$tabobj], $dn,$type);
               $this->systab->set_acl_base($dn);
-              $this->systab->by_object['phonegeneric']->remove_from_parent ();
+              $this->systab->by_object['phoneGeneric']->remove_from_parent ();
             }else{
               $this->systab= new $tabtype($this->config,$this->config->data['TABS'][$tabobj], $dn,$type);
               $this->systab->set_acl_base($dn);
@@ -663,7 +663,7 @@ class systems extends plugin
         if($tabtype=="phonetabs"){
           $this->systab= new $tabtype($this->config, $this->config->data['TABS'][$tabobj], $this->dn,$type);
           $this->systab->set_acl_base($this->dn);
-          $this->systab->by_object['phonegeneric']->remove_from_parent ();
+          $this->systab->by_object['phoneGeneric']->remove_from_parent ();
         }else{  
           $this->systab= new $tabtype($this->config,$this->config->data['TABS'][$tabobj], $this->dn,$type);
           $this->systab->set_acl_base($this->dn);
@@ -1160,7 +1160,7 @@ class systems extends plugin
           "TABCLASS"  =>"servtabs",     "ACL"     =>"server"),
         "printer"     => array( "CLASS"     =>"PRINTTABS",    "TABNAME" =>"printgeneric",    
           "TABCLASS"  =>"printtabs",    "ACL"     =>"printer"),
-        "phone"       => array( "CLASS"     =>"PHONETABS",    "TABNAME" =>"phonegeneric",    
+        "phone"       => array( "CLASS"     =>"PHONETABS",    "TABNAME" =>"phoneGeneric",    
           "TABCLASS"  =>"phonetabs",    "ACL"     =>"phone"),
         "component"   => array( "CLASS"     =>"COMPONENTTABS","TABNAME" =>"componentgeneric",
           "TABCLASS"  =>"componenttabs","ACL"     =>"component"));

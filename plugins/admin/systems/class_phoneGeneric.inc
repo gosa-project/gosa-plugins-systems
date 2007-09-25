@@ -54,7 +54,7 @@ class phoneGeneric extends plugin
 
   var $objectclasses= array("top", "goFonHardware");
 
-  function phonegeneric (&$config, $dn= NULL, $parent= NULL)
+  function phoneGeneric (&$config, $dn= NULL, $parent= NULL)
   {
     plugin::plugin ($config, $dn, $parent);
     $this->netConfigDNS = new termDNS($this->config,$this,$this->objectclasses, true);
@@ -468,7 +468,7 @@ class phoneGeneric extends plugin
       $this->netConfigDNS->ipHostNumber = $source['ipHostNumber'][0];
     }
 
-    $source_o = new phonegeneric($this->config, $source['dn']);
+    $source_o = new phoneGeneric($this->config, $source['dn']);
     $this->selected_categorie = $source_o->selected_categorie;
   }
 
