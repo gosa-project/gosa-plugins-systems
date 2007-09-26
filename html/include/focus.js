@@ -580,7 +580,9 @@ function move_div_by_cursor(e)
 		var cur_id	= 0;
 		var dialog = null;
 
-		if(enable_move_div_by_cursor){
+
+		if(undefined !== enable_move_div_by_cursor && enable_move_div_by_cursor == true){
+
 				if(document.getElementById('current_msg_dialogs')){
 
 						/* Get mouse position on screen 
