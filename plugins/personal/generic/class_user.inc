@@ -119,7 +119,10 @@ class user extends plugin
     /* Load base attributes */
     plugin::plugin ($config, $dn);
 
-    $this->orig_dn = $this->dn;
+    $this->orig_dn  = $this->dn;
+    $this->new_dn   = $this->dn;
+
+    $this->new_dn = $dn;
 
     if ($this->config->current['GOVERNMENTMODE']){
       /* Fix public visible attribute if unset */
