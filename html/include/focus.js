@@ -448,69 +448,171 @@ function focus_field()
 }
 
 
+/*  This function pops up messages from message queue 
+		All messages are hidden in html output (style='display:none;').
+		This function makes single messages visible till there are no more dialogs queued.
 
+		hidden inputs: 
+			current_msg_dialogs		- Currently visible dialog
+			closed_msg_dialogs		- IDs of already closed dialogs 
+			pending_msg_dialogs		- Queued dialog IDs. 
+*/
 function next_msg_dialog()
 {
-	var s_pending = "";
-	var a_pending = new Array();
-	var i_id			= 0;
-	var i					= 0;
-	var tmp				= "";
+		var s_pending = "";
+		var a_pending = new Array();
+		var i_id			= 0;
+		var i					= 0;
+		var tmp				= "";
+		var ele 			= null;
+		var ele2 			= null;
+		var cur_id 		= "";
 
-	if(document.getElementById('current_msg_dialogs')){
-		var cur_id = document.getElementById('current_msg_dialogs').value;
-		if(cur_id != ""){
-			var ele = document.getElementById('e_layer2' + cur_id);
-			ele.onmousemove = "";
-			hide('e_layer2' + cur_id); 	
-			document.getElementById('closed_msg_dialogs').value += "," + cur_id;
-			document.getElementById('current_msg_dialogs').value= ""; 
-		}
-	}
-
-	if(document.getElementById('pending_msg_dialogs')){
-		s_pending = document.getElementById('pending_msg_dialogs').value;
-		a_pending = s_pending.split(",");
-		if(a_pending.length){
-				i_id = a_pending.pop();
-				for (i = 0 ; i < a_pending.length; ++i){
-						tmp = tmp + a_pending[i] + ',';
-				}
-				tmp = tmp.replace(/,$/g,"");
-				if(i_id != ""){
-						var ele = document.getElementById('e_layer2' + i_id);
-						ele.style.display= 'block'	;
-						document.getElementById('pending_msg_dialogs').value= tmp;
-						document.getElementById('current_msg_dialogs').value= i_id;
-						ele.onmousedown = start_move_div_by_cursor;
-						ele.onmouseup 	= stop_move_div_by_cursor;
-						ele.onmousemove = move_div_by_cursor;
+		if(document.getElementById('current_msg_dialogs')){
+				cur_id = document.getElementById('current_msg_dialogs').value;
+				if(cur_id != ""){
+						ele = document.getElementById('e_layer' + cur_id);
+						ele.onmousemove = "";
+						hide('e_layer' + cur_id); 	
+						document.getElementById('closed_msg_dialogs').value += "," + cur_id;
+						document.getElementById('current_msg_dialogs').value= ""; 
 				}
 		}
-	}
+
+		if(document.getElementById('pending_msg_dialogs')){
+				s_pending = document.getElementById('pending_msg_dialogs').value;
+				a_pending = s_pending.split(",");
+				if(a_pending.length){
+						i_id = a_pending.pop();
+						for (i = 0 ; i < a_pending.length; ++i){
+								tmp = tmp + a_pending[i] + ',';
+						}
+						tmp = tmp.replace(/,$/g,"");
+						if(i_id != ""){
+								ele = document.getElementById('e_layer' + i_id);
+								ele.style.display= 'block'	;
+								document.getElementById('pending_msg_dialogs').value= tmp;
+								document.getElementById('current_msg_dialogs').value= i_id;
+								ele2 = document.getElementById('e_layer2') ;
+								ele.onmousedown = start_move_div_by_cursor;
+								ele2.onmouseup 	= stop_move_div_by_cursor;
+								ele2.onmousemove = move_div_by_cursor;
+						}else{
+								ele2 = document.getElementById('e_layer2') ;
+								ele2.style.display ="none";
+						}
+				}
+		}
 }
 
-var enable_move_div_by_cursor = false;
-function start_move_div_by_cursor()
+
+/* Drag & drop for message dialogs */
+var enable_move_div_by_cursor = false;		// Indicates wheter the div movement is enabled or not 
+var mouse_x_on_div	= 0;									// 
+var mouse_y_on_div 	= 0;
+var div_offset_x  	= 0;
+var div_offset_y  	= 0;
+
+/* Activates msg_dialog drag & drop
+ * This function is called when clicking on a displayed msg_dialog 
+ */
+function start_move_div_by_cursor(e)
 {
-	enable_move_div_by_cursor = true;
+		var x = 0; 
+		var y = 0;	
+		var cur_id = 0;
+		var dialog = null;
+		var event = null;
+
+		/* Get current msg_dialog position
+     */
+		cur_id = document.getElementById('current_msg_dialogs').value;
+		if(cur_id != ""){
+				dialog = document.getElementById('e_layer' + cur_id);
+				x = dialog.style.left;
+				y = dialog.style.top;
+				x = x.replace(/[^0-9]/g,"");
+				y = y.replace(/[^0-9]/g,"");
+				if(!y) y = 1;
+				if(!x) x = 1;
+		}
+
+		/* Get mouse position within msg_dialog 
+     */
+		if(window.event){
+				event = window.event;
+				if(event.offsetX){
+						div_offset_x   = event.clientX -x;
+						div_offset_y   = event.clientY -y;
+						enable_move_div_by_cursor = true;
+				}
+		}else if(e){
+				event = e;
+				if(event.layerX){
+						div_offset_x	= event.screenX -x;
+						div_offset_y	= event.screenY -y;
+						enable_move_div_by_cursor = true;
+				}
+		}
 }
 
+
+/* Deactivate msg_dialog movement 
+*/
 function stop_move_div_by_cursor()
 {
-	enable_move_div_by_cursor = false;
+		mouse_x_on_div = 0;
+		mouse_y_on_div = 0;
+		div_offset_x = 0;
+		div_offset_y = 0;
+		enable_move_div_by_cursor = false;
 }
 
+
+/* Move msg_dialog with cursor */
 function move_div_by_cursor(e)
 {
+		var event 				= false;
+		var mouse_pos_x		= 0;
+		var mouse_pos_y 	= 0;
+		var	cur_div_x = 0;
+		var cur_div_y = 0;
+		var cur_id	= 0;
+		var dialog = null;
+
 		if(enable_move_div_by_cursor){
 				if(document.getElementById('current_msg_dialogs')){
-						var cur_id = document.getElementById('current_msg_dialogs').value;
+
+						/* Get mouse position on screen 
+             */
+						if(window.event){
+								event = window.event;
+								mouse_pos_x  =event.clientX;
+								mouse_pos_y  =event.clientY;
+						}else if (e){
+								event = e;
+								mouse_pos_x  =event.screenX;
+								mouse_pos_y  =event.screenY;
+						}else{
+							return;
+						}
+
+						/* Get id of current msg_dialog */
+						cur_id = document.getElementById('current_msg_dialogs').value;
 						if(cur_id != ""){
-								var ele = document.getElementById('e_layer2' + cur_id);
-								ele.style.position = "absolute";
-								ele.style.top = (e.screenY - 100) + "px";
-								ele.style.left = (e.screenX -50)+ "px";
+								dialog = document.getElementById('e_layer' + cur_id);
+	
+								/* Calculate new position */
+								cur_div_x = mouse_pos_x - div_offset_x;
+								cur_div_y = mouse_pos_y - div_offset_y;
+
+								/* Ensure that dialog can't be moved out of screen */
+								if(cur_div_x < 0 ) cur_div_x = 0
+								if(cur_div_y < 0 ) cur_div_y = 0
+							
+								/* Assign new values */
+								dialog.style.left = (cur_div_x ) + "px";
+								dialog.style.top  = (cur_div_y ) + "px";
 						}
 				}
 		}

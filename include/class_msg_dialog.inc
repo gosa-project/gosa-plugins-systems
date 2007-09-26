@@ -46,6 +46,7 @@ class msg_dialog
 		$smarty->assign("s_Message",$this->s_Message);
 		$smarty->assign("s_Title",$this->s_Title);
 		$smarty->assign("i_ID",$this->i_ID);
+		$smarty->assign("frame",false);
 		$smarty->assign("IE",preg_match("/MSIE/", $_SERVER['HTTP_USER_AGENT']));
 		return($smarty->fetch(get_template_path('msg_dialog.tpl')));
 	}
@@ -73,6 +74,12 @@ class msg_dialog
 
 		if(isset($_SESSION['msg_dialogs']) && is_array($_SESSION['msg_dialogs'])){
 
+			/* Get frame one */
+			$smarty = get_smarty();
+			$smarty->assign("frame", true);
+			$smarty->assign("IE",preg_match("/MSIE/", $_SERVER['HTTP_USER_AGENT']));
+			$return = $smarty->fetch(get_template_path('msg_dialog.tpl'));
+
 			foreach($_SESSION['msg_dialogs'] as $key => $dialog){
 
 				if(preg_match("/".$dialog->get_ID()."/",$seen)){
@@ -83,12 +90,14 @@ class msg_dialog
 				}
 				unset($_SESSION['msg_dialogs'][$key]);
 			}
+			$dialog_ids = preg_replace("/,$/","",$dialog_ids);
+
+			$return .= "</div>";
+			$return .="<input type='hidden' style='width:400px;' name='pending_msg_dialogs' id='pending_msg_dialogs' value='".$dialog_ids."'>";
+			$return .="<input type='hidden' style='width:400px;' name='closed_msg_dialogs' id='closed_msg_dialogs' value=''>";
+			$return .="<input type='hidden' style='width:400px;' name='current_msg_dialogs' id='current_msg_dialogs' value=''>";
+			$return .="<input type='hidden' style='width:700px;' name='js_debug' id='js_debug'>";
 		}
-		$dialog_ids = preg_replace("/,$/","",$dialog_ids);
-		
-		$return .="<input type='hidden' style='width:400px;' name='pending_msg_dialogs' id='pending_msg_dialogs' value='".$dialog_ids."'>";
-		$return .="<input type='hidden' style='width:400px;' name='closed_msg_dialogs' id='closed_msg_dialogs' value=''>";
-		$return .="<input type='hidden' style='width:400px;' name='current_msg_dialogs' id='current_msg_dialogs' value=''>";
 		return($return);
 	}
 }

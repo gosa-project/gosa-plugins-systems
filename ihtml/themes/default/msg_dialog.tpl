@@ -1,5 +1,6 @@
+{if $frame}
 {if $IE}
-	<iframe id='e_layer3{$i_ID}'
+	<iframe id='e_layer3'
 		style="
 			position:absolute;
 			width:100%;
@@ -15,7 +16,9 @@
 			filter:chroma(color=#FFFFFF);
 			z-index:0; ">
 	</iframe>
-	<div  id='e_layer2{$i_ID}'
+	<div  id='e_layer2'
+			style='display:none;position:absolute; width:400%;'
+<!--
 		style="
 			position: absolute;
 			left: 0px;
@@ -25,13 +28,12 @@
 			z-index:0;
 			width:100%;
 			height:100%;
-			filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=scale, src='images/opacity_black.png'); ">
+			filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=scale, src='images/opacity_black.png'); "
+-->
+
 {else}
-	<div  id='e_layer2{$i_ID}'
-			style='display:none;'
-			onClick="move_div_by_cursor('e_layer2{$i_ID}');"
-			>
-<!--		style="
+	<div  id='e_layer2'
+		style="
 			position: absolute;
 			left: 0px;
 			top: 0px;
@@ -39,17 +41,19 @@
 			bottom:0px;
 			z-index:0;
 			background-image: url(images/opacity_black.png);">
--->
-{/if}
 
+{/if}
+{else}
 	<div id='e_layer{$i_ID}'
-			style='left:20%;
-				right:20%;
-				top:30%;
+			style='
+				width:60%;
+				left:200px;
+				top:200px;
 				background-color:white;
 				padding:5px;
 				border:5px solid red;
 				z-index:150;
+				display:none;
 				position:absolute;'>
 		<table style='width:100%' summary='' border=0>
 			<tr>
@@ -81,4 +85,4 @@
 			</tr>
 		</table>
 	</div>
-</div>
+{/if}
