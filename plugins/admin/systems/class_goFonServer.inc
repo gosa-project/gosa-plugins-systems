@@ -145,6 +145,11 @@ class goFonServer extends goService{
           show_ldap_error($ldap->get_error(),sprintf(_("Updating gofon home server failed for '%s'."),$dn));
         }
       }
+
+      /* Updated config list of gofon servers */
+      if($this->orig_dn == "new" || $this->orig_dn != $this->dn){
+        $_SESSION['config']->load_servers();
+      }
     }
   }
 
