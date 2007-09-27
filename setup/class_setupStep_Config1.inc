@@ -29,6 +29,7 @@ class Step_Config1 extends setup_step
   var $uidbase    = 1000;
   var $krbsasl    = FALSE;
   var $strict     = TRUE;
+  var $compressed = TRUE;
 
   var $header_image = "images/ldapserver.png";
   var $account_expiration  =FALSE;
@@ -54,7 +55,7 @@ class Step_Config1 extends setup_step
 
   var $crypt_methods  = array();
 
-  var $attributes = array("peopleou","groupou","peopledn","uidbase","encryption","theme","krbsasl",
+  var $attributes = array("compressed","peopleou","groupou","peopledn","uidbase","encryption","theme","krbsasl",
                           "base_hook","base_hook_active","account_expiration","strict","include_personal_title");
 
   function Step_Config1()
