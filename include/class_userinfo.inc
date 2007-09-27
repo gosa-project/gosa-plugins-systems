@@ -67,14 +67,22 @@ class userinfo
 
     /* Initialize ACL_CACHE */
     $_SESSION['ACL_CACHE']= array();
+    $this->reset_acl_cache();
   }
 
+
+  public function reset_acl_cache()
+  {
+    /* Initialize ACL_CACHE */
+    $_SESSION['ACL_CACHE']= array();
+  }
 
   function loadACL()
   {
     $this->ACL= array();    
     $this->groups= array();    
     $this->result_cache =array();
+    $this->reset_acl_cache();
     $ldap= $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
 
