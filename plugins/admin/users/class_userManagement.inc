@@ -36,7 +36,7 @@ class userManagement extends plugin
   var $pwd_change_queue     = array();
 
   var $start_pasting_copied_objects = FALSE;
-
+  var $current_action ="";
   var $msg_dialog= NULL;
   
   function userManagement(&$config, $ui)
@@ -202,7 +202,7 @@ class userManagement extends plugin
       } else {
 
         /* Missing permissions, show message */
-        print_red (_("You are not allowed to set this users password!"));
+        msg_dialog::display(_("Password change failed."),_("You are not allowed to set this users password!"),WARNING_DIALOG);
       }
       /* Clean session, delete lock */
       del_lock ($this->dn);
@@ -253,10 +253,11 @@ class userManagement extends plugin
            dialog. */
         $_SESSION['objectinfo']= $this->dn;
         return ($smarty->fetch(get_template_path('password.tpl', TRUE)));
+        
 
       } else {
         /* User is not allowed. Show message and cancel. */
-        print_red (_("You are not allowed to set this users password!"));
+        msg_dialog::display(_("Password change"),_("You are not allowed to set this users password!"),WARNING_DIALOG);
       }
     }
 
@@ -321,7 +322,7 @@ class userManagement extends plugin
 
     if ($s_action=="del_multiple"){
       $ids = $this->list_get_selected_items();
-
+      $this->dns = array();
       if(count($ids)){
 
         foreach($ids as $id){
@@ -334,19 +335,18 @@ class userManagement extends plugin
 
         $dns_names = "<br><pre>";
         foreach($this->dns as $dn){
-          add_lock ($dn, $this->ui->dn);
           $dns_names .= $dn."\n";
         }
         $dns_names .="</pre>";
 
         /* Lock the current entry, so nobody will edit it during deletion */
         if (count($this->dns) == 1){
-          $smarty->assign("info",     sprintf(_("You're about to delete the following entry: %s"), @LDAP::fix($dns_names)));
+          $info = sprintf(_("You're about to delete the following entry: %s"), @LDAP::fix($dns_names));
         } else {
-          $smarty->assign("info",     sprintf(_("You're about to delete the following entries: %s"), @LDAP::fix($dns_names)));
+          $info = sprintf(_("You're about to delete the following entries: %s"), @LDAP::fix($dns_names));
         }
-        $smarty->assign("multiple", true);
-        return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
+        $this->msg_dialog = new msg_dialog(_("Delete users"),$info,CONFIRM_DIALOG);
+        $this->current_action = $s_action;
       }
     }
 
@@ -356,7 +356,7 @@ class userManagement extends plugin
      ********************/
 
       /* Confirmation for deletion has been passed. Users should be deleted. */
-      if (isset($_POST['delete_multiple_user_confirm'])){
+      if ($this->current_action == "del_multiple" && is_object($this->msg_dialog) && $this->msg_dialog->is_confirmed()){
 
         /* Remove user by user and check acls before removeing them */
         foreach($this->dns as $key => $dn){
@@ -371,7 +371,7 @@ class userManagement extends plugin
             unset ($this->usertab);
             $this->usertab= NULL;
           } else {
-            print_red (sprintf(_("You are not allowed to delete the user '%s'!"),$dn));
+            msg_dialog::display(_("User delete"),sprintf(_("You are not allowed to delete the user '%s'!"),$dn),WARNING_DIALOG);
             if(isset($this->ui->uid)){
               new log("security","users/".get_class($this),$dn,array(),"Tried to trick deletion.");
             }
@@ -461,7 +461,8 @@ class userManagement extends plugin
 #      $smarty->assign("info", sprintf(_("You're about to delete the user %s."), @LDAP::fix($this->dn)));
 #      $smarty->assign("multiple", false);
 #      return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
-      $this->msg_dialog = new msg_dialog(_("Delete user"),sprintf(_("You're about to delete the user %s."), @LDAP::fix($this->dn)),CONFIRM_DIALOG);
+      $this->msg_dialog = new msg_dialog( _("Delete user"),sprintf(_("You're about to delete the user %s."), @LDAP::fix($this->dn)),CONFIRM_DIALOG);
+      $this->current_action = $s_action;
     }
 
 
@@ -470,7 +471,7 @@ class userManagement extends plugin
      ********************/
 
     /* Confirmation for deletion has been passed. User should be deleted. */
-    if (is_object($this->msg_dialog) && $this->msg_dialog->is_confirmed()){
+    if ($this->current_action == "del" && is_object($this->msg_dialog) && $this->msg_dialog->is_confirmed()){
 
       /* Some nice guy may send this as POST, so we've to check
          for the permissions again. */
@@ -490,7 +491,7 @@ class userManagement extends plugin
 
         /* Normally this shouldn't be reached, send some extra
            logs to notify the administrator */
-        print_red (_("You are not allowed to delete this user!"));
+        msg_dialog::display(_("User delete"),_("You are not allowed to delete this user!"),WARNING_DIALOG);
 
         if(isset($this->ui->uid)){
           new log("security","users/".get_class($this),$this->dn,array(),"Tried to trick deletion.");

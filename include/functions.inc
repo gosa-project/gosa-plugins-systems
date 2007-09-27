@@ -1040,7 +1040,11 @@ function print_red()
           $img= "images/warning.png";
           $addmsg= _("Please check your input and fix the error. Press 'OK' to close this message box.");
         }
-      
+     
+        msg_dialog::display($addmsg, $string,ERROR_DIALOG);
+ 
+        return;
+/*
         if(isset($_SESSION['errors']) && strlen($_SESSION['errors'])==0) {
 
           if(preg_match("/MSIE/", $_SERVER['HTTP_USER_AGENT'])){
@@ -1103,7 +1107,7 @@ function print_red()
          _("OK")."</button></td></tr></table></div>";
 
         }
-
+        */
       }else{
         return;
       }
