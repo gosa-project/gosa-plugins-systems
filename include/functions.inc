@@ -1237,9 +1237,11 @@ function show_ldap_error($message, $addon= "")
 {
   if (!preg_match("/Success/i", $message)){
     if ($addon == ""){
-      print_red (_("LDAP error: $message"));
+      msg_dialog::display(_("LDAP error:"),$message,ERROR_DIALOG);
+      #print_red (_("LDAP error:")." $message");
     } else {
-      print_red ("$addon<br><br><b>"._("LDAP error:")."</b> $message");
+      msg_dialog::display(sprintf(_("LDAP error in plugin '%s':"),"<i>".$addon."</i>"),$message,ERROR_DIALOG);
+      #print_red ("$addon<br><br><b>"._("LDAP error:")."</b> $message");
     }
     return TRUE;
   } else {
