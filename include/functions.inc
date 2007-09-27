@@ -34,7 +34,6 @@ define("GL_CONVERT"  , 4);
 define('UNIVERSAL',0x00);
 define('INTEGER',0x02);
 define('OCTET_STRING',0x04);
-define('NULL',0x05);
 define('OBJECT_IDENTIFIER ',0x06);
 define('SEQUENCE',0x10);
 define('SEQUENCE_OF',0x10);
