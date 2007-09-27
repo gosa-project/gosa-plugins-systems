@@ -509,6 +509,15 @@ class faiManagement extends plugin
         $mimesrc = preg_replace("/ou=fai,ou=configs,ou=systems,/","ou=mime,",$baseToUse); 
         $mimedst = preg_replace("/ou=fai,ou=configs,ou=systems,/","ou=mime,","ou=".$name.",".$baseToUse) ; 
 
+        /* Check if source depeartments exist */
+        foreach(array($baseToUse,$appsrc,$mimesrc) as $dep){
+          $ldap->cd($this->config->current['BASE']);
+          $ldap->cat($dep);
+          if(!$ldap->count()){
+            $ldap->create_missing_trees($dep);
+          }
+        }
+
         /* Print header to have styles included */
         echo '  <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
           <html>
