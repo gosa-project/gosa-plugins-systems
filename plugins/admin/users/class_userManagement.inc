@@ -357,7 +357,9 @@ class userManagement extends plugin
 
       /* Confirmation for deletion has been passed. Users should be deleted. */
       if ($this->current_action == "del_multiple" && is_object($this->msg_dialog) && $this->msg_dialog->is_confirmed()){
-
+        
+        $this->current_action = "";  
+        
         /* Remove user by user and check acls before removeing them */
         foreach($this->dns as $key => $dn){
 
@@ -473,6 +475,8 @@ class userManagement extends plugin
     /* Confirmation for deletion has been passed. User should be deleted. */
     if ($this->current_action == "del" && is_object($this->msg_dialog) && $this->msg_dialog->is_confirmed()){
 
+      $this->current_action = ""; 
+ 
       /* Some nice guy may send this as POST, so we've to check
          for the permissions again. */
 

@@ -127,7 +127,7 @@ class Print_a_class {
 		}
 		
 		# build a single table ... may be nested
-		$this->output .= '<table summary=\"\" style="border:none;" cellspacing="1" '.( !$iteration && $this->export_flag ? 'onClick="document.getElementById(\'pa_form_'.$this->export_hash.'\').submit();" )' : '' ).'>';
+		$this->output .= '<table summary="" style="border:none;" cellspacing="1" '.( !$iteration && $this->export_flag ? 'onClick="document.getElementById(\'pa_form_'.$this->export_hash.'\').submit();" )' : '' ).'>';
 		foreach( $array as $key => $value ) {
 			
 			$value_style = 'color:black;';
@@ -276,7 +276,7 @@ function print_result($RESULT) {
 		</script>
 	';
 
-	print '<table summary=\"\" border="0" bgcolor="#000000" cellspacing="1" cellpadding="1">';
+	print '<table summary="" border="0" bgcolor="#000000" cellspacing="1" cellpadding="1">';
 	
 	print '<tr>';
 	foreach($tables as $tableName => $tableCount) {

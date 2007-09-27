@@ -11,6 +11,7 @@ class msg_dialog
 	private $s_Message 	= "Undefined";
 	private $i_Type 	= INFO_DIALOG ;
 	private $i_ID		= 0;
+	private $a_Trace	= array();
 
 	public function __construct($s_title,$s_message,$i_type)
 	{
@@ -23,6 +24,7 @@ class msg_dialog
 		$this->s_Title	 = $s_title;
 		$this->s_Message = $s_message;
 		$this->i_Type	 = $i_type;
+		$this->a_Trace	 = debug_backtrace();
 		if(!isset($_SESSION['msg_dialogs'])){
 			$_SESSION['msg_dialogs'] = array();
 		}
@@ -31,7 +33,7 @@ class msg_dialog
 
 	public static function display($s_title,$s_message,$i_type = INFO_DIALOG)
 	{
-		$box = new msg_dialog($s_title,$s_message,$i_type);	
+		new msg_dialog($s_title,$s_message,$i_type);	
 	}
 
 	public function get_ID()
@@ -42,6 +44,7 @@ class msg_dialog
 	public function execute()
 	{
 		$smarty = get_smarty();
+		$smarty->assign("s_Trace",print_a($this->a_Trace,TRUE));
 		$smarty->assign("i_Type",$this->i_Type);
 		$smarty->assign("s_Message",$this->s_Message);
 		$smarty->assign("s_Title",$this->s_Title);

@@ -44,6 +44,14 @@
 
 {/if}
 {else}
+
+	{if $s_Trace != ""}
+	<div id='trace_{$i_ID}' style='visibility:hidden;'>
+		{$s_Trace}
+	</div>
+	
+	{/if}
+
 	<div id='e_layer{$i_ID}'
 			style='
 				width:60%;
@@ -72,6 +80,11 @@
 					<br>
 					<br>
 				</td>
+				{if $s_Trace}
+				<td style='width:20px; vertical-align:top; cursor:pointer;'>
+					<div onClick="toggle('trace_{$i_ID}')"><u>Trace</u></div>
+				</td>
+				{/if}
 			</tr>
 			<tr>
 				<td colspan='2' align='center'>
