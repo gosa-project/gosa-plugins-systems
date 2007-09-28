@@ -50,6 +50,7 @@ class msg_dialog
 		$smarty->assign("s_Title",$this->s_Title);
 		$smarty->assign("i_ID",$this->i_ID);
 		$smarty->assign("frame",false);
+		$smarty->assign("JS",$_SESSION['js']);
 		$smarty->assign("IE",preg_match("/MSIE/", $_SERVER['HTTP_USER_AGENT']));
 		return($smarty->fetch(get_template_path('msg_dialog.tpl')));
 	}
@@ -75,7 +76,7 @@ class msg_dialog
 #			$seen = $_POST['closed_msg_dialogs'];
 		}
 
-		if(isset($_SESSION['msg_dialogs']) && is_array($_SESSION['msg_dialogs'])){
+		if(isset($_SESSION['msg_dialogs']) && is_array($_SESSION['msg_dialogs']) && count($_SESSION['msg_dialogs'])){
 
 			/* Get frame one */
 			$smarty = get_smarty();
@@ -83,15 +84,20 @@ class msg_dialog
 			$smarty->assign("IE",preg_match("/MSIE/", $_SERVER['HTTP_USER_AGENT']));
 			$return = $smarty->fetch(get_template_path('msg_dialog.tpl'));
 
-			foreach($_SESSION['msg_dialogs'] as $key => $dialog){
+			if(!$_SESSION['js']){
+				$dialog = array_pop($_SESSION['msg_dialogs']);
+				$return.= $dialog->execute();
+			}else{
+				foreach($_SESSION['msg_dialogs'] as $key => $dialog){
 
-				if(preg_match("/".$dialog->get_ID()."/",$seen)){
+					if(preg_match("/".$dialog->get_ID()."/",$seen)){
+						unset($_SESSION['msg_dialogs'][$key]);
+					}else{
+						$return.= $dialog->execute();
+						$dialog_ids= $dialog->get_ID().",".$dialog_ids;
+					}
 					unset($_SESSION['msg_dialogs'][$key]);
-				}else{
-					$return.= $dialog->execute();
-					$dialog_ids= $dialog->get_ID().",".$dialog_ids;
 				}
-				unset($_SESSION['msg_dialogs'][$key]);
 			}
 			$dialog_ids = preg_replace("/,$/","",$dialog_ids);
 
