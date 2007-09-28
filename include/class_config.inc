@@ -791,6 +791,20 @@ class config  {
     return ("");
   }
 
+
+  /* On debian systems the session files are deleted with
+   *  a cronjob, which detects all files older than specified 
+   *  in php.ini:'session.gc_maxlifetime' and removes them.
+   * This function checks if the gosa.conf value matches the range
+   *  defined by session.gc_maxlifetime.
+   */
+  function check_session_lifetime()
+  {
+    $cfg_lifetime = $this->data['MAIN']['SESSION_LIFETIME'];
+    $ini_lifetime = ini_get('session.gc_maxlifetime');
+    $deb_system   = file_exists('/etc/debian_version');
+    return(!($deb_system && ($ini_lifetime < $cfg_lifetime)));  
+  }
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:

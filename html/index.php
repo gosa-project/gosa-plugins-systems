@@ -52,6 +52,13 @@ function displayLogin()
     $smarty->assign ("ssl", "");
   }
 
+  if(!$config->check_session_lifetime()){
+    $smarty->assign ("lifetime", _("Warning").": ".
+                                 _("The session lifetime configured in your gosa.conf doesn't match the php.ini settings."));
+  }else{
+    $smarty->assign ("lifetime", "");
+  }
+
   /* Generate server list */
   $servers= array();
   if (isset($_POST['server'])){
