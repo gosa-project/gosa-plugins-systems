@@ -28,57 +28,57 @@ function displayLogin()
 {
   global $smarty,$message,$config,$ssl,$error_collector;
   error_reporting(E_ALL | E_STRICT);
-    /* Fill template with required values */
-    $username = "";
-    if(isset($_POST["username"])){
-      $username= $_POST["username"];
-    }
-    $smarty->assign ('date', gmdate("D, d M Y H:i:s"));
-    $smarty->assign ('username', $username);
-    $smarty->assign ('personal_img', get_template_path('images/personal.png'));
-    $smarty->assign ('password_img', get_template_path('images/password.png'));
-    $smarty->assign ('directory_img', get_template_path('images/ldapserver.png'));
+  /* Fill template with required values */
+  $username = "";
+  if(isset($_POST["username"])){
+    $username= $_POST["username"];
+  }
+  $smarty->assign ('date', gmdate("D, d M Y H:i:s"));
+  $smarty->assign ('username', $username);
+  $smarty->assign ('personal_img', get_template_path('images/personal.png'));
+  $smarty->assign ('password_img', get_template_path('images/password.png'));
+  $smarty->assign ('directory_img', get_template_path('images/ldapserver.png'));
 
-    /* Some error to display? */
-    if (!isset($message)){
-      $message= "";
-    }
-    $smarty->assign ("message", $message);
+  /* Some error to display? */
+  if (!isset($message)){
+    $message= "";
+  }
+  $smarty->assign ("message", $message);
 
-    /* Displasy SSL mode warning? */
-    if ($ssl != "" && $config->data['MAIN']['WARNSSL'] == 'true'){
-      $smarty->assign ("ssl", _("Warning").": <a style=\"color:red;\" href=\"$ssl\">"._("Session is not encrypted!")."</a>");
-    } else {
-      $smarty->assign ("ssl", "");
-    }
+  /* Displasy SSL mode warning? */
+  if ($ssl != "" && $config->data['MAIN']['WARNSSL'] == 'true'){
+    $smarty->assign ("ssl", _("Warning").": <a style=\"color:red;\" href=\"$ssl\">"._("Session is not encrypted!")."</a>");
+  } else {
+    $smarty->assign ("ssl", "");
+  }
 
-    /* Generate server list */
-    $servers= array();
-    if (isset($_POST['server'])){
-      $selected= validate($_POST['server']);
-    } else {
-      $selected= $config->data['MAIN']['DEFAULT'];
-    }
-    foreach ($config->data['LOCATIONS'] as $key => $ignored){
-      $servers[$key]= $key;
-    }
-    $smarty->assign ("server_options", $servers);
-    $smarty->assign ("server_id", $selected);
+  /* Generate server list */
+  $servers= array();
+  if (isset($_POST['server'])){
+    $selected= validate($_POST['server']);
+  } else {
+    $selected= $config->data['MAIN']['DEFAULT'];
+  }
+  foreach ($config->data['LOCATIONS'] as $key => $ignored){
+    $servers[$key]= $key;
+  }
+  $smarty->assign ("server_options", $servers);
+  $smarty->assign ("server_id", $selected);
 
-    /* show login screen */
-    $smarty->assign ("PHPSESSID", session_id());
-    if (isset($_SESSION['errors'])){
-      $smarty->assign("errors", $_SESSION['errors']);
-    }
-    if ($error_collector != ""){
-      $smarty->assign("php_errors", $error_collector."</div>");
-    } else {
-      $smarty->assign("php_errors", "");
-    }
+  /* show login screen */
+  $smarty->assign ("PHPSESSID", session_id());
+  if (isset($_SESSION['errors'])){
+    $smarty->assign("errors", $_SESSION['errors']);
+  }
+  if ($error_collector != ""){
+    $smarty->assign("php_errors", $error_collector."</div>");
+  } else {
+    $smarty->assign("php_errors", "");
+  }
 
-    $smarty->display (get_template_path('headers.tpl'));
-    $smarty->display(get_template_path('login.tpl'));
-    exit();
+  $smarty->display (get_template_path('headers.tpl'));
+  $smarty->display(get_template_path('login.tpl'));
+  exit();
 }
 
 
@@ -88,7 +88,7 @@ function displayLogin()
 session_start ();
 
 /* Destroy old session if exists. 
-    Else you will get your old session back, if you not logged out correctly. */
+   Else you will get your old session back, if you not logged out correctly. */
 if(is_array($_SESSION) && count($_SESSION)){
   session_destroy();
   session_start();
@@ -146,7 +146,7 @@ $smarty->assign ('nextfield', 'username');
 /* Check for compile directory */
 if (!(is_dir($smarty->compile_dir) && is_writable($smarty->compile_dir))){
   echo sprintf(_("Directory '%s' specified as compile directory is not accessible!"),
-        $smarty->compile_dir);
+      $smarty->compile_dir);
   exit();
 }
 
@@ -301,7 +301,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])){
       /* are we using accountexpiration */
       if((isset($config->data['MAIN']['ACCOUNT_EXPIRATION'])) && 
           preg_match('/true/i', $config->data['MAIN']['ACCOUNT_EXPIRATION'])){
-      
+
         $expired= ldap_expired_account($config, $ui->dn, $ui->username);
 
         if ($expired == 1){
@@ -309,22 +309,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])){
           $smarty->assign ('nextfield', 'password');
           new log("security","login","",array(),"Account for user \"$username\" has expired") ;
         } elseif ($expired == 3){
-            $plist= new pluglist($config, $ui);
-            foreach ($plist->dirlist as $key => $value){
-              if (preg_match("/\bpassword\b/i",$value)){
-                $plug=$key;
-                new log("security","login","",array(),"User \"$username\" password forced to change") ;
-                header ("Location: main.php?plug=$plug&amp;reset=1");
-                exit;
-              }
+          $plist= new pluglist($config, $ui);
+          foreach ($plist->dirlist as $key => $value){
+            if (preg_match("/\bpassword\b/i",$value)){
+              $plug=$key;
+              new log("security","login","",array(),"User \"$username\" password forced to change") ;
+              header ("Location: main.php?plug=$plug&amp;reset=1");
+              exit;
             }
           }
+        }
 
         /* Not account expired or password forced change go to main page */
         new log("security","login","",array(),"User \"$username\" logged in successfully") ;
         header ("Location: main.php?global_check=1");
         exit;
-        
+
       } else {
         /* Go to main page */
         new log("security","login","",array(),"User \"$username\" logged in successfully") ;
