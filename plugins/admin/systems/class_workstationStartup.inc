@@ -98,49 +98,60 @@ class workstartup extends plugin
       $_SESSION['getAvailableClassesForThisRelease_CACHED_CLASSES'] = array();
 
       /* Search all FAI objects */
-      $ldap->search("(|(objectClass=FAIpackageList)(objectClass=FAItemplate)(objectClass=FAIvariable)(objectClass=FAIscript)(objectClass=FAIhook)(objectClass=FAIprofile)(objectClass=FAIpartitionTable))",array("cn","objectClass","FAIdebianSection"));
+      $ldap->search("(|(objectClass=FAIpackageList)(objectClass=FAItemplate)(objectClass=FAIvariable)(objectClass=FAIscript)(objectClass=FAIhook)(objectClass=FAIprofile)(objectClass=FAIpartitionTable))",array("cn","objectClass","FAIdebianSection",'description'));
       /* Sort all entries, and attach elementtype.
        * To be able to show the types in the listbox.
        */
       while($attr = $ldap->fetch()){
         $cn = $attr['cn'][0];
       
+        if(!isset($attr['description'])){
+          $attr['description'][0] ="";
+        }
+
         $_SESSION['getAvailableClassesForThisRelease_CACHED_CLASSES'][] = $attr;
    
         if(in_array('FAIpackageList',$attr['objectClass'])){
           $tmp2[$cn]['FAIpackageList']['obj']   = 'FAIpackageList'; 
           $tmp2[$cn]['FAIpackageList']['kzl']   = 'Pl';
           $tmp2[$cn]['FAIpackageList']['sec']   = $attr['FAIdebianSection'];
+          $tmp2[$cn]['FAIpackageList']['desc']  = $attr['description'];
           $this->FAIclasses[$attr['cn'][0]]=$attr['cn'][0];
         }
         if(in_array('FAItemplate',$attr['objectClass'])){
           $tmp2[$cn]['FAItemplate']['obj']      = 'FAItemplate'; 
           $tmp2[$cn]['FAItemplate']['kzl']      = 'T'; 
+          $tmp2[$cn]['FAItemplate']['desc']  = $attr['description'];
           $this->FAIclasses[$attr['cn'][0]]=$attr['cn'][0];
         }
         if(in_array('FAIvariable',$attr['objectClass'])){
           $tmp2[$cn]['FAIvariable']['obj']      = 'FAIvariable'; 
           $tmp2[$cn]['FAIvariable']['kzl']      = 'V'; 
+          $tmp2[$cn]['FAIvariable']['desc']  = $attr['description'];
           $this->FAIclasses[$attr['cn'][0]]=$attr['cn'][0];
         }
         if(in_array('FAIscript',$attr['objectClass'])){
           $tmp2[$cn]['FAIscript']['obj']        = 'FAIscript'; 
           $tmp2[$cn]['FAIscript']['kzl']        = 'S'; 
+          $tmp2[$cn]['FAIscript']['desc']  = $attr['description'];
           $this->FAIclasses[$attr['cn'][0]]=$attr['cn'][0];
         }
         if(in_array('FAIhook',$attr['objectClass'])){
           $tmp2[$cn]['FAIhook']['obj']          = 'FAIhook'; 
           $tmp2[$cn]['FAIhook']['kzl']          = 'H'; 
+          $tmp2[$cn]['FAIhook']['desc']  = $attr['description'];
           $this->FAIclasses[$attr['cn'][0]]=$attr['cn'][0];
         }
         if(in_array('FAIpartitionTable',$attr['objectClass'])){
           $tmp2[$cn]['FAIpartitionTable']['obj']= 'FAIpartitionTable'; 
           $tmp2[$cn]['FAIpartitionTable']['kzl']= 'Pt'; 
+          $tmp2[$cn]['FAIpartitionTable']['desc']  = $attr['description'];
           $this->FAIclasses[$attr['cn'][0]]=$attr['cn'][0];
         }
         if(in_array('FAIprofile',$attr['objectClass'])){
           $tmp2[$cn]['FAIprofile']['obj']= 'FAIprofile'; 
           $tmp2[$cn]['FAIprofile']['kzl']= 'P'; 
+          $tmp2[$cn]['FAIprofile']['desc']  = $attr['description'];
           $this->FAIclasses[$attr['cn'][0]]=$attr['cn'][0];
         }
       }
@@ -782,13 +793,22 @@ class workstartup extends plugin
           }
         }
         $i ++ ; 
+  
+        $desc = ""; 
+        foreach($this->FAIclassInfo[$class] as $types ){
+          if(isset($types['desc'][0])){
+            $desc.= $types['desc'][0]." ";
+          }
+        }
+        if(!empty($desc)){
+          $desc = "&nbsp;[".trim($desc)."]";
+        }        
 
         $div->AddEntry(array(
-              array("string"=>$class.$marker),
+              array("string"=>$class.$desc.$marker),
               array("string"=>preg_replace("/\%s/",base64_encode($class),$str),"attach"=>"style='width:50px;border-right:none;'")
               ));
       }  
-
       $smarty->assign("FAIScriptlist",$div->DrawList()); 
     }// END FAI output generation 
 
