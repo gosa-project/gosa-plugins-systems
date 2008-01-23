@@ -51,7 +51,7 @@ class ServerService extends plugin
           }
         }
       }else{
-        echo "missing class ".$plug['CLASS'];
+        trigger_error("Service class missing: ".$plug['CLASS']);
       }
     }
     $this->divList = new divListSystemService($config,$this);
