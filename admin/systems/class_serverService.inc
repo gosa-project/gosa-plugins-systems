@@ -37,15 +37,21 @@ class ServerService extends plugin
     plugin::plugin($config);
     $this->dn= $dn;
     foreach ($config->data['TABS']['SERVERSERVICE'] as $plug){
-      $name= $plug['CLASS'];
-      $this->plugin_names[]= $name;
-      $this->plugins[$name]= new $name($config, $dn);
- 
-      /* Capture all service objectClases, necessary for acl handling */ 
-      if(isset($this->plugins[$name]->objectclasses)){
-        foreach($this->plugins[$name]->objectclasses as $oc){
-          $this->objectclasses[] = $oc;
+
+      if(class_available($plug['CLASS'])){
+
+        $name= $plug['CLASS'];
+        $this->plugin_names[]= $name;
+        $this->plugins[$name]= new $name($config, $dn);
+
+        /* Capture all service objectClases, necessary for acl handling */ 
+        if(isset($this->plugins[$name]->objectclasses)){
+          foreach($this->plugins[$name]->objectclasses as $oc){
+            $this->objectclasses[] = $oc;
+          }
         }
+      }else{
+        echo "missing class ".$plug['CLASS'];
       }
     }
     $this->divList = new divListSystemService($config,$this);
