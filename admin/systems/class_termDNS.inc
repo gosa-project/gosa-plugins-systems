@@ -710,7 +710,7 @@ class termDNS extends plugin
         }    
       }
     }
-      
+    $this->dialog = NULL; 
 
     /****************/ 
     /* DNS HANDLING */
