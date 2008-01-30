@@ -21,7 +21,7 @@ class termDNS extends plugin
   var $OrigCn         = "";    // Initial cn
   var $IPisMust       = false;
   var $MACisMust      = false;
-  var $dialog;
+  var $dialog         = false;
 
   /* DCHP Attributes 
    */

@@ -723,7 +723,7 @@ class systems extends plugin
     /* Finish user edit is triggered by the tabulator dialog, so
        the user wants to save edited data. Check and save at this
        point. */
-    if ((isset($_POST['edit_finish'])) && (isset($this->systab->config)) || $save_object_directly){
+    if ((isset($_POST['edit_finish']) || isset($_POST['edit_apply'])) && (isset($this->systab->config)) || $save_object_directly){
 
       /* Check tabs, will feed message array */
       $message = array();
@@ -733,7 +733,7 @@ class systems extends plugin
         $found = false;
 
         /* Set gotoMode to active if we there was an ogroup selected . (save_object_directly) */
-        foreach(array("workgeneric"=>"active","servgeneric"=>"active","termgeneric"=>"graphic") as $tab => $value){
+        foreach(array("workgeneric"=>"active","servgeneric"=>"active","termgeneric"=>"active") as $tab => $value){
           if(isset($this->systab->by_object[$tab]->gotoMode)) {
             $found = true;
             $this->systab->by_object[$tab]->gotoMode = $value;
@@ -796,15 +796,16 @@ class systems extends plugin
           $ldap->cd($this->config->current['BASE']);
         }
 
-        /* Terminal has been saved successfully, remove lock from
-           LDAP. */
-        if ($this->dn != "new"){
-          del_lock ($this->dn);
-        }
+        /* Terminal has been saved successfully, remove lock from LDAP. */
+        if (!isset($_POST['edit_apply'])){
+          if ($this->dn != "new"){
+            del_lock ($this->dn);
+          }
 
-        unset ($this->systab);
-        $this->systab= NULL;
-        session::un_set('objectinfo');
+          unset ($this->systab);
+          $this->systab= NULL;
+          session::un_set('objectinfo');
+        }
       } else {
         /* Ok. There seem to be errors regarding to the tab data,
            show message and continue as usual. */
