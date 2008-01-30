@@ -324,6 +324,12 @@ class servgeneric extends plugin
   /* Save to LDAP */
   function save()
   {
+    /* Detect mode changes */
+    $activate= (isset($this->saved_attributes['gotoMode']) &&
+        $this->gotoMode != $this->saved_attributes['gotoMode'] &&
+        $this->gotoMode == "active" &&
+        tests::is_ip($this->netConfigDNS->ipHostNumber));
+
     plugin::save();
 
     /* Remove all empty values */
@@ -377,6 +383,11 @@ class servgeneric extends plugin
     if(!$this->didAction){
       $this->handle_post_events($mode,array("macAddress" => $this->netConfigDNS->macAddress,"ipHostNumber" => $this->netConfigDNS->ipHostNumber));
     }
+
+    if ($activate){
+      gosaSupportDaemon::send("gosa_set_activated_for_installation", $this->netConfigDNS->ipHostNumber);
+    }
+
   }
 
 
