@@ -1027,7 +1027,7 @@ class systems extends plugin
 
     /* Search for incoming objects */ 
     $filter = "(|(&".$userregex."(objectClass=goHard)(cn=".$this->DivListSystem->Regex.")))";
-    $res = array_merge($res,get_list($filter,$sys_categories, get_ou('incomingou'),get_ou('incomingou').$base,$sys_attrs, GL_NONE | GL_SIZELIMIT));
+    $res = array_merge($res,get_list($filter,$sys_categories, get_ou('incomingou').$base,$sys_attrs, GL_NONE | GL_SIZELIMIT));
 
     /* Get all gotoTerminal's */
     foreach ($res as $value){
@@ -1063,7 +1063,6 @@ class systems extends plugin
 
       /* Detect type of object and create an entry for $this->terminals */
       $terminal = array();
-
       if (in_array_ics('gotoTerminal', $value["objectClass"])){
 
         /* check acl */
