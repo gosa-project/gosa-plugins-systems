@@ -34,6 +34,7 @@ class servgeneric extends plugin
                             "update"          => "sceduledupdate",
                             "reinstall"       => "install",
                             "rescan"          => "",
+                            "wake"            => "",
                             "memcheck"        => "memcheck",
                             "sysinfo"         => "sysinfo");
 
@@ -104,17 +105,12 @@ class servgeneric extends plugin
     }
 
     /* Check for action */
-    if (isset($_POST['action']) && $this->acl_is_writeable("FAIstate")){
-      $cmd = $this->config->search("workgeneric", "ACTIONCMD",array('tabs'));
-      if ($cmd == ""){
-        print_red(_("No ACTIONCMD definition found in your gosa.conf"));
-      } else {
+    if ((isset($_POST['action'])) && ($this->acl_is_writeable("FAIstate")) && isset($this->mapActions[$_POST['saction']]) ){
+      gosaSupportDaemon::send("gosa_trigger_action_".$_POST['saction'], $this->netConfigDNS->ipHostNumber, array("macAddress" => $this->netConfigDNS->macAddress));
 
-        exec ($cmd." ".$this->netConfigDNS->macAddress." ".escapeshellarg($_POST['saction']), $dummy, $retval);
-        if ($retval != 0){
-          print_red(sprintf(_("Execution of '%s' failed!"), $cmd));
-        } else {
-          $this->didAction= TRUE;
+      $this->didAction= TRUE;
+
+      if ($_POST['saction'] != "wake") {
 
           /* Set FAIstate */
           if($this->fai_activated && $this->dn != "new"){
@@ -138,15 +134,14 @@ class servgeneric extends plugin
             }
 
             if($attrs['FAIstate'] == ""){
-#FIXME we should check if FAIobject is used anymore
+	      #FIXME we should check if FAIobject is used anymore
               $attrs['FAIstate'] = array();
             }
 
             $ldap->cd($this->dn);
             $ldap->modify($attrs);
           }
-          show_ldap_error($ldap->get_error(), sprintf(_("Saving of system server/generic (FAIstate) with dn '%s' failed."),$this->dn)); 
-        }
+	  show_ldap_error($ldap->get_error(), sprintf(_("Saving of system server/generic (FAIstate) with dn '%s' failed."),$this->dn)); 
       }
     }
 

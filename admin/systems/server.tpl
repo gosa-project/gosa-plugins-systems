@@ -65,7 +65,7 @@
   <td>
 {render acl=$FAIstateACL}
    <select size="1" name="saction" title="{t}Select action to execute for this server{/t}">
-    <option disabled>&nbsp;</option>
+    <option>&nbsp;</option>
     {html_options options=$actions}
    </select>
 {/render}

@@ -853,7 +853,7 @@ class systems extends plugin
           $dialog = TRUE;
         }  
       }
-      if(isset($this->systab->by_object[$this->systab->current]->netConfigDNS) && 
+      if(isset($this->systab->current) && isset($this->systab->by_object[$this->systab->current]->netConfigDNS) && 
         $this->systab->by_object[$this->systab->current]->netConfigDNS->dialog){
         $dialog = TRUE;
       }
