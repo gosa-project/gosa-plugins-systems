@@ -522,7 +522,8 @@ class systems extends plugin
 
       $ui = get_userinfo();
       $tabs = array(
-          "ArpNewDevice"=> array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "systems/incoming"),
+          "ArpNewDevice"=> array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "incoming/systems"),
+          "NewDevice"   => array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "incoming/systems"),
           "terminal"    => array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "terminal/termgeneric"),
           "workstation" => array("CLASS"=>"WORKTABS",     "TABCLASS" =>"worktabs",      "ACL"=> "workstation/workgeneric"),
           "server"      => array("CLASS"=>"SERVTABS",     "TABCLASS" =>"servtabs",      "ACL"=> "server/servgeneric"),
@@ -607,7 +608,8 @@ class systems extends plugin
       $type= $this->get_system_type($attrs);
       $ui = get_userinfo();
       $tabs = array(
-          "ArpNewDevice"=> array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "systems/incoming"),
+          "ArpNewDevice"=> array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "incoming/systems"),
+          "NewDevice"   => array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "incoming/systems"),
           "terminal"    => array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "terminal/termgeneric"),
           "workstation" => array("CLASS"=>"WORKTABS",     "TABCLASS" =>"worktabs",      "ACL"=> "workstation/workgeneric"),
           "server"      => array("CLASS"=>"SERVTABS",     "TABCLASS" =>"servtabs",      "ACL"=> "server/servgeneric"),
@@ -615,7 +617,6 @@ class systems extends plugin
           "phone"       => array("CLASS"=>"PHONETABS",    "TABCLASS" =>"phonetabs",     "ACL"=> "phone/phoneGeneric"),
           "winstation"  => array("CLASS"=>"WINTABS",      "TABCLASS" =>"wintabs",       "ACL"=> "winworkstation/wingeneric"),
           "component"   => array("CLASS"=>"COMPONENTTABS","TABCLASS" =>"componenttabs", "ACL"=> "component/componentGeneric"));
-
 
       /* get object type */
       $tabtype  = "termtabs";
@@ -666,7 +667,8 @@ class systems extends plugin
       $ui = get_userinfo();
 
       $tabs = array(
-          "ArpNewDevice"=> array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "systems/incoming"),
+          "ArpNewDevice"=> array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "incoming/systems"),
+          "NewDevice"   => array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "incoming/systems"),
           "terminal"    => array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "terminal/termgeneric"),
           "workstation" => array("CLASS"=>"WORKTABS",     "TABCLASS" =>"worktabs",      "ACL"=> "workstation/workgeneric"),
           "server"      => array("CLASS"=>"SERVTABS",     "TABCLASS" =>"servtabs",      "ACL"=> "server/servgeneric"),
