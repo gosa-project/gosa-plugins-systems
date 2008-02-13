@@ -522,6 +522,7 @@ class systems extends plugin
 
       $ui = get_userinfo();
       $tabs = array(
+          "ArpNewDevice"=> array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "systems/incoming"),
           "terminal"    => array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "terminal/termgeneric"),
           "workstation" => array("CLASS"=>"WORKTABS",     "TABCLASS" =>"worktabs",      "ACL"=> "workstation/workgeneric"),
           "server"      => array("CLASS"=>"SERVTABS",     "TABCLASS" =>"servtabs",      "ACL"=> "server/servgeneric"),
@@ -601,9 +602,12 @@ class systems extends plugin
       $this->dn = $this->terminals[$s_entry]['dn'];
       $attrs    = $this->terminals[$s_entry];
 
+  
+
       $type= $this->get_system_type($attrs);
       $ui = get_userinfo();
       $tabs = array(
+          "ArpNewDevice"=> array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "systems/incoming"),
           "terminal"    => array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "terminal/termgeneric"),
           "workstation" => array("CLASS"=>"WORKTABS",     "TABCLASS" =>"worktabs",      "ACL"=> "workstation/workgeneric"),
           "server"      => array("CLASS"=>"SERVTABS",     "TABCLASS" =>"servtabs",      "ACL"=> "server/servgeneric"),
@@ -662,6 +666,7 @@ class systems extends plugin
       $ui = get_userinfo();
 
       $tabs = array(
+          "ArpNewDevice"=> array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "systems/incoming"),
           "terminal"    => array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "terminal/termgeneric"),
           "workstation" => array("CLASS"=>"WORKTABS",     "TABCLASS" =>"worktabs",      "ACL"=> "workstation/workgeneric"),
           "server"      => array("CLASS"=>"SERVTABS",     "TABCLASS" =>"servtabs",      "ACL"=> "server/servgeneric"),
@@ -992,7 +997,7 @@ class systems extends plugin
 
     /* Attributes to fetch */
     $sys_attrs        = array("cn", "description", "macAddress", "objectClass", "sambaDomainName","gotoMode");
-    $sys_categories   = array("terminal", "workstation", "server", "phone" ,"printer");
+    $sys_categories   = array("terminal", "workstation", "server", "phone" ,"printer","incoming");
 
     /* Add FAIstate to attributes if FAI is activated */
     $tmp = $this->config->search("faiManagement", "CLASS",array('menu','tabs'));
