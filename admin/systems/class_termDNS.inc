@@ -287,10 +287,12 @@ class termDNS extends plugin
 
     /* There is no dns available
      */
+    $smarty->assign("DNS_is_account",$this->DNS_is_account);
+    $smarty->assign("DNSenabled",$this->DNSenabled);
     if($this->DNSenabled == false){
 
       /* Is IP address must ? */
-      $smarty->assign("DNS_is_account",false);
+#      $smarty->assign("DNS_is_account",false);
       $smarty->assign("IPisMust",(($this->IPisMust)||($this->DNS_is_account)));
 
       /* Assign smarty all non DNs attributes */
@@ -301,7 +303,7 @@ class termDNS extends plugin
 
       $display.= $smarty->fetch(get_template_path('network.tpl', TRUE));
     }else{
-      $smarty->assign("DNS_is_account",true);
+ #     $smarty->assign("DNS_is_account",true);
 
       /* Add new empty array to our record list */
       if(isset($_POST['AddNewRecord'])){
@@ -349,7 +351,7 @@ class termDNS extends plugin
       }
 
       /* Assign all needed vars */
-      $smarty->assign("DNSAccount",$this->DNS_is_account);
+ #     $smarty->assign("DNSAccount",$this->DNS_is_account);
       $smarty->assign("hide_dns_check_box",$this->hide_dns_check_box);
   
       $smarty->assign("Zones",$this->Zones);
@@ -1003,8 +1005,12 @@ class termDNS extends plugin
   function force_dns()
   {
     if($this->DNSenabled){
-      $this->DNS_is_account  = TRUE;
-      $this->hide_dns_check_box = TRUE;
+
+      /* Only force DNS account, if we have at least on dns Zone */
+      if(count($this->Zones)){
+        $this->DNS_is_account  = TRUE;
+        $this->hide_dns_check_box = TRUE;
+      }
     }
   }
 }

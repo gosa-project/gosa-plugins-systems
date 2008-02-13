@@ -12,7 +12,7 @@
             <input	id="ipHostNumber"	name="ipHostNumber"	size=25	maxlength=80	value="{$ipHostNumber}">
 {/render}
 {render acl=$ipHostNumberACL}
-{if $DNSAccount == true}
+{if $DNS_is_account == true}
       <input id="propose_ip" type="submit" name="propose_ip" value="{t}Propose ip{/t}" style="visibility:visible;">
       {else}
       <input id="propose_ip" type="submit" name="propose_ip" value="{t}Propose ip{/t}" style="visibility:hidden;">
@@ -74,11 +74,12 @@
         {/if}
       </table> 
     </td>
-    {if $DNS_is_account==true}
+    {if $DNSenabled==true}
 		<td	style="width:50%;vertical-align:top;border-left:1px solid #b0b0b0;" valign="top">
 
     {if $ZoneCnt}
-      {if $DNSAccount == true}
+      
+      {if $DNS_is_account == true}
       <input type="checkbox" name="DNS_is_account" value="1"  
         checked="checked"
         onclick="toggle('test2');
@@ -98,7 +99,7 @@
 
       {t}Enable DNS for this device{/t}
       <input type='image' src='images/list_reload.png' class='center' name="reloadThisDNSStuff" >
-      {if $DNSAccount == true}
+      {if $DNS_is_account == true}
       <div style="padding-left:20px;visibility:visible;" id="test2">
       {else}
       <div style="padding-left:20px;visibility:hidden;" id="test2">
@@ -108,7 +109,7 @@
 					<td><LABEL	for="zoneName">{t}Zone{/t}</LABEL></td>
 					<td>
 {render acl=$zoneNameACL}
-              <select name="zoneName" id="zoneName" {if $DNSAccount == false} disabled {/if}>
+              <select name="zoneName" id="zoneName" {if $DNS_is_account == false} disabled {/if}>
                 {html_options values=$ZoneKeys output=$Zones selected=$zoneName}
               </select>
 {/render}
@@ -118,7 +119,7 @@
           <td>{t}TTL{/t}</td>
           <td>
 {render acl=$dNSTTLACL}
-            <input type="text" name="dNSTTL" value="{$dNSTTL}" id="dNSTTL" {if $DNSAccount == false} disabled {/if}>
+            <input type="text" name="dNSTTL" value="{$dNSTTL}" id="dNSTTL" {if $DNS_is_account == false} disabled {/if}>
 {/render}
           </td>
         </tr>
@@ -135,7 +136,7 @@
 			</table>
       </div>
     {else}        
-      <input type="checkbox" name="dummy" value="1" disabled class='center'>
+      <input type="checkbox" name="dummy" value="1" disabled class='center' {if $DNS_is_account} checked {/if}>
       {t}Enable DNS for this device{/t} ({t}not configured{/t})
       <input type='image' src='images/list_reload.png' class='center'>
     {/if}
