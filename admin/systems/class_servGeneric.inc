@@ -108,7 +108,7 @@ class servgeneric extends plugin
     if ((isset($_POST['action'])) && ($this->acl_is_writeable("FAIstate")) && isset($this->mapActions[$_POST['saction']]) ){
         $method= "gosa";
         $action= $_POST['saction'];
-        if ($action == "reinstall" || $action == "softupdate"){
+	if ($action == "reinstall" || $action == "update" || $action == "instant_update"){
                 $method= "job";
         }
         gosaSupportDaemon::send("${method}_trigger_action_".$action, $this->netConfigDNS->macAddress, array("macAddress" => $this->netConfigDNS->macAddress));
