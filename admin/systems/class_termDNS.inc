@@ -4,7 +4,6 @@ class termDNS extends plugin
 {
   /* attribute list for save action */
   var $ignore_account = true;
-  var $autonet        = false;
 
   /* Basic informations 
    */
@@ -84,16 +83,6 @@ class termDNS extends plugin
       }
       $this->initial_dhcpHostEntry = $this->dhcpHostEntry;
       $this->initial_dhcpParentNode= $this->dhcpParentNode;
-    }
-
-
-    /************
-     * Autonetwork hook 
-     ************/
- 
-    /* Do we have autonet support? */
-    if (isset($this->config->data['MAIN']['AUTO_NETWORK_HOOK'])){
-      $this->autonet= true;
     }
 
 
@@ -211,25 +200,17 @@ class termDNS extends plugin
     $display= "";
 
     $smarty->assign("staticAddress", ""); 
-    $smarty->assign("autonet", $this->autonet);
  
     /* Check for autonet button */
-    if ($this->autonet && isset($_POST['autonet'])){
-      $cmd= $this->config->data['MAIN']['AUTO_NETWORK_HOOK'];
-      if(!empty($cmd) && $this->cn != ""){
-        $res = shell_exec($cmd." ".$this->cn);
-        if(!$res){
-          print_red(sprintf(_("Can't execute specified AUTO_NETWORK_HOOK '%s'. Please check your gosa.conf."),$cmd));
-        } else {
-          $res= split(';', trim($res));
-          if (isset($res[0]) && $res[0] != ""){
-            $this->ipHostNumber= $res[0];
-          }
-          if (isset($res[1]) && $res[1] != ""){
-            $this->macAddress= $res[1];
-          }
-        }
-      }
+    if (isset($_POST['autonet'])){
+	$d= new gosaSupportDaemon(TRUE, 0.5);
+        $res= $d->_send("<xml><header>gosa_network_completition</header><source>GOSA</source><target>GOSA</target><hostname>".$this->cn."</hostname></xml>", TRUE);
+	if (isset($res['XML']['IP'])){
+		$this->ipHostNumber= $res['XML']['IP'];
+	}
+	if (isset($res['XML']['MAC'])){
+		$this->macAddress= $res['XML']['MAC'];
+	}
     }
     
   
