@@ -182,7 +182,7 @@ class divListSystem extends MultiSelectWindow
       $s.= "...|<img src='images/select_workstation.png' alt='' border='0' class='center'>".
         "&nbsp;"._("Workstation")."|"."newsystem_workstation|\n";
     }
-    if(preg_match("/c/",$ui->get_permissions($this->selectedBase,"workstation/workgeneric"))){
+    if(preg_match("/c/",$ui->get_permissions($this->selectedBase,"workstation/servgeneric"))){
       $s.= "...|<img src='images/select_server.png' alt='' border='0' class='center'>".
         "&nbsp;"._("Server")."|"."newsystem_server|\n";
     }
@@ -198,6 +198,23 @@ class divListSystem extends MultiSelectWindow
       $s.= "...|<img src='images/select_component.png' alt='' border='0' class='center'>".
         "&nbsp;"._("Component")."|"."newsystem_component|\n";
     }
+
+    # Actions
+    $s.= "..|<img src='images/rocket.png' alt='' border='0' class='center'>".
+      "&nbsp;"._("Trigger action")."|\n";
+    $s.= "...|"."&nbsp;"._("Halt")."|"."halt_multiple|\n";
+    $s.= "...|"."&nbsp;"._("Reboot")."|"."reboot_multiple|\n";
+    $s.= "...|"."&nbsp;"._("Re-install")."|"."reinstall_multiple|\n";
+    $s.= "...|"."&nbsp;"._("Softupdate")."|"."update_multiple|\n";
+    $s.= "...|"."&nbsp;"._("Wake up")."|"."wake_multiple|\n";
+    $s.= "..|<img src='images/clock.png' alt='' border='0' class='center'>".
+      "&nbsp;"._("Schedule action")."|\n";
+    $s.= "...|"."&nbsp;"._("Halt")."|"."schedule_halt_multiple|\n";
+    $s.= "...|"."&nbsp;"._("Reboot")."|"."schedule_reboot_multiple|\n";
+    $s.= "...|"."&nbsp;"._("Re-install")."|"."schedule_reinstall_multiple|\n";
+    $s.= "...|"."&nbsp;"._("Softupdate")."|"."schedule_update_multiple|\n";
+    $s.= "...|"."&nbsp;"._("Wake up")."|"."schedule_wake_multiple|\n";
+
     $s.= "..|<img src='images/edittrash.png' alt='' border='0' class='center'>".
       "&nbsp;"._("Remove")."|"."remove_multiple|\n";
 
