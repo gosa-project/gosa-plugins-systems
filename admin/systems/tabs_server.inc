@@ -39,7 +39,7 @@ class servtabs extends tabs
     tabs::save_object($save_current);
 
     $base_obj = $this->by_object['servgeneric'];
-    $baseobject->netConfigDNS->cn= $baseobject->cn;
+    $base_obj->netConfigDNS->cn= $base_obj->cn;
   }
 
 
