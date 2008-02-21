@@ -15,7 +15,7 @@ class componenttabs extends tabs
   {
     tabs::save_object($save_current);
 
-    $base_obj = $this->by_object['componentGeneric'];
+    $baseobject = $this->by_object['componentGeneric'];
     $baseobject->netConfigDNS->cn= $baseobject->cn;
   }
 
