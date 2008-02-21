@@ -138,18 +138,42 @@ class termDNS extends plugin
       }
     }
 
-    /* Create a list of used mac and ip addresses */
+    /* Create a list of used mac and ip addresses.
+
+       ! We use this optically huge amount of code to fetch all 
+       Mac and IP addresses, because a simple search for mac and IP
+       over the whole ldap server was 10 to 20 times slower.
+     */
+    $deps  = array();
+    $ou = preg_replace("/,.*$/","",get_ou("systemsou"));
+    $a_ous = array(get_ou("serverou"),
+                  get_ou("terminalou"),
+                  get_ou("workstationou"),
+                  get_ou("printerou"),
+                  get_ou("phoneou"),
+                  get_ou("componentou"));
+  
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
-    $ldap->search("(|(macAddress=*)(ipHostNumber=*))",array("macAddress","ipHostNumber"));
+    $ldap->search("(&(objectClass=organizationalUnit)(".$ou."))",array("dn"));
     while($attrs = $ldap->fetch()){
-      if(isset($attrs['ipHostNumber'][0])){
-        $this->used_ip_mac["ip:".$attrs['ipHostNumber'][0]] = "ip:".$attrs['ipHostNumber'][0];
+      foreach($a_ous as $allowed){
+        $deps[] = $allowed.$attrs['dn'];
       }
-      if(isset($attrs['macAddress'][0])){
-        $this->used_ip_mac["mac:".$attrs['macAddress'][0]] = "mac:".$attrs['macAddress'][0];
-      }
-    } 
+    }
+
+    foreach($deps as $dep){
+      $ldap->cd($dep);
+      $ldap->search("(|(macAddress=*)(ipHostNumber=*))",array("macAddress","ipHostNumber"));
+      while($attrs = $ldap->fetch()){
+        if(isset($attrs['ipHostNumber'][0])){
+          $this->used_ip_mac["ip:".$attrs['ipHostNumber'][0]] = "ip:".$attrs['ipHostNumber'][0];
+        }
+        if(isset($attrs['macAddress'][0])){
+          $this->used_ip_mac["mac:".$attrs['macAddress'][0]] = "mac:".$attrs['macAddress'][0];
+        }
+      } 
+    }
 
     /* Save initial ip and mac values, to be able 
         check if the used values are already in use */ 

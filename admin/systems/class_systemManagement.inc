@@ -63,7 +63,7 @@ class systems extends plugin
     /* Call parent execute */
     plugin::execute();
 
-    session::set('LOCK_VARS_TO_USE',array("/^system_edit_/i","/^system_del_/","/^act/","/^id/","/^item_selected/","/^remove_multiple_systems/"));
+    session::set('LOCK_VARS_TO_USE',array("/^system_edit_/i","/^system_del_/","/^act/","/^id/","/^item_selected/","/^remove_multiple_systems/","/^menu_action/"));
 
     /********************
       Check for functional posts, edit|delete|add|... system devices 
@@ -488,10 +488,10 @@ class systems extends plugin
 
         foreach($ids as $id){
           $dn = $this->terminals[$id]['dn'];
-          if (($user= get_lock($dn)) != ""){
-            return(gen_locked_message ($user, $dn));
-          }
           $this->dns[$id] = $dn;
+        }
+        if ($user= get_multiple_locks($this->dns)){
+          return(gen_locked_message($user,$this->dns));
         }
 
         $dns_names = "<br><pre>";
