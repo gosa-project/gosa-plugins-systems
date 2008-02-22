@@ -399,12 +399,13 @@ class termDNS extends plugin
       $tmp = array();
       $this->dnsEntry['exists'] = false;
       $tmp = DNS::getDNSHostEntriesDiff($this->config,$this->OrigCn,$this->dnsEntry,$this->cn);
-
+  
       /* Delete dns */
       foreach($tmp['del'] as $dn => $del){
         $ldap->cd($dn);
         $ldap->rmdir_recursive($dn);
         new log("remove","unknown/".get_class($this),$dn);
+        show_ldap_error($ldap->get_error(), sprintf(_("Could not remove dns extension for '%s'."),$dn));
       }
     }
   }
