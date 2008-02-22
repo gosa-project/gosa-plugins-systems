@@ -1000,6 +1000,14 @@ class systems extends plugin
     /* Attributes to fetch */
     $sys_attrs        = array("cn", "description", "macAddress", "objectClass", "sambaDomainName","gotoMode");
     $sys_categories   = array("terminal", "workstation", "server", "phone" ,"printer","incoming");
+    $sys_bases        = array(
+        get_ou("terminalou"),
+        get_ou("workstationou"),
+        get_ou("serverou"),
+        get_ou("phoneou"),
+        get_ou("printerou"),
+        get_ou("incomingou"),
+        get_ou("componentou"));
 
     /* Add FAIstate to attributes if FAI is activated */
     $tmp = $this->config->search("faiManagement", "CLASS",array('menu','tabs'));
@@ -1008,12 +1016,12 @@ class systems extends plugin
     }    
 
     /* Walk through all possible search combinations, and search for some objects if the checkbox is enabled  */
+    $filter = "(|(&".$userregex."(objectClass=goHard)(cn=".$this->DivListSystem->Regex.")))";
     foreach($objs as $checkBox => $oc){
       if($this->DivListSystem->$checkBox){
         if($this->DivListSystem->SubSearch){
           if($oc['CLASS'] != ""){
-            $filter = "(&".$userregex."(objectClass=".$oc['CLASS'].")(cn=".$this->DivListSystem->Regex."))";
-            $new_res = get_sub_list($filter, $sys_categories ,preg_replace("/,.*$/","",$base), $base,$sys_attrs, GL_NONE | GL_SUBSEARCH | GL_SIZELIMIT);
+            $new_res = get_sub_list($filter, $sys_categories ,$sys_bases, $base,$sys_attrs, GL_SUBSEARCH | GL_SIZELIMIT);
       
             /* Remove all objects that are not in the expected sub department */
             foreach($new_res as $key => $obj){
@@ -1025,16 +1033,14 @@ class systems extends plugin
         }else{
           /* User filter? */
           if($oc['CLASS'] != ""){
-            $filter = "(&".$userregex."(objectClass=".$oc['CLASS'].")(cn=".$this->DivListSystem->Regex."))";
-            $res = array_merge($res,get_list($filter,$sys_categories,$oc['TREE'].$base, $sys_attrs, GL_NONE | GL_SIZELIMIT));
+            $res = array_merge($res,get_list($filter,$sys_categories,$oc['TREE'].$base, $sys_attrs,  GL_SIZELIMIT));
           }
         }
       } 
     }
 
     /* Search for incoming objects */ 
-    $filter = "(|(&".$userregex."(objectClass=goHard)(cn=".$this->DivListSystem->Regex.")))";
-    $res = array_merge($res,get_list($filter,$sys_categories, get_ou('incomingou').$base,$sys_attrs, GL_NONE | GL_SIZELIMIT));
+    $res = array_merge($res,get_list($filter,$sys_categories, get_ou('incomingou').$base,$sys_attrs, GL_SIZELIMIT));
 
     /* Get all gotoTerminal's */
     foreach ($res as $value){
