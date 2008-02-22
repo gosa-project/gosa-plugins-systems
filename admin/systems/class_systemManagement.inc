@@ -1000,14 +1000,6 @@ class systems extends plugin
     /* Attributes to fetch */
     $sys_attrs        = array("cn", "description", "macAddress", "objectClass", "sambaDomainName","gotoMode");
     $sys_categories   = array("terminal", "workstation", "server", "phone" ,"printer","incoming");
-    $sys_bases        = array(
-        get_ou("terminalou"),
-        get_ou("workstationou"),
-        get_ou("serverou"),
-        get_ou("phoneou"),
-        get_ou("printerou"),
-        get_ou("incomingou"),
-        get_ou("componentou"));
 
     /* Add FAIstate to attributes if FAI is activated */
     $tmp = $this->config->search("faiManagement", "CLASS",array('menu','tabs'));
@@ -1021,14 +1013,8 @@ class systems extends plugin
       if($this->DivListSystem->$checkBox){
         if($this->DivListSystem->SubSearch){
           if($oc['CLASS'] != ""){
-            $new_res = get_sub_list($filter, $sys_categories ,$sys_bases, $base,$sys_attrs, GL_SUBSEARCH | GL_SIZELIMIT);
-      
-            /* Remove all objects that are not in the expected sub department */
-            foreach($new_res as $key => $obj){
-              if(preg_match("/^[^,]+,".normalizePreg($oc['TREE'])."/",$obj['dn'])){
-                $res[$obj['dn']] = $obj;
-              }
-            }
+            $new_res = get_sub_list($filter, $sys_categories ,$oc['TREE'], $base,$sys_attrs, GL_SUBSEARCH | GL_SIZELIMIT);
+            $res = array_merge($res,$new_res);
           }
         }else{
           /* User filter? */
