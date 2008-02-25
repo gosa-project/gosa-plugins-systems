@@ -146,6 +146,12 @@ class systems extends plugin
       $s_action = "del_multiple";
     }
     
+    /* Handle instant actions from layers menu */
+    foreach (array("halt", "reboot", "reinstall", "update", "wake") as $act){
+	    if(isset($_POST['menu_action']) && preg_match("/^${act}_multiple/",$_POST['menu_action'])){
+	      $s_action = "${act}_multiple";
+	    }
+    }
 
     /* Check for exeeded sizelimit */
     if (($message= check_sizelimit()) != ""){
@@ -473,6 +479,33 @@ class systems extends plugin
     if (isset($_POST['delete_cancel']) || isset($_POST['password_cancel'])){
       del_lock ($this->dn);
       session::un_set('objectinfo');
+    }
+
+
+    /********************
+      Action for MULTIPLE entries requested
+     ********************/
+    if (preg_match("/(halt|reboot|reinstall|update|wake|)_multiple/", $s_action)){
+      $this->dns = array();
+      $ids = $this->list_get_selected_items();
+
+      if(count($ids)){
+	$mac= array();
+        $ldap = $this->config->get_ldap_link();
+
+        foreach($ids as $id){
+	  $ldap->cat ($this->terminals[$id]['dn'], array("macAddress"));
+	  $attrs= $ldap->fetch();
+	  if (isset($attrs['macAddress'][0])){
+          	$mac[]= $attrs['macAddress'][0];
+	  }
+        }
+
+	/* Action.... */
+	$action= preg_replace('/_multiple.*$/', '', $s_action);
+	gosaSupportDaemon::send("gosa_trigger_action_".$action, $mac, array("macAddress" => $mac));
+
+      }
     }
 
 
