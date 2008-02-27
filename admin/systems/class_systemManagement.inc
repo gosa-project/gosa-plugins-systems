@@ -541,14 +541,20 @@ class systems extends plugin
     if($this->systab instanceof DaemonEvent){
       $this->systab->save_object();
       if(isset($_POST['save_event_dialog']) || $save_events_directly){
-        $header     = $this->systab->get_schedule_action();
+
+        /* Directly means not scheduled */
+        if($save_events_directly){
+          $header     = $this->systab->get_trigger_action();
+        }else{
+          $header     = $this->systab->get_schedule_action();
+        }
         $targets    = $this->systab->get_targets();
         $data       = $this->systab->save();
         $data['timestamp'] = $this->systab->get_timestamp();
         $o_queue = new gosaSupportDaemon();
         foreach($targets as $target){
           $data['macaddress'] = $target;
-          $o_queue->send($header,$target,$data,TRUE);
+          $o_queue->send($header,$target,$data);
           if($o_queue->is_error()){
             msg_dialog::display(_("Daemon"),sprintf(_("Something went wrong while talking to the daemon: %s."),
                   $o_queue->get_error()),ERROR_DIALOG);
