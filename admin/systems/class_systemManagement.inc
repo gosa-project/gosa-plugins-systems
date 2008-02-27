@@ -553,8 +553,8 @@ class systems extends plugin
         $data['timestamp'] = $this->systab->get_timestamp();
         $o_queue = new gosaSupportDaemon();
         foreach($targets as $target){
-          $data['macaddress'] = $target;
-          $o_queue->send($header,$target,$data);
+          $data['macadress'] = $target;
+          $o_queue->send_data($header,$target,$data,!$save_events_directly);
           if($o_queue->is_error()){
             msg_dialog::display(_("Daemon"),sprintf(_("Something went wrong while talking to the daemon: %s."),
                   $o_queue->get_error()),ERROR_DIALOG);
