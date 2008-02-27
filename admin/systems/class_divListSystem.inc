@@ -199,21 +199,18 @@ class divListSystem extends MultiSelectWindow
         "&nbsp;"._("Component")."|"."newsystem_component|\n";
     }
 
-    # Actions
+    $events  = DaemonEvent::get_event_types();
     $s.= "..|<img src='images/rocket.png' alt='' border='0' class='center'>".
       "&nbsp;"._("Trigger action")."|\n";
-    $s.= "...|"."&nbsp;"._("Halt")."|"."halt_multiple|\n";
-    $s.= "...|"."&nbsp;"._("Reboot")."|"."reboot_multiple|\n";
-    $s.= "...|"."&nbsp;"._("Re-install")."|"."reinstall_multiple|\n";
-    $s.= "...|"."&nbsp;"._("Softupdate")."|"."update_multiple|\n";
-    $s.= "...|"."&nbsp;"._("Wake up")."|"."wake_multiple|\n";
+    foreach($events['BY_CLASS'] as $name =>  $event){
+      $s.= "...|".$event['MenuImage']."&nbsp;".$event['s_Menu_Name']."|trigger_event_".$name."\n";
+    }
+
     $s.= "..|<img src='images/clock.png' alt='' border='0' class='center'>".
       "&nbsp;"._("Schedule action")."|\n";
-    $s.= "...|"."&nbsp;"._("Halt")."|"."schedule_halt_multiple|\n";
-    $s.= "...|"."&nbsp;"._("Reboot")."|"."schedule_reboot_multiple|\n";
-    $s.= "...|"."&nbsp;"._("Re-install")."|"."schedule_reinstall_multiple|\n";
-    $s.= "...|"."&nbsp;"._("Softupdate")."|"."schedule_update_multiple|\n";
-    $s.= "...|"."&nbsp;"._("Wake up")."|"."schedule_wake_multiple|\n";
+    foreach($events['BY_CLASS'] as $name =>  $event){
+      $s.= "...|".$event['MenuImage']."&nbsp;".$event['s_Menu_Name']."|schedule_event_".$name."\n";
+    }
 
     $s.= "..|<img src='images/edittrash.png' alt='' border='0' class='center'>".
       "&nbsp;"._("Remove")."|"."remove_multiple|\n";

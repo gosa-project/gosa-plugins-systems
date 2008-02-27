@@ -141,6 +141,16 @@ class systems extends plugin
       $s_action = "editPaste";
     }
 
+    /* Handle daemon events */
+    if(isset($_POST['menu_action']) && preg_match("/^trigger_event_/",$_POST['menu_action'])){
+      $s_action = $_POST['menu_action'];
+    }
+    
+    /* Handle daemon events */
+    if(isset($_POST['menu_action']) && preg_match("/^schedule_event_/",$_POST['menu_action'])){
+      $s_action = $_POST['menu_action'];
+    }
+
     /* handle remove from layers menu */
     if(isset($_POST['menu_action']) && preg_match("/^remove_multiple/",$_POST['menu_action'])){
       $s_action = "del_multiple";
@@ -483,28 +493,57 @@ class systems extends plugin
 
 
     /********************
-      Action for MULTIPLE entries requested
+      Action(s) for MULTIPLE
      ********************/
-    if (preg_match("/(halt|reboot|reinstall|update|wake|)_multiple/", $s_action)){
+
+    /********************
+      SCHEDULE action in GOsa Daemon
+     ********************/
+    if(preg_match("/^schedule_event_/",$s_action)){
       $this->dns = array();
       $ids = $this->list_get_selected_items();
 
       if(count($ids)){
-	$mac= array();
+        $mac= array();
+
         $ldap = $this->config->get_ldap_link();
-
         foreach($ids as $id){
-	  $ldap->cat ($this->terminals[$id]['dn'], array("macAddress"));
-	  $attrs= $ldap->fetch();
-	  if (isset($attrs['macAddress'][0])){
-          	$mac[]= $attrs['macAddress'][0];
-	  }
+          $ldap->cat ($this->terminals[$id]['dn'], array("macAddress"));
+          $attrs= $ldap->fetch();
+          if (isset($attrs['macAddress'][0])){
+            $mac[]= $attrs['macAddress'][0];
+          }
         }
+        $events = DaemonEvent::get_event_types();
+        $type = preg_replace("/^schedule_event_/","",$s_action);
+        if(count($mac) && isset($events['BY_CLASS'][$type])){
+          $event = $events['BY_CLASS'][$type];
+          $this->systab = new $event['CLASS_NAME']($this->config);
+          $this->systab->add_targets($mac);
+        }
+      }
+    }
 
-	/* Action.... */
-	$action= preg_replace('/_multiple.*$/', '', $s_action);
-	gosaSupportDaemon::send("gosa_trigger_action_".$action, $mac, array("macAddress" => $mac));
-
+    /* Insert scheduled events into queue */
+    if($this->systab instanceof DaemonEvent){
+      $this->systab->save_object();
+      if(isset($_POST['save_event_dialog'])){
+        $header     = $this->systab->get_header_tag();
+        $targets    = $this->systab->get_targets();
+        $data       = $this->systab->save();
+        $data['timestamp'] = $this->systab->get_timestamp();
+        $o_queue = new gosaSupportDaemon();
+        foreach($targets as $target){
+          $data['mac'] =  $target;
+          if(!$o_queue->send($header,$target,$data,TRUE)){
+            msg_dialog::display(_("Daemon"),sprintf(_("Something went wrong while talking to the daemon: %s."),
+                  $o_queue->get_error()),ERROR_DIALOG);
+          }
+        }
+        $this->systab = FALSE;
+      }
+      if(isset($_POST['abort_event_dialog'])){
+        $this->systab = FALSE;
       }
     }
 
