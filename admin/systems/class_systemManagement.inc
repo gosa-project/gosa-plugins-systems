@@ -499,7 +499,8 @@ class systems extends plugin
     /********************
       SCHEDULE action in GOsa Daemon
      ********************/
-    if(preg_match("/^schedule_event_/",$s_action)){
+    $save_events_directly = FALSE;
+    if(preg_match("/^schedule_event_/",$s_action) || preg_match("/^trigger_event_/",$s_action)){
       $this->dns = array();
       $ids = $this->list_get_selected_items();
 
@@ -515,11 +516,23 @@ class systems extends plugin
           }
         }
         $events = DaemonEvent::get_event_types();
-        $type = preg_replace("/^schedule_event_/","",$s_action);
+        if(preg_match("/^trigger_event_/",$s_action)){
+          $type = preg_replace("/^trigger_event_/","",$s_action);
+        }else{
+          $type = preg_replace("/^schedule_event_/","",$s_action);
+        }
         if(count($mac) && isset($events['BY_CLASS'][$type])){
           $event = $events['BY_CLASS'][$type];
           $this->systab = new $event['CLASS_NAME']($this->config);
           $this->systab->add_targets($mac);
+
+          /* Insert event directly with current timestamp 
+           *  to force direct execution.
+           */
+          if(preg_match("/^trigger_event_/",$s_action)){
+            $this->systab->set_timestamp(time());
+            $save_events_directly = TRUE;
+          }
         }
       }
     }
@@ -527,8 +540,8 @@ class systems extends plugin
     /* Insert scheduled events into queue */
     if($this->systab instanceof DaemonEvent){
       $this->systab->save_object();
-      if(isset($_POST['save_event_dialog'])){
-        $header     = $this->systab->get_header_tag();
+      if(isset($_POST['save_event_dialog']) || $save_events_directly){
+        $header     = $this->systab->get_schedule_action();
         $targets    = $this->systab->get_targets();
         $data       = $this->systab->save();
         $data['timestamp'] = $this->systab->get_timestamp();
