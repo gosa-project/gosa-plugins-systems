@@ -550,7 +550,6 @@ class systems extends plugin
         }
         $targets    = $this->systab->get_targets();
         $data       = $this->systab->save();
-        $data['timestamp'] = $this->systab->get_timestamp();
         $o_queue = new gosaSupportDaemon();
         foreach($targets as $target){
           $data['macaddress'] = $target;
