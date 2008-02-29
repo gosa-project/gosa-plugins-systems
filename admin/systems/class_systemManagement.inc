@@ -499,7 +499,7 @@ class systems extends plugin
     /********************
       SCHEDULE action in GOsa Daemon
      ********************/
-    $save_events_directly = FALSE;
+
     if(preg_match("/^schedule_event_/",$s_action) || preg_match("/^trigger_event_/",$s_action)){
       $this->dns = array();
       $ids = $this->list_get_selected_items();
@@ -516,22 +516,18 @@ class systems extends plugin
           }
         }
         $events = DaemonEvent::get_event_types();
-        if(preg_match("/^trigger_event_/",$s_action)){
-          $type = preg_replace("/^trigger_event_/","",$s_action);
-        }else{
-          $type = preg_replace("/^schedule_event_/","",$s_action);
-        }
+        $type = preg_replace("/^[a-z]*_event_/","",$s_action);
+
+        /* Prepare event to be added 
+         */
         if(count($mac) && isset($events['BY_CLASS'][$type])){
           $event = $events['BY_CLASS'][$type];
           $this->systab = new $event['CLASS_NAME']($this->config);
           $this->systab->add_targets($mac);
-
-          /* Insert event directly with current timestamp 
-           *  to force direct execution.
-           */
-          if(preg_match("/^trigger_event_/",$s_action)){
-            $this->systab->set_timestamp(time());
-            $save_events_directly = TRUE;
+          if(preg_match("/trigger_event/",$s_action)){
+            $this->systab->set_type(TRIGGERED_EVENT);
+          }else{
+            $this->systab->set_type(SCHEDULED_EVENT);
           }
         }
       }
@@ -540,26 +536,18 @@ class systems extends plugin
     /* Insert scheduled events into queue */
     if($this->systab instanceof DaemonEvent){
       $this->systab->save_object();
-      if(isset($_POST['save_event_dialog']) || $save_events_directly){
 
-        /* Directly means not scheduled */
-        if($save_events_directly){
-          $header     = $this->systab->get_trigger_action();
-        }else{
-          $header     = $this->systab->get_schedule_action();
-        }
-        $targets    = $this->systab->get_targets();
-        $data       = $this->systab->save();
+      /* Save event 
+       */
+      if(isset($_POST['save_event_dialog']) || $this->systab->get_type() == TRIGGERED_EVENT){
         $o_queue = new gosaSupportDaemon();
-        foreach($targets as $target){
-          $data['macaddress'] = $target;
-          $o_queue->send_data($header,$target,$data,TRUE);
-          if($o_queue->is_error()){
-            msg_dialog::display(_("Daemon"),sprintf(_("Something went wrong while talking to the daemon: %s."),
-                  $o_queue->get_error()),ERROR_DIALOG);
-          }
+        $o_queue->append($this->systab);
+        if($o_queue->is_error()){
+          msg_dialog::display(_("Daemon"),sprintf(_("Something went wrong while talking to the daemon: %s."),
+                $o_queue->get_error()),ERROR_DIALOG);
+        }else{
+          $this->systab = FALSE;
         }
-        $this->systab = FALSE;
       }
       if(isset($_POST['abort_event_dialog'])){
         $this->systab = FALSE;
@@ -904,11 +892,9 @@ class systems extends plugin
             $evt = $events['BY_CLASS']['DaemonEvent_install'];
             $tmp = new $evt['CLASS_NAME']($this->config);
             $tmp->add_targets(array($mac));
-            $header  = $tmp->get_trigger_action();
-            $data = $tmp->save();
-            $data['macaddress'] = $mac;
+            $tmp->set_type(TRIGGERED_EVENT);
             $o_queue = new gosaSupportDaemon();
-            $o_queue->send_data($header,$mac,$data,TRUE);
+            $o_queue->append($tmp);
             if($o_queue->is_error()){
               msg_dialog::display(_("Daemon"),sprintf(_("Something went wrong while talking to the daemon: %s."),
                     $o_queue->get_error()),ERROR_DIALOG);
