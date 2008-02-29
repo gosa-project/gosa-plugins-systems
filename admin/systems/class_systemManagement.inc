@@ -633,7 +633,11 @@ class systems extends plugin
           if(preg_match("/d/",$tabacl)){ 
 
             /* Delete request is permitted, perform LDAP action */
-            if($tabtype=="phonetabs"){
+            if(in_array($type,array("ArpNewDevice","NewDevice")) && class_available("termgeneric")){
+              $this->systab= new termgeneric($this->config, $dn);
+              $this->systab->set_acl_base($dn);
+              $this->systab->remove_from_parent();
+            }elseif($tabtype=="phonetabs"){
               $this->systab= new $tabtype($this->config, $this->config->data['TABS'][$tabobj], $dn,$type);
               $this->systab->set_acl_base($dn);
               $this->systab->by_object['phoneGeneric']->remove_from_parent ();
@@ -770,7 +774,11 @@ class systems extends plugin
       if(preg_match("/d/",$tabacl)){
 
         /* Delete request is permitted, perform LDAP action */
-        if($tabtype=="phonetabs"){
+        if(in_array($type,array("ArpNewDevice","NewDevice")) && class_available("termgeneric")){
+          $this->systab= new termgeneric($this->config, $this->dn);
+          $this->systab->set_acl_base($this->dn);
+          $this->systab->remove_from_parent();
+        }elseif($tabtype=="phonetabs"){
           $this->systab= new $tabtype($this->config, $this->config->data['TABS'][$tabobj], $this->dn,$type);
           $this->systab->set_acl_base($this->dn);
           $this->systab->by_object['phoneGeneric']->remove_from_parent ();
