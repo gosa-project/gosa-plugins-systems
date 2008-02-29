@@ -879,6 +879,42 @@ class systems extends plugin
         }
 
         $this->systab->save();
+ 
+        /* Get macAddress to be able to an installation event 
+         */ 
+        if($this->systab instanceof ArpNewDeviceTabs || session::is_set('SelectedSystemType')){
+          $events = DaemonEvent::get_event_types();
+         
+          /* Get mac of currently edited entry */ 
+          $mac = "";
+          if($this->systab instanceof ArpNewDeviceTabs){
+            $mac = $this->systab->by_object['ArpNewDevice']->netConfigDNS->macAddress;
+          }else{
+            foreach(array("workgeneric","termgeneric","servgeneric") as $type){
+              if(isset($this->systab->by_object[$type]->netConfigDNS->macAddress)){
+                $mac = $this->systab->by_object[$type]->netConfigDNS->macAddress;
+                break;
+              }
+            } 
+          }
+
+          /* Add installation event
+           */
+          if(!empty($mac) && isset($events['BY_CLASS']['DaemonEvent_install'])){
+            $evt = $events['BY_CLASS']['DaemonEvent_install'];
+            $tmp = new $evt['CLASS_NAME']($this->config);
+            $tmp->add_targets(array($mac));
+            $header  = $tmp->get_trigger_action();
+            $data = $tmp->save();
+            $data['macaddress'] = $mac;
+            $o_queue = new gosaSupportDaemon();
+            $o_queue->send_data($header,$mac,$data,TRUE);
+            if($o_queue->is_error()){
+              msg_dialog::display(_("Daemon"),sprintf(_("Something went wrong while talking to the daemon: %s."),
+                    $o_queue->get_error()),ERROR_DIALOG);
+            }
+          }
+        }
 
         if(session::is_set('SelectedSystemType')){
           session::un_set('SelectedSystemType');
