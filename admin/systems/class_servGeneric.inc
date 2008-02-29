@@ -415,7 +415,21 @@ class servgeneric extends plugin
     }
 
     if ($activate){
-      gosaSupportDaemon::send("gosa_set_activated_for_installation", $this->netConfigDNS->ipHostNumber);
+
+      /* Send installation activation 
+       */
+      $events = DaemonEvent::get_event_types();
+      $o_queue = new gosaSupportDaemon();
+      if(isset($events['BY_CLASS']['DaemonEvent_installation_activation'])){
+        $evt = $events['BY_CLASS']['DaemonEvent_installation_activation'];
+        $tmp = new $evt['CLASS_NAME']($this->config);
+        $tmp->set_type(TRIGGERED_EVENT);
+        $tmp->add_targets(array($this->netConfigDNS->macAddress));
+        if(!$o_queue->append($tmp)){
+          msg_dialog::display(_("Daemon"),sprintf(_("Something went wrong while talking to the daemon: %s."),
+                $o_queue->get_error()),ERROR_DIALOG);
+        }
+      }
     }
 
   }
