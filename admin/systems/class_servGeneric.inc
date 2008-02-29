@@ -104,14 +104,49 @@ class servgeneric extends plugin
       return($display);
     }
 
-    /* Check for action */
+
+
     if ((isset($_POST['action'])) && ($this->acl_is_writeable("FAIstate")) && isset($this->mapActions[$_POST['saction']]) ){
+
+      /* Check given action */
+      $mapEvent = array("wake"           => "wakeup",
+                        "instant_update" => "update");
+      $action = $_POST['saction'];
+      if(isset($mapEvent[$action])){
+        $action = $mapEvent[$action];
+      }
+
+      /* Check if we have an DaemonEvent for this action */
+      if(class_available("DaemonEvent_".$action)){
+        $events = DaemonEvent::get_event_types();
+        if(isset($events['BY_CLASS']["DaemonEvent_".$action])){
+          $evt = $events['BY_CLASS']["DaemonEvent_".$action];
+          $tmp = new $evt['CLASS_NAME']($this->config);
+          $tmp->add_targets(array($this->netConfigDNS->macAddress));
+          $tmp->set_type(TRIGGERED_EVENT);
+          $o_queue = new gosaSupportDaemon();
+          if(!$o_queue->append($tmp)){
+            msg_dialog::display(_("Daemon"),sprintf(_("Something went wrong while talking to the daemon: %s."),
+                  $o_queue->get_error()),ERROR_DIALOG);
+          }
+        }
+      }else{
+
+        msg_dialog::display(_("Missing Daemon Event"),
+                    sprintf(_("The requested action does not exists '%s' Sending event manually."),"DaemonEvent_".$action),ERROR_DIALOG);
+
+        /* No event found, send action manually.
+         */
         $method= "gosa";
         $action= $_POST['saction'];
-	if ($action == "reinstall" || $action == "update" || $action == "instant_update"){
-                $method= "job";
+        if ($action == "reinstall" || $action == "update" || $action == "instant_update"){
+          $method= "job";
         }
-        gosaSupportDaemon::send("${method}_trigger_action_".$action, $this->netConfigDNS->macAddress, array("macAddress" => $this->netConfigDNS->macAddress));
+
+        gosaSupportDaemon::send("${method}_trigger_action_".$action,
+            $this->netConfigDNS->macAddress,
+            array("macAddress" => $this->netConfigDNS->macAddress));
+      }
 
       $this->didAction= TRUE;
 
