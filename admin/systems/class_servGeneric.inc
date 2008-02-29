@@ -29,9 +29,8 @@ class servgeneric extends plugin
   var $modes = array();
   var $ui   ;
   var $mapActions   = array("reboot"          => "",
-                            "instant_update"  => "softupdate",
+                            "update"          => "softupdate",
                             "localboot"       => "localboot",
-                            "update"          => "sceduledupdate",
                             "reinstall"       => "install",
                             "rescan"          => "",
                             "wake"            => "",
