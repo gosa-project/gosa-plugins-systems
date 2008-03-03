@@ -1376,13 +1376,10 @@ class systems extends plugin
   
     /* Return C&P dialog */
     if($this->start_pasting_copied_objects && $this->CopyPasteHandler->entries_queued()){
-    
-      /* Load entry from queue and set base */
-      $this->CopyPasteHandler->load_entry_from_queue();
-      $this->CopyPasteHandler->SetVar("base",$this->DivListSystem->selectedBase);
 
       /* Get dialog */
       $data = $this->CopyPasteHandler->execute();
+      $this->CopyPasteHandler->SetVar("base",$this->DivListSystem->selectedBase);
 
       /* Return dialog data */
       if(!empty($data)){
