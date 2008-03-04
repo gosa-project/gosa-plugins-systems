@@ -199,7 +199,7 @@ class divListSystem extends MultiSelectWindow
         "&nbsp;"._("Component")."|"."newsystem_component|\n";
     }
 
-    $events  = DaemonEvent::get_event_types();
+    $events  = DaemonEvent::get_event_types(SYSTEM_EVENT);
     $s.= "..|<img src='images/rocket.png' alt='' border='0' class='center'>".
       "&nbsp;"._("Trigger action")."|\n";
     foreach($events['BY_CLASS'] as $name =>  $event){

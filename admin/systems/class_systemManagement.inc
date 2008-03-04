@@ -515,7 +515,7 @@ class systems extends plugin
             $mac[]= $attrs['macAddress'][0];
           }
         }
-        $events = DaemonEvent::get_event_types();
+        $events = DaemonEvent::get_event_types(SYSTEM_EVENT);
         $type = preg_replace("/^[a-z]*_event_/","",$s_action);
 
         /* Prepare event to be added 
@@ -879,7 +879,7 @@ class systems extends plugin
         /* Get macAddress to be able to an installation event 
          */ 
         if($this->systab instanceof ArpNewDeviceTabs || session::is_set('SelectedSystemType')){
-          $events = DaemonEvent::get_event_types();
+          $events = DaemonEvent::get_event_types(SYSTEM_EVENT);
          
           /* Get mac of currently edited entry */ 
           $mac = "";
