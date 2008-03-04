@@ -130,11 +130,12 @@ class servgeneric extends plugin
         $action = $mapEvent[$action];
       }
 
+      
       /* Check if we have an DaemonEvent for this action */
-      if(class_available("DaemonEvent_".$action)){
-        $events = DaemonEvent::get_event_types(SYSTEM_EVENT);
-        if(isset($events['BY_CLASS']["DaemonEvent_".$action])){
-          $evt = $events['BY_CLASS']["DaemonEvent_".$action];
+      if(class_available("DaemonEvent")){
+        $events = DaemonEvent::get_event_types(SYSTEM_EVENT | HIDDEN_EVENT);
+        if(isset($events['TRIGGERED']["DaemonEvent_".$action])){
+          $evt = $events['TRIGGERED']["DaemonEvent_".$action];
           $tmp = new $evt['CLASS_NAME']($this->config);
           $tmp->add_targets(array($this->netConfigDNS->macAddress));
           $tmp->set_type(TRIGGERED_EVENT);
@@ -435,8 +436,8 @@ class servgeneric extends plugin
        */
       $events = DaemonEvent::get_event_types(SYSTEM_EVENT);
       $o_queue = new gosaSupportDaemon();
-      if(isset($events['BY_CLASS']['DaemonEvent_installation_activation'])){
-        $evt = $events['BY_CLASS']['DaemonEvent_installation_activation'];
+      if(isset($events['TRIGGERED']['DaemonEvent_installation_activation'])){
+        $evt = $events['TRIGGERED']['DaemonEvent_installation_activation'];
         $tmp = new $evt['CLASS_NAME']($this->config);
         $tmp->set_type(TRIGGERED_EVENT);
         $tmp->add_targets(array($this->netConfigDNS->macAddress));
