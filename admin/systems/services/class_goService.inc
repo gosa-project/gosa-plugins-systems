@@ -3,7 +3,7 @@
  * This code is part of GOsa (http://www.gosa-project.org)
  * Copyright (C) 2003-2008 GONICUS GmbH
  *
- * ID: $$Id: class_plugin.inc 9256 2008-03-03 16:09:13Z cajus $$
+ * ID: $$Id$$
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
