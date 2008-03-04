@@ -434,7 +434,7 @@ class servgeneric extends plugin
 
       /* Send installation activation 
        */
-      $events = DaemonEvent::get_event_types(SYSTEM_EVENT | EVENT_HIDDEN);
+      $events = DaemonEvent::get_event_types(SYSTEM_EVENT | HIDDEN_EVENT);
       $o_queue = new gosaSupportDaemon();
       if(isset($events['TRIGGERED']['DaemonEvent_installation_activation'])){
         $evt = $events['TRIGGERED']['DaemonEvent_installation_activation'];
