@@ -1,4 +1,24 @@
 <?php
+/*
+ * This code is part of GOsa (http://www.gosa-project.org)
+ * Copyright (C) 2003-2008 GONICUS GmbH
+ *
+ * ID: $$Id$$
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 
 class termDNS extends plugin
 {
@@ -487,41 +507,41 @@ class termDNS extends plugin
     /* Call common method to give check the hook */
     $message= plugin::check();
 
-    if($this->dhcpEnabled && $this->dhcp_is_Account && $this->dhcpParentNode != "" && count($this->dhcpHostEntry) == 0){
+#    if($this->dhcpEnabled && $this->dhcp_is_Account && $this->dhcpParentNode != "" && count($this->dhcpHostEntry) == 0){
 #      $message[] =_("You have not configured your dhcp settings yet.");
-    }
+#    }
     
     /* Check if mac and ip are already used */
     if(!empty($this->ipHostNumber) && $this->DNS_is_account && 
         $this->ipHostNumber != $this->orig_ipHostNumber && 
         in_array("ip:".$this->ipHostNumber,$this->used_ip_mac)){
-      $message[] =_("The specified IP address is already in use.");
+      $message[]= msgPool::duplicated(_("IP address"));
     }
     if(!empty($this->macAddress) && $this->dhcp_is_Account && 
         $this->macAddress != $this->orig_macAddress && 
         in_array("mac:".$this->macAddress,$this->used_ip_mac)){
-      print_red(sprintf(_("The specified MAC address '%s' for this system '%s' is already in use."),$this->macAddress,$this->cn));
+      $message[]= msgPool::duplicated(_("MAC address"));
     }
 
     /* Check if ip must be given
      */  
     if(($this->IPisMust)||($this->DNS_is_account)){
       if (empty($this->ipHostNumber)){
-        $message[]= _("The required field 'IP-address' is not set.");
+        $message[]= msgPool::required(_("IP address"));
       }
 
       if (!tests::is_ip($this->ipHostNumber)){
-        $message[]= _("Wrong IP format in field IP-address.");
+        $message[]= msgPool::invalid(_("IP address"), "", "", "192.168.1.10");
       }
     }
 
     /* Check if mac is empty 
      */
     if ($this->macAddress == "" ){
-      $message[]= _("The required field 'MAC-address' is not set.");
+      $message[]= msgPool::required(_("IP address"));
     }
     if(!tests::is_mac($this->macAddress)){
-      $message[]=(_("The given macaddress is invalid. There must be 6 2byte segments seperated by ':'."));
+      $message[]= msgPool::invalid(_("MAC address"), "", "", "00:0C:7F:31:33:F1");
     }
 
     /* only perfrom this checks if this is a valid DNS account */
@@ -535,7 +555,7 @@ class termDNS extends plugin
        $tmp2 = $tmp[$this->dnsEntry['zoneName']];
        if(!$this->netmaskIsCoherent($tmp2)){ //this->dnsEntry['zoneName'])){
          $tmp2 = preg_replace("/^.*\//","",$tmp2);
-         $message[] =sprintf(_("The specified IP address '%s' is not matching the selected reverse zone entry '%s'."),$this->ipHostNumber,$tmp2);
+         $message[] =sprintf(_("The IP address '%s' is not part of the selected reverse zone '%s'!"),$this->ipHostNumber,$tmp2);
        }
 
       /* Walk through all entries and detect duplicates or mismatches
@@ -547,7 +567,7 @@ class termDNS extends plugin
         if(!isset($checkArray[$values['type']][$values['value']])){
           $checkArray[$values['type']][$values['value']] = 0;
         }else{
-          $message[] = sprintf(_("Found duplicate value for record type '%s'."),$values['type']);
+          $message[] = sprintf(_("Record type '%s' is duplicated!"),$values['type']);
         }
 
         /* Check if given entries in $onlyOnce are used more than once
@@ -555,7 +575,7 @@ class termDNS extends plugin
         if(isset($onlyOnce[$values['type']])){
           $onlyOnce[$values['type']] ++;
           if($onlyOnce[$values['type']] > 1){
-            $message[] = sprintf(_("Found more than one entry for the uniqe record type '%s'."),$values['type']);
+            $message[] = sprintf(_("Uniq record type '%s' is duplicated!"),$values['type']);
           }
         }
 
@@ -566,14 +586,16 @@ class termDNS extends plugin
         /* Check if there is an aRecord defined which uses the same IP as used in IPhostAddress 
          */
         if(($values['type'] == "aRecord")&&($values['value'] == $this->ipHostNumber)){
-          $message[]=sprintf(_("The device IP '%s' is added as 'A Record', this will be done automatically, please remove the record."), 
+          #TODO: Where's the problem here?
+          $message[]=sprintf(_("The IP address '%s' will is added as 'A Record', this will be done automatically, please remove the record."), 
                $this->ipHostNumber);
         }
 
         /* only lower-case is allowed in record entries ... 
          */
         if($values['value'] != strtolower($values['value'])){
-          $message[] = sprintf(_("Only lowercase is allowed, please check your '%ss'."),$values['type']);
+          #TODO: What's in values['value']? Something for a propper message?
+          $message[] = sprintf(_("Only lowercase records are allowed, please check your '%ss'."),$values['type']);
         }
       }
     }

@@ -1,12 +1,27 @@
 <?php
+/*
+ * This code is part of GOsa (http://www.gosa-project.org)
+ * Copyright (C) 2003-2008 GONICUS GmbH
+ *
+ * ID: $$Id$$
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 
 class servgeneric extends plugin
 {
-  /* CLI vars */
-  var $cli_summary= "Manage server base objects";
-  var $cli_description= "Some longer text\nfor help";
-  var $cli_parameters= array("eins" => "Eins ist toll", "zwei" => "Zwei ist noch besser");
-
   /* Generic terminal attributes */
   var $ignore_account= TRUE;
   var $interfaces= array();
@@ -323,12 +338,12 @@ class servgeneric extends plugin
 
     /* must: cn */
     if ($this->cn == ""){
-      $message[]= _("The required field 'Server name' is not set.");
+      msgPool::required(_("Server name"));
     }
     
     /* Check if given name is a valid host/dns name */
     if(!tests::is_dns_name($this->cn)){
-      $message[] = _("Please specify a valid name for this object.");
+      $message[]= msgPool::invalid(_("Server name"), $this->cn, "/[a-z0-9\.\-]/i");
     }
 
     if ($this->orig_dn != $this->dn){
@@ -339,7 +354,7 @@ class servgeneric extends plugin
         while ($attrs= $ldap->fetch()){
           if ($attrs['dn'] != $this->orig_dn){
             if(!preg_match("/cn=dhcp,/",$attrs['dn']) && !preg_match("/,".get_ou('incomingou')."/",$attrs['dn']) && preg_match("/,".get_ou('serverou')."/",$attrs['dn'])){
-              $message[]= sprintf (_("There is already an entry '%s' in the base choosen by you"), $this->cn);
+              $message[]= msgPool::duplicated(_("Server name"));
               break;
             }
           }

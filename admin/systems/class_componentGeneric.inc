@@ -1,12 +1,27 @@
 <?php
+/*
+ * This code is part of GOsa (http://www.gosa-project.org)
+ * Copyright (C) 2003-2008 GONICUS GmbH
+ *
+ * ID: $$Id$$
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 
 class componentGeneric extends plugin
 {
-  /* CLI vars */
-  var $cli_summary= "Manage component base objects";
-  var $cli_description= "Some longer text\nfor help";
-  var $cli_parameters= array("eins" => "Eins ist toll", "zwei" => "Zwei ist noch besser");
-
   /* Generic terminal attributes */
   var $interfaces= array();
   var $ignore_account= TRUE;
@@ -183,20 +198,20 @@ class componentGeneric extends plugin
     $this->dn= "cn=".$this->cn.",".get_ou('componentou').$this->base;
 
     if ($this->cn == "" ){
-      $message[]= _("The required field 'Component name' is not set.");
+      $message[]= msgPool::required(_("Component name"));
     }
 
     /* Check if given name is a valid host/dns name */
     if(!tests::is_dns_name($this->cn)){
-      $message[] = _("Please specify a valid name for this object.");
+      $message[]= msgPool::invalid(_("Component name"), $this->cn, "/[a-z0-9\.\-]/i");
     }
 
     /* To check for valid ip*/
     if($this->netConfigDNS->ipHostNumber == ""){
-       $message[]= _("The required field IP address is empty.");
+       $message[]= msgPool::required(_("IP address"));
     } else {
       if (!tests::is_ip($this->netConfigDNS->ipHostNumber)){
-        $message[]= _("The field IP address contains an invalid address.");
+        $message[]= msgPool::invalid(_("IP address"), "", "", "192.168.1.2");
       }
     }
 
@@ -210,7 +225,7 @@ class componentGeneric extends plugin
             continue;
           }
           if ($attrs['dn'] != $this->orig_dn){
-            $message[]= sprintf (_("There is already an entry '%s' in the base choosen by you"), $this->cn);
+            $message[]= msgPool::duplicated(_("Component name"));
             break;
           }
         }
