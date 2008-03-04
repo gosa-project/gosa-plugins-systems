@@ -220,15 +220,18 @@ class divListSystem extends MultiSelectWindow
     }
 
     $events  = DaemonEvent::get_event_types(SYSTEM_EVENT);
+
     $s.= "..|<img src='images/rocket.png' alt='' border='0' class='center'>".
       "&nbsp;"._("Trigger action")."|\n";
-    foreach($events['BY_CLASS'] as $name =>  $event){
+    foreach($events['BY_TRIGGERED_ACTION'] as $event){
+      $name = $event['CLASS_NAME'];
       $s.= "...|".$event['MenuImage']."&nbsp;".$event['s_Menu_Name']."|trigger_event_".$name."\n";
     }
 
     $s.= "..|<img src='images/clock.png' alt='' border='0' class='center'>".
       "&nbsp;"._("Schedule action")."|\n";
-    foreach($events['BY_CLASS'] as $name =>  $event){
+    foreach($events['BY_SCHEDULED_ACTION'] as $name =>  $event){
+      $name = $event['CLASS_NAME'];
       $s.= "...|".$event['MenuImage']."&nbsp;".$event['s_Menu_Name']."|schedule_event_".$name."\n";
     }
 
