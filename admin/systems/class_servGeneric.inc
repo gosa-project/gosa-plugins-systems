@@ -123,7 +123,7 @@ class servgeneric extends plugin
           $evt = $events['TRIGGERED']["DaemonEvent_".$action];
           $tmp = new $evt['CLASS_NAME']($this->config);
           $tmp->add_targets(array($this->netConfigDNS->macAddress));
-          $tmp->set_type(TRIGGERED_EVENT);
+          $tmp->set_type(($action == "reinstall" || $action == "update")?SCHEDULED_EVENT:TRIGGERED_EVENT);
           $o_queue = new gosaSupportDaemon();
           if(!$o_queue->append($tmp)){
             msg_dialog::display(_("Daemon"),sprintf(_("Something went wrong while talking to the daemon: %s."),
