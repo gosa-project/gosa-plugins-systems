@@ -189,8 +189,7 @@ class servgeneric extends plugin
     /* Assign status */
     if (gosaSupportDaemon::ping($this->netConfigDNS->macAddress)){
       $smarty->assign("actions", array("halt" => _("Switch off"), "reboot" => _("Reboot"),
-                                       "instant_update" => _("Instant update"),
-                                       "update" => _("Scheduled update"),
+                                       "update" => _("Update"),
                                        "reinstall" => _("Reinstall"),
                                        "rescan" => _("Rescan hardware"),
                                        "memcheck" => _("Memory test"),
@@ -199,7 +198,7 @@ class servgeneric extends plugin
     } else {
       $smarty->assign("actions", array("wake" => _("Wake up"),
                                        "reinstall" => _("Reinstall"),
-                                       "update" => _("Scheduled update"),
+                                       "update" => _("Update"),
                                        "memcheck" => _("Memory test"),
                                        "localboot" => _("Force localboot"),
                                        "sysinfo"  => _("System analysis")));
