@@ -32,7 +32,6 @@ class servgeneric extends plugin
   var $l= "";
   var $description= "";
   var $orig_dn= "";
-  var $didAction= FALSE;
 
   /* attribute list for save action */
   var $attributes= array("cn", "description","gotoMode");
@@ -43,14 +42,8 @@ class servgeneric extends plugin
   var $netConfigDNS;
   var $modes = array();
   var $ui   ;
-  var $mapActions   = array("reboot"          => "",
-                            "update"          => "softupdate",
-                            "localboot"       => "localboot",
-                            "reinstall"       => "install",
-                            "rescan"          => "",
-                            "wake"            => "",
-                            "memcheck"        => "memcheck",
-                            "sysinfo"         => "sysinfo");
+  var $validActions   = array("reboot" => "", "update" => "", "localboot" => "", "reinstall" => "", "rescan" => "",
+                            "wake" => "", "memcheck" => "", "sysinfo" => "");
 
   var $fai_activated  =FALSE;
   var $view_logged = FALSE;
@@ -121,15 +114,7 @@ class servgeneric extends plugin
 
 
     if ((isset($_POST['action'])) && ($this->acl_is_writeable("FAIstate")) && isset($this->mapActions[$_POST['saction']]) ){
-
-      /* Check given action */
-      $mapEvent = array("wake"           => "wakeup",
-                        "instant_update" => "update");
       $action = $_POST['saction'];
-      if(isset($mapEvent[$action])){
-        $action = $mapEvent[$action];
-      }
-
       
       /* Check if we have an DaemonEvent for this action */
       if(class_available("DaemonEvent")){
@@ -146,58 +131,10 @@ class servgeneric extends plugin
           }
         }
       }else{
-
-        msg_dialog::display(_("Missing Daemon Event"),
-                    sprintf(_("The requested action does not exists '%s' Sending event manually."),"DaemonEvent_".$action),ERROR_DIALOG);
-
-        /* No event found, send action manually.
-         */
-        $method= "gosa";
-        $action= $_POST['saction'];
-        if ($action == "reinstall" || $action == "update" || $action == "instant_update"){
-          $method= "job";
-        }
-
-        gosaSupportDaemon::send("${method}_trigger_action_".$action,
-            $this->netConfigDNS->macAddress,
-            array("macAddress" => $this->netConfigDNS->macAddress));
+        msg_dialog::display(_("Event error"),
+                    sprintf(_("Event '%s' is not available!"),$action),ERROR_DIALOG);
       }
 
-      $this->didAction= TRUE;
-
-      if ($_POST['saction'] != "wake") {
-
-          /* Set FAIstate */
-          if($this->fai_activated && $this->dn != "new"){
-            $ldap = $this->config->get_ldap_link();
-            $ldap->cd($this->config->current['BASE']);
-            $ldap->cat($this->dn,array("objectClass"));
-            $res = $ldap->fetch();
-
-            $attrs = array();
-            $attrs['FAIstate'] = "";
-            if(isset($this->mapActions[$_POST['saction']])){
-              $attrs['FAIstate'] = $this->mapActions[$_POST ['saction']];
-            }
-
-            for($i = 0; $i < $res['objectClass']['count'] ; $i ++){
-              $attrs['objectClass'][] = $res['objectClass'][$i];
-            }
-
-            if(($attrs['FAIstate'] != "") && (!in_array("FAIobject",$attrs['objectClass']))){
-              $attrs['objectClass'][] = "FAIobject";
-            }
-
-            if($attrs['FAIstate'] == ""){
-	      #FIXME we should check if FAIobject is used anymore
-              $attrs['FAIstate'] = array();
-            }
-
-            $ldap->cd($this->dn);
-            $ldap->modify($attrs);
-          }
-	  show_ldap_error($ldap->get_error(), sprintf(_("Saving of system server/generic (FAIstate) with dn '%s' failed."),$this->dn)); 
-      }
     }
 
     /* Base select dialog */
@@ -426,9 +363,7 @@ class servgeneric extends plugin
     $this->netConfigDNS->save();
 
     /* Optionally execute a command after we're done */
-    if(!$this->didAction){
-      $this->handle_post_events($mode,array("macAddress" => $this->netConfigDNS->macAddress,"ipHostNumber" => $this->netConfigDNS->ipHostNumber));
-    }
+    $this->handle_post_events($mode,array("macAddress" => $this->netConfigDNS->macAddress,"ipHostNumber" => $this->netConfigDNS->ipHostNumber));
 
     if ($activate){
 
