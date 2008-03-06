@@ -543,7 +543,7 @@ class systems extends plugin
        */
       if(isset($_POST['save_event_dialog']) || $this->systab->get_type() == TRIGGERED_EVENT){
         $o_queue = new gosaSupportDaemon();
-        $this->systab->set_type(($s_action == "trigger_event_DaemonEvent_reinstall" || $s_action == "trigger_event_DaemonEvent_update")?SCHEDULED_EVENT:TRIGGERED_EVENT);
+        $this->systab->set_type(TRIGGERED_EVENT);
         $o_queue->append($this->systab);
         if($o_queue->is_error()){
           msg_dialog::display(_("Daemon"),sprintf(_("Something went wrong while talking to the daemon: %s."),
@@ -899,11 +899,11 @@ class systems extends plugin
 
           /* Add installation event
            */
-          if(!empty($mac) && isset($events['BY_CLASS']['DaemonEvent_install'])){
-            $evt = $events['BY_CLASS']['DaemonEvent_install'];
+          if(!empty($mac) && isset($events['BY_CLASS']['DaemonEvent_reinstall'])){
+            $evt = $events['BY_CLASS']['DaemonEvent_reinstall'];
             $tmp = new $evt['CLASS_NAME']($this->config);
             $tmp->add_targets(array($mac));
-            $tmp->set_type(TRIGGERED_EVENT);
+            $tmp->set_type(SCHEDULED_EVENT);
             $o_queue = new gosaSupportDaemon();
             $o_queue->append($tmp);
             if($o_queue->is_error()){
