@@ -425,7 +425,9 @@ class termDNS extends plugin
         $ldap->cd($dn);
         $ldap->rmdir_recursive($dn);
         new log("remove","unknown/".get_class($this),$dn);
-        show_ldap_error($ldap->get_error(), sprintf(_("Could not remove dns extension for '%s'."),$dn));
+        if (!$ldap->success()){
+          msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $dn, LDAP_DEL, get_class()));
+        }
       }
     }
   }
@@ -681,7 +683,9 @@ class termDNS extends plugin
       /* DHCP removed */
       if($this->initial_dhcp_is_Account && !$this->dhcp_is_Account){
         $ldap->rmdir_recursive($this->dhcpHostEntry['dn']);
-        show_ldap_error($ldap->get_error(),_("Removing dhcp entry for this object failed."));
+        if (!$ldap->success()){
+          msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dhcpHostEntry['dn'], LDAP_DEL, get_class()));
+        }
 
         $tmp = new servdhcp($this->config,$this->dhcpParentNode);
         $tmp->handle_post_events("remove");
@@ -698,7 +702,9 @@ class termDNS extends plugin
         $tmp = new servdhcp($this->config,$this->dhcpParentNode);
         $tmp->handle_post_events("add");
 
-        show_ldap_error($ldap->get_error(),_("Tried to add new dhcp entry failed."));
+        if (!$ldap->success()){
+          msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), "cn=".$this->cn.",".$this->dhcpParentNode, LDAP_ADD, get_class()));
+        }
       }
 
       /* DHCP still activated */
@@ -717,10 +723,14 @@ class termDNS extends plugin
           $tmp = new servdhcp($this->config,$this->dhcpParentNode);
           $tmp->handle_post_events("modify");
 
-          show_ldap_error($ldap->get_error(),_("Tried to add new dhcp entry failed."));
+          if (!$ldap->success()){
+            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), "cn=".$this->cn.",".$this->dhcpParentNode, LDAP_ADD, get_class()));
+          }
           if($res){
             $ldap->rmdir_recursive($this->dhcpHostEntry['dn']);
-            show_ldap_error($ldap->get_error(),_("Removing old dhcp entry failed."));
+            if (!$ldap->success()){
+              msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dhcpHostEntry['dn'], LDAP_DEL, get_class()));
+            }
           }
         }
          
@@ -736,7 +746,9 @@ class termDNS extends plugin
           $tmp = new servdhcp($this->config,$this->dhcpParentNode);
           $tmp->handle_post_events("modify");
 
-          show_ldap_error($ldap->get_error(),_("Modifying dhcp entry failed."));
+          if (!$ldap->success()){
+            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dhcpHostEntry['dn'], LDAP_MOD, get_class()));
+          }
         }    
       }
     }
@@ -806,8 +818,8 @@ class termDNS extends plugin
 
       /* Display errors 
        */
-      if($ldap->get_error() != "Success"){
-        show_ldap_error($ldap->get_error(), sprintf(_("Saving of terminal/dns account with dn '%s' failed."),$this->dn));
+      if (!$ldap->success()){
+        msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $dn, 0, get_class()));
       }
 
       $tmp2 = new servdns($this->config,$this->dn);

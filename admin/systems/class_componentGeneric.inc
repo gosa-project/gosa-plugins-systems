@@ -151,7 +151,10 @@ class componentGeneric extends plugin
     
     new log("remove","component/".get_class($this),$this->dn,$this->attributes,$ldap->get_error());
 
-    show_ldap_error($ldap->get_error(), sprintf(_("Removing of system component/generic with dn '%s' failed."),$this->dn));
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_DEL, get_class()));
+    }
+
     $this->handle_post_events(array("macAddress" => $this->netConfigDNS->macAddress,"ipHostNumber" => $this->netConfigDNS->ipHostNumber));
 
     /* Delete references to object groups */
@@ -285,7 +288,9 @@ class componentGeneric extends plugin
     $this->netConfigDNS->cn = $this->cn;
     $this->netConfigDNS->save();
 
-    show_ldap_error($ldap->get_error(), sprintf(_("Saving of system component/generic with dn '%s' failed."),$this->dn));
+    if (!$ldap->success()){
+      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
+    }
   }
 
   /* Return plugin informations for acl handling */
