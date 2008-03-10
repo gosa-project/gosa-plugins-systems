@@ -39,7 +39,7 @@ class divListSystemService extends MultiSelectWindow
     $this->SetSummary(_("Installed services"));
 
     /* Result page will look like a headpage */
-    $this->SetInformation(_("This menu allows you to add, remove and configure the properties of a specific service."));
+    $this->SetInformation(_("Add, remove and configure the properties of system services here."));
 
     /* Disable buttonsm */
     $this->EnableCloseButton(false);

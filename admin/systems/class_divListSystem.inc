@@ -64,7 +64,6 @@ class divListSystem extends MultiSelectWindow
 
     /* Result page will look like a headpage */
     $this->SetHeadpageMode();
-    $this->SetInformation(_("This menu allows you to add, remove and change the properties of specific systems. You can only add systems which have already been started once."));
 
     $this->EnableAplhabet   (true);
 
