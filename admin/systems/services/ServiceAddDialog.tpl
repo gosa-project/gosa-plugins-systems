@@ -27,6 +27,6 @@
 <div style="width:100%; text-align:right;padding-top:8px;padding-bottom:3px;">
     <input type='submit' name='SaveServiceAdd' value='{t}Continue{/t}' {if !$Services} disabled {/if}>
     &nbsp;
-    <input type='submit' name='CancelServiceAdd' value='{t}Cancel{/t}'>
+    <input type='submit' name='CancelServiceAdd' value='{msgPool type=cancelButton}'>
 </div>
 
