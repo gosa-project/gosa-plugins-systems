@@ -52,8 +52,8 @@ class goService extends plugin{
     }
 
     $str ="<div style='width:100%; text-align:right;'>".
-          "  <input type='submit' name='SaveService' value='"._("Save")."'>&nbsp;".
-          "  <input type='submit' name='CancelService' value='"._("Cancel")."'>".
+          "  <input type='submit' name='SaveService' value='".msgPool::saveButton()."'>&nbsp;".
+          "  <input type='submit' name='CancelService' value='".msgPool::cancelButton()."'>".
           "</div>";
     return($str);
   }
