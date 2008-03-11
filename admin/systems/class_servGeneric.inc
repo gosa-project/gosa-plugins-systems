@@ -48,6 +48,9 @@ class servgeneric extends plugin
   var $fai_activated  =FALSE;
   var $view_logged = FALSE;
 
+  var $currently_installing = FALSE;
+  var $currently_installing_warned = FALSE;
+
   function servgeneric (&$config, $dn= NULL, $parent= NULL)
   {
     /* Check if FAI is activated */
@@ -74,6 +77,17 @@ class servgeneric extends plugin
     $this->netConfigDNS = new termDNS($this->config,$this,$this->objectclasses);
     $this->netConfigDNS->set_acl_category("server");
     $this->netConfigDNS->set_acl_base($this->base);
+
+    /* Check if this host is currently in installation process*/
+    $o = new gosaSupportDaemon();
+    $e_types = DaemonEvent::get_event_types(USER_EVENT | SYSTEM_EVENT | HIDDEN_EVENT);
+    $evts = $o->get_entries_by_mac(array($this->netConfigDNS->macAddress));
+    foreach($evts as $evt){
+      if(isset($e_types['QUEUED'][$evt['HEADERTAG']]) &&
+          $e_types['QUEUED'][$evt['HEADERTAG']] == "DaemonEvent_reinstall"){
+        $this->currently_installing =TRUE;
+      }
+    }
        
     /* Save dn for later references */
     $this->orig_dn= $this->dn;
@@ -213,6 +227,7 @@ class servgeneric extends plugin
     }
     $smarty->assign("netconfig", $str);
     $smarty->assign("modes", $this->modes);
+    $smarty->assign("currently_installing", $this->currently_installing);
 
     return($smarty->fetch (get_template_path('server.tpl', TRUE)));
   }
@@ -306,6 +321,12 @@ class servgeneric extends plugin
           }
         }
       }
+    }
+
+    /* Warn the user, that this host is currently installing */
+    if($this->currently_installing && !$this->currently_installing_warned){
+      $this->currently_installing_warned = TRUE;
+      $message[] = _("This host is currently installing, if you really want to save it, save again.");
     }
 
     return ($message);
