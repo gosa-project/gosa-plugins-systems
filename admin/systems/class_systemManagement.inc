@@ -575,19 +575,14 @@ class systems extends plugin
           return(gen_locked_message($user,$this->dns));
         }
 
-        $dns_names = "<br><pre>";
+        $dns_names = array();
         foreach($this->dns as $dn){
           add_lock ($dn, $this->ui->dn);
-          $dns_names .= $dn."\n";
+          $dns_names[] = @LDAP::fix($dn);
         }
-        $dns_names .="</pre>";
 
         /* Lock the current entry, so nobody will edit it during deletion */
-        if (count($this->dns) == 1){
-          $smarty->assign("warning",     sprintf(_("You're about to delete the following entry %s"), @LDAP::fix($dns_names)));
-        } else {
-          $smarty->assign("warning",     sprintf(_("You're about to delete the following entries %s"), @LDAP::fix($dns_names)));
-        }
+        $smarty->assign("info", msgPool::deleteInfo($dns_names));
         $smarty->assign("multiple", true);
         return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
       }
@@ -725,7 +720,7 @@ class systems extends plugin
 
         /* Lock the current entry, so nobody will edit it during deletion */
         add_lock ($this->dn, $this->ui->dn);
-        $smarty->assign("warning", sprintf(_("You're about to delete all information about the component at '%s'."), @LDAP::fix($this->dn)));
+        $smarty->assign("info", msgPool::deleteInfo(@LDAP::fix($this->dn)));
         $smarty->assign("multiple", false);
         return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
       } else {
