@@ -69,7 +69,7 @@ class componentGeneric extends plugin
     /* Do we represent a valid phone? */
     if (!$this->is_account && $this->parent === NULL){
       $display= "<img alt=\"\" src=\"images/stop.png\" align=middle>&nbsp;<b>".
-        _("This 'dn' has no network features.")."</b>";
+        msgPool::noValidExtension(_("component"))."</b>";
       return($display);
     }
 

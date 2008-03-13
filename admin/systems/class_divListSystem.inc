@@ -84,17 +84,31 @@ class divListSystem extends MultiSelectWindow
     /* set Page header */
     $this->AddHeader(array("string"=> $chk,          "attach"=>"style='width:20px;'"));
     $this->AddHeader(array("string"=>"&nbsp;","attach"=>"style='width:20px;'"));
-    $this->AddHeader(array("string"=>_("System / Department")));
+    $this->AddHeader(array("string"=>_("Systems")." / "._("Department")));
     $this->AddHeader(array("string"=>_("Actions"),"attach"=>"style='width:".$action_col_size."px;border-right:0px;'"));
 
     /*                  Text        ,Value    ,Name         ,Is selected */
-    $this->AddCheckBox("ShowServers",         _("Select to see servers"),            _("Show servers"),          true);
-    $this->AddCheckBox("ShowTerminals",       _("Select to see Linux terminals"),    _("Show terminals") ,       true);
-    $this->AddCheckBox("ShowWorkstations",    _("Select to see Linux workstations"), _("Show workstations"),     true);
-    $this->AddCheckBox("ShowWinWorkstations", _("Select to see MicroSoft Windows based workstations"), _("Show windows based workstations"),true);
-    $this->AddCheckBox("ShowPrinters",        _("Select to see network printers"),    _("Show network printers") ,true);
-    $this->AddCheckBox("ShowPhones",          _("Select to see VOIP phones"),         _("Show phones") ,          true);
-    $this->AddCheckBox("ShowDevices",         _("Select to see network devices"),     _("Show network devices"),  true);
+    $this->AddCheckBox("ShowServers",        
+        msgPool::selectToView(  _("servers")),            
+        sprintf(_("Show %s"),   _("servers")),true);
+    $this->AddCheckBox("ShowTerminals",       
+        msgPool::selectToView(  _("Linux terminals")),    
+        sprintf(_("Show %s"),   _("terminals")),true);
+    $this->AddCheckBox("ShowWorkstations",
+        msgPool::selectToView(  _("Linux workstations")), 
+        sprintf(_("Show %s"),   _("workstations")),true);
+    $this->AddCheckBox("ShowWinWorkstations", 
+        msgPool::selectToView(  _("MicroSoft Windows based workstations")), 
+        sprintf(_("Show %s"),   _("windows based workstations")),true);
+    $this->AddCheckBox("ShowPrinters",
+        msgPool::selectToView(  _("network printers")),   
+        sprintf(_("Show %s"),   _("network printers")) ,true);
+    $this->AddCheckBox("ShowPhones",
+        msgPool::selectToView(  _("VOIP phones")),        
+        sprintf(_("Show %s"),   _("phones")) ,true);
+    $this->AddCheckBox("ShowDevices",
+        msgPool::selectToView(  _("network devices")),    
+        sprintf(_("Show %s"),   _("network devices")),  true);
 
     /* Add SubSearch checkbox */
     $this->AddCheckBox(SEPERATOR);
@@ -451,15 +465,15 @@ class divListSystem extends MultiSelectWindow
       $num_deps = count($this->Added_Departments);
     }
 
-    $num_ser_str = _("Number of listed servers");
-    $num_ws_str  = _("Number of listed workstations");
-    $num_ter_str = _("Number of listed terminals");
-    $num_pho_str = _("Number of listed phones");
-    $num_prt_str = _("Number of listed printers");
-    $num_com_str = _("Number of listed network components");
-    $num_new_str = _("Number of listed new devices");
-    $num_wws_str = _("Number of listed windows workstations");
-    $num_dep_str = _("Number of listed departments");
+    $num_ser_str = sprintf(_("Number of listed %s"),_("servers"));
+    $num_ws_str  = sprintf(_("Number of listed %s"),_("workstations"));
+    $num_ter_str = sprintf(_("Number of listed %s"),_("terminals"));
+    $num_pho_str = sprintf(_("Number of listed %s"),_("phones"));
+    $num_prt_str = sprintf(_("Number of listed %s"),_("printers"));
+    $num_com_str = sprintf(_("Number of listed %s"),_("network components"));
+    $num_new_str = sprintf(_("Number of listed %s"),_("new devices"));
+    $num_wws_str = sprintf(_("Number of listed %s"),_("windows workstations"));
+    $num_dep_str = sprintf(_("Number of listed %s"),_("departments"));
 
     $str = "<img class='center' src='images/select_server.png'
       title='".$num_ser_str."' alt='".$num_ser_str."'>&nbsp;".$cnts['server']."&nbsp;&nbsp;&nbsp;&nbsp;";

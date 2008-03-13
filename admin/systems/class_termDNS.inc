@@ -509,10 +509,6 @@ class termDNS extends plugin
     /* Call common method to give check the hook */
     $message= plugin::check();
 
-#    if($this->dhcpEnabled && $this->dhcp_is_Account && $this->dhcpParentNode != "" && count($this->dhcpHostEntry) == 0){
-#      $message[] =_("You have not configured your dhcp settings yet.");
-#    }
-    
     /* Check if mac and ip are already used */
     if(!empty($this->ipHostNumber) && $this->DNS_is_account && 
         $this->ipHostNumber != $this->orig_ipHostNumber && 
@@ -589,7 +585,7 @@ class termDNS extends plugin
          */
         if(($values['type'] == "aRecord")&&($values['value'] == $this->ipHostNumber)){
           #TODO: Where's the problem here?
-          $message[]=sprintf(_("The IP address '%s' will is added as 'A Record', this will be done automatically, please remove the record."), 
+          $message[]=sprintf(_("The IP address '%s' will be added as 'A Record', this will be done automatically, please remove the record."), 
                $this->ipHostNumber);
         }
 

@@ -123,11 +123,9 @@ class servgeneric extends plugin
     /* Do we represent a valid server? */
     if (!$this->is_account && $this->parent === NULL){
       $display= "<img alt=\"\" src=\"images/stop.png\" align=middle>&nbsp;<b>".
-        _("This 'dn' has no server features.")."</b>";
+        msgPool::noValidExtension(_("server"))."</b>"; 
       return($display);
     }
-
-
 
     if ((isset($_POST['action'])) && ($this->acl_is_writeable("FAIstate")) && isset($this->mapActions[$_POST['saction']]) ){
       $action = $_POST['saction'];
@@ -150,7 +148,6 @@ class servgeneric extends plugin
         msg_dialog::display(_("Event error"),
                     sprintf(_("Event '%s' is not available!"),$action),ERROR_DIALOG);
       }
-
     }
 
     /* Base select dialog */

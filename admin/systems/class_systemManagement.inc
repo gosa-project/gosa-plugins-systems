@@ -327,7 +327,7 @@ class systems extends plugin
           $this->systab->by_object[$tabname]->base = $this->DivListSystem->selectedBase;
           $this->systab->base = $this->DivListSystem->selectedBase;
         }else{
-          print_red(_("You are not allowed to create a new object of this type."));
+          print_red(msgPool::permCreate());
         }
       }
     }
@@ -649,7 +649,7 @@ class systems extends plugin
           } else {
             /* Normally this shouldn't be reached, send some extra
                logs to notify the administrator */
-            print_red (_("You are not allowed to delete this component!"));
+            print_red (msgPool::permDelete());
             new log("security","systems/".get_class($this),$dn,array(),"Tried to trick deletion.");
           }
           /* Remove lock file after successfull deletion */
@@ -727,7 +727,7 @@ class systems extends plugin
 
         /* Obviously the user isn't allowed to delete. Show message and
            clean session. */
-        print_red (_("You are not allowed to delete this component!"));
+        print_red (msgPool::permDelete());
       }
     }
 
@@ -792,7 +792,7 @@ class systems extends plugin
 
         /* Normally this shouldn't be reached, send some extra
            logs to notify the administrator */
-        print_red (_("You are not allowed to delete this component!"));
+        print_red(msgPool::permDelete());
         new log("security","systems/".get_class($this),$dn,array(),"Tried to trick deletion.");
       }
 
@@ -801,14 +801,7 @@ class systems extends plugin
     }
 
 
-
-
-
-
-
-
-
-   /********************
+    /********************
       Edit system type finished, check if everything went ok
      ********************/
     /* Finish user edit is triggered by the tabulator dialog, so

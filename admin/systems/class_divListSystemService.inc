@@ -47,7 +47,7 @@ class divListSystemService extends MultiSelectWindow
 
     /* set Page header */
     $this->AddHeader(array("string"=>"&nbsp;","attach"=>"style='width:20px;'"));
-    $this->AddHeader(array("string"=>_("Service name")));
+    $this->AddHeader(array("string"=>_("Name")));
     $this->AddHeader(array("string"=>_("Actions"),"attach"=>"style='width:100px;border-right:0px;'"));
     $this->HideFilterPart();
   }
