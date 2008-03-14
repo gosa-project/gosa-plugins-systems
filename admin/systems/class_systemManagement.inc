@@ -582,7 +582,7 @@ class systems extends plugin
         }
 
         /* Lock the current entry, so nobody will edit it during deletion */
-        $smarty->assign("info", msgPool::deleteInfo($dns_names));
+        $smarty->assign("warning", msgPool::deleteInfo($dns_names));
         $smarty->assign("multiple", true);
         return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
       }
@@ -720,7 +720,7 @@ class systems extends plugin
 
         /* Lock the current entry, so nobody will edit it during deletion */
         add_lock ($this->dn, $this->ui->dn);
-        $smarty->assign("info", msgPool::deleteInfo(@LDAP::fix($this->dn)));
+        $smarty->assign("warning", msgPool::deleteInfo(@LDAP::fix($this->dn)));
         $smarty->assign("multiple", false);
         return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
       } else {
