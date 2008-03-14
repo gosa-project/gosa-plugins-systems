@@ -1419,7 +1419,7 @@ class systems extends plugin
   {
     $temp= "";
     $conv= array(	
-        "NQ" => array("select_newsystem.png",_("New System from incoming")),
+        "NQ" => array("select_newsystem.png",_("New system from incoming")),
         "D" => array("select_default.png",_("Template")),
         "T" => array("select_terminal.png",_("Terminal")),
         "L" => array("select_workstation.png",_("Workstation")),
@@ -1431,10 +1431,10 @@ class systems extends plugin
         "GS" => array("select_server_green.png",_("Server is installing")),
         "YS" => array("select_server_yellow.png",_("Server is waiting for action")),
         "RS" => array("select_server_red.png",_("Server installation failed")),
-        "W" => array("select_winstation.png",_("Winstation")),
-        "C" => array("select_component.png",_("Network Device")),
-        "NT"=> array("select_new_terminal.png",_("New Terminal")),
-        "NL"=> array("select_new_workstation.png",_("New Workstation")),
+        "W" => array("select_winstation.png",_("Win workstation")),
+        "C" => array("select_component.png",_("Network device")),
+        "NT"=> array("select_new_terminal.png",_("New terminal")),
+        "NL"=> array("select_new_workstation.png",_("New workstation")),
         "P" => array("select_printer.png",_("Printer")));
 
     if((isset($input['is_new']))&&(!empty($input['is_new']))){

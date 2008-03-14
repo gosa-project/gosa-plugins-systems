@@ -104,7 +104,7 @@ class divListSystem extends MultiSelectWindow
         msgPool::selectToView(  _("network printers")),   
         sprintf(_("Show %s"),   _("network printers")) ,true);
     $this->AddCheckBox("ShowPhones",
-        msgPool::selectToView(  _("VOIP phones")),        
+        msgPool::selectToView(  _("VoIP phones")),        
         sprintf(_("Show %s"),   _("phones")) ,true);
     $this->AddCheckBox("ShowDevices",
         msgPool::selectToView(  _("network devices")),    
