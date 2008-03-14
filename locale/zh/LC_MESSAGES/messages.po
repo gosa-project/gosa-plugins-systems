@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-09 20:25+0100\n"
+"POT-Creation-Date: 2008-03-14 13:41+0100\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -16,138 +16,532 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: admin/systems/server.tpl:6 admin/systems/paste_generic.tpl:4
-#: admin/systems/class_servGeneric.inc:287
-#: admin/systems/class_servGeneric.inc:292
-#: admin/systems/class_servGeneric.inc:303
-msgid "Server name"
-msgstr "服务器名称"
+#: admin/systems/class_termDNS.inc:393
+msgid "Not matching"
+msgstr "不匹配"
 
-#: admin/systems/server.tpl:14 admin/systems/component.tpl:35
-#: admin/systems/class_servGeneric.inc:451
-#: admin/systems/class_componentGeneric.inc:311
-msgid "Description"
-msgstr "描述"
-
-#: admin/systems/server.tpl:22 admin/systems/class_baseSelectDialog.inc:65
-#: admin/systems/component.tpl:17 admin/systems/class_divListSystem.inc:189
-#: admin/systems/class_servGeneric.inc:453
-#: admin/systems/class_componentGeneric.inc:310
-msgid "Base"
-msgstr "位置"
-
-#: admin/systems/server.tpl:26 admin/systems/component.tpl:20
-msgid "Choose subtree to place group in"
-msgstr "选择来放置组的子树"
-
-#: admin/systems/server.tpl:32 admin/systems/component.tpl:25
-msgid "Select a base"
-msgstr "选择一个位置"
-
-#: admin/systems/server.tpl:41
-msgid "Mode"
-msgstr "模式"
-
-#: admin/systems/server.tpl:44
-msgid "Select terminal mode"
-msgstr "选择终端类型"
-
-#: admin/systems/server.tpl:62 admin/systems/class_baseSelectDialog.inc:66
-msgid "Action"
-msgstr "行动"
-
-#: admin/systems/server.tpl:67
-msgid "Select action to execute for this server"
-msgstr "选择为这台服务器要执行的动作"
-
-#: admin/systems/server.tpl:74
-msgid "Execute"
-msgstr "执行"
-
-#: admin/systems/paste_generic.tpl:14
-#, fuzzy
-msgid "workstation name"
-msgstr "工作站名称"
-
-#: admin/systems/paste_generic.tpl:24
-msgid "Terminal name"
-msgstr "终端名称"
-
-#: admin/systems/paste_generic.tpl:34
-msgid "Printer name"
-msgstr "打印机名称"
-
-#: admin/systems/paste_generic.tpl:44
-msgid "Phone name"
-msgstr "电话名称"
-
-#: admin/systems/paste_generic.tpl:54
-#: admin/systems/class_componentGeneric.inc:204
-#: admin/systems/class_componentGeneric.inc:209
-#: admin/systems/class_componentGeneric.inc:231
-#, fuzzy
-msgid "Component name"
-msgstr "常用名"
-
-#: admin/systems/services/class_goService.inc:42
-#: admin/systems/services/class_goService.inc:77
-#, fuzzy
-msgid "Empty service"
-msgstr "打印服务"
-
-#: admin/systems/services/class_goService.inc:55
-msgid "Save"
-msgstr "保存"
-
-#: admin/systems/services/class_goService.inc:56
-#: admin/systems/services/ServiceAddDialog.tpl:30
-#: admin/systems/class_baseSelectDialog.inc:62 admin/systems/password.tpl:30
-#: admin/systems/class_systemManagement.inc:1000 admin/systems/remove.tpl:17
-#: admin/systems/remove.tpl:21
-msgid "Cancel"
-msgstr "取消"
-
+#: admin/systems/class_termDNS.inc:429 admin/systems/class_termDNS.inc:683
+#: admin/systems/class_termDNS.inc:702 admin/systems/class_termDNS.inc:723
+#: admin/systems/class_termDNS.inc:728 admin/systems/class_termDNS.inc:746
+#: admin/systems/class_termDNS.inc:818 admin/systems/class_servGeneric.inc:248
+#: admin/systems/class_servGeneric.inc:390
 #: admin/systems/services/class_goService.inc:119
 #: admin/systems/services/class_goService.inc:147
 #: admin/systems/services/class_goService.inc:180
-#: admin/systems/class_servGeneric.inc:234
-#: admin/systems/class_servGeneric.inc:370
 #: admin/systems/class_componentGeneric.inc:155
 #: admin/systems/class_componentGeneric.inc:292
-#: admin/systems/class_termDNS.inc:429 admin/systems/class_termDNS.inc:687
-#: admin/systems/class_termDNS.inc:706 admin/systems/class_termDNS.inc:727
-#: admin/systems/class_termDNS.inc:732 admin/systems/class_termDNS.inc:750
-#: admin/systems/class_termDNS.inc:822
 msgid "LDAP error"
 msgstr ""
 
-#: admin/systems/services/class_goService.inc:234
-msgid "Configuration error"
+#: admin/systems/class_termDNS.inc:516 admin/systems/class_termDNS.inc:528
+#: admin/systems/class_termDNS.inc:532 admin/systems/class_termDNS.inc:539
+#: admin/systems/class_termDNS.inc:894
+#: admin/systems/class_componentGeneric.inc:214
+#: admin/systems/class_componentGeneric.inc:217
+#, fuzzy
+msgid "IP address"
+msgstr "IP 地址"
+
+#: admin/systems/class_termDNS.inc:521 admin/systems/class_termDNS.inc:542
+#: admin/systems/class_termDNS.inc:895
+msgid "MAC address"
+msgstr "MAC 地址"
+
+#: admin/systems/class_termDNS.inc:556
+#, fuzzy, php-format
+msgid "The IP address '%s' is not part of the selected reverse zone '%s'!"
+msgstr "提供的 IP 地址 '%s' 和所选的反向解析域条目 '%s' 不匹配。"
+
+#: admin/systems/class_termDNS.inc:568
+#, php-format
+msgid "Record type '%s' is duplicated!"
 msgstr ""
 
-#: admin/systems/services/ServiceAddDialog.tpl:3
-msgid "Adding a new service to the current server"
+#: admin/systems/class_termDNS.inc:576
+#, php-format
+msgid "Uniq record type '%s' is duplicated!"
 msgstr ""
 
-#: admin/systems/services/ServiceAddDialog.tpl:7
+#: admin/systems/class_termDNS.inc:588
+#, fuzzy, php-format
 msgid ""
-"This dialog allows you to add new services to the currenty edited server "
-"object. The box below shows all available but not already used services."
+"The IP address '%s' will be added as 'A Record', this will be done "
+"automatically, please remove the record."
+msgstr "设备 IP '%s' 将自动作为'A'记录添加，请删除这条记录。"
+
+#: admin/systems/class_termDNS.inc:596
+#, fuzzy, php-format
+msgid "Only lowercase records are allowed, please check your '%ss'."
+msgstr "只允许小写字母，请检查您的 '%ss'。"
+
+#: admin/systems/class_termDNS.inc:835 admin/systems/class_termDNS.inc:855
+msgid "Add"
+msgstr "添加"
+
+#: admin/systems/class_termDNS.inc:849
+msgid "Delete"
+msgstr "删除"
+
+#: admin/systems/class_termDNS.inc:885
+msgid "DNS"
 msgstr ""
 
-#: admin/systems/services/ServiceAddDialog.tpl:13
+#: admin/systems/class_termDNS.inc:886
 #, fuzzy
-msgid "Service to add"
-msgstr "选择要添加的打印机"
+msgid "DNS settings"
+msgstr "Samba 设置"
 
-#: admin/systems/services/ServiceAddDialog.tpl:20
+#: admin/systems/class_termDNS.inc:903
 #, fuzzy
-msgid "All available services are already in use."
-msgstr "这个设备名已经被使用。"
+msgid "DNS records"
+msgstr "Dns 记录"
 
-#: admin/systems/services/ServiceAddDialog.tpl:28
-msgid "Continue"
-msgstr "继续"
+#: admin/systems/class_termDNS.inc:904
+msgid "Zone name"
+msgstr "域名称"
+
+#: admin/systems/class_termDNS.inc:905 admin/systems/network.tpl:117
+msgid "TTL"
+msgstr "TTL"
+
+#: admin/systems/class_divListSystem.inc:62
+#: admin/systems/class_divListSystem.inc:63
+msgid "List of systems"
+msgstr "系统列表"
+
+#: admin/systems/class_divListSystem.inc:87
+#: admin/systems/class_systemManagement.inc:26
+msgid "Systems"
+msgstr "系统设置"
+
+#: admin/systems/class_divListSystem.inc:87
+#, fuzzy
+msgid "Department"
+msgstr "系统 / 部门"
+
+#: admin/systems/class_divListSystem.inc:88
+#: admin/systems/class_divListSystem.inc:207
+#: admin/systems/class_divListSystemService.inc:51
+msgid "Actions"
+msgstr "动作"
+
+#: admin/systems/class_divListSystem.inc:92
+#: admin/systems/class_divListSystem.inc:93
+#: admin/systems/class_divListSystem.inc:468
+#, fuzzy
+msgid "servers"
+msgstr "服务器"
+
+#: admin/systems/class_divListSystem.inc:93
+#: admin/systems/class_divListSystem.inc:96
+#: admin/systems/class_divListSystem.inc:99
+#: admin/systems/class_divListSystem.inc:102
+#: admin/systems/class_divListSystem.inc:105
+#: admin/systems/class_divListSystem.inc:108
+#: admin/systems/class_divListSystem.inc:111
+#, fuzzy, php-format
+msgid "Show %s"
+msgstr "显示电话"
+
+#: admin/systems/class_divListSystem.inc:95
+#, fuzzy
+msgid "Linux terminals"
+msgstr "显示终端"
+
+#: admin/systems/class_divListSystem.inc:96
+#: admin/systems/class_divListSystem.inc:470
+#, fuzzy
+msgid "terminals"
+msgstr "终端"
+
+#: admin/systems/class_divListSystem.inc:98
+#, fuzzy
+msgid "Linux workstations"
+msgstr "显示工作站"
+
+#: admin/systems/class_divListSystem.inc:99
+#: admin/systems/class_divListSystem.inc:469
+#, fuzzy
+msgid "workstations"
+msgstr "工作站"
+
+#: admin/systems/class_divListSystem.inc:101
+#, fuzzy
+msgid "MicroSoft Windows based workstations"
+msgstr "选择显示基于 Microsoft Windows 工作站"
+
+#: admin/systems/class_divListSystem.inc:102
+#, fuzzy
+msgid "windows based workstations"
+msgstr "显示 Windows 工作站"
+
+#: admin/systems/class_divListSystem.inc:104
+#: admin/systems/class_divListSystem.inc:105
+#, fuzzy
+msgid "network printers"
+msgstr "显示网络打印机"
+
+#: admin/systems/class_divListSystem.inc:107
+#, fuzzy
+msgid "VoIP phones"
+msgstr "显示电话"
+
+#: admin/systems/class_divListSystem.inc:108
+#: admin/systems/class_divListSystem.inc:471
+#, fuzzy
+msgid "phones"
+msgstr "电话"
+
+#: admin/systems/class_divListSystem.inc:110
+#: admin/systems/class_divListSystem.inc:111
+#, fuzzy
+msgid "network devices"
+msgstr "网络设备"
+
+#: admin/systems/class_divListSystem.inc:115
+msgid "Select to search within subtrees"
+msgstr "选择在子树中查询"
+
+#: admin/systems/class_divListSystem.inc:115
+#, fuzzy
+msgid "Search in subtrees"
+msgstr "在子树中查找"
+
+#: admin/systems/class_divListSystem.inc:118
+msgid "Display systems matching"
+msgstr "显示匹配的系统"
+
+#: admin/systems/class_divListSystem.inc:119
+msgid "Display systems of user"
+msgstr "显示用户系统"
+
+#: admin/systems/class_divListSystem.inc:202
+#: admin/systems/class_servGeneric.inc:473
+#: admin/systems/class_baseSelectDialog.inc:65 admin/systems/server.tpl:22
+#: admin/systems/component.tpl:17 admin/systems/class_componentGeneric.inc:310
+msgid "Base"
+msgstr "位置"
+
+#: admin/systems/class_divListSystem.inc:204
+msgid "Submit department"
+msgstr "提交部门"
+
+#: admin/systems/class_divListSystem.inc:204
+#: admin/systems/class_baseSelectDialog.inc:52
+msgid "Submit"
+msgstr "提交"
+
+#: admin/systems/class_divListSystem.inc:209
+msgid "Create"
+msgstr "创建"
+
+#: admin/systems/class_divListSystem.inc:212
+#: admin/systems/class_systemManagement.inc:1424
+msgid "Terminal"
+msgstr "终端"
+
+#: admin/systems/class_divListSystem.inc:216
+#: admin/systems/class_systemManagement.inc:1425
+msgid "Workstation"
+msgstr "工作站"
+
+#: admin/systems/class_divListSystem.inc:220
+#: admin/systems/class_servGeneric.inc:467
+#: admin/systems/class_systemManagement.inc:1430
+msgid "Server"
+msgstr "服务器"
+
+#: admin/systems/class_divListSystem.inc:224
+#: admin/systems/class_systemManagement.inc:1429
+msgid "Phone"
+msgstr "电话"
+
+#: admin/systems/class_divListSystem.inc:228
+#: admin/systems/class_systemManagement.inc:1438
+msgid "Printer"
+msgstr "打印机"
+
+#: admin/systems/class_divListSystem.inc:232
+#, fuzzy
+msgid "Component"
+msgstr "新组件"
+
+#: admin/systems/class_divListSystem.inc:238
+msgid "Trigger action"
+msgstr ""
+
+#: admin/systems/class_divListSystem.inc:244
+#, fuzzy
+msgid "Schedule action"
+msgstr "计划更新"
+
+#: admin/systems/class_divListSystem.inc:250
+msgid "Remove"
+msgstr "删除"
+
+#: admin/systems/class_divListSystem.inc:256
+#, fuzzy
+msgid "Copy"
+msgstr "复制"
+
+#: admin/systems/class_divListSystem.inc:258
+#, fuzzy
+msgid "Cut"
+msgstr "剪切"
+
+#: admin/systems/class_divListSystem.inc:267
+#: admin/systems/class_divListSystem.inc:270
+msgid "Paste"
+msgstr "粘贴"
+
+#: admin/systems/class_divListSystem.inc:292
+msgid "Cups Server"
+msgstr "Cups 服务器"
+
+#: admin/systems/class_divListSystem.inc:293
+msgid "Log Db"
+msgstr "Log DB"
+
+#: admin/systems/class_divListSystem.inc:294
+msgid "Syslog Server"
+msgstr "Syslog 服务器"
+
+#: admin/systems/class_divListSystem.inc:295
+msgid "Mail Server"
+msgstr "邮件服务器"
+
+#: admin/systems/class_divListSystem.inc:296
+msgid "Imap Server"
+msgstr "Imap 服务器"
+
+#: admin/systems/class_divListSystem.inc:297
+msgid "Nfs Server"
+msgstr "Nfs 服务器"
+
+#: admin/systems/class_divListSystem.inc:298
+msgid "Kerberos Server"
+msgstr "Kerberos 服务器"
+
+#: admin/systems/class_divListSystem.inc:299
+msgid "Asterisk Server"
+msgstr "Asterisk 服务器"
+
+#: admin/systems/class_divListSystem.inc:300
+msgid "Fax Server"
+msgstr "传真服务器"
+
+#: admin/systems/class_divListSystem.inc:301
+msgid "Ldap Server"
+msgstr "LDAP 服务器"
+
+#: admin/systems/class_divListSystem.inc:358
+msgid "cut"
+msgstr "剪切"
+
+#: admin/systems/class_divListSystem.inc:358
+msgid "Cut this entry"
+msgstr "剪切条目"
+
+#: admin/systems/class_divListSystem.inc:360
+msgid "copy"
+msgstr "复制"
+
+#: admin/systems/class_divListSystem.inc:360
+msgid "Copy this entry"
+msgstr "拷贝条目"
+
+#: admin/systems/class_divListSystem.inc:363
+msgid "edit"
+msgstr "编辑"
+
+#: admin/systems/class_divListSystem.inc:363
+msgid "Edit system"
+msgstr "编辑系统"
+
+#: admin/systems/class_divListSystem.inc:373
+msgid "delete"
+msgstr "删除"
+
+#: admin/systems/class_divListSystem.inc:373
+msgid "Delete system"
+msgstr "删除系统"
+
+#: admin/systems/class_divListSystem.inc:416
+msgid "Password"
+msgstr "口令"
+
+#: admin/systems/class_divListSystem.inc:416
+#, fuzzy
+msgid "Set root password"
+msgstr "设置 root 口令"
+
+#: admin/systems/class_divListSystem.inc:423
+msgid "Create CD"
+msgstr "创建 CD"
+
+#: admin/systems/class_divListSystem.inc:424
+msgid "Create FAI CD"
+msgstr "创建 FAI CD"
+
+#: admin/systems/class_divListSystem.inc:468
+#: admin/systems/class_divListSystem.inc:469
+#: admin/systems/class_divListSystem.inc:470
+#: admin/systems/class_divListSystem.inc:471
+#: admin/systems/class_divListSystem.inc:472
+#: admin/systems/class_divListSystem.inc:473
+#: admin/systems/class_divListSystem.inc:474
+#: admin/systems/class_divListSystem.inc:475
+#: admin/systems/class_divListSystem.inc:476
+#, fuzzy, php-format
+msgid "Number of listed %s"
+msgstr "部门名称"
+
+#: admin/systems/class_divListSystem.inc:472
+#, fuzzy
+msgid "printers"
+msgstr "打印机"
+
+#: admin/systems/class_divListSystem.inc:473
+#, fuzzy
+msgid "network components"
+msgstr "其他网络组件"
+
+#: admin/systems/class_divListSystem.inc:474
+#, fuzzy
+msgid "new devices"
+msgstr "新设备"
+
+#: admin/systems/class_divListSystem.inc:475
+#, fuzzy
+msgid "windows workstations"
+msgstr "显示工作站"
+
+#: admin/systems/class_divListSystem.inc:476
+#, fuzzy
+msgid "departments"
+msgstr "提交部门"
+
+#: admin/systems/class_servGeneric.inc:66
+msgid "Activated"
+msgstr "活动"
+
+#: admin/systems/class_servGeneric.inc:67
+msgid "Locked"
+msgstr "锁定"
+
+#: admin/systems/class_servGeneric.inc:126
+#, fuzzy
+msgid "server"
+msgstr "服务器"
+
+#: admin/systems/class_servGeneric.inc:143
+#: admin/systems/class_servGeneric.inc:410
+#: admin/systems/class_systemManagement.inc:548
+#: admin/systems/class_systemManagement.inc:897
+msgid "Daemon"
+msgstr ""
+
+#: admin/systems/class_servGeneric.inc:143
+#: admin/systems/class_servGeneric.inc:410
+#: admin/systems/class_systemManagement.inc:548
+#: admin/systems/class_systemManagement.inc:897
+#, php-format
+msgid "Something went wrong while talking to the daemon: %s."
+msgstr ""
+
+#: admin/systems/class_servGeneric.inc:148
+msgid "Event error"
+msgstr ""
+
+#: admin/systems/class_servGeneric.inc:149
+#, php-format
+msgid "Event '%s' is not available!"
+msgstr ""
+
+#: admin/systems/class_servGeneric.inc:204
+msgid "Switch off"
+msgstr "关闭"
+
+#: admin/systems/class_servGeneric.inc:204
+msgid "Reboot"
+msgstr "重启"
+
+#: admin/systems/class_servGeneric.inc:205
+#: admin/systems/class_servGeneric.inc:214
+#, fuzzy
+msgid "System update"
+msgstr "系统 / 部门"
+
+#: admin/systems/class_servGeneric.inc:206
+#: admin/systems/class_servGeneric.inc:213
+msgid "Reinstall"
+msgstr "重新安装"
+
+#: admin/systems/class_servGeneric.inc:207
+msgid "Rescan hardware"
+msgstr "重新扫描硬件"
+
+#: admin/systems/class_servGeneric.inc:208
+#: admin/systems/class_servGeneric.inc:215
+msgid "Memory test"
+msgstr "内存测试"
+
+#: admin/systems/class_servGeneric.inc:209
+#: admin/systems/class_servGeneric.inc:216
+msgid "Force localboot"
+msgstr "强制本地启动"
+
+#: admin/systems/class_servGeneric.inc:210
+#: admin/systems/class_servGeneric.inc:217
+msgid "System analysis"
+msgstr "系统分析"
+
+#: admin/systems/class_servGeneric.inc:212
+msgid "Wake up"
+msgstr "唤醒"
+
+#: admin/systems/class_servGeneric.inc:301
+#: admin/systems/class_servGeneric.inc:306
+#: admin/systems/class_servGeneric.inc:317 admin/systems/server.tpl:6
+#: admin/systems/paste_generic.tpl:4
+msgid "Server name"
+msgstr "服务器名称"
+
+#: admin/systems/class_servGeneric.inc:328
+msgid ""
+"This host is currently installing, if you really want to save it, save again."
+msgstr ""
+
+#: admin/systems/class_servGeneric.inc:461
+#: admin/systems/class_componentGeneric.inc:300
+msgid "Generic"
+msgstr "通用配置"
+
+#: admin/systems/class_servGeneric.inc:462
+#, fuzzy
+msgid "Server generic"
+msgstr "服务器名称"
+
+#: admin/systems/class_servGeneric.inc:470
+#: admin/systems/class_divListSystemService.inc:50
+#: admin/systems/class_componentGeneric.inc:309
+msgid "Name"
+msgstr "名称"
+
+#: admin/systems/class_servGeneric.inc:471 admin/systems/server.tpl:14
+#: admin/systems/component.tpl:35 admin/systems/class_componentGeneric.inc:311
+msgid "Description"
+msgstr "描述"
+
+#: admin/systems/class_servGeneric.inc:472
+#, fuzzy
+msgid "Goto mode"
+msgstr "到目录"
+
+#: admin/systems/class_servGeneric.inc:474
+#, fuzzy
+msgid "Action flag"
+msgstr "行动"
 
 #: admin/systems/class_baseSelectDialog.inc:44
 msgid "Choose a base"
@@ -181,11 +575,6 @@ msgstr ""
 msgid "Reload list"
 msgstr "重新加载列表"
 
-#: admin/systems/class_baseSelectDialog.inc:52
-#: admin/systems/class_divListSystem.inc:191
-msgid "Submit"
-msgstr "提交"
-
 #: admin/systems/class_baseSelectDialog.inc:55
 msgid ""
 "Step in the prefered tree and click save to use the current subtree as base. "
@@ -197,6 +586,14 @@ msgstr ""
 msgid "Use"
 msgstr "使用"
 
+#: admin/systems/class_baseSelectDialog.inc:62
+msgid "Cancel"
+msgstr "取消"
+
+#: admin/systems/class_baseSelectDialog.inc:66 admin/systems/server.tpl:62
+msgid "Action"
+msgstr "行动"
+
 #: admin/systems/class_baseSelectDialog.inc:72
 msgid "Filter entries with this syntax"
 msgstr "用这个语法过滤条目"
@@ -206,604 +603,83 @@ msgstr "用这个语法过滤条目"
 msgid "Select this base"
 msgstr "选择这个 base"
 
+#: admin/systems/server.tpl:26 admin/systems/component.tpl:20
+msgid "Choose subtree to place group in"
+msgstr "选择来放置组的子树"
+
+#: admin/systems/server.tpl:32 admin/systems/component.tpl:25
+msgid "Select a base"
+msgstr "选择一个位置"
+
+#: admin/systems/server.tpl:41
+msgid "Mode"
+msgstr "模式"
+
+#: admin/systems/server.tpl:44
+msgid "Select terminal mode"
+msgstr "选择终端类型"
+
+#: admin/systems/server.tpl:68
+msgid ""
+"System installation in progress, the FAI state cannot be changed right now."
+msgstr ""
+
+#: admin/systems/server.tpl:71
+msgid "Select action to execute for this server"
+msgstr "选择为这台服务器要执行的动作"
+
+#: admin/systems/server.tpl:79
+msgid "Execute"
+msgstr "执行"
+
 #: admin/systems/component.tpl:6
 msgid "Device name"
 msgstr "设备名称"
 
-#: admin/systems/password.tpl:2
-msgid ""
-"To change the terminal root password use the fields below. The changes take "
-"effect during the next reboot. Please memorize the new password, because you "
-"wouldn't be able to log in."
-msgstr ""
-"用下面的字段来修改终端 root 口令。这项修改将在下次重启之后起作用。请记住新口"
-"令，否则您无法登录。"
+#: admin/systems/class_serverService.inc:27
+msgid "Stop"
+msgstr "停止"
 
-#: admin/systems/password.tpl:5
-msgid "Leave fields blank for password inheritance from default entries."
-msgstr "如果要口令从缺省条目继承，此项空白"
-
-#: admin/systems/password.tpl:9
-msgid "Changing the password impinges on authentification only."
-msgstr "修改口令仅影响到鉴权。"
-
-#: admin/systems/password.tpl:14
-msgid "New password"
-msgstr "新口令"
-
-#: admin/systems/password.tpl:19
-msgid "Repeat new password"
-msgstr "重复新口令"
-
-#: admin/systems/password.tpl:28
-msgid "Set password"
-msgstr "设置口令"
-
-#: admin/systems/class_systemManagement.inc:26
-msgid "Systems"
-msgstr "系统设置"
-
-#: admin/systems/class_systemManagement.inc:27
+#: admin/systems/class_serverService.inc:28
 #, fuzzy
-msgid "This does something"
-msgstr "******"
+msgid "Start"
+msgstr "启动"
 
-#: admin/systems/class_systemManagement.inc:210
-msgid "Back"
-msgstr "返回"
-
-#: admin/systems/class_systemManagement.inc:257
-msgid "Creating the image failed. Please see the report below."
-msgstr "创建图片错误。请检查下面的报告。"
-
-#: admin/systems/class_systemManagement.inc:266
-#, php-format
-msgid "Command '%s', specified for ISO creation doesn't seem to exist."
-msgstr "命令 '%s'，用于创建 ISO 好像并不存在。"
-
-#: admin/systems/class_systemManagement.inc:330
+#: admin/systems/class_serverService.inc:29
 #, fuzzy
-msgid "You are not allowed to create a new object of this type."
-msgstr "您无权删除这个对象组！"
+msgid "Restart"
+msgstr "重试"
 
-#: admin/systems/class_systemManagement.inc:383
-msgid "You can't edit this object type yet!"
-msgstr "您尚无法编辑这个对象类型！"
-
-#: admin/systems/class_systemManagement.inc:411
-#: admin/systems/class_systemManagement.inc:477
-#, fuzzy
-msgid "You are not allowed to change the password for this object."
-msgstr "现在您无权修改您的口令"
-
-#: admin/systems/class_systemManagement.inc:423
-msgid "Passwords entered as new and repeated do not match!"
-msgstr "输入的新口令和重复口令不匹配！"
-
-#: admin/systems/class_systemManagement.inc:480
-#, fuzzy
-msgid "Can't detect object to change password."
-msgstr "无法检测对象名称。"
-
-#: admin/systems/class_systemManagement.inc:548
-#: admin/systems/class_systemManagement.inc:909
-#: admin/systems/class_servGeneric.inc:129
-#: admin/systems/class_servGeneric.inc:390
-msgid "Daemon"
+#: admin/systems/class_serverService.inc:332
+msgid "Can't set status while this server is not saved."
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:548
-#: admin/systems/class_systemManagement.inc:909
-#: admin/systems/class_servGeneric.inc:129
-#: admin/systems/class_servGeneric.inc:390
-#, php-format
-msgid "Something went wrong while talking to the daemon: %s."
-msgstr ""
-
-#: admin/systems/class_systemManagement.inc:587
+#: admin/systems/class_serverService.inc:344
 #, fuzzy, php-format
-msgid "You're about to delete the following entry %s"
-msgstr "您将要删除条目 %s。"
+msgid "The specified method '%s' can't executed for services."
+msgstr "给出的 ppd 文件 '%s' 无法打开读取。"
 
-#: admin/systems/class_systemManagement.inc:589
-#, fuzzy, php-format
-msgid "You're about to delete the following entries %s"
-msgstr "您将要删除条目 %s。"
+#: admin/systems/remove.tpl:2
+msgid "Warning"
+msgstr "警告"
 
-#: admin/systems/class_systemManagement.inc:657
-#: admin/systems/class_systemManagement.inc:735
-#: admin/systems/class_systemManagement.inc:800
-msgid "You are not allowed to delete this component!"
-msgstr "您无权删除这个组件！"
-
-#: admin/systems/class_systemManagement.inc:728
-#, php-format
-msgid "You're about to delete all information about the component at '%s'."
-msgstr "您将要删除关于组件 '%s' 的所有信息。"
-
-#: admin/systems/class_systemManagement.inc:839
-#, fuzzy, php-format
+#: admin/systems/remove.tpl:6
+#, fuzzy
 msgid ""
-"Can't set gotoMode to status 'active', the current object couldn't be "
-"identified."
-msgstr "无法设置状态 gotoMode 为 '活动', 当前对象无法识别。"
+"This includes all system and setup informations. Please double check if your "
+"really want to do this since there is no way for GOsa to get your data back."
+msgstr ""
+"这包含所有系统和设置信息。请再次检查您是否要这么做，因为 GOsa 没有办法将您的"
+"数据找回。"
 
-#: admin/systems/class_systemManagement.inc:994
-msgid "Ok"
-msgstr "好"
-
-#: admin/systems/class_systemManagement.inc:997
-msgid "Apply"
-msgstr "应用"
-
-#: admin/systems/class_systemManagement.inc:1177
-msgid "New terminal"
-msgstr "新终端"
-
-#: admin/systems/class_systemManagement.inc:1179
-msgid "New workstation"
-msgstr "新工作站"
-
-#: admin/systems/class_systemManagement.inc:1181
-#, fuzzy
-msgid "Unknown device"
-msgstr "未知"
-
-#: admin/systems/class_systemManagement.inc:1183
-msgid "New Device"
-msgstr "新设备"
-
-#: admin/systems/class_systemManagement.inc:1201
-msgid "Terminal template for"
-msgstr "终端模板"
-
-#: admin/systems/class_systemManagement.inc:1217
-msgid "Workstation template for"
-msgstr "工作站模板"
-
-#: admin/systems/class_systemManagement.inc:1434
-msgid "New System from incoming"
-msgstr "新识别的系统"
-
-#: admin/systems/class_systemManagement.inc:1435
-msgid "Template"
-msgstr "模板"
-
-#: admin/systems/class_systemManagement.inc:1436
-#: admin/systems/class_divListSystem.inc:199
-msgid "Terminal"
-msgstr "终端"
-
-#: admin/systems/class_systemManagement.inc:1437
-#: admin/systems/class_divListSystem.inc:203
-msgid "Workstation"
-msgstr "工作站"
-
-#: admin/systems/class_systemManagement.inc:1438
-msgid "Workstation is installing"
-msgstr "工作站正在安装"
-
-#: admin/systems/class_systemManagement.inc:1439
-msgid "Workstation is waiting for action"
-msgstr "等待的工作站"
-
-#: admin/systems/class_systemManagement.inc:1440
-msgid "Workstation installation failed"
-msgstr "工作站安装失败"
-
-#: admin/systems/class_systemManagement.inc:1441
-#: admin/systems/class_divListSystem.inc:211
-msgid "Phone"
-msgstr "电话"
-
-#: admin/systems/class_systemManagement.inc:1442
-#: admin/systems/class_divListSystem.inc:207
-#: admin/systems/class_servGeneric.inc:447
-msgid "Server"
-msgstr "服务器"
-
-#: admin/systems/class_systemManagement.inc:1443
-msgid "Server is installing"
-msgstr "服务器正在安装"
-
-#: admin/systems/class_systemManagement.inc:1444
-msgid "Server is waiting for action"
-msgstr "等待的服务器"
-
-#: admin/systems/class_systemManagement.inc:1445
-msgid "Server installation failed"
-msgstr "服务器安装失败"
-
-#: admin/systems/class_systemManagement.inc:1446
-msgid "Winstation"
-msgstr "Windows 工作站"
-
-#: admin/systems/class_systemManagement.inc:1447
-msgid "Network Device"
-msgstr "网络设备"
-
-#: admin/systems/class_systemManagement.inc:1448
-msgid "New Terminal"
-msgstr "新终端"
-
-#: admin/systems/class_systemManagement.inc:1449
-msgid "New Workstation"
-msgstr "新工作站"
-
-#: admin/systems/class_systemManagement.inc:1450
-#: admin/systems/class_divListSystem.inc:215
-msgid "Printer"
-msgstr "打印机"
-
-#: admin/systems/class_systemManagement.inc:1505
-#: admin/systems/class_systemManagement.inc:1506
-#, fuzzy
-msgid "Incoming objects"
-msgstr "成员对象"
-
-#: admin/systems/class_systemManagement.inc:1511
-#, fuzzy
-msgid "Incoming"
-msgstr "图标"
-
-#: admin/systems/class_divListSystem.inc:62
-#: admin/systems/class_divListSystem.inc:63
-msgid "List of systems"
-msgstr "系统列表"
-
-#: admin/systems/class_divListSystem.inc:67
+#: admin/systems/remove.tpl:10
 msgid ""
-"This menu allows you to add, remove and change the properties of specific "
-"systems. You can only add systems which have already been started once."
+"Best thing to do before performing this action would be to save the current "
+"contents of your LDAP tree in a file. So - if you've done so - press "
+"'Delete' to continue or 'Cancel' to abort."
 msgstr ""
-"这个菜单允许您添加，删除和修改所选系统的属性。您只能添加已经启动过一次的系"
-"统。"
-
-#: admin/systems/class_divListSystem.inc:88
-msgid "System / Department"
-msgstr "系统 / 部门"
-
-#: admin/systems/class_divListSystem.inc:89
-#: admin/systems/class_divListSystem.inc:194
-#: admin/systems/class_divListSystemService.inc:51
-msgid "Actions"
-msgstr "动作"
-
-#: admin/systems/class_divListSystem.inc:92
-msgid "Select to see servers"
-msgstr "选择显示服务器"
-
-#: admin/systems/class_divListSystem.inc:92
-msgid "Show servers"
-msgstr "显示服务器"
-
-#: admin/systems/class_divListSystem.inc:93
-msgid "Select to see Linux terminals"
-msgstr "选择显示 Linux 终端"
-
-#: admin/systems/class_divListSystem.inc:93
-msgid "Show terminals"
-msgstr "显示终端"
-
-#: admin/systems/class_divListSystem.inc:94
-msgid "Select to see Linux workstations"
-msgstr "选择显示 Linux 工作站"
-
-#: admin/systems/class_divListSystem.inc:94
-msgid "Show workstations"
-msgstr "显示工作站"
-
-#: admin/systems/class_divListSystem.inc:95
-msgid "Select to see MicroSoft Windows based workstations"
-msgstr "选择显示基于 Microsoft Windows 工作站"
-
-#: admin/systems/class_divListSystem.inc:95
-msgid "Show windows based workstations"
-msgstr "显示 Windows 工作站"
-
-#: admin/systems/class_divListSystem.inc:96
-msgid "Select to see network printers"
-msgstr "选择显示网络打印机"
-
-#: admin/systems/class_divListSystem.inc:96
-msgid "Show network printers"
-msgstr "显示网络打印机"
-
-#: admin/systems/class_divListSystem.inc:97
-msgid "Select to see VOIP phones"
-msgstr "选择显示 VOIP 电话"
-
-#: admin/systems/class_divListSystem.inc:97
-msgid "Show phones"
-msgstr "显示电话"
-
-#: admin/systems/class_divListSystem.inc:98
-msgid "Select to see network devices"
-msgstr "选择显示网络设备"
-
-#: admin/systems/class_divListSystem.inc:98
-msgid "Show network devices"
-msgstr "显示网络设备"
-
-#: admin/systems/class_divListSystem.inc:102
-msgid "Select to search within subtrees"
-msgstr "选择在子树中查询"
-
-#: admin/systems/class_divListSystem.inc:102
-#, fuzzy
-msgid "Search in subtrees"
-msgstr "在子树中查找"
-
-#: admin/systems/class_divListSystem.inc:105
-msgid "Display systems matching"
-msgstr "显示匹配的系统"
-
-#: admin/systems/class_divListSystem.inc:106
-msgid "Display systems of user"
-msgstr "显示用户系统"
-
-#: admin/systems/class_divListSystem.inc:191
-msgid "Submit department"
-msgstr "提交部门"
-
-#: admin/systems/class_divListSystem.inc:196
-msgid "Create"
-msgstr "创建"
-
-#: admin/systems/class_divListSystem.inc:219
-#, fuzzy
-msgid "Component"
-msgstr "新组件"
-
-#: admin/systems/class_divListSystem.inc:225
-msgid "Trigger action"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:231
-#, fuzzy
-msgid "Schedule action"
-msgstr "计划更新"
-
-#: admin/systems/class_divListSystem.inc:237
-msgid "Remove"
-msgstr "删除"
-
-#: admin/systems/class_divListSystem.inc:243
-#, fuzzy
-msgid "Copy"
-msgstr "复制"
-
-#: admin/systems/class_divListSystem.inc:245
-#, fuzzy
-msgid "Cut"
-msgstr "剪切"
-
-#: admin/systems/class_divListSystem.inc:254
-#: admin/systems/class_divListSystem.inc:257
-msgid "Paste"
-msgstr "粘贴"
-
-#: admin/systems/class_divListSystem.inc:279
-msgid "Cups Server"
-msgstr "Cups 服务器"
-
-#: admin/systems/class_divListSystem.inc:280
-msgid "Log Db"
-msgstr "Log DB"
-
-#: admin/systems/class_divListSystem.inc:281
-msgid "Syslog Server"
-msgstr "Syslog 服务器"
-
-#: admin/systems/class_divListSystem.inc:282
-msgid "Mail Server"
-msgstr "邮件服务器"
-
-#: admin/systems/class_divListSystem.inc:283
-msgid "Imap Server"
-msgstr "Imap 服务器"
-
-#: admin/systems/class_divListSystem.inc:284
-msgid "Nfs Server"
-msgstr "Nfs 服务器"
-
-#: admin/systems/class_divListSystem.inc:285
-msgid "Kerberos Server"
-msgstr "Kerberos 服务器"
-
-#: admin/systems/class_divListSystem.inc:286
-msgid "Asterisk Server"
-msgstr "Asterisk 服务器"
-
-#: admin/systems/class_divListSystem.inc:287
-msgid "Fax Server"
-msgstr "传真服务器"
-
-#: admin/systems/class_divListSystem.inc:288
-msgid "Ldap Server"
-msgstr "LDAP 服务器"
-
-#: admin/systems/class_divListSystem.inc:345
-msgid "cut"
-msgstr "剪切"
-
-#: admin/systems/class_divListSystem.inc:345
-msgid "Cut this entry"
-msgstr "剪切条目"
-
-#: admin/systems/class_divListSystem.inc:347
-msgid "copy"
-msgstr "复制"
-
-#: admin/systems/class_divListSystem.inc:347
-msgid "Copy this entry"
-msgstr "拷贝条目"
-
-#: admin/systems/class_divListSystem.inc:350
-msgid "edit"
-msgstr "编辑"
-
-#: admin/systems/class_divListSystem.inc:350
-msgid "Edit system"
-msgstr "编辑系统"
-
-#: admin/systems/class_divListSystem.inc:360
-msgid "delete"
-msgstr "删除"
-
-#: admin/systems/class_divListSystem.inc:360
-msgid "Delete system"
-msgstr "删除系统"
-
-#: admin/systems/class_divListSystem.inc:403
-msgid "Password"
-msgstr "口令"
-
-#: admin/systems/class_divListSystem.inc:403
-#, fuzzy
-msgid "Set root password"
-msgstr "设置 root 口令"
-
-#: admin/systems/class_divListSystem.inc:410
-msgid "Create CD"
-msgstr "创建 CD"
-
-#: admin/systems/class_divListSystem.inc:411
-msgid "Create FAI CD"
-msgstr "创建 FAI CD"
-
-#: admin/systems/class_divListSystem.inc:455
-#, fuzzy
-msgid "Number of listed servers"
-msgstr "文件服务器"
-
-#: admin/systems/class_divListSystem.inc:456
-#, fuzzy
-msgid "Number of listed workstations"
-msgstr "选择查看工作站"
-
-#: admin/systems/class_divListSystem.inc:457
-#, fuzzy
-msgid "Number of listed terminals"
-msgstr "选择查看终端"
-
-#: admin/systems/class_divListSystem.inc:458
-#, fuzzy
-msgid "Number of listed phones"
-msgstr "部门名称"
-
-#: admin/systems/class_divListSystem.inc:459
-#, fuzzy
-msgid "Number of listed printers"
-msgstr "部门名称"
-
-#: admin/systems/class_divListSystem.inc:460
-#, fuzzy
-msgid "Number of listed network components"
-msgstr "其他网络组件"
-
-#: admin/systems/class_divListSystem.inc:461
-#, fuzzy
-msgid "Number of listed new devices"
-msgstr "选择显示网络设备"
-
-#: admin/systems/class_divListSystem.inc:462
-#, fuzzy
-msgid "Number of listed windows workstations"
-msgstr "显示 Windows 工作站"
-
-#: admin/systems/class_divListSystem.inc:463
-#, fuzzy
-msgid "Number of listed departments"
-msgstr "部门名称"
-
-#: admin/systems/class_servGeneric.inc:63
-msgid "Activated"
-msgstr "活动"
-
-#: admin/systems/class_servGeneric.inc:64
-msgid "Locked"
-msgstr "锁定"
-
-#: admin/systems/class_servGeneric.inc:110
-msgid "This 'dn' has no server features."
-msgstr "这个 'dn' 没有服务器功能。"
-
-#: admin/systems/class_servGeneric.inc:134
-msgid "Event error"
-msgstr ""
-
-#: admin/systems/class_servGeneric.inc:135
-#, php-format
-msgid "Event '%s' is not available!"
-msgstr ""
-
-#: admin/systems/class_servGeneric.inc:191
-msgid "Switch off"
-msgstr "关闭"
-
-#: admin/systems/class_servGeneric.inc:191
-msgid "Reboot"
-msgstr "重启"
-
-#: admin/systems/class_servGeneric.inc:192
-#: admin/systems/class_servGeneric.inc:201
-#, fuzzy
-msgid "System update"
-msgstr "系统 / 部门"
-
-#: admin/systems/class_servGeneric.inc:193
-#: admin/systems/class_servGeneric.inc:200
-msgid "Reinstall"
-msgstr "重新安装"
-
-#: admin/systems/class_servGeneric.inc:194
-msgid "Rescan hardware"
-msgstr "重新扫描硬件"
-
-#: admin/systems/class_servGeneric.inc:195
-#: admin/systems/class_servGeneric.inc:202
-msgid "Memory test"
-msgstr "内存测试"
-
-#: admin/systems/class_servGeneric.inc:196
-#: admin/systems/class_servGeneric.inc:203
-msgid "Force localboot"
-msgstr "强制本地启动"
-
-#: admin/systems/class_servGeneric.inc:197
-#: admin/systems/class_servGeneric.inc:204
-msgid "System analysis"
-msgstr "系统分析"
-
-#: admin/systems/class_servGeneric.inc:199
-msgid "Wake up"
-msgstr "唤醒"
-
-#: admin/systems/class_servGeneric.inc:441
-#: admin/systems/class_componentGeneric.inc:300
-msgid "Generic"
-msgstr "通用配置"
-
-#: admin/systems/class_servGeneric.inc:442
-#, fuzzy
-msgid "Server generic"
-msgstr "服务器名称"
-
-#: admin/systems/class_servGeneric.inc:450
-#: admin/systems/class_componentGeneric.inc:309
-msgid "Name"
-msgstr "名称"
-
-#: admin/systems/class_servGeneric.inc:452
-#, fuzzy
-msgid "Goto mode"
-msgstr "到目录"
-
-#: admin/systems/class_servGeneric.inc:454
-#, fuzzy
-msgid "Action flag"
-msgstr "行动"
+"最好在执行这个操作之前，保存当前 LDAP 树中的内容到一个文件。所以，如果您已经"
+"这么做了，按“删除”继续或者按“取消”退出。"
 
 #: admin/systems/class_divListSystemService.inc:38
 #: admin/systems/class_divListSystemService.inc:39
@@ -813,17 +689,10 @@ msgstr "安装设备"
 
 #: admin/systems/class_divListSystemService.inc:42
 #, fuzzy
-msgid ""
-"This menu allows you to add, remove and configure the properties of a "
-"specific service."
+msgid "Add, remove and configure the properties of system services here."
 msgstr ""
 "这个菜单允许您添加，删除和修改所选系统的属性。您只能添加已经启动过一次的系"
 "统。"
-
-#: admin/systems/class_divListSystemService.inc:50
-#, fuzzy
-msgid "Service name"
-msgstr "设备名称"
 
 #: admin/systems/class_divListSystemService.inc:62
 #, fuzzy
@@ -902,28 +771,223 @@ msgstr "打印服务"
 msgid "Remove service"
 msgstr "删除 DNS 服务"
 
-#: admin/systems/class_componentGeneric.inc:72
-msgid "This 'dn' has no network features."
-msgstr "这个 'dn' 没有网络功能。"
+#: admin/systems/services/ServiceAddDialog.tpl:3
+msgid "Adding a new service to the current server"
+msgstr ""
 
-#: admin/systems/class_componentGeneric.inc:214
-#: admin/systems/class_componentGeneric.inc:217
-#: admin/systems/class_termDNS.inc:520 admin/systems/class_termDNS.inc:532
-#: admin/systems/class_termDNS.inc:536 admin/systems/class_termDNS.inc:543
-#: admin/systems/class_termDNS.inc:898
+#: admin/systems/services/ServiceAddDialog.tpl:7
+msgid ""
+"This dialog allows you to add new services to the currenty edited server "
+"object. The box below shows all available but not already used services."
+msgstr ""
+
+#: admin/systems/services/ServiceAddDialog.tpl:13
 #, fuzzy
-msgid "IP address"
-msgstr "IP 地址"
+msgid "Service to add"
+msgstr "选择要添加的打印机"
 
-#: admin/systems/class_componentGeneric.inc:301
+#: admin/systems/services/ServiceAddDialog.tpl:20
 #, fuzzy
-msgid "Component generic"
-msgstr "新组件"
+msgid "All available services are already in use."
+msgstr "这个设备名已经被使用。"
 
+#: admin/systems/services/ServiceAddDialog.tpl:28
+msgid "Continue"
+msgstr "继续"
+
+#: admin/systems/services/class_goService.inc:42
+#: admin/systems/services/class_goService.inc:77
+#, fuzzy
+msgid "Empty service"
+msgstr "打印服务"
+
+#: admin/systems/services/class_goService.inc:234
+msgid "Configuration error"
+msgstr ""
+
+#: admin/systems/paste_generic.tpl:14
+#, fuzzy
+msgid "workstation name"
+msgstr "工作站名称"
+
+#: admin/systems/paste_generic.tpl:24
+msgid "Terminal name"
+msgstr "终端名称"
+
+#: admin/systems/paste_generic.tpl:34
+msgid "Printer name"
+msgstr "打印机名称"
+
+#: admin/systems/paste_generic.tpl:44
+msgid "Phone name"
+msgstr "电话名称"
+
+#: admin/systems/paste_generic.tpl:54
+#: admin/systems/class_componentGeneric.inc:204
+#: admin/systems/class_componentGeneric.inc:209
+#: admin/systems/class_componentGeneric.inc:231
+#, fuzzy
+msgid "Component name"
+msgstr "常用名"
+
+#: admin/systems/password.tpl:2
+msgid ""
+"To change the terminal root password use the fields below. The changes take "
+"effect during the next reboot. Please memorize the new password, because you "
+"wouldn't be able to log in."
+msgstr ""
+"用下面的字段来修改终端 root 口令。这项修改将在下次重启之后起作用。请记住新口"
+"令，否则您无法登录。"
+
+#: admin/systems/password.tpl:5
+msgid "Leave fields blank for password inheritance from default entries."
+msgstr "如果要口令从缺省条目继承，此项空白"
+
+#: admin/systems/password.tpl:9
+msgid "Changing the password impinges on authentification only."
+msgstr "修改口令仅影响到鉴权。"
+
+#: admin/systems/password.tpl:14
+msgid "New password"
+msgstr "新口令"
+
+#: admin/systems/password.tpl:19
+msgid "Repeat new password"
+msgstr "重复新口令"
+
+#: admin/systems/password.tpl:28
+msgid "Set password"
+msgstr "设置口令"
+
+#: admin/systems/main.inc:47 admin/systems/main.inc:49
+msgid "System management"
+msgstr "系统管理"
+
+#: admin/systems/class_systemManagement.inc:27
+#, fuzzy
+msgid "This does something"
+msgstr "******"
+
+#: admin/systems/class_systemManagement.inc:210
+msgid "Back"
+msgstr "返回"
+
+#: admin/systems/class_systemManagement.inc:257
+msgid "Creating the image failed. Please see the report below."
+msgstr "创建图片错误。请检查下面的报告。"
+
+#: admin/systems/class_systemManagement.inc:266
+#, php-format
+msgid "Command '%s', specified for ISO creation doesn't seem to exist."
+msgstr "命令 '%s'，用于创建 ISO 好像并不存在。"
+
+#: admin/systems/class_systemManagement.inc:383
+msgid "You can't edit this object type yet!"
+msgstr "您尚无法编辑这个对象类型！"
+
+#: admin/systems/class_systemManagement.inc:411
+#: admin/systems/class_systemManagement.inc:477
+#, fuzzy
+msgid "You are not allowed to change the password for this object."
+msgstr "现在您无权修改您的口令"
+
+#: admin/systems/class_systemManagement.inc:423
+msgid "Passwords entered as new and repeated do not match!"
+msgstr "输入的新口令和重复口令不匹配！"
+
+#: admin/systems/class_systemManagement.inc:480
+#, fuzzy
+msgid "Can't detect object to change password."
+msgstr "无法检测对象名称。"
+
+#: admin/systems/class_systemManagement.inc:827
+#, fuzzy, php-format
+msgid ""
+"Can't set gotoMode to status 'active', the current object couldn't be "
+"identified."
+msgstr "无法设置状态 gotoMode 为 '活动', 当前对象无法识别。"
+
+#: admin/systems/class_systemManagement.inc:1165
+#: admin/systems/class_systemManagement.inc:1436
+msgid "New terminal"
+msgstr "新终端"
+
+#: admin/systems/class_systemManagement.inc:1167
+#: admin/systems/class_systemManagement.inc:1437
+msgid "New workstation"
+msgstr "新工作站"
+
+#: admin/systems/class_systemManagement.inc:1169
+#, fuzzy
+msgid "Unknown device"
+msgstr "未知"
+
+#: admin/systems/class_systemManagement.inc:1171
+msgid "New Device"
+msgstr "新设备"
+
+#: admin/systems/class_systemManagement.inc:1189
+msgid "Terminal template for"
+msgstr "终端模板"
+
+#: admin/systems/class_systemManagement.inc:1205
+msgid "Workstation template for"
+msgstr "工作站模板"
+
+#: admin/systems/class_systemManagement.inc:1422
+#, fuzzy
+msgid "New system from incoming"
+msgstr "新识别的系统"
+
+#: admin/systems/class_systemManagement.inc:1423
+msgid "Template"
+msgstr "模板"
+
+#: admin/systems/class_systemManagement.inc:1426
+msgid "Workstation is installing"
+msgstr "工作站正在安装"
+
+#: admin/systems/class_systemManagement.inc:1427
+msgid "Workstation is waiting for action"
+msgstr "等待的工作站"
+
+#: admin/systems/class_systemManagement.inc:1428
+msgid "Workstation installation failed"
+msgstr "工作站安装失败"
+
+#: admin/systems/class_systemManagement.inc:1431
+msgid "Server is installing"
+msgstr "服务器正在安装"
+
+#: admin/systems/class_systemManagement.inc:1432
+msgid "Server is waiting for action"
+msgstr "等待的服务器"
+
+#: admin/systems/class_systemManagement.inc:1433
+msgid "Server installation failed"
+msgstr "服务器安装失败"
+
+#: admin/systems/class_systemManagement.inc:1434
+#, fuzzy
+msgid "Win workstation"
+msgstr "工作站"
+
+#: admin/systems/class_systemManagement.inc:1435
 #: admin/systems/class_componentGeneric.inc:306
 #, fuzzy
 msgid "Network device"
 msgstr "网络设备"
+
+#: admin/systems/class_systemManagement.inc:1493
+#: admin/systems/class_systemManagement.inc:1494
+#, fuzzy
+msgid "Incoming objects"
+msgstr "成员对象"
+
+#: admin/systems/class_systemManagement.inc:1499
+#, fuzzy
+msgid "Incoming"
+msgstr "图标"
 
 #: admin/systems/network.tpl:1
 msgid "Network\tsettings"
@@ -974,125 +1038,127 @@ msgstr "启用该设备 DNS"
 msgid "Zone"
 msgstr "Zone"
 
-#: admin/systems/network.tpl:117 admin/systems/class_termDNS.inc:909
-msgid "TTL"
-msgstr "TTL"
-
 #: admin/systems/network.tpl:125
 msgid "Dns records"
 msgstr "Dns 记录"
 
-#: admin/systems/class_termDNS.inc:393
-msgid "Not matching"
-msgstr "不匹配"
-
-#: admin/systems/class_termDNS.inc:525 admin/systems/class_termDNS.inc:546
-#: admin/systems/class_termDNS.inc:899
-msgid "MAC address"
-msgstr "MAC 地址"
-
-#: admin/systems/class_termDNS.inc:560
-#, fuzzy, php-format
-msgid "The IP address '%s' is not part of the selected reverse zone '%s'!"
-msgstr "提供的 IP 地址 '%s' 和所选的反向解析域条目 '%s' 不匹配。"
-
-#: admin/systems/class_termDNS.inc:572
-#, php-format
-msgid "Record type '%s' is duplicated!"
-msgstr ""
-
-#: admin/systems/class_termDNS.inc:580
-#, php-format
-msgid "Uniq record type '%s' is duplicated!"
-msgstr ""
-
-#: admin/systems/class_termDNS.inc:592
-#, fuzzy, php-format
-msgid ""
-"The IP address '%s' will is added as 'A Record', this will be done "
-"automatically, please remove the record."
-msgstr "设备 IP '%s' 将自动作为'A'记录添加，请删除这条记录。"
-
-#: admin/systems/class_termDNS.inc:600
-#, fuzzy, php-format
-msgid "Only lowercase records are allowed, please check your '%ss'."
-msgstr "只允许小写字母，请检查您的 '%ss'。"
-
-#: admin/systems/class_termDNS.inc:839 admin/systems/class_termDNS.inc:859
-msgid "Add"
-msgstr "添加"
-
-#: admin/systems/class_termDNS.inc:853 admin/systems/remove.tpl:15
-#: admin/systems/remove.tpl:19
-msgid "Delete"
-msgstr "删除"
-
-#: admin/systems/class_termDNS.inc:889
-msgid "DNS"
-msgstr ""
-
-#: admin/systems/class_termDNS.inc:890
+#: admin/systems/class_componentGeneric.inc:72
 #, fuzzy
-msgid "DNS settings"
-msgstr "Samba 设置"
+msgid "component"
+msgstr "新组件"
 
-#: admin/systems/class_termDNS.inc:907
+#: admin/systems/class_componentGeneric.inc:301
 #, fuzzy
-msgid "DNS records"
-msgstr "Dns 记录"
+msgid "Component generic"
+msgstr "新组件"
 
-#: admin/systems/class_termDNS.inc:908
-msgid "Zone name"
-msgstr "域名称"
+#~ msgid "Save"
+#~ msgstr "保存"
 
-#: admin/systems/remove.tpl:2
-msgid "Warning"
-msgstr "警告"
-
-#: admin/systems/remove.tpl:6
 #, fuzzy
-msgid ""
-"This includes all system and setup informations. Please double check if your "
-"really want to do this since there is no way for GOsa to get your data back."
-msgstr ""
-"这包含所有系统和设置信息。请再次检查您是否要这么做，因为 GOsa 没有办法将您的"
-"数据找回。"
+#~ msgid "You are not allowed to create a new object of this type."
+#~ msgstr "您无权删除这个对象组！"
 
-#: admin/systems/remove.tpl:10
-msgid ""
-"Best thing to do before performing this action would be to save the current "
-"contents of your LDAP tree in a file. So - if you've done so - press "
-"'Delete' to continue or 'Cancel' to abort."
-msgstr ""
-"最好在执行这个操作之前，保存当前 LDAP 树中的内容到一个文件。所以，如果您已经"
-"这么做了，按“删除”继续或者按“取消”退出。"
-
-#: admin/systems/main.inc:47 admin/systems/main.inc:49
-msgid "System management"
-msgstr "系统管理"
-
-#: admin/systems/class_serverService.inc:27
-msgid "Stop"
-msgstr "停止"
-
-#: admin/systems/class_serverService.inc:28
 #, fuzzy
-msgid "Start"
-msgstr "启动"
+#~ msgid "You're about to delete the following entry %s"
+#~ msgstr "您将要删除条目 %s。"
 
-#: admin/systems/class_serverService.inc:29
 #, fuzzy
-msgid "Restart"
-msgstr "重试"
+#~ msgid "You're about to delete the following entries %s"
+#~ msgstr "您将要删除条目 %s。"
 
-#: admin/systems/class_serverService.inc:332
-msgid "Can't set status while this server is not saved."
-msgstr ""
+#~ msgid "You are not allowed to delete this component!"
+#~ msgstr "您无权删除这个组件！"
 
-#: admin/systems/class_serverService.inc:344
-#, fuzzy, php-format
-msgid "The specified method '%s' can't executed for services."
-msgstr "给出的 ppd 文件 '%s' 无法打开读取。"
+#~ msgid "You're about to delete all information about the component at '%s'."
+#~ msgstr "您将要删除关于组件 '%s' 的所有信息。"
+
+#~ msgid "Ok"
+#~ msgstr "好"
+
+#~ msgid "Apply"
+#~ msgstr "应用"
+
+#~ msgid "Winstation"
+#~ msgstr "Windows 工作站"
+
+#~ msgid "Network Device"
+#~ msgstr "网络设备"
+
+#~ msgid "New Terminal"
+#~ msgstr "新终端"
+
+#~ msgid "New Workstation"
+#~ msgstr "新工作站"
+
+#~ msgid ""
+#~ "This menu allows you to add, remove and change the properties of specific "
+#~ "systems. You can only add systems which have already been started once."
+#~ msgstr ""
+#~ "这个菜单允许您添加，删除和修改所选系统的属性。您只能添加已经启动过一次的系"
+#~ "统。"
+
+#~ msgid "Select to see servers"
+#~ msgstr "选择显示服务器"
+
+#~ msgid "Show servers"
+#~ msgstr "显示服务器"
+
+#~ msgid "Select to see Linux terminals"
+#~ msgstr "选择显示 Linux 终端"
+
+#~ msgid "Select to see Linux workstations"
+#~ msgstr "选择显示 Linux 工作站"
+
+#~ msgid "Select to see network printers"
+#~ msgstr "选择显示网络打印机"
+
+#~ msgid "Select to see VOIP phones"
+#~ msgstr "选择显示 VOIP 电话"
+
+#~ msgid "Select to see network devices"
+#~ msgstr "选择显示网络设备"
+
+#~ msgid "Show network devices"
+#~ msgstr "显示网络设备"
+
+#, fuzzy
+#~ msgid "Number of listed servers"
+#~ msgstr "文件服务器"
+
+#, fuzzy
+#~ msgid "Number of listed workstations"
+#~ msgstr "选择查看工作站"
+
+#, fuzzy
+#~ msgid "Number of listed terminals"
+#~ msgstr "选择查看终端"
+
+#, fuzzy
+#~ msgid "Number of listed printers"
+#~ msgstr "部门名称"
+
+#, fuzzy
+#~ msgid "Number of listed new devices"
+#~ msgstr "选择显示网络设备"
+
+#, fuzzy
+#~ msgid "Number of listed windows workstations"
+#~ msgstr "显示 Windows 工作站"
+
+#, fuzzy
+#~ msgid "Number of listed departments"
+#~ msgstr "部门名称"
+
+#~ msgid "This 'dn' has no server features."
+#~ msgstr "这个 'dn' 没有服务器功能。"
+
+#, fuzzy
+#~ msgid "Service name"
+#~ msgstr "设备名称"
+
+#~ msgid "This 'dn' has no network features."
+#~ msgstr "这个 'dn' 没有网络功能。"
 
 #, fuzzy
 #~ msgid "Removing dhcp entry for this object failed."
