@@ -465,15 +465,15 @@ class divListSystem extends MultiSelectWindow
       $num_deps = count($this->Added_Departments);
     }
 
-    $num_ser_str = sprintf(_("Number of listed %s"),_("servers"));
-    $num_ws_str  = sprintf(_("Number of listed %s"),_("workstations"));
-    $num_ter_str = sprintf(_("Number of listed %s"),_("terminals"));
-    $num_pho_str = sprintf(_("Number of listed %s"),_("phones"));
-    $num_prt_str = sprintf(_("Number of listed %s"),_("printers"));
-    $num_com_str = sprintf(_("Number of listed %s"),_("network components"));
-    $num_new_str = sprintf(_("Number of listed %s"),_("new devices"));
-    $num_wws_str = sprintf(_("Number of listed %s"),_("windows workstations"));
-    $num_dep_str = sprintf(_("Number of listed %s"),_("departments"));
+    $num_ser_str = sprintf(_("Number of listed '%s'"),_("servers"));
+    $num_ws_str  = sprintf(_("Number of listed '%s'"),_("workstations"));
+    $num_ter_str = sprintf(_("Number of listed '%s'"),_("terminals"));
+    $num_pho_str = sprintf(_("Number of listed '%s'"),_("phones"));
+    $num_prt_str = sprintf(_("Number of listed '%s'"),_("printers"));
+    $num_com_str = sprintf(_("Number of listed '%s'"),_("network components"));
+    $num_new_str = sprintf(_("Number of listed '%s'"),_("new devices"));
+    $num_wws_str = sprintf(_("Number of listed '%s'"),_("windows workstations"));
+    $num_dep_str = sprintf(_("Number of listed '%s'"),_("departments"));
 
     $str = "<img class='center' src='images/select_server.png'
       title='".$num_ser_str."' alt='".$num_ser_str."'>&nbsp;".$cnts['server']."&nbsp;&nbsp;&nbsp;&nbsp;";

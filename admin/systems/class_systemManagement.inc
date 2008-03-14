@@ -545,8 +545,7 @@ class systems extends plugin
         $o_queue = new gosaSupportDaemon();
         $o_queue->append($this->systab);
         if($o_queue->is_error()){
-          msg_dialog::display(_("Daemon"),sprintf(_("Something went wrong while talking to the daemon: %s."),
-                $o_queue->get_error()),ERROR_DIALOG);
+          msg_dialog::display(_("Service infrastructure"),msgPool::siError($o_queue->get_error()),ERROR_DIALOG);
         }else{
           $this->systab = FALSE;
         }
@@ -894,8 +893,7 @@ class systems extends plugin
             $o_queue = new gosaSupportDaemon();
             $o_queue->append($tmp);
             if($o_queue->is_error()){
-              msg_dialog::display(_("Daemon"),sprintf(_("Something went wrong while talking to the daemon: %s."),
-                    $o_queue->get_error()),ERROR_DIALOG);
+              msg_dialog::display(_("Service infrastructure"),msgPool::siError($o_queue->get_error()),ERROR_DIALOG);
             }
           }
         }
