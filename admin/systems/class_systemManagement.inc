@@ -327,7 +327,7 @@ class systems extends plugin
           $this->systab->by_object[$tabname]->base = $this->DivListSystem->selectedBase;
           $this->systab->base = $this->DivListSystem->selectedBase;
         }else{
-          print_red(msgPool::permCreate());
+          msg_dialog::display(_("Error"), msgPool::permCreate(), ERROR_DIALOG);
         }
       }
     }
@@ -380,7 +380,7 @@ class systems extends plugin
         session::set('objectinfo',$this->dn);
         add_lock ($this->dn, $this->ui->dn);
       }else{ 
-        print_red (_("You can't edit this object type yet!"));
+        msg_dialog::display(_("Error"), _("Editing this type of object is not supported yet!"), ERROR_DIALOG);
         del_lock($this->dn);
       }
     }
@@ -408,7 +408,7 @@ class systems extends plugin
         session::set('objectinfo',$this->dn);
         return ($smarty->fetch(get_template_path('password.tpl', TRUE)));
       }else{
-        print_red(_("You are not allowed to change the password for this object."));
+        msg_dialog::display(_("Permission error"), _("You have no permission to change this password!"), ERROR_DIALOG);
       }
     }
 
@@ -420,7 +420,7 @@ class systems extends plugin
     /* Correctly specified? */
     if (isset($_POST['password_finish'])){
       if ($_POST['new_password'] != $_POST['repeated_password']){
-        print_red (_("Passwords entered as new and repeated do not match!"));
+        msg_dialog::display(_("Error"), _("The passwords you've entered as 'New password' and 'Repeated password' do not match!"), ERROR_DIALOG);
         return($smarty->fetch(get_template_path('password.tpl', TRUE)));
       }
     }
@@ -474,10 +474,10 @@ class systems extends plugin
           $ldap->modify($attrs);
           new log("security","systems/".get_class($this),$this->dn,array_keys($attrs),$ldap->get_error());
         }else{
-          print_red(_("You are not allowed to change the password for this object."));
+          msg_dialog::display(_("Permission error"), _("You have no permission to change this password!"), ERROR_DIALOG);
         }
       }else{
-        print_red(_("Can't detect object to change password."));
+        msg_dialog::display(_("Error"), _("Cannot determine object to change password!"), ERROR_DIALOG);
       }
       session::un_set('objectinfo');
     }
@@ -648,7 +648,7 @@ class systems extends plugin
           } else {
             /* Normally this shouldn't be reached, send some extra
                logs to notify the administrator */
-            print_red (msgPool::permDelete());
+            msg_dialog::display(_("Permission error"), msgPool::permDelete(), ERROR_DIALOG);
             new log("security","systems/".get_class($this),$dn,array(),"Tried to trick deletion.");
           }
           /* Remove lock file after successfull deletion */
@@ -726,7 +726,7 @@ class systems extends plugin
 
         /* Obviously the user isn't allowed to delete. Show message and
            clean session. */
-        print_red (msgPool::permDelete());
+        msg_dialog::display(_("Permission error"), msgPool::permDelete(), ERROR_DIALOG);
       }
     }
 
@@ -791,7 +791,7 @@ class systems extends plugin
 
         /* Normally this shouldn't be reached, send some extra
            logs to notify the administrator */
-        print_red(msgPool::permDelete());
+        msg_dialog::display(_("Permission error"), msgPool::permDelete(), ERROR_DIALOG);
         new log("security","systems/".get_class($this),$dn,array(),"Tried to trick deletion.");
       }
 
@@ -823,7 +823,7 @@ class systems extends plugin
           }
         }
         if(!$found){
-          print_red(sprintf(_("Can't set gotoMode to status 'active', the current object couldn't be identified.")));
+          msg_dialog::display(_("Internal error"), _("Cannot set mode to 'active'!"), ERROR_DIALOG);
         }
 
       }

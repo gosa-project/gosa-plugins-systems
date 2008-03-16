@@ -170,7 +170,7 @@ class ServerService extends plugin
           $this->plugins[$s_entry] = $new_obj;
           $this->plugins[$s_entry]->is_account = false;
         }else{
-          print_red($str);
+          msg_dialog::display(_("Error"), $str, ERROR_DIALOG);
         }
       }
     }
@@ -218,7 +218,7 @@ class ServerService extends plugin
       $msgs = $this->dialog->check();
       if(count($msgs)){
         foreach($msgs as $msg){
-          print_red($msg);
+          msg_dialog::display(_("Error"), $msg, ERROR_DIALOG);
         }
       }else{
         $this->plugins[$this->current] = $this->dialog;
@@ -329,7 +329,7 @@ class ServerService extends plugin
   {
     /* Skip if this is a new server */
     if($this->dn == "new"){
-      print_red(_("Can't set status while this server is not saved."));
+      msg_dialog::display(_("Information"), _("Cannot update service status until it has been saved!"), INFO_DIALOG);
       return;
     }
 
@@ -341,7 +341,7 @@ class ServerService extends plugin
     }elseif($method == RESTART_SERVICE){
       $action = SERVICE_RESTARTED;
     }else{
-      print_red(sprintf(_("The specified method '%s' can't executed for services."),$action));
+      msg_dialog::display(_("Error"), _("Cannot update service status!"), ERROR_DIALOG);
       return;
     }
     

@@ -286,7 +286,7 @@ class termDNS extends plugin
       $msgs = $this->dialog->check(array());
       if(count($msgs)){
         foreach($msgs as $msg){
-          print_red($msg);
+          msg_dialog::display(_("Error"), $msg, ERROR_DIALOG);
         }
       }else{
         $this->dhcpHostEntry = $this->dialog->save();
