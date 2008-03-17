@@ -519,6 +519,27 @@ class systems extends plugin
         }
         $events = DaemonEvent::get_event_types(SYSTEM_EVENT);
         $type = preg_replace("/^[a-z]*_event_/","",$s_action);
+        $o_queue = new gosaSupportDaemon();
+
+        /* Skip installation or update trigerred events, 
+         *  if this entry is currently processing.
+         */
+        if(preg_match("/trigger_event/",$s_action) && in_array($type,array("DaemonEvent_reinstall","DaemonEvent_update"))){
+          foreach($mac as $key => $mac_address){
+            foreach($o_queue->get_entries_by_mac(array($mac_address)) as $entry){
+
+              $entry['STATUS'] = strtoupper($entry['STATUS']);
+              if($entry['STATUS'] == "PROCESSING" && 
+                  isset($events['QUEUED'][$entry['HEADERTAG']]) && 
+                  in_array($events['QUEUED'][$entry['HEADERTAG']],array("DaemonEvent_reinstall","DaemonEvent_update"))){
+                unset($mac[$key]);
+
+                new log("security","systems/".get_class($this),"",array(),"Skip adding 'DaemonEvent::".$type."' for mac '".$mac_address."', there is already a job in progress.");
+                break;
+              }
+            }
+          }
+        }        
 
         /* Prepare event to be added 
          */
