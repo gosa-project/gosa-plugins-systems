@@ -1105,17 +1105,18 @@ class systems extends plugin
     }    
 
     /* Walk through all possible search combinations, and search for some objects if the checkbox is enabled  */
-    $filter = "(|(&".$userregex."(objectClass=goHard)(cn=".$this->DivListSystem->Regex.")))";
     foreach($objs as $checkBox => $oc){
       if($this->DivListSystem->$checkBox){
         if($this->DivListSystem->SubSearch){
           if($oc['CLASS'] != ""){
+            $filter = "(&".$userregex."(objectClass=".$oc['CLASS'].")(cn=".$this->DivListSystem->Regex."))";
             $new_res = get_sub_list($filter, $sys_categories ,$oc['TREE'], $base,$sys_attrs, GL_SUBSEARCH | GL_SIZELIMIT);
             $res = array_merge($res,$new_res);
           }
         }else{
           /* User filter? */
           if($oc['CLASS'] != ""){
+            $filter = "(&".$userregex."(objectClass=".$oc['CLASS'].")(cn=".$this->DivListSystem->Regex."))";
             $res = array_merge($res,get_list($filter,$sys_categories,$oc['TREE'].$base, $sys_attrs,  GL_SIZELIMIT));
           }
         }
@@ -1123,6 +1124,7 @@ class systems extends plugin
     }
 
     /* Search for incoming objects */ 
+    $filter = "(|(&".$userregex."(objectClass=goHard)(cn=".$this->DivListSystem->Regex.")))";
     $res = array_merge($res,get_list($filter,$sys_categories, get_ou('incomingou').$base,$sys_attrs, GL_SIZELIMIT));
 
     /* Get all gotoTerminal's */
