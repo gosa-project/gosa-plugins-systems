@@ -645,21 +645,6 @@ class termDNS extends plugin
         }
       }
 
-      if(count($this->dhcpHostEntry) == 0){
-        $this->dialog = new dhcpHost($this->dhcpParentNode,TRUE);
-        $this->dialog->cn = $this->cn;
-        $this->dialog->dhcpHWAddress = "ethernet ".$this->macAddress;
-        if(!empty($this->ipHostNumber)){
-          $this->dialog->statements['fixed-address'] = $this->ipHostNumber;
-        }
-        $this->dialog->execute();
-        $this->dialog->save_object(); 
-        $this->dhcpHostEntry = $this->dialog->save();
-        if(count($this->dhcpHostEntry['dhcpOption']) == 0){
-          $this->dhcpHostEntry['dhcpOption']= array("host-name ".$this->cn);
-        }
-      }
-
       /* Write mac address to dhcp settings */
       if($this->dhcp_is_Account){
         if(!isset($this->dhcpHostEntry['dhcpHWAddress'][0]) || 
@@ -668,7 +653,16 @@ class termDNS extends plugin
           $this->dhcpHostEntry['MODIFIED'] = TRUE;
         }
       }
-  
+
+      /* Updated IP host number */
+      if($this->dhcp_is_Account){
+        foreach($this->dhcpHostEntry['dhcpStatements'] as $id => $value){
+          if(preg_match("/^fixed-address/",$value)){
+            $this->dhcpHostEntry['dhcpStatements'][$id] = "fixed-address ".$this->ipHostNumber; 
+            $this->dhcpHostEntry['MODIFIED'] = TRUE;
+          }
+        }
+      }
 
       /* Unset dhcpStatements if this attribute is empty  */
       if(isset($this->dhcpHostEntry['dhcpStatements']) && 
