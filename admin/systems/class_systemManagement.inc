@@ -1050,7 +1050,7 @@ class systems extends plugin
   {
   }
 
-  function adapt_from_template($dn)
+  function adapt_from_template($dn, $skip= array())
   {
   }
 
