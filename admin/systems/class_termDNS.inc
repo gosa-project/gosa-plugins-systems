@@ -30,8 +30,9 @@ class termDNS extends plugin
   var $attributes     = array("ipHostNumber","macAddress");
   var $objectclasses  = array("whatever");
 
-  var $ipHostNumber   = "";    // IP address 
-  var $macAddress     = "";    // Mac address 
+  var $ipHostNumber          = "";    // IP address 
+  var $additionalHostNumbers = array();
+  var $macAddress            = "";    // Mac address 
 
   var $orig_ipHostNumber   = "";    // IP address 
   var $orig_macAddress     = "";    // Mac address 
@@ -83,6 +84,13 @@ class termDNS extends plugin
       $this->cn = preg_replace("/\\\$\$/","",$this->attrs['cn'][0]);
     }
 
+
+    $this->additionalHostNumbers = array();
+    if(isset($this->attrs['ipHostNumber']) && $this->attrs['ipHostNumber']['count'] > 1){
+      for($i = 1 ; $i < $this->attrs['ipHostNumber']['count']; $i ++){
+        $this->additionalHostNumbers[] = $this->attrs['ipHostNumber'][$i];
+      }
+    }
  
     /************
      * DHCP 
@@ -243,6 +251,7 @@ class termDNS extends plugin
 
     $display= "";
 
+    $smarty->assign("additionalHostNumbers",$this->additionalHostNumbers);
     $smarty->assign("staticAddress", ""); 
  
     /* Check for autonet button */
@@ -406,6 +415,7 @@ class termDNS extends plugin
 
       $display.= $smarty->fetch(get_template_path('network.tpl', TRUE));
     }
+
     return($display);
   }
 

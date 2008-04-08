@@ -11,6 +11,11 @@
 {render acl=$ipHostNumberACL}
             <input	id="ipHostNumber"	name="ipHostNumber"	size=25	maxlength=80	value="{$ipHostNumber}">
 {/render}
+
+          {foreach from=$additionalHostNumbers item=item key=key}
+            <br>{$item}
+          {/foreach}
+
 {render acl=$ipHostNumberACL}
 {if $DNS_is_account == true}
       <input id="propose_ip" type="submit" name="propose_ip" value="{t}Propose ip{/t}" style="visibility:visible;">
