@@ -463,7 +463,8 @@ class systems extends plugin
       }
 
       /* Type detected */
-      if(!empty($type)){
+      $allow_for = array("terminal","workstation","server","component");
+      if(!empty($type) && in_array($type,$allow_for)){
 
         /* Get infos */
         $class    = $tabs[$type]["CLASS"];
