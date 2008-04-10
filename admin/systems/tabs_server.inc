@@ -69,6 +69,20 @@ class servtabs extends tabs
        'dn' to all plugins */
     $baseobject= $this->by_object['servgeneric'];
     $this->dn= "cn=$baseobject->cn,".get_ou('serverou').$baseobject->base;
+
+    /* cn is not case sensitive for ldap, but for php it is!! */
+    if($baseobject->orig_dn != "new"){
+      if($this->config->current['DNMODE'] == "cn"){
+        if (strtolower($baseobject->orig_dn) != (strtolower($this->dn))){
+          $baseobject->recursive_move($baseobject->orig_dn, $this->dn);
+        }
+      }else{
+        if ($baseobject->orig_dn != $this->dn){
+          $baseobject->recursive_move($baseobject->orig_dn, $this->dn);
+        }
+      }
+    }
+
     $baseobject->dn= $this->dn;
 
     foreach ($this->by_object as $key => $obj){
