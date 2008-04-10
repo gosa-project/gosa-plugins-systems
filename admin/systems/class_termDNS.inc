@@ -688,7 +688,9 @@ class termDNS extends plugin
 
     /* Add all additional ipHostNumbers now 
      */
-    $this->attrs['ipHostNumber'] = array($this->ipHostNumber);
+    if(!empty($this->ipHostNumber)){
+      $this->attrs['ipHostNumber'] = array($this->ipHostNumber);
+    }
     foreach($this->additionalHostNumbers as $value){
       $this->attrs['ipHostNumber'][] = $value;
     }
