@@ -46,6 +46,14 @@ class componenttabs extends tabs
        'dn' to all plugins */
     $baseobject= $this->by_object['componentGeneric'];
     $this->dn= "cn=$baseobject->cn,".get_ou('componentou').$baseobject->base;
+
+    if($this->dn != $baseobject->orig_dn && $baseobject->orig_dn != "new"){
+
+      /* Udpate acls */
+      $baseobject->update_acls($baseobject->orig_dn,$this->dn);
+      $baseobject->move($baseobject->orig_dn,$this->dn);
+    }
+
     $baseobject->dn= $this->dn;
 
     foreach ($this->by_object as $key => $obj){

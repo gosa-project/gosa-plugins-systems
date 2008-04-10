@@ -274,10 +274,6 @@ class componentGeneric extends plugin
       $this->handle_post_events("add",array("macAddress" => $this->netConfigDNS->macAddress,"ipHostNumber" => $this->netConfigDNS->ipHostNumber));
       
     } else {
-      if ($this->orig_dn != $this->dn){
-        $this->move($this->orig_dn, $this->dn);
-      }
-
       $ldap->cd($this->dn);
       $this->cleanup();
       $ldap->modify ($this->attrs); 
