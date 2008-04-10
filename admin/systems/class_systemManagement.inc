@@ -1086,6 +1086,9 @@ class systems extends plugin
   function save_object()
   {
     $this->DivListSystem->save_object();
+    if(is_object($this->CopyPasteHandler)){
+      $this->CopyPasteHandler->save_object();
+    }
   }
 
 
