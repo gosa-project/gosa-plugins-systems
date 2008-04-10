@@ -84,7 +84,8 @@ class termDNS extends plugin
       $this->cn = preg_replace("/\\\$\$/","",$this->attrs['cn'][0]);
     }
 
-
+    /* Create list of additional ipHostNumber.
+     */
     $this->additionalHostNumbers = array();
     if(isset($this->attrs['ipHostNumber']) && $this->attrs['ipHostNumber']['count'] > 1){
       for($i = 1 ; $i < $this->attrs['ipHostNumber']['count']; $i ++){
@@ -251,21 +252,45 @@ class termDNS extends plugin
 
     $display= "";
 
+    /**********
+     * Additional ipHostNumber handling 
+     **********/
+      
+    /* Add a new one */
+    if(isset($_POST['additionalHostNumbers_add'])){
+      if(!is_array($this->additionalHostNumbers)){
+        $this->additionalHostNumbers=array();
+      }
+      $this->additionalHostNumbers[] = "";
+    }
+
+    /* Delete given entry */
+    foreach($this->additionalHostNumbers as $id => $value){
+      if(isset($_POST['additionalHostNumbers_del_'.$id])){
+        unset($this->additionalHostNumbers[$id]);
+        $this->additionalHostNumbers = array_values($this->additionalHostNumbers);
+      }
+    } 
+ 
     $smarty->assign("additionalHostNumbers",$this->additionalHostNumbers);
     $smarty->assign("staticAddress", ""); 
  
+    /**********
+     * Autonet completion
+     **********/
+ 
     /* Check for autonet button */
     if (isset($_POST['autonet'])){
-	$d= new gosaSupportDaemon(TRUE, 0.5);
-        $res= $d->_send("<xml><header>gosa_network_completition</header><source>GOSA</source><target>GOSA</target><hostname>".$this->cn."</hostname></xml>", TRUE);
-	if (isset($res['XML']['IP'])){
-		$this->ipHostNumber= $res['XML']['IP'];
-	}
-	if (isset($res['XML']['MAC'])){
-		$this->macAddress= $res['XML']['MAC'];
-	}
+      $d= new gosaSupportDaemon(TRUE, 0.5);
+      $res= $d->_send("<xml><header>gosa_network_completition</header><source>GOSA</source><target>GOSA</target><hostname>".$this->cn."</hostname></xml>", TRUE);
+      if (isset($res['XML']['IP'])){
+        $this->ipHostNumber= $res['XML']['IP'];
+      }
+      if (isset($res['XML']['MAC'])){
+        $this->macAddress= $res['XML']['MAC'];
+      }
     }
-    
+
   
     /**********
      * DHCP Handling
@@ -452,7 +477,22 @@ class termDNS extends plugin
       /* Save all posted vars */
       plugin::save_object();
 
-      /* Handle DHCP Posts*/
+      /******
+        Additional IP Host Numbers 
+       ******/
+  
+      /* Get posts for all additionally added ipHostNumbers */
+      foreach($this->additionalHostNumbers as $id => $value){
+        if(isset($_POST['additionalHostNumbers_'.$id])){
+          $this->additionalHostNumbers[$id] = get_post('additionalHostNumbers_'.$id);
+        }
+      } 
+
+
+      /******
+        DHCP posts
+       ******/
+
       if($this->dhcpEnabled && isset($_POST['network_tpl_posted'])){
         foreach($this->dhcpAttributes as $attr){
           if(isset($_POST[$attr])){
@@ -472,6 +512,11 @@ class termDNS extends plugin
           $this->$attr = $_POST[$attr];
         }
       }
+
+
+      /******
+        DNS posts
+       ******/
 
       /* Check if DNS should be enabled / disabled */
       if($this->DNS_is_account && $this->acl_is_removeable() && !isset($_POST['DNS_is_account'])){
@@ -518,6 +563,17 @@ class termDNS extends plugin
   {
     /* Call common method to give check the hook */
     $message= plugin::check();
+
+    /******
+      check additional IP Host Numbers 
+     ******/
+
+    foreach($this->additionalHostNumbers as $id => $value){
+      if(!tests::is_ip($value)){
+        $message[]= msgPool::invalid(sprintf(_("IP address #%s"),($id +2)), "", "", "192.168.1.10");
+      }
+    }
+
 
     /* Check if mac and ip are already used */
     if(!empty($this->ipHostNumber) && $this->DNS_is_account && 
@@ -627,6 +683,13 @@ class termDNS extends plugin
     
     /* Save DNS setting & ip/Mac*/
     plugin::save();
+
+    /* Add all additional ipHostNumbers now 
+     */
+    $this->attrs['ipHostNumber'] = array($this->ipHostNumber);
+    foreach($this->additionalHostNumbers as $value){
+      $this->attrs['ipHostNumber'][] = $value;
+    }
 
     /* Write back to ldap */
     $ldap->cd($this->dn);

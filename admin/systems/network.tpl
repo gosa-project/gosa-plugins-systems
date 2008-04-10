@@ -6,15 +6,17 @@
 		<td	style="width:50%; vertical-align: top;">
 			<table	summary="">
 				<tr>
-					<td><LABEL	for="ipHostNumber">{t}IP-address{/t}{if $IPisMust}{$staticAddress}{/if}</LABEL></td>
+					<td style='vertical-align:top;'><LABEL	for="ipHostNumber">{t}IP-address{/t}{if $IPisMust}{$staticAddress}{/if}</LABEL></td>
 					<td>
 {render acl=$ipHostNumberACL}
             <input	id="ipHostNumber"	name="ipHostNumber"	size=25	maxlength=80	value="{$ipHostNumber}">
 {/render}
-
           {foreach from=$additionalHostNumbers item=item key=key}
-            <br>{$item}
+            <br>
+            <input size=25 maxlength=80 type='text' name='additionalHostNumbers_{$key}' value='{$item}'>
+            <input type='submit' name='additionalHostNumbers_del_{$key}' value='{msgPool type=delButton}'>
           {/foreach}
+          <input type='submit' name='additionalHostNumbers_add' value='{msgPool type=addButton}'>
 
 {render acl=$ipHostNumberACL}
 {if $DNS_is_account == true}
