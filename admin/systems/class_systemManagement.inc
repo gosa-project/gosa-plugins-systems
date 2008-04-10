@@ -393,16 +393,24 @@ class systems extends plugin
     /* Set terminals root password */
     if ($s_action=="change_pw"){
       $tabs = array(
-          "terminal"    => array("CLASS"=>"TERMTABS",     "TABNAME"=>"termgeneric",     "TABCLASS" =>"termtabs",      "ACL"=> "terminal"),
-          "workstation" => array("CLASS"=>"WORKTABS",     "TABNAME"=>"workgeneric",     "TABCLASS" =>"worktabs",      "ACL"=> "workstation"));
+          "ArpNewDevice"=> array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "incoming/systems"),
+          "NewDevice"   => array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "incoming/systems"),
+          "terminal"    => array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "terminal/termgeneric"),
+          "workstation" => array("CLASS"=>"WORKTABS",     "TABCLASS" =>"worktabs",      "ACL"=> "workstation/workgeneric"),
+          "server"      => array("CLASS"=>"SERVTABS",     "TABCLASS" =>"servtabs",      "ACL"=> "server/servgeneric"),
+          "printer"     => array("CLASS"=>"PRINTTABS",    "TABCLASS" =>"printtabs",     "ACL"=> "printer/printgeneric"),
+          "phone"       => array("CLASS"=>"PHONETABS",    "TABCLASS" =>"phonetabs",     "ACL"=> "phone/phoneGeneric"),
+          "winstation"  => array("CLASS"=>"WINTABS",      "TABCLASS" =>"wintabs",       "ACL"=> "winworkstation/wingeneric"),
+          "component"   => array("CLASS"=>"COMPONENTTABS","TABCLASS" =>"componenttabs", "ACL"=> "component/componentGeneric"));
 
+      $dn   = $this->terminals[$s_entry]['dn'];
       $type = $this->get_system_type($this->terminals[$s_entry]);
+
       $class    = $tabs[$type]["CLASS"];
-      $tabname  = $tabs[$type]["TABNAME"];
-      $acl_cat  = $tabs[$type]["ACL"];
+      $acl      = $tabs[$type]["ACL"];
       $tabclass = $tabs[$type]["TABCLASS"];
       $ui       = get_userinfo();
-      $tabacl   = $ui->get_permissions($this->DivListSystem->selectedBase,$acl_cat."/".$tabname,"gotoRootPasswd");
+      $tabacl   = $ui->get_permissions($dn,$acl,"userPassword");
       if(preg_match("/w/",$tabacl)){
         $this->dn= $this->terminals[$s_entry]['dn'];
         session::set('objectinfo',$this->dn);
@@ -435,14 +443,21 @@ class systems extends plugin
 
       /* Check if user is allowed to set password */
       $tabs = array(
-          "terminal"    => array("CLASS"=>"TERMTABS",     "TABNAME"=>"termgeneric",     "TABCLASS" =>"termtabs",      "ACL"=> "terminal"),
-          "workstation" => array("CLASS"=>"WORKTABS",     "TABNAME"=>"workgeneric",     "TABCLASS" =>"worktabs",      "ACL"=> "workstation"));
+          "ArpNewDevice"=> array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "incoming/systems"),
+          "NewDevice"   => array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "incoming/systems"),
+          "terminal"    => array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "terminal/termgeneric"),
+          "workstation" => array("CLASS"=>"WORKTABS",     "TABCLASS" =>"worktabs",      "ACL"=> "workstation/workgeneric"),
+          "server"      => array("CLASS"=>"SERVTABS",     "TABCLASS" =>"servtabs",      "ACL"=> "server/servgeneric"),
+          "printer"     => array("CLASS"=>"PRINTTABS",    "TABCLASS" =>"printtabs",     "ACL"=> "printer/printgeneric"),
+          "phone"       => array("CLASS"=>"PHONETABS",    "TABCLASS" =>"phonetabs",     "ACL"=> "phone/phoneGeneric"),
+          "winstation"  => array("CLASS"=>"WINTABS",      "TABCLASS" =>"wintabs",       "ACL"=> "winworkstation/wingeneric"),
+          "component"   => array("CLASS"=>"COMPONENTTABS","TABCLASS" =>"componenttabs", "ACL"=> "component/componentGeneric"));
 
       /* Detect object type */
       $type = "";
       foreach($this->terminals as $terminal){
         if($terminal['dn'] == $this->dn){
-          $type = $this->get_system_type($terminal);
+          $type  = $this->get_system_type($terminal);
           break;
         } 
       }
@@ -452,26 +467,60 @@ class systems extends plugin
 
         /* Get infos */
         $class    = $tabs[$type]["CLASS"];
-        $tabname  = $tabs[$type]["TABNAME"];
-        $acl_cat  = $tabs[$type]["ACL"];
+        $acl      = $tabs[$type]["ACL"];
         $tabclass = $tabs[$type]["TABCLASS"];
     
         /* Get acls */
         $ui       = get_userinfo();
-        $tabacl   = $ui->get_permissions($this->DivListSystem->selectedBase,$acl_cat."/".$tabname,"gotoRootPasswd");
+        $tabacl   = $ui->get_permissions($this->dn,$acl,"userPassword");
 
         /* Check acls */
         if(preg_match("/w/",$tabacl)){
           $ldap = $this->config->get_ldap_link();
           $ldap->cd($this->dn);
+          $ldap->cat($this->dn);
+          $old_attrs = $ldap->fetch();
 
           $attrs= array();
           if ($_POST['new_password'] == ""){
-            $attrs['gotoRootPasswd']= array();
+
+            /* Remove password attribute 
+             */
+            if(in_array("simpleSecurityObject",$old_attrs['objectClass'])){
+              $attrs['objectClass'] = array();
+              for($i = 0 ; $i < $old_attrs['objectClass']['count'] ; $i ++){
+                if(!preg_match("/simpleSecurityObject/i",$old_attrs['objectClass'][$i])){
+                  $attrs['objectClass'][] = $old_attrs['objectClass'][$i];
+                }
+              }
+            }
+            $attrs['userPassword']= array();
           } else {
-            $attrs['gotoRootPasswd']= crypt($_POST['new_password'],substr(session_id(),0,2));
+
+            /* Add/modify password attribute 
+             */
+            if(!in_array("simpleSecurityObject",$old_attrs['objectClass'])){
+              $attrs['objectClass'] = array();
+              for($i = 0 ; $i < $old_attrs['objectClass']['count'] ; $i ++){
+                $attrs['objectClass'][] = $old_attrs['objectClass'][$i];
+              }
+              $attrs['objectClass'][] = "simpleSecurityObject";
+            }
+
+            if(class_available("passwordMethodCrypt")){
+              $pwd_m = new passwordMethodCrypt($this->config);
+              $pwd_m->set_hash("crypt/md5");
+              $attrs['userPassword'] = $pwd_m->generate_hash($_POST['new_password']);
+            }else{
+              msg_dialog::display(_("Password method"),_("Password method crypt is missing. Cannot set system password."));
+              $attrs = array();
+            }
           }
           $ldap->modify($attrs);
+          if (!$ldap->success()){
+            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
+          }
+  
           new log("security","systems/".get_class($this),$this->dn,array_keys($attrs),$ldap->get_error());
         }else{
           msg_dialog::display(_("Permission error"), _("You have no permission to change this password!"), ERROR_DIALOG);

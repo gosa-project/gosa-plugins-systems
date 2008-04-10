@@ -403,21 +403,14 @@ class divListSystem extends MultiSelectWindow
         $display= $val["cn"][0].$dsc;
       }
 
-     
       /* Check if this is a terminal/workstation && if we are allowed to change the gotoRootPasswd */
-      $pwd_acl =""; 
-      if(in_array("gotoWorkstation",$val['objectClass'])){
-        $pwd_acl = $ui->get_permissions($val['dn'],"workstation/workgeneric","gotoRootPasswd");
-      }    
-      if(in_array("gotoTerminal",$val['objectClass'])){
-        $pwd_acl = $ui->get_permissions($val['dn'],"terminal/termgeneric","gotoRootPasswd");
-      }    
-      if(preg_match("/w/",$pwd_acl)){
-        $action2 = "<input class='center' type='image' src='images/certs.png' alt='"._("Password")."'   name='system_setpwd_%KEY%' title='"._("Set root password")."'>";
+      $display_key_for = array("terminal","workstation","server","component");
+      $pwd_acl = $ui->get_permissions($val['dn'],$tabs[$type]['ACL'],"userPassword");
+      if(preg_match("/w/",$pwd_acl) && in_array($type,$display_key_for)){
+        $action2 = "<input class='center' type='image' src='images/certs.png' alt='"._("Password")."'   name='system_setpwd_%KEY%' title='"._("Set password")."'>";
       }else{
         $action2 = $empty;
       }
-
 
       if(in_array("gotoWorkstation",$val['objectClass'])){
         $action2= "<input class='center' type='image' src='images/cdrom.png' alt='"._("Create CD")."'   
