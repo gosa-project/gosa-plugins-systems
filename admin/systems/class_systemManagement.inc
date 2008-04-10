@@ -443,15 +443,10 @@ class systems extends plugin
 
       /* Check if user is allowed to set password */
       $tabs = array(
-          "ArpNewDevice"=> array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "incoming/systems"),
-          "NewDevice"   => array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "incoming/systems"),
-          "terminal"    => array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "terminal/termgeneric"),
-          "workstation" => array("CLASS"=>"WORKTABS",     "TABCLASS" =>"worktabs",      "ACL"=> "workstation/workgeneric"),
-          "server"      => array("CLASS"=>"SERVTABS",     "TABCLASS" =>"servtabs",      "ACL"=> "server/servgeneric"),
-          "printer"     => array("CLASS"=>"PRINTTABS",    "TABCLASS" =>"printtabs",     "ACL"=> "printer/printgeneric"),
-          "phone"       => array("CLASS"=>"PHONETABS",    "TABCLASS" =>"phonetabs",     "ACL"=> "phone/phoneGeneric"),
-          "winstation"  => array("CLASS"=>"WINTABS",      "TABCLASS" =>"wintabs",       "ACL"=> "winworkstation/wingeneric"),
-          "component"   => array("CLASS"=>"COMPONENTTABS","TABCLASS" =>"componenttabs", "ACL"=> "component/componentGeneric"));
+          "terminal"    => array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "terminal/termgeneric"    ,"PLUG"=>"termgeneric"),
+          "workstation" => array("CLASS"=>"WORKTABS",     "TABCLASS" =>"worktabs",      "ACL"=> "workstation/workgeneric" ,"PLUG"=>"workgeneric"),
+          "server"      => array("CLASS"=>"SERVTABS",     "TABCLASS" =>"servtabs",      "ACL"=> "server/servgeneric"      ,"PLUG"=>"servgeneric"),
+          "component"   => array("CLASS"=>"COMPONENTTABS","TABCLASS" =>"componenttabs", "ACL"=> "component/componentGeneric","PLUG"=>"componentGeneric"));
 
       /* Detect object type */
       $type = "";
@@ -467,6 +462,7 @@ class systems extends plugin
       if(!empty($type) && in_array($type,$allow_for)){
 
         /* Get infos */
+        $plug     = $tabs[$type]["PLUG"];
         $class    = $tabs[$type]["CLASS"];
         $acl      = $tabs[$type]["ACL"];
         $tabclass = $tabs[$type]["TABCLASS"];
@@ -520,6 +516,11 @@ class systems extends plugin
           $ldap->modify($attrs);
           if (!$ldap->success()){
             msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
+          }else{
+            if(class_available($plug)){
+              $p = new $plug($this->config,$this->dn);
+              $p->handle_post_events("modify");
+            }
           }
   
           new log("security","systems/".get_class($this),$this->dn,array_keys($attrs),$ldap->get_error());
