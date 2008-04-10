@@ -32,6 +32,7 @@ class servgeneric extends plugin
   var $l= "";
   var $description= "";
   var $orig_dn= "";
+  var $orig_cn= "";
 
   /* attribute list for save action */
   var $attributes= array("cn", "description","gotoMode");
@@ -93,6 +94,7 @@ class servgeneric extends plugin
        
     /* Save dn for later references */
     $this->orig_dn= $this->dn;
+    $this->orig_cn= $this->cn;
   }
 
 
@@ -241,6 +243,8 @@ class servgeneric extends plugin
     $ldap= $this->config->get_ldap_link();
     $ldap->rmdir($this->dn);
 
+    update_accessTo($this->orig_cn,"");
+
     new log("remove","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
 
     if (!$ldap->success()){
@@ -369,6 +373,11 @@ class servgeneric extends plugin
       $this->cleanup();
       $ldap->modify ($this->attrs); 
       new log("modify","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+
+      /* Update all accessTo/trust dependencies */
+      if($this->orig_cn != $this->cn){
+        update_accessTo($this->orig_cn,$this->cn);
+      }
 
       $mode= "modify";
     }
