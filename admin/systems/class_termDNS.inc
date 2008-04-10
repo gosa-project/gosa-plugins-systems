@@ -594,9 +594,7 @@ class termDNS extends plugin
     if(($this->IPisMust)||($this->DNS_is_account)){
       if (empty($this->ipHostNumber)){
         $message[]= msgPool::required(_("IP address"));
-      }
-
-      if (!tests::is_ip($this->ipHostNumber)){
+      }elseif (!tests::is_ip($this->ipHostNumber)){
         $message[]= msgPool::invalid(_("IP address"), "", "", "192.168.1.10");
       }
     }
@@ -604,9 +602,8 @@ class termDNS extends plugin
     /* Check if mac is empty 
      */
     if ($this->macAddress == "" ){
-      $message[]= msgPool::required(_("IP address"));
-    }
-    if(!tests::is_mac($this->macAddress)){
+      $message[]= msgPool::required(_("MAC address"));
+    }elseif(!tests::is_mac($this->macAddress)){
       $message[]= msgPool::invalid(_("MAC address"), "", "", "00:0C:7F:31:33:F1");
     }
 
