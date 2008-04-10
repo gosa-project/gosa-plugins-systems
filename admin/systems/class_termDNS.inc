@@ -257,20 +257,22 @@ class termDNS extends plugin
      **********/
       
     /* Add a new one */
-    if(isset($_POST['additionalHostNumbers_add'])){
-      if(!is_array($this->additionalHostNumbers)){
-        $this->additionalHostNumbers=array();
+    foreach($_POST as $name => $value){
+      if(preg_match("/^additionalHostNumbers_add/",$name)){
+        $this->additionalHostNumbers[] = "";
+        break;
       }
-      $this->additionalHostNumbers[] = "";
+    
+      /* Delete given entry */
+      if(preg_match("/^additionalHostNumbers_del_/",$name)){
+        $id = preg_replace("/^^additionalHostNumbers_del_([0-9]*)_.*/","\\1",$name);
+        if(isset($this->additionalHostNumbers[$id])){
+          unset($this->additionalHostNumbers[$id]);
+          $this->additionalHostNumbers = array_values($this->additionalHostNumbers);
+        }
+        break;
+      } 
     }
-
-    /* Delete given entry */
-    foreach($this->additionalHostNumbers as $id => $value){
-      if(isset($_POST['additionalHostNumbers_del_'.$id])){
-        unset($this->additionalHostNumbers[$id]);
-        $this->additionalHostNumbers = array_values($this->additionalHostNumbers);
-      }
-    } 
  
     $smarty->assign("additionalHostNumbers",$this->additionalHostNumbers);
     $smarty->assign("staticAddress", ""); 
