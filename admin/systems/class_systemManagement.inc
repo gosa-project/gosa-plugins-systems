@@ -878,6 +878,17 @@ class systems extends plugin
     /* Finish user edit is triggered by the tabulator dialog, so
        the user wants to save edited data. Check and save at this
        point. */
+
+    /* Dirty workaround - MSG_DIALOG - OK
+       If a message dialog is shown and we press 'OK'
+        then try to save again.
+     */
+    foreach($_POST as $name => $value){
+      if(preg_match("/^MSG_OK/",$name)){
+        $_POST['edit_finish'] = TRUE;
+      }
+    }
+
     if ((isset($_POST['edit_finish']) || isset($_POST['edit_apply'])) && (isset($this->systab->config)) || $save_object_directly){
 
       /* Check tabs, will feed message array */
