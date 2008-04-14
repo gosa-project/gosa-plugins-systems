@@ -14,7 +14,7 @@
           {foreach from=$additionalHostNumbers item=item key=key}
             <br>
             <input size=25 maxlength=80 type='text' name='additionalHostNumbers_{$key}' value='{$item}'>
-            <input type='image' class='center' name='additionalHostNumbers_del_{$key}' src='images/edittrash.png' alt='{msgPool type=delButton}'>
+            <input type='image' class='center' name='additionalHostNumbers_del_{$key}' src='images/lists/trash.png' alt='{msgPool type=delButton}'>
           {/foreach}
           <input type='image' class='center' name='additionalHostNumbers_add}' src='images/list_new.png' alt='{msgPool type=addButton}'>
 
@@ -48,7 +48,7 @@
                 </td>
                 <td>
                   {t}Enable DHCP for this device{/t}
-                  <input type='image' src='images/list_reload.png' class='center'>
+                  <input type='image' src='images/lists/reload.png' class='center'>
                 </td>
               </tr>
               {else}
@@ -56,7 +56,7 @@
                 <td>
                   <input type='checkbox' name='dummy' class='center' disabled>
                   {t}Enable DHCP for this device{/t} ({t}not configured{/t})
-                  <input type='image' src='images/list_reload.png' class='center'>
+                  <input type='image' src='images/lists/reload.png' class='center'>
                 </td>
               </tr>
               {/if}
@@ -103,7 +103,7 @@
         {/if}
 
       {t}Enable DNS for this device{/t}
-      <input type='image' src='images/list_reload.png' class='center' name="reloadThisDNSStuff" >
+      <input type='image' src='images/lists/reload.png' class='center' name="reloadThisDNSStuff" >
       {if $DNS_is_account == true}
       <div style="padding-left:20px;visibility:visible;" id="test2">
       {else}
@@ -143,7 +143,7 @@
     {else}        
       <input type="checkbox" name="dummy" value="1" disabled class='center' {if $DNS_is_account} checked {/if}>
       {t}Enable DNS for this device{/t} ({t}not configured{/t})
-      <input type='image' src='images/list_reload.png' class='center'>
+      <input type='image' src='images/lists/reload.png' class='center'>
     {/if}
 
 		</td>

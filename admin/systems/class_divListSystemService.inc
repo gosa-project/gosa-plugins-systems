@@ -130,7 +130,7 @@ class divListSystemService extends MultiSelectWindow
         $actions .= "&nbsp;<img src='images/empty.png' width='16' alt=''>";
       }
       if($entry['AllowStart'] && $WasAccount){
-        $actions .= "&nbsp;<input type='image' name='RestartSingleService_".$name."' src='images/status_restart.png'
+        $actions .= "&nbsp;<input type='image' name='RestartSingleService_".$name."' src='images/lists/reload.png'
                             title='"._("Restart service")."'>";
       }else{
         $actions .= "&nbsp;<img src='images/empty.png' width='16' alt=''>";
@@ -146,7 +146,7 @@ class divListSystemService extends MultiSelectWindow
 
       /* Check if remove is enabled and allowed for current service */
       if($entry['AllowRemove'] && preg_match("/d/i",$acl)){
-        $actions .= "&nbsp;<input type='image' name='RemoveSingleService_".$name."' src='images/edittrash.png'
+        $actions .= "&nbsp;<input type='image' name='RemoveSingleService_".$name."' src='images/lists/trash.png'
                             title='"._("Remove service")."'>";
       }else{
         $actions .= "&nbsp;<img src='images/empty.png' width='16' alt=''>";
