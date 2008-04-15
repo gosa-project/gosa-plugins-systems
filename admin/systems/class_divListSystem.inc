@@ -359,7 +359,7 @@ class divListSystem extends MultiSelectWindow
         $action.= "<input class='center' type='image'
           src='images/lists/copy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
       }
-      $action.= "<input class='center' type='image' src='images/edit.png' 
+      $action.= "<input class='center' type='image' src='images/lists/edit.png' 
                     alt='"._("edit")."'     name='system_edit_%KEY%' title='"._("Edit system")."'>";
       if(preg_match("/(c.*w|w.*c)/",$acl_all)){
         $action.= $this->GetSnapShotActions($val['dn']);

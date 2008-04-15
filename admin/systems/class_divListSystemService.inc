@@ -138,7 +138,7 @@ class divListSystemService extends MultiSelectWindow
 
       /* Check if edit is enabled and allowed for current service */
       if($entry['AllowEdit'] && preg_match("/(r|w)/i",$acl)){
-        $actions .= "&nbsp;<input type='image' name='EditSingleService_".$name."' src='images/edit.png'
+        $actions .= "&nbsp;<input type='image' name='EditSingleService_".$name."' src='images/lists/edit.png'
                             title='"._("Edit service")."'>";
       }else{
         $actions .= "&nbsp;<img src='images/empty.png' width='16' alt=''>";
