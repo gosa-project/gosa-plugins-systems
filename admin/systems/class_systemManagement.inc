@@ -944,6 +944,14 @@ class systems extends plugin
             }
           }
 
+	  # Enable activation
+          foreach (array("servgeneric", "workgeneric", "termgeneric") as $cls){
+            if (isset($this->systab->by_object[$cls])){
+	      $this->systab->by_object["workstartup"]->auto_activate= TRUE;
+	    }
+          }
+
+	  # Enable sending of LDAP events
 	  if (isset($this->systab->by_object["workstartup"])){
             $this->systab->by_object["workstartup"]->gotoLdap_inherit= TRUE;
 	  }
