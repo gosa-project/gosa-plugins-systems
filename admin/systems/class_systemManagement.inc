@@ -943,6 +943,10 @@ class systems extends plugin
               $this->systab->by_object[$cls]->gotoXColordepth= "";
             }
           }
+
+	  if (isset($this->systab->by_object["workstartup"])){
+            $this->systab->by_object["workstartup"]->gotoLdap_inherit= TRUE;
+	  }
         }
 
         $this->systab->save();
