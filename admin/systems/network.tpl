@@ -16,7 +16,7 @@
             <input size=25 maxlength=80 type='text' name='additionalHostNumbers_{$key}' value='{$item}'>
             <input type='image' class='center' name='additionalHostNumbers_del_{$key}' src='images/lists/trash.png' alt='{msgPool type=delButton}'>
           {/foreach}
-          <input type='image' class='center' name='additionalHostNumbers_add}' src='images/list_new.png' alt='{msgPool type=addButton}'>
+          <input type='image' class='center' name='additionalHostNumbers_add}' src='images/lists/new.png' alt='{msgPool type=addButton}'>
 
 {render acl=$ipHostNumberACL}
 {if $DNS_is_account == true}

@@ -96,8 +96,8 @@ class divListSystemService extends MultiSelectWindow
  
       switch($entry['Status']){
         case ''      : $str ="&nbsp;";break;
-        case SERVICE_STOPPED  : $str ="<img src='images/status_stopped.png' title='"._("Stopped")."'>"; break;
-        case SERVICE_STARTED  : $str ="<img src='images/status_running.png' title='"._("Started")."'>"; break;
+        case SERVICE_STOPPED  : $str ="<img src='images/lists/off.png' title='"._("Stopped")."'>"; break;
+        case SERVICE_STARTED  : $str ="<img src='images/lists/on.png' title='"._("Started")."'>"; break;
         case SERVICE_RESTARTED : $str ="<img src='images/status_restarting.png' title='"._("Restarting")."' alt='R'>"; break;
         default: $str= "<img src='images/select_user.png' alt='".$entry['Status']."' title='"._("User status")." : ".$entry['Status']."'>";
       }
