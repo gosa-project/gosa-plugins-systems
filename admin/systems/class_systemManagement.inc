@@ -879,15 +879,15 @@ class systems extends plugin
        the user wants to save edited data. Check and save at this
        point. */
 
-    /* Dirty workaround - MSG_DIALOG - OK
-       If a message dialog is shown and we press 'OK'
-        then try to save again.
-     */
-    foreach($_POST as $name => $value){
-      if(preg_match("/^MSG_OK/",$name)){
-        $_POST['edit_finish'] = TRUE;
-      }
-    }
+#    /* Dirty workaround - MSG_DIALOG - OK
+#      If a message dialog is shown and we press 'OK'
+#       then try to save again.
+#     */
+#    foreach($_POST as $name => $value){
+#      if(preg_match("/^MSG_OK/",$name)){
+#        $_POST['edit_apply'] = TRUE;
+#      }
+#    }
 
     if ((isset($_POST['edit_finish']) || isset($_POST['edit_apply'])) && (isset($this->systab->config)) || $save_object_directly){
 
