@@ -327,8 +327,13 @@ class servgeneric extends plugin
 
     /* Warn the user, that this host is currently installing */
     if($this->currently_installing && !$this->currently_installing_warned && !preg_match("/".normalizePreg(get_ou("incomingou"))."/",$this->orig_dn)){
+
+      /* Force aborting without message dialog */
+      $message[] = "";
       $this->currently_installing_warned = TRUE;
-      $message[] = _("This host is currently installing, if you really want to save it, save again.");
+      msg_dialog::display(_("Software deployment"), 
+          _("This host is currently installing, if you really want to save it, press 'OK'."),
+          CONFIRM_DIALOG);
     }
 
     return ($message);

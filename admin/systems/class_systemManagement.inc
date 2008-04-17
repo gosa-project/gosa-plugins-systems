@@ -37,6 +37,7 @@ class systems extends plugin
 
   /* Arp hanlding activated */
   var $arp_handling_active = FALSE;
+  var $last_action = "";
 
   function systems (&$config, $ui)
   {
@@ -879,17 +880,28 @@ class systems extends plugin
        the user wants to save edited data. Check and save at this
        point. */
 
-#    /* Dirty workaround - MSG_DIALOG - OK
-#      If a message dialog is shown and we press 'OK'
-#       then try to save again.
-#     */
-#    foreach($_POST as $name => $value){
-#      if(preg_match("/^MSG_OK/",$name)){
-#        $_POST['edit_apply'] = TRUE;
-#      }
-#    }
+    /* Dirty workaround - MSG_DIALOG - OK
+      If a message dialog is shown and we press 'OK'
+       then try to save again.
+     */
+    foreach($_POST as $name => $value){
+      if(preg_match("/^MSG_OK/",$name)){
+        $_POST[$this->last_action] = TRUE;
+      }
+    }
 
     if ((isset($_POST['edit_finish']) || isset($_POST['edit_apply'])) && (isset($this->systab->config)) || $save_object_directly){
+
+      /* If the save routine gets interrupted by a confirm dialog, 
+          store last action so we can trigger it again after 'Ok' was pressed.
+         (This is the case if a system gets modified while it is installing - GOsa si)
+       */
+      $this->last_action = ""; 
+      if(isset($_POST['edit_finish'])){
+        $this->last_action = "edit_finish"; 
+      }elseif(isset($_POST['edit_apply'])){
+        $this->last_action = "edit_apply";
+      }
 
       /* Check tabs, will feed message array */
       $message = array();
