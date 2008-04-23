@@ -392,9 +392,10 @@ class ServerService extends plugin
   function save_object()
   {
     foreach($this->plugins as $name => $obj){
-      if($obj->is_account){
-        $this->plugins[$name]->save_object();
-      }
+    
+#      if($obj->is_account){
+#        $this->plugins[$name]->save_object();
+#      }
     }
   }
 
