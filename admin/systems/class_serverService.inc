@@ -46,10 +46,12 @@ class ServerService extends plugin
   var $backup           = NULL;
   var $acl              ;
   var $cn;
+  var $parent           ;
 
-  function ServerService (&$config, $dn)
+  function ServerService (&$config, $dn,$parent)
   {
     plugin::plugin($config);
+    $this->parent = $parent;
     $this->dn= $dn;
     foreach ($config->data['TABS']['SERVERSERVICE'] as $plug){
 
@@ -57,7 +59,7 @@ class ServerService extends plugin
 
         $name= $plug['CLASS'];
         $this->plugin_names[]= $name;
-        $this->plugins[$name]= new $name($config, $dn);
+        $this->plugins[$name]= new $name($config, $dn,&$this);
 
         /* Capture all service objectClases, necessary for acl handling */ 
         if(isset($this->plugins[$name]->objectclasses)){
@@ -214,7 +216,7 @@ class ServerService extends plugin
 
     /* Abort dialog */
     if(isset($_POST['SaveService']) && is_object($this->dialog)){
-      $this->dialog->save_object();
+#      $this->dialog->save_object();
       $msgs = $this->dialog->check();
       if(count($msgs)){
         foreach($msgs as $msg){
@@ -244,7 +246,7 @@ class ServerService extends plugin
 
     /* There is currently a subdialog open, display this dialog */
     if(is_object($this->dialog)){
-      $this->dialog->save_object();
+#      $this->dialog->save_object();
       return($this->dialog->execute());
     }
 
@@ -392,10 +394,9 @@ class ServerService extends plugin
   function save_object()
   {
     foreach($this->plugins as $name => $obj){
-    
-#      if($obj->is_account){
-#        $this->plugins[$name]->save_object();
-#      }
+      if($obj->is_account){
+        $this->plugins[$name]->save_object();
+      }
     }
   }
 
