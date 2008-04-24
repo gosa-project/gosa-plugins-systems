@@ -59,7 +59,7 @@ class ServerService extends plugin
 
         $name= $plug['CLASS'];
         $this->plugin_names[]= $name;
-        $this->plugins[$name]= new $name($config, $dn,&$this);
+        $this->plugins[$name]= new $name($config, $dn, $this);
 
         /* Capture all service objectClases, necessary for acl handling */ 
         if(isset($this->plugins[$name]->objectclasses)){
