@@ -163,7 +163,7 @@ class ServerService extends plugin
     if($s_action == "RemoveSingleService"){
 
       /* Create resetted obj */
-      $new_obj = new $s_entry($this->config,$this->dn,&$this);
+      $new_obj = new $s_entry($this->config,$this->dn, $this);
       $new_obj -> set_acl_base($this->acl_base);
       $new_obj -> set_acl_category(preg_replace("/\/$/","",$this->acl_category));
       $tmp     = $new_obj->getListEntry();
