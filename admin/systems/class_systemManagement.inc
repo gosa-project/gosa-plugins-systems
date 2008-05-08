@@ -996,9 +996,10 @@ class systems extends plugin
           session::un_set('objectinfo');
         }else{
       
-          /* Reinitialize tab classes, to ensure data consistency
-           */
-          $this->systab->re_init();
+          /* Reinitialize tab */
+          if($this->systab instanceof tabs){
+            $this->systab->re_init();
+          }
         }
       } else {
         /* Ok. There seem to be errors regarding to the tab data,
