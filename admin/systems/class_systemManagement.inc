@@ -1286,9 +1286,9 @@ class systems extends plugin
             $terminal['location'] = array_search($tmp, $this->config->departments);
             $terminal['message']  = _("Workstation template for")."&nbsp;'".$dn_name."'&nbsp;";
           }
-          if (isset($value["FAIstate"][0])){
-            $terminal['type']= $this->getState($terminal['type'], $value["FAIstate"][0]);
-          }
+#          if (isset($value["FAIstate"][0])){
+#            $terminal['type']= $this->getState($terminal['type'], $value["FAIstate"][0]);
+#          }
         }
       } elseif (in_array_ics('gotoPrinter', $value["objectClass"])){
        
@@ -1306,9 +1306,9 @@ class systems extends plugin
 
           $terminal             = $value;
           $terminal['type']     = "S";
-          if (isset($value["FAIstate"][0])){
-            $terminal['type']= $this->getState($terminal['type'], $value["FAIstate"][0]);
-          }
+#          if (isset($value["FAIstate"][0])){
+#            $terminal['type']= $this->getState($terminal['type'], $value["FAIstate"][0]);
+#          }
         }
       } elseif (in_array_ics('goFonHardware', $value["objectClass"])){
 
@@ -1500,57 +1500,88 @@ class systems extends plugin
   function convert_list($input)
   {
     $temp= "";
-    $conv= array(	
-        "NQ" => array("select_newsystem.png",_("New system from incoming")),
-        "D" => array("select_default.png",_("Template")),
-        "T" => array("select_terminal.png",_("Terminal")),
-        "L" => array("select_workstation.png",_("Workstation")),
-        "GL" => array("select_workstation_green.png",_("Workstation is installing")),
-        "YL" => array("select_workstation_yellow.png",_("Workstation is waiting for action")),
-        "RL" => array("select_workstation_red.png",_("Workstation installation failed")),
-        "F" => array("select_phone.png",_("Phone")),
-        "S" => array("select_server.png",_("Server")),
-        "GS" => array("select_server_green.png",_("Server is installing")),
-        "YS" => array("select_server_yellow.png",_("Server is waiting for action")),
-        "RS" => array("select_server_red.png",_("Server installation failed")),
-        "W" => array("select_winstation.png",_("Win workstation")),
-        "C" => array("select_component.png",_("Network device")),
-        "NT"=> array("select_new_terminal.png",_("New terminal")),
-        "NL"=> array("select_new_workstation.png",_("New workstation")),
-        "P" => array("select_printer.png",_("Printer")));
 
+    $conv= array(
+        "D" => array("select_default.png",_("Template")),
+        "F" => array("select_phone.png",_("Phone")),
+        "C" => array("select_component.png",_("Network device")),
+        "P" => array("select_printer.png",_("Printer")),
+
+        "W" => array("select_winstation.png",_("Win workstation")),
+
+        "L" => array("select_workstation.png",_("Workstation")),
+        "S" => array("select_server.png",_("Server")),
+        "T" => array("select_terminal.png",_("Terminal")),
+
+        "LX" => array("workstation_locked.png",_("Locked workstation")),
+        "SX" => array("server_locked.png",_("Locked server")),
+        "TX" => array("terminal_locked.png",_("Locked terminal")),
+
+        "LE" => array("workstation_error.png",_("Workstation error")),
+        "SE" => array("server_error.png",_("Server error")),
+        "TE" => array("terminal_error.png",_("Terminal error")),
+
+        "LB" => array("workstation_busy.png",_("Workstation busy")),
+        "SB" => array("server_busy.png",_("Server busy")),
+
+        "NQ" => array("select_newsystem.png",_("New system from incoming")),
+        "NT"=> array("select_new_terminal.png",_("New terminal")),
+        "NL"=> array("select_new_workstation.png",_("New workstation")));
+
+    /* Use locked icons 
+     */
+    if( in_array($input['type'],array("S","T","L")) && 
+        isset($input['gotoMode'][0]) && 
+        preg_match("/locked/",$input['gotoMode'][0])){
+      $input['type'].="X";
+    } elseif(in_array($input['type'],array("S","L")) &&
+        isset($input['FAIstate'][0])){
+
+    /* Add FAI state icons 
+     */
+      switch (preg_replace('/:.*$/', '', $input['FAIstate'][0])) {
+        case 'installing':
+          $type= 'O';
+          break;
+        case 'error':
+          $type= 'E';
+          break;
+        case 'install':
+        case 'sysinfo':
+        case 'softupdate':
+        case 'scheduledupdate':
+          $type= 'B';
+          break;
+      }
+
+      $input['type'].= $type;
+    }   
+
+    /* Use new images if object is from incoming 
+     */
     if((isset($input['is_new']))&&(!empty($input['is_new']))){
       $input['type']="N".$input['type'];
     }
+
+    /* Check which flags this objects uses 
+     */
     foreach ($conv  as $key => $value){
-      if($input['type']==$key){
+      $found = TRUE;
+      if(strlen($key) != strlen($input['type'])) {
+        $found = FALSE;
+      }
+      for($i = 0 ; $i < strlen($key) ; $i++){
+        if(!preg_match("/".$key[$i]."/",$input['type'])){
+          $found = FALSE;
+        }
+      }
+
+      if($found){
         $tmp['img'] ="<img class='center' src='images/".$value[0]."' alt='".$key."' title='".$value['1']."'>";
         $tmp['class']=$key;
         return $tmp;
       }
     }
-  }
-
-  
-  function getState($type, $state)
-  {
-    switch (preg_replace('/:.*$/', '', $state)) {
-      case 'installing':
-                $type= 'G'.$type;
-                break;
-      case 'error':
-                $type= 'R'.$type;
-                break;
-      case 'install':
-      case 'sysinfo':
-      case 'softupdate':
-      case 'scheduledupdate':
-                $type= 'Y'.$type;
-                break;
-    }
-
-
-    return ($type);
   }
 
 
