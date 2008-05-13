@@ -1541,12 +1541,10 @@ class systems extends plugin
      */
       $type= "";
       switch (preg_replace('/:.*$/', '', $input['FAIstate'][0])) {
-        case 'installing':
-          $type= 'O';
-          break;
         case 'error':
           $type= 'E';
           break;
+        case 'installing':
         case 'install':
         case 'sysinfo':
         case 'softupdate':
