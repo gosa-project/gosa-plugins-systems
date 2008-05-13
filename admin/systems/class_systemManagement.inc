@@ -1539,6 +1539,7 @@ class systems extends plugin
 
     /* Add FAI state icons 
      */
+      $type= "";
       switch (preg_replace('/:.*$/', '', $input['FAIstate'][0])) {
         case 'installing':
           $type= 'O';
