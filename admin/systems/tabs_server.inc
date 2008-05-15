@@ -54,6 +54,29 @@ class servtabs extends tabs
     $this->addSpecialTabs();
   }
 
+
+  /*! \brief Reinitializes the tab classes with fresh ldap values.
+    This maybe usefull if for example the apply button was pressed.
+   */
+  function re_init()
+  {
+    $baseobject= NULL;
+    foreach($this->by_object as $name => $object){
+      $class = get_class($object);
+      if(in_array($class,array("reference","acl"))) continue;
+      if ($baseobject === NULL){
+        $baseobject= new $class($this->config, $this->dn,NULL,$this);
+        $baseobject->enable_CSN_check();
+        $this->by_object[$name]= $baseobject;
+      } else {
+        $this->by_object[$name]= new $class($this->config, $this->dn, $baseobject,$this);
+      }
+      $this->by_object[$name]->parent= &$this;
+      $this->by_object[$name]->set_acl_category($this->acl_category);
+    }
+  }
+
+
   function save_object($save_current= FALSE)
   {
     tabs::save_object($save_current);
