@@ -39,6 +39,8 @@ class systems extends plugin
   var $arp_handling_active = FALSE;
   var $last_action = "";
 
+  var $dns = array();
+
   function systems (&$config, $ui)
   {
     /* Save configuration for internal use */
