@@ -24,7 +24,6 @@ if ($remove_lock){
         if(session::is_set('systems')){
                 $systems = session::get('systems');
                 $systems->remove_lock();
-                del_lock ($ui->dn);
                 session::un_set ('systems');
         }
 } else {

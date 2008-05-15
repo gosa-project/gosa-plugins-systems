@@ -382,7 +382,7 @@ class systems extends plugin
         add_lock ($this->dn, $this->ui->dn);
       }else{ 
         msg_dialog::display(_("Error"), _("Editing this type of object is not supported yet!"), ERROR_DIALOG);
-        del_lock($this->dn);
+        $this->remove_lock();
       }
     }
 
@@ -541,7 +541,7 @@ class systems extends plugin
 
     /* Delete terminal canceled? */
     if (isset($_POST['delete_cancel']) || isset($_POST['password_cancel'])){
-      del_lock ($this->dn);
+      $this->remove_lock();
       session::un_set('objectinfo');
     }
 
@@ -724,10 +724,11 @@ class systems extends plugin
             msg_dialog::display(_("Permission error"), msgPool::permDelete(), ERROR_DIALOG);
             new log("security","systems/".get_class($this),$dn,array(),"Tried to trick deletion.");
           }
-          /* Remove lock file after successfull deletion */
-          del_lock ($dn);
-          unset($this->dns[$key]);
         }
+
+        /* Remove lock file after successfull deletion */
+        $this->remove_lock();
+        $this->dns = array();
       }
     }
 
@@ -737,11 +738,11 @@ class systems extends plugin
 
     /* Remove lock */
    if(isset($_POST['delete_multiple_system_cancel'])){
-      foreach($this->dns as $key => $dn){
-        del_lock ($dn);
-        unset($this->dns[$key]);
-      }
-    }
+
+     /* Remove lock file after successfull deletion */
+     $this->remove_lock();
+     $this->dns = array();
+   }
 
 
     /********************
@@ -869,7 +870,7 @@ class systems extends plugin
       }
 
       /* Remove lock file after successfull deletion */
-      del_lock ($this->dn);
+      $this->remove_lock();
     }
 
 
@@ -988,7 +989,7 @@ class systems extends plugin
         /* Terminal has been saved successfully, remove lock from LDAP. */
         if (!isset($_POST['edit_apply'])){
           if ($this->dn != "new"){
-            del_lock ($this->dn);
+            $this->remove_lock();
           }
 
           unset ($this->systab);
@@ -1015,7 +1016,7 @@ class systems extends plugin
     /* Cancel dialogs */
     if (isset($_POST['edit_cancel']) || isset($_POST['password_cancel']) || isset($_POST['SystemTypeAborted'])){
       if (isset($this->systab)){
-        del_lock ($this->systab->dn);
+        $this->remove_lock();
         unset ($this->systab);
       }
       $this->systab= NULL;
@@ -1373,6 +1374,12 @@ class systems extends plugin
   {
     if (isset($this->systab->dn)){
       del_lock ($this->systab->dn);
+    }
+    if(isset($this->dn) && !empty($this->dn) && $this->dn != "new"){
+      del_lock($this->dn);
+    }
+    if(isset($this->dns) && is_array($this->dns) && count($this->dns)){
+      del_lock($this->dns);
     }
   }
 
