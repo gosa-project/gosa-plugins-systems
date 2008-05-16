@@ -41,6 +41,8 @@ class systems extends plugin
 
   var $dns = array();
 
+  var $system_activation_object = ""; // The object to activate (NewDevice)
+
   function systems (&$config, $ui)
   {
     /* Save configuration for internal use */
@@ -108,19 +110,6 @@ class systems extends plugin
       }
     }
    
-    /* Incoming handling  
-     * If someone made a systemtype and ogroup selection 
-     * Display the new requested entry type ... servtab  in case of server and so on.
-     */
-    if(isset($_POST['SystemTypeChoosen'])){
-      $SelectedSystemType = session::get('SelectedSystemType');
-      $s_action = "SelectedSystemType";
-      $s_entry  = $_POST['SystemType'];
-      $SelectedSystemType['ogroup'] = $_POST['ObjectGroup'];
-      $this->systab = NULL;
-      session::set('SelectedSystemType',$SelectedSystemType);
-    }
-
     /* remove image tags from posted entry  (posts looks like this 'name_x')*/
     $s_entry  = preg_replace("/_.$/","",$s_entry);
 
@@ -168,6 +157,11 @@ class systems extends plugin
 	    }
     }
 
+    /* Activate multiple machines */
+    if(isset($_POST['menu_action']) && preg_match("/^activate_multiple/",$_POST['menu_action'])){
+      $s_action = "activate_multiple";
+    }
+
     /* Check for exeeded sizelimit */
     if (($message= check_sizelimit()) != ""){
       return($message);
@@ -178,6 +172,13 @@ class systems extends plugin
       return ($smarty->fetch(get_template_path('chooser.tpl', TRUE)));
     }
 
+    /* Incoming handling  
+     * If someone made a systemtype and ogroup selection 
+     * Display the new requested entry type ... servtab  in case of server and so on.
+     */
+    if(isset($_POST['SystemTypeChoosen'])){
+      $s_action = "SelectedSystemType";
+    }
 
     /********************
       Copy & Paste Handling  ...
@@ -279,32 +280,142 @@ class systems extends plugin
 
 
     /********************
-      Create new system ...   
+      New Device hanlding  (Ogroup/System select dialog.)
      ********************/
-    /* Create new default terminal 
-     * Or create specified object of selected system type, from given incoming object  
-     */
 
-    $save_object_directly = false;
-    if(($s_action == "SelectedSystemType") && (isset($_POST['ObjectGroup']) && ($_POST['ObjectGroup'] != "none"))){
-      $save_object_directly = true;
+    if($s_action == "SelectedSystemType"){
+
+      /* Possible destination system types 
+       */
+      $tabs = array(
+          "terminal"    => array("CLASS"=>"TERMTABS",     "TABNAME"=>"termgeneric",     
+            "TABCLASS" =>"termtabs",      "ACL"=> "terminal"),
+          "workstation" => array("CLASS"=>"WORKTABS",     "TABNAME"=>"workgeneric",     
+            "TABCLASS" =>"worktabs",      "ACL"=> "workstation"),
+          "server"      => array("CLASS"=>"SERVTABS",     "TABNAME"=>"servgeneric",     
+            "TABCLASS" =>"servtabs",      "ACL"=> "server"));
+
+      /* Remember dialog selection.
+       */
+      $selected_group = $_POST['ObjectGroup'];
+      $selected_system = $_POST['SystemType'];
+
+      $this->systab = NULL;
+
+      /* Check if system type exists. It should! */
+      if(isset($tabs[$selected_system])){
+
+        /* Get tab informations */
+        $class    = $tabs[$selected_system]["CLASS"];
+        $tabname  = $tabs[$selected_system]["TABNAME"];
+        $tabclass = $tabs[$selected_system]["TABCLASS"];
+        $acl_cat  = $tabs[$selected_system]["ACL"];
+
+        /* Go through all objects that should be activated */
+        foreach($this->system_activation_object as $dn){
+
+          /* Load permissions for selected 'dn' and check if
+             we're allowed to create this 'dn' */
+          $this->dn = $dn;
+          $ui       = get_userinfo();
+          $tabacl   = $ui->get_permissions($this->dn,$acl_cat."/".$tabname);
+
+          /* We are allowed to create the requested system type */
+          if(preg_match("/c/",$tabacl)){
+            $this->systab= new $tabclass($this->config, $this->config->data['TABS'][$class], $this->dn,$selected_system);
+            $this->systab->set_acl_base($this->DivListSystem->selectedBase);
+            $this->systab->by_object[$tabname]->base = $this->DivListSystem->selectedBase;
+            $this->systab->base = $this->DivListSystem->selectedBase;
+
+            /*******
+             * Set gotoMode to active if we there was an ogroup selected. 
+             */
+            $found = false;
+            foreach(array("workgeneric"=>"active","servgeneric"=>"active","termgeneric"=>"active") as $tab => $value){
+              if(isset($this->systab->by_object[$tab]->gotoMode)) {
+                $found = true;
+                $this->systab->by_object[$tab]->gotoMode = $value;
+              }
+            }
+            if(!$found){
+              msg_dialog::display(_("Internal error"), _("Cannot set mode to 'active'!"), ERROR_DIALOG);
+            }
+
+
+            if($selected_group != "none"){
+
+              /*******
+               * Update object group membership
+               */
+              $og = new ogroup($this->config,$selected_group);
+              if($og){
+                $og->AddDelMembership($this->systab->dn);
+                $og->save();
+              }
+
+              /*******
+               * Set default system specific attributes 
+               */
+              foreach (array("workservice", "termservice") as $cls){
+                if (isset($this->systab->by_object[$cls])){
+                  $this->systab->by_object[$cls]->gotoXMouseport= "";
+                  $this->systab->by_object[$cls]->gotoXMouseType= "";
+                  $this->systab->by_object[$cls]->gotoXResolution= "";
+                  $this->systab->by_object[$cls]->gotoXColordepth= "";
+                }
+              }
+            }
+
+
+            // Enable activation
+            foreach (array("servgeneric", "workgeneric", "termgeneric") as $cls){
+              if (isset($this->systab->by_object[$cls])){
+                $this->systab->by_object["workstartup"]->auto_activate= TRUE;
+              }
+            }
+
+            // Enable sending of LDAP events
+            if (isset($this->systab->by_object["workstartup"])){
+              $this->systab->by_object["workstartup"]->gotoLdap_inherit= TRUE;
+            }
+
+            /* Don't save directly if there is no objectGroup selected.
+               The user will then be able to configure the missing attributes 
+                on his own.
+             */ 
+            if($selected_group != "none"){
+              $this->systab->save();
+              $this->systab = NULL;
+
+              if(!isset($ldap)){
+                $ldap = $this->config->get_ldap_link();
+              }
+              $ldap->cd ($this->dn);
+              $ldap->cat($this->dn, array('dn'));
+              if(count($ldap->fetch())){
+                $ldap->cd($this->dn);
+                $ldap->rmDir($this->dn);
+              }
+            }
+          }else{
+            msg_dialog::display(_("Error"), msgPool::permCreate(), ERROR_DIALOG);
+          }
+        }
+      }
     }
 
-    if (isset($_POST['create_system'])||$s_action=="newsystem"||$s_action == "SelectedSystemType") {
+
+    if (isset($_POST['create_system'])||$s_action=="newsystem") {
 
       /* If the current entry is an incoming object 
        * $sw = System type as posted in new incoming handling dialog 
        */ 
-      if($s_action == "SelectedSystemType") {
-        $sw         = $s_entry;
+      if(isset($_POST['system'])){
+        $sw = $_POST['system'];
       }else{
-        if(isset($_POST['system'])){
-          $sw = $_POST['system'];
-        }else{
-          $sw = $s_entry;
-        }
-        $this->dn= "new";
+        $sw = $s_entry;
       }
+      $this->dn= "new";
 
       $tabs = array(
           "terminal"    => array("CLASS"=>"TERMTABS",     "TABNAME"=>"termgeneric",     "TABCLASS" =>"termtabs",      "ACL"=> "terminal"),
@@ -334,6 +445,27 @@ class systems extends plugin
         }
       }
     }
+
+
+    /********************
+      System activation
+     ********************/
+
+    /* User wants to edit data? */
+    if (($s_action == "activate_multiple") && (!isset($this->systab->config))){
+      $this->system_activation_object = array();
+      foreach($this->list_get_selected_items() as $id) {
+        $obj = $this->terminals[$id];
+        $type= $this->get_system_type($obj);
+        if($type == "NewDevice"){
+          $this->system_activation_object[] = $obj['dn'];
+        }
+      }
+      if(count($this->system_activation_object)){
+        $this->systab = new SelectDeviceType($this->config,$this->system_activation_object) ;
+      }
+    }
+
 
     /********************
       Edit system ...   
@@ -371,6 +503,7 @@ class systems extends plugin
       if($type == "ArpNewDevice"){
         $this->systab = new ArpNewDeviceTabs($this->config,$this->config->data['TABS']['ARPNEWDEVICETABS'],$this->dn);
       }elseif($type == "NewDevice"){
+        $this->system_activation_object= array($this->dn);
         $this->systab = new SelectDeviceType($this->config,$this->dn) ;
       }elseif(isset($tabs[$type])){
 
@@ -893,7 +1026,7 @@ class systems extends plugin
       }
     }
 
-    if ((isset($_POST['edit_finish']) || isset($_POST['edit_apply'])) && (isset($this->systab->config)) || $save_object_directly){
+    if ((isset($_POST['edit_finish']) || isset($_POST['edit_apply'])) && (isset($this->systab->config))){
 
       /* If the save routine gets interrupted by a confirm dialog, 
           store last action so we can trigger it again after 'Ok' was pressed.
@@ -907,86 +1040,13 @@ class systems extends plugin
       }
 
       /* Check tabs, will feed message array */
-      $message = array();
-      if(!$save_object_directly){
-        $message = $this->systab->check();
-      }else{
-        $found = false;
+      $message = $this->systab->check();
 
-        /* Set gotoMode to active if we there was an ogroup selected . (save_object_directly) */
-        foreach(array("workgeneric"=>"active","servgeneric"=>"active","termgeneric"=>"active") as $tab => $value){
-          if(isset($this->systab->by_object[$tab]->gotoMode)) {
-            $found = true;
-            $this->systab->by_object[$tab]->gotoMode = $value;
-          }
-        }
-        if(!$found){
-          msg_dialog::display(_("Internal error"), _("Cannot set mode to 'active'!"), ERROR_DIALOG);
-        }
-
-      }
       /* Save, or display error message? */
       if (count($message) == 0){
 
-        /* Incoming behavior; you can select a system type and an ogroup membership.
-         * If this object is an Incoming object, session::get('SelectedSystemType') isset.
-         * Check if we must add the new object to an object group.
-         *
-         * If this is done, delete the old incoming entry... it is still there, because this is a new
-         * entry and not an edited one, so we will delete it.
-         *
-         */
-        if(session::is_set('SelectedSystemType')){
-          $SelectedSystemType = session::get('SelectedSystemType');
-          if($SelectedSystemType['ogroup'] != "none"){
-            $og = new ogroup($this->config,$SelectedSystemType['ogroup']);
-            if($og){
-              $og->AddDelMembership($this->systab->dn);
-              $og->save();
-            }
-          }
-        }
-
-        /* Save terminal data to ldap */
-        $SelectedSystemType = session::get('SelectedSystemType');
-        if(isset($SelectedSystemType['ogroup']) && $SelectedSystemType['ogroup'] != 'none'){
-          foreach (array("workservice", "termservice") as $cls){
-            if (isset($this->systab->by_object[$cls])){
-              $this->systab->by_object[$cls]->gotoXMouseport= "";
-              $this->systab->by_object[$cls]->gotoXMouseType= "";
-              $this->systab->by_object[$cls]->gotoXResolution= "";
-              $this->systab->by_object[$cls]->gotoXColordepth= "";
-            }
-          }
-
-	  # Enable activation
-          foreach (array("servgeneric", "workgeneric", "termgeneric") as $cls){
-            if (isset($this->systab->by_object[$cls])){
-	      $this->systab->by_object["workstartup"]->auto_activate= TRUE;
-	    }
-          }
-
-	  # Enable sending of LDAP events
-	  if (isset($this->systab->by_object["workstartup"])){
-            $this->systab->by_object["workstartup"]->gotoLdap_inherit= TRUE;
-	  }
-        }
 
         $this->systab->save();
-
-        if(session::is_set('SelectedSystemType')){
-          session::un_set('SelectedSystemType');
-          if(!isset($ldap)){
-            $ldap = $this->config->get_ldap_link();
-          }
-          $ldap->cd ($this->dn);
-          $ldap->cat($this->dn, array('dn'));
-          if(count($ldap->fetch())){
-            $ldap->cd($this->dn);
-            $ldap->rmDir($this->dn);
-          }
-          $ldap->cd($this->config->current['BASE']);
-        }
 
         /* Terminal has been saved successfully, remove lock from LDAP. */
         if (!isset($_POST['edit_apply'])){
@@ -1023,11 +1083,6 @@ class systems extends plugin
       }
       $this->systab= NULL;
       session::un_set('objectinfo');
-
-      /* Remove ogroup selection, which was set while editing a new incoming entry */
-      if(session::is_set('SelectedSystemType')){
-        session::un_set('SelectedSystemType');
-      }
     }
 
     /********************
