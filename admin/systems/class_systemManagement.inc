@@ -312,8 +312,11 @@ class systems extends plugin
         $acl_cat  = $tabs[$selected_system]["ACL"];
 
         /* Go through all objects that should be activated */
-        foreach($this->system_activation_object as $dn){
+        foreach($this->system_activation_object as $key => $dn){
 
+          /* Remove entry from list, to avoid page-reload problems */
+          unset($this->system_activation_object[$key]);
+  
           /* Load permissions for selected 'dn' and check if
              we're allowed to create this 'dn' */
           $this->dn = $dn;
@@ -370,7 +373,7 @@ class systems extends plugin
             // Enable activation
             foreach (array("servgeneric", "workgeneric", "termgeneric") as $cls){
               if (isset($this->systab->by_object[$cls])){
-                $this->systab->by_object["workstartup"]->auto_activate= TRUE;
+                $this->systab->by_object[$cls]->auto_activate= TRUE;
               }
             }
 
@@ -382,7 +385,7 @@ class systems extends plugin
             /* Don't save directly if there is no objectGroup selected.
                The user will then be able to configure the missing attributes 
                 on his own.
-             */ 
+             */
             if($selected_group != "none"){
               $this->systab->save();
               $this->systab = NULL;
