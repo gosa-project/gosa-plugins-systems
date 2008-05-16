@@ -367,19 +367,18 @@ class systems extends plugin
                   $this->systab->by_object[$cls]->gotoXColordepth= "";
                 }
               }
-            }
 
-
-            // Enable activation
-            foreach (array("servgeneric", "workgeneric", "termgeneric") as $cls){
-              if (isset($this->systab->by_object[$cls])){
-                $this->systab->by_object[$cls]->auto_activate= TRUE;
+              // Enable activation
+              foreach (array("servgeneric", "workgeneric", "termgeneric") as $cls){
+                if (isset($this->systab->by_object[$cls])){
+                  $this->systab->by_object[$cls]->auto_activate= TRUE;
+                }
               }
-            }
 
-            // Enable sending of LDAP events
-            if (isset($this->systab->by_object["workstartup"])){
-              $this->systab->by_object["workstartup"]->gotoLdap_inherit= TRUE;
+              // Enable sending of LDAP events
+              if (isset($this->systab->by_object["workstartup"])){
+                $this->systab->by_object["workstartup"]->gotoLdap_inherit= TRUE;
+              }
             }
 
             /* Don't save directly if there is no objectGroup selected.
