@@ -250,7 +250,7 @@ class divListSystem extends MultiSelectWindow
       "&nbsp;"._("Remove")."|"."remove_multiple|\n";
 
     $s.= "..|<img src='images/lists/unlocked.png' alt='' border='0' class='center'>".
-      "&nbsp;"._("Activate new systems")."|activate_multiple|\n";
+      "&nbsp;"._("Activate systems")."|activate_multiple|\n";
 
     /* Add multiple copy & cut icons */
     if(is_object($this->parent->CopyPasteHandler)){
