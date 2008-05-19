@@ -330,22 +330,22 @@ class systems extends plugin
             $this->systab->by_object[$tabname]->base = $this->DivListSystem->selectedBase;
             $this->systab->base = $this->DivListSystem->selectedBase;
 
-            /*******
-             * Set gotoMode to active if we there was an ogroup selected. 
-             */
-            $found = false;
-            foreach(array("workgeneric"=>"active","servgeneric"=>"active","termgeneric"=>"active") as $tab => $value){
-              if(isset($this->systab->by_object[$tab]->gotoMode)) {
-                $found = true;
-                $this->systab->by_object[$tab]->gotoMode = $value;
-              }
-            }
-            if(!$found){
-              msg_dialog::display(_("Internal error"), _("Cannot set mode to 'active'!"), ERROR_DIALOG);
-            }
-
 
             if($selected_group != "none"){
+
+              /*******
+               * Set gotoMode to active if we there was an ogroup selected. 
+               */
+              $found = false;
+              foreach(array("workgeneric"=>"active","servgeneric"=>"active","termgeneric"=>"active") as $tab => $value){
+                if(isset($this->systab->by_object[$tab]->gotoMode)) {
+                  $found = true;
+                  $this->systab->by_object[$tab]->gotoMode = $value;
+                }
+              }
+              if(!$found){
+                msg_dialog::display(_("Internal error"), _("Cannot set mode to 'active'!"), ERROR_DIALOG);
+              }
 
               /*******
                * Update object group membership
