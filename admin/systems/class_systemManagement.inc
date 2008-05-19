@@ -42,12 +42,19 @@ class systems extends plugin
   var $dns = array();
 
   var $system_activation_object = ""; // The object to activate (NewDevice)
+  var $fai_activated  = FALSE;
 
   function systems (&$config, $ui)
   {
     /* Save configuration for internal use */
     $this->config= $config;
     $this->ui= $ui;
+
+    /* Add FAIstate to attributes if FAI is activated */
+    $tmp = $this->config->search("faiManagement", "CLASS",array('menu','tabs'));
+    if(!empty($tmp)){
+      $this->fai_activated = TRUE;
+    }
 
     /* Creat dialog object */
     $this->DivListSystem = new divListSystem($this->config,$this);
@@ -61,7 +68,6 @@ class systems extends plugin
     if($this->config->search("ArpNewDevice","CLASS",array('tabs')) != ""){
       $this->arp_handling_active = TRUE;
     }
-
   }
 
 
@@ -1140,7 +1146,13 @@ class systems extends plugin
 
     /* Add departments if subsearch is disabled */
     if(!$this->DivListSystem->SubSearch){
-      $this->DivListSystem->AddDepartments($this->DivListSystem->selectedBase,3,1);
+
+      /* Add FAIstate to attributes if FAI is activated */
+      if($this->fai_activated){
+        $this->DivListSystem->AddDepartments($this->DivListSystem->selectedBase,4,1);
+      }else{
+        $this->DivListSystem->AddDepartments($this->DivListSystem->selectedBase,3,1);
+      }
     }
     $this->reload();
     $this->DivListSystem->setEntries($this->terminals);
@@ -1250,7 +1262,7 @@ class systems extends plugin
     }
 
     /* Attributes to fetch */
-    $sys_attrs        = array("cn", "description", "macAddress", "objectClass", "sambaDomainName","gotoMode");
+    $sys_attrs        = array("cn", "description", "macAddress", "objectClass", "sambaDomainName","gotoMode","FAIclass");
     $sys_categories   = array("terminal", "workstation", "server", "phone" ,"printer","incoming");
 
     /* Add FAIstate to attributes if FAI is activated */

@@ -85,6 +85,12 @@ class divListSystem extends MultiSelectWindow
     $this->AddHeader(array("string"=> $chk,          "attach"=>"style='width:20px;'"));
     $this->AddHeader(array("string"=>"&nbsp;","attach"=>"style='width:20px;'"));
     $this->AddHeader(array("string"=>_("Systems")." / "._("Department")));
+
+    /* Add header for selected FAI release, if fai is active */
+    if($this->parent->fai_activated){
+      $this->AddHeader(array("string"=>_("Release"),"attach"=>"style='width:100px;'"));
+    }
+
     $this->AddHeader(array("string"=>_("Actions"),"attach"=>"style='width:".$action_col_size."px;border-right:0px;'"));
 
     /*                  Text        ,Value    ,Name         ,Is selected */
@@ -444,15 +450,28 @@ class divListSystem extends MultiSelectWindow
       }
       $cnts[$type] ++;
 
-
       /* Create each field */
       $field0 = array("string" => "<input type='checkbox' id='item_selected_".$key."' name='item_selected_".$key."'>" ,
-                      "attach" => "style='width:20px;'");
+          "attach" => "style='width:20px;'");
+      $field1 = array("string" => sprintf($img['img'],$val['dn']),
+          "attach" => "style='text-align:center;width:20px;'");
+      $field2 = array("string" => sprintf($editlink,$key,$display),
+          "attach" => "style='' title='".preg_replace('/ /', '&nbsp;', @LDAP::fix($val['dn']))."'");
+      $field3 = array("string" => preg_replace("/%KEY%/", "$key", $action2.$action),
+          "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'");
 
-      $field1 = array("string" => sprintf($img['img'],$val['dn']), "attach" => "style='text-align:center;width:20px;'");
-      $field2 = array("string" => sprintf($editlink,$key,$display), "attach" => "style='' title='".preg_replace('/ /', '&nbsp;', @LDAP::fix($val['dn']))."'");
-      $field3 = array("string" => preg_replace("/%KEY%/", "$key", $action2.$action), "attach" => "style='width:".$action_col_size."px;border-right:0px;text-align:right;'");
-      $this->AddElement( array($field0,$field1,$field2,$field3));
+      if($this->parent->fai_activated){
+
+        $release ="&nbsp;";
+        if(isset($val['FAIclass'][0]) && preg_match("/:/",$val['FAIclass'][0])){
+          $release = preg_replace("/^.*:/","",$val['FAIclass'][0]);
+        }
+
+        $field2a = array("string" => $release,"attach"=>"style='width:100px;'");
+        $this->AddElement( array($field0,$field1,$field2,$field2a,$field3));
+      }else{
+        $this->AddElement( array($field0,$field1,$field2,$field3));
+      }
     }
 
     /* Create summary string for list footer */
