@@ -337,6 +337,27 @@ class divListSystem extends MultiSelectWindow
                   "printer" => 0 , "phone" => 0 , "server" => 0,
                   "NewDevice" => 0, "winstation"=> 0);
 
+
+    /* Get list of all objectGroups and their member and release configuration 
+     */
+    $ogroups = array();
+    if($this->parent->fai_activated){
+      $ogroups = get_sub_list("(&(objectClass=gosaGroupOfNames)(FAIclass=*)(member=*))",array("ogroups"),
+          get_ou("ogroupou"),$this->config->current['BASE'],array("FAIclass","member","cn"),GL_NO_ACL_CHECK | GL_SUBSEARCH);
+      foreach($ogroups as $ogroup){
+        for($i = 0 ; $i < $ogroup['member']['count'] ; $i++){
+          if(preg_match("/:/",$ogroup['FAIclass'][0])) {
+            if(!isset($og_list[$ogroup['member'][$i]])){
+              $ogs_release[$ogroup['member'][$i]]['STR'] = ""; 
+              $ogs_release[$ogroup['member'][$i]]['CN'] = ""; 
+            }
+            $ogs_release[$ogroup['member'][$i]]['STR'] .= preg_replace("/^.*:/","",$ogroup['FAIclass'][0]).", ";
+            $ogs_release[$ogroup['member'][$i]]['CN']  .= $ogroup['cn'][0].", ";
+          }
+        }
+      }
+    }
+
     // Test Every Entry and generate divlist Array
     foreach($terminals as $key => $val){
 
@@ -463,11 +484,17 @@ class divListSystem extends MultiSelectWindow
       if($this->parent->fai_activated){
 
         $release ="&nbsp;";
+        $release_attach = ""; 
         if(isset($val['FAIclass'][0]) && preg_match("/:/",$val['FAIclass'][0])){
-          $release = preg_replace("/^.*:/","",$val['FAIclass'][0]);
+          $release        = preg_replace("/^.*:/","",$val['FAIclass'][0]);
+          $release_attach = ""; 
+        }elseif(isset($ogs_release[$val['dn']])){
+          $release = trim($ogs_release[$val['dn']]['STR'],", ").
+            "&nbsp;<img src='images/select_ogroup.png' class='center' alt='' 
+            title='".sprintf(_("Inherited from %s"),trim($ogs_release[$val['dn']]['CN'],", "))."'>";
+          $release_attach = "title='".sprintf(_("Inherited from %s"),trim($ogs_release[$val['dn']]['CN'],", "))."'"; 
         }
-
-        $field2a = array("string" => $release,"attach"=>"style='width:100px;'");
+        $field2a = array("string" => $release,"attach"=>$release_attach." style='width:100px;'");
         $this->AddElement( array($field0,$field1,$field2,$field2a,$field3));
       }else{
         $this->AddElement( array($field0,$field1,$field2,$field3));
