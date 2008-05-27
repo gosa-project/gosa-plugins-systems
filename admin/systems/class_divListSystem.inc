@@ -213,6 +213,7 @@ class divListSystem extends MultiSelectWindow
     $s = ".|"._("Actions")."|\n";
     $s.= "..|<img src='images/lists/new.png' alt='' border='0' class='center'>".
       "&nbsp;"._("Create")."|\n";
+
     if(preg_match("/c/",$ui->get_permissions($this->selectedBase,"terminal/termgeneric"))){
       $s.= "...|<img src='images/select_terminal.png' alt='' border='0' class='center'>".
         "&nbsp;"._("Terminal")."|"."newsystem_terminal|\n";
@@ -258,26 +259,23 @@ class divListSystem extends MultiSelectWindow
     $s.= "..|<img src='images/lists/unlocked.png' alt='' border='0' class='center'>".
       "&nbsp;"._("Activate systems")."|activate_multiple|\n";
 
-    /* Add multiple copy & cut icons */
-    if(is_object($this->parent->CopyPasteHandler)){
+    if(is_object($this->parent->CopyPasteHandler) && preg_match("/r/",$all_module_acls)){
       $s.= "..|---|\n";
       $s.= "..|<img src='images/lists/copy.png' alt='' border='0' class='center'>".
         "&nbsp;"._("Copy")."|"."multiple_copy_systems|\n";
-      $s.= "..|<img src='images/lists/cut.png' alt='' border='0' class='center'>".
-        "&nbsp;"._("Cut")."|"."multiple_cut_systems|\n";
+      if(is_object($this->parent->CopyPasteHandler) && preg_match("/(r.*d|d.*r)/",$all_module_acls)){
+        $s.= "..|<img src='images/lists/cut.png' alt='' border='0' class='center'>".
+          "&nbsp;"._("Cut")."|"."multiple_cut_systems|\n";
+      }
     }
 
-    /* Get copy & paste icon */
-    $Copy_Paste ="";
-    if(preg_match("/(c.*w|w.*c)/",$all_module_acls) &&  $this->parent->CopyPasteHandler){
-      $s .= "..|---|\n";
-      if($this->parent->CopyPasteHandler->entries_queued()){
-        $img = "<img border='0' class='center' src='images/lists/paste.png' alt=''>";
-        $s.="..|".$img."&nbsp;"._("Paste")."|editPaste|\n";
-      }else{
-        $img = "<img border='0' class='center' src='images/lists/paste.png' alt=''>";
-        $s.="..|".$img."&nbsp;"._("Paste")."\n";
-      }
+    /* Copy & paste icons */
+    if(is_object($this->parent->CopyPasteHandler) && $this->parent->CopyPasteHandler->entries_queued()){
+      $img = "<img border='0' class='center' src='images/lists/paste.png' alt=''>";
+      $s.="..|".$img."&nbsp;"._("Paste")."|editPaste|\n";
+    }else{
+      $img = "<img border='0' class='center' src='images/lists/paste-grey.png' alt=''>";
+      $s.="..|".$img."&nbsp;"._("Paste")."\n";
     }
 
     /* Add snapshot icons */
@@ -383,20 +381,30 @@ class divListSystem extends MultiSelectWindow
       $acl      = $ui->get_permissions($val['dn'],$tabs[$type]['ACL']);
 
       $action ="";
-      if(($this->parent->CopyPasteHandler) && preg_match("/(c.*w|w.*c)/",$acl_all)){
-        $action.= "<input class='center' type='image'
+      if(preg_match("/(r.*d|r.*d)/",$acl_all) && $this->parent->CopyPasteHandler){
+        $action .= "<input class='center' type='image'
           src='images/lists/cut.png' alt='"._("cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
-        $action.= "<input class='center' type='image'
-          src='images/lists/copy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
-      }
-      $action.= "<input class='center' type='image' src='images/lists/edit.png' 
-                    alt='"._("edit")."'     name='system_edit_%KEY%' title='"._("Edit system")."'>";
-      if(preg_match("/(c.*w|w.*c)/",$acl_all)){
-        $action.= $this->GetSnapShotActions($val['dn']);
       }else{
-        $action.= $empty."&nbsp;".$empty."&nbsp;";
+        $action.="<img src='images/empty.png' alt=' ' class='center'>&nbsp;";
       }
 
+      if(preg_match("/r/",$acl_all) && $this->parent->CopyPasteHandler){
+        $action.= "<input class='center' type='image'
+          src='images/lists/copy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
+      }else{
+        $action.="<img src='images/empty.png' alt=' ' class='center'>&nbsp;";
+      }
+
+      $action.= "<input class='center' type='image' src='images/lists/edit.png' 
+                    alt='"._("edit")."'     name='system_edit_%KEY%' title='"._("Edit system")."'>";
+
+      /* Add snapshot icon */
+      if(preg_match("/(r.*w|w.*r)/",$acl_all)){
+        $action.= $this->GetSnapShotActions($val['dn']);
+      }else{
+        $action.="<img src='images/empty.png' alt=' ' class='center'>&nbsp;";
+        $action.="<img src='images/empty.png' alt=' ' class='center'>&nbsp;";
+      }
 
       if(preg_match("/d/",$acl)){
         $action.= "<input class='center' type='image' src='images/lists/trash.png' 
