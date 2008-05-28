@@ -780,26 +780,57 @@ class systems extends plugin
       $this->dns = array();
       $ids = $this->list_get_selected_items();
 
+      $ui = get_userinfo();
+      $tabs = array(
+          "ArpNewDevice"=> array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "incoming/systems"),
+          "NewDevice"   => array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "incoming/systems"),
+          "terminal"    => array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "terminal/termgeneric"),
+          "workstation" => array("CLASS"=>"WORKTABS",     "TABCLASS" =>"worktabs",      "ACL"=> "workstation/workgeneric"),
+          "server"      => array("CLASS"=>"SERVTABS",     "TABCLASS" =>"servtabs",      "ACL"=> "server/servgeneric"),
+          "printer"     => array("CLASS"=>"PRINTTABS",    "TABCLASS" =>"printtabs",     "ACL"=> "printer/printgeneric"),
+          "phone"       => array("CLASS"=>"PHONETABS",    "TABCLASS" =>"phonetabs",     "ACL"=> "phone/phoneGeneric"),
+          "winstation"  => array("CLASS"=>"WINTABS",      "TABCLASS" =>"wintabs",       "ACL"=> "winworkstation/wingeneric"),
+          "component"   => array("CLASS"=>"COMPONENTTABS","TABCLASS" =>"componenttabs", "ACL"=> "component/componentGeneric"));
+
+
       if(count($ids)){
 
+        $disallowed = array();
         foreach($ids as $id){
-          $dn = $this->terminals[$id]['dn'];
-          $this->dns[$id] = $dn;
-        }
-        if ($user= get_multiple_locks($this->dns)){
-          return(gen_locked_message($user,$this->dns));
+
+          /* Get 'dn' from posted termlinst */
+          $attrs  = $this->terminals[$id];
+          $type   = $this->get_system_type($attrs);
+          $dn     = $attrs['dn'];
+          $acl = $this->ui->get_permissions($dn, $tabs[$type]['ACL']);
+          if(preg_match("/d/",$acl)){
+            $this->dns[$id] = $dn;
+          }else{
+            $disallowed[] = $dn;
+          }
         }
 
-        $dns_names = array();
-        foreach($this->dns as $dn){
-          add_lock ($dn, $this->ui->dn);
-          $dns_names[] = @LDAP::fix($dn);
+        if(count($disallowed)){
+          msg_dialog::display(_("Permission"),msgPool::permDelete($disallowed),INFO_DIALOG);
         }
 
-        /* Lock the current entry, so nobody will edit it during deletion */
-        $smarty->assign("warning", msgPool::deleteInfo($dns_names));
-        $smarty->assign("multiple", true);
-        return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
+        if(count($this->dns)){
+
+          if ($user= get_multiple_locks($this->dns)){
+            return(gen_locked_message($user,$this->dns));
+          }
+
+          $dns_names = array();
+          foreach($this->dns as $dn){
+            add_lock ($dn, $this->ui->dn);
+            $dns_names[] = @LDAP::fix($dn);
+          }
+
+          /* Lock the current entry, so nobody will edit it during deletion */
+          $smarty->assign("warning", msgPool::deleteInfo($dns_names));
+          $smarty->assign("multiple", true);
+          return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
+        }
       }
     }
 
@@ -1490,7 +1521,12 @@ class systems extends plugin
       $tab_c  = $tabs[$type]['TABCLASS'];
       $acl    = $tabs[$type]['ACL'];
 
-      $this->CopyPasteHandler->add_to_queue($dn,$s_action,$tab_c,$tab_o,$acl);
+      if($s_action == "copy" && preg_match("/r/",$ui->has_complete_category_acls($dn,$acl))){
+        $this->CopyPasteHandler->add_to_queue($dn,$s_action,$tab_c,$tab_o,$acl);
+      }
+      if($s_action == "cut" && preg_match("/(r.*d|d.*r)/",$ui->has_complete_category_acls($dn,$acl))){
+        $this->CopyPasteHandler->add_to_queue($dn,$s_action,$tab_c,$tab_o,$acl);
+      }
     }
 
     /* Add entries to queue */
@@ -1510,10 +1546,10 @@ class systems extends plugin
           $tab_c  = $tabs[$type]['TABCLASS'];
           $acl    = $tabs[$type]['ACL'];
 
-          if($s_action == "copy_multiple"){
+          if($s_action == "copy_multiple" && preg_match("/r/",$ui->has_complete_category_acls($dn,$acl))){
             $this->CopyPasteHandler->add_to_queue($dn,"copy",$tab_c,$tab_o,$acl);
           }
-          if($s_action == "cut_multiple"){
+          if($s_action == "cut_multiple" && preg_match("/(r.*d|d.*r)/",$ui->has_complete_category_acls($dn,$acl))){
             $this->CopyPasteHandler->add_to_queue($dn,"cut",$tab_c,$tab_o,$acl);
           }
         }
