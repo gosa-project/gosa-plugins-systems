@@ -33,6 +33,7 @@ class servgeneric extends plugin
   var $description= "";
   var $orig_dn= "";
   var $orig_cn= "";
+  var $orig_base= "";
 
   /* attribute list for save action */
   var $attributes= array("cn", "description","gotoMode");
@@ -93,8 +94,9 @@ class servgeneric extends plugin
     }
        
     /* Save dn for later references */
-    $this->orig_dn= $this->dn;
-    $this->orig_cn= $this->cn;
+    $this->orig_dn   = $this->dn;
+    $this->orig_cn   = $this->cn;
+    $this->orig_base = $this->base;
   }
 
 
@@ -334,6 +336,14 @@ class servgeneric extends plugin
       msg_dialog::display(_("Software deployment"), 
           _("This host is currently installing, if you really want to save it, press 'OK'."),
           CONFIRM_DIALOG);
+    }
+
+    /* Check if we are allowed to create or move this object
+     */
+    if($this->orig_dn == "new" && !$this->acl_is_createable($this->base)){
+      $message[] = msgPool::permCreate();
+    }elseif($this->cn != $this->orig_cn || $this->base != $this->orig_base && !$this->acl_is_moveable($this->base)){
+      $message[] = msgPool::permMove();
     }
 
     return ($message);
