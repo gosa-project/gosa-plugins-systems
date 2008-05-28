@@ -1493,6 +1493,7 @@ class systems extends plugin
       return("");
     }
 
+    $ui = get_userinfo();
 
     $tabs = array(
         "terminal"    => array( "CLASS"     =>"TERMTABS",     "TABNAME" =>"termgeneric",     
