@@ -1520,12 +1520,13 @@ class systems extends plugin
 
       $tab_o  = $tabs[$type]['CLASS'];
       $tab_c  = $tabs[$type]['TABCLASS'];
+      $acl_c  = $tabs[$type]['TABNAME'];
       $acl    = $tabs[$type]['ACL'];
 
-      if($s_action == "copy" && preg_match("/r/",$ui->has_complete_category_acls($dn,$acl))){
+      if($s_action == "copy" && $ui->is_copyable($dn,$acl,$acl_c)){
         $this->CopyPasteHandler->add_to_queue($dn,$s_action,$tab_c,$tab_o,$acl);
       }
-      if($s_action == "cut" && preg_match("/(r.*d|d.*r)/",$ui->has_complete_category_acls($dn,$acl))){
+      if($s_action == "cut" && $ui->is_cutable($dn,$acl,$acl_c)){
         $this->CopyPasteHandler->add_to_queue($dn,$s_action,$tab_c,$tab_o,$acl);
       }
     }
@@ -1545,12 +1546,13 @@ class systems extends plugin
         if(isset($tabs[$type])){
           $tab_o  = $tabs[$type]['CLASS'];
           $tab_c  = $tabs[$type]['TABCLASS'];
+          $acl_c  = $tabs[$type]['TABNAME'];
           $acl    = $tabs[$type]['ACL'];
 
-          if($s_action == "copy_multiple" && preg_match("/r/",$ui->has_complete_category_acls($dn,$acl))){
+          if($s_action == "copy_multiple" && $ui->is_copyable($dn,$acl,$acl_c)){ 
             $this->CopyPasteHandler->add_to_queue($dn,"copy",$tab_c,$tab_o,$acl);
           }
-          if($s_action == "cut_multiple" && preg_match("/(r.*d|d.*r)/",$ui->has_complete_category_acls($dn,$acl))){
+          if($s_action == "cut_multiple" && $ui->is_cutable($dn,$acl,$acl_c)){
             $this->CopyPasteHandler->add_to_queue($dn,"cut",$tab_c,$tab_o,$acl);
           }
         }

@@ -372,6 +372,10 @@ class divListSystem extends MultiSelectWindow
         $acl_type = "incoming";
       }
 
+      $s_acl    = $tabs[$type]['ACL'];
+      $category = preg_replace("/\/.*$/","",$s_acl);
+      $class    = preg_replace("/^.*\//","",$s_acl);
+
       /* Get complete category acls */
       $acl_all  = $ui->has_complete_category_acls($val['dn'],$acl_type) ;
   
@@ -379,19 +383,20 @@ class divListSystem extends MultiSelectWindow
       $acl      = $ui->get_permissions($val['dn'],$tabs[$type]['ACL']);
 
       $action ="";
-      if(preg_match("/(r.*d|r.*d)/",$acl_all) && $this->parent->CopyPasteHandler){
+      if($ui->is_cutable($val['dn'],$category,$class) && $this->parent->CopyPasteHandler){
         $action .= "<input class='center' type='image'
           src='images/lists/cut.png' alt='"._("cut")."' name='cut_%KEY%' title='"._("Cut this entry")."'>&nbsp;";
       }else{
         $action.="<img src='images/empty.png' alt=' ' class='center'>&nbsp;";
       }
 
-      if(preg_match("/r/",$acl_all) && $this->parent->CopyPasteHandler){
+      if($ui->is_copyable($val['dn'],$category,$class) && $this->parent->CopyPasteHandler){
         $action.= "<input class='center' type='image'
           src='images/lists/copy.png' alt='"._("copy")."' name='copy_%KEY%' title='"._("Copy this entry")."'>&nbsp;";
       }else{
         $action.="<img src='images/empty.png' alt=' ' class='center'>&nbsp;";
       }
+
 
       $action.= "<input class='center' type='image' src='images/lists/edit.png' 
                     alt='"._("edit")."'     name='system_edit_%KEY%' title='"._("Edit system")."'>";
