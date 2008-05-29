@@ -44,6 +44,8 @@ class systems extends plugin
   var $system_activation_object = ""; // The object to activate (NewDevice)
   var $fai_activated  = FALSE;
 
+  var $acl_module = array("incoming","terminal","workstation","server","printer","phone","winworkstation","component");
+
   function systems (&$config, $ui)
   {
     /* Save configuration for internal use */
@@ -1167,7 +1169,7 @@ class systems extends plugin
 
     /* Check if there is a snapshot dialog open */
     $base = $this->DivListSystem->selectedBase;
-    if($str = $this->showSnapshotDialog($base,$this->get_used_snapshot_bases())){
+    if($str = $this->showSnapshotDialog($base,$this->get_used_snapshot_bases(),$this)){
       return($str);
     }
 
