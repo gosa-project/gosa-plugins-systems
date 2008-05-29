@@ -155,6 +155,7 @@ class divListSystem extends MultiSelectWindow
       $d = $ui->get_module_departments($module);      
       foreach($d as $department){
         $departments[$department] = $department;
+        
       }
     }
 
@@ -277,10 +278,7 @@ class divListSystem extends MultiSelectWindow
     }
 
     /* Add snapshot icons */
-    if(preg_match("/(c.*w|w.*c)/",$all_module_acls)){
-      $s .= "..|---|\n";
-      $s .= $this->get_snapshot_header(TRUE);
-    }
+    $s .= $this->parent->get_snapshot_header($this->selectedBase,$this->module);
 
     $this->SetDropDownHeaderMenu($s);
     $this->SetListHeader($listhead);
@@ -401,20 +399,7 @@ class divListSystem extends MultiSelectWindow
       $action.= "<input class='center' type='image' src='images/lists/edit.png' 
                     alt='"._("edit")."'     name='system_edit_%KEY%' title='"._("Edit system")."'>";
 
-      /* Add snapshot icon */
-      if(preg_match("/(r.*w|w.*r)/",$acl_all)){
-        $action.= $this->GetSnapShotActions($val['dn']);
-      }else{
-        $action.="<img src='images/empty.png' alt=' ' class='center'>&nbsp;";
-        $action.="<img src='images/empty.png' alt=' ' class='center'>&nbsp;";
-      }
-
-      if(preg_match("/d/",$acl)){
-        $action.= "<input class='center' type='image' src='images/lists/trash.png' 
-          alt='"._("delete")."'   name='system_del_%KEY%' title='"._("Delete system")."'>";
-      }else{
-        $action.= $empty;    
-      }
+      $action.= $this->parent->get_snapshot_action($val['dn'],$acl_type);
 
       /* Generate picture list, which is currently disabled */
       if(in_array("goCupsServer"    ,$val['objectClass'])) $cups    = $img1;   else $cups  =$empty;
