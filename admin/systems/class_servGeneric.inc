@@ -53,6 +53,8 @@ class servgeneric extends plugin
   var $currently_installing = FALSE;
   var $currently_installing_warned = FALSE;
 
+  var $kerberos_key_service = NULL;
+
   function servgeneric (&$config, $dn= NULL, $parent= NULL)
   {
     /* Check if FAI is activated */
@@ -63,6 +65,11 @@ class servgeneric extends plugin
     }
 
     plugin::plugin ($config, $dn, $parent);
+
+    /* Initialize kerberos host key plugin */
+    if(class_available("krb_host_keys")){
+      $this->kerberos_key_service = new krb_host_keys($this->config,$this);
+    }
 
     $this->ui = get_userinfo();
     $this->modes["active"]= _("Activated");
@@ -231,6 +238,11 @@ class servgeneric extends plugin
     $smarty->assign("modes", $this->modes);
     $smarty->assign("currently_installing", $this->currently_installing);
 
+    $smarty->assign("host_key","");
+    if(is_object($this->kerberos_key_service)){
+      $smarty->assign("host_key",$this->kerberos_key_service->execute());
+    }
+
     return($smarty->fetch (get_template_path('server.tpl', TRUE)));
   }
 
@@ -289,6 +301,11 @@ class servgeneric extends plugin
       }else{
         $this->base = $base_tmp;
       }
+    }
+
+    /* Hanle kerberos host key plugin */
+    if(is_object($this->kerberos_key_service)){
+      $this->kerberos_key_service->save_object();
     }
   }
 
