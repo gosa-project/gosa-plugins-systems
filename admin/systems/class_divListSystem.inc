@@ -374,6 +374,14 @@ class divListSystem extends MultiSelectWindow
 
       $action.= $this->parent->get_snapshot_action($val['dn'],$acl_type);
 
+      if(preg_match("/d/",$acl)){
+        $action.= "<input class='center' type='image' src='images/lists/trash.png'
+          alt='"._("delete")."'   name='system_del_%KEY%' title='"._("Delete system")."'>";
+      }else{
+        $action.= $empty;
+      }
+
+
       /* Generate picture list, which is currently disabled */
       if(in_array("goCupsServer"    ,$val['objectClass'])) $cups    = $img1;   else $cups  =$empty;
       if(in_array("goLogDBServer"   ,$val['objectClass'])) $logdb   = $img2;   else $logdb =$empty;
