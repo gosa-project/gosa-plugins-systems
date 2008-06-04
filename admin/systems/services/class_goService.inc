@@ -32,8 +32,10 @@ class goService extends plugin{
   var $dn                   = NULL;
   var $cn                   = "";
   var $DisplayName          = "";
-  var $view_logged  =FALSE;
+  var $view_logged          = FALSE;
 
+  var $krb_service_prefix   = "";
+  var $krb_host_key         = NULL; 
    
   /* Construcktion */ 
   function goService(&$config,$dn)
