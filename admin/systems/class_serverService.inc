@@ -67,6 +67,12 @@ class ServerService extends plugin
         $this->plugin_names[]= $name;
         $this->plugins[$name]= new $name($config, $dn, $this);
 
+        /* Initialize kerberos key support */ 
+        if(isset($this->plugins[$name]->krb_service_prefix) && !empty($this->plugins[$name]->krb_service_prefix)){
+          $this->plugins[$name]->krb_host_key = new krb_host_keys($this->config,$this->parent);
+          $this->plugins[$name]->krb_host_key->ServiceKey(TRUE);
+        }
+
         /* Capture all service objectClases, necessary for acl handling */ 
         if(isset($this->plugins[$name]->objectclasses)){
           foreach($this->plugins[$name]->objectclasses as $oc){
@@ -253,7 +259,11 @@ class ServerService extends plugin
     /* There is currently a subdialog open, display this dialog */
     if(is_object($this->dialog)){
 #      $this->dialog->save_object();
-      return($this->dialog->execute());
+      $add ="";
+      if(isset($this->dialog->krb_host_key)){
+        $add = $this->dialog->krb_host_key->execute();
+      }
+      return($add.$this->dialog->execute());
     }
 
 
