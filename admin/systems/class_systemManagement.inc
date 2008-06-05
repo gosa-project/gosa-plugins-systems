@@ -416,7 +416,9 @@ class systems extends plugin
 
 
     if (isset($_POST['create_system'])||$s_action=="newsystem") {
-
+    
+      $this->last_action = "";
+  
       /* If the current entry is an incoming object 
        * $sw = System type as posted in new incoming handling dialog 
        */ 
