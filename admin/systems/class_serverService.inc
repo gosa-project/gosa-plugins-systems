@@ -260,7 +260,7 @@ class ServerService extends plugin
     if(is_object($this->dialog)){
 #      $this->dialog->save_object();
       $add ="";
-      if(isset($this->dialog->krb_host_key)){
+      if(isset($this->dialog->krb_host_key) && $this->dialog->krb_host_key instanceof krb_host_keys){
         $add = $this->dialog->krb_host_key->save_object();
         $add = $this->dialog->krb_host_key->execute();
       }
@@ -428,6 +428,9 @@ class ServerService extends plugin
         }
       }
       if($this->plugins[$name]->initially_was_account){
+        if(isset($this->plugins[$name]->krb_host_key) && $this->plugins[$name]->krb_host_key instanceof krb_host_keys){
+          $this->plugins[$name]->krb_host_key->remove_from_parent();
+        }
         $this->plugins[$name]->remove_from_parent();
       }
     }
