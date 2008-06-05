@@ -253,6 +253,11 @@ class servgeneric extends plugin
       return;
     }
 
+    /* Remove kerberos key dependencies too */
+    if(is_object($this->kerberos_key_service)){
+      $this->kerberos_key_service->remove_from_parent();
+    }
+
     $this->netConfigDNS->remove_from_parent();
     $ldap= $this->config->get_ldap_link();
     $ldap->rmdir($this->dn);
