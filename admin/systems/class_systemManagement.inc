@@ -483,7 +483,7 @@ class systems extends plugin
 
     /* User wants to edit data? */
     if (($s_action == "edit") && (!isset($this->systab->config))){
-
+      $this->last_action = "";
       $this->dn= $this->terminals[$s_entry]['dn'];
 
       /* Check locking, save current plugin in 'back_plugin', so
