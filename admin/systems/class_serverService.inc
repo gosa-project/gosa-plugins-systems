@@ -69,8 +69,7 @@ class ServerService extends plugin
 
         /* Initialize kerberos key support */ 
         if(isset($this->plugins[$name]->krb_service_prefix) && !empty($this->plugins[$name]->krb_service_prefix)){
-          $this->plugins[$name]->krb_host_key = new krb_host_keys($this->config,$this->parent,$this->plugins[$name]->krb_service_prefix);
-          $this->plugins[$name]->krb_host_key->ServiceKey(TRUE);
+          $this->plugins[$name]->krb_host_key = &$this->parent->kerberos_key_service;
         }
 
         /* Capture all service objectClases, necessary for acl handling */ 
@@ -258,11 +257,10 @@ class ServerService extends plugin
 
     /* There is currently a subdialog open, display this dialog */
     if(is_object($this->dialog)){
-#      $this->dialog->save_object();
       $add ="";
       if(isset($this->dialog->krb_host_key) && $this->dialog->krb_host_key instanceof krb_host_keys){
-        $add = $this->dialog->krb_host_key->save_object();
-        $add = $this->dialog->krb_host_key->execute();
+        $add = $this->dialog->krb_host_key->save_object_by_prefix($this->dialog->krb_service_prefix);
+        $add = $this->dialog->krb_host_key->execute_by_prefix($this->dialog->krb_service_prefix,TRUE);
       }
       return($add.$this->dialog->execute());
     }
@@ -429,7 +427,7 @@ class ServerService extends plugin
       }
       if($this->plugins[$name]->initially_was_account){
         if(isset($this->plugins[$name]->krb_host_key) && $this->plugins[$name]->krb_host_key instanceof krb_host_keys){
-          $this->plugins[$name]->krb_host_key->remove_from_parent();
+          $this->plugins[$name]->krb_host_key->remove_from_parent_by_prefix($this->plugins[$name]->krb_host_key);
         }
         $this->plugins[$name]->remove_from_parent();
       }

@@ -240,7 +240,7 @@ class servgeneric extends plugin
 
     $smarty->assign("host_key","");
     if(is_object($this->kerberos_key_service)){
-      $smarty->assign("host_key",$this->kerberos_key_service->execute());
+      $smarty->assign("host_key",$this->kerberos_key_service->execute_by_prefix("host/"));
     }
 
     return($smarty->fetch (get_template_path('server.tpl', TRUE)));
@@ -255,7 +255,7 @@ class servgeneric extends plugin
 
     /* Remove kerberos key dependencies too */
     if(is_object($this->kerberos_key_service)){
-      $this->kerberos_key_service->remove_from_parent();
+      $this->kerberos_key_service->remove_from_parent_by_prefix("host/");
     }
 
     $this->netConfigDNS->remove_from_parent();
@@ -310,7 +310,7 @@ class servgeneric extends plugin
 
     /* Hanle kerberos host key plugin */
     if(is_object($this->kerberos_key_service)){
-      $this->kerberos_key_service->save_object();
+      $this->kerberos_key_service->save_object_by_prefix("host/");
     }
   }
 
