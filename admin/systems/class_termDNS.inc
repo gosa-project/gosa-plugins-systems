@@ -102,6 +102,11 @@ class termDNS extends plugin
     if($this->config->search("servdhcp","class",array("tabs"))){
       $this->dhcpEnabled = TRUE;
     }
+    
+    if(!class_available("dhcpHost")){
+      $this->dhcpEnabled = FALSE;
+    }
+
     if($this->dhcpEnabled){
       $this->dhcpParentNodes = $this->get_dhcp_parent_nodes();
       $this->dhcpParentNode  = $this->get_dhcp_parent_node();
