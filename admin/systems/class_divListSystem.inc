@@ -240,18 +240,20 @@ class divListSystem extends MultiSelectWindow
         "&nbsp;"._("Component")."|"."newsystem_component|\n";
     }
 
-    $events  = DaemonEvent::get_event_types(SYSTEM_EVENT);
+    if($this->parent->si_active){
+      $events  = DaemonEvent::get_event_types(SYSTEM_EVENT);
 
-    $s.= "..|<img src='images/rocket.png' alt='' border='0' class='center'>".
-      "&nbsp;"._("Trigger action")."|\n";
-    foreach($events['TRIGGERED'] as $name => $event){
-      $s.= "...|".$event['MenuImage']."&nbsp;".$event['s_Menu_Name']."|trigger_event_".$name."\n";
-    }
+      $s.= "..|<img src='images/rocket.png' alt='' border='0' class='center'>".
+        "&nbsp;"._("Trigger action")."|\n";
+      foreach($events['TRIGGERED'] as $name => $event){
+        $s.= "...|".$event['MenuImage']."&nbsp;".$event['s_Menu_Name']."|trigger_event_".$name."\n";
+      }
 
-    $s.= "..|<img src='images/clock.png' alt='' border='0' class='center'>".
-      "&nbsp;"._("Schedule action")."|\n";
-    foreach($events['SCHEDULED'] as $name =>  $event){
-      $s.= "...|".$event['MenuImage']."&nbsp;".$event['s_Menu_Name']."|schedule_event_".$name."\n";
+      $s.= "..|<img src='images/clock.png' alt='' border='0' class='center'>".
+        "&nbsp;"._("Schedule action")."|\n";
+      foreach($events['SCHEDULED'] as $name =>  $event){
+        $s.= "...|".$event['MenuImage']."&nbsp;".$event['s_Menu_Name']."|schedule_event_".$name."\n";
+      }
     }
 
     $s.= "..|<img src='images/lists/trash.png' alt='' border='0' class='center'>".

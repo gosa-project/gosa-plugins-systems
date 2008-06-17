@@ -43,6 +43,7 @@ class systems extends plugin
 
   var $system_activation_object = ""; // The object to activate (NewDevice)
   var $fai_activated  = FALSE;
+  var $si_active      = FALSE;
 
   var $acl_module = array("incoming","terminal","workstation","server","printer","phone","winworkstation","component");
 
@@ -69,6 +70,13 @@ class systems extends plugin
     /* Check whether the arp handling active or not */
     if($this->config->search("ArpNewDevice","CLASS",array('tabs')) != ""){
       $this->arp_handling_active = TRUE;
+    }
+
+    /* Check if we are able to communicate with the GOsa supprot daemon 
+     */
+    if(class_available("gosaSupportDaemon")){
+      $o = new gosaSupportDaemon();
+      $this->si_active = $o->connect();
     }
   }
 

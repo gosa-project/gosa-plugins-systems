@@ -127,6 +127,11 @@ class termDNS extends plugin
         $this->DNSenabled = true;
       }
     }
+
+    if(!class_available("DNS")){
+      $this->DNSenabled = FALSE;
+    }
+  
     if(!$this->DNSenabled){
       $this->DNS_is_account = false;
       return;
