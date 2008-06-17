@@ -32,8 +32,12 @@ class servtabs extends tabs
     $baseobject= NULL;
 
     foreach ($data as $tab){
-      $this->by_name[$tab['CLASS']]= $tab['NAME'];
+  
+      if(!class_available($tab['CLASS'])){
+        continue;
+      }
 
+      $this->by_name[$tab['CLASS']]= $tab['NAME'];
       if ($baseobject === NULL){
         $baseobject= new $tab['CLASS']($this->config, $this->dn,NULL,$this);
         $this->by_object[$tab['CLASS']]= $baseobject;
