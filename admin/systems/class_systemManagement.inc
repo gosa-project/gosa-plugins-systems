@@ -327,96 +327,102 @@ class systems extends plugin
         $tabclass = $tabs[$selected_system]["TABCLASS"];
         $acl_cat  = $tabs[$selected_system]["ACL"];
 
-        /* Go through all objects that should be activated */
-        foreach($this->system_activation_object as $key => $dn){
 
-          /* Remove entry from list, to avoid page-reload problems */
-          unset($this->system_activation_object[$key]);
-  
-          /* Load permissions for selected 'dn' and check if
-             we're allowed to create this 'dn' */
-          $this->dn = $dn;
-          $ui       = get_userinfo();
-          $tabacl   = $ui->get_permissions($this->dn,$acl_cat."/".$tabname);
+        if(!class_available($tabclass)){
+          msg_dialog::display(_("Error"), msgPool::class_not_found($tabclass), ERROR_DIALOG);
+        }else{
 
-          /* We are allowed to create the requested system type */
-          if(preg_match("/c/",$tabacl)){
-            $this->systab= new $tabclass($this->config, $this->config->data['TABS'][$class], $this->dn,$selected_system);
-            $this->systab->set_acl_base($this->DivListSystem->selectedBase);
-            $this->systab->by_object[$tabname]->base = $this->DivListSystem->selectedBase;
-            $this->systab->base = $this->DivListSystem->selectedBase;
+          /* Go through all objects that should be activated */
+          foreach($this->system_activation_object as $key => $dn){
+
+            /* Remove entry from list, to avoid page-reload problems */
+            unset($this->system_activation_object[$key]);
+
+            /* Load permissions for selected 'dn' and check if
+               we're allowed to create this 'dn' */
+            $this->dn = $dn;
+            $ui       = get_userinfo();
+            $tabacl   = $ui->get_permissions($this->dn,$acl_cat."/".$tabname);
+
+            /* We are allowed to create the requested system type */
+            if(preg_match("/c/",$tabacl)){
+              $this->systab= new $tabclass($this->config, $this->config->data['TABS'][$class], $this->dn,$selected_system);
+              $this->systab->set_acl_base($this->DivListSystem->selectedBase);
+              $this->systab->by_object[$tabname]->base = $this->DivListSystem->selectedBase;
+              $this->systab->base = $this->DivListSystem->selectedBase;
 
 
-            if($selected_group != "none"){
+              if($selected_group != "none"){
 
-              /*******
-               * Set gotoMode to active if we there was an ogroup selected. 
-               */
-              $found = false;
-              foreach(array("workgeneric"=>"active","servgeneric"=>"active","termgeneric"=>"active") as $tab => $value){
-                if(isset($this->systab->by_object[$tab]->gotoMode)) {
-                  $found = true;
-                  $this->systab->by_object[$tab]->gotoMode = $value;
+                /*******
+                 * Set gotoMode to active if we there was an ogroup selected. 
+                 */
+                $found = false;
+                foreach(array("workgeneric"=>"active","servgeneric"=>"active","termgeneric"=>"active") as $tab => $value){
+                  if(isset($this->systab->by_object[$tab]->gotoMode)) {
+                    $found = true;
+                    $this->systab->by_object[$tab]->gotoMode = $value;
+                  }
+                }
+                if(!$found){
+                  msg_dialog::display(_("Internal error"), _("Cannot set mode to 'active'!"), ERROR_DIALOG);
+                }
+
+                /*******
+                 * Update object group membership
+                 */
+                $og = new ogroup($this->config,$selected_group);
+                if($og){
+                  $og->AddDelMembership($this->systab->dn);
+                  $og->save();
+                }
+
+                /*******
+                 * Set default system specific attributes 
+                 */
+                foreach (array("workservice", "termservice") as $cls){
+                  if (isset($this->systab->by_object[$cls])){
+                    $this->systab->by_object[$cls]->gotoXMouseport= "";
+                    $this->systab->by_object[$cls]->gotoXMouseType= "";
+                    $this->systab->by_object[$cls]->gotoXResolution= "";
+                    $this->systab->by_object[$cls]->gotoXColordepth= "";
+                  }
+                }
+
+                // Enable activation
+                foreach (array("servgeneric", "workgeneric", "termgeneric") as $cls){
+                  if (isset($this->systab->by_object[$cls])){
+                    $this->systab->by_object[$cls]->auto_activate= TRUE;
+                  }
+                }
+
+                // Enable sending of LDAP events
+                if (isset($this->systab->by_object["workstartup"])){
+                  $this->systab->by_object["workstartup"]->gotoLdap_inherit= TRUE;
                 }
               }
-              if(!$found){
-                msg_dialog::display(_("Internal error"), _("Cannot set mode to 'active'!"), ERROR_DIALOG);
-              }
 
-              /*******
-               * Update object group membership
+              /* Don't save directly if there is no objectGroup selected.
+                 The user will then be able to configure the missing attributes 
+                 on his own.
                */
-              $og = new ogroup($this->config,$selected_group);
-              if($og){
-                $og->AddDelMembership($this->systab->dn);
-                $og->save();
-              }
+              if($selected_group != "none"){
+                $this->systab->save();
+                $this->systab = NULL;
 
-              /*******
-               * Set default system specific attributes 
-               */
-              foreach (array("workservice", "termservice") as $cls){
-                if (isset($this->systab->by_object[$cls])){
-                  $this->systab->by_object[$cls]->gotoXMouseport= "";
-                  $this->systab->by_object[$cls]->gotoXMouseType= "";
-                  $this->systab->by_object[$cls]->gotoXResolution= "";
-                  $this->systab->by_object[$cls]->gotoXColordepth= "";
+                if(!isset($ldap)){
+                  $ldap = $this->config->get_ldap_link();
+                }
+                $ldap->cd ($this->dn);
+                $ldap->cat($this->dn, array('dn'));
+                if(count($ldap->fetch())){
+                  $ldap->cd($this->dn);
+                  $ldap->rmDir($this->dn);
                 }
               }
-
-              // Enable activation
-              foreach (array("servgeneric", "workgeneric", "termgeneric") as $cls){
-                if (isset($this->systab->by_object[$cls])){
-                  $this->systab->by_object[$cls]->auto_activate= TRUE;
-                }
-              }
-
-              // Enable sending of LDAP events
-              if (isset($this->systab->by_object["workstartup"])){
-                $this->systab->by_object["workstartup"]->gotoLdap_inherit= TRUE;
-              }
+            }else{
+              msg_dialog::display(_("Error"), msgPool::permCreate(), ERROR_DIALOG);
             }
-
-            /* Don't save directly if there is no objectGroup selected.
-               The user will then be able to configure the missing attributes 
-                on his own.
-             */
-            if($selected_group != "none"){
-              $this->systab->save();
-              $this->systab = NULL;
-
-              if(!isset($ldap)){
-                $ldap = $this->config->get_ldap_link();
-              }
-              $ldap->cd ($this->dn);
-              $ldap->cat($this->dn, array('dn'));
-              if(count($ldap->fetch())){
-                $ldap->cd($this->dn);
-                $ldap->rmDir($this->dn);
-              }
-            }
-          }else{
-            msg_dialog::display(_("Error"), msgPool::permCreate(), ERROR_DIALOG);
           }
         }
       }
@@ -456,10 +462,15 @@ class systems extends plugin
         $ui       = get_userinfo();
         $tabacl   = $ui->get_permissions($this->DivListSystem->selectedBase,$acl_cat."/".$tabname);
         if(preg_match("/c/",$tabacl)){
-          $this->systab= new $tabclass($this->config, $this->config->data['TABS'][$class], $this->dn,$sw);
-          $this->systab->set_acl_base($this->DivListSystem->selectedBase);
-          $this->systab->by_object[$tabname]->base = $this->DivListSystem->selectedBase;
-          $this->systab->base = $this->DivListSystem->selectedBase;
+
+          if(!class_available($tabclass)){
+            msg_dialog::display(_("Error"), msgPool::class_not_found($tabclass), ERROR_DIALOG);
+          }else{
+            $this->systab= new $tabclass($this->config, $this->config->data['TABS'][$class], $this->dn,$sw);
+            $this->systab->set_acl_base($this->DivListSystem->selectedBase);
+            $this->systab->by_object[$tabname]->base = $this->DivListSystem->selectedBase;
+            $this->systab->base = $this->DivListSystem->selectedBase;
+          }
         }else{
           msg_dialog::display(_("Error"), msgPool::permCreate(), ERROR_DIALOG);
         }
@@ -521,20 +532,32 @@ class systems extends plugin
 
 
       if($type == "ArpNewDevice"){
-        $this->systab = new ArpNewDeviceTabs($this->config,$this->config->data['TABS']['ARPNEWDEVICETABS'],$this->dn);
+        if(!class_available("ArpNewDeviceTabs")){
+          msg_dialog::display(_("Error"), msgPool::class_not_found("ArpNewDevice"), ERROR_DIALOG);
+        }else{
+          $this->systab = new ArpNewDeviceTabs($this->config,$this->config->data['TABS']['ARPNEWDEVICETABS'],$this->dn);
+        }
       }elseif($type == "NewDevice"){
-        $this->system_activation_object= array($this->dn);
-        $this->systab = new SelectDeviceType($this->config,$this->dn) ;
+        if(!class_available("SelectDeviceType")){
+          msg_dialog::display(_("Error"), msgPool::class_not_found("SelectDeviceType"), ERROR_DIALOG);
+        }else{
+          $this->system_activation_object= array($this->dn);
+          $this->systab = new SelectDeviceType($this->config,$this->dn) ;
+        }
       }elseif(isset($tabs[$type])){
 
         $class    = $tabs[$type]["CLASS"];
         $acl_cat  = $tabs[$type]["ACL"];
         $tabclass = $tabs[$type]["TABCLASS"];
 
-        $this->systab= new $tabclass($this->config, $this->config->data['TABS'][$class], $this->dn,$acl_cat);
-        $this->systab->set_acl_base($this->dn);
-        session::set('objectinfo',$this->dn);
-        add_lock ($this->dn, $this->ui->dn);
+        if(!class_available($tabclass)){
+          msg_dialog::display(_("Error"), msgPool::class_not_found($tabclass), ERROR_DIALOG);
+        }else{
+          $this->systab= new $tabclass($this->config, $this->config->data['TABS'][$class], $this->dn,$acl_cat);
+          $this->systab->set_acl_base($this->dn);
+          session::set('objectinfo',$this->dn);
+          add_lock ($this->dn, $this->ui->dn);
+        }
       }else{ 
         msg_dialog::display(_("Error"), _("Editing this type of object is not supported yet!"), ERROR_DIALOG);
         $this->remove_lock();
