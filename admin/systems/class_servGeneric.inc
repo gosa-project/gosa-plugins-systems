@@ -55,6 +55,17 @@ class servgeneric extends plugin
 
   var $kerberos_key_service = NULL;
 
+  var $mapActions   = array("reboot"          => "",
+                            "instant_update"  => "softupdate",
+                            "localboot"       => "localboot",
+                            "update"          => "sceduledupdate",
+                            "reinstall"       => "install",
+                            "rescan"          => "",
+                            "wake"            => "",
+                            "memcheck"        => "memcheck",
+                            "sysinfo"         => "sysinfo");
+
+
   function servgeneric (&$config, $dn= NULL, $parent= NULL)
   {
     /* Check if FAI is activated */
