@@ -76,7 +76,7 @@ class systems extends plugin
      */
     if(class_available("gosaSupportDaemon")){
       $o = new gosaSupportDaemon();
-      $this->si_active = $o->connect();
+      $this->si_active = $o->connect() && class_available("DaemonEvent");
     }
   }
 
@@ -736,7 +736,7 @@ class systems extends plugin
       $this->dns = array();
       $ids = $this->list_get_selected_items();
 
-      if(count($ids)){
+      if(count($ids) && class_available("DaemonEvent")){
         $mac= array();
 
         $ldap = $this->config->get_ldap_link();
@@ -787,7 +787,7 @@ class systems extends plugin
     }
 
     /* Insert scheduled events into queue */
-    if($this->systab instanceof DaemonEvent){
+    if(class_available("DaemonEvent") && $this->systab instanceof DaemonEvent){
       $this->systab->save_object();
 
       /* Save event 

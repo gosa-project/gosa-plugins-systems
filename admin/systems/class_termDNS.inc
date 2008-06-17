@@ -459,7 +459,7 @@ class termDNS extends plugin
 
   function remove_from_parent()
   {
-    if($this->initially_was_account){
+    if($this->DNS_is_account){
 
       $ldap = $this->config->get_ldap_link();
 
