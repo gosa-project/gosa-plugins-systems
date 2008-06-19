@@ -133,68 +133,13 @@ class divListSystem extends MultiSelectWindow
     $options= "";
 
     /* Get all departments within this subtree */
-    $base = $this->config->current['BASE'];
-
-    /* Add base */
-    $tmp = array();
-    $tmp[] = array("dn"=>$this->config->current['BASE']);
-    $tmp=  array_merge($tmp,get_list("(&(|(ou=*)(description=*))(objectClass=gosaDepartment))", $this->module, $base,
-                    array("ou", "description"), GL_SIZELIMIT | GL_SUBSEARCH));
-
-    $deps = array();
-    foreach($tmp as $tm){
-      $deps[$tm['dn']] = $tm['dn'];
-    }
-
-    /* Load possible departments */
-    $ui= get_userinfo();
-    $first = "";
-    $found = FALSE;
-    $department = $departments = array();
-    foreach($this->module as $module){
-      $d = $ui->get_module_departments($module);      
-      foreach($d as $department){
-        $departments[$department] = $department;
-        
-      }
-    }
-
-    /* Load possible departments */
-    $ui= get_userinfo();
-    $ids = $this->config->idepartments;
-    $first = "";
-    $found = FALSE;
-    foreach($ids as $dep => $name){
-      if(isset($deps[$dep]) && in_array_ics($dep, $departments)){
-
-        /* Keep first base dn in mind, we could need this
-         *  info if no valid base was found
-         */
-        if(empty($first)) {
-          $first = $dep['dn'];
-        }
-
-        $value = $ids[$dep];
-        if ($this->selectedBase == $dep){
-          $found = TRUE;
-          $options.= "<option selected='selected' value='".$dep."'>$value</option>";
-        } else {
-          $options.= "<option value='".$dep."'>$value</option>";
-        }
-      }
-    }
-
-
-    /* The currently used base is not visible with your acl setup.
-     * Set base to first useable base.
-     */
-    if(!$found){
-      $this->selectedBase = $first;
-    }
+    $base     = $this->config->current['BASE'];
+    $options  = $this->create_department_list($this->module);
 
     /* If there is at least one c (Create) and one w (Write) acl in this combination
         display the snapshot paste icon. BUT check the correct acls in the management plugin */
     $all_module_acls = "";
+    $ui = get_userinfo();
     foreach($this->module as $module){
       $all_module_acls .= $ui->has_complete_category_acls($this->selectedBase,$module);
     }
