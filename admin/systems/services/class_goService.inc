@@ -38,7 +38,7 @@ class goService extends plugin{
   var $krb_host_key         = NULL; 
    
   /* Construcktion */ 
-  function goService(&$config,$dn)
+  function goService(&$config,$dn,$parent = NULL)
   {
     plugin::plugin($config,$dn);
     $this->DisplayName = _("Empty service");
