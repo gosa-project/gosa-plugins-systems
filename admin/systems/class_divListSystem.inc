@@ -160,27 +160,27 @@ class divListSystem extends MultiSelectWindow
     $s.= "..|<img src='images/lists/new.png' alt='' border='0' class='center'>".
       "&nbsp;"._("Create")."|\n";
 
-    if(preg_match("/c/",$ui->get_permissions($this->selectedBase,"terminal/termgeneric"))){
+    if(class_available("termtabs") && preg_match("/c/",$ui->get_permissions($this->selectedBase,"terminal/termgeneric"))){
       $s.= "...|<img src='images/select_terminal.png' alt='' border='0' class='center'>".
         "&nbsp;"._("Terminal")."|"."newsystem_terminal|\n";
     }
-    if(preg_match("/c/",$ui->get_permissions($this->selectedBase,"workstation/workgeneric"))){
+    if(class_available("worktabs") && preg_match("/c/",$ui->get_permissions($this->selectedBase,"workstation/workgeneric"))){
       $s.= "...|<img src='images/select_workstation.png' alt='' border='0' class='center'>".
         "&nbsp;"._("Workstation")."|"."newsystem_workstation|\n";
     }
-    if(preg_match("/c/",$ui->get_permissions($this->selectedBase,"workstation/servgeneric"))){
+    if(class_available("servtabs") && preg_match("/c/",$ui->get_permissions($this->selectedBase,"workstation/servgeneric"))){
       $s.= "...|<img src='images/select_server.png' alt='' border='0' class='center'>".
         "&nbsp;"._("Server")."|"."newsystem_server|\n";
     }
-    if(preg_match("/c/",$ui->get_permissions($this->selectedBase,"phone/phoneGeneric"))){
+    if(class_available("phonetabs") && preg_match("/c/",$ui->get_permissions($this->selectedBase,"phone/phoneGeneric"))){
       $s.= "...|<img src='images/select_phone.png' alt='' border='0' class='center'>".
         "&nbsp;"._("Phone")."|"."newsystem_phone|\n";
     }
-    if(preg_match("/c/",$ui->get_permissions($this->selectedBase,"printer/printgeneric"))){
+    if(class_available("printtabs") && preg_match("/c/",$ui->get_permissions($this->selectedBase,"printer/printgeneric"))){
       $s.= "...|<img src='images/select_printer.png' alt='' border='0' class='center'>".
         "&nbsp;"._("Printer")."|"."newsystem_printer|\n";
     }
-    if(preg_match("/c/",$ui->get_permissions($this->selectedBase,"component/componentGeneric"))){
+    if(class_available("componenttabs") && preg_match("/c/",$ui->get_permissions($this->selectedBase,"component/componentGeneric"))){
       $s.= "...|<img src='images/select_component.png' alt='' border='0' class='center'>".
         "&nbsp;"._("Component")."|"."newsystem_component|\n";
     }
