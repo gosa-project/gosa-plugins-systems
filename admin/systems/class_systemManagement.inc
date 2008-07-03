@@ -1314,13 +1314,13 @@ class systems extends plugin
 
     /* This array represents the combination between checkboxes and search filters */
     $objs = array( 
-        "ShowServers"        => array("CLASS" => "goServer"        ,"TREE" => get_ou('serverou')),
-        "ShowTerminals"      => array("CLASS" => "gotoTerminal"    ,"TREE" => get_ou('terminalou')),
-        "ShowPrinters"       => array("CLASS" => "gotoPrinter"     ,"TREE" => get_ou('printerou')),
-        "ShowDevices"        => array("CLASS" => "ieee802Device"   ,"TREE" => get_ou('componentou')),
-        "ShowPhones"         => array("CLASS" => "goFonHardware"   ,"TREE" => get_ou('phoneou')),
-        "ShowWorkstations"   => array("CLASS" => "gotoWorkstation" ,"TREE" => get_ou('workstationou')),
-        "ShowWinWorkstations"=> array("CLASS" => $samba            ,"TREE" => get_winstations_ou() ));
+        "ShowServers"        => array("TAB" => "servtabs",      "CLASS" => "goServer"        ,"TREE" => get_ou('serverou')),
+        "ShowTerminals"      => array("TAB" => "termtabs",      "CLASS" => "gotoTerminal"    ,"TREE" => get_ou('terminalou')),
+        "ShowPrinters"       => array("TAB" => "printtabs",     "CLASS" => "gotoPrinter"     ,"TREE" => get_ou('printerou')),
+        "ShowDevices"        => array("TAB" => "componenttabs", "CLASS" => "ieee802Device"   ,"TREE" => get_ou('componentou')),
+        "ShowPhones"         => array("TAB" => "phonetabs",     "CLASS" => "goFonHardware"   ,"TREE" => get_ou('phoneou')),
+        "ShowWorkstations"   => array("TAB" => "worktabs",      "CLASS" => "gotoWorkstation" ,"TREE" => get_ou('workstationou')),
+        "ShowWinWorkstations"=> array("TAB" => "wintabs",       "CLASS" => $samba            ,"TREE" => get_winstations_ou() ));
 
     /* Include the 'Display Systems of user' attribute */ 
     if ((!empty($this->DivListSystem->UserRegex)) && ($this->DivListSystem->UserRegex!= "*")){
@@ -1339,7 +1339,8 @@ class systems extends plugin
 
     /* Walk through all possible search combinations, and search for some objects if the checkbox is enabled  */
     foreach($objs as $checkBox => $oc){
-      if($this->DivListSystem->$checkBox){
+
+      if($this->DivListSystem->$checkBox && class_available($oc['TAB'])){
         if($this->DivListSystem->SubSearch){
           if($oc['CLASS'] != ""){
             $filter = "(&".$userregex."(objectClass=".$oc['CLASS'].")(cn=".$this->DivListSystem->Regex."))";

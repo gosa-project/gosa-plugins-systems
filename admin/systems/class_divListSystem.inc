@@ -94,27 +94,42 @@ class divListSystem extends MultiSelectWindow
     $this->AddHeader(array("string"=>_("Actions"),"attach"=>"style='width:".$action_col_size."px;border-right:0px;'"));
 
     /*                  Text        ,Value    ,Name         ,Is selected */
-    $this->AddCheckBox("ShowServers",        
-        msgPool::selectToView(  _("servers")),            
-        sprintf(_("Show %s"),   _("servers")),true);
-    $this->AddCheckBox("ShowTerminals",       
-        msgPool::selectToView(  _("Linux terminals")),    
-        sprintf(_("Show %s"),   _("terminals")),true);
-    $this->AddCheckBox("ShowWorkstations",
-        msgPool::selectToView(  _("Linux workstations")), 
-        sprintf(_("Show %s"),   _("workstations")),true);
-    $this->AddCheckBox("ShowWinWorkstations", 
-        msgPool::selectToView(  _("MicroSoft Windows based workstations")), 
-        sprintf(_("Show %s"),   _("windows based workstations")),true);
-    $this->AddCheckBox("ShowPrinters",
-        msgPool::selectToView(  _("network printers")),   
-        sprintf(_("Show %s"),   _("network printers")) ,true);
-    $this->AddCheckBox("ShowPhones",
-        msgPool::selectToView(  _("VoIP phones")),        
-        sprintf(_("Show %s"),   _("phones")) ,true);
-    $this->AddCheckBox("ShowDevices",
-        msgPool::selectToView(  _("network devices")),    
-        sprintf(_("Show %s"),   _("network devices")),  true);
+
+    if(class_available("servtabs")){
+      $this->AddCheckBox("ShowServers",        
+          msgPool::selectToView(  _("servers")),            
+          sprintf(_("Show %s"),   _("servers")),true);
+    }
+    if(class_available("termtabs")){
+      $this->AddCheckBox("ShowTerminals",       
+          msgPool::selectToView(  _("Linux terminals")),    
+          sprintf(_("Show %s"),   _("terminals")),true);
+    }
+    if(class_available("worktabs")){
+      $this->AddCheckBox("ShowWorkstations",
+          msgPool::selectToView(  _("Linux workstations")), 
+          sprintf(_("Show %s"),   _("workstations")),true);
+    }
+    if(class_available("wintabs")){
+      $this->AddCheckBox("ShowWinWorkstations", 
+          msgPool::selectToView(  _("MicroSoft Windows based workstations")), 
+          sprintf(_("Show %s"),   _("windows based workstations")),true);
+    }
+    if(class_available("printtabs")){
+      $this->AddCheckBox("ShowPrinters",
+          msgPool::selectToView(  _("network printers")),   
+          sprintf(_("Show %s"),   _("network printers")) ,true);
+    }
+    if(class_available("phonetabs")){
+      $this->AddCheckBox("ShowPhones",
+          msgPool::selectToView(  _("VoIP phones")),        
+          sprintf(_("Show %s"),   _("phones")) ,true);
+    }
+    if(class_available("componenttabs")){
+      $this->AddCheckBox("ShowDevices",
+          msgPool::selectToView(  _("network devices")),    
+          sprintf(_("Show %s"),   _("network devices")),  true);
+    }
 
     /* Add SubSearch checkbox */
     $this->AddCheckBox(SEPERATOR);
