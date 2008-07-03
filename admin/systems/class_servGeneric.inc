@@ -45,7 +45,7 @@ class servgeneric extends plugin
   var $modes = array();
   var $ui   ;
   var $validActions   = array("reboot" => "", "update" => "", "localboot" => "", "reinstall" => "", "rescan" => "",
-                            "wake" => "", "memcheck" => "", "sysinfo" => "");
+                            "wakeup" => "", "memcheck" => "", "sysinfo" => "");
 
   var $fai_activated  =FALSE;
   var $view_logged = FALSE;
@@ -61,7 +61,7 @@ class servgeneric extends plugin
                             "update"          => "sceduledupdate",
                             "reinstall"       => "install",
                             "rescan"          => "",
-                            "wake"            => "",
+                            "wakeup"            => "",
                             "memcheck"        => "memcheck",
                             "sysinfo"         => "sysinfo");
 
@@ -230,7 +230,7 @@ class servgeneric extends plugin
                                        "localboot" => _("Force localboot"),
                                        "sysinfo"  => _("System analysis")));
     } else {
-      $smarty->assign("actions", array("wake" => _("Wake up"),
+      $smarty->assign("actions", array("wakeup" => _("Wake up"),
                                        "reinstall" => _("Reinstall"),
                                        "update" => _("System update"),
                                        "memcheck" => _("Memory test"),
