@@ -210,7 +210,7 @@ class ServerService extends plugin
        Restore vars with values before editing */
     if(isset($_POST['CancelService']) && !empty($this->current)){
       if($this->backup == NULL){
-        $this->plugins[$this->current] = new $this->current($this->config,$this->dn);
+        $this->plugins[$this->current] = new $this->current($this->config,$this->dn,$this);
         $this->plugins[$this->current]-> set_acl_base($this->acl_base);
         $this->plugins[$this->current]-> set_acl_category(preg_replace("/\/$/","",$this->acl_category));
 
