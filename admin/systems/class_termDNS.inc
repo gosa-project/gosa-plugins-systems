@@ -611,10 +611,12 @@ class termDNS extends plugin
 
     /* Check if mac is empty 
      */
-    if ($this->macAddress == "" ){
-      $message[]= msgPool::required(_("MAC address"));
-    }elseif(!tests::is_mac($this->macAddress)){
-      $message[]= msgPool::invalid(_("MAC address"), "", "", "00:0C:7F:31:33:F1");
+    if($this->MACisMust || $this->dhcp_is_Account){
+      if ($this->macAddress == "" ){
+        $message[]= msgPool::required(_("MAC address"));
+      }elseif(!tests::is_mac($this->macAddress)){
+        $message[]= msgPool::invalid(_("MAC address"), "", "", "00:0C:7F:31:33:F1");
+      }
     }
 
     /* only perfrom this checks if this is a valid DNS account */
