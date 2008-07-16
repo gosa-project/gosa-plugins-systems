@@ -811,9 +811,14 @@ class systems extends plugin
       Delete MULTIPLE entries requested, display confirm dialog
      ********************/
 
-    if ($s_action=="del_multiple"){
+    if ($s_action=="del_multiple" || $s_action == "del"){
       $this->dns = array();
-      $ids = $this->list_get_selected_items();
+
+      if($s_action == "del_multiple"){
+        $ids = $this->list_get_selected_items();
+      }else{
+        $ids = array($s_entry);
+      }
 
       $ui = get_userinfo();
       $tabs = array(
@@ -952,135 +957,6 @@ class systems extends plugin
      $this->remove_lock();
      $this->dns = array();
    }
-
-
-    /********************
-      Delete system, confirm dialog
-     ********************/
-
-    /* Remove terminal was requested */
-    if ($s_action=="del"){
-
-      /* Get 'dn' from posted termlinst */
-      $this->dn = $this->terminals[$s_entry]['dn'];
-      $attrs    = $this->terminals[$s_entry];
-
-  
-
-      $type= $this->get_system_type($attrs);
-      $ui = get_userinfo();
-      $tabs = array(
-          "ArpNewDevice"=> array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "incoming/systems"),
-          "NewDevice"   => array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "incoming/systems"),
-          "terminal"    => array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "terminal/termgeneric"),
-          "workstation" => array("CLASS"=>"WORKTABS",     "TABCLASS" =>"worktabs",      "ACL"=> "workstation/workgeneric"),
-          "server"      => array("CLASS"=>"SERVTABS",     "TABCLASS" =>"servtabs",      "ACL"=> "server/servgeneric"),
-          "printer"     => array("CLASS"=>"PRINTTABS",    "TABCLASS" =>"printtabs",     "ACL"=> "printer/printgeneric"),
-          "phone"       => array("CLASS"=>"PHONETABS",    "TABCLASS" =>"phonetabs",     "ACL"=> "phone/phoneGeneric"),
-          "winstation"  => array("CLASS"=>"WINTABS",      "TABCLASS" =>"wintabs",       "ACL"=> "winworkstation/wingeneric"),
-          "component"   => array("CLASS"=>"COMPONENTTABS","TABCLASS" =>"componenttabs", "ACL"=> "component/componentGeneric"));
-
-      /* get object type */
-      $tabtype  = "termtabs";
-      $tabobj   = "TERMTABS";
-      $tabacl   = "";
-      if(isset($tabs[$type])){
-        $tabtype = $tabs[$type]['TABCLASS'];
-        $tabobj  = $tabs[$type]['CLASS'];
-        $tabacl  = $ui->get_permissions($this->dn,$tabs[$type]['ACL']);
-      }
-
-      /* Load permissions for selected 'dn' and check if
-         we're allowed to remove this 'dn' */
-      if(preg_match("/d/",$tabacl)){ 
-
-        /* Check locking, save current plugin in 'back_plugin', so
-           the dialog knows where to return. */
-        if (($user= get_lock($this->dn)) != ""){
-          return(gen_locked_message ($user, $this->dn));
-        }
-
-        /* Lock the current entry, so nobody will edit it during deletion */
-        add_lock ($this->dn, $this->ui->dn);
-        $smarty->assign("warning", msgPool::deleteInfo(@LDAP::fix($this->dn)));
-        $smarty->assign("multiple", false);
-        return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
-      } else {
-
-        /* Obviously the user isn't allowed to delete. Show message and
-           clean session. */
-        msg_dialog::display(_("Permission error"), msgPool::permDelete(), ERROR_DIALOG);
-      }
-    }
-
-
-    /********************
-      Delete system, confirmed
-     ********************/
-    /* Confirmation for deletion has been passed. Terminal should be deleted. */
-    if (isset($_POST['delete_terminal_confirm'])){
-
-      /* Find out more about the object type */
-      $ldap= $this->config->get_ldap_link();
-      $ldap->cat($this->dn, array('objectClass'));
-      $attrs= $ldap->fetch();
-      $type= $this->get_system_type($attrs);
-
-      $ui = get_userinfo();
-
-      $tabs = array(
-          "ArpNewDevice"=> array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "incoming/systems"),
-          "NewDevice"   => array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "incoming/systems"),
-          "terminal"    => array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "terminal/termgeneric"),
-          "workstation" => array("CLASS"=>"WORKTABS",     "TABCLASS" =>"worktabs",      "ACL"=> "workstation/workgeneric"),
-          "server"      => array("CLASS"=>"SERVTABS",     "TABCLASS" =>"servtabs",      "ACL"=> "server/servgeneric"),
-          "printer"     => array("CLASS"=>"PRINTTABS",    "TABCLASS" =>"printtabs",     "ACL"=> "printer/printgeneric"),
-          "phone"       => array("CLASS"=>"PHONETABS",    "TABCLASS" =>"phonetabs",     "ACL"=> "phone/phoneGeneric"),
-          "winstation"  => array("CLASS"=>"WINTABS",      "TABCLASS" =>"wintabs",       "ACL"=> "winworkstation/wingeneric"),
-          "component"   => array("CLASS"=>"COMPONENTTABS","TABCLASS" =>"componenttabs", "ACL"=> "component/componentGeneric"));
-
-      /* get object type */
-      $tabtype  = "termtabs";
-      $tabobj   = "TERMTABS";
-      $tabacl   = "";
-      if(isset($tabs[$type])){
-        $tabtype = $tabs[$type]['TABCLASS'];
-        $tabobj  = $tabs[$type]['CLASS'];
-        $tabacl  = $ui->get_permissions($this->dn,$tabs[$type]['ACL']);
-      }
-
-      /* Check if we are allowed to remove this object */
-      if(preg_match("/d/",$tabacl)){
-
-        /* Delete request is permitted, perform LDAP action */
-        if(in_array($type,array("ArpNewDevice","NewDevice")) && class_available("termgeneric")){
-          $this->systab= new termgeneric($this->config, $this->dn);
-          $this->systab->set_acl_base($this->dn);
-          $this->systab->remove_from_parent();
-        }elseif($tabtype=="phonetabs"){
-          $this->systab= new $tabtype($this->config, $this->config->data['TABS'][$tabobj], $this->dn,$type);
-          $this->systab->set_acl_base($this->dn);
-          $this->systab->by_object['phoneGeneric']->remove_from_parent ();
-        }else{  
-          $this->systab= new $tabtype($this->config,$this->config->data['TABS'][$tabobj], $this->dn,$type);
-          $this->systab->set_acl_base($this->dn);
-          $this->systab->delete();
-        }
-        unset ($this->systab);
-        $this->systab= NULL;
-
-        /* Terminal list has changed, reload it. */
-      } else {
-
-        /* Normally this shouldn't be reached, send some extra
-           logs to notify the administrator */
-        msg_dialog::display(_("Permission error"), msgPool::permDelete(), ERROR_DIALOG);
-        new log("security","systems/".get_class($this),$dn,array(),"Tried to trick deletion.");
-      }
-
-      /* Remove lock file after successfull deletion */
-      $this->remove_lock();
-    }
 
 
     /********************
