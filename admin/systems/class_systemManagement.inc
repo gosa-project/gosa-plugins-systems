@@ -1360,9 +1360,12 @@ class systems extends plugin
         } else {
           $domain= "";
         }
-        $terminal=$value;
-        $terminal['type']     ="W";
-        $terminal['domain']   = $name.$domain;
+        $acl = $ui->get_permissions($value['dn'],"winworkstation/wingeneric");
+        if($add != "" || preg_match("/r/",$acl)) {
+          $terminal=$value;
+          $terminal['type']     ="W";
+          $terminal['domain']   = $name.$domain;
+        }
       }
 
       if(count($terminal)){
