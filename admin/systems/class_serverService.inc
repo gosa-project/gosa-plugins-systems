@@ -258,7 +258,7 @@ class ServerService extends plugin
     /* There is currently a subdialog open, display this dialog */
     if(is_object($this->dialog)){
       $add ="";
-      if(isset($this->dialog->krb_host_key) && $this->dialog->krb_host_key instanceof krb_host_keys){
+      if(isset($this->dialog->krb_host_key) && $this->dialog->krb_host_key instanceof krbHostKeys){
         $add = $this->dialog->krb_host_key->save_object_by_prefix($this->dialog->krb_service_prefix);
         $add = $this->dialog->krb_host_key->execute_by_prefix($this->dialog->krb_service_prefix,TRUE);
       }
@@ -426,7 +426,7 @@ class ServerService extends plugin
         }
       }
       if($this->plugins[$name]->initially_was_account){
-        if(isset($this->plugins[$name]->krb_host_key) && $this->plugins[$name]->krb_host_key instanceof krb_host_keys){
+        if(isset($this->plugins[$name]->krb_host_key) && $this->plugins[$name]->krb_host_key instanceof krbHostKeys){
           $this->plugins[$name]->krb_host_key->remove_from_parent_by_prefix($this->plugins[$name]->krb_host_key);
         }
         $this->plugins[$name]->remove_from_parent();

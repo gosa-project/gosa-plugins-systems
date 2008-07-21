@@ -78,8 +78,8 @@ class servgeneric extends plugin
     plugin::plugin ($config, $dn, $parent);
 
     /* Initialize kerberos host key plugin */
-    if(class_available("krb_host_keys")){
-      $this->kerberos_key_service = new krb_host_keys($this->config,$this);
+    if(class_available("krbHostKeys")){
+      $this->kerberos_key_service = new krbHostKeys($this->config,$this);
     }
 
     $this->ui = get_userinfo();
