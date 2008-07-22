@@ -13,10 +13,16 @@
 {/render}
           {foreach from=$additionalHostNumbers item=item key=key}
             <br>
+{render acl=$ipHostNumberACL}
             <input size=25 maxlength=80 type='text' name='additionalHostNumbers_{$key}' value='{$item}'>
+{/render}
+{render acl=$ipHostNumberACL}
             <input type='image' class='center' name='additionalHostNumbers_del_{$key}' src='images/lists/trash.png' alt='{msgPool type=delButton}'>
+{/render}
           {/foreach}
+{render acl=$ipHostNumberACL}
           <input type='image' class='center' name='additionalHostNumbers_add}' src='images/lists/new.png' alt='{msgPool type=addButton}'>
+{/render}
 
 {render acl=$ipHostNumberACL}
 {if $DNS_is_account == true}
@@ -33,7 +39,9 @@
 {render acl=$macAddressACL}
             <input	name="macAddress"	id="macAddress"	size=25	maxlength=80	value="{$macAddress}">
 {/render}
+{render acl=$ipHostNumberACL.$macAddressACL}
 	    <input type="submit" name="autonet" value="{t}Autodetect{/t}">
+{/render}
           </td>
 				</tr>
         {if $dhcpEnabled}
@@ -43,12 +51,16 @@
               {if $dhcpParentNodeCnt}
               <tr>
                 <td>
+{render acl=$dhcpSetupACL}
                   <input onClick='document.mainform.submit();'
                     {if $dhcp_is_Account} checked {/if} type='checkbox' name='dhcp_is_Account' class='center'>
+{/render}
                 </td>
-                <td>
+                <td colspan="2">
                   {t}Enable DHCP for this device{/t}
+{render acl=$dhcpSetupACL}
                   <input type='image' src='images/lists/reload.png' class='center'>
+{/render}
                 </td>
               </tr>
               {else}
@@ -63,12 +75,19 @@
               {if $dhcp_is_Account}
               <tr>
                 <td>&nbsp;</td>
+                <td>{t}Parent node{/t}</td>            
                 <td>
-                  {t}Parent node{/t}
+{render acl=$dhcpSetupACL}
                   <select name='dhcpParentNode'>      
                     {html_options options=$dhcpParentNodes selected=$dhcpParentNode}
                   </select>
-                  &nbsp;
+{/render}
+                </td>
+              </tr>
+              <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>
                   <input type='submit' name='dhcpEditOptions' value='{t}Edit settings{/t}'>
                 </td>
               </tr>
@@ -84,6 +103,7 @@
 
     {if $ZoneCnt}
       
+{render acl=$dnsSetupACL}
       {if $DNS_is_account == true}
       <input type="checkbox" name="DNS_is_account" value="1"  
         checked="checked"
@@ -101,7 +121,7 @@
           toggle('propose_ip');
           changeState('AddNewRecord');"/>
         {/if}
-
+{/render}
       {t}Enable DNS for this device{/t}
       <input type='image' src='images/lists/reload.png' class='center' name="reloadThisDNSStuff" >
       {if $DNS_is_account == true}
@@ -113,7 +133,7 @@
 				<tr>
 					<td><LABEL	for="zoneName">{t}Zone{/t}</LABEL></td>
 					<td>
-{render acl=$zoneNameACL}
+{render acl=$dnsSetupACL}
               <select name="zoneName" id="zoneName" {if $DNS_is_account == false} disabled {/if}>
                 {html_options values=$ZoneKeys output=$Zones selected=$zoneName}
               </select>
@@ -123,7 +143,7 @@
         <tr>
           <td>{t}TTL{/t}</td>
           <td>
-{render acl=$dNSTTLACL}
+{render acl=$dnsSetupACL}
             <input type="text" name="dNSTTL" value="{$dNSTTL}" id="dNSTTL" {if $DNS_is_account == false} disabled {/if}>
 {/render}
           </td>
@@ -132,7 +152,7 @@
           <td valign="top">{t}Dns records{/t}</td>
           <td>
             {if $DNS_is_account == true}
-{render acl=$RecordsACL}
+{render acl=$dnsSetupACL}
               {$records}
 {/render}
             {/if}

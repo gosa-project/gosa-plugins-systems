@@ -267,21 +267,23 @@ class termDNS extends plugin
      **********/
       
     /* Add a new one */
-    foreach($_POST as $name => $value){
-      if(preg_match("/^additionalHostNumbers_add/",$name)){
-        $this->additionalHostNumbers[] = "";
-        break;
-      }
-    
-      /* Delete given entry */
-      if(preg_match("/^additionalHostNumbers_del_/",$name)){
-        $id = preg_replace("/^^additionalHostNumbers_del_([0-9]*)_.*/","\\1",$name);
-        if(isset($this->additionalHostNumbers[$id])){
-          unset($this->additionalHostNumbers[$id]);
-          $this->additionalHostNumbers = array_values($this->additionalHostNumbers);
+    if($this->acl_is_writeable("ipHostNumber")){
+      foreach($_POST as $name => $value){
+        if(preg_match("/^additionalHostNumbers_add/",$name)){
+          $this->additionalHostNumbers[] = "";
+          break;
         }
-        break;
-      } 
+
+        /* Delete given entry */
+        if(preg_match("/^additionalHostNumbers_del_/",$name)){
+          $id = preg_replace("/^^additionalHostNumbers_del_([0-9]*)_.*/","\\1",$name);
+          if(isset($this->additionalHostNumbers[$id])){
+            unset($this->additionalHostNumbers[$id]);
+            $this->additionalHostNumbers = array_values($this->additionalHostNumbers);
+          }
+          break;
+        } 
+      }
     }
  
     $smarty->assign("additionalHostNumbers",$this->additionalHostNumbers);
@@ -292,13 +294,14 @@ class termDNS extends plugin
      **********/
  
     /* Check for autonet button */
-    if (isset($_POST['autonet'])){
+    if (isset($_POST['autonet']) && ($this->acl_is_writeable("ipHostNumber") || $this->acl_is_writeable("macAddress"))){
       $d= new gosaSupportDaemon(TRUE, 0.5);
-      $res= $d->_send("<xml><header>gosa_network_completition</header><source>GOSA</source><target>GOSA</target><hostname>".$this->cn."</hostname></xml>", TRUE);
-      if (isset($res['XML']['IP'])){
+      $res= $d->_send("<xml><header>gosa_network_completition</header>".
+          "<source>GOSA</source><target>GOSA</target><hostname>".$this->cn."</hostname></xml>", TRUE);
+      if (isset($res['XML']['IP']) && $this->acl_is_writeable("ipHostNumber")){
         $this->ipHostNumber= $res['XML']['IP'];
       }
-      if (isset($res['XML']['MAC'])){
+      if (isset($res['XML']['MAC']) && $this->acl_is_writeable("macAddress")){
         $this->macAddress= $res['XML']['MAC'];
       }
     }
@@ -308,14 +311,14 @@ class termDNS extends plugin
      * DHCP Handling
      **********/
  
-    if(isset($_POST['dhcpEditOptions'])){
-
+    if(isset($_POST['dhcpEditOptions']) && $this->acl_is_readable("dhcpSetup")){
       if(count($this->dhcpHostEntry) == 0){
         $this->dialog = new dhcpHost($this->dhcpParentNode,TRUE);
       }else{
         $this->dialog = new dhcpHost($this->dhcpHostEntry,TRUE);
       }
-      $this->dialog->cn = $this->cn; 
+      $this->dialog->cn   = $this->cn;
+      $this->dialog->read_only     = !$this->acl_is_writeable("dhcpSetup");
       $this->dialog->dhcpHWAddress = "ethernet ".$this->macAddress; 
       if(!empty($this->ipHostNumber)){
         $this->dialog->statements['fixed-address'] = $this->ipHostNumber; 
@@ -326,9 +329,8 @@ class termDNS extends plugin
       $this->dialog = FALSE; 
     }
 
-    if(isset($_POST['save_dhcp'])){
+    if(isset($_POST['save_dhcp']) && $this->acl_is_writeable("dhcpSetup")){
       $this->dialog->save_object();
-      
       $msgs = $this->dialog->check(array());
       if(count($msgs)){
         foreach($msgs as $msg){
@@ -345,12 +347,11 @@ class termDNS extends plugin
       return($this->dialog->execute());
     }
  
-    $smarty->assign("dhcpEnabled",    $this->dhcpEnabled);
+    $smarty->assign("dhcpEnabled",    $this->dhcpEnabled && $this->acl_is_readable("dhcpSetup"));
     $smarty->assign("dhcp_is_Account",$this->dhcp_is_Account);
     $smarty->assign("dhcpParentNode", $this->dhcpParentNode);
     $smarty->assign("dhcpParentNodes",$this->dhcpParentNodes);
     $smarty->assign("dhcpParentNodeCnt",count($this->dhcpParentNodes));
-
 
     /**********
      * DNS Handling
@@ -359,7 +360,8 @@ class termDNS extends plugin
     /* There is no dns available
      */
     $smarty->assign("DNS_is_account",$this->DNS_is_account);
-    $smarty->assign("DNSenabled",$this->DNSenabled);
+    $smarty->assign("DNSenabled",$this->DNSenabled && $this->acl_is_readable("dnsSetup"));
+
     if($this->DNSenabled == false){
 
       /* Is IP address must ? */
@@ -377,12 +379,12 @@ class termDNS extends plugin
  #     $smarty->assign("DNS_is_account",true);
 
       /* Add new empty array to our record list */
-      if(isset($_POST['AddNewRecord'])){
+      if(isset($_POST['AddNewRecord']) && $this->acl_is_writeable("dnsSetup")){
         $this->dnsEntry['RECORDS'][]  =array("type"=>"aRecord","value"=>"");
       }
 
       /* propose_ip */
-      if(isset($_POST['propose_ip'])){
+      if(isset($_POST['propose_ip']) && $this->acl_is_writeable("ipHostNumber")){
         foreach($this->Zones as $key => $name){
           if($name == $this->dnsEntry['zoneName']){
             $net = DNS::FlipIp(str_replace(".in-addr.arpa","",DNS::getNameFromMix($key)));
@@ -393,21 +395,23 @@ class termDNS extends plugin
 
       /* Handle all posts */
       $only_once =true;
-      foreach($_POST as $name => $value){
+      if($this->acl_is_writeable("dnsSetup")){
+        foreach($_POST as $name => $value){
 
-        /* Check if we have to delete a record entry */
-        if((preg_match("/RemoveRecord_/",$name))&&($only_once)) {
+          /* Check if we have to delete a record entry */
+          if((preg_match("/RemoveRecord_/",$name))&&($only_once)) {
 
-          /* Avoid performing this once again */
-          $only_once = false;
+            /* Avoid performing this once again */
+            $only_once = false;
 
-          /* Extract id for specified entry */
-          $id = preg_replace("/RemoveRecord_/","",$name);
-          $id = preg_replace("/_.*$/","",$id);
+            /* Extract id for specified entry */
+            $id = preg_replace("/RemoveRecord_/","",$name);
+            $id = preg_replace("/_.*$/","",$id);
 
-          /* Delete this record, mark edited entries to be able to delete them */
-          if(isset($this->dnsEntry['RECORDS'][$id])){
-            unset($this->dnsEntry['RECORDS'][$id]);
+            /* Delete this record, mark edited entries to be able to delete them */
+            if(isset($this->dnsEntry['RECORDS'][$id])){
+              unset($this->dnsEntry['RECORDS'][$id]);
+            }
           }
         }
       }
@@ -492,12 +496,14 @@ class termDNS extends plugin
       /******
         Additional IP Host Numbers 
        ******/
-  
+
       /* Get posts for all additionally added ipHostNumbers */
-      foreach($this->additionalHostNumbers as $id => $value){
-        if(isset($_POST['additionalHostNumbers_'.$id])){
-          $this->additionalHostNumbers[$id] = get_post('additionalHostNumbers_'.$id);
-        }
+      if($this->acl_is_writeable("ipHostNumber")){
+        foreach($this->additionalHostNumbers as $id => $value){
+          if(isset($_POST['additionalHostNumbers_'.$id])){
+            $this->additionalHostNumbers[$id] = get_post('additionalHostNumbers_'.$id);
+          }
+        } 
       } 
 
 
@@ -505,7 +511,7 @@ class termDNS extends plugin
         DHCP posts
        ******/
 
-      if($this->dhcpEnabled && isset($_POST['network_tpl_posted'])){
+      if($this->acl_is_writeable("dhcpSetup") && $this->dhcpEnabled && isset($_POST['network_tpl_posted'])){
         foreach($this->dhcpAttributes as $attr){
           if(isset($_POST[$attr])){
             $this->$attr = $_POST[$attr];
@@ -531,14 +537,14 @@ class termDNS extends plugin
        ******/
 
       /* Check if DNS should be enabled / disabled */
-      if($this->DNS_is_account && $this->acl_is_removeable() && !isset($_POST['DNS_is_account'])){
+      if($this->DNS_is_account && $this->acl_is_writeable("dnsSetup") && !isset($_POST['DNS_is_account'])){
         $this->DNS_is_account = false;
-      }elseif(!$this->DNS_is_account && $this->acl_is_createable() && isset($_POST['DNS_is_account'])){
+      }elseif(!$this->DNS_is_account && $this->acl_is_writeable("dnsSetup") && isset($_POST['DNS_is_account'])){
         $this->DNS_is_account = true;
       }
 
       /* Get dns attributes */
-      if(($this->DNSenabled) && (isset($_POST['network_tpl_posted']))){
+      if(($this->DNSenabled) && (isset($_POST['network_tpl_posted'])) && $this->acl_is_writeable("dnsSetup")){
 
         /* Check for posted record changes */
         if(is_array($this->dnsEntry['RECORDS']) && $this->acl_is_writeable("Records")){
@@ -714,7 +720,7 @@ class termDNS extends plugin
     /****************/ 
   
     /* New entry */
-    if($this->dhcpEnabled){
+    if($this->dhcpEnabled && $this->acl_is_writeable("dhcpSetup")) {
 
       if(count($this->dhcpHostEntry) == 0){
         $this->dialog = new dhcpHost($this->dhcpParentNode,TRUE);
@@ -839,7 +845,7 @@ class termDNS extends plugin
      */ 
     if((!$this->DNSenabled) || ((!$this->DNS_is_account)&&(!$this->initially_was_account))){
       return;
-    }else{
+    }elseif($this->acl_is_writeable("dnsSetup")){
 
       /* Add ipHostNumber to aRecords
        */
@@ -975,16 +981,13 @@ class termDNS extends plugin
           "macAddress"    => _("MAC address"))
         );
 
-    /* Hide all dns specific code, if dns is not available
+    /* Hide all dns/dhcp configurations if not available
      */
-    $config = session::get('config');
-    foreach($config->data['TABS']['SERVERSERVICE'] as $tab){
-      if(preg_match("/^servdns$/",$tab['CLASS'])){
-        $tmp['plProvidedAcls']["Records"]        = _("DNS records");
-        $tmp['plProvidedAcls']["zoneName"]       = _("Zone name");
-        $tmp['plProvidedAcls']["dNSTTL"]         = _("TTL");
-        break;
-      }
+    if(class_available("servdns")){
+      $tmp['plProvidedAcls']["dnsSetup"]    = _("DNS configuration");
+    }
+    if(class_available("servdhcp")){
+      $tmp['plProvidedAcls']["dhcpSetup"]   = _("DHCP configuration");
     }
     return($tmp);
   }
