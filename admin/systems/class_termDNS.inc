@@ -59,7 +59,7 @@ class termDNS extends plugin
 
   /* DNS attributes  
    */
-  var $DNSattributes            = array("dNSClass","zoneName","dNSTTL");
+  var $DNSattributes            = array("zoneName","dNSTTL");
   var $DNS_is_account           = false;
   var $initially_was_account = false;
   var $dnsEntry                 = array();
@@ -547,7 +547,7 @@ class termDNS extends plugin
       if(($this->DNSenabled) && (isset($_POST['network_tpl_posted'])) && $this->acl_is_writeable("dnsSetup")){
 
         /* Check for posted record changes */
-        if(is_array($this->dnsEntry['RECORDS']) && $this->acl_is_writeable("Records")){
+        if(is_array($this->dnsEntry['RECORDS'])){
           foreach($this->dnsEntry['RECORDS'] as $key => $value){
 
             /* Check if type has changed */
@@ -560,14 +560,13 @@ class termDNS extends plugin
             }
           }
         }
+
         /* Get all basic DNS attributes (TTL, Clas ..)*/
         foreach($this->DNSattributes as $attr){
-          if(isset($_POST[$attr]) && $this->acl_is_writeable($attr)){
+          if(isset($_POST[$attr])){
             $this->dnsEntry[$attr] = $_POST[$attr];
           }
         }
-
-
       }
       if($this->hide_dns_check_box){
         $this->DNS_is_account = true;

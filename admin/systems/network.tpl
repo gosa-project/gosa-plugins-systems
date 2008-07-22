@@ -39,9 +39,7 @@
 {render acl=$macAddressACL}
             <input	name="macAddress"	id="macAddress"	size=25	maxlength=80	value="{$macAddress}">
 {/render}
-{render acl=$ipHostNumberACL.$macAddressACL}
-	    <input type="submit" name="autonet" value="{t}Autodetect{/t}">
-{/render}
+      	    <input type="submit" name="autonet" value="{t}Autodetect{/t}">
           </td>
 				</tr>
         {if $dhcpEnabled}
