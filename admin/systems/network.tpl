@@ -21,8 +21,9 @@
 {/render}
           {/foreach}
 {render acl=$ipHostNumberACL}
-          <input type='image' class='center' name='additionalHostNumbers_add}' src='images/lists/new.png' alt='{msgPool type=addButton}'>
+          <input type='image' class='center' name='additionalHostNumbers_add}' src='images/lists/new.png' alt='{msgPool type=addButton}'>&nbsp;
 {/render}
+<br> 
 
 {render acl=$ipHostNumberACL}
 {if $DNS_is_account == true}
