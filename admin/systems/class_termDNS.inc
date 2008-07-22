@@ -313,9 +313,9 @@ class termDNS extends plugin
  
     if(isset($_POST['dhcpEditOptions']) && $this->acl_is_readable("dhcpSetup")){
       if(count($this->dhcpHostEntry) == 0){
-        $this->dialog = new dhcpHost($this->dhcpParentNode,TRUE);
+        $this->dialog = new dhcpHost($this->parent,$this->dhcpParentNode,TRUE);
       }else{
-        $this->dialog = new dhcpHost($this->dhcpHostEntry,TRUE);
+        $this->dialog = new dhcpHost($this->parent,$this->dhcpHostEntry,TRUE);
       }
       $this->dialog->cn   = $this->cn;
       $this->dialog->read_only     = !$this->acl_is_writeable("dhcpSetup");
@@ -722,7 +722,7 @@ class termDNS extends plugin
     if($this->dhcpEnabled && $this->acl_is_writeable("dhcpSetup")) {
 
       if(count($this->dhcpHostEntry) == 0){
-        $this->dialog = new dhcpHost($this->dhcpParentNode,TRUE);
+        $this->dialog = new dhcpHost($parent,$this->dhcpParentNode,TRUE);
         $this->dialog->cn = $this->cn;
         $this->dialog->dhcpHWAddress = "ethernet ".$this->macAddress;
         if(!empty($this->ipHostNumber)){
