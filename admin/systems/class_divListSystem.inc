@@ -209,7 +209,7 @@ class divListSystem extends MultiSelectWindow
         $s.= "...|".$event['MenuImage']."&nbsp;".$event['s_Menu_Name']."|trigger_event_".$name."\n";
       }
 
-      $s.= "..|<img src='images/clock.png' alt='' border='0' class='center'>".
+      $s.= "..|<img src='plugins/systems/images/clock.png' alt='' border='0' class='center'>".
         "&nbsp;"._("Schedule action")."|\n";
       foreach($events['SCHEDULED'] as $name =>  $event){
         $s.= "...|".$event['MenuImage']."&nbsp;".$event['s_Menu_Name']."|schedule_event_".$name."\n";
@@ -382,7 +382,7 @@ class divListSystem extends MultiSelectWindow
       }
 
       if(in_array("gotoWorkstation",$val['objectClass'])){
-        $action2= "<input class='center' type='image' src='images/cdrom.png' alt='"._("Create CD")."'   
+        $action2= "<input class='center' type='image' src='plugins/systems/images/cdrom.png' alt='"._("Create CD")."'   
                       name='gen_cd_%KEY%' title='"._("Create FAI CD")."'>&nbsp;".$action2;
       }else{
         $action2= $empty.$action2;
