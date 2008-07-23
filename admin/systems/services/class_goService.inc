@@ -83,7 +83,7 @@ class goService extends plugin{
     $fields['AllowStop']    = $this->acl_is_writeable("stop");
     $fields['AllowRestart'] = $this->acl_is_writeable("restart");
     $fields['AllowRemove']  = $this->acl_is_removeable();
-    $fields['AllowEdit']    = true;
+    $fields['AllowEdit']    = $this->acl_is_readable("");
     return($fields);
   }
 

@@ -123,13 +123,13 @@ class divListSystemService extends MultiSelectWindow
       }else{
         $actions .= "&nbsp;<img src='images/empty.png' width='16' alt=''>";
       }
-      if($entry['AllowStart'] && $WasAccount){
+      if($entry['AllowStop'] && $WasAccount){
         $actions .= "&nbsp;<input type='image' name='StopSingleService_".$name."' src='images/status_stop.png'
                             title='"._("Stop service")."'>";
       }else{
         $actions .= "&nbsp;<img src='images/empty.png' width='16' alt=''>";
       }
-      if($entry['AllowStart'] && $WasAccount){
+      if($entry['AllowRestart'] && $WasAccount){
         $actions .= "&nbsp;<input type='image' name='RestartSingleService_".$name."' src='images/lists/reload.png'
                             title='"._("Restart service")."'>";
       }else{
