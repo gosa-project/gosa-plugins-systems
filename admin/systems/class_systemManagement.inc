@@ -25,6 +25,7 @@ class systems extends plugin
   /* Definitions */
   var $plHeadline     = "Systems";
   var $plDescription  = "This does something";
+  var $plIcon         = "plugins/systems/images/plugin.png";
   var $departments    = array();
 
   /* Dialog attributes */
