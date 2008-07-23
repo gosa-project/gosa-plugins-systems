@@ -380,7 +380,7 @@ class ServerService extends plugin
         $tmp = $this->plugins[$name]->getListEntry();
 
         /* Check if given action is allowed for this service */
-        if($tmp[$map[$action]]){
+        if($tmp[$map[$action]] && !empty($this->plugins[$name]->StatusFlag)){
           if($this->plugins[$name]->initially_was_account && $this->plugins[$name]->is_account){
             $this->plugins[$name]->setStatus($action);
           }
