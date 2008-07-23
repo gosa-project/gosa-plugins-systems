@@ -79,9 +79,10 @@ class goService extends plugin{
     $fields['Message']      = _("Empty service");
 
     /* Allow/disallow some functions */
-    $fields['AllowStart']   = $this->acl_is_writeable("start");
-    $fields['AllowStop']    = $this->acl_is_writeable("stop");
-    $fields['AllowRestart'] = $this->acl_is_writeable("restart");
+    $sf = !empty($this->StatusFlag);
+    $fields['AllowStart']   = $sf && $this->acl_is_writeable("start");
+    $fields['AllowStop']    = $sf && $this->acl_is_writeable("stop");
+    $fields['AllowRestart'] = $sf && $this->acl_is_writeable("restart");
     $fields['AllowRemove']  = $this->acl_is_removeable();
     $fields['AllowEdit']    = $this->acl_is_readable("");
     return($fields);
