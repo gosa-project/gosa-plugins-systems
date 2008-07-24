@@ -184,7 +184,7 @@ class divListSystem extends MultiSelectWindow
         "&nbsp;"._("Workstation")."|"."newsystem_workstation|\n";
     }
     if(class_available("servtabs") && preg_match("/c/",$ui->get_permissions($this->selectedBase,"workstation/servgeneric"))){
-      $s.= "...|<img src='images/select_server.png' alt='' border='0' class='center'>".
+      $s.= "...|<img src='plugins/systems/images/select_server.png' alt='' border='0' class='center'>".
         "&nbsp;"._("Server")."|"."newsystem_server|\n";
     }
     if(class_available("phonetabs") && preg_match("/c/",$ui->get_permissions($this->selectedBase,"phone/phoneGeneric"))){
@@ -429,7 +429,7 @@ class divListSystem extends MultiSelectWindow
     $num_wws_str = sprintf(_("Number of listed '%s'"),_("windows workstations"));
     $num_dep_str = sprintf(_("Number of listed '%s'"),_("departments"));
 
-    $str = "<img class='center' src='images/select_server.png'
+    $str = "<img class='center' src='plugins/systems/images/select_server.png'
       title='".$num_ser_str."' alt='".$num_ser_str."'>&nbsp;".$cnts['server']."&nbsp;&nbsp;&nbsp;&nbsp;";
     $str.= "<img class='center' src='images/select_workstation.png'
       title='".$num_ws_str."' alt='".$num_ws_str."'>&nbsp;".$cnts['workstation']."&nbsp;&nbsp;&nbsp;&nbsp;";
