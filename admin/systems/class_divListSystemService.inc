@@ -58,7 +58,7 @@ class divListSystemService extends MultiSelectWindow
        which are shown in the listbox on top of the listbox
      */
     $listhead = "<div style='background:#F0F0F9;height:16px;padding:0px;'>".
-    " <input type='image' align='middle' src='images/select_new_server.png' class='center' 
+    " <input type='image' align='middle' src='plugins/systems/images/select_new_server.png' class='center' 
         name='addNewService' alt='"._("Add service")."' title='"._("Add new service")."'>&nbsp;".
     " <img class='center' src='images/lists/seperator.png' align='middle' alt='' height='16' width='1'>&nbsp;".
     " <input type='image' align='middle' src='images/status_start_all.png' class='center'

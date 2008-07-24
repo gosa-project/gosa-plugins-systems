@@ -1557,7 +1557,7 @@ class systems extends plugin
         "LB" => array("images/workstation_busy.png",_("Workstation busy")),
         "SB" => array("images/server_busy.png",_("Server busy")),
 
-        "NQ" => array("images/select_newsystem.png",_("New system from incoming")),
+        "NQ" => array("plugins/systems/images/select_newsystem.png",_("New system from incoming")),
         "NT"=> array("images/select_new_terminal.png",_("New terminal")),
         "NL"=> array("images/select_new_workstation.png",_("New workstation")));
 
