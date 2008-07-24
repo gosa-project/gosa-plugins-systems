@@ -176,7 +176,7 @@ class divListSystem extends MultiSelectWindow
       "&nbsp;"._("Create")."|\n";
 
     if(class_available("termtabs") && preg_match("/c/",$ui->get_permissions($this->selectedBase,"terminal/termgeneric"))){
-      $s.= "...|<img src='images/select_terminal.png' alt='' border='0' class='center'>".
+      $s.= "...|<img src='plugins/systems/images/select_terminal.png' alt='' border='0' class='center'>".
         "&nbsp;"._("Terminal")."|"."newsystem_terminal|\n";
     }
     if(class_available("worktabs") && preg_match("/c/",$ui->get_permissions($this->selectedBase,"workstation/workgeneric"))){
@@ -433,7 +433,7 @@ class divListSystem extends MultiSelectWindow
       title='".$num_ser_str."' alt='".$num_ser_str."'>&nbsp;".$cnts['server']."&nbsp;&nbsp;&nbsp;&nbsp;";
     $str.= "<img class='center' src='images/select_workstation.png'
       title='".$num_ws_str."' alt='".$num_ws_str."'>&nbsp;".$cnts['workstation']."&nbsp;&nbsp;&nbsp;&nbsp;";
-    $str.= "<img class='center' src='images/select_terminal.png'
+    $str.= "<img class='center' src='plugins/systems/images/select_terminal.png'
       title='".$num_ter_str."' alt='".$num_ter_str."'>&nbsp;".$cnts['terminal']."&nbsp;&nbsp;&nbsp;&nbsp;";
     $str.= "<img class='center' src='plguins/systems/images/select_phone.png'
       title='".$num_pho_str."' alt='".$num_pho_str."'>&nbsp;".$cnts['phone']."&nbsp;&nbsp;&nbsp;&nbsp;";

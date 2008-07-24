@@ -1544,7 +1544,7 @@ class systems extends plugin
 
         "L" => array("images/select_workstation.png",_("Workstation")),
         "S" => array("images/select_server.png",_("Server")),
-        "T" => array("images/select_terminal.png",_("Terminal")),
+        "T" => array("plugins/systems/images/select_terminal.png",_("Terminal")),
 
         "LX" => array("images/workstation_locked.png",_("Locked workstation")),
         "SX" => array("images/server_locked.png",_("Locked server")),
