@@ -1536,7 +1536,7 @@ class systems extends plugin
 
     $conv= array(
         "D" => array("plugins/systems/images/select_default.png",_("Template")),
-        "F" => array("images/select_phone.png",_("Phone")),
+        "F" => array("plugins/systems/images/select_phone.png",_("Phone")),
         "C" => array("plugins/systems/images/select_component.png",_("Network device")),
         "P" => array("images/select_printer.png",_("Printer")),
 
