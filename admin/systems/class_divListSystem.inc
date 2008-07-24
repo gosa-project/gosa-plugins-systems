@@ -435,7 +435,7 @@ class divListSystem extends MultiSelectWindow
       title='".$num_ws_str."' alt='".$num_ws_str."'>&nbsp;".$cnts['workstation']."&nbsp;&nbsp;&nbsp;&nbsp;";
     $str.= "<img class='center' src='plugins/systems/images/select_terminal.png'
       title='".$num_ter_str."' alt='".$num_ter_str."'>&nbsp;".$cnts['terminal']."&nbsp;&nbsp;&nbsp;&nbsp;";
-    $str.= "<img class='center' src='plguins/systems/images/select_phone.png'
+    $str.= "<img class='center' src='plugins/systems/images/select_phone.png'
       title='".$num_pho_str."' alt='".$num_pho_str."'>&nbsp;".$cnts['phone']."&nbsp;&nbsp;&nbsp;&nbsp;";
     $str.= "<img class='center' src='plugins/systems/images/select_printer.png'
       title='".$num_prt_str."' alt='".$num_prt_str."'>&nbsp;".$cnts['printer']."&nbsp;&nbsp;&nbsp;&nbsp;";
