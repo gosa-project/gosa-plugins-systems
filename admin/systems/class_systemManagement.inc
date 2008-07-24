@@ -1543,23 +1543,23 @@ class systems extends plugin
         "W" => array("plugins/systems/images/select_winstation.png",_("Win workstation")),
 
         "L" => array("plugins/systems/images/select_workstation.png",_("Workstation")),
-        "S" => array("images/select_server.png",_("Server")),
+        "S" => array("plugins/systems/images/select_server.png",_("Server")),
         "T" => array("plugins/systems/images/select_terminal.png",_("Terminal")),
 
-        "LX" => array("images/workstation_locked.png",_("Locked workstation")),
-        "SX" => array("images/server_locked.png",_("Locked server")),
-        "TX" => array("images/terminal_locked.png",_("Locked terminal")),
+        "LX" => array("plugins/systems/images/workstation_locked.png",_("Locked workstation")),
+        "SX" => array("plugins/systems/images/server_locked.png",_("Locked server")),
+        "TX" => array("plugins/systems/images/terminal_locked.png",_("Locked terminal")),
 
-        "LE" => array("images/workstation_error.png",_("Workstation error")),
-        "SE" => array("images/server_error.png",_("Server error")),
-        "TE" => array("images/terminal_error.png",_("Terminal error")),
+        "LE" => array("plugins/systems/images/workstation_error.png",_("Workstation error")),
+        "SE" => array("plugins/systems/images/server_error.png",_("Server error")),
+        "TE" => array("plugins/systems/images/terminal_error.png",_("Terminal error")),
 
-        "LB" => array("images/workstation_busy.png",_("Workstation busy")),
-        "SB" => array("images/server_busy.png",_("Server busy")),
+        "LB" => array("plugins/systems/images/workstation_busy.png",_("Workstation busy")),
+        "SB" => array("plugins/systems/images/server_busy.png",_("Server busy")),
 
         "NQ" => array("plugins/systems/images/select_newsystem.png",_("New system from incoming")),
-        "NT"=> array("images/select_new_terminal.png",_("New terminal")),
-        "NL"=> array("images/select_new_workstation.png",_("New workstation")));
+        "NT" => array("plugins/systems/images/select_new_terminal.png",_("New terminal")),
+        "NL" => array("plugins/systems/images/select_new_workstation.png",_("New workstation")));
 
     /* Use locked icons 
      */
