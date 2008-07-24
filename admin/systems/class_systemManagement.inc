@@ -1540,7 +1540,7 @@ class systems extends plugin
         "C" => array("plugins/systems/images/select_component.png",_("Network device")),
         "P" => array("plugins/systems/images/select_printer.png",_("Printer")),
 
-        "W" => array("images/select_winstation.png",_("Win workstation")),
+        "W" => array("plugins/systems/images/select_winstation.png",_("Win workstation")),
 
         "L" => array("images/select_workstation.png",_("Workstation")),
         "S" => array("images/select_server.png",_("Server")),
