@@ -196,7 +196,7 @@ class divListSystem extends MultiSelectWindow
         "&nbsp;"._("Printer")."|"."newsystem_printer|\n";
     }
     if(class_available("componenttabs") && preg_match("/c/",$ui->get_permissions($this->selectedBase,"component/componentGeneric"))){
-      $s.= "...|<img src='images/select_component.png' alt='' border='0' class='center'>".
+      $s.= "...|<img src='plugins/systems/images/select_component.png' alt='' border='0' class='center'>".
         "&nbsp;"._("Component")."|"."newsystem_component|\n";
     }
 
@@ -439,7 +439,7 @@ class divListSystem extends MultiSelectWindow
       title='".$num_pho_str."' alt='".$num_pho_str."'>&nbsp;".$cnts['phone']."&nbsp;&nbsp;&nbsp;&nbsp;";
     $str.= "<img class='center' src='images/select_printer.png'
       title='".$num_prt_str."' alt='".$num_prt_str."'>&nbsp;".$cnts['printer']."&nbsp;&nbsp;&nbsp;&nbsp;";
-    $str.= "<img class='center' src='images/select_component.png'
+    $str.= "<img class='center' src='plugins/systems/images/select_component.png'
       title='".$num_com_str."' alt='".$num_com_str."'>&nbsp;".$cnts['component']."&nbsp;&nbsp;&nbsp;&nbsp;";
     $str.= "<img class='center' src='images/select_newsystem.png'
       title='".$num_new_str."' alt='".$num_new_str."'>&nbsp;".$cnts['NewDevice']."&nbsp;&nbsp;&nbsp;&nbsp;";

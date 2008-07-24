@@ -1535,31 +1535,31 @@ class systems extends plugin
     $temp= "";
 
     $conv= array(
-        "D" => array("select_default.png",_("Template")),
-        "F" => array("select_phone.png",_("Phone")),
-        "C" => array("select_component.png",_("Network device")),
-        "P" => array("select_printer.png",_("Printer")),
+        "D" => array("images/select_default.png",_("Template")),
+        "F" => array("images/select_phone.png",_("Phone")),
+        "C" => array("plugins/systems/images/select_component.png",_("Network device")),
+        "P" => array("images/select_printer.png",_("Printer")),
 
-        "W" => array("select_winstation.png",_("Win workstation")),
+        "W" => array("images/select_winstation.png",_("Win workstation")),
 
-        "L" => array("select_workstation.png",_("Workstation")),
-        "S" => array("select_server.png",_("Server")),
-        "T" => array("select_terminal.png",_("Terminal")),
+        "L" => array("images/select_workstation.png",_("Workstation")),
+        "S" => array("images/select_server.png",_("Server")),
+        "T" => array("images/select_terminal.png",_("Terminal")),
 
-        "LX" => array("workstation_locked.png",_("Locked workstation")),
-        "SX" => array("server_locked.png",_("Locked server")),
-        "TX" => array("terminal_locked.png",_("Locked terminal")),
+        "LX" => array("images/workstation_locked.png",_("Locked workstation")),
+        "SX" => array("images/server_locked.png",_("Locked server")),
+        "TX" => array("images/terminal_locked.png",_("Locked terminal")),
 
-        "LE" => array("workstation_error.png",_("Workstation error")),
-        "SE" => array("server_error.png",_("Server error")),
-        "TE" => array("terminal_error.png",_("Terminal error")),
+        "LE" => array("images/workstation_error.png",_("Workstation error")),
+        "SE" => array("images/server_error.png",_("Server error")),
+        "TE" => array("images/terminal_error.png",_("Terminal error")),
 
-        "LB" => array("workstation_busy.png",_("Workstation busy")),
-        "SB" => array("server_busy.png",_("Server busy")),
+        "LB" => array("images/workstation_busy.png",_("Workstation busy")),
+        "SB" => array("images/server_busy.png",_("Server busy")),
 
-        "NQ" => array("select_newsystem.png",_("New system from incoming")),
-        "NT"=> array("select_new_terminal.png",_("New terminal")),
-        "NL"=> array("select_new_workstation.png",_("New workstation")));
+        "NQ" => array("images/select_newsystem.png",_("New system from incoming")),
+        "NT"=> array("images/select_new_terminal.png",_("New terminal")),
+        "NL"=> array("images/select_new_workstation.png",_("New workstation")));
 
     /* Use locked icons 
      */
@@ -1609,7 +1609,7 @@ class systems extends plugin
       }
 
       if($found){
-        $tmp['img'] ="<img class='center' src='images/".$value[0]."' alt='".$key."' title='".$value['1']."'>";
+        $tmp['img'] ="<img class='center' src='".$value[0]."' alt='".$key."' title='".$value['1']."'>";
         $tmp['class']=$key;
         return $tmp;
       }
