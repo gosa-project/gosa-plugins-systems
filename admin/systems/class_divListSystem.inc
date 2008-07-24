@@ -402,7 +402,7 @@ class divListSystem extends MultiSelectWindow
           $release_attach = ""; 
         }elseif(isset($ogs_release[$val['dn']])){
           $release = trim($ogs_release[$val['dn']]['STR'],", ").
-            "&nbsp;<img src='images/select_ogroup.png' class='center' alt='' 
+            "&nbsp;<img src='plugins/ogroups/images/select_ogroup.png' class='center' alt='' 
             title='".sprintf(_("Inherited from %s"),trim($ogs_release[$val['dn']]['CN'],", "))."'>";
           $release_attach = "title='".sprintf(_("Inherited from %s"),trim($ogs_release[$val['dn']]['CN'],", "))."'"; 
         }
