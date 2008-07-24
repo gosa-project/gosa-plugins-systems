@@ -192,7 +192,7 @@ class divListSystem extends MultiSelectWindow
         "&nbsp;"._("Phone")."|"."newsystem_phone|\n";
     }
     if(class_available("printtabs") && preg_match("/c/",$ui->get_permissions($this->selectedBase,"printer/printgeneric"))){
-      $s.= "...|<img src='images/select_printer.png' alt='' border='0' class='center'>".
+      $s.= "...|<img src='plugins/systems/images/select_printer.png' alt='' border='0' class='center'>".
         "&nbsp;"._("Printer")."|"."newsystem_printer|\n";
     }
     if(class_available("componenttabs") && preg_match("/c/",$ui->get_permissions($this->selectedBase,"component/componentGeneric"))){
@@ -437,7 +437,7 @@ class divListSystem extends MultiSelectWindow
       title='".$num_ter_str."' alt='".$num_ter_str."'>&nbsp;".$cnts['terminal']."&nbsp;&nbsp;&nbsp;&nbsp;";
     $str.= "<img class='center' src='plguins/systems/images/select_phone.png'
       title='".$num_pho_str."' alt='".$num_pho_str."'>&nbsp;".$cnts['phone']."&nbsp;&nbsp;&nbsp;&nbsp;";
-    $str.= "<img class='center' src='images/select_printer.png'
+    $str.= "<img class='center' src='plugins/systems/images/select_printer.png'
       title='".$num_prt_str."' alt='".$num_prt_str."'>&nbsp;".$cnts['printer']."&nbsp;&nbsp;&nbsp;&nbsp;";
     $str.= "<img class='center' src='plugins/systems/images/select_component.png'
       title='".$num_com_str."' alt='".$num_com_str."'>&nbsp;".$cnts['component']."&nbsp;&nbsp;&nbsp;&nbsp;";
