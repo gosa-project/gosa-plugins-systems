@@ -1542,7 +1542,7 @@ class systems extends plugin
 
         "W" => array("plugins/systems/images/select_winstation.png",_("Win workstation")),
 
-        "L" => array("images/select_workstation.png",_("Workstation")),
+        "L" => array("plugins/systems/images/select_workstation.png",_("Workstation")),
         "S" => array("images/select_server.png",_("Server")),
         "T" => array("plugins/systems/images/select_terminal.png",_("Terminal")),
 
