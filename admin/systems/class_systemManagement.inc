@@ -64,7 +64,7 @@ class systems extends plugin
     $this->DivListSystem = new divListSystem($this->config,$this);
 
     /* Copy & Paste enabled ?*/
-    if((isset($this->config->data['MAIN']['ENABLECOPYPASTE']))&&(preg_match("/true/i",$this->config->data['MAIN']['ENABLECOPYPASTE']))){
+    if ($this->config->get_cfg_value("enablecopypaste") == "true"){
       $this->CopyPasteHandler = new CopyPasteHandler($this->config);
     }
 
@@ -1182,7 +1182,7 @@ class systems extends plugin
     /* Prepare samba class name */
     $samba  ="";
     if ($this->DivListSystem->ShowWinWorkstations){
-      if ($this->config->current['SAMBAVERSION'] == "3"){
+      if ($this->config->get_cfg_value("sambaversion") == "3"){
         $samba= "sambaSamAccount";
       } else {
         $samba= "sambaAccount";
