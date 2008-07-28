@@ -587,7 +587,7 @@ class termDNS extends plugin
 
     foreach($this->additionalHostNumbers as $id => $value){
       if(!tests::is_ip($value)){
-        $message[]= msgPool::invalid(sprintf(_("IP address #%s"),($id +2)), "", "", "192.168.1.10");
+        $message[]= msgPool::invalid(sprintf(_("IP address %s"),($id +2)), "", "", "192.168.1.10");
       }
     }
 
