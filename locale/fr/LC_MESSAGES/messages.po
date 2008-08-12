@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-08-01 16:29+0200\n"
-"PO-Revision-Date: 2008-07-24 02:13+0200\n"
+"PO-Revision-Date: 2008-08-12 14:03+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: french <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -50,9 +50,9 @@ msgid "LDAP error"
 msgstr "Erreur LDAP"
 
 #: admin/systems/class_termDNS.inc:590
-#, fuzzy, php-format
+#, php-format
 msgid "IP address %s"
-msgstr "Adresse IP #%s"
+msgstr "Adresse IP %s"
 
 #: admin/systems/class_termDNS.inc:599 admin/systems/class_termDNS.inc:611
 #: admin/systems/class_termDNS.inc:613 admin/systems/class_termDNS.inc:979
@@ -95,8 +95,7 @@ msgstr ""
 #: admin/systems/class_termDNS.inc:678
 #, php-format
 msgid "Only lowercase records are allowed, please check your '%ss'."
-msgstr ""
-"Seulement les minuscules sont autorisée, veuillez vérifier votre '%ss'."
+msgstr "Seulement les minuscules sont autorisée, veuillez vérifier votre '%ss'."
 
 #: admin/systems/class_termDNS.inc:920 admin/systems/class_termDNS.inc:940
 msgid "Add"
@@ -115,14 +114,12 @@ msgid "DNS settings"
 msgstr "Configuration DNS"
 
 #: admin/systems/class_termDNS.inc:986
-#, fuzzy
 msgid "DNS configuration"
-msgstr "Configuration de PHP"
+msgstr "Configuration du DNS"
 
 #: admin/systems/class_termDNS.inc:989
-#, fuzzy
 msgid "DHCP configuration"
-msgstr "Configuration de PHP"
+msgstr "Configuration de DHCP"
 
 #: admin/systems/class_divListSystem.inc:62
 #: admin/systems/class_divListSystem.inc:63
@@ -437,9 +434,8 @@ msgid "Software deployment"
 msgstr "Déploiement de logiciel"
 
 #: admin/systems/class_servGeneric.inc:370
-msgid ""
-"This host is currently installing, if you really want to save it, press 'OK'."
-msgstr ""
+msgid "This host is currently installing, if you really want to save it, press 'OK'."
+msgstr "Cet hôte est actuellement en cours d'installation, si vous voulez vraiment le sauver, cliquez sur 'OK'."
 
 #: admin/systems/class_servGeneric.inc:503
 #: admin/systems/class_componentGeneric.inc:309
@@ -490,8 +486,7 @@ msgid "Action"
 msgstr "Action"
 
 #: admin/systems/server.tpl:69
-msgid ""
-"System installation in progress, the FAI state cannot be changed right now."
+msgid "System installation in progress, the FAI state cannot be changed right now."
 msgstr ""
 "Le système est en cours d'installation, l'état FAI ne peut pas être changé "
 "maintenant."
@@ -732,8 +727,7 @@ msgstr "La création de l'image à échoué. veuillez lire le rapport ci dessous
 #: admin/systems/class_systemManagement.inc:287
 #, php-format
 msgid "Command '%s', specified for ISO creation doesn't seem to exist."
-msgstr ""
-"La commande '%s', utilisée dans la création de l'image ISO n'existe pas."
+msgstr "La commande '%s', utilisée dans la création de l'image ISO n'existe pas."
 
 #: admin/systems/class_systemManagement.inc:369
 msgid "Internal error"
@@ -857,7 +851,7 @@ msgstr "Serveur occupé"
 
 #: admin/systems/class_systemManagement.inc:1560
 msgid "New system from incoming"
-msgstr ""
+msgstr "Nouveau système depuis incoming"
 
 #: admin/systems/class_systemManagement.inc:1638
 #: admin/systems/class_systemManagement.inc:1639
@@ -928,38 +922,3 @@ msgstr "composant"
 msgid "Component generic"
 msgstr "Composant générique"
 
-#~ msgid "Cups Server"
-#~ msgstr "Serveur Cups"
-
-#~ msgid "Log Db"
-#~ msgstr "Base de données des journaux systèmes"
-
-#~ msgid "Syslog Server"
-#~ msgstr "Serveur de journaux systèmes"
-
-#~ msgid "Mail Server"
-#~ msgstr "Serveur de messagerie"
-
-#~ msgid "Imap Server"
-#~ msgstr "Serveur Imap"
-
-#~ msgid "Nfs Server"
-#~ msgstr "Serveur NFS"
-
-#~ msgid "Kerberos Server"
-#~ msgstr "Serveur Kerberos"
-
-#~ msgid "Asterisk Server"
-#~ msgstr "Serveur Asterisk"
-
-#~ msgid "Fax Server"
-#~ msgstr "Serveur de Fax"
-
-#~ msgid "Ldap Server"
-#~ msgstr "Serveur Ldap"
-
-#~ msgid "DNS records"
-#~ msgstr "Enregistrement DNS"
-
-#~ msgid "Zone name"
-#~ msgstr "Nom de la zone"
