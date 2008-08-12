@@ -427,7 +427,7 @@ class ServerService extends plugin
       }
       if($this->plugins[$name]->initially_was_account){
         if(isset($this->plugins[$name]->krb_host_key) && $this->plugins[$name]->krb_host_key instanceof krbHostKeys){
-          $this->plugins[$name]->krb_host_key->remove_from_parent_by_prefix($this->plugins[$name]->krb_host_key);
+          $this->plugins[$name]->krb_host_key->remove_from_parent_by_prefix($this->plugins[$name]->krb_service_prefix);
         }
         $this->plugins[$name]->remove_from_parent();
       }
