@@ -99,7 +99,7 @@ class servgeneric extends plugin
     $this->netConfigDNS->set_acl_base($this->base);
 
     /* Check if this host is currently in installation process*/
-    if(class_available("gosaSupportDaemon") && class_available("DaemonEvent")){
+    if($this->dn != "new" && class_available("gosaSupportDaemon") && class_available("DaemonEvent")){
       $o = new gosaSupportDaemon();
       $e_types = DaemonEvent::get_event_types(USER_EVENT | SYSTEM_EVENT | HIDDEN_EVENT);
       $evts = $o->get_entries_by_mac(array($this->netConfigDNS->macAddress));
