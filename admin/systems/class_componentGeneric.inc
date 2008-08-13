@@ -232,7 +232,7 @@ class componentGeneric extends plugin
           if(preg_match("/cn=dhcp,/",$attrs['dn'])){
             continue;
           }
-          if ($attrs['dn'] != $this->orig_dn){
+          if ($attrs['dn'] != $this->orig_dn && preg_match("/".normalizePreg(get_ou("componentou"))."/",$attrs['dn'])){
             $message[]= msgPool::duplicated(_("Component name"));
             break;
           }
