@@ -48,6 +48,8 @@ class systems extends plugin
 
   var $acl_module = array("incoming","terminal","workstation","server","printer","phone","winworkstation","component");
 
+  var $opsi = NULL;
+
   function systems (&$config, $ui)
   {
     /* Save configuration for internal use */
@@ -78,6 +80,12 @@ class systems extends plugin
     if(class_available("gosaSupportDaemon")){
       $o = new gosaSupportDaemon();
       $this->si_active = $o->connect() && class_available("DaemonEvent");
+    }
+
+    /* Check if we are able to communicate with the GOsa supprot daemon 
+     */
+    if(class_available("opsi")){
+      $this->opsi = new opsi($this->config);
     }
   }
 
@@ -515,14 +523,13 @@ class systems extends plugin
       }
 
       /* Find out more about the object type */
-      $ldap= $this->config->get_ldap_link();
-      $ldap->cat($this->dn, array('objectClass','gotoMode'));
-      $attrs= $ldap->fetch();
+      $attrs = $this->terminals[$s_entry];
       $type= $this->get_system_type($attrs);
-
+     
       /* Lock the current entry, so everyone will get the
          above dialog */
       $tabs = array(
+          "gosa_opsi_client"=> array("CLASS"=>"OPSITABS", "TABCLASS" =>"opsi_tabs",      "ACL"=> "opsi"),
           "terminal"    => array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "terminal"),
           "workstation" => array("CLASS"=>"WORKTABS",     "TABCLASS" =>"worktabs",      "ACL"=> "workstation"),
           "server"      => array("CLASS"=>"SERVTABS",     "TABCLASS" =>"servtabs",      "ACL"=> "server"),
@@ -530,7 +537,6 @@ class systems extends plugin
           "phone"       => array("CLASS"=>"PHONETABS",    "TABCLASS" =>"phonetabs",     "ACL"=> "phone"),
           "winstation"  => array("CLASS"=>"WINTABS",      "TABCLASS" =>"wintabs",       "ACL"=> "winworkstation"),
           "component"   => array("CLASS"=>"COMPONENTTABS","TABCLASS" =>"componenttabs", "ACL"=> "component"));
-
 
       if($type == "ArpNewDevice"){
         if(!class_available("ArpNewDeviceTabs")){
@@ -1238,6 +1244,12 @@ class systems extends plugin
     $filter = "(|(&".$userregex."(objectClass=goHard)(cn=".$this->DivListSystem->Regex.")))";
     $res = array_merge($res,get_list($filter,$sys_categories, get_ou('incomingou').$base,$sys_attrs, GL_SIZELIMIT));
 
+    /* Append opsi systems, the opsi extension have to installed.
+     */
+    if($this->opsi != NULL){
+      $res = array_merge($res,$this->opsi->get_hosts_for_system_management());
+    }
+    
     /* Get all gotoTerminal's */
     foreach ($res as $value){
 
@@ -1272,7 +1284,14 @@ class systems extends plugin
 
       /* Detect type of object and create an entry for $this->terminals */
       $terminal = array();
-      if (in_array_ics('gotoTerminal', $value["objectClass"])){
+
+       if (in_array_ics('gosa_opsi_client', $value["objectClass"])){
+
+         /* check acl */
+         $terminal             = $value;
+         $terminal['type']     = "O";
+
+       } elseif (in_array_ics('gotoTerminal', $value["objectClass"])){
 
         /* check acl */
         $acl = $ui->get_permissions($value['dn'],"terminal/termgeneric");
@@ -1506,7 +1525,9 @@ class systems extends plugin
     $classes = $attrs['objectClass'];
 
     $type= "";
-    if (in_array_ics('ieee802Device', $classes)){
+    if (in_array_ics('gosa_opsi_client', $classes)){
+      $type= "gosa_opsi_client";
+    }elseif (in_array_ics('ieee802Device', $classes)){
       $type= "component";
     }elseif (in_array_ics('gotoTerminal', $classes)){
       $type= "terminal";
@@ -1560,6 +1581,11 @@ class systems extends plugin
         "NQ" => array("plugins/systems/images/select_newsystem.png",_("New system from incoming")),
         "NT" => array("plugins/systems/images/select_new_terminal.png",_("New terminal")),
         "NL" => array("plugins/systems/images/select_new_workstation.png",_("New workstation")));
+
+    /* Add opsi client to system types */
+    if($this->opsi != NULL){
+        $conv["O"] = array("plugins/systems/images/select_default.png",_("Opsi client"));
+    }
 
     /* Use locked icons 
      */
