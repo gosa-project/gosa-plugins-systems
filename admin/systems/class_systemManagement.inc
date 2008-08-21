@@ -447,7 +447,7 @@ class systems extends plugin
       $this->dn= "new";
 
       $tabs = $this->get_tab_defs();
-
+  
       if(isset($tabs[$sw])){
         $class    = $tabs[$sw]["CLASS"];
         $tabname  = $tabs[$sw]["TABNAME"];
@@ -473,7 +473,6 @@ class systems extends plugin
         }
       }
     }
-
 
     /********************
       System activation
@@ -1669,10 +1668,10 @@ class systems extends plugin
     if($this->opsi != NULL){
       $tabs["opsi_client"] = array(
           "CLASS"   => "OPSITABS",
-          "TABNAME" => "opsi_generic" ,
+          "TABNAME" => "opsigeneric" ,
           "TABCLASS"=> "opsi_tabs",
           "ACLC"    => "opsi" ,
-          "ACL"     => "opsi/opsi_generic");
+          "ACL"     => "opsi/opsigeneric");
     }
 
     return($tabs);
