@@ -253,21 +253,11 @@ class divListSystem extends MultiSelectWindow
 
     /* ACL mapping */
     $ui = get_userinfo();
-    $tabs = array(
-          "terminal"    => array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "terminal/termgeneric"),
-          "workstation" => array("CLASS"=>"WORKTABS",     "TABCLASS" =>"worktabs",      "ACL"=> "workstation/workgeneric"),
-          "server"      => array("CLASS"=>"SERVTABS",     "TABCLASS" =>"servtabs",      "ACL"=> "server/servgeneric"),
-          "printer"     => array("CLASS"=>"PRINTTABS",    "TABCLASS" =>"printtabs",     "ACL"=> "printer/printgeneric"),
-          "phone"       => array("CLASS"=>"PHONETABS",    "TABCLASS" =>"phonetabs",     "ACL"=> "phone/phoneGeneric"),
-          "winstation"  => array("CLASS"=>"WINTABS",      "TABCLASS" =>"wintabs",       "ACL"=> "winworkstation/wingeneric"),
-          "incoming"    => array("CLASS"=>"",             "TABCLASS" =>"",              "ACL"=> "incoming/systems"),
-          "component"   => array("CLASS"=>"COMPONENTTABS","TABCLASS" =>"componenttabs", "ACL"=> "component/componentGeneric"));
-
+    $tabs = $this->parent->get_tab_defs();
 
     $cnts = array("component" => 0 , "terminal" => 0 , "workstation" => 0 , 
-                  "printer" => 0 , "phone" => 0 , "server" => 0,
+                  "printer" => 0 , "phone" => 0 , "server" => 0,"opsi_client" => 0,
                   "NewDevice" => 0, "winstation"=> 0);
-
 
     /* Get list of all objectGroups and their member and release configuration 
      */
@@ -294,19 +284,13 @@ class divListSystem extends MultiSelectWindow
 
       /* Get system type, it is used to fetch the acls for the current object.
           "winstation" acls are stored as 2winworkstation", so we have to map this here */
-      $type     = $this->parent->get_system_type($val);
-      if($type == "winstation") {
-        $acl_type = "winworkstation";
-      }else{
-        $acl_type = $type;
-      }
 
       /* Map NewDevice acls to workstation acls */
+      $type     = $this->parent->get_system_type($val);
       if($type == "NewDevice" || $type == "ArpNewDevice"){
         $type     = "incoming";
-        $acl_type = "incoming";
       }
-
+      $acl_type = $tabs[$type]['ACLC'];
       $s_acl    = $tabs[$type]['ACL'];
       $category = preg_replace("/\/.*$/","",$s_acl);
       $class    = preg_replace("/^.*\//","",$s_acl);

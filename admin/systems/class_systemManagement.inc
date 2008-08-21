@@ -312,13 +312,7 @@ class systems extends plugin
 
       /* Possible destination system types 
        */
-      $tabs = array(
-          "terminal"    => array("CLASS"=>"TERMTABS",     "TABNAME"=>"termgeneric",     
-            "TABCLASS" =>"termtabs",      "ACL"=> "terminal"),
-          "workstation" => array("CLASS"=>"WORKTABS",     "TABNAME"=>"workgeneric",     
-            "TABCLASS" =>"worktabs",      "ACL"=> "workstation"),
-          "server"      => array("CLASS"=>"SERVTABS",     "TABNAME"=>"servgeneric",     
-            "TABCLASS" =>"servtabs",      "ACL"=> "server"));
+      $tabs = $this->get_tab_defs();
 
       /* Remember dialog selection.
        */
@@ -334,7 +328,7 @@ class systems extends plugin
         $class    = $tabs[$selected_system]["CLASS"];
         $tabname  = $tabs[$selected_system]["TABNAME"];
         $tabclass = $tabs[$selected_system]["TABCLASS"];
-        $acl_cat  = $tabs[$selected_system]["ACL"];
+        $acl_cat  = $tabs[$selected_system]["ACLC"];
 
 
         if(!class_available($tabclass)){
@@ -452,19 +446,13 @@ class systems extends plugin
       }
       $this->dn= "new";
 
-      $tabs = array(
-          "terminal"    => array("CLASS"=>"TERMTABS",     "TABNAME"=>"termgeneric",     "TABCLASS" =>"termtabs",      "ACL"=> "terminal"),
-          "workstation" => array("CLASS"=>"WORKTABS",     "TABNAME"=>"workgeneric",     "TABCLASS" =>"worktabs",      "ACL"=> "workstation"),
-          "server"      => array("CLASS"=>"SERVTABS",     "TABNAME"=>"servgeneric",     "TABCLASS" =>"servtabs",      "ACL"=> "server"),
-          "printer"     => array("CLASS"=>"PRINTTABS",    "TABNAME"=>"printgeneric",    "TABCLASS" =>"printtabs",     "ACL"=> "printer"),
-          "phone"       => array("CLASS"=>"PHONETABS",    "TABNAME"=>"phoneGeneric",    "TABCLASS" =>"phonetabs",     "ACL"=> "phone"),
-          "component"   => array("CLASS"=>"COMPONENTTABS","TABNAME"=>"componentGeneric","TABCLASS" =>"componenttabs", "ACL"=> "component"));
+      $tabs = $this->get_tab_defs();
 
       if(isset($tabs[$sw])){
         $class    = $tabs[$sw]["CLASS"];
         $tabname  = $tabs[$sw]["TABNAME"];
         $tabclass = $tabs[$sw]["TABCLASS"];
-        $acl_cat  = $tabs[$sw]["ACL"];
+        $acl_cat  = $tabs[$sw]["ACLC"];
 
         /* Load permissions for selected 'dn' and check if
            we're allowed to remove this 'dn' */
@@ -528,15 +516,7 @@ class systems extends plugin
      
       /* Lock the current entry, so everyone will get the
          above dialog */
-      $tabs = array(
-          "gosa_opsi_client"=> array("CLASS"=>"OPSITABS", "TABCLASS" =>"opsi_tabs",      "ACL"=> "opsi"),
-          "terminal"    => array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "terminal"),
-          "workstation" => array("CLASS"=>"WORKTABS",     "TABCLASS" =>"worktabs",      "ACL"=> "workstation"),
-          "server"      => array("CLASS"=>"SERVTABS",     "TABCLASS" =>"servtabs",      "ACL"=> "server"),
-          "printer"     => array("CLASS"=>"PRINTTABS",    "TABCLASS" =>"printtabs",     "ACL"=> "printer"),
-          "phone"       => array("CLASS"=>"PHONETABS",    "TABCLASS" =>"phonetabs",     "ACL"=> "phone"),
-          "winstation"  => array("CLASS"=>"WINTABS",      "TABCLASS" =>"wintabs",       "ACL"=> "winworkstation"),
-          "component"   => array("CLASS"=>"COMPONENTTABS","TABCLASS" =>"componenttabs", "ACL"=> "component"));
+      $tabs = $this->get_tab_defs();
 
       if($type == "ArpNewDevice"){
         if(!class_available("ArpNewDeviceTabs")){
@@ -554,7 +534,7 @@ class systems extends plugin
       }elseif(isset($tabs[$type])){
 
         $class    = $tabs[$type]["CLASS"];
-        $acl_cat  = $tabs[$type]["ACL"];
+        $acl_cat  = $tabs[$type]["ACLC"];
         $tabclass = $tabs[$type]["TABCLASS"];
 
         if(!class_available($tabclass)){
@@ -578,16 +558,7 @@ class systems extends plugin
 
     /* Set terminals root password */
     if ($s_action=="change_pw"){
-      $tabs = array(
-          "ArpNewDevice"=> array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "incoming/systems"),
-          "NewDevice"   => array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "incoming/systems"),
-          "terminal"    => array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "terminal/termgeneric"),
-          "workstation" => array("CLASS"=>"WORKTABS",     "TABCLASS" =>"worktabs",      "ACL"=> "workstation/workgeneric"),
-          "server"      => array("CLASS"=>"SERVTABS",     "TABCLASS" =>"servtabs",      "ACL"=> "server/servgeneric"),
-          "printer"     => array("CLASS"=>"PRINTTABS",    "TABCLASS" =>"printtabs",     "ACL"=> "printer/printgeneric"),
-          "phone"       => array("CLASS"=>"PHONETABS",    "TABCLASS" =>"phonetabs",     "ACL"=> "phone/phoneGeneric"),
-          "winstation"  => array("CLASS"=>"WINTABS",      "TABCLASS" =>"wintabs",       "ACL"=> "winworkstation/wingeneric"),
-          "component"   => array("CLASS"=>"COMPONENTTABS","TABCLASS" =>"componenttabs", "ACL"=> "component/componentGeneric"));
+      $tabs = $this->get_tab_defs();
 
       $dn   = $this->terminals[$s_entry]['dn'];
       $type = $this->get_system_type($this->terminals[$s_entry]);
@@ -628,13 +599,8 @@ class systems extends plugin
         $_POST['new_password'] == $_POST['repeated_password']){
 
       /* Check if user is allowed to set password */
-      $tabs = array(
-          "terminal"    => array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "terminal/termgeneric"    ,"PLUG"=>"termgeneric"),
-          "workstation" => array("CLASS"=>"WORKTABS",     "TABCLASS" =>"worktabs",      "ACL"=> "workstation/workgeneric" ,"PLUG"=>"workgeneric"),
-          "server"      => array("CLASS"=>"SERVTABS",     "TABCLASS" =>"servtabs",      "ACL"=> "server/servgeneric"      ,"PLUG"=>"servgeneric"),
-          "component"   => array("CLASS"=>"COMPONENTTABS","TABCLASS" =>"componenttabs", "ACL"=> "component/componentGeneric","PLUG"=>"componentGeneric"));
+      $tabs = $this->get_tab_defs();
 
-      /* Detect object type */
       $type = "";
       foreach($this->terminals as $terminal){
         if($terminal['dn'] == $this->dn){
@@ -828,17 +794,7 @@ class systems extends plugin
       }
 
       $ui = get_userinfo();
-      $tabs = array(
-          "ArpNewDevice"=> array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "incoming/systems"),
-          "NewDevice"   => array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "incoming/systems"),
-          "terminal"    => array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "terminal/termgeneric"),
-          "workstation" => array("CLASS"=>"WORKTABS",     "TABCLASS" =>"worktabs",      "ACL"=> "workstation/workgeneric"),
-          "server"      => array("CLASS"=>"SERVTABS",     "TABCLASS" =>"servtabs",      "ACL"=> "server/servgeneric"),
-          "printer"     => array("CLASS"=>"PRINTTABS",    "TABCLASS" =>"printtabs",     "ACL"=> "printer/printgeneric"),
-          "phone"       => array("CLASS"=>"PHONETABS",    "TABCLASS" =>"phonetabs",     "ACL"=> "phone/phoneGeneric"),
-          "winstation"  => array("CLASS"=>"WINTABS",      "TABCLASS" =>"wintabs",       "ACL"=> "winworkstation/wingeneric"),
-          "component"   => array("CLASS"=>"COMPONENTTABS","TABCLASS" =>"componenttabs", "ACL"=> "component/componentGeneric"));
-
+      $tabs = $this->get_tab_defs();
 
       if(count($ids)){
 
@@ -890,17 +846,7 @@ class systems extends plugin
     if (isset($_POST['delete_multiple_system_confirm'])){
 
       $ui = get_userinfo();
-      $tabs = array(
-          "ArpNewDevice"=> array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "incoming/systems"),
-          "NewDevice"   => array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "incoming/systems"),
-          "terminal"    => array("CLASS"=>"TERMTABS",     "TABCLASS" =>"termtabs",      "ACL"=> "terminal/termgeneric"),
-          "workstation" => array("CLASS"=>"WORKTABS",     "TABCLASS" =>"worktabs",      "ACL"=> "workstation/workgeneric"),
-          "server"      => array("CLASS"=>"SERVTABS",     "TABCLASS" =>"servtabs",      "ACL"=> "server/servgeneric"),
-          "printer"     => array("CLASS"=>"PRINTTABS",    "TABCLASS" =>"printtabs",     "ACL"=> "printer/printgeneric"),
-          "phone"       => array("CLASS"=>"PHONETABS",    "TABCLASS" =>"phonetabs",     "ACL"=> "phone/phoneGeneric"),
-          "winstation"  => array("CLASS"=>"WINTABS",      "TABCLASS" =>"wintabs",       "ACL"=> "winworkstation/wingeneric"),
-          "component"   => array("CLASS"=>"COMPONENTTABS","TABCLASS" =>"componenttabs", "ACL"=> "component/componentGeneric"));
-
+      $tabs = $this->get_tab_defs();
 
       /* Remove user by user and check acls before removeing them */
       foreach($this->dns as $key => $dn){
@@ -1248,6 +1194,9 @@ class systems extends plugin
      */
     if($this->opsi != NULL){
       $res = array_merge($res,$this->opsi->get_hosts_for_system_management());
+      if($this->opsi->is_error()){
+        msg_dialog::display(_("Error"),msgPool::siError($this->opsi->get_error()),ERROR_DIALOG);
+      }
     }
     
     /* Get all gotoTerminal's */
@@ -1285,7 +1234,7 @@ class systems extends plugin
       /* Detect type of object and create an entry for $this->terminals */
       $terminal = array();
 
-       if (in_array_ics('gosa_opsi_client', $value["objectClass"])){
+       if (in_array_ics('opsi_client', $value["objectClass"])){
 
          /* check acl */
          $terminal             = $value;
@@ -1429,20 +1378,8 @@ class systems extends plugin
     }
 
     $ui = get_userinfo();
-
-    $tabs = array(
-        "terminal"    => array( "CLASS"     =>"TERMTABS",     "TABNAME" =>"termgeneric",     
-          "TABCLASS"  =>"termtabs",     "ACL"     =>"terminal"),
-        "workstation" => array( "CLASS"     =>"WORKTABS",     "TABNAME" =>"workgeneric",     
-          "TABCLASS"  =>"worktabs",     "ACL"     =>"workstation"),
-        "server"      => array( "CLASS"     =>"SERVTABS",     "TABNAME" =>"servgeneric",     
-          "TABCLASS"  =>"servtabs",     "ACL"     =>"server"),
-        "printer"     => array( "CLASS"     =>"PRINTTABS",    "TABNAME" =>"printgeneric",    
-          "TABCLASS"  =>"printtabs",    "ACL"     =>"printer"),
-        "phone"       => array( "CLASS"     =>"PHONETABS",    "TABNAME" =>"phoneGeneric",    
-          "TABCLASS"  =>"phonetabs",    "ACL"     =>"phone"),
-        "component"   => array( "CLASS"     =>"COMPONENTTABS","TABNAME" =>"componentGeneric",
-          "TABCLASS"  =>"componenttabs","ACL"     =>"component"));
+    
+    $tabs = $this->get_tab_defs();
 
     /* Add a single entry to queue */
     if($s_action == "cut" || $s_action == "copy"){
@@ -1456,7 +1393,7 @@ class systems extends plugin
       $tab_o  = $tabs[$type]['CLASS'];
       $tab_c  = $tabs[$type]['TABCLASS'];
       $acl_c  = $tabs[$type]['TABNAME'];
-      $acl    = $tabs[$type]['ACL'];
+      $acl    = $tabs[$type]['ACLC'];
 
       if($s_action == "copy" && $ui->is_copyable($dn,$acl,$acl_c)){
         $this->CopyPasteHandler->add_to_queue($dn,$s_action,$tab_c,$tab_o,$acl);
@@ -1482,7 +1419,7 @@ class systems extends plugin
           $tab_o  = $tabs[$type]['CLASS'];
           $tab_c  = $tabs[$type]['TABCLASS'];
           $acl_c  = $tabs[$type]['TABNAME'];
-          $acl    = $tabs[$type]['ACL'];
+          $acl    = $tabs[$type]['ACLC'];
 
           if($s_action == "copy_multiple" && $ui->is_copyable($dn,$acl,$acl_c)){ 
             $this->CopyPasteHandler->add_to_queue($dn,"copy",$tab_c,$tab_o,$acl);
@@ -1526,7 +1463,7 @@ class systems extends plugin
 
     $type= "";
     if (in_array_ics('gosa_opsi_client', $classes)){
-      $type= "gosa_opsi_client";
+      $type= "opsi_client";
     }elseif (in_array_ics('ieee802Device', $classes)){
       $type= "component";
     }elseif (in_array_ics('gotoTerminal', $classes)){
@@ -1632,7 +1569,7 @@ class systems extends plugin
         if(!preg_match("/".$key[$i]."/",$input['type'])){
           $found = FALSE;
         }
-      }
+     }
 
       if($found){
         $tmp['img'] ="<img class='center' src='".$value[0]."' alt='".$key."' title='".$value['1']."'>";
@@ -1654,6 +1591,93 @@ class systems extends plugin
     }
     return($ids);
   }
+
+
+  public function get_tab_defs()
+  {
+    $tabs = array(
+        "incoming"    => array(
+          "CLASS"     => "",
+          "TABNAME"   => "",
+          "TABCLASS"  => "",
+          "ACLC"      => "incoming",
+          "ACL"       => "incoming/systems"),
+
+        "ArpNewDevice"=> array(
+          "CLASS"     => "TERMTABS",
+          "TABNAME"   => "termgeneric" ,
+          "TABCLASS"  => "termtabs",
+          "ACLC"      => "incoming",
+          "ACL"       => "incoming/systems"),
+
+        "NewDevice"   => array(
+          "CLASS"     => "TERMTABS",
+          "TABNAME"   => "termgeneric",
+          "TABCLASS"  => "termtabs",
+          "ACLC"      => "incoming",
+          "ACL"       => "incoming/systems"),
+
+        "terminal"    => array(
+            "CLASS"     => "TERMTABS",
+            "TABNAME"   => "termgeneric",
+            "TABCLASS"  => "termtabs",
+            "ACLC"      => "terminal",
+            "ACL"       => "terminal/termgeneric"),
+
+        "workstation" =>  array(
+            "CLASS"   => "WORKTABS",
+            "TABNAME" => "workgeneric",
+            "TABCLASS"=> "worktabs",
+            "ACLC"    => "workstation",
+            "ACL"     => "workstation/workgeneric" ),
+
+        "server"      => array(
+            "CLASS"   => "SERVTABS",
+            "TABNAME" => "servgeneric",
+            "TABCLASS"=> "servtabs",
+            "ACLC"    => "server",
+            "ACL"     => "server/servgeneric"),
+
+        "printer"     => array(
+            "CLASS"   => "PRINTTABS",
+            "TABNAME" => "printgeneric",
+            "TABCLASS"=> "printtabs",
+            "ACLC"    => "printer",
+            "ACL"     => "printer/printgeneric"),
+
+        "phone"       => array(
+            "CLASS"   => "PHONETABS",
+            "TABNAME" => "phoneGeneric",
+            "TABCLASS"=> "phonetabs",
+            "ACLC"    => "phone",
+            "ACL"     => "phone/phoneGeneric"),
+
+        "winstation"  => array(
+            "CLASS"   => "WINTABS",
+            "TABNAME" => "wingeneric",
+            "TABCLASS"=> "wintabs",
+            "ACLC"    => "winworkstation",
+            "ACL"     => "winworkstation/wingeneric"),
+
+        "component"   => array(
+            "CLASS"   => "COMPONENTTABS",
+            "TABNAME" => "componentGeneric",
+            "TABCLASS"=> "componenttabs",
+            "ACLC"    => "component",
+            "ACL"     => "component/componentGeneric"));
+
+    if($this->opsi != NULL){
+      $tabs["opsi_client"] = array(
+          "CLASS"   => "OPSITABS",
+          "TABNAME" => "opsi_generic" ,
+          "TABCLASS"=> "opsi_tabs",
+          "ACLC"    => "opsi" ,
+          "ACL"     => "opsi/opsi_generic");
+    }
+
+    return($tabs);
+  }
+
 
 
   /* !! Incoming dummy acls, required to defined acls for incoming objects
