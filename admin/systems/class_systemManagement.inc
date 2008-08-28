@@ -1343,7 +1343,7 @@ class systems extends plugin
       if(count($terminal)){
         $t_id ++ ;
         $this->terminals[$t_id]=$terminal;
-        $opsi_map[$value['cn'][0]] = $t_id;
+        $opsi_map[preg_replace('/\$$/',"",$value['cn'][0])] = $t_id;
       }
     }
 
