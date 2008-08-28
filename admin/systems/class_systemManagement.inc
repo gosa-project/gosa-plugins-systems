@@ -1192,13 +1192,15 @@ class systems extends plugin
     /* Append opsi systems, the opsi extension have to installed.
      */
     if($this->opsi != NULL){
-      $res = array_merge($res,$this->opsi->get_hosts_for_system_management());
+      $opsi_clients = $this->opsi->get_hosts_for_system_management();
       if($this->opsi->is_error()){
         msg_dialog::display(_("Error"),msgPool::siError($this->opsi->get_error()),ERROR_DIALOG);
       }
     }
     
     /* Get all gotoTerminal's */
+    $t_id = 0;
+    $opsi_map  = array();
     foreach ($res as $value){
 
       $tmp= $value['dn'];
@@ -1233,7 +1235,7 @@ class systems extends plugin
       /* Detect type of object and create an entry for $this->terminals */
       $terminal = array();
 
-       if (in_array_ics('opsi_client', $value["objectClass"])){
+       if (0 && in_array_ics('gosa_opsi_client', $value["objectClass"])){
 
          /* check acl */
          $terminal             = $value;
@@ -1336,9 +1338,27 @@ class systems extends plugin
         }
       }
 
+      /* Append collected data to the host list.
+       */
       if(count($terminal)){
-        $this->terminals[]=$terminal;
+        $t_id ++ ;
+        $this->terminals[$t_id]=$terminal;
+        $opsi_map[$value['cn'][0]] = $t_id;
       }
+    }
+
+
+    /* Merge real hosts with opsi hosts.
+       If there is a samba host, then merge it with the opsi host,
+        to avoid duplicate entries.
+     */
+    foreach($opsi_clients as $entry){
+      if(isset($opsi_map[$entry['cn'][0]])){
+        continue;
+      }
+      $terminal             = $entry;
+      $terminal['type']     = "O";
+      $this->terminals[] = $terminal;
     }
 
     $tmp  =array();
