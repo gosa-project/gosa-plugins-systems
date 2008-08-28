@@ -1688,10 +1688,10 @@ class systems extends plugin
     if($this->opsi != NULL){
       $tabs["opsi_client"] = array(
           "CLASS"   => "OPSITABS",
-          "TABNAME" => "opsigeneric" ,
+          "TABNAME" => "opsiGeneric" ,
           "TABCLASS"=> "opsi_tabs",
           "ACLC"    => "opsi" ,
-          "ACL"     => "opsi/opsigeneric");
+          "ACL"     => "opsi/opsiGeneric");
     }
 
     return($tabs);
