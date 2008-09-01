@@ -1126,6 +1126,7 @@ class systems extends plugin
     $res              = array();
     $this->terminals  = array();
     $userregex        = "";
+    $opsi_clients     = array();
 
     /* Set base for all searches */
     $base=  $this->DivListSystem->selectedBase;
