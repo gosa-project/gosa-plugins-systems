@@ -1541,7 +1541,7 @@ class systems extends plugin
 
     /* Add opsi client to system types */
     if($this->opsi != NULL){
-        $conv["O"] = array("plugins/systems/images/select_default.png",_("Opsi client"));
+        $conv["O"] = array("plugins/systems/images/select_winstation.png",_("Opsi client"));
     }
 
     /* Use locked icons 

@@ -200,7 +200,7 @@ class divListSystem extends MultiSelectWindow
         "&nbsp;"._("Component")."|"."newsystem_component|\n";
     }
     if(class_available("opsiGeneric") && preg_match("/c/",$ui->get_permissions($this->selectedBase,"opsi/opsiGeneric"))){
-      $s.= "...|<img src='plugins/systems/images/select_component.png' alt='' border='0' class='center'>".
+      $s.= "...|<img src='plugins/systems/images/select_winstation.png' alt='' border='0' class='center'>".
         "&nbsp;"._("Opsi")."|"."newsystem_opsi_client|\n";
     }
 
