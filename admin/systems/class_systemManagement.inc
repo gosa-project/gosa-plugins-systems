@@ -1192,7 +1192,7 @@ class systems extends plugin
 
     /* Append opsi systems, the opsi extension have to installed.
      */
-    if($this->opsi != NULL){
+    if($this->opsi != NULL && $this->opsi->enabled()){
       $opsi_clients = $this->opsi->get_hosts_for_system_management();
       if($this->opsi->is_error()){
         msg_dialog::display(_("Error"),msgPool::siError($this->opsi->get_error()),ERROR_DIALOG);
