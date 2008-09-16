@@ -185,8 +185,8 @@ class termDNS extends plugin
      */
     $deps  = array();
     $ou = preg_replace("/,.*$/","",get_ou("systemsou"));
-    $a_ous = array(get_ou("serverou"),
-                  get_ou("terminalou"),
+    $a_ous = array(get_ou("serverRDN"),
+                  get_ou("terminalRDN"),
                   get_ou("workstationou"),
                   get_ou("printerou"),
                   get_ou("phoneou"),

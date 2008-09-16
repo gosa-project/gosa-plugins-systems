@@ -1062,10 +1062,10 @@ class systems extends plugin
     /* Check acls, if we are not allowed to create and write each plugin tab, skip this object */
 
     $tabs = array(
-        "terminal"        => get_ou('terminalou'),
+        "terminal"        => get_ou('terminalRDN'),
         "workstation"     => get_ou('workstationou'),
         "incoming"        => get_ou('incomingou'),
-        "server"          => get_ou('serverou'),
+        "server"          => get_ou('serverRDN'),
         "printer"         => get_ou('printerou'),
         "phone"           => get_ou('phoneou'),
         "winworkstation"  => get_winstations_ou(),
@@ -1143,8 +1143,8 @@ class systems extends plugin
 
     /* This array represents the combination between checkboxes and search filters */
     $objs = array( 
-        "ShowServers"        => array("TAB" => "servtabs",      "CLASS" => "goServer"        ,"TREE" => get_ou('serverou')),
-        "ShowTerminals"      => array("TAB" => "termtabs",      "CLASS" => "gotoTerminal"    ,"TREE" => get_ou('terminalou')),
+        "ShowServers"        => array("TAB" => "servtabs",      "CLASS" => "goServer"        ,"TREE" => get_ou('serverRDN')),
+        "ShowTerminals"      => array("TAB" => "termtabs",      "CLASS" => "gotoTerminal"    ,"TREE" => get_ou('terminalRDN')),
         "ShowPrinters"       => array("TAB" => "printtabs",     "CLASS" => "gotoPrinter"     ,"TREE" => get_ou('printerou')),
         "ShowDevices"        => array("TAB" => "componenttabs", "CLASS" => "ieee802Device"   ,"TREE" => get_ou('componentou')),
         "ShowPhones"         => array("TAB" => "phonetabs",     "CLASS" => "goFonHardware"   ,"TREE" => get_ou('phoneou')),

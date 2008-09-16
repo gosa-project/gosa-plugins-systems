@@ -92,7 +92,7 @@ class servgeneric extends plugin
       $this->base= dn2base($ui->dn);
       $this->cn= "";
     } else {
-      $this->base= preg_replace ("/^[^,]+,".normalizePreg(get_ou("serverou"))."/", "", $this->dn);
+      $this->base= preg_replace ("/^[^,]+,".normalizePreg(get_ou("serverRDN"))."/", "", $this->dn);
     }
     $this->netConfigDNS = new termDNS($this->config,$this,$this->objectclasses);
     $this->netConfigDNS->set_acl_category("server");
@@ -332,7 +332,7 @@ class servgeneric extends plugin
     /* Call common method to give check the hook */
     $message= plugin::check();
     $message= array_merge($message, $this->netConfigDNS->check());
-    $this->dn= "cn=".$this->cn.",".get_ou('serverou').$this->base;
+    $this->dn= "cn=".$this->cn.",".get_ou('serverRDN').$this->base;
 
     /* must: cn */
     if ($this->cn == ""){
@@ -351,7 +351,7 @@ class servgeneric extends plugin
       if ($ldap->count() != 0){
         while ($attrs= $ldap->fetch()){
           if ($attrs['dn'] != $this->orig_dn){
-            if(!preg_match("/cn=dhcp,/",$attrs['dn']) && !preg_match("/,".get_ou('incomingou')."/",$attrs['dn']) && preg_match("/,".get_ou('serverou')."/",$attrs['dn'])){
+            if(!preg_match("/cn=dhcp,/",$attrs['dn']) && !preg_match("/,".get_ou('incomingou')."/",$attrs['dn']) && preg_match("/,".get_ou('serverRDN')."/",$attrs['dn'])){
               $message[]= msgPool::duplicated(_("Server name"));
               break;
             }

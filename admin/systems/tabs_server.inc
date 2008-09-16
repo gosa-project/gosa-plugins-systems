@@ -95,7 +95,7 @@ class servtabs extends tabs
     /* Check for new 'dn', in order to propagate the
        'dn' to all plugins */
     $baseobject= $this->by_object['servgeneric'];
-    $this->dn= "cn=$baseobject->cn,".get_ou('serverou').$baseobject->base;
+    $this->dn= "cn=$baseobject->cn,".get_ou('serverRDN').$baseobject->base;
 
     /* cn is not case sensitive for ldap, but for php it is!! */
     if($baseobject->orig_dn != "new"){
