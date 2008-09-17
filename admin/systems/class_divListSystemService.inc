@@ -102,16 +102,15 @@ class divListSystemService extends MultiSelectWindow
         default: $str= "<img src='plugins/users/images/select_user.png' alt='".$entry['Status']."' title='"._("User status")." : ".$entry['Status']."'>";
       }
 
-      /* Get acls */
-      $acl = $ui->get_permissions($this->parent->dn,"server/".$name);
-      if(preg_match("/w/i",$acl) && !preg_match("/r/i",$acl)){
-        continue;
-      }
-  
       $WasAccount = $this->parent->plugins[$name] -> initially_was_account;    
   
       $plug = $_GET['plug'];
-      $link = "<a href='?plug=".$plug."&amp;act=open&amp;id=".$name."'>".$entry['Message']."</a>";
+
+      if($entry['AllowEdit']){
+        $link = "<a href='?plug=".$plug."&amp;act=open&amp;id=".$name."'>".$entry['Message']."</a>";
+      }else{
+        $link = $entry['Message'];
+      }
 
       $field1 = array("string" => $str ,"attach" => "style='width:20px;'");
       $field2 = array("string" => $link);
@@ -137,7 +136,7 @@ class divListSystemService extends MultiSelectWindow
       }
 
       /* Check if edit is enabled and allowed for current service */
-      if($entry['AllowEdit'] && preg_match("/(r|w)/i",$acl)){
+      if($entry['AllowEdit']){
         $actions .= "&nbsp;<input type='image' name='EditSingleService_".$name."' src='images/lists/edit.png'
                             title='"._("Edit service")."'>";
       }else{
@@ -145,7 +144,7 @@ class divListSystemService extends MultiSelectWindow
       }
 
       /* Check if remove is enabled and allowed for current service */
-      if($entry['AllowRemove'] && preg_match("/d/i",$acl)){
+      if($entry['AllowRemove']){
         $actions .= "&nbsp;<input type='image' name='RemoveSingleService_".$name."' src='images/lists/trash.png'
                             title='"._("Remove service")."'>";
       }else{

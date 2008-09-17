@@ -192,9 +192,11 @@ class ServerService extends plugin
     /* Edit a service and make a backup from all attributes, 
        to be able to restore old values after aborting dialog */ 
     if($s_action == "EditSingleService"){
-      $this->backup   = get_object_vars($this->plugins[$s_entry]);
-      $this->dialog   = $this->plugins[$s_entry];
-      $this->current  = $s_entry;
+      if($this->plugins[$s_entry]->acl_is_readable("")){
+        $this->backup   = get_object_vars($this->plugins[$s_entry]);
+        $this->dialog   = $this->plugins[$s_entry];
+        $this->current  = $s_entry;
+      }
     }
 
    
