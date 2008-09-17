@@ -243,7 +243,7 @@ class systems extends plugin
       $dsc             = array(0 => array("pipe", "r"), 1 => array("pipe", "w"), 2 => array("pipe", "w"));
 
       /* Get and check command */
-      $command= $this->config->search("workgeneric", "ISOCMD",array('tabs'));
+      $command= $this->config->search("workgeneric", "SYSTEMISOHOOK",array('tabs'));
       
       if (check_command($command)){
         @DEBUG (DEBUG_SHELL, __LINE__, __FUNCTION__, __FILE__, $command, "Execute");
@@ -999,7 +999,7 @@ class systems extends plugin
 
       $dialog     = FALSE;
       $hide_apply = $this->dn == "new";
-      $hide_apply = ($this->dn == "new") || (preg_match("/".normalizePreg(get_ou("incomingou"))."/",$this->dn));
+      $hide_apply = ($this->dn == "new") || (preg_match("/".normalizePreg(get_ou("systemIncomingRDN"))."/",$this->dn));
       if(is_object($this->systab) && !isset($this->systab->by_object)){
         $dialog = TRUE;
         $hide_apply = TRUE;
@@ -1063,13 +1063,13 @@ class systems extends plugin
 
     $tabs = array(
         "terminal"        => get_ou('terminalRDN'),
-        "workstation"     => get_ou('workstationou'),
-        "incoming"        => get_ou('incomingou'),
+        "workstation"     => get_ou('workstationRDN'),
+        "incoming"        => get_ou('systemIncomingRDN'),
         "server"          => get_ou('serverRDN'),
-        "printer"         => get_ou('printerou'),
-        "phone"           => get_ou('phoneou'),
+        "printer"         => get_ou('printerRDN'),
+        "phone"           => get_ou('phoneRDN'),
         "winworkstation"  => get_winstations_ou(),
-        "component"       => get_ou('componentou')
+        "component"       => get_ou('componentRDN')
         ); 
 
     foreach($tabs as $acl_cat => $dn){
@@ -1145,10 +1145,10 @@ class systems extends plugin
     $objs = array( 
         "ShowServers"        => array("TAB" => "servtabs",      "CLASS" => "goServer"        ,"TREE" => get_ou('serverRDN')),
         "ShowTerminals"      => array("TAB" => "termtabs",      "CLASS" => "gotoTerminal"    ,"TREE" => get_ou('terminalRDN')),
-        "ShowPrinters"       => array("TAB" => "printtabs",     "CLASS" => "gotoPrinter"     ,"TREE" => get_ou('printerou')),
-        "ShowDevices"        => array("TAB" => "componenttabs", "CLASS" => "ieee802Device"   ,"TREE" => get_ou('componentou')),
-        "ShowPhones"         => array("TAB" => "phonetabs",     "CLASS" => "goFonHardware"   ,"TREE" => get_ou('phoneou')),
-        "ShowWorkstations"   => array("TAB" => "worktabs",      "CLASS" => "gotoWorkstation" ,"TREE" => get_ou('workstationou')),
+        "ShowPrinters"       => array("TAB" => "printtabs",     "CLASS" => "gotoPrinter"     ,"TREE" => get_ou('printerRDN')),
+        "ShowDevices"        => array("TAB" => "componenttabs", "CLASS" => "ieee802Device"   ,"TREE" => get_ou('componentRDN')),
+        "ShowPhones"         => array("TAB" => "phonetabs",     "CLASS" => "goFonHardware"   ,"TREE" => get_ou('phoneRDN')),
+        "ShowWorkstations"   => array("TAB" => "worktabs",      "CLASS" => "gotoWorkstation" ,"TREE" => get_ou('workstationRDN')),
         "ShowWinWorkstations"=> array("TAB" => "wintabs",       "CLASS" => $samba            ,"TREE" => get_winstations_ou() ));
 
     /* Include the 'Display Systems of user' attribute */ 
@@ -1188,7 +1188,7 @@ class systems extends plugin
 
     /* Search for incoming objects */ 
     $filter = "(|(&".$userregex."(objectClass=goHard)(cn=".$this->DivListSystem->Regex.")))";
-    $res = array_merge($res,get_list($filter,$sys_categories, get_ou('incomingou').$base,$sys_attrs, GL_SIZELIMIT));
+    $res = array_merge($res,get_list($filter,$sys_categories, get_ou('systemIncomingRDN').$base,$sys_attrs, GL_SIZELIMIT));
 
     /* Append opsi systems, the opsi extension have to installed.
      */
@@ -1221,7 +1221,7 @@ class systems extends plugin
       }
 
       /* check if current object is a new one */
-      if (preg_match ("/,".get_ou('incomingou')."/i", $tmp)){
+      if (preg_match ("/,".get_ou('systemIncomingRDN')."/i", $tmp)){
         if (in_array_ics('gotoTerminal', $value['objectClass'])){
           $add= "- "._("New terminal");
         }elseif (in_array_ics('gotoWorkstation', $value['objectClass'])){

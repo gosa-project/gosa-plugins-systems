@@ -184,13 +184,13 @@ class termDNS extends plugin
        over the whole ldap server was 10 to 20 times slower.
      */
     $deps  = array();
-    $ou = preg_replace("/,.*$/","",get_ou("systemsou"));
+    $ou = preg_replace("/,.*$/","",get_ou("systemRDN"));
     $a_ous = array(get_ou("serverRDN"),
                   get_ou("terminalRDN"),
-                  get_ou("workstationou"),
-                  get_ou("printerou"),
-                  get_ou("phoneou"),
-                  get_ou("componentou"));
+                  get_ou("workstationRDN"),
+                  get_ou("printerRDN"),
+                  get_ou("phoneRDN"),
+                  get_ou("componentRDN"));
   
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);

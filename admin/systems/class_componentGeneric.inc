@@ -50,7 +50,7 @@ class componentGeneric extends plugin
       $this->base= dn2base($ui->dn);
       $this->cn= "";
     } else {
-      $this->base= preg_replace ("/^[^,]+,".normalizePreg(get_ou("componentou"))."/", "", $this->dn);
+      $this->base= preg_replace ("/^[^,]+,".normalizePreg(get_ou("componentRDN"))."/", "", $this->dn);
     }
     $this->netConfigDNS = new termDNS($this->config,$this,$this->objectclasses, true);
     /* Save dn for later references */
@@ -203,7 +203,7 @@ class componentGeneric extends plugin
     $message= plugin::check();
     $message= array_merge($message,$this->netConfigDNS->check());
 
-    $this->dn= "cn=".$this->cn.",".get_ou('componentou').$this->base;
+    $this->dn= "cn=".$this->cn.",".get_ou('componentRDN').$this->base;
 
     if ($this->cn == "" ){
       $message[]= msgPool::required(_("Component name"));
@@ -232,7 +232,7 @@ class componentGeneric extends plugin
           if(preg_match("/cn=dhcp,/",$attrs['dn'])){
             continue;
           }
-          if ($attrs['dn'] != $this->orig_dn && preg_match("/".normalizePreg(get_ou("componentou"))."/",$attrs['dn'])){
+          if ($attrs['dn'] != $this->orig_dn && preg_match("/".normalizePreg(get_ou("componentRDN"))."/",$attrs['dn'])){
             $message[]= msgPool::duplicated(_("Component name"));
             break;
           }

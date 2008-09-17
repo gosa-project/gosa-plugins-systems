@@ -203,7 +203,7 @@ class goService extends plugin{
   function action_hook($add_attrs= array())
   {
     /* Find postcreate entries for this class */
-    $command= $this->config->search(get_class($this), "ACTION_HOOK",array('menu','tabs'));
+    $command= $this->config->search(get_class($this), "SERVICEACTIONHOOK",array('menu','tabs'));
     if ($command != ""){
 
       /* Walk through attribute list */
@@ -234,7 +234,7 @@ class goService extends plugin{
 
         exec($command);
       } else {
-        msg_dialog::display(_("Configuration error"), msgPool::cmdnotfound("ACTION_HOOK", get_class($this)), ERROR_DIALOG);
+        msg_dialog::display(_("Configuration error"), msgPool::cmdnotfound("SERVICEACTIONHOOK", get_class($this)), ERROR_DIALOG);
       }
     }
   }
