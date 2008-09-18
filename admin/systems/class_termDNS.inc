@@ -454,6 +454,8 @@ class termDNS extends plugin
       $smarty->assign("changeStateForRecords",$changeStateForRecords);
       $smarty->assign("staticAddress","<font class=\"must\">*</font>");
 
+      $smarty->assign("autonetACL",$this->acl_is_writeable("macAddress").$this->acl_is_writeable("ipHostNumber"));
+
       $display.= $smarty->fetch(get_template_path('network.tpl', TRUE));
     }
 

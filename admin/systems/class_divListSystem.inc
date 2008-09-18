@@ -342,7 +342,10 @@ class divListSystem extends MultiSelectWindow
         $action2 = $empty;
       }
 
-      if(in_array("gotoWorkstation",$val['objectClass'])){
+      /* Add create FAI CD icon 
+       */
+      $acl_cd = preg_match("/w/",$ui->get_permissions($val['dn'],"workstation/workgeneric","createFAICD"));
+      if(in_array("gotoWorkstation",$val['objectClass']) && $acl_cd){
         $action2= "<input class='center' type='image' src='plugins/systems/images/cdrom.png' alt='"._("Create CD")."'   
                       name='gen_cd_%KEY%' title='"._("Create FAI CD")."'>&nbsp;".$action2;
       }else{
