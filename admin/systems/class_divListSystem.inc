@@ -268,7 +268,7 @@ class divListSystem extends MultiSelectWindow
     $ogroups = array();
     if($this->parent->fai_activated){
       $ogroups = get_sub_list("(&(objectClass=gosaGroupOfNames)(FAIclass=*)(member=*))",array("ogroups"),
-          get_ou("ogroupou"),$this->config->current['BASE'],array("FAIclass","member","cn"),GL_NO_ACL_CHECK | GL_SUBSEARCH);
+          get_ou("ogroupRDN"),$this->config->current['BASE'],array("FAIclass","member","cn"),GL_NO_ACL_CHECK | GL_SUBSEARCH);
       foreach($ogroups as $ogroup){
         for($i = 0 ; $i < $ogroup['member']['count'] ; $i++){
           if(preg_match("/:/",$ogroup['FAIclass'][0])) {
