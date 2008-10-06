@@ -39,6 +39,7 @@ class divListSystem extends MultiSelectWindow
   var $ShowPrinters;
   var $ShowDevices;
   var $ShowPhones;
+  var $ShowOpsiHosts;
 
   /* Subsearch checkbox */
   var $SubSearch;
@@ -131,6 +132,13 @@ class divListSystem extends MultiSelectWindow
           sprintf(_("Show %s"),   _("network devices")),  true);
     }
 
+    /* Add opsi checkboxes if opsi is enabled
+     */
+    if($this->parent->opsi instanceof opsi && $this->parent->opsi->enabled()){
+      $this->AddCheckBox("ShowOpsiHosts" , sprintf(_("Display objects of type '%s'."),
+            _("Opsi host")),_("Show opsi hosts")   ,true);
+    }
+
     /* Add SubSearch checkbox */
     $this->AddCheckBox(SEPERATOR);
     $this->AddCheckBox("SubSearch",  msgPool::selectToView("","subsearch"), msgPool::selectToView("","subsearch_small"), false);
@@ -199,7 +207,10 @@ class divListSystem extends MultiSelectWindow
       $s.= "...|<img src='plugins/systems/images/select_component.png' alt='' border='0' class='center'>".
         "&nbsp;"._("Component")."|"."newsystem_component|\n";
     }
-    if(class_available("opsiGeneric") && preg_match("/c/",$ui->get_permissions($this->selectedBase,"opsi/opsiGeneric"))){
+
+    if($this->parent->opsi instanceof opsi && 
+        $this->parent->opsi->enabled() &&  
+        preg_match("/c/",$ui->get_permissions($this->selectedBase,"opsi/opsiGeneric"))){
       $s.= "...|<img src='plugins/systems/images/select_winstation.png' alt='' border='0' class='center'>".
         "&nbsp;"._("Opsi")."|"."newsystem_opsi_client|\n";
     }

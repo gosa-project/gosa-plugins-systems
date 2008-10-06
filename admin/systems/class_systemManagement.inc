@@ -62,9 +62,6 @@ class systems extends plugin
       $this->fai_activated = TRUE;
     }
 
-    /* Creat dialog object */
-    $this->DivListSystem = new divListSystem($this->config,$this);
-
     /* Copy & Paste enabled ?*/
     if ($this->config->get_cfg_value("copyPaste") == "true"){
       $this->CopyPasteHandler = new CopyPasteHandler($this->config);
@@ -87,6 +84,9 @@ class systems extends plugin
     if(class_available("opsi")){
       $this->opsi = new opsi($this->config);
     }
+
+    /* Creat dialog object */
+    $this->DivListSystem = new divListSystem($this->config,$this);
   }
 
 
@@ -1192,7 +1192,7 @@ class systems extends plugin
 
     /* Append opsi systems, the opsi extension have to installed.
      */
-    if($this->opsi != NULL && $this->opsi->enabled()){
+    if($this->opsi instanceof opsi && $this->opsi->enabled() && $this->DivListSystem->ShowOpsiHosts){
       $opsi_clients = $this->opsi->get_hosts_for_system_management();
       if($this->opsi->is_error()){
         msg_dialog::display(_("Error"),msgPool::siError($this->opsi->get_error()),ERROR_DIALOG);
