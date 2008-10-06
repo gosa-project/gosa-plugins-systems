@@ -119,7 +119,7 @@ class divListSystem extends MultiSelectWindow
     /* Add opsi checkboxes if opsi is enabled */
     if($this->parent->opsi instanceof opsi && $this->parent->opsi->enabled()){
       $this->AddCheckBox("ShowOpsiHosts" , sprintf(_("Display objects of type '%s'."),
-            _("Opsi installed client")),_("Show opsi based clients")   ,true);
+            _("OPSI installed client")),_("Show OPSI based clients")   ,true);
     }
 
     if(class_available("printtabs")){
