@@ -116,6 +116,12 @@ class divListSystem extends MultiSelectWindow
           msgPool::selectToView(  _("MicroSoft Windows based workstations")), 
           sprintf(_("Show %s"),   _("windows based workstations")),true);
     }
+    /* Add opsi checkboxes if opsi is enabled */
+    if($this->parent->opsi instanceof opsi && $this->parent->opsi->enabled()){
+      $this->AddCheckBox("ShowOpsiHosts" , sprintf(_("Display objects of type '%s'."),
+            _("Opsi installed client")),_("Show opsi based clients")   ,true);
+    }
+
     if(class_available("printtabs")){
       $this->AddCheckBox("ShowPrinters",
           msgPool::selectToView(  _("network printers")),   
@@ -130,13 +136,6 @@ class divListSystem extends MultiSelectWindow
       $this->AddCheckBox("ShowDevices",
           msgPool::selectToView(  _("network devices")),    
           sprintf(_("Show %s"),   _("network devices")),  true);
-    }
-
-    /* Add opsi checkboxes if opsi is enabled
-     */
-    if($this->parent->opsi instanceof opsi && $this->parent->opsi->enabled()){
-      $this->AddCheckBox("ShowOpsiHosts" , sprintf(_("Display objects of type '%s'."),
-            _("Opsi host")),_("Show opsi hosts")   ,true);
     }
 
     /* Add SubSearch checkbox */
@@ -212,7 +211,7 @@ class divListSystem extends MultiSelectWindow
         $this->parent->opsi->enabled() &&  
         preg_match("/c/",$ui->get_permissions($this->selectedBase,"opsi/opsiGeneric"))){
       $s.= "...|<img src='plugins/systems/images/select_winstation.png' alt='' border='0' class='center'>".
-        "&nbsp;"._("Opsi")."|"."newsystem_opsi_client|\n";
+        "&nbsp;"._("Opsi client")."|"."newsystem_opsi_client|\n";
     }
 
     if($this->parent->si_active){
