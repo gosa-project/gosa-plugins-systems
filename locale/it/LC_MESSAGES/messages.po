@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-01 16:29+0200\n"
+"POT-Creation-Date: 2008-10-06 11:42+0200\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -17,18 +17,19 @@ msgstr ""
 
 #: admin/systems/class_termDNS.inc:337
 #: admin/systems/class_serverService.inc:186
-#: admin/systems/class_serverService.inc:234
-#: admin/systems/class_serverService.inc:361
-#: admin/systems/class_systemManagement.inc:333
-#: admin/systems/class_systemManagement.inc:425
-#: admin/systems/class_systemManagement.inc:468
-#: admin/systems/class_systemManagement.inc:476
-#: admin/systems/class_systemManagement.inc:537
-#: admin/systems/class_systemManagement.inc:543
-#: admin/systems/class_systemManagement.inc:555
-#: admin/systems/class_systemManagement.inc:563
-#: admin/systems/class_systemManagement.inc:611
-#: admin/systems/class_systemManagement.inc:711
+#: admin/systems/class_serverService.inc:236
+#: admin/systems/class_serverService.inc:363
+#: admin/systems/class_systemManagement.inc:335
+#: admin/systems/class_systemManagement.inc:427
+#: admin/systems/class_systemManagement.inc:464
+#: admin/systems/class_systemManagement.inc:472
+#: admin/systems/class_systemManagement.inc:522
+#: admin/systems/class_systemManagement.inc:528
+#: admin/systems/class_systemManagement.inc:540
+#: admin/systems/class_systemManagement.inc:548
+#: admin/systems/class_systemManagement.inc:587
+#: admin/systems/class_systemManagement.inc:682
+#: admin/systems/class_systemManagement.inc:1198
 msgid "Error"
 msgstr ""
 
@@ -36,317 +37,335 @@ msgstr ""
 msgid "Not matching"
 msgstr ""
 
-#: admin/systems/class_termDNS.inc:480 admin/systems/class_termDNS.inc:768
-#: admin/systems/class_termDNS.inc:787 admin/systems/class_termDNS.inc:808
-#: admin/systems/class_termDNS.inc:813 admin/systems/class_termDNS.inc:831
-#: admin/systems/class_termDNS.inc:903 admin/systems/class_servGeneric.inc:281
+#: admin/systems/class_termDNS.inc:482 admin/systems/class_termDNS.inc:770
+#: admin/systems/class_termDNS.inc:789 admin/systems/class_termDNS.inc:810
+#: admin/systems/class_termDNS.inc:815 admin/systems/class_termDNS.inc:833
+#: admin/systems/class_termDNS.inc:905 admin/systems/class_servGeneric.inc:281
 #: admin/systems/class_servGeneric.inc:433
 #: admin/systems/services/class_goService.inc:122
 #: admin/systems/services/class_goService.inc:150
 #: admin/systems/services/class_goService.inc:183
-#: admin/systems/class_systemManagement.inc:698
+#: admin/systems/class_systemManagement.inc:669
 #: admin/systems/class_componentGeneric.inc:160
 #: admin/systems/class_componentGeneric.inc:301
 #, fuzzy
 msgid "LDAP error"
 msgstr "Errore LDAP"
 
-#: admin/systems/class_termDNS.inc:590
+#: admin/systems/class_termDNS.inc:592
 #, fuzzy, php-format
 msgid "IP address %s"
 msgstr "Indirizzo principale"
 
-#: admin/systems/class_termDNS.inc:599 admin/systems/class_termDNS.inc:611
-#: admin/systems/class_termDNS.inc:613 admin/systems/class_termDNS.inc:979
+#: admin/systems/class_termDNS.inc:601 admin/systems/class_termDNS.inc:613
+#: admin/systems/class_termDNS.inc:615 admin/systems/class_termDNS.inc:981
 #: admin/systems/class_componentGeneric.inc:219
 #: admin/systems/class_componentGeneric.inc:222
 #, fuzzy
 msgid "IP address"
 msgstr "Indirizzo principale"
 
-#: admin/systems/class_termDNS.inc:604 admin/systems/class_termDNS.inc:621
-#: admin/systems/class_termDNS.inc:623 admin/systems/class_termDNS.inc:980
+#: admin/systems/class_termDNS.inc:606 admin/systems/class_termDNS.inc:623
+#: admin/systems/class_termDNS.inc:625 admin/systems/class_termDNS.inc:982
 #, fuzzy
 msgid "MAC address"
 msgstr "Indirizzo principale"
 
-#: admin/systems/class_termDNS.inc:638
+#: admin/systems/class_termDNS.inc:640
 #, php-format
 msgid "The IP address '%s' is not part of the selected reverse zone '%s'!"
 msgstr ""
 
-#: admin/systems/class_termDNS.inc:650
+#: admin/systems/class_termDNS.inc:652
 #, php-format
 msgid "Record type '%s' is duplicated!"
 msgstr ""
 
-#: admin/systems/class_termDNS.inc:658
+#: admin/systems/class_termDNS.inc:660
 #, php-format
 msgid "Uniq record type '%s' is duplicated!"
 msgstr ""
 
-#: admin/systems/class_termDNS.inc:670
+#: admin/systems/class_termDNS.inc:672
 #, php-format
 msgid ""
 "The IP address '%s' will be added as 'A Record', this will be done "
 "automatically, please remove the record."
 msgstr ""
 
-#: admin/systems/class_termDNS.inc:678
+#: admin/systems/class_termDNS.inc:680
 #, php-format
 msgid "Only lowercase records are allowed, please check your '%ss'."
 msgstr ""
 
-#: admin/systems/class_termDNS.inc:920 admin/systems/class_termDNS.inc:940
+#: admin/systems/class_termDNS.inc:922 admin/systems/class_termDNS.inc:942
 msgid "Add"
 msgstr "Aggiungi"
 
-#: admin/systems/class_termDNS.inc:934
+#: admin/systems/class_termDNS.inc:936
 msgid "Delete"
 msgstr "Rimuovi"
 
-#: admin/systems/class_termDNS.inc:970
+#: admin/systems/class_termDNS.inc:972
 msgid "DNS"
 msgstr ""
 
-#: admin/systems/class_termDNS.inc:971
+#: admin/systems/class_termDNS.inc:973
 #, fuzzy
 msgid "DNS settings"
 msgstr "Impostazioni Samba"
 
-#: admin/systems/class_termDNS.inc:986
+#: admin/systems/class_termDNS.inc:988
 #, fuzzy
 msgid "DNS configuration"
 msgstr "Scarica il file di  configurazione"
 
-#: admin/systems/class_termDNS.inc:989
+#: admin/systems/class_termDNS.inc:991
 #, fuzzy
 msgid "DHCP configuration"
 msgstr "Scarica il file di  configurazione"
 
-#: admin/systems/class_divListSystem.inc:62
 #: admin/systems/class_divListSystem.inc:63
+#: admin/systems/class_divListSystem.inc:64
 msgid "List of systems"
 msgstr "Lista dei sistemi"
 
-#: admin/systems/class_divListSystem.inc:81
+#: admin/systems/class_divListSystem.inc:82
 #, fuzzy
 msgid "Select all"
 msgstr "Rimuovi"
 
-#: admin/systems/class_divListSystem.inc:87
+#: admin/systems/class_divListSystem.inc:88
 #: admin/systems/class_systemManagement.inc:26
 msgid "Systems"
 msgstr "Sistemi"
 
-#: admin/systems/class_divListSystem.inc:87
+#: admin/systems/class_divListSystem.inc:88
 #, fuzzy
 msgid "Department"
 msgstr "Dipartimento"
 
-#: admin/systems/class_divListSystem.inc:91
+#: admin/systems/class_divListSystem.inc:92
 #, fuzzy
 msgid "Release"
 msgstr "Rimuovi"
 
-#: admin/systems/class_divListSystem.inc:94
-#: admin/systems/class_divListSystem.inc:174
+#: admin/systems/class_divListSystem.inc:95
+#: admin/systems/class_divListSystem.inc:181
 #: admin/systems/class_divListSystemService.inc:51
 msgid "Actions"
 msgstr "Azioni"
 
-#: admin/systems/class_divListSystem.inc:100
 #: admin/systems/class_divListSystem.inc:101
-#: admin/systems/class_divListSystem.inc:422
+#: admin/systems/class_divListSystem.inc:102
+#: admin/systems/class_divListSystem.inc:423
 #, fuzzy
 msgid "servers"
 msgstr "Server"
 
-#: admin/systems/class_divListSystem.inc:101
-#: admin/systems/class_divListSystem.inc:106
-#: admin/systems/class_divListSystem.inc:111
-#: admin/systems/class_divListSystem.inc:116
-#: admin/systems/class_divListSystem.inc:121
-#: admin/systems/class_divListSystem.inc:126
-#: admin/systems/class_divListSystem.inc:131
+#: admin/systems/class_divListSystem.inc:102
+#: admin/systems/class_divListSystem.inc:107
+#: admin/systems/class_divListSystem.inc:112
+#: admin/systems/class_divListSystem.inc:117
+#: admin/systems/class_divListSystem.inc:128
+#: admin/systems/class_divListSystem.inc:133
+#: admin/systems/class_divListSystem.inc:138
 #, fuzzy, php-format
 msgid "Show %s"
 msgstr "Mostra telefoni"
 
-#: admin/systems/class_divListSystem.inc:105
+#: admin/systems/class_divListSystem.inc:106
 #, fuzzy
 msgid "Linux terminals"
 msgstr "Mostra terminali"
 
-#: admin/systems/class_divListSystem.inc:106
-#: admin/systems/class_divListSystem.inc:424
+#: admin/systems/class_divListSystem.inc:107
+#: admin/systems/class_divListSystem.inc:425
 #, fuzzy
 msgid "terminals"
 msgstr "Terminali"
 
-#: admin/systems/class_divListSystem.inc:110
+#: admin/systems/class_divListSystem.inc:111
 #, fuzzy
 msgid "Linux workstations"
 msgstr "Mostra workstation"
 
-#: admin/systems/class_divListSystem.inc:111
-#: admin/systems/class_divListSystem.inc:423
+#: admin/systems/class_divListSystem.inc:112
+#: admin/systems/class_divListSystem.inc:424
 #, fuzzy
 msgid "workstations"
 msgstr "Mostra workstation"
 
-#: admin/systems/class_divListSystem.inc:115
+#: admin/systems/class_divListSystem.inc:116
 #, fuzzy
 msgid "MicroSoft Windows based workstations"
 msgstr "Mostra workstation Windows"
 
-#: admin/systems/class_divListSystem.inc:116
+#: admin/systems/class_divListSystem.inc:117
 #, fuzzy
 msgid "windows based workstations"
 msgstr "Mostra workstation Windows"
 
-#: admin/systems/class_divListSystem.inc:120
 #: admin/systems/class_divListSystem.inc:121
+#, fuzzy, php-format
+msgid "Display objects of type '%s'."
+msgstr "Gruppo di oggetti"
+
+#: admin/systems/class_divListSystem.inc:122
+#, fuzzy
+msgid "OPSI installed client"
+msgstr "Dispositivi del client"
+
+#: admin/systems/class_divListSystem.inc:122
+msgid "Show OPSI based clients"
+msgstr ""
+
+#: admin/systems/class_divListSystem.inc:127
+#: admin/systems/class_divListSystem.inc:128
 #, fuzzy
 msgid "network printers"
 msgstr "Mostra stampanti di rete"
 
-#: admin/systems/class_divListSystem.inc:125
+#: admin/systems/class_divListSystem.inc:132
 #, fuzzy
 msgid "VoIP phones"
 msgstr "Mostra telefoni"
 
-#: admin/systems/class_divListSystem.inc:126
-#: admin/systems/class_divListSystem.inc:425
+#: admin/systems/class_divListSystem.inc:133
+#: admin/systems/class_divListSystem.inc:426
 #, fuzzy
 msgid "phones"
 msgstr "Telefono"
 
-#: admin/systems/class_divListSystem.inc:130
-#: admin/systems/class_divListSystem.inc:131
+#: admin/systems/class_divListSystem.inc:137
+#: admin/systems/class_divListSystem.inc:138
 #, fuzzy
 msgid "network devices"
 msgstr "Mostra dispositiva di rete"
 
-#: admin/systems/class_divListSystem.inc:139
+#: admin/systems/class_divListSystem.inc:146
 msgid "Display systems matching"
 msgstr "Mostra i sistemi che corrispondono a:"
 
-#: admin/systems/class_divListSystem.inc:140
+#: admin/systems/class_divListSystem.inc:147
 #, fuzzy
 msgid "Display systems of user"
 msgstr "Mostra l'indirizzo dell'utente"
 
-#: admin/systems/class_divListSystem.inc:169
+#: admin/systems/class_divListSystem.inc:176
 #: admin/systems/class_servGeneric.inc:515 admin/systems/server.tpl:22
 #: admin/systems/component.tpl:17 admin/systems/class_componentGeneric.inc:319
 msgid "Base"
 msgstr "Base"
 
-#: admin/systems/class_divListSystem.inc:171
+#: admin/systems/class_divListSystem.inc:178
 msgid "Submit department"
 msgstr "Imposta dipartimento"
 
-#: admin/systems/class_divListSystem.inc:171
+#: admin/systems/class_divListSystem.inc:178
 msgid "Submit"
 msgstr ""
 
-#: admin/systems/class_divListSystem.inc:176
+#: admin/systems/class_divListSystem.inc:183
 msgid "Create"
 msgstr "Creare"
 
-#: admin/systems/class_divListSystem.inc:180
-#: admin/systems/class_systemManagement.inc:1547
+#: admin/systems/class_divListSystem.inc:187
+#: admin/systems/class_systemManagement.inc:1525
 #, fuzzy
 msgid "Terminal"
 msgstr "Terminali"
 
-#: admin/systems/class_divListSystem.inc:184
-#: admin/systems/class_systemManagement.inc:1545
+#: admin/systems/class_divListSystem.inc:191
+#: admin/systems/class_systemManagement.inc:1523
 msgid "Workstation"
 msgstr ""
 
-#: admin/systems/class_divListSystem.inc:188
+#: admin/systems/class_divListSystem.inc:195
 #: admin/systems/class_servGeneric.inc:509
-#: admin/systems/class_systemManagement.inc:1546
+#: admin/systems/class_systemManagement.inc:1524
 msgid "Server"
 msgstr "Server"
 
-#: admin/systems/class_divListSystem.inc:192
-#: admin/systems/class_systemManagement.inc:1539
+#: admin/systems/class_divListSystem.inc:199
+#: admin/systems/class_systemManagement.inc:1517
 msgid "Phone"
 msgstr "Telefono"
 
-#: admin/systems/class_divListSystem.inc:196
-#: admin/systems/class_systemManagement.inc:1541
+#: admin/systems/class_divListSystem.inc:203
+#: admin/systems/class_systemManagement.inc:1519
 msgid "Printer"
 msgstr "Stampante"
 
-#: admin/systems/class_divListSystem.inc:200
+#: admin/systems/class_divListSystem.inc:207
 #, fuzzy
 msgid "Component"
 msgstr "Nome comune"
 
-#: admin/systems/class_divListSystem.inc:207
+#: admin/systems/class_divListSystem.inc:214
+#: admin/systems/class_systemManagement.inc:1544
+msgid "Opsi client"
+msgstr ""
+
+#: admin/systems/class_divListSystem.inc:221
 msgid "Trigger action"
 msgstr ""
 
-#: admin/systems/class_divListSystem.inc:213
+#: admin/systems/class_divListSystem.inc:227
 msgid "Schedule action"
 msgstr ""
 
-#: admin/systems/class_divListSystem.inc:220
+#: admin/systems/class_divListSystem.inc:234
 msgid "Remove"
 msgstr "Rimuovi"
 
-#: admin/systems/class_divListSystem.inc:223
+#: admin/systems/class_divListSystem.inc:237
 #, fuzzy
 msgid "Activate systems"
 msgstr "Lista dei sistemi"
 
-#: admin/systems/class_divListSystem.inc:324
+#: admin/systems/class_divListSystem.inc:322
 msgid "edit"
 msgstr "modifica"
 
-#: admin/systems/class_divListSystem.inc:324
+#: admin/systems/class_divListSystem.inc:322
 #, fuzzy
 msgid "Edit system"
 msgstr "Lista dei sistemi"
 
-#: admin/systems/class_divListSystem.inc:330
+#: admin/systems/class_divListSystem.inc:328
 msgid "delete"
 msgstr "elimina"
 
-#: admin/systems/class_divListSystem.inc:330
+#: admin/systems/class_divListSystem.inc:328
 #, fuzzy
 msgid "Delete system"
 msgstr "Rimuovi"
 
-#: admin/systems/class_divListSystem.inc:352
+#: admin/systems/class_divListSystem.inc:350
 msgid "Password"
 msgstr "Password"
 
-#: admin/systems/class_divListSystem.inc:352 admin/systems/password.tpl:38
+#: admin/systems/class_divListSystem.inc:350 admin/systems/password.tpl:38
 msgid "Set password"
 msgstr "Cambia password"
 
-#: admin/systems/class_divListSystem.inc:358
+#: admin/systems/class_divListSystem.inc:359
 #, fuzzy
 msgid "Create CD"
 msgstr "Creare"
 
-#: admin/systems/class_divListSystem.inc:359
+#: admin/systems/class_divListSystem.inc:360
 #, fuzzy
 msgid "Create FAI CD"
 msgstr "Gruppo di oggetti"
 
-#: admin/systems/class_divListSystem.inc:406
 #: admin/systems/class_divListSystem.inc:407
+#: admin/systems/class_divListSystem.inc:408
 #, fuzzy, php-format
 msgid "Inherited from %s"
 msgstr "Gruppi di oggetti"
 
-#: admin/systems/class_divListSystem.inc:422
 #: admin/systems/class_divListSystem.inc:423
 #: admin/systems/class_divListSystem.inc:424
 #: admin/systems/class_divListSystem.inc:425
@@ -355,31 +374,32 @@ msgstr "Gruppi di oggetti"
 #: admin/systems/class_divListSystem.inc:428
 #: admin/systems/class_divListSystem.inc:429
 #: admin/systems/class_divListSystem.inc:430
+#: admin/systems/class_divListSystem.inc:431
 #, fuzzy, php-format
 msgid "Number of listed '%s'"
 msgstr "Server"
 
-#: admin/systems/class_divListSystem.inc:426
+#: admin/systems/class_divListSystem.inc:427
 #, fuzzy
 msgid "printers"
 msgstr "Stampante"
 
-#: admin/systems/class_divListSystem.inc:427
+#: admin/systems/class_divListSystem.inc:428
 #, fuzzy
 msgid "network components"
 msgstr "Mostra stampanti di rete"
 
-#: admin/systems/class_divListSystem.inc:428
+#: admin/systems/class_divListSystem.inc:429
 #, fuzzy
 msgid "new devices"
 msgstr "Mostra dispositiva di rete"
 
-#: admin/systems/class_divListSystem.inc:429
+#: admin/systems/class_divListSystem.inc:430
 #, fuzzy
 msgid "windows workstations"
 msgstr "Mostra workstation"
 
-#: admin/systems/class_divListSystem.inc:430
+#: admin/systems/class_divListSystem.inc:431
 #, fuzzy
 msgid "departments"
 msgstr "Imposta dipartimento"
@@ -400,7 +420,7 @@ msgstr "Server"
 
 #: admin/systems/class_servGeneric.inc:165
 #: admin/systems/class_servGeneric.inc:453
-#: admin/systems/class_systemManagement.inc:800
+#: admin/systems/class_systemManagement.inc:771
 #, fuzzy
 msgid "Service infrastructure"
 msgstr "Cognome"
@@ -558,16 +578,16 @@ msgstr "Avvio"
 msgid "Restart"
 msgstr "Riprova"
 
-#: admin/systems/class_serverService.inc:349
+#: admin/systems/class_serverService.inc:351
 #, fuzzy
 msgid "Information"
 msgstr "Icna"
 
-#: admin/systems/class_serverService.inc:349
+#: admin/systems/class_serverService.inc:351
 msgid "Cannot update service status until it has been saved!"
 msgstr ""
 
-#: admin/systems/class_serverService.inc:361
+#: admin/systems/class_serverService.inc:363
 msgid "Cannot update service status!"
 msgstr ""
 
@@ -619,7 +639,7 @@ msgid "Start all services"
 msgstr "Dispositivi del client"
 
 #: admin/systems/class_divListSystemService.inc:67
-#: admin/systems/class_divListSystemService.inc:128
+#: admin/systems/class_divListSystemService.inc:127
 #, fuzzy
 msgid "Stop service"
 msgstr "Servizi"
@@ -630,7 +650,7 @@ msgid "Stop all services"
 msgstr "Dispositivi del client"
 
 #: admin/systems/class_divListSystemService.inc:69
-#: admin/systems/class_divListSystemService.inc:134
+#: admin/systems/class_divListSystemService.inc:133
 #, fuzzy
 msgid "Restart service"
 msgstr "server"
@@ -660,17 +680,17 @@ msgstr "Destinazione"
 msgid "User status"
 msgstr "Opzioni di posta dell'identità"
 
-#: admin/systems/class_divListSystemService.inc:122
+#: admin/systems/class_divListSystemService.inc:121
 #, fuzzy
 msgid "Start service"
 msgstr "server"
 
-#: admin/systems/class_divListSystemService.inc:142
+#: admin/systems/class_divListSystemService.inc:141
 #, fuzzy
 msgid "Edit service"
 msgstr "Modifica contatto"
 
-#: admin/systems/class_divListSystemService.inc:150
+#: admin/systems/class_divListSystemService.inc:149
 #, fuzzy
 msgid "Remove service"
 msgstr "Elimina contatto"
@@ -771,166 +791,166 @@ msgstr ""
 msgid "This does something"
 msgstr "Questo fa qualcosa"
 
-#: admin/systems/class_systemManagement.inc:231
+#: admin/systems/class_systemManagement.inc:239
 msgid "Back"
 msgstr "Indietro"
 
-#: admin/systems/class_systemManagement.inc:278
+#: admin/systems/class_systemManagement.inc:286
 msgid "Creating the image failed. Please see the report below."
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:287
+#: admin/systems/class_systemManagement.inc:295
 #, php-format
 msgid "Command '%s', specified for ISO creation doesn't seem to exist."
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:369
+#: admin/systems/class_systemManagement.inc:371
 #, fuzzy
 msgid "Internal error"
 msgstr "Terminal Server"
 
-#: admin/systems/class_systemManagement.inc:369
+#: admin/systems/class_systemManagement.inc:371
 msgid "Cannot set mode to 'active'!"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:563
+#: admin/systems/class_systemManagement.inc:548
 msgid "Editing this type of object is not supported yet!"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:599
-#: admin/systems/class_systemManagement.inc:708
-#: admin/systems/class_systemManagement.inc:939
+#: admin/systems/class_systemManagement.inc:575
+#: admin/systems/class_systemManagement.inc:679
+#: admin/systems/class_systemManagement.inc:890
 #, fuzzy
 msgid "Permission error"
 msgstr "Permessi"
 
-#: admin/systems/class_systemManagement.inc:599
-#: admin/systems/class_systemManagement.inc:708
+#: admin/systems/class_systemManagement.inc:575
+#: admin/systems/class_systemManagement.inc:679
 #, fuzzy
 msgid "You have no permission to change this password!"
 msgstr "Non hai il permesso di cambiare la tua password."
 
-#: admin/systems/class_systemManagement.inc:611
+#: admin/systems/class_systemManagement.inc:587
 #, fuzzy
 msgid ""
 "The passwords you've entered as 'New password' and 'Repeated password' do "
 "not match!"
 msgstr "Le password nuova e ripetuta non corrispondono"
 
-#: admin/systems/class_systemManagement.inc:692
+#: admin/systems/class_systemManagement.inc:663
 #, fuzzy
 msgid "Password method"
 msgstr "Algorimo password"
 
-#: admin/systems/class_systemManagement.inc:692
+#: admin/systems/class_systemManagement.inc:663
 msgid "Password method crypt is missing. Cannot set system password."
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:711
+#: admin/systems/class_systemManagement.inc:682
 #, fuzzy
 msgid "Cannot determine object to change password!"
 msgstr "Cambia la password"
 
-#: admin/systems/class_systemManagement.inc:855
+#: admin/systems/class_systemManagement.inc:816
 #, fuzzy
 msgid "Permission"
 msgstr "Permessi"
 
-#: admin/systems/class_systemManagement.inc:1263
-#: admin/systems/class_systemManagement.inc:1561
+#: admin/systems/class_systemManagement.inc:1226
+#: admin/systems/class_systemManagement.inc:1539
 msgid "New terminal"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1265
-#: admin/systems/class_systemManagement.inc:1562
+#: admin/systems/class_systemManagement.inc:1228
+#: admin/systems/class_systemManagement.inc:1540
 msgid "New workstation"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1267
+#: admin/systems/class_systemManagement.inc:1230
 msgid "Unknown device"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1269
+#: admin/systems/class_systemManagement.inc:1232
 #, fuzzy
 msgid "New Device"
 msgstr "Mostra dispositiva di rete"
 
-#: admin/systems/class_systemManagement.inc:1287
+#: admin/systems/class_systemManagement.inc:1257
 #, fuzzy
 msgid "Terminal template for"
 msgstr "Terminal Server"
 
-#: admin/systems/class_systemManagement.inc:1303
+#: admin/systems/class_systemManagement.inc:1273
 msgid "Workstation template for"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1538
+#: admin/systems/class_systemManagement.inc:1516
 msgid "Template"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1540
+#: admin/systems/class_systemManagement.inc:1518
 #: admin/systems/class_componentGeneric.inc:315
 #, fuzzy
 msgid "Network device"
 msgstr "Mostra dispositiva di rete"
 
-#: admin/systems/class_systemManagement.inc:1543
+#: admin/systems/class_systemManagement.inc:1521
 #, fuzzy
 msgid "Win workstation"
 msgstr "Amministrazione"
 
-#: admin/systems/class_systemManagement.inc:1549
+#: admin/systems/class_systemManagement.inc:1527
 #, fuzzy
 msgid "Locked workstation"
 msgstr "Mostra workstation"
 
-#: admin/systems/class_systemManagement.inc:1550
+#: admin/systems/class_systemManagement.inc:1528
 #, fuzzy
 msgid "Locked server"
 msgstr "Server"
 
-#: admin/systems/class_systemManagement.inc:1551
+#: admin/systems/class_systemManagement.inc:1529
 #, fuzzy
 msgid "Locked terminal"
 msgstr "Mostra terminali"
 
-#: admin/systems/class_systemManagement.inc:1553
+#: admin/systems/class_systemManagement.inc:1531
 #, fuzzy
 msgid "Workstation error"
 msgstr "Creare"
 
-#: admin/systems/class_systemManagement.inc:1554
+#: admin/systems/class_systemManagement.inc:1532
 #, fuzzy
 msgid "Server error"
 msgstr "Stato"
 
-#: admin/systems/class_systemManagement.inc:1555
+#: admin/systems/class_systemManagement.inc:1533
 #, fuzzy
 msgid "Terminal error"
 msgstr "Terminal Server"
 
-#: admin/systems/class_systemManagement.inc:1557
+#: admin/systems/class_systemManagement.inc:1535
 #, fuzzy
 msgid "Workstation busy"
 msgstr "Mostra workstation"
 
-#: admin/systems/class_systemManagement.inc:1558
+#: admin/systems/class_systemManagement.inc:1536
 #, fuzzy
 msgid "Server busy"
 msgstr "Server"
 
-#: admin/systems/class_systemManagement.inc:1560
+#: admin/systems/class_systemManagement.inc:1538
 #, fuzzy
 msgid "New system from incoming"
 msgstr "Informazioni organizzazione"
 
-#: admin/systems/class_systemManagement.inc:1638
-#: admin/systems/class_systemManagement.inc:1639
+#: admin/systems/class_systemManagement.inc:1708
+#: admin/systems/class_systemManagement.inc:1709
 #, fuzzy
 msgid "Incoming objects"
 msgstr "Oggetti membri"
 
-#: admin/systems/class_systemManagement.inc:1644
+#: admin/systems/class_systemManagement.inc:1714
 #, fuzzy
 msgid "Incoming"
 msgstr "Icna"
@@ -952,43 +972,43 @@ msgstr ""
 msgid "MAC-address"
 msgstr ""
 
-#: admin/systems/network.tpl:43
+#: admin/systems/network.tpl:45
 msgid "Autodetect"
 msgstr ""
 
-#: admin/systems/network.tpl:59 admin/systems/network.tpl:69
+#: admin/systems/network.tpl:62 admin/systems/network.tpl:72
 msgid "Enable DHCP for this device"
 msgstr ""
 
-#: admin/systems/network.tpl:69 admin/systems/network.tpl:164
+#: admin/systems/network.tpl:72 admin/systems/network.tpl:167
 #, fuzzy
 msgid "not configured"
 msgstr "non configurata"
 
-#: admin/systems/network.tpl:77
+#: admin/systems/network.tpl:80
 #, fuzzy
 msgid "Parent node"
 msgstr "server"
 
-#: admin/systems/network.tpl:90
+#: admin/systems/network.tpl:93
 #, fuzzy
 msgid "Edit settings"
 msgstr "Opzioni di posta dell'identità"
 
-#: admin/systems/network.tpl:124 admin/systems/network.tpl:164
+#: admin/systems/network.tpl:127 admin/systems/network.tpl:167
 msgid "Enable DNS for this device"
 msgstr ""
 
-#: admin/systems/network.tpl:133
+#: admin/systems/network.tpl:136
 #, fuzzy
 msgid "Zone"
 msgstr "telefoni"
 
-#: admin/systems/network.tpl:143
+#: admin/systems/network.tpl:146
 msgid "TTL"
 msgstr ""
 
-#: admin/systems/network.tpl:151
+#: admin/systems/network.tpl:154
 #, fuzzy
 msgid "Dns records"
 msgstr "Directory"
