@@ -396,7 +396,7 @@ class divListSystem extends MultiSelectWindow
 
       if($this->parent->fai_activated){
 
-        $release ="&nbsp;";
+        $release ="";
         $release_attach = ""; 
         if(isset($val['FAIclass'][0]) && preg_match("/:/",$val['FAIclass'][0])){
           $release        = preg_replace("/^.*:/","",$val['FAIclass'][0]);
@@ -407,7 +407,7 @@ class divListSystem extends MultiSelectWindow
             title='".sprintf(_("Inherited from %s"),trim($ogs_release[$val['dn']]['CN'],", "))."'>";
           $release_attach = "title='".sprintf(_("Inherited from %s"),trim($ogs_release[$val['dn']]['CN'],", "))."'"; 
         }
-        $field2a = array("string" => $release,"attach"=>$release_attach." style='width:100px;'");
+        $field2a = array("string" => $release."&nbsp;","attach"=>$release_attach." style='width:100px;'");
         $this->AddElement( array($field0,$field1,$field2,$field2a,$field3));
       }else{
         $this->AddElement( array($field0,$field1,$field2,$field3));
