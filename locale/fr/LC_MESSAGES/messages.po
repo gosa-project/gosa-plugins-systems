@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-10-06 11:42+0200\n"
-"PO-Revision-Date: 2008-08-12 14:03+0200\n"
+"PO-Revision-Date: 2008-10-10 11:03+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: french <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -96,8 +96,7 @@ msgstr ""
 #: admin/systems/class_termDNS.inc:680
 #, php-format
 msgid "Only lowercase records are allowed, please check your '%ss'."
-msgstr ""
-"Seulement les minuscules sont autorisée, veuillez vérifier votre '%ss'."
+msgstr "Seulement les minuscules sont autorisée, veuillez vérifier votre '%ss'."
 
 #: admin/systems/class_termDNS.inc:922 admin/systems/class_termDNS.inc:942
 msgid "Add"
@@ -195,18 +194,17 @@ msgid "windows based workstations"
 msgstr "stations de travail Windows"
 
 #: admin/systems/class_divListSystem.inc:121
-#, fuzzy, php-format
+#, php-format
 msgid "Display objects of type '%s'."
-msgstr "Sélectionnez pour lister les objets de type '%s'."
+msgstr "Lister les objets de type '%s'."
 
 #: admin/systems/class_divListSystem.inc:122
-#, fuzzy
 msgid "OPSI installed client"
-msgstr "Services installés"
+msgstr "Client OPSI installé"
 
 #: admin/systems/class_divListSystem.inc:122
 msgid "Show OPSI based clients"
-msgstr ""
+msgstr "Montrer les clients OPSI"
 
 #: admin/systems/class_divListSystem.inc:127
 #: admin/systems/class_divListSystem.inc:128
@@ -285,9 +283,8 @@ msgstr "Composant"
 
 #: admin/systems/class_divListSystem.inc:214
 #: admin/systems/class_systemManagement.inc:1544
-#, fuzzy
 msgid "Opsi client"
-msgstr "Clients légers"
+msgstr "Clients OPSI"
 
 #: admin/systems/class_divListSystem.inc:221
 msgid "Trigger action"
@@ -456,8 +453,7 @@ msgid "Software deployment"
 msgstr "Déploiement de logiciel"
 
 #: admin/systems/class_servGeneric.inc:370
-msgid ""
-"This host is currently installing, if you really want to save it, press 'OK'."
+msgid "This host is currently installing, if you really want to save it, press 'OK'."
 msgstr ""
 "Cet hôte est actuellement en cours d'installation, si vous voulez vraiment "
 "le sauver, cliquez sur 'OK'."
@@ -511,8 +507,7 @@ msgid "Action"
 msgstr "Action"
 
 #: admin/systems/server.tpl:69
-msgid ""
-"System installation in progress, the FAI state cannot be changed right now."
+msgid "System installation in progress, the FAI state cannot be changed right now."
 msgstr ""
 "Le système est en cours d'installation, l'état FAI ne peut pas être changé "
 "maintenant."
@@ -753,8 +748,7 @@ msgstr "La création de l'image à échoué. veuillez lire le rapport ci dessous
 #: admin/systems/class_systemManagement.inc:295
 #, php-format
 msgid "Command '%s', specified for ISO creation doesn't seem to exist."
-msgstr ""
-"La commande '%s', utilisée dans la création de l'image ISO n'existe pas."
+msgstr "La commande '%s', utilisée dans la création de l'image ISO n'existe pas."
 
 #: admin/systems/class_systemManagement.inc:371
 msgid "Internal error"
@@ -948,3 +942,4 @@ msgstr "composant"
 #: admin/systems/class_componentGeneric.inc:310
 msgid "Component generic"
 msgstr "Composant générique"
+
