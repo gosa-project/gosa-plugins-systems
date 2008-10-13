@@ -708,6 +708,17 @@ class systems extends plugin
       $this->dns = array();
       $ids = $this->list_get_selected_items();
 
+      /* Handle opsi actions */
+      if($s_action == "trigger_event_DaemonEvent_reinstall"){
+        foreach($ids as $key => $id){
+          if($this->terminals[$id]['type'] == "O"){
+            $obj = $this->terminals[$id];
+            $this->opsi->job_opsi_install_client($obj['cn'][0],$obj['macAddress'][0]);
+            unset($ids[$key]);
+          }
+        }
+      }
+
       if(count($ids) && class_available("DaemonEvent")){
         $mac= array();
 
