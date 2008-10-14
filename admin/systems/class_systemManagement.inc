@@ -1169,7 +1169,7 @@ class systems extends plugin
 
     /* Attributes to fetch */
     $sys_attrs        = array("cn", "description", "macAddress", "objectClass", "sambaDomainName","gotoMode","FAIclass");
-    $sys_categories   = array("terminal", "workstation", "server", "phone" ,"printer","incoming");
+    $sys_categories   = array("terminal", "workstation", "server", "phone" ,"printer","incoming","winworkstation");
 
     /* Add FAIstate to attributes if FAI is activated */
     $tmp = $this->config->search("faiManagement", "CLASS",array('menu','tabs'));
