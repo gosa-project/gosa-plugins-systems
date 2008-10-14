@@ -54,6 +54,7 @@ class divListSystem extends MultiSelectWindow
                                                                   "terminal",
                                                                   "phone",
                                                                   "incoming",
+                                                                  "winworkstation",
                                                                   "printer"));
 
     $this->parent       = $parent;
