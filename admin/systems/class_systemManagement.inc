@@ -1326,8 +1326,9 @@ class systems extends plugin
           $terminal['type']   = "Q";
           $terminal['is_new'] = $add;
         }
-      } elseif (in_array_ics('ieee802Device', $value["objectClass"])){
-
+      } elseif (in_array_ics('ieee802Device', $value["objectClass"]) && 
+        !( in_array_ics('sambaAccount', $value["objectClass"]) || in_array_ics('sambaSamAccount', $value["objectClass"]))){
+        $type= "winstation";
         $acl = $ui->get_permissions($value['dn'],"component/componentGeneric");
         if($add != "" || preg_match("/r/",$acl)) {
 
@@ -1495,6 +1496,9 @@ class systems extends plugin
     $type= "";
     if (in_array_ics('gosa_opsi_client', $classes)){
       $type= "opsi_client";
+    }elseif (in_array_ics('sambaAccount', $classes) ||
+        in_array_ics('sambaSamAccount', $classes)){
+      $type= "winstation";
     }elseif (in_array_ics('ieee802Device', $classes)){
       $type= "component";
     }elseif (in_array_ics('gotoTerminal', $classes)){
@@ -1511,9 +1515,6 @@ class systems extends plugin
       $type= "ArpNewDevice";
     }elseif (in_array_ics('GOhard', $classes)){
       $type= "NewDevice";
-    }elseif (in_array_ics('sambaAccount', $classes) ||
-        in_array_ics('sambaSamAccount', $classes)){
-      $type= "winstation";
     }
     return ($type);
   }
