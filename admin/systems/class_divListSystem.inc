@@ -49,14 +49,12 @@ class divListSystem extends MultiSelectWindow
 
   function divListSystem (&$config,$parent)
   {
-    MultiSelectWindow::MultiSelectWindow($config, "System", array("server",
-                                                                  "workstation",
-                                                                  "terminal",
-                                                                  "phone",
-                                                                  "incoming",
-                                                                  "winworkstation",
-                                                                  "printer",
-                                                                  "opsi"));
+    $classes = array("server","workstation","terminal","phone","incoming","winworkstation","printer");
+    if(class_available("opsigeneric")){
+      $classes[] = "opsi";
+    }
+
+    MultiSelectWindow::MultiSelectWindow($config, "System", $classes);
 
     $this->parent       = $parent;
     $this->ui           = get_userinfo();
