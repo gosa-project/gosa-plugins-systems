@@ -55,7 +55,8 @@ class divListSystem extends MultiSelectWindow
                                                                   "phone",
                                                                   "incoming",
                                                                   "winworkstation",
-                                                                  "printer"));
+                                                                  "printer",
+                                                                  "opsi"));
 
     $this->parent       = $parent;
     $this->ui           = get_userinfo();
