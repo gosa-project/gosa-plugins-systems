@@ -722,12 +722,19 @@ class systems extends plugin
       if(count($ids) && class_available("DaemonEvent")){
         $mac= array();
 
+        /* Collect target mac addresses */
         $ldap = $this->config->get_ldap_link();
         foreach($ids as $id){
-          $ldap->cat ($this->terminals[$id]['dn'], array("macAddress"));
-          $attrs= $ldap->fetch();
-          if (isset($attrs['macAddress'][0])){
-            $mac[]= $attrs['macAddress'][0];
+          $type = $this->get_system_type($this->terminals[$id]);
+          if(!in_array($type,array("terminal","server","workstation","opsi_client","winstation "))) continue;
+          if(isset($this->terminals[$id]['macAddress'][0])){
+            $mac[] = $this->terminals[$id]['macAddress'][0];
+          }else{
+            $ldap->cat ($this->terminals[$id]['dn'], array("macAddress"));
+            $attrs= $ldap->fetch();
+            if (isset($attrs['macAddress'][0])){
+              $mac[]= $attrs['macAddress'][0];
+            }
           }
         }
         $events = DaemonEvent::get_event_types(SYSTEM_EVENT);
