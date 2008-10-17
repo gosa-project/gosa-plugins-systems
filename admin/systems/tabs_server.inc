@@ -22,6 +22,7 @@
 
 class servtabs extends tabs
 {
+  public $was_activated = FALSE;
 
   function servtabs($config, $data, $dn,$category)
   {

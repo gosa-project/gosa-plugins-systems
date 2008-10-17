@@ -305,9 +305,18 @@ class systems extends plugin
 
 
     /********************
-      New Device hanlding  (Ogroup/System select dialog.)
+      New Device handling  (Ogroup/System select dialog.)
      ********************/
 
+    /*  All objects that have to be activated are listed in 
+          $this->system_activation_object[] = "dn";
+      
+        If there is an object group selected we simply adopt all
+         settings from these group and then directly save the entry again.
+        If no object group was selected, then we keep the "edit" dialog of 
+         the target system opened to allow to edit the objects attributes.
+     */
+  
     if($s_action == "SelectedSystemType"){
 
       /* Possible destination system types 
@@ -335,7 +344,9 @@ class systems extends plugin
           msg_dialog::display(_("Error"), msgPool::class_not_found($tabclass), ERROR_DIALOG);
         }else{
 
-          /* Go through all objects that should be activated */
+          /* Go through all objects that should be activated 
+              Contains alls object dns that have to be activated ("New Devices" not unknown)
+            */
           foreach($this->system_activation_object as $key => $dn){
 
             /* Remove entry from list, to avoid page-reload problems */
@@ -354,11 +365,15 @@ class systems extends plugin
               $this->systab->by_object[$tabname]->base = $this->DivListSystem->selectedBase;
               $this->systab->base = $this->DivListSystem->selectedBase;
 
+              /* This will be used when the object is saved, to set FAIstate to 'install'
+                  and to preset maybe other attributes.
+               */
+              $this->systab->was_activated = TRUE;
 
               if($selected_group != "none"){
 
                 /*******
-                 * Set gotoMode to active if we there was an ogroup selected. 
+                 * Set gotoMode to active if there was an ogroup selected. 
                  */
                 $found = false;
                 foreach(array("workgeneric"=>"active","servgeneric"=>"active","termgeneric"=>"active") as $tab => $value){
@@ -411,6 +426,10 @@ class systems extends plugin
                */
               if($selected_group != "none"){
                 $this->systab->save();
+    
+                /* Post handling for activated new devices 
+                 */
+                $this->activate_new_device($this->systab->dn);
                 $this->systab = NULL;
 
                 if(!isset($ldap)){
@@ -529,6 +548,8 @@ class systems extends plugin
         }else{
           $this->system_activation_object= array($this->dn);
           $this->systab = new SelectDeviceType($this->config,$this->dn) ;
+
+          // see condition  -$s_action == "SelectedSystemType"-  for further handling
         }
       }elseif(isset($tabs[$type])){
 
@@ -666,7 +687,7 @@ class systems extends plugin
           }
           $ldap->modify($attrs);
           if (!$ldap->success()){
-            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
+            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, $type));
           }else{
             if(class_available($plug)){
               $p = new $plug($this->config,$this->dn);
@@ -964,9 +985,13 @@ class systems extends plugin
 
       /* Save, or display error message? */
       if (count($message) == 0){
-
-
         $this->systab->save();
+
+        /* Post handling for activated systems 
+         */
+        if($this->systab->was_activated){
+          $this->activate_new_device($this->systab->dn);
+        }
 
         /* Terminal has been saved successfully, remove lock from LDAP. */
         if (!isset($_POST['edit_apply'])){
@@ -1717,6 +1742,42 @@ class systems extends plugin
     return($tabs);
   }
 
+
+  /*! \brief  Sets FAIstate to "install" for "New Devices".
+              This function is some kind of "Post handler" for activated systems,
+               it is called directly after the object (workstabs,servtabs) gets saved.  
+      @param  String  $dn   The dn of the newly activated object.
+      @return Boolean TRUE if activated else FALSE
+   */
+  function activate_new_device($dn)
+  {
+    $ldap = $this->config->get_ldap_link();
+    $ldap->cd($this->config->current['BASE']);
+    $ldap->cat($dn);
+    if($ldap->count()){
+      $attrs = $ldap->fetch();
+      $type  = $this->get_system_type($attrs);
+      if(!in_array($type,array("workstation","server"))) {
+        $ocs = $attrs['objectClass'];
+        unset($ocs['count']);
+        $new_attrs = array();
+        if(!in_array("FAIobject",$ocs)){
+          $ocs[] = "FAIobject";
+          $new_attrs['objectClass'] = $ocs;
+        }
+        $new_attrs['FAIstate'] = "install";
+        $ldap->cd($dn);
+        $ldap->modify($new_attrs);
+        if (!$ldap->success()){
+          msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 
+                LDAP_MOD, "activate_new_device($dn)"));
+        }else{
+          return(TRUE);
+        }
+      }
+    }
+    return(FALSE);
+  }
 
 
   /* !! Incoming dummy acls, required to defined acls for incoming objects
