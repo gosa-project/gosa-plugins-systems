@@ -1234,11 +1234,15 @@ class systems extends plugin
     $res = array_merge($res,get_list($filter,$sys_categories, get_ou('systemIncomingRDN').$base,$sys_attrs, GL_SIZELIMIT));
 
     /* Append opsi systems, the opsi extension have to installed.
+        (Only, if we are allowed to view opsi hosts)
      */
     if($this->opsi instanceof opsi && $this->opsi->enabled() && $this->DivListSystem->ShowOpsiHosts){
-      $opsi_clients = $this->opsi->get_hosts_for_system_management();
-      if($this->opsi->is_error()){
-        msg_dialog::display(_("Error"),msgPool::siError($this->opsi->get_error()),ERROR_DIALOG);
+      $o_acl = $this->ui->get_permissions($base,"opsi/opsiGeneric","");
+      if(preg_match("/r/",$o_acl)){
+        $opsi_clients = $this->opsi->get_hosts_for_system_management();
+        if($this->opsi->is_error()){
+          msg_dialog::display(_("Error"),msgPool::siError($this->opsi->get_error()),ERROR_DIALOG);
+        }
       }
     }
     
