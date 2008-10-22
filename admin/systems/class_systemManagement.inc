@@ -989,7 +989,7 @@ class systems extends plugin
 
         /* Post handling for activated systems 
          */
-        if($this->systab->was_activated){
+        if(isset($this->systab->was_activated) && $this->systab->was_activated){
           $this->activate_new_device($this->systab->dn);
         }
 
@@ -1201,7 +1201,7 @@ class systems extends plugin
 
     /* Attributes to fetch */
     $sys_attrs        = array("cn", "description", "macAddress", "objectClass", "sambaDomainName","gotoMode","FAIclass");
-    $sys_categories   = array("terminal", "workstation", "server", "phone" ,"printer","incoming","winworkstation");
+    $sys_categories   = array("terminal", "workstation", "server", "phone" ,"printer","incoming","winworkstation","component");
 
     /* Add FAIstate to attributes if FAI is activated */
     $tmp = $this->config->search("faiManagement", "CLASS",array('menu','tabs'));
