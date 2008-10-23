@@ -509,11 +509,13 @@ class servgeneric extends plugin
           "plCategory"    => array("server" => array("description"  => _("Server"),
                                                      "objectClass"  => "goServer")),
           "plProvidedAcls"=> array(
-            "cn"           => _("Name"),
-            "description"  => _("Description"),
-            "gotoMode"     => _("Goto mode"),
-            "base"         => _("Base"),
-            "FAIstate"     => _("Action flag"))
+            "cn"            => _("Name"),
+            "description"   => _("Description"),
+            "base"          => _("Base"),
+
+            "gotoMode"      => _("Goto mode"),
+            "gotoRootPasswd"=> _("Root password"),
+            "FAIstate"      => _("Action flag"))
           ));
   }
 }

@@ -317,7 +317,8 @@ class componentGeneric extends plugin
           "plProvidedAcls"=> array(
             "cn"                  => _("Name"),
             "base"                => _("Base"),
-            "description"         => _("Description"))
+            "description"         => _("Description"),
+            "gotoRootPasswd"      => _("Root password"))
           ));
   }
 

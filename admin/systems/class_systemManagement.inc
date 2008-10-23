@@ -587,7 +587,7 @@ class systems extends plugin
       $acl      = $tabs[$type]["ACL"];
       $tabclass = $tabs[$type]["TABCLASS"];
       $ui       = get_userinfo();
-      $tabacl   = $ui->get_permissions($dn,$acl,"userPassword");
+      $tabacl   = $ui->get_permissions($dn,$acl,"gotoRootPasswd");
       if(preg_match("/w/",$tabacl)){
         $this->dn= $this->terminals[$s_entry]['dn'];
         session::set('objectinfo',$this->dn);
@@ -634,14 +634,13 @@ class systems extends plugin
       if(!empty($type) && in_array($type,$allow_for)){
 
         /* Get infos */
-        $plug     = $tabs[$type]["PLUG"];
-        $class    = $tabs[$type]["CLASS"];
+        $plug     = $tabs[$type]["TABNAME"];
         $acl      = $tabs[$type]["ACL"];
         $tabclass = $tabs[$type]["TABCLASS"];
-    
+   
         /* Get acls */
         $ui       = get_userinfo();
-        $tabacl   = $ui->get_permissions($this->dn,$acl,"userPassword");
+        $tabacl   = $ui->get_permissions($this->dn,$acl,"gotoRootPasswd");
 
         /* Check acls */
         if(preg_match("/w/",$tabacl)){
@@ -689,7 +688,7 @@ class systems extends plugin
           if (!$ldap->success()){
             msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, $type));
           }else{
-            if(class_available($plug)){
+            if(class_available($plug)){ 
               $p = new $plug($this->config,$this->dn);
               $p->handle_post_events("modify");
             }

@@ -345,7 +345,7 @@ class divListSystem extends MultiSelectWindow
 
       /* Check if this is a terminal/workstation && if we are allowed to change the gotoRootPasswd */
       $display_key_for = array("terminal","workstation","server","component");
-      $pwd_acl = $ui->get_permissions($val['dn'],$tabs[$type]['ACL'],"userPassword");
+      $pwd_acl = $ui->get_permissions($val['dn'],$tabs[$type]['ACL'],"gotoRootPasswd");
       if(preg_match("/w/",$pwd_acl) && in_array($type,$display_key_for)){
         $action2 = "<input class='center' type='image' src='images/lists/key.png' alt='"._("Password")."'   name='system_setpwd_%KEY%' title='"._("Set password")."'>";
       }else{
