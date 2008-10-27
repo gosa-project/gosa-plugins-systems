@@ -587,7 +587,7 @@ class systems extends plugin
       $acl      = $tabs[$type]["ACL"];
       $tabclass = $tabs[$type]["TABCLASS"];
       $ui       = get_userinfo();
-      $tabacl   = $ui->get_permissions($dn,$acl,"gotoRootPasswd");
+      $tabacl   = $ui->get_permissions($dn,$acl,"userPassword");
       if(preg_match("/w/",$tabacl)){
         $this->dn= $this->terminals[$s_entry]['dn'];
         session::set('objectinfo',$this->dn);
@@ -640,7 +640,7 @@ class systems extends plugin
    
         /* Get acls */
         $ui       = get_userinfo();
-        $tabacl   = $ui->get_permissions($this->dn,$acl,"gotoRootPasswd");
+        $tabacl   = $ui->get_permissions($this->dn,$acl,"userPassword");
 
         /* Check acls */
         if(preg_match("/w/",$tabacl)){

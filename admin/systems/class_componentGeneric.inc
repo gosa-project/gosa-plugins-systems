@@ -318,7 +318,7 @@ class componentGeneric extends plugin
             "cn"                  => _("Name"),
             "base"                => _("Base"),
             "description"         => _("Description"),
-            "gotoRootPasswd"      => _("Root password"))
+            "userPassword"      => _("Root password"))
           ));
   }
 

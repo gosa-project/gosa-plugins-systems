@@ -514,7 +514,7 @@ class servgeneric extends plugin
             "base"          => _("Base"),
 
             "gotoMode"      => _("Goto mode"),
-            "gotoRootPasswd"=> _("Root password"),
+            "userPassword"=> _("Root password"),
             "FAIstate"      => _("Action flag"))
           ));
   }
