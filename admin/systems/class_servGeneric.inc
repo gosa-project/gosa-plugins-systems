@@ -92,7 +92,7 @@ class servgeneric extends plugin
       $this->base= dn2base($ui->dn);
       $this->cn= "";
     } else {
-      $this->base= preg_replace ("/^[^,]+,".preg_quote(get_ou("serverRDN"))."/", "", $this->dn);
+      $this->base= preg_replace ("/^[^,]+,".preg_quote(get_ou("serverRDN"), '/')."/", "", $this->dn);
     }
     $this->netConfigDNS = new termDNS($this->config,$this,$this->objectclasses);
     $this->netConfigDNS->set_acl_category("server");
@@ -361,7 +361,7 @@ class servgeneric extends plugin
     }
 
     /* Warn the user, that this host is currently installing */
-    if($this->currently_installing && !$this->currently_installing_warned && !preg_match("/".preg_quote(get_ou("systemIncomingRDN"))."/",$this->orig_dn)){
+    if($this->currently_installing && !$this->currently_installing_warned && !preg_match("/".preg_quote(get_ou("systemIncomingRDN"), '/')."/",$this->orig_dn)){
 
       /* Force aborting without message dialog */
       $message[] = "";

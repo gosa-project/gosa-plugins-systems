@@ -863,7 +863,7 @@ class systems extends plugin
           $dns_names = array();
           foreach($this->dns as $dn){
             add_lock ($dn, $this->ui->dn);
-            $dns_names[] = @LDAP::fix($dn);
+            $dns_names[] = LDAP::fix($dn);
           }
 
           /* Lock the current entry, so nobody will edit it during deletion */
@@ -1041,7 +1041,7 @@ class systems extends plugin
 
       $dialog     = FALSE;
       $hide_apply = $this->dn == "new";
-      $hide_apply = ($this->dn == "new") || (preg_match("/".preg_quote(get_ou("systemIncomingRDN"))."/",$this->dn));
+      $hide_apply = ($this->dn == "new") || (preg_match("/".preg_quote(get_ou("systemIncomingRDN"), '/')."/",$this->dn));
       if(is_object($this->systab) && !isset($this->systab->by_object)){
         $dialog = TRUE;
         $hide_apply = TRUE;
@@ -1261,7 +1261,7 @@ class systems extends plugin
       }
 
       /* Create a string containing the last part of the department. */
-      $dn_name = preg_replace("#^([^/]+/)*#","",convert_department_dn(@LDAP::fix($tmp)));
+      $dn_name = preg_replace("#^([^/]+/)*#","",convert_department_dn(LDAP::fix($tmp)));
       if(empty($dn_name)){
         $dn_name = "/";
       }
