@@ -1041,7 +1041,7 @@ class systems extends plugin
 
       $dialog     = FALSE;
       $hide_apply = $this->dn == "new";
-      $hide_apply = ($this->dn == "new") || (preg_match("/".normalizePreg(get_ou("systemIncomingRDN"))."/",$this->dn));
+      $hide_apply = ($this->dn == "new") || (preg_match("/".preg_quote(get_ou("systemIncomingRDN"))."/",$this->dn));
       if(is_object($this->systab) && !isset($this->systab->by_object)){
         $dialog = TRUE;
         $hide_apply = TRUE;

@@ -1035,7 +1035,7 @@ class termDNS extends plugin
 
   function get_dhcp_parent_node()
   {
-    return(preg_replace("/^cn=".normalizePreg($this->cn).",/","",$this->get_dhcp_host_entry_dn()));
+    return(preg_replace("/^cn=".preg_quote($this->cn).",/","",$this->get_dhcp_host_entry_dn()));
   }
 
 
@@ -1084,7 +1084,7 @@ class termDNS extends plugin
       $tmp = array_flip($this->Zones);
       $tmp = preg_replace("/^[^\/]*+\//","",$tmp[$this->dnsEntry['zoneName']]);
       $tmp = trim(preg_replace("/\.in-addr.arpa$/","",$tmp));
-      $ptr = preg_replace("/^".normalizePreg(DNS::FlipIp($tmp))."\./","",$this->ipHostNumber);
+      $ptr = preg_replace("/^".preg_quote(DNS::FlipIp($tmp))."\./","",$this->ipHostNumber);
       return($ptr);
     }else{
       return(FALSE);
@@ -1111,7 +1111,7 @@ class termDNS extends plugin
     $ret = array();
     foreach($arr as $r => $name){
       $base_part = str_replace($base,"",$r);
-      if(preg_match("/^[a-z]*=".normalizePreg($name)."(|,)$/i",$base_part)){
+      if(preg_match("/^[a-z]*=".preg_quote($name)."(|,)$/i",$base_part)){
         $ret[$r] = $current.$name;
         $tmp = $this->create_tree($arr,$r,$current.".&nbsp;");
         foreach($tmp as $sub_key => $sub_name){
