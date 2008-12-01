@@ -525,7 +525,7 @@ class systems extends plugin
       /* Check locking, save current plugin in 'back_plugin', so
          the dialog knows where to return. */
       if (($user= get_lock($this->dn)) != ""){
-        return(gen_locked_message ($user, $this->dn));
+        return(gen_locked_message ($user, $this->dn,TRUE));
       }
 
       /* Find out more about the object type */
@@ -540,12 +540,14 @@ class systems extends plugin
         if(!class_available("ArpNewDeviceTabs")){
           msg_dialog::display(_("Error"), msgPool::class_not_found("ArpNewDevice"), ERROR_DIALOG);
         }else{
+          add_lock ($this->dn, $this->ui->dn);
           $this->systab = new ArpNewDeviceTabs($this->config,$this->config->data['TABS']['ARPNEWDEVICETABS'],$this->dn);
         }
       }elseif($type == "NewDevice"){
         if(!class_available("SelectDeviceType")){
           msg_dialog::display(_("Error"), msgPool::class_not_found("SelectDeviceType"), ERROR_DIALOG);
         }else{
+          add_lock ($this->dn, $this->ui->dn);
           $this->system_activation_object= array($this->dn);
           $this->systab = new SelectDeviceType($this->config,$this->dn) ;
 
@@ -560,10 +562,10 @@ class systems extends plugin
         if(!class_available($tabclass)){
           msg_dialog::display(_("Error"), msgPool::class_not_found($tabclass), ERROR_DIALOG);
         }else{
+          add_lock ($this->dn, $this->ui->dn);
           $this->systab= new $tabclass($this->config, $this->config->data['TABS'][$class], $this->dn,$acl_cat);
           $this->systab->set_acl_base($this->dn);
           session::set('objectinfo',$this->dn);
-          add_lock ($this->dn, $this->ui->dn);
         }
       }else{ 
         msg_dialog::display(_("Error"), _("Editing this type of object is not supported yet!"), ERROR_DIALOG);
@@ -1056,7 +1058,11 @@ class systems extends plugin
         $dialog = TRUE;
       }
 
-      if (!$dialog){
+      if(($this->systab instanceOf tabs || $this->systab instanceOf plugin) && $this->systab->read_only == TRUE){
+        $display.= "<p style=\"text-align:right\">
+          <input type=submit name=\"edit_cancel\" value=\"".msgPool::cancelButton()."\">
+          </p>";
+      }elseif (!$dialog){
         $display.= "<p style=\"text-align:right\">\n";
         $display.= "<input type=\"submit\" name=\"edit_finish\" style=\"width:80px\" value=\"".msgPool::okButton()."\">\n";
         $display.= "&nbsp;\n";
@@ -1427,8 +1433,7 @@ class systems extends plugin
   {
     if (isset($this->systab->dn)){
       del_lock ($this->systab->dn);
-    }
-    if(isset($this->dn) && !empty($this->dn) && $this->dn != "new"){
+    }elseif(isset($this->dn) && !empty($this->dn) && $this->dn != "new"){
       del_lock($this->dn);
     }
     if(isset($this->dns) && is_array($this->dns) && count($this->dns)){
