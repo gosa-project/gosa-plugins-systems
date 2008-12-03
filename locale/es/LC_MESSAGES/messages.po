@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-06 11:42+0200\n"
+"POT-Creation-Date: 2008-12-03 15:05+0100\n"
 "PO-Revision-Date: 2007-07-24 00:26+0200\n"
 "Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
 "Language-Team:  <es@li.org>\n"
@@ -17,78 +17,255 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: admin/systems/class_termDNS.inc:337
-#: admin/systems/class_serverService.inc:186
-#: admin/systems/class_serverService.inc:236
-#: admin/systems/class_serverService.inc:363
-#: admin/systems/class_systemManagement.inc:335
-#: admin/systems/class_systemManagement.inc:427
-#: admin/systems/class_systemManagement.inc:464
-#: admin/systems/class_systemManagement.inc:472
-#: admin/systems/class_systemManagement.inc:522
-#: admin/systems/class_systemManagement.inc:528
-#: admin/systems/class_systemManagement.inc:540
-#: admin/systems/class_systemManagement.inc:548
-#: admin/systems/class_systemManagement.inc:587
-#: admin/systems/class_systemManagement.inc:682
-#: admin/systems/class_systemManagement.inc:1198
-msgid "Error"
+#: admin/systems/services/ServiceAddDialog.tpl:3
+msgid "Adding a new service to the current server"
 msgstr ""
 
-#: admin/systems/class_termDNS.inc:443
-msgid "Not matching"
-msgstr "No mostrar los coincidentes"
+#: admin/systems/services/ServiceAddDialog.tpl:7
+msgid ""
+"This dialog allows you to add new services to the currenty edited server "
+"object. The box below shows all available but not already used services."
+msgstr ""
 
-#: admin/systems/class_termDNS.inc:482 admin/systems/class_termDNS.inc:770
-#: admin/systems/class_termDNS.inc:789 admin/systems/class_termDNS.inc:810
-#: admin/systems/class_termDNS.inc:815 admin/systems/class_termDNS.inc:833
-#: admin/systems/class_termDNS.inc:905 admin/systems/class_servGeneric.inc:281
-#: admin/systems/class_servGeneric.inc:433
+#: admin/systems/services/ServiceAddDialog.tpl:13
+msgid "Service to add"
+msgstr ""
+
+#: admin/systems/services/ServiceAddDialog.tpl:20
+msgid "All available services are already in use."
+msgstr ""
+
+#: admin/systems/services/ServiceAddDialog.tpl:28
+msgid "Continue"
+msgstr "Continuar"
+
+#: admin/systems/services/class_goService.inc:44
+#: admin/systems/services/class_goService.inc:79
+msgid "Empty service"
+msgstr "Servicio nulo"
+
 #: admin/systems/services/class_goService.inc:122
 #: admin/systems/services/class_goService.inc:150
 #: admin/systems/services/class_goService.inc:183
-#: admin/systems/class_systemManagement.inc:669
+#: admin/systems/class_termDNS.inc:483 admin/systems/class_termDNS.inc:771
+#: admin/systems/class_termDNS.inc:790 admin/systems/class_termDNS.inc:811
+#: admin/systems/class_termDNS.inc:816 admin/systems/class_termDNS.inc:834
+#: admin/systems/class_termDNS.inc:906 admin/systems/class_servGeneric.inc:281
+#: admin/systems/class_servGeneric.inc:433
 #: admin/systems/class_componentGeneric.inc:160
 #: admin/systems/class_componentGeneric.inc:301
+#: admin/systems/class_systemManagement.inc:691
+#: admin/systems/class_systemManagement.inc:1780
 #, fuzzy
 msgid "LDAP error"
 msgstr "Servicio LDAP"
 
-#: admin/systems/class_termDNS.inc:592
+#: admin/systems/services/class_goService.inc:237
+#, fuzzy
+msgid "Configuration error"
+msgstr "Se puede escribir en la configuración"
+
+#: admin/systems/class_divListSystemService.inc:38
+#: admin/systems/class_divListSystemService.inc:39
+msgid "Installed services"
+msgstr "Servicios instalados"
+
+#: admin/systems/class_divListSystemService.inc:42
+#, fuzzy
+msgid "Add, remove and configure the properties of system services here."
+msgstr ""
+"Este menú le permite añadir, eliminar o configurar las propiedades de un "
+"servicioespecíficos."
+
+#: admin/systems/class_divListSystemService.inc:50
+#: admin/systems/class_servGeneric.inc:512
+#: admin/systems/class_componentGeneric.inc:318
+msgid "Name"
+msgstr "Nombre"
+
+#: admin/systems/class_divListSystemService.inc:51
+#: admin/systems/class_divListSystem.inc:95
+#: admin/systems/class_divListSystem.inc:181
+msgid "Actions"
+msgstr "Acciones"
+
+#: admin/systems/class_divListSystemService.inc:62
+msgid "Add service"
+msgstr "Añadir servicio"
+
+#: admin/systems/class_divListSystemService.inc:62
+msgid "Add new service"
+msgstr "Añadir nuevo servicio"
+
+#: admin/systems/class_divListSystemService.inc:65
+msgid "Start all"
+msgstr "Inicio todos"
+
+#: admin/systems/class_divListSystemService.inc:65
+msgid "Start all services"
+msgstr "Iniciar todos los servicios"
+
+#: admin/systems/class_divListSystemService.inc:67
+#: admin/systems/class_divListSystemService.inc:127
+msgid "Stop service"
+msgstr "Parar servicio"
+
+#: admin/systems/class_divListSystemService.inc:67
+msgid "Stop all services"
+msgstr "Parar todos los servicios"
+
+#: admin/systems/class_divListSystemService.inc:69
+#: admin/systems/class_divListSystemService.inc:133
+msgid "Restart service"
+msgstr "Reiniciar servicio"
+
+#: admin/systems/class_divListSystemService.inc:69
+msgid "Restart all services"
+msgstr "Reiniciar todos los servicios"
+
+#: admin/systems/class_divListSystemService.inc:99
+msgid "Stopped"
+msgstr "Parado"
+
+#: admin/systems/class_divListSystemService.inc:100
+msgid "Started"
+msgstr "Iniciado"
+
+#: admin/systems/class_divListSystemService.inc:101
+msgid "Restarting"
+msgstr "Reiniciando"
+
+#: admin/systems/class_divListSystemService.inc:102
+msgid "User status"
+msgstr "Estado del usuario"
+
+#: admin/systems/class_divListSystemService.inc:121
+msgid "Start service"
+msgstr "Iniciar servicio"
+
+#: admin/systems/class_divListSystemService.inc:141
+msgid "Edit service"
+msgstr "Editar servicio"
+
+#: admin/systems/class_divListSystemService.inc:149
+msgid "Remove service"
+msgstr "Eliminar servicio"
+
+#: admin/systems/password.tpl:3
+msgid ""
+"To change the terminal root password use the fields below. The changes take "
+"effect during the next reboot. Please memorize the new password, because you "
+"wouldn't be able to log in."
+msgstr ""
+
+#: admin/systems/password.tpl:6
+msgid "Leave fields blank for password inheritance from default entries."
+msgstr ""
+
+#: admin/systems/password.tpl:10
+msgid "Changing the password impinges on authentification only."
+msgstr ""
+
+#: admin/systems/password.tpl:15
+msgid "New password"
+msgstr ""
+
+#: admin/systems/password.tpl:21
+msgid "Repeat new password"
+msgstr ""
+
+#: admin/systems/password.tpl:26
+#, fuzzy
+msgid "Password strength"
+msgstr "La contraseña expira en"
+
+#: admin/systems/password.tpl:38 admin/systems/class_divListSystem.inc:350
+msgid "Set password"
+msgstr ""
+
+#: admin/systems/paste_generic.tpl:4 admin/systems/server.tpl:6
+#: admin/systems/class_servGeneric.inc:339
+#: admin/systems/class_servGeneric.inc:344
+#: admin/systems/class_servGeneric.inc:355
+msgid "Server name"
+msgstr ""
+
+#: admin/systems/paste_generic.tpl:14
+msgid "workstation name"
+msgstr ""
+
+#: admin/systems/paste_generic.tpl:24
+msgid "Terminal name"
+msgstr ""
+
+#: admin/systems/paste_generic.tpl:34
+msgid "Printer name"
+msgstr ""
+
+#: admin/systems/paste_generic.tpl:44
+#: admin/systems/class_componentGeneric.inc:209
+#: admin/systems/class_componentGeneric.inc:214
+#: admin/systems/class_componentGeneric.inc:236
+msgid "Component name"
+msgstr ""
+
+#: admin/systems/class_termDNS.inc:338
+#: admin/systems/class_systemManagement.inc:344
+#: admin/systems/class_systemManagement.inc:446
+#: admin/systems/class_systemManagement.inc:483
+#: admin/systems/class_systemManagement.inc:491
+#: admin/systems/class_systemManagement.inc:541
+#: admin/systems/class_systemManagement.inc:548
+#: admin/systems/class_systemManagement.inc:563
+#: admin/systems/class_systemManagement.inc:571
+#: admin/systems/class_systemManagement.inc:610
+#: admin/systems/class_systemManagement.inc:704
+#: admin/systems/class_systemManagement.inc:1249
+#: admin/systems/class_serverService.inc:186
+#: admin/systems/class_serverService.inc:236
+#: admin/systems/class_serverService.inc:363
+msgid "Error"
+msgstr ""
+
+#: admin/systems/class_termDNS.inc:444
+msgid "Not matching"
+msgstr "No mostrar los coincidentes"
+
+#: admin/systems/class_termDNS.inc:593
 #, fuzzy, php-format
 msgid "IP address %s"
 msgstr "Dirección IP"
 
-#: admin/systems/class_termDNS.inc:601 admin/systems/class_termDNS.inc:613
-#: admin/systems/class_termDNS.inc:615 admin/systems/class_termDNS.inc:981
+#: admin/systems/class_termDNS.inc:602 admin/systems/class_termDNS.inc:614
+#: admin/systems/class_termDNS.inc:616 admin/systems/class_termDNS.inc:982
 #: admin/systems/class_componentGeneric.inc:219
 #: admin/systems/class_componentGeneric.inc:222
 msgid "IP address"
 msgstr "Dirección IP"
 
-#: admin/systems/class_termDNS.inc:606 admin/systems/class_termDNS.inc:623
-#: admin/systems/class_termDNS.inc:625 admin/systems/class_termDNS.inc:982
+#: admin/systems/class_termDNS.inc:607 admin/systems/class_termDNS.inc:624
+#: admin/systems/class_termDNS.inc:626 admin/systems/class_termDNS.inc:983
 msgid "MAC address"
 msgstr "Dirección MAC"
 
-#: admin/systems/class_termDNS.inc:640
+#: admin/systems/class_termDNS.inc:641
 #, fuzzy, php-format
 msgid "The IP address '%s' is not part of the selected reverse zone '%s'!"
 msgstr ""
 "La dirección IP introducida '%s' no coincide con la entrada '%s' de la zona "
 "inversa seleccionada."
 
-#: admin/systems/class_termDNS.inc:652
+#: admin/systems/class_termDNS.inc:653
 #, php-format
 msgid "Record type '%s' is duplicated!"
 msgstr ""
 
-#: admin/systems/class_termDNS.inc:660
+#: admin/systems/class_termDNS.inc:661
 #, php-format
 msgid "Uniq record type '%s' is duplicated!"
 msgstr ""
 
-#: admin/systems/class_termDNS.inc:672
+#: admin/systems/class_termDNS.inc:673
 #, fuzzy, php-format
 msgid ""
 "The IP address '%s' will be added as 'A Record', this will be done "
@@ -97,36 +274,285 @@ msgstr ""
 "El dispositivo IP '%s' se ha añadido como 'Registro A', esto se hará "
 "automáticamente, por favor elimine el registro."
 
-#: admin/systems/class_termDNS.inc:680
+#: admin/systems/class_termDNS.inc:681
 #, fuzzy, php-format
 msgid "Only lowercase records are allowed, please check your '%ss'."
 msgstr "Solo están permitidas minúsculas, por favor compruebe su '%ss'."
 
-#: admin/systems/class_termDNS.inc:922 admin/systems/class_termDNS.inc:942
+#: admin/systems/class_termDNS.inc:923 admin/systems/class_termDNS.inc:943
 msgid "Add"
 msgstr "Añadir"
 
-#: admin/systems/class_termDNS.inc:936
+#: admin/systems/class_termDNS.inc:937
 msgid "Delete"
 msgstr "Eliminar"
 
-#: admin/systems/class_termDNS.inc:972
+#: admin/systems/class_termDNS.inc:973
 msgid "DNS"
 msgstr "DNS"
 
-#: admin/systems/class_termDNS.inc:973
+#: admin/systems/class_termDNS.inc:974
 msgid "DNS settings"
 msgstr "Parametros de DNS"
 
-#: admin/systems/class_termDNS.inc:988
+#: admin/systems/class_termDNS.inc:989
 #, fuzzy
 msgid "DNS configuration"
 msgstr "Escribir archivo de configuración"
 
-#: admin/systems/class_termDNS.inc:991
+#: admin/systems/class_termDNS.inc:992
 #, fuzzy
 msgid "DHCP configuration"
 msgstr "Escribir archivo de configuración"
+
+#: admin/systems/server.tpl:14 admin/systems/class_servGeneric.inc:513
+#: admin/systems/class_componentGeneric.inc:320 admin/systems/component.tpl:35
+msgid "Description"
+msgstr "Descripción"
+
+#: admin/systems/server.tpl:22 admin/systems/class_servGeneric.inc:514
+#: admin/systems/class_componentGeneric.inc:319 admin/systems/component.tpl:17
+#: admin/systems/class_divListSystem.inc:176
+msgid "Base"
+msgstr "Base"
+
+#: admin/systems/server.tpl:26 admin/systems/component.tpl:20
+msgid "Choose subtree to place group in"
+msgstr ""
+
+#: admin/systems/server.tpl:32 admin/systems/component.tpl:25
+msgid "Select a base"
+msgstr ""
+
+#: admin/systems/server.tpl:42
+msgid "Mode"
+msgstr "Modo"
+
+#: admin/systems/server.tpl:45
+msgid "Select terminal mode"
+msgstr ""
+
+#: admin/systems/server.tpl:63
+msgid "Action"
+msgstr "Acción"
+
+#: admin/systems/server.tpl:69
+msgid ""
+"System installation in progress, the FAI state cannot be changed right now."
+msgstr ""
+
+#: admin/systems/server.tpl:72
+msgid "Select action to execute for this server"
+msgstr ""
+
+#: admin/systems/server.tpl:80
+msgid "Execute"
+msgstr "Ejecute"
+
+#: admin/systems/class_servGeneric.inc:86
+msgid "Activated"
+msgstr "Activado"
+
+#: admin/systems/class_servGeneric.inc:87
+msgid "Locked"
+msgstr "Bloqueado"
+
+#: admin/systems/class_servGeneric.inc:148
+#, fuzzy
+msgid "server"
+msgstr "Servidor"
+
+#: admin/systems/class_servGeneric.inc:165
+#: admin/systems/class_servGeneric.inc:453
+#: admin/systems/class_systemManagement.inc:811
+#, fuzzy
+msgid "Service infrastructure"
+msgstr "Nombre del servicio"
+
+#: admin/systems/class_servGeneric.inc:169
+msgid "Event error"
+msgstr ""
+
+#: admin/systems/class_servGeneric.inc:170
+#, php-format
+msgid "Event '%s' is not available!"
+msgstr ""
+
+#: admin/systems/class_servGeneric.inc:225
+msgid "Switch off"
+msgstr "Apagar"
+
+#: admin/systems/class_servGeneric.inc:225
+msgid "Reboot"
+msgstr "Reiniciar"
+
+#: admin/systems/class_servGeneric.inc:226
+#: admin/systems/class_servGeneric.inc:235
+#, fuzzy
+msgid "System update"
+msgstr "Sistema / Departamento"
+
+#: admin/systems/class_servGeneric.inc:227
+#: admin/systems/class_servGeneric.inc:234
+msgid "Reinstall"
+msgstr "Reinstalar"
+
+#: admin/systems/class_servGeneric.inc:228
+msgid "Rescan hardware"
+msgstr "Buscar hardware"
+
+#: admin/systems/class_servGeneric.inc:229
+#: admin/systems/class_servGeneric.inc:236
+msgid "Memory test"
+msgstr "Chequeo de memoria"
+
+#: admin/systems/class_servGeneric.inc:230
+#: admin/systems/class_servGeneric.inc:237
+msgid "Force localboot"
+msgstr "Forzar inicio local"
+
+#: admin/systems/class_servGeneric.inc:231
+#: admin/systems/class_servGeneric.inc:238
+msgid "System analysis"
+msgstr "Análisis del sistema"
+
+#: admin/systems/class_servGeneric.inc:233
+msgid "Wake up"
+msgstr "Despertar"
+
+#: admin/systems/class_servGeneric.inc:369
+#, fuzzy
+msgid "Software deployment"
+msgstr "Sistema / Departamento"
+
+#: admin/systems/class_servGeneric.inc:370
+msgid ""
+"This host is currently installing, if you really want to save it, press 'OK'."
+msgstr ""
+
+#: admin/systems/class_servGeneric.inc:503
+#: admin/systems/class_componentGeneric.inc:309
+msgid "Generic"
+msgstr "Genérico"
+
+#: admin/systems/class_servGeneric.inc:504
+msgid "Server generic"
+msgstr "Servidor genérico"
+
+#: admin/systems/class_servGeneric.inc:509
+#: admin/systems/class_divListSystem.inc:195
+#: admin/systems/class_systemManagement.inc:1576
+msgid "Server"
+msgstr "Servidor"
+
+#: admin/systems/class_servGeneric.inc:516
+msgid "Goto mode"
+msgstr "Pasar al modo"
+
+#: admin/systems/class_servGeneric.inc:517
+#: admin/systems/class_componentGeneric.inc:321
+#, fuzzy
+msgid "Root password"
+msgstr "poner contraseña de root       "
+
+#: admin/systems/class_servGeneric.inc:518
+msgid "Action flag"
+msgstr "Marca de acción"
+
+#: admin/systems/remove.tpl:2
+msgid "Warning"
+msgstr "Aviso"
+
+#: admin/systems/remove.tpl:6
+msgid ""
+"This includes all system and setup informations. Please double check if your "
+"really want to do this since there is no way for GOsa to get your data back."
+msgstr ""
+
+#: admin/systems/remove.tpl:10
+msgid ""
+"Best thing to do before performing this action would be to save the current "
+"contents of your LDAP tree in a file. So - if you've done so - press "
+"'Delete' to continue or 'Cancel' to abort."
+msgstr ""
+
+#: admin/systems/network.tpl:1
+msgid "Network\tsettings"
+msgstr ""
+
+#: admin/systems/network.tpl:9
+msgid "IP-address"
+msgstr ""
+
+#: admin/systems/network.tpl:30 admin/systems/network.tpl:32
+#, fuzzy
+msgid "Propose ip"
+msgstr "Propiedades"
+
+#: admin/systems/network.tpl:38
+msgid "MAC-address"
+msgstr ""
+
+#: admin/systems/network.tpl:45
+msgid "Autodetect"
+msgstr ""
+
+#: admin/systems/network.tpl:62 admin/systems/network.tpl:72
+msgid "Enable DHCP for this device"
+msgstr ""
+
+#: admin/systems/network.tpl:72 admin/systems/network.tpl:167
+#, fuzzy
+msgid "not configured"
+msgstr "Sin configurar"
+
+#: admin/systems/network.tpl:80
+#, fuzzy
+msgid "Parent node"
+msgstr "Servidor Origen"
+
+#: admin/systems/network.tpl:93
+#, fuzzy
+msgid "Edit settings"
+msgstr "Parámetros de correo"
+
+#: admin/systems/network.tpl:127 admin/systems/network.tpl:167
+msgid "Enable DNS for this device"
+msgstr ""
+
+#: admin/systems/network.tpl:136
+msgid "Zone"
+msgstr ""
+
+#: admin/systems/network.tpl:146
+msgid "TTL"
+msgstr "TTL"
+
+#: admin/systems/network.tpl:154
+msgid "Dns records"
+msgstr ""
+
+#: admin/systems/class_componentGeneric.inc:77
+#, fuzzy
+msgid "component"
+msgstr "Nuevo Componente"
+
+#: admin/systems/class_componentGeneric.inc:310
+msgid "Component generic"
+msgstr "Componente genérico"
+
+#: admin/systems/class_componentGeneric.inc:315
+#: admin/systems/class_systemManagement.inc:1570
+msgid "Network device"
+msgstr "Dispositivo de Red"
+
+#: admin/systems/component.tpl:6
+msgid "Device name"
+msgstr ""
+
+#: admin/systems/main.inc:46 admin/systems/main.inc:48
+msgid "System management"
+msgstr "Administración del sistema"
 
 #: admin/systems/class_divListSystem.inc:63
 #: admin/systems/class_divListSystem.inc:64
@@ -151,12 +577,6 @@ msgstr "Sistema / Departamento"
 #, fuzzy
 msgid "Release"
 msgstr "Eliminar"
-
-#: admin/systems/class_divListSystem.inc:95
-#: admin/systems/class_divListSystem.inc:181
-#: admin/systems/class_divListSystemService.inc:51
-msgid "Actions"
-msgstr "Acciones"
 
 #: admin/systems/class_divListSystem.inc:101
 #: admin/systems/class_divListSystem.inc:102
@@ -253,12 +673,6 @@ msgstr "Mostrar sistemas que coincidan con"
 msgid "Display systems of user"
 msgstr "Mostrar sistemas del usuario"
 
-#: admin/systems/class_divListSystem.inc:176
-#: admin/systems/class_servGeneric.inc:515 admin/systems/server.tpl:22
-#: admin/systems/component.tpl:17 admin/systems/class_componentGeneric.inc:319
-msgid "Base"
-msgstr "Base"
-
 #: admin/systems/class_divListSystem.inc:178
 msgid "Submit department"
 msgstr "Enviar departamento"
@@ -272,28 +686,22 @@ msgid "Create"
 msgstr "Crear"
 
 #: admin/systems/class_divListSystem.inc:187
-#: admin/systems/class_systemManagement.inc:1525
+#: admin/systems/class_systemManagement.inc:1577
 msgid "Terminal"
 msgstr "Terminal"
 
 #: admin/systems/class_divListSystem.inc:191
-#: admin/systems/class_systemManagement.inc:1523
+#: admin/systems/class_systemManagement.inc:1575
 msgid "Workstation"
 msgstr "Estación de trabajo"
 
-#: admin/systems/class_divListSystem.inc:195
-#: admin/systems/class_servGeneric.inc:509
-#: admin/systems/class_systemManagement.inc:1524
-msgid "Server"
-msgstr "Servidor"
-
 #: admin/systems/class_divListSystem.inc:199
-#: admin/systems/class_systemManagement.inc:1517
+#: admin/systems/class_systemManagement.inc:1569
 msgid "Phone"
 msgstr "Teléfono"
 
 #: admin/systems/class_divListSystem.inc:203
-#: admin/systems/class_systemManagement.inc:1519
+#: admin/systems/class_systemManagement.inc:1571
 msgid "Printer"
 msgstr "Impresora"
 
@@ -303,7 +711,7 @@ msgid "Component"
 msgstr "Nuevo Componente"
 
 #: admin/systems/class_divListSystem.inc:214
-#: admin/systems/class_systemManagement.inc:1544
+#: admin/systems/class_systemManagement.inc:1596
 msgid "Opsi client"
 msgstr ""
 
@@ -344,10 +752,6 @@ msgstr "Eliminar sistema"
 #: admin/systems/class_divListSystem.inc:350
 msgid "Password"
 msgstr "Contraseña"
-
-#: admin/systems/class_divListSystem.inc:350 admin/systems/password.tpl:38
-msgid "Set password"
-msgstr ""
 
 #: admin/systems/class_divListSystem.inc:359
 msgid "Create CD"
@@ -401,158 +805,170 @@ msgstr "Mostrar estaciones de trabajo"
 msgid "departments"
 msgstr "Enviar departamento"
 
-#: admin/systems/class_servGeneric.inc:86
-msgid "Activated"
-msgstr "Activado"
-
-#: admin/systems/class_servGeneric.inc:87
-msgid "Locked"
-msgstr "Bloqueado"
-
-#: admin/systems/class_servGeneric.inc:148
-#, fuzzy
-msgid "server"
-msgstr "Servidor"
-
-#: admin/systems/class_servGeneric.inc:165
-#: admin/systems/class_servGeneric.inc:453
-#: admin/systems/class_systemManagement.inc:771
-#, fuzzy
-msgid "Service infrastructure"
-msgstr "Nombre del servicio"
-
-#: admin/systems/class_servGeneric.inc:169
-msgid "Event error"
+#: admin/systems/class_systemManagement.inc:27
+msgid "This does something"
 msgstr ""
 
-#: admin/systems/class_servGeneric.inc:170
+#: admin/systems/class_systemManagement.inc:239
+msgid "Back"
+msgstr "Atrás"
+
+#: admin/systems/class_systemManagement.inc:286
+msgid "Creating the image failed. Please see the report below."
+msgstr ""
+"Ha fallado la creación de la imagen. Por favor compruebe el problema en el "
+"siguiente informe."
+
+#: admin/systems/class_systemManagement.inc:295
 #, php-format
-msgid "Event '%s' is not available!"
+msgid "Command '%s', specified for ISO creation doesn't seem to exist."
+msgstr ""
+"No parece existir el comando '%s', especificado para la creación de imágenes "
+"ISO."
+
+#: admin/systems/class_systemManagement.inc:386
+#, fuzzy
+msgid "Internal error"
+msgstr "Insertar separador"
+
+#: admin/systems/class_systemManagement.inc:386
+msgid "Cannot set mode to 'active'!"
 msgstr ""
 
-#: admin/systems/class_servGeneric.inc:225
-msgid "Switch off"
-msgstr "Apagar"
-
-#: admin/systems/class_servGeneric.inc:225
-msgid "Reboot"
-msgstr "Reiniciar"
-
-#: admin/systems/class_servGeneric.inc:226
-#: admin/systems/class_servGeneric.inc:235
-#, fuzzy
-msgid "System update"
-msgstr "Sistema / Departamento"
-
-#: admin/systems/class_servGeneric.inc:227
-#: admin/systems/class_servGeneric.inc:234
-msgid "Reinstall"
-msgstr "Reinstalar"
-
-#: admin/systems/class_servGeneric.inc:228
-msgid "Rescan hardware"
-msgstr "Buscar hardware"
-
-#: admin/systems/class_servGeneric.inc:229
-#: admin/systems/class_servGeneric.inc:236
-msgid "Memory test"
-msgstr "Chequeo de memoria"
-
-#: admin/systems/class_servGeneric.inc:230
-#: admin/systems/class_servGeneric.inc:237
-msgid "Force localboot"
-msgstr "Forzar inicio local"
-
-#: admin/systems/class_servGeneric.inc:231
-#: admin/systems/class_servGeneric.inc:238
-msgid "System analysis"
-msgstr "Análisis del sistema"
-
-#: admin/systems/class_servGeneric.inc:233
-msgid "Wake up"
-msgstr "Despertar"
-
-#: admin/systems/class_servGeneric.inc:339
-#: admin/systems/class_servGeneric.inc:344
-#: admin/systems/class_servGeneric.inc:355 admin/systems/server.tpl:6
-#: admin/systems/paste_generic.tpl:4
-msgid "Server name"
+#: admin/systems/class_systemManagement.inc:571
+msgid "Editing this type of object is not supported yet!"
 msgstr ""
 
-#: admin/systems/class_servGeneric.inc:369
+#: admin/systems/class_systemManagement.inc:598
+#: admin/systems/class_systemManagement.inc:701
+#: admin/systems/class_systemManagement.inc:930
 #, fuzzy
-msgid "Software deployment"
-msgstr "Sistema / Departamento"
+msgid "Permission error"
+msgstr "Permisos"
 
-#: admin/systems/class_servGeneric.inc:370
+#: admin/systems/class_systemManagement.inc:598
+#: admin/systems/class_systemManagement.inc:701
+#, fuzzy
+msgid "You have no permission to change this password!"
+msgstr "No tiene permisos para cambiar la contraseña de este objeto."
+
+#: admin/systems/class_systemManagement.inc:610
+#, fuzzy
 msgid ""
-"This host is currently installing, if you really want to save it, press 'OK'."
+"The passwords you've entered as 'New password' and 'Repeated password' do "
+"not match!"
+msgstr ""
+"¡La contraseñas introducidas como nueva y repita nueva contraseña no "
+"coinciden!"
+
+#: admin/systems/class_systemManagement.inc:685
+#, fuzzy
+msgid "Password method"
+msgstr "Contraseña"
+
+#: admin/systems/class_systemManagement.inc:685
+msgid "Password method crypt is missing. Cannot set system password."
 msgstr ""
 
-#: admin/systems/class_servGeneric.inc:503
-#: admin/systems/class_componentGeneric.inc:309
-msgid "Generic"
-msgstr "Genérico"
+#: admin/systems/class_systemManagement.inc:704
+#, fuzzy
+msgid "Cannot determine object to change password!"
+msgstr "No puedo encontrar el objeto para cambiarle la contraseña."
 
-#: admin/systems/class_servGeneric.inc:504
-msgid "Server generic"
+#: admin/systems/class_systemManagement.inc:856
+#, fuzzy
+msgid "Permission"
+msgstr "Permisos"
+
+#: admin/systems/class_systemManagement.inc:1278
+#: admin/systems/class_systemManagement.inc:1591
+msgid "New terminal"
+msgstr "Nuevo terminal"
+
+#: admin/systems/class_systemManagement.inc:1280
+#: admin/systems/class_systemManagement.inc:1592
+msgid "New workstation"
+msgstr "Nueva estación de trabajo"
+
+#: admin/systems/class_systemManagement.inc:1282
+#, fuzzy
+msgid "Unknown device"
+msgstr "¡id desconocido!"
+
+#: admin/systems/class_systemManagement.inc:1284
+msgid "New Device"
+msgstr "Nuevo Dispositivo"
+
+#: admin/systems/class_systemManagement.inc:1309
+msgid "Terminal template for"
+msgstr "Plantilla de terminal para"
+
+#: admin/systems/class_systemManagement.inc:1325
+msgid "Workstation template for"
+msgstr "Plantilla de estación de trabajo para"
+
+#: admin/systems/class_systemManagement.inc:1568
+msgid "Template"
+msgstr "Plantilla"
+
+#: admin/systems/class_systemManagement.inc:1573
+#, fuzzy
+msgid "Win workstation"
+msgstr "Estación de trabajo"
+
+#: admin/systems/class_systemManagement.inc:1579
+#, fuzzy
+msgid "Locked workstation"
+msgstr "Nueva estación de trabajo"
+
+#: admin/systems/class_systemManagement.inc:1580
+#, fuzzy
+msgid "Locked server"
+msgstr "Servidor LDAP"
+
+#: admin/systems/class_systemManagement.inc:1581
+#, fuzzy
+msgid "Locked terminal"
+msgstr "Nuevo terminal"
+
+#: admin/systems/class_systemManagement.inc:1583
+#, fuzzy
+msgid "Workstation error"
+msgstr "Estación de trabajo"
+
+#: admin/systems/class_systemManagement.inc:1584
+#, fuzzy
+msgid "Server error"
 msgstr "Servidor genérico"
 
-#: admin/systems/class_servGeneric.inc:512
-#: admin/systems/class_divListSystemService.inc:50
-#: admin/systems/class_componentGeneric.inc:318
-msgid "Name"
-msgstr "Nombre"
+#: admin/systems/class_systemManagement.inc:1585
+#, fuzzy
+msgid "Terminal error"
+msgstr "Insertar separador"
 
-#: admin/systems/class_servGeneric.inc:513 admin/systems/server.tpl:14
-#: admin/systems/component.tpl:35 admin/systems/class_componentGeneric.inc:320
-msgid "Description"
-msgstr "Descripción"
+#: admin/systems/class_systemManagement.inc:1587
+#, fuzzy
+msgid "Workstation busy"
+msgstr "Estación de trabajo"
 
-#: admin/systems/class_servGeneric.inc:514
-msgid "Goto mode"
-msgstr "Pasar al modo"
+#: admin/systems/class_systemManagement.inc:1588
+#, fuzzy
+msgid "Server busy"
+msgstr "Servidor"
 
-#: admin/systems/class_servGeneric.inc:516
-msgid "Action flag"
-msgstr "Marca de acción"
+#: admin/systems/class_systemManagement.inc:1590
+#, fuzzy
+msgid "New system from incoming"
+msgstr "Nuevo sistema desde entrada"
 
-#: admin/systems/server.tpl:26 admin/systems/component.tpl:20
-msgid "Choose subtree to place group in"
-msgstr ""
+#: admin/systems/class_systemManagement.inc:1796
+#: admin/systems/class_systemManagement.inc:1797
+msgid "Incoming objects"
+msgstr "Objetos de entrada"
 
-#: admin/systems/server.tpl:32 admin/systems/component.tpl:25
-msgid "Select a base"
-msgstr ""
-
-#: admin/systems/server.tpl:42
-msgid "Mode"
-msgstr "Modo"
-
-#: admin/systems/server.tpl:45
-msgid "Select terminal mode"
-msgstr ""
-
-#: admin/systems/server.tpl:63
-msgid "Action"
-msgstr "Acción"
-
-#: admin/systems/server.tpl:69
-msgid ""
-"System installation in progress, the FAI state cannot be changed right now."
-msgstr ""
-
-#: admin/systems/server.tpl:72
-msgid "Select action to execute for this server"
-msgstr ""
-
-#: admin/systems/server.tpl:80
-msgid "Execute"
-msgstr "Ejecute"
-
-#: admin/systems/component.tpl:6
-msgid "Device name"
-msgstr ""
+#: admin/systems/class_systemManagement.inc:1802
+msgid "Incoming"
+msgstr "Entrada"
 
 #: admin/systems/class_serverService.inc:27
 msgid "Stop"
@@ -579,415 +995,6 @@ msgstr "No puedo activar el estado mientras no se grabe el servidor."
 #: admin/systems/class_serverService.inc:363
 msgid "Cannot update service status!"
 msgstr ""
-
-#: admin/systems/remove.tpl:2
-msgid "Warning"
-msgstr "Aviso"
-
-#: admin/systems/remove.tpl:6
-msgid ""
-"This includes all system and setup informations. Please double check if your "
-"really want to do this since there is no way for GOsa to get your data back."
-msgstr ""
-
-#: admin/systems/remove.tpl:10
-msgid ""
-"Best thing to do before performing this action would be to save the current "
-"contents of your LDAP tree in a file. So - if you've done so - press "
-"'Delete' to continue or 'Cancel' to abort."
-msgstr ""
-
-#: admin/systems/class_divListSystemService.inc:38
-#: admin/systems/class_divListSystemService.inc:39
-msgid "Installed services"
-msgstr "Servicios instalados"
-
-#: admin/systems/class_divListSystemService.inc:42
-#, fuzzy
-msgid "Add, remove and configure the properties of system services here."
-msgstr ""
-"Este menú le permite añadir, eliminar o configurar las propiedades de un "
-"servicioespecíficos."
-
-#: admin/systems/class_divListSystemService.inc:62
-msgid "Add service"
-msgstr "Añadir servicio"
-
-#: admin/systems/class_divListSystemService.inc:62
-msgid "Add new service"
-msgstr "Añadir nuevo servicio"
-
-#: admin/systems/class_divListSystemService.inc:65
-msgid "Start all"
-msgstr "Inicio todos"
-
-#: admin/systems/class_divListSystemService.inc:65
-msgid "Start all services"
-msgstr "Iniciar todos los servicios"
-
-#: admin/systems/class_divListSystemService.inc:67
-#: admin/systems/class_divListSystemService.inc:127
-msgid "Stop service"
-msgstr "Parar servicio"
-
-#: admin/systems/class_divListSystemService.inc:67
-msgid "Stop all services"
-msgstr "Parar todos los servicios"
-
-#: admin/systems/class_divListSystemService.inc:69
-#: admin/systems/class_divListSystemService.inc:133
-msgid "Restart service"
-msgstr "Reiniciar servicio"
-
-#: admin/systems/class_divListSystemService.inc:69
-msgid "Restart all services"
-msgstr "Reiniciar todos los servicios"
-
-#: admin/systems/class_divListSystemService.inc:99
-msgid "Stopped"
-msgstr "Parado"
-
-#: admin/systems/class_divListSystemService.inc:100
-msgid "Started"
-msgstr "Iniciado"
-
-#: admin/systems/class_divListSystemService.inc:101
-msgid "Restarting"
-msgstr "Reiniciando"
-
-#: admin/systems/class_divListSystemService.inc:102
-msgid "User status"
-msgstr "Estado del usuario"
-
-#: admin/systems/class_divListSystemService.inc:121
-msgid "Start service"
-msgstr "Iniciar servicio"
-
-#: admin/systems/class_divListSystemService.inc:141
-msgid "Edit service"
-msgstr "Editar servicio"
-
-#: admin/systems/class_divListSystemService.inc:149
-msgid "Remove service"
-msgstr "Eliminar servicio"
-
-#: admin/systems/services/ServiceAddDialog.tpl:3
-msgid "Adding a new service to the current server"
-msgstr ""
-
-#: admin/systems/services/ServiceAddDialog.tpl:7
-msgid ""
-"This dialog allows you to add new services to the currenty edited server "
-"object. The box below shows all available but not already used services."
-msgstr ""
-
-#: admin/systems/services/ServiceAddDialog.tpl:13
-msgid "Service to add"
-msgstr ""
-
-#: admin/systems/services/ServiceAddDialog.tpl:20
-msgid "All available services are already in use."
-msgstr ""
-
-#: admin/systems/services/ServiceAddDialog.tpl:28
-msgid "Continue"
-msgstr "Continuar"
-
-#: admin/systems/services/class_goService.inc:44
-#: admin/systems/services/class_goService.inc:79
-msgid "Empty service"
-msgstr "Servicio nulo"
-
-#: admin/systems/services/class_goService.inc:237
-#, fuzzy
-msgid "Configuration error"
-msgstr "Se puede escribir en la configuración"
-
-#: admin/systems/paste_generic.tpl:14
-msgid "workstation name"
-msgstr ""
-
-#: admin/systems/paste_generic.tpl:24
-msgid "Terminal name"
-msgstr ""
-
-#: admin/systems/paste_generic.tpl:34
-msgid "Printer name"
-msgstr ""
-
-#: admin/systems/paste_generic.tpl:44
-#: admin/systems/class_componentGeneric.inc:209
-#: admin/systems/class_componentGeneric.inc:214
-#: admin/systems/class_componentGeneric.inc:236
-msgid "Component name"
-msgstr ""
-
-#: admin/systems/password.tpl:3
-msgid ""
-"To change the terminal root password use the fields below. The changes take "
-"effect during the next reboot. Please memorize the new password, because you "
-"wouldn't be able to log in."
-msgstr ""
-
-#: admin/systems/password.tpl:6
-msgid "Leave fields blank for password inheritance from default entries."
-msgstr ""
-
-#: admin/systems/password.tpl:10
-msgid "Changing the password impinges on authentification only."
-msgstr ""
-
-#: admin/systems/password.tpl:15
-msgid "New password"
-msgstr ""
-
-#: admin/systems/password.tpl:21
-msgid "Repeat new password"
-msgstr ""
-
-#: admin/systems/password.tpl:26
-#, fuzzy
-msgid "Password strength"
-msgstr "La contraseña expira en"
-
-#: admin/systems/main.inc:46 admin/systems/main.inc:48
-msgid "System management"
-msgstr "Administración del sistema"
-
-#: admin/systems/class_systemManagement.inc:27
-msgid "This does something"
-msgstr ""
-
-#: admin/systems/class_systemManagement.inc:239
-msgid "Back"
-msgstr "Atrás"
-
-#: admin/systems/class_systemManagement.inc:286
-msgid "Creating the image failed. Please see the report below."
-msgstr ""
-"Ha fallado la creación de la imagen. Por favor compruebe el problema en el "
-"siguiente informe."
-
-#: admin/systems/class_systemManagement.inc:295
-#, php-format
-msgid "Command '%s', specified for ISO creation doesn't seem to exist."
-msgstr ""
-"No parece existir el comando '%s', especificado para la creación de imágenes "
-"ISO."
-
-#: admin/systems/class_systemManagement.inc:371
-#, fuzzy
-msgid "Internal error"
-msgstr "Insertar separador"
-
-#: admin/systems/class_systemManagement.inc:371
-msgid "Cannot set mode to 'active'!"
-msgstr ""
-
-#: admin/systems/class_systemManagement.inc:548
-msgid "Editing this type of object is not supported yet!"
-msgstr ""
-
-#: admin/systems/class_systemManagement.inc:575
-#: admin/systems/class_systemManagement.inc:679
-#: admin/systems/class_systemManagement.inc:890
-#, fuzzy
-msgid "Permission error"
-msgstr "Permisos"
-
-#: admin/systems/class_systemManagement.inc:575
-#: admin/systems/class_systemManagement.inc:679
-#, fuzzy
-msgid "You have no permission to change this password!"
-msgstr "No tiene permisos para cambiar la contraseña de este objeto."
-
-#: admin/systems/class_systemManagement.inc:587
-#, fuzzy
-msgid ""
-"The passwords you've entered as 'New password' and 'Repeated password' do "
-"not match!"
-msgstr ""
-"¡La contraseñas introducidas como nueva y repita nueva contraseña no "
-"coinciden!"
-
-#: admin/systems/class_systemManagement.inc:663
-#, fuzzy
-msgid "Password method"
-msgstr "Contraseña"
-
-#: admin/systems/class_systemManagement.inc:663
-msgid "Password method crypt is missing. Cannot set system password."
-msgstr ""
-
-#: admin/systems/class_systemManagement.inc:682
-#, fuzzy
-msgid "Cannot determine object to change password!"
-msgstr "No puedo encontrar el objeto para cambiarle la contraseña."
-
-#: admin/systems/class_systemManagement.inc:816
-#, fuzzy
-msgid "Permission"
-msgstr "Permisos"
-
-#: admin/systems/class_systemManagement.inc:1226
-#: admin/systems/class_systemManagement.inc:1539
-msgid "New terminal"
-msgstr "Nuevo terminal"
-
-#: admin/systems/class_systemManagement.inc:1228
-#: admin/systems/class_systemManagement.inc:1540
-msgid "New workstation"
-msgstr "Nueva estación de trabajo"
-
-#: admin/systems/class_systemManagement.inc:1230
-#, fuzzy
-msgid "Unknown device"
-msgstr "¡id desconocido!"
-
-#: admin/systems/class_systemManagement.inc:1232
-msgid "New Device"
-msgstr "Nuevo Dispositivo"
-
-#: admin/systems/class_systemManagement.inc:1257
-msgid "Terminal template for"
-msgstr "Plantilla de terminal para"
-
-#: admin/systems/class_systemManagement.inc:1273
-msgid "Workstation template for"
-msgstr "Plantilla de estación de trabajo para"
-
-#: admin/systems/class_systemManagement.inc:1516
-msgid "Template"
-msgstr "Plantilla"
-
-#: admin/systems/class_systemManagement.inc:1518
-#: admin/systems/class_componentGeneric.inc:315
-msgid "Network device"
-msgstr "Dispositivo de Red"
-
-#: admin/systems/class_systemManagement.inc:1521
-#, fuzzy
-msgid "Win workstation"
-msgstr "Estación de trabajo"
-
-#: admin/systems/class_systemManagement.inc:1527
-#, fuzzy
-msgid "Locked workstation"
-msgstr "Nueva estación de trabajo"
-
-#: admin/systems/class_systemManagement.inc:1528
-#, fuzzy
-msgid "Locked server"
-msgstr "Servidor LDAP"
-
-#: admin/systems/class_systemManagement.inc:1529
-#, fuzzy
-msgid "Locked terminal"
-msgstr "Nuevo terminal"
-
-#: admin/systems/class_systemManagement.inc:1531
-#, fuzzy
-msgid "Workstation error"
-msgstr "Estación de trabajo"
-
-#: admin/systems/class_systemManagement.inc:1532
-#, fuzzy
-msgid "Server error"
-msgstr "Servidor genérico"
-
-#: admin/systems/class_systemManagement.inc:1533
-#, fuzzy
-msgid "Terminal error"
-msgstr "Insertar separador"
-
-#: admin/systems/class_systemManagement.inc:1535
-#, fuzzy
-msgid "Workstation busy"
-msgstr "Estación de trabajo"
-
-#: admin/systems/class_systemManagement.inc:1536
-#, fuzzy
-msgid "Server busy"
-msgstr "Servidor"
-
-#: admin/systems/class_systemManagement.inc:1538
-#, fuzzy
-msgid "New system from incoming"
-msgstr "Nuevo sistema desde entrada"
-
-#: admin/systems/class_systemManagement.inc:1708
-#: admin/systems/class_systemManagement.inc:1709
-msgid "Incoming objects"
-msgstr "Objetos de entrada"
-
-#: admin/systems/class_systemManagement.inc:1714
-msgid "Incoming"
-msgstr "Entrada"
-
-#: admin/systems/network.tpl:1
-msgid "Network\tsettings"
-msgstr ""
-
-#: admin/systems/network.tpl:9
-msgid "IP-address"
-msgstr ""
-
-#: admin/systems/network.tpl:30 admin/systems/network.tpl:32
-#, fuzzy
-msgid "Propose ip"
-msgstr "Propiedades"
-
-#: admin/systems/network.tpl:38
-msgid "MAC-address"
-msgstr ""
-
-#: admin/systems/network.tpl:45
-msgid "Autodetect"
-msgstr ""
-
-#: admin/systems/network.tpl:62 admin/systems/network.tpl:72
-msgid "Enable DHCP for this device"
-msgstr ""
-
-#: admin/systems/network.tpl:72 admin/systems/network.tpl:167
-#, fuzzy
-msgid "not configured"
-msgstr "Sin configurar"
-
-#: admin/systems/network.tpl:80
-#, fuzzy
-msgid "Parent node"
-msgstr "Servidor Origen"
-
-#: admin/systems/network.tpl:93
-#, fuzzy
-msgid "Edit settings"
-msgstr "Parámetros de correo"
-
-#: admin/systems/network.tpl:127 admin/systems/network.tpl:167
-msgid "Enable DNS for this device"
-msgstr ""
-
-#: admin/systems/network.tpl:136
-msgid "Zone"
-msgstr ""
-
-#: admin/systems/network.tpl:146
-msgid "TTL"
-msgstr "TTL"
-
-#: admin/systems/network.tpl:154
-msgid "Dns records"
-msgstr ""
-
-#: admin/systems/class_componentGeneric.inc:77
-#, fuzzy
-msgid "component"
-msgstr "Nuevo Componente"
-
-#: admin/systems/class_componentGeneric.inc:310
-msgid "Component generic"
-msgstr "Componente genérico"
 
 #~ msgid "Cups Server"
 #~ msgstr "Servidor CUPS"
@@ -1044,10 +1051,6 @@ msgstr "Componente genérico"
 
 #~ msgid "Copy this entry"
 #~ msgstr "Copiar esta entrada"
-
-#, fuzzy
-#~ msgid "Set root password"
-#~ msgstr "poner contraseña de root       "
 
 #~ msgid "Choose a base"
 #~ msgstr "Seleccionar una base"
