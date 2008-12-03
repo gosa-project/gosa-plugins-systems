@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-12-03 15:05+0100\n"
-"PO-Revision-Date: 2008-10-10 11:03+0200\n"
+"PO-Revision-Date: 2008-12-03 23:20+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: french <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -278,8 +278,7 @@ msgstr ""
 #: admin/systems/class_termDNS.inc:681
 #, php-format
 msgid "Only lowercase records are allowed, please check your '%ss'."
-msgstr ""
-"Seulement les minuscules sont autorisée, veuillez vérifier votre '%ss'."
+msgstr "Seulement les minuscules sont autorisée, veuillez vérifier votre '%ss'."
 
 #: admin/systems/class_termDNS.inc:923 admin/systems/class_termDNS.inc:943
 msgid "Add"
@@ -337,8 +336,7 @@ msgid "Action"
 msgstr "Action"
 
 #: admin/systems/server.tpl:69
-msgid ""
-"System installation in progress, the FAI state cannot be changed right now."
+msgid "System installation in progress, the FAI state cannot be changed right now."
 msgstr ""
 "Le système est en cours d'installation, l'état FAI ne peut pas être changé "
 "maintenant."
@@ -424,8 +422,7 @@ msgid "Software deployment"
 msgstr "Déploiement de logiciel"
 
 #: admin/systems/class_servGeneric.inc:370
-msgid ""
-"This host is currently installing, if you really want to save it, press 'OK'."
+msgid "This host is currently installing, if you really want to save it, press 'OK'."
 msgstr ""
 "Cet hôte est actuellement en cours d'installation, si vous voulez vraiment "
 "le sauver, cliquez sur 'OK'."
@@ -451,9 +448,8 @@ msgstr "Mode Goto"
 
 #: admin/systems/class_servGeneric.inc:517
 #: admin/systems/class_componentGeneric.inc:321
-#, fuzzy
 msgid "Root password"
-msgstr "Attribuer le mot de passe"
+msgstr "Mot de passe root"
 
 #: admin/systems/class_servGeneric.inc:518
 msgid "Action flag"
@@ -799,8 +795,7 @@ msgstr "La création de l'image à échoué. veuillez lire le rapport ci dessous
 #: admin/systems/class_systemManagement.inc:295
 #, php-format
 msgid "Command '%s', specified for ISO creation doesn't seem to exist."
-msgstr ""
-"La commande '%s', utilisée dans la création de l'image ISO n'existe pas."
+msgstr "La commande '%s', utilisée dans la création de l'image ISO n'existe pas."
 
 #: admin/systems/class_systemManagement.inc:386
 msgid "Internal error"
@@ -953,3 +948,4 @@ msgstr "Impossible de mettre à jour le statut avant que cela soit sauvé !"
 #: admin/systems/class_serverService.inc:363
 msgid "Cannot update service status!"
 msgstr "Impossible de mettre à jour le statut du service!"
+
