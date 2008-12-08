@@ -1,17 +1,18 @@
+# translation of messages.po to spanish
 # translation of admin.po to
 # translation of systems.po to
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+# Alejandro Escanero Blanco <aescanero@gmail.com>, 2008.
 msgid ""
 msgstr ""
-"Project-Id-Version: admin\n"
+"Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-12-03 15:05+0100\n"
-"PO-Revision-Date: 2007-07-24 00:26+0200\n"
-"Last-Translator: ALEJANDRO ESCANERO BLANCO\n"
-"Language-Team:  <es@li.org>\n"
+"PO-Revision-Date: 2008-12-08 22:59+0100\n"
+"Last-Translator: Alejandro Escanero Blanco <aescanero@gmail.com>\n"
+"Language-Team: spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,21 +20,21 @@ msgstr ""
 
 #: admin/systems/services/ServiceAddDialog.tpl:3
 msgid "Adding a new service to the current server"
-msgstr ""
+msgstr "Añadiendo un nuevo servicio al servidor seleccionado"
 
 #: admin/systems/services/ServiceAddDialog.tpl:7
 msgid ""
 "This dialog allows you to add new services to the currenty edited server "
 "object. The box below shows all available but not already used services."
-msgstr ""
+msgstr "Este diálogo le permite añadir nuevos servicios al servidor que está configurando. El panel inferior muestra todos los servicios disponibles y que no están siendo usados."
 
 #: admin/systems/services/ServiceAddDialog.tpl:13
 msgid "Service to add"
-msgstr ""
+msgstr "Servicio a añadir"
 
 #: admin/systems/services/ServiceAddDialog.tpl:20
 msgid "All available services are already in use."
-msgstr ""
+msgstr "Todos los servicios disponibles ya están en uso."
 
 #: admin/systems/services/ServiceAddDialog.tpl:28
 msgid "Continue"
@@ -56,14 +57,12 @@ msgstr "Servicio nulo"
 #: admin/systems/class_componentGeneric.inc:301
 #: admin/systems/class_systemManagement.inc:691
 #: admin/systems/class_systemManagement.inc:1780
-#, fuzzy
 msgid "LDAP error"
-msgstr "Servicio LDAP"
+msgstr "Error LDAP"
 
 #: admin/systems/services/class_goService.inc:237
-#, fuzzy
 msgid "Configuration error"
-msgstr "Se puede escribir en la configuración"
+msgstr "Error en la configuración"
 
 #: admin/systems/class_divListSystemService.inc:38
 #: admin/systems/class_divListSystemService.inc:39
@@ -71,11 +70,10 @@ msgid "Installed services"
 msgstr "Servicios instalados"
 
 #: admin/systems/class_divListSystemService.inc:42
-#, fuzzy
 msgid "Add, remove and configure the properties of system services here."
 msgstr ""
 "Este menú le permite añadir, eliminar o configurar las propiedades de un "
-"servicioespecíficos."
+"servicio del sistema."
 
 #: admin/systems/class_divListSystemService.inc:50
 #: admin/systems/class_servGeneric.inc:512
@@ -157,57 +155,59 @@ msgid ""
 "effect during the next reboot. Please memorize the new password, because you "
 "wouldn't be able to log in."
 msgstr ""
+"Para cambiar la contraseña del administrador del terminal use los campos a "
+"continuación. Los cambios tomarán efecto en el próximo inicio. Por favor, "
+"recuerde la nueva contraseña, porque no podrá iniciar sesión sin ella."
 
 #: admin/systems/password.tpl:6
 msgid "Leave fields blank for password inheritance from default entries."
-msgstr ""
+msgstr "Si deja los campos en blanco, se heredaran las contraseñas de las entradas predeterminadas."
 
 #: admin/systems/password.tpl:10
 msgid "Changing the password impinges on authentification only."
-msgstr ""
+msgstr "Cambiar la contraseña solo afecta a la autenticación."
 
 #: admin/systems/password.tpl:15
 msgid "New password"
-msgstr ""
+msgstr "Nueva contraseña"
 
 #: admin/systems/password.tpl:21
 msgid "Repeat new password"
-msgstr ""
+msgstr "Reintroduzca la contraseña"
 
 #: admin/systems/password.tpl:26
-#, fuzzy
 msgid "Password strength"
-msgstr "La contraseña expira en"
+msgstr "Resistencia de la contraseña"
 
 #: admin/systems/password.tpl:38 admin/systems/class_divListSystem.inc:350
 msgid "Set password"
-msgstr ""
+msgstr "Introducir contraseña"
 
 #: admin/systems/paste_generic.tpl:4 admin/systems/server.tpl:6
 #: admin/systems/class_servGeneric.inc:339
 #: admin/systems/class_servGeneric.inc:344
 #: admin/systems/class_servGeneric.inc:355
 msgid "Server name"
-msgstr ""
+msgstr "Nombre del servidor"
 
 #: admin/systems/paste_generic.tpl:14
 msgid "workstation name"
-msgstr ""
+msgstr "Nombre de la estación de trabajo"
 
 #: admin/systems/paste_generic.tpl:24
 msgid "Terminal name"
-msgstr ""
+msgstr "Nombre del terminal"
 
 #: admin/systems/paste_generic.tpl:34
 msgid "Printer name"
-msgstr ""
+msgstr "Nombre de la impresora"
 
 #: admin/systems/paste_generic.tpl:44
 #: admin/systems/class_componentGeneric.inc:209
 #: admin/systems/class_componentGeneric.inc:214
 #: admin/systems/class_componentGeneric.inc:236
 msgid "Component name"
-msgstr ""
+msgstr "Nombre del componente"
 
 #: admin/systems/class_termDNS.inc:338
 #: admin/systems/class_systemManagement.inc:344
@@ -225,16 +225,16 @@ msgstr ""
 #: admin/systems/class_serverService.inc:236
 #: admin/systems/class_serverService.inc:363
 msgid "Error"
-msgstr ""
+msgstr "Error"
 
 #: admin/systems/class_termDNS.inc:444
 msgid "Not matching"
 msgstr "No mostrar los coincidentes"
 
 #: admin/systems/class_termDNS.inc:593
-#, fuzzy, php-format
+#, php-format
 msgid "IP address %s"
-msgstr "Dirección IP"
+msgstr "Dirección IP %s"
 
 #: admin/systems/class_termDNS.inc:602 admin/systems/class_termDNS.inc:614
 #: admin/systems/class_termDNS.inc:616 admin/systems/class_termDNS.inc:982
@@ -249,33 +249,31 @@ msgid "MAC address"
 msgstr "Dirección MAC"
 
 #: admin/systems/class_termDNS.inc:641
-#, fuzzy, php-format
+#, php-format
 msgid "The IP address '%s' is not part of the selected reverse zone '%s'!"
 msgstr ""
-"La dirección IP introducida '%s' no coincide con la entrada '%s' de la zona "
-"inversa seleccionada."
+"¡La dirección IP '%s' no está dentro de la zona "
+"inversa seleccionada '%s'!"
 
 #: admin/systems/class_termDNS.inc:653
 #, php-format
 msgid "Record type '%s' is duplicated!"
-msgstr ""
+msgstr "¡El tipo de registro '%s' está duplicado!"
 
 #: admin/systems/class_termDNS.inc:661
 #, php-format
 msgid "Uniq record type '%s' is duplicated!"
-msgstr ""
+msgstr "¡El tipo de registro único '%s' está duplicado!"
 
 #: admin/systems/class_termDNS.inc:673
-#, fuzzy, php-format
+#, php-format
 msgid ""
 "The IP address '%s' will be added as 'A Record', this will be done "
 "automatically, please remove the record."
-msgstr ""
-"El dispositivo IP '%s' se ha añadido como 'Registro A', esto se hará "
-"automáticamente, por favor elimine el registro."
+msgstr "La dirección IP '%s' se añadira como 'Registro A', esto se hará automáticamente, por favor elimine el registro."
 
 #: admin/systems/class_termDNS.inc:681
-#, fuzzy, php-format
+#, php-format
 msgid "Only lowercase records are allowed, please check your '%ss'."
 msgstr "Solo están permitidas minúsculas, por favor compruebe su '%ss'."
 
@@ -296,14 +294,12 @@ msgid "DNS settings"
 msgstr "Parametros de DNS"
 
 #: admin/systems/class_termDNS.inc:989
-#, fuzzy
 msgid "DNS configuration"
-msgstr "Escribir archivo de configuración"
+msgstr "Configuración DNS"
 
 #: admin/systems/class_termDNS.inc:992
-#, fuzzy
 msgid "DHCP configuration"
-msgstr "Escribir archivo de configuración"
+msgstr "Configuración DHCP"
 
 #: admin/systems/server.tpl:14 admin/systems/class_servGeneric.inc:513
 #: admin/systems/class_componentGeneric.inc:320 admin/systems/component.tpl:35
@@ -318,11 +314,11 @@ msgstr "Base"
 
 #: admin/systems/server.tpl:26 admin/systems/component.tpl:20
 msgid "Choose subtree to place group in"
-msgstr ""
+msgstr "Elija lugar del árbol para colocar el grupo"
 
 #: admin/systems/server.tpl:32 admin/systems/component.tpl:25
 msgid "Select a base"
-msgstr ""
+msgstr "Seleccione una base"
 
 #: admin/systems/server.tpl:42
 msgid "Mode"
@@ -330,20 +326,19 @@ msgstr "Modo"
 
 #: admin/systems/server.tpl:45
 msgid "Select terminal mode"
-msgstr ""
+msgstr "Seleccionar modo de terminal"
 
 #: admin/systems/server.tpl:63
 msgid "Action"
 msgstr "Acción"
 
 #: admin/systems/server.tpl:69
-msgid ""
-"System installation in progress, the FAI state cannot be changed right now."
-msgstr ""
+msgid "System installation in progress, the FAI state cannot be changed right now."
+msgstr "Instalación del sistema en proceso, el estado FAI no puede ser cambiado actualmente."
 
 #: admin/systems/server.tpl:72
 msgid "Select action to execute for this server"
-msgstr ""
+msgstr "Seleccione una acción que se ejecutara en este servidor"
 
 #: admin/systems/server.tpl:80
 msgid "Execute"
@@ -358,25 +353,23 @@ msgid "Locked"
 msgstr "Bloqueado"
 
 #: admin/systems/class_servGeneric.inc:148
-#, fuzzy
 msgid "server"
 msgstr "Servidor"
 
 #: admin/systems/class_servGeneric.inc:165
 #: admin/systems/class_servGeneric.inc:453
 #: admin/systems/class_systemManagement.inc:811
-#, fuzzy
 msgid "Service infrastructure"
-msgstr "Nombre del servicio"
+msgstr "Infraestructura de servicio"
 
 #: admin/systems/class_servGeneric.inc:169
 msgid "Event error"
-msgstr ""
+msgstr "Evento de error"
 
 #: admin/systems/class_servGeneric.inc:170
 #, php-format
 msgid "Event '%s' is not available!"
-msgstr ""
+msgstr "¡El evento '%s' no está disponible!"
 
 #: admin/systems/class_servGeneric.inc:225
 msgid "Switch off"
@@ -388,9 +381,8 @@ msgstr "Reiniciar"
 
 #: admin/systems/class_servGeneric.inc:226
 #: admin/systems/class_servGeneric.inc:235
-#, fuzzy
 msgid "System update"
-msgstr "Sistema / Departamento"
+msgstr "Actualización del sistema"
 
 #: admin/systems/class_servGeneric.inc:227
 #: admin/systems/class_servGeneric.inc:234
@@ -421,14 +413,12 @@ msgid "Wake up"
 msgstr "Despertar"
 
 #: admin/systems/class_servGeneric.inc:369
-#, fuzzy
 msgid "Software deployment"
-msgstr "Sistema / Departamento"
+msgstr "Desarrollo de software"
 
 #: admin/systems/class_servGeneric.inc:370
-msgid ""
-"This host is currently installing, if you really want to save it, press 'OK'."
-msgstr ""
+msgid "This host is currently installing, if you really want to save it, press 'OK'."
+msgstr "Esta maquina está actualmente instalando, si quiere realmente grabarla, pulse 'OK'."
 
 #: admin/systems/class_servGeneric.inc:503
 #: admin/systems/class_componentGeneric.inc:309
@@ -451,9 +441,8 @@ msgstr "Pasar al modo"
 
 #: admin/systems/class_servGeneric.inc:517
 #: admin/systems/class_componentGeneric.inc:321
-#, fuzzy
 msgid "Root password"
-msgstr "poner contraseña de root       "
+msgstr "Contraseña de root"
 
 #: admin/systems/class_servGeneric.inc:518
 msgid "Action flag"
@@ -468,6 +457,9 @@ msgid ""
 "This includes all system and setup informations. Please double check if your "
 "really want to do this since there is no way for GOsa to get your data back."
 msgstr ""
+"Esto incluye todos los sistemas e información de configuración. Por favor "
+"pulse dos veces si quiere realmente hacer esto, ya que no hay forma de que "
+"GOsa recupere la información posteriormente."
 
 #: admin/systems/remove.tpl:10
 msgid ""
@@ -475,54 +467,53 @@ msgid ""
 "contents of your LDAP tree in a file. So - if you've done so - press "
 "'Delete' to continue or 'Cancel' to abort."
 msgstr ""
+"La mejor opción antes de ejecutar esta acción es haber grabado el contenido "
+"actual de su árbol LDAP en un fichero. Entonces - Y solo entonces - presione "
+"'Eliminar' para continuar o 'Cancelar' para abortar."
 
 #: admin/systems/network.tpl:1
 msgid "Network\tsettings"
-msgstr ""
+msgstr "Red\tparámetros"
 
 #: admin/systems/network.tpl:9
 msgid "IP-address"
-msgstr ""
+msgstr "Dirección IP"
 
 #: admin/systems/network.tpl:30 admin/systems/network.tpl:32
-#, fuzzy
 msgid "Propose ip"
-msgstr "Propiedades"
+msgstr "Proponer ip"
 
 #: admin/systems/network.tpl:38
 msgid "MAC-address"
-msgstr ""
+msgstr "Dirección MAC"
 
 #: admin/systems/network.tpl:45
 msgid "Autodetect"
-msgstr ""
+msgstr "Autodetección"
 
 #: admin/systems/network.tpl:62 admin/systems/network.tpl:72
 msgid "Enable DHCP for this device"
-msgstr ""
+msgstr "Activar DHCP para este dispositivo"
 
 #: admin/systems/network.tpl:72 admin/systems/network.tpl:167
-#, fuzzy
 msgid "not configured"
 msgstr "Sin configurar"
 
 #: admin/systems/network.tpl:80
-#, fuzzy
 msgid "Parent node"
 msgstr "Servidor Origen"
 
 #: admin/systems/network.tpl:93
-#, fuzzy
 msgid "Edit settings"
-msgstr "Parámetros de correo"
+msgstr "Editar características"
 
 #: admin/systems/network.tpl:127 admin/systems/network.tpl:167
 msgid "Enable DNS for this device"
-msgstr ""
+msgstr "Activar DNS para este dispositivo"
 
 #: admin/systems/network.tpl:136
 msgid "Zone"
-msgstr ""
+msgstr "Zona"
 
 #: admin/systems/network.tpl:146
 msgid "TTL"
@@ -530,12 +521,11 @@ msgstr "TTL"
 
 #: admin/systems/network.tpl:154
 msgid "Dns records"
-msgstr ""
+msgstr "Registros DNS"
 
 #: admin/systems/class_componentGeneric.inc:77
-#, fuzzy
 msgid "component"
-msgstr "Nuevo Componente"
+msgstr "Componente"
 
 #: admin/systems/class_componentGeneric.inc:310
 msgid "Component generic"
@@ -548,7 +538,7 @@ msgstr "Dispositivo de Red"
 
 #: admin/systems/component.tpl:6
 msgid "Device name"
-msgstr ""
+msgstr "Nombre del dispositivo"
 
 #: admin/systems/main.inc:46 admin/systems/main.inc:48
 msgid "System management"
@@ -561,29 +551,26 @@ msgstr "Lista de sistemas"
 
 #: admin/systems/class_divListSystem.inc:82
 msgid "Select all"
-msgstr ""
+msgstr "Seleccionar todo"
 
 #: admin/systems/class_divListSystem.inc:88
 #: admin/systems/class_systemManagement.inc:26
 msgid "Systems"
-msgstr ""
+msgstr "Sistemas"
 
 #: admin/systems/class_divListSystem.inc:88
-#, fuzzy
 msgid "Department"
-msgstr "Sistema / Departamento"
+msgstr "Departamento"
 
 #: admin/systems/class_divListSystem.inc:92
-#, fuzzy
 msgid "Release"
-msgstr "Eliminar"
+msgstr "Versión"
 
 #: admin/systems/class_divListSystem.inc:101
 #: admin/systems/class_divListSystem.inc:102
 #: admin/systems/class_divListSystem.inc:423
-#, fuzzy
 msgid "servers"
-msgstr "Servidor"
+msgstr "Servidores"
 
 #: admin/systems/class_divListSystem.inc:102
 #: admin/systems/class_divListSystem.inc:107
@@ -592,78 +579,67 @@ msgstr "Servidor"
 #: admin/systems/class_divListSystem.inc:128
 #: admin/systems/class_divListSystem.inc:133
 #: admin/systems/class_divListSystem.inc:138
-#, fuzzy, php-format
+#, php-format
 msgid "Show %s"
-msgstr "Mostrar teléfonos"
+msgstr "Mostrar %s"
 
 #: admin/systems/class_divListSystem.inc:106
-#, fuzzy
 msgid "Linux terminals"
-msgstr "Mostrar terminales"
+msgstr "Terminales linux"
 
 #: admin/systems/class_divListSystem.inc:107
 #: admin/systems/class_divListSystem.inc:425
-#, fuzzy
 msgid "terminals"
-msgstr "Terminal"
+msgstr "terminales"
 
 #: admin/systems/class_divListSystem.inc:111
-#, fuzzy
 msgid "Linux workstations"
-msgstr "Mostrar estaciones de trabajo"
+msgstr "Estaciones de trabajo linux"
 
 #: admin/systems/class_divListSystem.inc:112
 #: admin/systems/class_divListSystem.inc:424
-#, fuzzy
 msgid "workstations"
-msgstr "Estación de trabajo"
+msgstr "estaciones de trabajo"
 
 #: admin/systems/class_divListSystem.inc:116
-#, fuzzy
 msgid "MicroSoft Windows based workstations"
-msgstr "Seleccione para ver estaciones de trabajo basadas en Windows"
+msgstr "Estaciones de trabajo basadas en Windows"
 
 #: admin/systems/class_divListSystem.inc:117
-#, fuzzy
 msgid "windows based workstations"
-msgstr "Mostrara estaciones de trabajo basadas en windows"
+msgstr "estaciones de trabajo basadas en windows"
 
 #: admin/systems/class_divListSystem.inc:121
-#, fuzzy, php-format
+#, php-format
 msgid "Display objects of type '%s'."
-msgstr "Seleccione para ver los servidores"
+msgstr "Mostrar los objetos del tipo '%s'."
 
 #: admin/systems/class_divListSystem.inc:122
-#, fuzzy
 msgid "OPSI installed client"
-msgstr "Servicios instalados"
+msgstr "Instalado cliente OPSI"
 
 #: admin/systems/class_divListSystem.inc:122
 msgid "Show OPSI based clients"
-msgstr ""
+msgstr "Mostrar clientes basados OPSI"
 
 #: admin/systems/class_divListSystem.inc:127
 #: admin/systems/class_divListSystem.inc:128
-#, fuzzy
 msgid "network printers"
-msgstr "Mostrar impresoras de red"
+msgstr "impresoras de red"
 
 #: admin/systems/class_divListSystem.inc:132
-#, fuzzy
 msgid "VoIP phones"
-msgstr "Mostrar teléfonos"
+msgstr "teléfonos VoIP"
 
 #: admin/systems/class_divListSystem.inc:133
 #: admin/systems/class_divListSystem.inc:426
-#, fuzzy
 msgid "phones"
-msgstr "Teléfono"
+msgstr "teléfonos"
 
 #: admin/systems/class_divListSystem.inc:137
 #: admin/systems/class_divListSystem.inc:138
-#, fuzzy
 msgid "network devices"
-msgstr "Dispositivo de Red"
+msgstr "dispositivos de Red"
 
 #: admin/systems/class_divListSystem.inc:146
 msgid "Display systems matching"
@@ -706,32 +682,29 @@ msgid "Printer"
 msgstr "Impresora"
 
 #: admin/systems/class_divListSystem.inc:207
-#, fuzzy
 msgid "Component"
-msgstr "Nuevo Componente"
+msgstr "componente"
 
 #: admin/systems/class_divListSystem.inc:214
 #: admin/systems/class_systemManagement.inc:1596
 msgid "Opsi client"
-msgstr ""
+msgstr "cliente Opsi"
 
 #: admin/systems/class_divListSystem.inc:221
 msgid "Trigger action"
-msgstr ""
+msgstr "Acción disparada"
 
 #: admin/systems/class_divListSystem.inc:227
-#, fuzzy
 msgid "Schedule action"
-msgstr "Actualización programada"
+msgstr "Acción programada"
 
 #: admin/systems/class_divListSystem.inc:234
 msgid "Remove"
 msgstr "Eliminar"
 
 #: admin/systems/class_divListSystem.inc:237
-#, fuzzy
 msgid "Activate systems"
-msgstr "Editar sistema"
+msgstr "Activar sistemas"
 
 #: admin/systems/class_divListSystem.inc:322
 msgid "edit"
@@ -763,9 +736,9 @@ msgstr "Crear CD FAI"
 
 #: admin/systems/class_divListSystem.inc:407
 #: admin/systems/class_divListSystem.inc:408
-#, fuzzy, php-format
+#, php-format
 msgid "Inherited from %s"
-msgstr "Lista de grupos"
+msgstr "Heredado de %s"
 
 #: admin/systems/class_divListSystem.inc:423
 #: admin/systems/class_divListSystem.inc:424
@@ -776,38 +749,33 @@ msgstr "Lista de grupos"
 #: admin/systems/class_divListSystem.inc:429
 #: admin/systems/class_divListSystem.inc:430
 #: admin/systems/class_divListSystem.inc:431
-#, fuzzy, php-format
+#, php-format
 msgid "Number of listed '%s'"
-msgstr "Servidor de Perfil"
+msgstr "Número de mostrados '%s'"
 
 #: admin/systems/class_divListSystem.inc:427
-#, fuzzy
 msgid "printers"
-msgstr "Impresora"
+msgstr "impresoras"
 
 #: admin/systems/class_divListSystem.inc:428
-#, fuzzy
 msgid "network components"
-msgstr "Mostrar impresoras de red"
+msgstr "componentes de red"
 
 #: admin/systems/class_divListSystem.inc:429
-#, fuzzy
 msgid "new devices"
-msgstr "Nuevo Dispositivo"
+msgstr "nuevo dispositivo"
 
 #: admin/systems/class_divListSystem.inc:430
-#, fuzzy
 msgid "windows workstations"
-msgstr "Mostrar estaciones de trabajo"
+msgstr "estaciones de trabajo windows"
 
 #: admin/systems/class_divListSystem.inc:431
-#, fuzzy
 msgid "departments"
-msgstr "Enviar departamento"
+msgstr "departamentos"
 
 #: admin/systems/class_systemManagement.inc:27
 msgid "This does something"
-msgstr ""
+msgstr "Esto hace algo"
 
 #: admin/systems/class_systemManagement.inc:239
 msgid "Back"
@@ -827,56 +795,49 @@ msgstr ""
 "ISO."
 
 #: admin/systems/class_systemManagement.inc:386
-#, fuzzy
 msgid "Internal error"
-msgstr "Insertar separador"
+msgstr "error interno"
 
 #: admin/systems/class_systemManagement.inc:386
 msgid "Cannot set mode to 'active'!"
-msgstr ""
+msgstr "¡No se puede poner el modo a 'activo'!"
 
 #: admin/systems/class_systemManagement.inc:571
 msgid "Editing this type of object is not supported yet!"
-msgstr ""
+msgstr "¡No está soportado editar este tipo de objeto todavía!"
 
 #: admin/systems/class_systemManagement.inc:598
 #: admin/systems/class_systemManagement.inc:701
 #: admin/systems/class_systemManagement.inc:930
-#, fuzzy
 msgid "Permission error"
-msgstr "Permisos"
+msgstr "Error de permisos"
 
 #: admin/systems/class_systemManagement.inc:598
 #: admin/systems/class_systemManagement.inc:701
-#, fuzzy
 msgid "You have no permission to change this password!"
-msgstr "No tiene permisos para cambiar la contraseña de este objeto."
+msgstr "¡No tiene permisos para cambiar esta contraseña!"
 
 #: admin/systems/class_systemManagement.inc:610
-#, fuzzy
 msgid ""
 "The passwords you've entered as 'New password' and 'Repeated password' do "
 "not match!"
 msgstr ""
-"¡La contraseñas introducidas como nueva y repita nueva contraseña no "
+"¡La contraseñas introducidas como nueva y reintroduzca contraseña no "
 "coinciden!"
 
 #: admin/systems/class_systemManagement.inc:685
-#, fuzzy
 msgid "Password method"
-msgstr "Contraseña"
+msgstr "Método de contraseña"
 
 #: admin/systems/class_systemManagement.inc:685
 msgid "Password method crypt is missing. Cannot set system password."
-msgstr ""
+msgstr "No se encuentra método de codificación de contraseña. No se pueden introducir contraseñas de sistema."
 
 #: admin/systems/class_systemManagement.inc:704
-#, fuzzy
 msgid "Cannot determine object to change password!"
-msgstr "No puedo encontrar el objeto para cambiarle la contraseña."
+msgstr "¡No puedo encontrar el objeto para cambiarle la contraseña!"
 
 #: admin/systems/class_systemManagement.inc:856
-#, fuzzy
 msgid "Permission"
 msgstr "Permisos"
 
@@ -891,9 +852,8 @@ msgid "New workstation"
 msgstr "Nueva estación de trabajo"
 
 #: admin/systems/class_systemManagement.inc:1282
-#, fuzzy
 msgid "Unknown device"
-msgstr "¡id desconocido!"
+msgstr "Dispositivo desconocido"
 
 #: admin/systems/class_systemManagement.inc:1284
 msgid "New Device"
@@ -912,52 +872,42 @@ msgid "Template"
 msgstr "Plantilla"
 
 #: admin/systems/class_systemManagement.inc:1573
-#, fuzzy
 msgid "Win workstation"
-msgstr "Estación de trabajo"
+msgstr "Estación de trabajo Win"
 
 #: admin/systems/class_systemManagement.inc:1579
-#, fuzzy
 msgid "Locked workstation"
-msgstr "Nueva estación de trabajo"
+msgstr "Estación de trabajo bloqueada"
 
 #: admin/systems/class_systemManagement.inc:1580
-#, fuzzy
 msgid "Locked server"
-msgstr "Servidor LDAP"
+msgstr "Servidor bloqueado"
 
 #: admin/systems/class_systemManagement.inc:1581
-#, fuzzy
 msgid "Locked terminal"
-msgstr "Nuevo terminal"
+msgstr "Terminal bloqueado"
 
 #: admin/systems/class_systemManagement.inc:1583
-#, fuzzy
 msgid "Workstation error"
-msgstr "Estación de trabajo"
+msgstr "Error en estación de trabajo"
 
 #: admin/systems/class_systemManagement.inc:1584
-#, fuzzy
 msgid "Server error"
-msgstr "Servidor genérico"
+msgstr "Error en servidor"
 
 #: admin/systems/class_systemManagement.inc:1585
-#, fuzzy
 msgid "Terminal error"
-msgstr "Insertar separador"
+msgstr "Error en terminal"
 
 #: admin/systems/class_systemManagement.inc:1587
-#, fuzzy
 msgid "Workstation busy"
-msgstr "Estación de trabajo"
+msgstr "Estación de trabajo ocupada"
 
 #: admin/systems/class_systemManagement.inc:1588
-#, fuzzy
 msgid "Server busy"
-msgstr "Servidor"
+msgstr "Servidor ocupado"
 
 #: admin/systems/class_systemManagement.inc:1590
-#, fuzzy
 msgid "New system from incoming"
 msgstr "Nuevo sistema desde entrada"
 
@@ -983,361 +933,14 @@ msgid "Restart"
 msgstr "Reiniciar"
 
 #: admin/systems/class_serverService.inc:351
-#, fuzzy
 msgid "Information"
-msgstr "Estación de trabajo"
+msgstr "Información"
 
 #: admin/systems/class_serverService.inc:351
-#, fuzzy
 msgid "Cannot update service status until it has been saved!"
-msgstr "No puedo activar el estado mientras no se grabe el servidor."
+msgstr "¡No puedo actualizar el estado del servicio hasta que no se haya grabado!"
 
 #: admin/systems/class_serverService.inc:363
 msgid "Cannot update service status!"
-msgstr ""
+msgstr "¡No se puede actualizar el estado del servicio!"
 
-#~ msgid "Cups Server"
-#~ msgstr "Servidor CUPS"
-
-#~ msgid "Log Db"
-#~ msgstr "Registro Db"
-
-#~ msgid "Syslog Server"
-#~ msgstr "Servidor SYSLOG"
-
-#~ msgid "Mail Server"
-#~ msgstr "Servidor de Correo Electrónico"
-
-#~ msgid "Imap Server"
-#~ msgstr "Servidor IMAP"
-
-#~ msgid "Nfs Server"
-#~ msgstr "Servidor NFS"
-
-#~ msgid "Kerberos Server"
-#~ msgstr "Servidor Kerberos"
-
-#~ msgid "Asterisk Server"
-#~ msgstr "Servidor Asterisk"
-
-#~ msgid "Fax Server"
-#~ msgstr "Servidor Fax"
-
-#~ msgid "Ldap Server"
-#~ msgstr "Servidor LDAP"
-
-#~ msgid "DNS records"
-#~ msgstr "Registros DNS"
-
-#~ msgid "Zone name"
-#~ msgstr "Nombre de la zona"
-
-#, fuzzy
-#~ msgid "Copy"
-#~ msgstr "copiar"
-
-#, fuzzy
-#~ msgid "Cut"
-#~ msgstr "mover"
-
-#~ msgid "cut"
-#~ msgstr "mover"
-
-#~ msgid "Cut this entry"
-#~ msgstr "Mover esta entrada"
-
-#~ msgid "copy"
-#~ msgstr "copiar"
-
-#~ msgid "Copy this entry"
-#~ msgstr "Copiar esta entrada"
-
-#~ msgid "Choose a base"
-#~ msgstr "Seleccionar una base"
-
-#~ msgid "Go to root department"
-#~ msgstr "Ir al departamento raíz"
-
-#~ msgid "Root"
-#~ msgstr "Raíz"
-
-#~ msgid "Go up one department"
-#~ msgstr "Subir un departamento"
-
-#~ msgid "Up"
-#~ msgstr "Arriba"
-
-#~ msgid "Go to users department"
-#~ msgstr "Ir al departamento de usuarios"
-
-#~ msgid "Home"
-#~ msgstr "Inicio"
-
-#~ msgid "Reload list"
-#~ msgstr "Recargar lista"
-
-#~ msgid ""
-#~ "Step in the prefered tree and click save to use the current subtree as "
-#~ "base. Or click the image at the end of each entry."
-#~ msgstr ""
-#~ "Seleccione el árbol preferido y pulse grabar para usar el subárbol "
-#~ "seleccionado como base. O pulse en la imagen al final de cada entrada."
-
-#~ msgid "Use"
-#~ msgstr "Usar"
-
-#~ msgid "Cancel"
-#~ msgstr "Cancelar"
-
-#~ msgid "Filter entries with this syntax"
-#~ msgstr "Entradas de filtrado con esta sintaxis"
-
-#~ msgid "Select this base"
-#~ msgstr "Seleccionar esta base"
-
-#~ msgid "Workstation is installing"
-#~ msgstr "La estación de trabajo se está instalando"
-
-#~ msgid "Workstation is waiting for action"
-#~ msgstr "La estación de trabajo esta esperando por una acción"
-
-#~ msgid "Workstation installation failed"
-#~ msgstr "Ha fallado la instalación de la estación de trabajo"
-
-#~ msgid "Server is installing"
-#~ msgstr "El servidor se está instalando"
-
-#~ msgid "Server is waiting for action"
-#~ msgstr "El servidor está esperando por una acción"
-
-#~ msgid "Server installation failed"
-#~ msgstr "Ha fallado la instalación del servidor"
-
-#~ msgid "Select to search within subtrees"
-#~ msgstr "Seleccione para buscar dentro de los subárboles"
-
-#~ msgid "Search in subtrees"
-#~ msgstr "Buscar en subárboles"
-
-#~ msgid "The specified method '%s' can't executed for services."
-#~ msgstr "El método especificado '%s' no se puede ejecutar para servicios."
-
-#~ msgid "You can't edit this object type yet!"
-#~ msgstr "¡Aún no puede editar este tipo de objeto!"
-
-#, fuzzy
-#~ msgid ""
-#~ "Can't set gotoMode to status 'active', the current object couldn't be "
-#~ "identified."
-#~ msgstr ""
-#~ "No se puede cambiar gotoMode a estado 'activo', el objeto seleccionado no "
-#~ "puede ser identificado."
-
-#~ msgid "Save"
-#~ msgstr "Guardar"
-
-#~ msgid "You are not allowed to create a new object of this type."
-#~ msgstr "No tiene permisos para crear un nuevo objeto de este tipo."
-
-#~ msgid "You're about to delete the following entry %s"
-#~ msgstr "Has decidido eliminar la siguiente entrada %s"
-
-#~ msgid "You're about to delete the following entries %s"
-#~ msgstr "Has decidido eliminar las siguientes entradas %s"
-
-#~ msgid "You are not allowed to delete this component!"
-#~ msgstr "¡No tiene permisos para eliminar este componente!"
-
-#~ msgid "You're about to delete all information about the component at '%s'."
-#~ msgstr ""
-#~ "Has decidido eliminar toda información sobre el componente que está en '%"
-#~ "s'."
-
-#~ msgid "Ok"
-#~ msgstr "Ok"
-
-#~ msgid "Apply"
-#~ msgstr "Aplicar"
-
-#~ msgid "Winstation"
-#~ msgstr "Estación de trabajo Windows"
-
-#~ msgid "Network Device"
-#~ msgstr "Dispositivo de Red"
-
-#~ msgid "New Terminal"
-#~ msgstr "Nuevo Terminal"
-
-#~ msgid "New Workstation"
-#~ msgstr "Nueva Estación de trabajo"
-
-#~ msgid ""
-#~ "This menu allows you to add, remove and change the properties of specific "
-#~ "systems. You can only add systems which have already been started once."
-#~ msgstr ""
-#~ "Este menú permite añadir, modificar o eliminar las propiedades de "
-#~ "sistemas específicos. Solo puede añadir sistemas que han sido ya "
-#~ "iniciados alguna vez."
-
-#~ msgid "Select to see servers"
-#~ msgstr "Seleccione para ver los servidores"
-
-#~ msgid "Show servers"
-#~ msgstr "Mostrar servidores"
-
-#~ msgid "Select to see Linux terminals"
-#~ msgstr "Seleccione para ver los terminales Linux"
-
-#~ msgid "Select to see Linux workstations"
-#~ msgstr "Seleccione para ver las estaciones de trabajo Linux"
-
-#~ msgid "Select to see network printers"
-#~ msgstr "Seleccione para ver impresoras de red"
-
-#~ msgid "Select to see VOIP phones"
-#~ msgstr "Seleccione para ver teléfonos VOIP"
-
-#~ msgid "Select to see network devices"
-#~ msgstr "Seleccione para ver los dispositivos de red"
-
-#~ msgid "Show network devices"
-#~ msgstr "Mostrar dispositivos de Red"
-
-#, fuzzy
-#~ msgid "Number of listed workstations"
-#~ msgstr "Nueva estación de trabajo"
-
-#, fuzzy
-#~ msgid "Number of listed printers"
-#~ msgstr "Impresora por defecto"
-
-#, fuzzy
-#~ msgid "Number of listed new devices"
-#~ msgstr "Seleccione para ver los dispositivos de red"
-
-#, fuzzy
-#~ msgid "Number of listed windows workstations"
-#~ msgstr "Mostrara estaciones de trabajo basadas en windows"
-
-#, fuzzy
-#~ msgid "Number of listed departments"
-#~ msgstr "Eliminar departamentos seleccionados"
-
-#~ msgid "This 'dn' has no server features."
-#~ msgstr "Esta 'dn' no tiene características de servidor."
-
-#~ msgid "This 'dn' has no network features."
-#~ msgstr "Esta 'dn' no tiene características de red."
-
-#, fuzzy
-#~ msgid "Removing dhcp entry for this object failed."
-#~ msgstr "Ha fallado la eliminación del Rol en el grupo de objetos '%s'."
-
-#, fuzzy
-#~ msgid "Removing old dhcp entry failed."
-#~ msgstr "Ha fallado la eliminación del antiguo archivo ppd'%s'."
-
-#~ msgid "Saving of terminal/dns account with dn '%s' failed."
-#~ msgstr "Ha fallado la grabación de la cuenta de terminal/dns con dn '%s'."
-
-#~ msgid "Saving of system server/generic (FAIstate) with dn '%s' failed."
-#~ msgstr ""
-#~ "Ha fallado la grabación del servidor genérico (FAIstate) con dn '%s'."
-
-#~ msgid "Instant update"
-#~ msgstr "Actualización instantánea"
-
-#~ msgid "Scheduled update"
-#~ msgstr "Actualización programada"
-
-#~ msgid "Removing of system server/generic with dn '%s' failed."
-#~ msgstr "Ha fallado la eliminación del servidor genérico con dn '%s'."
-
-#~ msgid "Saving of system server/generic with dn '%s' failed."
-#~ msgstr "Ha fallado la grabación del servidor genérico con dn '%s'."
-
-#~ msgid "Removing of server services/"
-#~ msgstr "Eliminando servicios del servidor /"
-
-#~ msgid "Saving of server services/"
-#~ msgstr "Grabando servicios del servidor /"
-
-#~ msgid "Set status flag for server services/"
-#~ msgstr "Activando marca de estado de servicios del servidor /"
-
-#~ msgid "Removing of system component/generic with dn '%s' failed."
-#~ msgstr "Ha fallado la eliminación de componente genérico con dn '%s'."
-
-#~ msgid "Saving of system component/generic with dn '%s' failed."
-#~ msgstr "Ha fallado la grabación del componente genérico con dn '%s'."
-
-#~ msgid ""
-#~ "Can't execute specified AUTO_NETWORK_HOOK '%s'. Please check your gosa."
-#~ "conf."
-#~ msgstr ""
-#~ "No puedo ejecutar el AUTO_NETWORK_HOOK '%s' indicado. Por favor compruebe "
-#~ "el archivo gosa.conf."
-
-#, fuzzy
-#~ msgid "The specified IP address is already in use."
-#~ msgstr "El nombre introducido ya esta siendo usado"
-
-#, fuzzy
-#~ msgid ""
-#~ "The specified MAC address '%s' for this system '%s' is already in use."
-#~ msgstr "La cuenta principal que ha introducido ya esta en uso."
-
-#~ msgid "The required field 'IP-address' is not set."
-#~ msgstr "No ha introducido el campo obligatorio'Dirección IP'."
-
-#~ msgid "Wrong IP format in field IP-address."
-#~ msgstr "El campo 'Dirección IP' no tiene el formato correcto."
-
-#~ msgid "The required field 'MAC-address' is not set."
-#~ msgstr "No ha introducido el campo obligatorio'Dirección MAC'."
-
-#~ msgid ""
-#~ "The given macaddress is invalid. There must be 6 2byte segments seperated "
-#~ "by ':'."
-#~ msgstr ""
-#~ "La dirección MAX introducida no es válida. Debe tener 6 2 bytes segmentos "
-#~ "separados por ':'."
-
-#~ msgid "Found duplicate value for record type '%s'."
-#~ msgstr "Encontrado un valor duplicado para el tipo de registro '%s'."
-
-#~ msgid "Found more than one entry for the uniqe record type '%s'."
-#~ msgstr "Encontrado mas de una entrada para el tipo de registro único '%s'."
-
-#~ msgid "No ACTIONCMD definition found in your gosa.conf"
-#~ msgstr ""
-#~ "No se ha encontrado ninguna definición de 'ACTIONCMD' en 'gosa.conf'"
-
-#~ msgid "Execution of '%s' failed!"
-#~ msgstr "¡La ejecución de '%s' ha fallado!"
-
-#~ msgid "The required field 'Server name' is not set."
-#~ msgstr "No ha introducido el campo obligatorio'Nombre del servidor'."
-
-#, fuzzy
-#~ msgid "Please specify a valid name for this object."
-#~ msgstr "Por favor introduzca un nombre de adjunto valido."
-
-#~ msgid "There is already an entry '%s' in the base choosen by you"
-#~ msgstr "Ya hay una entrada '%s' en la base seleccionada"
-
-#~ msgid ""
-#~ "Command '%s', specified as ACTION_HOOK for plugin '%s' doesn't seem to "
-#~ "exist."
-#~ msgstr ""
-#~ "No existe el comando '%s', especificado como 'ACTION_HOOK' para la "
-#~ "extensión '%s'."
-
-#~ msgid "The required field 'Component name' is not set."
-#~ msgstr "No ha introducido el campo obligatorio'Nombre de componente'."
-
-#~ msgid "The required field IP address is empty."
-#~ msgstr "No ha introducido el campo obligatorio'Dirección IP'."
-
-#~ msgid "The field IP address contains an invalid address."
-#~ msgstr "El campo 'Dirección IP' tiene una dirección no valida."
