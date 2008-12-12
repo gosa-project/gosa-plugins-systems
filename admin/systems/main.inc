@@ -37,7 +37,6 @@ if ($remove_lock){
 
 	/* Reset requested? */
 	if (isset($_GET['reset']) && $_GET['reset'] == 1){
-		del_lock ($ui->dn);
 		session::un_set ('systems');
 	}
 
