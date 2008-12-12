@@ -37,7 +37,7 @@ if ( $cleanup ){
 
 
 	/* Create usermanagement object on demand */
-	if (!session::is_set('systems') || (isset($_GET['reset']) && $_GET['reset'] == 1)){
+	if (!session::is_set('systems')){
 		session::set('systems',new systems($config, $ui));
 	}
 	$systems = session::get('systems');
