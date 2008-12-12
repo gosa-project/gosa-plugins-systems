@@ -221,7 +221,7 @@ class systems extends plugin
      ********************/
     if ($s_action=="gen_cd"){
       $this->dn= $this->terminals[$s_entry]['dn'];
-      session::set('objectinfo',$this->dn);
+      set_object_info($this->dn);
       return ($smarty->fetch(get_template_path('gencd.tpl', TRUE)));
     }
 
@@ -565,7 +565,7 @@ class systems extends plugin
           add_lock ($this->dn, $this->ui->dn);
           $this->systab= new $tabclass($this->config, $this->config->data['TABS'][$class], $this->dn,$acl_cat);
           $this->systab->set_acl_base($this->dn);
-          session::set('objectinfo',$this->dn);
+          set_object_info($this->dn);
         }
       }else{ 
         msg_dialog::display(_("Error"), _("Editing this type of object is not supported yet!"), ERROR_DIALOG);
@@ -592,7 +592,7 @@ class systems extends plugin
       $tabacl   = $ui->get_permissions($dn,$acl,"userPassword");
       if(preg_match("/w/",$tabacl)){
         $this->dn= $this->terminals[$s_entry]['dn'];
-        session::set('objectinfo',$this->dn);
+        set_object_info($this->dn);
         return ($smarty->fetch(get_template_path('password.tpl', TRUE)));
       }else{
         msg_dialog::display(_("Permission error"), _("You have no permission to change this password!"), ERROR_DIALOG);
@@ -703,7 +703,7 @@ class systems extends plugin
       }else{
         msg_dialog::display(_("Error"), _("Cannot determine object to change password!"), ERROR_DIALOG);
       }
-      session::un_set('objectinfo');
+      set_object_info();
     }
 
 
@@ -714,7 +714,7 @@ class systems extends plugin
     /* Delete terminal canceled? */
     if (isset($_POST['delete_cancel']) || isset($_POST['password_cancel'])){
       $this->remove_lock();
-      session::un_set('objectinfo');
+      set_object_info();
     }
 
 
@@ -1002,7 +1002,7 @@ class systems extends plugin
 
           unset ($this->systab);
           $this->systab= NULL;
-          session::un_set('objectinfo');
+          set_object_info();
         }else{
       
           /* Reinitialize tab */
@@ -1028,7 +1028,7 @@ class systems extends plugin
         unset ($this->systab);
       }
       $this->systab= NULL;
-      session::un_set('objectinfo');
+      set_object_info();
     }
 
     /********************
