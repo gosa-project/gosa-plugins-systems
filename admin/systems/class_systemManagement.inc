@@ -989,8 +989,15 @@ class systems extends plugin
         $this->systab->save();
 
         /* Post handling for activated systems 
+            target opsi -> Remove source.
+            target gosa -> Activate system.
          */
-        if(isset($this->systab->was_activated) && $this->systab->was_activated){
+        if($this->systab instanceOf opsi_tabs && $this->systab->was_activated){
+          $ldap = $this->config->get_ldap_link();
+          $ldap->cd($this->config->current['BASE']);
+          $ldap->rmdir ($this->systab->dn);
+          @DEBUG(DEBUG_LDAP,__LINE__, __FUNCTION__, __FILE__,"Source removed: ".$this->systab->dn,"Opsi host activated.");
+        }elseif(isset($this->systab->was_activated) && $this->systab->was_activated){
           $this->activate_new_device($this->systab->dn);
         }
 
