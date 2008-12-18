@@ -370,6 +370,19 @@ class systems extends plugin
                */
               $this->systab->was_activated = TRUE;
 
+              /* Assign some default values for opsi hosts 
+               */
+              if($this->systab instanceOf opsi_tabs){
+                $ldap = $this->config->get_ldap_link();
+                $ldap->cat($dn);
+                $source_attrs = $ldap->fetch();
+                foreach(array("macAddress" => "mac" ,"cn" => "hostId","description","description") as $src => $attr){
+                  if(isset($source_attrs[$src][0])){
+                    $this->systab->by_object['opsiGeneric']->$attr = $source_attrs[$src][0];
+                  }
+                }
+              }
+
               if($selected_group != "none"){
 
                 /*******
