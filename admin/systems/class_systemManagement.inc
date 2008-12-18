@@ -1044,6 +1044,11 @@ class systems extends plugin
 
     /* Show tab dialog if object is present */
     if (isset($this->systab->config)){
+
+      if($this->systab instanceOf plugin && !($this->systab instanceOf tabs)){
+        $this->systab->save_object();
+      }
+
       $display= $this->systab->execute();
 
       /* Don't show buttons if tab dialog requests this */
