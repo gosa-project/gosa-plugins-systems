@@ -1010,6 +1010,11 @@ class systems extends plugin
           $ldap->cd($this->config->current['BASE']);
           $ldap->rmdir ($this->systab->dn);
           @DEBUG(DEBUG_LDAP,__LINE__, __FUNCTION__, __FILE__,"Source removed: ".$this->systab->dn,"Opsi host activated.");
+
+          $hostId =  $this->systab->by_object['opsiGeneric']->hostId;
+          $mac    =  $this->systab->by_object['opsiGeneric']->mac;
+          $this->opsi->job_opsi_activate_client($hostId,$mac);
+
         }elseif(isset($this->systab->was_activated) && $this->systab->was_activated){
           $this->activate_new_device($this->systab->dn);
         }
