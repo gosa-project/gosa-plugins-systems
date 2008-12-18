@@ -376,7 +376,7 @@ class systems extends plugin
                 $ldap = $this->config->get_ldap_link();
                 $ldap->cat($dn);
                 $source_attrs = $ldap->fetch();
-                foreach(array("macAddress" => "mac" ,"cn" => "hostId","description","description") as $src => $attr){
+                foreach(array("macAddress" => "mac" ,"cn" => "hostId","description" => "description") as $src => $attr){
                   if(isset($source_attrs[$src][0])){
                     $this->systab->by_object['opsiGeneric']->$attr = $source_attrs[$src][0];
                   }
