@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-12-19 08:38+0100\n"
-"PO-Revision-Date: 2008-12-03 23:20+0100\n"
+"PO-Revision-Date: 2008-12-21 12:38+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team: french <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -57,8 +57,7 @@ msgstr "La création de l'image à échoué. veuillez lire le rapport ci dessous
 #: admin/systems/class_systemManagement.inc:295
 #, php-format
 msgid "Command '%s', specified for ISO creation doesn't seem to exist."
-msgstr ""
-"La commande '%s', utilisée dans la création de l'image ISO n'existe pas."
+msgstr "La commande '%s', utilisée dans la création de l'image ISO n'existe pas."
 
 #: admin/systems/class_systemManagement.inc:344
 #: admin/systems/class_systemManagement.inc:459
@@ -194,7 +193,6 @@ msgid "Printer"
 msgstr "Imprimante"
 
 #: admin/systems/class_systemManagement.inc:1603
-#, fuzzy
 msgid "Windows workstation"
 msgstr "Ordinateur Windows"
 
@@ -796,8 +794,7 @@ msgid "Software deployment"
 msgstr "Déploiement de logiciel"
 
 #: admin/systems/class_servGeneric.inc:370
-msgid ""
-"This host is currently installing, if you really want to save it, press 'OK'."
+msgid "This host is currently installing, if you really want to save it, press 'OK'."
 msgstr ""
 "Cet hôte est actuellement en cours d'installation, si vous voulez vraiment "
 "le sauver, cliquez sur 'OK'."
@@ -850,8 +847,7 @@ msgid "Action"
 msgstr "Action"
 
 #: admin/systems/server.tpl:69
-msgid ""
-"System installation in progress, the FAI state cannot be changed right now."
+msgid "System installation in progress, the FAI state cannot be changed right now."
 msgstr ""
 "Le système est en cours d'installation, l'état FAI ne peut pas être changé "
 "maintenant."
@@ -914,8 +910,7 @@ msgstr ""
 #: admin/systems/class_termDNS.inc:681
 #, php-format
 msgid "Only lowercase records are allowed, please check your '%ss'."
-msgstr ""
-"Seulement les minuscules sont autorisée, veuillez vérifier votre '%ss'."
+msgstr "Seulement les minuscules sont autorisée, veuillez vérifier votre '%ss'."
 
 #: admin/systems/class_termDNS.inc:923 admin/systems/class_termDNS.inc:943
 msgid "Add"
@@ -953,5 +948,3 @@ msgstr "Composant générique"
 msgid "Device name"
 msgstr "Nom du périphérique"
 
-#~ msgid "Win workstation"
-#~ msgstr "Ordinateur Windows"
