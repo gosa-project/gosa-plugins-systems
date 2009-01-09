@@ -559,7 +559,7 @@ class termDNS extends plugin
             }
             /* Check if value has changed */
             if(isset($_POST['RecordValue_'.$key])){
-              $this->dnsEntry['RECORDS'][$key]['value'] = $_POST['RecordValue_'.$key];
+              $this->dnsEntry['RECORDS'][$key]['value'] = get_post('RecordValue_'.$key);
             }
           }
         }
