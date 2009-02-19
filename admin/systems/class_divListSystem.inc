@@ -183,7 +183,7 @@ class divListSystem extends MultiSelectWindow
       $s.= "...|<img src='plugins/systems/images/select_workstation.png' alt='' border='0' class='center'>".
         "&nbsp;"._("Workstation")."|"."newsystem_workstation|\n";
     }
-    if(class_available("servtabs") && preg_match("/c/",$ui->get_permissions($this->selectedBase,"workstation/servgeneric"))){
+    if(class_available("servtabs") && preg_match("/c/",$ui->get_permissions($this->selectedBase,"server/servgeneric"))){
       $s.= "...|<img src='plugins/systems/images/select_server.png' alt='' border='0' class='center'>".
         "&nbsp;"._("Server")."|"."newsystem_server|\n";
     }
