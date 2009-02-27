@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-19 08:38+0100\n"
+"POT-Creation-Date: 2009-02-27 10:16+0100\n"
 "PO-Revision-Date: 2008-12-19 08:43+0100\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
@@ -98,7 +98,8 @@ msgstr "Kann Modus nicht auf 'aktiv' setzen!"
 
 #: admin/systems/class_systemManagement.inc:584
 msgid "Editing this type of object is not supported yet!"
-msgstr "Bearbeiten von Objekten dieses Typs wird momentan noch nicht unterstützt!"
+msgstr ""
+"Bearbeiten von Objekten dieses Typs wird momentan noch nicht unterstützt!"
 
 #: admin/systems/class_systemManagement.inc:611
 #: admin/systems/class_systemManagement.inc:714
@@ -125,7 +126,8 @@ msgstr "Passwort-Methode"
 
 #: admin/systems/class_systemManagement.inc:698
 msgid "Password method crypt is missing. Cannot set system password."
-msgstr "Die Password-Methode CRYPT fehlt. Kann das System-Passwort nicht setzen."
+msgstr ""
+"Die Password-Methode CRYPT fehlt. Kann das System-Passwort nicht setzen."
 
 #: admin/systems/class_systemManagement.inc:704
 #: admin/systems/class_systemManagement.inc:1810
@@ -722,7 +724,8 @@ msgstr ""
 
 #: admin/systems/password.tpl:10
 msgid "Changing the password impinges on authentification only."
-msgstr "Das Ändern des Passwortes wirkt sich nur auf die Authentifizierung aus."
+msgstr ""
+"Das Ändern des Passwortes wirkt sich nur auf die Authentifizierung aus."
 
 #: admin/systems/password.tpl:15
 msgid "New password"
@@ -803,7 +806,8 @@ msgid "Software deployment"
 msgstr "Softwareverteilung"
 
 #: admin/systems/class_servGeneric.inc:370
-msgid "This host is currently installing, if you really want to save it, press 'OK'."
+msgid ""
+"This host is currently installing, if you really want to save it, press 'OK'."
 msgstr ""
 "Der Host ist gerade mitten in der Installation - wenn Sie dennoch speichern "
 "möchten, drücken Sie auf 'OK'."
@@ -856,7 +860,8 @@ msgid "Action"
 msgstr "Aktion"
 
 #: admin/systems/server.tpl:69
-msgid "System installation in progress, the FAI state cannot be changed right now."
+msgid ""
+"System installation in progress, the FAI state cannot be changed right now."
 msgstr ""
 "Eine Systeminstallation läuft gerade, der FAI state kann momentan nicht "
 "geändert werden."
@@ -917,7 +922,8 @@ msgstr ""
 #: admin/systems/class_termDNS.inc:681
 #, php-format
 msgid "Only lowercase records are allowed, please check your '%ss'."
-msgstr "Es sind nur Kleinbuchstaben in Datensätzen erlaubt, bitte prüfen Sie '%ss'."
+msgstr ""
+"Es sind nur Kleinbuchstaben in Datensätzen erlaubt, bitte prüfen Sie '%ss'."
 
 #: admin/systems/class_termDNS.inc:923 admin/systems/class_termDNS.inc:943
 msgid "Add"
@@ -954,4 +960,3 @@ msgstr "Netzwerk-Komponente (Allgemein)"
 #: admin/systems/component.tpl:6
 msgid "Device name"
 msgstr "Gerätename"
-
