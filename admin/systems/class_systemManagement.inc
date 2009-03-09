@@ -222,14 +222,14 @@ class systems extends plugin
     if ($s_action=="gen_cd"){
       $this->dn= $this->terminals[$s_entry]['dn'];
       set_object_info($this->dn);
-      return ($smarty->fetch(get_template_path('gencd.tpl', TRUE)));
+      return ($smarty->fetch(get_template_path('goto/gencd.tpl', TRUE)));
     }
 
 
     /* Start CD-Creation */
     if ((isset($_POST["cd_create"])) && !empty($this->dn)){
       $smarty->assign("src", "?plug=".$_GET['plug']."&amp;PerformIsoCreation");
-      return ($smarty->fetch(get_template_path('gencd_frame.tpl', TRUE)));
+      return ($smarty->fetch(get_template_path('goto/gencd_frame.tpl', TRUE)));
     }
 
 
