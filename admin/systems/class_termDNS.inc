@@ -712,6 +712,11 @@ class termDNS extends plugin
       $this->attrs['ipHostNumber'][] = $value;
     }
 
+    /* Do not add the objectClass ipHost if no ip address is given */
+    if(!$this->attrs['ipHostNumber']){
+      $this->attrs['objectClass'] = array_remove_entries(array("ipHost"),$this->attrs['objectClass']);
+    }
+
     /* Write back to ldap */
     $ldap->cd($this->dn);
     $this->cleanup();
