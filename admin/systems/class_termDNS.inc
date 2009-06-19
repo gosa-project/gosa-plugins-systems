@@ -425,7 +425,7 @@ class termDNS extends plugin
 
       /* Assign smarty all DNS attributes */
       foreach($this->DNSattributes as $attr){
-        $smarty->assign($attr,$this->dnsEntry[$attr]);
+        $smarty->assign($attr,htmlentities($this->dnsEntry[$attr]));
       }
 
       /* Assign all needed vars */
@@ -569,7 +569,7 @@ class termDNS extends plugin
         /* Get all basic DNS attributes (TTL, Clas ..)*/
         foreach($this->DNSattributes as $attr){
           if(isset($_POST[$attr])){
-            $this->dnsEntry[$attr] = $_POST[$attr];
+            $this->dnsEntry[$attr] = get_post($attr);
           }
         }
       }
@@ -940,7 +940,7 @@ class termDNS extends plugin
 
         $str.=" <tr>".
           "   <td>".$this->generateRecordListBox($entry['type'],"RecordTypeSelectedFor_".$key)."</td>".
-          "   <td><input type='text' value='".$entry['value']."' name='RecordValue_".$key."' id='RecordValue_".$key."'></td>".
+          "   <td><input type='text' value=\"".htmlentities($entry['value'])."\" name='RecordValue_".$key."' id='RecordValue_".$key."'></td>".
           "   <td><input type='submit' name='RemoveRecord_".$key."' value='"._("Delete")."' id='RemoveRecord_".$key."'></td>".
           "</tr>";
     }
@@ -952,6 +952,7 @@ class termDNS extends plugin
            "  </tr>".
            "</table>";
      $ret =  array("str" => $str, "changeStateForRecords" => $changeStateForRecords);
+  
     return($ret);
   }
 
