@@ -65,10 +65,11 @@ class termDNS extends plugin
   var $dnsEntry                 = array();
   var $DNSenabled               = false;
   var $hide_dns_check_box       = FALSE;
+  var $namingAttr               = "cn";
 
   /*  Terminal dns 
    */
-  function termDNS (&$config, $parent,$objectClasses,$IPisMust = false)
+  function termDNS (&$config, $parent,$objectClasses,$IPisMust = false,$namingAttr = "cn")
   {
     /* We need to know which objectClasses are used, to store the ip/mac
      * Because of different type of devices   
@@ -76,12 +77,13 @@ class termDNS extends plugin
     $this->parent         = $parent;
     $this->objectclasses  =  $objectClasses;
     $this->IPisMust       = $IPisMust;
+    $this->namingAttr     = $namingAttr;
 
     plugin::plugin ($config, $parent->dn);
 
-    if(isset($this->attrs['cn'][0])){
-      $this->OrigCn = preg_replace("/\\\$\$/","",$this->attrs['cn'][0]);
-      $this->cn = preg_replace("/\\\$\$/","",$this->attrs['cn'][0]);
+    if(isset($this->attrs[$namingAttr][0])){
+      $this->OrigCn = preg_replace("/\\\$\$/","",$this->attrs[$namingAttr][0]);
+      $this->cn = preg_replace("/\\\$\$/","",$this->attrs[$namingAttr][0]);
     }
 
     /* Create list of additional ipHostNumber.
@@ -98,7 +100,7 @@ class termDNS extends plugin
      ************/
 
     /* Hide all dhcp specific code, if dhcp plugin is not present in config */
-    $dhcpEnabled = FALSE;
+    $this->dhcpEnabled = FALSE;
     if($this->config->search("servdhcp","class",array("tabs"))){
       $this->dhcpEnabled = TRUE;
     }
@@ -754,7 +756,7 @@ class termDNS extends plugin
       }
 
       /* Updated IP host number */
-      if($this->dhcp_is_Account){
+      if($this->dhcp_is_Account && $this->dhcpHostEntry['dhcpStatements']){
         foreach($this->dhcpHostEntry['dhcpStatements'] as $id => $value){
           if(preg_match("/^fixed-address/",$value)){
             $this->dhcpHostEntry['dhcpStatements'][$id] = "fixed-address ".$this->ipHostNumber; 
@@ -803,7 +805,7 @@ class termDNS extends plugin
         if(($this->initial_dhcpParentNode != $this->dhcpParentNode) || 
            ($this->cn != $this->OrigCn)){
           $attrs = $this->dhcpHostEntry;
-          $attrs['cn'] = $this->cn;
+          $attrs[$this->namingAttr] = $this->cn;
           unset($attrs['dn']);
           unset($attrs['MODIFIED']);
           $ldap->cd("cn=".$this->cn.",".$this->dhcpParentNode);
@@ -1028,7 +1030,7 @@ class termDNS extends plugin
   {
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
-    $ldap->search ("(&(objectClass=dhcpHost)(cn=".$this->cn."))",array("cn","dn"));
+    $ldap->search ("(&(objectClass=dhcpHost)(cn=".$this->cn."))",array("uid","cn","dn"));
 
     if($ldap->count()){
       $attr = $ldap->fetch();
