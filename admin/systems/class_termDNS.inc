@@ -391,7 +391,7 @@ class termDNS extends plugin
         foreach($this->Zones as $key => $name){
           if($name == $this->dnsEntry['zoneName']){
             $net = DNS::FlipIp(str_replace(".in-addr.arpa","",DNS::getNameFromMix($key)));
-            $this->ipHostNumber = $this->generateRandomIp($net);
+            $this->ipHostNumber = $this->generateRandomIP($net);
           }
         }
       }
@@ -1105,13 +1105,48 @@ class termDNS extends plugin
   {
     $str = $net;
     $cnt = 4;
-    while(substr_count($str,".") < 3 && $cnt > 0){
-      $str .= ".".rand(0,255);
-      $str = preg_replace("/\.\.*/",".",$str);
-      $str = trim($str,". ");
-      $cnt --;
+
+    // first gather all IPs 
+    $ldap = $this->config->get_ldap_link();
+    $ocs = 
+      "(objectClass=goFonHardware)".
+      "(objectClass=goServer)".
+      "(objectClass=GOhard)".
+      "(objectClass=gotoTerminal)".
+      "(objectClass=gotoWorkstation)".
+      "(objectClass=gotoPrinter)".
+      "(objectClass=ipHost)";
+    $list = array();
+    $ldap->search("(&(|{$ocs})(ipHostNumber={$net}*))",array("ipHostNumber"));
+    while($attrs = $ldap->fetch()){
+      $list[] = $attrs['ipHostNumber'][0];
     }
-    return($str);
+
+    // Set starting ip.
+    $ip_data = preg_split("/\./",$net);
+    for($i=0;$i<4;$i++){
+      if(!isset($ip_data[$i])) $ip_data[$i] = 0;
+    }
+
+    // Search the next free and valid ip.
+    while(in_array(implode(".",$ip_data),$list) || $ip_data[3] <= 1){
+      $ip_data[3] ++ ;
+      if($ip_data[3] > 255){
+        $ip_data[3] = 1 ;
+        $ip_data[2] ++ ;
+      }
+      if($ip_data[2] > 255){
+        $ip_data[2] = 1 ;
+        $ip_data[1] ++ ;
+      }
+      if($ip_data[1] > 255){
+        $ip_data[1] = 1 ;
+        $ip_data[0] ++ ;
+      }
+      if($ip_data[0] > 255) break;
+    }
+
+    return(implode(".",$ip_data));
   }
 
   
