@@ -1461,10 +1461,11 @@ class systems extends plugin
 
   function remove_lock()
   {
-    if (isset($this->systab->dn)){
-      del_lock ($this->systab->dn);
-    }elseif(isset($this->dn) && !empty($this->dn) && $this->dn != "new"){
+     
+    if(isset($this->dn) && !empty($this->dn) && $this->dn != "new"){
       del_lock($this->dn);
+    }elseif (isset($this->systab->dn)){
+      del_lock ($this->systab->dn);
     }
     if(isset($this->dns) && is_array($this->dns) && count($this->dns)){
       del_lock($this->dns);
