@@ -324,7 +324,7 @@ class termDNS extends plugin
       $this->dialog->read_only     = !$this->acl_is_writeable("dhcpSetup");
       $this->dialog->dhcpHWAddress = "ethernet ".$this->macAddress; 
       if(!empty($this->ipHostNumber)){
-        $this->dialog->statements['fixed-address'] = $this->ipHostNumber; 
+        $this->dialog->statements->set('fixed-address', $this->ipHostNumber); 
       }
     }
 
@@ -736,7 +736,7 @@ class termDNS extends plugin
         $this->dialog->cn = $this->cn;
         $this->dialog->dhcpHWAddress = "ethernet ".$this->macAddress;
         if(!empty($this->ipHostNumber)){
-          $this->dialog->statements['fixed-address'] = $this->ipHostNumber;
+          $this->dialog->statements->set('fixed-address', $this->ipHostNumber);
         }
         $this->dialog->execute();
         $this->dialog->save_object(); 
