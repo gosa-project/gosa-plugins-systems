@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-27 10:16+0100\n"
+"POT-Creation-Date: 2009-06-30 09:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -69,7 +69,7 @@ msgstr ""
 #: admin/systems/class_serverService.inc:186
 #: admin/systems/class_serverService.inc:236
 #: admin/systems/class_serverService.inc:363
-#: admin/systems/class_termDNS.inc:338
+#: admin/systems/class_termDNS.inc:340
 msgid "Error"
 msgstr ""
 
@@ -111,15 +111,15 @@ msgid "Password method crypt is missing. Cannot set system password."
 msgstr ""
 
 #: admin/systems/class_systemManagement.inc:704
-#: admin/systems/class_systemManagement.inc:1810
+#: admin/systems/class_systemManagement.inc:1811
 #: admin/systems/services/class_goService.inc:122
 #: admin/systems/services/class_goService.inc:150
 #: admin/systems/services/class_goService.inc:183
 #: admin/systems/class_servGeneric.inc:281
-#: admin/systems/class_servGeneric.inc:433 admin/systems/class_termDNS.inc:483
-#: admin/systems/class_termDNS.inc:771 admin/systems/class_termDNS.inc:790
-#: admin/systems/class_termDNS.inc:811 admin/systems/class_termDNS.inc:816
-#: admin/systems/class_termDNS.inc:834 admin/systems/class_termDNS.inc:906
+#: admin/systems/class_servGeneric.inc:433 admin/systems/class_termDNS.inc:485
+#: admin/systems/class_termDNS.inc:778 admin/systems/class_termDNS.inc:797
+#: admin/systems/class_termDNS.inc:818 admin/systems/class_termDNS.inc:823
+#: admin/systems/class_termDNS.inc:841 admin/systems/class_termDNS.inc:913
 #: admin/systems/class_componentGeneric.inc:160
 #: admin/systems/class_componentGeneric.inc:301
 msgid "LDAP error"
@@ -140,12 +140,12 @@ msgid "Permission"
 msgstr ""
 
 #: admin/systems/class_systemManagement.inc:1308
-#: admin/systems/class_systemManagement.inc:1621
+#: admin/systems/class_systemManagement.inc:1622
 msgid "New terminal"
 msgstr ""
 
 #: admin/systems/class_systemManagement.inc:1310
-#: admin/systems/class_systemManagement.inc:1622
+#: admin/systems/class_systemManagement.inc:1623
 msgid "New workstation"
 msgstr ""
 
@@ -165,92 +165,92 @@ msgstr ""
 msgid "Workstation template for"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1598
+#: admin/systems/class_systemManagement.inc:1599
 msgid "Template"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1599
+#: admin/systems/class_systemManagement.inc:1600
 #: admin/systems/class_divListSystem.inc:199
 msgid "Phone"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1600
+#: admin/systems/class_systemManagement.inc:1601
 #: admin/systems/class_componentGeneric.inc:315
 msgid "Network device"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1601
+#: admin/systems/class_systemManagement.inc:1602
 #: admin/systems/class_divListSystem.inc:203
 msgid "Printer"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1603
+#: admin/systems/class_systemManagement.inc:1604
 msgid "Windows workstation"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1605
+#: admin/systems/class_systemManagement.inc:1606
 #: admin/systems/class_divListSystem.inc:191
 msgid "Workstation"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1606
+#: admin/systems/class_systemManagement.inc:1607
 #: admin/systems/class_divListSystem.inc:195
 #: admin/systems/class_servGeneric.inc:509
 msgid "Server"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1607
+#: admin/systems/class_systemManagement.inc:1608
 #: admin/systems/class_divListSystem.inc:187
 msgid "Terminal"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1609
+#: admin/systems/class_systemManagement.inc:1610
 msgid "Locked workstation"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1610
+#: admin/systems/class_systemManagement.inc:1611
 msgid "Locked server"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1611
+#: admin/systems/class_systemManagement.inc:1612
 msgid "Locked terminal"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1613
+#: admin/systems/class_systemManagement.inc:1614
 msgid "Workstation error"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1614
+#: admin/systems/class_systemManagement.inc:1615
 msgid "Server error"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1615
+#: admin/systems/class_systemManagement.inc:1616
 msgid "Terminal error"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1617
+#: admin/systems/class_systemManagement.inc:1618
 msgid "Workstation busy"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1618
+#: admin/systems/class_systemManagement.inc:1619
 msgid "Server busy"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1620
+#: admin/systems/class_systemManagement.inc:1621
 msgid "New system from incoming"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1626
+#: admin/systems/class_systemManagement.inc:1627
 #: admin/systems/class_divListSystem.inc:214
 msgid "Opsi client"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1826
 #: admin/systems/class_systemManagement.inc:1827
+#: admin/systems/class_systemManagement.inc:1828
 msgid "Incoming objects"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1832
+#: admin/systems/class_systemManagement.inc:1833
 msgid "Incoming"
 msgstr ""
 
@@ -840,75 +840,75 @@ msgstr ""
 msgid "Execute"
 msgstr ""
 
-#: admin/systems/class_termDNS.inc:444
+#: admin/systems/class_termDNS.inc:446
 msgid "Not matching"
 msgstr ""
 
-#: admin/systems/class_termDNS.inc:593
+#: admin/systems/class_termDNS.inc:595
 #, php-format
 msgid "IP address %s"
 msgstr ""
 
-#: admin/systems/class_termDNS.inc:602 admin/systems/class_termDNS.inc:614
-#: admin/systems/class_termDNS.inc:616 admin/systems/class_termDNS.inc:982
+#: admin/systems/class_termDNS.inc:604 admin/systems/class_termDNS.inc:616
+#: admin/systems/class_termDNS.inc:618 admin/systems/class_termDNS.inc:990
 #: admin/systems/class_componentGeneric.inc:219
 #: admin/systems/class_componentGeneric.inc:222
 msgid "IP address"
 msgstr ""
 
-#: admin/systems/class_termDNS.inc:607 admin/systems/class_termDNS.inc:624
-#: admin/systems/class_termDNS.inc:626 admin/systems/class_termDNS.inc:983
+#: admin/systems/class_termDNS.inc:609 admin/systems/class_termDNS.inc:626
+#: admin/systems/class_termDNS.inc:628 admin/systems/class_termDNS.inc:991
 msgid "MAC address"
 msgstr ""
 
-#: admin/systems/class_termDNS.inc:641
+#: admin/systems/class_termDNS.inc:643
 #, php-format
 msgid "The IP address '%s' is not part of the selected reverse zone '%s'!"
 msgstr ""
 
-#: admin/systems/class_termDNS.inc:653
+#: admin/systems/class_termDNS.inc:655
 #, php-format
 msgid "Record type '%s' is duplicated!"
 msgstr ""
 
-#: admin/systems/class_termDNS.inc:661
+#: admin/systems/class_termDNS.inc:663
 #, php-format
 msgid "Uniq record type '%s' is duplicated!"
 msgstr ""
 
-#: admin/systems/class_termDNS.inc:673
+#: admin/systems/class_termDNS.inc:675
 #, php-format
 msgid ""
 "The IP address '%s' will be added as 'A Record', this will be done "
 "automatically, please remove the record."
 msgstr ""
 
-#: admin/systems/class_termDNS.inc:681
+#: admin/systems/class_termDNS.inc:683
 #, php-format
 msgid "Only lowercase records are allowed, please check your '%ss'."
 msgstr ""
 
-#: admin/systems/class_termDNS.inc:923 admin/systems/class_termDNS.inc:943
+#: admin/systems/class_termDNS.inc:930 admin/systems/class_termDNS.inc:950
 msgid "Add"
 msgstr ""
 
-#: admin/systems/class_termDNS.inc:937
+#: admin/systems/class_termDNS.inc:944
 msgid "Delete"
 msgstr ""
 
-#: admin/systems/class_termDNS.inc:973
+#: admin/systems/class_termDNS.inc:981
 msgid "DNS"
 msgstr ""
 
-#: admin/systems/class_termDNS.inc:974
+#: admin/systems/class_termDNS.inc:982
 msgid "DNS settings"
 msgstr ""
 
-#: admin/systems/class_termDNS.inc:989
+#: admin/systems/class_termDNS.inc:997
 msgid "DNS configuration"
 msgstr ""
 
-#: admin/systems/class_termDNS.inc:992
+#: admin/systems/class_termDNS.inc:1000
 msgid "DHCP configuration"
 msgstr ""
 
