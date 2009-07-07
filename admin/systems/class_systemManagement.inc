@@ -317,7 +317,10 @@ class systems extends plugin
          the target system opened to allow to edit the objects attributes.
      */
     
-    if($this->systab instanceOf ArpNewDeviceTabs && isset($_POST['edit_finish'])){
+    if($this->systab instanceOf ArpNewDeviceTabs && 
+       isset($_POST['edit_finish']) && 
+       $this->systab->by_object['ArpNewDevice']->gotoIntegration ){
+      
 
       /* Check tabs, will feed message array */
       $message = $this->systab->check();
@@ -325,6 +328,7 @@ class systems extends plugin
         msg_dialog::displayChecks($message);
       }else{
         $s_action = "SelectedSystemType";
+        $this->systab->save();
         $this->systab = null;
         unset($_POST['edit_finish']);
       }

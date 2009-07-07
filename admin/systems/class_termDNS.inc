@@ -332,7 +332,7 @@ class termDNS extends plugin
       $this->dialog = FALSE; 
     }
 
-    if(isset($_POST['save_dhcp']) && $this->acl_is_writeable("dhcpSetup")){
+    if(isset($_POST['save_dhcp']) && $this->acl_is_writeable("dhcpSetup") && is_object($this->dialog)){
       $this->dialog->save_object();
       $msgs = $this->dialog->check(array());
       if(count($msgs)){
@@ -541,11 +541,15 @@ class termDNS extends plugin
         DNS posts
        ******/
 
-      /* Check if DNS should be enabled / disabled */
-      if($this->DNS_is_account && $this->acl_is_writeable("dnsSetup") && !isset($_POST['DNS_is_account'])){
-        $this->DNS_is_account = false;
-      }elseif(!$this->DNS_is_account && $this->acl_is_writeable("dnsSetup") && isset($_POST['DNS_is_account'])){
-        $this->DNS_is_account = true;
+      /* Check if DNS should be enabled / disabled 
+       *  -skip this, if the dns account is enforced.
+       */
+      if(!$this->hide_dns_check_box){
+        if($this->DNS_is_account && $this->acl_is_writeable("dnsSetup") && !isset($_POST['DNS_is_account'])){
+          $this->DNS_is_account = false;
+        }elseif(!$this->DNS_is_account && $this->acl_is_writeable("dnsSetup") && isset($_POST['DNS_is_account'])){
+          $this->DNS_is_account = true;
+        }
       }
 
       /* Get dns attributes */
