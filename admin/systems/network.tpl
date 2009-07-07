@@ -108,6 +108,9 @@
 {render acl=$dnsSetupACL}
       {if $DNS_is_account == true}
       <input type="checkbox" name="DNS_is_account" value="1"  
+
+        {if $hide_dns_check_box} disabled {/if}
+
         checked="checked"
         onclick="toggle('test2');
           changeState('zoneName');
