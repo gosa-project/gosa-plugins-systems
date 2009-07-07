@@ -316,7 +316,20 @@ class systems extends plugin
         If no object group was selected, then we keep the "edit" dialog of 
          the target system opened to allow to edit the objects attributes.
      */
-  
+    
+    if($this->systab instanceOf ArpNewDeviceTabs && isset($_POST['edit_finish'])){
+
+      /* Check tabs, will feed message array */
+      $message = $this->systab->check();
+      if(count($message)){
+        msg_dialog::displayChecks($message);
+      }else{
+        $s_action = "SelectedSystemType";
+        $this->systab = null;
+        unset($_POST['edit_finish']);
+      }
+    }
+ 
     if($s_action == "SelectedSystemType"){
 
       /* Possible destination system types 
@@ -325,7 +338,11 @@ class systems extends plugin
 
       /* Remember dialog selection.
        */
-      $selected_group = $_POST['ObjectGroup'];
+      
+      $selected_group = "none";
+      if(isset($_POST['ObjectGroup'])){
+        $selected_group = $_POST['ObjectGroup'];
+      }
       $selected_system = $_POST['SystemType'];
 
       $this->systab = NULL;
@@ -554,6 +571,7 @@ class systems extends plugin
           msg_dialog::display(_("Error"), msgPool::class_not_found("ArpNewDevice"), ERROR_DIALOG);
         }else{
           add_lock ($this->dn, $this->ui->dn);
+          $this->system_activation_object= array($this->dn);
           $this->systab = new ArpNewDeviceTabs($this->config,$this->config->data['TABS']['ARPNEWDEVICETABS'],$this->dn);
         }
       }elseif($type == "NewDevice"){
