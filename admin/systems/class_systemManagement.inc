@@ -1027,7 +1027,7 @@ class systems extends plugin
             target opsi -> Remove source.
             target gosa -> Activate system.
          */
-        if($this->systab instanceOf opsi_tabs && $this->systab->was_activated){
+        if($this->systab instanceOf opsi_tabs){
           $ldap = $this->config->get_ldap_link();
           $ldap->cd($this->config->current['BASE']);
           $ldap->rmdir ($this->systab->dn);
