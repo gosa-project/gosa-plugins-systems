@@ -319,18 +319,22 @@ class systems extends plugin
     
     if($this->systab instanceOf ArpNewDeviceTabs && 
        isset($_POST['edit_finish']) && 
-       $this->systab->by_object['ArpNewDevice']->gotoIntegration ){
+       isset($_POST['gotoIntegration'])){
       
+      $this->systab->save_object();
 
-      /* Check tabs, will feed message array */
-      $message = $this->systab->check();
-      if(count($message)){
-        msg_dialog::displayChecks($message);
-      }else{
-        $s_action = "SelectedSystemType";
-        $this->systab->save();
-        $this->systab = null;
-        unset($_POST['edit_finish']);
+      if($this->systab->by_object['ArpNewDevice']->gotoIntegration){
+
+        /* Check tabs, will feed message array */
+        $message = $this->systab->check();
+        if(count($message)){
+          msg_dialog::displayChecks($message);
+        }else{
+          $s_action = "SelectedSystemType";
+          $this->systab->save();
+          $this->systab = null;
+          unset($_POST['edit_finish']);
+        }
       }
     }
  
