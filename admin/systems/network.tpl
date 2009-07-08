@@ -107,9 +107,14 @@
       
 {render acl=$dnsSetupACL}
       {if $DNS_is_account == true}
-      <input type="checkbox" name="DNS_is_account" value="1"  
+      {if $hide_dns_check_box} 
+        <input type="hidden" name="DNS_is_account" value="1"  
+        <input type="checkbox" name="dummy" value="1" disabled
 
-        {if $hide_dns_check_box} disabled {/if}
+      {else}
+        <input type="checkbox" name="DNS_is_account" value="1"  
+      {/if}
+
 
         checked="checked"
         onclick="toggle('test2');
