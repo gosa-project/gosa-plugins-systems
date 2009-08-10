@@ -117,18 +117,18 @@
 
 
         checked="checked"
-        onclick="toggle('test2');
+        onclick="GOsa_toggle('test2');
           changeState('zoneName');
           changeState('dNSTTL');
-          toggle('propose_ip');
+          GOsa_toggle('propose_ip');
           changeState('AddNewRecord');
           {$changeStateForRecords}"/>
         {else}
       <input type="checkbox" name="DNS_is_account" value="1"  
-        onclick="toggle('test2');
+        onclick="GOsa_toggle('test2');
           changeState('zoneName');
           changeState('dNSTTL');
-          toggle('propose_ip');
+          GOsa_toggle('propose_ip');
           changeState('AddNewRecord');"/>
         {/if}
 {/render}
