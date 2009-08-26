@@ -24,11 +24,14 @@ class servtabs extends tabs
 {
   public $was_activated = FALSE;
 
-  function servtabs($config, $data, $dn,$category)
+  function servtabs($config, $data, $dn,$category,$hide_refs = FALSE, $hide_acls = FALSE)
   {
     /* Save dn */
     $this->dn= $dn;
     $this->config= $config;
+
+    $this->hide_acls = $hide_acls;
+    $this->hide_refs = $hide_refs;
 
     $baseobject= NULL;
 

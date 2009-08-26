@@ -23,9 +23,9 @@
 class componenttabs extends tabs
 {
 
-  function componenttabs($config, $data, $dn,$category)
+  function componenttabs($config, $data, $dn,$category,$hide_refs = FALSE, $hide_acls = FALSE)
   {
-    tabs::tabs($config, $data, $dn,$category);
+    tabs::tabs($config, $data, $dn,$category,$hide_refs, $hide_acls);
 
     /* Add references/acls/snapshots */
     $this->addSpecialTabs();
