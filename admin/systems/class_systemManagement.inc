@@ -385,10 +385,15 @@ class systems extends plugin
 
             /* We are allowed to create the requested system type */
             if(preg_match("/c/",$tabacl)){
-              $this->systab= new $tabclass($this->config, $this->config->data['TABS'][$class], $this->dn,$selected_system);
+              $this->systab= new $tabclass($this->config, $this->config->data['TABS'][$class], $this->dn, $selected_system);
               $this->systab->set_acl_base($this->DivListSystem->selectedBase);
-              $this->systab->by_object[$tabname]->base = $this->DivListSystem->selectedBase;
-              $this->systab->base = $this->DivListSystem->selectedBase;
+              if($selected_group != "none"){
+                $this->systab->base = preg_replace("/^[^,]+,".get_ou('ogroupRDN')."/", "", $selected_group);
+                $this->systab->by_object[$tabname]->base = $this->systab->base;
+              } else {
+                $this->systab->by_object[$tabname]->base = $this->DivListSystem->selectedBase;
+                $this->systab->base = $this->DivListSystem->selectedBase;
+              }
 
               /* This will be used when the object is saved, to set FAIstate to 'install'
                   and to preset maybe other attributes.

@@ -23,7 +23,7 @@
 	  <td>
 	   <br>
 {render acl=$baseACL}
-      <select id="base" size="1" name="base" title="{t}Choose subtree to place group in{/t}">
+      <select id="base" size="1" name="base" title="{t}Choose subtree to place server in{/t}">
        {html_options options=$bases selected=$base_select}
       </select>
 {/render}
