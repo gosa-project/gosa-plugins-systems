@@ -79,7 +79,9 @@ class termDNS extends plugin
     $this->IPisMust       = $IPisMust;
     $this->namingAttr     = $namingAttr;
 
-    plugin::plugin ($config, $parent->dn);
+    plugin::plugin ($config, $parent->dn, $this->parent);
+  
+    $this->attrs = &$this->parent->attrs;
 
     if(isset($this->attrs[$namingAttr][0])){
       $this->OrigCn = preg_replace("/\\\$\$/","",$this->attrs[$namingAttr][0]);
