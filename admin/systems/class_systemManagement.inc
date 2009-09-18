@@ -1468,7 +1468,7 @@ class systems extends plugin
         to avoid duplicate entries.
      */
     foreach($opsi_clients as $entry){
-      if(isset($opsi_map[$entry['cn'][0]])){
+      if(isset($opsi_map[$entry['cn'][0]]) || !preg_match("/".$this->DivListSystem->Regex."/", $entry['cn'][0])){
         continue;
       }
       $terminal             = $entry;
