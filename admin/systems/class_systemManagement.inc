@@ -1300,9 +1300,12 @@ class systems extends plugin
     $res = array_merge($res,get_list($filter,$sys_categories, get_ou('systemIncomingRDN').$base,$sys_attrs, GL_SIZELIMIT));
 
     /* Append opsi systems, the opsi extension have to installed.
-        (Only, if we are allowed to view opsi hosts)
+        (Only, if we are allowed to view opsi hosts and if we're on the ldap root)
      */
-    if($this->opsi instanceof opsi && $this->opsi->enabled() && $this->DivListSystem->ShowOpsiHosts){
+    if($this->DivListSystem->selectedBase == $this->config->current['BASE'] && 
+        $this->opsi instanceof opsi && 
+        $this->opsi->enabled() && 
+        $this->DivListSystem->ShowOpsiHosts){
       $o_acl = $this->ui->get_permissions($base,"opsi/opsiGeneric","");
       if(preg_match("/r/",$o_acl)){
         $opsi_clients = $this->opsi->get_hosts_for_system_management();
