@@ -1123,9 +1123,11 @@ class termDNS extends plugin
       "(objectClass=gotoPrinter)".
       "(objectClass=ipHost)";
     $list = array();
-    $ldap->search("(&(|{$ocs})(ipHostNumber={$net}*))",array("ipHostNumber"));
+    $ldap->search("(&(|{$ocs})(ipHostNumber=*))",array("ipHostNumber"));
     while($attrs = $ldap->fetch()){
-      $list[] = $attrs['ipHostNumber'][0];
+      if (preg_match("/^$net\./", $attrs['ipHostNumber'][0])) {
+        $list[] = $attrs['ipHostNumber'][0];
+      }
     }
 
     // Set starting ip.
