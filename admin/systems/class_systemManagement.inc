@@ -1470,8 +1470,9 @@ class systems extends plugin
        If there is a samba host, then merge it with the opsi host,
         to avoid duplicate entries.
      */
+    $oRex = preg_replace("/\*/",".*",$this->DivListSystem->Regex);
     foreach($opsi_clients as $entry){
-      if(isset($opsi_map[$entry['cn'][0]]) || !preg_match("/".$this->DivListSystem->Regex."/", $entry['cn'][0])){
+      if(isset($opsi_map[$entry['cn'][0]]) || !preg_match("/".preg_quote($oRex)."/", $entry['cn'][0])){
         continue;
       }
       $terminal             = $entry;
