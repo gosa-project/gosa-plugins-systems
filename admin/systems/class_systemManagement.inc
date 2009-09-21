@@ -1472,7 +1472,7 @@ class systems extends plugin
      */
     $oRex = preg_replace("/\*/",".*",$this->DivListSystem->Regex);
     foreach($opsi_clients as $entry){
-      if(isset($opsi_map[$entry['cn'][0]]) || !preg_match("/".preg_quote($oRex)."/", $entry['cn'][0])){
+      if(isset($opsi_map[$entry['cn'][0]]) || !preg_match("/".($oRex)."/", $entry['cn'][0])){
         continue;
       }
       $terminal             = $entry;
