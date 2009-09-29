@@ -721,7 +721,7 @@ class termDNS extends plugin
     }
 
     /* Do not add the objectClass ipHost if no ip address is given */
-    if(!$this->attrs['ipHostNumber']){
+    if(!isset($this->attrs['ipHostNumber'])){
       $this->attrs['objectClass'] = array_remove_entries(array("ipHost"),$this->attrs['objectClass']);
     }
 
