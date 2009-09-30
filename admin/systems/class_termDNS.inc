@@ -258,7 +258,7 @@ class termDNS extends plugin
   {
 	  /* Call parent execute */
     $smarty= get_smarty();
-    $smarty->assign("autonetACL",$this->acl_is_writeable("macAddress").$this->acl_is_writeable("ipHostNumber"));
+    $smarty->assign("autonetACL",$this->acl_is_writeable("macAddress") && $this->acl_is_writeable("ipHostNumber")?"rw":"");
 
     $tmp = $this->plInfo();
     foreach($tmp['plProvidedAcls'] as $name => $translation){
@@ -459,7 +459,7 @@ class termDNS extends plugin
       $smarty->assign("changeStateForRecords",$changeStateForRecords);
       $smarty->assign("staticAddress","<font class=\"must\">*</font>");
 
-      $smarty->assign("autonetACL",$this->acl_is_writeable("macAddress").$this->acl_is_writeable("ipHostNumber"));
+      $smarty->assign("autonetACL",$this->acl_is_writeable("macAddress") && $this->acl_is_writeable("ipHostNumber")?"rw":"");
 
       $display.= $smarty->fetch(get_template_path('network.tpl', TRUE));
     }
