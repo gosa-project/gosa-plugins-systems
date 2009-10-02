@@ -750,6 +750,15 @@ class termDNS extends plugin
         if(count($this->dhcpHostEntry['dhcpOption']) == 0){
           $this->dhcpHostEntry['dhcpOption']= array("host-name ".$this->cn);
         }
+      }else{
+
+        // Updated Host-Name entry 
+        foreach($this->dhcpHostEntry['dhcpOption'] as $key => $entry){
+          if(preg_match("/^host-name/", $entry)){
+            $this->dhcpHostEntry['dhcpOption'][$key] = "host-name ".$this->cn;
+            break;
+          }
+        }
       }
 
       /* Write mac address to dhcp settings */
