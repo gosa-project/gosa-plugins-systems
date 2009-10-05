@@ -156,9 +156,10 @@ class termDNS extends plugin
        */
       $this->dnsEntry     = DNS::getDNSHostEntries($config,$this->OrigCn);
 
+      $ptr = DNS::FlipIp($this->get_pTRRecord());
+
       /* Remove A record which equals $this->ipHostNumber
        */
-      $ptr = $this->get_pTRRecord();
       foreach($this->dnsEntry['RECORDS'] as $key => $rec){
         if(($rec['type'] == "aRecord") && ($rec['value'] == $this->ipHostNumber)){
           unset($this->dnsEntry['RECORDS'][$key]);
