@@ -1,13 +1,13 @@
-# translation of messages.po to french
-# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008.
+# translation of messages.po to
+# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-10-05 15:39+0200\n"
-"PO-Revision-Date: 2008-12-21 12:38+0100\n"
+"PO-Revision-Date: 2009-10-06 17:19+0200\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
-"Language-Team: french <fr@li.org>\n"
+"Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -63,8 +63,7 @@ msgstr "La création de l'image à échoué. veuillez lire le rapport ci dessous
 #: admin/systems/.svn/tmp/tempfile.2.tmp:295
 #, php-format
 msgid "Command '%s', specified for ISO creation doesn't seem to exist."
-msgstr ""
-"La commande '%s', utilisée dans la création de l'image ISO n'existe pas."
+msgstr "La commande '%s', utilisée dans la création de l'image ISO n'existe pas."
 
 #: admin/systems/class_systemManagement.inc:369
 #: admin/systems/class_systemManagement.inc:489
@@ -913,8 +912,7 @@ msgid "Software deployment"
 msgstr "Déploiement de logiciel"
 
 #: admin/systems/class_servGeneric.inc:370
-msgid ""
-"This host is currently installing, if you really want to save it, press 'OK'."
+msgid "This host is currently installing, if you really want to save it, press 'OK'."
 msgstr ""
 "Cet hôte est actuellement en cours d'installation, si vous voulez vraiment "
 "le sauver, cliquez sur 'OK'."
@@ -947,9 +945,8 @@ msgid "Action flag"
 msgstr "Indicateur d'action"
 
 #: admin/systems/server.tpl:26
-#, fuzzy
 msgid "Choose subtree to place server in"
-msgstr "Sélectionnez la branche où sera enregistrée l'utilisateur"
+msgstr "Sélectionnez la branche où sera enregistrée le serveur"
 
 #: admin/systems/server.tpl:32 admin/systems/component.tpl:25
 msgid "Select a base"
@@ -968,8 +965,7 @@ msgid "Action"
 msgstr "Action"
 
 #: admin/systems/server.tpl:69
-msgid ""
-"System installation in progress, the FAI state cannot be changed right now."
+msgid "System installation in progress, the FAI state cannot be changed right now."
 msgstr ""
 "Le système est en cours d'installation, l'état FAI ne peut pas être changé "
 "maintenant."
@@ -1032,8 +1028,7 @@ msgstr ""
 #: admin/systems/class_termDNS.inc:690
 #, php-format
 msgid "Only lowercase records are allowed, please check your '%ss'."
-msgstr ""
-"Seulement les minuscules sont autorisée, veuillez vérifier votre '%ss'."
+msgstr "Seulement les minuscules sont autorisée, veuillez vérifier votre '%ss'."
 
 #: admin/systems/class_termDNS.inc:946 admin/systems/class_termDNS.inc:966
 msgid "Add"
@@ -1072,6 +1067,6 @@ msgid "Device name"
 msgstr "Nom du périphérique"
 
 #: admin/systems/component.tpl:20
-#, fuzzy
 msgid "Choose subtree to place component in"
-msgstr "Sélectionnez la branche où sera placée le groupe"
+msgstr "Sélectionnez la branche où sera placée le composant"
+
