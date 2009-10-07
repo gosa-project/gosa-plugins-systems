@@ -97,6 +97,7 @@ class servgeneric extends plugin
     $this->netConfigDNS = new termDNS($this->config,$this,$this->objectclasses);
     $this->netConfigDNS->set_acl_category("server");
     $this->netConfigDNS->set_acl_base($this->base);
+    $this->netConfigDNS->MACisMust =TRUE;
 
     /* Check if this host is currently in installation process*/
     if($this->dn != "new" && class_available("gosaSupportDaemon") && class_available("DaemonEvent")){
