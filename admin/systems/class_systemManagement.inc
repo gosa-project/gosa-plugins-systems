@@ -1243,11 +1243,7 @@ class systems extends plugin
     /* Prepare samba class name */
     $samba  ="";
     if ($this->DivListSystem->ShowWinWorkstations){
-      if ($this->config->get_cfg_value("sambaversion") == "3"){
-        $samba= "sambaSamAccount";
-      } else {
-        $samba= "sambaAccount";
-      }
+      $samba= "sambaSamAccount";
     }
 
     /* This array represents the combination between checkboxes and search filters */
