@@ -893,6 +893,10 @@ class termDNS extends plugin
         $this->dnsEntry['exists'] = $this->DNS_is_account;
         $tmp = DNS::getDNSHostEntriesDiff($this->config,$this->OrigCn,$this->dnsEntry,$this->cn);
       }   
+    
+      /* Update SOA record if needed
+       */
+      $this->updateSOARecord();
 
       /* move follwoing entries 
        */
@@ -1193,6 +1197,15 @@ class termDNS extends plugin
         $this->DNS_is_account  = TRUE;
         $this->hide_dns_check_box = TRUE;
       }
+    }
+  }
+
+  function updateSOARecord()
+  {
+    $oldEntries = DNS::getDNSHostEntries($this->config,$this->OrigCn);
+    $newEntries = $this->dnsEntry;
+    if(array_differs($newEntries['RECORDS'],$oldEntries['RECORDS'])){
+      DNS::touchDNSZone($this->config,$this->dnsEntry['zoneName']);
     }
   }
 }
