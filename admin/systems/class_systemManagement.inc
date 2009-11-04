@@ -443,10 +443,7 @@ class systems extends plugin
                  */
                 foreach (array("workservice", "termservice") as $cls){
                   if (isset($this->systab->by_object[$cls])){
-                    $this->systab->by_object[$cls]->gotoXMouseport= "";
-                    $this->systab->by_object[$cls]->gotoXMouseType= "";
-                    $this->systab->by_object[$cls]->gotoXResolution= "";
-                    $this->systab->by_object[$cls]->gotoXColordepth= "";
+                    $this->systab->by_object[$cls]->set_everything_to_inherited();
                   }
                 }
 
