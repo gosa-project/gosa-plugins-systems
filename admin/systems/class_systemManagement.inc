@@ -388,7 +388,7 @@ class systems extends plugin
               $this->systab= new $tabclass($this->config, $this->config->data['TABS'][$class], $this->dn, $selected_system);
               $this->systab->set_acl_base($this->DivListSystem->selectedBase);
               if($selected_group != "none"){
-                $this->systab->base = preg_replace("/^[^,]+,".get_ou('ogroupRDN')."/", "", $selected_group);
+                $this->systab->base = preg_replace("/^[^,]+,".preg_quote(get_ou('ogroupRDN'), '/')."/i", "", $selected_group);
                 $this->systab->by_object[$tabname]->base = $this->systab->base;
               } else {
                 $this->systab->by_object[$tabname]->base = $this->DivListSystem->selectedBase;
@@ -1101,7 +1101,7 @@ class systems extends plugin
 
       $dialog     = FALSE;
       $hide_apply = $this->dn == "new";
-      $hide_apply = ($this->dn == "new") || (preg_match("/".preg_quote(get_ou("systemIncomingRDN"), '/')."/",$this->dn));
+      $hide_apply = ($this->dn == "new") || (preg_match("/".preg_quote(get_ou("systemIncomingRDN"), '/')."/i",$this->dn));
       if(is_object($this->systab) && !isset($this->systab->by_object)){
         $dialog = TRUE;
         $hide_apply = TRUE;

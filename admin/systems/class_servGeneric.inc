@@ -77,11 +77,7 @@ class servgeneric extends plugin
 
     plugin::plugin ($config, $dn, $parent);
 
-    /* Initialize kerberos host key plugin */
-    if(class_available("krbHostKeys")){
-      $this->kerberos_key_service = new krbHostKeys($this->config,$this);
-    }
-
+    /* Initialize */
     $this->ui = get_userinfo();
     $this->modes["active"]= _("Activated");
     $this->modes["locked"]= _("Locked");
@@ -92,12 +88,17 @@ class servgeneric extends plugin
       $this->base= dn2base($ui->dn);
       $this->cn= "";
     } else {
-      $this->base= preg_replace ("/^[^,]+,".preg_quote(get_ou("serverRDN"), '/')."/", "", $this->dn);
+      $this->base= preg_replace ("/^[^,]+,".preg_quote(get_ou("serverRDN"), '/')."/i", "", $this->dn);
     }
     $this->netConfigDNS = new termDNS($this->config,$this,$this->objectclasses);
     $this->netConfigDNS->set_acl_category("server");
     $this->netConfigDNS->set_acl_base($this->base);
     $this->netConfigDNS->MACisMust =TRUE;
+
+    /* Initialize kerberos host key plugin */
+    if(class_available("krbHostKeys")){
+      $this->kerberos_key_service = new krbHostKeys($this->config,$this);
+    }
 
     /* Check if this host is currently in installation process*/
     if($this->dn != "new" && class_available("gosaSupportDaemon") && class_available("DaemonEvent")){
@@ -352,7 +353,7 @@ class servgeneric extends plugin
       if ($ldap->count() != 0){
         while ($attrs= $ldap->fetch()){
           if ($attrs['dn'] != $this->orig_dn){
-            if(!preg_match("/cn=dhcp,/",$attrs['dn']) && !preg_match("/,".get_ou('systemIncomingRDN')."/",$attrs['dn']) && preg_match("/,".get_ou('serverRDN')."/",$attrs['dn'])){
+            if(!preg_match("/cn=dhcp,/",$attrs['dn']) && !preg_match("/,".preg_quote(get_ou('systemIncomingRDN'), '/')."/i",$attrs['dn']) && preg_match("/,".preg_quote(get_ou('serverRDN'), '/')."/i",$attrs['dn'])){
               $message[]= msgPool::duplicated(_("Server name"));
               break;
             }
@@ -362,7 +363,7 @@ class servgeneric extends plugin
     }
 
     /* Warn the user, that this host is currently installing */
-    if($this->currently_installing && !$this->currently_installing_warned && !preg_match("/".preg_quote(get_ou("systemIncomingRDN"), '/')."/",$this->orig_dn)){
+    if($this->currently_installing && !$this->currently_installing_warned && !preg_match("/".preg_quote(get_ou("systemIncomingRDN"), '/')."/i",$this->orig_dn)){
 
       /* Force aborting without message dialog */
       $message[] = "";
