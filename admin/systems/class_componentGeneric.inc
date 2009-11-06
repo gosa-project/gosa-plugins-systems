@@ -50,7 +50,7 @@ class componentGeneric extends plugin
       $this->base= dn2base($ui->dn);
       $this->cn= "";
     } else {
-      $this->base= preg_replace ("/^[^,]+,".preg_quote(get_ou("componentRDN"), '/')."/", "", $this->dn);
+      $this->base= preg_replace ("/^[^,]+,".preg_quote(get_ou("componentRDN"), '/')."/i", "", $this->dn);
     }
     $this->netConfigDNS = new termDNS($this->config,$this,$this->objectclasses, true);
     /* Save dn for later references */
@@ -232,7 +232,7 @@ class componentGeneric extends plugin
           if(preg_match("/cn=dhcp,/",$attrs['dn'])){
             continue;
           }
-          if ($attrs['dn'] != $this->orig_dn && preg_match("/".preg_quote(get_ou("componentRDN"), '/')."/",$attrs['dn'])){
+          if ($attrs['dn'] != $this->orig_dn && preg_match("/".preg_quote(get_ou("componentRDN"), '/')."/i",$attrs['dn'])){
             $message[]= msgPool::duplicated(_("Component name"));
             break;
           }
