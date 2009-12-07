@@ -236,7 +236,7 @@ class termDNS extends plugin
 
   function netmaskIsCoherent($idZone) 
   {
-    $netmask = DNS::FlipIp(str_replace(".in-addr.arpa","",DNS::getNameFromMix($idZone)));
+    $netmask = DNS::FlipIp(str_replace(".in-addr.arpa.","",DNS::getNameFromMix($idZone)));
     if(!strstr($this->ipHostNumber, $netmask)){
       return false;
     }else{
@@ -1112,7 +1112,7 @@ class termDNS extends plugin
       $attrs = $ldap->fetch();
       $tmp = array_flip($this->Zones);
       $tmp = preg_replace("/^[^\/]*+\//","",$tmp[$this->dnsEntry['zoneName']]);
-      $tmp = trim(preg_replace("/\.in-addr.arpa$/","",$tmp));
+      $tmp = trim(preg_replace("/\.in-addr.arpa\.$/","",$tmp));
       $ptr = preg_replace("/^".preg_quote(DNS::FlipIp($tmp), '/')."\./","",$this->ipHostNumber);
       return($ptr);
     }else{
