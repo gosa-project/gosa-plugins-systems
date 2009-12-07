@@ -355,6 +355,13 @@ class componentGeneric extends plugin
       $this->netConfigDNS->ipHostNumber = $source['ipHostNumber'][0];
     }
   }
+
+
+  function is_modal_dialog()
+  {
+    return((isset($this->dialog) && $this->dialog) || (isset($this->netConfigDNS->dialog) && $this->netConfigDNS->dialog));
+  }
+
 }
 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
