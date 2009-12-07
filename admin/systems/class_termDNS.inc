@@ -393,7 +393,7 @@ class termDNS extends plugin
       if(isset($_POST['propose_ip']) && $this->acl_is_writeable("ipHostNumber")){
         foreach($this->Zones as $key => $name){
           if($name == $this->dnsEntry['zoneName']){
-            $net = DNS::FlipIp(str_replace(".in-addr.arpa","",DNS::getNameFromMix($key)));
+            $net = DNS::FlipIp(str_replace(".in-addr.arpa.","",DNS::getNameFromMix($key)));
             $this->ipHostNumber = $this->generateRandomIP($net);
           }
         }

@@ -1470,15 +1470,17 @@ class systems extends plugin
       }
       $terminal             = $entry;
       $terminal['type']     = "O";
+      $terminal['cn'][0]    = preg_replace('/\..*$/', '$', $terminal['cn'][0]);
       $this->terminals[] = $terminal;
     }
 
     $tmp  =array();
     $tmp2 =array();
     foreach($this->terminals as $tkey => $val ){
-      $tmp[strtolower($val['cn'][0]).$val['dn']]=$val;
-      $tmp2[strtolower($val['cn'][0]).$val['dn']] = strtolower($val['cn'][0]).$val['dn'];
+      $tmp[strtolower($val['cn'][0])]=$val;
+      $tmp2[strtolower($val['cn'][0])] = strtolower($val['cn'][0]);
     }
+
     natcasesort($tmp2);
     $this->terminals=array();
     foreach($tmp2 as $val){
