@@ -71,27 +71,28 @@ class systemManagement extends management
     if($this->config->get_cfg_value("enableSnapshots") == "true"){
       $this->snapHandler = new SnapshotHandler($this->config);
     }
-    parent::__construct($config, $ui, "roles", $headpage);
+    parent::__construct($config, $ui, "systems", $headpage);
   }
 
 
   
-  /*! \brief   Overridden render method of class mangement.
-   *            this allows us to add a release selection box.
-   */
-  function renderList()
-  {
-    $headpage = $this->getHeadpage();
+ /*! \brief   Overridden render method of class mangement.
+  *            this allows us to add a release selection box.
+  */
+function renderList()
+{
+  $headpage = $this->getHeadpage();
+  $headpage->update();
 
-    $tD = $this->getObjectDefinitions();
-    $smarty = get_smarty();
-    foreach($tD as $name => $obj){
-#      $smarty->assign("USE_".$name, (empty($obj['CLASS']) || class_available($obj['CLASS'])));
-    }
-
-    $display = $headpage->render();
-    return($this->getHeader().$display);
+  $tD = $this->getObjectDefinitions();
+  $smarty = get_smarty();
+  foreach($tD as $name => $obj){
+    $smarty->assign("USE_".$name, (empty($obj['TABNAME']) || class_available($obj['TABNAME'])));
   }
+
+  $display = $headpage->render();
+  return($this->getHeader().$display);
+}
 
 
   public function getObjectDefinitions()
@@ -175,17 +176,15 @@ class systemManagement extends management
             "TABNAME" => "componentGeneric",
             "TABCLASS"=> "componenttabs",
             "ACLC"    => "component",
-            "ACL"     => "component/componentGeneric"));
+            "ACL"     => "component/componentGeneric"),
 
-    if($this->opsi != NULL){
-      $tabs["opsi_client"] = array(
-          "RDN"       => "",
-          "CLASS"   => "OPSITABS",
-          "TABNAME" => "opsiGeneric" ,
-          "TABCLASS"=> "opsi_tabs",
-          "ACLC"    => "opsi" ,
-          "ACL"     => "opsi/opsiGeneric");
-    }
+        "opsi_client" => array(
+            "RDN"     => "",
+            "CLASS"   => "OPSITABS",
+            "TABNAME" => "opsiGeneric" ,
+            "TABCLASS"=> "opsi_tabs",
+            "ACLC"    => "opsi" ,
+            "ACL"     => "opsi/opsiGeneric"));
 
     return($tabs);
   }
