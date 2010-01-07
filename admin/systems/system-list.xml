@@ -114,6 +114,7 @@
       <type>entry</type>
       <image>plugins/systems/images/select_winstation.png</image>
       <label>Opsi client</label>
+      <depends>opsi</depends>
      </action>
     </action>
 
