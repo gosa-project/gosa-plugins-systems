@@ -10,7 +10,7 @@
   <search>
     <query>
       <backend>LDAP</backend>
-      <filter>(&amp;(|$SERVER(objectClass=goServer))$NAME)</filter>
+      <filter>(&amp;(|$SERVER $WORKSTATION $TERMINAL $PRINTER $COMPONENT )$NAME)</filter>
       <attribute>dn</attribute>
       <attribute>objectClass</attribute>
       <attribute>cn</attribute>
@@ -32,7 +32,7 @@
     <tag>WORKSTATION</tag>
     <default>true</default>
     <unset></unset>
-    <set>(objectClass=goWorkstation)</set>
+    <set>(objectClass=gotoWorkstation)</set>
   </element>
 
   <element>
@@ -40,7 +40,7 @@
     <tag>TERMINAL</tag>
     <default>true</default>
     <unset></unset>
-    <set>(objectClass=goWorkstation)</set>
+    <set>(objectClass=gotoTerminal)</set>
   </element>
 
   <element>
@@ -48,7 +48,7 @@
     <tag>PRINTER</tag>
     <default>true</default>
     <unset></unset>
-    <set>(objectClass=goWorkstation)</set>
+    <set>(objectClass=gotoPrinter)</set>
   </element>
 
   <element>
@@ -56,7 +56,7 @@
     <tag>PHONE</tag>
     <default>true</default>
     <unset></unset>
-    <set>(objectClass=goWorkstation)</set>
+    <set>(objectClass=goFonHardware)</set>
   </element>
 
   <element>
@@ -72,7 +72,7 @@
     <tag>COMPONENT</tag>
     <default>true</default>
     <unset></unset>
-    <set>(objectClass=goWorkstation)</set>
+    <set>(objectClass=ieee802Device)</set>
   </element>
 
   <element>
