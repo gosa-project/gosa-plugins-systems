@@ -70,8 +70,50 @@
      <action>
       <name>new</name>
       <type>entry</type>
-      <image>plugins/rolemanagement/images/new.png</image>
-      <label>Role</label>
+      <image>plugins/systems/images/select_server.png</image>
+      <label>Server</label>
+     </action>
+
+     <action>
+      <name>new</name>
+      <type>entry</type>
+      <image>plugins/systems/images/select_workstation.png</image>
+      <label>Workstation</label>
+     </action>
+
+     <action>
+      <name>new</name>
+      <type>entry</type>
+      <image>plugins/systems/images/select_terminal.png</image>
+      <label>Terminal</label>
+     </action>
+
+     <action>
+      <name>new</name>
+      <type>entry</type>
+      <image>plugins/systems/images/select_printer.png</image>
+      <label>Network printer</label>
+     </action>
+
+     <action>
+      <name>new</name>
+      <type>entry</type>
+      <image>plugins/systems/images/select_phone.png</image>
+      <label>Phone</label>
+     </action>
+
+     <action>
+      <name>new</name>
+      <type>entry</type>
+      <image>plugins/systems/images/select_component.png</image>
+      <label>Network device</label>
+     </action>
+
+     <action>
+      <name>new</name>
+      <type>entry</type>
+      <image>plugins/systems/images/select_winstation.png</image>
+      <label>Opsi client</label>
      </action>
     </action>
 

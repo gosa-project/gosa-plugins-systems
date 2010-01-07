@@ -17,13 +17,13 @@
   {$TERMINAL}&nbsp;{t}Show terminals{/t}<br>
   {/if}
   {if $USE_printer}
-  {$PRINTER}&nbsp;{t}Show printer{/t}<br>
+  {$PRINTER}&nbsp;{t}Show network printer{/t}<br>
   {/if}
   {if $USE_phone}
   {$PHONE}&nbsp;{t}Show phones{/t}<br>
   {/if}
   {if $USE_winstation}
-  {$WINSTATION}&nbsp;{t}Show windows workstations{/t}<br>
+  {$WINSTATION}&nbsp;{t}Show windows based workstations{/t}<br>
   {/if}
   {if $USE_component}
   {$COMPONENT}&nbsp;{t}Show network devices{/t}<br>
@@ -32,7 +32,7 @@
   {$INCOMING}&nbsp;{t}Show incoming devices{/t}<br>
   {/if}
   {if $USE_opsi_client}
-  {$OPSI}&nbsp;{t}Show opsi hosts{/t}<br>
+  {$OPSI}&nbsp;{t}Show OPSI based clients{/t}<br>
   {/if}
 
   <div style="border-top:1px solid #AAAAAA"></div>
