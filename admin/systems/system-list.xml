@@ -72,6 +72,7 @@
       <type>entry</type>
       <image>plugins/systems/images/select_server.png</image>
       <label>Server</label>
+      <depends>servgeneric</depends>
      </action>
 
      <action>
@@ -79,6 +80,7 @@
       <type>entry</type>
       <image>plugins/systems/images/select_workstation.png</image>
       <label>Workstation</label>
+      <depends>workgeneric</depends>
      </action>
 
      <action>
@@ -86,6 +88,7 @@
       <type>entry</type>
       <image>plugins/systems/images/select_terminal.png</image>
       <label>Terminal</label>
+      <depends>termgeneric</depends>
      </action>
 
      <action>
@@ -93,6 +96,7 @@
       <type>entry</type>
       <image>plugins/systems/images/select_printer.png</image>
       <label>Network printer</label>
+      <depends>printgeneric</depends>
      </action>
 
      <action>
@@ -100,6 +104,7 @@
       <type>entry</type>
       <image>plugins/systems/images/select_phone.png</image>
       <label>Phone</label>
+      <depends>phoneGeneric</depends>
      </action>
 
      <action>
@@ -107,6 +112,7 @@
       <type>entry</type>
       <image>plugins/systems/images/select_component.png</image>
       <label>Network device</label>
+      <depends>componentGeneric</depends>
      </action>
 
      <action>
