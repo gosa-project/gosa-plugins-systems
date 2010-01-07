@@ -23,8 +23,8 @@
 /* Remove locks created by this plugin
 */
 if ($remove_lock){
-  if(session::is_set('systems')){
-      $macl = session::get('systems');
+  if(session::is_set('systemManagement')){
+      $macl = session::get('systemManagement');
       $macl->remove_lock();
   }
 }
@@ -32,33 +32,25 @@ if ($remove_lock){
 /* Remove this plugin from session
 */
 if ( $cleanup ){
-  session::un_set('systems');
+  session::un_set('systemManagement');
 }else{
 
+  /* Create systemManagement object on demand */
+  if (!session::is_set('systemManagement')){
+    $systemManagement= new systemManagement ($config, $ui);
+    session::set('systemManagement',$systemManagement);
+  }
+  $systemManagement = session::get('systemManagement');
+  $display= $systemManagement->execute();
 
-	/* Create usermanagement object on demand */
-	if (!session::is_set('systems')){
-		session::set('systems',new systems($config, $ui));
-	}
-	$systems = session::get('systems');
-	$systems->save_object();
-	$output= $systems->execute();
+  /* Reset requested? */
+  if (isset($_GET['reset']) && $_GET['reset'] == 1){
+    session::un_set ('systemManagement');
+  }
 
-	/* Reset requested? */
-	if (isset($_GET['reset']) && $_GET['reset'] == 1){
-		session::un_set ('systems');
-	}
-
-	/* Page header*/
-	if (get_object_info() != ""){
-		$display= print_header(get_template_path($systems->plIcon), _("System management"), "<img alt=\"\" align=\"middle\" src=\"".get_template_path('images/lists/locked.png')."\"> ".LDAP::fix(get_object_info()));
-	} else {
-		$display= print_header(get_template_path($systems->plIcon), _("System management"));
-	}
-
-	/* Show and save dialog */
-	$display.= $output;
-	session::set('systems',$systems);
+  /* Show and save dialog */
+  session::set('systemManagement',$systemManagement);
 }
 
+// vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
