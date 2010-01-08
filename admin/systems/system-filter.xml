@@ -16,6 +16,7 @@
       <attribute>cn</attribute>
       <attribute>description</attribute>
       <attribute>gotoMode</attribute>
+      <attribute>FAIstate</attribute>
       <attribute>macAddress</attribute>
     </query>
     <scope>auto</scope>

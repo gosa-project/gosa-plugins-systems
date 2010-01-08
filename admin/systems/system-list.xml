@@ -20,6 +20,31 @@
     </objectType>
 
     <objectType>
+      <label>Locked server</label>
+      <objectClass>goServer__IS_LOCKED</objectClass>
+      <category>server</category>
+      <class>servgeneric</class>
+      <image>plugins/systems/images/server_locked.png</image>
+    </objectType>
+
+    <objectType>
+      <label>Locked workstation</label>
+      <objectClass>gotoWorkstation</objectClass>
+      <category>workstation</category>
+      <class>workgeneric</class>
+      <image>plugins/systems/images/workstation_locked.png</image>
+    </objectType>
+
+    <objectType>
+      <label>Locked terminal</label>
+      <objectClass>gotoTerminal</objectClass>
+      <category>terminal</category>
+      <class>termgeneric</class>
+      <image>plugins/systems/images/terminal_locked.png</image>
+    </objectType>
+
+
+    <objectType>
       <label>New terminal</label>
       <objectClass>FAKE_OC_NewTerminal</objectClass>
       <category>terminal</category>
