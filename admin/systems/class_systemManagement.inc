@@ -46,8 +46,8 @@ class systemManagement extends management
     $tD = $this->getObjectDefinitions(); 
     $sP = array();
     foreach($tD as $entry){
-      if(!empty($entry['RDN']))
-      $sP[] = $entry['RDN'];
+      if(!empty($entry['ou']))
+        $sP[] = $entry['ou'];
     }
     $this->storagePoints = array_unique($sP);
 
@@ -55,25 +55,25 @@ class systemManagement extends management
 #    if (session::global_is_set(get_class($this)."_filter")){
 #      $filter= session::global_get(get_class($this)."_filter");
 #    } else {
-      $filter = new filter(get_template_path("system-filter.xml", true));
-      $filter->setObjectStorage($this->storagePoints);
+  $filter = new filter(get_template_path("system-filter.xml", true));
+  $filter->setObjectStorage($this->storagePoints);
 #    }
-    $this->setFilter($filter);
+  $this->setFilter($filter);
 
-    // Build headpage
-    $headpage = new listing(get_template_path("system-list.xml", true));
-    $headpage->setFilter($filter);
+  // Build headpage
+  $headpage = new listing(get_template_path("system-list.xml", true));
+  $headpage->setFilter($filter);
 
-    $filter->setConverter('INCOMING', 'systemManagement::incomingFilterConverter');
+  $filter->setConverter('INCOMING', 'systemManagement::incomingFilterConverter');
 
-    // Add copy&paste and snapshot handler.
-    if ($this->config->boolValueIsTrue("main", "copyPaste")){
-      $this->cpHandler = new CopyPasteHandler($this->config);
-    }
-    if($this->config->get_cfg_value("enableSnapshots") == "true"){
-      $this->snapHandler = new SnapshotHandler($this->config);
-    }
-    parent::__construct($config, $ui, "systems", $headpage);
+  // Add copy&paste and snapshot handler.
+  if ($this->config->boolValueIsTrue("main", "copyPaste")){
+    $this->cpHandler = new CopyPasteHandler($this->config);
+  }
+  if($this->config->get_cfg_value("enableSnapshots") == "true"){
+    $this->snapHandler = new SnapshotHandler($this->config);
+  }
+  parent::__construct($config, $ui, "systems", $headpage);
   }
 
   static function incomingFilterConverter($filter)
@@ -83,121 +83,140 @@ class systemManagement extends management
     return(preg_replace("/%systemIncomingRDN/", $rdn,$filter));
   }
 
-  
- /*! \brief   Overridden render method of class mangement.
-  *            this allows us to add a release selection box.
-  */
-function renderList()
-{
-  $headpage = $this->getHeadpage();
-  $headpage->update();
-
-  $tD = $this->getObjectDefinitions();
-  $smarty = get_smarty();
-  foreach($tD as $name => $obj){
-    $smarty->assign("USE_".$name, (empty($obj['TABNAME']) || class_available($obj['TABNAME'])));
+  function editEntry($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
+  {
+    $headpage = $this->getHeadpage();
+    foreach($target as $id){
+      $type = $headpage->getType($id);
+      echo $type."<br>";
+    }
   }
 
-  $display = $headpage->render();
-  return($this->getHeader().$display);
-}
+
+
+  /*! \brief   Overridden render method of class mangement.
+   *            this allows us to add a release selection box.
+   */
+  function renderList()
+  {
+    $headpage = $this->getHeadpage();
+    $headpage->update();
+
+    $tD = $this->getObjectDefinitions();
+    $smarty = get_smarty();
+    foreach($tD as $name => $obj){
+      $smarty->assign("USE_".$name, (empty($obj['TABNAME']) || class_available($obj['TABNAME'])));
+    }
+
+    $display = $headpage->render();
+    return($this->getHeader().$display);
+  }
 
 
   public function getObjectDefinitions()
   {
+
+#       "workstation" =>  array(
+#           "RDN"       => get_ou('workstationRDN'),
+#           "CLASS"   => "WORKTABS",
+#           "TABNAME" => "workgeneric",
+#           "TABCLASS"=> "worktabs",
+#           "ACLC"    => "workstation",
+#           "ACL"     => "workstation/workgeneric" ),
+
+
     $tabs = array(
-        "incoming"    => array(
-          "RDN"       => get_ou('systemIncomingRDN'),
-          "CLASS"     => "",
-          "TABNAME"   => "",
-          "TABCLASS"  => "",
-          "ACLC"      => "incoming",
-          "ACL"       => "incoming/systems"),
+        "FAKE_OC_OpsiHost" => array(
+          "ou"          => "",
+          "plugClass"   => "opsiGeneric",
+          "tabClass"    => "opsi_tabs",
+          "tabDesc"     => "OPSITABS",
+          "aclClass"    => "opsiGeneric",
+          "aclCategory" => "opsi"),
 
-        "ArpNewDevice"=> array(
-          "RDN"       => get_ou('systemIncomingRDN'),
-          "CLASS"     => "TERMTABS",
-          "TABNAME"   => "termgeneric" ,
-          "TABCLASS"  => "termtabs",
-          "ACLC"      => "incoming",
-          "ACL"       => "incoming/systems"),
+        "goServer" => array(
+          "ou"          => get_ou('serverRDN'),
+          "plugClass"   => "servgeneric",
+          "tabClass"    => "servtabs",
+          "tabDesc"     => "SERVTABS",
+          "aclClass"    => "servgeneric",
+          "aclCategory" => "server"),
 
-        "NewDevice"   => array(
-          "RDN"       => get_ou('systemIncomingRDN'),
-          "CLASS"     => "TERMTABS",
-          "TABNAME"   => "termgeneric",
-          "TABCLASS"  => "termtabs",
-          "ACLC"      => "incoming",
-          "ACL"       => "incoming/systems"),
+        "gotoWorkstation" => array(
+          "ou"          => get_ou('workstationRDN'),
+          "plugClass"   => "workgeneric",
+          "tabClass"    => "worktabs",
+          "tabDesc"     => "WORKTABS",
+          "aclClass"    => "workstation",
+          "aclCategory" => "workgeneric"),
 
-        "terminal"    => array(
-            "RDN"       => get_ou('terminalRDN'),
-            "CLASS"     => "TERMTABS",
-            "TABNAME"   => "termgeneric",
-            "TABCLASS"  => "termtabs",
-            "ACLC"      => "terminal",
-            "ACL"       => "terminal/termgeneric"),
+        "gotoTerminal" => array(
+            "ou"          => get_ou('terminalRDN'),
+            "plugClass"   => "termgeneric",
+            "tabClass"    => "termtabs",
+            "tabDesc"     => "TERMTABS",
+            "aclClass"    => "terminal",
+            "aclCategory" => "termgeneric"),
 
-        "workstation" =>  array(
-            "RDN"       => get_ou('workstationRDN'),
-            "CLASS"   => "WORKTABS",
-            "TABNAME" => "workgeneric",
-            "TABCLASS"=> "worktabs",
-            "ACLC"    => "workstation",
-            "ACL"     => "workstation/workgeneric" ),
+        "gotoPrinter" => array(
+            "ou"          => get_ou('printerRDN'),
+            "plugClass"   => "printgeneric",
+            "tabClass"    => "printtabs",
+            "tabDesc"     => "PRINTABS",
+            "aclClass"    => "printer",
+            "aclCategory" => "printgeneric"),
 
-        "server"      => array(
-            "RDN"       => get_ou('serverRDN'),
-            "CLASS"   => "SERVTABS",
-            "TABNAME" => "servgeneric",
-            "TABCLASS"=> "servtabs",
-            "ACLC"    => "server",
-            "ACL"     => "server/servgeneric"),
+        "FAKE_OC_NewDevice" => array(
+            "ou"          => get_ou('systemIncomingRDN'),
+            "plugClass"   => "termgeneric",
+            "tabClass"    => "termtabs",
+            "tabDesc"     => "TERMTABS",
+            "aclClass"    => "terminal",
+            "aclCategory" => "termgeneric"),
 
-        "printer"     => array(
-            "RDN"       => get_ou('printerRDN'),
-            "CLASS"   => "PRINTTABS",
-            "TABNAME" => "printgeneric",
-            "TABCLASS"=> "printtabs",
-            "ACLC"    => "printer",
-            "ACL"     => "printer/printgeneric"),
+        "goFonHardware" => array(
+            "ou"          => get_ou('phoneRDN'),
+            "plugClass"   => "phoneGeneric",
+            "tabClass"    => "phonetabs",
+            "tabDesc"     => "PHONETABS",
+            "aclClass"    => "phone",
+            "aclCategory" => "phoneGeneric"),
 
-        "phone"       => array(
-            "RDN"       => get_ou('phoneRDN'),
-            "CLASS"   => "PHONETABS",
-            "TABNAME" => "phoneGeneric",
-            "TABCLASS"=> "phonetabs",
-            "ACLC"    => "phone",
-            "ACL"     => "phone/phoneGeneric"),
+        "FAKE_OC_winstation" => array(
+            "ou"          => get_winstations_ou(),
+            "plugClass"   => "wingeneric",
+            "tabClass"    => "wintabs",
+            "tabDesc"     => "WINTABS",
+            "aclClass"    => "wingeneric",
+            "aclCategory" => "winworkstation"),
 
-        "winstation"  => array(
-            "RDN"       => get_winstations_ou(),
-            "CLASS"   => "WINTABS",
-            "TABNAME" => "wingeneric",
-            "TABCLASS"=> "wintabs",
-            "ACLC"    => "winworkstation",
-            "ACL"     => "winworkstation/wingeneric"),
+        "ieee802Device" => array(
+            "ou"          => get_ou('componentRDN'),
+            "plugClass"   => "componentGeneric",
+            "tabClass"    => "componenttabs",
+            "tabDesc"     => "COMPONENTTABS",
+            "aclClass"    => "componentGeneric",
+            "aclCategory" => "component"),
+        );
 
-        "component"   => array(
-            "RDN"       => get_ou('componentRDN'),
-            "CLASS"   => "COMPONENTTABS",
-            "TABNAME" => "componentGeneric",
-            "TABCLASS"=> "componenttabs",
-            "ACLC"    => "component",
-            "ACL"     => "component/componentGeneric"),
+    // Now map some special types
+    $tabs['FAKE_OC_NewWorkstation'] = &$tabs['gotoWorkstation'];
+    $tabs['FAKE_OC_NewTerminal'] = &$tabs['gotoTerminal'];
+    $tabs['FAKE_OC_NewServer'] = &$tabs['gotoWorkstation'];
+    $tabs['gotoWorkstation__IS_BUSY'] = &$tabs['gotoWorkstation'];
+    $tabs['gotoWorkstation__IS_ERROR'] = &$tabs['gotoWorkstation'];
+    $tabs['gotoWorkstation__IS_LOCKED'] = &$tabs['gotoWorkstation'];
+    $tabs['gotoTerminal__IS_BUSY'] = &$tabs['gotoTerminal'];
+    $tabs['gotoTerminal__IS_ERROR'] = &$tabs['gotoTerminal'];
+    $tabs['gotoTerminal__IS_LOCKED'] = &$tabs['gotoTerminal'];
+    $tabs['goServer__IS_BUSY'] = &$tabs['goServer'];
+    $tabs['goServer__IS_ERROR'] = &$tabs['goServer'];
+    $tabs['goServer__ISLOCKED'] = &$tabs['goServer'];
 
-        "opsi_client" => array(
-            "RDN"     => "",
-            "CLASS"   => "OPSITABS",
-            "TABNAME" => "opsiGeneric" ,
-            "TABCLASS"=> "opsi_tabs",
-            "ACLC"    => "opsi" ,
-            "ACL"     => "opsi/opsiGeneric"));
+    $tabs['FAKE_OC_NewUnknownDevice'] = &$tabs['FAKE_OC_NewDevice'];
 
     return($tabs);
   }
-
-
 } 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>

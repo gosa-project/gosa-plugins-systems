@@ -74,38 +74,37 @@ class filterSYSTEMS {
     }
 
     // Append opsi stuff ...
-    if(preg_match("/FAIstate=__NETBOOT__/", $filter)){
-      global $config;
-      $ui = get_userinfo();
-      if(class_available('opsi') && $base == $config->current['BASE']){
-        $opsi = new opsi($config);
-        $objects = array();
-        if($opsi instanceof opsi && $opsi->enabled()){
-          $opsi_acl = $ui->get_permissions($base,"opsi/opsiProperties");
-          if(preg_match("/r/",$opsi_acl)){
-            $opsi_clients = $opsi->get_hosts_for_system_management();
-            if($opsi->is_error()){
-              msg_dialog::display(_("Error"),msgPool::siError($opsi->get_error()),ERROR_DIALOG);
-            }else{
-              foreach($opsi_clients as $entry){
-                $entry['objectClass'] = array("FAKE_OC_OpsiHost");
-                $item = array('count' => count($entry));
-                foreach($entry as  $name => $value){
-                  $item[] = $name;
-                  $item[$name] = $value;
-                }
-                $entries[] = $item;
-              }
+    global $config;
+    $ui = get_userinfo();
+    if(preg_match("/FAIstate=__NETBOOT__/", $filter) && 
+        class_available('opsi') &&
+        $base == $config->current['BASE']){
+
+      // Check ACLs and opsi handle
+      $opsi_acl = $ui->get_permissions($base,"opsi/opsiProperties");
+      $opsi = new opsi($config);
+      $objects = array();
+      if($opsi instanceof opsi && $opsi->enabled() && preg_match("/r/",$opsi_acl)){
+
+        // Get list of opsi hosts 
+        $opsi_clients = $opsi->get_hosts_for_system_management();
+        if($opsi->is_error()){
+          msg_dialog::display(_("Error"),msgPool::siError($opsi->get_error()),ERROR_DIALOG);
+        }else{
+          foreach($opsi_clients as $entry){
+            $entry['objectClass'] = array("FAKE_OC_OpsiHost");
+            $item = array('count' => count($entry));
+            foreach($entry as  $name => $value){
+              $item[] = $name;
+              $item[$name] = $value;
             }
-          } 
+            $entries[] = $item;
+          }
         }
       }
     }
-  
-
     return($entries);
   }
-
 }
 
 ?>

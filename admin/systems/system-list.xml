@@ -12,6 +12,14 @@
     <defaultSortColumn>1</defaultSortColumn>
 
     <objectType>
+      <label>Opsi host</label>
+      <objectClass>FAKE_OC_OpsiHost</objectClass>
+      <category>opsi</category>
+      <class>opsiGeneric</class>
+      <image>plugins/systems/images/select_winstation.png</image>
+    </objectType>
+
+    <objectType>
       <label>New workstation</label>
       <objectClass>FAKE_OC_NewWorkstation</objectClass>
       <category>workstation</category>

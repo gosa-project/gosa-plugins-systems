@@ -7,31 +7,31 @@
 <div class="contentboxb">
   <div style="border-top:1px solid #AAAAAA"></div>
 
-  {if $USE_server}
+  {if $USE_goServer}
   {$SERVER}&nbsp;{t}Show servers{/t}<br>
   {/if}
-  {if $USE_workstation}
+  {if $USE_gotoWorkstation}
   {$WORKSTATION}&nbsp;{t}Show workstations{/t}<br>
   {/if}
-  {if $USE_terminal}
+  {if $USE_gotoTerminal}
   {$TERMINAL}&nbsp;{t}Show terminals{/t}<br>
   {/if}
-  {if $USE_printer}
+  {if $USE_gotoPrinter}
   {$PRINTER}&nbsp;{t}Show network printer{/t}<br>
   {/if}
-  {if $USE_phone}
+  {if $USE_goFonHardware}
   {$PHONE}&nbsp;{t}Show phones{/t}<br>
   {/if}
-  {if $USE_winstation}
+  {if $USE_FAKE_OC_winstation}
   {$WINSTATION}&nbsp;{t}Show windows based workstations{/t}<br>
   {/if}
-  {if $USE_component}
+  {if $USE_ieee802Device}
   {$COMPONENT}&nbsp;{t}Show network devices{/t}<br>
   {/if}
-  {if $USE_incoming}
+  {if $USE_FAKE_OC_NewWorkstation || $USE_FAKE_OC_NewTerminal || $USE_FAKE_OC_NewServer || $USE_FAKE_OC_NewDevice || $USE_FAKE_OC_NewUnknownDevice}
   {$INCOMING}&nbsp;{t}Show incoming devices{/t}<br>
   {/if}
-  {if $USE_opsi_client}
+  {if $USE_FAKE_OC_OpsiHost}
   {$OPSI}&nbsp;{t}Show OPSI based clients{/t}<br>
   {/if}
 
