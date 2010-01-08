@@ -12,13 +12,44 @@
     <defaultSortColumn>1</defaultSortColumn>
 
     <objectType>
+      <label>New workstation</label>
+      <objectClass>FAKE_OC_NewWorkstation</objectClass>
+      <category>workstation</category>
+      <class>workgeneric</class>
+      <image>plugins/systems/images/select_new_workstation.png</image>
+    </objectType>
+
+    <objectType>
+      <label>New terminal</label>
+      <objectClass>FAKE_OC_NewTerminal</objectClass>
+      <category>terminal</category>
+      <class>termgeneric</class>
+      <image>plugins/systems/images/select_new_terminal.png</image>
+    </objectType>
+
+    <objectType>
+      <label>New unknown device</label>
+      <objectClass>FAKE_OC_NewUnknownDevice</objectClass>
+      <category>terminal</category>
+      <class>termgeneric</class>
+      <image>plugins/systems/images/select_newsystem.png</image>
+    </objectType>
+
+    <objectType>
+      <label>New device</label>
+      <objectClass>FAKE_OC_NewDevice</objectClass>
+      <category>terminal</category>
+      <class>termgeneric</class>
+      <image>plugins/systems/images/select_newsystem.png</image>
+    </objectType>
+
+    <objectType>
       <label>Workstation template</label>
       <objectClass>FAKE_OC_WorkstationTemplate</objectClass>
       <category>workstation</category>
       <class>workgeneric</class>
       <image>plugins/systems/images/select_default.png</image>
     </objectType>
-
 
     <objectType>
       <label>Terminal template</label>
