@@ -85,10 +85,12 @@ class systemManagement extends management
 
   function editEntry($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
   {
-    $headpage = $this->getHeadpage();
-    foreach($target as $id){
-      $type = $headpage->getType($id);
-      echo $type."<br>";
+    if(count($target) == 1){
+      $tInfo = $this->getObjectDefinitions();
+      $headpage = $this->getHeadpage();
+      $dn = $target[0];
+      $type = $tInfo[$headpage->getType($dn)];
+      return(management::editEntry($action,$target,$all,$type['tabClass'],$type['tabDesc'],$type['aclCategory']));
     }
   }
 
@@ -115,16 +117,6 @@ class systemManagement extends management
 
   public function getObjectDefinitions()
   {
-
-#       "workstation" =>  array(
-#           "RDN"       => get_ou('workstationRDN'),
-#           "CLASS"   => "WORKTABS",
-#           "TABNAME" => "workgeneric",
-#           "TABCLASS"=> "worktabs",
-#           "ACLC"    => "workstation",
-#           "ACL"     => "workstation/workgeneric" ),
-
-
     $tabs = array(
         "FAKE_OC_OpsiHost" => array(
           "ou"          => "",
@@ -162,7 +154,7 @@ class systemManagement extends management
             "ou"          => get_ou('printerRDN'),
             "plugClass"   => "printgeneric",
             "tabClass"    => "printtabs",
-            "tabDesc"     => "PRINTABS",
+            "tabDesc"     => "PRINTTABS",
             "aclClass"    => "printer",
             "aclCategory" => "printgeneric"),
 
