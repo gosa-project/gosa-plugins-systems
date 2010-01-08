@@ -76,12 +76,124 @@ class systemManagement extends management
   parent::__construct($config, $ui, "systems", $headpage);
   }
 
+
+  /*! \brief    Update filter part for INCOMING.
+   *            Allows us to search for "systemIncomingRDN".
+   */
   static function incomingFilterConverter($filter)
   {
     $rdn = preg_replace("/^[^=]*=/", "", get_ou('systemIncomingRDN'));
     $rdn = preg_replace("/,.*$/","",$rdn);
     return(preg_replace("/%systemIncomingRDN/", $rdn,$filter));
   }
+
+ 
+  /*! \brief    Queue selected objects to be removed. 
+   *            Checks ACLs, Locks and ask for confirmation.
+   */
+  protected function removeEntryRequested($action="",$target=array(),$all=array())
+  {
+    $disallowed = array();
+    $this->dns = array();
+
+    @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,$target,"Entry removel requested!");
+
+    // Check permissons for each target
+    $tInfo = $this->getObjectDefinitions();
+    $headpage = $this->getHeadpage();
+    foreach($target as $dn){
+      $type = $headpage->getType($dn);
+      if(!isset($tInfo[$type])){
+        trigger_error("Unknown object type received '".$type."' please update systemManagement::getObjectDefinitions()!");
+      }else{
+        $info = $tInfo[$type];
+        $acl = $this->ui->get_permissions($dn, $info['aclCategory']."/".$info['aclClass']);
+        if(preg_match("/d/",$acl)){
+          $this->dns[] = $dn;
+        }else{
+          $disallowed[] = $dn;
+        }
+      }
+    }
+    if(count($disallowed)){
+      msg_dialog::display(_("Permission"),msgPool::permDelete($disallowed),INFO_DIALOG);
+    }
+
+    // We've at least one entry to delete.
+    if(count($this->dns)){
+
+      // check locks
+      if ($user= get_multiple_locks($this->dns)){
+        return(gen_locked_message($user,$this->dns));
+      }
+
+      // Add locks
+      $dns_names = array();
+      foreach($this->dns as $dn){
+        $dns_names[] =LDAP::fix($dn);
+      }
+      add_lock ($this->dns, $this->ui->dn);
+
+      // Display confirmation dialog.
+      $smarty = get_smarty();
+      $smarty->assign("info", msgPool::deleteInfo($dns_names,_($this->objectName)));
+      $smarty->assign("multiple", true);
+      return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
+    }
+  }
+
+
+  /*! \brief  Object removal was confirmed, now remove the requested entries.
+   *
+   *  @param  String  'action'  The name of the action which was the used as trigger.
+   *  @param  Array   'target'  A list of object dns, which should be affected by this method.
+   *  @param  Array   'all'     A combination of both 'action' and 'target'.
+   */
+  function removeEntryConfirmed($action="",$target=array(),$all=array(),
+      $altTabClass="",$altTabType="",$altAclCategory="")
+  {
+    @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,$target,"Entry removel confirmed!");
+
+    // Check permissons for each target
+    $tInfo = $this->getObjectDefinitions();
+    $headpage = $this->getHeadpage();
+    $disallowed = array();
+    foreach($this->dns as $key => $dn){
+      $type = $headpage->getType($dn);
+      if(!isset($tInfo[$type])){
+        trigger_error("Unknown object type received '".$type."' please update systemManagement::getObjectDefinitions()!");
+      }else{
+
+        $info = $tInfo[$type];
+        $acl = $this->ui->get_permissions($dn, $info['aclCategory']."/".$info['aclClass']);
+        if(preg_match("/d/",$acl)){
+
+          // Delete the object
+          $this->dn = $dn;
+          $this->tabObject= new $info['tabClass']($this->config,$this->config->data['TABS'][$info['tabDesc']], 
+              $this->dn, $info['aclCategory'], true, true);
+          $this->tabObject->set_acl_base($this->dn);
+          $this->tabObject->parent = &$this;
+          $this->tabObject->delete ();
+
+          // Remove the lock for the current object.
+          del_lock($this->dn);
+
+        }else{
+          $disallowed[] = $dn;
+          new log("security","groups/".get_class($this),$dn,array(),"Tried to trick deletion.");
+        }
+      }
+    }
+    if(count($disallowed)){
+      msg_dialog::display(_("Permission"),msgPool::permDelete($disallowed),INFO_DIALOG);
+    }
+
+    // Cleanup
+    $this->remove_lock();
+    $this->closeDialogs();
+  }
+
 
   function editEntry($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
   {
@@ -203,7 +315,7 @@ class systemManagement extends management
     $tabs['gotoTerminal__IS_LOCKED'] = &$tabs['gotoTerminal'];
     $tabs['goServer__IS_BUSY'] = &$tabs['goServer'];
     $tabs['goServer__IS_ERROR'] = &$tabs['goServer'];
-    $tabs['goServer__ISLOCKED'] = &$tabs['goServer'];
+    $tabs['goServer__IS_LOCKED'] = &$tabs['goServer'];
 
     $tabs['FAKE_OC_NewUnknownDevice'] = &$tabs['FAKE_OC_NewDevice'];
 
