@@ -15,6 +15,7 @@
       <attribute>objectClass</attribute>
       <attribute>cn</attribute>
       <attribute>description</attribute>
+      <attribute>macAddress</attribute>
     </query>
     <scope>auto</scope>
   </search>

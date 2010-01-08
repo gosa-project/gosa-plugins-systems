@@ -12,6 +12,14 @@
     <defaultSortColumn>1</defaultSortColumn>
 
     <objectType>
+      <label>Terminal template</label>
+      <objectClass>FAKE_OC_TerminalTemplate</objectClass>
+      <category>terminal</category>
+      <class>termgeneric</class>
+      <image>plugins/systems/images/select_default.png</image>
+    </objectType>
+
+    <objectType>
       <label>Winstation</label>
       <objectClass>FAKE_OC_winstation</objectClass>
       <category>winworkstation</category>
