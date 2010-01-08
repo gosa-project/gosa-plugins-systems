@@ -51,29 +51,29 @@ class systemManagement extends management
     }
     $this->storagePoints = array_unique($sP);
 
-#    // Build filter
-#    if (session::global_is_set(get_class($this)."_filter")){
-#      $filter= session::global_get(get_class($this)."_filter");
-#    } else {
-  $filter = new filter(get_template_path("system-filter.xml", true));
-  $filter->setObjectStorage($this->storagePoints);
-#    }
-  $this->setFilter($filter);
+    // Build filter
+    if (session::global_is_set(get_class($this)."_filter")){
+      $filter= session::global_get(get_class($this)."_filter");
+    } else {
+      $filter = new filter(get_template_path("system-filter.xml", true));
+      $filter->setObjectStorage($this->storagePoints);
+    }
+    $this->setFilter($filter);
 
-  // Build headpage
-  $headpage = new listing(get_template_path("system-list.xml", true));
-  $headpage->setFilter($filter);
+    // Build headpage
+    $headpage = new listing(get_template_path("system-list.xml", true));
+    $headpage->setFilter($filter);
+    $filter->setConverter('INCOMING', 'systemManagement::incomingFilterConverter');
+    $this->registerAction("DaemonEvent_halt", "systemManagement::handleEvent");
 
-  $filter->setConverter('INCOMING', 'systemManagement::incomingFilterConverter');
-
-  // Add copy&paste and snapshot handler.
-  if ($this->config->boolValueIsTrue("main", "copyPaste")){
-    $this->cpHandler = new CopyPasteHandler($this->config);
-  }
-  if($this->config->get_cfg_value("enableSnapshots") == "true"){
-    $this->snapHandler = new SnapshotHandler($this->config);
-  }
-  parent::__construct($config, $ui, "systems", $headpage);
+    // Add copy&paste and snapshot handler.
+    if ($this->config->boolValueIsTrue("main", "copyPaste")){
+      $this->cpHandler = new CopyPasteHandler($this->config);
+    }
+    if($this->config->get_cfg_value("enableSnapshots") == "true"){
+      $this->snapHandler = new SnapshotHandler($this->config);
+    }
+    parent::__construct($config, $ui, "systems", $headpage);
   }
 
 
@@ -195,6 +195,12 @@ class systemManagement extends management
   }
 
 
+  /*! \brief  Edit the selected system type.
+   *
+   *  @param  String  'action'  The name of the action which was the used as trigger.
+   *  @param  Array   'target'  A list of object dns, which should be affected by this method.
+   *  @param  Array   'all'     A combination of both 'action' and 'target'.
+   */
   function editEntry($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
   {
     if(count($target) == 1){
@@ -205,7 +211,6 @@ class systemManagement extends management
       return(management::editEntry($action,$target,$all,$type['tabClass'],$type['tabDesc'],$type['aclCategory']));
     }
   }
-
 
 
   /*! \brief   Overridden render method of class mangement.
