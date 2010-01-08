@@ -64,6 +64,8 @@ class systemManagement extends management
     $headpage = new listing(get_template_path("system-list.xml", true));
     $headpage->setFilter($filter);
 
+    $filter->setConverter('INCOMING', 'systemManagement::incomingFilterConverter');
+
     // Add copy&paste and snapshot handler.
     if ($this->config->boolValueIsTrue("main", "copyPaste")){
       $this->cpHandler = new CopyPasteHandler($this->config);
@@ -74,6 +76,12 @@ class systemManagement extends management
     parent::__construct($config, $ui, "systems", $headpage);
   }
 
+  static function incomingFilterConverter($filter)
+  {
+    $rdn = preg_replace("/^[^=]*=/", "", get_ou('systemIncomingRDN'));
+    $rdn = preg_replace("/,.*$/","",$rdn);
+    return(preg_replace("/%systemIncomingRDN/", $rdn,$filter));
+  }
 
   
  /*! \brief   Overridden render method of class mangement.
