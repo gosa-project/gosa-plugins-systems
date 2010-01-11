@@ -426,6 +426,15 @@
   <actiontriggers snapshot="true" copypaste="true">
 
     <action>
+      <name>createISO</name>
+      <type>entry</type>
+      <objectclass>gotoWorkstation</objectclass>
+      <image>plugins/systems/images/cdrom.png</image>
+      <acl>workstation/workgeneric[createFAICD:w]</acl>
+      <label>Create ISO</label>
+    </action>
+
+    <action>
       <name>cp</name>
       <type>copypaste</type>
     </action>

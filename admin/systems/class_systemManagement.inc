@@ -75,6 +75,9 @@ class systemManagement extends management
       $this->registerAction("DaemonEvent_activate","handleEvent");
     }
     $this->registerAction("saveEvent","saveEventDialog");
+    $this->registerAction("createISO","createISO");
+    $this->registerAction("initiateISOcreation","initiateISOcreation");
+    $this->registerAction("performIsoCreation","performIsoCreation");
 
     // Add copy&paste and snapshot handler.
     if ($this->config->boolValueIsTrue("main", "copyPaste")){
@@ -97,6 +100,92 @@ class systemManagement extends management
 
 
     parent::__construct($config, $ui, "systems", $headpage);
+  }
+
+
+  function createISO($action,$target)
+  {
+    if(count($target) == 1){
+      $smarty = get_smarty();
+      $this->dn= array_pop($target);
+      set_object_info($this->dn);
+      return ($smarty->fetch(get_template_path('goto/gencd.tpl', TRUE)));
+
+    }
+  }
+  
+  function initiateISOcreation()
+  {
+    $smarty = get_smarty();
+    $smarty->assign("src", "?plug=".$_GET['plug']."&amp;PerformIsoCreation");
+    return ($smarty->fetch(get_template_path('goto/gencd_frame.tpl', TRUE)));  
+  }
+
+
+  function performIsoCreation()
+  {
+    $return_button   = "<form method='get' action='main.php' target='_parent'>
+      <input type='submit' value='"._("Back")."'>
+      <input type='hidden' name='plug' value='".$_GET['plug']."'/>
+      </form>";
+
+    $dsc   = array(0 => array("pipe", "r"), 1 => array("pipe", "w"), 2 => array("pipe", "w"));
+
+    /* Get and check command */
+    $command= $this->config->search("workgeneric", "SYSTEMISOHOOK",array('tabs'));
+    if (check_command($command)){
+      @DEBUG (DEBUG_SHELL, __LINE__, __FUNCTION__, __FILE__, $command, "Execute");
+
+      /* Print out html introduction */
+      echo '  <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+        <html>
+        <head>
+        <title></title>
+        <style type="text/css">@import url("themes/default/style.css");</style>
+        <script language="javascript" src="include/focus.js" type="text/javascript"></script>
+        </head>
+        <body style="background: none; margin:4px;" id="body" >
+        <pre>';
+
+      /* Open process handle and check if it is a valid process */
+      $process= proc_open($command." '".$this->dn."'", $dsc, $pipes);
+      if (is_resource($process)) {
+        fclose($pipes[0]);
+
+        /* Print out returned lines && write JS to scroll down each line */
+        while (!feof($pipes[1])){
+          $cur_dat = fgets($pipes[1], 1024);
+          echo $cur_dat;
+          echo '<script language="javascript" type="text/javascript">scrollDown2();</script>' ;
+          flush();
+        }
+      }
+
+      /* Get error string && close streams */
+      $buffer= stream_get_contents($pipes[2]);
+
+      fclose($pipes[1]);
+      fclose($pipes[2]);
+      echo "</pre>";
+
+      /* Check return code */
+      $ret= proc_close($process);
+      if ($ret != 0){
+        echo "<h1 style='color:red'>"._("Creating the image failed. Please see the report below.")."</h1>";
+        echo "<pre style='color:red'>$buffer</pre>";
+      }
+      echo $return_button."<br>";
+    } else {
+      $tmp= "<h1 style='color:red'>".sprintf(_("Command '%s', specified for ISO creation doesn't seem to exist."), $command)."</h1>";
+      echo $tmp;
+      echo $return_button."<br>";
+    }
+
+    /* Scroll down completly */
+    echo '<script language="javascript" type="text/javascript">scrollDown2();</script>' ;
+    echo '</body></html>';
+    flush();
+    exit;
   }
 
 
@@ -353,6 +442,8 @@ class systemManagement extends management
     $action= management::detectPostActions();
     if(isset($_POST['abort_event_dialog']))  $action['action'] = "cancel";
     if(isset($_POST['save_event_dialog']))  $action['action'] = "saveEvent";
+    if(isset($_POST['cd_create']))  $action['action'] = "initiateISOcreation";
+    if(isset($_GET['PerformIsoCreation']))  $action['action'] = "performIsoCreation";
     return($action);
   }
 
