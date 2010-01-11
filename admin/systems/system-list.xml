@@ -429,6 +429,7 @@
       <name>createISO</name>
       <type>entry</type>
       <objectclass>gotoWorkstation</objectclass>
+      <objectclass>FAIobject</objectclass>
       <image>plugins/systems/images/cdrom.png</image>
       <acl>workstation/workgeneric[createFAICD:w]</acl>
       <label>Create ISO</label>
