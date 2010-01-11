@@ -509,7 +509,12 @@ class systemManagement extends management
     $ldap->cd($this->config->current['BASE']);
 
     // Walk through systems to activate
-    foreach($this->activationQueue as $dn => $data){
+    while(count($this->activationQueue)){
+ 
+      // Get next entry 
+      reset($this->activationQueue);
+      $dn = key($this->activationQueue);
+      $data= $this->activationQueue[$dn];
 
       if(!isset($data['SS'])) continue;
 
@@ -540,6 +545,7 @@ class systemManagement extends management
           // Open object an preset some values like the objects base 
           del_lock($dn);
           management::editEntry('editEntry',array($dn),array(),$tabClass,$tabDesc, $aclCategory);
+          $this->displayApplyBtn = FALSE;
           $this->tabObject->set_acl_base($headpage->getBase());
           if($data['OG'] != "none"){
             $this->tabObject->base = preg_replace("/^[^,]+,".preg_quote(get_ou('ogroupRDN'), '/')."/i", "", $data['OG']);
@@ -631,6 +637,9 @@ class systemManagement extends management
       $this->activate_new_device($this->last_dn);
       unset($this->activationQueue[$this->last_dn]);
     }
+
+    // Avoid using values from an older input dialog
+    $_POST = array();
     $this->handleActivationQueue();
   }
 
