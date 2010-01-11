@@ -263,7 +263,7 @@
      <label>Trigger action</label>
 
       <action>
-        <name>DaemonEvent_halt</name>
+        <name>T_DaemonEvent_halt</name>
         <depends>DaemonEvent_halt</depends>
         <type>entry</type>
         <image>images/lists/reload.png</image>
@@ -271,7 +271,7 @@
       </action>
 
       <action>
-        <name>DaemonEvent_reboot</name>
+        <name>T_DaemonEvent_reboot</name>
         <depends>DaemonEvent_reboot</depends>
         <type>entry</type>
         <image>images/lists/reload.png</image>
@@ -279,7 +279,7 @@
       </action>
 
       <action>
-        <name>DaemonEvent_wakeup</name>
+        <name>T_DaemonEvent_wakeup</name>
         <depends>DaemonEvent_wakeup</depends>
         <type>entry</type>
         <image>images/lists/on.png</image>
@@ -287,7 +287,7 @@
       </action>
 
       <action>
-        <name>DaemonEvent_update</name>
+        <name>T_DaemonEvent_update</name>
         <depends>DaemonEvent_update</depends>
         <type>entry</type>
         <image>plugins/goto/images/update.png</image>
@@ -295,7 +295,7 @@
       </action>
 
       <action>
-        <name>DaemonEvent_lock</name>
+        <name>T_DaemonEvent_lock</name>
         <depends>DaemonEvent_lock</depends>
         <type>entry</type>
         <image>images/lists/locked.png</image>
@@ -303,7 +303,7 @@
       </action>
 
       <action>
-        <name>DaemonEvent_activate</name>
+        <name>T_DaemonEvent_activate</name>
         <depends>DaemonEvent_activate</depends>
         <type>entry</type>
         <image>images/lists/unlocked.png</image>
@@ -311,7 +311,7 @@
       </action>
 
       <action>
-        <name>DaemonEvent_reinstall</name>
+        <name>T_DaemonEvent_reinstall</name>
         <depends>DaemonEvent_reinstall</depends>
         <type>entry</type>
         <image>plugins/goto/images/reinstall.png</image>
@@ -329,7 +329,7 @@
      <label>Schedule action</label>
 
       <action>
-        <name>DaemonEvent_halt</name>
+        <name>S_DaemonEvent_halt</name>
         <depends>DaemonEvent_halt</depends>
         <type>entry</type>
         <image>images/lists/off.png</image>
@@ -337,7 +337,7 @@
       </action>
 
       <action>
-        <name>DaemonEvent_reboot</name>
+        <name>S_DaemonEvent_reboot</name>
         <depends>DaemonEvent_reboot</depends>
         <type>entry</type>
         <image>images/lists/reload.png</image>
@@ -345,7 +345,7 @@
       </action>
 
       <action>
-        <name>DaemonEvent_wakeup</name>
+        <name>S_DaemonEvent_wakeup</name>
         <depends>DaemonEvent_wakeup</depends>
         <type>entry</type>
         <image>images/lists/on.png</image>
@@ -353,7 +353,7 @@
       </action>
 
       <action>
-        <name>DaemonEvent_update</name>
+        <name>S_DaemonEvent_update</name>
         <depends>DaemonEvent_update</depends>
         <type>entry</type>
         <image>plugins/goto/images/update.png</image>
@@ -361,7 +361,7 @@
       </action>
 
       <action>
-        <name>DaemonEvent_lock</name>
+        <name>S_DaemonEvent_lock</name>
         <depends>DaemonEvent_lock</depends>
         <type>entry</type>
         <image>images/lists/locked.png</image>
@@ -369,7 +369,7 @@
       </action>
 
       <action>
-        <name>DaemonEvent_activate</name>
+        <name>S_DaemonEvent_activate</name>
         <depends>DaemonEvent_activate</depends>
         <type>entry</type>
         <image>images/lists/unlocked.png</image>
@@ -377,7 +377,7 @@
       </action>
 
       <action>
-        <name>DaemonEvent_reinstall</name>
+        <name>S_DaemonEvent_reinstall</name>
         <depends>DaemonEvent_reinstall</depends>
         <type>entry</type>
         <image>plugins/goto/images/reinstall.png</image>
@@ -391,7 +391,7 @@
     </action>
 
     <action>
-      <name>activate_systems</name>
+      <name>DaemonEvent_activate</name>
       <depends>DaemonEvent_activate</depends>
       <type>entry</type>
       <image>images/lists/unlocked.png</image>
