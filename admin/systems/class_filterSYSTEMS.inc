@@ -17,7 +17,7 @@ class filterSYSTEMS {
           $entries[$key]['objectClass'][] = 'FAKE_OC_NewTerminal';
           $entries[$key]['cn'][0].= " <i>("._("New terminal").")</i>";
         }elseif(in_array('GOhard', $entry['objectClass']) && !isset($entry['gotoMode'][0])){ 
-          $entries[$key]['objectClass'][] = 'FAKE_OC_NewUnknownDevice';
+          $entries[$key]['objectClass'][] = 'FAKE_OC_ArpNewDevice';
           $entries[$key]['cn'][0].= " <i>("._("New unknown device").")</i>";
         }elseif(in_array('GOhard', $entry['objectClass'])){
           $entries[$key]['objectClass'][] = 'FAKE_OC_NewDevice';

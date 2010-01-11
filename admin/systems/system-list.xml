@@ -37,7 +37,7 @@
 
     <objectType>
       <label>Locked workstation</label>
-      <objectClass>gotoWorkstation</objectClass>
+      <objectClass>gotoWorkstation__IS_LOCKED</objectClass>
       <category>workstation</category>
       <class>workgeneric</class>
       <image>plugins/systems/images/workstation_locked.png</image>
@@ -45,7 +45,7 @@
 
     <objectType>
       <label>Locked terminal</label>
-      <objectClass>gotoTerminal</objectClass>
+      <objectClass>gotoTerminal__IS_LOCKED</objectClass>
       <category>terminal</category>
       <class>termgeneric</class>
       <image>plugins/systems/images/terminal_locked.png</image>
@@ -62,7 +62,7 @@
 
     <objectType>
       <label>New unknown device</label>
-      <objectClass>FAKE_OC_NewUnknownDevice</objectClass>
+      <objectClass>FAKE_OC_ArpNewDevice</objectClass>
       <category>terminal</category>
       <class>termgeneric</class>
       <image>plugins/systems/images/select_newsystem.png</image>
@@ -391,7 +391,7 @@
     </action>
 
     <action>
-      <name>DaemonEvent_activate</name>
+      <name>activateMultiple</name>
       <depends>DaemonEvent_activate</depends>
       <type>entry</type>
       <image>images/lists/unlocked.png</image>

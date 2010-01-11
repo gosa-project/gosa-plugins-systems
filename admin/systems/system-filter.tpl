@@ -28,7 +28,7 @@
   {if $USE_ieee802Device}
   {$COMPONENT}&nbsp;{t}Show network devices{/t}<br>
   {/if}
-  {if $USE_FAKE_OC_NewWorkstation || $USE_FAKE_OC_NewTerminal || $USE_FAKE_OC_NewServer || $USE_FAKE_OC_NewDevice || $USE_FAKE_OC_NewUnknownDevice}
+  {if $USE_FAKE_OC_NewWorkstation || $USE_FAKE_OC_NewTerminal || $USE_FAKE_OC_NewServer || $USE_FAKE_OC_NewDevice || $USE_FAKE_OC_ArpNewDevice}
   {$INCOMING}&nbsp;{t}Show incoming devices{/t}<br>
   {/if}
   {if $USE_FAKE_OC_OpsiHost}
