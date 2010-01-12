@@ -197,7 +197,7 @@
      <label>Create</label>
 
      <action>
-      <name>new_server</name>
+      <name>new_goServer</name>
       <type>entry</type>
       <image>plugins/systems/images/select_server.png</image>
       <label>Server</label>
@@ -205,7 +205,7 @@
      </action>
 
      <action>
-      <name>new_workstation</name>
+      <name>new_gotoWorkstation</name>
       <type>entry</type>
       <image>plugins/systems/images/select_workstation.png</image>
       <label>Workstation</label>
@@ -213,7 +213,7 @@
      </action>
 
      <action>
-      <name>new_terminal</name>
+      <name>new_gotoTerminal</name>
       <type>entry</type>
       <image>plugins/systems/images/select_terminal.png</image>
       <label>Terminal</label>
@@ -221,7 +221,7 @@
      </action>
 
      <action>
-      <name>new_printer</name>
+      <name>new_gotoPrinter</name>
       <type>entry</type>
       <image>plugins/systems/images/select_printer.png</image>
       <label>Network printer</label>
@@ -229,7 +229,7 @@
      </action>
 
      <action>
-      <name>new_phone</name>
+      <name>new_goFonHardware</name>
       <type>entry</type>
       <image>plugins/systems/images/select_phone.png</image>
       <label>Phone</label>
@@ -237,7 +237,7 @@
      </action>
 
      <action>
-      <name>new_component</name>
+      <name>new_ieee802Device</name>
       <type>entry</type>
       <image>plugins/systems/images/select_component.png</image>
       <label>Network device</label>
@@ -245,7 +245,7 @@
      </action>
 
      <action>
-      <name>new_opsi_client</name>
+      <name>new_FAKE_OC_OpsiHost</name>
       <type>entry</type>
       <image>plugins/systems/images/select_winstation.png</image>
       <label>Opsi client</label>

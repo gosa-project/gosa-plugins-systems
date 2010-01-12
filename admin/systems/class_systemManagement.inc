@@ -115,6 +115,15 @@ class systemManagement extends management
     $this->registerAction("systemTypeChosen","systemTypeChosen");
     $this->registerAction("handleActivationQueue","handleActivationQueue");
 
+    $this->registerAction("new_goServer",         "newEntry");
+    $this->registerAction("new_gotoWorkstation",  "newEntry");
+    $this->registerAction("new_gotoTerminal",     "newEntry");
+    $this->registerAction("new_gotoPrinter",      "newEntry");
+    $this->registerAction("new_goFonHardware",    "newEntry");
+    $this->registerAction("new_ieee802Device",    "newEntry");
+    $this->registerAction("new_FAKE_OC_OpsiHost", "newEntry");
+
+
     // Add copy&paste and snapshot handler.
     if ($this->config->boolValueIsTrue("main", "copyPaste")){
       $this->cpHandler = new CopyPasteHandler($this->config);
@@ -491,6 +500,27 @@ class systemManagement extends management
   }
 
 
+  /*! \brief  Edit the selected system type.
+   *
+   *  @param  String  'action'  The name of the action which was the used as trigger.
+   *  @param  Array   'target'  A list of object dns, which should be affected by this method.
+   *  @param  Array   'all'     A combination of both 'action' and 'target'.
+   */
+  function newEntry($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
+  {
+    $tInfo = $this->getObjectDefinitions();
+    $info = preg_replace("/^new_/","",$action);
+    if(!isset($tInfo[$info])){
+      trigger_error("Unknown action type '".$action."' cant create a new system!");
+    }else{
+      management::newEntry($action,$target,$all, 
+          $tInfo[$info]['tabClass'],
+          $tInfo[$info]['tabDesc'],
+          $tInfo[$info]['aclCategory']);
+    }
+  }
+
+
   function activateMultiple($action,$target)
   {
     $headpage = $this->getHeadpage();
@@ -796,6 +826,14 @@ class systemManagement extends management
     if(isset($_POST['cd_create']))  $action['action'] = "initiateISOcreation";
     if(isset($_GET['PerformIsoCreation']))  $action['action'] = "performIsoCreation";
     if(isset($_POST['SystemTypeAborted']))  $action['action'] = "cancel";
+
+    if(isset($_POST['new_goServer']))  $action['action'] = "new_goServer";
+    if(isset($_POST['new_gotoWorkstation']))  $action['action'] = "new_gotoWorkstation";
+    if(isset($_POST['new_gotoTerminal']))  $action['action'] = "new_gotoTerminal";
+    if(isset($_POST['new_gotoPrinter']))  $action['action'] = "new_gotoPrinter";
+    if(isset($_POST['new_goFonHardware']))  $action['action'] = "new_goFonHardware";
+    if(isset($_POST['new_ieee802Device']))  $action['action'] = "new_ieee802Device";
+    if(isset($_POST['new_FAKE_OC_OpsiHost']))  $action['action'] = "new_FAKE_OC_OpsiHost";
 
     if(!is_object($this->tabObject) && !is_object($this->dialogObject)){
       if(count($this->activationQueue)) $action['action'] = "handleActivationQueue";
