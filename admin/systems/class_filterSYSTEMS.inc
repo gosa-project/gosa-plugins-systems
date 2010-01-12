@@ -6,6 +6,9 @@ class filterSYSTEMS {
   {
     $ui = get_userinfo();
 
+    // Check whether the arp handling active or not
+    $arp_handling_active = ($this->config->search("ArpNewDevice","CLASS",array('tabs')) != "")
+
     $entries = filterLDAP::query($base, $scope, $filter, $attributes, $category, $objectStorage);
     foreach($entries as $key => $entry){
       if(preg_match("/".preg_quote(get_ou('systemIncomingRDN'),'/')."/i", $entry['dn'])){
@@ -17,7 +20,9 @@ class filterSYSTEMS {
         }elseif(in_array('gotoTerminal', $entry['objectClass'])){
           $entries[$key]['objectClass'][] = 'FAKE_OC_NewTerminal';
           $entries[$key]['cn'][0].= " <i>("._("New terminal").")</i>";
-        }elseif(in_array('GOhard', $entry['objectClass']) && !isset($entry['gotoMode'][0])){ 
+        }elseif($arp_handling_active && 
+            in_array('GOhard', $entry['objectClass']) && 
+            !isset($entry['gotoMode'][0])){ 
           $entries[$key]['objectClass'][] = 'FAKE_OC_ArpNewDevice';
           $entries[$key]['cn'][0].= " <i>("._("New unknown device").")</i>";
         }elseif(in_array('GOhard', $entry['objectClass'])){

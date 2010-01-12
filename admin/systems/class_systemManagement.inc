@@ -73,7 +73,6 @@ class systemManagement extends management
   protected $objectName   = "system";
   protected $objectInfo = array();
   protected $opsi = NULL;
-  protected $arp_handling_active = FALSE;
   protected $activationQueue  = array();
 
   function __construct($config,$ui)
@@ -137,11 +136,6 @@ class systemManagement extends management
     }
     if($this->config->get_cfg_value("enableSnapshots") == "true"){
       $this->snapHandler = new SnapshotHandler($this->config);
-    }
-
-    // Check whether the arp handling active or not 
-    if($this->config->search("ArpNewDevice","CLASS",array('tabs')) != ""){
-      $this->arp_handling_active = TRUE;
     }
 
     // Check if we are able to communicate with the GOsa supprot daemon
