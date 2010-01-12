@@ -5,9 +5,10 @@ class filterSYSTEMS {
   static function query($base, $scope, $filter, $attributes, $category, $objectStorage= "")
   {
     $ui = get_userinfo();
+    global $config;
 
     // Check whether the arp handling active or not
-    $arp_handling_active = ($this->config->search("ArpNewDevice","CLASS",array('tabs')) != "");
+    $arp_handling_active = ($config->search("ArpNewDevice","CLASS",array('tabs')) != "");
 
     $entries = filterLDAP::query($base, $scope, $filter, $attributes, $category, $objectStorage);
     foreach($entries as $key => $entry){
