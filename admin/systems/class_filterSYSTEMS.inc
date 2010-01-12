@@ -7,8 +7,6 @@ class filterSYSTEMS {
     $ui = get_userinfo();
     global $config;
 
-    syslog(1,$filter);
-
     // Check whether the arp handling active or not
     $arp_handling_active = ($config->search("ArpNewDevice","CLASS",array('tabs')) != "");
 
