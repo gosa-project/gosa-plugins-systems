@@ -448,7 +448,7 @@ class systemManagement extends management
 
         }else{
           $disallowed[] = $dn;
-          new log("security","groups/".get_class($this),$dn,array(),"Tried to trick deletion.");
+          new log("security","system/".get_class($this),$dn,array(),"Tried to trick deletion.");
         }
       }
     }
@@ -763,11 +763,56 @@ class systemManagement extends management
       unset($this->activationQueue[$this->last_dn]);
     }
 
+    /* Post handling for activated systems
+       target opsi -> Remove source.
+       target gosa -> Activate system.
+     */
+    if($this->last_tabObject instanceOf opsi_tabs){
+      $ldap = $this->config->get_ldap_link();
+      $ldap->cd($this->config->current['BASE']);
+      $ldap->rmdir ($this->last_tabObject->dn);
+      @DEBUG(DEBUG_LDAP,__LINE__, __FUNCTION__, __FILE__,
+          "Source removed: ".$this->tabObject->dn,"<b>Opsi host activated</b>");
+
+      $hostId =  $this->last_tabObject->by_object['opsiGeneric']->hostId;
+      $mac    =  $this->last_tabObject->by_object['opsiGeneric']->mac;
+      $this->opsi->job_opsi_activate_client($hostId,$mac);
+
+    }elseif(isset($this->last_tabObject->was_activated) && $this->last_tabObject->was_activated){
+      $this->activate_new_device($this->last_tabObject->dn);
+    }
+
     // Avoid using values from an older input dialog
     $_POST = array();
     $this->handleActivationQueue();
   }
 
+
+  protected function applyChanges()
+  {
+    $str = management::applyChanges();
+    if($str) return($str);
+
+    /* Post handling for activated systems
+       target opsi -> Remove source.
+       target gosa -> Activate system.
+     */
+    if($this->tabObject instanceOf opsi_tabs){
+      $ldap = $this->config->get_ldap_link();
+      $ldap->cd($this->config->current['BASE']);
+      $ldap->rmdir ($this->tabObject->dn);
+      @DEBUG(DEBUG_LDAP,__LINE__, __FUNCTION__, __FILE__,
+          "Source removed: ".$this->tabObject->dn,"<b>Opsi host activated</b>");
+
+      $hostId =  $this->tabObject->by_object['opsiGeneric']->hostId;
+      $mac    =  $this->tabObject->by_object['opsiGeneric']->mac;
+      $this->opsi->job_opsi_activate_client($hostId,$mac);
+
+    }elseif(isset($this->tabObject->was_activated) && $this->tabObject->was_activated){
+      $this->activate_new_device($this->tabObject->dn);
+    }
+  }
+  
 
   /*! \brief  Sets FAIstate to "install" for "New Devices".
     This function is some kind of "Post handler" for activated systems,
