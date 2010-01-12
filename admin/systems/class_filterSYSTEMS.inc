@@ -106,6 +106,12 @@ class filterSYSTEMS {
         class_available('opsi') &&
         $base == $config->current['BASE']){
 
+      // Get filter regex ...
+      $regex = "";
+      if(preg_match("/\(cn=[^\)\$]*\)/", $filter)){
+        $regex = trim(preg_replace("/^.*\(cn=([^\)\$]*)\).*$/","\\1", $filter),"* ");
+      }
+
       // Check ACLs and opsi handle
       $opsi_acl = $ui->get_permissions($base,"opsi/opsiProperties");
       $opsi = new opsi($config);
@@ -118,13 +124,15 @@ class filterSYSTEMS {
           msg_dialog::display(_("Error"),msgPool::siError($opsi->get_error()),ERROR_DIALOG);
         }else{
           foreach($opsi_clients as $entry){
-            $entry['objectClass'] = array("FAKE_OC_OpsiHost");
-            $item = array('count' => count($entry));
-            foreach($entry as  $name => $value){
-              $item[] = $name;
-              $item[$name] = $value;
+            if(empty($regex) || preg_match('/'.preg_quote($regex,'/').'/i',$entry['cn'])){
+              $entry['objectClass'] = array("FAKE_OC_OpsiHost");
+              $item = array('count' => count($entry));
+              foreach($entry as  $name => $value){
+                $item[] = $name;
+                $item[$name] = $value;
+              }
+              $entries[] = $item;
             }
-            $entries[] = $item;
           }
         }
       }
