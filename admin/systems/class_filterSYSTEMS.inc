@@ -7,7 +7,7 @@ class filterSYSTEMS {
     $ui = get_userinfo();
 
     // Check whether the arp handling active or not
-    $arp_handling_active = ($this->config->search("ArpNewDevice","CLASS",array('tabs')) != "")
+    $arp_handling_active = ($this->config->search("ArpNewDevice","CLASS",array('tabs')) != "");
 
     $entries = filterLDAP::query($base, $scope, $filter, $attributes, $category, $objectStorage);
     foreach($entries as $key => $entry){
