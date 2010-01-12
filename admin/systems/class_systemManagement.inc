@@ -20,6 +20,37 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+
+#
+# NewDevices 
+# -> Edit
+# ->  |- SelectDeviceType()       (Allows to select target SystemType and OGroup)
+# -> Save
+#     |-> systemTypeChosen()       (Queue entry to be activated) 
+#     |-> handleActivationQueue()  (Now acticvate objects)
+#       |-> Ogroup selected   
+#       | |-> Try to adapt values from Ogroup and save directly.
+#       |
+#       |-> NO Ogroup selected
+#       |  |-> Open dialogs of the target object and allow modifcation.
+#       |
+#       |->activate_new_device()   (Now activate the device)
+#
+#
+#
+#
+#
+#
+#
+
+
+
+
+
+
+
+
+
 class systemManagement extends management
 {
   var $plHeadline     = "Systems";
@@ -441,14 +472,13 @@ class systemManagement extends management
         if(!class_available("ArpNewDeviceTabs")){
           msg_dialog::display(_("Error"), msgPool::class_not_found("ArpNewDevice"), ERROR_DIALOG);
         }else{
-          $this->system_activation_object= array($dn);
           return(management::editEntry($action,$target,$all,"ArpNewDeviceTabs","ARPNEWDEVICETABS","incoming"));
         }
       }elseif($type == "FAKE_OC_NewDevice"){
         if(!class_available("SelectDeviceType")){
           msg_dialog::display(_("Error"), msgPool::class_not_found("SelectDeviceType"), ERROR_DIALOG);
         }else{
-          $this->system_activation_object= array($dn);
+          $this->activationQueue[$dn] = array();
           $this->dialogObject = new SelectDeviceType($this->config,$dn);
           $this->skipFooter = TRUE;
           $this->displayApplyBtn = FALSE;
@@ -500,6 +530,9 @@ class systemManagement extends management
 
   function handleActivationQueue()
   {
+    @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
+        'Entries left: '.count($this->activationQueue), "<b>Handling system activation queue!</b>");
+
     if(!count($this->activationQueue)) return("");
 
     $ldap     = $this->config->get_ldap_link();
@@ -515,7 +548,6 @@ class systemManagement extends management
       reset($this->activationQueue);
       $dn = key($this->activationQueue);
       $data= $this->activationQueue[$dn];
-      unset($this->activationQueue[$dn]);
 
       // Validate the given system type.
       if(!isset($data['SS'])) continue;
@@ -526,6 +558,9 @@ class systemManagement extends management
       }
       $type = $pInfo[$sysType];
 
+      @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
+          $dn, "<b>Try to activate:</b>");
+
       // Get target type definition 
       $plugClass    = $type["plugClass"];
       $tabClass     = $type["tabClass"];
@@ -534,7 +569,12 @@ class systemManagement extends management
 
       if(!class_available($tabClass)){
         msg_dialog::display(_("Error"), msgPool::class_not_found($tabclass), ERROR_DIALOG);
+        unset($this->activationQueue[$dn]);
+        continue;
       }else{
+
+        @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
+            $sysType, "<b>System type:</b>");
 
         // Load permissions for selected 'dn' and check if we're allowed to create this 'dn' 
         $this->dn = $dn;
@@ -544,6 +584,9 @@ class systemManagement extends management
         if(!preg_match("/c/",$acls)){
           unset($this->activationQueue[$dn]);
           msg_dialog::display(_("Error"), msgPool::permCreate(), ERROR_DIALOG);
+
+          @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
+              $acls, "<b>Insufficient permissions!</b>");
           continue;
         }else{
 
@@ -552,6 +595,10 @@ class systemManagement extends management
           management::editEntry('editEntry',array($dn),array(),$tabClass,$tabDesc, $aclCategory);
           $this->displayApplyBtn = FALSE;
           $this->tabObject->set_acl_base($headpage->getBase());
+
+          @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
+              $data['OG'], "<b>Selected ogroup:</b>");
+
           if($data['OG'] != "none"){
             $this->tabObject->base = preg_replace("/^[^,]+,".preg_quote(get_ou('ogroupRDN'), '/')."/i", "", $data['OG']);
             $this->tabObject->by_object[$plugClass]->base = $this->tabObject->base;
@@ -570,6 +617,8 @@ class systemManagement extends management
                 $this->tabObject->by_object['opsiGeneric']->$attr = $source_attrs[$src][0];
               }
             }
+            @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
+                "", "<b>OPSI attributes adapted</b>");
           }
 
           // Queue entry to be activated, when it is saved.
@@ -581,6 +630,8 @@ class systemManagement extends management
               if(isset($this->tabObject->by_object[$tab]->gotoMode)) {
                 $found = true;
                 $this->tabObject->by_object[$tab]->gotoMode = $value;
+                @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
+                    $tab."->gotoMode = {$value}", "<b>Setting gotoMode to: </b>");
               }
             }
             if(!$found){
@@ -592,12 +643,16 @@ class systemManagement extends management
             if($og){
               $og->AddDelMembership($this->tabObject->dn);
               $og->save();
+              @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
+                  $og->dn, "<b>Adding system to ogroup</b>");
             }
 
             // Set default system specific attributes
             foreach (array("workgeneric", "termgeneric") as $cls){
               if (isset($this->tabObject->by_object[$cls])){
                 $this->tabObject->by_object[$cls]->set_everything_to_inherited();
+                @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
+                    $og->dn, "<b>Calling {$cls}->set_everything_to_inherited()</b>");
               }
             }
 
@@ -605,12 +660,16 @@ class systemManagement extends management
             foreach (array("servgeneric", "workgeneric", "termgeneric") as $cls){
               if (isset($this->tabObject->by_object[$cls])){
                 $this->tabObject->by_object[$cls]->auto_activate= TRUE;
+                @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
+                    $cls, "<b>Setting auto_activate=TRUE for</b>");
               }
             }
 
             // Enable sending of LDAP events
             if (isset($this->tabObject->by_object["workstartup"])){
               $this->tabObject->by_object["workstartup"]->gotoLdap_inherit= TRUE;
+              @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
+                  "", "<b>Setting workstartup->gotoLdap_inherit=TRUE</b>");
             }
           }
 
@@ -622,9 +681,15 @@ class systemManagement extends management
 
             // There was a problem, skip activation here and allow to fix the problems..
             if(is_object($this->tabObject)){
+              @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
+                  "", "<b>Automatic saving failed, let the user fix the issues now.</b>");
               return;
             }
+            @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
+                "", "<b>System activated!</b>");
           }else{
+            @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
+                "", "<b>Open dialogs now</b>");
             return;
           }
         }
@@ -635,7 +700,9 @@ class systemManagement extends management
 
   protected function saveChanges()
   {
-  
+    @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
+        get_class($this->tabObject).": ".$this->tabObject->dn, "<b>Save</b>");
+ 
     // Handle 'New Unknown Devices' here.
     if($this->tabObject instanceOf ArpNewDeviceTabs){
       $this->tabObject->save_object();
@@ -645,11 +712,12 @@ class systemManagement extends management
         if(count($message)){
           msg_dialog::displayChecks($message);
         }else{
+          @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
+              get_class($this->tabObject).": ".$this->tabObject->dn, "<b>Queued for goto activation</b>");
           $this->tabObject->save();
           $this->activationQueue[$this->tabObject->dn]=array();
           $this->closeDialogs();
           $this->systemTypeChosen();
-        
         }
         return;
       }
@@ -660,7 +728,8 @@ class systemManagement extends management
     if($this->tabObject) return("");
 
     if(isset($this->activationQueue[$this->last_dn])){
-      $this->activate_new_device($this->last_dn);
+      $dn = $this->last_tabObject->dn;
+      $this->activate_new_device($dn);
       unset($this->activationQueue[$this->last_dn]);
     }
 
@@ -678,12 +747,14 @@ class systemManagement extends management
    */
   function activate_new_device($dn)
   {
+    @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
+        $dn, "<b>Activating system:</b>");
     $ldap = $this->config->get_ldap_link();
     $ldap->cd($this->config->current['BASE']);
     $ldap->cat($dn);
     if($ldap->count()){
       $attrs = $ldap->fetch();
-      if(count(array_intersect(array('goServer','gotoTerminal'), $attrs['objectClass']))){
+      if(count(array_intersect(array('goServer','gotoWorkstation'), $attrs['objectClass']))){
         $ocs = $attrs['objectClass'];
         unset($ocs['count']);
         $new_attrs = array();
@@ -697,9 +768,16 @@ class systemManagement extends management
         if (!$ldap->success()){
           msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn,
                 LDAP_MOD, "activate_new_device($dn)"));
+          @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
+              $dn, "<b>Failed!</b>");
         }else{
+          @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
+              $dn, "<b>Success</b>");
           return(TRUE);
         }
+      }else{
+        @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
+            $dn, "<b>FAIstate not set to install, this is only done for gotoWorkstation/goServer!</b>");
       }
     }
     return(FALSE);
