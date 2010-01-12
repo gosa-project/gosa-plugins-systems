@@ -24,25 +24,38 @@
 #
 # NewDevices 
 # -> Edit
-# ->  |- SelectDeviceType()       (Allows to select target SystemType and OGroup)
+#     |- SelectDeviceType()        (Allows to select target SystemType and OGroup)
 # -> Save
 #     |-> systemTypeChosen()       (Queue entry to be activated) 
-#     |-> handleActivationQueue()  (Now acticvate objects)
+#     |-> handleActivationQueue()  (Now acticvate queued objects)
 #       |-> Ogroup selected   
-#       | |-> Try to adapt values from Ogroup and save directly.
+#       | |-> Try to adapt values from ogroup and save directly.
 #       |
 #       |-> NO Ogroup selected
-#       |  |-> Open dialogs of the target object and allow modifcation.
+#       |  |-> Open dialogs of the target system type and allow modifcations.
 #       |
-#       |->activate_new_device()   (Now activate the device)
+#       |->activate_new_device()   (Finally activate the device - FAIsate=..)
 #
 #
+# NewArpDevices (NewUnknwonDevices )
+# -> Edit
+#     |-> editEntry - ArpNewDeviceTabs
+# -> Save       
+#     |-> NO gotoIntegeration 
+#     | |-> Save DHCP and DNS entries, then remove the source entry from ldap.
+#     |
+#     |-> gotoIntegration selected (Handle object like a NewDevice now)
+#     |-> systemTypeChosen()       (Queue entry to be activated)
+#     |-> handleActivationQueue()  (Now acticvate queued objects)
+#       |-> Ogroup selected
+#       | |-> Try to adapt values from ogroup and save directly.
+#       |
+#       |-> NO Ogroup selected
+#       |  |-> Open dialogs of the target system type and allow modifcations.
+#       |
+#       |->activate_new_device()   (Finally activate the device - FAIsate=..)
 #
-#
-#
-#
-#
-
+ 
 
 
 
