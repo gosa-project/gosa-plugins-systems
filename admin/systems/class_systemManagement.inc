@@ -1068,8 +1068,125 @@ class systemManagement extends management
   }
 
 
+  /*! \brief  Opens the snapshot creation dialog for the given target.
+   *
+   *  @param  String  'action'  The name of the action which was the used as trigger.
+   *  @param  Array   'target'  A list of object dns, which should be affected by this method.
+   *  @param  Array   'all'     A combination of both 'action' and 'target'.
+   */
+  function createSnapshotDialog($action="",$target=array(),$all=array())
+  {
+    @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,$target,"Snaptshot creation initiated!");
 
- /*! \brief  Detects actions/events send by the ui
+    $pInfo    = $this->getObjectDefinitions();
+    $headpage = $this->getHeadpage();
+    foreach($target as $dn){
+
+      $entry = $headpage->getEntry($dn);
+      $type = $headpage->getType($dn);
+      if(!isset($pInfo[$type])) {
+        trigger_error('Unknown system type \''.$type.'\'!');
+        return;
+      }
+
+      if(!empty($dn) && $this->ui->allow_snapshot_create($dn,$pInfo[$type]['aclCategory'])){
+        $this->dialogObject = new SnapShotDialog($this->config,$dn,$this);
+        $this->dialogObject->aclCategories = array($pInfo[$type]['aclCategory']);
+        $this->dialogObject->parent = &$this;
+
+      }else{
+        msg_dialog::display(_("Permission"),sprintf(_("You are not allowed to create a snapshot for %s."),$dn),
+            ERROR_DIALOG);
+      }
+    }
+  }
+
+
+  /*! \brief  Displays the "Restore snapshot dialog" for a given target.
+   *          If no target is specified, open the restore removed object
+   *           dialog.
+   *  @param  String  'action'  The name of the action which was the used as trigger.
+   *  @param  Array   'target'  A list of object dns, which should be affected by this method.
+   *  @param  Array   'all'     A combination of both 'action' and 'target'.
+   */
+  function restoreSnapshotDialog($action="",$target=array(),$all=array())
+  {
+    // Set current restore base for snapshot handling.
+    $headpage = $this->getHeadpage();
+    $pInfo    = $this->getObjectDefinitions();
+    if(is_object($this->snapHandler)){
+      $bases = array();
+      foreach($this->storagePoints as $sp){
+        $bases[] = $sp.$headpage->getBase();
+      }
+    }
+
+    // No bases specified? Try base
+    if(!count($bases)) $bases[] = $this->headpage->getBase();
+
+    // No target, open the restore removed object dialog.
+    if(!count($target)){
+
+      $cats = array();
+      foreach($pInfo as $data){
+        $cats[] = $data['aclCategory'];
+      }
+      $cats = array_unique($cats);
+
+      $entry = $headpage->getBase();
+      if(!empty($entry) && $this->ui->allow_snapshot_restore($entry,$cats)){
+        @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,$entry,"Snaptshot restoring initiated!");
+        $this->dialogObject = new SnapShotDialog($this->config,$entry,$this);
+        $this->dialogObject->set_snapshot_bases($bases);
+        $this->dialogObject->display_all_removed_objects = true;
+        $this->dialogObject->display_restore_dialog = true;
+        $this->dialogObject->parent = &$this;
+      }else{
+        msg_dialog::display(_("Permission"),sprintf(_("You are not allowed to restore a snapshot for %s."),$entry),
+            ERROR_DIALOG);
+      }
+    }else{
+
+      // Display the restore points for a given object.
+      $dn = array_pop($target);
+      $entry = $headpage->getEntry($dn);
+      $type = $headpage->getType($dn);
+      if(!isset($pInfo[$type])) {
+        trigger_error('Unknown system type \''.$type.'\'!');
+        return;
+      }
+
+      if(!empty($dn) && $this->ui->allow_snapshot_create($dn,$pInfo[$type]['aclCategory'])){
+        @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,$dn,"Snaptshot restoring initiated!");
+        $this->dialogObject = new SnapShotDialog($this->config,$dn,$this);
+        $this->dialogObject->set_snapshot_bases($bases);
+        $this->dialogObject->display_restore_dialog = true;
+        $this->dialogObject->parent = &$this;
+      }else{
+        msg_dialog::display(_("Permission"),sprintf(_("You are not allowed to restore a snapshot for %s."),$dn),
+            ERROR_DIALOG);
+      }
+    }
+  }
+
+
+  /*! \brief  Restores a snapshot object.
+   *          The dn of the snapshot entry has to be given as ['target'] parameter.
+   *
+   *  @param  String  'action'  The name of the action which was the used as trigger.
+   *  @param  Array   'target'  A list of object dns, which should be affected by this method.
+   *  @param  Array   'all'     A combination of both 'action' and 'target'.
+   */
+  function restoreSnapshot($action="",$target=array(),$all=array())
+  {
+    $dn       = array_pop($target);
+    $this->snapHandler->restore_snapshot($dn);
+    @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,$dn,"Snaptshot restored!");
+    $this->closeDialogs();
+  }
+
+
+  /*! \brief  Detects actions/events send by the ui
    *           and the corresponding targets.
    */
   function detectPostActions()
@@ -1146,9 +1263,9 @@ class systemManagement extends management
           "plugClass"   => "workgeneric",
           "tabClass"    => "worktabs",
           "tabDesc"     => "WORKTABS",
-          "aclClass"    => "workstation",
+          "aclClass"    => "workgeneric",
           "sendEvents"  => TRUE,
-          "aclCategory" => "workgeneric"),
+          "aclCategory" => "workstation"),
 
         "gotoTerminal" => array(
             "ou"          => get_ou('terminalRDN'),
@@ -1156,17 +1273,17 @@ class systemManagement extends management
             "tabClass"    => "termtabs",
             "sendEvents"  => TRUE,
             "tabDesc"     => "TERMTABS",
-            "aclClass"    => "terminal",
-            "aclCategory" => "termgeneric"),
+            "aclClass"    => "termgeneric",
+            "aclCategory" => "terminal"),
 
         "gotoPrinter" => array(
             "ou"          => get_ou('printerRDN'),
             "plugClass"   => "printgeneric",
             "tabClass"    => "printtabs",
             "tabDesc"     => "PRINTTABS",
-            "aclClass"    => "printer",
+            "aclClass"    => "printgeneric",
             "sendEvents"  => FALSE,
-            "aclCategory" => "printgeneric"),
+            "aclCategory" => "printer"),
 
         "FAKE_OC_NewDevice" => array(
             "ou"          => get_ou('systemIncomingRDN'),
@@ -1174,8 +1291,8 @@ class systemManagement extends management
             "tabClass"    => "termtabs",
             "sendEvents"  => TRUE,
             "tabDesc"     => "TERMTABS",
-            "aclClass"    => "terminal",
-            "aclCategory" => "termgeneric"),
+            "aclClass"    => "termgeneric",
+            "aclCategory" => "terminal"),
 
         "goFonHardware" => array(
             "ou"          => get_ou('phoneRDN'),
@@ -1183,8 +1300,8 @@ class systemManagement extends management
             "tabClass"    => "phonetabs",
             "tabDesc"     => "PHONETABS",
             "sendEvents"  => FALSE,
-            "aclClass"    => "phone",
-            "aclCategory" => "phoneGeneric"),
+            "aclClass"    => "phoneGeneric",
+            "aclCategory" => "phone"),
 
         "FAKE_OC_winstation" => array(
             "ou"          => get_winstations_ou(),
