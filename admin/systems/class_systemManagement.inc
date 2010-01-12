@@ -46,11 +46,6 @@
 
 
 
-
-
-
-
-
 class systemManagement extends management
 {
   var $plHeadline     = "Systems";
@@ -62,15 +57,11 @@ class systemManagement extends management
   protected $tabType = "";
   protected $aclCategory = "";
   protected $aclPlugin   = "";
-  protected $objectName   = "";
-
+  protected $objectName   = "system";
   protected $objectInfo = array();
-
   protected $opsi = NULL;
-
-
   protected $activationQueue  = array();
-  
+
   function __construct($config,$ui)
   {
     $this->config = $config;
@@ -86,12 +77,12 @@ class systemManagement extends management
     $this->storagePoints = array_unique($sP);
 
     // Build filter
-#    if (session::global_is_set(get_class($this)."_filter")){
-#      $filter= session::global_get(get_class($this)."_filter");
-#    } else {
+    if (session::global_is_set(get_class($this)."_filter")){
+      $filter= session::global_get(get_class($this)."_filter");
+    } else {
       $filter = new filter(get_template_path("system-filter.xml", true));
       $filter->setObjectStorage($this->storagePoints);
-#    }
+    }
     $this->setFilter($filter);
 
     // Build headpage
@@ -144,8 +135,6 @@ class systemManagement extends management
     if(class_available("opsi")){
       $this->opsi = new opsi($this->config);
     }
-
-
     parent::__construct($config, $ui, "systems", $headpage);
   }
 
@@ -172,6 +161,73 @@ class systemManagement extends management
         }
       }
     }
+  }
+
+
+
+/*! \brief  This method is used to queue and process copy&paste actions.
+   *          Allows to copy, cut and paste mutliple entries at once.
+   *  @param  String  'action'  The name of the action which was the used as trigger.
+   *  @param  Array   'target'  A list of object dns, which should be affected by this method.
+   *  @param  Array   'all'     A combination of both 'action' and 'target'.
+   */
+  function copyPasteHandler($action="",$target=array(),$all=array(),
+      $altTabClass ="", $altTabType = "", $altAclCategory="",$altAclPlugin="")
+  {
+    // Return without any actions while copy&paste handler is disabled.
+    if(!is_object($this->cpHandler))  return("");
+
+    // Save user input
+    $this->cpHandler->save_object();
+
+    // Add entries to queue
+    if($action == "copy" || $action == "cut"){
+
+      $tDefs= $this->getObjectDefinitions();
+      $headpage = $this->getHeadpage();
+      $ui       = get_userinfo();
+      $this->cpHandler->cleanup_queue();
+      foreach($target as $dn){
+
+        $type = $headpage->getType($dn);
+        $entry = $headpage->getEntry($dn);
+  
+        $aclCategory = $tDefs[$type]['aclCategory'];
+        $aclPlugin = $tDefs[$type]['aclClass'];
+        $tabClass = $tDefs[$type]['tabClass'];
+        $tabType = $tDefs[$type]['tabDesc'];
+
+        if($action == "copy" && $this->ui->is_copyable($dn,$aclCategory,$aclPlugin)){
+          $this->cpHandler->add_to_queue($dn,"copy",$tabClass,$tabType,$aclCategory,$this);
+          @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,$dn,"Entry copied!");
+        }
+        if($action == "cut" && $this->ui->is_cutable($dn,$aclCategory,$aclPlugin)){
+          $this->cpHandler->add_to_queue($dn,"cut",$tabClass,$tabType,$aclCategory,$this);
+          @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,$dn,"Entry cutted!");
+        }
+      }
+    }
+
+    // Initiate pasting
+    if($action == "paste"){
+      $this->cpPastingStarted = TRUE;
+    }
+
+    // Display any c&p dialogs, eg. object modifications required before pasting.
+    if($this->cpPastingStarted && $this->cpHandler->entries_queued()){
+      $headpage = $this->getHeadpage();
+      $this->cpHandler->SetVar("base",$headpage->getBase());
+      $data = $this->cpHandler->execute();
+      if(!empty($data)){
+        return($data);
+      }
+    }
+
+    // Automatically disable pasting process since there is no entry left to paste.
+    if(!$this->cpHandler->entries_queued()){
+      $this->cpPastingStarted = FALSE;
+    }
+    return("");
   }
 
 
