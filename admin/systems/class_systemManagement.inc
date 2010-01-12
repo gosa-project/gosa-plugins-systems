@@ -55,10 +55,6 @@
 #       |
 #       |->activate_new_device()   (Finally activate the device - FAIsate=..)
 #
- 
-
-
-
 class systemManagement extends management
 {
   var $plHeadline     = "Systems";
@@ -152,6 +148,8 @@ class systemManagement extends management
   }
 
 
+  /*! \brief  Act on password change requests.
+   */
   function setPassword($action,$target)
   {
     if(count($target) == 1){
@@ -177,8 +175,7 @@ class systemManagement extends management
   }
 
 
-
-/*! \brief  This method is used to queue and process copy&paste actions.
+  /*! \brief  This method is used to queue and process copy&paste actions.
    *          Allows to copy, cut and paste mutliple entries at once.
    *  @param  String  'action'  The name of the action which was the used as trigger.
    *  @param  Array   'target'  A list of object dns, which should be affected by this method.
@@ -244,6 +241,8 @@ class systemManagement extends management
   }
 
 
+  /*! \brief  Password change confirmed, now try to change the systems pwd.
+   */
   function passwordChangeConfirmed()
   {
     $tDefs= $this->getObjectDefinitions();
@@ -735,8 +734,9 @@ class systemManagement extends management
   }
 
 
-
-
+  /*! \brief  The system selection dialog was closed. 
+   *          We will now queue the given entry to be activated.
+   */ 
   function systemTypeChosen()
   {
     // Detect the systems target type 
@@ -757,6 +757,8 @@ class systemManagement extends management
   }
 
 
+  /*! \brief  Activate queued goto systems.
+   */
   function handleActivationQueue()
   {
     @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
