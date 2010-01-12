@@ -515,10 +515,15 @@ class systemManagement extends management
       reset($this->activationQueue);
       $dn = key($this->activationQueue);
       $data= $this->activationQueue[$dn];
+      unset($this->activationQueue[$dn]);
 
+      // Validate the given system type.
       if(!isset($data['SS'])) continue;
-
       $sysType = $data['SS'];
+      if(!isset($pInfo[$sysType])){
+        trigger_error('Unknown type \''.$sysType.'\'!');
+        continue;
+      }
       $type = $pInfo[$sysType];
 
       // Get target type definition 
@@ -630,6 +635,27 @@ class systemManagement extends management
 
   protected function saveChanges()
   {
+  
+    // Handle 'New Unknown Devices' here.
+    if($this->tabObject instanceOf ArpNewDeviceTabs){
+      $this->tabObject->save_object();
+
+      if($this->tabObject->by_object['ArpNewDevice']->gotoIntegration){
+        $message = $this->tabObject->check();
+        if(count($message)){
+          msg_dialog::displayChecks($message);
+        }else{
+          $this->tabObject->save();
+          $this->activationQueue[$this->tabObject->dn]=array();
+          $this->closeDialogs();
+          $this->systemTypeChosen();
+        
+        }
+        return;
+      }
+    }
+
+    //
     $str = management::saveChanges();
     if($this->tabObject) return("");
 
