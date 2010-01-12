@@ -73,6 +73,7 @@ class systemManagement extends management
   protected $objectName   = "system";
   protected $objectInfo = array();
   protected $opsi = NULL;
+  protected $arp_handling_active = FALSE;
   protected $activationQueue  = array();
 
   function __construct($config,$ui)
@@ -136,6 +137,11 @@ class systemManagement extends management
     }
     if($this->config->get_cfg_value("enableSnapshots") == "true"){
       $this->snapHandler = new SnapshotHandler($this->config);
+    }
+
+    // Check whether the arp handling active or not 
+    if($this->config->search("ArpNewDevice","CLASS",array('tabs')) != ""){
+      $this->arp_handling_active = TRUE;
     }
 
     // Check if we are able to communicate with the GOsa supprot daemon
@@ -324,6 +330,10 @@ class systemManagement extends management
   }
 
 
+  /*! \brief  The method gets called when somebody clicked the CD icon 
+   *           in the system listing. 
+   *          A confirmation will be shown to acknowledge the creation.
+   */
   function createISO($action,$target)
   {
     if(count($target) == 1){
@@ -334,7 +344,12 @@ class systemManagement extends management
 
     }
   }
-  
+ 
+
+  /*! \brief  Once the user has confirmed the ISO creation in 'createISO',
+   *           this method gets called. 
+   *          An iFrame is shown which then used 'performIsoCreation' as contents. 
+   */
   function initiateISOcreation()
   {
     $smarty = get_smarty();
@@ -343,6 +358,9 @@ class systemManagement extends management
   }
 
 
+  /*! \brief  ISO creation confirmed and iFrame is visible, now create the ISO 
+   *           and display the status to fill the iFrame.
+   */
   function performIsoCreation()
   {
     $return_button   = "<form method='get' action='main.php' target='_parent'>
@@ -411,7 +429,7 @@ class systemManagement extends management
 
 
   /*! \brief    Handle GOsa-si events
-   *            All events are handled here.
+   *            All schedules and triggered events are handled here.
    */
   function handleEvent($action="",$target=array(),$all=array())
   {
@@ -423,10 +441,10 @@ class systemManagement extends management
 
     // Detect triggere or scheduled actions 
     $headpage = $this->getHeadpage();
+    $event = preg_replace("/^[TS]_/","",$action); 
     if(preg_match("/^[TS]_/", $action)){
 
       // Send special reinstall action for opsi hosts
-      $event = preg_replace("/^[TS]_/","",$action); 
       if($event == "DaemonEvent_reinstall" && $this->si_active && $this->opsi){
         foreach($target as $key => $dn){
           $type = $headpage->getType($dn);
@@ -500,13 +518,19 @@ class systemManagement extends management
     }
   }
 
+
+  /*! \brief  Close all dialogs and reset the activationQueue.
+   */ 
   function cancelEdit()
   {
     management::cancelEdit();
     $this->activationQueue = array();
   }
   
-  
+ 
+  /*! \brief  Save event dialogs. 
+   *          And append the new GOsa-si event.
+   */ 
   function saveEventDialog()
   {
     $o_queue = new gosaSupportDaemon();
@@ -516,7 +540,6 @@ class systemManagement extends management
     }else{
       $this->closeDialogs();
     }
- 
   }
  
 
@@ -613,11 +636,17 @@ class systemManagement extends management
 
           // Delete the object
           $this->dn = $dn;
-          $this->tabObject= new $info['tabClass']($this->config,$this->config->data['TABS'][$info['tabDesc']], 
-              $this->dn, $info['aclCategory'], true, true);
-          $this->tabObject->set_acl_base($this->dn);
-          $this->tabObject->parent = &$this;
-          $this->tabObject->delete ();
+          if($info['tabClass'] == "phonetabs"){
+             $this->tabObject= new $tabtype($this->config, $this->config->data['TABS'][$tabobj], $dn,$type);
+             $this->tabObject->set_acl_base($dn);
+             $this->tabObject->by_object['phoneGeneric']->remove_from_parent ();
+          }else{
+            $this->tabObject= new $info['tabClass']($this->config,$this->config->data['TABS'][$info['tabDesc']], 
+                $this->dn, $info['aclCategory'], true, true);
+            $this->tabObject->set_acl_base($this->dn);
+            $this->tabObject->parent = &$this;
+            $this->tabObject->delete ();
+          }
 
           // Remove the lock for the current object.
           del_lock($this->dn);
@@ -639,10 +668,7 @@ class systemManagement extends management
 
 
   /*! \brief  Edit the selected system type.
-   *
-   *  @param  String  'action'  The name of the action which was the used as trigger.
-   *  @param  Array   'target'  A list of object dns, which should be affected by this method.
-   *  @param  Array   'all'     A combination of both 'action' and 'target'.
+   *          NewDevice and ArpNewDevice are handled here separately 
    */
   function editEntry($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
   {
@@ -697,6 +723,9 @@ class systemManagement extends management
   }
 
 
+  /*! \brief  Activates all selcted 'NewDevices' at once.
+   *          Enqueues the selected Devices in the activation queue.
+   */
   function activateMultiple($action,$target)
   {
     $headpage = $this->getHeadpage();
@@ -904,6 +933,10 @@ class systemManagement extends management
   }
 
 
+  /*! \brief  Save object modifications here and any dialogs too.
+   *          After a successfull update of the object data, close
+   *           the dialogs.
+   */
   protected function saveChanges()
   {
     @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
@@ -929,10 +962,11 @@ class systemManagement extends management
       }
     }
 
-    //
+    // Try to save changes here.
     $str = management::saveChanges();
     if($this->tabObject) return("");
 
+    // Activate system if required..
     if(isset($this->activationQueue[$this->last_dn])){
       $dn = $this->last_tabObject->dn;
       $this->activate_new_device($dn);
@@ -964,6 +998,9 @@ class systemManagement extends management
   }
 
 
+  /*! \brief  Save object modifications here and any dialogs too.
+   *          Keep dialogs opened.
+   */
   protected function applyChanges()
   {
     $str = management::applyChanges();
@@ -1189,6 +1226,24 @@ class systemManagement extends management
     $tabs['FAKE_OC_ArpNewDevice'] = &$tabs['FAKE_OC_NewDevice'];
 
     return($tabs);
+  }
+
+
+  /*! \brief  !! Incoming dummy acls, required to defined acls for incoming objects
+   */
+  static function plInfo()
+  {
+    return (array(
+          "plShortName"   => _("Incoming objects"),
+          "plDescription" => _("Incoming objects"),
+          "plSelfModify"  => FALSE,
+          "plDepends"     => array(),
+          "plPriority"    => 99,
+          "plSection"     => array("administration"),
+          "plCategory"    => array("incoming"   => array( "description"  => _("Incoming"),
+              "objectClass"  => "")),
+          "plProvidedAcls"=> array()
+          ));
   }
 } 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
