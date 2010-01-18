@@ -1332,6 +1332,8 @@ class systemManagement extends management
     $tabs['gotoTerminal__IS_BUSY'] = &$tabs['gotoTerminal'];
     $tabs['gotoTerminal__IS_ERROR'] = &$tabs['gotoTerminal'];
     $tabs['gotoTerminal__IS_LOCKED'] = &$tabs['gotoTerminal'];
+    $tabs['FAKE_OC_TerminalTemplate'] = &$tabs['gotoTerminal'];
+    $tabs['FAKE_OC_WorkstationTemplate'] = &$tabs['gotoTerminal'];
     $tabs['goServer__IS_BUSY'] = &$tabs['goServer'];
     $tabs['goServer__IS_ERROR'] = &$tabs['goServer'];
     $tabs['goServer__IS_LOCKED'] = &$tabs['goServer'];
