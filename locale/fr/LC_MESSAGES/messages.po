@@ -1,11 +1,11 @@
 # translation of messages.po to
-# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008, 2009.
+# Benoit Mortier <benoit.mortier@opensides.be>, 2005, 2006, 2007, 2008, 2009, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-01-18 18:50+0100\n"
-"PO-Revision-Date: 2009-10-06 17:19+0200\n"
+"PO-Revision-Date: 2010-01-18 23:24+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -102,7 +102,6 @@ msgid "Error"
 msgstr "Erreur"
 
 #: admin/systems/class_systemManagement.inc:259
-#, fuzzy
 msgid ""
 "The passwords you've entered as 'New password' and 'Repeated password' do "
 "not   match!"
@@ -160,8 +159,7 @@ msgstr "La création de l'image à échoué. veuillez lire le rapport ci dessous
 #: admin/systems/.svn/tmp/tempfile.2.tmp:295
 #, php-format
 msgid "Command '%s', specified for ISO creation doesn't seem to exist."
-msgstr ""
-"La commande '%s', utilisée dans la création de l'image ISO n'existe pas."
+msgstr "La commande '%s', utilisée dans la création de l'image ISO n'existe pas."
 
 #: admin/systems/class_systemManagement.inc:503
 #: admin/systems/class_systemManagement.inc:532
@@ -197,8 +195,7 @@ msgstr "Impossible de mettre le mode comme 'actif' !"
 #: admin/systems/class_systemManagement.inc:1098
 #, php-format
 msgid "You are not allowed to create a snapshot for %s."
-msgstr ""
-"Vous n'êtes pas autorisé à créer une nouvelle copie instantanée pour %s."
+msgstr "Vous n'êtes pas autorisé à créer une nouvelle copie instantanée pour %s."
 
 #: admin/systems/class_systemManagement.inc:1145
 #: admin/systems/class_systemManagement.inc:1166
@@ -640,49 +637,40 @@ msgid "Remove service"
 msgstr "Suppression du service"
 
 #: admin/systems/system-filter.tpl:3
-#, fuzzy
 msgid "Filter"
-msgstr "Filtres"
+msgstr "Filtre"
 
 #: admin/systems/system-filter.tpl:11
-#, fuzzy
 msgid "Show servers"
 msgstr "Serveurs"
 
 #: admin/systems/system-filter.tpl:14
-#, fuzzy
 msgid "Show workstations"
-msgstr "stations de travail"
+msgstr "Stations de travail"
 
 #: admin/systems/system-filter.tpl:17
-#, fuzzy
 msgid "Show terminals"
 msgstr "Terminaux"
 
 #: admin/systems/system-filter.tpl:20
-#, fuzzy
 msgid "Show network printer"
 msgstr "Imprimantes réseaux"
 
 #: admin/systems/system-filter.tpl:23
-#, fuzzy
 msgid "Show phones"
-msgstr "Montrer les changements"
+msgstr "Téléphones"
 
 #: admin/systems/system-filter.tpl:26
-#, fuzzy
 msgid "Show windows based workstations"
-msgstr "stations de travail Windows"
+msgstr "PC Windows"
 
 #: admin/systems/system-filter.tpl:29
-#, fuzzy
 msgid "Show network devices"
 msgstr "Périphériques réseau"
 
 #: admin/systems/system-filter.tpl:32
-#, fuzzy
 msgid "Show incoming devices"
-msgstr "Montrer les changements"
+msgstr "Montrer nouveau périphériques"
 
 #: admin/systems/.svn/tmp/tempfile.tmp:606
 #: admin/systems/.svn/tmp/tempfile.2.tmp:610
@@ -854,34 +842,28 @@ msgid "Dns records"
 msgstr "Enregistrement dns"
 
 #: admin/systems/system-list.xml:15
-#, fuzzy
 msgid "Opsi host"
 msgstr "Clients OPSI"
 
 #: admin/systems/system-list.xml:64 admin/systems/class_filterSYSTEMS.inc:28
-#, fuzzy
 msgid "New unknown device"
-msgstr "Périphérique Inconnu"
+msgstr "Nouveau périphérique Inconnu"
 
 #: admin/systems/system-list.xml:72 admin/systems/class_filterSYSTEMS.inc:31
-#, fuzzy
 msgid "New device"
 msgstr "Nouveau périphérique"
 
 #: admin/systems/system-list.xml:80
-#, fuzzy
 msgid "Workstation template"
-msgstr "Modèle de station de travail pour"
+msgstr "Modèle de station de travail"
 
 #: admin/systems/system-list.xml:88
-#, fuzzy
 msgid "Terminal template"
-msgstr "Modèle de terminal pour "
+msgstr "Modèle de terminal"
 
 #: admin/systems/system-list.xml:96
-#, fuzzy
 msgid "Winstation"
-msgstr "Stations Windows"
+msgstr "Pc Windows"
 
 #: admin/systems/system-list.xml:178 admin/systems/class_servGeneric.inc:515
 #: admin/systems/server.tpl:14 admin/systems/class_componentGeneric.inc:320
@@ -890,13 +872,12 @@ msgid "Description"
 msgstr "Description"
 
 #: admin/systems/system-list.xml:227
-#, fuzzy
 msgid "Network printer"
-msgstr "Imprimantes réseaux"
+msgstr "Imprimante réseaux"
 
 #: admin/systems/system-list.xml:270
 msgid "Halt "
-msgstr ""
+msgstr "Arrêter"
 
 #: admin/systems/system-list.xml:278 admin/systems/system-list.xml:344
 #: admin/systems/class_servGeneric.inc:227
@@ -904,7 +885,6 @@ msgid "Reboot"
 msgstr "Redémarrer"
 
 #: admin/systems/system-list.xml:286 admin/systems/system-list.xml:352
-#, fuzzy
 msgid "Wakeup"
 msgstr "Réveiller"
 
@@ -914,14 +894,12 @@ msgid "Update"
 msgstr "Mise à jour"
 
 #: admin/systems/system-list.xml:302 admin/systems/system-list.xml:368
-#, fuzzy
 msgid "Lock"
-msgstr "Verrouillé"
+msgstr "Verrouiller"
 
 #: admin/systems/system-list.xml:310 admin/systems/system-list.xml:376
-#, fuzzy
 msgid "Activate"
-msgstr "Activé"
+msgstr "Activer"
 
 #: admin/systems/system-list.xml:318 admin/systems/system-list.xml:384
 #: admin/systems/class_servGeneric.inc:229
@@ -931,26 +909,23 @@ msgstr "Reinstaller"
 
 #: admin/systems/system-list.xml:336
 msgid "Halt"
-msgstr ""
+msgstr "Arrêter"
 
 #: admin/systems/system-list.xml:433
 msgid "Change password"
 msgstr "Modifier le mot de passe"
 
 #: admin/systems/system-list.xml:444
-#, fuzzy
 msgid "Create ISO"
-msgstr "Créer"
+msgstr "Créer un image ISO"
 
 #: admin/systems/system-list.xml:456
-#, fuzzy
 msgid "Edit role"
-msgstr "Editer un rôle acl"
+msgstr "Editer un rôle"
 
 #: admin/systems/system-list.xml:469
-#, fuzzy
 msgid "Remove role"
-msgstr "Suppression de l'utilisateur"
+msgstr "Suppression d'un rôle"
 
 #: admin/systems/password.tpl:3
 msgid ""
@@ -1042,8 +1017,7 @@ msgid "Software deployment"
 msgstr "Déploiement de logiciel"
 
 #: admin/systems/class_servGeneric.inc:372
-msgid ""
-"This host is currently installing, if you really want to save it, press 'OK'."
+msgid "This host is currently installing, if you really want to save it, press 'OK'."
 msgstr ""
 "Cet hôte est actuellement en cours d'installation, si vous voulez vraiment "
 "le sauver, cliquez sur 'OK'."
@@ -1091,8 +1065,7 @@ msgid "Action"
 msgstr "Action"
 
 #: admin/systems/server.tpl:69
-msgid ""
-"System installation in progress, the FAI state cannot be changed right now."
+msgid "System installation in progress, the FAI state cannot be changed right now."
 msgstr ""
 "Le système est en cours d'installation, l'état FAI ne peut pas être changé "
 "maintenant."
@@ -1155,8 +1128,7 @@ msgstr ""
 #: admin/systems/class_termDNS.inc:690
 #, php-format
 msgid "Only lowercase records are allowed, please check your '%ss'."
-msgstr ""
-"Seulement les minuscules sont autorisée, veuillez vérifier votre '%ss'."
+msgstr "Seulement les minuscules sont autorisée, veuillez vérifier votre '%ss'."
 
 #: admin/systems/class_termDNS.inc:950 admin/systems/class_termDNS.inc:970
 msgid "Add"
@@ -1198,26 +1170,3 @@ msgstr "Nom du périphérique"
 msgid "Choose subtree to place component in"
 msgstr "Sélectionnez la branche où sera placée le composant"
 
-#~ msgid ""
-#~ "This includes all system and setup informations. Please double check if "
-#~ "your really want to do this since there is no way for GOsa to get your "
-#~ "data back."
-#~ msgstr ""
-#~ "Cela inclut tout les systèmes et les informations de configuration. "
-#~ "Veuillez vérifier que vous voulez effectuer cette opération étant donné "
-#~ "qu'il est impossible pour GOsa de récupérer vos données."
-
-#~ msgid ""
-#~ "Best thing to do before performing this action would be to save the "
-#~ "current contents of your LDAP tree in a file. So - if you've done so - "
-#~ "press 'Delete' to continue or 'Cancel' to abort."
-#~ msgstr ""
-#~ "Il est conseillé de sauvegarder l'arbre de votre annuaire LDAP dans un "
-#~ "fichier avant de réaliser cette action. Appuyez sur 'Supprimer' pour "
-#~ "continuer ou 'Annuler' pour abandonner."
-
-#~ msgid "This does something"
-#~ msgstr "Ceci fait quelque chose"
-
-#~ msgid "System management"
-#~ msgstr "Administration des système"
