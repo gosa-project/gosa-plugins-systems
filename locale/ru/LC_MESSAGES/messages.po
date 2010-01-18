@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-18 17:06+0100\n"
+"POT-Creation-Date: 2010-01-18 18:50+0100\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -19,66 +19,61 @@ msgid "Warning"
 msgstr "Предупреждение"
 
 #: admin/systems/remove.tpl:6
-#, fuzzy
 msgid ""
-"This includes all system and setup informations. Please double check if your "
-"really want to do this since there is no way for GOsa to get your data back."
+"This includes all account data, system access rules, imap settings, etc. for "
+"this user. Please double check if your really want to do this since there is "
+"no way for GOsa to get your data back."
 msgstr ""
-"Сюда входит <b>вся</b> информация о системе и ее настройках. Подумайте еще "
-"раз, действительно ли вам нужно удаление, так как GOsa не сможет отменить "
-"результаты этой операции."
+"Сюда входит вся информация об учетной записи этого пользователя, его права "
+"доступа в системе, настройки IMAP и т. д. Подумайте еще раз, действительно "
+"ли вам нужно удаление, так как GOsa не сможет отменить результаты этой "
+"операции."
 
 #: admin/systems/remove.tpl:10
 #, fuzzy
-msgid ""
-"Best thing to do before performing this action would be to save the current "
-"contents of your LDAP tree in a file. So - if you've done so - press "
-"'Delete' to continue or 'Cancel' to abort."
+msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
 msgstr ""
-"Лучше всего перед удалением сохранить резервную копию текущего дерева LDAP в "
-"файл. Если вы сделали это и действительно хотите выполнить удаление, нажмите "
-"<i>Удалить</i>, иначе нажмите <i>Отмена</i>."
+"Если вы уверены в своих действиях, нажмите на кнопку <i>Удалить</i>, иначе "
+"нажмите <i>Отмена</i>."
 
-#: admin/systems/class_systemManagement.inc:26
+#: admin/systems/class_systemManagement.inc:60
 #: admin/systems/class_divListSystem.inc:88
 msgid "Systems"
 msgstr "Системы"
 
-#: admin/systems/class_systemManagement.inc:27
-msgid "This does something"
-msgstr "Что-то будет"
+#: admin/systems/class_systemManagement.inc:61
+#: admin/systems/class_divListSystem.inc:63
+#: admin/systems/class_divListSystem.inc:64 admin/systems/system-list.xml:11
+msgid "List of systems"
+msgstr "Список систем"
 
-#: admin/systems/class_systemManagement.inc:239
-#: admin/systems/.svn/tmp/tempfile.tmp:239
-#: admin/systems/.svn/tmp/tempfile.2.tmp:239
-msgid "Back"
-msgstr "Назад"
+#: admin/systems/class_systemManagement.inc:171
+#: admin/systems/class_systemManagement.inc:267
+#: admin/systems/.svn/tmp/tempfile.tmp:633
+#: admin/systems/.svn/tmp/tempfile.tmp:736
+#: admin/systems/.svn/tmp/tempfile.tmp:965
+#: admin/systems/.svn/tmp/tempfile.2.tmp:637
+#: admin/systems/.svn/tmp/tempfile.2.tmp:740
+#: admin/systems/.svn/tmp/tempfile.2.tmp:969
+#, fuzzy
+msgid "Permission error"
+msgstr "Права для членов группы"
 
-#: admin/systems/class_systemManagement.inc:286
-#: admin/systems/.svn/tmp/tempfile.tmp:286
-#: admin/systems/.svn/tmp/tempfile.2.tmp:286
-msgid "Creating the image failed. Please see the report below."
-msgstr ""
+#: admin/systems/class_systemManagement.inc:171
+#: admin/systems/class_systemManagement.inc:267
+#: admin/systems/.svn/tmp/tempfile.tmp:633
+#: admin/systems/.svn/tmp/tempfile.tmp:736
+#: admin/systems/.svn/tmp/tempfile.2.tmp:637
+#: admin/systems/.svn/tmp/tempfile.2.tmp:740
+#, fuzzy
+msgid "You have no permission to change this password!"
+msgstr "Вам не разрешено менять пароль."
 
-#: admin/systems/class_systemManagement.inc:295
-#: admin/systems/.svn/tmp/tempfile.tmp:295
-#: admin/systems/.svn/tmp/tempfile.2.tmp:295
-#, fuzzy, php-format
-msgid "Command '%s', specified for ISO creation doesn't seem to exist."
-msgstr ""
-"Не удается найти команду \"%s\", указанную в поле POSTREMOVE модуля \"%s\"."
-
-#: admin/systems/class_systemManagement.inc:369
-#: admin/systems/class_systemManagement.inc:486
-#: admin/systems/class_systemManagement.inc:523
-#: admin/systems/class_systemManagement.inc:531
-#: admin/systems/class_systemManagement.inc:581
-#: admin/systems/class_systemManagement.inc:589
-#: admin/systems/class_systemManagement.inc:604
-#: admin/systems/class_systemManagement.inc:612
-#: admin/systems/class_systemManagement.inc:651
-#: admin/systems/class_systemManagement.inc:745
-#: admin/systems/class_systemManagement.inc:1306
+#: admin/systems/class_systemManagement.inc:258
+#: admin/systems/class_systemManagement.inc:677
+#: admin/systems/class_systemManagement.inc:683
+#: admin/systems/class_systemManagement.inc:802
+#: admin/systems/class_systemManagement.inc:817
 #: admin/systems/class_serverService.inc:186
 #: admin/systems/class_serverService.inc:236
 #: admin/systems/class_serverService.inc:363
@@ -104,77 +99,33 @@ msgstr ""
 #: admin/systems/.svn/tmp/tempfile.2.tmp:649
 #: admin/systems/.svn/tmp/tempfile.2.tmp:743
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1305
+#: admin/systems/class_filterSYSTEMS.inc:124
 #: admin/systems/class_termDNS.inc:343
 msgid "Error"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:429
-#: admin/systems/.svn/tmp/tempfile.tmp:420
-#: admin/systems/.svn/tmp/tempfile.2.tmp:424
-#, fuzzy
-msgid "Internal error"
-msgstr "Терминал-сервер"
-
-#: admin/systems/class_systemManagement.inc:429
-#: admin/systems/.svn/tmp/tempfile.tmp:420
-#: admin/systems/.svn/tmp/tempfile.2.tmp:424
-#, fuzzy
-msgid "Cannot set mode to 'active'!"
-msgstr "Список подразделений"
-
-#: admin/systems/class_systemManagement.inc:612
-#: admin/systems/.svn/tmp/tempfile.tmp:606
-#: admin/systems/.svn/tmp/tempfile.2.tmp:610
-msgid "Editing this type of object is not supported yet!"
-msgstr ""
-
-#: admin/systems/class_systemManagement.inc:639
-#: admin/systems/class_systemManagement.inc:742
-#: admin/systems/class_systemManagement.inc:971
-#: admin/systems/.svn/tmp/tempfile.tmp:633
-#: admin/systems/.svn/tmp/tempfile.tmp:736
-#: admin/systems/.svn/tmp/tempfile.tmp:965
-#: admin/systems/.svn/tmp/tempfile.2.tmp:637
-#: admin/systems/.svn/tmp/tempfile.2.tmp:740
-#: admin/systems/.svn/tmp/tempfile.2.tmp:969
-#, fuzzy
-msgid "Permission error"
-msgstr "Права для членов группы"
-
-#: admin/systems/class_systemManagement.inc:639
-#: admin/systems/class_systemManagement.inc:742
-#: admin/systems/.svn/tmp/tempfile.tmp:633
-#: admin/systems/.svn/tmp/tempfile.tmp:736
-#: admin/systems/.svn/tmp/tempfile.2.tmp:637
-#: admin/systems/.svn/tmp/tempfile.2.tmp:740
-#, fuzzy
-msgid "You have no permission to change this password!"
-msgstr "Вам не разрешено менять пароль."
-
-#: admin/systems/class_systemManagement.inc:651
-#: admin/systems/.svn/tmp/tempfile.tmp:645
-#: admin/systems/.svn/tmp/tempfile.2.tmp:649
+#: admin/systems/class_systemManagement.inc:259
 #, fuzzy
 msgid ""
 "The passwords you've entered as 'New password' and 'Repeated password' do "
-"not match!"
+"not   match!"
 msgstr "Введенные пароли не совпадают!"
 
-#: admin/systems/class_systemManagement.inc:726
+#: admin/systems/class_systemManagement.inc:305
 #: admin/systems/.svn/tmp/tempfile.tmp:720
 #: admin/systems/.svn/tmp/tempfile.2.tmp:724
 #, fuzzy
 msgid "Password method"
 msgstr "Хэширование паролей"
 
-#: admin/systems/class_systemManagement.inc:726
+#: admin/systems/class_systemManagement.inc:305
 #: admin/systems/.svn/tmp/tempfile.tmp:720
 #: admin/systems/.svn/tmp/tempfile.2.tmp:724
 msgid "Password method crypt is missing. Cannot set system password."
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:732
-#: admin/systems/class_systemManagement.inc:1841
+#: admin/systems/class_systemManagement.inc:311
+#: admin/systems/class_systemManagement.inc:1053
 #: admin/systems/services/class_goService.inc:122
 #: admin/systems/services/class_goService.inc:150
 #: admin/systems/services/class_goService.inc:183
@@ -193,14 +144,28 @@ msgstr ""
 msgid "LDAP error"
 msgstr "Ошибка LDAP:"
 
-#: admin/systems/class_systemManagement.inc:745
-#: admin/systems/.svn/tmp/tempfile.tmp:739
-#: admin/systems/.svn/tmp/tempfile.2.tmp:743
-#, fuzzy
-msgid "Cannot determine object to change password!"
-msgstr "Сменить пароль"
+#: admin/systems/class_systemManagement.inc:360
+#: admin/systems/.svn/tmp/tempfile.tmp:239
+#: admin/systems/.svn/tmp/tempfile.2.tmp:239
+msgid "Back"
+msgstr "Назад"
 
-#: admin/systems/class_systemManagement.inc:852
+#: admin/systems/class_systemManagement.inc:406
+#: admin/systems/.svn/tmp/tempfile.tmp:286
+#: admin/systems/.svn/tmp/tempfile.2.tmp:286
+msgid "Creating the image failed. Please see the report below."
+msgstr ""
+
+#: admin/systems/class_systemManagement.inc:411
+#: admin/systems/.svn/tmp/tempfile.tmp:295
+#: admin/systems/.svn/tmp/tempfile.2.tmp:295
+#, fuzzy, php-format
+msgid "Command '%s', specified for ISO creation doesn't seem to exist."
+msgstr ""
+"Не удается найти команду \"%s\", указанную в поле POSTREMOVE модуля \"%s\"."
+
+#: admin/systems/class_systemManagement.inc:503
+#: admin/systems/class_systemManagement.inc:532
 #: admin/systems/.svn/tmp/tempfile.tmp:846
 #: admin/systems/.svn/tmp/tempfile.2.tmp:850
 #: admin/systems/class_servGeneric.inc:167
@@ -209,189 +174,44 @@ msgstr "Сменить пароль"
 msgid "Service infrastructure"
 msgstr "Имя сервера"
 
-#: admin/systems/class_systemManagement.inc:897
+#: admin/systems/class_systemManagement.inc:578
+#: admin/systems/class_systemManagement.inc:654
+#: admin/systems/class_systemManagement.inc:1098
+#: admin/systems/class_systemManagement.inc:1145
+#: admin/systems/class_systemManagement.inc:1166
 #: admin/systems/.svn/tmp/tempfile.tmp:891
 #: admin/systems/.svn/tmp/tempfile.2.tmp:895
 #, fuzzy
 msgid "Permission"
 msgstr "Права для членов группы"
 
-#: admin/systems/class_systemManagement.inc:1335
-#: admin/systems/class_systemManagement.inc:1652
-#: admin/systems/.svn/tmp/tempfile.tmp:1330
-#: admin/systems/.svn/tmp/tempfile.tmp:1644
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1334
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1648
-msgid "New terminal"
-msgstr "Создать терминал"
-
-#: admin/systems/class_systemManagement.inc:1337
-#: admin/systems/class_systemManagement.inc:1653
-#: admin/systems/.svn/tmp/tempfile.tmp:1332
-#: admin/systems/.svn/tmp/tempfile.tmp:1645
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1336
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1649
-msgid "New workstation"
-msgstr "Новая рабочая станция"
-
-#: admin/systems/class_systemManagement.inc:1339
-#: admin/systems/.svn/tmp/tempfile.tmp:1334
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1338
+#: admin/systems/class_systemManagement.inc:869
+#: admin/systems/.svn/tmp/tempfile.tmp:420
+#: admin/systems/.svn/tmp/tempfile.2.tmp:424
 #, fuzzy
-msgid "Unknown device"
-msgstr "состояние неизвестно"
-
-#: admin/systems/class_systemManagement.inc:1341
-#: admin/systems/.svn/tmp/tempfile.tmp:1336
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1340
-#, fuzzy
-msgid "New Device"
-msgstr "Сетевые устройства"
-
-#: admin/systems/class_systemManagement.inc:1366
-#: admin/systems/.svn/tmp/tempfile.tmp:1361
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1365
-#, fuzzy
-msgid "Terminal template for"
-msgstr "Шаблон терминала"
-
-#: admin/systems/class_systemManagement.inc:1382
-#: admin/systems/.svn/tmp/tempfile.tmp:1377
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1381
-msgid "Workstation template for"
-msgstr "Шаблон рабочей станции для"
-
-#: admin/systems/class_systemManagement.inc:1629
-#: admin/systems/.svn/tmp/tempfile.tmp:1621
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1625
-msgid "Template"
-msgstr "Шаблон"
-
-#: admin/systems/class_systemManagement.inc:1630
-#: admin/systems/class_divListSystem.inc:199
-#: admin/systems/.svn/tmp/tempfile.tmp:1622
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1626
-msgid "Phone"
-msgstr "Телефон"
-
-#: admin/systems/class_systemManagement.inc:1631
-#: admin/systems/.svn/tmp/tempfile.tmp:1623
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1627
-#: admin/systems/class_componentGeneric.inc:315
-#, fuzzy
-msgid "Network device"
-msgstr "Сетевые устройства"
-
-#: admin/systems/class_systemManagement.inc:1632
-#: admin/systems/class_divListSystem.inc:203
-#: admin/systems/.svn/tmp/tempfile.tmp:1624
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1628
-msgid "Printer"
-msgstr "Принтер"
-
-#: admin/systems/class_systemManagement.inc:1634
-#: admin/systems/.svn/tmp/tempfile.tmp:1626
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1630
-#, fuzzy
-msgid "Windows workstation"
-msgstr "Показать рабочие станции"
-
-#: admin/systems/class_systemManagement.inc:1636
-#: admin/systems/class_divListSystem.inc:191
-#: admin/systems/.svn/tmp/tempfile.tmp:1628
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1632
-msgid "Workstation"
-msgstr "Рабочая станция"
-
-#: admin/systems/class_systemManagement.inc:1637
-#: admin/systems/class_divListSystem.inc:195
-#: admin/systems/.svn/tmp/tempfile.tmp:1629
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1633
-#: admin/systems/class_servGeneric.inc:511
-msgid "Server"
-msgstr "Сервер"
-
-#: admin/systems/class_systemManagement.inc:1638
-#: admin/systems/class_divListSystem.inc:187
-#: admin/systems/.svn/tmp/tempfile.tmp:1630
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1634
-#, fuzzy
-msgid "Terminal"
-msgstr "Терминалы"
-
-#: admin/systems/class_systemManagement.inc:1640
-#: admin/systems/.svn/tmp/tempfile.tmp:1632
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1636
-#, fuzzy
-msgid "Locked workstation"
-msgstr "Новая рабочая станция"
-
-#: admin/systems/class_systemManagement.inc:1641
-#: admin/systems/.svn/tmp/tempfile.tmp:1633
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1637
-#, fuzzy
-msgid "Locked server"
-msgstr "Сервер подкачки"
-
-#: admin/systems/class_systemManagement.inc:1642
-#: admin/systems/.svn/tmp/tempfile.tmp:1634
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1638
-#, fuzzy
-msgid "Locked terminal"
-msgstr "Создать терминал"
-
-#: admin/systems/class_systemManagement.inc:1644
-#: admin/systems/.svn/tmp/tempfile.tmp:1636
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1640
-#, fuzzy
-msgid "Workstation error"
-msgstr "Рабочая станция"
-
-#: admin/systems/class_systemManagement.inc:1645
-#: admin/systems/.svn/tmp/tempfile.tmp:1637
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1641
-#, fuzzy
-msgid "Server error"
-msgstr "Имя сервера"
-
-#: admin/systems/class_systemManagement.inc:1646
-#: admin/systems/.svn/tmp/tempfile.tmp:1638
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1642
-#, fuzzy
-msgid "Terminal error"
+msgid "Internal error"
 msgstr "Терминал-сервер"
 
-#: admin/systems/class_systemManagement.inc:1648
-#: admin/systems/.svn/tmp/tempfile.tmp:1640
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1644
+#: admin/systems/class_systemManagement.inc:869
+#: admin/systems/.svn/tmp/tempfile.tmp:420
+#: admin/systems/.svn/tmp/tempfile.2.tmp:424
 #, fuzzy
-msgid "Workstation busy"
-msgstr "Рабочая станция"
+msgid "Cannot set mode to 'active'!"
+msgstr "Список подразделений"
 
-#: admin/systems/class_systemManagement.inc:1649
-#: admin/systems/.svn/tmp/tempfile.tmp:1641
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1645
-#, fuzzy
-msgid "Server busy"
-msgstr "Серверы"
+#: admin/systems/class_systemManagement.inc:1098
+#, fuzzy, php-format
+msgid "You are not allowed to create a snapshot for %s."
+msgstr "Вам не разрешено менять пароль."
 
-#: admin/systems/class_systemManagement.inc:1651
-#: admin/systems/.svn/tmp/tempfile.tmp:1643
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1647
-#, fuzzy
-msgid "New system from incoming"
-msgstr "Системная информация"
+#: admin/systems/class_systemManagement.inc:1145
+#: admin/systems/class_systemManagement.inc:1166
+#, fuzzy, php-format
+msgid "You are not allowed to restore a snapshot for %s."
+msgstr "Вам не разрешено менять пароль."
 
-#: admin/systems/class_systemManagement.inc:1657
-#: admin/systems/class_divListSystem.inc:214
-#: admin/systems/.svn/tmp/tempfile.tmp:1649
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1653
-#, fuzzy
-msgid "Opsi client"
-msgstr "Тонкий клиент"
-
-#: admin/systems/class_systemManagement.inc:1857
-#: admin/systems/class_systemManagement.inc:1858
+#: admin/systems/class_systemManagement.inc:1350
+#: admin/systems/class_systemManagement.inc:1351
 #: admin/systems/.svn/tmp/tempfile.tmp:1849
 #: admin/systems/.svn/tmp/tempfile.tmp:1850
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1853
@@ -400,7 +220,7 @@ msgstr "Тонкий клиент"
 msgid "Incoming objects"
 msgstr "Включаемые объекты"
 
-#: admin/systems/class_systemManagement.inc:1863
+#: admin/systems/class_systemManagement.inc:1356
 #: admin/systems/.svn/tmp/tempfile.tmp:1855
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1859
 #, fuzzy
@@ -442,11 +262,6 @@ msgstr "Указанное имя уже используется."
 msgid "Continue"
 msgstr "Продолжить"
 
-#: admin/systems/class_divListSystem.inc:63
-#: admin/systems/class_divListSystem.inc:64
-msgid "List of systems"
-msgstr "Список систем"
-
 #: admin/systems/class_divListSystem.inc:82
 #, fuzzy
 msgid "Select all"
@@ -465,6 +280,7 @@ msgstr "Удалить"
 #: admin/systems/class_divListSystem.inc:95
 #: admin/systems/class_divListSystem.inc:181
 #: admin/systems/class_divListSystemService.inc:51
+#: admin/systems/system-list.xml:186
 msgid "Actions"
 msgstr "Действия"
 
@@ -529,6 +345,7 @@ msgid "OPSI installed client"
 msgstr "Клиентские устройства"
 
 #: admin/systems/class_divListSystem.inc:122
+#: admin/systems/system-filter.tpl:35
 msgid "Show OPSI based clients"
 msgstr ""
 
@@ -565,8 +382,9 @@ msgid "Display systems of user"
 msgstr "Показать адреса пользователя"
 
 #: admin/systems/class_divListSystem.inc:176
-#: admin/systems/class_servGeneric.inc:516 admin/systems/server.tpl:22
-#: admin/systems/class_componentGeneric.inc:319 admin/systems/component.tpl:17
+#: admin/systems/class_servGeneric.inc:516 admin/systems/system-list.tpl:13
+#: admin/systems/server.tpl:22 admin/systems/class_componentGeneric.inc:319
+#: admin/systems/component.tpl:17
 msgid "Base"
 msgstr "Ветка"
 
@@ -575,34 +393,79 @@ msgstr "Ветка"
 msgid "Submit department"
 msgstr "Показать подразделения"
 
-#: admin/systems/class_divListSystem.inc:178
+#: admin/systems/class_divListSystem.inc:178 admin/systems/system-list.tpl:13
 msgid "Submit"
 msgstr ""
 
-#: admin/systems/class_divListSystem.inc:183
+#: admin/systems/class_divListSystem.inc:183 admin/systems/system-list.xml:197
 msgid "Create"
 msgstr "Создать"
 
-#: admin/systems/class_divListSystem.inc:207
+#: admin/systems/class_divListSystem.inc:187
+#: admin/systems/.svn/tmp/tempfile.tmp:1630
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1634
+#: admin/systems/system-list.xml:120 admin/systems/system-list.xml:219
+#, fuzzy
+msgid "Terminal"
+msgstr "Терминалы"
+
+#: admin/systems/class_divListSystem.inc:191
+#: admin/systems/.svn/tmp/tempfile.tmp:1628
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1632
+#: admin/systems/system-list.xml:112 admin/systems/system-list.xml:211
+msgid "Workstation"
+msgstr "Рабочая станция"
+
+#: admin/systems/class_divListSystem.inc:195
+#: admin/systems/.svn/tmp/tempfile.tmp:1629
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1633
+#: admin/systems/system-list.xml:104 admin/systems/system-list.xml:203
+#: admin/systems/class_servGeneric.inc:511
+msgid "Server"
+msgstr "Сервер"
+
+#: admin/systems/class_divListSystem.inc:199
+#: admin/systems/.svn/tmp/tempfile.tmp:1622
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1626
+#: admin/systems/system-list.xml:136 admin/systems/system-list.xml:235
+msgid "Phone"
+msgstr "Телефон"
+
+#: admin/systems/class_divListSystem.inc:203
+#: admin/systems/.svn/tmp/tempfile.tmp:1624
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1628
+#: admin/systems/system-list.xml:128
+msgid "Printer"
+msgstr "Принтер"
+
+#: admin/systems/class_divListSystem.inc:207 admin/systems/system-list.xml:144
 #, fuzzy
 msgid "Component"
 msgstr "Прочие сетевые компоненты"
 
-#: admin/systems/class_divListSystem.inc:221
+#: admin/systems/class_divListSystem.inc:214
+#: admin/systems/.svn/tmp/tempfile.tmp:1649
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1653
+#: admin/systems/system-list.xml:251
+#, fuzzy
+msgid "Opsi client"
+msgstr "Тонкий клиент"
+
+#: admin/systems/class_divListSystem.inc:221 admin/systems/system-list.xml:263
 #, fuzzy
 msgid "Trigger action"
 msgstr "Личная информация"
 
-#: admin/systems/class_divListSystem.inc:227
+#: admin/systems/class_divListSystem.inc:227 admin/systems/system-list.xml:329
 #, fuzzy
 msgid "Schedule action"
 msgstr "Выберите режим терминала"
 
-#: admin/systems/class_divListSystem.inc:234
+#: admin/systems/class_divListSystem.inc:234 admin/systems/system-list.xml:405
 msgid "Remove"
 msgstr "Удалить"
 
-#: admin/systems/class_divListSystem.inc:237
+#: admin/systems/class_divListSystem.inc:237 admin/systems/system-list.xml:398
 #, fuzzy
 msgid "Activate systems"
 msgstr "Список систем"
@@ -760,7 +623,7 @@ msgstr ""
 "были запущены."
 
 #: admin/systems/class_divListSystemService.inc:50
-#: admin/systems/class_servGeneric.inc:514
+#: admin/systems/system-list.xml:170 admin/systems/class_servGeneric.inc:514
 #: admin/systems/class_componentGeneric.inc:318
 msgid "Name"
 msgstr "Фамилия"
@@ -842,6 +705,178 @@ msgstr "Служба печати"
 msgid "Remove service"
 msgstr "Удалить сервис DNS"
 
+#: admin/systems/system-filter.tpl:3
+#, fuzzy
+msgid "Filter"
+msgstr "Фильтры"
+
+#: admin/systems/system-filter.tpl:11
+msgid "Show servers"
+msgstr "Показать серверы"
+
+#: admin/systems/system-filter.tpl:14
+msgid "Show workstations"
+msgstr "Показать рабочие станции"
+
+#: admin/systems/system-filter.tpl:17
+msgid "Show terminals"
+msgstr "Показать терминалы"
+
+#: admin/systems/system-filter.tpl:20
+#, fuzzy
+msgid "Show network printer"
+msgstr "Показать сетевые принтеры"
+
+#: admin/systems/system-filter.tpl:23
+msgid "Show phones"
+msgstr "Показать телефоны"
+
+#: admin/systems/system-filter.tpl:26
+#, fuzzy
+msgid "Show windows based workstations"
+msgstr "Показать рабочие станции с windows"
+
+#: admin/systems/system-filter.tpl:29
+#, fuzzy
+msgid "Show network devices"
+msgstr "Сетевые устройства"
+
+#: admin/systems/system-filter.tpl:32
+#, fuzzy
+msgid "Show incoming devices"
+msgstr "Сетевые устройства"
+
+#: admin/systems/.svn/tmp/tempfile.tmp:606
+#: admin/systems/.svn/tmp/tempfile.2.tmp:610
+msgid "Editing this type of object is not supported yet!"
+msgstr ""
+
+#: admin/systems/.svn/tmp/tempfile.tmp:645
+#: admin/systems/.svn/tmp/tempfile.2.tmp:649
+#, fuzzy
+msgid ""
+"The passwords you've entered as 'New password' and 'Repeated password' do "
+"not match!"
+msgstr "Введенные пароли не совпадают!"
+
+#: admin/systems/.svn/tmp/tempfile.tmp:739
+#: admin/systems/.svn/tmp/tempfile.2.tmp:743
+#, fuzzy
+msgid "Cannot determine object to change password!"
+msgstr "Сменить пароль"
+
+#: admin/systems/.svn/tmp/tempfile.tmp:1330
+#: admin/systems/.svn/tmp/tempfile.tmp:1644
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1334
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1648 admin/systems/system-list.xml:56
+#: admin/systems/class_filterSYSTEMS.inc:23
+msgid "New terminal"
+msgstr "Создать терминал"
+
+#: admin/systems/.svn/tmp/tempfile.tmp:1332
+#: admin/systems/.svn/tmp/tempfile.tmp:1645
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1336
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1649 admin/systems/system-list.xml:23
+#: admin/systems/class_filterSYSTEMS.inc:20
+msgid "New workstation"
+msgstr "Новая рабочая станция"
+
+#: admin/systems/.svn/tmp/tempfile.tmp:1334
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1338
+#, fuzzy
+msgid "Unknown device"
+msgstr "состояние неизвестно"
+
+#: admin/systems/.svn/tmp/tempfile.tmp:1336
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1340
+#, fuzzy
+msgid "New Device"
+msgstr "Сетевые устройства"
+
+#: admin/systems/.svn/tmp/tempfile.tmp:1361
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1365
+#, fuzzy
+msgid "Terminal template for"
+msgstr "Шаблон терминала"
+
+#: admin/systems/.svn/tmp/tempfile.tmp:1377
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1381
+msgid "Workstation template for"
+msgstr "Шаблон рабочей станции для"
+
+#: admin/systems/.svn/tmp/tempfile.tmp:1621
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1625
+msgid "Template"
+msgstr "Шаблон"
+
+#: admin/systems/.svn/tmp/tempfile.tmp:1623
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1627
+#: admin/systems/system-list.xml:243
+#: admin/systems/class_componentGeneric.inc:315
+#, fuzzy
+msgid "Network device"
+msgstr "Сетевые устройства"
+
+#: admin/systems/.svn/tmp/tempfile.tmp:1626
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1630
+#, fuzzy
+msgid "Windows workstation"
+msgstr "Показать рабочие станции"
+
+#: admin/systems/.svn/tmp/tempfile.tmp:1632
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1636 admin/systems/system-list.xml:39
+#, fuzzy
+msgid "Locked workstation"
+msgstr "Новая рабочая станция"
+
+#: admin/systems/.svn/tmp/tempfile.tmp:1633
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1637 admin/systems/system-list.xml:31
+#, fuzzy
+msgid "Locked server"
+msgstr "Сервер подкачки"
+
+#: admin/systems/.svn/tmp/tempfile.tmp:1634
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1638 admin/systems/system-list.xml:47
+#, fuzzy
+msgid "Locked terminal"
+msgstr "Создать терминал"
+
+#: admin/systems/.svn/tmp/tempfile.tmp:1636
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1640
+#, fuzzy
+msgid "Workstation error"
+msgstr "Рабочая станция"
+
+#: admin/systems/.svn/tmp/tempfile.tmp:1637
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1641
+#, fuzzy
+msgid "Server error"
+msgstr "Имя сервера"
+
+#: admin/systems/.svn/tmp/tempfile.tmp:1638
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1642
+#, fuzzy
+msgid "Terminal error"
+msgstr "Терминал-сервер"
+
+#: admin/systems/.svn/tmp/tempfile.tmp:1640
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1644
+#, fuzzy
+msgid "Workstation busy"
+msgstr "Рабочая станция"
+
+#: admin/systems/.svn/tmp/tempfile.tmp:1641
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1645
+#, fuzzy
+msgid "Server busy"
+msgstr "Серверы"
+
+#: admin/systems/.svn/tmp/tempfile.tmp:1643
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1647
+#, fuzzy
+msgid "New system from incoming"
+msgstr "Системная информация"
+
 #: admin/systems/network.tpl:1
 #, fuzzy
 msgid "Network\tsettings"
@@ -904,9 +939,103 @@ msgstr ""
 msgid "Dns records"
 msgstr "Каталог"
 
-#: admin/systems/main.inc:54 admin/systems/main.inc:56
-msgid "System management"
-msgstr "Управление системами"
+#: admin/systems/system-list.xml:15
+#, fuzzy
+msgid "Opsi host"
+msgstr "Тонкий клиент"
+
+#: admin/systems/system-list.xml:64 admin/systems/class_filterSYSTEMS.inc:28
+#, fuzzy
+msgid "New unknown device"
+msgstr "состояние неизвестно"
+
+#: admin/systems/system-list.xml:72 admin/systems/class_filterSYSTEMS.inc:31
+#, fuzzy
+msgid "New device"
+msgstr "Сетевые устройства"
+
+#: admin/systems/system-list.xml:80
+#, fuzzy
+msgid "Workstation template"
+msgstr "Шаблон рабочей станции для"
+
+#: admin/systems/system-list.xml:88
+#, fuzzy
+msgid "Terminal template"
+msgstr "Шаблон терминала"
+
+#: admin/systems/system-list.xml:96
+#, fuzzy
+msgid "Winstation"
+msgstr "Рабочая станция"
+
+#: admin/systems/system-list.xml:178 admin/systems/class_servGeneric.inc:515
+#: admin/systems/server.tpl:14 admin/systems/class_componentGeneric.inc:320
+#: admin/systems/component.tpl:35
+msgid "Description"
+msgstr "Описание"
+
+#: admin/systems/system-list.xml:227
+#, fuzzy
+msgid "Network printer"
+msgstr "Показать сетевые принтеры"
+
+#: admin/systems/system-list.xml:270
+msgid "Halt "
+msgstr ""
+
+#: admin/systems/system-list.xml:278 admin/systems/system-list.xml:344
+#: admin/systems/class_servGeneric.inc:227
+msgid "Reboot"
+msgstr "Перезагрузить"
+
+#: admin/systems/system-list.xml:286 admin/systems/system-list.xml:352
+#, fuzzy
+msgid "Wakeup"
+msgstr "Вернуть в обычный режим"
+
+#: admin/systems/system-list.xml:294 admin/systems/system-list.xml:360
+#: admin/systems/system-list.tpl:13
+msgid "Update"
+msgstr ""
+
+#: admin/systems/system-list.xml:302 admin/systems/system-list.xml:368
+msgid "Lock"
+msgstr ""
+
+#: admin/systems/system-list.xml:310 admin/systems/system-list.xml:376
+#, fuzzy
+msgid "Activate"
+msgstr "Личный"
+
+#: admin/systems/system-list.xml:318 admin/systems/system-list.xml:384
+#: admin/systems/class_servGeneric.inc:229
+#: admin/systems/class_servGeneric.inc:236
+msgid "Reinstall"
+msgstr ""
+
+#: admin/systems/system-list.xml:336
+msgid "Halt"
+msgstr ""
+
+#: admin/systems/system-list.xml:433
+msgid "Change password"
+msgstr "Сменить пароль"
+
+#: admin/systems/system-list.xml:444
+#, fuzzy
+msgid "Create ISO"
+msgstr "Создать"
+
+#: admin/systems/system-list.xml:456
+#, fuzzy
+msgid "Edit role"
+msgstr "Пользователи домена"
+
+#: admin/systems/system-list.xml:469
+#, fuzzy
+msgid "Remove role"
+msgstr "Включаемые объекты"
 
 #: admin/systems/password.tpl:3
 #, fuzzy
@@ -968,20 +1097,11 @@ msgstr "Сменить пароль"
 msgid "Switch off"
 msgstr "Выключить"
 
-#: admin/systems/class_servGeneric.inc:227
-msgid "Reboot"
-msgstr "Перезагрузить"
-
 #: admin/systems/class_servGeneric.inc:228
 #: admin/systems/class_servGeneric.inc:237
 #, fuzzy
 msgid "System update"
 msgstr "Подразделение"
-
-#: admin/systems/class_servGeneric.inc:229
-#: admin/systems/class_servGeneric.inc:236
-msgid "Reinstall"
-msgstr ""
 
 #: admin/systems/class_servGeneric.inc:230
 #, fuzzy
@@ -1028,11 +1148,6 @@ msgstr "Общее"
 #, fuzzy
 msgid "Server generic"
 msgstr "Имя сервера"
-
-#: admin/systems/class_servGeneric.inc:515 admin/systems/server.tpl:14
-#: admin/systems/class_componentGeneric.inc:320 admin/systems/component.tpl:35
-msgid "Description"
-msgstr "Описание"
 
 #: admin/systems/class_servGeneric.inc:518
 #, fuzzy
@@ -1184,6 +1299,32 @@ msgstr "Имя сервера"
 #, fuzzy
 msgid "Choose subtree to place component in"
 msgstr "Выберите ветку для группы"
+
+#, fuzzy
+#~ msgid ""
+#~ "This includes all system and setup informations. Please double check if "
+#~ "your really want to do this since there is no way for GOsa to get your "
+#~ "data back."
+#~ msgstr ""
+#~ "Сюда входит <b>вся</b> информация о системе и ее настройках. Подумайте "
+#~ "еще раз, действительно ли вам нужно удаление, так как GOsa не сможет "
+#~ "отменить результаты этой операции."
+
+#, fuzzy
+#~ msgid ""
+#~ "Best thing to do before performing this action would be to save the "
+#~ "current contents of your LDAP tree in a file. So - if you've done so - "
+#~ "press 'Delete' to continue or 'Cancel' to abort."
+#~ msgstr ""
+#~ "Лучше всего перед удалением сохранить резервную копию текущего дерева "
+#~ "LDAP в файл. Если вы сделали это и действительно хотите выполнить "
+#~ "удаление, нажмите <i>Удалить</i>, иначе нажмите <i>Отмена</i>."
+
+#~ msgid "This does something"
+#~ msgstr "Что-то будет"
+
+#~ msgid "System management"
+#~ msgstr "Управление системами"
 
 #, fuzzy
 #~ msgid "Win workstation"
@@ -1357,10 +1498,6 @@ msgstr "Выберите ветку для группы"
 #~ msgstr "Применить"
 
 #, fuzzy
-#~ msgid "Winstation"
-#~ msgstr "Рабочая станция"
-
-#, fuzzy
 #~ msgid "Network Device"
 #~ msgstr "Сетевые устройства"
 
@@ -1384,9 +1521,6 @@ msgstr "Выберите ветку для группы"
 #~ msgid "Select to see servers"
 #~ msgstr "Выберите, чтобы просмотреть серверы"
 
-#~ msgid "Show servers"
-#~ msgstr "Показать серверы"
-
 #, fuzzy
 #~ msgid "Select to see Linux terminals"
 #~ msgstr "Выберите чтобы посмотреть терминалы"
@@ -1404,10 +1538,6 @@ msgstr "Выберите ветку для группы"
 #, fuzzy
 #~ msgid "Select to see network devices"
 #~ msgstr "Выберите чтобы посмотреть сетевые принтеры"
-
-#, fuzzy
-#~ msgid "Show network devices"
-#~ msgstr "Сетевые устройства"
 
 #, fuzzy
 #~ msgid "Number of listed servers"
