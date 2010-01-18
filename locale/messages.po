@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-05 15:39+0200\n"
+"POT-Creation-Date: 2010-01-18 17:06+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -62,16 +62,16 @@ msgid "Command '%s', specified for ISO creation doesn't seem to exist."
 msgstr ""
 
 #: admin/systems/class_systemManagement.inc:369
-#: admin/systems/class_systemManagement.inc:489
-#: admin/systems/class_systemManagement.inc:526
-#: admin/systems/class_systemManagement.inc:534
-#: admin/systems/class_systemManagement.inc:584
-#: admin/systems/class_systemManagement.inc:592
-#: admin/systems/class_systemManagement.inc:607
-#: admin/systems/class_systemManagement.inc:615
-#: admin/systems/class_systemManagement.inc:654
-#: admin/systems/class_systemManagement.inc:748
-#: admin/systems/class_systemManagement.inc:1313
+#: admin/systems/class_systemManagement.inc:486
+#: admin/systems/class_systemManagement.inc:523
+#: admin/systems/class_systemManagement.inc:531
+#: admin/systems/class_systemManagement.inc:581
+#: admin/systems/class_systemManagement.inc:589
+#: admin/systems/class_systemManagement.inc:604
+#: admin/systems/class_systemManagement.inc:612
+#: admin/systems/class_systemManagement.inc:651
+#: admin/systems/class_systemManagement.inc:745
+#: admin/systems/class_systemManagement.inc:1306
 #: admin/systems/class_serverService.inc:186
 #: admin/systems/class_serverService.inc:236
 #: admin/systems/class_serverService.inc:363
@@ -113,15 +113,15 @@ msgstr ""
 msgid "Cannot set mode to 'active'!"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:615
+#: admin/systems/class_systemManagement.inc:612
 #: admin/systems/.svn/tmp/tempfile.tmp:606
 #: admin/systems/.svn/tmp/tempfile.2.tmp:610
 msgid "Editing this type of object is not supported yet!"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:642
-#: admin/systems/class_systemManagement.inc:745
-#: admin/systems/class_systemManagement.inc:974
+#: admin/systems/class_systemManagement.inc:639
+#: admin/systems/class_systemManagement.inc:742
+#: admin/systems/class_systemManagement.inc:971
 #: admin/systems/.svn/tmp/tempfile.tmp:633
 #: admin/systems/.svn/tmp/tempfile.tmp:736
 #: admin/systems/.svn/tmp/tempfile.tmp:965
@@ -131,8 +131,8 @@ msgstr ""
 msgid "Permission error"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:642
-#: admin/systems/class_systemManagement.inc:745
+#: admin/systems/class_systemManagement.inc:639
+#: admin/systems/class_systemManagement.inc:742
 #: admin/systems/.svn/tmp/tempfile.tmp:633
 #: admin/systems/.svn/tmp/tempfile.tmp:736
 #: admin/systems/.svn/tmp/tempfile.2.tmp:637
@@ -140,7 +140,7 @@ msgstr ""
 msgid "You have no permission to change this password!"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:654
+#: admin/systems/class_systemManagement.inc:651
 #: admin/systems/.svn/tmp/tempfile.tmp:645
 #: admin/systems/.svn/tmp/tempfile.2.tmp:649
 msgid ""
@@ -148,20 +148,20 @@ msgid ""
 "not match!"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:729
+#: admin/systems/class_systemManagement.inc:726
 #: admin/systems/.svn/tmp/tempfile.tmp:720
 #: admin/systems/.svn/tmp/tempfile.2.tmp:724
 msgid "Password method"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:729
+#: admin/systems/class_systemManagement.inc:726
 #: admin/systems/.svn/tmp/tempfile.tmp:720
 #: admin/systems/.svn/tmp/tempfile.2.tmp:724
 msgid "Password method crypt is missing. Cannot set system password."
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:735
-#: admin/systems/class_systemManagement.inc:1846
+#: admin/systems/class_systemManagement.inc:732
+#: admin/systems/class_systemManagement.inc:1841
 #: admin/systems/services/class_goService.inc:122
 #: admin/systems/services/class_goService.inc:150
 #: admin/systems/services/class_goService.inc:183
@@ -169,38 +169,38 @@ msgstr ""
 #: admin/systems/.svn/tmp/tempfile.tmp:1833
 #: admin/systems/.svn/tmp/tempfile.2.tmp:730
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1837
-#: admin/systems/class_servGeneric.inc:281
-#: admin/systems/class_servGeneric.inc:433 admin/systems/class_termDNS.inc:488
+#: admin/systems/class_servGeneric.inc:283
+#: admin/systems/class_servGeneric.inc:435 admin/systems/class_termDNS.inc:488
 #: admin/systems/class_termDNS.inc:794 admin/systems/class_termDNS.inc:813
 #: admin/systems/class_termDNS.inc:834 admin/systems/class_termDNS.inc:839
-#: admin/systems/class_termDNS.inc:857 admin/systems/class_termDNS.inc:929
+#: admin/systems/class_termDNS.inc:857 admin/systems/class_termDNS.inc:933
 #: admin/systems/class_componentGeneric.inc:160
 #: admin/systems/class_componentGeneric.inc:301
 msgid "LDAP error"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:748
+#: admin/systems/class_systemManagement.inc:745
 #: admin/systems/.svn/tmp/tempfile.tmp:739
 #: admin/systems/.svn/tmp/tempfile.2.tmp:743
 msgid "Cannot determine object to change password!"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:855
+#: admin/systems/class_systemManagement.inc:852
 #: admin/systems/.svn/tmp/tempfile.tmp:846
 #: admin/systems/.svn/tmp/tempfile.2.tmp:850
-#: admin/systems/class_servGeneric.inc:165
-#: admin/systems/class_servGeneric.inc:453
+#: admin/systems/class_servGeneric.inc:167
+#: admin/systems/class_servGeneric.inc:455
 msgid "Service infrastructure"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:900
+#: admin/systems/class_systemManagement.inc:897
 #: admin/systems/.svn/tmp/tempfile.tmp:891
 #: admin/systems/.svn/tmp/tempfile.2.tmp:895
 msgid "Permission"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1342
-#: admin/systems/class_systemManagement.inc:1657
+#: admin/systems/class_systemManagement.inc:1335
+#: admin/systems/class_systemManagement.inc:1652
 #: admin/systems/.svn/tmp/tempfile.tmp:1330
 #: admin/systems/.svn/tmp/tempfile.tmp:1644
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1334
@@ -208,8 +208,8 @@ msgstr ""
 msgid "New terminal"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1344
-#: admin/systems/class_systemManagement.inc:1658
+#: admin/systems/class_systemManagement.inc:1337
+#: admin/systems/class_systemManagement.inc:1653
 #: admin/systems/.svn/tmp/tempfile.tmp:1332
 #: admin/systems/.svn/tmp/tempfile.tmp:1645
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1336
@@ -217,148 +217,148 @@ msgstr ""
 msgid "New workstation"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1346
+#: admin/systems/class_systemManagement.inc:1339
 #: admin/systems/.svn/tmp/tempfile.tmp:1334
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1338
 msgid "Unknown device"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1348
+#: admin/systems/class_systemManagement.inc:1341
 #: admin/systems/.svn/tmp/tempfile.tmp:1336
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1340
 msgid "New Device"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1373
+#: admin/systems/class_systemManagement.inc:1366
 #: admin/systems/.svn/tmp/tempfile.tmp:1361
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1365
 msgid "Terminal template for"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1389
+#: admin/systems/class_systemManagement.inc:1382
 #: admin/systems/.svn/tmp/tempfile.tmp:1377
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1381
 msgid "Workstation template for"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1634
+#: admin/systems/class_systemManagement.inc:1629
 #: admin/systems/.svn/tmp/tempfile.tmp:1621
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1625
 msgid "Template"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1635
+#: admin/systems/class_systemManagement.inc:1630
 #: admin/systems/class_divListSystem.inc:199
 #: admin/systems/.svn/tmp/tempfile.tmp:1622
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1626
 msgid "Phone"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1636
+#: admin/systems/class_systemManagement.inc:1631
 #: admin/systems/.svn/tmp/tempfile.tmp:1623
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1627
 #: admin/systems/class_componentGeneric.inc:315
 msgid "Network device"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1637
+#: admin/systems/class_systemManagement.inc:1632
 #: admin/systems/class_divListSystem.inc:203
 #: admin/systems/.svn/tmp/tempfile.tmp:1624
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1628
 msgid "Printer"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1639
+#: admin/systems/class_systemManagement.inc:1634
 #: admin/systems/.svn/tmp/tempfile.tmp:1626
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1630
 msgid "Windows workstation"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1641
+#: admin/systems/class_systemManagement.inc:1636
 #: admin/systems/class_divListSystem.inc:191
 #: admin/systems/.svn/tmp/tempfile.tmp:1628
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1632
 msgid "Workstation"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1642
+#: admin/systems/class_systemManagement.inc:1637
 #: admin/systems/class_divListSystem.inc:195
 #: admin/systems/.svn/tmp/tempfile.tmp:1629
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1633
-#: admin/systems/class_servGeneric.inc:509
+#: admin/systems/class_servGeneric.inc:511
 msgid "Server"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1643
+#: admin/systems/class_systemManagement.inc:1638
 #: admin/systems/class_divListSystem.inc:187
 #: admin/systems/.svn/tmp/tempfile.tmp:1630
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1634
 msgid "Terminal"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1645
+#: admin/systems/class_systemManagement.inc:1640
 #: admin/systems/.svn/tmp/tempfile.tmp:1632
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1636
 msgid "Locked workstation"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1646
+#: admin/systems/class_systemManagement.inc:1641
 #: admin/systems/.svn/tmp/tempfile.tmp:1633
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1637
 msgid "Locked server"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1647
+#: admin/systems/class_systemManagement.inc:1642
 #: admin/systems/.svn/tmp/tempfile.tmp:1634
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1638
 msgid "Locked terminal"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1649
+#: admin/systems/class_systemManagement.inc:1644
 #: admin/systems/.svn/tmp/tempfile.tmp:1636
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1640
 msgid "Workstation error"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1650
+#: admin/systems/class_systemManagement.inc:1645
 #: admin/systems/.svn/tmp/tempfile.tmp:1637
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1641
 msgid "Server error"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1651
+#: admin/systems/class_systemManagement.inc:1646
 #: admin/systems/.svn/tmp/tempfile.tmp:1638
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1642
 msgid "Terminal error"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1653
+#: admin/systems/class_systemManagement.inc:1648
 #: admin/systems/.svn/tmp/tempfile.tmp:1640
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1644
 msgid "Workstation busy"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1654
+#: admin/systems/class_systemManagement.inc:1649
 #: admin/systems/.svn/tmp/tempfile.tmp:1641
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1645
 msgid "Server busy"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1656
+#: admin/systems/class_systemManagement.inc:1651
 #: admin/systems/.svn/tmp/tempfile.tmp:1643
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1647
 msgid "New system from incoming"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1662
+#: admin/systems/class_systemManagement.inc:1657
 #: admin/systems/class_divListSystem.inc:214
 #: admin/systems/.svn/tmp/tempfile.tmp:1649
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1653
 msgid "Opsi client"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1862
-#: admin/systems/class_systemManagement.inc:1863
+#: admin/systems/class_systemManagement.inc:1857
+#: admin/systems/class_systemManagement.inc:1858
 #: admin/systems/.svn/tmp/tempfile.tmp:1849
 #: admin/systems/.svn/tmp/tempfile.tmp:1850
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1853
@@ -366,7 +366,7 @@ msgstr ""
 msgid "Incoming objects"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1868
+#: admin/systems/class_systemManagement.inc:1863
 #: admin/systems/.svn/tmp/tempfile.tmp:1855
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1859
 msgid "Incoming"
@@ -510,7 +510,7 @@ msgid "Display systems of user"
 msgstr ""
 
 #: admin/systems/class_divListSystem.inc:176
-#: admin/systems/class_servGeneric.inc:514 admin/systems/server.tpl:22
+#: admin/systems/class_servGeneric.inc:516 admin/systems/server.tpl:22
 #: admin/systems/class_componentGeneric.inc:319 admin/systems/component.tpl:17
 msgid "Base"
 msgstr ""
@@ -642,9 +642,9 @@ msgstr ""
 msgid "Cannot update service status!"
 msgstr ""
 
-#: admin/systems/paste_generic.tpl:4 admin/systems/class_servGeneric.inc:339
-#: admin/systems/class_servGeneric.inc:344
-#: admin/systems/class_servGeneric.inc:355 admin/systems/server.tpl:6
+#: admin/systems/paste_generic.tpl:4 admin/systems/class_servGeneric.inc:341
+#: admin/systems/class_servGeneric.inc:346
+#: admin/systems/class_servGeneric.inc:357 admin/systems/server.tpl:6
 msgid "Server name"
 msgstr ""
 
@@ -677,7 +677,7 @@ msgid "Add, remove and configure the properties of system services here."
 msgstr ""
 
 #: admin/systems/class_divListSystemService.inc:50
-#: admin/systems/class_servGeneric.inc:512
+#: admin/systems/class_servGeneric.inc:514
 #: admin/systems/class_componentGeneric.inc:318
 msgid "Name"
 msgstr ""
@@ -827,101 +827,101 @@ msgstr ""
 msgid "Password strength"
 msgstr ""
 
-#: admin/systems/class_servGeneric.inc:86
+#: admin/systems/class_servGeneric.inc:82
 msgid "Activated"
 msgstr ""
 
-#: admin/systems/class_servGeneric.inc:87
+#: admin/systems/class_servGeneric.inc:83
 msgid "Locked"
 msgstr ""
 
-#: admin/systems/class_servGeneric.inc:148
+#: admin/systems/class_servGeneric.inc:150
 msgid "server"
 msgstr ""
 
-#: admin/systems/class_servGeneric.inc:169
+#: admin/systems/class_servGeneric.inc:171
 msgid "Event error"
 msgstr ""
 
-#: admin/systems/class_servGeneric.inc:170
+#: admin/systems/class_servGeneric.inc:172
 #, php-format
 msgid "Event '%s' is not available!"
 msgstr ""
 
-#: admin/systems/class_servGeneric.inc:225
+#: admin/systems/class_servGeneric.inc:227
 msgid "Switch off"
 msgstr ""
 
-#: admin/systems/class_servGeneric.inc:225
+#: admin/systems/class_servGeneric.inc:227
 msgid "Reboot"
 msgstr ""
 
-#: admin/systems/class_servGeneric.inc:226
-#: admin/systems/class_servGeneric.inc:235
-msgid "System update"
-msgstr ""
-
-#: admin/systems/class_servGeneric.inc:227
-#: admin/systems/class_servGeneric.inc:234
-msgid "Reinstall"
-msgstr ""
-
 #: admin/systems/class_servGeneric.inc:228
-msgid "Rescan hardware"
+#: admin/systems/class_servGeneric.inc:237
+msgid "System update"
 msgstr ""
 
 #: admin/systems/class_servGeneric.inc:229
 #: admin/systems/class_servGeneric.inc:236
-msgid "Memory test"
+msgid "Reinstall"
 msgstr ""
 
 #: admin/systems/class_servGeneric.inc:230
-#: admin/systems/class_servGeneric.inc:237
-msgid "Force localboot"
+msgid "Rescan hardware"
 msgstr ""
 
 #: admin/systems/class_servGeneric.inc:231
 #: admin/systems/class_servGeneric.inc:238
-msgid "System analysis"
+msgid "Memory test"
+msgstr ""
+
+#: admin/systems/class_servGeneric.inc:232
+#: admin/systems/class_servGeneric.inc:239
+msgid "Force localboot"
 msgstr ""
 
 #: admin/systems/class_servGeneric.inc:233
+#: admin/systems/class_servGeneric.inc:240
+msgid "System analysis"
+msgstr ""
+
+#: admin/systems/class_servGeneric.inc:235
 msgid "Wake up"
 msgstr ""
 
-#: admin/systems/class_servGeneric.inc:369
+#: admin/systems/class_servGeneric.inc:371
 msgid "Software deployment"
 msgstr ""
 
-#: admin/systems/class_servGeneric.inc:370
+#: admin/systems/class_servGeneric.inc:372
 msgid ""
 "This host is currently installing, if you really want to save it, press 'OK'."
 msgstr ""
 
-#: admin/systems/class_servGeneric.inc:503
+#: admin/systems/class_servGeneric.inc:505
 #: admin/systems/class_componentGeneric.inc:309
 msgid "Generic"
 msgstr ""
 
-#: admin/systems/class_servGeneric.inc:504
+#: admin/systems/class_servGeneric.inc:506
 msgid "Server generic"
 msgstr ""
 
-#: admin/systems/class_servGeneric.inc:513 admin/systems/server.tpl:14
+#: admin/systems/class_servGeneric.inc:515 admin/systems/server.tpl:14
 #: admin/systems/class_componentGeneric.inc:320 admin/systems/component.tpl:35
 msgid "Description"
 msgstr ""
 
-#: admin/systems/class_servGeneric.inc:516
+#: admin/systems/class_servGeneric.inc:518
 msgid "Goto mode"
 msgstr ""
 
-#: admin/systems/class_servGeneric.inc:517
+#: admin/systems/class_servGeneric.inc:519
 #: admin/systems/class_componentGeneric.inc:321
 msgid "Root password"
 msgstr ""
 
-#: admin/systems/class_servGeneric.inc:518
+#: admin/systems/class_servGeneric.inc:520
 msgid "Action flag"
 msgstr ""
 
@@ -968,14 +968,14 @@ msgid "IP address %s"
 msgstr ""
 
 #: admin/systems/class_termDNS.inc:611 admin/systems/class_termDNS.inc:623
-#: admin/systems/class_termDNS.inc:625 admin/systems/class_termDNS.inc:1006
+#: admin/systems/class_termDNS.inc:625 admin/systems/class_termDNS.inc:1010
 #: admin/systems/class_componentGeneric.inc:219
 #: admin/systems/class_componentGeneric.inc:222
 msgid "IP address"
 msgstr ""
 
 #: admin/systems/class_termDNS.inc:616 admin/systems/class_termDNS.inc:633
-#: admin/systems/class_termDNS.inc:635 admin/systems/class_termDNS.inc:1007
+#: admin/systems/class_termDNS.inc:635 admin/systems/class_termDNS.inc:1011
 msgid "MAC address"
 msgstr ""
 
@@ -1006,27 +1006,27 @@ msgstr ""
 msgid "Only lowercase records are allowed, please check your '%ss'."
 msgstr ""
 
-#: admin/systems/class_termDNS.inc:946 admin/systems/class_termDNS.inc:966
+#: admin/systems/class_termDNS.inc:950 admin/systems/class_termDNS.inc:970
 msgid "Add"
 msgstr ""
 
-#: admin/systems/class_termDNS.inc:960
+#: admin/systems/class_termDNS.inc:964
 msgid "Delete"
 msgstr ""
 
-#: admin/systems/class_termDNS.inc:997
+#: admin/systems/class_termDNS.inc:1001
 msgid "DNS"
 msgstr ""
 
-#: admin/systems/class_termDNS.inc:998
+#: admin/systems/class_termDNS.inc:1002
 msgid "DNS settings"
 msgstr ""
 
-#: admin/systems/class_termDNS.inc:1013
+#: admin/systems/class_termDNS.inc:1017
 msgid "DNS configuration"
 msgstr ""
 
-#: admin/systems/class_termDNS.inc:1016
+#: admin/systems/class_termDNS.inc:1020
 msgid "DHCP configuration"
 msgstr ""
 

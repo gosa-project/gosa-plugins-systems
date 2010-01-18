@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-05 15:39+0200\n"
+"POT-Creation-Date: 2010-01-18 17:06+0100\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -68,16 +68,16 @@ msgid "Command '%s', specified for ISO creation doesn't seem to exist."
 msgstr "命令 '%s'，用于创建 ISO 好像并不存在。"
 
 #: admin/systems/class_systemManagement.inc:369
-#: admin/systems/class_systemManagement.inc:489
-#: admin/systems/class_systemManagement.inc:526
-#: admin/systems/class_systemManagement.inc:534
-#: admin/systems/class_systemManagement.inc:584
-#: admin/systems/class_systemManagement.inc:592
-#: admin/systems/class_systemManagement.inc:607
-#: admin/systems/class_systemManagement.inc:615
-#: admin/systems/class_systemManagement.inc:654
-#: admin/systems/class_systemManagement.inc:748
-#: admin/systems/class_systemManagement.inc:1313
+#: admin/systems/class_systemManagement.inc:486
+#: admin/systems/class_systemManagement.inc:523
+#: admin/systems/class_systemManagement.inc:531
+#: admin/systems/class_systemManagement.inc:581
+#: admin/systems/class_systemManagement.inc:589
+#: admin/systems/class_systemManagement.inc:604
+#: admin/systems/class_systemManagement.inc:612
+#: admin/systems/class_systemManagement.inc:651
+#: admin/systems/class_systemManagement.inc:745
+#: admin/systems/class_systemManagement.inc:1306
 #: admin/systems/class_serverService.inc:186
 #: admin/systems/class_serverService.inc:236
 #: admin/systems/class_serverService.inc:363
@@ -121,15 +121,15 @@ msgstr "终端服务器"
 msgid "Cannot set mode to 'active'!"
 msgstr "转到根部门"
 
-#: admin/systems/class_systemManagement.inc:615
+#: admin/systems/class_systemManagement.inc:612
 #: admin/systems/.svn/tmp/tempfile.tmp:606
 #: admin/systems/.svn/tmp/tempfile.2.tmp:610
 msgid "Editing this type of object is not supported yet!"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:642
-#: admin/systems/class_systemManagement.inc:745
-#: admin/systems/class_systemManagement.inc:974
+#: admin/systems/class_systemManagement.inc:639
+#: admin/systems/class_systemManagement.inc:742
+#: admin/systems/class_systemManagement.inc:971
 #: admin/systems/.svn/tmp/tempfile.tmp:633
 #: admin/systems/.svn/tmp/tempfile.tmp:736
 #: admin/systems/.svn/tmp/tempfile.tmp:965
@@ -140,8 +140,8 @@ msgstr ""
 msgid "Permission error"
 msgstr "允许"
 
-#: admin/systems/class_systemManagement.inc:642
-#: admin/systems/class_systemManagement.inc:745
+#: admin/systems/class_systemManagement.inc:639
+#: admin/systems/class_systemManagement.inc:742
 #: admin/systems/.svn/tmp/tempfile.tmp:633
 #: admin/systems/.svn/tmp/tempfile.tmp:736
 #: admin/systems/.svn/tmp/tempfile.2.tmp:637
@@ -150,7 +150,7 @@ msgstr "允许"
 msgid "You have no permission to change this password!"
 msgstr "现在您无权修改您的口令"
 
-#: admin/systems/class_systemManagement.inc:654
+#: admin/systems/class_systemManagement.inc:651
 #: admin/systems/.svn/tmp/tempfile.tmp:645
 #: admin/systems/.svn/tmp/tempfile.2.tmp:649
 #, fuzzy
@@ -159,21 +159,21 @@ msgid ""
 "not match!"
 msgstr "输入的新口令和重复口令不匹配！"
 
-#: admin/systems/class_systemManagement.inc:729
+#: admin/systems/class_systemManagement.inc:726
 #: admin/systems/.svn/tmp/tempfile.tmp:720
 #: admin/systems/.svn/tmp/tempfile.2.tmp:724
 #, fuzzy
 msgid "Password method"
 msgstr "口令存储"
 
-#: admin/systems/class_systemManagement.inc:729
+#: admin/systems/class_systemManagement.inc:726
 #: admin/systems/.svn/tmp/tempfile.tmp:720
 #: admin/systems/.svn/tmp/tempfile.2.tmp:724
 msgid "Password method crypt is missing. Cannot set system password."
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:735
-#: admin/systems/class_systemManagement.inc:1846
+#: admin/systems/class_systemManagement.inc:732
+#: admin/systems/class_systemManagement.inc:1841
 #: admin/systems/services/class_goService.inc:122
 #: admin/systems/services/class_goService.inc:150
 #: admin/systems/services/class_goService.inc:183
@@ -181,42 +181,42 @@ msgstr ""
 #: admin/systems/.svn/tmp/tempfile.tmp:1833
 #: admin/systems/.svn/tmp/tempfile.2.tmp:730
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1837
-#: admin/systems/class_servGeneric.inc:281
-#: admin/systems/class_servGeneric.inc:433 admin/systems/class_termDNS.inc:488
+#: admin/systems/class_servGeneric.inc:283
+#: admin/systems/class_servGeneric.inc:435 admin/systems/class_termDNS.inc:488
 #: admin/systems/class_termDNS.inc:794 admin/systems/class_termDNS.inc:813
 #: admin/systems/class_termDNS.inc:834 admin/systems/class_termDNS.inc:839
-#: admin/systems/class_termDNS.inc:857 admin/systems/class_termDNS.inc:929
+#: admin/systems/class_termDNS.inc:857 admin/systems/class_termDNS.inc:933
 #: admin/systems/class_componentGeneric.inc:160
 #: admin/systems/class_componentGeneric.inc:301
 #, fuzzy
 msgid "LDAP error"
 msgstr "LDAP 错误:"
 
-#: admin/systems/class_systemManagement.inc:748
+#: admin/systems/class_systemManagement.inc:745
 #: admin/systems/.svn/tmp/tempfile.tmp:739
 #: admin/systems/.svn/tmp/tempfile.2.tmp:743
 #, fuzzy
 msgid "Cannot determine object to change password!"
 msgstr "无法检测对象名称。"
 
-#: admin/systems/class_systemManagement.inc:855
+#: admin/systems/class_systemManagement.inc:852
 #: admin/systems/.svn/tmp/tempfile.tmp:846
 #: admin/systems/.svn/tmp/tempfile.2.tmp:850
-#: admin/systems/class_servGeneric.inc:165
-#: admin/systems/class_servGeneric.inc:453
+#: admin/systems/class_servGeneric.inc:167
+#: admin/systems/class_servGeneric.inc:455
 #, fuzzy
 msgid "Service infrastructure"
 msgstr "设备名称"
 
-#: admin/systems/class_systemManagement.inc:900
+#: admin/systems/class_systemManagement.inc:897
 #: admin/systems/.svn/tmp/tempfile.tmp:891
 #: admin/systems/.svn/tmp/tempfile.2.tmp:895
 #, fuzzy
 msgid "Permission"
 msgstr "允许"
 
-#: admin/systems/class_systemManagement.inc:1342
-#: admin/systems/class_systemManagement.inc:1657
+#: admin/systems/class_systemManagement.inc:1335
+#: admin/systems/class_systemManagement.inc:1652
 #: admin/systems/.svn/tmp/tempfile.tmp:1330
 #: admin/systems/.svn/tmp/tempfile.tmp:1644
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1334
@@ -224,8 +224,8 @@ msgstr "允许"
 msgid "New terminal"
 msgstr "新终端"
 
-#: admin/systems/class_systemManagement.inc:1344
-#: admin/systems/class_systemManagement.inc:1658
+#: admin/systems/class_systemManagement.inc:1337
+#: admin/systems/class_systemManagement.inc:1653
 #: admin/systems/.svn/tmp/tempfile.tmp:1332
 #: admin/systems/.svn/tmp/tempfile.tmp:1645
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1336
@@ -233,45 +233,45 @@ msgstr "新终端"
 msgid "New workstation"
 msgstr "新工作站"
 
-#: admin/systems/class_systemManagement.inc:1346
+#: admin/systems/class_systemManagement.inc:1339
 #: admin/systems/.svn/tmp/tempfile.tmp:1334
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1338
 #, fuzzy
 msgid "Unknown device"
 msgstr "未知"
 
-#: admin/systems/class_systemManagement.inc:1348
+#: admin/systems/class_systemManagement.inc:1341
 #: admin/systems/.svn/tmp/tempfile.tmp:1336
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1340
 msgid "New Device"
 msgstr "新设备"
 
-#: admin/systems/class_systemManagement.inc:1373
+#: admin/systems/class_systemManagement.inc:1366
 #: admin/systems/.svn/tmp/tempfile.tmp:1361
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1365
 msgid "Terminal template for"
 msgstr "终端模板"
 
-#: admin/systems/class_systemManagement.inc:1389
+#: admin/systems/class_systemManagement.inc:1382
 #: admin/systems/.svn/tmp/tempfile.tmp:1377
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1381
 msgid "Workstation template for"
 msgstr "工作站模板"
 
-#: admin/systems/class_systemManagement.inc:1634
+#: admin/systems/class_systemManagement.inc:1629
 #: admin/systems/.svn/tmp/tempfile.tmp:1621
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1625
 msgid "Template"
 msgstr "模板"
 
-#: admin/systems/class_systemManagement.inc:1635
+#: admin/systems/class_systemManagement.inc:1630
 #: admin/systems/class_divListSystem.inc:199
 #: admin/systems/.svn/tmp/tempfile.tmp:1622
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1626
 msgid "Phone"
 msgstr "电话"
 
-#: admin/systems/class_systemManagement.inc:1636
+#: admin/systems/class_systemManagement.inc:1631
 #: admin/systems/.svn/tmp/tempfile.tmp:1623
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1627
 #: admin/systems/class_componentGeneric.inc:315
@@ -279,106 +279,106 @@ msgstr "电话"
 msgid "Network device"
 msgstr "网络设备"
 
-#: admin/systems/class_systemManagement.inc:1637
+#: admin/systems/class_systemManagement.inc:1632
 #: admin/systems/class_divListSystem.inc:203
 #: admin/systems/.svn/tmp/tempfile.tmp:1624
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1628
 msgid "Printer"
 msgstr "打印机"
 
-#: admin/systems/class_systemManagement.inc:1639
+#: admin/systems/class_systemManagement.inc:1634
 #: admin/systems/.svn/tmp/tempfile.tmp:1626
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1630
 #, fuzzy
 msgid "Windows workstation"
 msgstr "显示工作站"
 
-#: admin/systems/class_systemManagement.inc:1641
+#: admin/systems/class_systemManagement.inc:1636
 #: admin/systems/class_divListSystem.inc:191
 #: admin/systems/.svn/tmp/tempfile.tmp:1628
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1632
 msgid "Workstation"
 msgstr "工作站"
 
-#: admin/systems/class_systemManagement.inc:1642
+#: admin/systems/class_systemManagement.inc:1637
 #: admin/systems/class_divListSystem.inc:195
 #: admin/systems/.svn/tmp/tempfile.tmp:1629
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1633
-#: admin/systems/class_servGeneric.inc:509
+#: admin/systems/class_servGeneric.inc:511
 msgid "Server"
 msgstr "服务器"
 
-#: admin/systems/class_systemManagement.inc:1643
+#: admin/systems/class_systemManagement.inc:1638
 #: admin/systems/class_divListSystem.inc:187
 #: admin/systems/.svn/tmp/tempfile.tmp:1630
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1634
 msgid "Terminal"
 msgstr "终端"
 
-#: admin/systems/class_systemManagement.inc:1645
+#: admin/systems/class_systemManagement.inc:1640
 #: admin/systems/.svn/tmp/tempfile.tmp:1632
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1636
 #, fuzzy
 msgid "Locked workstation"
 msgstr "新工作站"
 
-#: admin/systems/class_systemManagement.inc:1646
+#: admin/systems/class_systemManagement.inc:1641
 #: admin/systems/.svn/tmp/tempfile.tmp:1633
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1637
 #, fuzzy
 msgid "Locked server"
 msgstr "LDAP 服务器"
 
-#: admin/systems/class_systemManagement.inc:1647
+#: admin/systems/class_systemManagement.inc:1642
 #: admin/systems/.svn/tmp/tempfile.tmp:1634
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1638
 #, fuzzy
 msgid "Locked terminal"
 msgstr "新终端"
 
-#: admin/systems/class_systemManagement.inc:1649
+#: admin/systems/class_systemManagement.inc:1644
 #: admin/systems/.svn/tmp/tempfile.tmp:1636
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1640
 #, fuzzy
 msgid "Workstation error"
 msgstr "工作站"
 
-#: admin/systems/class_systemManagement.inc:1650
+#: admin/systems/class_systemManagement.inc:1645
 #: admin/systems/.svn/tmp/tempfile.tmp:1637
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1641
 #, fuzzy
 msgid "Server error"
 msgstr "服务器名称"
 
-#: admin/systems/class_systemManagement.inc:1651
+#: admin/systems/class_systemManagement.inc:1646
 #: admin/systems/.svn/tmp/tempfile.tmp:1638
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1642
 #, fuzzy
 msgid "Terminal error"
 msgstr "终端服务器"
 
-#: admin/systems/class_systemManagement.inc:1653
+#: admin/systems/class_systemManagement.inc:1648
 #: admin/systems/.svn/tmp/tempfile.tmp:1640
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1644
 #, fuzzy
 msgid "Workstation busy"
 msgstr "工作站"
 
-#: admin/systems/class_systemManagement.inc:1654
+#: admin/systems/class_systemManagement.inc:1649
 #: admin/systems/.svn/tmp/tempfile.tmp:1641
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1645
 #, fuzzy
 msgid "Server busy"
 msgstr "服务器"
 
-#: admin/systems/class_systemManagement.inc:1656
+#: admin/systems/class_systemManagement.inc:1651
 #: admin/systems/.svn/tmp/tempfile.tmp:1643
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1647
 #, fuzzy
 msgid "New system from incoming"
 msgstr "新识别的系统"
 
-#: admin/systems/class_systemManagement.inc:1662
+#: admin/systems/class_systemManagement.inc:1657
 #: admin/systems/class_divListSystem.inc:214
 #: admin/systems/.svn/tmp/tempfile.tmp:1649
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1653
@@ -386,8 +386,8 @@ msgstr "新识别的系统"
 msgid "Opsi client"
 msgstr "瘦客户机"
 
-#: admin/systems/class_systemManagement.inc:1862
-#: admin/systems/class_systemManagement.inc:1863
+#: admin/systems/class_systemManagement.inc:1857
+#: admin/systems/class_systemManagement.inc:1858
 #: admin/systems/.svn/tmp/tempfile.tmp:1849
 #: admin/systems/.svn/tmp/tempfile.tmp:1850
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1853
@@ -396,7 +396,7 @@ msgstr "瘦客户机"
 msgid "Incoming objects"
 msgstr "成员对象"
 
-#: admin/systems/class_systemManagement.inc:1868
+#: admin/systems/class_systemManagement.inc:1863
 #: admin/systems/.svn/tmp/tempfile.tmp:1855
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1859
 #, fuzzy
@@ -560,7 +560,7 @@ msgid "Display systems of user"
 msgstr "显示用户系统"
 
 #: admin/systems/class_divListSystem.inc:176
-#: admin/systems/class_servGeneric.inc:514 admin/systems/server.tpl:22
+#: admin/systems/class_servGeneric.inc:516 admin/systems/server.tpl:22
 #: admin/systems/class_componentGeneric.inc:319 admin/systems/component.tpl:17
 msgid "Base"
 msgstr "位置"
@@ -705,9 +705,9 @@ msgstr ""
 msgid "Cannot update service status!"
 msgstr "无法打开指定证书！"
 
-#: admin/systems/paste_generic.tpl:4 admin/systems/class_servGeneric.inc:339
-#: admin/systems/class_servGeneric.inc:344
-#: admin/systems/class_servGeneric.inc:355 admin/systems/server.tpl:6
+#: admin/systems/paste_generic.tpl:4 admin/systems/class_servGeneric.inc:341
+#: admin/systems/class_servGeneric.inc:346
+#: admin/systems/class_servGeneric.inc:357 admin/systems/server.tpl:6
 msgid "Server name"
 msgstr "服务器名称"
 
@@ -746,7 +746,7 @@ msgstr ""
 "统。"
 
 #: admin/systems/class_divListSystemService.inc:50
-#: admin/systems/class_servGeneric.inc:512
+#: admin/systems/class_servGeneric.inc:514
 #: admin/systems/class_componentGeneric.inc:318
 msgid "Name"
 msgstr "名称"
@@ -919,108 +919,108 @@ msgstr "重复新口令"
 msgid "Password strength"
 msgstr "口令存储"
 
-#: admin/systems/class_servGeneric.inc:86
+#: admin/systems/class_servGeneric.inc:82
 msgid "Activated"
 msgstr "活动"
 
-#: admin/systems/class_servGeneric.inc:87
+#: admin/systems/class_servGeneric.inc:83
 msgid "Locked"
 msgstr "锁定"
 
-#: admin/systems/class_servGeneric.inc:148
+#: admin/systems/class_servGeneric.inc:150
 #, fuzzy
 msgid "server"
 msgstr "服务器"
 
-#: admin/systems/class_servGeneric.inc:169
+#: admin/systems/class_servGeneric.inc:171
 #, fuzzy
 msgid "Event error"
 msgstr "PHP 错误"
 
-#: admin/systems/class_servGeneric.inc:170
+#: admin/systems/class_servGeneric.inc:172
 #, fuzzy, php-format
 msgid "Event '%s' is not available!"
 msgstr "不允许修改口令"
 
-#: admin/systems/class_servGeneric.inc:225
+#: admin/systems/class_servGeneric.inc:227
 msgid "Switch off"
 msgstr "关闭"
 
-#: admin/systems/class_servGeneric.inc:225
+#: admin/systems/class_servGeneric.inc:227
 msgid "Reboot"
 msgstr "重启"
 
-#: admin/systems/class_servGeneric.inc:226
-#: admin/systems/class_servGeneric.inc:235
+#: admin/systems/class_servGeneric.inc:228
+#: admin/systems/class_servGeneric.inc:237
 #, fuzzy
 msgid "System update"
 msgstr "系统 / 部门"
 
-#: admin/systems/class_servGeneric.inc:227
-#: admin/systems/class_servGeneric.inc:234
+#: admin/systems/class_servGeneric.inc:229
+#: admin/systems/class_servGeneric.inc:236
 msgid "Reinstall"
 msgstr "重新安装"
 
-#: admin/systems/class_servGeneric.inc:228
+#: admin/systems/class_servGeneric.inc:230
 msgid "Rescan hardware"
 msgstr "重新扫描硬件"
 
-#: admin/systems/class_servGeneric.inc:229
-#: admin/systems/class_servGeneric.inc:236
+#: admin/systems/class_servGeneric.inc:231
+#: admin/systems/class_servGeneric.inc:238
 msgid "Memory test"
 msgstr "内存测试"
 
-#: admin/systems/class_servGeneric.inc:230
-#: admin/systems/class_servGeneric.inc:237
+#: admin/systems/class_servGeneric.inc:232
+#: admin/systems/class_servGeneric.inc:239
 msgid "Force localboot"
 msgstr "强制本地启动"
 
-#: admin/systems/class_servGeneric.inc:231
-#: admin/systems/class_servGeneric.inc:238
+#: admin/systems/class_servGeneric.inc:233
+#: admin/systems/class_servGeneric.inc:240
 msgid "System analysis"
 msgstr "系统分析"
 
-#: admin/systems/class_servGeneric.inc:233
+#: admin/systems/class_servGeneric.inc:235
 msgid "Wake up"
 msgstr "唤醒"
 
-#: admin/systems/class_servGeneric.inc:369
+#: admin/systems/class_servGeneric.inc:371
 #, fuzzy
 msgid "Software deployment"
 msgstr "系统管理"
 
-#: admin/systems/class_servGeneric.inc:370
+#: admin/systems/class_servGeneric.inc:372
 msgid ""
 "This host is currently installing, if you really want to save it, press 'OK'."
 msgstr ""
 
-#: admin/systems/class_servGeneric.inc:503
+#: admin/systems/class_servGeneric.inc:505
 #: admin/systems/class_componentGeneric.inc:309
 msgid "Generic"
 msgstr "通用配置"
 
-#: admin/systems/class_servGeneric.inc:504
+#: admin/systems/class_servGeneric.inc:506
 #, fuzzy
 msgid "Server generic"
 msgstr "服务器名称"
 
-#: admin/systems/class_servGeneric.inc:513 admin/systems/server.tpl:14
+#: admin/systems/class_servGeneric.inc:515 admin/systems/server.tpl:14
 #: admin/systems/class_componentGeneric.inc:320 admin/systems/component.tpl:35
 msgid "Description"
 msgstr "描述"
 
-#: admin/systems/class_servGeneric.inc:516
+#: admin/systems/class_servGeneric.inc:518
 #, fuzzy
 msgid "Goto mode"
 msgstr "到目录"
 
-#: admin/systems/class_servGeneric.inc:517
+#: admin/systems/class_servGeneric.inc:519
 #: admin/systems/class_componentGeneric.inc:321
 #, fuzzy
 msgid "Root password"
 msgstr "设置口令"
 
-#: admin/systems/class_servGeneric.inc:518
+#: admin/systems/class_servGeneric.inc:520
 #, fuzzy
 msgid "Action flag"
 msgstr "行动"
@@ -1069,7 +1069,7 @@ msgid "IP address %s"
 msgstr "IP 地址"
 
 #: admin/systems/class_termDNS.inc:611 admin/systems/class_termDNS.inc:623
-#: admin/systems/class_termDNS.inc:625 admin/systems/class_termDNS.inc:1006
+#: admin/systems/class_termDNS.inc:625 admin/systems/class_termDNS.inc:1010
 #: admin/systems/class_componentGeneric.inc:219
 #: admin/systems/class_componentGeneric.inc:222
 #, fuzzy
@@ -1077,7 +1077,7 @@ msgid "IP address"
 msgstr "IP 地址"
 
 #: admin/systems/class_termDNS.inc:616 admin/systems/class_termDNS.inc:633
-#: admin/systems/class_termDNS.inc:635 admin/systems/class_termDNS.inc:1007
+#: admin/systems/class_termDNS.inc:635 admin/systems/class_termDNS.inc:1011
 msgid "MAC address"
 msgstr "MAC 地址"
 
@@ -1108,29 +1108,29 @@ msgstr "设备 IP '%s' 将自动作为'A'记录添加，请删除这条记录。
 msgid "Only lowercase records are allowed, please check your '%ss'."
 msgstr "只允许小写字母，请检查您的 '%ss'。"
 
-#: admin/systems/class_termDNS.inc:946 admin/systems/class_termDNS.inc:966
+#: admin/systems/class_termDNS.inc:950 admin/systems/class_termDNS.inc:970
 msgid "Add"
 msgstr "添加"
 
-#: admin/systems/class_termDNS.inc:960
+#: admin/systems/class_termDNS.inc:964
 msgid "Delete"
 msgstr "删除"
 
-#: admin/systems/class_termDNS.inc:997
+#: admin/systems/class_termDNS.inc:1001
 msgid "DNS"
 msgstr ""
 
-#: admin/systems/class_termDNS.inc:998
+#: admin/systems/class_termDNS.inc:1002
 #, fuzzy
 msgid "DNS settings"
 msgstr "Samba 设置"
 
-#: admin/systems/class_termDNS.inc:1013
+#: admin/systems/class_termDNS.inc:1017
 #, fuzzy
 msgid "DNS configuration"
 msgstr "PHP 安装检查"
 
-#: admin/systems/class_termDNS.inc:1016
+#: admin/systems/class_termDNS.inc:1020
 #, fuzzy
 msgid "DHCP configuration"
 msgstr "PHP 安装检查"
