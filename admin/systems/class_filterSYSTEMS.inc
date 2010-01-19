@@ -38,7 +38,8 @@ class filterSYSTEMS {
       // Detect Workstation & templates
       }elseif(in_array('gotoWorkstation', $entry['objectClass'])){
         if(!isset($entry['macAddress'][0]) || $entry['macAddress'][0] == "-"){
-          $entries[$key]['objectClass'][] = 'FAKE_OC_WorkstationTemplate';
+          continue; // We do not need templates anymore, we've ogroups now.
+          //$entries[$key]['objectClass'][] = 'FAKE_OC_WorkstationTemplate';
         }
         $pwd_acl = $ui->get_permissions($entry['dn'],'workstation/workgeneric','userPassword');
         if(preg_match("/w/",$pwd_acl)){
@@ -48,7 +49,8 @@ class filterSYSTEMS {
       // Detect Terminal & templates
       }elseif(in_array('gotoTerminal', $entry['objectClass'])){
         if(!isset($entry['macAddress'][0]) || $entry['macAddress'][0] == "-"){
-          $entries[$key]['objectClass'][] = 'FAKE_OC_TerminalTemplate';
+          continue; // We do not need templates anymore, we've ogroups now.
+          //$entries[$key]['objectClass'][] = 'FAKE_OC_TerminalTemplate';
         }
         $pwd_acl = $ui->get_permissions($entry['dn'],'terminal/termgeneric','userPassword');
         if(preg_match("/w/",$pwd_acl)){
@@ -58,7 +60,8 @@ class filterSYSTEMS {
       // Detect Server & templates
       }elseif(in_array('goServer', $entry['objectClass'])){
         if(!isset($entry['macAddress'][0]) || $entry['macAddress'][0] == "-"){
-          $entries[$key]['objectClass'][] = 'FAKE_OC_ServerTemplate';
+          continue; // We do not need templates anymore, we've ogroups now.
+          //$entries[$key]['objectClass'][] = 'FAKE_OC_ServerTemplate';
         }
         $pwd_acl = $ui->get_permissions($entry['dn'],'server/servgeneric','userPassword');
         if(preg_match("/w/",$pwd_acl)){
