@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-18 18:50+0100\n"
+"POT-Creation-Date: 2010-01-19 20:51+0100\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -99,7 +99,7 @@ msgstr "Вам не разрешено менять пароль."
 #: admin/systems/.svn/tmp/tempfile.2.tmp:649
 #: admin/systems/.svn/tmp/tempfile.2.tmp:743
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1305
-#: admin/systems/class_filterSYSTEMS.inc:124
+#: admin/systems/class_filterSYSTEMS.inc:127
 #: admin/systems/class_termDNS.inc:343
 msgid "Error"
 msgstr ""
@@ -210,8 +210,8 @@ msgstr "Вам не разрешено менять пароль."
 msgid "You are not allowed to restore a snapshot for %s."
 msgstr "Вам не разрешено менять пароль."
 
-#: admin/systems/class_systemManagement.inc:1350
-#: admin/systems/class_systemManagement.inc:1351
+#: admin/systems/class_systemManagement.inc:1352
+#: admin/systems/class_systemManagement.inc:1353
 #: admin/systems/.svn/tmp/tempfile.tmp:1849
 #: admin/systems/.svn/tmp/tempfile.tmp:1850
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1853
@@ -220,7 +220,7 @@ msgstr "Вам не разрешено менять пароль."
 msgid "Incoming objects"
 msgstr "Включаемые объекты"
 
-#: admin/systems/class_systemManagement.inc:1356
+#: admin/systems/class_systemManagement.inc:1358
 #: admin/systems/.svn/tmp/tempfile.tmp:1855
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1859
 #, fuzzy

@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-18 18:50+0100\n"
+"POT-Creation-Date: 2010-01-19 20:51+0100\n"
 "PO-Revision-Date: 2008-12-19 08:43+0100\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
@@ -103,13 +103,12 @@ msgstr "Sie haben keine Berechtigung, um das Passwort zu ändern!"
 #: admin/systems/.svn/tmp/tempfile.2.tmp:649
 #: admin/systems/.svn/tmp/tempfile.2.tmp:743
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1305
-#: admin/systems/class_filterSYSTEMS.inc:124
+#: admin/systems/class_filterSYSTEMS.inc:127
 #: admin/systems/class_termDNS.inc:343
 msgid "Error"
 msgstr "Fehler"
 
 #: admin/systems/class_systemManagement.inc:259
-#, fuzzy
 msgid ""
 "The passwords you've entered as 'New password' and 'Repeated password' do "
 "not   match!"
@@ -214,8 +213,8 @@ msgstr "Ihnen ist es nicht erlaubt, einen Snapshot für %s zu erstellen."
 msgid "You are not allowed to restore a snapshot for %s."
 msgstr "Ihnen ist es nicht erlaubt, einen Snapshot für %s wiederherzustellen."
 
-#: admin/systems/class_systemManagement.inc:1350
-#: admin/systems/class_systemManagement.inc:1351
+#: admin/systems/class_systemManagement.inc:1352
+#: admin/systems/class_systemManagement.inc:1353
 #: admin/systems/.svn/tmp/tempfile.tmp:1849
 #: admin/systems/.svn/tmp/tempfile.tmp:1850
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1853
@@ -223,7 +222,7 @@ msgstr "Ihnen ist es nicht erlaubt, einen Snapshot für %s wiederherzustellen."
 msgid "Incoming objects"
 msgstr "Eingehende Objekte"
 
-#: admin/systems/class_systemManagement.inc:1356
+#: admin/systems/class_systemManagement.inc:1358
 #: admin/systems/.svn/tmp/tempfile.tmp:1855
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1859
 msgid "Incoming"
@@ -648,49 +647,40 @@ msgid "Remove service"
 msgstr "Dienst entfernen"
 
 #: admin/systems/system-filter.tpl:3
-#, fuzzy
 msgid "Filter"
 msgstr "Filter"
 
 #: admin/systems/system-filter.tpl:11
-#, fuzzy
 msgid "Show servers"
-msgstr "Server"
+msgstr "Zeige Server"
 
 #: admin/systems/system-filter.tpl:14
-#, fuzzy
 msgid "Show workstations"
-msgstr "Arbeitsstationen"
+msgstr "Zeige Arbeitsstationen"
 
 #: admin/systems/system-filter.tpl:17
-#, fuzzy
 msgid "Show terminals"
-msgstr "Terminals"
+msgstr "Zeige Terminals"
 
 #: admin/systems/system-filter.tpl:20
-#, fuzzy
 msgid "Show network printer"
-msgstr "Netzwerk-Drucker"
+msgstr "Zeige Netzwerk-Drucker"
 
 #: admin/systems/system-filter.tpl:23
-#, fuzzy
 msgid "Show phones"
-msgstr "Zeige Änderungen"
+msgstr "Zeige Telefone"
 
 #: admin/systems/system-filter.tpl:26
-#, fuzzy
 msgid "Show windows based workstations"
-msgstr "Windows basierte Arbeitsstationen"
+msgstr "Zeige Windows basierte Arbeitsstationen"
 
 #: admin/systems/system-filter.tpl:29
-#, fuzzy
 msgid "Show network devices"
-msgstr "Netzwerk-Geräte"
+msgstr "Zeige Netzwerk-Geräte"
 
 #: admin/systems/system-filter.tpl:32
-#, fuzzy
 msgid "Show incoming devices"
-msgstr "Shadow inactive"
+msgstr "Zeige neue Geräte"
 
 #: admin/systems/.svn/tmp/tempfile.tmp:606
 #: admin/systems/.svn/tmp/tempfile.2.tmp:610
@@ -863,34 +853,28 @@ msgid "Dns records"
 msgstr "DNS-Einträge"
 
 #: admin/systems/system-list.xml:15
-#, fuzzy
 msgid "Opsi host"
 msgstr "OPSI Client"
 
 #: admin/systems/system-list.xml:64 admin/systems/class_filterSYSTEMS.inc:28
-#, fuzzy
 msgid "New unknown device"
-msgstr "Unbekanntes Gerät"
+msgstr "Unbekanntes neues Gerät"
 
 #: admin/systems/system-list.xml:72 admin/systems/class_filterSYSTEMS.inc:31
-#, fuzzy
 msgid "New device"
 msgstr "Neues Gerät"
 
 #: admin/systems/system-list.xml:80
-#, fuzzy
 msgid "Workstation template"
-msgstr "Arbeitsstations-Vorlage für"
+msgstr "Arbeitsstations-Vorlage"
 
 #: admin/systems/system-list.xml:88
-#, fuzzy
 msgid "Terminal template"
-msgstr "Terminal-Vorlage für"
+msgstr "Terminal-Vorlage"
 
 #: admin/systems/system-list.xml:96
-#, fuzzy
 msgid "Winstation"
-msgstr "Windows-Arbeitsstationen"
+msgstr "Windows-Arbeitsstation"
 
 #: admin/systems/system-list.xml:178 admin/systems/class_servGeneric.inc:515
 #: admin/systems/server.tpl:14 admin/systems/class_componentGeneric.inc:320
@@ -899,13 +883,12 @@ msgid "Description"
 msgstr "Beschreibung"
 
 #: admin/systems/system-list.xml:227
-#, fuzzy
 msgid "Network printer"
 msgstr "Netzwerk-Drucker"
 
 #: admin/systems/system-list.xml:270
 msgid "Halt "
-msgstr ""
+msgstr "Anhalten"
 
 #: admin/systems/system-list.xml:278 admin/systems/system-list.xml:344
 #: admin/systems/class_servGeneric.inc:227
@@ -913,7 +896,6 @@ msgid "Reboot"
 msgstr "Neustarten"
 
 #: admin/systems/system-list.xml:286 admin/systems/system-list.xml:352
-#, fuzzy
 msgid "Wakeup"
 msgstr "Aufwecken"
 
@@ -923,14 +905,12 @@ msgid "Update"
 msgstr "Aktualisieren"
 
 #: admin/systems/system-list.xml:302 admin/systems/system-list.xml:368
-#, fuzzy
 msgid "Lock"
-msgstr "Gesperrt"
+msgstr "Sperren"
 
 #: admin/systems/system-list.xml:310 admin/systems/system-list.xml:376
-#, fuzzy
 msgid "Activate"
-msgstr "Aktiv"
+msgstr "Aktivieren"
 
 #: admin/systems/system-list.xml:318 admin/systems/system-list.xml:384
 #: admin/systems/class_servGeneric.inc:229
@@ -940,26 +920,23 @@ msgstr "Neu-Installation"
 
 #: admin/systems/system-list.xml:336
 msgid "Halt"
-msgstr ""
+msgstr "Anhalten"
 
 #: admin/systems/system-list.xml:433
 msgid "Change password"
 msgstr "Passwort ändern"
 
 #: admin/systems/system-list.xml:444
-#, fuzzy
 msgid "Create ISO"
-msgstr "Anlegen"
+msgstr "DVD-ISO anlegen"
 
 #: admin/systems/system-list.xml:456
-#, fuzzy
 msgid "Edit role"
-msgstr "ACL-Rolle bearbeiten"
+msgstr "Rolle bearbeiten"
 
 #: admin/systems/system-list.xml:469
-#, fuzzy
 msgid "Remove role"
-msgstr "Benutzer entfernen"
+msgstr "Rolle entfernen"
 
 #: admin/systems/password.tpl:3
 msgid ""

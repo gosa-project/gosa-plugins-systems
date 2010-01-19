@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-18 18:50+0100\n"
+"POT-Creation-Date: 2010-01-19 20:51+0100\n"
 "PO-Revision-Date: 2010-01-18 23:24+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
@@ -96,7 +96,7 @@ msgstr "Vous n'êtes pas autorisé à modifier le mot de passe !"
 #: admin/systems/.svn/tmp/tempfile.2.tmp:649
 #: admin/systems/.svn/tmp/tempfile.2.tmp:743
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1305
-#: admin/systems/class_filterSYSTEMS.inc:124
+#: admin/systems/class_filterSYSTEMS.inc:127
 #: admin/systems/class_termDNS.inc:343
 msgid "Error"
 msgstr "Erreur"
@@ -159,7 +159,8 @@ msgstr "La création de l'image à échoué. veuillez lire le rapport ci dessous
 #: admin/systems/.svn/tmp/tempfile.2.tmp:295
 #, php-format
 msgid "Command '%s', specified for ISO creation doesn't seem to exist."
-msgstr "La commande '%s', utilisée dans la création de l'image ISO n'existe pas."
+msgstr ""
+"La commande '%s', utilisée dans la création de l'image ISO n'existe pas."
 
 #: admin/systems/class_systemManagement.inc:503
 #: admin/systems/class_systemManagement.inc:532
@@ -195,7 +196,8 @@ msgstr "Impossible de mettre le mode comme 'actif' !"
 #: admin/systems/class_systemManagement.inc:1098
 #, php-format
 msgid "You are not allowed to create a snapshot for %s."
-msgstr "Vous n'êtes pas autorisé à créer une nouvelle copie instantanée pour %s."
+msgstr ""
+"Vous n'êtes pas autorisé à créer une nouvelle copie instantanée pour %s."
 
 #: admin/systems/class_systemManagement.inc:1145
 #: admin/systems/class_systemManagement.inc:1166
@@ -203,8 +205,8 @@ msgstr "Vous n'êtes pas autorisé à créer une nouvelle copie instantanée pou
 msgid "You are not allowed to restore a snapshot for %s."
 msgstr "Vous n'êtes pas autorisé à restaurer un copie instantanée de %s."
 
-#: admin/systems/class_systemManagement.inc:1350
-#: admin/systems/class_systemManagement.inc:1351
+#: admin/systems/class_systemManagement.inc:1352
+#: admin/systems/class_systemManagement.inc:1353
 #: admin/systems/.svn/tmp/tempfile.tmp:1849
 #: admin/systems/.svn/tmp/tempfile.tmp:1850
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1853
@@ -212,7 +214,7 @@ msgstr "Vous n'êtes pas autorisé à restaurer un copie instantanée de %s."
 msgid "Incoming objects"
 msgstr "Objets entrants"
 
-#: admin/systems/class_systemManagement.inc:1356
+#: admin/systems/class_systemManagement.inc:1358
 #: admin/systems/.svn/tmp/tempfile.tmp:1855
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1859
 msgid "Incoming"
@@ -1017,7 +1019,8 @@ msgid "Software deployment"
 msgstr "Déploiement de logiciel"
 
 #: admin/systems/class_servGeneric.inc:372
-msgid "This host is currently installing, if you really want to save it, press 'OK'."
+msgid ""
+"This host is currently installing, if you really want to save it, press 'OK'."
 msgstr ""
 "Cet hôte est actuellement en cours d'installation, si vous voulez vraiment "
 "le sauver, cliquez sur 'OK'."
@@ -1065,7 +1068,8 @@ msgid "Action"
 msgstr "Action"
 
 #: admin/systems/server.tpl:69
-msgid "System installation in progress, the FAI state cannot be changed right now."
+msgid ""
+"System installation in progress, the FAI state cannot be changed right now."
 msgstr ""
 "Le système est en cours d'installation, l'état FAI ne peut pas être changé "
 "maintenant."
@@ -1128,7 +1132,8 @@ msgstr ""
 #: admin/systems/class_termDNS.inc:690
 #, php-format
 msgid "Only lowercase records are allowed, please check your '%ss'."
-msgstr "Seulement les minuscules sont autorisée, veuillez vérifier votre '%ss'."
+msgstr ""
+"Seulement les minuscules sont autorisée, veuillez vérifier votre '%ss'."
 
 #: admin/systems/class_termDNS.inc:950 admin/systems/class_termDNS.inc:970
 msgid "Add"
@@ -1169,4 +1174,3 @@ msgstr "Nom du périphérique"
 #: admin/systems/component.tpl:20
 msgid "Choose subtree to place component in"
 msgstr "Sélectionnez la branche où sera placée le composant"
-

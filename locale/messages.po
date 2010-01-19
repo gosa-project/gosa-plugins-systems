@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-18 18:50+0100\n"
+"POT-Creation-Date: 2010-01-19 20:51+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -92,7 +92,7 @@ msgstr ""
 #: admin/systems/.svn/tmp/tempfile.2.tmp:649
 #: admin/systems/.svn/tmp/tempfile.2.tmp:743
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1305
-#: admin/systems/class_filterSYSTEMS.inc:124
+#: admin/systems/class_filterSYSTEMS.inc:127
 #: admin/systems/class_termDNS.inc:343
 msgid "Error"
 msgstr ""
@@ -195,8 +195,8 @@ msgstr ""
 msgid "You are not allowed to restore a snapshot for %s."
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1350
-#: admin/systems/class_systemManagement.inc:1351
+#: admin/systems/class_systemManagement.inc:1352
+#: admin/systems/class_systemManagement.inc:1353
 #: admin/systems/.svn/tmp/tempfile.tmp:1849
 #: admin/systems/.svn/tmp/tempfile.tmp:1850
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1853
@@ -204,7 +204,7 @@ msgstr ""
 msgid "Incoming objects"
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:1356
+#: admin/systems/class_systemManagement.inc:1358
 #: admin/systems/.svn/tmp/tempfile.tmp:1855
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1859
 msgid "Incoming"
