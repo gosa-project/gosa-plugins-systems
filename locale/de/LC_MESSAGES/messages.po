@@ -336,7 +336,7 @@ msgstr "mit OPSI installierte Clients"
 #: admin/systems/class_divListSystem.inc:122
 #: admin/systems/system-filter.tpl:35
 msgid "Show OPSI based clients"
-msgstr "Zeige auf OPSI basierende Clients"
+msgstr "Zeige OPSI Clients"
 
 #: admin/systems/class_divListSystem.inc:127
 #: admin/systems/class_divListSystem.inc:128
@@ -672,7 +672,7 @@ msgstr "Zeige Telefone"
 
 #: admin/systems/system-filter.tpl:26
 msgid "Show windows based workstations"
-msgstr "Zeige Windows basierte Arbeitsstationen"
+msgstr "Zeige Windows Arbeitsstationen"
 
 #: admin/systems/system-filter.tpl:29
 msgid "Show network devices"
