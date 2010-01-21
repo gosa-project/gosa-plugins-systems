@@ -9,7 +9,7 @@
 					<td style='vertical-align:top;'><LABEL	for="ipHostNumber">{t}IP-address{/t}{if $IPisMust}{$staticAddress}{/if}</LABEL></td>
 					<td>
 {render acl=$ipHostNumberACL}
-            <input	id="ipHostNumber"	name="ipHostNumber"	size=25	maxlength=80	value="{$ipHostNumber}">
+            <input	type='text' id="ipHostNumber"	name="ipHostNumber"	size=25	maxlength=80	value="{$ipHostNumber}">
 {/render}
           {foreach from=$additionalHostNumbers item=item key=key}
             <br>
@@ -38,7 +38,7 @@
 					<td><LABEL	for="macAddress">{t}MAC-address{/t}</LABEL>{$staticAddress}</td>
 					<td>
 {render acl=$macAddressACL}
-            <input	name="macAddress"	id="macAddress"	size=25	maxlength=80	value="{$macAddress}">
+            <input	type='text' name="macAddress"	id="macAddress"	size=25	maxlength=80	value="{$macAddress}">
 {/render}
 
 {render acl=$autonetACL}
