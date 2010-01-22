@@ -30,37 +30,58 @@ define("SERVICE_RESTARTED",_("Restart"));
 
 define("ALL_SERVICES",100);
 
-class ServerService extends plugin
+class ServerService extends management
 {
   /* attribute list for save action */
   var $ignore_account   = TRUE;
   var $attributes       = array();
   var $objectclasses    = array();
-
+  var $skipFooter       = TRUE;
+  var $skipHeader       = TRUE;
   var $divList          = NULL;
 
   var $plugins          = array();
   var $pluign_names     = array();
 
   var $current          = "";
+  var $dialog           = FALSE;
   var $backup           = NULL;
   var $acl              ;
   var $cn;
   var $parent           ;
 
-  function ServerService (&$config, $dn,$parent)
-  {
-    plugin::plugin($config);
-    $this->parent = $parent;
-    $this->dn= $dn;
+  var $pl_notify = FALSE;
 
-    /* Adapt parent attributes */
+  function __construct (&$config, $dn,$parent)
+  {
+    $this->config = $config;
+    $this->parent = $parent;
+    $this->ui     = get_userinfo();
+    $this->dn= $dn;
     if(isset($this->parent->attrs)){
       $this->attrs = $this->parent->attrs;
     }
 
-    foreach ($config->data['TABS']['SERVERSERVICE'] as $plug){
 
+    // Set storage points - We do not have any - We just create a fake list which lists all services 
+    $this->storagePoints = array();
+
+#    // Build filter
+ #   if (session::global_is_set(get_class($this)."_filter")){
+  #    $filter= session::global_get(get_class($this)."_filter");
+   # } else {
+      $filter = new filter(get_template_path("serverService-filter.xml", true));
+      $filter->setObjectStorage($this->storagePoints);
+    #}
+    $this->setFilter($filter);
+
+    // Build headpage
+    $headpage = new listing(get_template_path("serverService-list.xml", true));
+    $headpage->setFilter($filter);
+
+    
+    // Initialize list of used and useable services.
+    foreach ($config->data['TABS']['SERVERSERVICE'] as $plug){
       if(class_available($plug['CLASS'])){
 
         $name= $plug['CLASS'];
@@ -82,24 +103,16 @@ class ServerService extends plugin
         #trigger_error("Service class missing: ".$plug['CLASS']);
       }
     }
-    $this->divList = new divListSystemService($config,$this);
+
+    parent::__construct($config, $ui, "systems", $headpage);
 	}
 
-  function set_acl_base($base)
-  {
-    plugin::set_acl_base($base);
-    foreach($this->plugins as $name => $obj){
-      $this->plugins[$name]->set_acl_base($base);
-    }
+
+  static function getServiceList()
+  { 
+    return(session::get('ServerService'));
   }
 
-  function set_acl_category($category)
-  {
-    plugin::set_acl_category($category);
-    foreach($this->plugins as $name => $obj){
-      $this->plugins[$name]->set_acl_category($category);
-    }
-  }
 
   function execute()
   {
@@ -269,16 +282,8 @@ class ServerService extends plugin
 
 
     /* Dispaly services overview */
-    $this->divList->execute();
-    $list = array();
-
-    foreach($this->plugins as $name => $obj){
-      if($obj->is_account){
-        $list[$name] = $this->plugins[$name]->getListEntry(); 
-      }
-    }
-    $this->divList -> setEntries($list);
-    return("<table style='width:100%;'><tr><td>".$this->divList->Draw()."</td></tr></table>");
+    session::set('ServerService', $this->plugins);
+    return(management::execute());
   }
 
 
@@ -480,6 +485,22 @@ class ServerService extends plugin
     }
   }
   
+
+  // Forward plugin ACLs 
+  function set_acl_base($base)
+  {
+    foreach($this->plugins as $name => $obj){
+      $this->plugins[$name]->set_acl_base($base);
+    }
+  }
+
+  // Forward plugin ACLs 
+  function set_acl_category($category)
+  {
+    foreach($this->plugins as $name => $obj){
+      $this->plugins[$name]->set_acl_category($category);
+    }
+  }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
