@@ -21,7 +21,15 @@
   </definition>
 
   <table>
-    <layout>||250px|170px;r|</layout>
+    <layout>|18px;c||250px|170px;r|</layout>
+
+    <column>
+      <label>!</label>
+      <sortAttribute>Status</sortAttribute>
+      <sortType>string</sortType>
+      <value>%{filter:filterServiceStatus(row,dn,"%s",Status)}</value>
+      <export>true</export>
+    </column>
 
     <column>
       <label>Description</label>

@@ -77,6 +77,7 @@ class ServerService extends management
 
     // Build headpage
     $headpage = new listing(get_template_path("serverService-list.xml", true));
+    $headpage->registerElementFilter("filterServiceStatus", "ServerService::filterServiceStatus");
     $headpage->setFilter($filter);
 
     
@@ -113,6 +114,22 @@ class ServerService extends management
     return(session::get('ServerService'));
   }
 
+  static function filterServiceStatus($a,$b,$c,$d)
+  {
+    $img ="";
+    if(isset($d['0'])){
+      switch($d[0]){
+        case 'Restart' : $img = ('images/status_restarting.png'); break;
+        case 'Stop' : $img = ('images/lists/off.png'); break;
+        case 'Start' : $img = ('images/lists/on.png'); break;
+      }
+    }
+    if(!empty($img)){
+      return('<img src=\''.$img.'\'>');
+    }
+    return("");  
+  }
+  
 
   function execute()
   {
