@@ -21,7 +21,7 @@
   </definition>
 
   <table>
-    <layout>|18px;c||250px|170px;r|</layout>
+    <layout>|18px;c||170px;r|</layout>
 
     <column>
       <label>!</label>
@@ -54,205 +54,15 @@
      <label>Create</label>
 
      <action>
-      <name>new_goServer</name>
+      <name>new</name>
       <type>entry</type>
-      <image>plugins/systems/images/select_server.png</image>
-      <label>Server</label>
-      <depends>servgeneric</depends>
-     </action>
-
-     <action>
-      <name>new_gotoWorkstation</name>
-      <type>entry</type>
-      <image>plugins/systems/images/select_workstation.png</image>
-      <label>Workstation</label>
-      <depends>workgeneric</depends>
-     </action>
-
-     <action>
-      <name>new_gotoTerminal</name>
-      <type>entry</type>
-      <image>plugins/systems/images/select_terminal.png</image>
-      <label>Terminal</label>
-      <depends>termgeneric</depends>
-     </action>
-
-     <action>
-      <name>new_gotoPrinter</name>
-      <type>entry</type>
-      <image>plugins/systems/images/select_printer.png</image>
-      <label>Network printer</label>
-      <depends>printgeneric</depends>
-     </action>
-
-     <action>
-      <name>new_goFonHardware</name>
-      <type>entry</type>
-      <image>plugins/systems/images/select_phone.png</image>
-      <label>Phone</label>
-      <depends>phoneGeneric</depends>
-     </action>
-
-     <action>
-      <name>new_ieee802Device</name>
-      <type>entry</type>
-      <image>plugins/systems/images/select_component.png</image>
-      <label>Network device</label>
-      <depends>componentGeneric</depends>
-     </action>
-
-     <action>
-      <name>new_FAKE_OC_OpsiHost</name>
-      <type>entry</type>
-      <image>plugins/systems/images/select_winstation.png</image>
-      <label>Opsi client</label>
-      <depends>opsi</depends>
+      <image>images/lists/new.png</image>
+      <label>Service</label>
      </action>
     </action>
 
     <action>
       <type>separator</type>
-    </action>
-
-    <action>
-     <type>sub</type>
-     <image>images/rocket.png</image>
-     <label>Trigger action</label>
-
-      <action>
-        <name>T_DaemonEvent_halt</name>
-        <depends>DaemonEvent_halt</depends>
-        <type>entry</type>
-        <image>images/lists/reload.png</image>
-        <label>Halt </label>
-      </action>
-
-      <action>
-        <name>T_DaemonEvent_reboot</name>
-        <depends>DaemonEvent_reboot</depends>
-        <type>entry</type>
-        <image>images/lists/reload.png</image>
-        <label>Reboot</label>
-      </action>
-
-      <action>
-        <name>T_DaemonEvent_wakeup</name>
-        <depends>DaemonEvent_wakeup</depends>
-        <type>entry</type>
-        <image>images/lists/on.png</image>
-        <label>Wakeup</label>
-      </action>
-
-      <action>
-        <name>T_DaemonEvent_update</name>
-        <depends>DaemonEvent_update</depends>
-        <type>entry</type>
-        <image>plugins/goto/images/update.png</image>
-        <label>Update</label>
-      </action>
-
-      <action>
-        <name>T_DaemonEvent_lock</name>
-        <depends>DaemonEvent_lock</depends>
-        <type>entry</type>
-        <image>images/lists/locked.png</image>
-        <label>Lock</label>
-      </action>
-
-      <action>
-        <name>T_DaemonEvent_activate</name>
-        <depends>DaemonEvent_activate</depends>
-        <type>entry</type>
-        <image>images/lists/unlocked.png</image>
-        <label>Activate</label>
-      </action>
-
-      <action>
-        <name>T_DaemonEvent_reinstall</name>
-        <depends>DaemonEvent_reinstall</depends>
-        <type>entry</type>
-        <image>plugins/goto/images/reinstall.png</image>
-        <label>Reinstall</label>
-      </action>
-
-
-    </action>
-
-
-
-    <action>
-     <type>sub</type>
-     <image>plugins/systems/images/clock.png</image>
-     <label>Schedule action</label>
-
-      <action>
-        <name>S_DaemonEvent_halt</name>
-        <depends>DaemonEvent_halt</depends>
-        <type>entry</type>
-        <image>images/lists/off.png</image>
-        <label>Halt</label>
-      </action>
-
-      <action>
-        <name>S_DaemonEvent_reboot</name>
-        <depends>DaemonEvent_reboot</depends>
-        <type>entry</type>
-        <image>images/lists/reload.png</image>
-        <label>Reboot</label>
-      </action>
-
-      <action>
-        <name>S_DaemonEvent_wakeup</name>
-        <depends>DaemonEvent_wakeup</depends>
-        <type>entry</type>
-        <image>images/lists/on.png</image>
-        <label>Wakeup</label>
-      </action>
-
-      <action>
-        <name>S_DaemonEvent_update</name>
-        <depends>DaemonEvent_update</depends>
-        <type>entry</type>
-        <image>plugins/goto/images/update.png</image>
-        <label>Update</label>
-      </action>
-
-      <action>
-        <name>S_DaemonEvent_lock</name>
-        <depends>DaemonEvent_lock</depends>
-        <type>entry</type>
-        <image>images/lists/locked.png</image>
-        <label>Lock</label>
-      </action>
-
-      <action>
-        <name>S_DaemonEvent_activate</name>
-        <depends>DaemonEvent_activate</depends>
-        <type>entry</type>
-        <image>images/lists/unlocked.png</image>
-        <label>Activate</label>
-      </action>
-
-      <action>
-        <name>S_DaemonEvent_reinstall</name>
-        <depends>DaemonEvent_reinstall</depends>
-        <type>entry</type>
-        <image>plugins/goto/images/reinstall.png</image>
-        <label>Reinstall</label>
-      </action>
-
-    </action>
-
-    <action>
-      <type>separator</type>
-    </action>
-
-    <action>
-      <name>activateMultiple</name>
-      <depends>DaemonEvent_activate</depends>
-      <type>entry</type>
-      <image>images/lists/unlocked.png</image>
-      <label>Activate systems</label>
     </action>
 
     <action>
@@ -266,63 +76,47 @@
       <type>exporter</type>
     </action>
 
-    <action>
-      <type>separator</type>
-    </action>
-
-    <action>
-      <type>copypaste</type>
-    </action>
-
-    <action>
-      <type>snapshot</type>
-    </action>
-
   </actionmenu>
 
-  <actiontriggers snapshot="true" copypaste="true">
+  <actiontriggers snapshot="false" copypaste="false">
 
     <action>
-      <name>setPassword</name>
+      <name>start</name>
       <type>entry</type>
-      <objectclass>FAKE_OC_PWD_changeAble</objectclass>
-      <image>images/lists/key.png</image>
-      <label>Change password</label>
-    </action>
-
-
-    <action>
-      <name>createISO</name>
-      <type>entry</type>
-      <objectclass>gotoWorkstation</objectclass>
-      <objectclass>FAIobject</objectclass>
-      <image>plugins/systems/images/cdrom.png</image>
-      <acl>workstation/workgeneric[createFAICD:w]</acl>
-      <label>Create ISO</label>
+      <image>images/status_start.png</image>
+      <objectclass>AllowStart</objectclass> 
+      <label>Start</label>
     </action>
 
     <action>
-      <name>cp</name>
-      <type>copypaste</type>
+      <name>stop</name>
+      <type>entry</type>
+      <image>images/status_stop.png</image>
+      <objectclass>AllowStop</objectclass> 
+      <label>Stop</label>
+    </action>
+
+    <action>
+      <name>restart</name>
+      <type>entry</type>
+      <image>images/lists/reload.png</image>
+      <objectclass>AllowRestart</objectclass> 
+      <label>Restart</label>
     </action>
 
     <action>
       <name>edit</name>
       <type>entry</type>
       <image>images/lists/edit.png</image>
+      <objectclass>AllowEdit</objectclass> 
       <label>Edit role</label>
-    </action>
-
-    <action>
-      <name>snapshot</name>
-      <type>snapshot</type>
     </action>
 
     <action>
       <name>remove</name>
       <type>entry</type>
       <image>images/lists/trash.png</image>
-      <acl>%acl[d]</acl>
+      <objectclass>AllowRemove</objectclass> 
       <label>Remove system</label>
     </action>
 

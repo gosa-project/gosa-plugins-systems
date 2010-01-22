@@ -11,6 +11,11 @@ class filterServerService {
         $data = $plugins[$name]->getListEntry();
         $data['objectClass'] = array('FAKE_OC_ServerService'); 
         $data['name'] = $name;
+        if($data['AllowStart'])   $data['objectClass'][] = "AllowStart";
+        if($data['AllowStop'])    $data['objectClass'][] = "AllowStop";
+        if($data['AllowRestart']) $data['objectClass'][] = "AllowRestart";
+        if($data['AllowRemove'])  $data['objectClass'][] = "AllowRemove";
+        if($data['AllowEdit'])    $data['objectClass'][] = "AllowEdit";
         foreach($data as $key => $value){
           if(!is_array($data[$key])) $data[$key] = array($data[$key]);
           $list[$name][] = $key;
