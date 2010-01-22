@@ -7,7 +7,6 @@
     <baseMode>true</baseMode>
     <multiSelect>true</multiSelect>
     <template>system-list.tpl</template>
-    <module>server</module>
     <label>List of systems</label>
     <defaultSortColumn>1</defaultSortColumn>
 
@@ -465,8 +464,8 @@
       <name>remove</name>
       <type>entry</type>
       <image>images/lists/trash.png</image>
-      <acl>roles/role[d]</acl>
-      <label>Remove role</label>
+      <acl>%acl[d]</acl>
+      <label>Remove system</label>
     </action>
 
   </actiontriggers>

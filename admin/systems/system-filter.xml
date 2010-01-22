@@ -2,7 +2,7 @@
 
 <filterdef>
   <definition>
-    <category>roles</category>
+    <category>server</category>
     <template>system-filter.tpl</template>
     <initial>true</initial>
   </definition>
