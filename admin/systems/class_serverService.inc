@@ -61,61 +61,61 @@ class ServerService extends management
       $this->attrs = $this->parent->attrs;
     }
 
-
     // Set storage points - We do not have any - We just create a fake list which lists all services 
     $this->storagePoints = array();
 
-#    // Build filter
-#   if (session::global_is_set(get_class($this)."_filter")){
-#    $filter= session::global_get(get_class($this)."_filter");
-# } else {
-  $filter = new filter(get_template_path("serverService-filter.xml", true));
-  $filter->setObjectStorage($this->storagePoints);
-#}
-  $this->setFilter($filter);
+    // Build filter
+    if (session::global_is_set(get_class($this)."_filter")){
+      $filter= session::global_get(get_class($this)."_filter");
+    } else {
+      $filter = new filter(get_template_path("serverService-filter.xml", true));
+      $filter->setObjectStorage($this->storagePoints);
+    }
+    $this->setFilter($filter);
 
-  // Build headpage
-  $headpage = new listing(get_template_path("serverService-list.xml", true));
-  $headpage->registerElementFilter("filterServiceStatus", "ServerService::filterServiceStatus");
-  $headpage->setFilter($filter);
+    // Build headpage
+    $headpage = new listing(get_template_path("serverService-list.xml", true));
+    $headpage->registerElementFilter("filterServiceStatus", "ServerService::filterServiceStatus");
+    $headpage->setFilter($filter);
 
 
-  // Initialize list of used and useable services.
-  foreach ($config->data['TABS']['SERVERSERVICE'] as $plug){
-    if(class_available($plug['CLASS'])){
+    // Initialize list of used and useable services.
+    foreach ($config->data['TABS']['SERVERSERVICE'] as $plug){
+      if(class_available($plug['CLASS'])){
 
-      $name= $plug['CLASS'];
-      $this->plugin_names[]= $name;
-      $this->plugins[$name]= new $name($config, $dn, $this);
+        $name= $plug['CLASS'];
+        $this->plugin_names[]= $name;
+        $this->plugins[$name]= new $name($config, $dn, $this);
 
-      /* Initialize kerberos key support */ 
-      if(isset($this->plugins[$name]->krb_service_prefix) && !empty($this->plugins[$name]->krb_service_prefix)){
-        $this->plugins[$name]->krb_host_key = &$this->parent->kerberos_key_service;
-      }
+        /* Initialize kerberos key support */ 
+        if(isset($this->plugins[$name]->krb_service_prefix) && !empty($this->plugins[$name]->krb_service_prefix)){
+          $this->plugins[$name]->krb_host_key = &$this->parent->kerberos_key_service;
+        }
 
-      /* Capture all service objectClases, necessary for acl handling */ 
-      if(isset($this->plugins[$name]->objectclasses)){
-        foreach($this->plugins[$name]->objectclasses as $oc){
-          $this->objectclasses[] = $oc;
+        /* Capture all service objectClases, necessary for acl handling */ 
+        if(isset($this->plugins[$name]->objectclasses)){
+          foreach($this->plugins[$name]->objectclasses as $oc){
+            $this->objectclasses[] = $oc;
+          }
         }
       }
-    }else{
-#trigger_error("Service class missing: ".$plug['CLASS']);
     }
+
+    parent::__construct($config, $this->ui, "services", $headpage);
+    $this->registerAction("new",                "newService");
+    $this->registerAction("remove",             "removeService");
+    $this->registerAction("newServiceSelected", "newServiceSelected");
+    $this->registerAction("saveService",        "saveService");
+    $this->registerAction("cancelService",      "cancelEdit");
+    $this->registerAction("newServiceCancel",   "closeDialogs");
+    $this->registerAction("restart",            "updateServiceStatus");
+    $this->registerAction("stop",               "updateServiceStatus");
+    $this->registerAction("start",              "updateServiceStatus");
   }
 
-  parent::__construct($config, $this->ui, "services", $headpage);
-  $this->registerAction("new",                "newService");
-  $this->registerAction("remove",             "removeService");
-  $this->registerAction("newServiceSelected", "newServiceSelected");
-  $this->registerAction("saveService",        "saveService");
-  $this->registerAction("cancelService",      "cancelEdit");
-  $this->registerAction("newServiceCancel",   "closeDialogs");
-  $this->registerAction("restart",            "updateServiceStatus");
-  $this->registerAction("stop",               "updateServiceStatus");
-  $this->registerAction("start",              "updateServiceStatus");
-  }
 
+  /*! \brief    Filter extra POST and GET variables for this plugin.
+   */ 
   function detectPostActions()
   {
     $action = management::detectPostActions();
@@ -126,6 +126,10 @@ class ServerService extends management
     return($action);
   }
 
+  
+  /*! \brief  Edit an existing service here.
+   *          Somebody clicked on the paper and pencil icon.
+   */
   function editEntry($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
   {
     $this->dialog = TRUE;
@@ -136,6 +140,7 @@ class ServerService extends management
       $this->current  = $s_entry;
     }
   }
+
 
   /*! \brief  Editing an object was caneled.
    *          Close dialogs/tabs and remove locks.
@@ -158,12 +163,30 @@ class ServerService extends management
   }
 
 
+  /*! \brief  Let the user choose the new service to create.
+   */
   function newService()
   {
     $this->dialog = TRUE;
     $this->dialogObject = new ServiceAddDialog($this->config,$this->dn,$this);
   }
 
+
+  /*! \brief  Create the selected service.
+   */
+  function newServiceSelected()
+  {
+    $this->closeDialogs();
+    $serv = $_POST['ServiceName'];
+    $this->plugins[$serv]->is_account = true;
+    $this->dialogObject  = $this->plugins[$serv];
+    $this->current = $serv;
+    $this->dialog = TRUE;
+  }
+
+
+  /*! \brief  Save the currently edited service.
+   */
   function saveService()
   {
     $this->dialogObject->save_object();
@@ -184,23 +207,19 @@ class ServerService extends management
     }
   }
 
-  function newServiceSelected()
-  {
-    $this->closeDialogs();
-    $serv = $_POST['ServiceName'];
-    $this->plugins[$serv]->is_account = true;
-    $this->dialogObject  = $this->plugins[$serv];
-    $this->current = $serv;
-    $this->dialog = TRUE;
-  }
 
-
+  /*!\brief   Close all opened dialogs 
+   *          And reset "dialog open" flags to display bottom buttons again.
+   */
   function closeDialogs()
   {
     management::closeDialogs();
     $this->dialog = FALSE;
   }
 
+
+  /*! \brief    Remove the selected service(s)
+   */
   protected function removeService($action="",$target=array(),$all=array())
   {
     foreach($target as $s_entry){
@@ -223,11 +242,20 @@ class ServerService extends management
     }
   }
 
+
+  /*! \brief    Returns the list of of services, active services.
+   *            Used in the filter class for services. 
+   *             class_filterServerService.inc
+   */
   static function getServiceList()
   { 
     return(session::get('ServerService'));
   }
 
+
+  /*! \brief    Returns an image for the service status.
+   *            Used in the service list class.
+   */
   static function filterServiceStatus($a,$b,$c,$d)
   {
     $img ="";
@@ -321,6 +349,9 @@ class ServerService extends management
     return($this->renderList());
   }
 
+
+  /*! \brief    Updates the status for a list of services.
+   */
   function updateServiceStatus($action, $target,$all)
   {
     /* Handle state changes for services */
@@ -337,18 +368,10 @@ class ServerService extends management
     }
   }
 
-  function _execute()
-  {
 
-
-    /* Dispaly services overview */
-    session::set('ServerService', $this->plugins);
-    return(management::execute());
-  }
-
-
-  /* Get all used services 
-     CLASSNAME => _($this->plugins[*]->DisplayName);   */
+  /*! \brief   Returns a list of all used services
+   *            CLASSNAME => _($this->plugins[*]->DisplayName);   
+   */
   function getAllUsedServices()
   {
     $ret = array();
@@ -365,8 +388,8 @@ class ServerService extends management
   }
 
 
-  /* Get all unused services 
-     CLASSNAME => _($this->plugins[*]->DisplayName);  */
+  /*! \brief    Returns a list of all unused services.
+   */
   function getAllUnusedServices()
   {
     $tmp = $this->getAllUsedServices();
@@ -407,8 +430,9 @@ class ServerService extends management
   }
 
 
-  /* This function sets the status var for each used 
-     service && calls an external hook if specified in gosa.conf*/
+  /*! \brief    Updates the status of a service and 
+   *             calls an external hook if specified in gosa.conf
+   */
   function ServiceStatusUpdate($method , $service)
   {
     /* Skip if this is a new server */
@@ -466,12 +490,16 @@ class ServerService extends management
   }
 
 
+  /*! \brief    No checks here.
+   */
   function check()
   {   
     return(array());
   }
 
 
+  /*! \brief    Keep posted form values in opened dialogs
+   */
   function save_object()
   {
     foreach($this->plugins as $name => $obj){
@@ -482,6 +510,8 @@ class ServerService extends management
   }
 
 
+  /*! \brief    Remove all active services
+   */
   function remove_from_parent()
   {
     $caseVars = array("cn","dn");
@@ -501,6 +531,8 @@ class ServerService extends management
   }
 
 
+  /*! \brief    Save all active services
+   */
   function save()
   {
     $caseVars = array("cn","dn");
@@ -523,6 +555,8 @@ class ServerService extends management
   }
 
 
+  /*! \brief    Prepare active services to be copied.
+   */
   function PrepareForCopyPaste($source)
   {
     plugin::PrepareForCopyPaste($source);
@@ -533,7 +567,9 @@ class ServerService extends management
   }
 
 
-  /* Check if all plugins allow a remove ..  */
+  /*! \brief    Check if there is an active service which prevents 
+   *             complete service removal.
+   */
   function allow_remove()
   {
     foreach($this->plugins as $name => $obj){
@@ -545,7 +581,8 @@ class ServerService extends management
   }
 
 
-  // Forward plugin ACLs 
+  /*! \brief    Forward plugin acls 
+   */
   function set_acl_base($base)
   {
     $this->acl_base = $base;
@@ -554,7 +591,9 @@ class ServerService extends management
     }
   }
 
-  // Forward plugin ACLs 
+
+  /*! \brief    Forward plugin acls 
+   */
   function set_acl_category($category)
   {
     $this->acl_category = $category;
