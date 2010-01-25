@@ -110,6 +110,7 @@ class ServerService extends management
   $this->registerAction("newServiceSelected", "newServiceSelected");
   $this->registerAction("saveService",        "saveService");
   $this->registerAction("cancelService",      "cancelEdit");
+  $this->registerAction("newServiceCancel",   "closeDialogs");
   $this->registerAction("restart",            "updateServiceStatus");
   $this->registerAction("stop",               "updateServiceStatus");
   $this->registerAction("start",              "updateServiceStatus");
@@ -119,7 +120,7 @@ class ServerService extends management
   {
     $action = management::detectPostActions();
     if(isset($_POST['SaveServiceAdd']))   $action['action'] = "newServiceSelected";
-    if(isset($_POST['CancelServiceAdd'])) $action['action'] = "cancel";
+    if(isset($_POST['CancelServiceAdd'])) $action['action'] = "newServiceCancel";
     if(isset($_POST['SaveService']))      $action['action'] = "save";
     if(isset($_POST['CancelService']))    $action['action'] = "cancelService";
     return($action);
@@ -279,7 +280,15 @@ class ServerService extends management
     if(is_object($this->dialogObject)){
       if(method_exists($this->dialogObject,'save_object')) $this->dialogObject->save_object();
       if(method_exists($this->dialogObject,'execute')){
-        $display = $this->dialogObject->execute();
+
+        /* There is currently a subdialog open, display this dialog */
+        $add ="";
+        if(isset($this->dialogObject->krb_host_key) && $this->dialogObject->krb_host_key instanceof krbHostKeys){
+          $add = $this->dialogObject->krb_host_key->save_object_by_prefix($this->dialogObject->krb_service_prefix);
+          $add = $this->dialogObject->krb_host_key->execute_by_prefix($this->dialogObject->krb_service_prefix,TRUE);
+        }
+
+        $display = $add.$this->dialogObject->execute();
         $display.= $this->_getTabFooter();
         return($this->getHeader().$display);
       }
@@ -306,6 +315,7 @@ class ServerService extends management
       $this->snapHandler->setSnapshotBases($bases);
     }
 
+
     // Display list
     session::set('ServerService', $this->plugins);
     return($this->renderList());
@@ -329,16 +339,6 @@ class ServerService extends management
 
   function _execute()
   {
-
-    /* There is currently a subdialog open, display this dialog */
-    if(is_object($this->dialog)){
-      $add ="";
-      if(isset($this->dialog->krb_host_key) && $this->dialog->krb_host_key instanceof krbHostKeys){
-        $add = $this->dialog->krb_host_key->save_object_by_prefix($this->dialog->krb_service_prefix);
-        $add = $this->dialog->krb_host_key->execute_by_prefix($this->dialog->krb_service_prefix,TRUE);
-      }
-      return($add.$this->dialog->execute());
-    }
 
 
     /* Dispaly services overview */
