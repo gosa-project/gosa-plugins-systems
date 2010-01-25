@@ -22,11 +22,11 @@ class filterServerService {
           $list[$name][$key] = $data[$key];
           $list[$name][$key]['count'] = count($data[$key]);
           $list[$name]['count'] = count($data);
-          $list[$name]['dn'] = $key;
+          $list[$name]['dn'] = $name;
         }
       }
     }
-    return($list);
+    return(array_values($list));
   }
 }
 

@@ -73,6 +73,35 @@
     </action>
 
     <action>
+      <type>separator</type>
+    </action>
+
+    <action>
+      <name>start</name>
+      <type>entry</type>
+      <image>images/status_start.png</image>
+      <label>Start</label>
+    </action>
+
+    <action>
+      <name>stop</name>
+      <type>entry</type>
+      <image>images/status_stop.png</image>
+      <label>Stop</label>
+    </action>
+
+    <action>
+      <name>restart</name>
+      <type>entry</type>
+      <image>images/lists/reload.png</image>
+      <label>Restart</label>
+    </action>
+
+    <action>
+      <type>separator</type>
+    </action>
+
+    <action>
       <type>exporter</type>
     </action>
 
@@ -109,7 +138,7 @@
       <type>entry</type>
       <image>images/lists/edit.png</image>
       <objectclass>AllowEdit</objectclass> 
-      <label>Edit role</label>
+      <label>Edit service</label>
     </action>
 
     <action>
@@ -117,7 +146,7 @@
       <type>entry</type>
       <image>images/lists/trash.png</image>
       <objectclass>AllowRemove</objectclass> 
-      <label>Remove system</label>
+      <label>Remove service</label>
     </action>
 
   </actiontriggers>

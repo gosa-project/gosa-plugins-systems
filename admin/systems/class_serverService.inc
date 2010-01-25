@@ -34,23 +34,22 @@ class ServerService extends management
 {
   /* attribute list for save action */
   var $ignore_account   = TRUE;
-  var $attributes       = array();
-  var $objectclasses    = array();
   var $skipFooter       = TRUE;
   var $skipHeader       = TRUE;
-  var $divList          = NULL;
-
   var $plugins          = array();
   var $pluign_names     = array();
-
   var $current          = "";
   var $dialog           = FALSE;
+  var $read_only        = FALSE;
   var $backup           = NULL;
   var $acl              ;
   var $cn;
   var $parent           ;
-
   var $pl_notify = FALSE;
+  var $acl_category = "";
+  var $acl_base = "";
+
+  var $is_account;
 
   function __construct (&$config, $dn,$parent)
   {
@@ -67,47 +66,161 @@ class ServerService extends management
     $this->storagePoints = array();
 
 #    // Build filter
- #   if (session::global_is_set(get_class($this)."_filter")){
-  #    $filter= session::global_get(get_class($this)."_filter");
-   # } else {
-      $filter = new filter(get_template_path("serverService-filter.xml", true));
-      $filter->setObjectStorage($this->storagePoints);
-    #}
-    $this->setFilter($filter);
+#   if (session::global_is_set(get_class($this)."_filter")){
+#    $filter= session::global_get(get_class($this)."_filter");
+# } else {
+  $filter = new filter(get_template_path("serverService-filter.xml", true));
+  $filter->setObjectStorage($this->storagePoints);
+#}
+  $this->setFilter($filter);
 
-    // Build headpage
-    $headpage = new listing(get_template_path("serverService-list.xml", true));
-    $headpage->registerElementFilter("filterServiceStatus", "ServerService::filterServiceStatus");
-    $headpage->setFilter($filter);
+  // Build headpage
+  $headpage = new listing(get_template_path("serverService-list.xml", true));
+  $headpage->registerElementFilter("filterServiceStatus", "ServerService::filterServiceStatus");
+  $headpage->setFilter($filter);
 
-    
-    // Initialize list of used and useable services.
-    foreach ($config->data['TABS']['SERVERSERVICE'] as $plug){
-      if(class_available($plug['CLASS'])){
 
-        $name= $plug['CLASS'];
-        $this->plugin_names[]= $name;
-        $this->plugins[$name]= new $name($config, $dn, $this);
+  // Initialize list of used and useable services.
+  foreach ($config->data['TABS']['SERVERSERVICE'] as $plug){
+    if(class_available($plug['CLASS'])){
 
-        /* Initialize kerberos key support */ 
-        if(isset($this->plugins[$name]->krb_service_prefix) && !empty($this->plugins[$name]->krb_service_prefix)){
-          $this->plugins[$name]->krb_host_key = &$this->parent->kerberos_key_service;
+      $name= $plug['CLASS'];
+      $this->plugin_names[]= $name;
+      $this->plugins[$name]= new $name($config, $dn, $this);
+
+      /* Initialize kerberos key support */ 
+      if(isset($this->plugins[$name]->krb_service_prefix) && !empty($this->plugins[$name]->krb_service_prefix)){
+        $this->plugins[$name]->krb_host_key = &$this->parent->kerberos_key_service;
+      }
+
+      /* Capture all service objectClases, necessary for acl handling */ 
+      if(isset($this->plugins[$name]->objectclasses)){
+        foreach($this->plugins[$name]->objectclasses as $oc){
+          $this->objectclasses[] = $oc;
         }
+      }
+    }else{
+#trigger_error("Service class missing: ".$plug['CLASS']);
+    }
+  }
 
-        /* Capture all service objectClases, necessary for acl handling */ 
-        if(isset($this->plugins[$name]->objectclasses)){
-          foreach($this->plugins[$name]->objectclasses as $oc){
-            $this->objectclasses[] = $oc;
-          }
-        }
-      }else{
-        #trigger_error("Service class missing: ".$plug['CLASS']);
+  parent::__construct($config, $this->ui, "services", $headpage);
+  $this->registerAction("new",                "newService");
+  $this->registerAction("remove",             "removeService");
+  $this->registerAction("newServiceSelected", "newServiceSelected");
+  $this->registerAction("saveService",        "saveService");
+  $this->registerAction("cancelService",      "cancelEdit");
+  $this->registerAction("restart",            "updateServiceStatus");
+  $this->registerAction("stop",               "updateServiceStatus");
+  $this->registerAction("start",              "updateServiceStatus");
+  }
+
+  function detectPostActions()
+  {
+    $action = management::detectPostActions();
+    if(isset($_POST['SaveServiceAdd']))   $action['action'] = "newServiceSelected";
+    if(isset($_POST['CancelServiceAdd'])) $action['action'] = "cancel";
+    if(isset($_POST['SaveService']))      $action['action'] = "save";
+    if(isset($_POST['CancelService']))    $action['action'] = "cancelService";
+    return($action);
+  }
+
+  function editEntry($action="",$target=array(),$all=array(), $altTabClass ="", $altTabType = "", $altAclCategory="")
+  {
+    $this->dialog = TRUE;
+    $s_entry = array_pop($target);
+    if($this->plugins[$s_entry]->acl_is_readable("")){
+      $this->backup   = get_object_vars($this->plugins[$s_entry]);
+      $this->dialogObject   = $this->plugins[$s_entry];
+      $this->current  = $s_entry;
+    }
+  }
+
+  /*! \brief  Editing an object was caneled.
+   *          Close dialogs/tabs and remove locks.
+   */
+  protected function cancelEdit()
+  {
+    if($this->backup == NULL){
+      $this->plugins[$this->current] = new $this->current($this->config,$this->dn,$this);
+      $this->plugins[$this->current]-> set_acl_base($this->acl_base);
+      $this->plugins[$this->current]-> set_acl_category(preg_replace("/\/$/","",$this->acl_category));
+
+    }else{
+      foreach($this->backup as $name => $value){
+        $this->plugins[$this->current]->$name = $value;
       }
     }
+    $this->backup   = NULL;
+    $this->current  = "";
+    $this->closeDialogs();
+  }
 
-    parent::__construct($config, $ui, "systems", $headpage);
-	}
 
+  function newService()
+  {
+    $this->dialog = TRUE;
+    $this->dialogObject = new ServiceAddDialog($this->config,$this->dn,$this);
+  }
+
+  function saveService()
+  {
+    $this->dialogObject->save_object();
+    $msgs = $this->dialogObject->check();
+    if(count($msgs)){
+      foreach($msgs as $msg){
+        msg_dialog::display(_("Error"), $msg, ERROR_DIALOG);
+      }
+    }else{
+      $this->plugins[$this->current] = $this->dialog;
+      $tmp  = get_object_vars($this->dialog);
+      foreach($tmp as $name => $value){
+        $this->plugins[$this->current]->$name = $value;
+      }
+      $this->current = "";
+      $this->dialog = FALSE;
+      $this->backup = NULL;
+    }
+  }
+
+  function newServiceSelected()
+  {
+    $this->closeDialogs();
+    $serv = $_POST['ServiceName'];
+    $this->plugins[$serv]->is_account = true;
+    $this->dialogObject  = $this->plugins[$serv];
+    $this->current = $serv;
+    $this->dialog = TRUE;
+  }
+
+
+  function closeDialogs()
+  {
+    management::closeDialogs();
+    $this->dialog = FALSE;
+  }
+
+  protected function removeService($action="",$target=array(),$all=array())
+  {
+    foreach($target as $s_entry){
+      $new_obj = new $s_entry($this->config,$this->dn, $this);
+      $new_obj->set_acl_base($this->acl_base);
+      $new_obj->set_acl_category(preg_replace("/\/$/","",$this->acl_category));
+      $tmp     = $new_obj->getListEntry();
+
+      /* Check if we are allowed to remove this service
+       */
+      if($tmp['AllowRemove']){
+        $str = $this->plugins[$s_entry]->allow_remove();
+        if(empty($str)){
+          $this->plugins[$s_entry] = $new_obj;
+          $this->plugins[$s_entry]->is_account = false;
+        }else{
+          msg_dialog::display(_("Error"), $str, ERROR_DIALOG);
+        }
+      }
+    }
+  }
 
   static function getServiceList()
   { 
@@ -129,163 +242,93 @@ class ServerService extends management
     }
     return("");  
   }
-  
 
+
+  /*! \brief  Execute this plugin
+   *          Handle actions/events, locking, snapshots, dialogs, tabs,...
+   */
   function execute()
   {
-    /* Variable initialisation */  
-    $s_action = "";
-    $s_entry  = "";
+    // Ensure that html posts and gets are kept even if we see a 'Entry islocked' dialog.
+    $vars = array('/^act$/','/^listing/','/^PID$/','/^FILTER_PID$/');
+    session::set('LOCK_VARS_TO_USE',$vars);
 
-    /* Walk through posts and check if there are some introductions for us */
-    $PossiblePosts = array("addNewService"  => "", 
-                           "startServices"  => "",
-                           "stopServices"   => "",
-                           "restartServices"  => "",
-                           "removeServices" => "",
+    /* Display the copy & paste dialog, if it is currently open */
+    $ret = $this->copyPasteHandler("",array());
+    if($ret){
+      return($this->getHeader().$ret);
+    }
 
-                           "StartSingleService"  => "/^StartSingleService_(.*)_[xy]$/",
-                           "StopSingleService"   => "/^StopSingleService_(.*)_[xy]$/",
-                           "RestartSingleService"  => "/^RestartSingleService_(.*)_[xy]$/",
-                           "RemoveSingleService" => "/^RemoveSingleService_(.*)_[xy]$/",
-                           "EditSingleService"   => "/^EditSingleService_(.*)_[xy]$/");
-
-  
-    $once = true;
-    foreach($_POST as $name => $value){
-      foreach($PossiblePosts as $pregCheck => $idPreg) {
-        if(preg_match("/^".$pregCheck."/",$name) && $once){
-          $once     = false;
-          $s_action = $pregCheck;
-          
-          if(!empty($idPreg)){
-            $s_entry = preg_replace($idPreg,"\\1",$name);
-          }
-        }
+    // Update filter
+    $filter = $this->getFilter();
+    if ($filter) {
+      $filter->update();
+      session::global_set(get_class($this)."_filter", $filter);
+      session::set('autocomplete', $filter);
+      if (!$filter->isValid()){
+        msg_dialog::display(_("Filter error"), _("The filter is incomplete!"), ERROR_DIALOG);
       }
     }
 
 
+    // Handle actions (POSTs and GETs)
+    $str = $this->handleActions($this->detectPostActions());
+    if($str) return($this->getHeader().$str);
+
+    // Open single dialog objects
+    if(is_object($this->dialogObject)){
+      if(method_exists($this->dialogObject,'save_object')) $this->dialogObject->save_object();
+      if(method_exists($this->dialogObject,'execute')){
+        $display = $this->dialogObject->execute();
+        $display.= $this->_getTabFooter();
+        return($this->getHeader().$display);
+      }
+    }
+
+    // Display tab object.
+    if($this->tabObject instanceOf tabs || $this->tabObject instanceOf multi_plug){
+#      $this->tabObject->save_object();
+      $display = $this->tabObject->execute();
+      $display.= $this->_getTabFooter();
+      return($this->getHeader().$display);
+    }
+
+    // Set current restore base for snapshot handling.
+    if(is_object($this->snapHandler)){
+      $bases = array();
+      foreach($this->storagePoints as $sp){
+        $bases[] = $sp.$this->headpage->getBase();
+      }
+
+      // No bases specified? Try base
+      if(!count($bases)) $bases[] = $this->headpage->getBase();
+
+      $this->snapHandler->setSnapshotBases($bases);
+    }
+
+    // Display list
+    session::set('ServerService', $this->plugins);
+    return($this->renderList());
+  }
+
+  function updateServiceStatus($action, $target,$all)
+  {
     /* Handle state changes for services */
-    $map =  array(    "startServices"         => array("type" => START_SERVICE ,   "service" => ALL_SERVICES),
-                      "stopServices"          => array("type" => STOP_SERVICE  ,   "service" => ALL_SERVICES),
-                      "restartServices"       => array("type" => RESTART_SERVICE , "service" => ALL_SERVICES),                 
-                      "StartSingleService"    => array("type" => START_SERVICE ,   "service" => $s_entry),
-                      "StopSingleService"     => array("type" => STOP_SERVICE ,    "service" => $s_entry),
-                      "RestartSingleService"  => array("type" => RESTART_SERVICE , "service" => $s_entry));
-    if(isset($map[$s_action])){
-      $type     = $map[$s_action]['type'];
-      $service  = $map[$s_action]['service'];
-      $this->ServiceStatusUpdate($type,$service);
-    }
-
-    /* Handle actions linked via href */
-    if(isset($_GET['act']) && $_GET['act'] == "open" && isset($_GET['id'])){
-      $id = $_GET['id'];
-      if(isset($this->plugins[$id])){
-        $s_entry = $id;
-        $s_action = "EditSingleService";
-      } 
-    }
-
-    /* Open service add dialog */
-    if($s_action == "addNewService"){
-      $this->dialog = new ServiceAddDialog($this->config,$this->dn,$this);
-    }
-
-
-    /* Remove service */
-    if($s_action == "RemoveSingleService"){
-
-      /* Create resetted obj */
-      $new_obj = new $s_entry($this->config,$this->dn, $this);
-      $new_obj -> set_acl_base($this->acl_base);
-      $new_obj -> set_acl_category(preg_replace("/\/$/","",$this->acl_category));
-      $tmp     = $new_obj->getListEntry();
-
-      if($tmp['AllowRemove']){
-
-        /* Check if we are allowed to remove this service
-         */
-        $str = $this->plugins[$s_entry]->allow_remove();
-
-        if(empty($str)){
-          $this->plugins[$s_entry] = $new_obj;
-          $this->plugins[$s_entry]->is_account = false;
-        }else{
-          msg_dialog::display(_("Error"), $str, ERROR_DIALOG);
-        }
+    $map =  array(    
+        "start"    =>  START_SERVICE ,
+        "stop"     =>  STOP_SERVICE ,
+        "restart"  =>  RESTART_SERVICE );
+    foreach($target as $s_entry){
+      if(isset($map[$action])){
+        $type     = $map[$action];
+        $service  = $s_entry;
+        $this->ServiceStatusUpdate($type,$service);
       }
     }
+  }
 
-
-    /* Edit a service and make a backup from all attributes, 
-       to be able to restore old values after aborting dialog */ 
-    if($s_action == "EditSingleService"){
-      if($this->plugins[$s_entry]->acl_is_readable("")){
-        $this->backup   = get_object_vars($this->plugins[$s_entry]);
-        $this->dialog   = $this->plugins[$s_entry];
-        $this->current  = $s_entry;
-      }
-    }
-
-   
-    /* Abort service add */
-    if(isset($_POST['CancelServiceAdd'])){
-      $this->dialog   = FALSE;
-      $this->backup   = NULL;
-      $this->current  = "";
-    }
-
- 
-    /* Abort dialog 
-       Restore vars with values before editing */
-    if(isset($_POST['CancelService']) && !empty($this->current)){
-      if($this->backup == NULL){
-        $this->plugins[$this->current] = new $this->current($this->config,$this->dn,$this);
-        $this->plugins[$this->current]-> set_acl_base($this->acl_base);
-        $this->plugins[$this->current]-> set_acl_category(preg_replace("/\/$/","",$this->acl_category));
-
-      }else{
-        foreach($this->backup as $name => $value){
-          $this->plugins[$this->current]->$name = $value;
-        }
-      }
-      $this->dialog   = FALSE;
-      $this->backup   = NULL;
-      $this->current  = ""; 
-    }
-  
-
-    /* Abort dialog */
-    if(isset($_POST['SaveService']) && is_object($this->dialog)){
-#      $this->dialog->save_object();
-      $msgs = $this->dialog->check();
-      if(count($msgs)){
-        foreach($msgs as $msg){
-          msg_dialog::display(_("Error"), $msg, ERROR_DIALOG);
-        }
-      }else{
-        $this->plugins[$this->current] = $this->dialog;
-        $tmp  = get_object_vars($this->dialog);
-        foreach($tmp as $name => $value){
-          $this->plugins[$this->current]->$name = $value;
-        }
-        $this->current = "";
-        $this->dialog = FALSE;
-        $this->backup = NULL;
-      }
-    }
-
-
-    /* Abort dialog */
-    if((isset($_POST['SaveServiceAdd'])) && (!empty($_POST['ServiceName']))){
-      $serv = $_POST['ServiceName'];    
-      $this->plugins[$serv]->is_account = true;
-      $this->dialog  = $this->plugins[$serv];
-      $this->current = $serv;
-    }
-
+  function _execute()
+  {
 
     /* There is currently a subdialog open, display this dialog */
     if(is_object($this->dialog)){
@@ -305,7 +348,7 @@ class ServerService extends management
 
 
   /* Get all used services 
-      CLASSNAME => _($this->plugins[*]->DisplayName);   */
+     CLASSNAME => _($this->plugins[*]->DisplayName);   */
   function getAllUsedServices()
   {
     $ret = array();
@@ -323,7 +366,7 @@ class ServerService extends management
 
 
   /* Get all unused services 
-      CLASSNAME => _($this->plugins[*]->DisplayName);  */
+     CLASSNAME => _($this->plugins[*]->DisplayName);  */
   function getAllUnusedServices()
   {
     $tmp = $this->getAllUsedServices();
@@ -333,7 +376,7 @@ class ServerService extends management
         $pool_of_ocs[]= get_class($this->plugins[$name]);
       }
     }
-   
+
     $ret = array();
     foreach($this->plugins as $name => $obj){
 
@@ -362,8 +405,8 @@ class ServerService extends management
     }
     return($ret);
   }
- 
- 
+
+
   /* This function sets the status var for each used 
      service && calls an external hook if specified in gosa.conf*/
   function ServiceStatusUpdate($method , $service)
@@ -385,7 +428,7 @@ class ServerService extends management
       msg_dialog::display(_("Error"), _("Cannot update service status!"), ERROR_DIALOG);
       return;
     }
-    
+
     $caseVars = array("cn","dn");
     if($service == ALL_SERVICES){
       foreach($this->plugins as $name => $obj){
@@ -397,8 +440,8 @@ class ServerService extends management
 
         /* check if services can be restarted */
         $map =array(SERVICE_STARTED=> "AllowStart" ,
-                    SERVICE_STOPPED => "AllowStop",
-                    SERVICE_RESTARTED => "AllowRestart");
+            SERVICE_STOPPED => "AllowStop",
+            SERVICE_RESTARTED => "AllowRestart");
 
         /* get plugins informations, restart/start/stop actions allowed ?*/
         $tmp = $this->plugins[$name]->getListEntry();
@@ -424,9 +467,8 @@ class ServerService extends management
 
 
   function check()
-  {
-    $message = plugin::check();
-    return $message;
+  {   
+    return(array());
   }
 
 
@@ -480,7 +522,7 @@ class ServerService extends management
     }
   }
 
-  
+
   function PrepareForCopyPaste($source)
   {
     plugin::PrepareForCopyPaste($source);
@@ -501,11 +543,12 @@ class ServerService extends management
       }
     }
   }
-  
+
 
   // Forward plugin ACLs 
   function set_acl_base($base)
   {
+    $this->acl_base = $base;
     foreach($this->plugins as $name => $obj){
       $this->plugins[$name]->set_acl_base($base);
     }
@@ -514,6 +557,7 @@ class ServerService extends management
   // Forward plugin ACLs 
   function set_acl_category($category)
   {
+    $this->acl_category = $category;
     foreach($this->plugins as $name => $obj){
       $this->plugins[$name]->set_acl_category($category);
     }
