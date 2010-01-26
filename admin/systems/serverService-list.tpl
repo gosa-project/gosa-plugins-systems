@@ -8,7 +8,7 @@
       </div>
       
       <div class="contentboxb">
-       <div style='background:white;padding:0px;padding:3px;'>
+       <div style='background:white;padding:3px;'>
         <table><tr>
           <td>{$ROOT}&nbsp;</td><td>{$BACK}&nbsp;</td><td>{$HOME}&nbsp;</td><td>{$RELOAD}&nbsp;</td><td>{$SEPARATOR}&nbsp;</td><td><img src='images/rocket.png' alt='' class='center'></td><td> {$ACTIONS}</td>
         </tr></table>
@@ -18,12 +18,9 @@
       <div style='height:4px;'>
       </div>
       
-      <input type="hidden" id="d_save" value="450">
+      <input type="hidden" id="d_save" value="205">
       <input type="hidden" id="d_space" value="760">
       {$LIST}
-    </td>
-    <td style='vertical-align:top'>
-      {$FILTER}
     </td>
   </tr>
 </table>
