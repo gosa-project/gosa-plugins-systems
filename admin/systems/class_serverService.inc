@@ -147,12 +147,12 @@ class ServerService extends management
    */
   protected function cancelEdit()
   {
-    if($this->backup == NULL){
+    if($this->backup == NULL && $this->current){
       $this->plugins[$this->current] = new $this->current($this->config,$this->dn,$this);
       $this->plugins[$this->current]-> set_acl_base($this->acl_base);
       $this->plugins[$this->current]-> set_acl_category(preg_replace("/\/$/","",$this->acl_category));
 
-    }else{
+    }elseif(is_array($this->backup)){
       foreach($this->backup as $name => $value){
         $this->plugins[$this->current]->$name = $value;
       }
@@ -269,7 +269,7 @@ class ServerService extends management
     if(!empty($img)){
       return('<img src=\''.$img.'\'>');
     }
-    return("");  
+    return("&nbsp;");  
   }
 
 
