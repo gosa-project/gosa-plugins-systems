@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-19 20:51+0100\n"
+"POT-Creation-Date: 2010-01-27 15:14+0100\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -34,13 +34,11 @@ msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
 msgstr "所以，如果您确定，请按“删除”继续，否则按“取消”退出。"
 
 #: admin/systems/class_systemManagement.inc:60
-#: admin/systems/class_divListSystem.inc:88
 msgid "Systems"
 msgstr "系统设置"
 
 #: admin/systems/class_systemManagement.inc:61
-#: admin/systems/class_divListSystem.inc:63
-#: admin/systems/class_divListSystem.inc:64 admin/systems/system-list.xml:11
+#: admin/systems/system-list.xml:10
 msgid "List of systems"
 msgstr "系统列表"
 
@@ -71,9 +69,9 @@ msgstr "现在您无权修改您的口令"
 #: admin/systems/class_systemManagement.inc:683
 #: admin/systems/class_systemManagement.inc:802
 #: admin/systems/class_systemManagement.inc:817
-#: admin/systems/class_serverService.inc:186
-#: admin/systems/class_serverService.inc:236
-#: admin/systems/class_serverService.inc:363
+#: admin/systems/class_serverService.inc:196
+#: admin/systems/class_serverService.inc:239
+#: admin/systems/class_serverService.inc:452
 #: admin/systems/.svn/tmp/tempfile.tmp:365
 #: admin/systems/.svn/tmp/tempfile.tmp:480
 #: admin/systems/.svn/tmp/tempfile.tmp:517
@@ -258,311 +256,88 @@ msgstr "这个设备名已经被使用。"
 msgid "Continue"
 msgstr "继续"
 
-#: admin/systems/class_divListSystem.inc:82
+#: admin/systems/serverService-list.xml:10
 #, fuzzy
-msgid "Select all"
-msgstr "选择"
+msgid "List of services"
+msgstr "用户列表"
 
-#: admin/systems/class_divListSystem.inc:88
+#: admin/systems/serverService-list.xml:14
+#: admin/systems/serverService-list.xml:60
 #, fuzzy
-msgid "Department"
-msgstr "系统 / 部门"
+msgid "Service"
+msgstr "服务"
 
-#: admin/systems/class_divListSystem.inc:92
-#, fuzzy
-msgid "Release"
-msgstr "删除"
+#: admin/systems/serverService-list.xml:27
+msgid "!"
+msgstr ""
 
-#: admin/systems/class_divListSystem.inc:95
-#: admin/systems/class_divListSystem.inc:181
-#: admin/systems/class_divListSystemService.inc:51
-#: admin/systems/system-list.xml:186
+#: admin/systems/serverService-list.xml:35 admin/systems/system-list.xml:177
+#: admin/systems/class_servGeneric.inc:515 admin/systems/server.tpl:14
+#: admin/systems/class_componentGeneric.inc:320 admin/systems/component.tpl:35
+msgid "Description"
+msgstr "描述"
+
+#: admin/systems/serverService-list.xml:43 admin/systems/system-list.xml:185
 msgid "Actions"
 msgstr "动作"
 
-#: admin/systems/class_divListSystem.inc:101
-#: admin/systems/class_divListSystem.inc:102
-#: admin/systems/class_divListSystem.inc:423
-#, fuzzy
-msgid "servers"
-msgstr "服务器"
-
-#: admin/systems/class_divListSystem.inc:102
-#: admin/systems/class_divListSystem.inc:107
-#: admin/systems/class_divListSystem.inc:112
-#: admin/systems/class_divListSystem.inc:117
-#: admin/systems/class_divListSystem.inc:128
-#: admin/systems/class_divListSystem.inc:133
-#: admin/systems/class_divListSystem.inc:138
-#, fuzzy, php-format
-msgid "Show %s"
-msgstr "显示电话"
-
-#: admin/systems/class_divListSystem.inc:106
-#, fuzzy
-msgid "Linux terminals"
-msgstr "显示终端"
-
-#: admin/systems/class_divListSystem.inc:107
-#: admin/systems/class_divListSystem.inc:425
-#, fuzzy
-msgid "terminals"
-msgstr "终端"
-
-#: admin/systems/class_divListSystem.inc:111
-#, fuzzy
-msgid "Linux workstations"
-msgstr "显示工作站"
-
-#: admin/systems/class_divListSystem.inc:112
-#: admin/systems/class_divListSystem.inc:424
-#, fuzzy
-msgid "workstations"
-msgstr "工作站"
-
-#: admin/systems/class_divListSystem.inc:116
-#, fuzzy
-msgid "MicroSoft Windows based workstations"
-msgstr "选择显示基于 Microsoft Windows 工作站"
-
-#: admin/systems/class_divListSystem.inc:117
-#, fuzzy
-msgid "windows based workstations"
-msgstr "显示 Windows 工作站"
-
-#: admin/systems/class_divListSystem.inc:121
-#, fuzzy, php-format
-msgid "Display objects of type '%s'."
-msgstr "选择要添加的对象"
-
-#: admin/systems/class_divListSystem.inc:122
-#, fuzzy
-msgid "OPSI installed client"
-msgstr "安装设备"
-
-#: admin/systems/class_divListSystem.inc:122
-#: admin/systems/system-filter.tpl:35
-msgid "Show OPSI based clients"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:127
-#: admin/systems/class_divListSystem.inc:128
-#, fuzzy
-msgid "network printers"
-msgstr "显示网络打印机"
-
-#: admin/systems/class_divListSystem.inc:132
-#, fuzzy
-msgid "VoIP phones"
-msgstr "显示电话"
-
-#: admin/systems/class_divListSystem.inc:133
-#: admin/systems/class_divListSystem.inc:426
-#, fuzzy
-msgid "phones"
-msgstr "电话"
-
-#: admin/systems/class_divListSystem.inc:137
-#: admin/systems/class_divListSystem.inc:138
-#, fuzzy
-msgid "network devices"
-msgstr "网络设备"
-
-#: admin/systems/class_divListSystem.inc:146
-msgid "Display systems matching"
-msgstr "显示匹配的系统"
-
-#: admin/systems/class_divListSystem.inc:147
-msgid "Display systems of user"
-msgstr "显示用户系统"
-
-#: admin/systems/class_divListSystem.inc:176
-#: admin/systems/class_servGeneric.inc:516 admin/systems/system-list.tpl:13
-#: admin/systems/server.tpl:22 admin/systems/class_componentGeneric.inc:319
-#: admin/systems/component.tpl:17
-msgid "Base"
-msgstr "位置"
-
-#: admin/systems/class_divListSystem.inc:178
-msgid "Submit department"
-msgstr "提交部门"
-
-#: admin/systems/class_divListSystem.inc:178 admin/systems/system-list.tpl:13
-msgid "Submit"
-msgstr "提交"
-
-#: admin/systems/class_divListSystem.inc:183 admin/systems/system-list.xml:197
+#: admin/systems/serverService-list.xml:54 admin/systems/system-list.xml:196
 msgid "Create"
 msgstr "创建"
 
-#: admin/systems/class_divListSystem.inc:187
-#: admin/systems/.svn/tmp/tempfile.tmp:1630
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1634
-#: admin/systems/system-list.xml:120 admin/systems/system-list.xml:219
-msgid "Terminal"
-msgstr "终端"
-
-#: admin/systems/class_divListSystem.inc:191
-#: admin/systems/.svn/tmp/tempfile.tmp:1628
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1632
-#: admin/systems/system-list.xml:112 admin/systems/system-list.xml:211
-msgid "Workstation"
-msgstr "工作站"
-
-#: admin/systems/class_divListSystem.inc:195
-#: admin/systems/.svn/tmp/tempfile.tmp:1629
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1633
-#: admin/systems/system-list.xml:104 admin/systems/system-list.xml:203
-#: admin/systems/class_servGeneric.inc:511
-msgid "Server"
-msgstr "服务器"
-
-#: admin/systems/class_divListSystem.inc:199
-#: admin/systems/.svn/tmp/tempfile.tmp:1622
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1626
-#: admin/systems/system-list.xml:136 admin/systems/system-list.xml:235
-msgid "Phone"
-msgstr "电话"
-
-#: admin/systems/class_divListSystem.inc:203
-#: admin/systems/.svn/tmp/tempfile.tmp:1624
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1628
-#: admin/systems/system-list.xml:128
-msgid "Printer"
-msgstr "打印机"
-
-#: admin/systems/class_divListSystem.inc:207 admin/systems/system-list.xml:144
-#, fuzzy
-msgid "Component"
-msgstr "新组件"
-
-#: admin/systems/class_divListSystem.inc:214
-#: admin/systems/.svn/tmp/tempfile.tmp:1649
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1653
-#: admin/systems/system-list.xml:251
-#, fuzzy
-msgid "Opsi client"
-msgstr "瘦客户机"
-
-#: admin/systems/class_divListSystem.inc:221 admin/systems/system-list.xml:263
-#, fuzzy
-msgid "Trigger action"
-msgstr "切换信息"
-
-#: admin/systems/class_divListSystem.inc:227 admin/systems/system-list.xml:329
-#, fuzzy
-msgid "Schedule action"
-msgstr "计划更新"
-
-#: admin/systems/class_divListSystem.inc:234 admin/systems/system-list.xml:405
+#: admin/systems/serverService-list.xml:72 admin/systems/system-list.xml:404
 msgid "Remove"
 msgstr "删除"
 
-#: admin/systems/class_divListSystem.inc:237 admin/systems/system-list.xml:398
-#, fuzzy
-msgid "Activate systems"
-msgstr "编辑系统"
-
-#: admin/systems/class_divListSystem.inc:322
-msgid "edit"
-msgstr "编辑"
-
-#: admin/systems/class_divListSystem.inc:322
-msgid "Edit system"
-msgstr "编辑系统"
-
-#: admin/systems/class_divListSystem.inc:328
-msgid "delete"
-msgstr "删除"
-
-#: admin/systems/class_divListSystem.inc:328
-msgid "Delete system"
-msgstr "删除系统"
-
-#: admin/systems/class_divListSystem.inc:350
-msgid "Password"
-msgstr "口令"
-
-#: admin/systems/class_divListSystem.inc:350 admin/systems/password.tpl:38
-msgid "Set password"
-msgstr "设置口令"
-
-#: admin/systems/class_divListSystem.inc:359
-msgid "Create CD"
-msgstr "创建 CD"
-
-#: admin/systems/class_divListSystem.inc:360
-msgid "Create FAI CD"
-msgstr "创建 FAI CD"
-
-#: admin/systems/class_divListSystem.inc:407
-#: admin/systems/class_divListSystem.inc:408
-#, fuzzy, php-format
-msgid "Inherited from %s"
-msgstr "对象组"
-
-#: admin/systems/class_divListSystem.inc:423
-#: admin/systems/class_divListSystem.inc:424
-#: admin/systems/class_divListSystem.inc:425
-#: admin/systems/class_divListSystem.inc:426
-#: admin/systems/class_divListSystem.inc:427
-#: admin/systems/class_divListSystem.inc:428
-#: admin/systems/class_divListSystem.inc:429
-#: admin/systems/class_divListSystem.inc:430
-#: admin/systems/class_divListSystem.inc:431
-#, fuzzy, php-format
-msgid "Number of listed '%s'"
-msgstr "部门名称"
-
-#: admin/systems/class_divListSystem.inc:427
-#, fuzzy
-msgid "printers"
-msgstr "打印机"
-
-#: admin/systems/class_divListSystem.inc:428
-#, fuzzy
-msgid "network components"
-msgstr "其他网络组件"
-
-#: admin/systems/class_divListSystem.inc:429
-#, fuzzy
-msgid "new devices"
-msgstr "新设备"
-
-#: admin/systems/class_divListSystem.inc:430
-#, fuzzy
-msgid "windows workstations"
-msgstr "显示工作站"
-
-#: admin/systems/class_divListSystem.inc:431
-#, fuzzy
-msgid "departments"
-msgstr "提交部门"
-
-#: admin/systems/class_serverService.inc:27
-msgid "Stop"
-msgstr "停止"
-
+#: admin/systems/serverService-list.xml:83
+#: admin/systems/serverService-list.xml:117
 #: admin/systems/class_serverService.inc:28
 #, fuzzy
 msgid "Start"
 msgstr "启动"
 
+#: admin/systems/serverService-list.xml:90
+#: admin/systems/serverService-list.xml:125
+#: admin/systems/class_serverService.inc:27
+msgid "Stop"
+msgstr "停止"
+
+#: admin/systems/serverService-list.xml:97
+#: admin/systems/serverService-list.xml:133
 #: admin/systems/class_serverService.inc:29
 #, fuzzy
 msgid "Restart"
 msgstr "重试"
 
-#: admin/systems/class_serverService.inc:351
+#: admin/systems/serverService-list.xml:141
+#, fuzzy
+msgid "Edit service"
+msgstr "打印服务"
+
+#: admin/systems/serverService-list.xml:149
+#, fuzzy
+msgid "Remove service"
+msgstr "删除 DNS 服务"
+
+#: admin/systems/class_serverService.inc:298
+#, fuzzy
+msgid "Filter error"
+msgstr "终端服务器"
+
+#: admin/systems/class_serverService.inc:298
+msgid "The filter is incomplete!"
+msgstr ""
+
+#: admin/systems/class_serverService.inc:440
 #, fuzzy
 msgid "Information"
 msgstr "工作站"
 
-#: admin/systems/class_serverService.inc:351
+#: admin/systems/class_serverService.inc:440
 msgid "Cannot update service status until it has been saved!"
 msgstr ""
 
-#: admin/systems/class_serverService.inc:363
+#: admin/systems/class_serverService.inc:452
 #, fuzzy
 msgid "Cannot update service status!"
 msgstr "无法打开指定证书！"
@@ -594,103 +369,7 @@ msgstr "打印机名称"
 msgid "Component name"
 msgstr "常用名"
 
-#: admin/systems/class_divListSystemService.inc:38
-#: admin/systems/class_divListSystemService.inc:39
-#, fuzzy
-msgid "Installed services"
-msgstr "安装设备"
-
-#: admin/systems/class_divListSystemService.inc:42
-#, fuzzy
-msgid "Add, remove and configure the properties of system services here."
-msgstr ""
-"这个菜单允许您添加，删除和修改所选系统的属性。您只能添加已经启动过一次的系"
-"统。"
-
-#: admin/systems/class_divListSystemService.inc:50
-#: admin/systems/system-list.xml:170 admin/systems/class_servGeneric.inc:514
-#: admin/systems/class_componentGeneric.inc:318
-msgid "Name"
-msgstr "名称"
-
-#: admin/systems/class_divListSystemService.inc:62
-#, fuzzy
-msgid "Add service"
-msgstr "添加 DNS 服务"
-
-#: admin/systems/class_divListSystemService.inc:62
-#, fuzzy
-msgid "Add new service"
-msgstr "添加 DNS 服务"
-
-#: admin/systems/class_divListSystemService.inc:65
-#, fuzzy
-msgid "Start all"
-msgstr "启动"
-
-#: admin/systems/class_divListSystemService.inc:65
-#, fuzzy
-msgid "Start all services"
-msgstr "查看所有服务"
-
-#: admin/systems/class_divListSystemService.inc:67
-#: admin/systems/class_divListSystemService.inc:127
-#, fuzzy
-msgid "Stop service"
-msgstr "声音服务"
-
-#: admin/systems/class_divListSystemService.inc:67
-#, fuzzy
-msgid "Stop all services"
-msgstr "查看所有服务"
-
-#: admin/systems/class_divListSystemService.inc:69
-#: admin/systems/class_divListSystemService.inc:133
-#, fuzzy
-msgid "Restart service"
-msgstr "打印服务"
-
-#: admin/systems/class_divListSystemService.inc:69
-#, fuzzy
-msgid "Restart all services"
-msgstr "查看所有服务"
-
-#: admin/systems/class_divListSystemService.inc:99
-#, fuzzy
-msgid "Stopped"
-msgstr "停止"
-
-#: admin/systems/class_divListSystemService.inc:100
-#, fuzzy
-msgid "Started"
-msgstr "州/省"
-
-#: admin/systems/class_divListSystemService.inc:101
-#, fuzzy
-msgid "Restarting"
-msgstr "目标"
-
-#: admin/systems/class_divListSystemService.inc:102
-#, fuzzy
-msgid "User status"
-msgstr "用户设置"
-
-#: admin/systems/class_divListSystemService.inc:121
-#, fuzzy
-msgid "Start service"
-msgstr "扫描服务"
-
-#: admin/systems/class_divListSystemService.inc:141
-#, fuzzy
-msgid "Edit service"
-msgstr "打印服务"
-
-#: admin/systems/class_divListSystemService.inc:149
-#, fuzzy
-msgid "Remove service"
-msgstr "删除 DNS 服务"
-
-#: admin/systems/system-filter.tpl:3
+#: admin/systems/system-filter.tpl:3 admin/systems/serverService-filter.tpl:3
 #, fuzzy
 msgid "Filter"
 msgstr "过滤器"
@@ -730,6 +409,10 @@ msgstr "显示网络设备"
 msgid "Show incoming devices"
 msgstr "显示网络设备"
 
+#: admin/systems/system-filter.tpl:35
+msgid "Show OPSI based clients"
+msgstr ""
+
 #: admin/systems/.svn/tmp/tempfile.tmp:606
 #: admin/systems/.svn/tmp/tempfile.2.tmp:610
 msgid "Editing this type of object is not supported yet!"
@@ -752,7 +435,7 @@ msgstr "无法检测对象名称。"
 #: admin/systems/.svn/tmp/tempfile.tmp:1330
 #: admin/systems/.svn/tmp/tempfile.tmp:1644
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1334
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1648 admin/systems/system-list.xml:56
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1648 admin/systems/system-list.xml:55
 #: admin/systems/class_filterSYSTEMS.inc:23
 msgid "New terminal"
 msgstr "新终端"
@@ -760,7 +443,7 @@ msgstr "新终端"
 #: admin/systems/.svn/tmp/tempfile.tmp:1332
 #: admin/systems/.svn/tmp/tempfile.tmp:1645
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1336
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1649 admin/systems/system-list.xml:23
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1649 admin/systems/system-list.xml:22
 #: admin/systems/class_filterSYSTEMS.inc:20
 msgid "New workstation"
 msgstr "新工作站"
@@ -791,13 +474,25 @@ msgstr "工作站模板"
 msgid "Template"
 msgstr "模板"
 
+#: admin/systems/.svn/tmp/tempfile.tmp:1622
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1626
+#: admin/systems/system-list.xml:135 admin/systems/system-list.xml:234
+msgid "Phone"
+msgstr "电话"
+
 #: admin/systems/.svn/tmp/tempfile.tmp:1623
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1627
-#: admin/systems/system-list.xml:243
+#: admin/systems/system-list.xml:242
 #: admin/systems/class_componentGeneric.inc:315
 #, fuzzy
 msgid "Network device"
 msgstr "网络设备"
+
+#: admin/systems/.svn/tmp/tempfile.tmp:1624
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1628
+#: admin/systems/system-list.xml:127
+msgid "Printer"
+msgstr "打印机"
 
 #: admin/systems/.svn/tmp/tempfile.tmp:1626
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1630
@@ -805,20 +500,39 @@ msgstr "网络设备"
 msgid "Windows workstation"
 msgstr "显示工作站"
 
+#: admin/systems/.svn/tmp/tempfile.tmp:1628
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1632
+#: admin/systems/system-list.xml:111 admin/systems/system-list.xml:210
+msgid "Workstation"
+msgstr "工作站"
+
+#: admin/systems/.svn/tmp/tempfile.tmp:1629
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1633
+#: admin/systems/system-list.xml:103 admin/systems/system-list.xml:202
+#: admin/systems/class_servGeneric.inc:511
+msgid "Server"
+msgstr "服务器"
+
+#: admin/systems/.svn/tmp/tempfile.tmp:1630
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1634
+#: admin/systems/system-list.xml:119 admin/systems/system-list.xml:218
+msgid "Terminal"
+msgstr "终端"
+
 #: admin/systems/.svn/tmp/tempfile.tmp:1632
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1636 admin/systems/system-list.xml:39
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1636 admin/systems/system-list.xml:38
 #, fuzzy
 msgid "Locked workstation"
 msgstr "新工作站"
 
 #: admin/systems/.svn/tmp/tempfile.tmp:1633
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1637 admin/systems/system-list.xml:31
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1637 admin/systems/system-list.xml:30
 #, fuzzy
 msgid "Locked server"
 msgstr "LDAP 服务器"
 
 #: admin/systems/.svn/tmp/tempfile.tmp:1634
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1638 admin/systems/system-list.xml:47
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1638 admin/systems/system-list.xml:46
 #, fuzzy
 msgid "Locked terminal"
 msgstr "新终端"
@@ -858,6 +572,13 @@ msgstr "服务器"
 #, fuzzy
 msgid "New system from incoming"
 msgstr "新识别的系统"
+
+#: admin/systems/.svn/tmp/tempfile.tmp:1649
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1653
+#: admin/systems/system-list.xml:250
+#, fuzzy
+msgid "Opsi client"
+msgstr "瘦客户机"
 
 #: admin/systems/network.tpl:1
 msgid "Network\tsettings"
@@ -916,103 +637,122 @@ msgstr "TTL"
 msgid "Dns records"
 msgstr "Dns 记录"
 
-#: admin/systems/system-list.xml:15
+#: admin/systems/system-list.xml:14
 #, fuzzy
 msgid "Opsi host"
 msgstr "瘦客户机"
 
-#: admin/systems/system-list.xml:64 admin/systems/class_filterSYSTEMS.inc:28
+#: admin/systems/system-list.xml:63 admin/systems/class_filterSYSTEMS.inc:28
 #, fuzzy
 msgid "New unknown device"
 msgstr "未知"
 
-#: admin/systems/system-list.xml:72 admin/systems/class_filterSYSTEMS.inc:31
+#: admin/systems/system-list.xml:71 admin/systems/class_filterSYSTEMS.inc:31
 #, fuzzy
 msgid "New device"
 msgstr "新设备"
 
-#: admin/systems/system-list.xml:80
+#: admin/systems/system-list.xml:79
 #, fuzzy
 msgid "Workstation template"
 msgstr "工作站模板"
 
-#: admin/systems/system-list.xml:88
+#: admin/systems/system-list.xml:87
 #, fuzzy
 msgid "Terminal template"
 msgstr "终端模板"
 
-#: admin/systems/system-list.xml:96
+#: admin/systems/system-list.xml:95
 msgid "Winstation"
 msgstr "Windows 工作站"
 
-#: admin/systems/system-list.xml:178 admin/systems/class_servGeneric.inc:515
-#: admin/systems/server.tpl:14 admin/systems/class_componentGeneric.inc:320
-#: admin/systems/component.tpl:35
-msgid "Description"
-msgstr "描述"
+#: admin/systems/system-list.xml:143
+#, fuzzy
+msgid "Component"
+msgstr "新组件"
 
-#: admin/systems/system-list.xml:227
+#: admin/systems/system-list.xml:169 admin/systems/class_servGeneric.inc:514
+#: admin/systems/class_componentGeneric.inc:318
+msgid "Name"
+msgstr "名称"
+
+#: admin/systems/system-list.xml:226
 #, fuzzy
 msgid "Network printer"
 msgstr "显示网络打印机"
 
-#: admin/systems/system-list.xml:270
+#: admin/systems/system-list.xml:262
+#, fuzzy
+msgid "Trigger action"
+msgstr "切换信息"
+
+#: admin/systems/system-list.xml:269
 msgid "Halt "
 msgstr ""
 
-#: admin/systems/system-list.xml:278 admin/systems/system-list.xml:344
+#: admin/systems/system-list.xml:277 admin/systems/system-list.xml:343
 #: admin/systems/class_servGeneric.inc:227
 msgid "Reboot"
 msgstr "重启"
 
-#: admin/systems/system-list.xml:286 admin/systems/system-list.xml:352
+#: admin/systems/system-list.xml:285 admin/systems/system-list.xml:351
 #, fuzzy
 msgid "Wakeup"
 msgstr "唤醒"
 
-#: admin/systems/system-list.xml:294 admin/systems/system-list.xml:360
+#: admin/systems/system-list.xml:293 admin/systems/system-list.xml:359
 #: admin/systems/system-list.tpl:13
 msgid "Update"
 msgstr ""
 
-#: admin/systems/system-list.xml:302 admin/systems/system-list.xml:368
+#: admin/systems/system-list.xml:301 admin/systems/system-list.xml:367
 #, fuzzy
 msgid "Lock"
 msgstr "锁定"
 
-#: admin/systems/system-list.xml:310 admin/systems/system-list.xml:376
+#: admin/systems/system-list.xml:309 admin/systems/system-list.xml:375
 #, fuzzy
 msgid "Activate"
 msgstr "活动"
 
-#: admin/systems/system-list.xml:318 admin/systems/system-list.xml:384
+#: admin/systems/system-list.xml:317 admin/systems/system-list.xml:383
 #: admin/systems/class_servGeneric.inc:229
 #: admin/systems/class_servGeneric.inc:236
 msgid "Reinstall"
 msgstr "重新安装"
 
-#: admin/systems/system-list.xml:336
+#: admin/systems/system-list.xml:328
+#, fuzzy
+msgid "Schedule action"
+msgstr "计划更新"
+
+#: admin/systems/system-list.xml:335
 msgid "Halt"
 msgstr ""
 
-#: admin/systems/system-list.xml:433
+#: admin/systems/system-list.xml:397
+#, fuzzy
+msgid "Activate systems"
+msgstr "编辑系统"
+
+#: admin/systems/system-list.xml:432
 msgid "Change password"
 msgstr "修改口令"
 
-#: admin/systems/system-list.xml:444
+#: admin/systems/system-list.xml:443
 #, fuzzy
 msgid "Create ISO"
 msgstr "创建"
 
-#: admin/systems/system-list.xml:456
+#: admin/systems/system-list.xml:455
 #, fuzzy
 msgid "Edit role"
 msgstr "编辑宏"
 
-#: admin/systems/system-list.xml:469
+#: admin/systems/system-list.xml:468
 #, fuzzy
-msgid "Remove role"
-msgstr "成员对象"
+msgid "Remove system"
+msgstr "删除图片"
 
 #: admin/systems/password.tpl:3
 msgid ""
@@ -1043,6 +783,10 @@ msgstr "重复新口令"
 #, fuzzy
 msgid "Password strength"
 msgstr "口令存储"
+
+#: admin/systems/password.tpl:38
+msgid "Set password"
+msgstr "设置口令"
 
 #: admin/systems/class_servGeneric.inc:82
 msgid "Activated"
@@ -1120,6 +864,12 @@ msgstr "通用配置"
 msgid "Server generic"
 msgstr "服务器名称"
 
+#: admin/systems/class_servGeneric.inc:516 admin/systems/system-list.tpl:13
+#: admin/systems/server.tpl:22 admin/systems/class_componentGeneric.inc:319
+#: admin/systems/component.tpl:17
+msgid "Base"
+msgstr "位置"
+
 #: admin/systems/class_servGeneric.inc:518
 #, fuzzy
 msgid "Goto mode"
@@ -1135,6 +885,10 @@ msgstr "设置口令"
 #, fuzzy
 msgid "Action flag"
 msgstr "行动"
+
+#: admin/systems/system-list.tpl:13
+msgid "Submit"
+msgstr "提交"
 
 #: admin/systems/server.tpl:26
 #, fuzzy
@@ -1264,6 +1018,198 @@ msgstr "设备名称"
 #, fuzzy
 msgid "Choose subtree to place component in"
 msgstr "选择来放置组的子树"
+
+#, fuzzy
+#~ msgid "Select all"
+#~ msgstr "选择"
+
+#, fuzzy
+#~ msgid "Department"
+#~ msgstr "系统 / 部门"
+
+#, fuzzy
+#~ msgid "Release"
+#~ msgstr "删除"
+
+#, fuzzy
+#~ msgid "servers"
+#~ msgstr "服务器"
+
+#, fuzzy
+#~ msgid "Show %s"
+#~ msgstr "显示电话"
+
+#, fuzzy
+#~ msgid "Linux terminals"
+#~ msgstr "显示终端"
+
+#, fuzzy
+#~ msgid "terminals"
+#~ msgstr "终端"
+
+#, fuzzy
+#~ msgid "Linux workstations"
+#~ msgstr "显示工作站"
+
+#, fuzzy
+#~ msgid "workstations"
+#~ msgstr "工作站"
+
+#, fuzzy
+#~ msgid "MicroSoft Windows based workstations"
+#~ msgstr "选择显示基于 Microsoft Windows 工作站"
+
+#, fuzzy
+#~ msgid "windows based workstations"
+#~ msgstr "显示 Windows 工作站"
+
+#, fuzzy
+#~ msgid "Display objects of type '%s'."
+#~ msgstr "选择要添加的对象"
+
+#, fuzzy
+#~ msgid "OPSI installed client"
+#~ msgstr "安装设备"
+
+#, fuzzy
+#~ msgid "network printers"
+#~ msgstr "显示网络打印机"
+
+#, fuzzy
+#~ msgid "VoIP phones"
+#~ msgstr "显示电话"
+
+#, fuzzy
+#~ msgid "phones"
+#~ msgstr "电话"
+
+#, fuzzy
+#~ msgid "network devices"
+#~ msgstr "网络设备"
+
+#~ msgid "Display systems matching"
+#~ msgstr "显示匹配的系统"
+
+#~ msgid "Display systems of user"
+#~ msgstr "显示用户系统"
+
+#~ msgid "Submit department"
+#~ msgstr "提交部门"
+
+#~ msgid "edit"
+#~ msgstr "编辑"
+
+#~ msgid "Edit system"
+#~ msgstr "编辑系统"
+
+#~ msgid "delete"
+#~ msgstr "删除"
+
+#~ msgid "Delete system"
+#~ msgstr "删除系统"
+
+#~ msgid "Password"
+#~ msgstr "口令"
+
+#~ msgid "Create CD"
+#~ msgstr "创建 CD"
+
+#~ msgid "Create FAI CD"
+#~ msgstr "创建 FAI CD"
+
+#, fuzzy
+#~ msgid "Inherited from %s"
+#~ msgstr "对象组"
+
+#, fuzzy
+#~ msgid "Number of listed '%s'"
+#~ msgstr "部门名称"
+
+#, fuzzy
+#~ msgid "printers"
+#~ msgstr "打印机"
+
+#, fuzzy
+#~ msgid "network components"
+#~ msgstr "其他网络组件"
+
+#, fuzzy
+#~ msgid "new devices"
+#~ msgstr "新设备"
+
+#, fuzzy
+#~ msgid "windows workstations"
+#~ msgstr "显示工作站"
+
+#, fuzzy
+#~ msgid "departments"
+#~ msgstr "提交部门"
+
+#, fuzzy
+#~ msgid "Installed services"
+#~ msgstr "安装设备"
+
+#, fuzzy
+#~ msgid "Add, remove and configure the properties of system services here."
+#~ msgstr ""
+#~ "这个菜单允许您添加，删除和修改所选系统的属性。您只能添加已经启动过一次的系"
+#~ "统。"
+
+#, fuzzy
+#~ msgid "Add service"
+#~ msgstr "添加 DNS 服务"
+
+#, fuzzy
+#~ msgid "Add new service"
+#~ msgstr "添加 DNS 服务"
+
+#, fuzzy
+#~ msgid "Start all"
+#~ msgstr "启动"
+
+#, fuzzy
+#~ msgid "Start all services"
+#~ msgstr "查看所有服务"
+
+#, fuzzy
+#~ msgid "Stop service"
+#~ msgstr "声音服务"
+
+#, fuzzy
+#~ msgid "Stop all services"
+#~ msgstr "查看所有服务"
+
+#, fuzzy
+#~ msgid "Restart service"
+#~ msgstr "打印服务"
+
+#, fuzzy
+#~ msgid "Restart all services"
+#~ msgstr "查看所有服务"
+
+#, fuzzy
+#~ msgid "Stopped"
+#~ msgstr "停止"
+
+#, fuzzy
+#~ msgid "Started"
+#~ msgstr "州/省"
+
+#, fuzzy
+#~ msgid "Restarting"
+#~ msgstr "目标"
+
+#, fuzzy
+#~ msgid "User status"
+#~ msgstr "用户设置"
+
+#, fuzzy
+#~ msgid "Start service"
+#~ msgstr "扫描服务"
+
+#, fuzzy
+#~ msgid "Remove role"
+#~ msgstr "成员对象"
 
 #, fuzzy
 #~ msgid ""

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-19 20:51+0100\n"
+"POT-Creation-Date: 2010-01-27 15:14+0100\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -37,13 +37,11 @@ msgstr ""
 "нажмите <i>Отмена</i>."
 
 #: admin/systems/class_systemManagement.inc:60
-#: admin/systems/class_divListSystem.inc:88
 msgid "Systems"
 msgstr "Системы"
 
 #: admin/systems/class_systemManagement.inc:61
-#: admin/systems/class_divListSystem.inc:63
-#: admin/systems/class_divListSystem.inc:64 admin/systems/system-list.xml:11
+#: admin/systems/system-list.xml:10
 msgid "List of systems"
 msgstr "Список систем"
 
@@ -74,9 +72,9 @@ msgstr "Вам не разрешено менять пароль."
 #: admin/systems/class_systemManagement.inc:683
 #: admin/systems/class_systemManagement.inc:802
 #: admin/systems/class_systemManagement.inc:817
-#: admin/systems/class_serverService.inc:186
-#: admin/systems/class_serverService.inc:236
-#: admin/systems/class_serverService.inc:363
+#: admin/systems/class_serverService.inc:196
+#: admin/systems/class_serverService.inc:239
+#: admin/systems/class_serverService.inc:452
 #: admin/systems/.svn/tmp/tempfile.tmp:365
 #: admin/systems/.svn/tmp/tempfile.tmp:480
 #: admin/systems/.svn/tmp/tempfile.tmp:517
@@ -262,321 +260,89 @@ msgstr "Указанное имя уже используется."
 msgid "Continue"
 msgstr "Продолжить"
 
-#: admin/systems/class_divListSystem.inc:82
+#: admin/systems/serverService-list.xml:10
 #, fuzzy
-msgid "Select all"
-msgstr "Удалить"
+msgid "List of services"
+msgstr "Список пользователей"
 
-#: admin/systems/class_divListSystem.inc:88
+#: admin/systems/serverService-list.xml:14
+#: admin/systems/serverService-list.xml:60
 #, fuzzy
-msgid "Department"
-msgstr "Подразделение"
+msgid "Service"
+msgstr "Сервисы"
 
-#: admin/systems/class_divListSystem.inc:92
-#, fuzzy
-msgid "Release"
-msgstr "Удалить"
+#: admin/systems/serverService-list.xml:27
+msgid "!"
+msgstr ""
 
-#: admin/systems/class_divListSystem.inc:95
-#: admin/systems/class_divListSystem.inc:181
-#: admin/systems/class_divListSystemService.inc:51
-#: admin/systems/system-list.xml:186
+#: admin/systems/serverService-list.xml:35 admin/systems/system-list.xml:177
+#: admin/systems/class_servGeneric.inc:515 admin/systems/server.tpl:14
+#: admin/systems/class_componentGeneric.inc:320 admin/systems/component.tpl:35
+msgid "Description"
+msgstr "Описание"
+
+#: admin/systems/serverService-list.xml:43 admin/systems/system-list.xml:185
 msgid "Actions"
 msgstr "Действия"
 
-#: admin/systems/class_divListSystem.inc:101
-#: admin/systems/class_divListSystem.inc:102
-#: admin/systems/class_divListSystem.inc:423
-#, fuzzy
-msgid "servers"
-msgstr "Сервер"
-
-#: admin/systems/class_divListSystem.inc:102
-#: admin/systems/class_divListSystem.inc:107
-#: admin/systems/class_divListSystem.inc:112
-#: admin/systems/class_divListSystem.inc:117
-#: admin/systems/class_divListSystem.inc:128
-#: admin/systems/class_divListSystem.inc:133
-#: admin/systems/class_divListSystem.inc:138
-#, fuzzy, php-format
-msgid "Show %s"
-msgstr "Показать телефоны"
-
-#: admin/systems/class_divListSystem.inc:106
-#, fuzzy
-msgid "Linux terminals"
-msgstr "Показать терминалы"
-
-#: admin/systems/class_divListSystem.inc:107
-#: admin/systems/class_divListSystem.inc:425
-#, fuzzy
-msgid "terminals"
-msgstr "Терминалы"
-
-#: admin/systems/class_divListSystem.inc:111
-#, fuzzy
-msgid "Linux workstations"
-msgstr "Показать рабочие станции"
-
-#: admin/systems/class_divListSystem.inc:112
-#: admin/systems/class_divListSystem.inc:424
-#, fuzzy
-msgid "workstations"
-msgstr "Рабочая станция"
-
-#: admin/systems/class_divListSystem.inc:116
-#, fuzzy
-msgid "MicroSoft Windows based workstations"
-msgstr "Посмотреть рабочие станции с MicroSoft Windows"
-
-#: admin/systems/class_divListSystem.inc:117
-#, fuzzy
-msgid "windows based workstations"
-msgstr "Показать рабочие станции с windows"
-
-#: admin/systems/class_divListSystem.inc:121
-#, fuzzy, php-format
-msgid "Display objects of type '%s'."
-msgstr "Выбрать объекты для добавления"
-
-#: admin/systems/class_divListSystem.inc:122
-#, fuzzy
-msgid "OPSI installed client"
-msgstr "Клиентские устройства"
-
-#: admin/systems/class_divListSystem.inc:122
-#: admin/systems/system-filter.tpl:35
-msgid "Show OPSI based clients"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:127
-#: admin/systems/class_divListSystem.inc:128
-#, fuzzy
-msgid "network printers"
-msgstr "Показать сетевые принтеры"
-
-#: admin/systems/class_divListSystem.inc:132
-#, fuzzy
-msgid "VoIP phones"
-msgstr "Показать телефоны"
-
-#: admin/systems/class_divListSystem.inc:133
-#: admin/systems/class_divListSystem.inc:426
-#, fuzzy
-msgid "phones"
-msgstr "Телефон"
-
-#: admin/systems/class_divListSystem.inc:137
-#: admin/systems/class_divListSystem.inc:138
-#, fuzzy
-msgid "network devices"
-msgstr "Сетевые устройства"
-
-#: admin/systems/class_divListSystem.inc:146
-msgid "Display systems matching"
-msgstr "Показать подходяшие системы"
-
-#: admin/systems/class_divListSystem.inc:147
-#, fuzzy
-msgid "Display systems of user"
-msgstr "Показать адреса пользователя"
-
-#: admin/systems/class_divListSystem.inc:176
-#: admin/systems/class_servGeneric.inc:516 admin/systems/system-list.tpl:13
-#: admin/systems/server.tpl:22 admin/systems/class_componentGeneric.inc:319
-#: admin/systems/component.tpl:17
-msgid "Base"
-msgstr "Ветка"
-
-#: admin/systems/class_divListSystem.inc:178
-#, fuzzy
-msgid "Submit department"
-msgstr "Показать подразделения"
-
-#: admin/systems/class_divListSystem.inc:178 admin/systems/system-list.tpl:13
-msgid "Submit"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:183 admin/systems/system-list.xml:197
+#: admin/systems/serverService-list.xml:54 admin/systems/system-list.xml:196
 msgid "Create"
 msgstr "Создать"
 
-#: admin/systems/class_divListSystem.inc:187
-#: admin/systems/.svn/tmp/tempfile.tmp:1630
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1634
-#: admin/systems/system-list.xml:120 admin/systems/system-list.xml:219
-#, fuzzy
-msgid "Terminal"
-msgstr "Терминалы"
-
-#: admin/systems/class_divListSystem.inc:191
-#: admin/systems/.svn/tmp/tempfile.tmp:1628
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1632
-#: admin/systems/system-list.xml:112 admin/systems/system-list.xml:211
-msgid "Workstation"
-msgstr "Рабочая станция"
-
-#: admin/systems/class_divListSystem.inc:195
-#: admin/systems/.svn/tmp/tempfile.tmp:1629
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1633
-#: admin/systems/system-list.xml:104 admin/systems/system-list.xml:203
-#: admin/systems/class_servGeneric.inc:511
-msgid "Server"
-msgstr "Сервер"
-
-#: admin/systems/class_divListSystem.inc:199
-#: admin/systems/.svn/tmp/tempfile.tmp:1622
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1626
-#: admin/systems/system-list.xml:136 admin/systems/system-list.xml:235
-msgid "Phone"
-msgstr "Телефон"
-
-#: admin/systems/class_divListSystem.inc:203
-#: admin/systems/.svn/tmp/tempfile.tmp:1624
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1628
-#: admin/systems/system-list.xml:128
-msgid "Printer"
-msgstr "Принтер"
-
-#: admin/systems/class_divListSystem.inc:207 admin/systems/system-list.xml:144
-#, fuzzy
-msgid "Component"
-msgstr "Прочие сетевые компоненты"
-
-#: admin/systems/class_divListSystem.inc:214
-#: admin/systems/.svn/tmp/tempfile.tmp:1649
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1653
-#: admin/systems/system-list.xml:251
-#, fuzzy
-msgid "Opsi client"
-msgstr "Тонкий клиент"
-
-#: admin/systems/class_divListSystem.inc:221 admin/systems/system-list.xml:263
-#, fuzzy
-msgid "Trigger action"
-msgstr "Личная информация"
-
-#: admin/systems/class_divListSystem.inc:227 admin/systems/system-list.xml:329
-#, fuzzy
-msgid "Schedule action"
-msgstr "Выберите режим терминала"
-
-#: admin/systems/class_divListSystem.inc:234 admin/systems/system-list.xml:405
+#: admin/systems/serverService-list.xml:72 admin/systems/system-list.xml:404
 msgid "Remove"
 msgstr "Удалить"
 
-#: admin/systems/class_divListSystem.inc:237 admin/systems/system-list.xml:398
-#, fuzzy
-msgid "Activate systems"
-msgstr "Список систем"
-
-#: admin/systems/class_divListSystem.inc:322
-#, fuzzy
-msgid "edit"
-msgstr "Изменить"
-
-#: admin/systems/class_divListSystem.inc:322
-#, fuzzy
-msgid "Edit system"
-msgstr "Список систем"
-
-#: admin/systems/class_divListSystem.inc:328
-#, fuzzy
-msgid "delete"
-msgstr "Удалить"
-
-#: admin/systems/class_divListSystem.inc:328
-#, fuzzy
-msgid "Delete system"
-msgstr "Удалить"
-
-#: admin/systems/class_divListSystem.inc:350
-msgid "Password"
-msgstr "Пароль"
-
-#: admin/systems/class_divListSystem.inc:350 admin/systems/password.tpl:38
-msgid "Set password"
-msgstr "Изменить пароль"
-
-#: admin/systems/class_divListSystem.inc:359
-#, fuzzy
-msgid "Create CD"
-msgstr "Создать"
-
-#: admin/systems/class_divListSystem.inc:360
-#, fuzzy
-msgid "Create FAI CD"
-msgstr "Объект группы"
-
-#: admin/systems/class_divListSystem.inc:407
-#: admin/systems/class_divListSystem.inc:408
-#, fuzzy, php-format
-msgid "Inherited from %s"
-msgstr "Объединения"
-
-#: admin/systems/class_divListSystem.inc:423
-#: admin/systems/class_divListSystem.inc:424
-#: admin/systems/class_divListSystem.inc:425
-#: admin/systems/class_divListSystem.inc:426
-#: admin/systems/class_divListSystem.inc:427
-#: admin/systems/class_divListSystem.inc:428
-#: admin/systems/class_divListSystem.inc:429
-#: admin/systems/class_divListSystem.inc:430
-#: admin/systems/class_divListSystem.inc:431
-#, fuzzy, php-format
-msgid "Number of listed '%s'"
-msgstr "Подразделение"
-
-#: admin/systems/class_divListSystem.inc:427
-#, fuzzy
-msgid "printers"
-msgstr "Принтер"
-
-#: admin/systems/class_divListSystem.inc:428
-#, fuzzy
-msgid "network components"
-msgstr "Прочие сетевые компоненты"
-
-#: admin/systems/class_divListSystem.inc:429
-#, fuzzy
-msgid "new devices"
-msgstr "Сетевые устройства"
-
-#: admin/systems/class_divListSystem.inc:430
-#, fuzzy
-msgid "windows workstations"
-msgstr "Показать рабочие станции"
-
-#: admin/systems/class_divListSystem.inc:431
-#, fuzzy
-msgid "departments"
-msgstr "Показать подразделения"
-
-#: admin/systems/class_serverService.inc:27
-#, fuzzy
-msgid "Stop"
-msgstr "Отношение"
-
+#: admin/systems/serverService-list.xml:83
+#: admin/systems/serverService-list.xml:117
 #: admin/systems/class_serverService.inc:28
 #, fuzzy
 msgid "Start"
 msgstr "Запуск"
 
+#: admin/systems/serverService-list.xml:90
+#: admin/systems/serverService-list.xml:125
+#: admin/systems/class_serverService.inc:27
+#, fuzzy
+msgid "Stop"
+msgstr "Отношение"
+
+#: admin/systems/serverService-list.xml:97
+#: admin/systems/serverService-list.xml:133
 #: admin/systems/class_serverService.inc:29
 #, fuzzy
 msgid "Restart"
 msgstr "Повторить"
 
-#: admin/systems/class_serverService.inc:351
+#: admin/systems/serverService-list.xml:141
+#, fuzzy
+msgid "Edit service"
+msgstr "Служба печати"
+
+#: admin/systems/serverService-list.xml:149
+#, fuzzy
+msgid "Remove service"
+msgstr "Удалить сервис DNS"
+
+#: admin/systems/class_serverService.inc:298
+#, fuzzy
+msgid "Filter error"
+msgstr "Терминал-сервер"
+
+#: admin/systems/class_serverService.inc:298
+msgid "The filter is incomplete!"
+msgstr ""
+
+#: admin/systems/class_serverService.inc:440
 #, fuzzy
 msgid "Information"
 msgstr "Рабочая станция"
 
-#: admin/systems/class_serverService.inc:351
+#: admin/systems/class_serverService.inc:440
 msgid "Cannot update service status until it has been saved!"
 msgstr ""
 
-#: admin/systems/class_serverService.inc:363
+#: admin/systems/class_serverService.inc:452
 #, fuzzy
 msgid "Cannot update service status!"
 msgstr "Невозможно выбрать базу данных!"
@@ -608,104 +374,7 @@ msgstr "Имя принтера"
 msgid "Component name"
 msgstr "Местоположение"
 
-#: admin/systems/class_divListSystemService.inc:38
-#: admin/systems/class_divListSystemService.inc:39
-#, fuzzy
-msgid "Installed services"
-msgstr "Клиентские устройства"
-
-#: admin/systems/class_divListSystemService.inc:42
-#, fuzzy
-msgid "Add, remove and configure the properties of system services here."
-msgstr ""
-"С помощью этого меню вы можете добавлять, изменять и удалять свойства "
-"отдельных систем. Вы можете только добавлять системы которые однажды уже "
-"были запущены."
-
-#: admin/systems/class_divListSystemService.inc:50
-#: admin/systems/system-list.xml:170 admin/systems/class_servGeneric.inc:514
-#: admin/systems/class_componentGeneric.inc:318
-msgid "Name"
-msgstr "Фамилия"
-
-#: admin/systems/class_divListSystemService.inc:62
-#, fuzzy
-msgid "Add service"
-msgstr "Добавить сервис DNS"
-
-#: admin/systems/class_divListSystemService.inc:62
-#, fuzzy
-msgid "Add new service"
-msgstr "Добавить сервис DNS"
-
-#: admin/systems/class_divListSystemService.inc:65
-#, fuzzy
-msgid "Start all"
-msgstr "Запуск"
-
-#: admin/systems/class_divListSystemService.inc:65
-#, fuzzy
-msgid "Start all services"
-msgstr "Предоставлять службу сканирования"
-
-#: admin/systems/class_divListSystemService.inc:67
-#: admin/systems/class_divListSystemService.inc:127
-#, fuzzy
-msgid "Stop service"
-msgstr "Звук"
-
-#: admin/systems/class_divListSystemService.inc:67
-#, fuzzy
-msgid "Stop all services"
-msgstr "Предоставлять службу сканирования"
-
-#: admin/systems/class_divListSystemService.inc:69
-#: admin/systems/class_divListSystemService.inc:133
-#, fuzzy
-msgid "Restart service"
-msgstr "Служба печати"
-
-#: admin/systems/class_divListSystemService.inc:69
-#, fuzzy
-msgid "Restart all services"
-msgstr "Предоставлять службу сканирования"
-
-#: admin/systems/class_divListSystemService.inc:99
-#, fuzzy
-msgid "Stopped"
-msgstr "Пол"
-
-#: admin/systems/class_divListSystemService.inc:100
-#, fuzzy
-msgid "Started"
-msgstr "Адм. единица"
-
-#: admin/systems/class_divListSystemService.inc:101
-#, fuzzy
-msgid "Restarting"
-msgstr "Назначение"
-
-#: admin/systems/class_divListSystemService.inc:102
-#, fuzzy
-msgid "User status"
-msgstr "Почтовые настройки пользователя"
-
-#: admin/systems/class_divListSystemService.inc:121
-#, fuzzy
-msgid "Start service"
-msgstr "Сканер"
-
-#: admin/systems/class_divListSystemService.inc:141
-#, fuzzy
-msgid "Edit service"
-msgstr "Служба печати"
-
-#: admin/systems/class_divListSystemService.inc:149
-#, fuzzy
-msgid "Remove service"
-msgstr "Удалить сервис DNS"
-
-#: admin/systems/system-filter.tpl:3
+#: admin/systems/system-filter.tpl:3 admin/systems/serverService-filter.tpl:3
 #, fuzzy
 msgid "Filter"
 msgstr "Фильтры"
@@ -746,6 +415,10 @@ msgstr "Сетевые устройства"
 msgid "Show incoming devices"
 msgstr "Сетевые устройства"
 
+#: admin/systems/system-filter.tpl:35
+msgid "Show OPSI based clients"
+msgstr ""
+
 #: admin/systems/.svn/tmp/tempfile.tmp:606
 #: admin/systems/.svn/tmp/tempfile.2.tmp:610
 msgid "Editing this type of object is not supported yet!"
@@ -768,7 +441,7 @@ msgstr "Сменить пароль"
 #: admin/systems/.svn/tmp/tempfile.tmp:1330
 #: admin/systems/.svn/tmp/tempfile.tmp:1644
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1334
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1648 admin/systems/system-list.xml:56
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1648 admin/systems/system-list.xml:55
 #: admin/systems/class_filterSYSTEMS.inc:23
 msgid "New terminal"
 msgstr "Создать терминал"
@@ -776,7 +449,7 @@ msgstr "Создать терминал"
 #: admin/systems/.svn/tmp/tempfile.tmp:1332
 #: admin/systems/.svn/tmp/tempfile.tmp:1645
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1336
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1649 admin/systems/system-list.xml:23
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1649 admin/systems/system-list.xml:22
 #: admin/systems/class_filterSYSTEMS.inc:20
 msgid "New workstation"
 msgstr "Новая рабочая станция"
@@ -809,13 +482,25 @@ msgstr "Шаблон рабочей станции для"
 msgid "Template"
 msgstr "Шаблон"
 
+#: admin/systems/.svn/tmp/tempfile.tmp:1622
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1626
+#: admin/systems/system-list.xml:135 admin/systems/system-list.xml:234
+msgid "Phone"
+msgstr "Телефон"
+
 #: admin/systems/.svn/tmp/tempfile.tmp:1623
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1627
-#: admin/systems/system-list.xml:243
+#: admin/systems/system-list.xml:242
 #: admin/systems/class_componentGeneric.inc:315
 #, fuzzy
 msgid "Network device"
 msgstr "Сетевые устройства"
+
+#: admin/systems/.svn/tmp/tempfile.tmp:1624
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1628
+#: admin/systems/system-list.xml:127
+msgid "Printer"
+msgstr "Принтер"
 
 #: admin/systems/.svn/tmp/tempfile.tmp:1626
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1630
@@ -823,20 +508,40 @@ msgstr "Сетевые устройства"
 msgid "Windows workstation"
 msgstr "Показать рабочие станции"
 
+#: admin/systems/.svn/tmp/tempfile.tmp:1628
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1632
+#: admin/systems/system-list.xml:111 admin/systems/system-list.xml:210
+msgid "Workstation"
+msgstr "Рабочая станция"
+
+#: admin/systems/.svn/tmp/tempfile.tmp:1629
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1633
+#: admin/systems/system-list.xml:103 admin/systems/system-list.xml:202
+#: admin/systems/class_servGeneric.inc:511
+msgid "Server"
+msgstr "Сервер"
+
+#: admin/systems/.svn/tmp/tempfile.tmp:1630
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1634
+#: admin/systems/system-list.xml:119 admin/systems/system-list.xml:218
+#, fuzzy
+msgid "Terminal"
+msgstr "Терминалы"
+
 #: admin/systems/.svn/tmp/tempfile.tmp:1632
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1636 admin/systems/system-list.xml:39
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1636 admin/systems/system-list.xml:38
 #, fuzzy
 msgid "Locked workstation"
 msgstr "Новая рабочая станция"
 
 #: admin/systems/.svn/tmp/tempfile.tmp:1633
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1637 admin/systems/system-list.xml:31
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1637 admin/systems/system-list.xml:30
 #, fuzzy
 msgid "Locked server"
 msgstr "Сервер подкачки"
 
 #: admin/systems/.svn/tmp/tempfile.tmp:1634
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1638 admin/systems/system-list.xml:47
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1638 admin/systems/system-list.xml:46
 #, fuzzy
 msgid "Locked terminal"
 msgstr "Создать терминал"
@@ -876,6 +581,13 @@ msgstr "Серверы"
 #, fuzzy
 msgid "New system from incoming"
 msgstr "Системная информация"
+
+#: admin/systems/.svn/tmp/tempfile.tmp:1649
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1653
+#: admin/systems/system-list.xml:250
+#, fuzzy
+msgid "Opsi client"
+msgstr "Тонкий клиент"
 
 #: admin/systems/network.tpl:1
 #, fuzzy
@@ -939,103 +651,122 @@ msgstr ""
 msgid "Dns records"
 msgstr "Каталог"
 
-#: admin/systems/system-list.xml:15
+#: admin/systems/system-list.xml:14
 #, fuzzy
 msgid "Opsi host"
 msgstr "Тонкий клиент"
 
-#: admin/systems/system-list.xml:64 admin/systems/class_filterSYSTEMS.inc:28
+#: admin/systems/system-list.xml:63 admin/systems/class_filterSYSTEMS.inc:28
 #, fuzzy
 msgid "New unknown device"
 msgstr "состояние неизвестно"
 
-#: admin/systems/system-list.xml:72 admin/systems/class_filterSYSTEMS.inc:31
+#: admin/systems/system-list.xml:71 admin/systems/class_filterSYSTEMS.inc:31
 #, fuzzy
 msgid "New device"
 msgstr "Сетевые устройства"
 
-#: admin/systems/system-list.xml:80
+#: admin/systems/system-list.xml:79
 #, fuzzy
 msgid "Workstation template"
 msgstr "Шаблон рабочей станции для"
 
-#: admin/systems/system-list.xml:88
+#: admin/systems/system-list.xml:87
 #, fuzzy
 msgid "Terminal template"
 msgstr "Шаблон терминала"
 
-#: admin/systems/system-list.xml:96
+#: admin/systems/system-list.xml:95
 #, fuzzy
 msgid "Winstation"
 msgstr "Рабочая станция"
 
-#: admin/systems/system-list.xml:178 admin/systems/class_servGeneric.inc:515
-#: admin/systems/server.tpl:14 admin/systems/class_componentGeneric.inc:320
-#: admin/systems/component.tpl:35
-msgid "Description"
-msgstr "Описание"
+#: admin/systems/system-list.xml:143
+#, fuzzy
+msgid "Component"
+msgstr "Прочие сетевые компоненты"
 
-#: admin/systems/system-list.xml:227
+#: admin/systems/system-list.xml:169 admin/systems/class_servGeneric.inc:514
+#: admin/systems/class_componentGeneric.inc:318
+msgid "Name"
+msgstr "Фамилия"
+
+#: admin/systems/system-list.xml:226
 #, fuzzy
 msgid "Network printer"
 msgstr "Показать сетевые принтеры"
 
-#: admin/systems/system-list.xml:270
+#: admin/systems/system-list.xml:262
+#, fuzzy
+msgid "Trigger action"
+msgstr "Личная информация"
+
+#: admin/systems/system-list.xml:269
 msgid "Halt "
 msgstr ""
 
-#: admin/systems/system-list.xml:278 admin/systems/system-list.xml:344
+#: admin/systems/system-list.xml:277 admin/systems/system-list.xml:343
 #: admin/systems/class_servGeneric.inc:227
 msgid "Reboot"
 msgstr "Перезагрузить"
 
-#: admin/systems/system-list.xml:286 admin/systems/system-list.xml:352
+#: admin/systems/system-list.xml:285 admin/systems/system-list.xml:351
 #, fuzzy
 msgid "Wakeup"
 msgstr "Вернуть в обычный режим"
 
-#: admin/systems/system-list.xml:294 admin/systems/system-list.xml:360
+#: admin/systems/system-list.xml:293 admin/systems/system-list.xml:359
 #: admin/systems/system-list.tpl:13
 msgid "Update"
 msgstr ""
 
-#: admin/systems/system-list.xml:302 admin/systems/system-list.xml:368
+#: admin/systems/system-list.xml:301 admin/systems/system-list.xml:367
 msgid "Lock"
 msgstr ""
 
-#: admin/systems/system-list.xml:310 admin/systems/system-list.xml:376
+#: admin/systems/system-list.xml:309 admin/systems/system-list.xml:375
 #, fuzzy
 msgid "Activate"
 msgstr "Личный"
 
-#: admin/systems/system-list.xml:318 admin/systems/system-list.xml:384
+#: admin/systems/system-list.xml:317 admin/systems/system-list.xml:383
 #: admin/systems/class_servGeneric.inc:229
 #: admin/systems/class_servGeneric.inc:236
 msgid "Reinstall"
 msgstr ""
 
-#: admin/systems/system-list.xml:336
+#: admin/systems/system-list.xml:328
+#, fuzzy
+msgid "Schedule action"
+msgstr "Выберите режим терминала"
+
+#: admin/systems/system-list.xml:335
 msgid "Halt"
 msgstr ""
 
-#: admin/systems/system-list.xml:433
+#: admin/systems/system-list.xml:397
+#, fuzzy
+msgid "Activate systems"
+msgstr "Список систем"
+
+#: admin/systems/system-list.xml:432
 msgid "Change password"
 msgstr "Сменить пароль"
 
-#: admin/systems/system-list.xml:444
+#: admin/systems/system-list.xml:443
 #, fuzzy
 msgid "Create ISO"
 msgstr "Создать"
 
-#: admin/systems/system-list.xml:456
+#: admin/systems/system-list.xml:455
 #, fuzzy
 msgid "Edit role"
 msgstr "Пользователи домена"
 
-#: admin/systems/system-list.xml:469
+#: admin/systems/system-list.xml:468
 #, fuzzy
-msgid "Remove role"
-msgstr "Включаемые объекты"
+msgid "Remove system"
+msgstr "Удалить изображение"
 
 #: admin/systems/password.tpl:3
 #, fuzzy
@@ -1068,6 +799,10 @@ msgstr "Подтверждение"
 #, fuzzy
 msgid "Password strength"
 msgstr "Хэширование паролей"
+
+#: admin/systems/password.tpl:38
+msgid "Set password"
+msgstr "Изменить пароль"
 
 #: admin/systems/class_servGeneric.inc:82
 #, fuzzy
@@ -1149,6 +884,12 @@ msgstr "Общее"
 msgid "Server generic"
 msgstr "Имя сервера"
 
+#: admin/systems/class_servGeneric.inc:516 admin/systems/system-list.tpl:13
+#: admin/systems/server.tpl:22 admin/systems/class_componentGeneric.inc:319
+#: admin/systems/component.tpl:17
+msgid "Base"
+msgstr "Ветка"
+
 #: admin/systems/class_servGeneric.inc:518
 #, fuzzy
 msgid "Goto mode"
@@ -1164,6 +905,10 @@ msgstr "Изменить пароль"
 #, fuzzy
 msgid "Action flag"
 msgstr "Действие"
+
+#: admin/systems/system-list.tpl:13
+msgid "Submit"
+msgstr ""
 
 #: admin/systems/server.tpl:26
 #, fuzzy
@@ -1299,6 +1044,207 @@ msgstr "Имя сервера"
 #, fuzzy
 msgid "Choose subtree to place component in"
 msgstr "Выберите ветку для группы"
+
+#, fuzzy
+#~ msgid "Select all"
+#~ msgstr "Удалить"
+
+#, fuzzy
+#~ msgid "Department"
+#~ msgstr "Подразделение"
+
+#, fuzzy
+#~ msgid "Release"
+#~ msgstr "Удалить"
+
+#, fuzzy
+#~ msgid "servers"
+#~ msgstr "Сервер"
+
+#, fuzzy
+#~ msgid "Show %s"
+#~ msgstr "Показать телефоны"
+
+#, fuzzy
+#~ msgid "Linux terminals"
+#~ msgstr "Показать терминалы"
+
+#, fuzzy
+#~ msgid "terminals"
+#~ msgstr "Терминалы"
+
+#, fuzzy
+#~ msgid "Linux workstations"
+#~ msgstr "Показать рабочие станции"
+
+#, fuzzy
+#~ msgid "workstations"
+#~ msgstr "Рабочая станция"
+
+#, fuzzy
+#~ msgid "MicroSoft Windows based workstations"
+#~ msgstr "Посмотреть рабочие станции с MicroSoft Windows"
+
+#, fuzzy
+#~ msgid "windows based workstations"
+#~ msgstr "Показать рабочие станции с windows"
+
+#, fuzzy
+#~ msgid "Display objects of type '%s'."
+#~ msgstr "Выбрать объекты для добавления"
+
+#, fuzzy
+#~ msgid "OPSI installed client"
+#~ msgstr "Клиентские устройства"
+
+#, fuzzy
+#~ msgid "network printers"
+#~ msgstr "Показать сетевые принтеры"
+
+#, fuzzy
+#~ msgid "VoIP phones"
+#~ msgstr "Показать телефоны"
+
+#, fuzzy
+#~ msgid "phones"
+#~ msgstr "Телефон"
+
+#, fuzzy
+#~ msgid "network devices"
+#~ msgstr "Сетевые устройства"
+
+#~ msgid "Display systems matching"
+#~ msgstr "Показать подходяшие системы"
+
+#, fuzzy
+#~ msgid "Display systems of user"
+#~ msgstr "Показать адреса пользователя"
+
+#, fuzzy
+#~ msgid "Submit department"
+#~ msgstr "Показать подразделения"
+
+#, fuzzy
+#~ msgid "edit"
+#~ msgstr "Изменить"
+
+#, fuzzy
+#~ msgid "Edit system"
+#~ msgstr "Список систем"
+
+#, fuzzy
+#~ msgid "delete"
+#~ msgstr "Удалить"
+
+#, fuzzy
+#~ msgid "Delete system"
+#~ msgstr "Удалить"
+
+#~ msgid "Password"
+#~ msgstr "Пароль"
+
+#, fuzzy
+#~ msgid "Create CD"
+#~ msgstr "Создать"
+
+#, fuzzy
+#~ msgid "Create FAI CD"
+#~ msgstr "Объект группы"
+
+#, fuzzy
+#~ msgid "Inherited from %s"
+#~ msgstr "Объединения"
+
+#, fuzzy
+#~ msgid "Number of listed '%s'"
+#~ msgstr "Подразделение"
+
+#, fuzzy
+#~ msgid "printers"
+#~ msgstr "Принтер"
+
+#, fuzzy
+#~ msgid "network components"
+#~ msgstr "Прочие сетевые компоненты"
+
+#, fuzzy
+#~ msgid "new devices"
+#~ msgstr "Сетевые устройства"
+
+#, fuzzy
+#~ msgid "windows workstations"
+#~ msgstr "Показать рабочие станции"
+
+#, fuzzy
+#~ msgid "departments"
+#~ msgstr "Показать подразделения"
+
+#, fuzzy
+#~ msgid "Installed services"
+#~ msgstr "Клиентские устройства"
+
+#, fuzzy
+#~ msgid "Add, remove and configure the properties of system services here."
+#~ msgstr ""
+#~ "С помощью этого меню вы можете добавлять, изменять и удалять свойства "
+#~ "отдельных систем. Вы можете только добавлять системы которые однажды уже "
+#~ "были запущены."
+
+#, fuzzy
+#~ msgid "Add service"
+#~ msgstr "Добавить сервис DNS"
+
+#, fuzzy
+#~ msgid "Add new service"
+#~ msgstr "Добавить сервис DNS"
+
+#, fuzzy
+#~ msgid "Start all"
+#~ msgstr "Запуск"
+
+#, fuzzy
+#~ msgid "Start all services"
+#~ msgstr "Предоставлять службу сканирования"
+
+#, fuzzy
+#~ msgid "Stop service"
+#~ msgstr "Звук"
+
+#, fuzzy
+#~ msgid "Stop all services"
+#~ msgstr "Предоставлять службу сканирования"
+
+#, fuzzy
+#~ msgid "Restart service"
+#~ msgstr "Служба печати"
+
+#, fuzzy
+#~ msgid "Restart all services"
+#~ msgstr "Предоставлять службу сканирования"
+
+#, fuzzy
+#~ msgid "Stopped"
+#~ msgstr "Пол"
+
+#, fuzzy
+#~ msgid "Started"
+#~ msgstr "Адм. единица"
+
+#, fuzzy
+#~ msgid "Restarting"
+#~ msgstr "Назначение"
+
+#, fuzzy
+#~ msgid "User status"
+#~ msgstr "Почтовые настройки пользователя"
+
+#, fuzzy
+#~ msgid "Start service"
+#~ msgstr "Сканер"
+
+#, fuzzy
+#~ msgid "Remove role"
+#~ msgstr "Включаемые объекты"
 
 #, fuzzy
 #~ msgid ""

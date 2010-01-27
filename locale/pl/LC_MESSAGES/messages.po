@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-19 20:51+0100\n"
+"POT-Creation-Date: 2010-01-27 15:14+0100\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -35,13 +35,11 @@ msgstr ""
 "anulować."
 
 #: admin/systems/class_systemManagement.inc:60
-#: admin/systems/class_divListSystem.inc:88
 msgid "Systems"
 msgstr "Systemy"
 
 #: admin/systems/class_systemManagement.inc:61
-#: admin/systems/class_divListSystem.inc:63
-#: admin/systems/class_divListSystem.inc:64 admin/systems/system-list.xml:11
+#: admin/systems/system-list.xml:10
 msgid "List of systems"
 msgstr "Lista systemów"
 
@@ -72,9 +70,9 @@ msgstr "Brak uprawnień do zmiany własnego hasła w tym momencie"
 #: admin/systems/class_systemManagement.inc:683
 #: admin/systems/class_systemManagement.inc:802
 #: admin/systems/class_systemManagement.inc:817
-#: admin/systems/class_serverService.inc:186
-#: admin/systems/class_serverService.inc:236
-#: admin/systems/class_serverService.inc:363
+#: admin/systems/class_serverService.inc:196
+#: admin/systems/class_serverService.inc:239
+#: admin/systems/class_serverService.inc:452
 #: admin/systems/.svn/tmp/tempfile.tmp:365
 #: admin/systems/.svn/tmp/tempfile.tmp:480
 #: admin/systems/.svn/tmp/tempfile.tmp:517
@@ -260,312 +258,85 @@ msgstr "Wszystkie dostępne usługi są już w użyciu."
 msgid "Continue"
 msgstr "Kontynuuj"
 
-#: admin/systems/class_divListSystem.inc:82
+#: admin/systems/serverService-list.xml:10
 #, fuzzy
-msgid "Select all"
-msgstr "Wybierz"
+msgid "List of services"
+msgstr "Lista użytkowników"
 
-#: admin/systems/class_divListSystem.inc:88
+#: admin/systems/serverService-list.xml:14
+#: admin/systems/serverService-list.xml:60
 #, fuzzy
-msgid "Department"
-msgstr "System / Departament"
+msgid "Service"
+msgstr "Usługi"
 
-#: admin/systems/class_divListSystem.inc:92
-#, fuzzy
-msgid "Release"
-msgstr "Usuń"
+#: admin/systems/serverService-list.xml:27
+msgid "!"
+msgstr ""
 
-#: admin/systems/class_divListSystem.inc:95
-#: admin/systems/class_divListSystem.inc:181
-#: admin/systems/class_divListSystemService.inc:51
-#: admin/systems/system-list.xml:186
+#: admin/systems/serverService-list.xml:35 admin/systems/system-list.xml:177
+#: admin/systems/class_servGeneric.inc:515 admin/systems/server.tpl:14
+#: admin/systems/class_componentGeneric.inc:320 admin/systems/component.tpl:35
+msgid "Description"
+msgstr "Opis"
+
+#: admin/systems/serverService-list.xml:43 admin/systems/system-list.xml:185
 msgid "Actions"
 msgstr "Akcje"
 
-#: admin/systems/class_divListSystem.inc:101
-#: admin/systems/class_divListSystem.inc:102
-#: admin/systems/class_divListSystem.inc:423
-#, fuzzy
-msgid "servers"
-msgstr "Serwer"
-
-#: admin/systems/class_divListSystem.inc:102
-#: admin/systems/class_divListSystem.inc:107
-#: admin/systems/class_divListSystem.inc:112
-#: admin/systems/class_divListSystem.inc:117
-#: admin/systems/class_divListSystem.inc:128
-#: admin/systems/class_divListSystem.inc:133
-#: admin/systems/class_divListSystem.inc:138
-#, fuzzy, php-format
-msgid "Show %s"
-msgstr "Pokaż telefony"
-
-#: admin/systems/class_divListSystem.inc:106
-#, fuzzy
-msgid "Linux terminals"
-msgstr "Pokaż terminale"
-
-#: admin/systems/class_divListSystem.inc:107
-#: admin/systems/class_divListSystem.inc:425
-#, fuzzy
-msgid "terminals"
-msgstr "Terminal"
-
-#: admin/systems/class_divListSystem.inc:111
-#, fuzzy
-msgid "Linux workstations"
-msgstr "Pokaż stacje robocze"
-
-#: admin/systems/class_divListSystem.inc:112
-#: admin/systems/class_divListSystem.inc:424
-#, fuzzy
-msgid "workstations"
-msgstr "Stacja robocza"
-
-#: admin/systems/class_divListSystem.inc:116
-#, fuzzy
-msgid "MicroSoft Windows based workstations"
-msgstr "Zaznacz aby zobaczyć stacje robocze windows"
-
-#: admin/systems/class_divListSystem.inc:117
-#, fuzzy
-msgid "windows based workstations"
-msgstr "Pokaż stacje robocze windows"
-
-#: admin/systems/class_divListSystem.inc:121
-#, fuzzy, php-format
-msgid "Display objects of type '%s'."
-msgstr "Wybierz obiekty do dodania"
-
-#: admin/systems/class_divListSystem.inc:122
-#, fuzzy
-msgid "OPSI installed client"
-msgstr "Zainstalowane usługi"
-
-#: admin/systems/class_divListSystem.inc:122
-#: admin/systems/system-filter.tpl:35
-msgid "Show OPSI based clients"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:127
-#: admin/systems/class_divListSystem.inc:128
-#, fuzzy
-msgid "network printers"
-msgstr "Pokaż drukarki sieciowe"
-
-#: admin/systems/class_divListSystem.inc:132
-#, fuzzy
-msgid "VoIP phones"
-msgstr "Pokaż telefony"
-
-#: admin/systems/class_divListSystem.inc:133
-#: admin/systems/class_divListSystem.inc:426
-#, fuzzy
-msgid "phones"
-msgstr "Telefon"
-
-#: admin/systems/class_divListSystem.inc:137
-#: admin/systems/class_divListSystem.inc:138
-#, fuzzy
-msgid "network devices"
-msgstr "Urządzenia sieciowe"
-
-#: admin/systems/class_divListSystem.inc:146
-msgid "Display systems matching"
-msgstr "Wyświetl systemy pasujące"
-
-#: admin/systems/class_divListSystem.inc:147
-msgid "Display systems of user"
-msgstr "Wyświetl systemy użytkownika"
-
-#: admin/systems/class_divListSystem.inc:176
-#: admin/systems/class_servGeneric.inc:516 admin/systems/system-list.tpl:13
-#: admin/systems/server.tpl:22 admin/systems/class_componentGeneric.inc:319
-#: admin/systems/component.tpl:17
-msgid "Base"
-msgstr "Kontener"
-
-#: admin/systems/class_divListSystem.inc:178
-msgid "Submit department"
-msgstr "Zatwierdź departament"
-
-#: admin/systems/class_divListSystem.inc:178 admin/systems/system-list.tpl:13
-msgid "Submit"
-msgstr "Wyślij"
-
-#: admin/systems/class_divListSystem.inc:183 admin/systems/system-list.xml:197
+#: admin/systems/serverService-list.xml:54 admin/systems/system-list.xml:196
 msgid "Create"
 msgstr "Utwórz"
 
-#: admin/systems/class_divListSystem.inc:187
-#: admin/systems/.svn/tmp/tempfile.tmp:1630
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1634
-#: admin/systems/system-list.xml:120 admin/systems/system-list.xml:219
-msgid "Terminal"
-msgstr "Terminal"
-
-#: admin/systems/class_divListSystem.inc:191
-#: admin/systems/.svn/tmp/tempfile.tmp:1628
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1632
-#: admin/systems/system-list.xml:112 admin/systems/system-list.xml:211
-msgid "Workstation"
-msgstr "Stacja robocza"
-
-#: admin/systems/class_divListSystem.inc:195
-#: admin/systems/.svn/tmp/tempfile.tmp:1629
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1633
-#: admin/systems/system-list.xml:104 admin/systems/system-list.xml:203
-#: admin/systems/class_servGeneric.inc:511
-msgid "Server"
-msgstr "Serwer"
-
-#: admin/systems/class_divListSystem.inc:199
-#: admin/systems/.svn/tmp/tempfile.tmp:1622
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1626
-#: admin/systems/system-list.xml:136 admin/systems/system-list.xml:235
-msgid "Phone"
-msgstr "Telefon"
-
-#: admin/systems/class_divListSystem.inc:203
-#: admin/systems/.svn/tmp/tempfile.tmp:1624
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1628
-#: admin/systems/system-list.xml:128
-msgid "Printer"
-msgstr "Drukarka"
-
-#: admin/systems/class_divListSystem.inc:207 admin/systems/system-list.xml:144
-#, fuzzy
-msgid "Component"
-msgstr "Nowy komponent"
-
-#: admin/systems/class_divListSystem.inc:214
-#: admin/systems/.svn/tmp/tempfile.tmp:1649
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1653
-#: admin/systems/system-list.xml:251
-#, fuzzy
-msgid "Opsi client"
-msgstr "Cienki klient"
-
-#: admin/systems/class_divListSystem.inc:221 admin/systems/system-list.xml:263
-#, fuzzy
-msgid "Trigger action"
-msgstr "Przełącz informacje"
-
-#: admin/systems/class_divListSystem.inc:227 admin/systems/system-list.xml:329
-#, fuzzy
-msgid "Schedule action"
-msgstr "Zaplanowana aktualizacja"
-
-#: admin/systems/class_divListSystem.inc:234 admin/systems/system-list.xml:405
+#: admin/systems/serverService-list.xml:72 admin/systems/system-list.xml:404
 msgid "Remove"
 msgstr "Usuń"
 
-#: admin/systems/class_divListSystem.inc:237 admin/systems/system-list.xml:398
-#, fuzzy
-msgid "Activate systems"
-msgstr "Edytuj system"
-
-#: admin/systems/class_divListSystem.inc:322
-msgid "edit"
-msgstr "edytuj"
-
-#: admin/systems/class_divListSystem.inc:322
-msgid "Edit system"
-msgstr "Edytuj system"
-
-#: admin/systems/class_divListSystem.inc:328
-msgid "delete"
-msgstr "Usuń"
-
-#: admin/systems/class_divListSystem.inc:328
-msgid "Delete system"
-msgstr "Usuń system"
-
-#: admin/systems/class_divListSystem.inc:350
-msgid "Password"
-msgstr "Hasło"
-
-#: admin/systems/class_divListSystem.inc:350 admin/systems/password.tpl:38
-msgid "Set password"
-msgstr "Ustaw hasło"
-
-#: admin/systems/class_divListSystem.inc:359
-#, fuzzy
-msgid "Create CD"
-msgstr "Utwórz"
-
-#: admin/systems/class_divListSystem.inc:360
-#, fuzzy
-msgid "Create FAI CD"
-msgstr "Utwórz nowy obiekt FAI"
-
-#: admin/systems/class_divListSystem.inc:407
-#: admin/systems/class_divListSystem.inc:408
-#, fuzzy, php-format
-msgid "Inherited from %s"
-msgstr "Grupy obiektów"
-
-#: admin/systems/class_divListSystem.inc:423
-#: admin/systems/class_divListSystem.inc:424
-#: admin/systems/class_divListSystem.inc:425
-#: admin/systems/class_divListSystem.inc:426
-#: admin/systems/class_divListSystem.inc:427
-#: admin/systems/class_divListSystem.inc:428
-#: admin/systems/class_divListSystem.inc:429
-#: admin/systems/class_divListSystem.inc:430
-#: admin/systems/class_divListSystem.inc:431
-#, fuzzy, php-format
-msgid "Number of listed '%s'"
-msgstr "Nazwa departamentu"
-
-#: admin/systems/class_divListSystem.inc:427
-#, fuzzy
-msgid "printers"
-msgstr "Drukarka"
-
-#: admin/systems/class_divListSystem.inc:428
-#, fuzzy
-msgid "network components"
-msgstr "Inny element sieciowy"
-
-#: admin/systems/class_divListSystem.inc:429
-#, fuzzy
-msgid "new devices"
-msgstr "Nowe urządzenie"
-
-#: admin/systems/class_divListSystem.inc:430
-#, fuzzy
-msgid "windows workstations"
-msgstr "Pokaż stacje robocze"
-
-#: admin/systems/class_divListSystem.inc:431
-#, fuzzy
-msgid "departments"
-msgstr "Zatwierdź departament"
-
-#: admin/systems/class_serverService.inc:27
-msgid "Stop"
-msgstr "Zatrzymaj"
-
+#: admin/systems/serverService-list.xml:83
+#: admin/systems/serverService-list.xml:117
 #: admin/systems/class_serverService.inc:28
 msgid "Start"
 msgstr "Start"
 
+#: admin/systems/serverService-list.xml:90
+#: admin/systems/serverService-list.xml:125
+#: admin/systems/class_serverService.inc:27
+msgid "Stop"
+msgstr "Zatrzymaj"
+
+#: admin/systems/serverService-list.xml:97
+#: admin/systems/serverService-list.xml:133
 #: admin/systems/class_serverService.inc:29
 msgid "Restart"
 msgstr "Restart"
 
-#: admin/systems/class_serverService.inc:351
+#: admin/systems/serverService-list.xml:141
+msgid "Edit service"
+msgstr "Edytuj usługę"
+
+#: admin/systems/serverService-list.xml:149
+msgid "Remove service"
+msgstr "Usuń usługę"
+
+#: admin/systems/class_serverService.inc:298
+#, fuzzy
+msgid "Filter error"
+msgstr "Błąd krytyczny"
+
+#: admin/systems/class_serverService.inc:298
+msgid "The filter is incomplete!"
+msgstr ""
+
+#: admin/systems/class_serverService.inc:440
 #, fuzzy
 msgid "Information"
 msgstr "Stacja robocza"
 
-#: admin/systems/class_serverService.inc:351
+#: admin/systems/class_serverService.inc:440
 #, fuzzy
 msgid "Cannot update service status until it has been saved!"
 msgstr "Nie można ustawić statusu podczas gdy nie zapisano tego serwera."
 
-#: admin/systems/class_serverService.inc:363
+#: admin/systems/class_serverService.inc:452
 #, fuzzy
 msgid "Cannot update service status!"
 msgstr "Nie można otworzyć wybranego certyfikatu!"
@@ -597,85 +368,7 @@ msgstr "nazwa drukarki"
 msgid "Component name"
 msgstr "Nazwa potoczna"
 
-#: admin/systems/class_divListSystemService.inc:38
-#: admin/systems/class_divListSystemService.inc:39
-msgid "Installed services"
-msgstr "Zainstalowane usługi"
-
-#: admin/systems/class_divListSystemService.inc:42
-#, fuzzy
-msgid "Add, remove and configure the properties of system services here."
-msgstr "To menu umożliwia tworzenie, usuwanie oraz edycję właściwości usług."
-
-#: admin/systems/class_divListSystemService.inc:50
-#: admin/systems/system-list.xml:170 admin/systems/class_servGeneric.inc:514
-#: admin/systems/class_componentGeneric.inc:318
-msgid "Name"
-msgstr "Imię"
-
-#: admin/systems/class_divListSystemService.inc:62
-msgid "Add service"
-msgstr "Dodaj usługę"
-
-#: admin/systems/class_divListSystemService.inc:62
-msgid "Add new service"
-msgstr "Dodan nową usługę"
-
-#: admin/systems/class_divListSystemService.inc:65
-msgid "Start all"
-msgstr "Uruchom wszystko"
-
-#: admin/systems/class_divListSystemService.inc:65
-msgid "Start all services"
-msgstr "Uruchom wszystkie usługi"
-
-#: admin/systems/class_divListSystemService.inc:67
-#: admin/systems/class_divListSystemService.inc:127
-msgid "Stop service"
-msgstr "Zatrzymaj usługę"
-
-#: admin/systems/class_divListSystemService.inc:67
-msgid "Stop all services"
-msgstr "Zatrzymaj wszystike usługi"
-
-#: admin/systems/class_divListSystemService.inc:69
-#: admin/systems/class_divListSystemService.inc:133
-msgid "Restart service"
-msgstr "Restartuj usługę"
-
-#: admin/systems/class_divListSystemService.inc:69
-msgid "Restart all services"
-msgstr "Restartuj wszystkie usługi"
-
-#: admin/systems/class_divListSystemService.inc:99
-msgid "Stopped"
-msgstr "Zatrzymano"
-
-#: admin/systems/class_divListSystemService.inc:100
-msgid "Started"
-msgstr "Wystartowano"
-
-#: admin/systems/class_divListSystemService.inc:101
-msgid "Restarting"
-msgstr "Restartuję"
-
-#: admin/systems/class_divListSystemService.inc:102
-msgid "User status"
-msgstr "Status użytkownika"
-
-#: admin/systems/class_divListSystemService.inc:121
-msgid "Start service"
-msgstr "Uruchom usługę"
-
-#: admin/systems/class_divListSystemService.inc:141
-msgid "Edit service"
-msgstr "Edytuj usługę"
-
-#: admin/systems/class_divListSystemService.inc:149
-msgid "Remove service"
-msgstr "Usuń usługę"
-
-#: admin/systems/system-filter.tpl:3
+#: admin/systems/system-filter.tpl:3 admin/systems/serverService-filter.tpl:3
 #, fuzzy
 msgid "Filter"
 msgstr "Filtry"
@@ -715,6 +408,10 @@ msgstr "Pokaż urządzenia sieciowe"
 msgid "Show incoming devices"
 msgstr "Pokaż urządzenia sieciowe"
 
+#: admin/systems/system-filter.tpl:35
+msgid "Show OPSI based clients"
+msgstr ""
+
 #: admin/systems/.svn/tmp/tempfile.tmp:606
 #: admin/systems/.svn/tmp/tempfile.2.tmp:610
 msgid "Editing this type of object is not supported yet!"
@@ -737,7 +434,7 @@ msgstr "Nie można wykryć nazwy obiektu."
 #: admin/systems/.svn/tmp/tempfile.tmp:1330
 #: admin/systems/.svn/tmp/tempfile.tmp:1644
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1334
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1648 admin/systems/system-list.xml:56
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1648 admin/systems/system-list.xml:55
 #: admin/systems/class_filterSYSTEMS.inc:23
 msgid "New terminal"
 msgstr "Nowy terminal"
@@ -745,7 +442,7 @@ msgstr "Nowy terminal"
 #: admin/systems/.svn/tmp/tempfile.tmp:1332
 #: admin/systems/.svn/tmp/tempfile.tmp:1645
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1336
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1649 admin/systems/system-list.xml:23
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1649 admin/systems/system-list.xml:22
 #: admin/systems/class_filterSYSTEMS.inc:20
 msgid "New workstation"
 msgstr "Nowa stacja robocza"
@@ -776,12 +473,24 @@ msgstr "Szablon stacji roboczej dla"
 msgid "Template"
 msgstr "Szablon"
 
+#: admin/systems/.svn/tmp/tempfile.tmp:1622
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1626
+#: admin/systems/system-list.xml:135 admin/systems/system-list.xml:234
+msgid "Phone"
+msgstr "Telefon"
+
 #: admin/systems/.svn/tmp/tempfile.tmp:1623
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1627
-#: admin/systems/system-list.xml:243
+#: admin/systems/system-list.xml:242
 #: admin/systems/class_componentGeneric.inc:315
 msgid "Network device"
 msgstr "Urządzenia sieciowe"
+
+#: admin/systems/.svn/tmp/tempfile.tmp:1624
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1628
+#: admin/systems/system-list.xml:127
+msgid "Printer"
+msgstr "Drukarka"
 
 #: admin/systems/.svn/tmp/tempfile.tmp:1626
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1630
@@ -789,20 +498,39 @@ msgstr "Urządzenia sieciowe"
 msgid "Windows workstation"
 msgstr "Pokaż stacje robocze"
 
+#: admin/systems/.svn/tmp/tempfile.tmp:1628
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1632
+#: admin/systems/system-list.xml:111 admin/systems/system-list.xml:210
+msgid "Workstation"
+msgstr "Stacja robocza"
+
+#: admin/systems/.svn/tmp/tempfile.tmp:1629
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1633
+#: admin/systems/system-list.xml:103 admin/systems/system-list.xml:202
+#: admin/systems/class_servGeneric.inc:511
+msgid "Server"
+msgstr "Serwer"
+
+#: admin/systems/.svn/tmp/tempfile.tmp:1630
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1634
+#: admin/systems/system-list.xml:119 admin/systems/system-list.xml:218
+msgid "Terminal"
+msgstr "Terminal"
+
 #: admin/systems/.svn/tmp/tempfile.tmp:1632
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1636 admin/systems/system-list.xml:39
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1636 admin/systems/system-list.xml:38
 #, fuzzy
 msgid "Locked workstation"
 msgstr "Nowa stacja robocza"
 
 #: admin/systems/.svn/tmp/tempfile.tmp:1633
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1637 admin/systems/system-list.xml:31
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1637 admin/systems/system-list.xml:30
 #, fuzzy
 msgid "Locked server"
 msgstr "Serwer Ldap"
 
 #: admin/systems/.svn/tmp/tempfile.tmp:1634
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1638 admin/systems/system-list.xml:47
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1638 admin/systems/system-list.xml:46
 #, fuzzy
 msgid "Locked terminal"
 msgstr "Nowy terminal"
@@ -842,6 +570,13 @@ msgstr "Serwery"
 #, fuzzy
 msgid "New system from incoming"
 msgstr "Nowy system dla nadchodzących"
+
+#: admin/systems/.svn/tmp/tempfile.tmp:1649
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1653
+#: admin/systems/system-list.xml:250
+#, fuzzy
+msgid "Opsi client"
+msgstr "Cienki klient"
 
 #: admin/systems/network.tpl:1
 msgid "Network\tsettings"
@@ -900,103 +635,122 @@ msgstr "TTL"
 msgid "Dns records"
 msgstr "Rekordy DNS"
 
-#: admin/systems/system-list.xml:15
+#: admin/systems/system-list.xml:14
 #, fuzzy
 msgid "Opsi host"
 msgstr "Cienki klient"
 
-#: admin/systems/system-list.xml:64 admin/systems/class_filterSYSTEMS.inc:28
+#: admin/systems/system-list.xml:63 admin/systems/class_filterSYSTEMS.inc:28
 #, fuzzy
 msgid "New unknown device"
 msgstr "Nieznane"
 
-#: admin/systems/system-list.xml:72 admin/systems/class_filterSYSTEMS.inc:31
+#: admin/systems/system-list.xml:71 admin/systems/class_filterSYSTEMS.inc:31
 #, fuzzy
 msgid "New device"
 msgstr "Nowe urządzenie"
 
-#: admin/systems/system-list.xml:80
+#: admin/systems/system-list.xml:79
 #, fuzzy
 msgid "Workstation template"
 msgstr "Szablon stacji roboczej dla"
 
-#: admin/systems/system-list.xml:88
+#: admin/systems/system-list.xml:87
 #, fuzzy
 msgid "Terminal template"
 msgstr "Szablon terminala dla"
 
-#: admin/systems/system-list.xml:96
+#: admin/systems/system-list.xml:95
 msgid "Winstation"
 msgstr "Stacja Windows"
 
-#: admin/systems/system-list.xml:178 admin/systems/class_servGeneric.inc:515
-#: admin/systems/server.tpl:14 admin/systems/class_componentGeneric.inc:320
-#: admin/systems/component.tpl:35
-msgid "Description"
-msgstr "Opis"
+#: admin/systems/system-list.xml:143
+#, fuzzy
+msgid "Component"
+msgstr "Nowy komponent"
 
-#: admin/systems/system-list.xml:227
+#: admin/systems/system-list.xml:169 admin/systems/class_servGeneric.inc:514
+#: admin/systems/class_componentGeneric.inc:318
+msgid "Name"
+msgstr "Imię"
+
+#: admin/systems/system-list.xml:226
 #, fuzzy
 msgid "Network printer"
 msgstr "Pokaż drukarki sieciowe"
 
-#: admin/systems/system-list.xml:270
+#: admin/systems/system-list.xml:262
+#, fuzzy
+msgid "Trigger action"
+msgstr "Przełącz informacje"
+
+#: admin/systems/system-list.xml:269
 msgid "Halt "
 msgstr ""
 
-#: admin/systems/system-list.xml:278 admin/systems/system-list.xml:344
+#: admin/systems/system-list.xml:277 admin/systems/system-list.xml:343
 #: admin/systems/class_servGeneric.inc:227
 msgid "Reboot"
 msgstr "Restartuj"
 
-#: admin/systems/system-list.xml:286 admin/systems/system-list.xml:352
+#: admin/systems/system-list.xml:285 admin/systems/system-list.xml:351
 #, fuzzy
 msgid "Wakeup"
 msgstr "Zbudź"
 
-#: admin/systems/system-list.xml:294 admin/systems/system-list.xml:360
+#: admin/systems/system-list.xml:293 admin/systems/system-list.xml:359
 #: admin/systems/system-list.tpl:13
 msgid "Update"
 msgstr "Aktualizuj"
 
-#: admin/systems/system-list.xml:302 admin/systems/system-list.xml:368
+#: admin/systems/system-list.xml:301 admin/systems/system-list.xml:367
 #, fuzzy
 msgid "Lock"
 msgstr "Zablokowane"
 
-#: admin/systems/system-list.xml:310 admin/systems/system-list.xml:376
+#: admin/systems/system-list.xml:309 admin/systems/system-list.xml:375
 #, fuzzy
 msgid "Activate"
 msgstr "Aktywne"
 
-#: admin/systems/system-list.xml:318 admin/systems/system-list.xml:384
+#: admin/systems/system-list.xml:317 admin/systems/system-list.xml:383
 #: admin/systems/class_servGeneric.inc:229
 #: admin/systems/class_servGeneric.inc:236
 msgid "Reinstall"
 msgstr "Przeinstaluj"
 
-#: admin/systems/system-list.xml:336
+#: admin/systems/system-list.xml:328
+#, fuzzy
+msgid "Schedule action"
+msgstr "Zaplanowana aktualizacja"
+
+#: admin/systems/system-list.xml:335
 msgid "Halt"
 msgstr ""
 
-#: admin/systems/system-list.xml:433
+#: admin/systems/system-list.xml:397
+#, fuzzy
+msgid "Activate systems"
+msgstr "Edytuj system"
+
+#: admin/systems/system-list.xml:432
 msgid "Change password"
 msgstr "Zmień hasło"
 
-#: admin/systems/system-list.xml:444
+#: admin/systems/system-list.xml:443
 #, fuzzy
 msgid "Create ISO"
 msgstr "Utwórz"
 
-#: admin/systems/system-list.xml:456
+#: admin/systems/system-list.xml:455
 #, fuzzy
 msgid "Edit role"
 msgstr "Edytuj makro"
 
-#: admin/systems/system-list.xml:469
+#: admin/systems/system-list.xml:468
 #, fuzzy
-msgid "Remove role"
-msgstr "Usuń obiekt"
+msgid "Remove system"
+msgstr "Usuń obrazek"
 
 #: admin/systems/password.tpl:3
 msgid ""
@@ -1028,6 +782,10 @@ msgstr "Powtórz nowe hasło"
 #, fuzzy
 msgid "Password strength"
 msgstr "Przechowywanie hasła"
+
+#: admin/systems/password.tpl:38
+msgid "Set password"
+msgstr "Ustaw hasło"
 
 #: admin/systems/class_servGeneric.inc:82
 msgid "Activated"
@@ -1105,6 +863,12 @@ msgstr "Ogólne"
 msgid "Server generic"
 msgstr "Nazwa serwera"
 
+#: admin/systems/class_servGeneric.inc:516 admin/systems/system-list.tpl:13
+#: admin/systems/server.tpl:22 admin/systems/class_componentGeneric.inc:319
+#: admin/systems/component.tpl:17
+msgid "Base"
+msgstr "Kontener"
+
 #: admin/systems/class_servGeneric.inc:518
 #, fuzzy
 msgid "Goto mode"
@@ -1119,6 +883,10 @@ msgstr "Ustaw hasło"
 #: admin/systems/class_servGeneric.inc:520
 msgid "Action flag"
 msgstr "Flaga akcji"
+
+#: admin/systems/system-list.tpl:13
+msgid "Submit"
+msgstr "Wyślij"
 
 #: admin/systems/server.tpl:26
 #, fuzzy
@@ -1249,6 +1017,185 @@ msgstr "Nazwa urządzenia"
 #, fuzzy
 msgid "Choose subtree to place component in"
 msgstr "Wybierz poddrzewo do umieszczenia grupy"
+
+#, fuzzy
+#~ msgid "Select all"
+#~ msgstr "Wybierz"
+
+#, fuzzy
+#~ msgid "Department"
+#~ msgstr "System / Departament"
+
+#, fuzzy
+#~ msgid "Release"
+#~ msgstr "Usuń"
+
+#, fuzzy
+#~ msgid "servers"
+#~ msgstr "Serwer"
+
+#, fuzzy
+#~ msgid "Show %s"
+#~ msgstr "Pokaż telefony"
+
+#, fuzzy
+#~ msgid "Linux terminals"
+#~ msgstr "Pokaż terminale"
+
+#, fuzzy
+#~ msgid "terminals"
+#~ msgstr "Terminal"
+
+#, fuzzy
+#~ msgid "Linux workstations"
+#~ msgstr "Pokaż stacje robocze"
+
+#, fuzzy
+#~ msgid "workstations"
+#~ msgstr "Stacja robocza"
+
+#, fuzzy
+#~ msgid "MicroSoft Windows based workstations"
+#~ msgstr "Zaznacz aby zobaczyć stacje robocze windows"
+
+#, fuzzy
+#~ msgid "windows based workstations"
+#~ msgstr "Pokaż stacje robocze windows"
+
+#, fuzzy
+#~ msgid "Display objects of type '%s'."
+#~ msgstr "Wybierz obiekty do dodania"
+
+#, fuzzy
+#~ msgid "OPSI installed client"
+#~ msgstr "Zainstalowane usługi"
+
+#, fuzzy
+#~ msgid "network printers"
+#~ msgstr "Pokaż drukarki sieciowe"
+
+#, fuzzy
+#~ msgid "VoIP phones"
+#~ msgstr "Pokaż telefony"
+
+#, fuzzy
+#~ msgid "phones"
+#~ msgstr "Telefon"
+
+#, fuzzy
+#~ msgid "network devices"
+#~ msgstr "Urządzenia sieciowe"
+
+#~ msgid "Display systems matching"
+#~ msgstr "Wyświetl systemy pasujące"
+
+#~ msgid "Display systems of user"
+#~ msgstr "Wyświetl systemy użytkownika"
+
+#~ msgid "Submit department"
+#~ msgstr "Zatwierdź departament"
+
+#~ msgid "edit"
+#~ msgstr "edytuj"
+
+#~ msgid "Edit system"
+#~ msgstr "Edytuj system"
+
+#~ msgid "delete"
+#~ msgstr "Usuń"
+
+#~ msgid "Delete system"
+#~ msgstr "Usuń system"
+
+#~ msgid "Password"
+#~ msgstr "Hasło"
+
+#, fuzzy
+#~ msgid "Create CD"
+#~ msgstr "Utwórz"
+
+#, fuzzy
+#~ msgid "Create FAI CD"
+#~ msgstr "Utwórz nowy obiekt FAI"
+
+#, fuzzy
+#~ msgid "Inherited from %s"
+#~ msgstr "Grupy obiektów"
+
+#, fuzzy
+#~ msgid "Number of listed '%s'"
+#~ msgstr "Nazwa departamentu"
+
+#, fuzzy
+#~ msgid "printers"
+#~ msgstr "Drukarka"
+
+#, fuzzy
+#~ msgid "network components"
+#~ msgstr "Inny element sieciowy"
+
+#, fuzzy
+#~ msgid "new devices"
+#~ msgstr "Nowe urządzenie"
+
+#, fuzzy
+#~ msgid "windows workstations"
+#~ msgstr "Pokaż stacje robocze"
+
+#, fuzzy
+#~ msgid "departments"
+#~ msgstr "Zatwierdź departament"
+
+#~ msgid "Installed services"
+#~ msgstr "Zainstalowane usługi"
+
+#, fuzzy
+#~ msgid "Add, remove and configure the properties of system services here."
+#~ msgstr ""
+#~ "To menu umożliwia tworzenie, usuwanie oraz edycję właściwości usług."
+
+#~ msgid "Add service"
+#~ msgstr "Dodaj usługę"
+
+#~ msgid "Add new service"
+#~ msgstr "Dodan nową usługę"
+
+#~ msgid "Start all"
+#~ msgstr "Uruchom wszystko"
+
+#~ msgid "Start all services"
+#~ msgstr "Uruchom wszystkie usługi"
+
+#~ msgid "Stop service"
+#~ msgstr "Zatrzymaj usługę"
+
+#~ msgid "Stop all services"
+#~ msgstr "Zatrzymaj wszystike usługi"
+
+#~ msgid "Restart service"
+#~ msgstr "Restartuj usługę"
+
+#~ msgid "Restart all services"
+#~ msgstr "Restartuj wszystkie usługi"
+
+#~ msgid "Stopped"
+#~ msgstr "Zatrzymano"
+
+#~ msgid "Started"
+#~ msgstr "Wystartowano"
+
+#~ msgid "Restarting"
+#~ msgstr "Restartuję"
+
+#~ msgid "User status"
+#~ msgstr "Status użytkownika"
+
+#~ msgid "Start service"
+#~ msgstr "Uruchom usługę"
+
+#, fuzzy
+#~ msgid "Remove role"
+#~ msgstr "Usuń obiekt"
 
 #~ msgid ""
 #~ "This includes all system and setup informations. Please double check if "

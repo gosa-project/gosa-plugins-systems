@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-19 20:51+0100\n"
+"POT-Creation-Date: 2010-01-27 15:14+0100\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
@@ -40,13 +40,11 @@ msgstr ""
 "om te annuleren."
 
 #: admin/systems/class_systemManagement.inc:60
-#: admin/systems/class_divListSystem.inc:88
 msgid "Systems"
 msgstr "Systemen"
 
 #: admin/systems/class_systemManagement.inc:61
-#: admin/systems/class_divListSystem.inc:63
-#: admin/systems/class_divListSystem.inc:64 admin/systems/system-list.xml:11
+#: admin/systems/system-list.xml:10
 msgid "List of systems"
 msgstr "Lijst met systemen"
 
@@ -77,9 +75,9 @@ msgstr "U heeft momenteel geen toestemming om uw wachtwoord te veranderen"
 #: admin/systems/class_systemManagement.inc:683
 #: admin/systems/class_systemManagement.inc:802
 #: admin/systems/class_systemManagement.inc:817
-#: admin/systems/class_serverService.inc:186
-#: admin/systems/class_serverService.inc:236
-#: admin/systems/class_serverService.inc:363
+#: admin/systems/class_serverService.inc:196
+#: admin/systems/class_serverService.inc:239
+#: admin/systems/class_serverService.inc:452
 #: admin/systems/.svn/tmp/tempfile.tmp:365
 #: admin/systems/.svn/tmp/tempfile.tmp:480
 #: admin/systems/.svn/tmp/tempfile.tmp:517
@@ -268,313 +266,88 @@ msgstr "De opgegeven apparaat naam wordt al gebruikt."
 msgid "Continue"
 msgstr "Doorgaan"
 
-#: admin/systems/class_divListSystem.inc:82
+#: admin/systems/serverService-list.xml:10
 #, fuzzy
-msgid "Select all"
-msgstr "Selecteer"
+msgid "List of services"
+msgstr "Lijst met gebruikers"
 
-#: admin/systems/class_divListSystem.inc:88
+#: admin/systems/serverService-list.xml:14
+#: admin/systems/serverService-list.xml:60
 #, fuzzy
-msgid "Department"
-msgstr "Systeem / Afdeling"
+msgid "Service"
+msgstr "Services"
 
-#: admin/systems/class_divListSystem.inc:92
-#, fuzzy
-msgid "Release"
-msgstr "Verwijderen"
+#: admin/systems/serverService-list.xml:27
+msgid "!"
+msgstr ""
 
-#: admin/systems/class_divListSystem.inc:95
-#: admin/systems/class_divListSystem.inc:181
-#: admin/systems/class_divListSystemService.inc:51
-#: admin/systems/system-list.xml:186
+#: admin/systems/serverService-list.xml:35 admin/systems/system-list.xml:177
+#: admin/systems/class_servGeneric.inc:515 admin/systems/server.tpl:14
+#: admin/systems/class_componentGeneric.inc:320 admin/systems/component.tpl:35
+msgid "Description"
+msgstr "Omschrijving"
+
+#: admin/systems/serverService-list.xml:43 admin/systems/system-list.xml:185
 msgid "Actions"
 msgstr "Acties"
 
-#: admin/systems/class_divListSystem.inc:101
-#: admin/systems/class_divListSystem.inc:102
-#: admin/systems/class_divListSystem.inc:423
-#, fuzzy
-msgid "servers"
-msgstr "Server"
-
-#: admin/systems/class_divListSystem.inc:102
-#: admin/systems/class_divListSystem.inc:107
-#: admin/systems/class_divListSystem.inc:112
-#: admin/systems/class_divListSystem.inc:117
-#: admin/systems/class_divListSystem.inc:128
-#: admin/systems/class_divListSystem.inc:133
-#: admin/systems/class_divListSystem.inc:138
-#, fuzzy, php-format
-msgid "Show %s"
-msgstr "Toon telefoons"
-
-#: admin/systems/class_divListSystem.inc:106
-#, fuzzy
-msgid "Linux terminals"
-msgstr "Toon terminals"
-
-#: admin/systems/class_divListSystem.inc:107
-#: admin/systems/class_divListSystem.inc:425
-#, fuzzy
-msgid "terminals"
-msgstr "Terminal"
-
-#: admin/systems/class_divListSystem.inc:111
-#, fuzzy
-msgid "Linux workstations"
-msgstr "Toon werkstations"
-
-#: admin/systems/class_divListSystem.inc:112
-#: admin/systems/class_divListSystem.inc:424
-#, fuzzy
-msgid "workstations"
-msgstr "Werkstation"
-
-#: admin/systems/class_divListSystem.inc:116
-#, fuzzy
-msgid "MicroSoft Windows based workstations"
-msgstr "Selecteer om Microsoft Windows werkstations te zien"
-
-#: admin/systems/class_divListSystem.inc:117
-#, fuzzy
-msgid "windows based workstations"
-msgstr "Toon Windows werkstations"
-
-#: admin/systems/class_divListSystem.inc:121
-#, fuzzy, php-format
-msgid "Display objects of type '%s'."
-msgstr "Selecteer de toe te voegen objecten"
-
-#: admin/systems/class_divListSystem.inc:122
-#, fuzzy
-msgid "OPSI installed client"
-msgstr "Geinstalleerde apparaten"
-
-#: admin/systems/class_divListSystem.inc:122
-#: admin/systems/system-filter.tpl:35
-msgid "Show OPSI based clients"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:127
-#: admin/systems/class_divListSystem.inc:128
-#, fuzzy
-msgid "network printers"
-msgstr "Toon netwerk printers"
-
-#: admin/systems/class_divListSystem.inc:132
-#, fuzzy
-msgid "VoIP phones"
-msgstr "Toon telefoons"
-
-#: admin/systems/class_divListSystem.inc:133
-#: admin/systems/class_divListSystem.inc:426
-#, fuzzy
-msgid "phones"
-msgstr "Telefoon"
-
-#: admin/systems/class_divListSystem.inc:137
-#: admin/systems/class_divListSystem.inc:138
-#, fuzzy
-msgid "network devices"
-msgstr "Netwerk apparaten"
-
-#: admin/systems/class_divListSystem.inc:146
-msgid "Display systems matching"
-msgstr "Toon de overeenkomende systemen"
-
-#: admin/systems/class_divListSystem.inc:147
-msgid "Display systems of user"
-msgstr "Toon systemen van gebruiker"
-
-#: admin/systems/class_divListSystem.inc:176
-#: admin/systems/class_servGeneric.inc:516 admin/systems/system-list.tpl:13
-#: admin/systems/server.tpl:22 admin/systems/class_componentGeneric.inc:319
-#: admin/systems/component.tpl:17
-msgid "Base"
-msgstr "Basis"
-
-#: admin/systems/class_divListSystem.inc:178
-msgid "Submit department"
-msgstr "Verwerk afdeling"
-
-#: admin/systems/class_divListSystem.inc:178 admin/systems/system-list.tpl:13
-msgid "Submit"
-msgstr "Verwerk"
-
-#: admin/systems/class_divListSystem.inc:183 admin/systems/system-list.xml:197
+#: admin/systems/serverService-list.xml:54 admin/systems/system-list.xml:196
 msgid "Create"
 msgstr "Aanmaken"
 
-#: admin/systems/class_divListSystem.inc:187
-#: admin/systems/.svn/tmp/tempfile.tmp:1630
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1634
-#: admin/systems/system-list.xml:120 admin/systems/system-list.xml:219
-msgid "Terminal"
-msgstr "Terminal"
-
-#: admin/systems/class_divListSystem.inc:191
-#: admin/systems/.svn/tmp/tempfile.tmp:1628
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1632
-#: admin/systems/system-list.xml:112 admin/systems/system-list.xml:211
-msgid "Workstation"
-msgstr "Werkstation"
-
-#: admin/systems/class_divListSystem.inc:195
-#: admin/systems/.svn/tmp/tempfile.tmp:1629
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1633
-#: admin/systems/system-list.xml:104 admin/systems/system-list.xml:203
-#: admin/systems/class_servGeneric.inc:511
-msgid "Server"
-msgstr "Server"
-
-#: admin/systems/class_divListSystem.inc:199
-#: admin/systems/.svn/tmp/tempfile.tmp:1622
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1626
-#: admin/systems/system-list.xml:136 admin/systems/system-list.xml:235
-msgid "Phone"
-msgstr "Telefoon"
-
-#: admin/systems/class_divListSystem.inc:203
-#: admin/systems/.svn/tmp/tempfile.tmp:1624
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1628
-#: admin/systems/system-list.xml:128
-msgid "Printer"
-msgstr "Printer"
-
-#: admin/systems/class_divListSystem.inc:207 admin/systems/system-list.xml:144
-#, fuzzy
-msgid "Component"
-msgstr "Nieuw component"
-
-#: admin/systems/class_divListSystem.inc:214
-#: admin/systems/.svn/tmp/tempfile.tmp:1649
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1653
-#: admin/systems/system-list.xml:251
-#, fuzzy
-msgid "Opsi client"
-msgstr "Thin Client"
-
-#: admin/systems/class_divListSystem.inc:221 admin/systems/system-list.xml:263
-#, fuzzy
-msgid "Trigger action"
-msgstr "Informatie weergeven/verbergen"
-
-#: admin/systems/class_divListSystem.inc:227 admin/systems/system-list.xml:329
-#, fuzzy
-msgid "Schedule action"
-msgstr "Geplande bijwerking"
-
-#: admin/systems/class_divListSystem.inc:234 admin/systems/system-list.xml:405
+#: admin/systems/serverService-list.xml:72 admin/systems/system-list.xml:404
 msgid "Remove"
 msgstr "Verwijderen"
 
-#: admin/systems/class_divListSystem.inc:237 admin/systems/system-list.xml:398
-#, fuzzy
-msgid "Activate systems"
-msgstr "Bewerk systeem"
-
-#: admin/systems/class_divListSystem.inc:322
-msgid "edit"
-msgstr "Bewerk"
-
-#: admin/systems/class_divListSystem.inc:322
-msgid "Edit system"
-msgstr "Bewerk systeem"
-
-#: admin/systems/class_divListSystem.inc:328
-msgid "delete"
-msgstr "Verwijder"
-
-#: admin/systems/class_divListSystem.inc:328
-msgid "Delete system"
-msgstr "Verwijder systeem"
-
-#: admin/systems/class_divListSystem.inc:350
-msgid "Password"
-msgstr "Wachtwoord"
-
-#: admin/systems/class_divListSystem.inc:350 admin/systems/password.tpl:38
-msgid "Set password"
-msgstr "Wachtwoord instellen"
-
-#: admin/systems/class_divListSystem.inc:359
-#, fuzzy
-msgid "Create CD"
-msgstr "Aanmaken"
-
-#: admin/systems/class_divListSystem.inc:360
-#, fuzzy
-msgid "Create FAI CD"
-msgstr "Nieuw FAI object aanmaken"
-
-#: admin/systems/class_divListSystem.inc:407
-#: admin/systems/class_divListSystem.inc:408
-#, fuzzy, php-format
-msgid "Inherited from %s"
-msgstr "Objectgroepen"
-
-#: admin/systems/class_divListSystem.inc:423
-#: admin/systems/class_divListSystem.inc:424
-#: admin/systems/class_divListSystem.inc:425
-#: admin/systems/class_divListSystem.inc:426
-#: admin/systems/class_divListSystem.inc:427
-#: admin/systems/class_divListSystem.inc:428
-#: admin/systems/class_divListSystem.inc:429
-#: admin/systems/class_divListSystem.inc:430
-#: admin/systems/class_divListSystem.inc:431
-#, fuzzy, php-format
-msgid "Number of listed '%s'"
-msgstr "Naam van de afdeling"
-
-#: admin/systems/class_divListSystem.inc:427
-#, fuzzy
-msgid "printers"
-msgstr "Printer"
-
-#: admin/systems/class_divListSystem.inc:428
-#, fuzzy
-msgid "network components"
-msgstr "Ander netwerk component"
-
-#: admin/systems/class_divListSystem.inc:429
-#, fuzzy
-msgid "new devices"
-msgstr "Nieuw apparaat"
-
-#: admin/systems/class_divListSystem.inc:430
-#, fuzzy
-msgid "windows workstations"
-msgstr "Toon werkstations"
-
-#: admin/systems/class_divListSystem.inc:431
-#, fuzzy
-msgid "departments"
-msgstr "Verwerk afdeling"
-
-#: admin/systems/class_serverService.inc:27
-msgid "Stop"
-msgstr "Stop"
-
+#: admin/systems/serverService-list.xml:83
+#: admin/systems/serverService-list.xml:117
 #: admin/systems/class_serverService.inc:28
 #, fuzzy
 msgid "Start"
 msgstr "Opstarten"
 
+#: admin/systems/serverService-list.xml:90
+#: admin/systems/serverService-list.xml:125
+#: admin/systems/class_serverService.inc:27
+msgid "Stop"
+msgstr "Stop"
+
+#: admin/systems/serverService-list.xml:97
+#: admin/systems/serverService-list.xml:133
 #: admin/systems/class_serverService.inc:29
 #, fuzzy
 msgid "Restart"
 msgstr "Opnieuw proberen"
 
-#: admin/systems/class_serverService.inc:351
+#: admin/systems/serverService-list.xml:141
+#, fuzzy
+msgid "Edit service"
+msgstr "Print service"
+
+#: admin/systems/serverService-list.xml:149
+#, fuzzy
+msgid "Remove service"
+msgstr "Verwijder DNS service"
+
+#: admin/systems/class_serverService.inc:298
+#, fuzzy
+msgid "Filter error"
+msgstr "Terminal server"
+
+#: admin/systems/class_serverService.inc:298
+msgid "The filter is incomplete!"
+msgstr ""
+
+#: admin/systems/class_serverService.inc:440
 #, fuzzy
 msgid "Information"
 msgstr "Werkstation"
 
-#: admin/systems/class_serverService.inc:351
+#: admin/systems/class_serverService.inc:440
 msgid "Cannot update service status until it has been saved!"
 msgstr ""
 
-#: admin/systems/class_serverService.inc:363
+#: admin/systems/class_serverService.inc:452
 #, fuzzy
 msgid "Cannot update service status!"
 msgstr "Het opgegeven certificaat kon geopend worden!"
@@ -606,104 +379,7 @@ msgstr "Printernaam"
 msgid "Component name"
 msgstr "Algemene naam"
 
-#: admin/systems/class_divListSystemService.inc:38
-#: admin/systems/class_divListSystemService.inc:39
-#, fuzzy
-msgid "Installed services"
-msgstr "Geinstalleerde apparaten"
-
-#: admin/systems/class_divListSystemService.inc:42
-#, fuzzy
-msgid "Add, remove and configure the properties of system services here."
-msgstr ""
-"Dit menu maakt het mogelijk om specifieke systemen toe te voegen, bewerken "
-"en verwijderen. U kunt alleen systemen toevoegen die al eens opgestart "
-"geweest zijn."
-
-#: admin/systems/class_divListSystemService.inc:50
-#: admin/systems/system-list.xml:170 admin/systems/class_servGeneric.inc:514
-#: admin/systems/class_componentGeneric.inc:318
-msgid "Name"
-msgstr "Naam"
-
-#: admin/systems/class_divListSystemService.inc:62
-#, fuzzy
-msgid "Add service"
-msgstr "Voeg DNS service toe"
-
-#: admin/systems/class_divListSystemService.inc:62
-#, fuzzy
-msgid "Add new service"
-msgstr "Voeg DNS service toe"
-
-#: admin/systems/class_divListSystemService.inc:65
-#, fuzzy
-msgid "Start all"
-msgstr "Opstarten"
-
-#: admin/systems/class_divListSystemService.inc:65
-#, fuzzy
-msgid "Start all services"
-msgstr "alle services bekijken"
-
-#: admin/systems/class_divListSystemService.inc:67
-#: admin/systems/class_divListSystemService.inc:127
-#, fuzzy
-msgid "Stop service"
-msgstr "Audio service"
-
-#: admin/systems/class_divListSystemService.inc:67
-#, fuzzy
-msgid "Stop all services"
-msgstr "alle services bekijken"
-
-#: admin/systems/class_divListSystemService.inc:69
-#: admin/systems/class_divListSystemService.inc:133
-#, fuzzy
-msgid "Restart service"
-msgstr "Print service"
-
-#: admin/systems/class_divListSystemService.inc:69
-#, fuzzy
-msgid "Restart all services"
-msgstr "alle services bekijken"
-
-#: admin/systems/class_divListSystemService.inc:99
-#, fuzzy
-msgid "Stopped"
-msgstr "Stop"
-
-#: admin/systems/class_divListSystemService.inc:100
-#, fuzzy
-msgid "Started"
-msgstr "Provincie"
-
-#: admin/systems/class_divListSystemService.inc:101
-#, fuzzy
-msgid "Restarting"
-msgstr "Doel"
-
-#: admin/systems/class_divListSystemService.inc:102
-#, fuzzy
-msgid "User status"
-msgstr "Systeem status"
-
-#: admin/systems/class_divListSystemService.inc:121
-#, fuzzy
-msgid "Start service"
-msgstr "Scan service"
-
-#: admin/systems/class_divListSystemService.inc:141
-#, fuzzy
-msgid "Edit service"
-msgstr "Print service"
-
-#: admin/systems/class_divListSystemService.inc:149
-#, fuzzy
-msgid "Remove service"
-msgstr "Verwijder DNS service"
-
-#: admin/systems/system-filter.tpl:3
+#: admin/systems/system-filter.tpl:3 admin/systems/serverService-filter.tpl:3
 #, fuzzy
 msgid "Filter"
 msgstr "Filters"
@@ -743,6 +419,10 @@ msgstr "Toon netwerk apparaten"
 msgid "Show incoming devices"
 msgstr "Toon netwerk apparaten"
 
+#: admin/systems/system-filter.tpl:35
+msgid "Show OPSI based clients"
+msgstr ""
+
 #: admin/systems/.svn/tmp/tempfile.tmp:606
 #: admin/systems/.svn/tmp/tempfile.2.tmp:610
 msgid "Editing this type of object is not supported yet!"
@@ -767,7 +447,7 @@ msgstr "Kan de objectnaam niet detecteren"
 #: admin/systems/.svn/tmp/tempfile.tmp:1330
 #: admin/systems/.svn/tmp/tempfile.tmp:1644
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1334
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1648 admin/systems/system-list.xml:56
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1648 admin/systems/system-list.xml:55
 #: admin/systems/class_filterSYSTEMS.inc:23
 msgid "New terminal"
 msgstr "Nieuwe terminal"
@@ -775,7 +455,7 @@ msgstr "Nieuwe terminal"
 #: admin/systems/.svn/tmp/tempfile.tmp:1332
 #: admin/systems/.svn/tmp/tempfile.tmp:1645
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1336
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1649 admin/systems/system-list.xml:23
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1649 admin/systems/system-list.xml:22
 #: admin/systems/class_filterSYSTEMS.inc:20
 msgid "New workstation"
 msgstr "Nieuw werkstation"
@@ -806,13 +486,25 @@ msgstr "Werkstation sjabloon voor"
 msgid "Template"
 msgstr "Sjabloon"
 
+#: admin/systems/.svn/tmp/tempfile.tmp:1622
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1626
+#: admin/systems/system-list.xml:135 admin/systems/system-list.xml:234
+msgid "Phone"
+msgstr "Telefoon"
+
 #: admin/systems/.svn/tmp/tempfile.tmp:1623
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1627
-#: admin/systems/system-list.xml:243
+#: admin/systems/system-list.xml:242
 #: admin/systems/class_componentGeneric.inc:315
 #, fuzzy
 msgid "Network device"
 msgstr "Netwerk apparaten"
+
+#: admin/systems/.svn/tmp/tempfile.tmp:1624
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1628
+#: admin/systems/system-list.xml:127
+msgid "Printer"
+msgstr "Printer"
 
 #: admin/systems/.svn/tmp/tempfile.tmp:1626
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1630
@@ -820,20 +512,39 @@ msgstr "Netwerk apparaten"
 msgid "Windows workstation"
 msgstr "Toon werkstations"
 
+#: admin/systems/.svn/tmp/tempfile.tmp:1628
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1632
+#: admin/systems/system-list.xml:111 admin/systems/system-list.xml:210
+msgid "Workstation"
+msgstr "Werkstation"
+
+#: admin/systems/.svn/tmp/tempfile.tmp:1629
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1633
+#: admin/systems/system-list.xml:103 admin/systems/system-list.xml:202
+#: admin/systems/class_servGeneric.inc:511
+msgid "Server"
+msgstr "Server"
+
+#: admin/systems/.svn/tmp/tempfile.tmp:1630
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1634
+#: admin/systems/system-list.xml:119 admin/systems/system-list.xml:218
+msgid "Terminal"
+msgstr "Terminal"
+
 #: admin/systems/.svn/tmp/tempfile.tmp:1632
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1636 admin/systems/system-list.xml:39
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1636 admin/systems/system-list.xml:38
 #, fuzzy
 msgid "Locked workstation"
 msgstr "Nieuw werkstation"
 
 #: admin/systems/.svn/tmp/tempfile.tmp:1633
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1637 admin/systems/system-list.xml:31
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1637 admin/systems/system-list.xml:30
 #, fuzzy
 msgid "Locked server"
 msgstr "Ldap server"
 
 #: admin/systems/.svn/tmp/tempfile.tmp:1634
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1638 admin/systems/system-list.xml:47
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1638 admin/systems/system-list.xml:46
 #, fuzzy
 msgid "Locked terminal"
 msgstr "Nieuwe terminal"
@@ -873,6 +584,13 @@ msgstr "Servers"
 #, fuzzy
 msgid "New system from incoming"
 msgstr "Nieuw systeem uit inkomende wachtrij"
+
+#: admin/systems/.svn/tmp/tempfile.tmp:1649
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1653
+#: admin/systems/system-list.xml:250
+#, fuzzy
+msgid "Opsi client"
+msgstr "Thin Client"
 
 #: admin/systems/network.tpl:1
 msgid "Network\tsettings"
@@ -931,103 +649,122 @@ msgstr "TTL"
 msgid "Dns records"
 msgstr "DNS records"
 
-#: admin/systems/system-list.xml:15
+#: admin/systems/system-list.xml:14
 #, fuzzy
 msgid "Opsi host"
 msgstr "Thin Client"
 
-#: admin/systems/system-list.xml:64 admin/systems/class_filterSYSTEMS.inc:28
+#: admin/systems/system-list.xml:63 admin/systems/class_filterSYSTEMS.inc:28
 #, fuzzy
 msgid "New unknown device"
 msgstr "Onbekend"
 
-#: admin/systems/system-list.xml:72 admin/systems/class_filterSYSTEMS.inc:31
+#: admin/systems/system-list.xml:71 admin/systems/class_filterSYSTEMS.inc:31
 #, fuzzy
 msgid "New device"
 msgstr "Nieuw apparaat"
 
-#: admin/systems/system-list.xml:80
+#: admin/systems/system-list.xml:79
 #, fuzzy
 msgid "Workstation template"
 msgstr "Werkstation sjabloon voor"
 
-#: admin/systems/system-list.xml:88
+#: admin/systems/system-list.xml:87
 #, fuzzy
 msgid "Terminal template"
 msgstr "Terminal sjabloon voor"
 
-#: admin/systems/system-list.xml:96
+#: admin/systems/system-list.xml:95
 msgid "Winstation"
 msgstr "Windows werkstation"
 
-#: admin/systems/system-list.xml:178 admin/systems/class_servGeneric.inc:515
-#: admin/systems/server.tpl:14 admin/systems/class_componentGeneric.inc:320
-#: admin/systems/component.tpl:35
-msgid "Description"
-msgstr "Omschrijving"
+#: admin/systems/system-list.xml:143
+#, fuzzy
+msgid "Component"
+msgstr "Nieuw component"
 
-#: admin/systems/system-list.xml:227
+#: admin/systems/system-list.xml:169 admin/systems/class_servGeneric.inc:514
+#: admin/systems/class_componentGeneric.inc:318
+msgid "Name"
+msgstr "Naam"
+
+#: admin/systems/system-list.xml:226
 #, fuzzy
 msgid "Network printer"
 msgstr "Toon netwerk printers"
 
-#: admin/systems/system-list.xml:270
+#: admin/systems/system-list.xml:262
+#, fuzzy
+msgid "Trigger action"
+msgstr "Informatie weergeven/verbergen"
+
+#: admin/systems/system-list.xml:269
 msgid "Halt "
 msgstr ""
 
-#: admin/systems/system-list.xml:278 admin/systems/system-list.xml:344
+#: admin/systems/system-list.xml:277 admin/systems/system-list.xml:343
 #: admin/systems/class_servGeneric.inc:227
 msgid "Reboot"
 msgstr "Herstarten"
 
-#: admin/systems/system-list.xml:286 admin/systems/system-list.xml:352
+#: admin/systems/system-list.xml:285 admin/systems/system-list.xml:351
 #, fuzzy
 msgid "Wakeup"
 msgstr "Aanzetten"
 
-#: admin/systems/system-list.xml:294 admin/systems/system-list.xml:360
+#: admin/systems/system-list.xml:293 admin/systems/system-list.xml:359
 #: admin/systems/system-list.tpl:13
 msgid "Update"
 msgstr ""
 
-#: admin/systems/system-list.xml:302 admin/systems/system-list.xml:368
+#: admin/systems/system-list.xml:301 admin/systems/system-list.xml:367
 #, fuzzy
 msgid "Lock"
 msgstr "Geblokkeerd"
 
-#: admin/systems/system-list.xml:310 admin/systems/system-list.xml:376
+#: admin/systems/system-list.xml:309 admin/systems/system-list.xml:375
 #, fuzzy
 msgid "Activate"
 msgstr "Geactiveerd"
 
-#: admin/systems/system-list.xml:318 admin/systems/system-list.xml:384
+#: admin/systems/system-list.xml:317 admin/systems/system-list.xml:383
 #: admin/systems/class_servGeneric.inc:229
 #: admin/systems/class_servGeneric.inc:236
 msgid "Reinstall"
 msgstr "Herinstalleer"
 
-#: admin/systems/system-list.xml:336
+#: admin/systems/system-list.xml:328
+#, fuzzy
+msgid "Schedule action"
+msgstr "Geplande bijwerking"
+
+#: admin/systems/system-list.xml:335
 msgid "Halt"
 msgstr ""
 
-#: admin/systems/system-list.xml:433
+#: admin/systems/system-list.xml:397
+#, fuzzy
+msgid "Activate systems"
+msgstr "Bewerk systeem"
+
+#: admin/systems/system-list.xml:432
 msgid "Change password"
 msgstr "Verander wachtwoord"
 
-#: admin/systems/system-list.xml:444
+#: admin/systems/system-list.xml:443
 #, fuzzy
 msgid "Create ISO"
 msgstr "Aanmaken"
 
-#: admin/systems/system-list.xml:456
+#: admin/systems/system-list.xml:455
 #, fuzzy
 msgid "Edit role"
 msgstr "Bewerk share"
 
-#: admin/systems/system-list.xml:469
+#: admin/systems/system-list.xml:468
 #, fuzzy
-msgid "Remove role"
-msgstr "Lidmaatschap objecten"
+msgid "Remove system"
+msgstr "Plaatje verwijderen"
 
 #: admin/systems/password.tpl:3
 msgid ""
@@ -1060,6 +797,10 @@ msgstr "Herhaal het nieuwe wachtwoord"
 #, fuzzy
 msgid "Password strength"
 msgstr "Wachtwoord encryptie"
+
+#: admin/systems/password.tpl:38
+msgid "Set password"
+msgstr "Wachtwoord instellen"
 
 #: admin/systems/class_servGeneric.inc:82
 msgid "Activated"
@@ -1137,6 +878,12 @@ msgstr "Algemeen"
 msgid "Server generic"
 msgstr "Servernaam"
 
+#: admin/systems/class_servGeneric.inc:516 admin/systems/system-list.tpl:13
+#: admin/systems/server.tpl:22 admin/systems/class_componentGeneric.inc:319
+#: admin/systems/component.tpl:17
+msgid "Base"
+msgstr "Basis"
+
 #: admin/systems/class_servGeneric.inc:518
 #, fuzzy
 msgid "Goto mode"
@@ -1152,6 +899,10 @@ msgstr "Wachtwoord instellen"
 #, fuzzy
 msgid "Action flag"
 msgstr "Actie"
+
+#: admin/systems/system-list.tpl:13
+msgid "Submit"
+msgstr "Verwerk"
 
 #: admin/systems/server.tpl:26
 #, fuzzy
@@ -1284,6 +1035,201 @@ msgstr "Apparaat naam"
 #, fuzzy
 msgid "Choose subtree to place component in"
 msgstr "Selecteer de subtree waaronder deze groep geplaatst wordt"
+
+#, fuzzy
+#~ msgid "Select all"
+#~ msgstr "Selecteer"
+
+#, fuzzy
+#~ msgid "Department"
+#~ msgstr "Systeem / Afdeling"
+
+#, fuzzy
+#~ msgid "Release"
+#~ msgstr "Verwijderen"
+
+#, fuzzy
+#~ msgid "servers"
+#~ msgstr "Server"
+
+#, fuzzy
+#~ msgid "Show %s"
+#~ msgstr "Toon telefoons"
+
+#, fuzzy
+#~ msgid "Linux terminals"
+#~ msgstr "Toon terminals"
+
+#, fuzzy
+#~ msgid "terminals"
+#~ msgstr "Terminal"
+
+#, fuzzy
+#~ msgid "Linux workstations"
+#~ msgstr "Toon werkstations"
+
+#, fuzzy
+#~ msgid "workstations"
+#~ msgstr "Werkstation"
+
+#, fuzzy
+#~ msgid "MicroSoft Windows based workstations"
+#~ msgstr "Selecteer om Microsoft Windows werkstations te zien"
+
+#, fuzzy
+#~ msgid "windows based workstations"
+#~ msgstr "Toon Windows werkstations"
+
+#, fuzzy
+#~ msgid "Display objects of type '%s'."
+#~ msgstr "Selecteer de toe te voegen objecten"
+
+#, fuzzy
+#~ msgid "OPSI installed client"
+#~ msgstr "Geinstalleerde apparaten"
+
+#, fuzzy
+#~ msgid "network printers"
+#~ msgstr "Toon netwerk printers"
+
+#, fuzzy
+#~ msgid "VoIP phones"
+#~ msgstr "Toon telefoons"
+
+#, fuzzy
+#~ msgid "phones"
+#~ msgstr "Telefoon"
+
+#, fuzzy
+#~ msgid "network devices"
+#~ msgstr "Netwerk apparaten"
+
+#~ msgid "Display systems matching"
+#~ msgstr "Toon de overeenkomende systemen"
+
+#~ msgid "Display systems of user"
+#~ msgstr "Toon systemen van gebruiker"
+
+#~ msgid "Submit department"
+#~ msgstr "Verwerk afdeling"
+
+#~ msgid "edit"
+#~ msgstr "Bewerk"
+
+#~ msgid "Edit system"
+#~ msgstr "Bewerk systeem"
+
+#~ msgid "delete"
+#~ msgstr "Verwijder"
+
+#~ msgid "Delete system"
+#~ msgstr "Verwijder systeem"
+
+#~ msgid "Password"
+#~ msgstr "Wachtwoord"
+
+#, fuzzy
+#~ msgid "Create CD"
+#~ msgstr "Aanmaken"
+
+#, fuzzy
+#~ msgid "Create FAI CD"
+#~ msgstr "Nieuw FAI object aanmaken"
+
+#, fuzzy
+#~ msgid "Inherited from %s"
+#~ msgstr "Objectgroepen"
+
+#, fuzzy
+#~ msgid "Number of listed '%s'"
+#~ msgstr "Naam van de afdeling"
+
+#, fuzzy
+#~ msgid "printers"
+#~ msgstr "Printer"
+
+#, fuzzy
+#~ msgid "network components"
+#~ msgstr "Ander netwerk component"
+
+#, fuzzy
+#~ msgid "new devices"
+#~ msgstr "Nieuw apparaat"
+
+#, fuzzy
+#~ msgid "windows workstations"
+#~ msgstr "Toon werkstations"
+
+#, fuzzy
+#~ msgid "departments"
+#~ msgstr "Verwerk afdeling"
+
+#, fuzzy
+#~ msgid "Installed services"
+#~ msgstr "Geinstalleerde apparaten"
+
+#, fuzzy
+#~ msgid "Add, remove and configure the properties of system services here."
+#~ msgstr ""
+#~ "Dit menu maakt het mogelijk om specifieke systemen toe te voegen, "
+#~ "bewerken en verwijderen. U kunt alleen systemen toevoegen die al eens "
+#~ "opgestart geweest zijn."
+
+#, fuzzy
+#~ msgid "Add service"
+#~ msgstr "Voeg DNS service toe"
+
+#, fuzzy
+#~ msgid "Add new service"
+#~ msgstr "Voeg DNS service toe"
+
+#, fuzzy
+#~ msgid "Start all"
+#~ msgstr "Opstarten"
+
+#, fuzzy
+#~ msgid "Start all services"
+#~ msgstr "alle services bekijken"
+
+#, fuzzy
+#~ msgid "Stop service"
+#~ msgstr "Audio service"
+
+#, fuzzy
+#~ msgid "Stop all services"
+#~ msgstr "alle services bekijken"
+
+#, fuzzy
+#~ msgid "Restart service"
+#~ msgstr "Print service"
+
+#, fuzzy
+#~ msgid "Restart all services"
+#~ msgstr "alle services bekijken"
+
+#, fuzzy
+#~ msgid "Stopped"
+#~ msgstr "Stop"
+
+#, fuzzy
+#~ msgid "Started"
+#~ msgstr "Provincie"
+
+#, fuzzy
+#~ msgid "Restarting"
+#~ msgstr "Doel"
+
+#, fuzzy
+#~ msgid "User status"
+#~ msgstr "Systeem status"
+
+#, fuzzy
+#~ msgid "Start service"
+#~ msgstr "Scan service"
+
+#, fuzzy
+#~ msgid "Remove role"
+#~ msgstr "Lidmaatschap objecten"
 
 #, fuzzy
 #~ msgid ""

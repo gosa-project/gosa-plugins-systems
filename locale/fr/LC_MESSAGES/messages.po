@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-19 20:51+0100\n"
+"POT-Creation-Date: 2010-01-27 15:14+0100\n"
 "PO-Revision-Date: 2010-01-18 23:24+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
@@ -36,13 +36,11 @@ msgstr ""
 "'Annuler' pour abandonner."
 
 #: admin/systems/class_systemManagement.inc:60
-#: admin/systems/class_divListSystem.inc:88
 msgid "Systems"
 msgstr "Systèmes"
 
 #: admin/systems/class_systemManagement.inc:61
-#: admin/systems/class_divListSystem.inc:63
-#: admin/systems/class_divListSystem.inc:64 admin/systems/system-list.xml:11
+#: admin/systems/system-list.xml:10
 msgid "List of systems"
 msgstr "Liste des systèmes"
 
@@ -71,9 +69,9 @@ msgstr "Vous n'êtes pas autorisé à modifier le mot de passe !"
 #: admin/systems/class_systemManagement.inc:683
 #: admin/systems/class_systemManagement.inc:802
 #: admin/systems/class_systemManagement.inc:817
-#: admin/systems/class_serverService.inc:186
-#: admin/systems/class_serverService.inc:236
-#: admin/systems/class_serverService.inc:363
+#: admin/systems/class_serverService.inc:196
+#: admin/systems/class_serverService.inc:239
+#: admin/systems/class_serverService.inc:452
 #: admin/systems/.svn/tmp/tempfile.tmp:365
 #: admin/systems/.svn/tmp/tempfile.tmp:480
 #: admin/systems/.svn/tmp/tempfile.tmp:517
@@ -254,283 +252,82 @@ msgstr "Tout les services disponibles sont déjà utilisés."
 msgid "Continue"
 msgstr "Continuer"
 
-#: admin/systems/class_divListSystem.inc:82
-msgid "Select all"
-msgstr "Sélectionner tout"
+#: admin/systems/serverService-list.xml:10
+#, fuzzy
+msgid "List of services"
+msgstr "Liste des utilisateurs"
 
-#: admin/systems/class_divListSystem.inc:88
-msgid "Department"
-msgstr "Département"
+#: admin/systems/serverService-list.xml:14
+#: admin/systems/serverService-list.xml:60
+#, fuzzy
+msgid "Service"
+msgstr "Serveur"
 
-#: admin/systems/class_divListSystem.inc:92
-msgid "Release"
-msgstr "Version"
+#: admin/systems/serverService-list.xml:27
+msgid "!"
+msgstr ""
 
-#: admin/systems/class_divListSystem.inc:95
-#: admin/systems/class_divListSystem.inc:181
-#: admin/systems/class_divListSystemService.inc:51
-#: admin/systems/system-list.xml:186
+#: admin/systems/serverService-list.xml:35 admin/systems/system-list.xml:177
+#: admin/systems/class_servGeneric.inc:515 admin/systems/server.tpl:14
+#: admin/systems/class_componentGeneric.inc:320 admin/systems/component.tpl:35
+msgid "Description"
+msgstr "Description"
+
+#: admin/systems/serverService-list.xml:43 admin/systems/system-list.xml:185
 msgid "Actions"
 msgstr ""
 
-#: admin/systems/class_divListSystem.inc:101
-#: admin/systems/class_divListSystem.inc:102
-#: admin/systems/class_divListSystem.inc:423
-msgid "servers"
-msgstr "Serveurs"
-
-#: admin/systems/class_divListSystem.inc:102
-#: admin/systems/class_divListSystem.inc:107
-#: admin/systems/class_divListSystem.inc:112
-#: admin/systems/class_divListSystem.inc:117
-#: admin/systems/class_divListSystem.inc:128
-#: admin/systems/class_divListSystem.inc:133
-#: admin/systems/class_divListSystem.inc:138
-#, php-format
-msgid "Show %s"
-msgstr "Afficher %s"
-
-#: admin/systems/class_divListSystem.inc:106
-msgid "Linux terminals"
-msgstr "Terminaux linux"
-
-#: admin/systems/class_divListSystem.inc:107
-#: admin/systems/class_divListSystem.inc:425
-msgid "terminals"
-msgstr "Terminaux"
-
-#: admin/systems/class_divListSystem.inc:111
-msgid "Linux workstations"
-msgstr "Stations Linux"
-
-#: admin/systems/class_divListSystem.inc:112
-#: admin/systems/class_divListSystem.inc:424
-msgid "workstations"
-msgstr "stations de travail"
-
-#: admin/systems/class_divListSystem.inc:116
-msgid "MicroSoft Windows based workstations"
-msgstr "Stations de travail Microsoft Windows"
-
-#: admin/systems/class_divListSystem.inc:117
-msgid "windows based workstations"
-msgstr "stations de travail Windows"
-
-#: admin/systems/class_divListSystem.inc:121
-#, php-format
-msgid "Display objects of type '%s'."
-msgstr "Lister les objets de type '%s'."
-
-#: admin/systems/class_divListSystem.inc:122
-msgid "OPSI installed client"
-msgstr "Client OPSI installé"
-
-#: admin/systems/class_divListSystem.inc:122
-#: admin/systems/system-filter.tpl:35
-msgid "Show OPSI based clients"
-msgstr "Montrer les clients OPSI"
-
-#: admin/systems/class_divListSystem.inc:127
-#: admin/systems/class_divListSystem.inc:128
-msgid "network printers"
-msgstr "Imprimantes réseaux"
-
-#: admin/systems/class_divListSystem.inc:132
-msgid "VoIP phones"
-msgstr "Téléphones VOIP"
-
-#: admin/systems/class_divListSystem.inc:133
-#: admin/systems/class_divListSystem.inc:426
-msgid "phones"
-msgstr "Téléphones"
-
-#: admin/systems/class_divListSystem.inc:137
-#: admin/systems/class_divListSystem.inc:138
-msgid "network devices"
-msgstr "Périphériques réseau"
-
-#: admin/systems/class_divListSystem.inc:146
-msgid "Display systems matching"
-msgstr "Afficher les systèmes correspondant"
-
-#: admin/systems/class_divListSystem.inc:147
-msgid "Display systems of user"
-msgstr "Afficher les systèmes de l'utilisateur"
-
-#: admin/systems/class_divListSystem.inc:176
-#: admin/systems/class_servGeneric.inc:516 admin/systems/system-list.tpl:13
-#: admin/systems/server.tpl:22 admin/systems/class_componentGeneric.inc:319
-#: admin/systems/component.tpl:17
-msgid "Base"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:178
-msgid "Submit department"
-msgstr "Soumettre le département"
-
-#: admin/systems/class_divListSystem.inc:178 admin/systems/system-list.tpl:13
-msgid "Submit"
-msgstr "Soumettre"
-
-#: admin/systems/class_divListSystem.inc:183 admin/systems/system-list.xml:197
+#: admin/systems/serverService-list.xml:54 admin/systems/system-list.xml:196
 msgid "Create"
 msgstr "Créer"
 
-#: admin/systems/class_divListSystem.inc:187
-#: admin/systems/.svn/tmp/tempfile.tmp:1630
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1634
-#: admin/systems/system-list.xml:120 admin/systems/system-list.xml:219
-msgid "Terminal"
-msgstr ""
-
-#: admin/systems/class_divListSystem.inc:191
-#: admin/systems/.svn/tmp/tempfile.tmp:1628
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1632
-#: admin/systems/system-list.xml:112 admin/systems/system-list.xml:211
-msgid "Workstation"
-msgstr "Stations de travail"
-
-#: admin/systems/class_divListSystem.inc:195
-#: admin/systems/.svn/tmp/tempfile.tmp:1629
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1633
-#: admin/systems/system-list.xml:104 admin/systems/system-list.xml:203
-#: admin/systems/class_servGeneric.inc:511
-msgid "Server"
-msgstr "Serveur"
-
-#: admin/systems/class_divListSystem.inc:199
-#: admin/systems/.svn/tmp/tempfile.tmp:1622
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1626
-#: admin/systems/system-list.xml:136 admin/systems/system-list.xml:235
-msgid "Phone"
-msgstr "Téléphone"
-
-#: admin/systems/class_divListSystem.inc:203
-#: admin/systems/.svn/tmp/tempfile.tmp:1624
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1628
-#: admin/systems/system-list.xml:128
-msgid "Printer"
-msgstr "Imprimante"
-
-#: admin/systems/class_divListSystem.inc:207 admin/systems/system-list.xml:144
-msgid "Component"
-msgstr "Composant"
-
-#: admin/systems/class_divListSystem.inc:214
-#: admin/systems/.svn/tmp/tempfile.tmp:1649
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1653
-#: admin/systems/system-list.xml:251
-msgid "Opsi client"
-msgstr "Clients OPSI"
-
-#: admin/systems/class_divListSystem.inc:221 admin/systems/system-list.xml:263
-msgid "Trigger action"
-msgstr "Déclencher une action"
-
-#: admin/systems/class_divListSystem.inc:227 admin/systems/system-list.xml:329
-msgid "Schedule action"
-msgstr "Programmer une action"
-
-#: admin/systems/class_divListSystem.inc:234 admin/systems/system-list.xml:405
+#: admin/systems/serverService-list.xml:72 admin/systems/system-list.xml:404
 msgid "Remove"
 msgstr "Supprimer"
 
-#: admin/systems/class_divListSystem.inc:237 admin/systems/system-list.xml:398
-msgid "Activate systems"
-msgstr "Activer un système"
-
-#: admin/systems/class_divListSystem.inc:322
-msgid "edit"
-msgstr "éditer"
-
-#: admin/systems/class_divListSystem.inc:322
-msgid "Edit system"
-msgstr "Editer un système"
-
-#: admin/systems/class_divListSystem.inc:328
-msgid "delete"
-msgstr "supprimer"
-
-#: admin/systems/class_divListSystem.inc:328
-msgid "Delete system"
-msgstr "Effacer un système"
-
-#: admin/systems/class_divListSystem.inc:350
-msgid "Password"
-msgstr "Mot de passe"
-
-#: admin/systems/class_divListSystem.inc:350 admin/systems/password.tpl:38
-msgid "Set password"
-msgstr "Attribuer le mot de passe"
-
-#: admin/systems/class_divListSystem.inc:359
-msgid "Create CD"
-msgstr "Créer un CD"
-
-#: admin/systems/class_divListSystem.inc:360
-msgid "Create FAI CD"
-msgstr "Créer un CD FAI"
-
-#: admin/systems/class_divListSystem.inc:407
-#: admin/systems/class_divListSystem.inc:408
-#, php-format
-msgid "Inherited from %s"
-msgstr "Hérité depuis %s"
-
-#: admin/systems/class_divListSystem.inc:423
-#: admin/systems/class_divListSystem.inc:424
-#: admin/systems/class_divListSystem.inc:425
-#: admin/systems/class_divListSystem.inc:426
-#: admin/systems/class_divListSystem.inc:427
-#: admin/systems/class_divListSystem.inc:428
-#: admin/systems/class_divListSystem.inc:429
-#: admin/systems/class_divListSystem.inc:430
-#: admin/systems/class_divListSystem.inc:431
-#, php-format
-msgid "Number of listed '%s'"
-msgstr "Nombre de '%s' listés"
-
-#: admin/systems/class_divListSystem.inc:427
-msgid "printers"
-msgstr "Imprimantes"
-
-#: admin/systems/class_divListSystem.inc:428
-msgid "network components"
-msgstr "composants réseau"
-
-#: admin/systems/class_divListSystem.inc:429
-msgid "new devices"
-msgstr "Nouveau périphériques"
-
-#: admin/systems/class_divListSystem.inc:430
-msgid "windows workstations"
-msgstr "Ordinateur Windows"
-
-#: admin/systems/class_divListSystem.inc:431
-msgid "departments"
-msgstr "départements"
-
-#: admin/systems/class_serverService.inc:27
-msgid "Stop"
-msgstr "Arrêter"
-
+#: admin/systems/serverService-list.xml:83
+#: admin/systems/serverService-list.xml:117
 #: admin/systems/class_serverService.inc:28
 msgid "Start"
 msgstr "Démarrage"
 
+#: admin/systems/serverService-list.xml:90
+#: admin/systems/serverService-list.xml:125
+#: admin/systems/class_serverService.inc:27
+msgid "Stop"
+msgstr "Arrêter"
+
+#: admin/systems/serverService-list.xml:97
+#: admin/systems/serverService-list.xml:133
 #: admin/systems/class_serverService.inc:29
 msgid "Restart"
 msgstr "Réessayer"
 
-#: admin/systems/class_serverService.inc:351
+#: admin/systems/serverService-list.xml:141
+msgid "Edit service"
+msgstr "Editer le service"
+
+#: admin/systems/serverService-list.xml:149
+msgid "Remove service"
+msgstr "Suppression du service"
+
+#: admin/systems/class_serverService.inc:298
+msgid "Filter error"
+msgstr "Erreur de Filtre"
+
+#: admin/systems/class_serverService.inc:298
+msgid "The filter is incomplete!"
+msgstr "Le filtre est incomplet !"
+
+#: admin/systems/class_serverService.inc:440
 msgid "Information"
 msgstr "Information"
 
-#: admin/systems/class_serverService.inc:351
+#: admin/systems/class_serverService.inc:440
 msgid "Cannot update service status until it has been saved!"
 msgstr "Impossible de mettre à jour le statut avant que cela soit sauvé !"
 
-#: admin/systems/class_serverService.inc:363
+#: admin/systems/class_serverService.inc:452
 msgid "Cannot update service status!"
 msgstr "Impossible de mettre à jour le statut du service!"
 
@@ -559,86 +356,7 @@ msgstr "Nom de l'imprimante"
 msgid "Component name"
 msgstr "Nom du composant"
 
-#: admin/systems/class_divListSystemService.inc:38
-#: admin/systems/class_divListSystemService.inc:39
-msgid "Installed services"
-msgstr "Services installés"
-
-#: admin/systems/class_divListSystemService.inc:42
-msgid "Add, remove and configure the properties of system services here."
-msgstr ""
-"ajouter, de supprimer ou de changer les propriétés d'un service spécifique "
-"ici."
-
-#: admin/systems/class_divListSystemService.inc:50
-#: admin/systems/system-list.xml:170 admin/systems/class_servGeneric.inc:514
-#: admin/systems/class_componentGeneric.inc:318
-msgid "Name"
-msgstr "Nom"
-
-#: admin/systems/class_divListSystemService.inc:62
-msgid "Add service"
-msgstr "Ajouter un service"
-
-#: admin/systems/class_divListSystemService.inc:62
-msgid "Add new service"
-msgstr "Ajouter un nouveau service"
-
-#: admin/systems/class_divListSystemService.inc:65
-msgid "Start all"
-msgstr "Démarrer tout"
-
-#: admin/systems/class_divListSystemService.inc:65
-msgid "Start all services"
-msgstr "Démarrer tout les services"
-
-#: admin/systems/class_divListSystemService.inc:67
-#: admin/systems/class_divListSystemService.inc:127
-msgid "Stop service"
-msgstr "Stopper tout les Service"
-
-#: admin/systems/class_divListSystemService.inc:67
-msgid "Stop all services"
-msgstr "Stopper tout les services"
-
-#: admin/systems/class_divListSystemService.inc:69
-#: admin/systems/class_divListSystemService.inc:133
-msgid "Restart service"
-msgstr "Redémarrer le service"
-
-#: admin/systems/class_divListSystemService.inc:69
-msgid "Restart all services"
-msgstr "Redémarrer tout les services"
-
-#: admin/systems/class_divListSystemService.inc:99
-msgid "Stopped"
-msgstr "Arrêté"
-
-#: admin/systems/class_divListSystemService.inc:100
-msgid "Started"
-msgstr "Démarrer"
-
-#: admin/systems/class_divListSystemService.inc:101
-msgid "Restarting"
-msgstr "Redémarre"
-
-#: admin/systems/class_divListSystemService.inc:102
-msgid "User status"
-msgstr "Statut de l'utilisateur"
-
-#: admin/systems/class_divListSystemService.inc:121
-msgid "Start service"
-msgstr "Démarrer le service"
-
-#: admin/systems/class_divListSystemService.inc:141
-msgid "Edit service"
-msgstr "Editer le service"
-
-#: admin/systems/class_divListSystemService.inc:149
-msgid "Remove service"
-msgstr "Suppression du service"
-
-#: admin/systems/system-filter.tpl:3
+#: admin/systems/system-filter.tpl:3 admin/systems/serverService-filter.tpl:3
 msgid "Filter"
 msgstr "Filtre"
 
@@ -674,6 +392,10 @@ msgstr "Périphériques réseau"
 msgid "Show incoming devices"
 msgstr "Montrer nouveau périphériques"
 
+#: admin/systems/system-filter.tpl:35
+msgid "Show OPSI based clients"
+msgstr "Montrer les clients OPSI"
+
 #: admin/systems/.svn/tmp/tempfile.tmp:606
 #: admin/systems/.svn/tmp/tempfile.2.tmp:610
 msgid "Editing this type of object is not supported yet!"
@@ -696,7 +418,7 @@ msgstr "Impossible de déterminer l'objet pour changer son mot de passe !"
 #: admin/systems/.svn/tmp/tempfile.tmp:1330
 #: admin/systems/.svn/tmp/tempfile.tmp:1644
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1334
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1648 admin/systems/system-list.xml:56
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1648 admin/systems/system-list.xml:55
 #: admin/systems/class_filterSYSTEMS.inc:23
 msgid "New terminal"
 msgstr "Nouveau terminal"
@@ -704,7 +426,7 @@ msgstr "Nouveau terminal"
 #: admin/systems/.svn/tmp/tempfile.tmp:1332
 #: admin/systems/.svn/tmp/tempfile.tmp:1645
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1336
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1649 admin/systems/system-list.xml:23
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1649 admin/systems/system-list.xml:22
 #: admin/systems/class_filterSYSTEMS.inc:20
 msgid "New workstation"
 msgstr "Nouvelle station de travail"
@@ -734,30 +456,61 @@ msgstr "Modèle de station de travail pour"
 msgid "Template"
 msgstr "Modèle"
 
+#: admin/systems/.svn/tmp/tempfile.tmp:1622
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1626
+#: admin/systems/system-list.xml:135 admin/systems/system-list.xml:234
+msgid "Phone"
+msgstr "Téléphone"
+
 #: admin/systems/.svn/tmp/tempfile.tmp:1623
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1627
-#: admin/systems/system-list.xml:243
+#: admin/systems/system-list.xml:242
 #: admin/systems/class_componentGeneric.inc:315
 msgid "Network device"
 msgstr "Périphérique réseau"
+
+#: admin/systems/.svn/tmp/tempfile.tmp:1624
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1628
+#: admin/systems/system-list.xml:127
+msgid "Printer"
+msgstr "Imprimante"
 
 #: admin/systems/.svn/tmp/tempfile.tmp:1626
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1630
 msgid "Windows workstation"
 msgstr "Ordinateur Windows"
 
+#: admin/systems/.svn/tmp/tempfile.tmp:1628
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1632
+#: admin/systems/system-list.xml:111 admin/systems/system-list.xml:210
+msgid "Workstation"
+msgstr "Stations de travail"
+
+#: admin/systems/.svn/tmp/tempfile.tmp:1629
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1633
+#: admin/systems/system-list.xml:103 admin/systems/system-list.xml:202
+#: admin/systems/class_servGeneric.inc:511
+msgid "Server"
+msgstr "Serveur"
+
+#: admin/systems/.svn/tmp/tempfile.tmp:1630
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1634
+#: admin/systems/system-list.xml:119 admin/systems/system-list.xml:218
+msgid "Terminal"
+msgstr ""
+
 #: admin/systems/.svn/tmp/tempfile.tmp:1632
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1636 admin/systems/system-list.xml:39
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1636 admin/systems/system-list.xml:38
 msgid "Locked workstation"
 msgstr "Ordinateur verrouillé"
 
 #: admin/systems/.svn/tmp/tempfile.tmp:1633
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1637 admin/systems/system-list.xml:31
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1637 admin/systems/system-list.xml:30
 msgid "Locked server"
 msgstr "Serveur verrouillé"
 
 #: admin/systems/.svn/tmp/tempfile.tmp:1634
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1638 admin/systems/system-list.xml:47
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1638 admin/systems/system-list.xml:46
 msgid "Locked terminal"
 msgstr "Terminal verrouillé"
 
@@ -790,6 +543,12 @@ msgstr "Serveur occupé"
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1647
 msgid "New system from incoming"
 msgstr "Nouveau système depuis incoming"
+
+#: admin/systems/.svn/tmp/tempfile.tmp:1649
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1653
+#: admin/systems/system-list.xml:250
+msgid "Opsi client"
+msgstr "Clients OPSI"
 
 #: admin/systems/network.tpl:1
 msgid "Network\tsettings"
@@ -843,91 +602,107 @@ msgstr ""
 msgid "Dns records"
 msgstr "Enregistrement dns"
 
-#: admin/systems/system-list.xml:15
+#: admin/systems/system-list.xml:14
 msgid "Opsi host"
 msgstr "Clients OPSI"
 
-#: admin/systems/system-list.xml:64 admin/systems/class_filterSYSTEMS.inc:28
+#: admin/systems/system-list.xml:63 admin/systems/class_filterSYSTEMS.inc:28
 msgid "New unknown device"
 msgstr "Nouveau périphérique Inconnu"
 
-#: admin/systems/system-list.xml:72 admin/systems/class_filterSYSTEMS.inc:31
+#: admin/systems/system-list.xml:71 admin/systems/class_filterSYSTEMS.inc:31
 msgid "New device"
 msgstr "Nouveau périphérique"
 
-#: admin/systems/system-list.xml:80
+#: admin/systems/system-list.xml:79
 msgid "Workstation template"
 msgstr "Modèle de station de travail"
 
-#: admin/systems/system-list.xml:88
+#: admin/systems/system-list.xml:87
 msgid "Terminal template"
 msgstr "Modèle de terminal"
 
-#: admin/systems/system-list.xml:96
+#: admin/systems/system-list.xml:95
 msgid "Winstation"
 msgstr "Pc Windows"
 
-#: admin/systems/system-list.xml:178 admin/systems/class_servGeneric.inc:515
-#: admin/systems/server.tpl:14 admin/systems/class_componentGeneric.inc:320
-#: admin/systems/component.tpl:35
-msgid "Description"
-msgstr "Description"
+#: admin/systems/system-list.xml:143
+msgid "Component"
+msgstr "Composant"
 
-#: admin/systems/system-list.xml:227
+#: admin/systems/system-list.xml:169 admin/systems/class_servGeneric.inc:514
+#: admin/systems/class_componentGeneric.inc:318
+msgid "Name"
+msgstr "Nom"
+
+#: admin/systems/system-list.xml:226
 msgid "Network printer"
 msgstr "Imprimante réseaux"
 
-#: admin/systems/system-list.xml:270
+#: admin/systems/system-list.xml:262
+msgid "Trigger action"
+msgstr "Déclencher une action"
+
+#: admin/systems/system-list.xml:269
 msgid "Halt "
 msgstr "Arrêter"
 
-#: admin/systems/system-list.xml:278 admin/systems/system-list.xml:344
+#: admin/systems/system-list.xml:277 admin/systems/system-list.xml:343
 #: admin/systems/class_servGeneric.inc:227
 msgid "Reboot"
 msgstr "Redémarrer"
 
-#: admin/systems/system-list.xml:286 admin/systems/system-list.xml:352
+#: admin/systems/system-list.xml:285 admin/systems/system-list.xml:351
 msgid "Wakeup"
 msgstr "Réveiller"
 
-#: admin/systems/system-list.xml:294 admin/systems/system-list.xml:360
+#: admin/systems/system-list.xml:293 admin/systems/system-list.xml:359
 #: admin/systems/system-list.tpl:13
 msgid "Update"
 msgstr "Mise à jour"
 
-#: admin/systems/system-list.xml:302 admin/systems/system-list.xml:368
+#: admin/systems/system-list.xml:301 admin/systems/system-list.xml:367
 msgid "Lock"
 msgstr "Verrouiller"
 
-#: admin/systems/system-list.xml:310 admin/systems/system-list.xml:376
+#: admin/systems/system-list.xml:309 admin/systems/system-list.xml:375
 msgid "Activate"
 msgstr "Activer"
 
-#: admin/systems/system-list.xml:318 admin/systems/system-list.xml:384
+#: admin/systems/system-list.xml:317 admin/systems/system-list.xml:383
 #: admin/systems/class_servGeneric.inc:229
 #: admin/systems/class_servGeneric.inc:236
 msgid "Reinstall"
 msgstr "Reinstaller"
 
-#: admin/systems/system-list.xml:336
+#: admin/systems/system-list.xml:328
+msgid "Schedule action"
+msgstr "Programmer une action"
+
+#: admin/systems/system-list.xml:335
 msgid "Halt"
 msgstr "Arrêter"
 
-#: admin/systems/system-list.xml:433
+#: admin/systems/system-list.xml:397
+msgid "Activate systems"
+msgstr "Activer un système"
+
+#: admin/systems/system-list.xml:432
 msgid "Change password"
 msgstr "Modifier le mot de passe"
 
-#: admin/systems/system-list.xml:444
+#: admin/systems/system-list.xml:443
 msgid "Create ISO"
 msgstr "Créer un image ISO"
 
-#: admin/systems/system-list.xml:456
+#: admin/systems/system-list.xml:455
 msgid "Edit role"
 msgstr "Editer un rôle"
 
-#: admin/systems/system-list.xml:469
-msgid "Remove role"
-msgstr "Suppression d'un rôle"
+#: admin/systems/system-list.xml:468
+#, fuzzy
+msgid "Remove system"
+msgstr "Suppression de l'utilisateur"
 
 #: admin/systems/password.tpl:3
 msgid ""
@@ -960,6 +735,10 @@ msgstr "Confirmation du nouveau mot de passe"
 #: admin/systems/password.tpl:26
 msgid "Password strength"
 msgstr "Niveau de sécurité du mot de passe"
+
+#: admin/systems/password.tpl:38
+msgid "Set password"
+msgstr "Attribuer le mot de passe"
 
 #: admin/systems/class_servGeneric.inc:82
 msgid "Activated"
@@ -1034,6 +813,12 @@ msgstr "Informations"
 msgid "Server generic"
 msgstr "Serveur générique"
 
+#: admin/systems/class_servGeneric.inc:516 admin/systems/system-list.tpl:13
+#: admin/systems/server.tpl:22 admin/systems/class_componentGeneric.inc:319
+#: admin/systems/component.tpl:17
+msgid "Base"
+msgstr ""
+
 #: admin/systems/class_servGeneric.inc:518
 msgid "Goto mode"
 msgstr "Mode Goto"
@@ -1046,6 +831,10 @@ msgstr "Mot de passe root"
 #: admin/systems/class_servGeneric.inc:520
 msgid "Action flag"
 msgstr "Indicateur d'action"
+
+#: admin/systems/system-list.tpl:13
+msgid "Submit"
+msgstr "Soumettre"
 
 #: admin/systems/server.tpl:26
 msgid "Choose subtree to place server in"
@@ -1174,3 +963,155 @@ msgstr "Nom du périphérique"
 #: admin/systems/component.tpl:20
 msgid "Choose subtree to place component in"
 msgstr "Sélectionnez la branche où sera placée le composant"
+
+#~ msgid "Select all"
+#~ msgstr "Sélectionner tout"
+
+#~ msgid "Department"
+#~ msgstr "Département"
+
+#~ msgid "Release"
+#~ msgstr "Version"
+
+#~ msgid "servers"
+#~ msgstr "Serveurs"
+
+#~ msgid "Show %s"
+#~ msgstr "Afficher %s"
+
+#~ msgid "Linux terminals"
+#~ msgstr "Terminaux linux"
+
+#~ msgid "terminals"
+#~ msgstr "Terminaux"
+
+#~ msgid "Linux workstations"
+#~ msgstr "Stations Linux"
+
+#~ msgid "workstations"
+#~ msgstr "stations de travail"
+
+#~ msgid "MicroSoft Windows based workstations"
+#~ msgstr "Stations de travail Microsoft Windows"
+
+#~ msgid "windows based workstations"
+#~ msgstr "stations de travail Windows"
+
+#~ msgid "Display objects of type '%s'."
+#~ msgstr "Lister les objets de type '%s'."
+
+#~ msgid "OPSI installed client"
+#~ msgstr "Client OPSI installé"
+
+#~ msgid "network printers"
+#~ msgstr "Imprimantes réseaux"
+
+#~ msgid "VoIP phones"
+#~ msgstr "Téléphones VOIP"
+
+#~ msgid "phones"
+#~ msgstr "Téléphones"
+
+#~ msgid "network devices"
+#~ msgstr "Périphériques réseau"
+
+#~ msgid "Display systems matching"
+#~ msgstr "Afficher les systèmes correspondant"
+
+#~ msgid "Display systems of user"
+#~ msgstr "Afficher les systèmes de l'utilisateur"
+
+#~ msgid "Submit department"
+#~ msgstr "Soumettre le département"
+
+#~ msgid "edit"
+#~ msgstr "éditer"
+
+#~ msgid "Edit system"
+#~ msgstr "Editer un système"
+
+#~ msgid "delete"
+#~ msgstr "supprimer"
+
+#~ msgid "Delete system"
+#~ msgstr "Effacer un système"
+
+#~ msgid "Password"
+#~ msgstr "Mot de passe"
+
+#~ msgid "Create CD"
+#~ msgstr "Créer un CD"
+
+#~ msgid "Create FAI CD"
+#~ msgstr "Créer un CD FAI"
+
+#~ msgid "Inherited from %s"
+#~ msgstr "Hérité depuis %s"
+
+#~ msgid "Number of listed '%s'"
+#~ msgstr "Nombre de '%s' listés"
+
+#~ msgid "printers"
+#~ msgstr "Imprimantes"
+
+#~ msgid "network components"
+#~ msgstr "composants réseau"
+
+#~ msgid "new devices"
+#~ msgstr "Nouveau périphériques"
+
+#~ msgid "windows workstations"
+#~ msgstr "Ordinateur Windows"
+
+#~ msgid "departments"
+#~ msgstr "départements"
+
+#~ msgid "Installed services"
+#~ msgstr "Services installés"
+
+#~ msgid "Add, remove and configure the properties of system services here."
+#~ msgstr ""
+#~ "ajouter, de supprimer ou de changer les propriétés d'un service "
+#~ "spécifique ici."
+
+#~ msgid "Add service"
+#~ msgstr "Ajouter un service"
+
+#~ msgid "Add new service"
+#~ msgstr "Ajouter un nouveau service"
+
+#~ msgid "Start all"
+#~ msgstr "Démarrer tout"
+
+#~ msgid "Start all services"
+#~ msgstr "Démarrer tout les services"
+
+#~ msgid "Stop service"
+#~ msgstr "Stopper tout les Service"
+
+#~ msgid "Stop all services"
+#~ msgstr "Stopper tout les services"
+
+#~ msgid "Restart service"
+#~ msgstr "Redémarrer le service"
+
+#~ msgid "Restart all services"
+#~ msgstr "Redémarrer tout les services"
+
+#~ msgid "Stopped"
+#~ msgstr "Arrêté"
+
+#~ msgid "Started"
+#~ msgstr "Démarrer"
+
+#~ msgid "Restarting"
+#~ msgstr "Redémarre"
+
+#~ msgid "User status"
+#~ msgstr "Statut de l'utilisateur"
+
+#~ msgid "Start service"
+#~ msgstr "Démarrer le service"
+
+#~ msgid "Remove role"
+#~ msgstr "Suppression d'un rôle"
