@@ -8,7 +8,7 @@
     <multiSelect>true</multiSelect>
     <template>../plugins/admin/systems/systemSelect/selectSystem-list.tpl</template>
     <module>server</module>
-    <label>List of systems</label>
+    <label>Please select the desired entries</label>
     <defaultSortColumn>1</defaultSortColumn>
 
     <objectType>
@@ -62,7 +62,7 @@
     </column>
 
     <column>
-      <label>Description name</label>
+      <label>Description</label>
       <sortAttribute>description</sortAttribute>
       <sortType>string</sortType>
       <value>%{description}</value>
