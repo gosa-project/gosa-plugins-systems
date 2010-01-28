@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-01-28 22:31+0100\n"
-"PO-Revision-Date: 2010-01-20 00:29+0100\n"
+"PO-Revision-Date: 2010-01-29 00:00+0100\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <>\n"
 "MIME-Version: 1.0\n"
@@ -105,12 +105,12 @@ msgid "Error"
 msgstr "Error"
 
 #: admin/systems/class_systemManagement.inc:259
-#, fuzzy
 msgid ""
 "The passwords you've entered as 'New password' and 'Repeated password' do "
 "not   match!"
 msgstr ""
-"¡La contraseñas introducidas como nueva y reintroduzca contraseña no "
+"¡La contraseñas introducidas como 'Nueva contraseña' y 'Reintroduzca "
+"contraseña' no "
 "coinciden!"
 
 #: admin/systems/class_systemManagement.inc:305
@@ -261,19 +261,17 @@ msgid "Continue"
 msgstr "Continuar"
 
 #: admin/systems/serverService-list.xml:10
-#, fuzzy
 msgid "List of services"
-msgstr "Lista de usuarios"
+msgstr "Lista de servicios"
 
 #: admin/systems/serverService-list.xml:14
 #: admin/systems/serverService-list.xml:60
-#, fuzzy
 msgid "Service"
-msgstr "Servicios"
+msgstr "Servicio"
 
 #: admin/systems/serverService-list.xml:27
 msgid "!"
-msgstr ""
+msgstr "!"
 
 #: admin/systems/serverService-list.xml:35
 #: admin/systems/systemSelect/selectSystem-list.xml:65
@@ -322,13 +320,12 @@ msgid "Remove service"
 msgstr "Eliminar servicio"
 
 #: admin/systems/class_serverService.inc:298
-#, fuzzy
 msgid "Filter error"
-msgstr "Error fatal"
+msgstr "Error del filtro"
 
 #: admin/systems/class_serverService.inc:298
 msgid "The filter is incomplete!"
-msgstr ""
+msgstr "¡El filtro está incompleto!"
 
 #: admin/systems/class_serverService.inc:440
 msgid "Information"
@@ -376,9 +373,8 @@ msgid "Base"
 msgstr "Base"
 
 #: admin/systems/systemSelect/selectSystem-list.xml:11
-#, fuzzy
 msgid "Please select the desired entries"
-msgstr "Por favor seleccione su idioma preferido"
+msgstr "Por favor seleccione las entradas que desee"
 
 #: admin/systems/systemSelect/selectSystem-list.xml:15
 #: admin/systems/.svn/tmp/tempfile.tmp:1629
@@ -410,9 +406,8 @@ msgstr "Nombre"
 
 #: admin/systems/systemSelect/selectSystem-filter.tpl:3
 #: admin/systems/system-filter.tpl:3 admin/systems/serverService-filter.tpl:3
-#, fuzzy
 msgid "Filter"
-msgstr "Filtros"
+msgstr "Filtro"
 
 #: admin/systems/systemSelect/selectSystem-filter.tpl:11
 #: admin/systems/system-filter.tpl:11
@@ -430,29 +425,24 @@ msgid "Show terminals"
 msgstr "Mostrar terminales"
 
 #: admin/systems/system-filter.tpl:20
-#, fuzzy
 msgid "Show network printer"
-msgstr "impresoras de red"
+msgstr "Mostrar la impresoras de red"
 
 #: admin/systems/system-filter.tpl:23
-#, fuzzy
 msgid "Show phones"
-msgstr "Mostrar cambios"
+msgstr "Mostrar teléfonos"
 
 #: admin/systems/system-filter.tpl:26
-#, fuzzy
 msgid "Show windows based workstations"
-msgstr "estaciones de trabajo basadas en windows"
+msgstr "Mostrara estaciones de trabajo basadas en windows"
 
 #: admin/systems/system-filter.tpl:29
-#, fuzzy
 msgid "Show network devices"
-msgstr "dispositivos de Red"
+msgstr "Mostrar dispositivos de Red"
 
 #: admin/systems/system-filter.tpl:32
-#, fuzzy
 msgid "Show incoming devices"
-msgstr "Shadow inactive"
+msgstr "Mostrar dispositivos entrantes"
 
 #: admin/systems/system-filter.tpl:35
 msgid "Show OPSI based clients"
@@ -646,32 +636,26 @@ msgid "Dns records"
 msgstr "Registros DNS"
 
 #: admin/systems/system-list.xml:14
-#, fuzzy
 msgid "Opsi host"
-msgstr "cliente Opsi"
+msgstr "Equipo Opsi"
 
 #: admin/systems/system-list.xml:63 admin/systems/class_filterSYSTEMS.inc:28
-#, fuzzy
 msgid "New unknown device"
-msgstr "Dispositivo desconocido"
+msgstr "Nuevo dispositivo desconocido"
 
 #: admin/systems/system-list.xml:71 admin/systems/class_filterSYSTEMS.inc:31
-#, fuzzy
 msgid "New device"
-msgstr "Nuevo Dispositivo"
+msgstr "Nuevo dispositivo"
 
 #: admin/systems/system-list.xml:79
-#, fuzzy
 msgid "Workstation template"
-msgstr "Plantilla de estación de trabajo para"
+msgstr "Plantilla de estación de trabajo"
 
 #: admin/systems/system-list.xml:87
-#, fuzzy
 msgid "Terminal template"
-msgstr "Plantilla de terminal para"
+msgstr "Plantilla de terminal"
 
 #: admin/systems/system-list.xml:95
-#, fuzzy
 msgid "Winstation"
 msgstr "Estación de trabajo Windows"
 
@@ -680,9 +664,8 @@ msgid "Component"
 msgstr "componente"
 
 #: admin/systems/system-list.xml:226
-#, fuzzy
 msgid "Network printer"
-msgstr "impresoras de red"
+msgstr "Impresora de Red"
 
 #: admin/systems/system-list.xml:262
 msgid "Trigger action"
@@ -690,7 +673,7 @@ msgstr "Acción disparada"
 
 #: admin/systems/system-list.xml:269
 msgid "Halt "
-msgstr ""
+msgstr "Para sistema "
 
 #: admin/systems/system-list.xml:277 admin/systems/system-list.xml:343
 #: admin/systems/class_servGeneric.inc:227
@@ -698,7 +681,6 @@ msgid "Reboot"
 msgstr "Reiniciar"
 
 #: admin/systems/system-list.xml:285 admin/systems/system-list.xml:351
-#, fuzzy
 msgid "Wakeup"
 msgstr "Despertar"
 
@@ -707,14 +689,12 @@ msgid "Update"
 msgstr "Actualizar"
 
 #: admin/systems/system-list.xml:301 admin/systems/system-list.xml:367
-#, fuzzy
 msgid "Lock"
-msgstr "Bloqueado"
+msgstr "Bloqueo"
 
 #: admin/systems/system-list.xml:309 admin/systems/system-list.xml:375
-#, fuzzy
 msgid "Activate"
-msgstr "Activado"
+msgstr "Activar"
 
 #: admin/systems/system-list.xml:317 admin/systems/system-list.xml:383
 #: admin/systems/class_servGeneric.inc:229
@@ -728,7 +708,7 @@ msgstr "Acción programada"
 
 #: admin/systems/system-list.xml:335
 msgid "Halt"
-msgstr ""
+msgstr "Parar sistema"
 
 #: admin/systems/system-list.xml:397
 msgid "Activate systems"
@@ -739,19 +719,16 @@ msgid "Change password"
 msgstr "Cambiar contraseña"
 
 #: admin/systems/system-list.xml:443
-#, fuzzy
 msgid "Create ISO"
-msgstr "Crear"
+msgstr "Crear ISO"
 
 #: admin/systems/system-list.xml:455
-#, fuzzy
 msgid "Edit role"
 msgstr "Editar rol"
 
 #: admin/systems/system-list.xml:468
-#, fuzzy
 msgid "Remove system"
-msgstr "Eliminar usuario"
+msgstr "Eliminar sistema"
 
 #: admin/systems/password.tpl:3
 msgid ""
@@ -876,9 +853,8 @@ msgid "Action flag"
 msgstr "Marca de acción"
 
 #: admin/systems/server.tpl:26
-#, fuzzy
 msgid "Choose subtree to place server in"
-msgstr "Elija el subárbol donde colocar al usuario"
+msgstr "Elija el subárbol donde colocar al servidor"
 
 #: admin/systems/server.tpl:32 admin/systems/component.tpl:25
 msgid "Select a base"
@@ -999,9 +975,8 @@ msgid "Device name"
 msgstr "Nombre del dispositivo"
 
 #: admin/systems/component.tpl:20
-#, fuzzy
 msgid "Choose subtree to place component in"
-msgstr "Elija lugar del árbol para colocar el grupo"
+msgstr "Elija lugar del árbol para colocar el componente"
 
 #~ msgid "Submit"
 #~ msgstr "Enviar"
