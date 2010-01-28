@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-01-28 22:31+0100\n"
-"PO-Revision-Date: 2010-01-18 23:24+0100\n"
+"PO-Revision-Date: 2010-01-28 22:31+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -157,8 +157,7 @@ msgstr "La création de l'image à échoué. veuillez lire le rapport ci dessous
 #: admin/systems/.svn/tmp/tempfile.2.tmp:295
 #, php-format
 msgid "Command '%s', specified for ISO creation doesn't seem to exist."
-msgstr ""
-"La commande '%s', utilisée dans la création de l'image ISO n'existe pas."
+msgstr "La commande '%s', utilisée dans la création de l'image ISO n'existe pas."
 
 #: admin/systems/class_systemManagement.inc:503
 #: admin/systems/class_systemManagement.inc:532
@@ -194,8 +193,7 @@ msgstr "Impossible de mettre le mode comme 'actif' !"
 #: admin/systems/class_systemManagement.inc:1098
 #, php-format
 msgid "You are not allowed to create a snapshot for %s."
-msgstr ""
-"Vous n'êtes pas autorisé à créer une nouvelle copie instantanée pour %s."
+msgstr "Vous n'êtes pas autorisé à créer une nouvelle copie instantanée pour %s."
 
 #: admin/systems/class_systemManagement.inc:1145
 #: admin/systems/class_systemManagement.inc:1166
@@ -253,15 +251,13 @@ msgid "Continue"
 msgstr "Continuer"
 
 #: admin/systems/serverService-list.xml:10
-#, fuzzy
 msgid "List of services"
-msgstr "Liste des utilisateurs"
+msgstr "Liste des services"
 
 #: admin/systems/serverService-list.xml:14
 #: admin/systems/serverService-list.xml:60
-#, fuzzy
 msgid "Service"
-msgstr "Serveur"
+msgstr ""
 
 #: admin/systems/serverService-list.xml:27
 msgid "!"
@@ -366,9 +362,8 @@ msgid "Base"
 msgstr ""
 
 #: admin/systems/systemSelect/selectSystem-list.xml:11
-#, fuzzy
 msgid "Please select the desired entries"
-msgstr "Veuillez sélectionner la langue par défaut"
+msgstr "Veuillez sélectionner les entrées désirées"
 
 #: admin/systems/systemSelect/selectSystem-list.xml:15
 #: admin/systems/.svn/tmp/tempfile.tmp:1629
@@ -721,9 +716,8 @@ msgid "Edit role"
 msgstr "Editer un rôle"
 
 #: admin/systems/system-list.xml:468
-#, fuzzy
 msgid "Remove system"
-msgstr "Suppression de l'utilisateur"
+msgstr "Suppression du système"
 
 #: admin/systems/password.tpl:3
 msgid ""
@@ -819,8 +813,7 @@ msgid "Software deployment"
 msgstr "Déploiement de logiciel"
 
 #: admin/systems/class_servGeneric.inc:372
-msgid ""
-"This host is currently installing, if you really want to save it, press 'OK'."
+msgid "This host is currently installing, if you really want to save it, press 'OK'."
 msgstr ""
 "Cet hôte est actuellement en cours d'installation, si vous voulez vraiment "
 "le sauver, cliquez sur 'OK'."
@@ -868,8 +861,7 @@ msgid "Action"
 msgstr "Action"
 
 #: admin/systems/server.tpl:69
-msgid ""
-"System installation in progress, the FAI state cannot be changed right now."
+msgid "System installation in progress, the FAI state cannot be changed right now."
 msgstr ""
 "Le système est en cours d'installation, l'état FAI ne peut pas être changé "
 "maintenant."
@@ -932,8 +924,7 @@ msgstr ""
 #: admin/systems/class_termDNS.inc:690
 #, php-format
 msgid "Only lowercase records are allowed, please check your '%ss'."
-msgstr ""
-"Seulement les minuscules sont autorisée, veuillez vérifier votre '%ss'."
+msgstr "Seulement les minuscules sont autorisée, veuillez vérifier votre '%ss'."
 
 #: admin/systems/class_termDNS.inc:950 admin/systems/class_termDNS.inc:970
 msgid "Add"
@@ -975,157 +966,3 @@ msgstr "Nom du périphérique"
 msgid "Choose subtree to place component in"
 msgstr "Sélectionnez la branche où sera placée le composant"
 
-#~ msgid "Submit"
-#~ msgstr "Soumettre"
-
-#~ msgid "Select all"
-#~ msgstr "Sélectionner tout"
-
-#~ msgid "Department"
-#~ msgstr "Département"
-
-#~ msgid "Release"
-#~ msgstr "Version"
-
-#~ msgid "servers"
-#~ msgstr "Serveurs"
-
-#~ msgid "Show %s"
-#~ msgstr "Afficher %s"
-
-#~ msgid "Linux terminals"
-#~ msgstr "Terminaux linux"
-
-#~ msgid "terminals"
-#~ msgstr "Terminaux"
-
-#~ msgid "Linux workstations"
-#~ msgstr "Stations Linux"
-
-#~ msgid "workstations"
-#~ msgstr "stations de travail"
-
-#~ msgid "MicroSoft Windows based workstations"
-#~ msgstr "Stations de travail Microsoft Windows"
-
-#~ msgid "windows based workstations"
-#~ msgstr "stations de travail Windows"
-
-#~ msgid "Display objects of type '%s'."
-#~ msgstr "Lister les objets de type '%s'."
-
-#~ msgid "OPSI installed client"
-#~ msgstr "Client OPSI installé"
-
-#~ msgid "network printers"
-#~ msgstr "Imprimantes réseaux"
-
-#~ msgid "VoIP phones"
-#~ msgstr "Téléphones VOIP"
-
-#~ msgid "phones"
-#~ msgstr "Téléphones"
-
-#~ msgid "network devices"
-#~ msgstr "Périphériques réseau"
-
-#~ msgid "Display systems matching"
-#~ msgstr "Afficher les systèmes correspondant"
-
-#~ msgid "Display systems of user"
-#~ msgstr "Afficher les systèmes de l'utilisateur"
-
-#~ msgid "Submit department"
-#~ msgstr "Soumettre le département"
-
-#~ msgid "edit"
-#~ msgstr "éditer"
-
-#~ msgid "Edit system"
-#~ msgstr "Editer un système"
-
-#~ msgid "delete"
-#~ msgstr "supprimer"
-
-#~ msgid "Delete system"
-#~ msgstr "Effacer un système"
-
-#~ msgid "Password"
-#~ msgstr "Mot de passe"
-
-#~ msgid "Create CD"
-#~ msgstr "Créer un CD"
-
-#~ msgid "Create FAI CD"
-#~ msgstr "Créer un CD FAI"
-
-#~ msgid "Inherited from %s"
-#~ msgstr "Hérité depuis %s"
-
-#~ msgid "Number of listed '%s'"
-#~ msgstr "Nombre de '%s' listés"
-
-#~ msgid "printers"
-#~ msgstr "Imprimantes"
-
-#~ msgid "network components"
-#~ msgstr "composants réseau"
-
-#~ msgid "new devices"
-#~ msgstr "Nouveau périphériques"
-
-#~ msgid "windows workstations"
-#~ msgstr "Ordinateur Windows"
-
-#~ msgid "departments"
-#~ msgstr "départements"
-
-#~ msgid "Installed services"
-#~ msgstr "Services installés"
-
-#~ msgid "Add, remove and configure the properties of system services here."
-#~ msgstr ""
-#~ "ajouter, de supprimer ou de changer les propriétés d'un service "
-#~ "spécifique ici."
-
-#~ msgid "Add service"
-#~ msgstr "Ajouter un service"
-
-#~ msgid "Add new service"
-#~ msgstr "Ajouter un nouveau service"
-
-#~ msgid "Start all"
-#~ msgstr "Démarrer tout"
-
-#~ msgid "Start all services"
-#~ msgstr "Démarrer tout les services"
-
-#~ msgid "Stop service"
-#~ msgstr "Stopper tout les Service"
-
-#~ msgid "Stop all services"
-#~ msgstr "Stopper tout les services"
-
-#~ msgid "Restart service"
-#~ msgstr "Redémarrer le service"
-
-#~ msgid "Restart all services"
-#~ msgstr "Redémarrer tout les services"
-
-#~ msgid "Stopped"
-#~ msgstr "Arrêté"
-
-#~ msgid "Started"
-#~ msgstr "Démarrer"
-
-#~ msgid "Restarting"
-#~ msgstr "Redémarre"
-
-#~ msgid "User status"
-#~ msgstr "Statut de l'utilisateur"
-
-#~ msgid "Start service"
-#~ msgstr "Démarrer le service"
-
-#~ msgid "Remove role"
-#~ msgstr "Suppression d'un rôle"
