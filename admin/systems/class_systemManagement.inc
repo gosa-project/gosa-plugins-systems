@@ -708,10 +708,10 @@ class systemManagement extends management
     if(!isset($tInfo[$info])){
       trigger_error("Unknown action type '".$action."' cant create a new system!");
     }else{
-      management::newEntry($action,$target,$all, 
+      return(management::newEntry($action,$target,$all, 
           $tInfo[$info]['tabClass'],
           $tInfo[$info]['tabDesc'],
-          $tInfo[$info]['aclCategory']);
+          $tInfo[$info]['aclCategory']));
     }
   }
 
