@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-27 15:14+0100\n"
+"POT-Creation-Date: 2010-01-28 22:31+0100\n"
 "PO-Revision-Date: 2005-04-18 14:35+0300\n"
 "Last-Translator: Igor Muratov <migor@altlinux.org>\n"
 "Language-Team: ALT Linux Team\n"
@@ -275,9 +275,11 @@ msgstr "Сервисы"
 msgid "!"
 msgstr ""
 
-#: admin/systems/serverService-list.xml:35 admin/systems/system-list.xml:177
-#: admin/systems/class_servGeneric.inc:515 admin/systems/server.tpl:14
-#: admin/systems/class_componentGeneric.inc:320 admin/systems/component.tpl:35
+#: admin/systems/serverService-list.xml:35
+#: admin/systems/systemSelect/selectSystem-list.xml:65
+#: admin/systems/system-list.xml:177 admin/systems/class_servGeneric.inc:515
+#: admin/systems/server.tpl:14 admin/systems/class_componentGeneric.inc:320
+#: admin/systems/component.tpl:35
 msgid "Description"
 msgstr "Описание"
 
@@ -374,19 +376,64 @@ msgstr "Имя принтера"
 msgid "Component name"
 msgstr "Местоположение"
 
+#: admin/systems/systemSelect/selectSystem-list.tpl:13
+#: admin/systems/class_servGeneric.inc:516 admin/systems/system-list.tpl:13
+#: admin/systems/server.tpl:22 admin/systems/class_componentGeneric.inc:319
+#: admin/systems/component.tpl:17
+msgid "Base"
+msgstr "Ветка"
+
+#: admin/systems/systemSelect/selectSystem-list.xml:11
+#, fuzzy
+msgid "Please select the desired entries"
+msgstr "Язык по умолчанию"
+
+#: admin/systems/systemSelect/selectSystem-list.xml:15
+#: admin/systems/.svn/tmp/tempfile.tmp:1629
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1633
+#: admin/systems/system-list.xml:103 admin/systems/system-list.xml:202
+#: admin/systems/class_servGeneric.inc:511
+msgid "Server"
+msgstr "Сервер"
+
+#: admin/systems/systemSelect/selectSystem-list.xml:23
+#: admin/systems/.svn/tmp/tempfile.tmp:1628
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1632
+#: admin/systems/system-list.xml:111 admin/systems/system-list.xml:210
+msgid "Workstation"
+msgstr "Рабочая станция"
+
+#: admin/systems/systemSelect/selectSystem-list.xml:31
+#: admin/systems/.svn/tmp/tempfile.tmp:1630
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1634
+#: admin/systems/system-list.xml:119 admin/systems/system-list.xml:218
+#, fuzzy
+msgid "Terminal"
+msgstr "Терминалы"
+
+#: admin/systems/systemSelect/selectSystem-list.xml:57
+#: admin/systems/system-list.xml:169 admin/systems/class_servGeneric.inc:514
+#: admin/systems/class_componentGeneric.inc:318
+msgid "Name"
+msgstr "Фамилия"
+
+#: admin/systems/systemSelect/selectSystem-filter.tpl:3
 #: admin/systems/system-filter.tpl:3 admin/systems/serverService-filter.tpl:3
 #, fuzzy
 msgid "Filter"
 msgstr "Фильтры"
 
+#: admin/systems/systemSelect/selectSystem-filter.tpl:11
 #: admin/systems/system-filter.tpl:11
 msgid "Show servers"
 msgstr "Показать серверы"
 
+#: admin/systems/systemSelect/selectSystem-filter.tpl:12
 #: admin/systems/system-filter.tpl:14
 msgid "Show workstations"
 msgstr "Показать рабочие станции"
 
+#: admin/systems/systemSelect/selectSystem-filter.tpl:13
 #: admin/systems/system-filter.tpl:17
 msgid "Show terminals"
 msgstr "Показать терминалы"
@@ -507,26 +554,6 @@ msgstr "Принтер"
 #, fuzzy
 msgid "Windows workstation"
 msgstr "Показать рабочие станции"
-
-#: admin/systems/.svn/tmp/tempfile.tmp:1628
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1632
-#: admin/systems/system-list.xml:111 admin/systems/system-list.xml:210
-msgid "Workstation"
-msgstr "Рабочая станция"
-
-#: admin/systems/.svn/tmp/tempfile.tmp:1629
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1633
-#: admin/systems/system-list.xml:103 admin/systems/system-list.xml:202
-#: admin/systems/class_servGeneric.inc:511
-msgid "Server"
-msgstr "Сервер"
-
-#: admin/systems/.svn/tmp/tempfile.tmp:1630
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1634
-#: admin/systems/system-list.xml:119 admin/systems/system-list.xml:218
-#, fuzzy
-msgid "Terminal"
-msgstr "Терминалы"
 
 #: admin/systems/.svn/tmp/tempfile.tmp:1632
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1636 admin/systems/system-list.xml:38
@@ -686,11 +713,6 @@ msgstr "Рабочая станция"
 msgid "Component"
 msgstr "Прочие сетевые компоненты"
 
-#: admin/systems/system-list.xml:169 admin/systems/class_servGeneric.inc:514
-#: admin/systems/class_componentGeneric.inc:318
-msgid "Name"
-msgstr "Фамилия"
-
 #: admin/systems/system-list.xml:226
 #, fuzzy
 msgid "Network printer"
@@ -716,7 +738,6 @@ msgid "Wakeup"
 msgstr "Вернуть в обычный режим"
 
 #: admin/systems/system-list.xml:293 admin/systems/system-list.xml:359
-#: admin/systems/system-list.tpl:13
 msgid "Update"
 msgstr ""
 
@@ -884,12 +905,6 @@ msgstr "Общее"
 msgid "Server generic"
 msgstr "Имя сервера"
 
-#: admin/systems/class_servGeneric.inc:516 admin/systems/system-list.tpl:13
-#: admin/systems/server.tpl:22 admin/systems/class_componentGeneric.inc:319
-#: admin/systems/component.tpl:17
-msgid "Base"
-msgstr "Ветка"
-
 #: admin/systems/class_servGeneric.inc:518
 #, fuzzy
 msgid "Goto mode"
@@ -905,10 +920,6 @@ msgstr "Изменить пароль"
 #, fuzzy
 msgid "Action flag"
 msgstr "Действие"
-
-#: admin/systems/system-list.tpl:13
-msgid "Submit"
-msgstr ""
 
 #: admin/systems/server.tpl:26
 #, fuzzy

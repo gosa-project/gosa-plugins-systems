@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-27 15:14+0100\n"
+"POT-Creation-Date: 2010-01-28 22:31+0100\n"
 "PO-Revision-Date: 2010-01-18 23:24+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
@@ -267,9 +267,11 @@ msgstr "Serveur"
 msgid "!"
 msgstr ""
 
-#: admin/systems/serverService-list.xml:35 admin/systems/system-list.xml:177
-#: admin/systems/class_servGeneric.inc:515 admin/systems/server.tpl:14
-#: admin/systems/class_componentGeneric.inc:320 admin/systems/component.tpl:35
+#: admin/systems/serverService-list.xml:35
+#: admin/systems/systemSelect/selectSystem-list.xml:65
+#: admin/systems/system-list.xml:177 admin/systems/class_servGeneric.inc:515
+#: admin/systems/server.tpl:14 admin/systems/class_componentGeneric.inc:320
+#: admin/systems/component.tpl:35
 msgid "Description"
 msgstr "Description"
 
@@ -356,18 +358,62 @@ msgstr "Nom de l'imprimante"
 msgid "Component name"
 msgstr "Nom du composant"
 
+#: admin/systems/systemSelect/selectSystem-list.tpl:13
+#: admin/systems/class_servGeneric.inc:516 admin/systems/system-list.tpl:13
+#: admin/systems/server.tpl:22 admin/systems/class_componentGeneric.inc:319
+#: admin/systems/component.tpl:17
+msgid "Base"
+msgstr ""
+
+#: admin/systems/systemSelect/selectSystem-list.xml:11
+#, fuzzy
+msgid "Please select the desired entries"
+msgstr "Veuillez sélectionner la langue par défaut"
+
+#: admin/systems/systemSelect/selectSystem-list.xml:15
+#: admin/systems/.svn/tmp/tempfile.tmp:1629
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1633
+#: admin/systems/system-list.xml:103 admin/systems/system-list.xml:202
+#: admin/systems/class_servGeneric.inc:511
+msgid "Server"
+msgstr "Serveur"
+
+#: admin/systems/systemSelect/selectSystem-list.xml:23
+#: admin/systems/.svn/tmp/tempfile.tmp:1628
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1632
+#: admin/systems/system-list.xml:111 admin/systems/system-list.xml:210
+msgid "Workstation"
+msgstr "Stations de travail"
+
+#: admin/systems/systemSelect/selectSystem-list.xml:31
+#: admin/systems/.svn/tmp/tempfile.tmp:1630
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1634
+#: admin/systems/system-list.xml:119 admin/systems/system-list.xml:218
+msgid "Terminal"
+msgstr ""
+
+#: admin/systems/systemSelect/selectSystem-list.xml:57
+#: admin/systems/system-list.xml:169 admin/systems/class_servGeneric.inc:514
+#: admin/systems/class_componentGeneric.inc:318
+msgid "Name"
+msgstr "Nom"
+
+#: admin/systems/systemSelect/selectSystem-filter.tpl:3
 #: admin/systems/system-filter.tpl:3 admin/systems/serverService-filter.tpl:3
 msgid "Filter"
 msgstr "Filtre"
 
+#: admin/systems/systemSelect/selectSystem-filter.tpl:11
 #: admin/systems/system-filter.tpl:11
 msgid "Show servers"
 msgstr "Serveurs"
 
+#: admin/systems/systemSelect/selectSystem-filter.tpl:12
 #: admin/systems/system-filter.tpl:14
 msgid "Show workstations"
 msgstr "Stations de travail"
 
+#: admin/systems/systemSelect/selectSystem-filter.tpl:13
 #: admin/systems/system-filter.tpl:17
 msgid "Show terminals"
 msgstr "Terminaux"
@@ -479,25 +525,6 @@ msgstr "Imprimante"
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1630
 msgid "Windows workstation"
 msgstr "Ordinateur Windows"
-
-#: admin/systems/.svn/tmp/tempfile.tmp:1628
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1632
-#: admin/systems/system-list.xml:111 admin/systems/system-list.xml:210
-msgid "Workstation"
-msgstr "Stations de travail"
-
-#: admin/systems/.svn/tmp/tempfile.tmp:1629
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1633
-#: admin/systems/system-list.xml:103 admin/systems/system-list.xml:202
-#: admin/systems/class_servGeneric.inc:511
-msgid "Server"
-msgstr "Serveur"
-
-#: admin/systems/.svn/tmp/tempfile.tmp:1630
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1634
-#: admin/systems/system-list.xml:119 admin/systems/system-list.xml:218
-msgid "Terminal"
-msgstr ""
 
 #: admin/systems/.svn/tmp/tempfile.tmp:1632
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1636 admin/systems/system-list.xml:38
@@ -630,11 +657,6 @@ msgstr "Pc Windows"
 msgid "Component"
 msgstr "Composant"
 
-#: admin/systems/system-list.xml:169 admin/systems/class_servGeneric.inc:514
-#: admin/systems/class_componentGeneric.inc:318
-msgid "Name"
-msgstr "Nom"
-
 #: admin/systems/system-list.xml:226
 msgid "Network printer"
 msgstr "Imprimante réseaux"
@@ -657,7 +679,6 @@ msgid "Wakeup"
 msgstr "Réveiller"
 
 #: admin/systems/system-list.xml:293 admin/systems/system-list.xml:359
-#: admin/systems/system-list.tpl:13
 msgid "Update"
 msgstr "Mise à jour"
 
@@ -813,12 +834,6 @@ msgstr "Informations"
 msgid "Server generic"
 msgstr "Serveur générique"
 
-#: admin/systems/class_servGeneric.inc:516 admin/systems/system-list.tpl:13
-#: admin/systems/server.tpl:22 admin/systems/class_componentGeneric.inc:319
-#: admin/systems/component.tpl:17
-msgid "Base"
-msgstr ""
-
 #: admin/systems/class_servGeneric.inc:518
 msgid "Goto mode"
 msgstr "Mode Goto"
@@ -831,10 +846,6 @@ msgstr "Mot de passe root"
 #: admin/systems/class_servGeneric.inc:520
 msgid "Action flag"
 msgstr "Indicateur d'action"
-
-#: admin/systems/system-list.tpl:13
-msgid "Submit"
-msgstr "Soumettre"
 
 #: admin/systems/server.tpl:26
 msgid "Choose subtree to place server in"
@@ -963,6 +974,9 @@ msgstr "Nom du périphérique"
 #: admin/systems/component.tpl:20
 msgid "Choose subtree to place component in"
 msgstr "Sélectionnez la branche où sera placée le composant"
+
+#~ msgid "Submit"
+#~ msgstr "Soumettre"
 
 #~ msgid "Select all"
 #~ msgstr "Sélectionner tout"

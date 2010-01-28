@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-27 15:14+0100\n"
+"POT-Creation-Date: 2010-01-28 22:31+0100\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -271,9 +271,11 @@ msgstr "服务"
 msgid "!"
 msgstr ""
 
-#: admin/systems/serverService-list.xml:35 admin/systems/system-list.xml:177
-#: admin/systems/class_servGeneric.inc:515 admin/systems/server.tpl:14
-#: admin/systems/class_componentGeneric.inc:320 admin/systems/component.tpl:35
+#: admin/systems/serverService-list.xml:35
+#: admin/systems/systemSelect/selectSystem-list.xml:65
+#: admin/systems/system-list.xml:177 admin/systems/class_servGeneric.inc:515
+#: admin/systems/server.tpl:14 admin/systems/class_componentGeneric.inc:320
+#: admin/systems/component.tpl:35
 msgid "Description"
 msgstr "描述"
 
@@ -369,19 +371,63 @@ msgstr "打印机名称"
 msgid "Component name"
 msgstr "常用名"
 
+#: admin/systems/systemSelect/selectSystem-list.tpl:13
+#: admin/systems/class_servGeneric.inc:516 admin/systems/system-list.tpl:13
+#: admin/systems/server.tpl:22 admin/systems/class_componentGeneric.inc:319
+#: admin/systems/component.tpl:17
+msgid "Base"
+msgstr "位置"
+
+#: admin/systems/systemSelect/selectSystem-list.xml:11
+#, fuzzy
+msgid "Please select the desired entries"
+msgstr "请选择一个打印机或者取消。"
+
+#: admin/systems/systemSelect/selectSystem-list.xml:15
+#: admin/systems/.svn/tmp/tempfile.tmp:1629
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1633
+#: admin/systems/system-list.xml:103 admin/systems/system-list.xml:202
+#: admin/systems/class_servGeneric.inc:511
+msgid "Server"
+msgstr "服务器"
+
+#: admin/systems/systemSelect/selectSystem-list.xml:23
+#: admin/systems/.svn/tmp/tempfile.tmp:1628
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1632
+#: admin/systems/system-list.xml:111 admin/systems/system-list.xml:210
+msgid "Workstation"
+msgstr "工作站"
+
+#: admin/systems/systemSelect/selectSystem-list.xml:31
+#: admin/systems/.svn/tmp/tempfile.tmp:1630
+#: admin/systems/.svn/tmp/tempfile.2.tmp:1634
+#: admin/systems/system-list.xml:119 admin/systems/system-list.xml:218
+msgid "Terminal"
+msgstr "终端"
+
+#: admin/systems/systemSelect/selectSystem-list.xml:57
+#: admin/systems/system-list.xml:169 admin/systems/class_servGeneric.inc:514
+#: admin/systems/class_componentGeneric.inc:318
+msgid "Name"
+msgstr "名称"
+
+#: admin/systems/systemSelect/selectSystem-filter.tpl:3
 #: admin/systems/system-filter.tpl:3 admin/systems/serverService-filter.tpl:3
 #, fuzzy
 msgid "Filter"
 msgstr "过滤器"
 
+#: admin/systems/systemSelect/selectSystem-filter.tpl:11
 #: admin/systems/system-filter.tpl:11
 msgid "Show servers"
 msgstr "显示服务器"
 
+#: admin/systems/systemSelect/selectSystem-filter.tpl:12
 #: admin/systems/system-filter.tpl:14
 msgid "Show workstations"
 msgstr "显示工作站"
 
+#: admin/systems/systemSelect/selectSystem-filter.tpl:13
 #: admin/systems/system-filter.tpl:17
 msgid "Show terminals"
 msgstr "显示终端"
@@ -499,25 +545,6 @@ msgstr "打印机"
 #, fuzzy
 msgid "Windows workstation"
 msgstr "显示工作站"
-
-#: admin/systems/.svn/tmp/tempfile.tmp:1628
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1632
-#: admin/systems/system-list.xml:111 admin/systems/system-list.xml:210
-msgid "Workstation"
-msgstr "工作站"
-
-#: admin/systems/.svn/tmp/tempfile.tmp:1629
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1633
-#: admin/systems/system-list.xml:103 admin/systems/system-list.xml:202
-#: admin/systems/class_servGeneric.inc:511
-msgid "Server"
-msgstr "服务器"
-
-#: admin/systems/.svn/tmp/tempfile.tmp:1630
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1634
-#: admin/systems/system-list.xml:119 admin/systems/system-list.xml:218
-msgid "Terminal"
-msgstr "终端"
 
 #: admin/systems/.svn/tmp/tempfile.tmp:1632
 #: admin/systems/.svn/tmp/tempfile.2.tmp:1636 admin/systems/system-list.xml:38
@@ -671,11 +698,6 @@ msgstr "Windows 工作站"
 msgid "Component"
 msgstr "新组件"
 
-#: admin/systems/system-list.xml:169 admin/systems/class_servGeneric.inc:514
-#: admin/systems/class_componentGeneric.inc:318
-msgid "Name"
-msgstr "名称"
-
 #: admin/systems/system-list.xml:226
 #, fuzzy
 msgid "Network printer"
@@ -701,7 +723,6 @@ msgid "Wakeup"
 msgstr "唤醒"
 
 #: admin/systems/system-list.xml:293 admin/systems/system-list.xml:359
-#: admin/systems/system-list.tpl:13
 msgid "Update"
 msgstr ""
 
@@ -864,12 +885,6 @@ msgstr "通用配置"
 msgid "Server generic"
 msgstr "服务器名称"
 
-#: admin/systems/class_servGeneric.inc:516 admin/systems/system-list.tpl:13
-#: admin/systems/server.tpl:22 admin/systems/class_componentGeneric.inc:319
-#: admin/systems/component.tpl:17
-msgid "Base"
-msgstr "位置"
-
 #: admin/systems/class_servGeneric.inc:518
 #, fuzzy
 msgid "Goto mode"
@@ -885,10 +900,6 @@ msgstr "设置口令"
 #, fuzzy
 msgid "Action flag"
 msgstr "行动"
-
-#: admin/systems/system-list.tpl:13
-msgid "Submit"
-msgstr "提交"
 
 #: admin/systems/server.tpl:26
 #, fuzzy
@@ -1018,6 +1029,9 @@ msgstr "设备名称"
 #, fuzzy
 msgid "Choose subtree to place component in"
 msgstr "选择来放置组的子树"
+
+#~ msgid "Submit"
+#~ msgstr "提交"
 
 #, fuzzy
 #~ msgid "Select all"
