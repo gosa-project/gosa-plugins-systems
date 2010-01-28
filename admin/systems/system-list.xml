@@ -133,7 +133,7 @@
 
     <objectType>
       <label>Phone</label>
-      <objectClass>goPhoneHardware</objectClass>
+      <objectClass>goFonHardware</objectClass>
       <category>phone</category>
       <class>phoneGeneric</class>
       <image>plugins/systems/images/select_phone.png</image>
