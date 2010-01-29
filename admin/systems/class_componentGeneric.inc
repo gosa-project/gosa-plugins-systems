@@ -39,6 +39,7 @@ class componentGeneric extends plugin
   var $objectclasses= array("top", "device", "ipHost", "ieee802Device");
   var $netConfigDNS;
   var $view_logged  = FALSE;
+  var $baseSelector;
 
   function componentGeneric (&$config, $dn= NULL, $parent= NULL)
   {
@@ -58,6 +59,12 @@ class componentGeneric extends plugin
 
     $this->orig_base = $this->base;
     $this->orig_cn = $this->cn;
+
+    /* Instanciate base selector */
+    $this->baseSelector= new baseSelector($this->get_allowed_bases(), $this->base);
+    $this->baseSelector->setSubmitButton(false);
+    $this->baseSelector->setHeight(300);
+    $this->baseSelector->update(true);
   }
 
 
@@ -111,7 +118,7 @@ class componentGeneric extends plugin
 
     /* Fill templating stuff */
     $smarty= get_smarty();
-    $smarty->assign("bases", $this->config->idepartments);
+    $smarty->assign("usePrototype", "true");
 
     /* Set acls */
     $tmp = $this->plInfo();
@@ -119,13 +126,11 @@ class componentGeneric extends plugin
       $smarty->assign($name."ACL",$this->getacl($name));
     }
 
-    $smarty->assign("bases", $this->get_allowed_bases());
-
     /* Assign attributes */
     foreach ($this->attributes as $attr){
       $smarty->assign("$attr", $this->$attr);
     }
-    $smarty->assign("base_select", $this->base);
+    $smarty->assign("base", $this->baseSelector->render());
 
     /* Show main page */
     $str = $this->netConfigDNS->execute();
@@ -186,13 +191,17 @@ class componentGeneric extends plugin
 
     $this->netConfigDNS->save_object();
 
-    /* Set new base if allowed */
-    $tmp = $this->get_allowed_bases();
-    if(isset($_POST['base'])){
-      if(isset($tmp[$_POST['base']])){
-        $this->base= $_POST['base'];
+    /* Refresh base */
+    if ($this->acl_is_moveable($this->base)){
+      if (!$this->baseSelector->update()) {
+        msg_dialog::display(_("Error"), msgPool::permMove(), ERROR_DIALOG);
+      }
+      if ($this->base != $this->baseSelector->getBase()) {
+        $this->base= $this->baseSelector->getBase();
+        $this->is_modified= TRUE;
       }
     }
+
   }
 
 
