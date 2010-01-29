@@ -54,6 +54,7 @@ class servgeneric extends plugin
   var $currently_installing_warned = FALSE;
 
   var $kerberos_key_service = NULL;
+  var $baseSelector;
 
   var $mapActions   = array("reboot"          => "",
                             "instant_update"  => "softupdate",
@@ -117,6 +118,12 @@ class servgeneric extends plugin
     $this->orig_dn   = $this->dn;
     $this->orig_cn   = $this->cn;
     $this->orig_base = $this->base;
+
+    /* Instanciate base selector */
+    $this->baseSelector= new baseSelector($this->get_allowed_bases(), $this->base);
+    $this->baseSelector->setSubmitButton(false);
+    $this->baseSelector->setHeight(300);
+    $this->baseSelector->update(true);
   }
 
 
@@ -173,38 +180,9 @@ class servgeneric extends plugin
       }
     }
 
-    /* Base select dialog */
-    $once = true;
-    foreach($_POST as $name => $value){
-      if(preg_match("/^chooseBase/",$name) && $once ){
-        $once = false;
-        $this->dialog = new baseSelectDialog($this->config,$this,$this->get_allowed_bases());
-        $this->dialog->setCurrentBase($this->base);
-      }
-    }
-
-    /* Dialog handling */
-    if(is_object($this->dialog)){
-      /* Must be called before save_object */
-      $this->dialog->save_object();
-
-      if($this->dialog->isClosed()){
-        $this->dialog = false;
-      }elseif($this->dialog->isSelected()){
-  
-        /* Only accept allowed bases */
-        $tmp = $this->get_allowed_bases();
-        if($tmp[$this->dialog->isSelected()]){
-          $this->base = $this->dialog->isSelected();
-        }
-        $this->dialog= false;
-      }else{
-        return($this->dialog->execute());
-      }
-    }
-
     /* Fill templating stuff */
     $smarty= get_smarty();
+    $smarty->assign("usePrototype", "true");
 
     $tmp = $this->plInfo();
     foreach($tmp['plProvidedAcls'] as $name => $translated){
@@ -212,7 +190,7 @@ class servgeneric extends plugin
     }
 
     /* Assign base ACL */
-    $smarty->assign("bases"   , $this->get_allowed_bases());
+    $smarty->assign("base", $this->baseSelector->render());
 
     /* Assign attributes */
     foreach ($this->attributes as $attr){
@@ -220,7 +198,6 @@ class servgeneric extends plugin
     }
 
     $smarty->assign("staticAddress", "");
-    $smarty->assign("base_select", $this->base);
 
     /* Assign status */
     if (gosaSupportDaemon::ping($this->netConfigDNS->macAddress)){
@@ -311,15 +288,17 @@ class servgeneric extends plugin
     plugin::save_object();
     $this->netConfigDNS->save_object();
 
-    /* Get base selection */
-    $tmp = $this->get_allowed_bases();
-    if(isset($_POST['base'])){
-      if($tmp[$_POST['base']]){
-        $this->base = $_POST['base'];
-      }else{
-        $this->base = $base_tmp;
+    /* Refresh base */
+    if ($this->acl_is_moveable($this->base)){
+      if (!$this->baseSelector->update()) {
+        msg_dialog::display(_("Error"), msgPool::permMove(), ERROR_DIALOG);
+      }
+      if ($this->base != $this->baseSelector->getBase()) {
+        $this->base= $this->baseSelector->getBase();
+        $this->is_modified= TRUE;
       }
     }
+
 
     /* Hanle kerberos host key plugin */
     if(is_object($this->kerberos_key_service)){
