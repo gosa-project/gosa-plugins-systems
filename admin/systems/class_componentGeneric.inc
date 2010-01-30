@@ -85,37 +85,6 @@ class componentGeneric extends plugin
       return($display);
     }
 
-    /* Base select dialog */
-    $once = true;
-    foreach($_POST as $name => $value){
-      if(preg_match("/^chooseBase/",$name) && $once){
-        $once = false;
-        $this->dialog = new baseSelectDialog($this->config,$this,$this->get_allowed_bases());
-        $this->dialog->setCurrentBase($this->base);
-      }
-    }
-
-    /* Dialog handling */
-    if(is_object($this->dialog)){
-      /* Must be called before save_object */
-      $this->dialog->save_object();
-
-      if($this->dialog->isClosed()){
-        $this->dialog = false;
-      }elseif($this->dialog->isSelected()){
-
-        /* A new base was selected, check if it is a valid one */
-        $tmp = $this->get_allowed_bases();
-        if(isset($tmp[$this->dialog->isSelected()])){
-          $this->base = $this->dialog->isSelected();
-        }
-
-        $this->dialog= false;
-      }else{
-        return($this->dialog->execute());
-      }
-    }
-
     /* Fill templating stuff */
     $smarty= get_smarty();
     $smarty->assign("usePrototype", "true");
