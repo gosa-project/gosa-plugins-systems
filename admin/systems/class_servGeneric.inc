@@ -325,6 +325,11 @@ class servgeneric extends plugin
       $message[]= msgPool::invalid(_("Server name"), $this->cn, "/[a-z0-9\.\-]/i");
     }
 
+    // Check if a wrong base was supplied
+    if(!$this->baseSelector->checkLastBaseUpdate()){
+      $message[]= msgPool::check_base();;
+    }
+
     if ($this->orig_dn != $this->dn){
       $ldap= $this->config->get_ldap_link();
       $ldap->cd ($this->base);
