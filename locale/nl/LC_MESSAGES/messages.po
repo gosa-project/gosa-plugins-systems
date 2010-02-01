@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:31+0100\n"
+"POT-Creation-Date: 2010-02-01 14:51+0100\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
@@ -40,13 +40,9 @@ msgstr ""
 "om te annuleren."
 
 #: admin/systems/class_systemManagement.inc:60
+#: admin/systems/class_systemManagement.inc:61
 msgid "Systems"
 msgstr "Systemen"
-
-#: admin/systems/class_systemManagement.inc:61
-#: admin/systems/system-list.xml:10
-msgid "List of systems"
-msgstr "Lijst met systemen"
 
 #: admin/systems/class_systemManagement.inc:171
 #: admin/systems/class_systemManagement.inc:267
@@ -675,6 +671,10 @@ msgstr "TTL"
 #: admin/systems/network.tpl:162
 msgid "Dns records"
 msgstr "DNS records"
+
+#: admin/systems/system-list.xml:10
+msgid "List of systems"
+msgstr "Lijst met systemen"
 
 #: admin/systems/system-list.xml:14
 #, fuzzy

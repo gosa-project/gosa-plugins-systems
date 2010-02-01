@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:31+0100\n"
+"POT-Creation-Date: 2010-02-01 14:51+0100\n"
 "PO-Revision-Date: 2007-06-03 12:27+0800\n"
 "Last-Translator: Jiang Xin <worldhello.net@gmail.com>\n"
 "Language-Team: Chinese Simplified <zh@li.org>\n"
@@ -34,13 +34,9 @@ msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
 msgstr "所以，如果您确定，请按“删除”继续，否则按“取消”退出。"
 
 #: admin/systems/class_systemManagement.inc:60
+#: admin/systems/class_systemManagement.inc:61
 msgid "Systems"
 msgstr "系统设置"
-
-#: admin/systems/class_systemManagement.inc:61
-#: admin/systems/system-list.xml:10
-msgid "List of systems"
-msgstr "系统列表"
 
 #: admin/systems/class_systemManagement.inc:171
 #: admin/systems/class_systemManagement.inc:267
@@ -663,6 +659,10 @@ msgstr "TTL"
 #: admin/systems/network.tpl:162
 msgid "Dns records"
 msgstr "Dns 记录"
+
+#: admin/systems/system-list.xml:10
+msgid "List of systems"
+msgstr "系统列表"
 
 #: admin/systems/system-list.xml:14
 #, fuzzy

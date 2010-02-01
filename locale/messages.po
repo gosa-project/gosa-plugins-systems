@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:31+0100\n"
+"POT-Creation-Date: 2010-02-01 14:51+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,12 +32,8 @@ msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
 msgstr ""
 
 #: admin/systems/class_systemManagement.inc:60
-msgid "Systems"
-msgstr ""
-
 #: admin/systems/class_systemManagement.inc:61
-#: admin/systems/system-list.xml:10
-msgid "List of systems"
+msgid "Systems"
 msgstr ""
 
 #: admin/systems/class_systemManagement.inc:171
@@ -609,6 +605,10 @@ msgstr ""
 
 #: admin/systems/network.tpl:162
 msgid "Dns records"
+msgstr ""
+
+#: admin/systems/system-list.xml:10
+msgid "List of systems"
 msgstr ""
 
 #: admin/systems/system-list.xml:14

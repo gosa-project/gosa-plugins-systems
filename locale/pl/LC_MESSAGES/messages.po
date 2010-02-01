@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: polski\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:31+0100\n"
+"POT-Creation-Date: 2010-02-01 14:51+0100\n"
 "PO-Revision-Date: 2007-07-14 21:45+0100\n"
 "Last-Translator: Piotr Rybicki <meritus@innervision.pl>\n"
 "Language-Team: Piotr Rybicki <meritus@innervision.pl>\n"
@@ -35,13 +35,9 @@ msgstr ""
 "anulować."
 
 #: admin/systems/class_systemManagement.inc:60
+#: admin/systems/class_systemManagement.inc:61
 msgid "Systems"
 msgstr "Systemy"
-
-#: admin/systems/class_systemManagement.inc:61
-#: admin/systems/system-list.xml:10
-msgid "List of systems"
-msgstr "Lista systemów"
 
 #: admin/systems/class_systemManagement.inc:171
 #: admin/systems/class_systemManagement.inc:267
@@ -661,6 +657,10 @@ msgstr "TTL"
 #: admin/systems/network.tpl:162
 msgid "Dns records"
 msgstr "Rekordy DNS"
+
+#: admin/systems/system-list.xml:10
+msgid "List of systems"
+msgstr "Lista systemów"
 
 #: admin/systems/system-list.xml:14
 #, fuzzy

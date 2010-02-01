@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:31+0100\n"
+"POT-Creation-Date: 2010-02-01 14:51+0100\n"
 "PO-Revision-Date: 2005-11-18 15:26+0100\n"
 "Last-Translator: Alessandro Amici <a.amici@bopen.it>\n"
 "Language-Team: Italian\n"
@@ -34,13 +34,9 @@ msgstr ""
 "i> per abortire."
 
 #: admin/systems/class_systemManagement.inc:60
+#: admin/systems/class_systemManagement.inc:61
 msgid "Systems"
 msgstr "Sistemi"
-
-#: admin/systems/class_systemManagement.inc:61
-#: admin/systems/system-list.xml:10
-msgid "List of systems"
-msgstr "Lista dei sistemi"
 
 #: admin/systems/class_systemManagement.inc:171
 #: admin/systems/class_systemManagement.inc:267
@@ -676,6 +672,10 @@ msgstr ""
 #, fuzzy
 msgid "Dns records"
 msgstr "Directory"
+
+#: admin/systems/system-list.xml:10
+msgid "List of systems"
+msgstr "Lista dei sistemi"
 
 #: admin/systems/system-list.xml:14
 msgid "Opsi host"

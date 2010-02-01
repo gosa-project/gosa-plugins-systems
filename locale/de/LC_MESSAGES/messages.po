@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:31+0100\n"
+"POT-Creation-Date: 2010-02-01 14:51+0100\n"
 "PO-Revision-Date: 2008-12-19 08:43+0100\n"
 "Last-Translator: Cajus Pollmeier <pollmeier@gonicus.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
@@ -43,13 +43,9 @@ msgstr ""
 "'Abbrechen' zum Abbruch."
 
 #: admin/systems/class_systemManagement.inc:60
+#: admin/systems/class_systemManagement.inc:61
 msgid "Systems"
 msgstr "Systeme"
-
-#: admin/systems/class_systemManagement.inc:61
-#: admin/systems/system-list.xml:10
-msgid "List of systems"
-msgstr "Liste der Systeme"
 
 #: admin/systems/class_systemManagement.inc:171
 #: admin/systems/class_systemManagement.inc:267
@@ -635,6 +631,10 @@ msgstr "TTL"
 msgid "Dns records"
 msgstr "DNS-Einträge"
 
+#: admin/systems/system-list.xml:10
+msgid "List of systems"
+msgstr "Liste der Systeme"
+
 #: admin/systems/system-list.xml:14
 msgid "Opsi host"
 msgstr "OPSI Client"
@@ -978,181 +978,3 @@ msgstr "Gerätename"
 #: admin/systems/component.tpl:20
 msgid "Choose subtree to place component in"
 msgstr "Wählen Sie den Teilbaum, in den die Komponente eingepflegt werden soll"
-
-#~ msgid "Submit"
-#~ msgstr "Übertragen"
-
-#~ msgid "Select all"
-#~ msgstr "Alle auswählen"
-
-#~ msgid "Department"
-#~ msgstr "Abteilung"
-
-#~ msgid "Release"
-#~ msgstr "Freigeben"
-
-#~ msgid "servers"
-#~ msgstr "Server"
-
-#~ msgid "Show %s"
-#~ msgstr "Zeige %s"
-
-#~ msgid "Linux terminals"
-#~ msgstr "Linux Terminals"
-
-#~ msgid "terminals"
-#~ msgstr "Terminals"
-
-#~ msgid "Linux workstations"
-#~ msgstr "Linux Arbeitsstationen"
-
-#~ msgid "workstations"
-#~ msgstr "Arbeitsstationen"
-
-#~ msgid "MicroSoft Windows based workstations"
-#~ msgstr "Microsoft Windows Arbeitsstationen"
-
-#~ msgid "windows based workstations"
-#~ msgstr "Windows basierte Arbeitsstationen"
-
-#~ msgid "Display objects of type '%s'."
-#~ msgstr "Auswählen um Objekte des Typs '%s' aufzulisten."
-
-#~ msgid "OPSI installed client"
-#~ msgstr "mit OPSI installierte Clients"
-
-#~ msgid "network printers"
-#~ msgstr "Netzwerk-Drucker"
-
-#~ msgid "VoIP phones"
-#~ msgstr "VoIP-Telefone"
-
-#~ msgid "phones"
-#~ msgstr "Telefone"
-
-#~ msgid "network devices"
-#~ msgstr "Netzwerk-Geräte"
-
-#~ msgid "Display systems matching"
-#~ msgstr "Zeige die Systeme, auf die das Folgende passt"
-
-#~ msgid "Display systems of user"
-#~ msgstr "Zeige Systeme des Benutzers"
-
-#~ msgid "Submit department"
-#~ msgstr "Aktualisieren"
-
-#~ msgid "edit"
-#~ msgstr "Bearbeiten"
-
-#~ msgid "Edit system"
-#~ msgstr "System bearbeiten"
-
-#~ msgid "delete"
-#~ msgstr "Entfernen"
-
-#~ msgid "Delete system"
-#~ msgstr "Entferne System"
-
-#~ msgid "Password"
-#~ msgstr "Passwort"
-
-#~ msgid "Create CD"
-#~ msgstr "Erstelle CD"
-
-#~ msgid "Create FAI CD"
-#~ msgstr "Erstelle FAI-CD"
-
-#~ msgid "Inherited from %s"
-#~ msgstr "Von %s geerbt"
-
-#~ msgid "Number of listed '%s'"
-#~ msgstr "Anzahl der angezeigten '%s'"
-
-#~ msgid "printers"
-#~ msgstr "Drucker"
-
-#~ msgid "network components"
-#~ msgstr "Netzwerk-Komponenten"
-
-#~ msgid "new devices"
-#~ msgstr "Neue Geräte"
-
-#~ msgid "windows workstations"
-#~ msgstr "Windows-Arbeitsstationen"
-
-#~ msgid "departments"
-#~ msgstr "Abteilungen"
-
-#~ msgid "Installed services"
-#~ msgstr "Installierte Dienste"
-
-#~ msgid "Add, remove and configure the properties of system services here."
-#~ msgstr ""
-#~ "Mit diesem Menü können Sie die Eigenschaften von System-Diensten "
-#~ "hinzufügen, diese löschen oder verändern."
-
-#~ msgid "Add service"
-#~ msgstr "Dienst hinzufügen"
-
-#~ msgid "Add new service"
-#~ msgstr "Neuen Dienst hinzufügen"
-
-#~ msgid "Start all"
-#~ msgstr "Alle starten"
-
-#~ msgid "Start all services"
-#~ msgstr "Alle Dienste starten"
-
-#~ msgid "Stop service"
-#~ msgstr "Dienst beenden"
-
-#~ msgid "Stop all services"
-#~ msgstr "Alle Dienste beenden"
-
-#~ msgid "Restart service"
-#~ msgstr "Dienst neustarten"
-
-#~ msgid "Restart all services"
-#~ msgstr "Alle Dienste neustarten"
-
-#~ msgid "Stopped"
-#~ msgstr "Beendet"
-
-#~ msgid "Started"
-#~ msgstr "Gestartet"
-
-#~ msgid "Restarting"
-#~ msgstr "Starte neu"
-
-#~ msgid "User status"
-#~ msgstr "Benutzer-Status"
-
-#~ msgid "Start service"
-#~ msgstr "Dienst starten"
-
-#~ msgid "Remove role"
-#~ msgstr "Rolle entfernen"
-
-#~ msgid ""
-#~ "This includes all system and setup informations. Please double check if "
-#~ "your really want to do this since there is no way for GOsa to get your "
-#~ "data back."
-#~ msgstr ""
-#~ "Dies umfasst alle System- und Setup-Informationen Bitte prüfen Sie dies "
-#~ "genau, da es keine Möglichkeit für GOsa gibt, die Daten zu restaurieren. "
-
-#~ msgid ""
-#~ "Best thing to do before performing this action would be to save the "
-#~ "current contents of your LDAP tree in a file. So - if you've done so - "
-#~ "press 'Delete' to continue or 'Cancel' to abort."
-#~ msgstr ""
-#~ "Eine Sicherung der LDAP-Datenbank bietet sich an. Wenn Sie dies erledigt "
-#~ "haben, drücken Sie 'Entfernen' um Fortzufahren oder 'Abbrechen', um den "
-#~ "Vorgang abzubrechen."
-
-#~ msgid "This does something"
-#~ msgstr "Dies tut etwas"
-
-#~ msgid "System management"
-#~ msgstr "Systemverwaltung"

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:31+0100\n"
+"POT-Creation-Date: 2010-02-01 14:51+0100\n"
 "PO-Revision-Date: 2010-01-28 22:31+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
@@ -36,13 +36,9 @@ msgstr ""
 "'Annuler' pour abandonner."
 
 #: admin/systems/class_systemManagement.inc:60
+#: admin/systems/class_systemManagement.inc:61
 msgid "Systems"
 msgstr "Systèmes"
-
-#: admin/systems/class_systemManagement.inc:61
-#: admin/systems/system-list.xml:10
-msgid "List of systems"
-msgstr "Liste des systèmes"
 
 #: admin/systems/class_systemManagement.inc:171
 #: admin/systems/class_systemManagement.inc:267
@@ -623,6 +619,10 @@ msgstr ""
 #: admin/systems/network.tpl:162
 msgid "Dns records"
 msgstr "Enregistrement dns"
+
+#: admin/systems/system-list.xml:10
+msgid "List of systems"
+msgstr "Liste des systèmes"
 
 #: admin/systems/system-list.xml:14
 msgid "Opsi host"

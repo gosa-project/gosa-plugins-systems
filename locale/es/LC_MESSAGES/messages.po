@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-28 22:31+0100\n"
+"POT-Creation-Date: 2010-02-01 14:51+0100\n"
 "PO-Revision-Date: 2010-01-29 00:00+0100\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <>\n"
@@ -41,13 +41,9 @@ msgstr ""
 "<i>Cancelar</i> para Abortar."
 
 #: admin/systems/class_systemManagement.inc:60
+#: admin/systems/class_systemManagement.inc:61
 msgid "Systems"
 msgstr "Sistemas"
-
-#: admin/systems/class_systemManagement.inc:61
-#: admin/systems/system-list.xml:10
-msgid "List of systems"
-msgstr "Lista de sistemas"
 
 #: admin/systems/class_systemManagement.inc:171
 #: admin/systems/class_systemManagement.inc:267
@@ -634,6 +630,10 @@ msgstr "TTL"
 #: admin/systems/network.tpl:162
 msgid "Dns records"
 msgstr "Registros DNS"
+
+#: admin/systems/system-list.xml:10
+msgid "List of systems"
+msgstr "Lista de sistemas"
 
 #: admin/systems/system-list.xml:14
 msgid "Opsi host"
