@@ -58,7 +58,7 @@
 class systemManagement extends management
 {
   var $plHeadline     = "Systems";
-  var $plDescription  = "List of systems";
+  var $plDescription  = "Systems";
   var $plIcon  = "plugins/systems/images/plugin.png";
 
   // Tab definition 
