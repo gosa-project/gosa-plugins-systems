@@ -27,9 +27,9 @@
 
 {render acl=$ipHostNumberACL}
 {if $DNS_is_account == true}
-      <input id="propose_ip" type="submit" name="propose_ip" value="{t}Propose ip{/t}" style="visibility:visible;">
+      <input id="propose_ip" type="submit" name="propose_ip" value="{t}Propose ip{/t}" style="display: none;">
       {else}
-      <input id="propose_ip" type="submit" name="propose_ip" value="{t}Propose ip{/t}" style="visibility:hidden;">
+      <input id="propose_ip" type="submit" name="propose_ip" value="{t}Propose ip{/t}" style="display: none;">
       {/if}
 {/render}
           </td>
@@ -117,27 +117,28 @@
 
 
         checked="checked"
-        onclick="GOsa_toggle('test2');
+        onclick="
+          $('test2').toggle();
           changeState('zoneName');
           changeState('dNSTTL');
-          GOsa_toggle('propose_ip');
+          $('propose_ip').toggle();
           changeState('AddNewRecord');
           {$changeStateForRecords}"/>
         {else}
       <input type="checkbox" name="DNS_is_account" value="1"  
-        onclick="GOsa_toggle('test2');
+        onclick="$('test2').toggle();
           changeState('zoneName');
           changeState('dNSTTL');
-          GOsa_toggle('propose_ip');
+          $('propose_ip').toggle();
           changeState('AddNewRecord');"/>
         {/if}
 {/render}
       {t}Enable DNS for this device{/t}
       <input type='image' src='images/lists/reload.png' class='center' name="reloadThisDNSStuff" >
       {if $DNS_is_account == true}
-      <div style="padding-left:20px;visibility:visible;" id="test2">
+      <div style="padding-left:20px;display: none;" id="test2">
       {else}
-      <div style="padding-left:20px;visibility:hidden;" id="test2">
+      <div style="padding-left:20px;display: none;" id="test2">
       {/if}
 			<table summary="">
 				<tr>
