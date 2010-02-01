@@ -121,7 +121,7 @@ class ServerService extends management
     $action = management::detectPostActions();
     if(isset($_POST['SaveServiceAdd']))   $action['action'] = "newServiceSelected";
     if(isset($_POST['CancelServiceAdd'])) $action['action'] = "newServiceCancel";
-    if(isset($_POST['SaveService']))      $action['action'] = "save";
+    if(isset($_POST['SaveService']))      $action['action'] = "saveService";
     if(isset($_POST['CancelService']))    $action['action'] = "cancelService";
     return($action);
   }
@@ -196,13 +196,12 @@ class ServerService extends management
         msg_dialog::display(_("Error"), $msg, ERROR_DIALOG);
       }
     }else{
-      $this->plugins[$this->current] = $this->dialog;
-      $tmp  = get_object_vars($this->dialog);
+      $this->plugins[$this->current] = $this->dialogObject;
+      $tmp  = get_object_vars($this->dialogObject);
       foreach($tmp as $name => $value){
         $this->plugins[$this->current]->$name = $value;
       }
-      $this->current = "";
-      $this->dialog = FALSE;
+      $this->closeDialogs();
       $this->backup = NULL;
     }
   }
@@ -413,7 +412,6 @@ class ServerService extends management
         }
       }
 
-      /* Only show createable services */
       if(!$obj->acl_is_createable()){
         $skip = true;
       }
