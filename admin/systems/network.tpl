@@ -27,7 +27,7 @@
 
 {render acl=$ipHostNumberACL}
 {if $DNS_is_account == true}
-      <input id="propose_ip" type="submit" name="propose_ip" value="{t}Propose ip{/t}" style="display: none;">
+      <input id="propose_ip" type="submit" name="propose_ip" value="{t}Propose ip{/t}">
       {else}
       <input id="propose_ip" type="submit" name="propose_ip" value="{t}Propose ip{/t}" style="display: none;">
       {/if}
@@ -136,7 +136,7 @@
       {t}Enable DNS for this device{/t}
       <input type='image' src='images/lists/reload.png' class='center' name="reloadThisDNSStuff" >
       {if $DNS_is_account == true}
-      <div style="padding-left:20px;display: none;" id="test2">
+      <div style="padding-left:20px" id="test2">
       {else}
       <div style="padding-left:20px;display: none;" id="test2">
       {/if}
