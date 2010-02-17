@@ -96,7 +96,7 @@ class systemManagement extends management
 
     // Build headpage
     $headpage = new listing(get_template_path("system-list.xml", true));
-    $headpage->registerElementFilter("systemDescription", "systemManagement::systemDescription");
+    $headpage->registerElementFilter("systemRelease", "systemManagement::systemRelease");
     $headpage->setFilter($filter);
     $filter->setConverter('INCOMING', 'systemManagement::incomingFilterConverter');
 
@@ -1348,25 +1348,28 @@ class systemManagement extends management
   }
 
 
-  function systemDescription($a,$b,$c,$d)
+  function systemRelease($a,$b,$c,$d)
   {
     global $config;
 
     // A ... solution, but I can't figure out a better solution right now.
     $headpage = session::get('SYSTEMS_DESCRIPTION_FILTER');
-    if(!is_object($headpage)) return($str);
-    $str = $headpage->filterLink($a,$b,$c,$d);
+    if(!is_array($d) || !count($d) || !is_object($headpage)) return("&nbsp;");
+
     $ldap = $config->get_ldap_link();
     $ldap->cd($config->current['BASE']);
-    $ldap->search("(&(objectClass=gosaGroupOfNames)(member=".$b."))");
+    $ldap->search("(&(objectClass=gosaGroupOfNames)(FAIclass=*)(member=".$b."))",array('FAIclass'));
+    
     while($attrs = $ldap->fetch()){
-      $str .= "&nbsp;<img class='center' src='plugins/ogroups/images/ogroup.png' 
+
+      $rel = preg_replace("/^.*:/","",$attrs['FAIclass'][0]);
+      $str = "&nbsp;<img class='center' src='plugins/ogroups/images/ogroup.png' 
           title='"._("Object group member")."' 
-          alt='("._("Object group member").")' >";
+          alt='("._("Object group member").")' >&nbsp;".$rel;
       return($str);
     }
     
-    return($str);
+    return("&nbsp;");
   }
 
 

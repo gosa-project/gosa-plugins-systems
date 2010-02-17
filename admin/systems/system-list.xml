@@ -150,7 +150,7 @@
   </definition>
 
   <table>
-    <layout>|20px;c||250px|170px;r|</layout>
+    <layout>|20px;c||250px||170px;r|</layout>
 
     <department>
       <value>%{filter:objectType(dn,objectClass)}</value>
@@ -177,7 +177,15 @@
       <label>Description</label>
       <sortAttribute>description</sortAttribute>
       <sortType>string</sortType>
-      <value>%{filter:systemDescription(row,dn,"%s",description)}</value>
+      <value>%{filter:link(row,dn,"%s",description)}</value>
+      <export>true</export>
+    </column>
+
+    <column>
+      <label>Release</label>
+      <sortAttribute>description</sortAttribute>
+      <sortType>string</sortType>
+      <value>%{filter:systemRelease(row,dn,"%s",FAIclass)}</value>
       <export>true</export>
     </column>
 
