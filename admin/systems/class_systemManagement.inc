@@ -86,16 +86,17 @@ class systemManagement extends management
     $this->storagePoints = array_unique($sP);
 
     // Build filter
-    if (session::global_is_set(get_class($this)."_filter")){
-      $filter= session::global_get(get_class($this)."_filter");
-    } else {
+#    if (session::global_is_set(get_class($this)."_filter")){
+ #     $filter= session::global_get(get_class($this)."_filter");
+ #   } else {
       $filter = new filter(get_template_path("system-filter.xml", true));
       $filter->setObjectStorage($this->storagePoints);
-    }
+  #  }
     $this->setFilter($filter);
 
     // Build headpage
     $headpage = new listing(get_template_path("system-list.xml", true));
+    $headpage->registerElementFilter("systemDescription", "systemManagement::systemDescription");
     $headpage->setFilter($filter);
     $filter->setConverter('INCOMING', 'systemManagement::incomingFilterConverter');
 
@@ -145,6 +146,9 @@ class systemManagement extends management
       $this->opsi = new opsi($this->config);
     }
     parent::__construct($config, $ui, "systems", $headpage);
+
+    // Used to generate an 'ogroup' icon within the description field.
+    session::set('SYSTEMS_DESCRIPTION_FILTER', $headpage);
   }
 
 
@@ -1341,6 +1345,28 @@ class systemManagement extends management
     $tabs['FAKE_OC_ArpNewDevice'] = &$tabs['FAKE_OC_NewDevice'];
 
     return($tabs);
+  }
+
+
+  function systemDescription($a,$b,$c,$d)
+  {
+    global $config;
+
+    // A ... solution, but I can't figure out a better solution right now.
+    $headpage = session::get('SYSTEMS_DESCRIPTION_FILTER');
+    if(!is_object($headpage)) return($str);
+    $str = $headpage->filterLink($a,$b,$c,$d);
+    $ldap = $config->get_ldap_link();
+    $ldap->cd($config->current['BASE']);
+    $ldap->search("(&(objectClass=gosaGroupOfNames)(member=".$b."))");
+    while($attrs = $ldap->fetch()){
+      $str .= "&nbsp;<img class='center' src='plugins/ogroups/images/ogroup.png' 
+          title='"._("Object group member")."' 
+          alt='("._("Object group member").")' >";
+      return($str);
+    }
+    
+    return($str);
   }
 
 
