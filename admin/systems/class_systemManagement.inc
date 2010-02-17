@@ -1358,14 +1358,13 @@ class systemManagement extends management
 
     $ldap = $config->get_ldap_link();
     $ldap->cd($config->current['BASE']);
-    $ldap->search("(&(objectClass=gosaGroupOfNames)(FAIclass=*)(member=".$b."))",array('FAIclass'));
-    
+    $ldap->search("(&(objectClass=gosaGroupOfNames)(FAIclass=*)(member=".$b."))",array('FAIclass','cn'));
     while($attrs = $ldap->fetch()){
-
       $rel = preg_replace("/^.*:/","",$attrs['FAIclass'][0]);
+      $sys = sprintf(_("Inherited from %s"),$attrs['cn'][0]);
       $str = "&nbsp;<img class='center' src='plugins/ogroups/images/ogroup.png' 
-          title='"._("Object group member")."' 
-          alt='("._("Object group member").")' >&nbsp;".$rel;
+          title='".$sys."' 
+          alt='".$sys."' >&nbsp;".$rel;
       return($str);
     }
     
