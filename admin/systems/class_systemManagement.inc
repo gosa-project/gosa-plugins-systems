@@ -86,12 +86,12 @@ class systemManagement extends management
     $this->storagePoints = array_unique($sP);
 
     // Build filter
-#    if (session::global_is_set(get_class($this)."_filter")){
- #     $filter= session::global_get(get_class($this)."_filter");
- #   } else {
+    if (session::global_is_set(get_class($this)."_filter")){
+     $filter= session::global_get(get_class($this)."_filter");
+    } else {
       $filter = new filter(get_template_path("system-filter.xml", true));
       $filter->setObjectStorage($this->storagePoints);
-  #  }
+    }
     $this->setFilter($filter);
 
     // Build headpage
@@ -146,9 +146,6 @@ class systemManagement extends management
       $this->opsi = new opsi($this->config);
     }
     parent::__construct($config, $ui, "systems", $headpage);
-
-    // Used to generate an 'ogroup' icon within the description field.
-    session::set('SYSTEMS_DESCRIPTION_FILTER', $headpage);
   }
 
 
@@ -1348,13 +1345,26 @@ class systemManagement extends management
   }
 
 
-  function systemRelease($a,$b,$c,$d)
+  static function systemRelease($a,$b,$c,$objectclasses= null,$class= null)
   {
     global $config;
 
-    // A ... solution, but I can't figure out a better solution right now.
-    $headpage = session::get('SYSTEMS_DESCRIPTION_FILTER');
-    if(!is_array($d) || !count($d) || !is_object($headpage)) return("&nbsp;");
+    // No objectclasses set - go ahead
+    if(!$objectclasses) return("&nbsp;");
+
+    // Skip non fai objects
+    if (!in_array_ics("FAIobject", $objectclasses)) {
+      return "&nbsp;";
+    }
+
+    // If we've an own fai class, just use this
+    if ($class && is_array($class)) {
+      foreach (explode(' ', $class[0]) as $element) {
+        if ($element[0] == ":") {
+          return mb_substr($element, 1);
+        }
+      }
+    }
 
     $ldap = $config->get_ldap_link();
     $ldap->cd($config->current['BASE']);

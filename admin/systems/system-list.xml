@@ -185,7 +185,7 @@
       <label>Release</label>
       <sortAttribute>description</sortAttribute>
       <sortType>string</sortType>
-      <value>%{filter:systemRelease(row,dn,"%s",FAIclass)}</value>
+      <value>%{filter:systemRelease(row,dn,"%s",objectClass,FAIclass)}</value>
       <export>true</export>
     </column>
 
