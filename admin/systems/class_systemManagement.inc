@@ -1361,11 +1361,12 @@ class systemManagement extends management
     if ($class && is_array($class)) {
       foreach (explode(' ', $class[0]) as $element) {
         if ($element[0] == ":") {
-          return mb_substr($element, 1);
+          return "&nbsp;<img class='center' src='images/empty.png'>&nbsp;".mb_substr($element, 1);
         }
       }
     }
 
+    // Load information if needed
     $ldap = $config->get_ldap_link();
     $ldap->cd($config->current['BASE']);
     $ldap->search("(&(objectClass=gosaGroupOfNames)(FAIclass=*)(member=".$b."))",array('FAIclass','cn'));
