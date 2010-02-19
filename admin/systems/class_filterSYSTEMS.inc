@@ -127,7 +127,7 @@ class filterSYSTEMS {
           msg_dialog::display(_("Error"),msgPool::siError($opsi->get_error()),ERROR_DIALOG);
         }else{
           foreach($opsi_clients as $entry){
-            if(empty($regex) || preg_match('/'.preg_quote($regex,'/').'/i',$entry['cn'])){
+            if(empty($regex) || preg_match('/'.preg_quote($regex,'/').'/i',$entry['cn'][0])){
               $entry['objectClass'] = array("FAKE_OC_OpsiHost");
               $item = array('count' => count($entry));
               foreach($entry as  $name => $value){
