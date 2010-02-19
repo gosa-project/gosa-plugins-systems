@@ -833,9 +833,9 @@ class systemManagement extends management
 
           if($data['OG'] != "none"){
             $this->tabObject->base = preg_replace("/^[^,]+,".preg_quote(get_ou('ogroupRDN'), '/')."/i", "", $data['OG']);
-            $this->tabObject->by_object[$plugClass]->base = $this->tabObject->base;
+            $this->tabObject->by_object[$plugClass]->baseSelector->setBase($this->tabObject->base);
           } else {
-            $this->tabObject->by_object[$plugClass]->base = $headpage->getBase();
+            $this->tabObject->by_object[$plugClass]->baseSelector->setBase($headpage->getBase());
             $this->tabObject->base = $headpage->getBase();
           }
 
