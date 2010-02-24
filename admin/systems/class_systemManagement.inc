@@ -870,15 +870,6 @@ class systemManagement extends management
               msg_dialog::display(_("Internal error"), _("Cannot set mode to 'active'!"), ERROR_DIALOG);
             }
 
-            // Update object group membership
-            $og = new ogroup($this->config,$data['OG']);
-            if($og){
-              $og->AddDelMembership($this->tabObject->dn);
-              $og->save();
-              @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
-                  $og->dn, "<b>Adding system to ogroup</b>");
-            }
-
             // Set default system specific attributes
             foreach (array("workgeneric", "termgeneric") as $cls){
               if (isset($this->tabObject->by_object[$cls])){
@@ -1032,6 +1023,20 @@ class systemManagement extends management
    */
   function activate_new_device($dn)
   {
+    // finally add entry to ogroup, with its new dn not the source dn with 'ou=incoming.'
+    if(isset($this->activationQueue[$this->last_dn])){
+      $data =$this->activationQueue[$this->last_dn];
+
+      // Update object group membership
+      $og = new ogroup($this->config,$data['OG']);
+      if($og){
+        $og->AddDelMembership($this->last_tabObject->dn);
+        $og->save();
+        @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
+            $og->dn, "<b>Adding system to ogroup</b>");
+      }
+    }
+
     @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
         $dn, "<b>Activating system:</b>");
     $ldap = $this->config->get_ldap_link();
