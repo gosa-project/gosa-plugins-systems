@@ -1032,20 +1032,6 @@ class systemManagement extends management
    */
   function activate_new_device($dn)
   {
-    // finally add entry to ogroup, with its new dn not the source dn with 'ou=incoming.'
-    if(isset($this->activationQueue[$this->last_dn])){
-      $data =$this->activationQueue[$this->last_dn];
-
-      // Update object group membership
-      $og = new ogroup($this->config,$data['OG']);
-      if($og){
-        $og->AddDelMembership($this->last_tabObject->dn);
-        $og->save();
-        @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
-            $og->dn, "<b>Adding system to ogroup</b>");
-      }
-    }
-
     @DEBUG (DEBUG_TRACE, __LINE__, __FUNCTION__, __FILE__,
         $dn, "<b>Activating system:</b>");
     $ldap = $this->config->get_ldap_link();
