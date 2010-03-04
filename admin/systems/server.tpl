@@ -54,7 +54,7 @@
 {if $fai_activated}
 <p class="plugbottom" style="margin-bottom:0px; padding:0px;">&nbsp;</p>
 
-<h3><img class="center" alt="" align="middle" src="images/rocket.png"> {t}Action{/t}</h3>
+<h3>{t}Action{/t}</h3>
 <table summary="">
  <tr>
   <td>
