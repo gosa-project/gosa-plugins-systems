@@ -38,7 +38,7 @@
  </tr>
 </table>
 
-<p class="plugbottom" style="margin-bottom:0px; padding:0px;">&nbsp;</p>
+<hr>
 
 {$netconfig}
 
