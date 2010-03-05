@@ -47,12 +47,12 @@
  </tr>
 </table>
 
-<p class="plugbottom" style="margin-bottom:0px; padding:0px;">&nbsp;</p>
+<hr>
 
 {$netconfig}
 
 {if $fai_activated}
-<p class="plugbottom" style="margin-bottom:0px; padding:0px;">&nbsp;</p>
+<hr>
 
 <h3>{t}Action{/t}</h3>
 <table summary="">
