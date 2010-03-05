@@ -32,13 +32,12 @@
  
 </table>
 
-<br>
-
-<p class="plugbottom">
+<hr>
+<div class="plugin-actions">
   <input type=submit name="password_finish" value="{t}Set password{/t}">
-  &nbsp;
   <input type=submit name="password_cancel" value="{msgPool type=cancelButton}">
-</p>
+</div>
+
 
 <!-- Place cursor -->
 <script language="JavaScript" type="text/javascript">	
