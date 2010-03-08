@@ -2,7 +2,7 @@
 
 class filterSYSTEMS {
 
-  static function query($base, $scope, $filter, $attributes, $category, $objectStorage= "")
+  static function query($parent,$base, $scope, $filter, $attributes, $category, $objectStorage= "")
   {
     $ui = get_userinfo();
     global $config;
@@ -10,7 +10,7 @@ class filterSYSTEMS {
     // Check whether the arp handling active or not
     $arp_handling_active = ($config->search("ArpNewDevice","CLASS",array('tabs')) != "");
 
-    $entries = filterLDAP::query($base, $scope, $filter, $attributes, $category, $objectStorage);
+    $entries = filterLDAP::query($parent,$base, $scope, $filter, $attributes, $category, $objectStorage);
     foreach($entries as $key => $entry){
       if(preg_match("/".preg_quote(get_ou('systemIncomingRDN'),'/')."/i", $entry['dn'])){
 
