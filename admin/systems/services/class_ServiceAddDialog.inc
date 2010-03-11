@@ -38,12 +38,14 @@ class ServiceAddDialog extends plugin{
 
   function execute()
   {
+    plugin::execute();
+
     $smarty = get_smarty();
     $services = $this->parent->getAllUnusedServices();
     natcasesort($services);
     $smarty->assign("Services",$services);
     return($smarty->fetch(get_template_path("ServiceAddDialog.tpl", TRUE,dirname(__FILE__))));
- }
+  }
 
   function check(){ return array();}
   function save_object(){;}
