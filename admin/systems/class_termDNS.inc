@@ -257,6 +257,8 @@ class termDNS extends plugin
 
   function execute()
   {
+    plugin::execute();
+
 	  /* Call parent execute */
     $smarty= get_smarty();
     $smarty->assign("autonetACL",$this->acl_is_writeable("macAddress") && $this->acl_is_writeable("ipHostNumber")?"rw":"");
