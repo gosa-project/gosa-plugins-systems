@@ -9,9 +9,6 @@ class filterOPSIHOSTS {
     $ui = get_userinfo();
     $entries = array();
 
-
-        
-
     if(class_available('opsi') && $base == $config->current['BASE']){
 
       $attr = $value = "";
