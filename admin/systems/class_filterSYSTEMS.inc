@@ -11,6 +11,8 @@ class filterSYSTEMS {
     $arp_handling_active = ($config->search("ArpNewDevice","CLASS",array('tabs')) != "");
 
     $entries = filterLDAP::query($base, $scope, $filter, $attributes, $category, $objectStorage);
+
+
     foreach($entries as $key => $entry){
       if(preg_match("/".preg_quote(get_ou('systemIncomingRDN'),'/')."/i", $entry['dn'])){
 

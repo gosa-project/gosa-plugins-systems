@@ -86,19 +86,19 @@ class systemManagement extends management
     $this->storagePoints = array_unique($sP);
 
     // Build filter
-    if (session::global_is_set(get_class($this)."_filter")){
-     $filter= session::global_get(get_class($this)."_filter");
-    } else {
+#    if (session::global_is_set(get_class($this)."_filter")){
+ #    $filter= session::global_get(get_class($this)."_filter");
+  #  } else {
       $filter = new filter(get_template_path("system-filter.xml", true));
       $filter->setObjectStorage($this->storagePoints);
-    }
+   # }
     $this->setFilter($filter);
 
     // Build headpage
     $headpage = new listing(get_template_path("system-list.xml", true));
     $headpage->registerElementFilter("systemRelease", "systemManagement::systemRelease");
     $headpage->setFilter($filter);
-    $filter->setConverter('INCOMING', 'systemManagement::incomingFilterConverter');
+    $filter->setConverter('systemManagement::incomingFilterConverter');
 
     // Register Daemon Events
     if(class_available("DaemonEvent") && class_available("gosaSupportDaemon")){

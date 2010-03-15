@@ -3,134 +3,46 @@
 <filterdef>
   <definition>
     <category>server</category>
-    <template>system-filter.tpl</template>
     <initial>true</initial>
+    <scope>auto</scope>
+    <default>default</default>
+    <attribute>dn</attribute>
+    <attribute>objectClass</attribute>
+    <attribute>cn</attribute>
+    <attribute>description</attribute>
+    <attribute>gotoMode</attribute>
+    <attribute>FAIstate</attribute>
+    <attribute>FAIclass</attribute>
+    <attribute>macAddress</attribute>
+    <attribute>gotoLastUser</attribute>
   </definition>
 
   <search>
+    <tag>default</tag>
+    <label>Default filter</label>
     <query>
       <backend>SYSTEMS</backend>
-      <filter>(&amp;(|$SERVER$WORKSTATION$TERMINAL$PHONE$PRINTER$COMPONENT$WINSTATION$INCOMING$OPSI)$NAME$USER)</filter>
-      <attribute>dn</attribute>
-      <attribute>objectClass</attribute>
-      <attribute>cn</attribute>
-      <attribute>description</attribute>
-      <attribute>gotoMode</attribute>
-      <attribute>FAIstate</attribute>
-      <attribute>FAIclass</attribute>
-      <attribute>macAddress</attribute>
-      <attribute>gotoLastUser</attribute>
+      <filter>(&amp;(objectClass=goServer)(cn=$))</filter>
     </query>
-    <scope>auto</scope>
+    <autocomplete>
+      <attribute>cn</attribute>
+      <frequency>0.5</frequency>
+      <characters>3</characters>
+    </autocomplete>
   </search>
 
-  <element>
-    <type>textfield</type>
-    <tag>NAME</tag>
-    <size>20</size>
-    <maxlength>60</maxlength>
-    <default></default>
-    <unset></unset>
-    <set>(cn=*$*)</set>
-    <alphabet>false</alphabet>
-    <autocomplete>
+  <search>
+    <tag>incoming</tag>
+    <label>Incoming objects</label>
+    <query>
       <backend>SYSTEMS</backend>
-      <filter>(cn=*$NAME*)</filter>
+      <filter>(&amp;(objectClass=goHard)(ou:dn:=%systemIncomingRDN)(cn=$))</filter>
+    </query>
+    <autocomplete>
       <attribute>cn</attribute>
       <frequency>0.5</frequency>
       <characters>3</characters>
     </autocomplete>
-  </element>
-
-  <element>
-    <type>textfield</type>
-    <tag>USER</tag>
-    <size>20</size>
-    <maxlength>60</maxlength>
-    <default></default>
-    <unset></unset>
-    <set>(gotoLastUser=*$*)</set>
-    <alphabet>false</alphabet>
-    <autocomplete>
-      <backend>SYSTEMS</backend>
-      <filter>(gotoLastUser=*USER*)</filter>
-      <attribute>cn</attribute>
-      <frequency>0.5</frequency>
-      <characters>3</characters>
-    </autocomplete>
-  </element>
-
-  <element>
-    <type>checkbox</type>
-    <tag>SERVER</tag>
-    <default>true</default>
-    <unset></unset>
-    <set>(objectClass=goServer)</set>
-  </element>
-
-  <element>
-    <type>checkbox</type>
-    <tag>WORKSTATION</tag>
-    <default>true</default>
-    <unset></unset>
-    <set>(objectClass=gotoWorkstation)</set>
-  </element>
-
-  <element>
-    <type>checkbox</type>
-    <tag>TERMINAL</tag>
-    <default>true</default>
-    <unset></unset>
-    <set>(objectClass=gotoTerminal)</set>
-  </element>
-
-  <element>
-    <type>checkbox</type>
-    <tag>PRINTER</tag>
-    <default>true</default>
-    <unset></unset>
-    <set>(objectClass=gotoPrinter)</set>
-  </element>
-
-  <element>
-    <type>checkbox</type>
-    <tag>PHONE</tag>
-    <default>true</default>
-    <unset></unset>
-    <set>(objectClass=goFonHardware)</set>
-  </element>
-
-  <element>
-    <type>checkbox</type>
-    <tag>WINSTATION</tag>
-    <default>true</default>
-    <unset></unset>
-    <set>(&amp;(objectClass=sambaSamAccount)(cn=*\$))</set>
-  </element>
-
-  <element>
-    <type>checkbox</type>
-    <tag>COMPONENT</tag>
-    <default>true</default>
-    <unset></unset>
-    <set>(objectClass=ieee802Device)</set>
-  </element>
-
-  <element>
-    <type>checkbox</type>
-    <tag>INCOMING</tag>
-    <default>true</default>
-    <unset></unset>
-    <set>(&amp;(|(objectClass=goWorkstation)(objectClass=gotoTerminal)(objectClass=goHard))(ou:dn:=%systemIncomingRDN))</set>
-  </element>
-
-
-  <element>
-    <type>checkbox</type>
-    <tag>OPSI</tag>
-    <default>true</default>
-    <unset></unset>
-    <set>(&amp;(objectClass=FAIclass)(FAIstate=__NETBOOT__))</set>
-  </element>
+  </search>
 
 </filterdef>
