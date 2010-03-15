@@ -1361,7 +1361,7 @@ class systemManagement extends management
     if ($class && is_array($class)) {
       foreach (explode(' ', $class[0]) as $element) {
         if ($element[0] == ":") {
-          return "&nbsp;<img class='center' src='images/empty.png'>&nbsp;".mb_substr($element, 1);
+          return "&nbsp;".image('images/empty.png')."&nbsp;".mb_substr($element, 1);
         }
       }
     }
@@ -1373,9 +1373,7 @@ class systemManagement extends management
     while($attrs = $ldap->fetch()){
       $rel = preg_replace("/^.*:/","",$attrs['FAIclass'][0]);
       $sys = sprintf(_("Inherited from %s"),$attrs['cn'][0]);
-      $str = "&nbsp;<img class='center' src='plugins/ogroups/images/ogroup.png' 
-          title='".$sys."' 
-          alt='".$sys."' >&nbsp;".$rel;
+      $str = "&nbsp;".image('plugins/ogroups/images/ogroup.png', "", $sys)."&nbsp;".$rel;
       return($str);
     }
     
