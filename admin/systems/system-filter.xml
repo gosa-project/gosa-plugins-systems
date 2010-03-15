@@ -22,8 +22,37 @@
     <label>Default filter</label>
     <query>
       <backend>SYSTEMS</backend>
-      <filter>(&amp;(objectClass=goServer)(cn=$))</filter>
+      <filter>(&amp;(objectClass=goServer)(objectClass=goPhoneHardware)(cn=$))</filter>
     </query>
+    <autocomplete>
+      <attribute>cn</attribute>
+      <frequency>0.5</frequency>
+      <characters>3</characters>
+    </autocomplete>
+  </search>
+
+  <search>
+    <tag>all</tag>
+    <label>Ldap &amp; opsi</label>
+    <query>
+      <backend>SYSTEMS</backend>
+      <filter>(&amp;(objectClass=goServer)(objectClass=goPhoneHardware)(cn=$))</filter>
+    </query>
+    <query>
+      <backend>OPSIHOSTS</backend>
+      <filter>cn=$</filter>
+    </query>
+    <autocomplete>
+      <attribute>cn</attribute>
+      <frequency>0.5</frequency>
+      <characters>3</characters>
+    </autocomplete>
+  </search>
+
+
+  <search>
+    <tag>onlyOpsi</tag>
+    <label>Opsi hosts</label>
     <query>
       <backend>OPSIHOSTS</backend>
       <filter>cn=$</filter>
