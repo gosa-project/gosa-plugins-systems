@@ -24,6 +24,10 @@
       <backend>SYSTEMS</backend>
       <filter>(&amp;(objectClass=goServer)(cn=$))</filter>
     </query>
+    <query>
+      <backend>OPSIHOSTS</backend>
+      <filter>$</filter>
+    </query>
     <autocomplete>
       <attribute>cn</attribute>
       <frequency>0.5</frequency>
