@@ -22,7 +22,7 @@
     <label>Default filter</label>
     <query>
       <backend>SYSTEMS</backend>
-      <filter>(&amp;(objectClass=goServer)(objectClass=goPhoneHardware)(cn=$))</filter>
+      <filter>(&amp;(|(objectClass=goServer)(objectClass=goFonHardware)(objectClass=gotoWorkstation))(cn=$))</filter>
     </query>
     <autocomplete>
       <attribute>cn</attribute>
