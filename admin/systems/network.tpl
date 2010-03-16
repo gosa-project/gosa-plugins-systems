@@ -27,9 +27,11 @@
 
 {render acl=$ipHostNumberACL}
 {if $DNS_is_account == true}
-      <input id="propose_ip" type="submit" name="propose_ip" value="{t}Propose ip{/t}">
+      <button type='submit' name='propose_ip' id="propose_ip">{t}Propose ip{/t}</button>
+
       {else}
-      <input id="propose_ip" type="submit" name="propose_ip" value="{t}Propose ip{/t}" style="display: none;">
+      <button type='submit' name='propose_ip' id="propose_ip">{t}Propose ip{/t}</button>
+
       {/if}
 {/render}
           </td>
@@ -42,7 +44,8 @@
 {/render}
 
 {render acl=$autonetACL}
-      	    <input type="submit" name="autonet" value="{t}Autodetect{/t}">
+      	    <button type='submit' name='autonet'>{t}Autodetect{/t}</button>
+
 {/render}
           </td>
 				</tr>
@@ -90,7 +93,8 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>
-                  <input type='submit' name='dhcpEditOptions' value='{t}Edit settings{/t}'>
+                  <button type='submit' name='dhcpEditOptions'>{t}Edit settings{/t}</button>
+
                 </td>
               </tr>
               {/if}

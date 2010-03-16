@@ -25,8 +25,11 @@
 <br>
 <p class="seperator">
 <div style="width:100%; text-align:right;padding-top:8px;padding-bottom:3px;">
-    <input type='submit' name='SaveServiceAdd' value='{t}Continue{/t}' {if !$Services} disabled {/if}>
+    <button type='submit' name='SaveServiceAdd' {if !$Services} disabled {/if}
+>{t}Continue{/t}</button>
+
     &nbsp;
-    <input type='submit' name='CancelServiceAdd' value='{msgPool type=cancelButton}'>
+    <button type='submit' name='CancelServiceAdd'>{msgPool type=cancelButton}</button>
+
 </div>
 

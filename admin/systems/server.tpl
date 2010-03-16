@@ -71,7 +71,8 @@
   </td>
   <td>
 {render acl=$FAIstateACL}
-   <input type=submit name="action" value="{t}Execute{/t}">
+   <button type='submit' name='action'>{t}Execute{/t}</button>
+
 {/render}
   </td>
  </tr>
