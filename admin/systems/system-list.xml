@@ -31,7 +31,7 @@
       <objectClass>goServer__IS_LOCKED</objectClass>
       <category>server</category>
       <class>servgeneric</class>
-      <image>plugins/systems/images/server_locked.png</image>
+      <image>plugins/systems/images/select_server.png[locked]</image>
     </objectType>
 
     <objectType>
@@ -39,7 +39,7 @@
       <objectClass>gotoWorkstation__IS_LOCKED</objectClass>
       <category>workstation</category>
       <class>workgeneric</class>
-      <image>plugins/systems/images/workstation_locked.png</image>
+      <image>plugins/systems/images/select_workstation.png[locked]</image>
     </objectType>
 
     <objectType>
@@ -47,7 +47,7 @@
       <objectClass>gotoTerminal__IS_LOCKED</objectClass>
       <category>terminal</category>
       <class>termgeneric</class>
-      <image>plugins/systems/images/terminal_locked.png</image>
+      <image>plugins/systems/images/select_terminal.png[locked]</image>
     </objectType>
 
 
