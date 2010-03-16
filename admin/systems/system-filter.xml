@@ -22,7 +22,18 @@
     <label>Default filter</label>
     <query>
       <backend>SYSTEMS</backend>
-      <filter>(&amp;(|(objectClass=goServer)(objectClass=goFonHardware)(objectClass=gotoWorkstation)(objectClass=gotoWorkstation)(objectClass=ieee802Device)(objectClass=gotoPrinter))(cn=$))</filter>
+      <filter>(&amp;
+                (|(objectClass=goServer)
+                  (objectClass=gotoWorkstation)
+                  (objectClass=gotoTerminal)
+                  (objectClass=goFonHardware)
+                  (objectClass=ieee802Device)
+                  (objectClass=gotoPrinter)
+                  (objectClass=sambaSamAccount)
+                )
+                (cn=$)
+              )
+      </filter>
     </query>
     <autocomplete>
       <attribute>cn</attribute>
@@ -33,10 +44,22 @@
 
   <search>
     <tag>all</tag>
-    <label>Ldap &amp; opsi</label>
+    <label>All systems</label>
     <query>
       <backend>SYSTEMS</backend>
-      <filter>(&amp;(objectClass=goServer)(objectClass=goPhoneHardware)(cn=$))</filter>
+      <filter>(&amp;
+                (|(objectClass=goServer)
+                  (objectClass=gotoWorkstation)
+                  (objectClass=gotoTerminal)
+                  (objectClass=goFonHardware)
+                  (objectClass=ieee802Device)
+                  (objectClass=gotoPrinter)
+                  (objectClass=sambaSamAccount)
+                  (&amp;(objectClass=goHard)(ou:dn:=%systemIncomingRDN))
+                )
+                (cn=$)
+              )
+      </filter>
     </query>
     <query>
       <backend>OPSIHOSTS</backend>
@@ -52,7 +75,7 @@
 
   <search>
     <tag>onlyOpsi</tag>
-    <label>Opsi hosts</label>
+    <label>Opsi</label>
     <query>
       <backend>OPSIHOSTS</backend>
       <filter>cn=$</filter>

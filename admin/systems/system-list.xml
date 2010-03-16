@@ -23,7 +23,7 @@
       <objectClass>FAKE_OC_NewWorkstation</objectClass>
       <category>workstation</category>
       <class>workgeneric</class>
-      <image>plugins/systems/images/select_new_workstation.png</image>
+      <image>plugins/systems/images/select_workstation.png[new]</image>
     </objectType>
 
     <objectType>
@@ -56,7 +56,7 @@
       <objectClass>FAKE_OC_NewTerminal</objectClass>
       <category>terminal</category>
       <class>termgeneric</class>
-      <image>plugins/systems/images/select_new_terminal.png</image>
+      <image>plugins/systems/images/select_terminal.png[new]</image>
     </objectType>
 
     <objectType>
@@ -64,7 +64,7 @@
       <objectClass>FAKE_OC_ArpNewDevice</objectClass>
       <category>terminal</category>
       <class>termgeneric</class>
-      <image>plugins/systems/images/select_newsystem.png</image>
+      <image>plugins/systems/images/select_default.png[new]</image>
     </objectType>
 
     <objectType>
@@ -72,7 +72,7 @@
       <objectClass>FAKE_OC_NewDevice</objectClass>
       <category>terminal</category>
       <class>termgeneric</class>
-      <image>plugins/systems/images/select_newsystem.png</image>
+      <image>plugins/systems/images/select_default.png[new]</image>
     </objectType>
 
     <objectType>
