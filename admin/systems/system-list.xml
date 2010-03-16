@@ -72,7 +72,7 @@
       <objectClass>FAKE_OC_NewDevice</objectClass>
       <category>terminal</category>
       <class>termgeneric</class>
-      <image>images/lists/element.png[new]</image>
+      <image>plugins/systems/images/select_default.png[new]</image>
     </objectType>
 
     <objectType>
@@ -200,13 +200,13 @@
 
     <action>
      <type>sub</type>
-     <image>plugins/systems/images/select_server.png[new]</image>
+     <image>images/lists/element.png[new]</image>
      <label>Create</label>
 
      <action>
       <name>new_goServer</name>
       <type>entry</type>
-      <image>plugins/systems/images/select_server.png</image>
+      <image>plugins/systems/images/select_server.png[new]</image>
       <label>Server</label>
       <depends>servgeneric</depends>
      </action>
@@ -214,7 +214,7 @@
      <action>
       <name>new_gotoWorkstation</name>
       <type>entry</type>
-      <image>plugins/systems/images/select_workstation.png</image>
+      <image>plugins/systems/images/select_workstation.png[new]</image>
       <label>Workstation</label>
       <depends>workgeneric</depends>
      </action>
@@ -222,7 +222,7 @@
      <action>
       <name>new_gotoTerminal</name>
       <type>entry</type>
-      <image>plugins/systems/images/select_terminal.png</image>
+      <image>plugins/systems/images/select_terminal.png[new]</image>
       <label>Terminal</label>
       <depends>termgeneric</depends>
      </action>
@@ -230,7 +230,7 @@
      <action>
       <name>new_gotoPrinter</name>
       <type>entry</type>
-      <image>plugins/systems/images/select_printer.png</image>
+      <image>plugins/systems/images/select_printer.png[new]</image>
       <label>Network printer</label>
       <depends>printgeneric</depends>
      </action>
@@ -238,7 +238,7 @@
      <action>
       <name>new_goFonHardware</name>
       <type>entry</type>
-      <image>plugins/systems/images/select_phone.png</image>
+      <image>plugins/systems/images/select_phone.png[new]</image>
       <label>Phone</label>
       <depends>phoneGeneric</depends>
      </action>
@@ -246,7 +246,7 @@
      <action>
       <name>new_ieee802Device</name>
       <type>entry</type>
-      <image>plugins/systems/images/select_component.png</image>
+      <image>plugins/systems/images/select_component.png[new]</image>
       <label>Network device</label>
       <depends>componentGeneric</depends>
      </action>
@@ -254,7 +254,7 @@
      <action>
       <name>new_FAKE_OC_OpsiHost</name>
       <type>entry</type>
-      <image>plugins/systems/images/select_winstation.png</image>
+      <image>plugins/systems/images/select_winstation.png[new]</image>
       <label>Opsi client</label>
       <depends>opsi</depends>
      </action>
