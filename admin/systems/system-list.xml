@@ -64,7 +64,7 @@
       <objectClass>FAKE_OC_ArpNewDevice</objectClass>
       <category>terminal</category>
       <class>termgeneric</class>
-      <image>plugins/systems/images/select_default.png[new]</image>
+      <image>images/lists/element.png[new]</image>
     </objectType>
 
     <objectType>
@@ -72,7 +72,7 @@
       <objectClass>FAKE_OC_NewDevice</objectClass>
       <category>terminal</category>
       <class>termgeneric</class>
-      <image>plugins/systems/images/select_default.png[new]</image>
+      <image>images/lists/element.png[new]</image>
     </objectType>
 
     <objectType>
