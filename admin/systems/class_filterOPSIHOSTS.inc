@@ -11,11 +11,13 @@ class filterOPSIHOSTS {
 
     if(class_available('opsi') && $base == $config->current['BASE']){
 
+      // Explode filter into attribute and value to search for.
       $attr = $value = "";
+      $filter = preg_replace("/\*/",".*",$filter);
       if(preg_match("/=/", $filter)) {
         list($fAttr,$fValue) = preg_split("/=/", $filter);
       }
-      
+ 
       // Check ACLs and opsi handle
       $opsi_acl = $ui->get_permissions($base,"opsi/opsiProperties");
       $opsi = new opsi($config);
@@ -28,7 +30,6 @@ class filterOPSIHOSTS {
           msg_dialog::display(_("Error"),msgPool::siError($opsi->get_error()),ERROR_DIALOG);
         }else{
           foreach($opsi_clients as $entry){
-
             if(empty($fAttr) || preg_match("/{$fValue}/i",$entry[$fAttr][0])){
               $entry['objectClass'] = array("FAKE_OC_OpsiHost");
               $item = array('count' => count($entry));
