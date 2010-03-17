@@ -3,10 +3,12 @@
 
 <table	summary=""	width="100%" cellspacing=0 cellpadding=0>
 	<tr>
-		<td	style="width:50%; vertical-align: top;">
+		<td style='width:50%; '>
+
 			<table	summary="">
 				<tr>
-					<td style='vertical-align:top;'><LABEL	for="ipHostNumber">{t}IP-address{/t}{if $IPisMust}{$staticAddress}{/if}</LABEL></td>
+					<td>
+<LABEL	for="ipHostNumber">{t}IP-address{/t}{if $IPisMust}{$staticAddress}{/if}</LABEL></td>
 					<td>
 {render acl=$ipHostNumberACL}
             <input	type='text' id="ipHostNumber"	name="ipHostNumber"	size=25	maxlength=80	value="{$ipHostNumber}">
@@ -17,11 +19,12 @@
             <input size=25 maxlength=80 type='text' name='additionalHostNumbers_{$key}' value='{$item}'>
 {/render}
 {render acl=$ipHostNumberACL}
-            <input type='image' class='center' name='additionalHostNumbers_del_{$key}' src='images/lists/trash.png' alt='{msgPool type=delButton}'>
+            {image path="images/lists/trash.png" action="additionalHostNumbers_del_{$key}"}
+
 {/render}
           {/foreach}
 {render acl=$ipHostNumberACL}
-          <input type='image' class='center' name='additionalHostNumbers_add}' src='images/lists/new.png' alt='{msgPool type=addButton}'>&nbsp;
+          {image path="images/lists/new.png" action="additionalHostNumbers_add}"
 {/render}
 <br> 
 
@@ -64,7 +67,8 @@
                 <td colspan="2">
                   {t}Enable DHCP for this device{/t}
 {render acl=$dhcpSetupACL}
-                  <input type='image' src='images/lists/reload.png' class='center'>
+                  {image path="images/lists/reload.png"}
+
 {/render}
                 </td>
               </tr>
@@ -73,7 +77,8 @@
                 <td>
                   <input type='checkbox' name='dummy' class='center' disabled>
                   {t}Enable DHCP for this device{/t} ({t}not configured{/t})
-                  <input type='image' src='images/lists/reload.png' class='center'>
+                  {image path="images/lists/reload.png"}
+
                 </td>
               </tr>
               {/if}
@@ -83,7 +88,7 @@
                 <td>{t}Parent node{/t}</td>            
                 <td>
 {render acl=$dhcpSetupACL}
-                  <select name='dhcpParentNode'>      
+                  <select name='dhcpParentNode' size=1>      
                     {html_options options=$dhcpParentNodes selected=$dhcpParentNode}
                   </select>
 {/render}
@@ -105,7 +110,8 @@
       </table> 
     </td>
     {if $DNSenabled==true}
-		<td	style="width:50%;vertical-align:top;border-left:1px solid #b0b0b0;" valign="top">
+		<td style='width:50%;' class='left-border'>
+
 
     {if $ZoneCnt}
       
@@ -138,7 +144,8 @@
         {/if}
 {/render}
       {t}Enable DNS for this device{/t}
-      <input type='image' src='images/lists/reload.png' class='center' name="reloadThisDNSStuff" >
+      {image path="images/lists/reload.png" action="reloadThisDNSStuff"}
+
       {if $DNS_is_account == true}
       <div style="padding-left:20px" id="test2">
       {else}
@@ -149,7 +156,7 @@
 					<td><LABEL	for="zoneName">{t}Zone{/t}</LABEL></td>
 					<td>
 {render acl=$dnsSetupACL}
-              <select name="zoneName" id="zoneName" {if $DNS_is_account == false} disabled {/if}>
+              <select name="zoneName" id="zoneName" {if $DNS_is_account == false} disabled {/if} size=1>
                 {html_options values=$ZoneKeys output=$Zones selected=$zoneName}
               </select>
 {/render}
@@ -178,7 +185,8 @@
     {else}        
       <input type="checkbox" name="dummy" value="1" disabled class='center' {if $DNS_is_account} checked {/if}>
       {t}Enable DNS for this device{/t} ({t}not configured{/t})
-      <input type='image' src='images/lists/reload.png' class='center'>
+      {image path="images/lists/reload.png"}
+
     {/if}
 
 		</td>
