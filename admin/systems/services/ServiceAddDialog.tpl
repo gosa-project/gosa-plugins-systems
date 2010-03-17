@@ -11,7 +11,7 @@
 {if $Services} 
 <br>
 <br>{t}Service to add{/t} &nbsp;
-	<select name="ServiceName" >
+	<select name="ServiceName"  size=1>
 		<option value="" >&nbsp;</option>
 		{html_options options=$Services}
 	</select>
