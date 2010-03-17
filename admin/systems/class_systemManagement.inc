@@ -553,6 +553,9 @@ class systemManagement extends management
    */
   protected function removeEntryRequested($action="",$target=array(),$all=array())
   {
+    // Close dialogs and remove locks for currently handled dns
+    $this->cancelEdit();
+
     $disallowed = array();
     $this->dns = array();
 
@@ -589,16 +592,28 @@ class systemManagement extends management
 
       // Add locks
       $dns_names = array();
+      $types = array();
+      $h = $this->getHeadpage();
+
+      // Build list of object -labels
+      foreach($h->objectTypes as $type){
+        $map[$type['objectClass']]= $type['label'];
+      }
+
       foreach($this->dns as $dn){
-        $dns_names[] =LDAP::fix($dn);
+        $tmp = $h->getType($dn);
+        if(isset($map[$tmp])){
+          $dns_names[] = '('._($map[$tmp]).')&nbsp;-&nbsp;'.LDAP::fix($dn);
+        }else{
+          $dns_names[] =LDAP::fix($dn);
+        }
       }
       add_lock ($this->dns, $this->ui->dn);
 
       // Display confirmation dialog.
       $smarty = get_smarty();
-      $smarty->assign("info", msgPool::deleteInfo($dns_names,_($this->objectName)));
-      $smarty->assign("multiple", true);
-      return($smarty->fetch(get_template_path('remove.tpl', TRUE)));
+      $smarty->assign("info", msgPool::deleteInfo($dns_names));
+      return($smarty->fetch(get_template_path('removeEntries.tpl')));
     }
   }
 
