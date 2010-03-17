@@ -1,6 +1,7 @@
 <table summary="" width="100%">
  <tr>
-  <td style="vertical-align:top; width:50%;">
+  <td style='width:50%;'>
+
 	<table summary="">
 	 <tr>
 	  <td><LABEL for="cn">{t}Server name{/t}</LABEL>{$must}</td>
@@ -30,13 +31,14 @@
 	</table>
 	{$host_key}
   </td>
-  <td  style="vertical-align:top;border-left:1px solid #A0A0A0;">
+  <td class='left-border'>
+
 	<table summary="">
    	<tr>
      <td>{t}Mode{/t}</td>
      <td>
 {render acl=$gotoModeACL}
-      <select name="gotoMode" title="{t}Select terminal mode{/t}">
+      <select name="gotoMode" title="{t}Select terminal mode{/t}" size=1>
        {html_options options=$modes selected=$gotoMode}
       </select>
 {/render}
