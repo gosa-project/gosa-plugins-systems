@@ -26,6 +26,8 @@ class systemSelect extends management
   protected $skipFooter = TRUE;
   protected $skipHeader = TRUE;
 
+  public $plHeadline = "System selection";
+
   function __construct($config,$ui)
   {
     $this->config = $config;
