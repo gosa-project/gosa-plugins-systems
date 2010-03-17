@@ -1,6 +1,7 @@
 <table summary="" width="100%">
  <tr>
-  <td style="vertical-align:top; width:50%; border-right:1px solid #A0A0A0">
+  <td style='width:50%; ' class='right-border'>
+
 	<table summary="">
 	 <tr>
 	  <td><LABEL for="cn">{t}Device name{/t}</LABEL>{$must}</td>
@@ -23,7 +24,8 @@
 	  </tr>
 	</table>
   </td>
-  <td style="vertical-align:top">
+  <td>
+
 	<table summary="">
 	 <tr>
 	  <td><LABEL for="description">{t}Description{/t}</LABEL></td>
