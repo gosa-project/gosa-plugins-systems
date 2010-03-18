@@ -145,6 +145,8 @@ class servgeneric extends plugin
 
   function execute()
   {
+    
+
     /* Call parent execute */
     plugin::execute();
 
@@ -221,6 +223,7 @@ class servgeneric extends plugin
     $smarty->assign("fai_activated",$this->fai_activated);
 
     $str = $this->netConfigDNS->execute();
+    $this->dialog = $this->is_modal_dialog();
     if(is_object($this->netConfigDNS->dialog)){
       return($str);
     }
