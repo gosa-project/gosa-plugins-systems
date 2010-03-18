@@ -946,7 +946,7 @@ class termDNS extends plugin
     $changeStateForRecords = "";
     
     if(!$this->DNS_is_account) {
-      $str = "<input type='submit' value='"._("Add")."' name='AddNewRecord' id='AddNewRecord' disabled='disabled'>";
+      $str = "<button type='submit' name='AddNewRecord' id='AddNewRecord' disabled='disabled'>".msgPool::addButton()."</button>";
       return(array("str" => $str, "changeStateForRecords"=> ""));
     }
  
@@ -960,13 +960,13 @@ class termDNS extends plugin
         $str.=" <tr>".
           "   <td>".$this->generateRecordListBox($entry['type'],"RecordTypeSelectedFor_".$key)."</td>".
           "   <td><input type='text' value=\"".htmlentities($entry['value'])."\" name='RecordValue_".$key."' id='RecordValue_".$key."'></td>".
-          "   <td><input type='submit' name='RemoveRecord_".$key."' value='"._("Delete")."' id='RemoveRecord_".$key."'></td>".
+          "   <td><button type='submit' name='RemoveRecord_".$key."' id='RemoveRecord_".$key."'>".msgPool::delButton()."</button>";
           "</tr>";
     }
 
     $str.= "  <tr>".
            "    <td colspan=2 width='50%'></td><td>".
-           "      <input type='submit' value='"._("Add")."' name='AddNewRecord' id='AddNewRecord'>".
+           "      <button type='submit' name='AddNewRecord' id='AddNewRecord'>".msgPool::addButton()."</button>".
            "    </td>".
            "  </tr>".
            "</table>";
