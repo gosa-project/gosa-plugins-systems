@@ -295,7 +295,6 @@ class termDNS extends plugin
     }
  
     $smarty->assign("additionalHostNumbers",$this->additionalHostNumbers);
-    $smarty->assign("staticAddress", ""); 
  
     /**********
      * Autonet completion
@@ -380,7 +379,6 @@ class termDNS extends plugin
       foreach($this->attributes as $attr){
         $smarty->assign($attr,$this->$attr);
       }
-      $smarty->assign("staticAddress","<font class=\"must\">*</font>");
 
       $display.= $smarty->fetch(get_template_path('network.tpl', TRUE));
     }else{
@@ -460,7 +458,6 @@ class termDNS extends plugin
 
       $smarty->assign("records",$tmp['str']);
       $smarty->assign("changeStateForRecords",$changeStateForRecords);
-      $smarty->assign("staticAddress","<font class=\"must\">*</font>");
 
       $smarty->assign("autonetACL",$this->acl_is_writeable("macAddress") && $this->acl_is_writeable("ipHostNumber")?"rw":"");
 
