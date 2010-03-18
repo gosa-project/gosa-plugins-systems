@@ -199,8 +199,6 @@ class servgeneric extends plugin
       $smarty->assign("$attr", $this->$attr);
     }
 
-    $smarty->assign("staticAddress", "");
-
     /* Assign status */
     if (gosaSupportDaemon::ping($this->netConfigDNS->macAddress)){
       $smarty->assign("actions", array("halt" => _("Switch off"), "reboot" => _("Reboot"),
