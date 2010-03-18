@@ -4,7 +4,6 @@
 	<tr>
 		<td style='width:50%; '>
 
-
         <table	summary="{t}Network settings{/t}">
           <tr>
             <td>
@@ -12,24 +11,8 @@
             </td>
             <td>
               {render acl=$ipHostNumberACL}
-                <input	type='text' id="ipHostNumber"	name="ipHostNumber"	size=25	maxlength=80	value="{$ipHostNumber}">
+                <input	type='text' id="ipHostNumber"	name="ipHostNumber"	value="{$ipHostNumber}">
               {/render}
-
-              {foreach from=$additionalHostNumbers item=item key=key}
-                <br>
-                {render acl=$ipHostNumberACL}
-                  <input size=25 maxlength=80 type='text' name='additionalHostNumbers_{$key}' value='{$item}'>
-                {/render}
-                {render acl=$ipHostNumberACL}
-                  {image path="images/lists/trash.png" action="additionalHostNumbers_del_{$key}"}
-                {/render}
-              {/foreach}
-
-              {render acl=$ipHostNumberACL}
-                {image path="images/lists/edit.png" action="additionalHostNumbers_add"}
-              {/render}
-              <br> 
-
               {render acl=$ipHostNumberACL}
                 {if $DNS_is_account == true}
                   <button type='submit' name='propose_ip' id="propose_ip">{t}Propose ip{/t}</button>
@@ -37,6 +20,21 @@
                   <button type='submit' name='propose_ip' id="propose_ip">{t}Propose ip{/t}</button>
                 {/if}
               {/render}
+
+              {foreach from=$additionalHostNumbers item=item key=key}
+                <br>
+                {render acl=$ipHostNumberACL}
+                  <input type='text' name='additionalHostNumbers_{$key}' value='{$item}'>
+                {/render}
+                {render acl=$ipHostNumberACL}
+                  {image path="images/lists/trash.png" action="additionalHostNumbers_del_{$key}"}
+                {/render}
+              {/foreach}
+
+              {render acl=$ipHostNumberACL}
+                {image path="images/lists/edit.png[new]" action="additionalHostNumbers_add"}
+              {/render}
+
           </td>
 				</tr>
 				<tr>
@@ -45,7 +43,7 @@
           </td>
 					<td>
             {render acl=$macAddressACL}
-              <input	type='text' name="macAddress"	id="macAddress"	size=25	maxlength=80	value="{$macAddress}">
+              <input	type='text' name="macAddress"	id="macAddress"	value="{$macAddress}">
             {/render}
             {render acl=$autonetACL}
       	      <button type='submit' name='autonet'>{t}Autodetect{/t}</button>
@@ -57,66 +55,55 @@
       <hr>
 
 {if $dhcpEnabled}
-      <table width="100%">
+
+      <table  summary="{t}DHCP settings{/t}">
+        {if $dhcpParentNodeCnt}
         <tr>
-          <td colspan=2 style='padding-top:12px;'>
-            <table>
-
-              {if $dhcpParentNodeCnt}
-              <tr>
-                <td>
-                  {render acl=$dhcpSetupACL}
-                    <input onClick='document.mainform.submit();'
-                      {if $dhcp_is_Account} checked {/if} type='checkbox' name='dhcp_is_Account' class='center'>
-                  {/render} 
-                </td>
-                <td colspan="2">
-                  {t}Enable DHCP for this device{/t}
-                  {render acl=$dhcpSetupACL}
-                    {image path="images/lists/reload.png"}
-                  {/render}
-                </td>
-              </tr>
-              {else}
-              <tr>
-                <td>
-                  <input type='checkbox' name='dummy' class='center' disabled>
-                  {t}Enable DHCP for this device{/t} ({t}not configured{/t})
-                  {image path="images/lists/reload.png"}
-                </td>
-              </tr>
-              {/if}
-              {if $dhcp_is_Account}
-              <tr>
-                <td>&nbsp;</td>
-                <td>{t}Parent node{/t}</td>            
-                <td>
-
-                  {render acl=$dhcpSetupACL}
-                    <select name='dhcpParentNode' size=1>      
-                      {html_options options=$dhcpParentNodes selected=$dhcpParentNode}
-                    </select>
-                  {/render}
-                </td>
-              </tr>
-              <tr>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>
-                  <button type='submit' name='dhcpEditOptions'>{t}Edit settings{/t}</button>
-
-                </td>
-              </tr>
-              {/if}
-            </table>
+          <td>
+            {render acl=$dhcpSetupACL}
+              <input onClick='document.mainform.submit();'
+                {if $dhcp_is_Account} checked {/if} type='checkbox' name='dhcp_is_Account' class='center'>
+            {/render} 
+          </td>
+          <td colspan="2">
+            {t}Enable DHCP for this device{/t}
+            {render acl=$dhcpSetupACL}
+              {image path="images/lists/reload.png"}
+            {/render}
+          </td>
+        </tr>
+        {else}
+        <tr>
+          <td>
+            <input type='checkbox' name='dummy' class='center' disabled>
+            {t}Enable DHCP for this device{/t} ({t}not configured{/t})
+            {image path="images/lists/reload.png"}
           </td>
         </tr>
         {/if}
-      </table> 
-    </td>
-    {if $DNSenabled==true}
-		<td style='width:50%;' class='left-border'>
+        {if $dhcp_is_Account}
+        <tr>
+          <td>&nbsp;</td>
+          <td>{t}Parent node{/t}</td>            
+          <td>
 
+            {render acl=$dhcpSetupACL}
+              <select name='dhcpParentNode' size=1>      
+                {html_options options=$dhcpParentNodes selected=$dhcpParentNode}
+              </select>
+            {/render}
+            <button type='submit' name='dhcpEditOptions'>{t}Edit settings{/t}</button>
+
+          </td>
+        </tr>
+        {/if}
+      </table>
+
+    {/if}
+    </td>
+
+		<td style='width:50%;' class='left-border'>
+    {if $DNSenabled==true}
 
     {if $ZoneCnt}
       

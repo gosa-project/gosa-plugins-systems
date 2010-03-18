@@ -284,7 +284,7 @@ class termDNS extends plugin
 
         /* Delete given entry */
         if(preg_match("/^additionalHostNumbers_del_/",$name)){
-          $id = preg_replace("/^^additionalHostNumbers_del_([0-9]*)_.*/","\\1",$name);
+          $id = preg_replace("/^^additionalHostNumbers_del_([0-9]*)$/","\\1",$name);
           if(isset($this->additionalHostNumbers[$id])){
             unset($this->additionalHostNumbers[$id]);
             $this->additionalHostNumbers = array_values($this->additionalHostNumbers);
