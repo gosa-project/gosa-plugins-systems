@@ -2,6 +2,7 @@
  <tr>
   <td style='width:50%;'>
 
+  <h3>{t}Generic{/t}</h3>
 	<table summary="">
 	 <tr>
 	  <td><LABEL for="cn">{t}Server name{/t}</LABEL>{$must}</td>
@@ -19,21 +20,6 @@
 {/render}
           </td>
 	 </tr>
- 	 <tr>
-	  <td><br><LABEL for="base">{t}Base{/t}</LABEL>{$must}</td>
-	  <td>
-	   <br>
-{render acl=$baseACL}
-           {$base}
-{/render}
-	   </td>
-	  </tr>
-	</table>
-	{$host_key}
-  </td>
-  <td class='left-border'>
-
-	<table summary="">
    	<tr>
      <td>{t}Mode{/t}</td>
      <td>
@@ -44,12 +30,26 @@
 {/render}
      </td>
     </tr>
+ 	 <tr>
+	  <td><br><LABEL for="base">{t}Base{/t}</LABEL>{$must}</td>
+	  <td>
+	   <br>
+{render acl=$baseACL}
+           {$base}
+{/render}
+	   </td>
+	  </tr>
 	</table>
+
+  </td>
+  <td class='left-border'>
+	{$host_key}
   </td>
  </tr>
 </table>
 
 <hr>
+<br>
 
 {$netconfig}
 
