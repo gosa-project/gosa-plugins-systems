@@ -1,75 +1,80 @@
 <h3>	{t}Network	settings{/t}</h3>
 
-
-<table	summary=""	width="100%" cellspacing=0 cellpadding=0>
+<table	summary="{t}Network settings{/t}">
 	<tr>
 		<td style='width:50%; '>
 
-			<table	summary="">
-				<tr>
-					<td>
-<LABEL	for="ipHostNumber">{t}IP-address{/t}{if $IPisMust}{$staticAddress}{/if}</LABEL></td>
-					<td>
-{render acl=$ipHostNumberACL}
-            <input	type='text' id="ipHostNumber"	name="ipHostNumber"	size=25	maxlength=80	value="{$ipHostNumber}">
-{/render}
-          {foreach from=$additionalHostNumbers item=item key=key}
-            <br>
-{render acl=$ipHostNumberACL}
-            <input size=25 maxlength=80 type='text' name='additionalHostNumbers_{$key}' value='{$item}'>
-{/render}
-{render acl=$ipHostNumberACL}
-            {image path="images/lists/trash.png" action="additionalHostNumbers_del_{$key}"}
 
-{/render}
-          {/foreach}
-{render acl=$ipHostNumberACL}
-          {image path="images/lists/new.png" action="additionalHostNumbers_add}"
-{/render}
-<br> 
+        <table	summary="{t}Network settings{/t}">
+          <tr>
+            <td>
+              <LABEL	for="ipHostNumber">{t}IP-address{/t}{if $IPisMust}{$must}{/if}</LABEL>
+            </td>
+            <td>
+              {render acl=$ipHostNumberACL}
+                <input	type='text' id="ipHostNumber"	name="ipHostNumber"	size=25	maxlength=80	value="{$ipHostNumber}">
+              {/render}
 
-{render acl=$ipHostNumberACL}
-{if $DNS_is_account == true}
-      <button type='submit' name='propose_ip' id="propose_ip">{t}Propose ip{/t}</button>
+              {foreach from=$additionalHostNumbers item=item key=key}
+                <br>
+                {render acl=$ipHostNumberACL}
+                  <input size=25 maxlength=80 type='text' name='additionalHostNumbers_{$key}' value='{$item}'>
+                {/render}
+                {render acl=$ipHostNumberACL}
+                  {image path="images/lists/trash.png" action="additionalHostNumbers_del_{$key}"}
+                {/render}
+              {/foreach}
 
-      {else}
-      <button type='submit' name='propose_ip' id="propose_ip">{t}Propose ip{/t}</button>
+              {render acl=$ipHostNumberACL}
+                {image path="images/lists/edit.png" action="additionalHostNumbers_add"}
+              {/render}
+              <br> 
 
-      {/if}
-{/render}
+              {render acl=$ipHostNumberACL}
+                {if $DNS_is_account == true}
+                  <button type='submit' name='propose_ip' id="propose_ip">{t}Propose ip{/t}</button>
+                {else}
+                  <button type='submit' name='propose_ip' id="propose_ip">{t}Propose ip{/t}</button>
+                {/if}
+              {/render}
           </td>
 				</tr>
 				<tr>
-					<td><LABEL	for="macAddress">{t}MAC-address{/t}</LABEL>{$staticAddress}</td>
 					<td>
-{render acl=$macAddressACL}
-            <input	type='text' name="macAddress"	id="macAddress"	size=25	maxlength=80	value="{$macAddress}">
-{/render}
-
-{render acl=$autonetACL}
-      	    <button type='submit' name='autonet'>{t}Autodetect{/t}</button>
-
-{/render}
+            <LABEL	for="macAddress">{t}MAC-address{/t}</LABEL>{$must}
+          </td>
+					<td>
+            {render acl=$macAddressACL}
+              <input	type='text' name="macAddress"	id="macAddress"	size=25	maxlength=80	value="{$macAddress}">
+            {/render}
+            {render acl=$autonetACL}
+      	      <button type='submit' name='autonet'>{t}Autodetect{/t}</button>
+            {/render}
           </td>
 				</tr>
-        {if $dhcpEnabled}
+      </table>
+
+      <hr>
+
+{if $dhcpEnabled}
+      <table width="100%">
         <tr>
           <td colspan=2 style='padding-top:12px;'>
             <table>
+
               {if $dhcpParentNodeCnt}
               <tr>
                 <td>
-{render acl=$dhcpSetupACL}
-                  <input onClick='document.mainform.submit();'
-                    {if $dhcp_is_Account} checked {/if} type='checkbox' name='dhcp_is_Account' class='center'>
-{/render}
+                  {render acl=$dhcpSetupACL}
+                    <input onClick='document.mainform.submit();'
+                      {if $dhcp_is_Account} checked {/if} type='checkbox' name='dhcp_is_Account' class='center'>
+                  {/render} 
                 </td>
                 <td colspan="2">
                   {t}Enable DHCP for this device{/t}
-{render acl=$dhcpSetupACL}
-                  {image path="images/lists/reload.png"}
-
-{/render}
+                  {render acl=$dhcpSetupACL}
+                    {image path="images/lists/reload.png"}
+                  {/render}
                 </td>
               </tr>
               {else}
@@ -78,7 +83,6 @@
                   <input type='checkbox' name='dummy' class='center' disabled>
                   {t}Enable DHCP for this device{/t} ({t}not configured{/t})
                   {image path="images/lists/reload.png"}
-
                 </td>
               </tr>
               {/if}
@@ -87,11 +91,12 @@
                 <td>&nbsp;</td>
                 <td>{t}Parent node{/t}</td>            
                 <td>
-{render acl=$dhcpSetupACL}
-                  <select name='dhcpParentNode' size=1>      
-                    {html_options options=$dhcpParentNodes selected=$dhcpParentNode}
-                  </select>
-{/render}
+
+                  {render acl=$dhcpSetupACL}
+                    <select name='dhcpParentNode' size=1>      
+                      {html_options options=$dhcpParentNodes selected=$dhcpParentNode}
+                    </select>
+                  {/render}
                 </td>
               </tr>
               <tr>
