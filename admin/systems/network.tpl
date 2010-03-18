@@ -1,6 +1,6 @@
 <h3>	{t}Network	settings{/t}</h3>
 
-<table	summary="{t}Network settings{/t}">
+<table	summary="{t}Network settings{/t}" width="100%">
 	<tr>
 		<td style='width:50%; '>
 
