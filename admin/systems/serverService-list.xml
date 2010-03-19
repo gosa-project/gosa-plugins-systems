@@ -15,7 +15,7 @@
       <objectClass>FAKE_OC_ServerService</objectClass>
       <category>server</category>
       <class>ServerService</class>
-      <image>images/lits/new.png</image>
+      <image>images/lits/lists/element.png[new]</image>
     </objectType>
 
   </definition>
@@ -50,13 +50,13 @@
 
     <action>
      <type>sub</type>
-     <image>images/lists/new.png</image>
+     <image>images/lists/element.png[new]</image>
      <label>Create</label>
 
      <action>
       <name>new</name>
       <type>entry</type>
-      <image>images/lists/new.png</image>
+      <image>images/lists/element.png[new]</image>
       <label>Service</label>
      </action>
     </action>

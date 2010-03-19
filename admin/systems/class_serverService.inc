@@ -293,11 +293,7 @@ class ServerService extends management
       $filter->update();
       session::global_set(get_class($this)."_filter", $filter);
       session::set('autocomplete', $filter);
-      if (!$filter->isValid()){
-        msg_dialog::display(_("Filter error"), _("The filter is incomplete!"), ERROR_DIALOG);
-      }
     }
-
 
     // Handle actions (POSTs and GETs)
     $str = $this->handleActions($this->detectPostActions());
