@@ -700,6 +700,7 @@ class systemManagement extends management
         }else{
           $this->activationQueue[$dn] = array();
           $this->dialogObject = new SelectDeviceType($this->config,$dn);
+          $this->dialogObject->set_acl_category("incoming");
           $this->skipFooter = TRUE;
           $this->displayApplyBtn = FALSE;
           // see condition  -$s_action == "::systemTypeChosen"-  for further handling
