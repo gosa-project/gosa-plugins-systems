@@ -1003,7 +1003,7 @@ class termDNS extends plugin
         "plDepends"     => array(),
         "plPriority"    => 5,
         "plSection"     => array("administration"),
-        "plCategory"    => array("workstation","terminal","phone","server","component","printer","winworkstation"),
+        "plCategory"    => array("workstation","terminal","phone","server","component","printer","winworkstation","opsi"),
 
         "plProvidedAcls"=> array(
           "ipHostNumber"  => _("IP address"),
