@@ -62,16 +62,16 @@
     <objectType>
       <label>New unknown device</label>
       <objectClass>FAKE_OC_ArpNewDevice</objectClass>
-      <category>terminal</category>
-      <class>termgeneric</class>
+      <category>incoming</category>
+      <class>ArpNewDevice</class>
       <image>images/lists/element.png[new]</image>
     </objectType>
 
     <objectType>
       <label>New device</label>
       <objectClass>FAKE_OC_NewDevice</objectClass>
-      <category>terminal</category>
-      <class>termgeneric</class>
+      <category>incoming</category>
+      <class>systemManagement</class>
       <image>images/lists/element.png[new]</image>
     </objectType>
 
