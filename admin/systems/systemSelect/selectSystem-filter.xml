@@ -3,6 +3,8 @@
 <filterdef>
   <definition>
     <category>server</category>
+    <category>workstation</category>
+    <category>terminal</category>
     <initial>true</initial>
     <default>default</default>
     <scope>auto</scope>
