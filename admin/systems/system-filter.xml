@@ -2,12 +2,16 @@
 
 <filterdef>
   <definition>
+    <initial>true</initial>
     <category>server</category>
-    <category>terminal</category>
     <category>workstation</category>
+    <category>terminal</category>
     <category>opsi</category>
     <category>incoming</category>
-    <initial>true</initial>
+    <category>phone</category>
+    <category>printer</category>
+    <category>winworkstation</category>
+    <category>component</category>
     <scope>auto</scope>
     <default>default</default>
     <attribute>dn</attribute>
