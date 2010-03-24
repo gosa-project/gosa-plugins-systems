@@ -189,6 +189,7 @@ class ServerService extends management
    */
   function saveService()
   {
+    if(!is_object($this->dialogObject)) return;
     $this->dialogObject->save_object();
     $msgs = $this->dialogObject->check();
     if(count($msgs)){
