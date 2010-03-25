@@ -1,9 +1,9 @@
-<table summary="" width="100%">
+<table summary="{t}Server{/t}" width="100%">
  <tr>
   <td style='width:50%;'>
 
   <h3>{t}Generic{/t}</h3>
-	<table summary="">
+	<table summary="{t}Server settings{/t}">
 	 <tr>
 	  <td><LABEL for="cn">{t}Server name{/t}</LABEL>{$must}</td>
 	  <td>
@@ -54,32 +54,24 @@
 {$netconfig}
 
 {if $fai_activated}
-<hr>
+  <hr>
 
-<h3>{t}Action{/t}</h3>
-<table summary="">
- <tr>
-  <td>
+  <h3>{t}Action{/t}</h3>
 
-{if $currently_installing}
-	<i>{t}System installation in progress, the FAI state cannot be changed right now.{/t}</i>
-{else}
-{render acl=$FAIstateACL}
-   <select size="1" name="saction" title="{t}Select action to execute for this server{/t}">
-    <option>&nbsp;</option>
-    {html_options options=$actions}
-   </select>
-{/render}
-  </td>
-  <td>
-{render acl=$FAIstateACL}
-   <button type='submit' name='action'>{t}Execute{/t}</button>
+  {if $currently_installing}
+    <i>{t}System installation in progress, the FAI state cannot be changed right now.{/t}</i>
+  {else}
+    {render acl=$FAIstateACL}
+       <select size="1" name="saction" title="{t}Select action to execute for this server{/t}">
+        <option>&nbsp;</option>
+        {html_options options=$actions}
+       </select>
+    {/render}
+    {render acl=$FAIstateACL}
+       <button type='submit' name='action'>{t}Execute{/t}</button>
 
-{/render}
-  </td>
- </tr>
-{/if}
-</table>
+    {/render}
+  {/if}
 {/if}
 
 <!-- Place cursor -->
