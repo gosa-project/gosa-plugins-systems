@@ -1,10 +1,10 @@
-<h3>	{t}Network	settings{/t}</h3>
+<h3>{t}Network	settings{/t}</h3>
 
 <table	summary="{t}Network settings{/t}" width="100%">
 	<tr>
 		<td style='width:50%; '>
 
-        <table	summary="{t}Network settings{/t}">
+        <table	summary="{t}Address settings{/t}">
           <tr>
             <td>
               <LABEL	for="ipHostNumber">{t}IP-address{/t}{if $IPisMust}{$must}{/if}</LABEL>
@@ -143,7 +143,7 @@
       {else}
       <div style="padding-left:20px;display: none;" id="test2">
       {/if}
-			<table summary="">
+			<table summary="{t}DNS zone settings{/t}">
 				<tr>
 					<td><LABEL	for="zoneName">{t}Zone{/t}</LABEL></td>
 					<td>
