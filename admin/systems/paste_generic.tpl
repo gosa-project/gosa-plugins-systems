@@ -1,5 +1,5 @@
 {if $object == "server"}
-    <table summary="">
+    <table summary="{t}Paste server{/t}">
      <tr>
       <td><LABEL for="cn">{t}Server name{/t}</LABEL>{$must}</td>
       <td>
@@ -9,7 +9,7 @@
 	</table>
 {/if}
 {if $object == "workstation"}
-    <table summary="">
+    <table summary="{t}Paste workstation{/t}">
      <tr>
       <td><LABEL for="cn">{t}workstation name{/t}</LABEL>{$must}</td>
       <td>
@@ -19,7 +19,7 @@
 	</table>
 {/if}
 {if $object == "terminal"}
-    <table summary="">
+    <table summary="{t}Paste terminal{/t}">
      <tr>
       <td><LABEL for="cn">{t}Terminal name{/t}</LABEL>{$must}</td>
       <td>
@@ -29,7 +29,7 @@
 	</table>
 {/if}
 {if $object == "printer"}
-    <table summary="">
+    <table summary="{t}Paste printer{/t}">
      <tr>
       <td><LABEL for="cn">{t}Printer name{/t}</LABEL>{$must}</td>
       <td>
@@ -39,7 +39,7 @@
 	</table>
 {/if}
 {if $object == "component"}
-    <table summary="">
+    <table summary="{t}Paste network component{/t}">
      <tr>
       <td><LABEL for="cn">{t}Component name{/t}</LABEL>{$must}</td>
       <td>
