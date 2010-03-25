@@ -10,7 +10,7 @@
  {t}Changing the password impinges on authentification only.{/t}
 </p>
 
-<table summary="">
+<table summary="{t}System password change{/t}">
 
   <tr>
     <td><b><LABEL for="new_password">{t}New password{/t}</LABEL></b></td>
