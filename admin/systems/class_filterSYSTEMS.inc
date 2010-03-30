@@ -37,7 +37,7 @@ class filterSYSTEMS {
 
         // Detect SAMBA machines
       }elseif(in_array('sambaSamAccount', $entry['objectClass']) && preg_match("/\$$/", $entry['cn'][0])){
-        $entries[$key]['objectClass'][] = 'FAKE_OC_winstation';
+        $entries[$key]['objectClass'][] = 'sambaSamAccount';
 
         // Detect Workstation & templates
       }elseif(in_array('gotoWorkstation', $entry['objectClass'])){

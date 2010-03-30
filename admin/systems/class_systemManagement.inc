@@ -1304,7 +1304,7 @@ class systemManagement extends management
             "aclClass"    => "phoneGeneric",
             "aclCategory" => "phone"),
 
-        "FAKE_OC_winstation" => array(
+        "sambaSamAccount" => array(
             "ou"          => get_winstations_ou(),
             "plugClass"   => "wingeneric",
             "sendEvents"  => TRUE,

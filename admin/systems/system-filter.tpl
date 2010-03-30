@@ -22,7 +22,7 @@
   {if $USE_goFonHardware}
   {$PHONE}&nbsp;{t}Show phones{/t}<br>
   {/if}
-  {if $USE_FAKE_OC_winstation}
+  {if $USE_sambaSamAccount}
   {$WINSTATION}&nbsp;{t}Show windows based workstations{/t}<br>
   {/if}
   {if $USE_ieee802Device}

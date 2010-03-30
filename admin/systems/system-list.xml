@@ -93,7 +93,7 @@
 
     <objectType>
       <label>Winstation</label>
-      <objectClass>FAKE_OC_winstation</objectClass>
+      <objectClass>sambaSamAccount</objectClass>
       <category>winworkstation</category>
       <class>wingeneric</class>
       <image>plugins/systems/images/select_winstation.png</image>

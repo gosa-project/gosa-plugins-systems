@@ -14,6 +14,7 @@
       <attribute>dn</attribute>
       <attribute>objectClass</attribute>
       <attribute>cn</attribute>
+      <attribute>uid</attribute>
       <attribute>description</attribute>
       <attribute>gotoMode</attribute>
       <attribute>FAIstate</attribute>
@@ -31,12 +32,13 @@
     <maxlength>60</maxlength>
     <default></default>
     <unset></unset>
-    <set>(cn=*$*)</set>
+    <set>(|(cn=*$*)(uid=*$*))</set>
     <alphabet>false</alphabet>
     <autocomplete>
       <backend>SYSTEMS</backend>
-      <filter>(cn=*$NAME*)</filter>
+      <filter>(|(cn=*$NAME*)(uid=*$NAME*))</filter>
       <attribute>cn</attribute>
+      <attribute>uid</attribute>
       <frequency>0.5</frequency>
       <characters>3</characters>
     </autocomplete>
@@ -55,6 +57,7 @@
       <backend>SYSTEMS</backend>
       <filter>(gotoLastUser=*USER*)</filter>
       <attribute>cn</attribute>
+      <attribute>uid</attribute>
       <frequency>0.5</frequency>
       <characters>3</characters>
     </autocomplete>
@@ -105,7 +108,7 @@
     <tag>WINSTATION</tag>
     <default>true</default>
     <unset></unset>
-    <set>(&amp;(objectClass=sambaSamAccount)(cn=*\$))</set>
+    <set>(&amp;(objectClass=sambaSamAccount)(uid=*\$))</set>
   </element>
 
   <element>
