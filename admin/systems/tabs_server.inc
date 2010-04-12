@@ -33,6 +33,7 @@ class servtabs extends tabs
     $this->hide_acls = $hide_acls;
     $this->hide_refs = $hide_refs;
 
+    $this->acl_category = $category;
     $baseobject= NULL;
 
     foreach ($data as $tab){
