@@ -1033,6 +1033,7 @@ class systemManagement extends management
       $hostId =  $this->tabObject->by_object['opsiGeneric']->hostId;
       $mac    =  $this->tabObject->by_object['opsiGeneric']->mac;
       $this->opsi->job_opsi_activate_client($hostId,$mac);
+      $this->tabObject->set_acl_base($this->dn);
 
     }elseif(isset($this->tabObject->was_activated) && $this->tabObject->was_activated){
       $this->activate_new_device($this->tabObject->dn);
