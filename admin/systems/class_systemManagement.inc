@@ -58,7 +58,7 @@
 class systemManagement extends management
 {
   var $plHeadline     = "Systems";
-  var $plDescription  = "Systems";
+  var $plDescription  = "Manage systems, their services and prepare them for use with GOsa";
   var $plIcon  = "plugins/systems/images/plugin.png";
 
   // Tab definition 
