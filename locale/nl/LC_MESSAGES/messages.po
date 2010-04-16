@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-01 14:51+0100\n"
+"POT-Creation-Date: 2010-04-16 16:37+0200\n"
 "PO-Revision-Date: 2006-06-02 16:58+0100\n"
 "Last-Translator: Niels Klomp (CareWorks ICT Services) <nk@careworks.nl>\n"
 "Language-Team: CareWorks ICT Services <info@careworks.nl>\n"
@@ -19,89 +19,232 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: admin/systems/remove.tpl:2
-msgid "Warning"
-msgstr "Waarschuwing"
+#: admin/systems/system-filter.xml:30
+#: admin/systems/systemSelect/selectSystem-filter.xml:19
+#: admin/systems/serverService-filter.xml:17
+#, fuzzy
+msgid "Default filter"
+msgstr "Parameters"
 
-#: admin/systems/remove.tpl:6
+#: admin/systems/system-filter.xml:55
+#, fuzzy
+msgid "All systems"
+msgstr "gebruikers"
+
+#: admin/systems/system-filter.xml:86
+#, fuzzy
+msgid "Opsi"
+msgstr "Thin Client"
+
+#: admin/systems/system-filter.xml:100
+#: admin/systems/class_systemManagement.inc:1406
+#: admin/systems/class_systemManagement.inc:1407
+#, fuzzy
+msgid "Incoming objects"
+msgstr "Lidmaatschap objecten"
+
+#: admin/systems/systemSelect/selectSystem-list.xml:11
+#, fuzzy
+msgid "Please select the desired entries"
+msgstr "Voorkeurstaal"
+
+#: admin/systems/systemSelect/selectSystem-list.xml:15
+#: admin/systems/server.tpl:1 admin/systems/class_servGeneric.inc:498
+#: admin/systems/system-list.xml:103 admin/systems/system-list.xml:210
+msgid "Server"
+msgstr "Server"
+
+#: admin/systems/systemSelect/selectSystem-list.xml:23
+#: admin/systems/system-list.xml:111 admin/systems/system-list.xml:218
+msgid "Workstation"
+msgstr "Werkstation"
+
+#: admin/systems/systemSelect/selectSystem-list.xml:31
+#: admin/systems/system-list.xml:119 admin/systems/system-list.xml:226
+msgid "Terminal"
+msgstr "Terminal"
+
+#: admin/systems/systemSelect/selectSystem-list.xml:57
+#: admin/systems/class_servGeneric.inc:501
+#: admin/systems/class_componentGeneric.inc:301
+#: admin/systems/system-list.xml:169
+msgid "Name"
+msgstr "Naam"
+
+#: admin/systems/systemSelect/selectSystem-list.xml:65
+#: admin/systems/server.tpl:16 admin/systems/class_servGeneric.inc:502
+#: admin/systems/component.tpl:29 admin/systems/serverService-list.xml:35
+#: admin/systems/class_componentGeneric.inc:303
+#: admin/systems/system-list.xml:177
+msgid "Description"
+msgstr "Omschrijving"
+
+#: admin/systems/systemSelect/selectSystem-list.tpl:12
+#: admin/systems/server.tpl:34 admin/systems/system-list.tpl:12
+#: admin/systems/class_servGeneric.inc:503 admin/systems/component.tpl:18
+#: admin/systems/class_componentGeneric.inc:302
+msgid "Base"
+msgstr "Basis"
+
+#: admin/systems/systemSelect/class_systemSelect.inc:29
+#, fuzzy
+msgid "System selection"
+msgstr "Groep instellingen"
+
+#: admin/systems/network.tpl:1
+msgid "Network\tsettings"
+msgstr "Netwerk\tinstellingen"
+
+#: admin/systems/network.tpl:3
+#, fuzzy
+msgid "Network settings"
+msgstr "Netwerk\tinstellingen"
+
+#: admin/systems/network.tpl:7
+#, fuzzy
+msgid "Address settings"
+msgstr "Programma instellingen"
+
+#: admin/systems/network.tpl:10
+msgid "IP-address"
+msgstr "IP adres"
+
+#: admin/systems/network.tpl:18 admin/systems/network.tpl:20
+#, fuzzy
+msgid "Propose ip"
+msgstr "Eigenschappen"
+
+#: admin/systems/network.tpl:42
+msgid "MAC-address"
+msgstr "Hardware adres (MAC)"
+
+#: admin/systems/network.tpl:49
+msgid "Autodetect"
+msgstr "Auto detect."
+
+#: admin/systems/network.tpl:59
+#, fuzzy
+msgid "DHCP settings"
+msgstr "Samba Instellingen"
+
+#: admin/systems/network.tpl:69 admin/systems/network.tpl:79
+#, fuzzy
+msgid "Enable DHCP for this device"
+msgstr "DNS voor dit apparaat activeren"
+
+#: admin/systems/network.tpl:79 admin/systems/network.tpl:179
+#, fuzzy
+msgid "not configured"
+msgstr "niet geconfigureerd"
+
+#: admin/systems/network.tpl:87
+#, fuzzy
+msgid "Parent node"
+msgstr "Hoofd/Parent server"
+
+#: admin/systems/network.tpl:95
+#, fuzzy
+msgid "Edit settings"
+msgstr "E-mail instellingen"
+
+#: admin/systems/network.tpl:138 admin/systems/network.tpl:179
+msgid "Enable DNS for this device"
+msgstr "DNS voor dit apparaat activeren"
+
+#: admin/systems/network.tpl:146
+#, fuzzy
+msgid "DNS zone settings"
+msgstr "Samba Instellingen"
+
+#: admin/systems/network.tpl:148
+msgid "Zone"
+msgstr "Zone"
+
+#: admin/systems/network.tpl:158
+msgid "TTL"
+msgstr "TTL"
+
+#: admin/systems/network.tpl:166
+msgid "Dns records"
+msgstr "DNS records"
+
+#: admin/systems/server.tpl:5 admin/systems/class_servGeneric.inc:492
+#: admin/systems/class_componentGeneric.inc:292
+msgid "Generic"
+msgstr "Algemeen"
+
+#: admin/systems/server.tpl:6
+#, fuzzy
+msgid "Server settings"
+msgstr "Gebruikersinstellingen"
+
+#: admin/systems/server.tpl:8 admin/systems/class_servGeneric.inc:323
+#: admin/systems/class_servGeneric.inc:328
+#: admin/systems/class_servGeneric.inc:344 admin/systems/paste_generic.tpl:4
+msgid "Server name"
+msgstr "Servernaam"
+
+#: admin/systems/server.tpl:24
+msgid "Mode"
+msgstr "Modus"
+
+#: admin/systems/server.tpl:27
+msgid "Select terminal mode"
+msgstr "Selecteer terminal modus"
+
+#: admin/systems/server.tpl:59
+msgid "Action"
+msgstr "Actie"
+
+#: admin/systems/server.tpl:62
 msgid ""
-"This includes all account data, system access rules, imap settings, etc. for "
-"this user. Please double check if your really want to do this since there is "
-"no way for GOsa to get your data back."
+"System installation in progress, the FAI state cannot be changed right now."
 msgstr ""
-"Dit omvat alle account gegevens, systeem toegangsregels, imap instellingen "
-"etc. voor deze gebruiker. Verzeker uzelf hiervan, aangezien er geen "
-"mogelijkheid voor GOsa is om deze informatie terug te halen."
 
-#: admin/systems/remove.tpl:10
-msgid "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
-msgstr ""
-"Indien u zeker bent drukt u dan 'Verwijderen' om door te gaan of 'Annuleren' "
-"om te annuleren."
+#: admin/systems/server.tpl:65
+msgid "Select action to execute for this server"
+msgstr "Selecteer de voor deze server uit te voeren actie"
+
+#: admin/systems/server.tpl:71
+msgid "Execute"
+msgstr "Commando"
 
 #: admin/systems/class_systemManagement.inc:60
-#: admin/systems/class_systemManagement.inc:61
 msgid "Systems"
 msgstr "Systemen"
 
-#: admin/systems/class_systemManagement.inc:171
-#: admin/systems/class_systemManagement.inc:267
-#: admin/systems/.svn/tmp/tempfile.tmp:633
-#: admin/systems/.svn/tmp/tempfile.tmp:736
-#: admin/systems/.svn/tmp/tempfile.tmp:965
-#: admin/systems/.svn/tmp/tempfile.2.tmp:637
-#: admin/systems/.svn/tmp/tempfile.2.tmp:740
-#: admin/systems/.svn/tmp/tempfile.2.tmp:969
+#: admin/systems/class_systemManagement.inc:61
+msgid "Manage systems, their services and prepare them for use with GOsa"
+msgstr ""
+
+#: admin/systems/class_systemManagement.inc:172
+#: admin/systems/class_systemManagement.inc:268
 #, fuzzy
 msgid "Permission error"
 msgstr "Rechten"
 
-#: admin/systems/class_systemManagement.inc:171
-#: admin/systems/class_systemManagement.inc:267
-#: admin/systems/.svn/tmp/tempfile.tmp:633
-#: admin/systems/.svn/tmp/tempfile.tmp:736
-#: admin/systems/.svn/tmp/tempfile.2.tmp:637
-#: admin/systems/.svn/tmp/tempfile.2.tmp:740
+#: admin/systems/class_systemManagement.inc:172
+#: admin/systems/class_systemManagement.inc:268
 #, fuzzy
 msgid "You have no permission to change this password!"
 msgstr "U heeft momenteel geen toestemming om uw wachtwoord te veranderen"
 
-#: admin/systems/class_systemManagement.inc:258
-#: admin/systems/class_systemManagement.inc:677
-#: admin/systems/class_systemManagement.inc:683
-#: admin/systems/class_systemManagement.inc:802
-#: admin/systems/class_systemManagement.inc:817
-#: admin/systems/class_serverService.inc:196
+#: admin/systems/class_systemManagement.inc:259
+#: admin/systems/class_systemManagement.inc:693
+#: admin/systems/class_systemManagement.inc:699
+#: admin/systems/class_systemManagement.inc:819
+#: admin/systems/class_systemManagement.inc:834
+#: admin/systems/class_servGeneric.inc:297
+#: admin/systems/class_serverService.inc:197
 #: admin/systems/class_serverService.inc:239
-#: admin/systems/class_serverService.inc:452
-#: admin/systems/.svn/tmp/tempfile.tmp:365
-#: admin/systems/.svn/tmp/tempfile.tmp:480
-#: admin/systems/.svn/tmp/tempfile.tmp:517
-#: admin/systems/.svn/tmp/tempfile.tmp:525
-#: admin/systems/.svn/tmp/tempfile.tmp:575
-#: admin/systems/.svn/tmp/tempfile.tmp:583
-#: admin/systems/.svn/tmp/tempfile.tmp:598
-#: admin/systems/.svn/tmp/tempfile.tmp:606
-#: admin/systems/.svn/tmp/tempfile.tmp:645
-#: admin/systems/.svn/tmp/tempfile.tmp:739
-#: admin/systems/.svn/tmp/tempfile.tmp:1301
-#: admin/systems/.svn/tmp/tempfile.2.tmp:369
-#: admin/systems/.svn/tmp/tempfile.2.tmp:484
-#: admin/systems/.svn/tmp/tempfile.2.tmp:521
-#: admin/systems/.svn/tmp/tempfile.2.tmp:529
-#: admin/systems/.svn/tmp/tempfile.2.tmp:579
-#: admin/systems/.svn/tmp/tempfile.2.tmp:587
-#: admin/systems/.svn/tmp/tempfile.2.tmp:602
-#: admin/systems/.svn/tmp/tempfile.2.tmp:610
-#: admin/systems/.svn/tmp/tempfile.2.tmp:649
-#: admin/systems/.svn/tmp/tempfile.2.tmp:743
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1305
-#: admin/systems/class_filterSYSTEMS.inc:127
-#: admin/systems/class_termDNS.inc:343
+#: admin/systems/class_serverService.inc:447
+#: admin/systems/class_termDNS.inc:344
+#: admin/systems/class_componentGeneric.inc:166
+#: admin/systems/class_filterOPSIHOSTS.inc:30
 msgid "Error"
 msgstr "Fout"
 
-#: admin/systems/class_systemManagement.inc:259
+#: admin/systems/class_systemManagement.inc:260
 #, fuzzy
 msgid ""
 "The passwords you've entered as 'New password' and 'Repeated password' do "
@@ -110,133 +253,458 @@ msgstr ""
 "Het nieuwe wachtwoord en het herhaalde wachtwoord komen niet met elkaar "
 "overeen!"
 
-#: admin/systems/class_systemManagement.inc:305
-#: admin/systems/.svn/tmp/tempfile.tmp:720
-#: admin/systems/.svn/tmp/tempfile.2.tmp:724
+#: admin/systems/class_systemManagement.inc:306
 #, fuzzy
 msgid "Password method"
 msgstr "Wachtwoord encryptie"
 
-#: admin/systems/class_systemManagement.inc:305
-#: admin/systems/.svn/tmp/tempfile.tmp:720
-#: admin/systems/.svn/tmp/tempfile.2.tmp:724
+#: admin/systems/class_systemManagement.inc:306
 msgid "Password method crypt is missing. Cannot set system password."
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:311
-#: admin/systems/class_systemManagement.inc:1053
-#: admin/systems/services/class_goService.inc:122
-#: admin/systems/services/class_goService.inc:150
-#: admin/systems/services/class_goService.inc:183
-#: admin/systems/.svn/tmp/tempfile.tmp:726
-#: admin/systems/.svn/tmp/tempfile.tmp:1833
-#: admin/systems/.svn/tmp/tempfile.2.tmp:730
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1837
-#: admin/systems/class_servGeneric.inc:283
-#: admin/systems/class_servGeneric.inc:435 admin/systems/class_termDNS.inc:488
-#: admin/systems/class_termDNS.inc:794 admin/systems/class_termDNS.inc:813
-#: admin/systems/class_termDNS.inc:834 admin/systems/class_termDNS.inc:839
-#: admin/systems/class_termDNS.inc:857 admin/systems/class_termDNS.inc:933
-#: admin/systems/class_componentGeneric.inc:160
-#: admin/systems/class_componentGeneric.inc:301
+#: admin/systems/class_systemManagement.inc:312
+#: admin/systems/class_systemManagement.inc:1071
+#: admin/systems/class_servGeneric.inc:263
+#: admin/systems/class_servGeneric.inc:422 admin/systems/class_termDNS.inc:487
+#: admin/systems/class_termDNS.inc:793 admin/systems/class_termDNS.inc:812
+#: admin/systems/class_termDNS.inc:833 admin/systems/class_termDNS.inc:838
+#: admin/systems/class_termDNS.inc:856 admin/systems/class_termDNS.inc:932
+#: admin/systems/services/class_goService.inc:124
+#: admin/systems/services/class_goService.inc:152
+#: admin/systems/services/class_goService.inc:185
+#: admin/systems/class_componentGeneric.inc:134
+#: admin/systems/class_componentGeneric.inc:284
 #, fuzzy
 msgid "LDAP error"
 msgstr "LDAP fout:"
 
-#: admin/systems/class_systemManagement.inc:360
-#: admin/systems/.svn/tmp/tempfile.tmp:239
-#: admin/systems/.svn/tmp/tempfile.2.tmp:239
+#: admin/systems/class_systemManagement.inc:361
 msgid "Back"
 msgstr "Terug"
 
-#: admin/systems/class_systemManagement.inc:406
-#: admin/systems/.svn/tmp/tempfile.tmp:286
-#: admin/systems/.svn/tmp/tempfile.2.tmp:286
+#: admin/systems/class_systemManagement.inc:407
 msgid "Creating the image failed. Please see the report below."
 msgstr ""
 
-#: admin/systems/class_systemManagement.inc:411
-#: admin/systems/.svn/tmp/tempfile.tmp:295
-#: admin/systems/.svn/tmp/tempfile.2.tmp:295
+#: admin/systems/class_systemManagement.inc:412
 #, fuzzy, php-format
 msgid "Command '%s', specified for ISO creation doesn't seem to exist."
 msgstr ""
 "Het commando '%s' dat gespecificeerd is als POSTMODIFY voor module '%s' "
 "bestaat niet."
 
-#: admin/systems/class_systemManagement.inc:503
-#: admin/systems/class_systemManagement.inc:532
-#: admin/systems/.svn/tmp/tempfile.tmp:846
-#: admin/systems/.svn/tmp/tempfile.2.tmp:850
-#: admin/systems/class_servGeneric.inc:167
-#: admin/systems/class_servGeneric.inc:455
+#: admin/systems/class_systemManagement.inc:504
+#: admin/systems/class_systemManagement.inc:533
+#: admin/systems/class_servGeneric.inc:178
+#: admin/systems/class_servGeneric.inc:442
 #, fuzzy
 msgid "Service infrastructure"
 msgstr "Apparaat naam"
 
-#: admin/systems/class_systemManagement.inc:578
-#: admin/systems/class_systemManagement.inc:654
-#: admin/systems/class_systemManagement.inc:1098
-#: admin/systems/class_systemManagement.inc:1145
-#: admin/systems/class_systemManagement.inc:1166
-#: admin/systems/.svn/tmp/tempfile.tmp:891
-#: admin/systems/.svn/tmp/tempfile.2.tmp:895
+#: admin/systems/class_systemManagement.inc:582
+#: admin/systems/class_systemManagement.inc:670
+#: admin/systems/class_systemManagement.inc:1116
+#: admin/systems/class_systemManagement.inc:1163
+#: admin/systems/class_systemManagement.inc:1184
 #, fuzzy
 msgid "Permission"
 msgstr "Rechten"
 
-#: admin/systems/class_systemManagement.inc:869
-#: admin/systems/.svn/tmp/tempfile.tmp:420
-#: admin/systems/.svn/tmp/tempfile.2.tmp:424
+#: admin/systems/class_systemManagement.inc:886
 #, fuzzy
 msgid "Internal error"
 msgstr "Terminal server"
 
-#: admin/systems/class_systemManagement.inc:869
-#: admin/systems/.svn/tmp/tempfile.tmp:420
-#: admin/systems/.svn/tmp/tempfile.2.tmp:424
+#: admin/systems/class_systemManagement.inc:886
 #, fuzzy
 msgid "Cannot set mode to 'active'!"
 msgstr "Ga naar basis afdelingen"
 
-#: admin/systems/class_systemManagement.inc:1098
+#: admin/systems/class_systemManagement.inc:1116
 #, fuzzy, php-format
 msgid "You are not allowed to create a snapshot for %s."
 msgstr "U heeft geen toestemming om uw wachtwoord te veranderen!"
 
-#: admin/systems/class_systemManagement.inc:1145
-#: admin/systems/class_systemManagement.inc:1166
+#: admin/systems/class_systemManagement.inc:1163
+#: admin/systems/class_systemManagement.inc:1184
 #, fuzzy, php-format
 msgid "You are not allowed to restore a snapshot for %s."
 msgstr "U heeft geen toestemming om uw wachtwoord te veranderen!"
 
-#: admin/systems/class_systemManagement.inc:1352
-#: admin/systems/class_systemManagement.inc:1353
-#: admin/systems/.svn/tmp/tempfile.tmp:1849
-#: admin/systems/.svn/tmp/tempfile.tmp:1850
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1853
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1854
-#, fuzzy
-msgid "Incoming objects"
-msgstr "Lidmaatschap objecten"
+#: admin/systems/class_systemManagement.inc:1392
+#, fuzzy, php-format
+msgid "Inherited from %s"
+msgstr "Objectgroepen"
 
-#: admin/systems/class_systemManagement.inc:1358
-#: admin/systems/.svn/tmp/tempfile.tmp:1855
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1859
+#: admin/systems/class_systemManagement.inc:1412
 #, fuzzy
 msgid "Incoming"
 msgstr "Icoon"
 
+#: admin/systems/class_servGeneric.inc:83
+msgid "Activated"
+msgstr "Geactiveerd"
+
+#: admin/systems/class_servGeneric.inc:84
+msgid "Locked"
+msgstr "Geblokkeerd"
+
+#: admin/systems/class_servGeneric.inc:161
+#, fuzzy
+msgid "server"
+msgstr "Server"
+
+#: admin/systems/class_servGeneric.inc:182
+#, fuzzy
+msgid "Event error"
+msgstr "Systeem status"
+
+#: admin/systems/class_servGeneric.inc:183
+#, fuzzy, php-format
+msgid "Event '%s' is not available!"
+msgstr "Het veranderen van het wachtwoord is niet toegestaan"
+
+#: admin/systems/class_servGeneric.inc:206
+msgid "Switch off"
+msgstr "Uitschakelen"
+
+#: admin/systems/class_servGeneric.inc:206 admin/systems/system-list.xml:285
+#: admin/systems/system-list.xml:351
+msgid "Reboot"
+msgstr "Herstarten"
+
+#: admin/systems/class_servGeneric.inc:207
+#: admin/systems/class_servGeneric.inc:216
+#, fuzzy
+msgid "System update"
+msgstr "Systeem / Afdeling"
+
+#: admin/systems/class_servGeneric.inc:208
+#: admin/systems/class_servGeneric.inc:215 admin/systems/system-list.xml:325
+#: admin/systems/system-list.xml:391
+msgid "Reinstall"
+msgstr "Herinstalleer"
+
+#: admin/systems/class_servGeneric.inc:209
+msgid "Rescan hardware"
+msgstr "Hardware opnieuw scannen"
+
+#: admin/systems/class_servGeneric.inc:210
+#: admin/systems/class_servGeneric.inc:217
+msgid "Memory test"
+msgstr "Geheugentest"
+
+#: admin/systems/class_servGeneric.inc:211
+#: admin/systems/class_servGeneric.inc:218
+msgid "Force localboot"
+msgstr ""
+
+#: admin/systems/class_servGeneric.inc:212
+#: admin/systems/class_servGeneric.inc:219
+msgid "System analysis"
+msgstr "Systeem analyse"
+
+#: admin/systems/class_servGeneric.inc:214
+msgid "Wake up"
+msgstr "Aanzetten"
+
+#: admin/systems/class_servGeneric.inc:358
+#, fuzzy
+msgid "Software deployment"
+msgstr "Systeembeheer"
+
+#: admin/systems/class_servGeneric.inc:359
+msgid ""
+"This host is currently installing, if you really want to save it, press 'OK'."
+msgstr ""
+
+#: admin/systems/class_servGeneric.inc:493
+#, fuzzy
+msgid "Server generic"
+msgstr "Servernaam"
+
+#: admin/systems/class_servGeneric.inc:505
+#, fuzzy
+msgid "Goto mode"
+msgstr "naar map"
+
+#: admin/systems/class_servGeneric.inc:506
+#: admin/systems/class_componentGeneric.inc:304
+#, fuzzy
+msgid "Root password"
+msgstr "Wachtwoord instellen"
+
+#: admin/systems/class_servGeneric.inc:507
+#, fuzzy
+msgid "Action flag"
+msgstr "Actie"
+
+#: admin/systems/component.tpl:1 admin/systems/system-list.xml:143
+#, fuzzy
+msgid "Component"
+msgstr "Nieuw component"
+
+#: admin/systems/component.tpl:5
+#, fuzzy
+msgid "Generic settings"
+msgstr "Algemene wachtrij instellingen"
+
+#: admin/systems/component.tpl:7
+msgid "Device name"
+msgstr "Apparaat naam"
+
+#: admin/systems/password.tpl:3
+msgid ""
+"To change the terminal root password use the fields below. The changes take "
+"effect during the next reboot. Please memorize the new password, because you "
+"wouldn't be able to log in."
+msgstr ""
+"Gebruik de velden hieronder om het terminal root wachtwoord te veranderen. "
+"De veranderingen worden onmiddelijk doorgevoerd. Onthoud het nieuwe "
+"wachtwoord a.u.b. aangezien u niet in kan loggen zonder dit wachtwoord."
+
+#: admin/systems/password.tpl:6
+msgid "Leave fields blank for password inheritance from default entries."
+msgstr "Laat velden leeg voor wachtwoord overerving vanuit standaard waarden."
+
+#: admin/systems/password.tpl:10
+msgid "Changing the password impinges on authentification only."
+msgstr ""
+"Het veranderen van het wachtwoord is alleen van toepassing op authenticatie."
+
+#: admin/systems/password.tpl:13
+#, fuzzy
+msgid "System password change"
+msgstr "Het veranderen van het wachtwoord is niet toegestaan"
+
+#: admin/systems/password.tpl:16
+msgid "New password"
+msgstr "Nieuw wachtwoord"
+
+#: admin/systems/password.tpl:22
+msgid "Repeat new password"
+msgstr "Herhaal het nieuwe wachtwoord"
+
+#: admin/systems/password.tpl:27
+#, fuzzy
+msgid "Password strength"
+msgstr "Wachtwoord encryptie"
+
+#: admin/systems/password.tpl:38
+msgid "Set password"
+msgstr "Wachtwoord instellen"
+
+#: admin/systems/paste_generic.tpl:2
+#, fuzzy
+msgid "Paste server"
+msgstr "Plakken"
+
+#: admin/systems/paste_generic.tpl:12
+#, fuzzy
+msgid "Paste workstation"
+msgstr "Nieuw werkstation"
+
+#: admin/systems/paste_generic.tpl:14
+#, fuzzy
+msgid "workstation name"
+msgstr "Werkstation naam"
+
+#: admin/systems/paste_generic.tpl:22
+#, fuzzy
+msgid "Paste terminal"
+msgstr "Nieuwe terminal"
+
+#: admin/systems/paste_generic.tpl:24
+msgid "Terminal name"
+msgstr "Terminal naam"
+
+#: admin/systems/paste_generic.tpl:32
+#, fuzzy
+msgid "Paste printer"
+msgstr "Printer"
+
+#: admin/systems/paste_generic.tpl:34
+msgid "Printer name"
+msgstr "Printernaam"
+
+#: admin/systems/paste_generic.tpl:42
+#, fuzzy
+msgid "Paste network component"
+msgstr "Ander netwerk component"
+
+#: admin/systems/paste_generic.tpl:44
+#: admin/systems/class_componentGeneric.inc:187
+#: admin/systems/class_componentGeneric.inc:192
+#: admin/systems/class_componentGeneric.inc:214
+#, fuzzy
+msgid "Component name"
+msgstr "Algemene naam"
+
+#: admin/systems/class_serverService.inc:27
+#: admin/systems/serverService-list.xml:90
+#: admin/systems/serverService-list.xml:125
+msgid "Stop"
+msgstr "Stop"
+
+#: admin/systems/class_serverService.inc:28
+#: admin/systems/serverService-list.xml:83
+#: admin/systems/serverService-list.xml:117
+#, fuzzy
+msgid "Start"
+msgstr "Opstarten"
+
+#: admin/systems/class_serverService.inc:29
+#: admin/systems/serverService-list.xml:97
+#: admin/systems/serverService-list.xml:133
+#, fuzzy
+msgid "Restart"
+msgstr "Opnieuw proberen"
+
+#: admin/systems/class_serverService.inc:435
+#, fuzzy
+msgid "Information"
+msgstr "Werkstation"
+
+#: admin/systems/class_serverService.inc:435
+msgid "Cannot update service status until it has been saved!"
+msgstr ""
+
+#: admin/systems/class_serverService.inc:447
+#, fuzzy
+msgid "Cannot update service status!"
+msgstr "Het opgegeven certificaat kon geopend worden!"
+
+#: admin/systems/class_termDNS.inc:449
+#, fuzzy
+msgid "Not matching"
+msgstr "Niet actief"
+
+#: admin/systems/class_termDNS.inc:601
+#, fuzzy, php-format
+msgid "IP address %s"
+msgstr "IP adres"
+
+#: admin/systems/class_termDNS.inc:610 admin/systems/class_termDNS.inc:622
+#: admin/systems/class_termDNS.inc:624 admin/systems/class_termDNS.inc:1009
+#: admin/systems/class_componentGeneric.inc:197
+#: admin/systems/class_componentGeneric.inc:200
+#, fuzzy
+msgid "IP address"
+msgstr "IP adres"
+
+#: admin/systems/class_termDNS.inc:615 admin/systems/class_termDNS.inc:632
+#: admin/systems/class_termDNS.inc:634 admin/systems/class_termDNS.inc:1010
+msgid "MAC address"
+msgstr "Hardware adres (MAC)"
+
+#: admin/systems/class_termDNS.inc:649
+#, php-format
+msgid "The IP address '%s' is not part of the selected reverse zone '%s'!"
+msgstr ""
+
+#: admin/systems/class_termDNS.inc:661
+#, php-format
+msgid "Record type '%s' is duplicated!"
+msgstr ""
+
+#: admin/systems/class_termDNS.inc:669
+#, php-format
+msgid "Uniq record type '%s' is duplicated!"
+msgstr ""
+
+#: admin/systems/class_termDNS.inc:681
+#, fuzzy, php-format
+msgid ""
+"The IP address '%s' will be added as 'A Record', this will be done "
+"automatically, please remove the record."
+msgstr ""
+"Het apparaat IP '%s' is toegevoegd als 'A Record'. Dit wordt automatisch "
+"afgehandeld door GOsa. Verwijder het record a.u.b."
+
+#: admin/systems/class_termDNS.inc:689
+#, fuzzy, php-format
+msgid "Only lowercase records are allowed, please check your '%ss'."
+msgstr "Hoofdletters zijn niet toegestaan. Controleer uw '%ss'"
+
+#: admin/systems/class_termDNS.inc:1000
+msgid "DNS"
+msgstr ""
+
+#: admin/systems/class_termDNS.inc:1001
+#, fuzzy
+msgid "DNS settings"
+msgstr "Samba Instellingen"
+
+#: admin/systems/class_termDNS.inc:1016
+#, fuzzy
+msgid "DNS configuration"
+msgstr "FAX database"
+
+#: admin/systems/class_termDNS.inc:1019
+#, fuzzy
+msgid "DHCP configuration"
+msgstr "FAX database"
+
+#: admin/systems/serverService-list.xml:10
+#, fuzzy
+msgid "List of services"
+msgstr "Lijst met gebruikers"
+
+#: admin/systems/serverService-list.xml:14
+#: admin/systems/serverService-list.xml:60
+#, fuzzy
+msgid "Service"
+msgstr "Services"
+
+#: admin/systems/serverService-list.xml:27
+msgid "!"
+msgstr ""
+
+#: admin/systems/serverService-list.xml:43 admin/systems/system-list.xml:193
+msgid "Actions"
+msgstr "Acties"
+
+#: admin/systems/serverService-list.xml:54 admin/systems/system-list.xml:204
+msgid "Create"
+msgstr "Aanmaken"
+
+#: admin/systems/serverService-list.xml:72 admin/systems/system-list.xml:412
+msgid "Remove"
+msgstr "Verwijderen"
+
+#: admin/systems/serverService-list.xml:141
+#, fuzzy
+msgid "Edit service"
+msgstr "Print service"
+
+#: admin/systems/serverService-list.xml:149
+#, fuzzy
+msgid "Remove service"
+msgstr "Verwijder DNS service"
+
+#: admin/systems/class_filterSYSTEMS.inc:22 admin/systems/system-list.xml:22
+msgid "New workstation"
+msgstr "Nieuw werkstation"
+
+#: admin/systems/class_filterSYSTEMS.inc:25 admin/systems/system-list.xml:55
+msgid "New terminal"
+msgstr "Nieuwe terminal"
+
+#: admin/systems/class_filterSYSTEMS.inc:30 admin/systems/system-list.xml:63
+#, fuzzy
+msgid "New unknown device"
+msgstr "Onbekend"
+
+#: admin/systems/class_filterSYSTEMS.inc:33 admin/systems/system-list.xml:71
+#, fuzzy
+msgid "New device"
+msgstr "Nieuw apparaat"
+
 #: admin/systems/services/class_goService.inc:44
-#: admin/systems/services/class_goService.inc:79
+#: admin/systems/services/class_goService.inc:81
 #, fuzzy
 msgid "Empty service"
 msgstr "Print service"
-
-#: admin/systems/services/class_goService.inc:237
-#, fuzzy
-msgid "Configuration error"
-msgstr "Configuratie bestand"
 
 #: admin/systems/services/ServiceAddDialog.tpl:3
 msgid "Adding a new service to the current server"
@@ -258,419 +726,25 @@ msgstr "Selecteer de toe te voegen printer"
 msgid "All available services are already in use."
 msgstr "De opgegeven apparaat naam wordt al gebruikt."
 
-#: admin/systems/services/ServiceAddDialog.tpl:28
+#: admin/systems/services/ServiceAddDialog.tpl:29
 msgid "Continue"
 msgstr "Doorgaan"
 
-#: admin/systems/serverService-list.xml:10
+#: admin/systems/class_componentGeneric.inc:84
 #, fuzzy
-msgid "List of services"
-msgstr "Lijst met gebruikers"
+msgid "component"
+msgstr "Nieuw component"
 
-#: admin/systems/serverService-list.xml:14
-#: admin/systems/serverService-list.xml:60
+#: admin/systems/class_componentGeneric.inc:293
 #, fuzzy
-msgid "Service"
-msgstr "Services"
+msgid "Component generic"
+msgstr "Nieuw component"
 
-#: admin/systems/serverService-list.xml:27
-msgid "!"
-msgstr ""
-
-#: admin/systems/serverService-list.xml:35
-#: admin/systems/systemSelect/selectSystem-list.xml:65
-#: admin/systems/system-list.xml:177 admin/systems/class_servGeneric.inc:515
-#: admin/systems/server.tpl:14 admin/systems/class_componentGeneric.inc:320
-#: admin/systems/component.tpl:35
-msgid "Description"
-msgstr "Omschrijving"
-
-#: admin/systems/serverService-list.xml:43 admin/systems/system-list.xml:185
-msgid "Actions"
-msgstr "Acties"
-
-#: admin/systems/serverService-list.xml:54 admin/systems/system-list.xml:196
-msgid "Create"
-msgstr "Aanmaken"
-
-#: admin/systems/serverService-list.xml:72 admin/systems/system-list.xml:404
-msgid "Remove"
-msgstr "Verwijderen"
-
-#: admin/systems/serverService-list.xml:83
-#: admin/systems/serverService-list.xml:117
-#: admin/systems/class_serverService.inc:28
-#, fuzzy
-msgid "Start"
-msgstr "Opstarten"
-
-#: admin/systems/serverService-list.xml:90
-#: admin/systems/serverService-list.xml:125
-#: admin/systems/class_serverService.inc:27
-msgid "Stop"
-msgstr "Stop"
-
-#: admin/systems/serverService-list.xml:97
-#: admin/systems/serverService-list.xml:133
-#: admin/systems/class_serverService.inc:29
-#, fuzzy
-msgid "Restart"
-msgstr "Opnieuw proberen"
-
-#: admin/systems/serverService-list.xml:141
-#, fuzzy
-msgid "Edit service"
-msgstr "Print service"
-
-#: admin/systems/serverService-list.xml:149
-#, fuzzy
-msgid "Remove service"
-msgstr "Verwijder DNS service"
-
-#: admin/systems/class_serverService.inc:298
-#, fuzzy
-msgid "Filter error"
-msgstr "Terminal server"
-
-#: admin/systems/class_serverService.inc:298
-msgid "The filter is incomplete!"
-msgstr ""
-
-#: admin/systems/class_serverService.inc:440
-#, fuzzy
-msgid "Information"
-msgstr "Werkstation"
-
-#: admin/systems/class_serverService.inc:440
-msgid "Cannot update service status until it has been saved!"
-msgstr ""
-
-#: admin/systems/class_serverService.inc:452
-#, fuzzy
-msgid "Cannot update service status!"
-msgstr "Het opgegeven certificaat kon geopend worden!"
-
-#: admin/systems/paste_generic.tpl:4 admin/systems/class_servGeneric.inc:341
-#: admin/systems/class_servGeneric.inc:346
-#: admin/systems/class_servGeneric.inc:357 admin/systems/server.tpl:6
-msgid "Server name"
-msgstr "Servernaam"
-
-#: admin/systems/paste_generic.tpl:14
-#, fuzzy
-msgid "workstation name"
-msgstr "Werkstation naam"
-
-#: admin/systems/paste_generic.tpl:24
-msgid "Terminal name"
-msgstr "Terminal naam"
-
-#: admin/systems/paste_generic.tpl:34
-msgid "Printer name"
-msgstr "Printernaam"
-
-#: admin/systems/paste_generic.tpl:44
-#: admin/systems/class_componentGeneric.inc:209
-#: admin/systems/class_componentGeneric.inc:214
-#: admin/systems/class_componentGeneric.inc:236
-#, fuzzy
-msgid "Component name"
-msgstr "Algemene naam"
-
-#: admin/systems/systemSelect/selectSystem-list.tpl:13
-#: admin/systems/class_servGeneric.inc:516 admin/systems/system-list.tpl:13
-#: admin/systems/server.tpl:22 admin/systems/class_componentGeneric.inc:319
-#: admin/systems/component.tpl:17
-msgid "Base"
-msgstr "Basis"
-
-#: admin/systems/systemSelect/selectSystem-list.xml:11
-#, fuzzy
-msgid "Please select the desired entries"
-msgstr "Voorkeurstaal"
-
-#: admin/systems/systemSelect/selectSystem-list.xml:15
-#: admin/systems/.svn/tmp/tempfile.tmp:1629
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1633
-#: admin/systems/system-list.xml:103 admin/systems/system-list.xml:202
-#: admin/systems/class_servGeneric.inc:511
-msgid "Server"
-msgstr "Server"
-
-#: admin/systems/systemSelect/selectSystem-list.xml:23
-#: admin/systems/.svn/tmp/tempfile.tmp:1628
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1632
-#: admin/systems/system-list.xml:111 admin/systems/system-list.xml:210
-msgid "Workstation"
-msgstr "Werkstation"
-
-#: admin/systems/systemSelect/selectSystem-list.xml:31
-#: admin/systems/.svn/tmp/tempfile.tmp:1630
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1634
-#: admin/systems/system-list.xml:119 admin/systems/system-list.xml:218
-msgid "Terminal"
-msgstr "Terminal"
-
-#: admin/systems/systemSelect/selectSystem-list.xml:57
-#: admin/systems/system-list.xml:169 admin/systems/class_servGeneric.inc:514
-#: admin/systems/class_componentGeneric.inc:318
-msgid "Name"
-msgstr "Naam"
-
-#: admin/systems/systemSelect/selectSystem-filter.tpl:3
-#: admin/systems/system-filter.tpl:3 admin/systems/serverService-filter.tpl:3
-#, fuzzy
-msgid "Filter"
-msgstr "Filters"
-
-#: admin/systems/systemSelect/selectSystem-filter.tpl:11
-#: admin/systems/system-filter.tpl:11
-msgid "Show servers"
-msgstr "Toon servers"
-
-#: admin/systems/systemSelect/selectSystem-filter.tpl:12
-#: admin/systems/system-filter.tpl:14
-msgid "Show workstations"
-msgstr "Toon werkstations"
-
-#: admin/systems/systemSelect/selectSystem-filter.tpl:13
-#: admin/systems/system-filter.tpl:17
-msgid "Show terminals"
-msgstr "Toon terminals"
-
-#: admin/systems/system-filter.tpl:20
-#, fuzzy
-msgid "Show network printer"
-msgstr "Toon netwerk printers"
-
-#: admin/systems/system-filter.tpl:23
-msgid "Show phones"
-msgstr "Toon telefoons"
-
-#: admin/systems/system-filter.tpl:26
-#, fuzzy
-msgid "Show windows based workstations"
-msgstr "Toon Windows werkstations"
-
-#: admin/systems/system-filter.tpl:29
-msgid "Show network devices"
-msgstr "Toon netwerk apparaten"
-
-#: admin/systems/system-filter.tpl:32
-#, fuzzy
-msgid "Show incoming devices"
-msgstr "Toon netwerk apparaten"
-
-#: admin/systems/system-filter.tpl:35
-msgid "Show OPSI based clients"
-msgstr ""
-
-#: admin/systems/.svn/tmp/tempfile.tmp:606
-#: admin/systems/.svn/tmp/tempfile.2.tmp:610
-msgid "Editing this type of object is not supported yet!"
-msgstr ""
-
-#: admin/systems/.svn/tmp/tempfile.tmp:645
-#: admin/systems/.svn/tmp/tempfile.2.tmp:649
-#, fuzzy
-msgid ""
-"The passwords you've entered as 'New password' and 'Repeated password' do "
-"not match!"
-msgstr ""
-"Het nieuwe wachtwoord en het herhaalde wachtwoord komen niet met elkaar "
-"overeen!"
-
-#: admin/systems/.svn/tmp/tempfile.tmp:739
-#: admin/systems/.svn/tmp/tempfile.2.tmp:743
-#, fuzzy
-msgid "Cannot determine object to change password!"
-msgstr "Kan de objectnaam niet detecteren"
-
-#: admin/systems/.svn/tmp/tempfile.tmp:1330
-#: admin/systems/.svn/tmp/tempfile.tmp:1644
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1334
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1648 admin/systems/system-list.xml:55
-#: admin/systems/class_filterSYSTEMS.inc:23
-msgid "New terminal"
-msgstr "Nieuwe terminal"
-
-#: admin/systems/.svn/tmp/tempfile.tmp:1332
-#: admin/systems/.svn/tmp/tempfile.tmp:1645
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1336
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1649 admin/systems/system-list.xml:22
-#: admin/systems/class_filterSYSTEMS.inc:20
-msgid "New workstation"
-msgstr "Nieuw werkstation"
-
-#: admin/systems/.svn/tmp/tempfile.tmp:1334
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1338
-#, fuzzy
-msgid "Unknown device"
-msgstr "Onbekend"
-
-#: admin/systems/.svn/tmp/tempfile.tmp:1336
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1340
-msgid "New Device"
-msgstr "Nieuw apparaat"
-
-#: admin/systems/.svn/tmp/tempfile.tmp:1361
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1365
-msgid "Terminal template for"
-msgstr "Terminal sjabloon voor"
-
-#: admin/systems/.svn/tmp/tempfile.tmp:1377
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1381
-msgid "Workstation template for"
-msgstr "Werkstation sjabloon voor"
-
-#: admin/systems/.svn/tmp/tempfile.tmp:1621
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1625
-msgid "Template"
-msgstr "Sjabloon"
-
-#: admin/systems/.svn/tmp/tempfile.tmp:1622
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1626
-#: admin/systems/system-list.xml:135 admin/systems/system-list.xml:234
-msgid "Phone"
-msgstr "Telefoon"
-
-#: admin/systems/.svn/tmp/tempfile.tmp:1623
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1627
-#: admin/systems/system-list.xml:242
-#: admin/systems/class_componentGeneric.inc:315
+#: admin/systems/class_componentGeneric.inc:298
+#: admin/systems/system-list.xml:250
 #, fuzzy
 msgid "Network device"
 msgstr "Netwerk apparaten"
-
-#: admin/systems/.svn/tmp/tempfile.tmp:1624
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1628
-#: admin/systems/system-list.xml:127
-msgid "Printer"
-msgstr "Printer"
-
-#: admin/systems/.svn/tmp/tempfile.tmp:1626
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1630
-#, fuzzy
-msgid "Windows workstation"
-msgstr "Toon werkstations"
-
-#: admin/systems/.svn/tmp/tempfile.tmp:1632
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1636 admin/systems/system-list.xml:38
-#, fuzzy
-msgid "Locked workstation"
-msgstr "Nieuw werkstation"
-
-#: admin/systems/.svn/tmp/tempfile.tmp:1633
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1637 admin/systems/system-list.xml:30
-#, fuzzy
-msgid "Locked server"
-msgstr "Ldap server"
-
-#: admin/systems/.svn/tmp/tempfile.tmp:1634
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1638 admin/systems/system-list.xml:46
-#, fuzzy
-msgid "Locked terminal"
-msgstr "Nieuwe terminal"
-
-#: admin/systems/.svn/tmp/tempfile.tmp:1636
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1640
-#, fuzzy
-msgid "Workstation error"
-msgstr "Werkstation"
-
-#: admin/systems/.svn/tmp/tempfile.tmp:1637
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1641
-#, fuzzy
-msgid "Server error"
-msgstr "Servernaam"
-
-#: admin/systems/.svn/tmp/tempfile.tmp:1638
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1642
-#, fuzzy
-msgid "Terminal error"
-msgstr "Terminal server"
-
-#: admin/systems/.svn/tmp/tempfile.tmp:1640
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1644
-#, fuzzy
-msgid "Workstation busy"
-msgstr "Werkstation"
-
-#: admin/systems/.svn/tmp/tempfile.tmp:1641
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1645
-#, fuzzy
-msgid "Server busy"
-msgstr "Servers"
-
-#: admin/systems/.svn/tmp/tempfile.tmp:1643
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1647
-#, fuzzy
-msgid "New system from incoming"
-msgstr "Nieuw systeem uit inkomende wachtrij"
-
-#: admin/systems/.svn/tmp/tempfile.tmp:1649
-#: admin/systems/.svn/tmp/tempfile.2.tmp:1653
-#: admin/systems/system-list.xml:250
-#, fuzzy
-msgid "Opsi client"
-msgstr "Thin Client"
-
-#: admin/systems/network.tpl:1
-msgid "Network\tsettings"
-msgstr "Netwerk\tinstellingen"
-
-#: admin/systems/network.tpl:9
-msgid "IP-address"
-msgstr "IP adres"
-
-#: admin/systems/network.tpl:30 admin/systems/network.tpl:32
-#, fuzzy
-msgid "Propose ip"
-msgstr "Eigenschappen"
-
-#: admin/systems/network.tpl:38
-msgid "MAC-address"
-msgstr "Hardware adres (MAC)"
-
-#: admin/systems/network.tpl:45
-msgid "Autodetect"
-msgstr "Auto detect."
-
-#: admin/systems/network.tpl:62 admin/systems/network.tpl:72
-#, fuzzy
-msgid "Enable DHCP for this device"
-msgstr "DNS voor dit apparaat activeren"
-
-#: admin/systems/network.tpl:72 admin/systems/network.tpl:175
-#, fuzzy
-msgid "not configured"
-msgstr "niet geconfigureerd"
-
-#: admin/systems/network.tpl:80
-#, fuzzy
-msgid "Parent node"
-msgstr "Hoofd/Parent server"
-
-#: admin/systems/network.tpl:93
-#, fuzzy
-msgid "Edit settings"
-msgstr "E-mail instellingen"
-
-#: admin/systems/network.tpl:135 admin/systems/network.tpl:175
-msgid "Enable DNS for this device"
-msgstr "DNS voor dit apparaat activeren"
-
-#: admin/systems/network.tpl:144
-msgid "Zone"
-msgstr "Zone"
-
-#: admin/systems/network.tpl:154
-msgid "TTL"
-msgstr "TTL"
-
-#: admin/systems/network.tpl:162
-msgid "Dns records"
-msgstr "DNS records"
 
 #: admin/systems/system-list.xml:10
 msgid "List of systems"
@@ -681,15 +755,20 @@ msgstr "Lijst met systemen"
 msgid "Opsi host"
 msgstr "Thin Client"
 
-#: admin/systems/system-list.xml:63 admin/systems/class_filterSYSTEMS.inc:28
+#: admin/systems/system-list.xml:30
 #, fuzzy
-msgid "New unknown device"
-msgstr "Onbekend"
+msgid "Locked server"
+msgstr "Ldap server"
 
-#: admin/systems/system-list.xml:71 admin/systems/class_filterSYSTEMS.inc:31
+#: admin/systems/system-list.xml:38
 #, fuzzy
-msgid "New device"
-msgstr "Nieuw apparaat"
+msgid "Locked workstation"
+msgstr "Nieuw werkstation"
+
+#: admin/systems/system-list.xml:46
+#, fuzzy
+msgid "Locked terminal"
+msgstr "Nieuwe terminal"
 
 #: admin/systems/system-list.xml:79
 #, fuzzy
@@ -705,347 +784,219 @@ msgstr "Terminal sjabloon voor"
 msgid "Winstation"
 msgstr "Windows werkstation"
 
-#: admin/systems/system-list.xml:143
-#, fuzzy
-msgid "Component"
-msgstr "Nieuw component"
+#: admin/systems/system-list.xml:127
+msgid "Printer"
+msgstr "Printer"
 
-#: admin/systems/system-list.xml:226
+#: admin/systems/system-list.xml:135 admin/systems/system-list.xml:242
+msgid "Phone"
+msgstr "Telefoon"
+
+#: admin/systems/system-list.xml:185
+#, fuzzy
+msgid "Release"
+msgstr "Verwijderen"
+
+#: admin/systems/system-list.xml:234
 #, fuzzy
 msgid "Network printer"
 msgstr "Toon netwerk printers"
 
-#: admin/systems/system-list.xml:262
+#: admin/systems/system-list.xml:258
+#, fuzzy
+msgid "Opsi client"
+msgstr "Thin Client"
+
+#: admin/systems/system-list.xml:270
 #, fuzzy
 msgid "Trigger action"
 msgstr "Informatie weergeven/verbergen"
 
-#: admin/systems/system-list.xml:269
+#: admin/systems/system-list.xml:277
 msgid "Halt "
 msgstr ""
 
-#: admin/systems/system-list.xml:277 admin/systems/system-list.xml:343
-#: admin/systems/class_servGeneric.inc:227
-msgid "Reboot"
-msgstr "Herstarten"
-
-#: admin/systems/system-list.xml:285 admin/systems/system-list.xml:351
+#: admin/systems/system-list.xml:293 admin/systems/system-list.xml:359
 #, fuzzy
 msgid "Wakeup"
 msgstr "Aanzetten"
 
-#: admin/systems/system-list.xml:293 admin/systems/system-list.xml:359
+#: admin/systems/system-list.xml:301 admin/systems/system-list.xml:367
 msgid "Update"
 msgstr ""
 
-#: admin/systems/system-list.xml:301 admin/systems/system-list.xml:367
+#: admin/systems/system-list.xml:309 admin/systems/system-list.xml:375
 #, fuzzy
 msgid "Lock"
 msgstr "Geblokkeerd"
 
-#: admin/systems/system-list.xml:309 admin/systems/system-list.xml:375
+#: admin/systems/system-list.xml:317 admin/systems/system-list.xml:383
 #, fuzzy
 msgid "Activate"
 msgstr "Geactiveerd"
 
-#: admin/systems/system-list.xml:317 admin/systems/system-list.xml:383
-#: admin/systems/class_servGeneric.inc:229
-#: admin/systems/class_servGeneric.inc:236
-msgid "Reinstall"
-msgstr "Herinstalleer"
-
-#: admin/systems/system-list.xml:328
+#: admin/systems/system-list.xml:336
 #, fuzzy
 msgid "Schedule action"
 msgstr "Geplande bijwerking"
 
-#: admin/systems/system-list.xml:335
+#: admin/systems/system-list.xml:343
 msgid "Halt"
 msgstr ""
 
-#: admin/systems/system-list.xml:397
+#: admin/systems/system-list.xml:405
 #, fuzzy
 msgid "Activate systems"
 msgstr "Bewerk systeem"
 
-#: admin/systems/system-list.xml:432
+#: admin/systems/system-list.xml:440
 msgid "Change password"
 msgstr "Verander wachtwoord"
 
-#: admin/systems/system-list.xml:443
+#: admin/systems/system-list.xml:451
 #, fuzzy
 msgid "Create ISO"
 msgstr "Aanmaken"
 
-#: admin/systems/system-list.xml:455
+#: admin/systems/system-list.xml:463
 #, fuzzy
 msgid "Edit role"
 msgstr "Bewerk share"
 
-#: admin/systems/system-list.xml:468
+#: admin/systems/system-list.xml:476
 #, fuzzy
 msgid "Remove system"
 msgstr "Plaatje verwijderen"
 
-#: admin/systems/password.tpl:3
-msgid ""
-"To change the terminal root password use the fields below. The changes take "
-"effect during the next reboot. Please memorize the new password, because you "
-"wouldn't be able to log in."
-msgstr ""
-"Gebruik de velden hieronder om het terminal root wachtwoord te veranderen. "
-"De veranderingen worden onmiddelijk doorgevoerd. Onthoud het nieuwe "
-"wachtwoord a.u.b. aangezien u niet in kan loggen zonder dit wachtwoord."
+#~ msgid "Warning"
+#~ msgstr "Waarschuwing"
 
-#: admin/systems/password.tpl:6
-msgid "Leave fields blank for password inheritance from default entries."
-msgstr "Laat velden leeg voor wachtwoord overerving vanuit standaard waarden."
+#~ msgid ""
+#~ "This includes all account data, system access rules, imap settings, etc. "
+#~ "for this user. Please double check if your really want to do this since "
+#~ "there is no way for GOsa to get your data back."
+#~ msgstr ""
+#~ "Dit omvat alle account gegevens, systeem toegangsregels, imap "
+#~ "instellingen etc. voor deze gebruiker. Verzeker uzelf hiervan, aangezien "
+#~ "er geen mogelijkheid voor GOsa is om deze informatie terug te halen."
 
-#: admin/systems/password.tpl:10
-msgid "Changing the password impinges on authentification only."
-msgstr ""
-"Het veranderen van het wachtwoord is alleen van toepassing op authenticatie."
+#~ msgid ""
+#~ "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
+#~ msgstr ""
+#~ "Indien u zeker bent drukt u dan 'Verwijderen' om door te gaan of "
+#~ "'Annuleren' om te annuleren."
 
-#: admin/systems/password.tpl:15
-msgid "New password"
-msgstr "Nieuw wachtwoord"
-
-#: admin/systems/password.tpl:21
-msgid "Repeat new password"
-msgstr "Herhaal het nieuwe wachtwoord"
-
-#: admin/systems/password.tpl:26
 #, fuzzy
-msgid "Password strength"
-msgstr "Wachtwoord encryptie"
+#~ msgid "Configuration error"
+#~ msgstr "Configuratie bestand"
 
-#: admin/systems/password.tpl:38
-msgid "Set password"
-msgstr "Wachtwoord instellen"
-
-#: admin/systems/class_servGeneric.inc:82
-msgid "Activated"
-msgstr "Geactiveerd"
-
-#: admin/systems/class_servGeneric.inc:83
-msgid "Locked"
-msgstr "Geblokkeerd"
-
-#: admin/systems/class_servGeneric.inc:150
 #, fuzzy
-msgid "server"
-msgstr "Server"
+#~ msgid "Filter error"
+#~ msgstr "Terminal server"
 
-#: admin/systems/class_servGeneric.inc:171
 #, fuzzy
-msgid "Event error"
-msgstr "Systeem status"
+#~ msgid "Filter"
+#~ msgstr "Filters"
 
-#: admin/systems/class_servGeneric.inc:172
-#, fuzzy, php-format
-msgid "Event '%s' is not available!"
-msgstr "Het veranderen van het wachtwoord is niet toegestaan"
+#~ msgid "Show servers"
+#~ msgstr "Toon servers"
 
-#: admin/systems/class_servGeneric.inc:227
-msgid "Switch off"
-msgstr "Uitschakelen"
+#~ msgid "Show workstations"
+#~ msgstr "Toon werkstations"
 
-#: admin/systems/class_servGeneric.inc:228
-#: admin/systems/class_servGeneric.inc:237
+#~ msgid "Show terminals"
+#~ msgstr "Toon terminals"
+
 #, fuzzy
-msgid "System update"
-msgstr "Systeem / Afdeling"
+#~ msgid "Show network printer"
+#~ msgstr "Toon netwerk printers"
 
-#: admin/systems/class_servGeneric.inc:230
-msgid "Rescan hardware"
-msgstr "Hardware opnieuw scannen"
+#~ msgid "Show phones"
+#~ msgstr "Toon telefoons"
 
-#: admin/systems/class_servGeneric.inc:231
-#: admin/systems/class_servGeneric.inc:238
-msgid "Memory test"
-msgstr "Geheugentest"
-
-#: admin/systems/class_servGeneric.inc:232
-#: admin/systems/class_servGeneric.inc:239
-msgid "Force localboot"
-msgstr ""
-
-#: admin/systems/class_servGeneric.inc:233
-#: admin/systems/class_servGeneric.inc:240
-msgid "System analysis"
-msgstr "Systeem analyse"
-
-#: admin/systems/class_servGeneric.inc:235
-msgid "Wake up"
-msgstr "Aanzetten"
-
-#: admin/systems/class_servGeneric.inc:371
 #, fuzzy
-msgid "Software deployment"
-msgstr "Systeembeheer"
+#~ msgid "Show windows based workstations"
+#~ msgstr "Toon Windows werkstations"
 
-#: admin/systems/class_servGeneric.inc:372
-msgid ""
-"This host is currently installing, if you really want to save it, press 'OK'."
-msgstr ""
+#~ msgid "Show network devices"
+#~ msgstr "Toon netwerk apparaten"
 
-#: admin/systems/class_servGeneric.inc:505
-#: admin/systems/class_componentGeneric.inc:309
-msgid "Generic"
-msgstr "Algemeen"
-
-#: admin/systems/class_servGeneric.inc:506
 #, fuzzy
-msgid "Server generic"
-msgstr "Servernaam"
+#~ msgid "Show incoming devices"
+#~ msgstr "Toon netwerk apparaten"
 
-#: admin/systems/class_servGeneric.inc:518
 #, fuzzy
-msgid "Goto mode"
-msgstr "naar map"
+#~ msgid ""
+#~ "The passwords you've entered as 'New password' and 'Repeated password' do "
+#~ "not match!"
+#~ msgstr ""
+#~ "Het nieuwe wachtwoord en het herhaalde wachtwoord komen niet met elkaar "
+#~ "overeen!"
 
-#: admin/systems/class_servGeneric.inc:519
-#: admin/systems/class_componentGeneric.inc:321
 #, fuzzy
-msgid "Root password"
-msgstr "Wachtwoord instellen"
+#~ msgid "Cannot determine object to change password!"
+#~ msgstr "Kan de objectnaam niet detecteren"
 
-#: admin/systems/class_servGeneric.inc:520
 #, fuzzy
-msgid "Action flag"
-msgstr "Actie"
+#~ msgid "Unknown device"
+#~ msgstr "Onbekend"
 
-#: admin/systems/server.tpl:26
+#~ msgid "New Device"
+#~ msgstr "Nieuw apparaat"
+
+#~ msgid "Terminal template for"
+#~ msgstr "Terminal sjabloon voor"
+
+#~ msgid "Workstation template for"
+#~ msgstr "Werkstation sjabloon voor"
+
+#~ msgid "Template"
+#~ msgstr "Sjabloon"
+
 #, fuzzy
-msgid "Choose subtree to place server in"
-msgstr "Kies de subtree waaronder de gebruiker geplaatst wordt"
+#~ msgid "Windows workstation"
+#~ msgstr "Toon werkstations"
 
-#: admin/systems/server.tpl:32 admin/systems/component.tpl:25
-msgid "Select a base"
-msgstr "Selecteer een basis"
-
-#: admin/systems/server.tpl:42
-msgid "Mode"
-msgstr "Modus"
-
-#: admin/systems/server.tpl:45
-msgid "Select terminal mode"
-msgstr "Selecteer terminal modus"
-
-#: admin/systems/server.tpl:63
-msgid "Action"
-msgstr "Actie"
-
-#: admin/systems/server.tpl:69
-msgid ""
-"System installation in progress, the FAI state cannot be changed right now."
-msgstr ""
-
-#: admin/systems/server.tpl:72
-msgid "Select action to execute for this server"
-msgstr "Selecteer de voor deze server uit te voeren actie"
-
-#: admin/systems/server.tpl:80
-msgid "Execute"
-msgstr "Commando"
-
-#: admin/systems/class_termDNS.inc:449
 #, fuzzy
-msgid "Not matching"
-msgstr "Niet actief"
+#~ msgid "Workstation error"
+#~ msgstr "Werkstation"
 
-#: admin/systems/class_termDNS.inc:602
-#, fuzzy, php-format
-msgid "IP address %s"
-msgstr "IP adres"
-
-#: admin/systems/class_termDNS.inc:611 admin/systems/class_termDNS.inc:623
-#: admin/systems/class_termDNS.inc:625 admin/systems/class_termDNS.inc:1010
-#: admin/systems/class_componentGeneric.inc:219
-#: admin/systems/class_componentGeneric.inc:222
 #, fuzzy
-msgid "IP address"
-msgstr "IP adres"
+#~ msgid "Server error"
+#~ msgstr "Servernaam"
 
-#: admin/systems/class_termDNS.inc:616 admin/systems/class_termDNS.inc:633
-#: admin/systems/class_termDNS.inc:635 admin/systems/class_termDNS.inc:1011
-msgid "MAC address"
-msgstr "Hardware adres (MAC)"
-
-#: admin/systems/class_termDNS.inc:650
-#, php-format
-msgid "The IP address '%s' is not part of the selected reverse zone '%s'!"
-msgstr ""
-
-#: admin/systems/class_termDNS.inc:662
-#, php-format
-msgid "Record type '%s' is duplicated!"
-msgstr ""
-
-#: admin/systems/class_termDNS.inc:670
-#, php-format
-msgid "Uniq record type '%s' is duplicated!"
-msgstr ""
-
-#: admin/systems/class_termDNS.inc:682
-#, fuzzy, php-format
-msgid ""
-"The IP address '%s' will be added as 'A Record', this will be done "
-"automatically, please remove the record."
-msgstr ""
-"Het apparaat IP '%s' is toegevoegd als 'A Record'. Dit wordt automatisch "
-"afgehandeld door GOsa. Verwijder het record a.u.b."
-
-#: admin/systems/class_termDNS.inc:690
-#, fuzzy, php-format
-msgid "Only lowercase records are allowed, please check your '%ss'."
-msgstr "Hoofdletters zijn niet toegestaan. Controleer uw '%ss'"
-
-#: admin/systems/class_termDNS.inc:950 admin/systems/class_termDNS.inc:970
-msgid "Add"
-msgstr "Toevoegen"
-
-#: admin/systems/class_termDNS.inc:964
-msgid "Delete"
-msgstr "Verwijderen"
-
-#: admin/systems/class_termDNS.inc:1001
-msgid "DNS"
-msgstr ""
-
-#: admin/systems/class_termDNS.inc:1002
 #, fuzzy
-msgid "DNS settings"
-msgstr "Samba Instellingen"
+#~ msgid "Terminal error"
+#~ msgstr "Terminal server"
 
-#: admin/systems/class_termDNS.inc:1017
 #, fuzzy
-msgid "DNS configuration"
-msgstr "FAX database"
+#~ msgid "Workstation busy"
+#~ msgstr "Werkstation"
 
-#: admin/systems/class_termDNS.inc:1020
 #, fuzzy
-msgid "DHCP configuration"
-msgstr "FAX database"
+#~ msgid "Server busy"
+#~ msgstr "Servers"
 
-#: admin/systems/class_componentGeneric.inc:77
 #, fuzzy
-msgid "component"
-msgstr "Nieuw component"
+#~ msgid "New system from incoming"
+#~ msgstr "Nieuw systeem uit inkomende wachtrij"
 
-#: admin/systems/class_componentGeneric.inc:310
 #, fuzzy
-msgid "Component generic"
-msgstr "Nieuw component"
+#~ msgid "Choose subtree to place server in"
+#~ msgstr "Kies de subtree waaronder de gebruiker geplaatst wordt"
 
-#: admin/systems/component.tpl:6
-msgid "Device name"
-msgstr "Apparaat naam"
+#~ msgid "Select a base"
+#~ msgstr "Selecteer een basis"
 
-#: admin/systems/component.tpl:20
+#~ msgid "Add"
+#~ msgstr "Toevoegen"
+
+#~ msgid "Delete"
+#~ msgstr "Verwijderen"
+
 #, fuzzy
-msgid "Choose subtree to place component in"
-msgstr "Selecteer de subtree waaronder deze groep geplaatst wordt"
+#~ msgid "Choose subtree to place component in"
+#~ msgstr "Selecteer de subtree waaronder deze groep geplaatst wordt"
 
 #~ msgid "Submit"
 #~ msgstr "Verwerk"
@@ -1057,10 +1008,6 @@ msgstr "Selecteer de subtree waaronder deze groep geplaatst wordt"
 #, fuzzy
 #~ msgid "Department"
 #~ msgstr "Systeem / Afdeling"
-
-#, fuzzy
-#~ msgid "Release"
-#~ msgstr "Verwijderen"
 
 #, fuzzy
 #~ msgid "servers"
@@ -1151,20 +1098,12 @@ msgstr "Selecteer de subtree waaronder deze groep geplaatst wordt"
 #~ msgstr "Nieuw FAI object aanmaken"
 
 #, fuzzy
-#~ msgid "Inherited from %s"
-#~ msgstr "Objectgroepen"
-
-#, fuzzy
 #~ msgid "Number of listed '%s'"
 #~ msgstr "Naam van de afdeling"
 
 #, fuzzy
 #~ msgid "printers"
 #~ msgstr "Printer"
-
-#, fuzzy
-#~ msgid "network components"
-#~ msgstr "Ander netwerk component"
 
 #, fuzzy
 #~ msgid "new devices"
