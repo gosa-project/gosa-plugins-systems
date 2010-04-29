@@ -14,14 +14,17 @@
 
   <tr>
     <td><b><LABEL for="new_password">{t}New password{/t}</LABEL></b></td>
-    <td><input id="new_password" type="password" name="new_password" size="30" maxlength="40"
-		onkeyup="testPasswordCss(document.getElementById('new_password').value);"
-		onFocus="nextfield= 'repeated_password';"></td>
+    <td>
+        {factory type='password' id='new_password' name='new_password'
+            onkeyup="testPasswordCss(\$('new_password').value);" onfocus="nextfield='repeated_password';"}
+    </td>
   </tr>
   <tr>
     <td><b><LABEL for="repeated_password">{t}Repeat new password{/t}</LABEL></b></td>
-    <td><input type="password" id="repeated_password" name="repeated_password" size="30" maxlength="40"
-		onFocus="nextfield= 'password_finish';"></td>
+    <td>
+        {factory type='password' id='repeated_password' name='repeated_password'
+            onfocus="nextfield='password_finish';"}
+    </td>
   </tr>
   <tr>
        <td>{t}Password strength{/t}</td>
@@ -35,10 +38,8 @@
 
 <hr>
 <div class="plugin-actions">
-  <button type='submit' name='password_finish'>{t}Set password{/t}</button>
-
-  <button type='submit' name='password_cancel'>{msgPool type=cancelButton}</button>
-
+  <button type='submit' id='password_finish'name='password_finish'>{t}Set password{/t}</button>
+  <button type='submit' id='password_cancel'name='password_cancel'>{msgPool type=cancelButton}</button>
 </div>
 
 
