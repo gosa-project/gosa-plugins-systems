@@ -1363,12 +1363,15 @@ class systemManagement extends management
   }
 
 
-  static function filterSystemDescription($row,$dn,$pid,$description=array())
+  static function filterSystemDescription($row,$dn,$pid,$state,$description=array())
   {
       $dn= LDAP::fix(func_get_arg(1));
       $desc = isset($description[0])?$description[0]:"&nbsp;";
-      $rc = "<rowClass:entry-locked/>";
       $rc = "";
+      switch($state){
+        case 'locked' : $rc = "<rowClass:entry-locked/>"; break;
+        case 'error' : $rc = "<rowClass:entry-locked/>"; break;
+      }
       return("<a href='?plug=".$_GET['plug']."&amp;PID={$pid}&amp;act=listing_edit_{$row}' title='{$dn}'>{$desc}</a>{$rc}");
   }
 

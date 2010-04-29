@@ -40,6 +40,7 @@ class filterSYSTEMS {
                 // Detect Workstation & templates
             }elseif(in_array('gotoWorkstation', $entry['objectClass'])){
                 if(!isset($entry['macAddress'][0]) || $entry['macAddress'][0] == "-"){
+                    unset($entries[$key]);
                     continue; // We do not need templates anymore, we've ogroups now.
                     //$entries[$key]['objectClass'][] = 'FAKE_OC_WorkstationTemplate';
                 }
@@ -51,6 +52,7 @@ class filterSYSTEMS {
                 // Detect Terminal & templates
             }elseif(in_array('gotoTerminal', $entry['objectClass'])){
                 if(!isset($entry['macAddress'][0]) || $entry['macAddress'][0] == "-"){
+                    unset($entries[$key]);
                     continue; // We do not need templates anymore, we've ogroups now.
                     //$entries[$key]['objectClass'][] = 'FAKE_OC_TerminalTemplate';
                 }
@@ -62,6 +64,7 @@ class filterSYSTEMS {
                 // Detect Server & templates
             }elseif(in_array('goServer', $entry['objectClass'])){
                 if(!isset($entry['macAddress'][0]) || $entry['macAddress'][0] == "-"){
+                    unset($entries[$key]);
                     continue; // We do not need templates anymore, we've ogroups now.
                     //$entries[$key]['objectClass'][] = 'FAKE_OC_ServerTemplate';
                 }
@@ -79,6 +82,7 @@ class filterSYSTEMS {
             }
 
             // Detect object states
+            $state = 'none';
             foreach(array('gotoWorkstation','gotoTerminal','goServer') as $type){
                 if(in_array($type, $entry['objectClass'])){
 
@@ -96,18 +100,20 @@ class filterSYSTEMS {
                             case 'scheduledupdate':
                                 $state= 'busy';
                                 break;
-                            default: $state ="";
                         }
                     }
                 }
             }
-            if(!empty($state)){
+        
+            if(isset($entries[$key])){    
                 $entries[$key][$entries[$key]['count']]= 'state';
                 $entries[$key]['state']= $state;
                 $entries[$key]['count'] ++;
             }
-        }
 
+            
+
+        }
         return($entries);
     }
 }

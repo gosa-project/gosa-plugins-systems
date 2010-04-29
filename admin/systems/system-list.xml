@@ -177,7 +177,7 @@
       <label>Description</label>
       <sortAttribute>description</sortAttribute>
       <sortType>string</sortType>
-      <value>%{filter:filterSystemDescription(row,dn,pid,description)}</value>
+      <value>%{filter:filterSystemDescription(row,dn,pid,state,description)}</value>
       <export>true</export>
     </column>
 
