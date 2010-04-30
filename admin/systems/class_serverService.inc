@@ -557,8 +557,6 @@ class ServerService extends management
    */
   function PrepareForCopyPaste($source)
   {
-    plugin::PrepareForCopyPaste($source);
-
     foreach($this->plugins as $name => $plugin){
       $this->plugins[$name]->PrepareForCopyPaste($source);
     }
@@ -599,6 +597,15 @@ class ServerService extends management
       $this->plugins[$name]->set_acl_category($category);
     }
   }
+
+  function saveCopyDialog(){
+  }
+
+
+  function getCopyDialog(){
+    return(array("string"=>"","status"=>""));
+  }
+
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
