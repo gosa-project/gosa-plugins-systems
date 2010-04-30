@@ -1371,6 +1371,7 @@ class systemManagement extends management
       switch($state){
         case 'locked' : $rc = "<rowClass:entry-locked/><rowLabel:locked/>"; break;
         case 'error' : $rc = "<rowClass:entry-error/><rowLabel:error/>"; break;
+        case 'busy' : $rc = "<rowClass:entry-busy/><rowLabel:busy/>"; break;
         case 'warning' : $rc = "<rowClass:entry-warning/><rowLabel:warning/>"; break;
       }
       return("<a href='?plug=".$_GET['plug']."&amp;PID={$pid}&amp;act=listing_edit_{$row}' title='{$dn}'>{$desc}</a>{$rc}");
