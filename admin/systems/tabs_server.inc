@@ -105,7 +105,7 @@ class servtabs extends tabs
 
     /* cn is not case sensitive for ldap, but for php it is!! */
     if($baseobject->orig_dn != "new"){
-      if($this->config->get_cfg_value("accountPrimaryAttribute") == "cn"){
+      if($this->config->get_cfg_value("core","accountPrimaryAttribute") == "cn"){
         if (strtolower($baseobject->orig_dn) != (strtolower($this->dn))){
           $baseobject->recursive_move($baseobject->orig_dn, $this->dn);
         }
