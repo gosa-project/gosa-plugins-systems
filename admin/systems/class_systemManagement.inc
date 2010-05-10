@@ -1417,17 +1417,33 @@ class systemManagement extends management
    */
   static function plInfo()
   {
-    return (array(
-          "plShortName"   => _("Incoming objects"),
-          "plDescription" => _("Incoming objects"),
-          "plSelfModify"  => FALSE,
-          "plDepends"     => array(),
-          "plPriority"    => 99,
-          "plSection"     => array("administration"),
+      return (array(
+                  "plShortName"   => _("Incoming objects"),
+                  "plDescription" => _("Incoming objects"),
+                  "plSelfModify"  => FALSE,
+                  "plDepends"     => array(),
+                  "plPriority"    => 99,
+                  "plSection"     => array("administration"),
+
+                  "plProperties" =>
+                  array(
+                      array(
+                          "name"          => "systemRDN",
+                          "type"          => "rdn",
+                          "default"       => "ou=systems,",
+                          "description"   => "The 'systemRDN' statement defines the location where new systems will be created. The default is 'ou=systems,'.",
+                          "check"         => "gosaProperty::isRdn",
+                          "migrate"       => "",
+                          "group"         => "plugin",
+                          "mandatory"     => FALSE
+                          )
+                      ),
+
+
           "plCategory"    => array("incoming"   => array( "description"  => _("Incoming"),
-              "objectClass"  => "")),
+                      "objectClass"  => "")),
           "plProvidedAcls"=> array()
-          ));
+              ));
   }
 } 
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
