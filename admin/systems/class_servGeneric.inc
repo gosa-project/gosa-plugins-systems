@@ -493,6 +493,20 @@ class servgeneric extends plugin
           "plSection"     => array("administration"),           
           "plCategory"    => array("server" => array("description"  => _("Server"),
                                                      "objectClass"  => "goServer")),
+          "plProperties" =>
+          array(
+              array(
+                  "name"          => "serverRDN",
+                  "type"          => "rdn",
+                  "default"       => "ou=servers,ou=systems,",
+                  "description"   => "The 'serverRDN' statement defines the location where new servers will be created. The default is 'ou=servers,ou=systems,'.",
+                  "check"         => "gosaProperty::isRdn",
+                  "migrate"       => "",
+                  "group"         => "plugin",
+                  "mandatory"     => FALSE
+                  )
+              ),
+
           "plProvidedAcls"=> array(
             "cn"            => _("Name"),
             "description"   => _("Description"),
