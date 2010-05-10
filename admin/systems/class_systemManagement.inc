@@ -366,7 +366,7 @@ class systemManagement extends management
     $dsc   = array(0 => array("pipe", "r"), 1 => array("pipe", "w"), 2 => array("pipe", "w"));
 
     /* Get and check command */
-    $command= $this->config->search("workgeneric", "SYSTEMISOHOOK",array('tabs'));
+    $command= $this->config->get_cfg_value("workgeneric", "systemIsoHook");
     if (check_command($command)){
       @DEBUG (DEBUG_SHELL, __LINE__, __FUNCTION__, __FILE__, $command, "Execute");
 
