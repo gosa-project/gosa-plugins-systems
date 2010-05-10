@@ -288,21 +288,35 @@ class componentGeneric extends plugin
   /* Return plugin informations for acl handling */
   static function plInfo()
   {
-    return (array(
-          "plShortName"   => _("Generic"),
-          "plDescription" => _("Component generic"),
-          "plSelfModify"  => FALSE,
-          "plDepends"     => array(),
-          "plPriority"    => 1,
-          "plSection"     => array("administration"),
-          "plCategory"    => array("component" => array("description"  => _("Network device"),
-                                                        "objectClass"  => array("device", "ipHost", "ieee802Device"))),
+      return (array(
+                  "plShortName"   => _("Generic"),
+                  "plDescription" => _("Component generic"),
+                  "plSelfModify"  => FALSE,
+                  "plDepends"     => array(),
+                  "plPriority"    => 1,
+                  "plSection"     => array("administration"),
+                  "plCategory"    => array("component" => array("description"  => _("Network device"),
+                          "objectClass"  => array("device", "ipHost", "ieee802Device"))),
+                  "plProperties" =>
+                  array(
+                      array(
+                          "name"          => "componentRDN",
+                          "type"          => "rdn",
+                          "default"       => "ou=netdevices,ou=systems,",
+                          "description"   => "The 'componentRDN' statement defines the location where new components will be created. The default is 'ou=netdevices,ou=systems,'.",
+                          "check"         => "gosaProperty::isRdn",
+                          "migrate"       => "",
+                          "group"         => "plugin",
+                          "mandatory"     => FALSE
+                          )
+                      ),
+
           "plProvidedAcls"=> array(
-            "cn"                  => _("Name"),
-            "base"                => _("Base"),
-            "description"         => _("Description"),
-            "userPassword"      => _("Root password"))
-          ));
+                  "cn"                  => _("Name"),
+                  "base"                => _("Base"),
+                  "description"         => _("Description"),
+                  "userPassword"      => _("Root password"))
+              ));
   }
 
   /* Display generic part for server copy & paste */
