@@ -14,7 +14,7 @@ class filterSYSTEMS {
 
 
         foreach($entries as $key => $entry){
-            if(preg_match("/".preg_quote(get_ou("ArpNewDevice", "systemIncomingRDN") ,'/')."/i", $entry['dn'])){
+            if(preg_match("/".preg_quote(get_ou('systemIncomingRDN'),'/')."/i", $entry['dn'])){
 
                 // Detect incoming types
                 if(in_array('gotoWorkstation', $entry['objectClass'])){
