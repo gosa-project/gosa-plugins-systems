@@ -103,7 +103,7 @@ class termDNS extends plugin
 
     /* Hide all dhcp specific code, if dhcp plugin is not present in config */
     $this->dhcpEnabled = FALSE;
-    if($this->config->search("servdhcp","class",array("tabs"))){
+    if($this->config->pluginEnabled("servdhcp")){
       $this->dhcpEnabled = TRUE;
     }
     
