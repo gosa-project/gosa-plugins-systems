@@ -543,7 +543,7 @@ class systemManagement extends management
    */
   static function incomingFilterConverter($filter)
   {
-    $rdn = preg_replace("/^[^=]*=/", "", get_ou('systemIncomingRDN'));
+    $rdn = preg_replace("/^[^=]*=/", "", get_ou("ArpNewDevice", "systemIncomingRDN"));
     $rdn = preg_replace("/,.*$/","",$rdn);
     return(preg_replace("/%systemIncomingRDN/", $rdn,$filter));
   }
@@ -849,7 +849,7 @@ class systemManagement extends management
               $data['OG'], "<b>Selected ogroup:</b>");
 
           if($data['OG'] != "none"){
-            $this->tabObject->base = preg_replace("/^[^,]+,".preg_quote(get_ou('ogroupRDN'), '/')."/i", "", $data['OG']);
+            $this->tabObject->base = preg_replace("/^[^,]+,".preg_quote(get_ou("group", "ogroupRDN"), '/')."/i", "", $data['OG']);
             $this->tabObject->by_object[$plugClass]->baseSelector->setBase($this->tabObject->base);
           } else {
             $this->tabObject->by_object[$plugClass]->baseSelector->setBase($headpage->getBase());
@@ -1269,7 +1269,7 @@ class systemManagement extends management
           "aclCategory" => "opsi"),
 
         "goServer" => array(
-          "ou"          => get_ou('serverRDN'),
+          "ou"          => get_ou("servgeneric", "serverRDN"),
           "plugClass"   => "servgeneric",
           "tabClass"    => "servtabs",
           "tabDesc"     => "SERVTABS",
@@ -1278,7 +1278,7 @@ class systemManagement extends management
           "aclCategory" => "server"),
 
         "gotoWorkstation" => array(
-          "ou"          => get_ou('workstationRDN'),
+          "ou"          => get_ou("workgeneric", "workstationRDN"),
           "plugClass"   => "workgeneric",
           "tabClass"    => "worktabs",
           "tabDesc"     => "WORKTABS",
@@ -1287,7 +1287,7 @@ class systemManagement extends management
           "aclCategory" => "workstation"),
 
         "gotoTerminal" => array(
-            "ou"          => get_ou('terminalRDN'),
+            "ou"          => get_ou("termgeneric", "terminalRDN"),
             "plugClass"   => "termgeneric",
             "tabClass"    => "termtabs",
             "sendEvents"  => TRUE,
@@ -1296,7 +1296,7 @@ class systemManagement extends management
             "aclCategory" => "terminal"),
 
         "gotoPrinter" => array(
-            "ou"          => get_ou('printerRDN'),
+            "ou"          => get_ou("printgeneric", "printerRDN"),
             "plugClass"   => "printgeneric",
             "tabClass"    => "printtabs",
             "tabDesc"     => "PRINTTABS",
@@ -1305,7 +1305,7 @@ class systemManagement extends management
             "aclCategory" => "printer"),
 
         "FAKE_OC_NewDevice" => array(
-            "ou"          => get_ou('systemIncomingRDN'),
+            "ou"          => get_ou("ArpNewDevice", "systemIncomingRDN"),
             "plugClass"   => "termgeneric",
             "tabClass"    => "termtabs",
             "sendEvents"  => TRUE,
@@ -1314,7 +1314,7 @@ class systemManagement extends management
             "aclCategory" => "terminal"),
 
         "goFonHardware" => array(
-            "ou"          => get_ou('phoneRDN'),
+            "ou"          => get_ou("phoneGeneric", "phoneRDN"),
             "plugClass"   => "phoneGeneric",
             "tabClass"    => "phonetabs",
             "tabDesc"     => "PHONETABS",
@@ -1332,7 +1332,7 @@ class systemManagement extends management
             "aclCategory" => "winworkstation"),
 
         "ieee802Device" => array(
-            "ou"          => get_ou('componentRDN'),
+            "ou"          => get_ou("componentGeneric", "componentRDN"),
             "plugClass"   => "componentGeneric",
             "sendEvents"  => FALSE,
             "tabClass"    => "componenttabs",
