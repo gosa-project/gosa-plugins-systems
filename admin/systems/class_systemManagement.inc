@@ -83,6 +83,7 @@ class systemManagement extends management
       if(!empty($entry['ou']))
         $sP[] = $entry['ou'];
     }
+
     $this->storagePoints = array_unique($sP);
 
     // Build filter
