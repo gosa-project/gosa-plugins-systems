@@ -1434,7 +1434,7 @@ class systemManagement extends management
                           "default"       => "ou=systems,",
                           "description"   => "The 'systemRDN' statement defines the location where new systems will be created. The default is 'ou=systems,'.",
                           "check"         => "gosaProperty::isRdn",
-                          "migrate"       => "",
+                          "migrate"       => "migrate_systemRDN",
                           "group"         => "plugin",
                           "mandatory"     => FALSE
                           )
