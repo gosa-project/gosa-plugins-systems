@@ -99,7 +99,7 @@ class ServerService extends management
         $contents =file_get_contents(get_template_path("serverService-list.xml", true));
         $template = "
             <action>
-            <name>new_%s</name>
+            <name>instantNew_%s</name>
             <type>entry</type>
             <label>%s</label>
             </action>";
@@ -123,6 +123,7 @@ class ServerService extends management
         $this->registerAction("restart",            "updateServiceStatus");
         $this->registerAction("stop",               "updateServiceStatus");
         $this->registerAction("start",              "updateServiceStatus");
+        $this->registerAction("instantNew",         "instantNewService");
     }
 
 
@@ -135,6 +136,10 @@ class ServerService extends management
         if(isset($_POST['CancelServiceAdd'])) $action['action'] = "newServiceCancel";
         if(isset($_POST['SaveService']))      $action['action'] = "saveService";
         if(isset($_POST['CancelService']))    $action['action'] = "cancelService";
+        if(preg_match("/^instantNew_/",$action['action'])){
+            $action['targets'][] = preg_replace("/^instantNew_/i","",$action['action']);
+            $action['action'] = "instantNew";
+        }
         return($action);
     }
 
@@ -190,6 +195,19 @@ class ServerService extends management
     {
         $this->closeDialogs();
         $serv = $_POST['ServiceName'];
+        $this->plugins[$serv]->is_account = true;
+        $this->dialogObject  = $this->plugins[$serv];
+        $this->current = $serv;
+        $this->dialog = TRUE;
+    }
+
+
+    /*! \brief  Create the selected service.
+     */
+    function instantNewService($action, $targets, $all)
+    {
+        $this->closeDialogs();
+        $serv = $targets[0];
         $this->plugins[$serv]->is_account = true;
         $this->dialogObject  = $this->plugins[$serv];
         $this->current = $serv;
