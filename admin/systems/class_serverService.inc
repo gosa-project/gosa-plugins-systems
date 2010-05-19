@@ -73,12 +73,6 @@ class ServerService extends management
         }
         $this->setFilter($filter);
 
-        // Build headpage
-        $headpage = new listing(get_template_path("serverService-list.xml", true));
-        $headpage->registerElementFilter("filterServiceStatus", "ServerService::filterServiceStatus");
-        $headpage->setFilter($filter);
-
-
         // Initialize list of used and useable services.
         foreach ($config->data['TABS']['SERVERSERVICE'] as $plug){
             if(class_available($plug['CLASS'])){
@@ -100,6 +94,24 @@ class ServerService extends management
                 }
             }
         }
+
+        // Load service xml file and fill in placeholders
+        $contents =file_get_contents(get_template_path("serverService-list.xml", true));
+        $template = "
+            <action>
+            <name>new_%s</name>
+            <type>entry</type>
+            <label>%s</label>
+            </action>";
+        $serviceList = "";
+        foreach($this->getAllUnusedServices() as $name => $desc){
+            $serviceList.= sprintf($template, $name,_($desc));
+        }
+        $contents = preg_replace("/%SERVICES%/",$serviceList, $contents);
+
+        $headpage = new listing($contents,TRUE);
+        $headpage->registerElementFilter("filterServiceStatus", "ServerService::filterServiceStatus");
+        $headpage->setFilter($filter);
 
         parent::__construct($config, $this->ui, "services", $headpage);
         $this->registerAction("new",                "newService");

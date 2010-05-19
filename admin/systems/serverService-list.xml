@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <list>
   <definition>
     <departmentBrowser>false</departmentBrowser>
@@ -53,12 +52,8 @@
      <image>images/lists/element.png[new]</image>
      <label>Create</label>
 
-     <action>
-      <name>new</name>
-      <type>entry</type>
-      <image>images/lists/element.png[new]</image>
-      <label>Service</label>
-     </action>
+     %SERVICES%
+
     </action>
 
     <action>
