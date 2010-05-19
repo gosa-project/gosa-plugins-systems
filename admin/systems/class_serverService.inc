@@ -116,10 +116,8 @@ class ServerService extends management
         parent::__construct($config, $this->ui, "services", $headpage);
         $this->registerAction("new",                "newService");
         $this->registerAction("remove",             "removeService");
-        $this->registerAction("newServiceSelected", "newServiceSelected");
         $this->registerAction("saveService",        "saveService");
         $this->registerAction("cancelService",      "cancelEdit");
-        $this->registerAction("newServiceCancel",   "closeDialogs");
         $this->registerAction("restart",            "updateServiceStatus");
         $this->registerAction("stop",               "updateServiceStatus");
         $this->registerAction("start",              "updateServiceStatus");
@@ -132,8 +130,6 @@ class ServerService extends management
     function detectPostActions()
     {
         $action = management::detectPostActions();
-        if(isset($_POST['SaveServiceAdd']))   $action['action'] = "newServiceSelected";
-        if(isset($_POST['CancelServiceAdd'])) $action['action'] = "newServiceCancel";
         if(isset($_POST['SaveService']))      $action['action'] = "saveService";
         if(isset($_POST['CancelService']))    $action['action'] = "cancelService";
         if(preg_match("/^instantNew_/",$action['action'])){
@@ -177,28 +173,6 @@ class ServerService extends management
         $this->backup   = NULL;
         $this->current  = "";
         $this->closeDialogs();
-    }
-
-
-    /*! \brief  Let the user choose the new service to create.
-     */
-    function newService()
-    {
-        $this->dialog = TRUE;
-        $this->dialogObject = new ServiceAddDialog($this->config,$this->dn,$this);
-    }
-
-
-    /*! \brief  Create the selected service.
-     */
-    function newServiceSelected()
-    {
-        $this->closeDialogs();
-        $serv = $_POST['ServiceName'];
-        $this->plugins[$serv]->is_account = true;
-        $this->dialogObject  = $this->plugins[$serv];
-        $this->current = $serv;
-        $this->dialog = TRUE;
     }
 
 
