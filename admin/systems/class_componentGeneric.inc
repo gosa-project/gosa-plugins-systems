@@ -303,7 +303,7 @@ class componentGeneric extends plugin
                           "name"          => "componentRDN",
                           "type"          => "rdn",
                           "default"       => "ou=netdevices,ou=systems,",
-                          "description"   => "The 'componentRDN' statement defines the location where new components will be created. The default is 'ou=netdevices,ou=systems,'.",
+                          "description"   => _("The 'componentRDN' statement defines the location where new components will be created. The default is 'ou=netdevices,ou=systems,'."),
                           "check"         => "gosaProperty::isRdn",
                           "migrate"       => "migrate_componentRDN",
                           "group"         => "plugin",
