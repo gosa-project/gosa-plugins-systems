@@ -104,11 +104,21 @@ class ServerService extends management
             <label>%s</label>
             </action>";
         $serviceList = "";
-        foreach($this->getAllUnusedServices() as $name => $desc){
+
+        // Sort entries by alphabet 
+        $list = array();
+        $services = $this->getAllUnusedServices();
+        foreach($services as $name => $desc){
+            $list[_($desc).$name] = $name;
+        }
+        ksort($list);
+
+        // Create menu entries -> create -> services[]
+        foreach($list as $name){
+            $desc = $services[$name];
             $serviceList.= sprintf($template, $name,_($desc));
         }
         $contents = preg_replace("/%SERVICES%/",$serviceList, $contents);
-
         $headpage = new listing($contents,TRUE);
         $headpage->registerElementFilter("filterServiceStatus", "ServerService::filterServiceStatus");
         $headpage->setFilter($filter);
