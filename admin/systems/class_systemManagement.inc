@@ -1441,8 +1441,7 @@ class systemManagement extends management
                       ),
 
 
-          "plCategory"    => array("incoming"   => array( "description"  => _("Incoming"),
-                      "objectClass"  => "")),
+          "plCategory"    => array("incoming"   => array( "description"  => _("Incoming"))),
           "plProvidedAcls"=> array()
               ));
   }
