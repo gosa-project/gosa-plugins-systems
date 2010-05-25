@@ -491,6 +491,7 @@ class servgeneric extends plugin
           "plDepends"     => array(),
           "plPriority"    => 1,
           "plSection"     => array("administration"),           
+          "plRequirements"=> array('ldapSchema' => array('goServer' => '>=2.7')),
           "plCategory"    => array("server" => array("description"  => _("Server"),
                                                      "objectClass"  => "goServer")),
           "plProperties" =>
