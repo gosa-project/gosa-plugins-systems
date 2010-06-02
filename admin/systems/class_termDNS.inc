@@ -302,15 +302,25 @@ class termDNS extends plugin
  
     /* Check for autonet button */
     if (isset($_POST['autonet']) && ($this->acl_is_writeable("ipHostNumber") || $this->acl_is_writeable("macAddress"))){
-      $d= new gosaSupportDaemon(TRUE, 0.5);
-      $res= $d->_send("<xml><header>gosa_network_completition</header>".
-          "<source>GOSA</source><target>GOSA</target><hostname>".$this->cn."</hostname></xml>", TRUE);
-      if (isset($res['XML']['IP']) && $this->acl_is_writeable("ipHostNumber")){
-        $this->ipHostNumber= $res['XML']['IP'];
-      }
-      if (isset($res['XML']['MAC']) && $this->acl_is_writeable("macAddress")){
-        $this->macAddress= $res['XML']['MAC'];
-      }
+
+        if ($this->config->get_cfg_value("core","gosaRpcServer") != ""){
+            $rpc = $this->config->getRpcHandle();
+            $res = $rpc->networkCompletion($this->cn);
+            if(isset($res['ip']) && tests::is_ip($res['ip'])) $this->ipHostNumber= $res['ip'];
+            if(isset($res['mac']) && tests::is_mac($res['mac'])) $this->macAddress= $res['mac'];
+
+        }elseif ($config->get_cfg_value("core","gosaSupportURI") != ""){
+
+            $d= new gosaSupportDaemon(TRUE, 0.5);
+            $res= $d->_send("<xml><header>gosa_network_completition</header>".
+                    "<source>GOSA</source><target>GOSA</target><hostname>".$this->cn."</hostname></xml>", TRUE);
+            if (isset($res['XML']['IP']) && $this->acl_is_writeable("ipHostNumber")){
+                $this->ipHostNumber= $res['XML']['IP'];
+            }
+            if (isset($res['XML']['MAC']) && $this->acl_is_writeable("macAddress")){
+                $this->macAddress= $res['XML']['MAC'];
+            }
+        }
     }
 
   
