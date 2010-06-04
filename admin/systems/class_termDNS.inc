@@ -370,6 +370,16 @@ class termDNS extends plugin
     $smarty->assign("dhcpParentNodes",$this->dhcpParentNodes);
     $smarty->assign("dhcpParentNodeCnt",count($this->dhcpParentNodes));
 
+    // Assign network card manufacturer string
+    $smarty->assign("macManufacturer", "");
+    if ($this->config->get_cfg_value("core","gosaRpcServer") != ""){
+        $rpc = $this->config->getRpcHandle();
+        $res = $rpc->getMacManufacturer($this->macAddress);
+        if($rpc->success()){
+            $smarty->assign('macManufacturer',$rpc->getMacManufacturer($this->macAddress));
+        }
+    }
+
     /**********
      * DNS Handling
      **********/
@@ -470,7 +480,6 @@ class termDNS extends plugin
       $smarty->assign("changeStateForRecords",$changeStateForRecords);
 
       $smarty->assign("autonetACL",$this->acl_is_writeable("macAddress") && $this->acl_is_writeable("ipHostNumber")?"rw":"");
-
       $display.= $smarty->fetch(get_template_path('network.tpl', TRUE));
     }
 

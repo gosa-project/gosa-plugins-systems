@@ -45,9 +45,13 @@
             {render acl=$macAddressACL}
               <input	type='text' name="macAddress"	id="macAddress"	value="{$macAddress}">
             {/render}
+
             {render acl=$autonetACL}
       	      <button type='submit' name='autonet'>{t}Autodetect{/t}</button>
             {/render}
+            {if macManufacturer!=""}
+                <br><span style='font-size:xx-small;'>{$macManufacturer}</span>
+            {/if}
           </td>
 				</tr>
       </table>
