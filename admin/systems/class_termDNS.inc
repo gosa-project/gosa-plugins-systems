@@ -34,6 +34,10 @@ class termDNS extends plugin
   var $additionalHostNumbers = array();
   var $macAddress            = "";    // Mac address 
 
+  // Used in manufacturer detection
+  var $last_macAddress       = "";      
+  var $manufacturer          = "";
+
   var $orig_ipHostNumber   = "";    // IP address 
   var $orig_macAddress     = "";    // Mac address 
 
@@ -371,14 +375,15 @@ class termDNS extends plugin
     $smarty->assign("dhcpParentNodeCnt",count($this->dhcpParentNodes));
 
     // Assign network card manufacturer string
-    $smarty->assign("macManufacturer", "");
-    if ($this->config->get_cfg_value("core","gosaRpcServer") != ""){
+    if ($this->config->get_cfg_value("core","gosaRpcServer") != ""   && 
+        $this->macAddress != $this->last_macAddress){
         $rpc = $this->config->getRpcHandle();
         $res = $rpc->getMacManufacturer($this->macAddress);
         if($rpc->success()){
-            $smarty->assign('macManufacturer',$rpc->getMacManufacturer($this->macAddress));
+            $this->manufacturer = $rpc->getMacManufacturer($this->macAddress);
         }
     }
+    $smarty->assign("macManufacturer", $this->manufacturer);
 
     /**********
      * DNS Handling
@@ -515,6 +520,8 @@ class termDNS extends plugin
   {
 
     if(isset($_POST['network_tpl_posted'])){
+
+      $this->last_macAddress = $this->macAddress;
 
       /* Save all posted vars */
       plugin::save_object();
