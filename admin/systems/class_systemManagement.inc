@@ -1367,7 +1367,7 @@ class systemManagement extends management
     static function filterSystemDescription($row,$dn,$pid,$state,$description=array())
     {
         $dn= LDAP::fix(func_get_arg(1));
-        $desc = isset($description[0])?$description[0]:"&nbsp;";
+        $desc = isset($description[0])?$description[0]:"";
         $rc = "";
         switch($state){
             case 'locked' : $rc = "<rowClass:entry-locked/><rowLabel:locked/>"; break;
