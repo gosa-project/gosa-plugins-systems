@@ -89,7 +89,7 @@ class filterSYSTEMS {
                     }
                 }
             }
-        
+
             if(isset($entries[$key])){    
                 $entries[$key][$entries[$key]['count']]= 'state';
                 $entries[$key]['state']= $state;
