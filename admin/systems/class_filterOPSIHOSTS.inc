@@ -32,6 +32,7 @@ class filterOPSIHOSTS {
                     foreach($opsi_clients as $entry){
                         if(empty($fAttr) || preg_match("/{$fValue}/i",$entry[$fAttr][0])){
                             $entry['objectClass'] = array("FAKE_OC_OpsiHost");
+                            if(!isset($entry['description'])) $entry['description'] = "";
                             $item = array('count' => count($entry));
                             foreach($entry as  $name => $value){
                                 $item[] = $name;
