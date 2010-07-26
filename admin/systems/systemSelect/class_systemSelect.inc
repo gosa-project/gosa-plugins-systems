@@ -22,44 +22,47 @@
 
 class systemSelect extends management
 {
-  // Tab definition 
-  protected $skipFooter = TRUE;
-  protected $skipHeader = TRUE;
+    // Tab definition 
+    protected $skipFooter = TRUE;
+    protected $skipHeader = TRUE;
 
-  public $plHeadline = "System selection";
+    public $plHeadline = "System selection";
 
-  function __construct($config,$ui)
-  {
-    $this->config = $config;
-    $this->ui = $ui;
-    $this->storagePoints = array(get_ou("servgeneric", "serverRDN"), get_ou("workgeneric", "workstationRDN"), get_ou("termgeneric", "terminalRDN"));
+    function __construct($config,$ui)
+    {
+        $this->config = $config;
+        $this->ui = $ui;
+        $this->storagePoints = array(
+                get_ou("servgeneric", "serverRDN"), 
+                get_ou("workgeneric", "workstationRDN"), 
+                get_ou("termgeneric", "terminalRDN"));
 
-    // Build filter
-    if (session::global_is_set(get_class($this)."_filter")){
-      $filter= session::global_get(get_class($this)."_filter");
-    } else {
-      $filter = new filter(get_template_path("selectSystem-filter.xml", true, dirname(__FILE__)));
-      $filter->setObjectStorage($this->storagePoints);
+        // Build filter
+        if (session::global_is_set(get_class($this)."_filter")){
+            $filter= session::global_get(get_class($this)."_filter");
+        } else {
+            $filter = new filter(get_template_path("selectSystem-filter.xml", true, dirname(__FILE__)));
+            $filter->setObjectStorage($this->storagePoints);
+        }
+        $this->setFilter($filter);
+
+        // Build headpage
+        $headpage = new listing(get_template_path("selectSystem-list.xml", true, dirname(__FILE__)));
+        $headpage->setFilter($filter);
+        parent::__construct($config, $ui, "object", $headpage);
     }
-    $this->setFilter($filter);
 
-    // Build headpage
-    $headpage = new listing(get_template_path("selectSystem-list.xml", true, dirname(__FILE__)));
-    $headpage->setFilter($filter);
-    parent::__construct($config, $ui, "object", $headpage);
-  }
-
-  function save()
-  {
-    $act = $this->detectPostActions();
-    $headpage = $this->getHeadpage();
-    if(!isset($act['targets'])) return(array());
-    $ret = array();
-    foreach($act['targets'] as $dn){
-      $ret[] = $headpage->getEntry($dn);
+    function save()
+    {
+        $act = $this->detectPostActions();
+        $headpage = $this->getHeadpage();
+        if(!isset($act['targets'])) return(array());
+        $ret = array();
+        foreach($act['targets'] as $dn){
+            $ret[] = $headpage->getEntry($dn);
+        }
+        return($ret);
     }
-    return($ret);
-  }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
