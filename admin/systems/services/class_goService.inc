@@ -21,210 +21,210 @@
  */
 
 class goService extends plugin{
-	
-  /* This plugin only writes its objectClass */
-  var $objectclasses    = array();
-  var $attributes       = array();
-  var $StatusFlag       = "";
- 
-  /* This class can't be assigned twice so it conflicts with itsself */
-  var $conflicts            = array();
-  var $dn                   = NULL;
-  var $cn                   = "";
-  var $DisplayName          = "";
-  var $view_logged          = FALSE;
 
-  var $krb_service_prefix   = "";
-  var $krb_host_key         = NULL; 
-   
-  /* Construcktion */ 
-  function goService(&$config,$dn,$parent = NULL)
-  {
-    plugin::plugin($config,$dn);
-    $this->DisplayName = _("Empty service");
-  }
+    /* This plugin only writes its objectClass */
+    var $objectclasses    = array();
+    var $attributes       = array();
+    var $StatusFlag       = "";
 
-  
-  /* Create content */
-  function execute()
-  {
-    plugin::execute();
+    /* This class can't be assigned twice so it conflicts with itsself */
+    var $conflicts            = array();
+    var $dn                   = NULL;
+    var $cn                   = "";
+    var $DisplayName          = "";
+    var $view_logged          = FALSE;
 
-    if($this->is_account && !$this->view_logged){
-      $this->view_logged = TRUE;
-      new log("view","server/".get_class($this),$this->dn);
+    var $krb_service_prefix   = "";
+    var $krb_host_key         = NULL; 
+
+    /* Construcktion */ 
+    function goService(&$config,$dn,$parent = NULL)
+    {
+        plugin::plugin($config,$dn);
+        $this->DisplayName = _("Empty service");
     }
 
-    $str ="<div style='width:100%; text-align:right;'>".
-          "  <input type='submit' name='SaveService' value='".msgPool::saveButton()."'>&nbsp;".
-          "  <input type='submit' name='CancelService' value='".msgPool::cancelButton()."'>".
-          "</div>";
-    return($str);
-  }
 
+    /* Create content */
+    function execute()
+    {
+        plugin::execute();
 
-  /* Get service information for serverService plugin */
-  function getListEntry()
-  {
-    
-    $this->updateStatusState();
+        if($this->is_account && !$this->view_logged){
+            $this->view_logged = TRUE;
+            new log("view","server/".get_class($this),$this->dn);
+        }
 
-    /* Assign status flag */
-    if(!empty($this->StatusFlag)){
-      $flag                   = $this->StatusFlag;
-      $fields['Status']       = $this->$flag;
-    }else{
-      $fields['Status']       = "";
+        $str ="<div style='width:100%; text-align:right;'>".
+            "  <input type='submit' name='SaveService' value='".msgPool::saveButton()."'>&nbsp;".
+            "  <input type='submit' name='CancelService' value='".msgPool::cancelButton()."'>".
+            "</div>";
+        return($str);
     }
 
-    /* Name displayed in service overview */
-    $fields['Message']      = _("Empty service");
 
-    /* Allow/disallow some functions */
-    $sf = !empty($this->StatusFlag);
-    $fields['AllowStart']   = $sf && $this->acl_is_writeable("start");
-    $fields['AllowStop']    = $sf && $this->acl_is_writeable("stop");
-    $fields['AllowRestart'] = $sf && $this->acl_is_writeable("restart");
-    $fields['AllowRemove']  = $this->acl_is_removeable();
-    $fields['AllowEdit']    = $this->acl_is_readable("");
-    return($fields);
-  }
+    /* Get service information for serverService plugin */
+    function getListEntry()
+    {
 
+        $this->updateStatusState();
 
-  /* Remove service */
-  function remove_from_parent()
-  {
-    if(!$this->initially_was_account || !$this->acl_is_removeable()){
-      return;
-    }
-    
-    plugin::remove_from_parent();
+        /* Assign status flag */
+        if(!empty($this->StatusFlag)){
+            $flag                   = $this->StatusFlag;
+            $fields['Status']       = $this->$flag;
+        }else{
+            $fields['Status']       = "";
+        }
 
-    /* Remove status flag, it is not a memeber of 
-        this->attributes, so ensure that it is deleted too */
-    if(!empty($this->StatusFlag)){
-      $this->attrs[$this->StatusFlag] = array();
-    }
+        /* Name displayed in service overview */
+        $fields['Message']      = _("Empty service");
 
-    /* Check if this is a new entry ... add/modify */
-    $ldap = $this->config->get_ldap_link();
-    $ldap->cat($this->dn,array("objectClass"));
-    if($ldap->count()){
-      $ldap->cd($this->dn);
-      $ldap->modify($this->attrs);
-    }else{
-      $ldap->cd($this->dn);
-      $ldap->add($this->attrs);
-      
+        /* Allow/disallow some functions */
+        $sf = !empty($this->StatusFlag);
+        $fields['AllowStart']   = $sf && $this->acl_is_writeable("start");
+        $fields['AllowStop']    = $sf && $this->acl_is_writeable("stop");
+        $fields['AllowRestart'] = $sf && $this->acl_is_writeable("restart");
+        $fields['AllowRemove']  = $this->acl_is_removeable();
+        $fields['AllowEdit']    = $this->acl_is_readable("");
+        return($fields);
     }
 
-    new log("remove","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
 
-    if (!$ldap->success()){
-      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
-    }
-    $this->handle_post_events("remove");
-  }
+    /* Remove service */
+    function remove_from_parent()
+    {
+        if(!$this->initially_was_account || !$this->acl_is_removeable()){
+            return;
+        }
 
+        plugin::remove_from_parent();
 
-  /* Save service */
-  function save()
-  {
-    plugin::save();
-    /* Check if this is a new entry ... add/modify */
-    $ldap = $this->config->get_ldap_link();
-    $ldap->cat($this->dn,array("objectClass"));
-    if($ldap->count()){
-      $ldap->cd($this->dn);
-      $ldap->modify($this->attrs);
-    }else{
-      $ldap->cd($this->dn);
-      $ldap->add($this->attrs);
-    }
-    if($this->initially_was_account){
-      new log("modify","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
-      $this->handle_post_events("modify");
-    }else{
-      $this->handle_post_events("add");
-      new log("create","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
-    }
-    if (!$ldap->success()){
-      msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
-    }
-  }
+        /* Remove status flag, it is not a memeber of 
+           this->attributes, so ensure that it is deleted too */
+        if(!empty($this->StatusFlag)){
+            $this->attrs[$this->StatusFlag] = array();
+        }
 
+        /* Check if this is a new entry ... add/modify */
+        $ldap = $this->config->get_ldap_link();
+        $ldap->cat($this->dn,array("objectClass"));
+        if($ldap->count()){
+            $ldap->cd($this->dn);
+            $ldap->modify($this->attrs);
+        }else{
+            $ldap->cd($this->dn);
+            $ldap->add($this->attrs);
 
-  /* Directly save new status flag */
-  function setStatus($value)
-  {
-    if($value == "none") return;
+        }
 
-    /* Can't set status flag for new services (Object doesn't exists in ldap tree) */
-    if(!$this->initially_was_account) return;
+        new log("remove","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
 
-    /* Can't set status flag, if no flag is specified  */
-    if(empty($this->StatusFlag)){
-      return;
+        if (!$ldap->success()){
+            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
+        }
+        $this->handle_post_events("remove");
     }
 
-    /* Get object (server), update status flag and save changes */
-    $ldap = $this->config->get_ldap_link();
-    $ldap->cd($this->dn);
-    $ldap->cat($this->dn,array("objectClass"));
-    if($ldap->count()){
 
-      $tmp = $ldap->fetch();
-      for($i = 0; $i < $tmp['objectClass']['count']; $i ++){
-        $attrs['objectClass'][] = $tmp['objectClass'][$i];
-      }
-      $flag = $this->StatusFlag;
-      $attrs[$flag] = $value;
-      $this->$flag = $value;
-      $ldap->modify($attrs);
-      if (!$ldap->success()){
-        msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
-      }
-      $this->action_hook();
+    /* Save service */
+    function save()
+    {
+        plugin::save();
+        /* Check if this is a new entry ... add/modify */
+        $ldap = $this->config->get_ldap_link();
+        $ldap->cat($this->dn,array("objectClass"));
+        if($ldap->count()){
+            $ldap->cd($this->dn);
+            $ldap->modify($this->attrs);
+        }else{
+            $ldap->cd($this->dn);
+            $ldap->add($this->attrs);
+        }
+        if($this->initially_was_account){
+            new log("modify","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+            $this->handle_post_events("modify");
+        }else{
+            $this->handle_post_events("add");
+            new log("create","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+        }
+        if (!$ldap->success()){
+            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
+        }
     }
-  }
 
 
-  function check()
-  { 
-    $message = plugin::check();
-    return($message);
-  }
-  
+    /* Directly save new status flag */
+    function setStatus($value)
+    {
+        if($value == "none") return;
 
-  function save_object()
-  {
-    plugin::save_object();
-  }  
+        /* Can't set status flag for new services (Object doesn't exists in ldap tree) */
+        if(!$this->initially_was_account) return;
 
-  
-  function action_hook($addAttrs= array())
-  {
-    $this->callHook('SERVICEACTIONHOOK', $addAttrs);
-  }
+        /* Can't set status flag, if no flag is specified  */
+        if(empty($this->StatusFlag)){
+            return;
+        }
 
+        /* Get object (server), update status flag and save changes */
+        $ldap = $this->config->get_ldap_link();
+        $ldap->cd($this->dn);
+        $ldap->cat($this->dn,array("objectClass"));
+        if($ldap->count()){
 
-  /* Get updates for status flag */
-  function updateStatusState()
-  {
-    if(empty($this->StatusFlag)) return;
-
-    $attrs = array();
-    $flag = $this->StatusFlag;
-    $ldap = $this->config->get_ldap_link();
-    $ldap->cd($this->cn);
-    $ldap->cat($this->dn,array($flag));
-    if($ldap->count()){
-      $attrs = $ldap->fetch();
+            $tmp = $ldap->fetch();
+            for($i = 0; $i < $tmp['objectClass']['count']; $i ++){
+                $attrs['objectClass'][] = $tmp['objectClass'][$i];
+            }
+            $flag = $this->StatusFlag;
+            $attrs[$flag] = $value;
+            $this->$flag = $value;
+            $ldap->modify($attrs);
+            if (!$ldap->success()){
+                msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
+            }
+            $this->action_hook();
+        }
     }
-    if(isset($attrs[$flag][0])){
-      $this->$flag = $attrs[$flag][0];
+
+
+    function check()
+    { 
+        $message = plugin::check();
+        return($message);
     }
-  }
+
+
+    function save_object()
+    {
+        plugin::save_object();
+    }  
+
+
+    function action_hook($addAttrs= array())
+    {
+        $this->callHook('SERVICEACTIONHOOK', $addAttrs);
+    }
+
+
+    /* Get updates for status flag */
+    function updateStatusState()
+    {
+        if(empty($this->StatusFlag)) return;
+
+        $attrs = array();
+        $flag = $this->StatusFlag;
+        $ldap = $this->config->get_ldap_link();
+        $ldap->cd($this->cn);
+        $ldap->cat($this->dn,array($flag));
+        if($ldap->count()){
+            $attrs = $ldap->fetch();
+        }
+        if(isset($attrs[$flag][0])){
+            $this->$flag = $attrs[$flag][0];
+        }
+    }
 }
 // vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
 ?>
