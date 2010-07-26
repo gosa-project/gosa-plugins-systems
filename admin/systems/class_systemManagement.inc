@@ -99,6 +99,7 @@ class systemManagement extends management
         $headpage = new listing(get_template_path("system-list.xml", true));
         $headpage->registerElementFilter("systemRelease", "systemManagement::systemRelease");
         $headpage->registerElementFilter("filterSystemDescription", "systemManagement::filterSystemDescription");
+        $headpage->registerElementFilter("filterLink", "systemManagement::filterLink");
         $headpage->setFilter($filter);
         $filter->setConverter('systemManagement::incomingFilterConverter');
 
@@ -1367,7 +1368,8 @@ class systemManagement extends management
     static function filterSystemDescription($row,$dn,$pid,$state,$description=array())
     {
         $dn= LDAP::fix(func_get_arg(1));
-        $desc = isset($description[0])?$description[0]:"";
+        $desc = isset($description[0])?set_post($description[0]):"";
+    
         $rc = "";
         switch($state){
             case 'locked' : $rc = "<rowClass:entry-locked/><rowLabel:locked/>"; break;
@@ -1375,8 +1377,36 @@ class systemManagement extends management
             case 'busy' : $rc = "<rowClass:entry-busy/><rowLabel:busy/>"; break;
             case 'warning' : $rc = "<rowClass:entry-warning/><rowLabel:warning/>"; break;
         }
-        return("<a href='?plug=".$_GET['plug']."&amp;PID={$pid}&amp;act=listing_edit_{$row}' title='{$dn}'>".set_post($desc)."</a>{$rc}");
+        return("<a href='?plug=".$_GET['plug']."&amp;PID={$pid}&amp;act=listing_edit_{$row}' title='{$dn}'>".$desc."</a>{$rc}");
     }
+
+
+    static function filterLink()
+    {
+        $result= "&nbsp;";
+        $row= func_get_arg(0);
+        $pid= func_get_arg(4);
+        $dn= LDAP::fix(func_get_arg(1));
+        $params= array(func_get_arg(2));
+
+        // Collect sprintf params
+        for ($i = 3;$i < func_num_args();$i++) {
+            $val= func_get_arg($i);
+            if (is_array($val)){
+                $params[]= $val[0];
+                continue;
+            }
+            $params[]= $val;
+        }
+
+        $result= "&nbsp;";
+        $trans= call_user_func_array("sprintf", $params);
+        if ($trans != "") {
+            return("<a href='?plug=".$_GET['plug']."&amp;PID=$pid&amp;act=listing_edit_$row' title='$dn'>".$trans."</a>");
+        }
+        return $result;
+    }
+
 
     static function systemRelease($a,$b,$c,$objectclasses= null,$class= null)
     {

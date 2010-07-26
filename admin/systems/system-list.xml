@@ -169,7 +169,7 @@
       <label>Name</label>
       <sortAttribute>cn</sortAttribute>
       <sortType>string</sortType>
-      <value>%{filter:link(row,dn,"%s",cn)}</value>
+      <value>%{filter:filterLink(row,dn,"%s",cn,pid)}</value>
       <export>true</export>
     </column>
 
