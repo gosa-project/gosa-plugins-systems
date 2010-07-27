@@ -64,15 +64,6 @@ class ServerService extends management
         // Set storage points - We do not have any - We just create a fake list which lists all services 
         $this->storagePoints = array("");
 
-        // Build filter
-        if (session::global_is_set(get_class($this)."_filter")){
-            $filter= session::global_get(get_class($this)."_filter");
-        } else {
-            $filter = new filter(get_template_path("serverService-filter.xml", true));
-            $filter->setObjectStorage($this->storagePoints);
-        }
-        $this->setFilter($filter);
-
         // Initialize list of used and useable services.
         foreach ($config->data['TABS']['SERVERSERVICE'] as $plug){
             if(class_available($plug['CLASS'])){
@@ -94,6 +85,22 @@ class ServerService extends management
                 }
             }
         }
+        $this->rebuildListing();
+    }
+
+
+    function rebuildListing()
+    {
+
+        // Build filter
+        if (session::global_is_set(get_class($this)."_filter")){
+            $filter= session::global_get(get_class($this)."_filter");
+        } else {
+            $filter = new filter(get_template_path("serverService-filter.xml", true));
+            $filter->setObjectStorage($this->storagePoints);
+        }
+        $this->setFilter($filter);
+
 
         // Load service xml file and fill in placeholders
         $contents =file_get_contents(get_template_path("serverService-list.xml", true));
@@ -136,7 +143,7 @@ class ServerService extends management
         $headpage->registerElementFilter("filterServiceStatus", "ServerService::filterServiceStatus");
         $headpage->setFilter($filter);
 
-        parent::__construct($config, $this->ui, "services", $headpage);
+        parent::__construct($this->config, $this->ui, "services", $headpage);
         $this->registerAction("new",                "newService");
         $this->registerAction("remove",             "removeService");
         $this->registerAction("saveService",        "saveService");
@@ -195,6 +202,7 @@ class ServerService extends management
         }
         $this->backup   = NULL;
         $this->current  = "";
+        $this->rebuildListing();
         $this->closeDialogs();
     }
 
@@ -231,6 +239,7 @@ class ServerService extends management
             }
             $this->closeDialogs();
             $this->backup = NULL;
+            $this->rebuildListing();
         }
     }
 
@@ -305,6 +314,7 @@ class ServerService extends management
      */
     function execute()
     {
+
         // Ensure that html posts and gets are kept even if we see a 'Entry islocked' dialog.
         $vars = array('/^act$/','/^listing/','/^PID$/','/^FILTER_PID$/');
         session::set('LOCK_VARS_TO_USE',$vars);
@@ -365,7 +375,6 @@ class ServerService extends management
 
             $this->snapHandler->setSnapshotBases($bases);
         }
-
 
         // Display list
         session::set('ServerService', $this->plugins);
