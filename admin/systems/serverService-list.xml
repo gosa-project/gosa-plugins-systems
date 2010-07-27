@@ -47,18 +47,7 @@
 
   <actionmenu>
 
-    <action>
-     <type>sub</type>
-     <image>images/lists/element.png[new]</image>
-     <label>Create</label>
-
-     %SERVICES%
-
-    </action>
-
-    <action>
-      <type>separator</type>
-    </action>
+    %SERVICES%
 
     <action>
       <name>remove</name>

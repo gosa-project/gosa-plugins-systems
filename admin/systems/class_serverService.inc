@@ -118,6 +118,19 @@ class ServerService extends management
             $desc = $services[$name];
             $serviceList.= sprintf($template, $name,_($desc));
         }
+
+        if(!empty($serviceList)){
+            $serviceList = "
+              <action>
+                 <type>sub</type>
+                 <image>images/lists/element.png[new]</image>
+                 <label>Create</label>
+                 {$serviceList} 
+                </action>
+            ";
+
+         }
+
         $contents = preg_replace("/%SERVICES%/",$serviceList, $contents);
         $headpage = new listing($contents,TRUE);
         $headpage->registerElementFilter("filterServiceStatus", "ServerService::filterServiceStatus");
