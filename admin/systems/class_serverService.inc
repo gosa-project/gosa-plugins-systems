@@ -249,8 +249,10 @@ class ServerService extends management
      */
     function closeDialogs()
     {
+        $dnKeeper = $this->dn;
         management::closeDialogs();
         $this->dialog = FALSE;
+        $this->dn = $dnKeeper;
     }
 
 
