@@ -45,7 +45,9 @@ class componenttabs extends tabs
     /* Check for new 'dn', in order to propagate the
        'dn' to all plugins */
     $baseobject= $this->by_object['componentGeneric'];
-    $this->dn= "cn=$baseobject->cn,".get_ou("componentGeneric", "componentRDN").$baseobject->base;
+    $cn      = preg_replace('/,/', '\,', $baseobject->cn);
+    $cn      = preg_replace('/"/', '\"', $cn);
+    $this->dn= "cn={$cn},".get_ou("componentGeneric", "componentRDN").$baseobject->base;
 
     if($this->dn != $baseobject->orig_dn && $baseobject->orig_dn != "new"){
 
