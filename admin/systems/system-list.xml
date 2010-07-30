@@ -92,7 +92,7 @@
     </objectType>
 
     <objectType>
-      <label>Winstation</label>
+      <label>Windows workstation</label>
       <objectClass>FAKE_OC_winstation</objectClass>
       <category>winworkstation</category>
       <class>wingeneric</class>

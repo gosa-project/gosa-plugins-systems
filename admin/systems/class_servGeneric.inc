@@ -208,7 +208,7 @@ class servgeneric extends plugin
                             "reinstall" => _("Reinstall"),
                             "rescan" => _("Rescan hardware"),
                             "memcheck" => _("Memory test"),
-                            "localboot" => _("Force localboot"),
+                            "localboot" => _("Force local boot"),
                             "sysinfo"  => _("System analysis"))));
         } else {
             $smarty->assign("actions", 
@@ -218,7 +218,7 @@ class servgeneric extends plugin
                             "reinstall" => _("Reinstall"),
                             "update" => _("System update"),
                             "memcheck" => _("Memory test"),
-                            "localboot" => _("Force localboot"),
+                            "localboot" => _("Force local boot"),
                             "sysinfo"  => _("System analysis"))));
         }
 

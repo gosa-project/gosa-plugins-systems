@@ -15,9 +15,9 @@
               {/render}
               {render acl=$ipHostNumberACL}
                 {if $DNS_is_account == true}
-                  <button type='submit' name='propose_ip' id="propose_ip">{t}Propose ip{/t}</button>
+                  <button type='submit' name='propose_ip' id="propose_ip">{t}Propose IP{/t}</button>
                 {else}
-                  <button type='submit' name='propose_ip' id="propose_ip">{t}Propose ip{/t}</button>
+                  <button type='submit' name='propose_ip' id="propose_ip">{t}Propose IP{/t}</button>
                 {/if}
               {/render}
 
@@ -47,7 +47,7 @@
             {/render}
 
             {render acl=$autonetACL}
-      	      <button type='submit' name='autonet'>{t}Autodetect{/t}</button>
+      	      <button type='submit' name='autonet'>{t}Auto detect{/t}</button>
             {/render}
             {if macManufacturer!=""}
                 <br><span style='font-size:xx-small;'>{$macManufacturer}</span>
@@ -167,7 +167,7 @@
           </td>
         </tr>
         <tr>
-          <td valign="top">{t}Dns records{/t}</td>
+          <td valign="top">{t}DNS records{/t}</td>
           <td>
             {if $DNS_is_account == true}
 {render acl=$dnsSetupACL}

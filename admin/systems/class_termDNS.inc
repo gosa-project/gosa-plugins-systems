@@ -692,7 +692,7 @@ class termDNS extends plugin
                 if(isset($onlyOnce[$values['type']])){
                     $onlyOnce[$values['type']] ++;
                     if($onlyOnce[$values['type']] > 1){
-                        $message[] = sprintf(_("Uniq record type '%s' is duplicated!"),$values['type']);
+                        $message[] = sprintf(_("Unique record type '%s' is duplicated!"),$values['type']);
                     }
                 }
 

@@ -7,7 +7,7 @@
 </p>
 
 <p>
- {t}Changing the password impinges on authentification only.{/t}
+ {t}Changing the password impinges on authentication only.{/t}
 </p>
 
 <table summary="{t}System password change{/t}">
