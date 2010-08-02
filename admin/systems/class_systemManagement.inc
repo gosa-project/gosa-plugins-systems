@@ -179,6 +179,17 @@ class systemManagement extends management
     }
 
 
+    function getAclCategories()
+    {
+        $ret = array();
+        $tDefs= $this->getObjectDefinitions();
+        foreach($tDefs as $type => $data){
+            $ret[] = $data['aclCategory'];
+        }
+        return(array_unique($ret));
+    }
+
+
     /*! \brief  This method is used to queue and process copy&paste actions.
      *          Allows to copy, cut and paste mutliple entries at once.
      *  @param  String  'action'  The name of the action which was the used as trigger.
