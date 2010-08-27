@@ -224,7 +224,7 @@ class goService extends plugin{
         $attrs = get_object_vars($this);
         foreach($attrs as $name => $value){
           if(!is_string($value)) continue;
-          $command= preg_replace("/%$name/", $value, $command);
+          $command= preg_replace("/%$name/", escapeshellarg($value), $command);
         }
       }
 
