@@ -527,13 +527,15 @@ class systemManagement extends management
    */ 
   function saveEventDialog()
   {
-    $o_queue = new gosaSupportDaemon();
-    $o_queue->append($this->dialogObject);
-    if($o_queue->is_error()){
-      msg_dialog::display(_("Service infrastructure"),msgPool::siError($o_queue->get_error()),ERROR_DIALOG);
-    }else{
-      $this->closeDialogs();
-    }
+      if($this->si_active){
+          $o_queue = new gosaSupportDaemon();
+          $o_queue->append($this->dialogObject);
+          if($o_queue->is_error()){
+              msg_dialog::display(_("Service infrastructure"),msgPool::siError($o_queue->get_error()),ERROR_DIALOG);
+          }else{
+              $this->closeDialogs();
+          }
+      }
   }
  
 
