@@ -164,7 +164,7 @@ class servgeneric extends plugin
       $action = $_POST['saction'];
       
       /* Check if we have an DaemonEvent for this action */
-      if(class_available("DaemonEvent")){
+      if(class_available("gosaSupportDaemon") && class_available("DaemonEvent")){
         $events = DaemonEvent::get_event_types(SYSTEM_EVENT | HIDDEN_EVENT);
         if(isset($events['TRIGGERED']["DaemonEvent_".$action])){
           $evt = $events['TRIGGERED']["DaemonEvent_".$action];
@@ -426,7 +426,7 @@ class servgeneric extends plugin
     /* Optionally execute a command after we're done */
     $this->handle_post_events($mode,array("macAddress" => $this->netConfigDNS->macAddress,"ipHostNumber" => $this->netConfigDNS->ipHostNumber));
 
-    if ($activate){
+    if($activate && class_available("gosaSupportDaemon") && class_available("DaemonEvent")){
 
       /* Send installation activation 
        */
