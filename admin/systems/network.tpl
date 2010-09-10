@@ -142,7 +142,7 @@
 					<td><LABEL	for="zoneName">{t}Zone{/t}</LABEL></td>
 					<td>
 {render acl=$dnsSetupACL}
-              <select name="zoneName" id="zoneName" {if $DNS_is_account == false} disabled {/if} size=1>
+              <select name="zoneName" id="zoneName" size=1>
                 {html_options values=$ZoneKeys output=$Zones selected=$zoneName}
               </select>
 {/render}
@@ -152,7 +152,7 @@
           <td>{t}TTL{/t}</td>
           <td>
 {render acl=$dnsSetupACL}
-            <input type="text" name="dNSTTL" value="{$dNSTTL}" id="dNSTTL" {if $DNS_is_account == false} disabled {/if}>
+            <input type="text" name="dNSTTL" value="{$dNSTTL}" id="dNSTTL">
 {/render}
           </td>
         </tr>
