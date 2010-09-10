@@ -970,12 +970,6 @@ class termDNS extends plugin
         function generateRecordsList()
         {
             $changeStateForRecords = "";
-
-            if(!$this->DNS_is_account) {
-                $str = "<button type='submit' name='AddNewRecord' id='AddNewRecord' disabled='disabled'>".msgPool::addButton()."</button>";
-                return(array("str" => $str, "changeStateForRecords"=> ""));
-            }
-
             $str = "<table summary='' width='100%'>";
             foreach($this->dnsEntry['RECORDS'] as $key => $entry){
 

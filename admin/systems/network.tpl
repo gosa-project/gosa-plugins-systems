@@ -113,35 +113,25 @@
       
 {render acl=$dnsSetupACL}
       {if $DNS_is_account == true}
-      {if $hide_dns_check_box} 
-        <input type="hidden" name="DNS_is_account" value="1"  
-        <input type="checkbox" name="dummy" value="1" disabled
 
+      {if $hide_dns_check_box} 
+        <input type="hidden" name="DNS_is_account" value="1"> 
+        <input type="checkbox" name="dummy" value="1" disabled
+            checked="checked" />
       {else}
         <input type="checkbox" name="DNS_is_account" value="1"  
+            checked="checked" onclick="$('test2').toggle(); $('propose_ip').toggle();"/>
       {/if}
 
-
-        checked="checked"
-        onclick="
-          $('test2').toggle();
-          changeState('zoneName');
-          changeState('dNSTTL');
-          $('propose_ip').toggle();
-          changeState('AddNewRecord');
-          {$changeStateForRecords}"/>
         {else}
       <input type="checkbox" name="DNS_is_account" value="1"  
-        onclick="$('test2').toggle();
-          changeState('zoneName');
-          changeState('dNSTTL');
+        onclick="
+          $('test2').toggle();
           $('propose_ip').toggle();
-          changeState('AddNewRecord');"/>
+          "/>
         {/if}
 {/render}
       {t}Enable DNS for this device{/t}
-      {image path="images/lists/reload.png" action="reloadThisDNSStuff"}
-
       {if $DNS_is_account == true}
       <div style="padding-left:20px" id="test2">
       {else}
@@ -169,11 +159,9 @@
         <tr>
           <td valign="top">{t}DNS records{/t}</td>
           <td>
-            {if $DNS_is_account == true}
 {render acl=$dnsSetupACL}
               {$records}
 {/render}
-            {/if}
           </td>
 				</tr>
 			</table>
