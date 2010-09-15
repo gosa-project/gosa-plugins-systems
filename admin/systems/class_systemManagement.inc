@@ -1275,7 +1275,7 @@ class systemManagement extends management
                 "registeredDevice" => array(
                     "ou"          => "ou=systems,",
                     "plugClass"   => "registeredDevice",
-                    "tabClass"    => "registeredDevice",
+                    "tabClass"    => "registeredDeviceTab",
                     "tabDesc"     => "REGISTEREDDEVICETABS",
                     "aclClass"    => "registeredDevice",
                     "sendEvents"  => FALSE,
