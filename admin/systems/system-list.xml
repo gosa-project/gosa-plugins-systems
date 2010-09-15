@@ -212,6 +212,14 @@
      <label>Create</label>
 
      <action>
+      <name>new_registeredDevice</name>
+      <type>entry</type>
+      <image>images/lists/edit.png</image>
+      <label>Registered device</label>
+      <depends>registeredDevice</depends>
+     </action>
+
+     <action>
       <name>new_goServer</name>
       <type>entry</type>
       <image>plugins/systems/images/select_server.png[new]</image>
