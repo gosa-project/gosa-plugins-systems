@@ -11,6 +11,14 @@
     <defaultSortColumn>1</defaultSortColumn>
 
     <objectType>
+      <label>Registered device</label>
+      <objectClass>registeredDevice</objectClass>
+      <category>registeredDevice</category>
+      <class>registeredDevice</class>
+      <image>images/lists/edit.png</image>
+    </objectType>
+
+    <objectType>
       <label>Opsi host</label>
       <objectClass>FAKE_OC_OpsiHost</objectClass>
       <category>opsi</category>

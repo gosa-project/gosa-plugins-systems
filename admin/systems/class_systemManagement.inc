@@ -1272,6 +1272,15 @@ class systemManagement extends management
     public function getObjectDefinitions()
     {
         $tabs = array(
+                "registeredDevice" => array(
+                    "ou"          => "ou=systems,",
+                    "plugClass"   => "registeredDevice",
+                    "tabClass"    => "registeredDevice",
+                    "tabDesc"     => "REGISTEREDDEVICETABS",
+                    "aclClass"    => "registeredDevice",
+                    "sendEvents"  => FALSE,
+                    "aclCategory" => "registeredDevice"),
+
                 "FAKE_OC_OpsiHost" => array(
                     "ou"          => "",
                     "plugClass"   => "opsiGeneric",
