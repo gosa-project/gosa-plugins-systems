@@ -119,7 +119,7 @@ class systemManagement extends management
         $this->registerAction("systemTypeChosen","systemTypeChosen");
         $this->registerAction("handleActivationQueue","handleActivationQueue");
 
-        $this->registerAction("new_Device",           "newEntry");
+        $this->registerAction("new_device",           "newEntry");
         $this->registerAction("new_goServer",         "newEntry");
         $this->registerAction("new_gotoWorkstation",  "newEntry");
         $this->registerAction("new_gotoTerminal",     "newEntry");
