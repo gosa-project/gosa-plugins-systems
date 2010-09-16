@@ -1280,7 +1280,7 @@ class systemManagement extends management
                     "tabDesc"     => "NEWDEVICETABS",
                     "aclClass"    => "Device",
                     "sendEvents"  => FALSE,
-                    "aclCategory" => "device"),
+                    "aclCategory" => "Device"),
 
                 "FAKE_OC_OpsiHost" => array(
                     "ou"          => "",
