@@ -11,10 +11,10 @@
     <defaultSortColumn>1</defaultSortColumn>
 
     <objectType>
-      <label>Registered device</label>
-      <objectClass>registeredDevice</objectClass>
-      <category>registeredDevice</category>
-      <class>registeredDevice</class>
+      <label>Device</label>
+      <objectClass>device</objectClass>
+      <category>Device</category>
+      <class>Device</class>
       <image>images/lists/edit.png</image>
     </objectType>
 
@@ -212,11 +212,11 @@
      <label>Create</label>
 
      <action>
-      <name>new_registeredDevice</name>
+      <name>new_Device</name>
       <type>entry</type>
       <image>images/lists/edit.png</image>
-      <label>Registered device</label>
-      <depends>registeredDevice</depends>
+      <label>Device</label>
+      <depends>Device</depends>
      </action>
 
      <action>

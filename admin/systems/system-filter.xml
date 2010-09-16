@@ -12,7 +12,7 @@
     <category>printer</category>
     <category>winworkstation</category>
     <category>component</category>
-    <category>registeredDevice</category>
+    <category>Device</category>
     <scope>auto</scope>
     <default>default</default>
     <attribute>dn</attribute>
@@ -35,7 +35,7 @@
       <filter>(&amp;
                 (|(objectClass=goServer)
                   (objectClass=gotoWorkstation)
-                  (objectClass=registeredDevice)
+                  (objectClass=device)
                   (objectClass=gotoTerminal)
                   (objectClass=goFonHardware)
                   (objectClass=ieee802Device)

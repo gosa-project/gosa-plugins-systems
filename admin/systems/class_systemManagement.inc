@@ -119,7 +119,7 @@ class systemManagement extends management
         $this->registerAction("systemTypeChosen","systemTypeChosen");
         $this->registerAction("handleActivationQueue","handleActivationQueue");
 
-        $this->registerAction("new_registeredDevice", "newEntry");
+        $this->registerAction("new_Device",           "newEntry");
         $this->registerAction("new_goServer",         "newEntry");
         $this->registerAction("new_gotoWorkstation",  "newEntry");
         $this->registerAction("new_gotoTerminal",     "newEntry");
@@ -1273,14 +1273,14 @@ class systemManagement extends management
     public function getObjectDefinitions()
     {
         $tabs = array(
-                "registeredDevice" => array(
+                "device" => array(
                     "ou"          => "ou=systems,",
-                    "plugClass"   => "registeredDevice",
-                    "tabClass"    => "registeredDeviceTab",
-                    "tabDesc"     => "REGISTEREDDEVICETABS",
-                    "aclClass"    => "registeredDevice",
+                    "plugClass"   => "Device",
+                    "tabClass"    => "DeviceTab",
+                    "tabDesc"     => "NEWDEVICETABS",
+                    "aclClass"    => "Device",
                     "sendEvents"  => FALSE,
-                    "aclCategory" => "registeredDevice"),
+                    "aclCategory" => "device"),
 
                 "FAKE_OC_OpsiHost" => array(
                     "ou"          => "",
