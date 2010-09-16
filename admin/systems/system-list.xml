@@ -212,7 +212,7 @@
      <label>Create</label>
 
      <action>
-      <name>new_Device</name>
+      <name>new_device</name>
       <type>entry</type>
       <image>images/lists/edit.png</image>
       <label>Device</label>
