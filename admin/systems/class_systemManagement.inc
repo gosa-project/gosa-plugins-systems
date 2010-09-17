@@ -1274,7 +1274,7 @@ class systemManagement extends management
     {
         $tabs = array(
                 "device" => array(
-                    "ou"          => "ou=systems,",
+                    "ou"          => get_ou('Device','DeviceRDN'),
                     "plugClass"   => "Device",
                     "tabClass"    => "DeviceTab",
                     "tabDesc"     => "NEWDEVICETABS",
