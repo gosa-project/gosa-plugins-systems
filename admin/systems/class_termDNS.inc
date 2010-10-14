@@ -310,9 +310,12 @@ class termDNS extends plugin
             if ($this->config->get_cfg_value("core","gosaRpcServer") != ""){
                 $rpc = $this->config->getRpcHandle();
                 $res = $rpc->networkCompletion($this->cn);
-                if(isset($res['ip']) && tests::is_ip($res['ip'])) $this->ipHostNumber= $res['ip'];
-                if(isset($res['mac']) && tests::is_mac($res['mac'])) $this->macAddress= $res['mac'];
-
+                if(!$rpc->success()){
+                    msg_dialog::display(_("Error"), msgPool::rpcError($rpc->get_error()), ERROR_DIALOG);
+                }else{
+                    if(isset($res['ip']) && tests::is_ip($res['ip'])) $this->ipHostNumber= $res['ip'];
+                    if(isset($res['mac']) && tests::is_mac($res['mac'])) $this->macAddress= $res['mac'];
+                }
             }elseif ($config->get_cfg_value("core","gosaSupportURI") != ""){
 
                 $d= new gosaSupportDaemon(TRUE, 0.5);
