@@ -633,7 +633,7 @@ class systemManagement extends management
           // Delete the object
           $this->dn = $dn;
           if($info['tabClass'] == "phonetabs"){
-             $this->tabObject= new $tabtype($this->config, $this->config->data['TABS'][$tabobj], $dn,$type);
+             $this->tabObject= new $info['tabClass']($this->config, $this->config->data['TABS'][$info['tabDesc']], $dn,$type);
              $this->tabObject->set_acl_base($dn);
              $this->tabObject->by_object['phoneGeneric']->remove_from_parent ();
           }else{
