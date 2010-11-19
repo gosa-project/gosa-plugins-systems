@@ -39,7 +39,7 @@
 				</tr>
 				<tr>
 					<td>
-            <LABEL	for="macAddress">{t}MAC-address{/t}</LABEL>{$must}
+            <LABEL	for="macAddress">{t}MAC-address{/t}</LABEL>{if $MACisMust}{$must}{/if}
           </td>
 					<td>
             {render acl=$macAddressACL}

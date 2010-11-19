@@ -299,6 +299,7 @@ class termDNS extends plugin
         }
 
         $smarty->assign("additionalHostNumbers",$this->additionalHostNumbers);
+        $smarty->assign("MACisMust",$this->MACisMust);
 
         /**********
          * Autonet completion
