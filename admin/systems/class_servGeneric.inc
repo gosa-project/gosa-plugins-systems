@@ -84,7 +84,8 @@ class servgeneric extends plugin
             $ui= get_userinfo();
             $this->base= dn2base(session::global_is_set("CurrentMainBase")?"cn=dummy,".session::global_get("CurrentMainBase"):$ui->dn);
             $this->cn= "";
-        } elseif(preg_match("/".preg_quote(get_ou("ArpNewDevice", "systemIncomingRDN"), '/')."/i", $this->dn)){
+        } elseif(class_available("ArpNewDevice") &&
+                preg_match("/".preg_quote(get_ou("ArpNewDevice", "systemIncomingRDN"), '/')."/i", $this->dn)){
             $this->base= preg_replace ("/^[^,]+,".preg_quote(get_ou("ArpNewDevice", "systemIncomingRDN"), '/')."/i", "", $this->dn);
         } else {
             $this->base= preg_replace ("/^[^,]+,".preg_quote(get_ou("servgeneric", "serverRDN"), '/')."/i", "", $this->dn);
