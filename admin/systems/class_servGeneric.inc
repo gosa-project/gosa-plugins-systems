@@ -344,7 +344,14 @@ class servgeneric extends plugin
             if ($ldap->count() != 0){
                 while ($attrs= $ldap->fetch()){
                     if ($attrs['dn'] != $this->orig_dn){
-                        if(!preg_match("/cn=dhcp,/",$attrs['dn']) && !preg_match("/,".preg_quote(get_ou("ArpNewDevice", "systemIncomingRDN"), '/')."/i",$attrs['dn']) && preg_match("/,".preg_quote(get_ou("servgeneric", "serverRDN"), '/')."/i",$attrs['dn'])){
+
+                        $matchesArp = FALSE;
+                        if(class_available("ArpNewDevice")){
+                            $matchesArp = preg_match("/,".preg_quote(get_ou("ArpNewDevice", "systemIncomingRDN"), '/')."/i",$attrs['dn']);
+                        }
+                        $matchesServer = preg_match("/,".preg_quote(get_ou("servgeneric", "serverRDN"), '/')."/i",$attrs['dn']);
+
+                        if(!preg_match("/cn=dhcp,/",$attrs['dn']) && !$matchesArp && $matchesServer){
                             $message[]= msgPool::duplicated(_("Server name"));
                             break;
                         }
@@ -354,7 +361,9 @@ class servgeneric extends plugin
         }
 
         /* Warn the user, that this host is currently installing */
-        if($this->currently_installing && !$this->currently_installing_warned && !preg_match("/".preg_quote(get_ou("ArpNewDevice", "systemIncomingRDN"), '/')."/i",$this->orig_dn)){
+        if($this->currently_installing && 
+                !$this->currently_installing_warned && 
+                !preg_match("/".preg_quote(get_ou("ArpNewDevice", "systemIncomingRDN"), '/')."/i", $this->orig_dn)){
 
             /* Force aborting without message dialog */
             $message[] = "";
