@@ -1382,11 +1382,21 @@ class systemManagement extends management
 
         $tabs['FAKE_OC_ArpNewDevice'] = &$tabs['FAKE_OC_NewDevice'];
 
+
+        // Remove those types, we cannot handle at the moment due to lack of 
+        //  installed GOsa-plugins.
+        foreach($tabs as $name => $tab){
+
+            if(!class_available($tab['plugClass'])) {
+                unset($tabs[$name]);
+            }
+        }
+
         return($tabs);
     }
 
 
-    static function filterSystemDescription($row,$dn,$pid,$state,$description=array())
+    static function filterSystemDescription($row,$dn,$pid,$state = '',$description=array())
     {
         $dn= LDAP::fix(func_get_arg(1));
         $desc = isset($description[0])?set_post($description[0]):"";
