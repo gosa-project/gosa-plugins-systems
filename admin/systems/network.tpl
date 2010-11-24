@@ -6,7 +6,7 @@
 		<td	style="width:50%; vertical-align: top;">
 			<table	summary="">
 				<tr>
-					<td style='vertical-align:top;'><LABEL	for="ipHostNumber">{t}IP-address{/t}{if $IPisMust}{$staticAddress}{/if}</LABEL></td>
+					<td style='vertical-align:top;'><LABEL	for="ipHostNumber">{t}IP-address{/t}{if $IPisMust}{$must}{/if}</LABEL></td>
 					<td>
 {render acl=$ipHostNumberACL}
             <input	type='text' id="ipHostNumber"	name="ipHostNumber"	size=25	maxlength=80	value="{$ipHostNumber}">
@@ -35,7 +35,7 @@
           </td>
 				</tr>
 				<tr>
-					<td><LABEL	for="macAddress">{t}MAC-address{/t}</LABEL>{if $MACisMust}{$staticAddress}{/if}</td>
+					<td><LABEL	for="macAddress">{t}MAC-address{/t}</LABEL>{if $MACisMust}{$must}{/if}</td>
 					<td>
 {render acl=$macAddressACL}
             <input	type='text' name="macAddress"	id="macAddress"	size=25	maxlength=80	value="{$macAddress}">
