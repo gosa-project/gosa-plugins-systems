@@ -227,8 +227,9 @@ class servgeneric extends plugin
         $smarty->assign("fai_activated",$this->fai_activated);
 
         $str = $this->netConfigDNS->execute();
-        $this->dialog = $this->is_modal_dialog();
+        $this->dialog = FALSE;
         if(is_object($this->netConfigDNS->dialog)){
+            $this->dialog = TRUE;
             return($str);
         }
         $smarty->assign("netconfig", $str);
