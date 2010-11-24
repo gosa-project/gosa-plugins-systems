@@ -317,7 +317,7 @@ class termDNS extends plugin
                     if(isset($res['ip']) && tests::is_ip($res['ip'])) $this->ipHostNumber= $res['ip'];
                     if(isset($res['mac']) && tests::is_mac($res['mac'])) $this->macAddress= $res['mac'];
                 }
-            }elseif ($config->get_cfg_value("core","gosaSupportURI") != ""){
+            }elseif ($this->config->get_cfg_value("core","gosaSupportURI") != ""){
 
                 $d= new gosaSupportDaemon(TRUE, 0.5);
                 $res= $d->_send("<xml><header>gosa_network_completition</header>".
