@@ -260,6 +260,7 @@ class termDNS extends plugin
 	  /* Call parent execute */
     $smarty= get_smarty();
     $smarty->assign("autonetACL",$this->acl_is_writeable("macAddress") && $this->acl_is_writeable("ipHostNumber")?"rw":"");
+    $smarty->assign("MACisMust",$this->MACisMust);
 
     $tmp = $this->plInfo();
     foreach($tmp['plProvidedAcls'] as $name => $translation){

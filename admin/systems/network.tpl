@@ -35,7 +35,7 @@
           </td>
 				</tr>
 				<tr>
-					<td><LABEL	for="macAddress">{t}MAC-address{/t}</LABEL>{$staticAddress}</td>
+					<td><LABEL	for="macAddress">{t}MAC-address{/t}</LABEL>{if $MACisMust}{$staticAddress}{/if}</td>
 					<td>
 {render acl=$macAddressACL}
             <input	type='text' name="macAddress"	id="macAddress"	size=25	maxlength=80	value="{$macAddress}">
