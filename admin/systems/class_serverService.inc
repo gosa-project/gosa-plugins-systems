@@ -592,8 +592,6 @@ class ServerService extends management
      */
     function PrepareForCopyPaste($source)
     {
-        plugin::PrepareForCopyPaste($source);
-
         foreach($this->plugins as $name => $plugin){
             $this->plugins[$name]->PrepareForCopyPaste($source);
         }
