@@ -10,6 +10,7 @@
     <label>List of systems</label>
     <defaultSortColumn>1</defaultSortColumn>
 
+<!--
     <objectType>
       <label>Device</label>
       <objectClass>registeredDevice</objectClass>
@@ -17,7 +18,7 @@
       <class>Device</class>
       <image>images/lists/edit.png</image>
     </objectType>
-
+-->
     <objectType>
       <label>Opsi host</label>
       <objectClass>FAKE_OC_OpsiHost</objectClass>
