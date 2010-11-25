@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: messages\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-09-17 05:04-0400\n"
-"PO-Revision-Date: 2010-01-28 22:31+0100\n"
+"PO-Revision-Date: 2010-11-25 23:25+0100\n"
 "Last-Translator: Benoit Mortier <benoit.mortier@opensides.be>\n"
 "Language-Team:  <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -19,9 +19,8 @@ msgid "Component"
 msgstr "Composant"
 
 #: admin/systems/component.tpl:5
-#, fuzzy
 msgid "Generic settings"
-msgstr "Paramètres par défaut des utilisateurs"
+msgstr "Paramètres par défaut"
 
 #: admin/systems/component.tpl:7
 msgid "Device name"
@@ -131,7 +130,6 @@ msgstr "Test mémoire"
 
 #: admin/systems/class_servGeneric.inc:211
 #: admin/systems/class_servGeneric.inc:221
-#, fuzzy
 msgid "Force local boot"
 msgstr "Forcer un démarrage local"
 
@@ -171,8 +169,7 @@ msgid "Software deployment"
 msgstr "Déploiement de logiciel"
 
 #: admin/systems/class_servGeneric.inc:362
-msgid ""
-"This host is currently installing, if you really want to save it, press 'OK'."
+msgid "This host is currently installing, if you really want to save it, press 'OK'."
 msgstr ""
 "Cet hôte est actuellement en cours d'installation, si vous voulez vraiment "
 "le sauver, cliquez sur 'OK'."
@@ -221,9 +218,8 @@ msgstr "Indicateur d'action"
 #: admin/systems/serverService-filter.xml:17
 #: admin/systems/systemSelect/selectSystem-filter.xml:19
 #: admin/systems/system-filter.xml:32
-#, fuzzy
 msgid "Default filter"
-msgstr "Imprimante"
+msgstr "Filtre par défaut"
 
 #: admin/systems/class_termDNS.inc:474
 msgid "Not matching"
@@ -259,9 +255,9 @@ msgid "Record type '%s' is duplicated!"
 msgstr "L'enregistrement de type '%s' est dupliquée !"
 
 #: admin/systems/class_termDNS.inc:695
-#, fuzzy, php-format
+#, php-format
 msgid "Unique record type '%s' is duplicated!"
-msgstr "L'enregistrement de type '%s' est dupliqué !"
+msgstr "L'enregistrement unique de type '%s' est dupliqué !"
 
 #: admin/systems/class_termDNS.inc:707
 #, php-format
@@ -275,8 +271,7 @@ msgstr ""
 #: admin/systems/class_termDNS.inc:715
 #, php-format
 msgid "Only lowercase records are allowed, please check your '%ss'."
-msgstr ""
-"Seulement les minuscules sont autorisée, veuillez vérifier votre '%ss'."
+msgstr "Seulement les minuscules sont autorisée, veuillez vérifier votre '%ss'."
 
 #: admin/systems/class_termDNS.inc:1020
 msgid "DNS"
@@ -325,21 +320,18 @@ msgid "Network\tsettings"
 msgstr "Configuration\tréseau"
 
 #: admin/systems/network.tpl:3
-#, fuzzy
 msgid "Network settings"
-msgstr "Configuration\tréseau"
+msgstr "Configuration réseau"
 
 #: admin/systems/network.tpl:7
-#, fuzzy
 msgid "Address settings"
-msgstr "Ajouter %s paramètres"
+msgstr "Paramètres de l'adresse"
 
 #: admin/systems/network.tpl:10
 msgid "IP-address"
 msgstr "Adresse IP"
 
 #: admin/systems/network.tpl:18 admin/systems/network.tpl:20
-#, fuzzy
 msgid "Propose IP"
 msgstr "Proposer une adresse ip"
 
@@ -348,14 +340,12 @@ msgid "MAC-address"
 msgstr "Adresse MAC"
 
 #: admin/systems/network.tpl:50
-#, fuzzy
 msgid "Auto detect"
 msgstr "Autodétection"
 
 #: admin/systems/network.tpl:63
-#, fuzzy
 msgid "DHCP settings"
-msgstr "Configuration DNS"
+msgstr "Configuration DHCP"
 
 #: admin/systems/network.tpl:73 admin/systems/network.tpl:83
 msgid "Enable DHCP for this device"
@@ -378,7 +368,6 @@ msgid "Enable DNS for this device"
 msgstr "Activer le DNS pour ce périphérique"
 
 #: admin/systems/network.tpl:140
-#, fuzzy
 msgid "DNS zone settings"
 msgstr "Configuration DNS"
 
@@ -391,14 +380,12 @@ msgid "TTL"
 msgstr ""
 
 #: admin/systems/network.tpl:160
-#, fuzzy
 msgid "DNS records"
-msgstr "Enregistrement dns"
+msgstr "Enregistrement DNS"
 
 #: admin/systems/server.tpl:6
-#, fuzzy
 msgid "Server settings"
-msgstr "Préférences utilisateur"
+msgstr "Configuration serveur"
 
 #: admin/systems/server.tpl:24
 msgid "Mode"
@@ -413,8 +400,7 @@ msgid "Action"
 msgstr "Action"
 
 #: admin/systems/server.tpl:62
-msgid ""
-"System installation in progress, the FAI state cannot be changed right now."
+msgid "System installation in progress, the FAI state cannot be changed right now."
 msgstr ""
 "Le système est en cours d'installation, l'état FAI ne peut pas être changé "
 "maintenant."
@@ -463,7 +449,7 @@ msgstr "Systèmes"
 
 #: admin/systems/class_systemManagement.inc:61
 msgid "Manage systems, their services and prepare them for use with GOsa"
-msgstr ""
+msgstr "Gèrer des systèmes, leur services et leur utilisation avec GOsa"
 
 #: admin/systems/class_systemManagement.inc:176
 #: admin/systems/class_systemManagement.inc:283
@@ -504,8 +490,7 @@ msgstr "La création de l'image à échoué. veuillez lire le rapport ci dessous
 #: admin/systems/class_systemManagement.inc:427
 #, php-format
 msgid "Command '%s', specified for ISO creation doesn't seem to exist."
-msgstr ""
-"La commande '%s', utilisée dans la création de l'image ISO n'existe pas."
+msgstr "La commande '%s', utilisée dans la création de l'image ISO n'existe pas."
 
 #: admin/systems/class_systemManagement.inc:597
 #: admin/systems/class_systemManagement.inc:685
@@ -526,8 +511,7 @@ msgstr "Impossible de mettre le mode comme 'actif' !"
 #: admin/systems/class_systemManagement.inc:1131
 #, php-format
 msgid "You are not allowed to create a snapshot for %s."
-msgstr ""
-"Vous n'êtes pas autorisé à créer une nouvelle copie instantanée pour %s."
+msgstr "Vous n'êtes pas autorisé à créer une nouvelle copie instantanée pour %s."
 
 #: admin/systems/class_systemManagement.inc:1178
 #: admin/systems/class_systemManagement.inc:1199
@@ -538,7 +522,7 @@ msgstr "Vous n'êtes pas autorisé à restaurer un copie instantanée de %s."
 #: admin/systems/class_systemManagement.inc:1459
 #, php-format
 msgid "Inherited from %s"
-msgstr ""
+msgstr "Hérité de %s"
 
 #: admin/systems/class_systemManagement.inc:1473
 #: admin/systems/class_systemManagement.inc:1474
@@ -561,9 +545,8 @@ msgid "List of systems"
 msgstr "Liste des systèmes"
 
 #: admin/systems/system-list.xml:14 admin/systems/system-list.xml:218
-#, fuzzy
 msgid "Device"
-msgstr "Périphériques"
+msgstr "Périphérique"
 
 #: admin/systems/system-list.xml:22
 msgid "Opsi host"
@@ -612,9 +595,8 @@ msgid "Phone"
 msgstr "Téléphone"
 
 #: admin/systems/system-list.xml:193
-#, fuzzy
 msgid "Release"
-msgstr "Supprimer"
+msgstr "Version"
 
 #: admin/systems/system-list.xml:201 admin/systems/serverService-list.xml:42
 msgid "Actions"
@@ -705,14 +687,12 @@ msgstr ""
 "par défaut."
 
 #: admin/systems/password.tpl:10
-#, fuzzy
 msgid "Changing the password impinges on authentication only."
 msgstr "Changer le mot de passe influe seulement sur l'authentification."
 
 #: admin/systems/password.tpl:13
-#, fuzzy
 msgid "System password change"
-msgstr "Changement de mot de passe"
+msgstr "Changement de mot de passe du système"
 
 #: admin/systems/password.tpl:16
 msgid "New password"
@@ -736,46 +716,40 @@ msgid "Empty service"
 msgstr "Service vide"
 
 #: admin/systems/paste_generic.tpl:2
-#, fuzzy
 msgid "Paste server"
-msgstr "Coller"
+msgstr "Coller le serveur"
 
 #: admin/systems/paste_generic.tpl:12
-#, fuzzy
 msgid "Paste workstation"
-msgstr "Nouvelle station de travail"
+msgstr "Coller la station de travail"
 
 #: admin/systems/paste_generic.tpl:14
 msgid "workstation name"
 msgstr "Nom de la station de travail"
 
 #: admin/systems/paste_generic.tpl:22
-#, fuzzy
 msgid "Paste terminal"
-msgstr "Nouveau terminal"
+msgstr "Coller le terminal"
 
 #: admin/systems/paste_generic.tpl:24
 msgid "Terminal name"
 msgstr "Nom du terminal"
 
 #: admin/systems/paste_generic.tpl:32
-#, fuzzy
 msgid "Paste printer"
-msgstr "Imprimante"
+msgstr "Coller l'Imprimante"
 
 #: admin/systems/paste_generic.tpl:34
 msgid "Printer name"
 msgstr "Nom de l'imprimante"
 
 #: admin/systems/paste_generic.tpl:42
-#, fuzzy
 msgid "Paste network component"
-msgstr "Composant domaine"
+msgstr "Coller le composant réseau"
 
 #: admin/systems/systemSelect/class_systemSelect.inc:29
-#, fuzzy
 msgid "System selection"
-msgstr "Préférences des groupes"
+msgstr "Sélectionner le système"
 
 #: admin/systems/systemSelect/selectSystem-list.xml:11
 msgid "Please select the desired entries"
@@ -802,150 +776,10 @@ msgid "Remove service"
 msgstr "Suppression du service"
 
 #: admin/systems/system-filter.xml:58
-#, fuzzy
 msgid "All systems"
-msgstr "utilisateurs"
+msgstr "Tout les systèmes"
 
 #: admin/systems/system-filter.xml:89
-#, fuzzy
 msgid "Opsi"
-msgstr "Clients OPSI"
+msgstr ""
 
-#~ msgid "Winstation"
-#~ msgstr "Pc Windows"
-
-#~ msgid "Adding a new service to the current server"
-#~ msgstr "Ajouter un nouveau service au serveur sélectionné"
-
-#~ msgid ""
-#~ "This dialog allows you to add new services to the currenty edited server "
-#~ "object. The box below shows all available but not already used services."
-#~ msgstr ""
-#~ "Cette boite de dialogue vous permet d'ajouter des nouveaux services au "
-#~ "serveur que vous éditez actuellement. Le cadre si dessous vous montre "
-#~ "tout les services disponibles mais pas encore utilisés."
-
-#~ msgid "Service to add"
-#~ msgstr "Service à ajouter"
-
-#~ msgid "All available services are already in use."
-#~ msgstr "Tout les services disponibles sont déjà utilisés."
-
-#~ msgid "Continue"
-#~ msgstr "Continuer"
-
-#~ msgid "Warning"
-#~ msgstr "Avertissement"
-
-#~ msgid ""
-#~ "This includes all account data, system access rules, imap settings, etc. "
-#~ "for this user. Please double check if your really want to do this since "
-#~ "there is no way for GOsa to get your data back."
-#~ msgstr ""
-#~ "Cela inclut toutes les données des comptes, les droits d'accès, la "
-#~ "configuration imap,etc. pour cet utilisateur. Veuillez vous assurez que "
-#~ "vous voulez effectuez cette opération étant donné qu'il est impossible "
-#~ "pour GOsa de récupérer vos données."
-
-#~ msgid ""
-#~ "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
-#~ msgstr ""
-#~ "D'accord - si vous êtes sur - cliquez sur 'Supprimer' pour continuer ou "
-#~ "sur 'Annuler' pour abandonner."
-
-#~ msgid "Configuration error"
-#~ msgstr "Erreur de configuration"
-
-#~ msgid "Filter error"
-#~ msgstr "Erreur de Filtre"
-
-#~ msgid "The filter is incomplete!"
-#~ msgstr "Le filtre est incomplet !"
-
-#~ msgid "Filter"
-#~ msgstr "Filtre"
-
-#~ msgid "Show servers"
-#~ msgstr "Serveurs"
-
-#~ msgid "Show workstations"
-#~ msgstr "Stations de travail"
-
-#~ msgid "Show terminals"
-#~ msgstr "Terminaux"
-
-#~ msgid "Show network printer"
-#~ msgstr "Imprimantes réseaux"
-
-#~ msgid "Show phones"
-#~ msgstr "Téléphones"
-
-#~ msgid "Show windows based workstations"
-#~ msgstr "PC Windows"
-
-#~ msgid "Show network devices"
-#~ msgstr "Périphériques réseau"
-
-#~ msgid "Show incoming devices"
-#~ msgstr "Montrer nouveau périphériques"
-
-#~ msgid "Show OPSI based clients"
-#~ msgstr "Montrer les clients OPSI"
-
-#~ msgid "Editing this type of object is not supported yet!"
-#~ msgstr "L'édition de ce type d'objet n'est pas encore supporté !"
-
-#~ msgid ""
-#~ "The passwords you've entered as 'New password' and 'Repeated password' do "
-#~ "not match!"
-#~ msgstr ""
-#~ "Le mot de passe entré dans le champ 'Nouveau mot de passe' et celui dans "
-#~ "le champ 'Vérification du mot de passe' ne concordent pas !"
-
-#~ msgid "Cannot determine object to change password!"
-#~ msgstr "Impossible de déterminer l'objet pour changer son mot de passe !"
-
-#~ msgid "Unknown device"
-#~ msgstr "Périphérique Inconnu"
-
-#~ msgid "New Device"
-#~ msgstr "Nouveau périphérique"
-
-#~ msgid "Terminal template for"
-#~ msgstr "Modèle de terminal pour "
-
-#~ msgid "Workstation template for"
-#~ msgstr "Modèle de station de travail pour"
-
-#~ msgid "Template"
-#~ msgstr "Modèle"
-
-#~ msgid "Workstation error"
-#~ msgstr "Erreur d'ordinateur"
-
-#~ msgid "Server error"
-#~ msgstr "Erreur du serveur"
-
-#~ msgid "Terminal error"
-#~ msgstr "Erreur du terminal"
-
-#~ msgid "Workstation busy"
-#~ msgstr "Ordinateur occupé"
-
-#~ msgid "Server busy"
-#~ msgstr "Serveur occupé"
-
-#~ msgid "New system from incoming"
-#~ msgstr "Nouveau système depuis incoming"
-
-#~ msgid "Choose subtree to place server in"
-#~ msgstr "Sélectionnez la branche où sera enregistrée le serveur"
-
-#~ msgid "Select a base"
-#~ msgstr "Sélectionnez une base"
-
-#~ msgid "Add"
-#~ msgstr "Ajouter"
-
-#~ msgid "Choose subtree to place component in"
-#~ msgstr "Sélectionnez la branche où sera placée le composant"
