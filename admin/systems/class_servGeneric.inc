@@ -521,7 +521,7 @@ class servgeneric extends plugin
                             "name"          => "serverRDN",
                             "type"          => "rdn",
                             "default"       => "ou=servers,ou=systems,",
-                            "description"   => _("The 'serverRDN' statement defines the location where new servers will be created. The default is 'ou=servers,ou=systems,'."),
+                            "description"   => _("RDN for server storage."),
                             "check"         => "gosaProperty::isRdn",
                             "migrate"       => "migrate_serverRDN",
                             "group"         => "plugin",
