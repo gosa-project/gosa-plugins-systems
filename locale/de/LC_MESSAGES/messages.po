@@ -166,7 +166,7 @@ msgstr "Geerbt von %s"
 
 #: admin/systems/class_systemManagement.inc:1496
 msgid "RDN for system storage."
-msgstr ""
+msgstr "RDN zur Ablage von Systemen."
 
 #: admin/systems/class_systemManagement.inc:1505
 msgid "Incoming"
@@ -657,7 +657,7 @@ msgstr "Server (Allgemein)"
 
 #: admin/systems/class_servGeneric.inc:524
 msgid "RDN for server storage."
-msgstr ""
+msgstr "RDN zur Ablage von Servern."
 
 #: admin/systems/class_servGeneric.inc:537
 msgid "Goto mode"
@@ -780,7 +780,7 @@ msgstr "Netzwerk-Komponente (Allgemein)"
 
 #: admin/systems/class_componentGeneric.inc:306
 msgid "RDN for component storage."
-msgstr ""
+msgstr "RDN zur Ablage von Komponenten."
 
 #: admin/systems/component.tpl:5
 msgid "Generic settings"
@@ -789,164 +789,3 @@ msgstr "Allgemeine Benutzereinstellungen"
 #: admin/systems/component.tpl:7
 msgid "Device name"
 msgstr "Gerätename"
-
-#~ msgid ""
-#~ "The 'serverRDN' statement defines the location where new servers will be "
-#~ "created. The default is 'ou=servers,ou=systems,'."
-#~ msgstr ""
-#~ "Die Option 'serverRDN' definiert den Ablageort für neue Server. Der "
-#~ "Standard ist 'ou=servers,ou=systems,'."
-
-#~ msgid ""
-#~ "The 'componentRDN' statement defines the location where new components "
-#~ "will be created. The default is 'ou=netdevices,ou=systems,'."
-#~ msgstr ""
-#~ "Die Option 'componentRDN' definiert den Ablageort für neue Komponente. "
-#~ "Der Standard ist 'ou=netdevices,ou=systems,'."
-
-#~ msgid ""
-#~ "The 'systemRDN' statement defines the location where new systems will be "
-#~ "created. The default is 'ou=systems,'."
-#~ msgstr ""
-#~ "Die Option 'systemRDN' definiert den Ablageort für neue Systeme. Der "
-#~ "Standard ist 'ou=systems,'."
-
-#~ msgid "Winstation"
-#~ msgstr "Windows-Arbeitsstation"
-
-#~ msgid "Adding a new service to the current server"
-#~ msgstr "Hinzufügen eines neues Dienstes zum gewählten Server"
-
-#~ msgid ""
-#~ "This dialog allows you to add new services to the currenty edited server "
-#~ "object. The box below shows all available but not already used services."
-#~ msgstr ""
-#~ "Dieser Dialog ermöglicht Ihnen das Hinzufügen neuer Dienste zum momentan "
-#~ "gewählten Server. Die Box unterhalb zeigt alle verfügbaren aber momentan "
-#~ "nicht verwendeten Dienste."
-
-#~ msgid "Service to add"
-#~ msgstr "Dienst, der hinzugefügt wird"
-
-#~ msgid "All available services are already in use."
-#~ msgstr "Alle verfügbaren Dienste werden bereits verwendet."
-
-#~ msgid "Continue"
-#~ msgstr "Fortsetzen"
-
-#~ msgid "Warning"
-#~ msgstr "Warnung"
-
-#~ msgid ""
-#~ "This includes all account data, system access rules, imap settings, etc. "
-#~ "for this user. Please double check if your really want to do this since "
-#~ "there is no way for GOsa to get your data back."
-#~ msgstr ""
-#~ "Dies umfasst alle Konto-Informationen, Zugriffsregeln, IMAP-"
-#~ "Einstellungen, etc. dieses Benutzers. Bitte prüfen Sie genau, da es keine "
-#~ "Möglichkeit für GOsa gibt, die Daten wiederherzustellen. "
-
-#~ msgid ""
-#~ "So - if you're sure - press 'Delete' to continue or 'Cancel' to abort."
-#~ msgstr ""
-#~ "Wenn Sie sicher sind, drücken Sie 'Entfernen' um fortzufahren oder "
-#~ "'Abbrechen' zum Abbruch."
-
-#~ msgid "Configuration error"
-#~ msgstr "Konfigurationsfehler"
-
-#~ msgid "Filter error"
-#~ msgstr "Filter Fehler"
-
-#~ msgid "The filter is incomplete!"
-#~ msgstr "Der Filter ist unvollständig!"
-
-#~ msgid "Filter"
-#~ msgstr "Filter"
-
-#~ msgid "Show servers"
-#~ msgstr "Zeige Server"
-
-#~ msgid "Show workstations"
-#~ msgstr "Zeige Arbeitsstationen"
-
-#~ msgid "Show terminals"
-#~ msgstr "Zeige Terminals"
-
-#~ msgid "Show network printer"
-#~ msgstr "Zeige Netzwerk-Drucker"
-
-#~ msgid "Show phones"
-#~ msgstr "Zeige Telefone"
-
-#~ msgid "Show windows based workstations"
-#~ msgstr "Zeige Windows Arbeitsstationen"
-
-#~ msgid "Show network devices"
-#~ msgstr "Zeige Netzwerk-Geräte"
-
-#~ msgid "Show incoming devices"
-#~ msgstr "Zeige neue Geräte"
-
-#~ msgid "Show OPSI based clients"
-#~ msgstr "Zeige OPSI Clients"
-
-#~ msgid "Editing this type of object is not supported yet!"
-#~ msgstr ""
-#~ "Bearbeiten von Objekten dieses Typs wird momentan noch nicht unterstützt!"
-
-#~ msgid ""
-#~ "The passwords you've entered as 'New password' and 'Repeated password' do "
-#~ "not match!"
-#~ msgstr ""
-#~ "Die Passworte, die Sie als 'Neues Passwort' und 'Wiederholung des neuen "
-#~ "Passworts' eingegeben haben sind nicht identisch!"
-
-#~ msgid "Cannot determine object to change password!"
-#~ msgstr "Kann Objekt nicht erkennen, um das Passwort zu ändern."
-
-#~ msgid "Unknown device"
-#~ msgstr "Unbekanntes Gerät"
-
-#~ msgid "New Device"
-#~ msgstr "Neues Gerät"
-
-#~ msgid "Terminal template for"
-#~ msgstr "Terminal-Vorlage für"
-
-#~ msgid "Workstation template for"
-#~ msgstr "Arbeitsstations-Vorlage für"
-
-#~ msgid "Template"
-#~ msgstr "Vorlage"
-
-#~ msgid "Workstation error"
-#~ msgstr "Arbeitsstationsfehler"
-
-#~ msgid "Server error"
-#~ msgstr "Serverfehler"
-
-#~ msgid "Terminal error"
-#~ msgstr "Terminalfehler"
-
-#~ msgid "Workstation busy"
-#~ msgstr "Arbeitsstation beschäftigt"
-
-#~ msgid "Server busy"
-#~ msgstr "Server ist ausgelastet"
-
-#~ msgid "New system from incoming"
-#~ msgstr "Neues Gerät aus 'incoming'"
-
-#~ msgid "Choose subtree to place server in"
-#~ msgstr "Wählen Sie den Teilbaum, in den der Server eingepflegt werden soll"
-
-#~ msgid "Select a base"
-#~ msgstr "Wählen Sie eine Basis"
-
-#~ msgid "Add"
-#~ msgstr "Hinzufügen"
-
-#~ msgid "Choose subtree to place component in"
-#~ msgstr ""
-#~ "Wählen Sie den Teilbaum, in den die Komponente eingepflegt werden soll"
