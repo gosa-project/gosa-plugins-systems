@@ -43,11 +43,6 @@ if ( $cleanup ){
     $systemManagement = session::get('systemManagement');
     $display= $systemManagement->execute();
 
-    /* Reset requested? */
-    if (isset($_GET['reset']) && $_GET['reset'] == 1){
-        session::un_set ('systemManagement');
-    }
-
     /* Show and save dialog */
     session::set('systemManagement',$systemManagement);
 }
