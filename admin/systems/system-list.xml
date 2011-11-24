@@ -476,7 +476,7 @@
       <name>edit</name>
       <type>entry</type>
       <image>images/lists/edit.png</image>
-      <label>Edit role</label>
+      <label>Edit device</label>
     </action>
 
     <action>
