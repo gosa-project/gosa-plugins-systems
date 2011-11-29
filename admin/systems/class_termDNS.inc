@@ -516,6 +516,20 @@ class termDNS extends plugin
                 }
             }
         }
+
+        /************
+         * DHCP Handling 
+         ************/
+
+        /* DHCP removed */
+        if($this->dhcp_is_Account){
+            $ldap = $this->config->get_ldap_link();
+            $ldap->rmdir_recursive($this->dhcpHostEntry['dn']);
+            if (!$ldap->success()){
+                msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dhcpHostEntry['dn'], LDAP_DEL,         get_class()));
+            }
+        }
+
     }
 
 
