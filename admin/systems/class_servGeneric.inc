@@ -225,6 +225,8 @@ class servgeneric extends plugin
 
         /* Show main page */
         $smarty->assign("fai_activated",$this->fai_activated);
+        $si_url = $this->config->get_cfg_value("core","gosaSupportURI");
+        $smarty->assign("si_activated",!empty($si_url));
 
         $str = $this->netConfigDNS->execute();
         $this->dialog = FALSE;

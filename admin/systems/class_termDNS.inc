@@ -815,7 +815,7 @@ class termDNS extends plugin
                 }
 
                 /* Updated IP host number */
-                if($this->dhcp_is_Account && $this->dhcpHostEntry['dhcpStatements']){
+                if($this->dhcp_is_Account && isset($this->dhcpHostEntry['dhcpStatements'])){
                     foreach($this->dhcpHostEntry['dhcpStatements'] as $id => $value){
                         if(preg_match("/^fixed-address/",$value)){
                             $this->dhcpHostEntry['dhcpStatements'][$id] = "fixed-address ".$this->ipHostNumber; 

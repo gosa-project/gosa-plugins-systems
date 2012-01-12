@@ -53,7 +53,7 @@
 
 {$netconfig}
 
-{if $fai_activated}
+{if $fai_activated && $si_activated}
   <hr>
 
   <h3>{t}Action{/t}</h3>
