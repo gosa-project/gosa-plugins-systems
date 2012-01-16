@@ -188,8 +188,15 @@ class componentGeneric extends plugin
         }
 
         /* Check if given name is a valid host/dns name */
-        if(!tests::is_dns_name($this->cn)){
-            $message[]= msgPool::invalid(_("Component name"), $this->cn, "/[a-z0-9\.\-]/i");
+        $regex = $reason = "";
+        if(!tests::is_dns_name($this->cn, $reason, $regex)){
+            if($reason == 1){
+                $message[]= sprintf(_("The full qualified domain name is too long!"));
+            }elseif($reason == 2){
+                $message[]= sprintf(_("The hostname name is too long!"));
+            }else{
+                $message[]= msgPool::invalid(_("Server name"), $this->cn, "/{$regex}/i");
+            }
         }
 
         /* To check for valid ip*/
