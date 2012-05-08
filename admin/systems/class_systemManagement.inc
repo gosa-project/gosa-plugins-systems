@@ -87,7 +87,13 @@ class systemManagement extends management
         $this->storagePoints = array_unique($sP);
 
         // Build filter
-        if (session::global_is_set(get_class($this)."_filter")){
+        // #TODO: We got problems with this list when using it from session.
+        // Somehow we got the Service list instead of the Systems list...
+        // To reproduce, open a server and go to the services tab, no editing such 
+        // stuff needed, it just has to be visible once.
+        // Afterwards got back to the systems list, and take a look.. all systems
+        // are gone
+        if (FALSE && session::global_is_set(get_class($this)."_filter")){
             $filter= session::global_get(get_class($this)."_filter");
         } else {
             $filter = new filter(get_template_path("system-filter.xml", true));

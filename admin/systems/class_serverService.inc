@@ -91,7 +91,6 @@ class ServerService extends management
 
     function rebuildListing()
     {
-
         // Build filter
         if (session::global_is_set(get_class($this)."_filter")){
             $filter= session::global_get(get_class($this)."_filter");
