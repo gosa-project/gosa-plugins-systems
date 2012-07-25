@@ -331,7 +331,7 @@ class ServerService extends management
         if ($filter) {
             $filter->update();
             session::global_set(get_class($this)."_filter", $filter);
-            session::set('autocomplete', $filter);
+            session::set('autocomplete', get_class($this)."_filter");
         }
 
         // Handle actions (POSTs and GETs)
