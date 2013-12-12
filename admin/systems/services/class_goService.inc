@@ -204,7 +204,7 @@ class goService extends plugin{
 
     function action_hook($addAttrs= array())
     {
-        $this->callHook('SERVICEACTIONHOOK', $addAttrs);
+        $this->callHook($this, 'SERVICEACTIONHOOK', $addAttrs);
     }
 
 
