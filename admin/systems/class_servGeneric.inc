@@ -67,7 +67,7 @@ class servgeneric extends plugin
             "sysinfo"         => "sysinfo");
 
 
-    function servgeneric (&$config, $dn= NULL, $parent= NULL)
+    function __construct(&$config, $dn= NULL, $parent= NULL)
     {
         /* Check if FAI is activated */
         $this->fai_activated = $config->pluginEnabled("faiManagement");

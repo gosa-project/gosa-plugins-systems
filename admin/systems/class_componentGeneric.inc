@@ -41,7 +41,7 @@ class componentGeneric extends plugin
     var $view_logged  = FALSE;
     var $baseSelector;
 
-    function componentGeneric (&$config, $dn= NULL, $parent= NULL)
+    function __construct(&$config, $dn= NULL, $parent= NULL)
     {
         plugin::plugin ($config, $dn, $parent);
 

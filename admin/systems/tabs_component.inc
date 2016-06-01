@@ -23,7 +23,7 @@
 class componenttabs extends tabs
 {
 
-  function componenttabs($config, $data, $dn,$category,$hide_refs = FALSE, $hide_acls = FALSE)
+  function __construct($config, $data, $dn,$category,$hide_refs = FALSE, $hide_acls = FALSE)
   {
     tabs::tabs($config, $data, $dn,$category,$hide_refs, $hide_acls);
 

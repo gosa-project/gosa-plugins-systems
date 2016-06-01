@@ -24,7 +24,7 @@ class servtabs extends tabs
 {
   public $was_activated = FALSE;
 
-  function servtabs($config, $data, $dn,$category,$hide_refs = FALSE, $hide_acls = FALSE)
+  function __construct($config, $data, $dn,$category,$hide_refs = FALSE, $hide_acls = FALSE)
   {
     /* Save dn */
     $this->dn= $dn;
