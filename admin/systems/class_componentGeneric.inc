@@ -43,7 +43,7 @@ class componentGeneric extends plugin
 
     function __construct(&$config, $dn= NULL, $parent= NULL)
     {
-        plugin::plugin ($config, $dn, $parent);
+        plugin::__construct ($config, $dn, $parent);
 
         /* Set base */
         if ($this->dn == "new"){

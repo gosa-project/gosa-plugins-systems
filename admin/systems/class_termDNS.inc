@@ -83,7 +83,7 @@ class termDNS extends plugin
         $this->IPisMust       = $IPisMust;
         $this->namingAttr     = $namingAttr;
 
-        plugin::plugin ($config, $parent->dn, $this->parent);
+        plugin::__construct ($config, $parent->dn, $this->parent);
 
         $this->attrs = &$this->parent->attrs;
 

@@ -72,7 +72,7 @@ class servgeneric extends plugin
         /* Check if FAI is activated */
         $this->fai_activated = $config->pluginEnabled("faiManagement");
 
-        plugin::plugin ($config, $dn, $parent);
+        plugin::__construct ($config, $dn, $parent);
 
         /* Initialize */
         $this->ui = get_userinfo();
