@@ -110,6 +110,14 @@ class systemManagement extends management
         $filter->setConverter('systemManagement::incomingFilterConverter');
 
         // Register Daemon Events
+        if(class_available("DaemonEvent") && class_available("gosaSupportDaemon")){
+            $events = DaemonEvent::get_event_types(SYSTEM_EVENT | HIDDEN_EVENT);
+            foreach($events['TRIGGERED'] as $name => $data){
+                $this->registerAction("T_".$name,"handleEvent");
+                $this->registerAction("S_".$name,"handleEvent");
+            }
+            $this->registerAction("activateMultiple","activateMultiple");
+        }
         $this->registerAction("saveEvent","saveEventDialog");
         $this->registerAction("createISO","createISO");
         $this->registerAction("initiateISOcreation","initiateISOcreation");
@@ -135,6 +143,12 @@ class systemManagement extends management
         }
         if($this->config->get_cfg_value("core","enableSnapshots") == "true"){
             $this->snapHandler = new SnapshotHandler($this->config);
+        }
+
+        // Check if we are able to communicate with the GOsa supprot daemon
+        if(class_available("gosaSupportDaemon")){
+            $o = new gosaSupportDaemon();
+            $this->si_active = $o->connect() && class_available("DaemonEvent");
         }
 
         // Check if we are able to communicate with the GOsa supprot daemon
@@ -443,7 +457,80 @@ class systemManagement extends management
         // Detect triggere or scheduled actions 
         $headpage = $this->getHeadpage();
         $event = preg_replace("/^[TS]_/","",$action); 
- 
+        if(preg_match("/^[TS]_/", $action)){
+
+            // Send special reinstall action for opsi hosts
+            if($event == "DaemonEvent_reinstall" && $this->si_active && $this->opsi){
+                foreach($target as $key => $dn){
+                    $type = $headpage->getType($dn);
+
+                    // Send Reinstall event for opsi hosts
+                    if($type == "FAKE_OC_OpsiHost"){
+                        $obj = $headpage->getEntry($dn);
+                        $this->opsi->job_opsi_install_client($obj['cn'][0],$obj['macAddress'][0]);
+                        unset($target[$key]);
+                    }
+                }
+            }
+        } 
+
+        // Now send remaining FAI/GOsa-si events here.
+        if(count($target) && $this->si_active){
+            $mac= array();
+
+            // Collect target mac addresses
+            $ldap = $this->config->get_ldap_link();
+            $tD = $this->getObjectDefinitions();
+            $events = DaemonEvent::get_event_types(SYSTEM_EVENT);
+            $o_queue = new gosaSupportDaemon();
+            foreach($target as $dn){
+                $type = $headpage->getType($dn);
+                if($tD[$type]['sendEvents']){
+                    $obj = $headpage->getEntry($dn);
+                    if(isset($obj['macAddress'][0])){
+                        $mac[] = $obj['macAddress'][0];
+                    }
+                }
+            }
+
+            /* Skip installation or update trigerred events,
+             *  if this entry is currently processing.
+             */
+            if($triggered && in_array_strict($event,array("DaemonEvent_reinstall","DaemonEvent_update"))){
+                foreach($mac as $key => $mac_address){
+                    foreach($o_queue->get_entries_by_mac(array($mac_address)) as $entry){
+                        $entry['STATUS'] = strtoupper($entry['STATUS']);
+                        if($entry['STATUS'] == "PROCESSING" &&
+                                isset($events['QUEUED'][$entry['HEADERTAG']]) &&
+                                in_array_strict($events['QUEUED'][$entry['HEADERTAG']],array("DaemonEvent_reinstall","DaemonEvent_update"))){
+                            unset($mac[$key]);
+
+                            new log("security","systems/".get_class($this),"",array(),"Skip adding 'DaemonEvent::".$type."' for mac '".$mac_address."', there is already a job in progress.");
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // Prepare event to be added
+            if(count($mac) && isset($events['BY_CLASS'][$event]) && $this->si_active){
+                $event = $events['BY_CLASS'][$event];
+                $this->dialogObject = new $event['CLASS_NAME']($this->config);
+                $this->dialogObject->add_targets($mac);
+
+                if($triggered){
+                    $this->dialogObject->set_type(TRIGGERED_EVENT);
+                    $o_queue->append($this->dialogObject);
+                    if($o_queue->is_error()){
+                        msg_dialog::display(_("Service infrastructure"),msgPool::siError($o_queue->get_error()),ERROR_DIALOG);
+                    }else{
+                        $this->closeDialogs();
+                    }
+                }else{
+                    $this->dialogObject->set_type(SCHEDULED_EVENT);
+                }
+            }
+        }
     }
 
 
@@ -461,7 +548,13 @@ class systemManagement extends management
      */ 
     function saveEventDialog()
     {
-        $this->closeDialogs();
+        $o_queue = new gosaSupportDaemon();
+        $o_queue->append($this->dialogObject);
+        if($o_queue->is_error()){
+            msg_dialog::display(_("Service infrastructure"),msgPool::siError($o_queue->get_error()),ERROR_DIALOG);
+        }else{
+            $this->closeDialogs();
+        }
     }
 
 
