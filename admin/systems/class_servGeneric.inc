@@ -101,16 +101,8 @@ class servgeneric extends plugin
         }
 
         /* Check if this host is currently in installation process*/
-        if($this->dn != "new" && class_available("gosaSupportDaemon") && class_available("DaemonEvent")){
-            $o = new gosaSupportDaemon();
+        if($this->dn != "new" && class_available("DaemonEvent")){
             $e_types = DaemonEvent::get_event_types(USER_EVENT | SYSTEM_EVENT | HIDDEN_EVENT);
-            $evts = $o->get_entries_by_mac(array($this->netConfigDNS->macAddress));
-            foreach($evts as $evt){
-                if(isset($e_types['QUEUED'][$evt['HEADERTAG']]) && $evt['STATUS'] == "processing" && 
-                        $e_types['QUEUED'][$evt['HEADERTAG']] == "DaemonEvent_reinstall"){
-                    $this->currently_installing =TRUE;
-                }
-            }
         }
 
         /* Save dn for later references */
@@ -170,10 +162,6 @@ class servgeneric extends plugin
                     $tmp = new $evt['CLASS_NAME']($this->config);
                     $tmp->add_targets(array($this->netConfigDNS->macAddress));
                     $tmp->set_type(TRIGGERED_EVENT);
-                    $o_queue = new gosaSupportDaemon();
-                    if(!$o_queue->append($tmp)){
-                        msg_dialog::display(_("Service infrastructure"),msgPool::siError($o_queue->get_error()),ERROR_DIALOG);
-                    }
                 }
             }else{
                 msg_dialog::display(_("Event error"),
@@ -199,29 +187,16 @@ class servgeneric extends plugin
         }
 
         /* Assign status */
-        if (gosaSupportDaemon::ping($this->netConfigDNS->macAddress)){
-            $smarty->assign("actions", 
-                    set_post(
-                        array(
-                            "halt" => _("Switch off"), 
-                            "reboot" => _("Reboot"),
-                            "update" => _("System update"),
-                            "reinstall" => _("Reinstall"),
-                            "rescan" => _("Rescan hardware"),
-                            "memcheck" => _("Memory test"),
-                            "localboot" => _("Force local boot"),
-                            "sysinfo"  => _("System analysis"))));
-        } else {
-            $smarty->assign("actions", 
-                    set_post(
-                        array(
-                            "wakeup" => _("Wake up"),
-                            "reinstall" => _("Reinstall"),
-                            "update" => _("System update"),
-                            "memcheck" => _("Memory test"),
-                            "localboot" => _("Force local boot"),
-                            "sysinfo"  => _("System analysis"))));
-        }
+
+        $smarty->assign("actions", 
+                set_post(
+                    array(
+                        "wakeup" => _("Wake up"),
+                        "reinstall" => _("Reinstall"),
+                        "update" => _("System update"),
+                        "memcheck" => _("Memory test"),
+                        "localboot" => _("Force local boot"),
+                        "sysinfo"  => _("System analysis"))));
 
         /* Show main page */
         $smarty->assign("fai_activated",$this->fai_activated);
@@ -279,12 +254,7 @@ class servgeneric extends plugin
             $og->save ();
         }
 
-        /* Clean queue form entries with this mac 
-         */
-        if(class_available("gosaSupportDaemon") && tests::is_mac($this->netConfigDNS->orig_macAddress)){
-            $q = new gosaSupportDaemon();
-            $q->clean_queue_from_mac($this->netConfigDNS->orig_macAddress);
-        }
+
         $this->handle_post_events("remove",array("macAddress" => $this->netConfigDNS->macAddress,"ipHostNumber" => $this->netConfigDNS->ipHostNumber));
     }
 
@@ -455,15 +425,11 @@ class servgeneric extends plugin
             /* Send installation activation 
              */
             $events = DaemonEvent::get_event_types(SYSTEM_EVENT | HIDDEN_EVENT);
-            $o_queue = new gosaSupportDaemon();
             if(isset($events['TRIGGERED']['DaemonEvent_installation_activation'])){
                 $evt = $events['TRIGGERED']['DaemonEvent_installation_activation'];
                 $tmp = new $evt['CLASS_NAME']($this->config);
                 $tmp->set_type(TRIGGERED_EVENT);
                 $tmp->add_targets(array($this->netConfigDNS->macAddress));
-                if(!$o_queue->append($tmp)){
-                    msg_dialog::display(_("Service infrastructure"),msgPool::siError($o_queue->get_error()),ERROR_DIALOG);
-                }
             }
         }
 
