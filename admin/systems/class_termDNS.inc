@@ -3,7 +3,7 @@
  * This code is part of GOsa (http://www.gosa-project.org)
  * Copyright (C) 2003-2008 GONICUS GmbH
  *
- * ID: $$Id$$
+ * ID: $$Id: class_termDNS.inc 21097 2012-01-12 09:36:53Z hickert $$
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -390,7 +390,7 @@ class termDNS extends plugin
         if($this->DNSenabled == false){
 
             /* Is IP address must ? */
-#      $smarty->assign("DNS_is_account",false);
+            # $smarty->assign("DNS_is_account",false);
             $smarty->assign("IPisMust",(($this->IPisMust)||($this->DNS_is_account)));
 
             /* Assign smarty all non DNs attributes */
@@ -400,7 +400,7 @@ class termDNS extends plugin
 
             $display.= $smarty->fetch(get_template_path('network.tpl', TRUE));
         }else{
-#     $smarty->assign("DNS_is_account",true);
+            # $smarty->assign("DNS_is_account",true);
 
             /* Add new empty array to our record list */
             if(isset($_POST['AddNewRecord']) && $this->acl_is_writeable("dnsSetup")){

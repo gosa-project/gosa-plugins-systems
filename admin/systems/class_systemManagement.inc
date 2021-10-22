@@ -3,7 +3,7 @@
  * This code is part of GOsa (http://www.gosa-project.org)
  * Copyright (C) 2003-2008 GONICUS GmbH
  *
- * ID: $$Id$$
+ * ID: $$Id: class_systemManagement.inc 21155 2012-05-08 13:39:31Z hickert $$
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -174,6 +174,8 @@ class systemManagement extends management
                 if(preg_match("/w/",$tabacl)){
                     $this->dn= $dn;
                     set_object_info($this->dn);
+                    $pwLength = 8;
+                    $smarty->assign("pwLength", $pwLength);
                     return ($smarty->fetch(get_template_path('password.tpl', TRUE)));
                 }else{
                     msg_dialog::display(_("Permission error"), _("You have no permission to change this password!"), ERROR_DIALOG);

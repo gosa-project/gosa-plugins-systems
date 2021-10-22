@@ -3,7 +3,7 @@
  * This code is part of GOsa (http://www.gosa-project.org)
  * Copyright (C) 2003-2008 GONICUS GmbH
  *
- * ID: $$Id$$
+ * ID: $$Id: class_serverService.inc 21155 2012-05-08 13:39:31Z hickert $$
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -331,7 +331,7 @@ class ServerService extends management
         if ($filter) {
             $filter->update();
             session::global_set(get_class($this)."_filter", $filter);
-            session::set('autocomplete', get_class($this)."_filter");
+            session::set('autocomplete', $filter);
         }
 
         // Handle actions (POSTs and GETs)

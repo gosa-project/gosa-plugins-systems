@@ -3,7 +3,7 @@
  * This code is part of GOsa (http://www.gosa-project.org)
  * Copyright (C) 2003-2008 GONICUS GmbH
  *
- * ID: $$Id$$
+ * ID: $$Id: class_goService.inc 19118 2010-07-26 15:46:29Z hickert $$
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -204,7 +204,7 @@ class goService extends plugin{
 
     function action_hook($addAttrs= array())
     {
-        $this->callHook($this, 'SERVICEACTIONHOOK', $addAttrs);
+        $this->callHook('SERVICEACTIONHOOK', $addAttrs);
     }
 
 
