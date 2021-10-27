@@ -80,8 +80,16 @@ class componentGeneric extends plugin
 
         /* Do we represent a valid phone? */
         if (!$this->is_account && $this->parent === NULL){
-            $display= "<img alt=\"\" src=\"images/small-error.png\" align=middle>&nbsp;<b>".
-                msgPool::noValidExtension(_("component"))."</b>";
+            switch ($theme) {
+                case 'classic':
+                  $symbol = "<img alt='' src='images/small-error.png' align='middle'>";
+                  break;
+                
+                default:
+                  $symbol = "<i class='material-icons'>report</i>";
+                  break;
+            }
+            $display = "<div class='valign-wrapper'>".$symbol.msgPool::noValidExtension(_("component"))."</div>";
             return($display);
         }
 
