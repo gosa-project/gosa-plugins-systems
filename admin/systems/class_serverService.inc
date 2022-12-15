@@ -159,10 +159,10 @@ class ServerService extends management
     function detectPostActions()
     {
         $action = management::detectPostActions();
-        if(isset($_POST['SaveService']))      $action['action'] = "saveService";
-        if(isset($_POST['CancelService']))    $action['action'] = "cancelService";
-        if(preg_match("/^instantNew_/",$action['action'])){
-            $action['targets'][] = preg_replace("/^instantNew_/i","",$action['action']);
+        if (isset($_POST['SaveService']))      $action['action'] = "saveService";
+        if (isset($_POST['CancelService']))    $action['action'] = "cancelService";
+        if (isset($action['action']) && preg_match("/^instantNew_/", (string) $action['action'])) {
+            $action['targets'][] = preg_replace("/^instantNew_/i", "", $action['action']);
             $action['action'] = "instantNew";
         }
         return($action);
