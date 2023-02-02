@@ -70,6 +70,8 @@ class termDNS extends plugin
     var $DNSenabled               = false;
     var $hide_dns_check_box       = FALSE;
     var $namingAttr               = "cn";
+    var $Zones                    = null;
+    var $RecordTypes              = null;
 
     /*  Terminal dns 
      */
