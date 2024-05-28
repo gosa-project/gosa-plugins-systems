@@ -20,7 +20,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-class goService extends plugin{
+class goService extends plugin
+{
 
     /* This plugin only writes its objectClass */
     var $objectclasses    = array();
@@ -35,12 +36,12 @@ class goService extends plugin{
     var $view_logged          = FALSE;
 
     var $krb_service_prefix   = "";
-    var $krb_host_key         = NULL; 
+    var $krb_host_key         = NULL;
 
-    /* Construcktion */ 
-    function __construct(&$config,$dn,$parent = NULL)
+    /* Construcktion */
+    function __construct(&$config, $dn, $parent = NULL)
     {
-        plugin::__construct($config,$dn);
+        plugin::__construct($config, $dn);
         $this->DisplayName = _("Empty service");
     }
 
@@ -50,16 +51,16 @@ class goService extends plugin{
     {
         plugin::execute();
 
-        if($this->is_account && !$this->view_logged){
+        if ($this->is_account && !$this->view_logged) {
             $this->view_logged = TRUE;
-            new log("view","server/".get_class($this),$this->dn);
+            new log("view", "server/" . get_class($this), $this->dn);
         }
 
-        $str ="<div style='width:100%; text-align:right;'>".
-            "  <input type='submit' name='SaveService' value='".msgPool::saveButton()."'>&nbsp;".
-            "  <input type='submit' name='CancelService' value='".msgPool::cancelButton()."'>".
+        $str = "<div style='width:100%; text-align:right;'>" .
+            "  <input type='submit' name='SaveService' value='" . msgPool::saveButton() . "'>&nbsp;" .
+            "  <input type='submit' name='CancelService' value='" . msgPool::cancelButton() . "'>" .
             "</div>";
-        return($str);
+        return ($str);
     }
 
 
@@ -70,10 +71,10 @@ class goService extends plugin{
         $this->updateStatusState();
 
         /* Assign status flag */
-        if(!empty($this->StatusFlag)){
+        if (!empty($this->StatusFlag)) {
             $flag                   = $this->StatusFlag;
             $fields['Status']       = $this->$flag;
-        }else{
+        } else {
             $fields['Status']       = "";
         }
 
@@ -87,14 +88,14 @@ class goService extends plugin{
         $fields['AllowRestart'] = $sf && $this->acl_is_writeable("restart");
         $fields['AllowRemove']  = $this->acl_is_removeable();
         $fields['AllowEdit']    = $this->acl_is_readable("");
-        return($fields);
+        return ($fields);
     }
 
 
     /* Remove service */
     function remove_from_parent()
     {
-        if(!$this->initially_was_account || !$this->acl_is_removeable()){
+        if (!$this->initially_was_account || !$this->acl_is_removeable()) {
             return;
         }
 
@@ -102,25 +103,24 @@ class goService extends plugin{
 
         /* Remove status flag, it is not a memeber of 
            this->attributes, so ensure that it is deleted too */
-        if(!empty($this->StatusFlag)){
+        if (!empty($this->StatusFlag)) {
             $this->attrs[$this->StatusFlag] = array();
         }
 
         /* Check if this is a new entry ... add/modify */
         $ldap = $this->config->get_ldap_link();
-        $ldap->cat($this->dn,array("objectClass"));
-        if($ldap->count()){
+        $ldap->cat($this->dn, array("objectClass"));
+        if ($ldap->count()) {
             $ldap->cd($this->dn);
             $ldap->modify($this->attrs);
-        }else{
+        } else {
             $ldap->cd($this->dn);
             $ldap->add($this->attrs);
-
         }
 
-        new log("remove","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+        new log("remove", "server/" . get_class($this), $this->dn, array_keys($this->attrs), $ldap->get_error());
 
-        if (!$ldap->success()){
+        if (!$ldap->success()) {
             msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
         }
         $this->handle_post_events("remove");
@@ -133,22 +133,22 @@ class goService extends plugin{
         plugin::save();
         /* Check if this is a new entry ... add/modify */
         $ldap = $this->config->get_ldap_link();
-        $ldap->cat($this->dn,array("objectClass"));
-        if($ldap->count()){
+        $ldap->cat($this->dn, array("objectClass"));
+        if ($ldap->count()) {
             $ldap->cd($this->dn);
             $ldap->modify($this->attrs);
-        }else{
+        } else {
             $ldap->cd($this->dn);
             $ldap->add($this->attrs);
         }
-        if($this->initially_was_account){
-            new log("modify","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+        if ($this->initially_was_account) {
+            new log("modify", "server/" . get_class($this), $this->dn, array_keys($this->attrs), $ldap->get_error());
             $this->handle_post_events("modify");
-        }else{
+        } else {
             $this->handle_post_events("add");
-            new log("create","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+            new log("create", "server/" . get_class($this), $this->dn, array_keys($this->attrs), $ldap->get_error());
         }
-        if (!$ldap->success()){
+        if (!$ldap->success()) {
             msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
         }
     }
@@ -157,31 +157,31 @@ class goService extends plugin{
     /* Directly save new status flag */
     function setStatus($value)
     {
-        if($value == "none") return;
+        if ($value == "none") return;
 
         /* Can't set status flag for new services (Object doesn't exists in ldap tree) */
-        if(!$this->initially_was_account) return;
+        if (!$this->initially_was_account) return;
 
         /* Can't set status flag, if no flag is specified  */
-        if(empty($this->StatusFlag)){
+        if (empty($this->StatusFlag)) {
             return;
         }
 
         /* Get object (server), update status flag and save changes */
         $ldap = $this->config->get_ldap_link();
         $ldap->cd($this->dn);
-        $ldap->cat($this->dn,array("objectClass"));
-        if($ldap->count()){
+        $ldap->cat($this->dn, array("objectClass"));
+        if ($ldap->count()) {
 
             $tmp = $ldap->fetch();
-            for($i = 0; $i < $tmp['objectClass']['count']; $i ++){
+            for ($i = 0; $i < $tmp['objectClass']['count']; $i++) {
                 $attrs['objectClass'][] = $tmp['objectClass'][$i];
             }
             $flag = $this->StatusFlag;
             $attrs[$flag] = $value;
             $this->$flag = $value;
             $ldap->modify($attrs);
-            if (!$ldap->success()){
+            if (!$ldap->success()) {
                 msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
             }
             $this->action_hook();
@@ -190,19 +190,19 @@ class goService extends plugin{
 
 
     function check()
-    { 
+    {
         $message = plugin::check();
-        return($message);
+        return ($message);
     }
 
 
     function save_object()
     {
         plugin::save_object();
-    }  
+    }
 
 
-    function action_hook($addAttrs= array())
+    function action_hook($addAttrs = array())
     {
         $this->callHook($this, 'SERVICEACTIONHOOK', $addAttrs);
     }
@@ -211,20 +211,18 @@ class goService extends plugin{
     /* Get updates for status flag */
     function updateStatusState()
     {
-        if(empty($this->StatusFlag)) return;
+        if (empty($this->StatusFlag)) return;
 
         $attrs = array();
         $flag = $this->StatusFlag;
         $ldap = $this->config->get_ldap_link();
         $ldap->cd($this->cn);
-        $ldap->cat($this->dn,array($flag));
-        if($ldap->count()){
+        $ldap->cat($this->dn, array($flag));
+        if ($ldap->count()) {
             $attrs = $ldap->fetch();
         }
-        if(isset($attrs[$flag][0])){
+        if (isset($attrs[$flag][0])) {
             $this->$flag = $attrs[$flag][0];
         }
     }
 }
-// vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
-?>

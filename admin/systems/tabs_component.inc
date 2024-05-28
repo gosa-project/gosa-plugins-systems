@@ -23,49 +23,45 @@
 class componenttabs extends tabs
 {
 
-  function __construct($config, $data, $dn,$category,$hide_refs = FALSE, $hide_acls = FALSE)
-  {
-    tabs::__construct($config, $data, $dn,$category,$hide_refs, $hide_acls);
+    function __construct($config, $data, $dn, $category, $hide_refs = FALSE, $hide_acls = FALSE)
+    {
+        parent::__construct($config, $data, $dn, $category, $hide_refs, $hide_acls);
 
-    /* Add references/acls/snapshots */
-    $this->addSpecialTabs();
-  }
+        /* Add references/acls/snapshots */
+        $this->addSpecialTabs();
+    }
 
-  function save_object($save_current= FALSE)
-  {
-    tabs::save_object($save_current);
+    function save_object($save_current = FALSE)
+    {
+        parent::save_object($save_current);
 
-    $baseobject = $this->by_object['componentGeneric'];
-    $baseobject->netConfigDNS->cn= $baseobject->cn;
-  }
+        $baseobject = $this->by_object['componentGeneric'];
+        $baseobject->netConfigDNS->cn = $baseobject->cn;
+    }
 
 
-  function save($ignore_account= FALSE)
-  {
-    /* Check for new 'dn', in order to propagate the
+    function save($ignore_account = FALSE)
+    {
+        /* Check for new 'dn', in order to propagate the
        'dn' to all plugins */
-    $baseobject= $this->by_object['componentGeneric'];
-    $cn      = preg_replace('/,/', '\,', $baseobject->cn);
-    $cn      = preg_replace('/"/', '\"', $cn);
-    $this->dn= "cn={$cn},".get_ou("componentGeneric", "componentRDN").$baseobject->base;
+        $baseobject = $this->by_object['componentGeneric'];
+        $cn      = preg_replace('/,/', '\,', $baseobject->cn);
+        $cn      = preg_replace('/"/', '\"', $cn);
+        $this->dn = "cn={$cn}," . get_ou("componentGeneric", "componentRDN") . $baseobject->base;
 
-    if($this->dn != $baseobject->orig_dn && $baseobject->orig_dn != "new"){
+        if ($this->dn != $baseobject->orig_dn && $baseobject->orig_dn != "new") {
 
-      /* Udpate acls */
-      $baseobject->update_acls($baseobject->orig_dn,$this->dn);
-      $baseobject->move($baseobject->orig_dn,$this->dn);
+            /* Udpate acls */
+            $baseobject->update_acls($baseobject->orig_dn, $this->dn);
+            $baseobject->move($baseobject->orig_dn, $this->dn);
+        }
+
+        $baseobject->dn = $this->dn;
+
+        foreach ($this->by_object as $key => $obj) {
+            $this->by_object[$key]->dn = $this->dn;
+        }
+
+        parent::save(TRUE);
     }
-
-    $baseobject->dn= $this->dn;
-
-    foreach ($this->by_object as $key => $obj){
-      $this->by_object[$key]->dn= $this->dn;
-    }
-
-    tabs::save(TRUE);
-  }
-
 }
-
-// vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
-?>
