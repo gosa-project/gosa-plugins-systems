@@ -128,7 +128,7 @@ class servnfs extends plugin
                             break;
                         }
                     default: {
-                            continue;
+                            break;
                         }
                 }
                 $ldap = $this->config->get_ldap_link();

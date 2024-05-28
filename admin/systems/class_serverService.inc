@@ -162,7 +162,7 @@ class ServerService extends management
         $action = parent::detectPostActions();
         if (isset($_POST['SaveService']))      $action['action'] = "saveService";
         if (isset($_POST['CancelService']))    $action['action'] = "cancelService";
-        if (preg_match("/^instantNew_/", $action['action'])) {
+        if (preg_match("/^instantNew_/", $action['action'] ?? '')) {
             $action['targets'][] = preg_replace("/^instantNew_/i", "", $action['action']);
             $action['action'] = "instantNew";
         }
