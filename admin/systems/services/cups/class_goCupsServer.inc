@@ -1,6 +1,7 @@
 <?php
 
-class goCupsServer extends goService{
+class goCupsServer extends goService
+{
 
     var $cli_summary      = "This plugin is used within the ServerService Pluign \nand indicates that this server supports cups management.";
     var $cli_description  = "Some longer text\nfor help";
@@ -19,71 +20,69 @@ class goCupsServer extends goService{
     var $acl;
     var $cn                  = "";
     var $goCupsServerStatus  = "";
-    var $view_logged  =FALSE;
+    var $view_logged  = FALSE;
 
-    function __construct(&$config,$dn)
+    function __construct(&$config, $dn)
     {
-        goService::__construct($config,$dn);
+        goService::__construct($config, $dn);
         $this->DisplayName = _("Print service");
     }
 
 
     function execute()
-    { 
-        if($this->is_account && !$this->view_logged){
+    {
+        if ($this->is_account && !$this->view_logged) {
             $this->view_logged = TRUE;
-            new log("view","server/".get_class($this),$this->dn);
+            new log("view", "server/" . get_class($this), $this->dn);
         }
 
-        $smarty = get_smarty(); 
-        foreach($this->attributes as $attr){
-            $smarty->assign($attr,set_post($this->$attr));
+        $smarty = get_smarty();
+        foreach ($this->attributes as $attr) {
+            $smarty->assign($attr, set_post($this->$attr));
         }
-        return($smarty->fetch(get_template_path("goCupsServer.tpl",TRUE,dirname(__FILE__))));
+        return ($smarty->fetch(get_template_path("goCupsServer.tpl", TRUE, dirname(__FILE__))));
     }
 
     function getListEntry()
     {
         $fields = goService::getListEntry();
         $fields['Message']    = _("Print service");
-#$fields['AllowEdit']  = false;
-        return($fields);
+        #$fields['AllowEdit']  = false;
+        return ($fields);
     }
 
     function check()
-    { 
+    {
         $message = plugin::check();
-        return($message);
+        return ($message);
     }
 
     function save_object()
     {
         plugin::save_object();
-    }  
+    }
 
     /* Return plugin informations for acl handling */
     static function plInfo()
     {
         return (array(
-                    "plShortName"   => _("Cups"),
-                    "plDescription" => _("Print service")." ("._("Services").")",
-                    "plSelfModify"  => FALSE,
-                    "plDepends"     => array(),
-                    "plPriority"    => 100,
-                    "plSection"     => array("administration"),
-                    "plCategory"    => array("server"),
-                    "plRequirements"=> array(
-                        'ldapSchema' => array('goCupsServer' => '>=2.7'),
-                        'onFailureDisablePlugin' => array(get_class())
-                        ),
+            "plShortName"   => _("Cups"),
+            "plDescription" => _("Print service") . " (" . _("Services") . ")",
+            "plSelfModify"  => FALSE,
+            "plDepends"     => array(),
+            "plPriority"    => 100,
+            "plSection"     => array("administration"),
+            "plCategory"    => array("server"),
+            "plRequirements" => array(
+                'ldapSchema' => array('goCupsServer' => '>=2.7'),
+                'onFailureDisablePlugin' => array(get_class())
+            ),
 
-                    "plProvidedAcls"=> array(
-                        "start"         => _("Start"),
-                        "stop"          => _("Stop"),
-                        "restart"       => _("Restart"),
-                        )
-                    ));
+            "plProvidedAcls" => array(
+                "start"         => _("Start"),
+                "stop"          => _("Stop"),
+                "restart"       => _("Restart"),
+            )
+        ));
     }
 }
-// vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
-?>

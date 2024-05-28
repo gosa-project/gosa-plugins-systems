@@ -21,20 +21,20 @@
 class dhcpPlugin extends plugin
 {
     /* Used attributes */
-    var $cn= "";
-    var $orig_cn= "";
-    var $options= null;
-    var $statements= array();
+    var $cn = "";
+    var $orig_cn = "";
+    var $options = null;
+    var $statements = array();
 
     /* Subobjects */
     var $network;
     var $advanced;
 
     /* attribute list for save action */
-    var $attributes= array();
-    var $objectclasses= array();
+    var $attributes = array();
+    var $objectclasses = array();
 
-    function __construct(&$parent,$attrs)
+    function __construct(&$parent, $attrs)
     {
         $this->initTime = microtime(TRUE);
         $this->parent = $parent;
@@ -43,53 +43,58 @@ class dhcpPlugin extends plugin
         $this->statements = new dhcpOption();
 
         /* Load statements / options */
-        if (is_array($attrs)){
-            $this->dn= $attrs['dn'];
-            $this->cn= $attrs['cn'][0];
-            $this->new= FALSE;
+        if (is_array($attrs)) {
+            $this->dn = $attrs['dn'];
+            $this->cn = $attrs['cn'][0];
+            $this->is_new = FALSE;
 
             /* Load options */
-            if (isset($attrs['dhcpOption'])){
-                foreach($attrs['dhcpOption'] as $opt){
+            if (isset($attrs['dhcpOption'])) {
+                foreach ($attrs['dhcpOption'] as $opt) {
                     $this->options->add(trim($opt));
                 }
             }
 
             /* Load statements */
-            if (isset($attrs['dhcpStatements'])){
-                foreach($attrs['dhcpStatements'] as $opt){
+            if (isset($attrs['dhcpStatements'])) {
+                foreach ($attrs['dhcpStatements'] as $opt) {
                     $this->statements->add(trim($opt));
                 }
             }
         } else {
             /* We keep the parent dn here if it's new */
-            $this->dn= $attrs;
-            $this->new= TRUE;
+            $this->dn = $attrs;
+            $this->is_new = TRUE;
         }
 
         /* Load network module */
-        $this->network= new dhcpNetwork();
-        $this->network->options= &$this->options;
-        $this->network->statements= &$this->statements;
-        $this->advanced= new dhcpAdvanced();
-        $this->advanced->options= &$this->options;
-        $this->advanced->statements= &$this->statements;
+        $this->network = new dhcpNetwork();
+        $this->network->options = &$this->options;
+        $this->network->statements = &$this->statements;
+        $this->advanced = new dhcpAdvanced();
+        $this->advanced->options = &$this->options;
+        $this->advanced->statements = &$this->statements;
 
         $this->network->parent = $parent;
         $this->advanced->parent = $parent;
 
         /* Save CN for later reference */
-        $this->orig_cn= $this->cn;
+        $this->orig_cn = $this->cn;
 
         // Create statistic table entry
-        stats::log('plugin', $class = get_class($this), $category = array($this->acl_category),  $action = 'open',
-                $amount = 1, $duration = (microtime(TRUE) - $this->initTime));
-
+        stats::log(
+            'plugin',
+            $class = get_class($this),
+            $category = array($this->acl_category),
+            $action = 'open',
+            $amount = 1,
+            $duration = (microtime(TRUE) - $this->initTime)
+        );
     }
 
     function execute()
     {
-        plugin::execute();
+        parent::execute();
         return ("");
     }
 
@@ -102,10 +107,10 @@ class dhcpPlugin extends plugin
     /* Save data to object */
     function save_object()
     {
-# // CHECK
-#   foreach (array("filename", "next-server","get-lease-hostnames","use-host-decl-names") as $toberemoved){
-#     unset($this->statements[$toberemoved]);
-#   }
+        # // CHECK
+        #   foreach (array("filename", "next-server","get-lease-hostnames","use-host-decl-names") as $toberemoved){
+        #     unset($this->statements[$toberemoved]);
+        #   }
 
         /* Save sub-objects */
         $this->network->save_object();
@@ -116,7 +121,7 @@ class dhcpPlugin extends plugin
     /* Check values */
     function check()
     {
-        $message= array();
+        $message = array();
         return $message;
     }
 
@@ -125,36 +130,36 @@ class dhcpPlugin extends plugin
     function save()
     {
         /* Add cn if we're new */
-        if ($this->new){
-            $this->dn= "cn=".$this->cn.",".$this->dn;
+        if ($this->is_new) {
+            $this->dn = "cn=" . $this->cn . "," . $this->dn;
         } else {
-            $this->dn= "cn=".$this->cn.preg_replace('/^cn=[^,]+/', '', $this->dn);
+            $this->dn = "cn=" . $this->cn . preg_replace('/^cn=[^,]+/', '', $this->dn);
         }
 
         /* Assemble new entry - options */
-        $this->attrs['dhcpOption']= $this->options->save();
+        $this->attrs['dhcpOption'] = $this->options->save();
 
         /* Assemble new entry - statements */
-        $this->attrs['dhcpStatements']= $this->statements->save();
+        $this->attrs['dhcpStatements'] = $this->statements->save();
 
         /* Move dn to the result */
-        $this->attrs['dn']= $this->dn;
-        $this->attrs['cn']= array($this->cn);
-        $this->attrs['objectClass']= $this->objectclasses;
-        $this->attrs['MODIFIED']= TRUE;
+        $this->attrs['dn'] = $this->dn;
+        $this->attrs['cn'] = array($this->cn);
+        $this->attrs['objectClass'] = $this->objectclasses;
+        $this->attrs['MODIFIED'] = TRUE;
         return ($this->attrs);
     }
 
 
     function removeAttrs($name, $type)
     {
-        $new= array();
-        foreach ($this->attrs[$type] as $value){
-            if (!preg_match("/^$name /", $value)){
-                $new[]= $value;
+        $new = array();
+        foreach ($this->attrs[$type] as $value) {
+            if (!preg_match("/^$name /", $value)) {
+                $new[] = $value;
             }
         }
-        $this->attrs[$type]= $new;
+        $this->attrs[$type] = $new;
     }
 
 
@@ -168,8 +173,4 @@ class dhcpPlugin extends plugin
     {
         $this->removeAttrs($name, 'dhcpStatement');
     }
-
 }
-
-// vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
-?>

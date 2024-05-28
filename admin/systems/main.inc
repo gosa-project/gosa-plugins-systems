@@ -22,8 +22,8 @@
 
 /* Remove locks created by this plugin
  */
-if ($remove_lock){
-    if(session::is_set('systemManagement')){
+if ($remove_lock) {
+    if (session::is_set('systemManagement')) {
         $macl = session::get('systemManagement');
         $macl->remove_lock();
     }
@@ -31,21 +31,18 @@ if ($remove_lock){
 
 /* Remove this plugin from session
  */
-if ( $cleanup ){
+if ($cleanup) {
     session::un_set('systemManagement');
-}else{
+} else {
 
     /* Create systemManagement object on demand */
-    if (!session::is_set('systemManagement')){
-        $systemManagement= new systemManagement ($config, $ui);
-        session::set('systemManagement',$systemManagement);
+    if (!session::is_set('systemManagement')) {
+        $systemManagement = new systemManagement($config, $ui);
+        session::set('systemManagement', $systemManagement);
     }
     $systemManagement = session::get('systemManagement');
-    $display= $systemManagement->execute();
+    $display = $systemManagement->execute();
 
     /* Show and save dialog */
-    session::set('systemManagement',$systemManagement);
+    session::set('systemManagement', $systemManagement);
 }
-
-// vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
-?>

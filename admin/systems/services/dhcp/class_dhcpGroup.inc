@@ -21,34 +21,37 @@
 class dhcpGroup extends dhcpPlugin
 {
     /* attribute list for save action */
-    var $objectclasses= array('top', 'dhcpGroup', 'dhcpOptions');
+    var $objectclasses = array('top', 'dhcpGroup', 'dhcpOptions');
 
-    function __construct($parent,&$attrs)
+    function __construct($parent, &$attrs)
     {
         /* Load statements / options */
-        dhcpPlugin::__construct($parent,$attrs);
+        parent::__construct($parent, $attrs);
     }
 
     function execute()
     {
-        $smarty= get_smarty();
+        $smarty = get_smarty();
         $smarty->assign("cn", set_post($this->cn));
 
         /* Assign ACLs */
-        $smarty->assign("acl",$this->parent->getacl(""));
+        $smarty->assign("acl", $this->parent->getacl(""));
 
         /* Show main page */
-        $display= $smarty->fetch (get_template_path('dhcp_group.tpl', TRUE, 
-                    dirname(__FILE__))).$this->network->execute();
-        $display.= $this->advanced->execute();
+        $display = $smarty->fetch(get_template_path(
+            'dhcp_group.tpl',
+            TRUE,
+            dirname(__FILE__)
+        )) . $this->network->execute();
+        $display .= $this->advanced->execute();
 
         /* Add footer */
-        $display.= "<div style='width:100%;text-align:right;margin-top:5px;'>";
-        if(preg_match("/w/",$this->parent->getacl(""))){
-            $display.= 	 "<button type='submit' name='save_dhcp'>".msgPool::saveButton()."</button>&nbsp;";
+        $display .= "<div style='width:100%;text-align:right;margin-top:5px;'>";
+        if (preg_match("/w/", $this->parent->getacl(""))) {
+            $display .=      "<button type='submit' name='save_dhcp'>" . msgPool::saveButton() . "</button>&nbsp;";
         }
-        $display.=   "<button type='submit' name='cancel_dhcp'>".msgPool::cancelButton()."</button>";
-        $display.= "</div>";
+        $display .=   "<button type='submit' name='cancel_dhcp'>" . msgPool::cancelButton() . "</button>";
+        $display .= "</div>";
 
         return ($display);
     }
@@ -63,45 +66,45 @@ class dhcpGroup extends dhcpPlugin
     function save_object()
     {
         /* Save cn */
-        if (preg_match("/w/",$this->parent->getacl("")) && isset($_POST['cn'])){
-            $this->cn= get_post('cn');
+        if (preg_match("/w/", $this->parent->getacl("")) && isset($_POST['cn'])) {
+            $this->cn = get_post('cn');
         }
 
         /* Handle global saving */
-        dhcpPlugin::save_object();
+        parent::save_object();
     }
 
 
     /* Check values */
     function check()
     {
-        $message= array();
+        $message = array();
 
         $cache = $this->parent->dhcpObjectCache;
 
         /* All required fields are set? */
-        if ($this->cn == ""){
-            $message[]= msgPool::required(_("Name"));
+        if ($this->cn == "") {
+            $message[] = msgPool::required(_("Name"));
         }
-        if (!preg_match('/^[a-z0-9_-]*$/i', $this->cn)){
-            $message[]= msgPool::invalid(_("Name"),$this->cn,"/[a-z0-9_-]/i");
+        if (!preg_match('/^[a-z0-9_-]*$/i', $this->cn)) {
+            $message[] = msgPool::invalid(_("Name"), $this->cn, "/[a-z0-9_-]/i");
         }
 
         /* cn already used? */
-        if ($this->orig_cn != $this->cn || $this->new){
+        if ($this->orig_cn != $this->cn || $this->is_new) {
 
-            foreach($cache as $dn => $dummy){
-                if (preg_match("/^cn=".$this->cn.",/", $dn) && count($dummy)){
-                    $message[]= msgPool::duplicated(_("Name"));
+            foreach ($cache as $dn => $dummy) {
+                if (preg_match("/^cn=" . $this->cn . ",/", $dn) && count($dummy)) {
+                    $message[] = msgPool::duplicated(_("Name"));
                     break;
                 }
             }
         }
 
         /* Check external plugins */
-        $net= $this->network->check();
-        $adv= $this->advanced->check();
-        $message= array_merge($message, $net, $adv);
+        $net = $this->network->check();
+        $adv = $this->advanced->check();
+        $message = array_merge($message, $net, $adv);
 
         return $message;
     }
@@ -110,11 +113,7 @@ class dhcpGroup extends dhcpPlugin
     /* Save to LDAP */
     function save()
     {
-        dhcpPlugin::save();
+        parent::save();
         return ($this->attrs);
     }
-
-
 }
-
-?>

@@ -28,18 +28,19 @@ class systemSelect extends management
 
     public $plHeadline = "System selection";
 
-    function __construct($config,$ui)
+    function __construct($config, $ui)
     {
         $this->config = $config;
         $this->ui = $ui;
         $this->storagePoints = array(
-                get_ou("servgeneric", "serverRDN"), 
-                get_ou("workgeneric", "workstationRDN"), 
-                get_ou("termgeneric", "terminalRDN"));
+            get_ou("servgeneric", "serverRDN"),
+            get_ou("workgeneric", "workstationRDN"),
+            get_ou("termgeneric", "terminalRDN")
+        );
 
         // Build filter
-        if (session::global_is_set(get_class($this)."_filter")){
-            $filter= session::global_get(get_class($this)."_filter");
+        if (session::global_is_set(get_class($this) . "_filter")) {
+            $filter = session::global_get(get_class($this) . "_filter");
         } else {
             $filter = new filter(get_template_path("selectSystem-filter.xml", true, dirname(__FILE__)));
             $filter->setObjectStorage($this->storagePoints);
@@ -56,13 +57,11 @@ class systemSelect extends management
     {
         $act = $this->detectPostActions();
         $headpage = $this->getHeadpage();
-        if(!isset($act['targets'])) return(array());
+        if (!isset($act['targets'])) return (array());
         $ret = array();
-        foreach($act['targets'] as $dn){
+        foreach ($act['targets'] as $dn) {
             $ret[] = $headpage->getEntry($dn);
         }
-        return($ret);
+        return ($ret);
     }
 }
-// vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
-?>

@@ -1,6 +1,7 @@
 <?php
 
-class goShareServer extends goService{
+class goShareServer extends goService
+{
 
     var $cli_summary      = "This plugin is used within the ServerService Pluign \nand indicates that this server supports shares.";
     var $cli_description  = "Some longer text\nfor help";
@@ -22,23 +23,26 @@ class goShareServer extends goService{
     var $allow_mounts         = false;
     var $mounts_to_remove     = array();
     var $mounts_to_add        = array();
-    var $view_logged  =FALSE;
+    var $view_logged  = FALSE;
+    var $goExportEntryList = null;
+    var $o_subWindow = null;
+    var $oldone = null;
 
-    function __construct(&$config,$dn)
+    function __construct(&$config, $dn)
     {
-        goService::__construct($config,$dn);
+        parent::__construct($config, $dn);
 
         $this->DisplayName = _("File service (Shares)");
 
-        $tmp =array();
-        if(isset($this->attrs['goExportEntry'])){
-            if(isset($this->attrs['goExportEntry']['count'])){
-                for($i= 0; $i<$this->attrs['goExportEntry']['count']; $i++){
-                    $entry= $this->attrs['goExportEntry'][$i];
-                    $tmp[preg_replace('/\|.*$/', '', $entry)]= $entry;
+        $tmp = array();
+        if (isset($this->attrs['goExportEntry'])) {
+            if (isset($this->attrs['goExportEntry']['count'])) {
+                for ($i = 0; $i < $this->attrs['goExportEntry']['count']; $i++) {
+                    $entry = $this->attrs['goExportEntry'][$i];
+                    $tmp[preg_replace('/\|.*$/', '', $entry)] = $entry;
                 }
             }
-        } 
+        }
         $this->goExportEntryList = $tmp;
 
         $ldap = $this->config->get_ldap_link();
@@ -50,27 +54,27 @@ class goShareServer extends goService{
 
 
     function execute()
-    { 
-        $smarty = get_smarty(); 
+    {
+        $smarty = get_smarty();
 
-        if($this->is_account && !$this->view_logged){
+        if ($this->is_account && !$this->view_logged) {
             $this->view_logged = TRUE;
-            new log("view","server/".get_class($this),$this->dn);
+            new log("view", "server/" . get_class($this), $this->dn);
         }
 
 
-        if((isset($_POST['DelNfsEnt']))&&(isset($_POST['goExportEntryList'])) && ($this->acl_is_writeable("name"))){
-            if($this->allow_mounts){
-                foreach(get_post('goExportEntryList') as $entry){
+        if ((isset($_POST['DelNfsEnt'])) && (isset($_POST['goExportEntryList'])) && ($this->acl_is_writeable("name"))) {
+            if ($this->allow_mounts) {
+                foreach (get_post('goExportEntryList') as $entry) {
                     $this->deleteFromMountList($this->goExportEntryList[$entry]);
                 }
             }
-            foreach(get_post('goExportEntryList') as $entry){
+            foreach (get_post('goExportEntryList') as $entry) {
                 $this->deleteFromList($entry);
             }
         }
 
-        if(isset($_POST['NewNfsAdd']) && ($this->acl_is_writeable("name"))){
+        if (isset($_POST['NewNfsAdd']) && ($this->acl_is_writeable("name"))) {
             $this->oldone = NULL;
             $this->o_subWindow = new servnfs($this->config, $this);
             $this->o_subWindow->set_acl_category("server");
@@ -78,32 +82,32 @@ class goShareServer extends goService{
             $this->dialog = true;
         }
 
-        if((isset($_POST['NewNfsEdit']))&&(isset($_POST['goExportEntryList']))){
+        if ((isset($_POST['NewNfsEdit'])) && (isset($_POST['goExportEntryList']))) {
             $entry = $this->goExportEntryList[$_POST['goExportEntryList'][0]];
-            $add_mount=isset($this->mounts_to_add[$entry]);
-            $this->oldone=$entry;
-            $this->o_subWindow = new servnfs($this->config,$this,$entry,$add_mount);
+            $add_mount = isset($this->mounts_to_add[$entry]);
+            $this->oldone = $entry;
+            $this->o_subWindow = new servnfs($this->config, $this, $entry, $add_mount);
             $this->o_subWindow->set_acl_base($this->dn);
             $this->o_subWindow->set_acl_category("server");
             $this->dialog = true;
         }
-        if(isset($this->o_subWindow)){
+        if (isset($this->o_subWindow)) {
             $this->o_subWindow->save_object(TRUE);
         }
 
         /* Save NFS setup */
-        if(isset($_POST['NFSsave']) && isset($this->o_subWindow) && is_object($this->o_subWindow)){
-            if(count($this->o_subWindow->check())>0){
-                foreach($this->o_subWindow->check() as $msg) {
+        if (isset($_POST['NFSsave']) && isset($this->o_subWindow) && is_object($this->o_subWindow)) {
+            if (count($this->o_subWindow->check()) > 0) {
+                foreach ($this->o_subWindow->check() as $msg) {
                     msg_dialog::display(_("Error"), $msg, ERROR_DIALOG);
                 }
-            }else{
+            } else {
                 $this->o_subWindow->save_object();
                 $newone = $this->o_subWindow->save();
 
                 $this->addToList($newone);
-                if($this->allow_mounts){
-                    if($this->oldone != NULL) {
+                if ($this->allow_mounts) {
+                    if ($this->oldone != NULL) {
                         $this->deleteFromMountList($this->oldone);
                     }
                     if ($this->o_subWindow->should_create_mount()) {
@@ -116,46 +120,46 @@ class goShareServer extends goService{
         }
 
         /* Cancel NFS setup */
-        if(isset($_POST['NFScancel'])){
+        if (isset($_POST['NFScancel'])) {
             $this->oldone = NULL;
             unset($this->o_subWindow);
             $this->dialog = false;
         }
 
         /* Execute NFS setup dialog*/
-        if(isset($this->o_subWindow)){
+        if (isset($this->o_subWindow)) {
             return $this->o_subWindow->execute();
         }
 
-        foreach($this->attributes as $attr){
-            $smarty->assign($attr,set_post($this->$attr));
+        foreach ($this->attributes as $attr) {
+            $smarty->assign($attr, set_post($this->$attr));
         }
 
         /* Set acls */
         $tmp = $this->plInfo();
-        foreach($tmp['plProvidedAcls'] as $name => $translated){
-            $smarty->assign($name."ACL",$this->getacl($name));
+        foreach ($tmp['plProvidedAcls'] as $name => $translated) {
+            $smarty->assign($name . "ACL", $this->getacl($name));
         }
-        $smarty->assign("createable",$this->acl_is_createable());
-        $smarty->assign("removeable",$this->acl_is_removeable());
+        $smarty->assign("createable", $this->acl_is_createable());
+        $smarty->assign("removeable", $this->acl_is_removeable());
 
-        $tellSmarty= array();
+        $tellSmarty = array();
         ksort($this->goExportEntryList);
-        foreach($this->goExportEntryList as $name=>$values){
-            $tmp = explode("|",$values);
-            $tellSmarty[$name] = $tmp[0]." ".$tmp[4]." (".$tmp[2].")";
+        foreach ($this->goExportEntryList as $name => $values) {
+            $tmp = explode("|", $values);
+            $tellSmarty[$name] = $tmp[0] . " " . $tmp[4] . " (" . $tmp[2] . ")";
         }
         $smarty->assign("goExportEntry",        array_keys($tellSmarty));
-        $smarty->assign("goExportEntryKeys",    ($tellSmarty));
-        return($smarty->fetch(get_template_path("goShareServer.tpl",TRUE,dirname(__FILE__))));
+        $smarty->assign("goExportEntryKeys", ($tellSmarty));
+        return ($smarty->fetch(get_template_path("goShareServer.tpl", TRUE, dirname(__FILE__))));
     }
 
 
     function getListEntry()
     {
-        $fields = goService::getListEntry();
+        $fields = parent::getListEntry();
         $fields['Message']    = _("File service (Shares)");
-        return($fields);
+        return ($fields);
     }
 
 
@@ -164,55 +168,55 @@ class goShareServer extends goService{
         plugin::save();
 
         /* Arrays */
-        foreach (array("goExportEntryList"=>"goExportEntry") as $source => $destination){
-            $this->attrs[$destination]= array();
-            foreach ($this->$source as $element){
-                $this->attrs[$destination][]= $element;
+        foreach (array("goExportEntryList" => "goExportEntry") as $source => $destination) {
+            $this->attrs[$destination] = array();
+            foreach ($this->$source as $element) {
+                $this->attrs[$destination][] = $element;
             }
         }
 
 
         /* Process netatalk mounts */
-        if($this->allow_mounts) {
+        if ($this->allow_mounts) {
             $this->process_mounts();
         }
 
         /* Check if this is a new entry ... add/modify */
         $ldap = $this->config->get_ldap_link();
-        $ldap->cat($this->dn,array("objectClass"));
-        if($ldap->count()){
+        $ldap->cat($this->dn, array("objectClass"));
+        if ($ldap->count()) {
             $ldap->cd($this->dn);
             $ldap->modify($this->attrs);
-        }else{
+        } else {
             $ldap->cd($this->dn);
             $ldap->add($this->attrs);
         }
-        if (!$ldap->success()){
+        if (!$ldap->success()) {
             msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
         }
-        if($this->initially_was_account){
+        if ($this->initially_was_account) {
             $this->handle_post_events("modify");
-            new log("modify","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
-        }else{
+            new log("modify", "server/" . get_class($this), $this->dn, array_keys($this->attrs), $ldap->get_error());
+        } else {
             $this->handle_post_events("add");
-            new log("create","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+            new log("create", "server/" . get_class($this), $this->dn, array_keys($this->attrs), $ldap->get_error());
         }
     }
 
 
     function check()
-    { 
+    {
         $message = plugin::check();
-        return($message);
+        return ($message);
     }
 
 
     function save_object()
     {
-        if(isset($_POST['goShareServerPosted'])){
+        if (isset($_POST['goShareServerPosted'])) {
             plugin::save_object();
         }
-    } 
+    }
 
     function allow_remove()
     {
@@ -222,24 +226,25 @@ class goShareServer extends goService{
         $cn = $ldap->getCn($this->dn);
         $ldap->search("(&(|(objectClass=posixGroup)(objectClass=posixAccount)(objectClass=gosaGroupOfNames))(gotoShare=$cn|*))", array("dn"));
 
-        if($ldap->count()){
+        if ($ldap->count()) {
             /* Number of entries shown in warning */
             $i    = 3;
             $str  = '<p>';
-            while(($attrs = $ldap->fetch()) && $i >= 0){
-                $i --;
-                if(isset($attrs['dn'])){
-                    $str .= '<i>' . $attrs['dn']."</i><br/>";
+            while (($attrs = $ldap->fetch()) && $i >= 0) {
+                $i--;
+                if (isset($attrs['dn'])) {
+                    $str .= '<i>' . $attrs['dn'] . "</i><br/>";
                 }
             }
             $str .= '</p>';
-            return(sprintf(_("Cannot remove share - it is still in use by these objects: %s"), $str));
+            return (sprintf(_("Cannot remove share - it is still in use by these objects: %s"), $str));
         }
     }
 
-    function addToList($entry){
+    function addToList($entry)
+    {
         $key =  key($entry);
-        $this->goExportEntryList[$key]=$entry[$key];
+        $this->goExportEntryList[$key] = $entry[$key];
     }
 
     function deleteFromList($id)
@@ -249,76 +254,76 @@ class goShareServer extends goService{
         $ldap->cd($this->config->current['BASE']);
         $cn = $ldap->getCn($this->dn);
         $ldap->search("(|(gotoProfileServer=*|$id)(gotoShare=$cn|$id|*))", array("cn"));
-        if ($ldap->count() != 0){
-            while ($attrs= $ldap->fetch()){
-                $obj[$ldap->getDN()]= $attrs['cn'][0];
+        if ($ldap->count() != 0) {
+            while ($attrs = $ldap->fetch()) {
+                $obj[$ldap->getDN()] = $attrs['cn'][0];
             }
             msg_dialog::display(_("Error"), msgPool::stillInUse(_("share"), msgPool::buildList($obj)), ERROR_DIALOG);
-
         } else {
             /* Finally remove it */
             unset($this->goExportEntryList[$id]);
         }
     }
 
-    function process_mounts() {
+    function process_mounts()
+    {
 
-        $clip = "cn=" . $this->cn . ",".get_ou("servgeneric", "serverRDN");
+        $clip = "cn=" . $this->cn . "," . get_ou("servgeneric", "serverRDN");
         $mountsdn = "cn=mounts," . substr($this->dn, strlen($clip));
 
         $mounts = array(
-                "objectClass" => "container",
-                "cn" => "mounts"
-                );
+            "objectClass" => "container",
+            "cn" => "mounts"
+        );
 
-# load data from mounts container
+        # load data from mounts container
         $ldap = $this->config->get_ldap_link();
         $ldap->cat($mountsdn, array('dn'));
         $attrs = $ldap->fetch();
 
-# mounts container not present yet, so we create it
+        # mounts container not present yet, so we create it
         if (count($attrs) == 0) {
             $ldap->cd($mountsdn);
             $ldap->add($mounts);
-            if (!$ldap->success()){
+            if (!$ldap->success()) {
                 msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_ADD, get_class()));
             }
-            new log("modify","server/".get_class($this),$mountsdn,array_keys($mounts),$ldap->get_error());
+            new log("modify", "server/" . get_class($this), $mountsdn, array_keys($mounts), $ldap->get_error());
         }
 
-# remove deleted mounts from the container
+        # remove deleted mounts from the container
         foreach ($this->mounts_to_remove as $entry) {
-            $mount=$this->returnMountEntry($entry);
-            $mountdn = "cn=".$mount["cn"].","."$mountsdn";
+            $mount = $this->returnMountEntry($entry);
+            $mountdn = "cn=" . $mount["cn"] . "," . "$mountsdn";
 
             $ldap->cat($mountdn, array('dn'));
             $attrs = $ldap->fetch();
 
             if (count($attrs) != 0) {
                 $ldap->rmdir($mountdn);
-                if (!$ldap->success()){
+                if (!$ldap->success()) {
                     msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $mountdn, LDAP_DEL, get_class()));
                 }
-                new log("remove","server/".get_class($this),$mountdn,array_keys($mount),$ldap->get_error());
+                new log("remove", "server/" . get_class($this), $mountdn, array_keys($mount), $ldap->get_error());
             }
         }
 
-# add new mounts to the container
+        # add new mounts to the container
         foreach ($this->mounts_to_add as $entry) {
-            $mount=$this->returnMountEntry($entry);
-            $mountdn = "cn=".$mount["cn"].","."$mountsdn";
+            $mount = $this->returnMountEntry($entry);
+            $mountdn = "cn=" . $mount["cn"] . "," . "$mountsdn";
             $ldap->cd($mountdn);
             $ldap->add($mount);
-            if (!$ldap->success()){
+            if (!$ldap->success()) {
                 msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $mount, LDAP_ADD, get_class()));
             }
-            new log("create","server/".get_class($this),$mountdn,array_keys($mount),$ldap->get_error());
+            new log("create", "server/" . get_class($this), $mountdn, array_keys($mount), $ldap->get_error());
         }
     }
 
-    function addToMountList($entry) 
+    function addToMountList($entry)
     {
-        if($this->acl_is_writeable("name")){
+        if ($this->acl_is_writeable("name")) {
             $key =  key($entry);
             $type = $this->get_share_type($entry[$key]);
             if (($type == "netatalk") || ($type == "NFS")) {
@@ -328,9 +333,9 @@ class goShareServer extends goService{
         }
     }
 
-    function deleteFromMountList($entry) 
+    function deleteFromMountList($entry)
     {
-        if($this->acl_is_writeable("name")){
+        if ($this->acl_is_writeable("name")) {
             $type = $this->get_share_type($entry);
             if (($type == "netatalk") || ($type == "NFS")) {
                 $this->mounts_to_remove[$entry] = $entry;
@@ -339,7 +344,7 @@ class goShareServer extends goService{
         }
     }
 
-    function get_share_type($share) 
+    function get_share_type($share)
     {
         $tmp = explode("|", $share);
         return $tmp[2];
@@ -356,32 +361,32 @@ class goShareServer extends goService{
         $options = $item[5];
 
         switch ($type) {
-            case "netatalk" : {
-                $mount = array(
+            case "netatalk": {
+                    $mount = array(
                         "mountDirectory" => "/Network/Servers/",
                         "mountOption" => array(
                             "net",
-                            "url==afp://;AUTH=NO%20USER%20AUTHENT@".$this->cn."/$name/"
-                            ),
+                            "url==afp://;AUTH=NO%20USER%20AUTHENT@" . $this->cn . "/$name/"
+                        ),
                         "mountType" => "url",
                         "objectClass" => "mount",
-                        "cn" => $this->cn .":/".$name
-                        );
-                break;
-            }
-            case "NFS" : {
-                $mount = array(
+                        "cn" => $this->cn . ":/" . $name
+                    );
+                    break;
+                }
+            case "NFS": {
+                    $mount = array(
                         "mountDirectory" => "/Network/Servers/",
                         "mountOption" => "net",
                         "mountType" => "nfs",
                         "objectClass" => "mount",
-                        "cn" => $this->cn .":".$path
-                        );
-                break;
-            }
-            default : {
-                          continue;
-                      }
+                        "cn" => $this->cn . ":" . $path
+                    );
+                    break;
+                }
+            default: {
+                    continue;
+                }
         }
         return $mount;
     }
@@ -391,12 +396,12 @@ class goShareServer extends goService{
     {
         plugin::PrepareForCopyPaste($source);
 
-        $tmp =array();
-        if(isset($source['goExportEntry'])){
-            if(isset($source['goExportEntry']['count'])){
-                for($i= 0; $i<$source['goExportEntry']['count']; $i++){
-                    $entry= $source['goExportEntry'][$i];
-                    $tmp[preg_replace('/\|.*$/', '', $entry)]= $entry;
+        $tmp = array();
+        if (isset($source['goExportEntry'])) {
+            if (isset($source['goExportEntry']['count'])) {
+                for ($i = 0; $i < $source['goExportEntry']['count']; $i++) {
+                    $entry = $source['goExportEntry'][$i];
+                    $tmp[preg_replace('/\|.*$/', '', $entry)] = $entry;
                 }
             }
         }
@@ -409,37 +414,34 @@ class goShareServer extends goService{
     static function plInfo()
     {
         return (array(
-                    "plShortName"   => _("File service (Shares)"),
-                    "plDescription" => _("File service - Shares")." ("._("Services").")",
-                    "plSelfModify"  => FALSE,
-                    "plDepends"     => array(),
-                    "plPriority"    => 90,
-                    "plSection"     => array("administration"),
-                    "plRequirements"=> array(
-                        'ldapSchema' => array('goShareServer' => '>=2.7'),
-                        'onFailureDisablePlugin' => array(get_class())
-                        ),
-                    "plCategory"    => array("server"),
+            "plShortName"   => _("File service (Shares)"),
+            "plDescription" => _("File service - Shares") . " (" . _("Services") . ")",
+            "plSelfModify"  => FALSE,
+            "plDepends"     => array(),
+            "plPriority"    => 90,
+            "plSection"     => array("administration"),
+            "plRequirements" => array(
+                'ldapSchema' => array('goShareServer' => '>=2.7'),
+                'onFailureDisablePlugin' => array(get_class())
+            ),
+            "plCategory"    => array("server"),
 
-                    "plProvidedAcls"=> array(
-                        "start"         => _("Start"),
-                        "stop"          => _("Stop"),
-                        "restart"       => _("Restart"),
-                        "name"          => _("Name"),
-                        "goExportEntry" => _("Share entries"),
-                        "appleMounts"   => _("Apple mounts"),
-                        "netatalkmount" => _("Apple mounts"),
-                        "description"   => _("Description"),
-                        "type"          => _("Type"),
-                        "charset"       => _("Character set"),
-                        "path"          => _("Path"),
-                        "option"        => _("Option"),
-                        "volume"        => _("Volume"))
+            "plProvidedAcls" => array(
+                "start"         => _("Start"),
+                "stop"          => _("Stop"),
+                "restart"       => _("Restart"),
+                "name"          => _("Name"),
+                "goExportEntry" => _("Share entries"),
+                "appleMounts"   => _("Apple mounts"),
+                "netatalkmount" => _("Apple mounts"),
+                "description"   => _("Description"),
+                "type"          => _("Type"),
+                "charset"       => _("Character set"),
+                "path"          => _("Path"),
+                "option"        => _("Option"),
+                "volume"        => _("Volume")
+            )
 
-                        ));
+        ));
     }
-
-
 }
-// vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
-?>

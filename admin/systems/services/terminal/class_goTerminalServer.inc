@@ -1,10 +1,11 @@
 <?php
 
-class goTerminalServer extends goService{
+class goTerminalServer extends goService
+{
 
     /* This plugin only writes its objectClass */
     var $objectclasses    = array("goTerminalServer");
-    var $attributes       = array("goXdmcpIsEnabled","gotoSessionType");
+    var $attributes       = array("goXdmcpIsEnabled", "gotoSessionType");
     var $StatusFlag       = "goTerminalServerStatus";
 
     /* This class can't be assigned twice so it conflicts with itsself */
@@ -15,66 +16,67 @@ class goTerminalServer extends goService{
     var $acl;
     var $cn                      = "";
     var $goTerminalServerStatus  = "";
-    var $goXdmcpIsEnabled        = false;  
+    var $goXdmcpIsEnabled        = false;
     var $view_logged             = FALSE;
 
     var $gotoSessionType         = array();
+    var $gotoSessionTypes = [];
 
-    function __construct(&$config,$dn)
+    function __construct(&$config, $dn)
     {
-        goService::__construct($config,$dn);
+        parent::__construct($config, $dn);
         $this->DisplayName = _("Terminal service");
 
         $tmp = array();
-        if(isset($this->attrs['gotoSessionType'])){
-            for($i =0; $i < $this->attrs['gotoSessionType']['count'] ; $i++){
+        if (isset($this->attrs['gotoSessionType'])) {
+            for ($i = 0; $i < $this->attrs['gotoSessionType']['count']; $i++) {
                 $tmp[] = $this->attrs['gotoSessionType'][$i];
             }
         }
         $this->gotoSessionType = $tmp;
-#$this->gotoSessionTypes= array("LDM","XDMCP","RDP","CITRIX"); 
-        $this->gotoSessionTypes= array("LDM","XDMCP", "SHELL", "RDP", "TELNET"); 
+        #$this->gotoSessionTypes= array("LDM","XDMCP","RDP","CITRIX"); 
+        $this->gotoSessionTypes = array("LDM", "XDMCP", "SHELL", "RDP", "TELNET");
     }
 
 
     function execute()
-    { 
+    {
         $smarty = get_smarty();
 
-        if($this->is_account && !$this->view_logged){
+        if ($this->is_account && !$this->view_logged) {
             $this->view_logged = TRUE;
-            new log("view","server/".get_class($this),$this->dn);
+            new log("view", "server/" . get_class($this), $this->dn);
         }
 
 
         $tmp = $this->plinfo();
-        foreach($tmp['plProvidedAcls'] as $name => $translation){
-            $smarty->assign($name."ACL",$this->getacl($name));
+        foreach ($tmp['plProvidedAcls'] as $name => $translation) {
+            $smarty->assign($name . "ACL", $this->getacl($name));
         }
 
-        foreach($this->attributes as $attr){
+        foreach ($this->attributes as $attr) {
             $smarty->assign($attr, set_post($this->$attr));
         }
 
         $tmp = array();
-        foreach($this->gotoSessionTypes as $type){
-            if(in_array_strict($type,$this->gotoSessionType)){
+        foreach ($this->gotoSessionTypes as $type) {
+            if (in_array_strict($type, $this->gotoSessionType)) {
                 $tmp[$type] = TRUE;
-            }else{
+            } else {
                 $tmp[$type] = FALSE;
             }
         }
         $smarty->assign("gotoSessionTypes", set_post($tmp));
-        return($smarty->fetch(get_template_path("goTerminalServer.tpl",TRUE,dirname(__FILE__))));
+        return ($smarty->fetch(get_template_path("goTerminalServer.tpl", TRUE, dirname(__FILE__))));
     }
 
 
     function getListEntry()
     {
-        $fields               = goService::getListEntry();
+        $fields               = parent::getListEntry();
         $fields['Message']    = _("Terminal service");
-#$fields['AllowEdit']  = true;
-        return($fields);
+        #$fields['AllowEdit']  = true;
+        return ($fields);
     }
 
 
@@ -82,7 +84,7 @@ class goTerminalServer extends goService{
     {
         plugin::save();
 
-        if(!$this->goXdmcpIsEnabled){
+        if (!$this->goXdmcpIsEnabled) {
             $this->attrs['goXdmcpIsEnabled'] = "0";
         }
 
@@ -90,69 +92,69 @@ class goTerminalServer extends goService{
 
         /* Check if this is a new entry ... add/modify */
         $ldap = $this->config->get_ldap_link();
-        $ldap->cat($this->dn,array("objectClass"));
-        if($ldap->count()){
+        $ldap->cat($this->dn, array("objectClass"));
+        if ($ldap->count()) {
             $ldap->cd($this->dn);
             $ldap->modify($this->attrs);
-        }else{
+        } else {
             $ldap->cd($this->dn);
             $ldap->add($this->attrs);
         }
-        if (!$ldap->success()){
+        if (!$ldap->success()) {
             msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
         }
-        if($this->initially_was_account){
+        if ($this->initially_was_account) {
             $this->handle_post_events("modify");
-            new log("modify","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
-        }else{
+            new log("modify", "server/" . get_class($this), $this->dn, array_keys($this->attrs), $ldap->get_error());
+        } else {
             $this->handle_post_events("add");
-            new log("create","server/".get_class($this),$this->dn,array_keys($this->attrs),$ldap->get_error());
+            new log("create", "server/" . get_class($this), $this->dn, array_keys($this->attrs), $ldap->get_error());
         }
     }
 
 
     function check()
-    { 
+    {
         $message = plugin::check();
-        return($message);
+        return ($message);
     }
 
 
     function save_object()
     {
-        if(isset($_POST['goTerminalServerPosted'])){
+        if (isset($_POST['goTerminalServerPosted'])) {
             plugin::save_object();
 
             $this->gotoSessionType = array();
-            foreach($this->gotoSessionTypes as $attr){
-                if(isset($_POST['gotoSessionType_'.$attr])){
+            foreach ($this->gotoSessionTypes as $attr) {
+                if (isset($_POST['gotoSessionType_' . $attr])) {
                     $this->gotoSessionType[] = $attr;
                 }
             }
 
-            if($this->acl_is_writeable("goXdmcpIsEnabled")){
-                if(isset($_POST['goXdmcpIsEnabled'])){
+            if ($this->acl_is_writeable("goXdmcpIsEnabled")) {
+                if (isset($_POST['goXdmcpIsEnabled'])) {
                     $this->goXdmcpIsEnabled = true;
-                }else{
+                } else {
                     $this->goXdmcpIsEnabled = false;
                 }
             }
         }
-    } 
+    }
 
 
     function PrepareForCopyPaste($obj)
     {
         plugin::PrepareForCopyPaste($obj);
         $tmp = array();
-        if(isset($obj['gotoSessionType'])){
-            for($i =0; $i < $obj['gotoSessionType']['count'] ; $i++){
+        if (isset($obj['gotoSessionType'])) {
+            for ($i = 0; $i < $obj['gotoSessionType']['count']; $i++) {
                 $tmp[] = $obj['gotoSessionType'][$i];
             }
         }
         $this->gotoSessionType = $tmp;
-#$this->gotoSessionTypes= array("LDM","XDMCP","RDP","CITRIX"); 
-        $this->gotoSessionTypes= array("LDM","XDMCP", "SHELL", "TELNET"); 
+        #$this->gotoSessionTypes= array("LDM","XDMCP","RDP","CITRIX"); 
+        $this->gotoSessionTypes = array("LDM", "XDMCP", "SHELL", "TELNET");
     }
 
 
@@ -160,28 +162,25 @@ class goTerminalServer extends goService{
     static function plInfo()
     {
         return (array(
-                    "plShortName"   => _("Terminal service"),
-                    "plDescription" => _("Terminal service")." ("._("Services").")",
-                    "plSelfModify"  => FALSE,
-                    "plDepends"     => array(),
-                    "plPriority"    => 87,
-                    "plSection"     => array("administration"),
-                    "plRequirements"=> array(
-                        'ldapSchema' => array('goTerminalServer' => '>=2.7'),
-                        'onFailureDisablePlugin' => array(get_class())
-                        ),
-                    "plCategory"    => array("server"),
+            "plShortName"   => _("Terminal service"),
+            "plDescription" => _("Terminal service") . " (" . _("Services") . ")",
+            "plSelfModify"  => FALSE,
+            "plDepends"     => array(),
+            "plPriority"    => 87,
+            "plSection"     => array("administration"),
+            "plRequirements" => array(
+                'ldapSchema' => array('goTerminalServer' => '>=2.7'),
+                'onFailureDisablePlugin' => array(get_class())
+            ),
+            "plCategory"    => array("server"),
 
 
-                    "plProvidedAcls"=> array(
-                        "start"           => _("Start"),
-                        "stop"            => _("Stop"),
-                        "restart"         => _("Restart"),
-                        "goXdmcpIsEnabled"  => _("Temporary disable login"))
-                    ));
+            "plProvidedAcls" => array(
+                "start"           => _("Start"),
+                "stop"            => _("Stop"),
+                "restart"         => _("Restart"),
+                "goXdmcpIsEnabled"  => _("Temporary disable login")
+            )
+        ));
     }
-
-
 }
-// vim:tabstop=2:expandtab:shiftwidth=2:filetype=php:syntax:ruler:
-?>
