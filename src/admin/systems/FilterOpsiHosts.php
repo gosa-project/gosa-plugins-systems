@@ -1,6 +1,6 @@
 <?php
 
-class filterOPSIHOSTS
+class FilterOpsiHosts
 {
 
     static function query($base, $scope, $filter, $attributes, $category, $objectStorage = "")

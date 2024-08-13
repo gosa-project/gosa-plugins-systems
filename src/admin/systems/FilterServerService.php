@@ -1,6 +1,8 @@
 <?php
 
-class filterServerService
+namespace GosaSystems\admin\systems;
+
+class FilterServerService
 {
 
     static function query($base, $scope, $filter, $attributes, $category, $objectStorage = "")
