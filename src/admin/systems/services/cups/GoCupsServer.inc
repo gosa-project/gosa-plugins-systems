@@ -1,6 +1,14 @@
 <?php
 
-class goCupsServer extends goService
+namespace GosaSystems\admin\systems\services\cups;
+
+use \log as log;
+use GosaSystems\admin\systems\services\GoService as GoService;
+use \plugin as plugin;
+
+
+
+class GoCupsServer extends GoService
 {
 
     var $cli_summary      = "This plugin is used within the ServerService Pluign \nand indicates that this server supports cups management.";

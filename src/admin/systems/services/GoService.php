@@ -20,7 +20,14 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-class goService extends plugin
+namespace GosaSystems\admin\systems\services;
+
+use \plugin as Plugin;
+use \msgPool as msgPool;
+use \log as log;
+use \msg_dialog as msg_dialog;
+
+class GoService extends Plugin
 {
 
     /* This plugin only writes its objectClass */
