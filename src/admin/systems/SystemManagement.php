@@ -72,7 +72,6 @@ use \log as log;
 use \LDAP as LDAP;
 use \SelectDeviceType as SelectDeviceType;
 use \ogroup as ogroup;
-use \ArpNewDeviceTabs as ArpNewDeviceTabs;
 use \SnapShotDialog as SnapShotDialog;
 
 class SystemManagement extends Management

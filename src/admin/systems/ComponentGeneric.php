@@ -20,7 +20,19 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-class componentGeneric extends plugin
+namespace GosaSystems\admin\systems;
+
+use \plugin as Plugin;
+use \session as session;
+use \msg_dialog as msg_dialog;
+use \msgPool as msgPool;
+use \log as log;
+use \LDAP as LDAP;
+use \ogroup as ogroup;
+use \baseSelector as baseSelector;
+use \tests as tests;
+
+class ComponentGeneric extends Plugin
 {
     /* Generic terminal attributes */
     var $interfaces = array();
@@ -77,7 +89,7 @@ class componentGeneric extends plugin
             $this->view_logged = TRUE;
             new log("view", "component/" . get_class($this), $this->dn);
         }
-        
+
         /* Do we represent a valid phone? */
         if (!$this->is_account && $this->parent === NULL) {
             switch (getThemeName()) {

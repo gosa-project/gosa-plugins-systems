@@ -20,7 +20,14 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-class termDNS extends plugin
+namespace GosaSystems\admin\systems;
+
+use \plugin as Plugin;
+use \msg_dialog as msg_dialog;
+use \msgPool as msgPool;
+use \log as log;
+
+class TermDns extends Plugin
 {
     /* attribute list for save action */
     var $ignore_account = true;
@@ -85,7 +92,7 @@ class termDNS extends plugin
         $this->IPisMust       = $IPisMust;
         $this->namingAttr     = $namingAttr;
 
-        plugin::__construct($config, $parent->dn, $this->parent);
+        parent::__construct($config, $parent->dn, $this->parent);
 
         $this->attrs = &$this->parent->attrs;
 
@@ -265,7 +272,7 @@ class termDNS extends plugin
 
     function execute()
     {
-        plugin::execute();
+        parent::execute();
 
         /* Call parent execute */
         $smarty = get_smarty();
@@ -536,7 +543,7 @@ class termDNS extends plugin
             $this->last_macAddress = $this->macAddress;
 
             /* Save all posted vars */
-            plugin::save_object();
+            parent::save_object();
 
             /******
               Additional IP Host Numbers 
@@ -628,7 +635,7 @@ class termDNS extends plugin
     function check()
     {
         /* Call common method to give check the hook */
-        $message = plugin::check();
+        $message = parent::check();
 
         /******
           check additional IP Host Numbers 
@@ -753,7 +760,7 @@ class termDNS extends plugin
         $this->dn = $dn;
 
         /* Save DNS setting & ip/Mac*/
-        plugin::save();
+        parent::save();
 
         /* Add all additional ipHostNumbers now 
              */

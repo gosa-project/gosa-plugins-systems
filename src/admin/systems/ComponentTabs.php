@@ -20,10 +20,14 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-class componenttabs extends tabs
+namespace GosaSystems\admin\systems;
+
+use \tabs as Tabs;
+
+class ComponentTabs extends Tabs
 {
 
-    function __construct($config, $data, $dn, $category, $hide_refs = FALSE, $hide_acls = FALSE)
+    function __construct($config, $data, $dn, $category, $hide_refs = false, $hide_acls = false)
     {
         parent::__construct($config, $data, $dn, $category, $hide_refs, $hide_acls);
 
@@ -31,7 +35,7 @@ class componenttabs extends tabs
         $this->addSpecialTabs();
     }
 
-    function save_object($save_current = FALSE)
+    function save_object($save_current = false)
     {
         parent::save_object($save_current);
 
@@ -40,7 +44,7 @@ class componenttabs extends tabs
     }
 
 
-    function save($ignore_account = FALSE)
+    function save($ignore_account = false)
     {
         /* Check for new 'dn', in order to propagate the
        'dn' to all plugins */
@@ -62,6 +66,6 @@ class componenttabs extends tabs
             $this->by_object[$key]->dn = $this->dn;
         }
 
-        parent::save(TRUE);
+        parent::save(true);
     }
 }

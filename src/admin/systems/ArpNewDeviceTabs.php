@@ -20,17 +20,21 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-class ArpNewDeviceTabs extends tabs
+namespace GosaSystems\admin\systems;
+
+use \tabs as Tabs;
+
+class ArpNewDeviceTabs extends Tabs
 {
 
     function save($ignore_account = FALSE)
     {
-        tabs::save($ignore_account);
+        parent::save($ignore_account);
     }
 
     function execute()
     {
-        tabs::execute();
-        return ($this->by_object[$this->current]->execute());
+        parent::execute();
+        return $this->by_object[$this->current]->execute();
     }
 }
