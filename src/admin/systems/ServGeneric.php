@@ -20,7 +20,21 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-class servgeneric extends plugin
+namespace GosaSystems\admin\systems;
+
+use \plugin as Plugin;
+use \session as session;
+use \DaemonEvent as DaemonEvent;
+use \msg_dialog as msg_dialog;
+use \msgPool as msgPool;
+use \log as log;
+use \LDAP as LDAP;
+use \ogroup as ogroup;
+use \baseSelector as baseSelector;
+use \tests as tests;
+
+
+class ServGeneric extends Plugin
 {
     /* Generic terminal attributes */
     var $ignore_account = TRUE;
@@ -45,8 +59,14 @@ class servgeneric extends plugin
     var $modes = array();
     var $ui;
     var $validActions   = array(
-        "reboot" => "", "update" => "", "localboot" => "", "reinstall" => "", "rescan" => "",
-        "wakeup" => "", "memcheck" => "", "sysinfo" => ""
+        "reboot" => "",
+        "update" => "",
+        "localboot" => "",
+        "reinstall" => "",
+        "rescan" => "",
+        "wakeup" => "",
+        "memcheck" => "",
+        "sysinfo" => ""
     );
 
     var $fai_activated  = FALSE;
@@ -76,7 +96,7 @@ class servgeneric extends plugin
         /* Check if FAI is activated */
         $this->fai_activated = $config->pluginEnabled("faiManagement");
 
-        plugin::__construct($config, $dn, $parent);
+        parent::__construct($config, $dn, $parent);
 
         /* Initialize */
         $this->ui = get_userinfo();
@@ -96,7 +116,7 @@ class servgeneric extends plugin
         } else {
             $this->base = preg_replace("/^[^,]+," . preg_quote(get_ou("servgeneric", "serverRDN"), '/') . "/i", "", $this->dn);
         }
-        $this->netConfigDNS = new termDNS($this->config, $this, $this->objectclasses);
+        $this->netConfigDNS = new TermDns($this->config, $this, $this->objectclasses);
         $this->netConfigDNS->set_acl_category("server");
         $this->netConfigDNS->set_acl_base($this->base);
         $this->netConfigDNS->MACisMust = TRUE;
@@ -126,14 +146,14 @@ class servgeneric extends plugin
 
     function set_acl_base($base)
     {
-        plugin::set_acl_base($base);
+        parent::set_acl_base($base);
         $this->netConfigDNS->set_acl_base($base);
     }
 
 
     function set_acl_category($cat)
     {
-        plugin::set_acl_category($cat);
+        parent::set_acl_category($cat);
         $this->netConfigDNS->set_acl_category($cat);
     }
 
@@ -143,7 +163,7 @@ class servgeneric extends plugin
 
 
         /* Call parent execute */
-        plugin::execute();
+        parent::execute();
 
         if ($this->is_account && !$this->view_logged) {
             $this->view_logged = TRUE;
@@ -286,7 +306,7 @@ class servgeneric extends plugin
         /* Save current base, to be able to revert to last base, 
            if new base is invalid or not allowed to be selected */
         $base_tmp = $this->base;
-        plugin::save_object();
+        parent::save_object();
         $this->netConfigDNS->save_object();
 
         /* Refresh base */
@@ -312,7 +332,7 @@ class servgeneric extends plugin
     function check()
     {
         /* Call common method to give check the hook */
-        $message = plugin::check();
+        $message = parent::check();
         $message = array_merge($message, $this->netConfigDNS->check());
         $this->dn = "cn=" . $this->cn . "," . get_ou("servgeneric", "serverRDN") . $this->base;
 
@@ -399,7 +419,7 @@ class servgeneric extends plugin
             $this->gotoMode == "active" &&
             tests::is_ip($this->netConfigDNS->ipHostNumber));
 
-        plugin::save();
+        parent::save();
 
         /* Remove all empty values */
         if ($this->orig_dn == 'new') {
@@ -486,7 +506,7 @@ class servgeneric extends plugin
 
     function PrepareForCopyPaste($source)
     {
-        plugin::PrepareForCopyPaste($source);
+        parent::PrepareForCopyPaste($source);
         if (isset($source['macAddress'][0])) {
             $this->netConfigDNS->macAddress = $source['macAddress'][0];
         }

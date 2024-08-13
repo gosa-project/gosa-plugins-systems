@@ -20,6 +20,16 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+namespace GosaSystems\admin\systems;
+
+use \management as Management;
+use \session as session;
+use \filter as filter;
+use \listing as listing;
+use \msg_dialog as msg_dialog;
+use \tabs as tabs;
+use \multi_plug as multi_plug;
+
 define("START_SERVICE", 1);
 define("STOP_SERVICE", 2);
 define("RESTART_SERVICE", 3);
@@ -642,9 +652,7 @@ class ServerService extends management
     }
 
 
-    function saveCopyDialog()
-    {
-    }
+    function saveCopyDialog() {}
 
 
     function getCopyDialog()

@@ -1,6 +1,11 @@
 <?php
 
-class filterSYSTEMS
+namespace GosaSystems\admin\systems;
+
+use \filterLDAP as filterLDAP;
+
+
+class FilterSystems
 {
 
     static function query($base, $scope, $filter, $attributes, $category, $objectStorage = "")
