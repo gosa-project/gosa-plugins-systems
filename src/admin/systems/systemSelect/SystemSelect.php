@@ -20,7 +20,14 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-class systemSelect extends management
+namespace GosaSystems\admin\systems\systemSelect;
+
+use \management as Management;
+use \session as session;
+use \filter as filter;
+use \listing as listing;
+
+class SystemSelect extends Management
 {
     // Tab definition 
     protected $skipFooter = TRUE;
