@@ -1,6 +1,14 @@
 <?php
 
-class goShareServer extends goService
+namespace GosaSystems\admin\systems\services\shares;
+
+use GosaSystems\admin\systems\services\GoService as GoService;
+use \log as log;
+use \plugin as Plugin;
+use \msg_dialog as msg_dialog;
+use \msgPool as msgPool;
+
+class GoShareServer extends GoService
 {
 
     var $cli_summary      = "This plugin is used within the ServerService Pluign \nand indicates that this server supports shares.";

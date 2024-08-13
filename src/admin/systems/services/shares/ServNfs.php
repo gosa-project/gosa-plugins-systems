@@ -1,6 +1,14 @@
 <?php
 
-class servnfs extends plugin
+namespace GosaSystems\admin\systems\services\shares;
+
+use \log as log;
+use \plugin as Plugin;
+use \msg_dialog as msg_dialog;
+use \msgPool as msgPool;
+use \tests as tests;
+
+class ServNfs extends Plugin
 {
     /* attribute list for save action */
     var $ignore_account   = TRUE;
@@ -64,8 +72,13 @@ class servnfs extends plugin
 
         if ($entry) {
             list(
-                $this->name, $this->description, $this->type, $this->charset,
-                $this->path, $this->option, $this->volume
+                $this->name,
+                $this->description,
+                $this->type,
+                $this->charset,
+                $this->path,
+                $this->option,
+                $this->volume
             ) = explode("|", $entry . "|");
             $this->is_edit          = true;
         } else {
