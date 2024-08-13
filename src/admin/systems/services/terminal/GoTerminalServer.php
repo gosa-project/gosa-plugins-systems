@@ -1,6 +1,16 @@
 <?php
 
-class goTerminalServer extends goService
+namespace GosaSystems\admin\systems\services\terminal;
+
+use \log as log;
+use GosaSystems\admin\systems\services\GoService as GoService;
+use \plugin as plugin;
+use \msg_dialog as msg_dialog;
+use \msgPool as msgPool;
+
+
+
+class GoTerminalServer extends GoService
 {
 
     /* This plugin only writes its objectClass */

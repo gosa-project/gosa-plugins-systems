@@ -1,5 +1,11 @@
 <?php
-class goSpamServerRule extends plugin
+
+namespace GosaSystems\admin\systems\services\spam;
+
+use \log as log;
+use \plugin as Plugin;
+
+class GoSpamServerRule extends Plugin
 {
 
     var $attributes = array("name", "rule");

@@ -1,6 +1,17 @@
 <?php
 
-class gospamserver extends goService
+namespace GosaSystems\admin\systems\services\spam;
+
+use \log as log;
+use GosaSystems\admin\systems\services\GoService as GoService;
+use \plugin as plugin;
+use \msg_dialog as msg_dialog;
+use \msgPool as msgPool;
+use \sortableListing as sortableListing;
+use \tests as tests;
+
+
+class GoSpamServer extends GoService
 {
 
     /* This plugin only writes its objectClass */
@@ -120,7 +131,7 @@ class gospamserver extends goService
 
         /* Add a new rule */
         if (isset($_POST['AddRule']) && $this->acl_is_writeable("saRule")) {
-            $this->dialog = new goSpamServerRule($this->config, $this->dn);
+            $this->dialog = new GoSpamServerRule($this->config, $this->dn);
             $this->dialog->acl_base = $this->acl_base;
             $this->dialog->acl_category = $this->acl_category;
         }
@@ -140,13 +151,13 @@ class gospamserver extends goService
         if ($action['action'] == 'edit') {
             $id = $this->ruleList->getKey($action['targets'][0]);
             $rule = $this->Rules[$id];
-            $this->dialog = new goSpamServerRule($this->config, $this->dn, $id, $rule);
+            $this->dialog = new GoSpamServerRule($this->config, $this->dn, $id, $rule);
             $this->dialog->acl_base = $this->acl_base;
             $this->dialog->acl_category = $this->acl_category;
         }
 
         /* Save rules */
-        if (isset($_POST['SaveRule']) && $this->dialog instanceof goSpamServerRule) {
+        if (isset($_POST['SaveRule']) && $this->dialog instanceof GoSpamServerRule) {
             $this->dialog->save_object();
             $msgs = $this->dialog->check();
             if (count($msgs)) {
