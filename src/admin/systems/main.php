@@ -20,8 +20,13 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+namespace GosaSystems\admin\systems;
+
+use \session as session;
+
 /* Remove locks created by this plugin
  */
+
 if ($remove_lock) {
     if (session::is_set('systemManagement')) {
         $macl = session::get('systemManagement');

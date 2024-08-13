@@ -20,7 +20,12 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-class servtabs extends tabs
+namespace GosaSystems\admin\systems;
+
+use \tabs as Tabs;
+use \session as session;
+
+class ServerTabs extends Tabs
 {
     public $was_activated = FALSE;
 
