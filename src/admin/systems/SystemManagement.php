@@ -55,7 +55,27 @@
 #       |
 #       |->activate_new_device()   (Finally activate the device - FAIsate=..)
 #
-class systemManagement extends management
+
+namespace GosaSystems\admin\systems;
+
+use \management as Management;
+use \session as session;
+use \filter as filter;
+use \listing as listing;
+use \DaemonEvent as DaemonEvent;
+use \CopyPasteHandler as CopyPasteHandler;
+use \SnapshotHandler as SnapshotHandler;
+use \msg_dialog as msg_dialog;
+use \msgPool as msgPool;
+use \passwordMethodCrypt as passwordMethodCrypt;
+use \log as log;
+use \LDAP as LDAP;
+use \SelectDeviceType as SelectDeviceType;
+use \ogroup as ogroup;
+use \ArpNewDeviceTabs as ArpNewDeviceTabs;
+use \SnapShotDialog as SnapShotDialog;
+
+class SystemManagement extends Management
 {
     var $plHeadline     = "Systems";
     var $plDescription  = "Manage systems, their services and prepare them for use with GOsa";
@@ -149,10 +169,6 @@ class systemManagement extends management
 
         $this->si_active = FALSE;
 
-        // Check if we are able to communicate with the GOsa supprot daemon
-        if (class_available("opsi")) {
-            $this->opsi = new opsi($this->config);
-        }
         parent::__construct($config, $ui, "systems", $headpage);
     }
 
@@ -522,7 +538,7 @@ class systemManagement extends management
      */
     function cancelEdit()
     {
-        management::cancelEdit();
+        parent::cancelEdit();
         $this->activationQueue = array();
     }
 
@@ -709,7 +725,7 @@ class systemManagement extends management
                 if (!class_available("ArpNewDeviceTabs")) {
                     msg_dialog::display(_("Error"), msgPool::class_not_found("ArpNewDevice"), ERROR_DIALOG);
                 } else {
-                    return (management::editEntry($action, $target, $all, "ArpNewDeviceTabs", "ARPNEWDEVICETABS", "incoming"));
+                    return (parent::editEntry($action, $target, $all, "ArpNewDeviceTabs", "ARPNEWDEVICETABS", "incoming"));
                 }
             } elseif ($type == "FAKE_OC_NewDevice") {
                 if (!class_available("SelectDeviceType")) {
@@ -723,7 +739,7 @@ class systemManagement extends management
                     // see condition  -$s_action == "::systemTypeChosen"-  for further handling
                 }
             } else {
-                return (management::editEntry($action, $target, $all, $tData['tabClass'], $tData['tabDesc'], $tData['aclCategory']));
+                return (parent::editEntry($action, $target, $all, $tData['tabClass'], $tData['tabDesc'], $tData['aclCategory']));
             }
         }
     }
@@ -742,7 +758,7 @@ class systemManagement extends management
         if (!isset($tInfo[$info])) {
             trigger_error("Unknown action type '" . $action . "' cant create a new system!");
         } else {
-            return (management::newEntry(
+            return (parent::newEntry(
                 $action,
                 $target,
                 $all,
@@ -885,7 +901,7 @@ class systemManagement extends management
 
                     // Open object an preset some values like the objects base 
                     del_lock($dn);
-                    management::editEntry('editEntry', array($dn), array(), $tabClass, $tabDesc, $aclCategory);
+                    parent::editEntry('editEntry', array($dn), array(), $tabClass, $tabDesc, $aclCategory);
                     $this->displayApplyBtn = FALSE;
                     $this->tabObject->set_acl_base($headpage->getBase());
 
@@ -904,26 +920,6 @@ class systemManagement extends management
                     } else {
                         $this->tabObject->by_object[$plugClass]->baseSelector->setBase($headpage->getBase());
                         $this->tabObject->base = $headpage->getBase();
-                    }
-
-                    // Assign some default values for opsi hosts
-                    if ($this->tabObject instanceof opsi_tabs) {
-                        $ldap = $this->config->get_ldap_link();
-                        $ldap->cat($dn);
-                        $source_attrs = $ldap->fetch();
-                        foreach (array("macAddress" => "mac", "cn" => "hostId", "description" => "description") as $src => $attr) {
-                            if (isset($source_attrs[$src][0])) {
-                                $this->tabObject->by_object['opsiGeneric']->$attr = $source_attrs[$src][0];
-                            }
-                        }
-                        @DEBUG(
-                            DEBUG_TRACE,
-                            __LINE__,
-                            __FUNCTION__,
-                            __FILE__,
-                            "",
-                            "<b>OPSI attributes adapted</b>"
-                        );
                     }
 
                     // Queue entry to be activated, when it is saved.
@@ -1093,7 +1089,7 @@ class systemManagement extends management
         }
 
         // Try to save changes here.
-        $str = management::saveChanges();
+        $str = parent::saveChanges();
         if ($this->tabObject) return ("");
 
         // Activate system if required..
@@ -1107,23 +1103,7 @@ class systemManagement extends management
            target opsi -> Remove source.
            target gosa -> Activate system.
          */
-        if ($this->last_tabObject instanceof opsi_tabs) {
-            $ldap = $this->config->get_ldap_link();
-            $ldap->cd($this->config->current['BASE']);
-            $ldap->rmdir($this->last_tabObject->dn);
-            @DEBUG(
-                DEBUG_LDAP,
-                __LINE__,
-                __FUNCTION__,
-                __FILE__,
-                "Source removed: " . $this->tabObject->dn,
-                "<b>Opsi host activated</b>"
-            );
-
-            $hostId =  $this->last_tabObject->by_object['opsiGeneric']->hostId;
-            $mac    =  $this->last_tabObject->by_object['opsiGeneric']->mac;
-            $this->opsi->job_opsi_activate_client($hostId, $mac);
-        } elseif (isset($this->last_tabObject->was_activated) && $this->last_tabObject->was_activated) {
+        if (isset($this->last_tabObject->was_activated) && $this->last_tabObject->was_activated) {
             $this->activate_new_device($this->last_tabObject->dn);
         }
 
@@ -1138,31 +1118,14 @@ class systemManagement extends management
      */
     protected function applyChanges()
     {
-        $str = management::applyChanges();
+        $str = parent::applyChanges();
         if ($str) return ($str);
 
         /* Post handling for activated systems
            target opsi -> Remove source.
            target gosa -> Activate system.
          */
-        if ($this->tabObject instanceof opsi_tabs) {
-            $ldap = $this->config->get_ldap_link();
-            $ldap->cd($this->config->current['BASE']);
-            $ldap->rmdir($this->tabObject->dn);
-            @DEBUG(
-                DEBUG_LDAP,
-                __LINE__,
-                __FUNCTION__,
-                __FILE__,
-                "Source removed: " . $this->tabObject->dn,
-                "<b>Opsi host activated</b>"
-            );
-
-            $hostId =  $this->tabObject->by_object['opsiGeneric']->hostId;
-            $mac    =  $this->tabObject->by_object['opsiGeneric']->mac;
-            $this->opsi->job_opsi_activate_client($hostId, $mac);
-            $this->tabObject->set_acl_base($this->dn);
-        } elseif (isset($this->tabObject->was_activated) && $this->tabObject->was_activated) {
+        if (isset($this->tabObject->was_activated) && $this->tabObject->was_activated) {
             $this->activate_new_device($this->tabObject->dn);
         }
     }
@@ -1372,7 +1335,7 @@ class systemManagement extends management
      */
     function detectPostActions()
     {
-        $action = management::detectPostActions();
+        $action = parent::detectPostActions();
         if (isset($_POST['abort_event_dialog']))  $action['action'] = "cancel";
         if (isset($_POST['save_event_dialog']))  $action['action'] = "saveEvent";
         if (isset($_POST['cd_create']))  $action['action'] = "initiateISOcreation";
