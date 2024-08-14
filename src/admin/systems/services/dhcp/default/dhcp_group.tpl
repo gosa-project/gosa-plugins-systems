@@ -1,23 +1,23 @@
 {* GOsa dhcp sharedNetwork - smarty template *}
+<div class="dhcp-group-wrapper">
+    <div class="row">
+        <h3>{t}Generic{/t}</h3>
+        <div class="col s12 xl6">
+            <h4>{t}DHCP group settings{/t}</h4>
 
-<h3>{t}Generic{/t}</h3>
+            {render acl=$acl}
+            <div class="input-field">
+                <input id='cn' type='text' name='cn' value='{$cn}' title='{t}Name of group{/t}'>
+                <label lang="cn">{t}Name{/t}{$must}</label>
+            </div>
+            {/render}
 
-<table summary="{t}DHCP group settings{/t}">
- <tr>
-  <td>{t}Name{/t}{$must}</td>
-  <td>
-   {render acl=$acl}
-    <input id='cn' type='text' name='cn' value='{$cn}' title='{t}Name of group{/t}'>
-   {/render}
-  </td>
- </tr>
-</table>
-
-<hr>
+        </div>
+    </div>
+</div>
 
 <!-- Place cursor in correct field -->
 <script language="JavaScript" type="text/javascript">
- <!-- // First input field on page	 
-  focus_field('cn');  
- -->
+    // First input field on page	 
+    focus_field('cn');
 </script>

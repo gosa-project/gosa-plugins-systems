@@ -1,66 +1,51 @@
 {* GOsa dhcp subnet - smarty template *}
-
-<h3>{t}Generic{/t}</h3>
-<table width="100%" summary="{t}DHCP subnet settings{/t}">
- <tr>
-  <td width="50%">
-
-   <table summary="{t}DHCP subnet settings{/t}">
-    <tr>
-     <td>{t}Network address{/t}{$must}</td>
-     <td>
+<div class="dhcp-subnet-wrapper">
+  <div class="row">
+    <div class="col s12 xl6">
+      <h3>{t}Generic{/t}</h3>
       {render acl=$acl}
-       <input id='cn' type='text' name='cn' value='{$cn}'>
+      <div class="input-field">
+        <input id='cn' type='text' name='cn' value='{$cn}'>
+        <label for="cn">{t}Network address{/t}{$must}</label>
+      </div>
       {/render}
-     </td>
-    </tr>
-    <tr>
-     <td>{t}Net mask{/t}{$must}</td>
-     <td>
+
       {render acl=$acl}
-       <input type='text' name='dhcp_netmask' value='{$dhcp_netmask}'>
+      <div class="input-field">
+        <input type='text' name='dhcp_netmask' id="dhcp_netmask" value='{$dhcp_netmask}'>
+        <label for="dhcp_netmask">{t}Net mask{/t}{$must}</label>
+      </div>
       {/render}
-     </tr>
-    </table>
+    </div>
 
-   </td>
-   <td>
-
-    <table summary="{t}DHCP subnet settings{/t}">
-     <tr>
-      <td>
-       {render acl=$acl}
+    <div class="col s12 xl6">
+      {render acl=$acl}
+      <label>
         <input type="checkbox" name="use_range" value="1"
           onChange="changeState('range_start');changeState('range_stop');" {$use_range}>
-       </td>
+        <span>{t}Range for dynamic address assignment{/t}</span>
+      </label>
       {/render}
-      <td>{t}Range for dynamic address assignment{/t}</td>
-     </tr>
-     <tr>
-      <td>&nbsp;</td>
-      <td>
-       {render acl=$acl}
+
+      {render acl=$acl}
+      <div class="input-field">
         <input type='text' id='range_start' name='range_start' value='{$range_start}' {$range_disabled}>
-       {/render}&nbsp;
-       <b>-</b>&nbsp;
-       {render acl=$acl}
+      </div>
+      {/render}
+
+      {render acl=$acl}
+      <div class="input-field">
         <input type='text' id='range_stop' name='range_stop' value='{$range_stop}' {$range_disabled}>
-       {/render}
-      </td>
-     </tr>
-    </table>
+      </div>
+      {/render}
+    </div>
+  </div>
+</div>
 
-   </td>
-  </tr>
- </table>
-
- <input type='hidden' name='dhcp_subnet_posted' value='1'>
-
- <hr>
+<input type='hidden' name='dhcp_subnet_posted' value='1'>
 
 <!-- Place cursor in correct field -->
 <script language="JavaScript" type="text/javascript">
- <!-- // First input field on page	 
-  focus_field('cn');  
- -->
+  // First input field on page	 
+  focus_field('cn');
 </script>
