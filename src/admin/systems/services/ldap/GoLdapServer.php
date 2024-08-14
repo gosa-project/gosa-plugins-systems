@@ -1,6 +1,14 @@
 <?php
 
-class goLdapServer extends goService
+namespace GosaSystems\admin\systems\services\ldap;
+
+use \log as log;
+use GosaSystems\admin\systems\services\GoService as GoService;
+use \plugin as plugin;
+use \msgPool as msgPool;
+use \msg_dialog as msg_dialog;
+
+class GoLdapServer extends GoService
 {
 
     var $cli_summary      = "This plugin is used within the ServerService Pluign \nand indicates that this server has goLdapServer defined.";

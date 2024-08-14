@@ -18,17 +18,22 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-class dhcpSubnet extends dhcpPlugin
+namespace GosaSystems\admin\systems\services\dhcp;
+
+use \msgPool as msgPool;
+use \tests as tests;
+
+class DhcpSubnet extends DhcpPlugin
 {
     /* Used attributes */
-    var $dhcpNetMask = 24;
-    var $dhcpRange = "";
-    var $range_start = "";
-    var $range_stop = "";
-    var $use_range = FALSE;
+    public $dhcpNetMask = 24;
+    public $dhcpRange = "";
+    public $range_start = "";
+    public $range_stop = "";
+    public $use_range = FALSE;
 
     /* attribute list for save action */
-    var $objectclasses = array('top', 'dhcpSubnet', 'dhcpOptions');
+    public $objectclasses = array('top', 'dhcpSubnet', 'dhcpOptions');
 
     function __construct($parent, $attrs)
     {
@@ -90,9 +95,7 @@ class dhcpSubnet extends dhcpPlugin
     }
 
 
-    function remove_from_parent()
-    {
-    }
+    function remove_from_parent() {}
 
 
     /* Save data to object */
@@ -151,12 +154,14 @@ class dhcpSubnet extends dhcpPlugin
         }
 
         /* IP's? */
-        foreach (array(
-            'dhcpNetMask' => _("Net mask"),
-            'cn'          => _("Network address"),
-            'range_start' => _("Range"),
-            'range_stop'  => _("Range")
-        ) as $attr => $str) {
+        foreach (
+            array(
+                'dhcpNetMask' => _("Net mask"),
+                'cn'          => _("Network address"),
+                'range_start' => _("Range"),
+                'range_stop'  => _("Range")
+            ) as $attr => $str
+        ) {
             if ($this->$attr != "" && !tests::is_ip($this->$attr)) {
                 $message[] = msgPool::invalid($str, "", "", "192.168.0.23");
             }

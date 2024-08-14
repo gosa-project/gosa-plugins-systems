@@ -31,19 +31,19 @@ class GoService extends Plugin
 {
 
     /* This plugin only writes its objectClass */
-    var $objectclasses    = array();
-    var $attributes       = array();
-    var $StatusFlag       = "";
+    public $objectclasses    = array();
+    public $attributes       = array();
+    public $StatusFlag       = "";
 
     /* This class can't be assigned twice so it conflicts with itsself */
-    var $conflicts            = array();
-    var $dn                   = NULL;
-    var $cn                   = "";
-    var $DisplayName          = "";
-    var $view_logged          = FALSE;
+    public $conflicts            = array();
+    public $dn                   = NULL;
+    public $cn                   = "";
+    public $DisplayName          = "";
+    public $view_logged          = FALSE;
 
-    var $krb_service_prefix   = "";
-    var $krb_host_key         = NULL;
+    public $krb_service_prefix   = "";
+    public $krb_host_key         = NULL;
 
     /* Construcktion */
     function __construct(&$config, $dn, $parent = NULL)

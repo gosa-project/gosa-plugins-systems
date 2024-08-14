@@ -18,21 +18,26 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-class dhcpPlugin extends plugin
+namespace GosaSystems\admin\systems\services\dhcp;
+
+use \plugin as Plugin;
+use \stats as stats;
+
+class DhcpPlugin extends Plugin
 {
     /* Used attributes */
-    var $cn = "";
-    var $orig_cn = "";
-    var $options = null;
-    var $statements = array();
+    public $cn = "";
+    public $orig_cn = "";
+    public $options = null;
+    public $statements = null;
 
     /* Subobjects */
-    var $network;
-    var $advanced;
+    public $network;
+    public $advanced;
 
     /* attribute list for save action */
-    var $attributes = array();
-    var $objectclasses = array();
+    public $attributes = array();
+    public $objectclasses = array();
 
     function __construct(&$parent, $attrs)
     {
@@ -99,9 +104,7 @@ class dhcpPlugin extends plugin
     }
 
 
-    function remove_from_parent()
-    {
-    }
+    function remove_from_parent() {}
 
 
     /* Save data to object */

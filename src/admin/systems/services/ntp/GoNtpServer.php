@@ -1,6 +1,14 @@
 <?php
 
-class goNtpServer extends goService
+namespace GosaSystems\admin\systems\services\ntp;
+
+use \log as log;
+use GosaSystems\admin\systems\services\GoService as GoService;
+use \plugin as plugin;
+use \msgPool as msgPool;
+use \msg_dialog as msg_dialog;
+
+class GoNtpServer extends GoService
 {
 
     var $cli_summary      = "This pluign is used within the ServerService Pluign \nand indicates that this server supports NTP service.";
@@ -153,7 +161,5 @@ class goNtpServer extends goService
         return array();
     }
 
-    function save_object()
-    {;
-    }
+    function save_object() {}
 }

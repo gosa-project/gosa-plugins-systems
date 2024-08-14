@@ -1,24 +1,33 @@
 <?php
 
-class goKioskService extends goService
+namespace GosaSystems\admin\systems\services\kiosk;
+
+use \log as log;
+use GosaSystems\admin\systems\services\GoService as GoService;
+use \plugin as plugin;
+use \msgPool as msgPool;
+use \msg_dialog as msg_dialog;
+use \sortableListing as sortableListing;
+
+class GoKioskService extends GoService
 {
 
     /* This plugin only writes its objectClass */
-    var $objectclasses    = array("goEnvironmentServer");
-    var $attributes       = array("gotoKioskProfile");
-    var $StatusFlag       = "";
+    public $objectclasses    = array("goEnvironmentServer");
+    public $attributes       = array("gotoKioskProfile");
+    public $StatusFlag       = "";
 
     /* This class can't be assigned twice so it conflicts with itsself */
-    var $conflicts        = array("goKioskService");
+    public $conflicts        = array("goKioskService");
 
-    var $baseDir          = "../kiosk";
-    var $filesToAttach    = array();
-    var $cn               = "unknown";
-    var $orig_cn          = "unknown";
-    var $gotoKioskProfiles = array();
-    var $gotoKioskProfile = array();
-    var $server_path      = "http://%cn/kiosk";
-    var $kioskList = null;
+    public $baseDir          = "../kiosk";
+    public $filesToAttach    = array();
+    public $cn               = "unknown";
+    public $orig_cn          = "unknown";
+    public $gotoKioskProfiles = array();
+    public $gotoKioskProfile = array();
+    public $server_path      = "http://%cn/kiosk";
+    public $kioskList = null;
 
     function __construct(&$config, $dn, $parent)
     {

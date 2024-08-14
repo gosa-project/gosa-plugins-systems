@@ -1,28 +1,37 @@
 <?php
 
-class servdns extends goService
+namespace GosaSystems\admin\systems\services\dns;
+
+use GosaSystems\admin\systems\services\GoService as GoService;
+use \plugin as Plugin;
+use \msgPool as msgPool;
+use \msg_dialog as msg_dialog;
+use \sortableListing as sortableListing;
+use \log as log;
+
+class ServDns extends GoService
 {
     /* attribute list for save action */
-    var $ignore_account   = FALSE;
-    var $attributes       = array();
-    var $objectclasses    = array("whatever");
+    public $ignore_account   = FALSE;
+    public $attributes       = array();
+    public $objectclasses    = array("whatever");
 
-    var $RecordTypes      = array();
-    var $Zones            = array();
+    public $RecordTypes      = array();
+    public $Zones            = array();
 
-    var $orig_dn          = "";
+    public $orig_dn          = "";
 
-    var $initially_was_account;
+    public $initially_was_account;
 
     /* ServerService tab vars */
-    var $conflicts        = array("servdns");
-    var $DisplayName      = "";
-    var $StatusFlag       = "";
-    var $view_logged      = FALSE;
+    public $conflicts        = array("servdns");
+    public $DisplayName      = "";
+    public $StatusFlag       = "";
+    public $view_logged      = FALSE;
 
-    var $dns_server_list   = array("ENTRIES" => array(), "FOR_LIST" => array());
-    var $take_over_id       = -1;
-    var $zoneList = null;
+    public $dns_server_list   = array("ENTRIES" => array(), "FOR_LIST" => array());
+    public $take_over_id       = -1;
+    public $zoneList = null;
 
 
     function __construct(&$config, $dn = NULL, $parent = NULL)

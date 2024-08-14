@@ -1,6 +1,14 @@
 <?php
 
-class rSyslogServer extends goService
+namespace GosaSystems\admin\systems\services\rsyslog;
+
+use \log as log;
+use GosaSystems\admin\systems\services\GoService as GoService;
+use \plugin as plugin;
+use \msgPool as msgPool;
+use \msg_dialog as msg_dialog;
+
+class RsyslogServer extends GoService
 {
 
     /* This plugin only writes its objectClass */

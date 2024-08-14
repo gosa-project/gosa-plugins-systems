@@ -18,15 +18,20 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-class dhcpPool extends dhcpPlugin
+namespace GosaSystems\admin\systems\services\dhcp;
+
+use \msgPool as msgPool;
+use \tests as tests;
+
+class DhcpPool extends DhcpPlugin
 {
     /* Used attributes */
-    var $dhcpRange = "";
-    var $range_start = "";
-    var $range_stop = "";
+    public $dhcpRange = "";
+    public $range_start = "";
+    public $range_stop = "";
 
     /* attribute list for save action */
-    var $objectclasses = array('top', 'dhcpPool');
+    public $objectclasses = array('top', 'dhcpPool');
 
     function __construct($parent, $attrs)
     {
@@ -68,9 +73,7 @@ class dhcpPool extends dhcpPlugin
         return ($display);
     }
 
-    function remove_from_parent()
-    {
-    }
+    function remove_from_parent() {}
 
 
     /* Save data to object */
@@ -170,8 +173,14 @@ class dhcpPool extends dhcpPlugin
     {
         $type = "";
         $types = array(
-            "dhcpService", "dhcpClass", "dhcpSubClass", "dhcpHost",
-            "dhcpGroup", "dhcpPool", "dhcpSubnet", "dhcpSharedNetwork"
+            "dhcpService",
+            "dhcpClass",
+            "dhcpSubClass",
+            "dhcpHost",
+            "dhcpGroup",
+            "dhcpPool",
+            "dhcpSubnet",
+            "dhcpSharedNetwork"
         );
 
         foreach ($cache[$dn]['objectClass'] as $oc) {

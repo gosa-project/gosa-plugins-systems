@@ -18,19 +18,25 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-class dhcpAdvanced extends plugin
+namespace GosaSystems\admin\systems\services\dhcp;
+
+use \plugin as Plugin;
+use \msg_dialog as msg_dialog;
+use \stats as stats;
+
+class DhcpAdvanced extends Plugin
 {
     /* Used attributes */
-    var $options = null;
-    var $statements = null;
-    var $show_advanced = FALSE;
-    var $autoStatements = array();
-    var $autoOptions = array();
+    public $options = null;
+    public $statements = null;
+    public $show_advanced = FALSE;
+    public $autoStatements = array();
+    public $autoOptions = array();
 
     /* attribute list for save action */
-    var $attributes = array();
-    var $objectclasses = array();
-    var $parent;
+    public $attributes = array();
+    public $objectclasses = array();
+    public $parent;
 
     function __construct()
     {
@@ -127,9 +133,7 @@ class dhcpAdvanced extends plugin
         return ($smarty->fetch(get_template_path('dhcp_advanced.tpl', TRUE, dirname(__FILE__))));
     }
 
-    function remove_from_parent()
-    {
-    }
+    function remove_from_parent() {}
 
 
     /* Save data to object */
@@ -154,9 +158,7 @@ class dhcpAdvanced extends plugin
 
 
     /* Save to LDAP */
-    function save()
-    {
-    }
+    function save() {}
 
 
     function setAutoOptions($addopt = array())

@@ -18,20 +18,25 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-class dhcpDnsZone extends dhcpPlugin
+namespace GosaSystems\admin\systems\services\dhcp;
+
+use \msgPool as msgPool;
+
+
+class DhcpDnsZone extends DhcpPlugin
 {
     /* Used attributes */
-    var $dhcpKeyDN = "";
-    var $dhcpDnsZone = "";
-    var $dhcpDnsZoneServer = "";
-    var $cn = "";
+    public $dhcpKeyDN = "";
+    public $dhcpDnsZone = "";
+    public $dhcpDnsZoneServer = "";
+    public $cn = "";
 
-    var $drop_down_domain = array();
-    var $drop_down_nameserver = array();
-    var $drop_down_tsigkey = array();
+    public $drop_down_domain = array();
+    public $drop_down_nameserver = array();
+    public $drop_down_tsigkey = array();
 
     /* attribute list for save action */
-    var $objectclasses = array("top", "dhcpDnsZone");
+    public $objectclasses = array("top", "dhcpDnsZone");
 
 
     function __construct($parent, $attrs, $host_exists_in_gosa = FALSE)
@@ -102,9 +107,7 @@ class dhcpDnsZone extends dhcpPlugin
 
 
 
-    function remove_from_parent()
-    {
-    }
+    function remove_from_parent() {}
 
 
     /* Save data to object */

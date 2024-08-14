@@ -1,6 +1,17 @@
 <?php
 
-class servkolab extends goService
+namespace GosaSystems\admin\systems\services\kolab;
+
+use \log as log;
+use GosaSystems\admin\systems\services\GoService as GoService;
+use \plugin as plugin;
+use \msgPool as msgPool;
+use \msg_dialog as msg_dialog;
+use \sortableListing as sortableListing;
+use \tests as tests;
+use \mailMethod as mailMethod;
+
+class ServKolab extends GoService
 {
     var $postfix_mydomain                 = "";
     var $cyrus_admins                     = "";
@@ -30,10 +41,23 @@ class servkolab extends goService
     var $postfix_mynetworksData = null;
 
     var $attributes =  array(
-        "postfix_mydomain", "postfix_mydestination", "proftpd_ftp", "k",
-        "postfix_mynetworks", "postfix_enable_virus_scan", "postfix_relayhost", "apache_http",
-        "postfix_allow_unauthenticated", "cyrus_admins", "cyrus_imap", "kolabFreeBusyFuture",
-        "cyrus_pop3", "cyrus_imaps", "cyrus_pop3s", "cyrus_sieve", "apache_allow_unauthenticated_fb",
+        "postfix_mydomain",
+        "postfix_mydestination",
+        "proftpd_ftp",
+        "k",
+        "postfix_mynetworks",
+        "postfix_enable_virus_scan",
+        "postfix_relayhost",
+        "apache_http",
+        "postfix_allow_unauthenticated",
+        "cyrus_admins",
+        "cyrus_imap",
+        "kolabFreeBusyFuture",
+        "cyrus_pop3",
+        "cyrus_imaps",
+        "cyrus_pop3s",
+        "cyrus_sieve",
+        "apache_allow_unauthenticated_fb",
         "cyrus_quotawarn"
     );
     var $objectclasses = array("top", "kolab");
@@ -326,12 +350,20 @@ class servkolab extends goService
             }
 
             /* Save checkboxes */
-            foreach (array(
-                "postfix_enable_virus_scan", "postfix_allow_unauthenticated",
-                "cyrus_imap", "cyrus_pop3", "cyrus_imaps",
-                "cyrus_pop3s", "cyrus_sieve", "apache_allow_unauthenticated_fb",
-                "proftpd_ftp", "apache_http"
-            ) as $cb) {
+            foreach (
+                array(
+                    "postfix_enable_virus_scan",
+                    "postfix_allow_unauthenticated",
+                    "cyrus_imap",
+                    "cyrus_pop3",
+                    "cyrus_imaps",
+                    "cyrus_pop3s",
+                    "cyrus_sieve",
+                    "apache_allow_unauthenticated_fb",
+                    "proftpd_ftp",
+                    "apache_http"
+                ) as $cb
+            ) {
 
                 if ($this->acl_is_writeable(preg_replace("/_/", "", $cb))) {
                     if (isset($_POST[$cb])) {

@@ -1,33 +1,40 @@
 <?php
 
-class goFaxServer extends goService
+namespace GosaSystems\admin\systems\services\gofax;
+
+use \log as log;
+use GosaSystems\admin\systems\services\GoService as GoService;
+use \plugin as plugin;
+use \msgPool as msgPool;
+
+class GoFaxServer extends GoService
 {
 
-    var $cli_summary      = "This pluign is used within the ServerService Pluign \nand indicates that this server supports fax informations.";
-    var $cli_description  = "Some longer text\nfor help";
-    var $cli_parameters   = array("eins" => "Eins ist toll", "zwei" => "Zwei ist noch besser");
+    public $cli_summary      = "This pluign is used within the ServerService Pluign \nand indicates that this server supports fax informations.";
+    public $cli_description  = "Some longer text\nfor help";
+    public $cli_parameters   = array("eins" => "Eins ist toll", "zwei" => "Zwei ist noch besser");
 
     /* This plugin only writes its objectClass */
-    var $objectclasses    = array("goFaxServer");
-    var $attributes       = array("goFaxAdmin", "goFaxPassword");
-    var $StatusFlag       = "goFaxServerStatus";
+    public $objectclasses    = array("goFaxServer");
+    public $attributes       = array("goFaxAdmin", "goFaxPassword");
+    public $StatusFlag       = "goFaxServerStatus";
 
     /* This class can't be assigned twice so it conflicts with itsself */
-    var $conflicts        = array("goFaxServer");
+    public $conflicts        = array("goFaxServer");
 
-    var $DisplayName      = "";
-    var $dn               = NULL;
-    var $acl;
+    public $DisplayName      = "";
+    public $dn               = NULL;
+    public $acl;
 
-    var $goFaxAdmin         = "";
-    var $goFaxPassword      = "";
-    var $goFaxServerStatus  = "";
-    var $cn                 = "";
-    var $view_logged  = FALSE;
+    public $goFaxAdmin         = "";
+    public $goFaxPassword      = "";
+    public $goFaxServerStatus  = "";
+    public $cn                 = "";
+    public $view_logged  = FALSE;
 
     function __construct(&$config, $dn)
     {
-        goService::__construct($config, $dn);
+        parent::__construct($config, $dn);
         $this->DisplayName = _("FAX database");
     }
 
@@ -56,7 +63,7 @@ class goFaxServer extends goService
 
     function getListEntry()
     {
-        $fields               = goService::getListEntry();
+        $fields               = parent::getListEntry();
         $fields['Message']    = _("FAX database configuration");
         #$fields['AllowEdit']  = true;
         return ($fields);

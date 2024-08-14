@@ -1,31 +1,41 @@
 <?php
 
-class servdhcp extends goService
+namespace GosaSystems\admin\systems\services\dhcp;
+
+use GosaSystems\admin\systems\services\GoService as GoService;
+use \plugin as Plugin;
+use \msgPool as msgPool;
+use \msg_dialog as msg_dialog;
+use \sortableListing as sortableListing;
+use \LDAP as LDAP;
+
+
+class ServDhcp extends GoService
 {
     /* attribute list for save action */
-    var $attributes = array("dhcpServiceDN");
-    var $objectclasses = array("dhcpServer");
-    var $conflicts        = array("servdhcp");
-    var $dhcpServiceDN = "";
+    public $attributes = array("dhcpServiceDN");
+    public $objectclasses = array("dhcpServer");
+    public $conflicts        = array("servdhcp");
+    public $dhcpServiceDN = "";
 
     /* Section storage */
-    var $dhcpSections = array();
-    var $dhcpObjectCache = array();
+    public $dhcpSections = array();
+    public $dhcpObjectCache = array();
 
-    var $dhcpDNtoID = array();
+    public $dhcpDNtoID = array();
 
-    var $current_object = "";
-    var $types = array();
-    var $serviceDN = "";
+    public $current_object = "";
+    public $types = array();
+    public $serviceDN = "";
 
-    var $quote_option = array("domain-name");
+    public $quote_option = array("domain-name");
 
-    var $orig_dn = "";
+    public $orig_dn = "";
 
-    var $dhcp_server_list   = array("ENTRIES" => array(), "FOR_LIST" => array());
-    var $take_over_id       = -1;
-    var $display_warning  = TRUE;
-    var $entryList = null;
+    public $dhcp_server_list   = array("ENTRIES" => array(), "FOR_LIST" => array());
+    public $take_over_id       = -1;
+    public $display_warning  = TRUE;
+    public $entryList = null;
 
     function __construct(&$config, $dn = NULL, $parent = NULL)
     {
@@ -699,9 +709,16 @@ class servdhcp extends goService
     {
         $type = "";
         $types = array(
-            "dhcpService", "dhcpClass", "dhcpSubClass", "dhcpHost",
-            "dhcpGroup", "dhcpPool", "dhcpSubnet", "dhcpSharedNetwork",
-            "dhcpTSigKey", "dhcpDnsZone"
+            "dhcpService",
+            "dhcpClass",
+            "dhcpSubClass",
+            "dhcpHost",
+            "dhcpGroup",
+            "dhcpPool",
+            "dhcpSubnet",
+            "dhcpSharedNetwork",
+            "dhcpTSigKey",
+            "dhcpDnsZone"
         );
 
         foreach ($this->dhcpObjectCache[$dn]['objectClass'] as $oc) {
@@ -742,9 +759,7 @@ class servdhcp extends goService
     }
 
 
-    function take_over_service()
-    {
-    }
+    function take_over_service() {}
 
 
     function get_list_of_dhcp_servers()

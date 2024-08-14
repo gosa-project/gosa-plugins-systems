@@ -18,15 +18,23 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-class dhcpNetwork extends plugin
+namespace GosaSystems\admin\systems\services\dhcp;
+
+use \plugin as Plugin;
+use \msgPool as msgPool;
+use \msg_dialog as msg_dialog;
+use \stats as stats;
+use \tests as tests;
+
+class DhcpNetwork extends Plugin
 {
     /* Used attributes */
-    var $options = null;
-    var $statements = null;
+    public $options = null;
+    public $statements = null;
 
     /* attribute list for save action */
-    var $attributes = array();
-    var $objectclasses = array();
+    public $attributes = array();
+    public $objectclasses = array();
 
     function __construct()
     {
@@ -148,9 +156,7 @@ class dhcpNetwork extends plugin
         return $smarty->fetch(get_template_path('dhcp_network.tpl', TRUE, dirname(__FILE__)));
     }
 
-    function remove_from_parent()
-    {
-    }
+    function remove_from_parent() {}
 
 
     /* Save data to object */
@@ -164,10 +170,14 @@ class dhcpNetwork extends plugin
              */
 
             /* Options */
-            foreach (array(
-                "routers" => "routers", "domain-name" => "domain", "subnet-mask" => "subnet_mask",
-                "broadcast-address" => "broadcast_address"
-            ) as $key => $val) {
+            foreach (
+                array(
+                    "routers" => "routers",
+                    "domain-name" => "domain",
+                    "subnet-mask" => "subnet_mask",
+                    "broadcast-address" => "broadcast_address"
+                ) as $key => $val
+            ) {
                 if ($_POST["$val"] == '') {
                     $this->options->remove($key);
                 } else {
@@ -224,7 +234,5 @@ class dhcpNetwork extends plugin
 
 
     /* Save to LDAP */
-    function save()
-    {
-    }
+    function save() {}
 }

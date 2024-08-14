@@ -18,10 +18,14 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-class dhcpSubClass extends dhcpPlugin
+namespace GosaSystems\admin\systems\services\dhcp;
+
+use \msgPool as msgPool;
+
+class DhcpClass extends DhcpPlugin
 {
     /* attribute list for save action */
-    var $objectclasses = array('top', 'dhcpSubClass', 'dhcpOptions');
+    public $objectclasses = array('top', 'dhcpClass', 'dhcpOptions');
 
     function __construct($parent, &$attrs)
     {
@@ -57,9 +61,7 @@ class dhcpSubClass extends dhcpPlugin
     }
 
 
-    function remove_from_parent()
-    {
-    }
+    function remove_from_parent() {}
 
 
     /* Save data to object */

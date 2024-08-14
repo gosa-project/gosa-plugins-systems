@@ -1,16 +1,22 @@
 <?php
 
-class dhcpNewSectionDialog extends plugin
+namespace GosaSystems\admin\systems\services\dhcp;
+
+use \plugin as Plugin;
+use \stats as stats;
+
+
+class DhcpNewSectionDialog extends Plugin
 {
     /* attribute list for save action */
-    var $ignore_account     = TRUE;
-    var $attributes         = array();
-    var $objectclasses      = array("whatever");
+    public $ignore_account     = TRUE;
+    public $attributes         = array();
+    public $objectclasses      = array("whatever");
 
     /* Mapping array */
-    var $types = array();
-    var $classtype = "";
-    var $sectionMap = array(
+    public $types = array();
+    public $classtype = "";
+    public $sectionMap = array(
         "dhcpService" => array("dhcpSharedNetwork", "dhcpSubnet", "dhcpGroup", "dhcpHost", "dhcpClass", "dhcpTSigKey", "dhcpDnsZone"),
         "dhcpClass" => array("dhcpSubClass"),
         "dhcpSubClass" => array(),
@@ -22,8 +28,6 @@ class dhcpNewSectionDialog extends plugin
         "dhcpTSigKey" => array(),
         "dhcpDnsZone" => array()
     );
-
-
 
     function __construct($type)
     {
@@ -75,9 +79,7 @@ class dhcpNewSectionDialog extends plugin
 
     /* Get posts and set class name 
      */
-    function save_object()
-    {
-    }
+    function save_object() {}
 
     /* Check given class name */
     function check()
@@ -90,7 +92,5 @@ class dhcpNewSectionDialog extends plugin
 
 
     /* Return the class name */
-    function save()
-    {
-    }
+    function save() {}
 }

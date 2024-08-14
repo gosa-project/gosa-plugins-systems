@@ -4,10 +4,14 @@
  * E.g. 'dhcpHost' includes 'dhcpAdvanced', both use the same options. 
  * In other words, they use a references to an instance of this class.
  */
-class dhcpOption
+
+namespace GosaSystems\admin\systems\services\dhcp;
+
+
+class DhcpOption
 {
 
-    var $options = array();
+    public $options = array();
 
     function getAll()
     {

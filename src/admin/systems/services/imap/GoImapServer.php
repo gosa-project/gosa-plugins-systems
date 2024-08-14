@@ -1,6 +1,14 @@
 <?php
 
-class goImapServer extends goService
+namespace GosaSystems\admin\systems\services\imap;
+
+use \log as log;
+use GosaSystems\admin\systems\services\GoService as GoService;
+use \plugin as plugin;
+use \msgPool as msgPool;
+use \msg_dialog as msg_dialog;
+
+class GoImapServer extends GoService
 {
 
     var $cli_summary      = "This pluign is used within the ServerService Pluign \nand indicates that this server supports mailqueue listings and so on.";
@@ -16,9 +24,16 @@ class goImapServer extends goService
     var $dn               = NULL;
     var $StatusFlag       = "goImapServerStatus";
     var $attributes       = array(
-        "goImapName", "goImapConnect", "goImapAdmin", "goImapPassword",
-        "goImapSieveServer", "goImapSievePort",
-        "cyrusImap", "cyrusImapSSL", "cyrusPop3", "cyrusPop3SSL"
+        "goImapName",
+        "goImapConnect",
+        "goImapAdmin",
+        "goImapPassword",
+        "goImapSieveServer",
+        "goImapSievePort",
+        "cyrusImap",
+        "cyrusImapSSL",
+        "cyrusPop3",
+        "cyrusPop3SSL"
     );
 
     var $cn                   = "";

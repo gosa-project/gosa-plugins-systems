@@ -18,15 +18,20 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-class dhcpService extends dhcpPlugin
+namespace GosaSystems\admin\systems\services\dhcp;
+
+use \msgPool as msgPool;
+use \tests as tests;
+
+class DhcpService extends DhcpPlugin
 {
     /* Used attributes */
-    var $dhcpPrimaryDN = "";
-    var $orig_dhcpPrimaryDN = "";
-    var $ddns_styles = array('none', 'interim', 'ad-hoc');
+    public $dhcpPrimaryDN = "";
+    public $orig_dhcpPrimaryDN = "";
+    public $ddns_styles = array('none', 'interim', 'ad-hoc');
 
     /* attribute list for save action */
-    var $objectclasses = array('top', 'dhcpService');
+    public $objectclasses = array('top', 'dhcpService');
 
 
     function __construct($parent, $attrs)
@@ -47,8 +52,11 @@ class dhcpService extends dhcpPlugin
 
         $this->advanced->setAutoOptions(array("server-name"));
         $this->advanced->setAutoStatements(array(
-            "default-lease-time", "max-lease-time",
-            "authoritative", "server-identifier", "ddns-update-style"
+            "default-lease-time",
+            "max-lease-time",
+            "authoritative",
+            "server-identifier",
+            "ddns-update-style"
         ));
 
         /* Save for later action */
@@ -87,9 +95,7 @@ class dhcpService extends dhcpPlugin
         return ($display);
     }
 
-    function remove_from_parent()
-    {
-    }
+    function remove_from_parent() {}
 
 
     /* Save data to object */

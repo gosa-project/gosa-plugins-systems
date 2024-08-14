@@ -1,20 +1,27 @@
 <?php
 
-class servDNSeditZoneEntries extends plugin
+namespace GosaSystems\admin\systems\services\dns;
+
+use \plugin as Plugin;
+use \msgPool as msgPool;
+use \msg_dialog as msg_dialog;
+use \tests as tests;
+
+class ServDnsEditZoneEntries extends Plugin
 {
     /* attribute list for save action */
-    var $ignore_account     = TRUE;
-    var $attributes         = array();
-    var $objectclasses      = array("whatever");
+    public $ignore_account     = TRUE;
+    public $attributes         = array();
+    public $objectclasses      = array("whatever");
 
-    var $Devices            = array();
+    public $Devices            = array();
 
-    var $zoneName           = "";   // ZoneName of currently edited Zone
-    var $reverseName        = "";   // ReverseZone of the currently edited Zone
+    public $zoneName           = "";   // ZoneName of currently edited Zone
+    public $reverseName        = "";   // ReverseZone of the currently edited Zone
 
-    var $RecordTypes        = array();  // Possible record type.
-    var $acl                = "";
-    var $disableDialog      = false; // Dialog will be disabled, if this zone is new 
+    public $RecordTypes        = array();  // Possible record type.
+    public $acl                = "";
+    public $disableDialog      = false; // Dialog will be disabled, if this zone is new 
 
 
     function __construct(&$config, $dn, &$zoneObject)
@@ -590,7 +597,5 @@ class servDNSeditZoneEntries extends plugin
     }
 
 
-    function remove_from_parent()
-    {
-    }
+    function remove_from_parent() {}
 }

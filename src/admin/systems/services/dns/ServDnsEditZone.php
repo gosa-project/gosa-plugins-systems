@@ -1,52 +1,66 @@
 <?php
 
-class servdnseditZone extends plugin
+namespace GosaSystems\admin\systems\services\dns;
+
+use \plugin as Plugin;
+use \msgPool as msgPool;
+use \msg_dialog as msg_dialog;
+use \tests as tests;
+use \sortableListing as sortableListing;
+
+class ServDnsEditZone extends Plugin
 {
     /* attribute list for save action */
-    var $ignore_account = TRUE;
-    var $attributes     = array(
-        "zoneName", "ReverseZone", "dNSClass",
-        "sOAprimary", "sOAmail", "sOAserial", "sOArefresh", "sOAretry", "sOAexpire", "sOAttl"
+    public $ignore_account = TRUE;
+    public $attributes     = array(
+        "zoneName",
+        "ReverseZone",
+        "dNSClass",
+        "sOAprimary",
+        "sOAmail",
+        "sOAserial",
+        "sOArefresh",
+        "sOAretry",
+        "sOAexpire",
+        "sOAttl"
     );
-    var $objectclasses  = array("whatever");
+    public $objectclasses  = array("whatever");
 
-    var $RecordTypes              = array();
+    public $RecordTypes              = array();
 
-    var $ReverseZone              = "";
-    var $zoneName                 = "";
-    var $dNSClass                 = "IN";
+    public $ReverseZone              = "";
+    public $zoneName                 = "";
+    public $dNSClass                 = "IN";
 
-    var $sOAprimary               = "";
-    var $sOAmail                  = "";
-    var $sOAserial                = "";
-    var $sOArefresh               = "3600";
-    var $sOAretry                 = "1800";
-    var $sOAexpire                = "720000";
-    var $sOAttl                   = "6400";
+    public $sOAprimary               = "";
+    public $sOAmail                  = "";
+    public $sOAserial                = "";
+    public $sOArefresh               = "3600";
+    public $sOAretry                 = "1800";
+    public $sOAexpire                = "720000";
+    public $sOAttl                   = "6400";
 
-    var $Records                  = array();
-    var $mXRecords                = array();
+    public $Records                  = array();
+    public $mXRecords                = array();
 
-    var $OldZoneName              = ""; // To detect changes made with this edit
-    var $OldReverseZone           = "";
+    public $OldZoneName              = ""; // To detect changes made with this edit
+    public $OldReverseZone           = "";
 
-    var $InitialReverseZone       = "";
-    var $InitialzoneName          = "";
-    var $NetworkClass                = "A"; // One out of A,B,C
+    public $InitialReverseZone       = "";
+    public $InitialzoneName          = "";
+    public $NetworkClass                = "A"; // One out of A,B,C
 
-    var $dialog                   = false;
+    public $zoneEditor               = NULL;
 
-    var $zoneEditor               = NULL;
+    public $isNew                    = true;
 
-    var $isNew                    = true;
-
-    var $ZoneObject               = array();
-    var $Zone_is_used             = FALSE;
-    var $mxList = null;
+    public $ZoneObject               = array();
+    public $Zone_is_used             = FALSE;
+    public $mxList = null;
 
     function __construct(&$config, $dn = NULL, $attrs = array())
     {
-        plugin::__construct($config, $dn);
+        parent::__construct($config, $dn);
 
         /* All types with required attrs */
         $this->RecordTypes = DNS::getDnsRecordTypes(true);
@@ -155,17 +169,14 @@ class servdnseditZone extends plugin
     function execute()
     {
         /* Call parent execute */
-        plugin::execute();
+        parent::execute();
 
         /* Fill templating stuff */
         $smarty = get_smarty();
 
         $smarty->assign("Zone_is_used", $this->Zone_is_used);
-        $ui = get_userinfo();
 
-        /* Assign ACLs 
-           All acls are defined in our parent class.
-         */
+        // Assign ACLs - All acls are defined in our parent class.
         $tmp = $this->parent->plInfo();
         foreach ($tmp['plProvidedAcls'] as $name => $desc) {
             $smarty->assign($name . "ACL", $this->parent->getacl($name));
@@ -287,14 +298,12 @@ class servdnseditZone extends plugin
         return ($display);
     }
 
-    function remove_from_parent()
-    {
-    }
+    function remove_from_parent() {}
 
     /* Save data to object */
     function save_object()
     {
-        plugin::save_object();
+        parent::save_object();
 
         if (!is_object($this->parent)) return;
 
@@ -318,7 +327,7 @@ class servdnseditZone extends plugin
     function check()
     {
         /* Call common method to give check the hook */
-        $message = plugin::check();
+        $message = parent::check();
 
         /* Check if zoneName is already in use */
         $usedZones = $this->getUsedZoneNames();

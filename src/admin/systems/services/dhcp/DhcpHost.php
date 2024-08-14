@@ -18,14 +18,18 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-class dhcpHost extends dhcpPlugin
+namespace GosaSystems\admin\systems\services\dhcp;
+
+use \msgPool as msgPool;
+
+class DhcpHost extends DhcpPlugin
 {
     /* Used attributes */
-    var $dhcpHWAddress = "";
-    var $realGosaHost = FALSE;
+    public $dhcpHWAddress = "";
+    public $realGosaHost = FALSE;
 
     /* attribute list for save action */
-    var $objectclasses = array("top", "dhcpHost");
+    public $objectclasses = array("top", "dhcpHost");
 
     function __construct($parent, $attrs, $host_exists_in_gosa = FALSE)
     {
@@ -84,9 +88,7 @@ class dhcpHost extends dhcpPlugin
     }
 
 
-    function remove_from_parent()
-    {
-    }
+    function remove_from_parent() {}
 
 
     /* Save data to object */

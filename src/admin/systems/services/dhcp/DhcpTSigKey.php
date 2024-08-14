@@ -18,14 +18,18 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-class dhcpTSigKey extends dhcpPlugin
+namespace GosaSystems\admin\systems\services\dhcp;
+
+use \msgPool as msgPool;
+
+class DdhcpTSigKey extends DhcpPlugin
 {
     /* Used attributes */
-    var $dhcpKeyAlgorithm = "";
-    var $dhcpKeySecret = "";
+    public $dhcpKeyAlgorithm = "";
+    public $dhcpKeySecret = "";
 
     /* attribute list for save action */
-    var $objectclasses = array("top", "dhcpTSigKey");
+    public $objectclasses = array("top", "dhcpTSigKey");
 
     function __construct($parent, $attrs)
     {
@@ -78,9 +82,7 @@ class dhcpTSigKey extends dhcpPlugin
     }
 
 
-    function remove_from_parent()
-    {
-    }
+    function remove_from_parent() {}
 
 
     /* Save data to object */

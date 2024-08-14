@@ -1,6 +1,12 @@
 <?php
 
-class DNS
+namespace GosaSystems\admin\systems\services\dns;
+
+use \msgPool as msgPool;
+use \msg_dialog as msg_dialog;
+use \session as session;
+
+class Dns
 {
     static $RecordTypes = array(
         'aRecord' => "aRecord",
@@ -756,7 +762,7 @@ class DNS
                 $ldap->cd($zone['dn']);
                 $ldap->modify($attrs);
                 if (!$ldap->success()) {
-                    msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $dn, LDAP_DEL, get_class()));
+                    msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $zone['dn'], LDAP_DEL, get_class()));
                 }
             }
         }

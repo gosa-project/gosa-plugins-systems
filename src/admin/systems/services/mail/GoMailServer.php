@@ -1,6 +1,16 @@
 <?php
 
-class goMailServer extends goService
+namespace GosaSystems\admin\systems\services\mail;
+
+use \log as log;
+use GosaSystems\admin\systems\services\GoService as GoService;
+use \plugin as plugin;
+use \msgPool as msgPool;
+use \msg_dialog as msg_dialog;
+use \sortableListing as sortableListing;
+use \tests as tests;
+
+class GoMailServer extends GoService
 {
 
     var $cli_summary      = "This pluign is used within the ServerService Pluign \nand indicates that this server supports mailqueue listings and so on.";
@@ -15,11 +25,18 @@ class goMailServer extends goService
     var $dn               = NULL;
     var $StatusFlag       = "goMailServerStatus";
     var $attributes       = array(
-        "description", "postfixHeaderSizeLimit",
-        "postfixMailboxSizeLimit", "postfixMessageSizeLimit",
-        "postfixMyDestinations", "postfixMyDomain", "postfixMyhostname",
-        "postfixMyNetworks", "postfixRelayhost", "postfixTransportTable",
-        "postfixSenderRestrictions", "postfixRecipientRestrictions"
+        "description",
+        "postfixHeaderSizeLimit",
+        "postfixMailboxSizeLimit",
+        "postfixMessageSizeLimit",
+        "postfixMyDestinations",
+        "postfixMyDomain",
+        "postfixMyhostname",
+        "postfixMyNetworks",
+        "postfixRelayhost",
+        "postfixTransportTable",
+        "postfixSenderRestrictions",
+        "postfixRecipientRestrictions"
     );
 
     var $goMailServerStatus;
@@ -60,11 +77,13 @@ class goMailServer extends goService
         $str = $this->config->data['TABS']['SERVERSERVICE'];
         $this->TransportProtocols = array("smtp" => "SMTP");
         $this->RestrictionFilters = array("FILTER" => "FILTER");
-        foreach (array(
+        foreach (
+            array(
                 "postfixRestrictionFilters" => "RestrictionFilters",
                 "postfixProtocols"        => "TransportProtocols"
             )
-            as $file => $var) {
+            as $file => $var
+        ) {
             if ($this->config->get_cfg_value("goMailServer", $file) != "") {
                 $file = $this->config->get_cfg_value("goMailServer", $file);
                 if ((isset($file)) && is_readable($file)) {

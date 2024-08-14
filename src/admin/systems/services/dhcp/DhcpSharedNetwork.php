@@ -18,20 +18,32 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-class dhcpSharedNetwork extends dhcpPlugin
+namespace GosaSystems\admin\systems\services\dhcp;
+
+use \msgPool as msgPool;
+use \tests as tests;
+
+class DhcpSharedNetwork extends DhcpPlugin
 {
     /* attribute list for save action */
-    var $objectclasses = array('top', 'dhcpSharedNetwork');
+    public $objectclasses = array('top', 'dhcpSharedNetwork');
 
     function __construct($parent, $attrs)
     {
         parent::__construct($parent, $attrs);
 
         $this->advanced->setAutoStatements(array(
-            "server-identifier", "default-lease-time",
-            "max-lease-time", "min-lease-time", "authoritative", "deny unknown-clients",
-            "deny bootp", "deny booting", "allow unknown-clients",
-            "allow bootp", "allow booting"
+            "server-identifier",
+            "default-lease-time",
+            "max-lease-time",
+            "min-lease-time",
+            "authoritative",
+            "deny unknown-clients",
+            "deny bootp",
+            "deny booting",
+            "allow unknown-clients",
+            "allow bootp",
+            "allow booting"
         ));
     }
 
@@ -57,11 +69,13 @@ class dhcpSharedNetwork extends dhcpPlugin
 
         $allow = $this->statements->get("allow");
         if (!is_array($allow)) $allow = array($allow);
-        foreach (array(
-            "unknown-clients" => "allow_unknown_state",
-            "bootp" => "allow_bootp_state",
-            "booting" => "allow_booting_state"
-        ) as $state => $target) {
+        foreach (
+            array(
+                "unknown-clients" => "allow_unknown_state",
+                "bootp" => "allow_bootp_state",
+                "booting" => "allow_booting_state"
+            ) as $state => $target
+        ) {
             if (in_array_strict($state, $allow)) {
                 $smarty->assign($target, "checked");
             } else {
@@ -74,11 +88,16 @@ class dhcpSharedNetwork extends dhcpPlugin
 
         /* Remove states configured by checkboxes. 
          */
-        foreach (array(
-            "deny unknown-clients",
-            "deny bootp", "deny booting", "allow unknown-clients",
-            "allow bootp", "allow booting"
-        ) as $name) {
+        foreach (
+            array(
+                "deny unknown-clients",
+                "deny bootp",
+                "deny booting",
+                "allow unknown-clients",
+                "allow bootp",
+                "allow booting"
+            ) as $name
+        ) {
             if ($this->statements->exists($name)) {
                 $this->statements->remove($name);
             }
@@ -98,9 +117,7 @@ class dhcpSharedNetwork extends dhcpPlugin
     }
 
 
-    function remove_from_parent()
-    {
-    }
+    function remove_from_parent() {}
 
 
     /* Save data to object */
@@ -115,10 +132,14 @@ class dhcpSharedNetwork extends dhcpPlugin
             $this->cn = get_post('cn');
             parent::save_object();
 
-            foreach (array(
-                "server-identifier", "default-lease-time",
-                "max-lease-time", "min-lease-time"
-            ) as $attr) {
+            foreach (
+                array(
+                    "server-identifier",
+                    "default-lease-time",
+                    "max-lease-time",
+                    "min-lease-time"
+                ) as $attr
+            ) {
                 if (isset($_POST[$attr]) && $_POST[$attr] != "") {
                     $this->statements->set($attr, get_post($attr));
                 } else {
@@ -158,11 +179,13 @@ class dhcpSharedNetwork extends dhcpPlugin
         }
 
         /* Check lease times */
-        foreach (array(
-            "default-lease-time" => _("Default lease time"),
-            "max-lease-time" => _("Max. lease time"),
-            "min-lease-time" => _("Min. lease time")
-        ) as $key => $val) {
+        foreach (
+            array(
+                "default-lease-time" => _("Default lease time"),
+                "max-lease-time" => _("Max. lease time"),
+                "min-lease-time" => _("Min. lease time")
+            ) as $key => $val
+        ) {
             if (
                 $this->statements->exists($key) && $this->statements->get($key) != "" &&
                 !tests::is_id($this->statements->get($key))
