@@ -28,8 +28,8 @@ use \session as session;
  */
 
 if ($remove_lock) {
-    if (session::is_set('systemManagement')) {
-        $macl = session::get('systemManagement');
+    if (session::is_set('SystemManagement')) {
+        $macl = session::get('SystemManagement');
         $macl->remove_lock();
     }
 }
@@ -37,17 +37,17 @@ if ($remove_lock) {
 /* Remove this plugin from session
  */
 if ($cleanup) {
-    session::un_set('systemManagement');
+    session::un_set('SystemManagement');
 } else {
 
-    /* Create systemManagement object on demand */
-    if (!session::is_set('systemManagement')) {
-        $systemManagement = new systemManagement($config, $ui);
-        session::set('systemManagement', $systemManagement);
+    /* Create SystemManagement object on demand */
+    if (!session::is_set('SystemManagement')) {
+        $systemManagement = new SystemManagement($config, $ui);
+        session::set('SystemManagement', $systemManagement);
     }
-    $systemManagement = session::get('systemManagement');
+    $systemManagement = session::get('SystemManagement');
     $display = $systemManagement->execute();
 
     /* Show and save dialog */
-    session::set('systemManagement', $systemManagement);
+    session::set('SystemManagement', $systemManagement);
 }
