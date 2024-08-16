@@ -3,7 +3,7 @@
  * This code is part of GOsa (http://www.gosa-project.org)
  * Copyright (C) 2003-2008 GONICUS GmbH
  *
- * ID: $$Id: class_systemManagement.inc 21155 2012-05-08 13:39:31Z hickert $$
+ * ID: $$Id: SystemManagement.php 21155 2012-05-08 13:39:31Z hickert $$
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -124,11 +124,11 @@ class SystemManagement extends Management
 
         // Build headpage
         $headpage = new listing(get_template_path("system-list.xml", true));
-        $headpage->registerElementFilter("systemRelease", "systemManagement::systemRelease");
-        $headpage->registerElementFilter("filterSystemDescription", "systemManagement::filterSystemDescription");
-        $headpage->registerElementFilter("filterLink", "systemManagement::filterLink");
+        $headpage->registerElementFilter("systemRelease", "SystemManagement::systemRelease");
+        $headpage->registerElementFilter("filterSystemDescription", "SystemManagement::filterSystemDescription");
+        $headpage->registerElementFilter("filterLink", "SystemManagement::filterLink");
         $headpage->setFilter($filter);
-        $filter->setConverter('systemManagement::incomingFilterConverter');
+        $filter->setConverter('SystemManagement::incomingFilterConverter');
 
         // Register Daemon Events
         if (class_available("DaemonEvent")) {
@@ -582,7 +582,7 @@ class SystemManagement extends Management
         foreach ($target as $dn) {
             $type = $headpage->getType($dn);
             if (!isset($tInfo[$type])) {
-                trigger_error("Unknown object type received '" . $type . "' please update systemManagement::getObjectDefinitions()!");
+                trigger_error("Unknown object type received '" . $type . "' please update SystemManagement::getObjectDefinitions()!");
             } else {
                 $info = $tInfo[$type];
                 $acl = $this->ui->get_permissions($dn, $info['aclCategory'] . "/" . $info['aclClass']);
@@ -657,7 +657,7 @@ class SystemManagement extends Management
         foreach ($this->dns as $key => $dn) {
             $type = $headpage->getType($dn);
             if (!isset($tInfo[$type])) {
-                trigger_error("Unknown object type received '" . $type . "' please update systemManagement::getObjectDefinitions()!");
+                trigger_error("Unknown object type received '" . $type . "' please update SystemManagement::getObjectDefinitions()!");
             } else {
 
                 $info = $tInfo[$type];
