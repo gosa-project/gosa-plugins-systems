@@ -79,7 +79,7 @@
       <label>New device</label>
       <objectClass>FAKE_OC_NewDevice</objectClass>
       <category>incoming</category>
-      <class>systemManagement</class>
+      <class>GosaSystems\admin\systems\SystemManagement</class>
       <image>images/lists/element.png[new]</image>
     </objectType>
 
