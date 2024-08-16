@@ -21,7 +21,6 @@
  */
 
 namespace GosaSystems\admin\systems;
-
 use \session as session;
 
 /* Remove locks created by this plugin
