@@ -124,11 +124,11 @@ class SystemManagement extends Management
 
         // Build headpage
         $headpage = new listing(get_template_path("system-list.xml", true));
-        $headpage->registerElementFilter("systemRelease", "SystemManagement::systemRelease");
-        $headpage->registerElementFilter("filterSystemDescription", "SystemManagement::filterSystemDescription");
-        $headpage->registerElementFilter("filterLink", "SystemManagement::filterLink");
+        $headpage->registerElementFilter("systemRelease", "GosaSystems\admin\systems\SystemManagement::systemRelease");
+        $headpage->registerElementFilter("filterSystemDescription", "GosaSystems\admin\systems\SystemManagement::filterSystemDescription");
+        $headpage->registerElementFilter("filterLink", "GosaSystems\admin\systems\SystemManagement::filterLink");
         $headpage->setFilter($filter);
-        $filter->setConverter('SystemManagement::incomingFilterConverter');
+        $filter->setConverter('GosaSystems\admin\systems\SystemManagement::incomingFilterConverter');
 
         // Register Daemon Events
         if (class_available("DaemonEvent")) {
@@ -582,7 +582,7 @@ class SystemManagement extends Management
         foreach ($target as $dn) {
             $type = $headpage->getType($dn);
             if (!isset($tInfo[$type])) {
-                trigger_error("Unknown object type received '" . $type . "' please update SystemManagement::getObjectDefinitions()!");
+                trigger_error("Unknown object type received '" . $type . "' please update GosaSystems\admin\systems\SystemManagement::getObjectDefinitions()!");
             } else {
                 $info = $tInfo[$type];
                 $acl = $this->ui->get_permissions($dn, $info['aclCategory'] . "/" . $info['aclClass']);
@@ -657,7 +657,7 @@ class SystemManagement extends Management
         foreach ($this->dns as $key => $dn) {
             $type = $headpage->getType($dn);
             if (!isset($tInfo[$type])) {
-                trigger_error("Unknown object type received '" . $type . "' please update SystemManagement::getObjectDefinitions()!");
+                trigger_error("Unknown object type received '" . $type . "' please update GosaSystems\admin\systems\SystemManagement::getObjectDefinitions()!");
             } else {
 
                 $info = $tInfo[$type];

@@ -31,7 +31,7 @@
     <tag>default</tag>
     <label>Default filter</label>
     <query>
-      <backend>SYSTEMS</backend>
+      <backend>GosaSystems\admin\systems\FilterSystems</backend>
       <filter>(&amp;
                 (|(objectClass=goServer)
                   (objectClass=gotoWorkstation)
@@ -57,7 +57,7 @@
     <tag>all</tag>
     <label>All systems</label>
     <query>
-      <backend>SYSTEMS</backend>
+      <backend>GosaSystems\admin\systems\FilterSystems</backend>
       <filter>(&amp;
                 (|(objectClass=goServer)
                   (objectClass=gotoWorkstation)
@@ -102,7 +102,7 @@
     <tag>incoming</tag>
     <label>Incoming objects</label>
     <query>
-      <backend>SYSTEMS</backend>
+      <backend>GosaSystems\admin\systems\FilterSystems</backend>
       <filter>(&amp;(objectClass=goHard)(ou:dn:=%systemIncomingRDN)(cn=$))</filter>
     </query>
     <autocomplete>
