@@ -22,7 +22,7 @@ namespace GosaSystems\admin\systems\services\dhcp;
 
 use \msgPool as msgPool;
 
-class DdhcpTSigKey extends DhcpPlugin
+class DhcpTSigKey extends DhcpPlugin
 {
     /* Used attributes */
     public $dhcpKeyAlgorithm = "";
