@@ -128,7 +128,7 @@ class GoService extends Plugin
         new log("remove", "server/" . get_class($this), $this->dn, array_keys($this->attrs), $ldap->get_error());
 
         if (!$ldap->success()) {
-            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
+            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, __CLASS__));
         }
         $this->handle_post_events("remove");
     }
@@ -156,7 +156,7 @@ class GoService extends Plugin
             new log("create", "server/" . get_class($this), $this->dn, array_keys($this->attrs), $ldap->get_error());
         }
         if (!$ldap->success()) {
-            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
+            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, __CLASS__));
         }
     }
 
@@ -189,7 +189,7 @@ class GoService extends Plugin
             $this->$flag = $value;
             $ldap->modify($attrs);
             if (!$ldap->success()) {
-                msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
+                msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, __CLASS__));
             }
             $this->action_hook();
         }

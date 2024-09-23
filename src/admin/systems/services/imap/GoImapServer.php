@@ -205,7 +205,7 @@ class GoImapServer extends GoService
             new log("create", "server/" . get_class($this), $this->dn, array_keys($this->attrs), $ldap->get_error());
         }
         if (!$ldap->success()) {
-            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
+            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, __CLASS__));
         }
     }
 
@@ -223,7 +223,7 @@ class GoImapServer extends GoService
             "plCategory"    => array("server"),
             "plRequirements" => array(
                 'ldapSchema' => array('goImapServer' => '>=2.7'),
-                'onFailureDisablePlugin' => array(get_class(), 'mailAccount', 'mailogroup', 'mailgroup')
+                'onFailureDisablePlugin' => array(__CLASS__, 'mailAccount', 'mailogroup', 'mailgroup')
             ),
 
             "plProvidedAcls" => array(

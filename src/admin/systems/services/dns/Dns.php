@@ -762,7 +762,7 @@ class Dns
                 $ldap->cd($zone['dn']);
                 $ldap->modify($attrs);
                 if (!$ldap->success()) {
-                    msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $zone['dn'], LDAP_DEL, get_class()));
+                    msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $zone['dn'], LDAP_DEL, __CLASS__));
                 }
             }
         }

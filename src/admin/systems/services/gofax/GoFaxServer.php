@@ -102,7 +102,7 @@ class GoFaxServer extends GoService
             "plCategory"    => array("server"),
             "plRequirements" => array(
                 'ldapSchema' => array('goFaxServer' => '>=2.7'),
-                'onFailureDisablePlugin' => array(get_class(), 'faxreport', 'gofaxAccount')
+                'onFailureDisablePlugin' => array(__CLASS__, 'faxreport', 'gofaxAccount')
             ),
 
             "plProvidedAcls" => array(

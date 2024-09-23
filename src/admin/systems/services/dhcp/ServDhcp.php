@@ -415,7 +415,7 @@ class ServDhcp extends GoService
             if ($this->objectType($dn) == 'dhcpService') {
                 $ldap->rmdir_recursive($dn);
                 if (!$ldap->success()) {
-                    msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $dn, LDAP_DEL, get_class()));
+                    msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $dn, LDAP_DEL, __CLASS__));
                 }
             }
         }
@@ -432,7 +432,7 @@ class ServDhcp extends GoService
         $ldap->modify($this->attrs);
 
         if (!$ldap->success()) {
-            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
+            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, __CLASS__));
         }
 
         /* Optionally execute a command after we're done */
@@ -487,7 +487,7 @@ class ServDhcp extends GoService
                 if ($ldap->cat($dn)) {
                     $ldap->rmdir_recursive($dn);
                     if (!$ldap->success()) {
-                        msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $dn, LDAP_MOD, get_class()));
+                        msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $dn, LDAP_MOD, __CLASS__));
                     }
                 }
                 continue;
@@ -563,7 +563,7 @@ class ServDhcp extends GoService
                 if ($modify) {
                     $ldap->modify($attrs);
                     if (!$ldap->success()) {
-                        msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $dn, LDAP_MOD, get_class()));
+                        msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $dn, LDAP_MOD, __CLASS__));
                     }
 
                     /* Optionally execute a command after we're done */
@@ -571,7 +571,7 @@ class ServDhcp extends GoService
                 } else {
                     $ldap->add($attrs);
                     if (!$ldap->success()) {
-                        msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $dn, LDAP_ADD, get_class()));
+                        msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $dn, LDAP_ADD, __CLASS__));
                     }
 
                     /* Optionally execute a command after we're done */
@@ -598,7 +598,7 @@ class ServDhcp extends GoService
         $ldap->modify($this->attrs);
 
         if (!$ldap->success()) {
-            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
+            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, __CLASS__));
         }
 
         /* Optionally execute a command after we're done */

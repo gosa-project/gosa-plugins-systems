@@ -104,7 +104,7 @@ class GoNtpServer extends GoService
             $ldap->add($this->attrs);
         }
         if (!$ldap->success()) {
-            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
+            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, __CLASS__));
         }
         if ($this->initially_was_account) {
             $this->handle_post_events("modify");
@@ -128,7 +128,7 @@ class GoNtpServer extends GoService
             "plSection"     => array("administration"),
             "plRequirements" => array(
                 'ldapSchema' => array('goNtpServer' => '>=2.7'),
-                'onFailureDisablePlugin' => array(get_class())
+                'onFailureDisablePlugin' => array(__CLASS__)
             ),
             "plCategory"    => array("server"),
 

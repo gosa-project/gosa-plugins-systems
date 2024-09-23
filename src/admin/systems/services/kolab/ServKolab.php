@@ -308,7 +308,7 @@ class ServKolab extends GoService
             /* Remove complete entry */
             $ldap->rmdir($this->dn);
             if (!$ldap->success()) {
-                msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_DEL, get_class()));
+                msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_DEL, __CLASS__));
             }
         } else {
 
@@ -324,7 +324,7 @@ class ServKolab extends GoService
             $this->cleanup();
             $ldap->modify($attrs);
             if (!$ldap->success()) {
-                msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, get_class()));
+                msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_MOD, __CLASS__));
             }
         }
 
@@ -487,7 +487,7 @@ class ServKolab extends GoService
         }
 
         if (!$ldap->success()) {
-            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
+            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, __CLASS__));
         }
 
         /* Optionally execute a command after we're done */

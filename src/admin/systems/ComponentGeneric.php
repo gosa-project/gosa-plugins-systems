@@ -151,7 +151,7 @@ class ComponentGeneric extends Plugin
         new log("remove", "component/" . get_class($this), $this->dn, $this->attributes, $ldap->get_error());
 
         if (!$ldap->success()) {
-            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_DEL, get_class()));
+            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_DEL, __CLASS__));
         }
 
         $this->handle_post_events(array("macAddress" => $this->netConfigDNS->macAddress, "ipHostNumber" => $this->netConfigDNS->ipHostNumber));
@@ -306,7 +306,7 @@ class ComponentGeneric extends Plugin
         $this->netConfigDNS->save();
 
         if (!$ldap->success()) {
-            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
+            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, __CLASS__));
         }
     }
 

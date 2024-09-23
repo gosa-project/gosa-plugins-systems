@@ -514,7 +514,7 @@ class TermDns extends Plugin
                 $ldap->rmdir_recursive($dn);
                 new log("remove", "unknown/" . get_class($this), $dn);
                 if (!$ldap->success()) {
-                    msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $dn, LDAP_DEL, get_class()));
+                    msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $dn, LDAP_DEL, __CLASS__));
                 }
             }
         }
@@ -528,7 +528,7 @@ class TermDns extends Plugin
             $ldap = $this->config->get_ldap_link();
             $ldap->rmdir_recursive($this->dhcpHostEntry['dn']);
             if (!$ldap->success()) {
-                msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dhcpHostEntry['dn'], LDAP_DEL,         get_class()));
+                msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dhcpHostEntry['dn'], LDAP_DEL,         __CLASS__));
             }
         }
     }
@@ -845,7 +845,7 @@ class TermDns extends Plugin
             if ($this->initial_dhcp_is_Account && !$this->dhcp_is_Account) {
                 $ldap->rmdir_recursive($this->dhcpHostEntry['dn']);
                 if (!$ldap->success()) {
-                    msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dhcpHostEntry['dn'], LDAP_DEL, get_class()));
+                    msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dhcpHostEntry['dn'], LDAP_DEL, __CLASS__));
                 }
 
                 $tmp = new servdhcp($this->config, $this->dhcpParentNode);
@@ -864,7 +864,7 @@ class TermDns extends Plugin
                 $tmp->handle_post_events("add");
 
                 if (!$ldap->success()) {
-                    msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), "cn=" . $this->cn . "," . $this->dhcpParentNode, LDAP_ADD, get_class()));
+                    msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), "cn=" . $this->cn . "," . $this->dhcpParentNode, LDAP_ADD, __CLASS__));
                 }
             }
 
@@ -886,12 +886,12 @@ class TermDns extends Plugin
                     $tmp->handle_post_events("modify");
 
                     if (!$ldap->success()) {
-                        msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), "cn=" . $this->cn . "," . $this->dhcpParentNode, LDAP_ADD, get_class()));
+                        msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), "cn=" . $this->cn . "," . $this->dhcpParentNode, LDAP_ADD, __CLASS__));
                     }
                     if ($res) {
                         $ldap->rmdir_recursive($this->dhcpHostEntry['dn']);
                         if (!$ldap->success()) {
-                            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dhcpHostEntry['dn'], LDAP_DEL, get_class()));
+                            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dhcpHostEntry['dn'], LDAP_DEL, __CLASS__));
                         }
                     }
                 }
@@ -911,7 +911,7 @@ class TermDns extends Plugin
                     $tmp->handle_post_events("modify");
 
                     if (!$ldap->success()) {
-                        msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dhcpHostEntry['dn'], LDAP_MOD, get_class()));
+                        msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dhcpHostEntry['dn'], LDAP_MOD, __CLASS__));
                     }
                 }
             }
@@ -987,7 +987,7 @@ class TermDns extends Plugin
             /* Display errors 
                  */
             if (!$ldap->success()) {
-                msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $dn, 0, get_class()));
+                msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $dn, 0, __CLASS__));
             }
 
             $tmp2 = new servdns($this->config, $this->dn);

@@ -200,7 +200,7 @@ class GoShareServer extends GoService
             $ldap->add($this->attrs);
         }
         if (!$ldap->success()) {
-            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, get_class()));
+            msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, 0, __CLASS__));
         }
         if ($this->initially_was_account) {
             $this->handle_post_events("modify");
@@ -294,7 +294,7 @@ class GoShareServer extends GoService
             $ldap->cd($mountsdn);
             $ldap->add($mounts);
             if (!$ldap->success()) {
-                msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_ADD, get_class()));
+                msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $this->dn, LDAP_ADD, __CLASS__));
             }
             new log("modify", "server/" . get_class($this), $mountsdn, array_keys($mounts), $ldap->get_error());
         }
@@ -310,7 +310,7 @@ class GoShareServer extends GoService
             if (count($attrs) != 0) {
                 $ldap->rmdir($mountdn);
                 if (!$ldap->success()) {
-                    msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $mountdn, LDAP_DEL, get_class()));
+                    msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $mountdn, LDAP_DEL, __CLASS__));
                 }
                 new log("remove", "server/" . get_class($this), $mountdn, array_keys($mount), $ldap->get_error());
             }
@@ -323,7 +323,7 @@ class GoShareServer extends GoService
             $ldap->cd($mountdn);
             $ldap->add($mount);
             if (!$ldap->success()) {
-                msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $mount, LDAP_ADD, get_class()));
+                msg_dialog::display(_("LDAP error"), msgPool::ldaperror($ldap->get_error(), $mount, LDAP_ADD, __CLASS__));
             }
             new log("create", "server/" . get_class($this), $mountdn, array_keys($mount), $ldap->get_error());
         }
@@ -430,7 +430,7 @@ class GoShareServer extends GoService
             "plSection"     => array("administration"),
             "plRequirements" => array(
                 'ldapSchema' => array('goShareServer' => '>=2.7'),
-                'onFailureDisablePlugin' => array(get_class())
+                'onFailureDisablePlugin' => array(__CLASS__)
             ),
             "plCategory"    => array("server"),
 
