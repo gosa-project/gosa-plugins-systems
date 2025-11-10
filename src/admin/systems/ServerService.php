@@ -40,7 +40,7 @@ define("SERVICE_RESTARTED", _("Restart"));
 
 define("ALL_SERVICES", 100);
 
-class ServerService extends management
+class ServerService extends Management
 {
     /* attribute list for save action */
     var $ignore_account   = TRUE;

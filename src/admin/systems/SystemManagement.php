@@ -1405,8 +1405,8 @@ class SystemManagement extends Management
 
             "goServer" => array(
                 "ou"          => get_ou("servgeneric", "serverRDN"),
-                "plugClass"   => "servgeneric",
-                "tabClass"    => "servtabs",
+                "plugClass"   => "GosaSystems\admin\systems\ServGeneric",
+                "tabClass"    => "GosaSystems\admin\systems\ServerTabs",
                 "tabDesc"     => "SERVTABS",
                 "aclClass"    => "servgeneric",
                 "sendEvents"  => TRUE,

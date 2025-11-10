@@ -96,7 +96,7 @@ class ServerTabs extends Tabs
     {
         parent::save_object($save_current);
 
-        $baseobject = $this->by_object['servgeneric'];
+        $baseobject = $this->by_object['GosaSystems\admin\systems\ServGeneric'];
         $baseobject->netConfigDNS->cn = $baseobject->cn;
     }
 
@@ -105,7 +105,7 @@ class ServerTabs extends Tabs
     {
         /* Check for new 'dn', in order to propagate the
        'dn' to all plugins */
-        $baseobject = $this->by_object['servgeneric'];
+        $baseobject = $this->by_object['GosaSystems\admin\systems\ServGeneric'];
         $cn      = preg_replace('/,/', '\,', $baseobject->cn);
         $cn      = preg_replace('/"/', '\"', $cn);
         $this->dn = "cn={$cn}," . get_ou("servgeneric", "serverRDN") . $baseobject->base;
