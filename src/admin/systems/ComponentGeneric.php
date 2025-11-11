@@ -65,7 +65,7 @@ class ComponentGeneric extends Plugin
         } else {
             $this->base = preg_replace("/^[^,]+," . preg_quote(get_ou("componentGeneric", "componentRDN"), '/') . "/i", "", $this->dn);
         }
-        $this->netConfigDNS = new termDNS($this->config, $this, $this->objectclasses, true);
+        $this->netConfigDNS = new TermDns($this->config, $this, $this->objectclasses, true);
         /* Save dn for later references */
         $this->orig_dn = $this->dn;
 

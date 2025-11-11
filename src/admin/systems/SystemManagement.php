@@ -1415,8 +1415,8 @@ class SystemManagement extends Management
 
             "gotoWorkstation" => array(
                 "ou"          => get_ou("workgeneric", "workstationRDN"),
-                "plugClass"   => "workgeneric",
-                "tabClass"    => "worktabs",
+                "plugClass"   => "GosaSystems\admin\systems\WorkGeneric",
+                "tabClass"    => "GosaSystems\admin\systems\WorkTabs",
                 "tabDesc"     => "WORKTABS",
                 "aclClass"    => "workgeneric",
                 "sendEvents"  => TRUE,
