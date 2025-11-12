@@ -68,6 +68,7 @@ class WorkStartup extends Plugin
 
     public SortableListing $faiList;
     public SortableListing $ldapList;
+    public string $cn;
 
     function __construct(&$config, $dn= NULL, $parent= NULL)
     {
