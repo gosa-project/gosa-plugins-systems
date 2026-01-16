@@ -1405,8 +1405,8 @@ class SystemManagement extends Management
 
             "goServer" => array(
                 "ou"          => get_ou("servgeneric", "serverRDN"),
-                "plugClass"   => "servgeneric",
-                "tabClass"    => "servtabs",
+                "plugClass"   => "GosaSystems\admin\systems\ServGeneric",
+                "tabClass"    => "GosaSystems\admin\systems\ServerTabs",
                 "tabDesc"     => "SERVTABS",
                 "aclClass"    => "servgeneric",
                 "sendEvents"  => TRUE,
@@ -1415,8 +1415,8 @@ class SystemManagement extends Management
 
             "gotoWorkstation" => array(
                 "ou"          => get_ou("workgeneric", "workstationRDN"),
-                "plugClass"   => "workgeneric",
-                "tabClass"    => "worktabs",
+                "plugClass"   => "GosaSystems\admin\systems\WorkGeneric",
+                "tabClass"    => "GosaSystems\admin\systems\WorkTabs",
                 "tabDesc"     => "WORKTABS",
                 "aclClass"    => "workgeneric",
                 "sendEvents"  => TRUE,

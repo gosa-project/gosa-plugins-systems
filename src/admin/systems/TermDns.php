@@ -26,6 +26,7 @@ use \plugin as Plugin;
 use \msg_dialog as msg_dialog;
 use \msgPool as msgPool;
 use \log as log;
+use \tests as tests;
 
 class TermDns extends Plugin
 {
