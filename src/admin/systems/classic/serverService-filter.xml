@@ -16,7 +16,7 @@
     <tag>default</tag>
     <label>Default filter</label>
     <query>
-      <backend>ServerService</backend>
+      <backend>GosaSystems\admin\systems\FilterServerService</backend>
       <filter>...</filter>
     </query>
   </search>
