@@ -1475,9 +1475,9 @@ class SystemManagement extends Management
 
             "ieee802Device" => array(
                 "ou"          => get_ou("componentGeneric", "componentRDN"),
-                "plugClass"   => "componentGeneric",
+                "plugClass"   => "GosaSystems\\admin\\systems\\ComponentGeneric",
                 "sendEvents"  => FALSE,
-                "tabClass"    => "componenttabs",
+                "tabClass"    => "GosaSystems\\admin\\systems\\ComponentTabs",
                 "tabDesc"     => "COMPONENTTABS",
                 "aclClass"    => "componentGeneric",
                 "aclCategory" => "component"
