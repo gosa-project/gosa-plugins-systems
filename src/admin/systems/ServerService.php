@@ -134,7 +134,8 @@ class ServerService extends management
         // Create menu entries -> create -> services[]
         foreach ($list as $name) {
             $desc = $services[$name];
-            $serviceList .= sprintf($template, $name, _($desc));
+            $safeName = base64_encode($name);
+            $serviceList .= sprintf($template, $safeName, _($desc));
         }
 
         if (!empty($serviceList)) {
@@ -150,7 +151,7 @@ class ServerService extends management
 
         $contents = preg_replace("/%SERVICES%/", $serviceList, $contents);
         $headpage = new listing($contents, TRUE);
-        $headpage->registerElementFilter("filterServiceStatus", "ServerService::filterServiceStatus");
+        $headpage->registerElementFilter("filterServiceStatus", "GosaSystems\\admin\\systems\\ServerService::filterServiceStatus");
         $headpage->setFilter($filter);
 
         parent::__construct($this->config, $this->ui, "services", $headpage);
@@ -173,7 +174,8 @@ class ServerService extends management
         if (isset($_POST['SaveService']))      $action['action'] = "saveService";
         if (isset($_POST['CancelService']))    $action['action'] = "cancelService";
         if (preg_match("/^instantNew_/", $action['action'] ?? '')) {
-            $action['targets'][] = preg_replace("/^instantNew_/i", "", $action['action']);
+            $safeTarget = preg_replace("/^instantNew_/i", "", $action['action']);
+            $action['targets'][] = base64_decode($safeTarget);
             $action['action'] = "instantNew";
         }
         return ($action);
