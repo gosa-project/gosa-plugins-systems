@@ -1405,8 +1405,8 @@ class SystemManagement extends Management
 
             "goServer" => array(
                 "ou"          => get_ou("servgeneric", "serverRDN"),
-                "plugClass"   => "servgeneric",
-                "tabClass"    => "servtabs",
+                "plugClass"   => "GosaSystems\\admin\\systems\\ServGeneric",
+                "tabClass"    => "GosaSystems\\admin\\systems\\ServerTabs",
                 "tabDesc"     => "SERVTABS",
                 "aclClass"    => "servgeneric",
                 "sendEvents"  => TRUE,
@@ -1475,9 +1475,9 @@ class SystemManagement extends Management
 
             "ieee802Device" => array(
                 "ou"          => get_ou("componentGeneric", "componentRDN"),
-                "plugClass"   => "componentGeneric",
+                "plugClass"   => "GosaSystems\\admin\\systems\\ComponentGeneric",
                 "sendEvents"  => FALSE,
-                "tabClass"    => "componenttabs",
+                "tabClass"    => "GosaSystems\\admin\\systems\\ComponentTabs",
                 "tabDesc"     => "COMPONENTTABS",
                 "aclClass"    => "componentGeneric",
                 "aclCategory" => "component"

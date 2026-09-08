@@ -39,7 +39,7 @@ class ComponentTabs extends Tabs
     {
         parent::save_object($save_current);
 
-        $baseobject = $this->by_object['componentGeneric'];
+        $baseobject = $this->by_object['GosaSystems\admin\systems\ComponentGeneric'];
         $baseobject->netConfigDNS->cn = $baseobject->cn;
     }
 
@@ -48,7 +48,7 @@ class ComponentTabs extends Tabs
     {
         /* Check for new 'dn', in order to propagate the
        'dn' to all plugins */
-        $baseobject = $this->by_object['componentGeneric'];
+        $baseobject = $this->by_object['GosaSystems\admin\systems\ComponentGeneric'];
         $cn      = preg_replace('/,/', '\,', $baseobject->cn);
         $cn      = preg_replace('/"/', '\"', $cn);
         $this->dn = "cn={$cn}," . get_ou("componentGeneric", "componentRDN") . $baseobject->base;
